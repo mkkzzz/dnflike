@@ -608,6 +608,65 @@ G_AIR = dict(torso=-5, head=-15, uaf=160, laf=28, sword=12, uab=-165, lab=-24, t
 G_DOWN = dict(torso=0, head=-10, uaf=160, laf=10, sword=0, uab=175, lab=0, thf=12, shf=-8, thb=-8, shb=-4, h=0.0)
 
 
+# ---------------------------------------------------------------- 实机状态补充姿势
+# preview 的剧本只演 idle / run / A1 A2 A3 / UPPER / GW / DASH，
+# 但实机状态机（game/scripts/player.gd、monster.gd 的 St 枚举）还需要
+# 起跳 / 后跳 / 格挡 / 受击 / 浮空 / 倒地 / 起身，以及哥布林的挥棒。
+# 下面这些是同一套 rig 上的原创程序化姿势（基于 BASE / G_IDLE 调角度），
+# 由 tools/bake_game_assets.py 烘焙成实机帧条 —— 改这里就等于改实机观感。
+#
+# 角度约定（详见 solve）：0 = 正下方，正 = 朝前（facing 方向），90 = 水平前，180 = 正上；
+# shf / shb / laf / lab 是「相对上一节的夹角」，负值 = 关节向后折（膝盖/手肘的自然弯向）。
+# h = 整体离地抬升（实机的物理位移由 CharacterBody2D 负责，这里只补视觉上的腾空/下沉）。
+
+# 跳跃：蹲身蓄力 → 收腿上升 → 伸腿下落（落地那一下由状态机切回 idle，不单独做帧）
+JUMP_TAKEOFF = P(torso=24, head=8, uaf=-34, laf=44, sword=-44, uab=-48, lab=32, thf=54, shf=-96, thb=-28, shb=-62)
+JUMP_RISE = P(torso=-8, head=-14, uaf=148, laf=24, sword=14, uab=-124, lab=34, thf=58, shf=-104, thb=-34, shb=-58)
+JUMP_FALL = P(torso=16, head=-2, uaf=48, laf=26, sword=-16, uab=-46, lab=42, thf=34, shf=-14, thb=-6, shb=-34)
+
+# 后跳（↓+C）：向后仰身、双腿前蹬、剑在身前拖曳 → 落地刹住
+BD_COIL = P(torso=26, head=6, uaf=-40, laf=52, sword=-40, uab=-44, lab=38, thf=48, shf=-88, thb=-24, shb=-58)
+BD_LEAN = P(torso=-32, head=-12, uaf=126, laf=44, sword=26, uab=-74, lab=38, thf=50, shf=-26, thb=18, shb=-44, h=4)
+BD_HOP = P(torso=-42, head=-16, uaf=144, laf=32, sword=16, uab=-88, lab=28, thf=64, shf=-38, thb=28, shb=-54, h=12)
+BD_LAND = P(torso=8, head=2, uaf=34, laf=40, sword=-24, uab=-30, lab=44, thf=36, shf=-58, thb=-20, shb=-40)
+
+# 格挡（V）：剑身竖在身前，重心下沉；GUARD_LOW 是循环里的呼吸帧
+GUARD = P(torso=16, head=-2, uaf=98, laf=-58, sword=124, uab=-34, lab=46, thf=28, shf=-38, thb=-24, shb=-26)
+GUARD_LOW = P(torso=20, head=0, uaf=104, laf=-54, sword=118, uab=-30, lab=48, thf=32, shf=-44, thb=-22, shb=-30, h=-3)
+GUARD_HI = P(torso=13, head=-4, uaf=94, laf=-62, sword=128, uab=-37, lab=44, thf=25, shf=-34, thb=-25, shb=-23, h=1)
+
+# 受击（HIT）：头后仰、手臂甩起 → 收势
+HIT_RECOIL = P(torso=-26, head=-34, uaf=-44, laf=64, sword=-34, uab=-96, lab=44, thf=30, shf=-26, thb=-26, shb=-14)
+HIT_SAG = P(torso=-8, head=-16, uaf=-16, laf=52, sword=-28, uab=-56, lab=40, thf=24, shf=-34, thb=-18, shb=-24)
+
+# 浮空（AIR）：整体后仰（rot 由帧集给），四肢张开乱舞
+AIR_FLAIL = P(torso=-34, head=-18, uaf=-118, laf=58, sword=-26, uab=138, lab=-28, thf=46, shf=-44, thb=-36, shb=-26)
+AIR_FLAIL2 = P(torso=-22, head=-10, uaf=-88, laf=66, sword=-40, uab=108, lab=-16, thf=24, shf=-72, thb=-16, shb=-48)
+
+# 倒地（DOWN）：躺平（rot=90），四肢摊开
+DOWN_LIE = P(torso=12, head=-16, uaf=-18, laf=74, sword=-52, uab=-72, lab=54, thf=22, shf=-64, thb=-10, shb=-34)
+DOWN_LIE2 = P(torso=6, head=-8, uaf=-8, laf=62, sword=-60, uab=-58, lab=46, thf=16, shf=-52, thb=-4, shb=-26)
+
+# 起身（GETUP）：撑地 → 单膝 → 站起
+GETUP_PUSH = P(torso=52, head=24, uaf=-70, laf=76, sword=-30, uab=-52, lab=62, thf=84, shf=-112, thb=-30, shb=-78, h=10)
+GETUP_KNEE = P(torso=36, head=16, uaf=-46, laf=64, sword=-40, uab=-40, lab=50, thf=76, shf=-104, thb=-34, shb=-70, h=4)
+
+# 哥布林挥棒（ATTACK）：棒子抡到脑后 → 砸向地面 → 收棒
+G_ATK_WIND = D(G_IDLE, torso=-18, head=-16, uaf=152, laf=28, sword=32, uab=-42, lab=42, thf=18, shf=-30, thb=-32, shb=-18, h=4)
+G_ATK_HIT = D(G_IDLE, torso=46, head=18, uaf=88, laf=-12, sword=-32, uab=-72, lab=42, thf=62, shf=-72, thb=-48, shb=-18)
+G_ATK_FOL = D(G_ATK_HIT, torso=36, uaf=74, sword=-40)
+
+# 剑魂「拔刀斩」：收刀入鞘（蓄） → 拔刀横斩 → 收势
+QD_WIND = P(torso=30, head=8, uaf=-40, laf=60, sword=-70, uab=-30, lab=50, thf=40, shf=-70, thb=-20, shb=-40)
+QD_DRAW = P(torso=40, head=14, uaf=95, laf=0, sword=0, uab=-72, lab=30, thf=58, shf=-56, thb=-44, shb=-14)
+QD_END = P(torso=20, head=4, uaf=60, laf=24, sword=-14, uab=-40, lab=42, thf=32, shf=-44, thb=-24, shb=-26)
+
+# 剑魂「连突刺」：剑端平的，连续前刺
+TH_READY = P(torso=25, head=2, uaf=60, laf=-20, sword=50, uab=-38, lab=44, thf=35, shf=-55, thb=-25, shb=-30)
+TH_STAB = P(torso=38, head=8, uaf=85, laf=-15, sword=25, uab=-86, lab=20, thf=56, shf=-36, thb=-46, shb=-10)
+TH_STAB2 = P(torso=32, head=4, uaf=78, laf=-18, sword=32, uab=-80, lab=24, thf=50, shf=-42, thb=-40, shb=-14)
+
+
 class Clip:
     def __init__(self, name, dur, keys=None, hits=(), move=(), trail=None, events=(), popup=None, proc=None, slot=None):
         self.name, self.dur, self.keys, self.hits, self.move = name, dur, keys, list(hits), list(move)
@@ -661,7 +720,213 @@ CLIPS = {
                trail=(5, 9), events=[(8, "gw", None)], popup="地裂波", slot=1),
     "DASH": Clip("DASH", 32, [(0, BASE, "lin"), (5, D_CROUCH, "io"), (7, D_GO, "out"), (16, D_GO, "lin"), (22, D_END, "io"), (32, BASE, "io")],
                  move=[(7, 16, 13.0)], trail=(6, 9), events=[(20, "turn", None), (25, "xslash", None)], popup="影突·斩", slot=2),
+    # 剑魂技能（preview 剧本没演，实机 SKILL 状态要用）
+    "QD": Clip("QD", 20, [(0, BASE, "lin"), (6, QD_WIND, "io"), (9, QD_DRAW, "out"), (12, D(QD_DRAW, uaf=110, sword=10), "out"),
+                          (16, QD_END, "io"), (20, BASE, "io")],
+               hits=[dict(f=9, x0=-10, x1=96, hmax=120, dmg=(3600, 4600), kind="knock", stop=8, shake=5)], trail=(8, 12), popup="拔刀斩", slot=3),
+    "THRUST": Clip("THRUST", 16, [(0, BASE, "lin"), (2, TH_STAB, "out"), (4, TH_READY, "io"), (5, TH_STAB2, "out"), (7, TH_READY, "io"),
+                                  (8, TH_STAB, "out"), (11, TH_READY, "io"), (16, BASE, "io")],
+                   hits=[dict(f=2, x0=-4, x1=64, hmax=104, dmg=(900, 1300), kind="stun", stop=3, shake=2),
+                         dict(f=5, x0=-4, x1=64, hmax=104, dmg=(900, 1300), kind="stun", stop=3, shake=2),
+                         dict(f=8, x0=-4, x1=70, hmax=104, dmg=(1100, 1500), kind="knock", stop=4, shake=3)],
+                   trail=(1, 9), popup="连突刺", slot=3),
 }
+
+
+# ---------------------------------------------------------------- 实机状态帧集
+# game/scripts/player.gd、monster.gd 的状态机（St 枚举）→ 逐帧采样参数。
+# tools/bake_game_assets.py 只调用 state_frames()，自己不复述任何美术细节。
+#
+# 帧序列里每一项：
+#   pose / h / rot / grounded   solve + place 的输入（h 是离地抬升，实机的物理高度由 CharacterBody2D 负责）
+#   tnow / speed                传给 draw_player，驱动围巾与衣摆的摆动
+#   ticks                       该帧占几个实机物理帧（实机 60fps，preview 是 30fps，故默认 2）
+FPS_GAME = 60
+FPS_BAKE = 30
+TICKS = FPS_GAME // FPS_BAKE
+
+
+def _fr(pose, h=None, rot=0.0, grounded=True, tnow=0.0, speed=0.0, ticks=TICKS):
+    return dict(pose=pose, h=(pose.get("h", 0.0) if h is None else float(h)), rot=float(rot),
+                grounded=grounded, tnow=float(tnow), speed=float(speed), ticks=int(ticks))
+
+
+def _clip_frames(clip):
+    """按 preview 的 player_step 时间轴逐帧采样（t = 1..dur），并复现速度插值（围巾/衣摆幅度）。"""
+    out, sp = [], 0.0
+    for i in range(clip.dur):
+        t = i + 1
+        moving = False
+        for f0, f1, vx in clip.move:
+            if f0 < t <= f1:
+                sp = lerp(sp, min(8.0, vx), 0.6)
+                moving = True
+        if not moving:
+            sp *= 0.8
+        out.append(_fr(clip_pose(clip, t), tnow=t, speed=sp))
+    return out
+
+
+def _key_frames(keys, speed=0.0, ticks=TICKS):
+    """关键帧表 → 逐帧序列（t = 1..末帧，和 clip_pose 同一套插值）。"""
+    c = Clip("tmp", keys[-1][0], keys)
+    return [_fr(clip_pose(c, t), tnow=t, speed=speed, ticks=ticks) for t in range(1, keys[-1][0] + 1)]
+
+
+def _pose_frames(poses, ticks=8, rot=0.0, grounded=True):
+    """直接给定姿势序列（不插值），每帧占 ticks 个物理帧。"""
+    return [_fr(p, tnow=i * ticks // TICKS, rot=rot, grounded=grounded, ticks=ticks)
+            for i, p in enumerate(poses)]
+
+
+def _blend(a, b, u):
+    return {k: a[k] + (b[k] - a[k]) * u for k in a}
+
+
+def _idle_frames(n=26, ticks=4):
+    """待机循环：idle_proc 读的是全局 G.sim，这里让相位在 n 帧内正好走满一整圈 → 首尾无缝。
+
+    相位整圈 = preview 的 52 帧（0.12 rad/帧 ≈ 1.75s）；这里采 26 个样、每样显示 4 个物理帧，
+    呼吸周期与 preview 一致，帧条宽度又能塞进单张纹理。
+    """
+    out, old = [], G.sim
+    try:
+        for i in range(n):
+            G.sim = i * (2 * math.pi / 0.12) / n
+            out.append(_fr(idle_proc(0), tnow=i * ticks // TICKS, ticks=ticks))
+    finally:
+        G.sim = old
+    return out
+
+
+def _run_frames(n=15):
+    """奔跑循环：run_proc 读全局 PL.run_phase；preview 是 0.42/帧（≈15 帧一圈），这里走满 2π。"""
+    out, old = [], PL.run_phase
+    try:
+        for i in range(n):
+            PL.run_phase = 2 * math.pi * i / n
+            out.append(_fr(run_proc(0), tnow=i, speed=6.4))
+    finally:
+        PL.run_phase = old
+    return out
+
+
+def _air_frames(poses, n=6, ticks=3, rot0=-24.0, rotk=8.0):
+    """浮空循环：整体后仰 + 四肢乱舞，首尾无缝。"""
+    return [_fr(poses[i % len(poses)], rot=rot0 + rotk * math.sin(2 * math.pi * i / n), grounded=False,
+                tnow=i * TICKS, ticks=ticks) for i in range(n)]
+
+
+def _getup_frames(n=12):
+    """倒地 → 起身：撑地 → 单膝 → 站起；整体旋转从 90° 回正。"""
+    c = Clip("tmp", n, [(0, DOWN_LIE, "lin"), (3, GETUP_PUSH, "out"), (7, GETUP_KNEE, "io"), (n, BASE, "io")])
+    return [_fr(clip_pose(c, t), rot=90.0 * (1.0 - EASE["io"](t / n)), tnow=t * TICKS, ticks=3)
+            for t in range(1, n + 1)]
+
+
+def _gob_idle_frames(n=42):
+    """哥布林待机：preview 是 s = sin(e.t * 0.15)，n 帧走满一整圈 → 无缝。"""
+    out = []
+    for i in range(n):
+        s = math.sin(2 * math.pi * i / n)
+        out.append(_fr(D(G_IDLE, torso=G_IDLE["torso"] + 3 * s, uaf=G_IDLE["uaf"] + 6 * s), tnow=i))
+    return out
+
+
+def _gob_walk_frames(n=21, lean=7.0, swing=20.0):
+    """哥布林走/跑：preview 的 walk 姿势，相位在 n 帧内走满一整圈。"""
+    out = []
+    for i in range(n):
+        ph = 2 * math.pi * i / n
+        out.append(_fr(D(G_IDLE, torso=G_IDLE["torso"] + lean + 3 * math.sin(ph * 2),
+                         thf=G_IDLE["thf"] + swing * math.sin(ph), shf=G_IDLE["shf"] - 22 * max(0.0, math.cos(ph)),
+                         thb=G_IDLE["thb"] + swing * math.sin(ph + math.pi),
+                         shb=G_IDLE["shb"] - 22 * max(0.0, math.cos(ph + math.pi))), tnow=i))
+    return out
+
+
+def _gob_down_frames():
+    """哥布林倒地：和 preview 一样 rot=90 躺平。"""
+    return _pose_frames([D(G_DOWN, torso=-8, uaf=150), G_DOWN, D(G_DOWN, uaf=168), G_DOWN], ticks=8, rot=90.0)
+
+
+def _gob_getup_frames(n=8):
+    return [_fr(_blend(G_DOWN, G_IDLE, EASE["io"](i / (n - 1))),
+                rot=90.0 * (1 - i / (n - 1)), tnow=i * TICKS, ticks=2) for i in range(n)]
+
+
+def _player_state(name):
+    """玩家状态 → (帧序列, 是否循环)。动作名与 player.gd 的 move_name / St 枚举对齐。"""
+    if name == "idle":
+        return _idle_frames(), True
+    if name == "run":
+        return _run_frames(15), True
+    if name == "jump":
+        return _key_frames([(0, BASE, "lin"), (3, JUMP_TAKEOFF, "io"), (7, JUMP_RISE, "out"),
+                            (11, D(JUMP_RISE, torso=-2, thf=50, shf=-92), "io"), (14, JUMP_FALL, "io"),
+                            (20, D(JUMP_FALL, torso=22, thf=42, shf=-32), "io")]), False
+    if name == "back_dash":
+        return _key_frames([(0, BASE, "lin"), (1, BD_COIL, "io"), (3, BD_LEAN, "out"), (5, BD_HOP, "lin"),
+                            (7, BD_LEAN, "io"), (9, BD_LAND, "out"), (10, BASE, "io")]), False
+    if name == "guard":
+        return _pose_frames([GUARD, GUARD_HI, GUARD, GUARD_LOW], ticks=10), True
+    if name == "hit":
+        return _key_frames([(0, HIT_RECOIL, "lin"), (2, HIT_RECOIL, "lin"), (5, HIT_SAG, "io"), (8, BASE, "io")]), False
+    if name == "air":
+        return _air_frames([AIR_FLAIL, AIR_FLAIL2]), True
+    if name == "down":
+        return _pose_frames([D(DOWN_LIE, uaf=-40, thf=34, torso=22), DOWN_LIE, DOWN_LIE2, DOWN_LIE],
+                            ticks=8, rot=90.0), False
+    if name == "getup":
+        return _getup_frames(), False
+    if name == "attack1":
+        return _clip_frames(CLIPS["A1"]), False
+    if name == "attack2":
+        return _clip_frames(CLIPS["A2"]), False
+    if name == "attack3":
+        return _clip_frames(CLIPS["A3"]), False
+    if name == "upper":
+        return _clip_frames(CLIPS["UPPER"]), False
+    if name == "rage_slash":                      # 狂战士怒斩 ≈ preview 的地裂波（同为蓄力重击）
+        return _clip_frames(CLIPS["GW"]), False
+    if name == "quick_draw":                      # 剑魂拔刀斩
+        return _clip_frames(CLIPS["QD"]), False
+    if name == "thrust":                          # 剑魂连突刺
+        return _clip_frames(CLIPS["THRUST"]), False
+    return None
+
+
+def _monster_state(name):
+    """哥布林状态 → (帧序列, 是否循环)。名字与 monster.gd 的 St 枚举对齐。"""
+    if name == "idle":
+        return _gob_idle_frames(42), True
+    if name == "patrol":
+        return _gob_walk_frames(21, lean=7.0, swing=20.0), True
+    if name == "chase":
+        return _gob_walk_frames(14, lean=15.0, swing=27.0), True
+    if name == "attack":
+        return _key_frames([(0, G_IDLE, "lin"), (6, G_ATK_WIND, "io"), (7, D(G_ATK_WIND, uaf=158), "lin"),
+                            (8, G_ATK_HIT, "out"), (11, G_ATK_FOL, "out"), (13, G_IDLE, "io")]), False
+    if name == "hit":
+        return _key_frames([(0, G_IDLE, "lin"), (3, G_HIT, "out"), (5, G_HIT, "lin"), (9, G_IDLE, "io")]), False
+    if name == "air":
+        return _air_frames([G_AIR, D(G_AIR, uaf=176, thf=30, thb=-30)], rot0=-14.0, rotk=12.0), True
+    if name == "down":
+        return _gob_down_frames(), False
+    if name == "getup":
+        return _gob_getup_frames(), False
+    return None
+
+
+PLAYER_STATE_NAMES = ["idle", "run", "jump", "back_dash", "guard", "hit", "air", "down", "getup",
+                      "attack1", "attack2", "attack3", "upper", "rage_slash", "quick_draw", "thrust"]
+MONSTER_STATE_NAMES = ["idle", "patrol", "chase", "attack", "hit", "air", "down", "getup"]
+
+
+def state_frames(who, name):
+    """实机帧条的唯一入口：返回 (帧序列, 是否循环)；未定义返回 None。"""
+    st = _player_state(name) if who == "player" else _monster_state(name)
+    return st
 
 
 # ---------------------------------------------------------------- world state

@@ -1,6 +1,12 @@
 class_name Player
 extends CharacterBody2D
 ## 玩家：状态机 + 帧表驱动动作 + 职业技能（数据来自 data/*.json）
+##
+## 渲染：骨骼动画帧条贴图（game/art/player/*.png + art/anim.json），
+## 由 tools/bake_game_assets.py 从 tools/render_preview.py 烘焙 —— 美术只在 Python 那一份。
+## 本脚本只按状态取帧、按脚底锚点定位、朝左时水平翻转。
+
+const AnimLib := preload("res://scripts/anim_lib.gd")
 
 signal hp_changed(hp: float, max_hp: float)
 
@@ -49,6 +55,12 @@ var buff_data := {}
 var buff_t := 0.0
 var invincible := 0
 
+# 帧条动画（由 art/anim.json 驱动；取不到就退回占位绘制）
+var anims: Dictionary = {}
+var anim_name := ""
+var anim_frame := 0
+var anim_tick := 0
+
 func _ready() -> void:
 	var shape := CollisionShape2D.new()
 	var rect := RectangleShape2D.new()
@@ -57,6 +69,12 @@ func _ready() -> void:
 	shape.position = Vector2(0, -32)
 	add_child(shape)
 	z_index = 1
+	anims = AnimLib.load_group("player")
+	anim_name = _pick_anim()
+	if anims.is_empty():
+		push_warning("[ART] 玩家帧条不可用，退回占位绘制（先跑 python tools/bake_game_assets.py）")
+	else:
+		print("[ART] player anims=%d" % anims.size())
 
 func setup(data: Dictionary, battle_fx: BattleFX, monster_list: Array) -> void:
 	cfg = data
@@ -86,7 +104,53 @@ func _physics_process(_delta: float) -> void:
 		St.AIR:
 			_air_state()
 	move_and_slide()
+	_anim_step()
 	queue_redraw()
+
+## 每物理帧推进帧条动画（命中停顿期间 _physics_process 提前返回 → 动画也跟着停）
+func _anim_step() -> void:
+	var want := _pick_anim()
+	if want != anim_name:
+		anim_name = want
+		anim_frame = 0
+		anim_tick = 0
+	if not anims.has(anim_name):
+		return
+	var r: Array = AnimLib.advance(anims[anim_name], anim_frame, anim_tick)
+	anim_frame = r[0]
+	anim_tick = r[1]
+
+## 状态 → 帧条名。帧表动作（三段普攻 / 上挑 / 后跳 / 职业技能）用 move_name 区分。
+func _pick_anim() -> String:
+	match state:
+		St.IDLE:
+			return AnimLib.pick(anims, ["idle"], "idle")
+		St.RUN:
+			return AnimLib.pick(anims, ["run"], "idle")
+		St.JUMP:
+			return AnimLib.pick(anims, ["jump"], "idle")
+		St.GUARD:
+			return AnimLib.pick(anims, ["guard"], "idle")
+		St.HIT:
+			return AnimLib.pick(anims, ["hit"], "idle")
+		St.AIR:
+			return AnimLib.pick(anims, ["air"], "idle")
+		St.DOWN:
+			return AnimLib.pick(anims, ["down"], "idle")
+		St.GETUP:
+			return AnimLib.pick(anims, ["getup"], "idle")
+	if state in [St.ATK, St.UPPER, St.SKILL, St.BACK_DASH]:
+		# 专属帧条（attack1/2/3、upper、rage_slash、quick_draw、thrust、back_dash…）优先
+		var by_state := "attack1"
+		match state:
+			St.UPPER:
+				by_state = "upper"
+			St.SKILL:
+				by_state = "attack1"
+			St.BACK_DASH:
+				by_state = "back_dash"
+		return AnimLib.pick(anims, [move_name, by_state, "attack1", "idle"], "idle")
+	return AnimLib.pick(anims, ["idle"], "idle")
 
 func _update_timers() -> void:
 	if invincible > 0:
@@ -144,6 +208,8 @@ func _free_state() -> void:
 		else:
 			velocity.y = GameConfig.moves["jump"]["vy"]
 			state = St.JUMP
+			if fx != null:
+				fx.spawn_dust(position, 5)          # 起跳扬尘
 			print("[M1] jump")
 	elif Input.is_action_just_pressed("attack"):
 		_start_attack()
@@ -162,6 +228,8 @@ func _jump_state() -> void:
 	if is_on_floor():
 		velocity.y = 0
 		state = St.IDLE
+		if fx != null:
+			fx.spawn_dust(position, 6)              # 落地扬尘
 	if Input.is_action_just_pressed("attack") and combo_window > 0:
 		_start_attack()
 
@@ -230,6 +298,27 @@ func _tick_frame_move() -> void:
 			_tick_normal_move()
 	if state in [St.SKILL, St.ATK, St.UPPER]:
 		velocity.y += cfg["gravity"] * (1.0 / 60.0)
+	_swing_fx()
+
+## 刀光：出招期间每帧喂一次「这一刀的进度」，由 battle_fx 累积成蓝白刀光带；
+## 进入收招（recovery）就停手，避免刀光糊在收势上。
+func _swing_fx() -> void:
+	if fx == null:
+		return
+	var span := _swing_span()
+	if span <= 0.0 or phase_t > span:
+		return
+	fx.on_swing(position, facing, clampf(phase_t / span, 0.0, 1.0))
+
+## 这一刀的挥砍时长（物理帧）：普攻/上挑 = windup + active，
+## 蓄力技（拔刀斩）= charge + active，多段技（怒斩/连突刺）= 最后一段的延迟。
+func _swing_span() -> float:
+	if move_data.has("charge"):
+		return float(move_data.get("charge", 0)) + float(move_data.get("active", 0))
+	if move_data.has("hits"):
+		var hits: Array = move_data["hits"]
+		return float(hits[-1].get("delay", 0)) if not hits.is_empty() else 0.0
+	return float(move_data.get("windup", 0)) + float(move_data.get("active", 0))
 
 func _tick_normal_move() -> void:
 	var mv: Dictionary = move_data
@@ -352,6 +441,8 @@ func _air_state() -> void:
 	if is_on_floor():
 		state = St.DOWN
 		st_hit_left = 24
+		if fx != null:
+			fx.spawn_dust(position, 8)              # 被打落地的扬尘
 
 func _try_skill() -> bool:
 	if job == 0:
@@ -417,13 +508,34 @@ func set_job(j: int) -> void:
 	print("[M1] job switch: %d" % job)
 
 func _draw() -> void:
-	# 落地阴影：钉在地面线上，随离地高度收缩（对齐 preview 的椭圆投影）
+	# 落地阴影：钉在地面线上，随离地高度收缩（对齐 preview 的椭圆投影；
+	# preview 世界 640x360 → 实机 1280x720 是 2 倍，所以这里的尺寸也是 preview 值的 2 倍）
 	var gy := ground_y - position.y
-	if gy > -10.0 and gy < 160.0:
-		var sh_w := 40.0 * (1.0 - minf(absf(gy), 140.0) / 280.0)
-		draw_set_transform(Vector2(0.0, gy), 0.0, Vector2(1.0, 0.22))
+	if gy > -10.0 and gy < 320.0:
+		var sh_w := 80.0 * (1.0 - minf(absf(gy), 280.0) / 560.0)
+		draw_set_transform(Vector2(0.0, gy), 0.0, Vector2(1.0, 0.25))
 		draw_circle(Vector2.ZERO, sh_w * 0.5, Color(0.0, 0.0, 0.0, 0.45))
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	# 骨骼动画帧条：position 即脚底，用清单里的锚点反推左上角；朝左时以脚底为轴水平翻转
+	var clip: Dictionary = anims.get(anim_name, {})
+	if clip.is_empty():
+		_draw_placeholder()
+	else:
+		var dst := Rect2(-clip["ax"], -clip["ay"], clip["frame_w"], clip["frame_h"])
+		if facing < 0:
+			draw_set_transform(Vector2.ZERO, 0.0, Vector2(-1.0, 1.0))
+		draw_texture_rect_region(clip["tex"], dst, AnimLib.src_rect(clip, anim_frame))
+		if facing < 0:
+			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	# 无敌闪烁（modulate 对帧条同样生效）
+	if invincible > 0 and invincible % 4 < 2:
+		modulate = Color(1, 1, 1, 0.45)
+	else:
+		modulate = Color.WHITE
+	# 头顶血条已移除：preview 里玩家血量在下角球体（HUD 负责），世界空间不画血条
+
+## 帧条缺失时的兜底：沿用 M1 的 draw_rect 占位小人（保证任何情况下都有东西可看）
+func _draw_placeholder() -> void:
 	# 腿
 	draw_rect(Rect2(-14, -40, 12, 40), Color(0.24, 0.22, 0.3))
 	draw_rect(Rect2(2, -40, 12, 40), Color(0.28, 0.25, 0.34))
@@ -445,11 +557,3 @@ func _draw() -> void:
 	var base := Vector2(facing * 12, -70)
 	var tip := base + Vector2(cos(sword_a) * facing, sin(sword_a)) * 44.0
 	draw_line(base, tip, Color(0.82, 0.9, 0.96), 3.0)
-	# 无敌闪烁
-	if invincible > 0 and invincible % 4 < 2:
-		modulate = Color(1, 1, 1, 0.45)
-	else:
-		modulate = Color.WHITE
-	# 血条
-	draw_rect(Rect2(-18, -104, 36, 5), Color(0.1, 0.1, 0.1))
-	draw_rect(Rect2(-18, -104, 36 * clampf(hp / cfg["max_hp"], 0, 1), 5), Color(0.85, 0.2, 0.2))

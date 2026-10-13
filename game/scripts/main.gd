@@ -10,6 +10,8 @@ const WORLD_W := 4000.0
 const GROUND_Y := 576.0
 ## 出生点 [x, 视觉景深]。景深取自 preview：E1 z=56 → -8，E2 z=80 → +16（相对玩家 z=64）
 const SPAWNS := [[620.0, -8.0], [900.0, 16.0]]
+## 角色绘制层级基准，必须大于 0（背景在 z_index 0），景深在此基础上加减
+const Z_ACTOR := 10
 
 var bm: BattleFX
 var player: Player
@@ -18,6 +20,7 @@ var info_label: Label
 var font: FontFile
 var bg_tex: Texture2D
 var vignette_tex: Texture2D
+var hud: Hud
 
 func _ready() -> void:
 	GameConfig.load_all()
@@ -84,6 +87,8 @@ func _build_world() -> void:
 	bm = BattleFX.new()
 	bm.name = "BattleFX"
 	bm.number_font = font
+	# 特效要画在角色之上：bm 先于 player/monster 入树，默认会被它们盖住
+	bm.z_index = 40
 	add_child(bm)
 	var cam := Camera2D.new()
 	cam.position = Vector2(400, 360)
@@ -100,6 +105,7 @@ func _build_world() -> void:
 	player.name = "Player"
 	player.position = Vector2(300, GROUND_Y)
 	player.ground_y = GROUND_Y
+	player.z_index = Z_ACTOR
 	add_child(player)
 	player.setup(GameConfig.player, bm, monsters)
 
@@ -114,35 +120,81 @@ func _spawn_goblin(x: float, depth_y: float = NAN) -> void:
 	m.depth_y = float(cfg.get("depth_y", 0.0)) if is_nan(depth_y) else depth_y
 	m.ground_y = GROUND_Y
 	add_child(m)
+	# 按景深决定绘制层级：站得靠前（depth_y 大）的压在玩家前面，靠后的被玩家挡住。
+	# 基准 Z_ACTOR 必须 > 0 —— 背景是 main 自己在 z_index 0 画的，
+	# 直接用 depth_y 当 z_index 会让靠后的怪（depth_y 为负）跑到背景背后消失。
+	# 必须在 add_child 之后设，否则被 monster.gd 的 _ready 覆盖。
+	m.z_index = Z_ACTOR + int(round(m.depth_y))
 	m.setup(cfg, player, bm)
 	monsters.append(m)
 
 func _build_hud() -> void:
-	# HUD 必须挂 CanvasLayer：挂 Node2D 下会随相机一起滚动
+	# 正式 HUD：CanvasLayer 由 Hud 内部自建，因此不会随相机滚动
+	hud = Hud.new()
+	hud.name = "Hud"
+	add_child(hud)
+	hud.set_font(font)
+	hud.set_player_info("幽影剑士", 30, 0)
+	# M2 房间系统尚未实现：不设房间时隐藏房间块，避免显示假数据
+	hud.clear_room()
+
+	# 调试层：只留操作提示与状态。正式数值已由 HUD 接管，这里不再重复显示。
 	var layer := CanvasLayer.new()
-	layer.name = "HudLayer"
-	layer.layer = 10
+	layer.name = "DebugLayer"
+	layer.layer = 11
 	add_child(layer)
-	var title := Label.new()
-	title.text = "M1 手感原型 · X普攻 C跳 Z上挑 V格挡 ↓+C后跳 · T切换转职 R重置"
-	title.position = Vector2(16, 8)
-	if font:
-		title.add_theme_font_override("font", font)
-	layer.add_child(title)
 	info_label = Label.new()
-	info_label.position = Vector2(16, 36)
+	info_label.position = Vector2(16, 76)
+	info_label.add_theme_font_size_override("font_size", 13)
+	info_label.modulate = Color(1.0, 1.0, 1.0, 0.72)
 	if font:
 		info_label.add_theme_font_override("font", font)
 	layer.add_child(info_label)
 
 
-## 暗角叠加层：固定屏幕空间，压在 HUD 之上
+## HUD 顶部铭牌的目标：最近的存活怪物
+func _pick_target():
+	var best = null
+	var best_d := INF
+	for m in monsters:
+		if not is_instance_valid(m) or m.dead:
+			continue
+		var d: float = absf(m.position.x - player.position.x)
+		if d < best_d:
+			best_d = d
+			best = m
+	return best
+
+
+## 技能格按键 → HUD 格子索引（与 hud_manifest.json 的 slots 顺序一致）
+const SLOT_INDEX := {"A": 0, "S": 1, "D": 2, "F": 3, "G": 4, "H": 5, "1": 6, "2": 7}
+
+## player.cds（技能 id → 剩余帧数）+ skills.json 的 slot/cd 字段 → HUD 冷却遮罩
+func _hud_cooldowns() -> void:
+	var left := {}
+	var total := {}
+	for sid in player.cds.keys():
+		var sk: Dictionary = GameConfig.skills.get(sid, {})
+		if sk.is_empty():
+			continue
+		var idx: int = SLOT_INDEX.get(str(sk.get("slot", "")), -1)
+		if idx < 0:
+			continue
+		var l := float(player.cds[sid]) / 60.0
+		if l > 0.0:
+			left[idx] = l
+			total[idx] = float(sk.get("cd", 0))
+	hud.set_cooldowns(left, total)
+
+
+## 暗角叠加层：固定屏幕空间。
+## 层号必须低于 HUD —— preview 的合成顺序是 world(含暗角) → hud → 动态 UI。
 func _build_vignette() -> void:
 	if vignette_tex == null:
 		return
 	var layer := CanvasLayer.new()
 	layer.name = "VignetteLayer"
-	layer.layer = 20
+	layer.layer = 1
 	var tr := TextureRect.new()
 	tr.texture = vignette_tex
 	tr.position = Vector2.ZERO
@@ -178,6 +230,12 @@ func _process(_delta: float) -> void:
 	if camera != null and player != null:
 		camera.position.x = clampf(player.position.x, 640, 3360)
 		camera.position.y = 360
+	if hud != null and player != null:
+		hud.set_vitals(player.hp, player.cfg["max_hp"], player.mp, player.cfg["max_mp"])
+		hud.set_combo(player.combo)
+		hud.set_job(player.job)
+		hud.set_target(_pick_target())
+		_hud_cooldowns()
 	if info_label == null:
 		return
 	var job_name: String = ["基础鬼剑士", "狂战士", "剑魂"][player.job]
@@ -191,7 +249,7 @@ func _process(_delta: float) -> void:
 	for m in monsters:
 		if is_instance_valid(m) and not m.dead:
 			alive += 1
-	info_label.text = "职业: %s | 状态: %s | 连段: %d | HP: %.0f/%.0f | 怪物存活: %d\n技能: %s" % \
+	info_label.text = "X普攻 C跳 Z上挑 V格挡 ↓+C后跳 T转职 R重置\n职业: %s | 状态: %s | 连段: %d | HP: %.0f/%.0f | 怪物存活: %d | 技能: %s" % \
 		[job_name, st_name, player.combo, player.hp, player.cfg["max_hp"], alive, skills]
 
 func _draw() -> void:
