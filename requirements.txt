@@ -1,0 +1,15 @@
+# Python 工具链依赖（tools/ 下的美术管线脚本）
+# 安装：python -m pip install -r requirements.txt
+# 已验证版本：Python 3.12.14 / Pillow 12.3.0 / numpy 2.3.5 / scipy 1.18.1 / imageio 2.38.0 / imageio-ffmpeg 0.6.0
+
+numpy>=2.0
+Pillow>=10.0
+
+# make_anim.py：绿幕抠图后的连通域切帧
+scipy>=1.11
+
+# render_preview.py：GIF 输出
+imageio>=2.31
+
+# render_preview.py：MP4 输出（自带 ffmpeg 二进制，系统无须另装 ffmpeg）
+imageio-ffmpeg>=0.4.9
