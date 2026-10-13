@@ -135,7 +135,9 @@ func _build_hud() -> void:
 	add_child(hud)
 	hud.set_font(font)
 	hud.set_player_info("幽影剑士", 30, 0)
-	# M2 房间系统尚未实现：不设房间时隐藏房间块，避免显示假数据
+	# M2 房间系统尚未实现：不设房间时隐藏房间块，避免显示假数据。
+	# 接口已就绪并验证过渲染（set_room(idx, total, difficulty) → 「第 N / M 间 · 难度：X」），
+	# M2 落地后把这里换成 hud.set_room(...) 即可。
 	hud.clear_room()
 
 	# 调试层：只留操作提示与状态。正式数值已由 HUD 接管，这里不再重复显示。
