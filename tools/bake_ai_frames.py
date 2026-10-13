@@ -41,6 +41,7 @@ SPEC_PATH = os.path.join(ROOT, "ai_anim_spec.json")
 OUT_ROOT = os.path.join(PROJ, "game", "art")
 MANIFEST = os.path.join(OUT_ROOT, "anim.json")
 FPS = 60                     # 实机物理帧率，durations 以物理帧为单位
+PAD_TARGET = 12              # 帧条四周留白（**实机像素**；会按归一化倍率折算回源图空间）
 
 
 # ------------------------------------------------------------------ 抠背景
@@ -92,13 +93,21 @@ def bake_action(sheet_path, rows, cols, target_body_h, pixel, posterize, key_mod
     body_h = float(np.median([f["hgt"] for f in frames]))
     print(f"    切出 {len(frames)} 帧，body 高度中位数={body_h:.0f}px")
 
-    # 统一画布：以 hip_x / foot 为锚点
-    pad = 12
+    # 归一化到实机角色尺寸（AI 帧图通常远大于游戏尺度）
+    scale = target_body_h / body_h if body_h > 0 else 1.0
+
+    # 统一画布：以 hip_x / foot 为锚点。
+    # 两个坑：
+    #   1) 必须同时算脚底**以下**的 `down` —— 刀尖/飘带可能越过脚底，
+    #      只按 `up` 定高会把它们裁掉（foot 来自腐蚀后的身体掩码，细刀身不算在里面）
+    #   2) pad 必须折算到源图空间，否则源图越大、折算到实机的留白越小（4K 帧图会几乎没留白）
+    pad = max(2, int(round(PAD_TARGET / scale))) if scale > 0 else 12
     left = max(f["hip_x"] - np.nonzero(f["mask"])[1].min() for f in frames)
     right = max(np.nonzero(f["mask"])[1].max() - f["hip_x"] for f in frames)
     up = max(f["foot"] - np.nonzero(f["mask"])[0].min() for f in frames)
+    down = max(max(0.0, np.nonzero(f["mask"])[0].max() - f["foot"]) for f in frames)
     cw = int(left + right) + pad * 2
-    chh = int(up) + pad * 2
+    chh = int(up + down) + pad * 2
     ax, ay = int(left) + pad, int(up) + pad
 
     aligned = []
@@ -108,15 +117,13 @@ def bake_action(sheet_path, rows, cols, target_body_h, pixel, posterize, key_mod
                                (int(round(ax - f["hip_x"])), int(round(ay - f["foot"]))))
         aligned.append(canvas)
 
-    # 归一化到实机角色尺寸（AI 帧图通常远大于游戏尺度）
-    scale = target_body_h / body_h if body_h > 0 else 1.0
     if abs(scale - 1.0) > 0.01:
         cw = max(2, int(round(cw * scale)))
         chh = max(2, int(round(chh * scale)))
         ax = int(round(ax * scale))
         ay = int(round(ay * scale))
         aligned = [a.resize((cw, chh), Image.LANCZOS) for a in aligned]
-        print(f"    归一化 x{scale:.3f} → 画布 {cw}x{chh}，身高≈{target_body_h}px")
+        print(f"    归一化 x{scale:.3f} → 画布 {cw}x{chh}，身高≈{target_body_h}px，留白≈{PAD_TARGET}px")
 
     # 微弱像素化：缩到 1/pixel → 轻度色阶量化 → alpha 二值化 → 最近邻放大
     step = 256 // posterize
@@ -127,6 +134,30 @@ def bake_action(sheet_path, rows, cols, target_body_h, pixel, posterize, key_mod
         rgb_q = (arr[..., :3] // step * step + step // 2).clip(0, 255).astype(np.uint8)
         rgba = np.dstack([rgb_q, np.where(arr[..., 3] > 110, 255, 0).astype(np.uint8)])
         pixel_frames.append(Image.fromarray(rgba, "RGBA").resize((cw, chh), Image.NEAREST))
+
+    # 自检：任何一帧贴到画布边缘 = 画布算小了（刀尖/飘带/发梢被裁）。
+    # 这个坑很隐蔽（脚底以下的刀尖曾整段消失），所以每次都报出来，别等实机才发现。
+    clipped = []
+    for i, f in enumerate(pixel_frames):
+        arr = np.array(f)
+        ys, xs = np.nonzero(arr[..., 3] > 20)
+        if len(xs) == 0:
+            clipped.append(f"{i}:空帧")
+            continue
+        touch = []
+        if xs.min() <= 0:
+            touch.append("左")
+        if xs.max() >= cw - 1:
+            touch.append("右")
+        if ys.min() <= 0:
+            touch.append("上")
+        if ys.max() >= chh - 1:
+            touch.append("下")
+        if touch:
+            clipped.append(f"{i}:{'+'.join(touch)}")
+    if clipped:
+        print(f"    ⚠ 有 {len(clipped)} 帧贴到画布边缘，可能被裁：{', '.join(clipped)}")
+        print("      → 检查帧图是否角色越出网格，或调大 PAD_TARGET / 调小 target_body_h")
 
     strip = Image.new("RGBA", (cw * len(pixel_frames), chh), (0, 0, 0, 0))
     for i, f in enumerate(pixel_frames):

@@ -97,8 +97,10 @@ def slot_pos(i):
     return (slot_x(i), 664)
 
 
-# 职业 → A/S 两格的技能图标（preview 里没有职业图标，这里用它的 make_icon 变体映射，
-# 保证仍然是"唯一美术源生成"，不是 GDScript 现画）
+# 职业 → A/S 两格的技能图标。preview 里没有职业图标，这里用它的 make_icon 变体映射，
+# 好处是 HUD chrome 不依赖任何美术源、烘焙期一次画好，不用 GDScript 现画。
+# 注意：HUD 是**程序化占位**（见 docs/design/11_实机表现层管线.md），
+# 正式 UI 美术仍需按定稿风格另行产出后替换。
 JOB_SLOT_ICONS = {
     0: {0: "up", 1: "wave"},
     1: {0: "aura", 1: "wave"},      # 狂战士：A 血怒 / S 怒斩
