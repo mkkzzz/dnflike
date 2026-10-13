@@ -1,0 +1,604 @@
+{
+  "version": 2,
+  "fps": 60,
+  "generator": "tools/bake_demo_art.py",
+  "art_source": "built-in image_gen transparent keyframe atlases",
+  "note": "Right-facing strips. Duration units: 60 Hz physics ticks. Same scale/canvas/foot anchor for every action within a character.",
+  "groups": {
+    "player": {
+      "idle": {
+        "file": "assets/demo/player/idle.png",
+        "frames": 2,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          24,
+          24
+        ],
+        "fps": 12,
+        "loop": true,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          0,
+          1
+        ],
+        "pose_note": "two distinct breathing keyframes"
+      },
+      "run": {
+        "file": "assets/demo/player/run.png",
+        "frames": 4,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          6,
+          5,
+          6,
+          5
+        ],
+        "fps": 12,
+        "loop": true,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "pose_note": "four distinct stride keyframes"
+      },
+      "attack1": {
+        "file": "assets/demo/player/attack1.png",
+        "frames": 3,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          6,
+          4,
+          10
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          8,
+          9,
+          1
+        ],
+        "pose_note": "horizontal cut and recovery"
+      },
+      "attack2": {
+        "file": "assets/demo/player/attack2.png",
+        "frames": 4,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          5,
+          4,
+          6,
+          6
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          8,
+          10,
+          2,
+          1
+        ],
+        "pose_note": "rising cut and guarded recovery"
+      },
+      "attack3": {
+        "file": "assets/demo/player/attack3.png",
+        "frames": 4,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          8,
+          5,
+          8,
+          10
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          8,
+          11,
+          9,
+          1
+        ],
+        "pose_note": "heavy cut and low follow-through"
+      },
+      "upper": {
+        "file": "assets/demo/player/upper.png",
+        "frames": 4,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          5,
+          3,
+          6,
+          6
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          3,
+          10,
+          12,
+          1
+        ],
+        "pose_note": "crouch, rising cut, airborne, recovery"
+      },
+      "jump": {
+        "file": "assets/demo/player/jump.png",
+        "frames": 2,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          5,
+          12
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          3,
+          12
+        ],
+        "pose_note": "takeoff crouch and airborne keyframe"
+      },
+      "air": {
+        "file": "assets/demo/player/air.png",
+        "frames": 1,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          12
+        ],
+        "fps": 12,
+        "loop": true,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          12
+        ],
+        "pose_note": "held airborne pose; motion provided by game physics"
+      },
+      "back_dash": {
+        "file": "assets/demo/player/back_dash.png",
+        "frames": 4,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          3,
+          8,
+          3,
+          4
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          3,
+          12,
+          3,
+          1
+        ],
+        "pose_note": "reuse crouch and airborne poses; game provides travel"
+      },
+      "guard": {
+        "file": "assets/demo/player/guard.png",
+        "frames": 1,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          12
+        ],
+        "fps": 12,
+        "loop": true,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          2
+        ],
+        "pose_note": "held guard pose"
+      },
+      "hit": {
+        "file": "assets/demo/player/hit.png",
+        "frames": 3,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          7,
+          4,
+          5
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          13,
+          3,
+          1
+        ],
+        "pose_note": "recoil, regain balance, recovery"
+      },
+      "down": {
+        "file": "assets/demo/player/down.png",
+        "frames": 2,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          5,
+          24
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          13,
+          14
+        ],
+        "pose_note": "recoil and grounded knocked-down keyframe"
+      },
+      "getup": {
+        "file": "assets/demo/player/getup.png",
+        "frames": 4,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          4,
+          7,
+          4,
+          5
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          14,
+          15,
+          3,
+          1
+        ],
+        "pose_note": "down, kneel, crouch, stand"
+      },
+      "blood_rage": {
+        "file": "assets/demo/player/blood_rage.png",
+        "frames": 4,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          6,
+          4,
+          4,
+          6
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          2,
+          8,
+          2,
+          1
+        ],
+        "pose_note": "core guard/windup reuse; buff aura supplied by game"
+      },
+      "quick_draw": {
+        "file": "assets/demo/player/quick_draw.png",
+        "frames": 4,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          18,
+          6,
+          7,
+          7
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          8,
+          9,
+          11,
+          1
+        ],
+        "pose_note": "windup and horizontal-cut reuse; wide FX supplied by game"
+      },
+      "rage_slash": {
+        "file": "assets/demo/player/rage_slash.png",
+        "frames": 5,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          6,
+          3,
+          5,
+          3,
+          21
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          8,
+          10,
+          8,
+          11,
+          1
+        ],
+        "pose_note": "two distinct cuts; reused windup/recovery"
+      },
+      "thrust": {
+        "file": "assets/demo/player/thrust.png",
+        "frames": 7,
+        "frame_w": 296,
+        "frame_h": 238,
+        "ax": 128,
+        "ay": 221,
+        "durations": [
+          4,
+          2,
+          4,
+          2,
+          4,
+          2,
+          16
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/player_demo_v2.png",
+        "source_cells": [
+          8,
+          9,
+          8,
+          9,
+          8,
+          9,
+          1
+        ],
+        "pose_note": "three pulses reuse horizontal extension; dedicated thrust poses deferred"
+      }
+    },
+    "monster": {
+      "idle": {
+        "file": "assets/demo/monster/idle.png",
+        "frames": 2,
+        "frame_w": 239,
+        "frame_h": 222,
+        "ax": 114,
+        "ay": 201,
+        "durations": [
+          25,
+          25
+        ],
+        "fps": 12,
+        "loop": true,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/monster_demo_v2.png",
+        "source_cells": [
+          0,
+          1
+        ],
+        "pose_note": "two distinct ready keyframes"
+      },
+      "patrol": {
+        "file": "assets/demo/monster/patrol.png",
+        "frames": 4,
+        "frame_w": 239,
+        "frame_h": 222,
+        "ax": 114,
+        "ay": 201,
+        "durations": [
+          9,
+          7,
+          9,
+          7
+        ],
+        "fps": 12,
+        "loop": true,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/monster_demo_v2.png",
+        "source_cells": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "pose_note": "four stride poses; slower playback"
+      },
+      "chase": {
+        "file": "assets/demo/monster/chase.png",
+        "frames": 4,
+        "frame_w": 239,
+        "frame_h": 222,
+        "ax": 114,
+        "ay": 201,
+        "durations": [
+          6,
+          5,
+          6,
+          5
+        ],
+        "fps": 12,
+        "loop": true,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/monster_demo_v2.png",
+        "source_cells": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "pose_note": "four distinct stride keyframes"
+      },
+      "attack": {
+        "file": "assets/demo/monster/attack.png",
+        "frames": 5,
+        "frame_w": 239,
+        "frame_h": 222,
+        "ax": 114,
+        "ay": 201,
+        "durations": [
+          6,
+          6,
+          4,
+          6,
+          4
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/monster_demo_v2.png",
+        "source_cells": [
+          8,
+          9,
+          10,
+          11,
+          0
+        ],
+        "pose_note": "windup, overhead, smash, follow-through, recover"
+      },
+      "hit": {
+        "file": "assets/demo/monster/hit.png",
+        "frames": 3,
+        "frame_w": 239,
+        "frame_h": 222,
+        "ax": 114,
+        "ay": 201,
+        "durations": [
+          7,
+          3,
+          4
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/monster_demo_v2.png",
+        "source_cells": [
+          12,
+          3,
+          0
+        ],
+        "pose_note": "recoil and recovery"
+      },
+      "air": {
+        "file": "assets/demo/monster/air.png",
+        "frames": 1,
+        "frame_w": 239,
+        "frame_h": 222,
+        "ax": 114,
+        "ay": 201,
+        "durations": [
+          10
+        ],
+        "fps": 12,
+        "loop": true,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/monster_demo_v2.png",
+        "source_cells": [
+          13
+        ],
+        "pose_note": "held airborne knockback; motion supplied by physics"
+      },
+      "down": {
+        "file": "assets/demo/monster/down.png",
+        "frames": 2,
+        "frame_w": 239,
+        "frame_h": 222,
+        "ax": 114,
+        "ay": 201,
+        "durations": [
+          5,
+          30
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/monster_demo_v2.png",
+        "source_cells": [
+          13,
+          14
+        ],
+        "pose_note": "fall and grounded knocked-down keyframe"
+      },
+      "getup": {
+        "file": "assets/demo/monster/getup.png",
+        "frames": 4,
+        "frame_w": 239,
+        "frame_h": 222,
+        "ax": 114,
+        "ay": 201,
+        "durations": [
+          3,
+          4,
+          3,
+          2
+        ],
+        "fps": 12,
+        "loop": false,
+        "source": "ai_keyframes",
+        "atlas": "art/sheets/monster_demo_v2.png",
+        "source_cells": [
+          14,
+          15,
+          3,
+          0
+        ],
+        "pose_note": "down, kneel, crouch, stand"
+      }
+    }
+  }
+}

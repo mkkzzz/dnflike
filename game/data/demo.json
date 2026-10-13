@@ -1,0 +1,18 @@
+{
+  "player_x": 220,
+  "wave_delay": 2.0,
+  "waves": [
+    {"name": "守门者", "spawns": [{"x": 770, "depth": -14}, {"x": 1020, "depth": 12}]},
+    {"name": "回廊围攻", "spawns": [{"x": 650, "depth": 16}, {"x": 870, "depth": -28}, {"x": 1080, "depth": 2}]},
+    {
+      "name": "最后的阻击",
+      "spawns": [
+        {"x": 660, "depth": -12}, {"x": 930, "depth": 18},
+        {"x": 1110, "depth": 0, "overrides": {
+          "name": "哥布林队长", "hp": 380, "attack": 45, "move_speed": 140, "chase_speed": 170,
+          "attack_move": {"windup": 24, "active": 5, "recovery": 26, "range": 85, "damage": 45}
+        }}
+      ]
+    }
+  ]
+}

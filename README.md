@@ -1,52 +1,69 @@
-# dnf
+# 幽暗回廊 · DNF-like
 
-怀旧风横版动作 RPG（单机）。原创美术/音频，还原经典横版动作网游的手感与系统。
+原创手绘风单机横版动作 RPG，Godot 4.7.2。当前交付可玩的**战斗 demo v2**：选择鬼剑士 / 狂战士 / 剑魂，突破三波哥布林围攻，进入胜负结算并重玩。
 
-## 目录结构
+## 开始试玩
 
-```
-dnf/
-├── docs/        # 策划案、设计案、工作记录（全部工作内容落盘于此并随 git 提交）
-├── art/         # 正式美术资源
-│   ├── characters/     # 角色标杆图、头像
-│   └── environments/   # 场景背景
-├── audio/       # 音频资源（音效、BGM）
-├── game/        # Godot 4.7 工程
-│   ├── project.godot
-│   ├── art/                # 烘焙贴图（不入 git，由 bake_game_assets.py 生成）
-│   ├── scenes/Main.tscn
-│   └── scripts/
-├── temp/        # 临时预览产物（不入 git，见 .gitignore）
-├── tools/       # 自研工具脚本
-│   ├── setup_godot.ps1      # 新机器一键安装 Godot
-│   ├── bake_ai_frames.py    # 【正式】AI 动作帧图 → 角色/怪物帧条
-│   ├── ai_anim_spec.json    # AI 出图规格 + 待定的尺度/手感参数
-│   ├── make_anim.py         # 帧图处理算法（绿幕抠图/切帧/脚底对齐/像素化）
-│   ├── bake_game_assets.py  # 【占位】程序化几何 → 帧条 + 背景 + 暗角
-│   ├── bake_hud.py          # 【占位】程序化 HUD 静态层
-│   └── render_preview.py    # 手感验证预览渲染器（**不是美术源**，见 11 文档）
-└── requirements.txt       # Python 工具链依赖
+```powershell
+# 本机已有 Godot 时直接运行
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_demo.ps1
+
+# 新机器先安装引擎，再按上一步启动
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/setup_godot.ps1
 ```
 
-## 运行
+也可以用 Godot 打开 `game/project.godot` 后按 F6/F5 运行主场景。自备引擎可向启动脚本传入 `-GodotPath "C:\path\godot.exe"`。正式 demo 的贴图已提交到 `game/assets/demo/`，首次拉取**无需安装 Python 或重新烘焙美术**；启动脚本会完成 Godot 导入。
 
-- 本机：`tools/godot/Godot_v4.7.2-stable_win64.exe --path game`
-- 新机器：先跑一次 `tools/setup_godot.ps1`，再按上一步启动；或手动下载同版本 Godot 后打开 `game/project.godot`
-  - 若被系统执行策略拦截（`禁止运行脚本`），用 `pwsh -ExecutionPolicy Bypass -File tools/setup_godot.ps1`
-- Python 工具链（仅 `tools/` 下的预览/切帧/烘焙脚本需要）：`python -m pip install -r requirements.txt`
-- 美术烘焙（产物 `game/art/` 不入库，换机器/改美术后重跑）：
-  - **正式**：`python tools/bake_ai_frames.py` —— AI 动作帧图 → 角色/怪物帧条（规格见 `tools/ai_anim_spec.json`）
-  - **占位**：`python tools/bake_game_assets.py` —— 程序化几何图形当占位；**不会覆盖**已有 AI 帧条
-  - `python tools/bake_hud.py` —— HUD 静态层
-- 美术方向：定稿标杆 = `art/characters/hero_cool.png`（黑皮风衣+血红内衬+红挑染）。
-  `benchmark_board.png` / `hero_idle.png` / `hero_attack.png` 是**已弃用旧方案**，勿参照。
-  详见 [docs/design/10_美术与音频管线.md](docs/design/10_美术与音频管线.md)
-- 操作（M1 手感原型）：←/→ 移动（双击奔跑），C/空格 跳，X 普攻（三段连招），Z 上挑，V 格挡，↓+C 后跳；A~H 转职技能（T 切换转职调试：基础/狂战士/剑魂，R 重置战斗）
-- 自动化验收：`tools/godot/Godot_v4.7.2-stable_win64_console.exe --headless --fixed-fps 60 --path game --quit-after 800 -- --test`（日志 grep `[M1]` 判定）
-- 数据驱动：动作帧表/技能/怪物/玩家属性在 `game/data/*.json`，改完即生效
+## 操作
 
-## 协作约定
+| 按键 | 动作 |
+|---|---|
+| ← / → | 行走；双击同方向奔跑 |
+| Shift + ← / → | 按住奔跑 |
+| ↑ / ↓ | 调整地面纵深，攻击需要对齐敌人所在纵深 |
+| X | 三段连击，允许提前输入缓冲 |
+| Z | 上挑；命中后按 C 起跳，空中 X 追击 |
+| C / 空格 | 跳跃 |
+| ↓ + C | 后跳，起手有短暂无敌 |
+| V | 按住格挡，减伤 80% |
+| A / S | 狂战士：血怒 / 怒斩；剑魂：拔刀斩 / 连突刺 |
+| 1 / 2 | 生命 / 魔力药水，共享 5 秒冷却 |
+| Esc / F1 | 暂停 / 操作说明 |
+| R / T | 重玩 / 切换职业试玩 |
 
-- 所有策划/设计/会议结论必须写入 `docs/` 并随 git 提交。
-- `temp/`、`tools/godot/`、`game/.godot/` 不入库；有价值的资源归档到 `art/` 后提交。
-- 每次会话结束前：更新文档 + git 提交。
+M1 双转职各提供两个代表技能，D/F/G/H 尚未开放。最后一波含攻击前摇更明显、血量更高的哥布林队长。
+
+## 验证与美术重建
+
+```powershell
+# 46 项自动断言：连招、攻速、浮空、技能、受身、死亡、暂停、重玩和完整通关
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_demo.ps1 -Test
+
+# 真实渲染截图：标题、场景、技能命中 → temp/demo/
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_demo.ps1 -Capture
+
+# 同时在真实渲染器中跑回归并保存真实三波通关结算截图
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_demo.ps1 -Test -Capture
+
+# 仅修改美术源时需要 Python 工具链
+python -m pip install -r requirements.txt
+python tools/bake_demo_art.py
+python tools/bake_demo_art.py --validate-only
+python tools/bake_demo_environment.py
+```
+
+回归测试会静音并验证合成 PCM 数据，普通试玩和单独截图模式保留音效。`-Test` 检查引擎错误、完成标记与退出码，失败会返回错误。
+
+角色使用内置 imagegen 制作的两张透明 atlas：32 个核心姿势，25 个动作条、83 个输出帧。部分技能和过渡动作有限复用核心姿势，当前仍是关键帧 demo，后续需要专用动作和中间帧。源图、完整提示词、映射、核验图见 [art/sheets/README.md](art/sheets/README.md)。
+
+## 工程内容
+
+- `game/scripts/`：战斗、AI、界面、特效、程序合成音效与回归测试。
+- `game/data/`：动作帧表、技能、属性、怪物与三波遭遇配置。
+- `game/assets/demo/`：入库的正式 demo 帧条、背景、头像与动画清单。
+- `art/characters/`：已确认角色参照；主角唯一造型标杆为 `hero_cool.png`。
+- `art/sheets/`：新动作源图、提示词、几何报告、动作预览。
+- `docs/design/`：既有设计；本轮实现和验收见 [战斗 demo v2 记录](docs/2026-10-14_战斗Demo优化与验收.md)。
+- `tools/`：安装、启动、烘焙与旧预览工具。
+
+旧 `game/art/` 继续作为被忽略的占位烘焙目录，demo 不再依赖它。`render_preview.py` 是历史手感验证器，不能用它的旧造型覆盖正式美术。`temp/`、`tools/godot/`、`game/.godot/` 不入库；设计结论与正式资源随 Git 提交。

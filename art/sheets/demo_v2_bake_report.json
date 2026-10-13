@@ -1,0 +1,765 @@
+{
+  "generator": "tools/bake_demo_art.py",
+  "groups": {
+    "player": {
+      "source_atlas": "art/sheets/player_demo_v2.png",
+      "scale": 0.6188925081433225,
+      "target_body_h": 190,
+      "standing_body_h_source": 307,
+      "frame_w": 296,
+      "frame_h": 238,
+      "ax": 128,
+      "ay": 221,
+      "keyframes": [
+        {
+          "grid_cell": 0,
+          "row": 0,
+          "col": 0,
+          "source_bbox": [
+            35,
+            11,
+            310,
+            324
+          ],
+          "source_alpha_area": 31877,
+          "pose": "ready",
+          "source_floor_anchor": [
+            145,
+            320
+          ],
+          "baked_bbox": [
+            60,
+            30,
+            230,
+            224
+          ]
+        },
+        {
+          "grid_cell": 1,
+          "row": 0,
+          "col": 1,
+          "source_bbox": [
+            346,
+            12,
+            568,
+            324
+          ],
+          "source_alpha_area": 33118,
+          "pose": "ready_breathe",
+          "source_floor_anchor": [
+            480,
+            320
+          ],
+          "baked_bbox": [
+            45,
+            30,
+            182,
+            223
+          ]
+        },
+        {
+          "grid_cell": 2,
+          "row": 0,
+          "col": 2,
+          "source_bbox": [
+            643,
+            20,
+            912,
+            324
+          ],
+          "source_alpha_area": 32896,
+          "pose": "guard",
+          "source_floor_anchor": [
+            779,
+            320
+          ],
+          "baked_bbox": [
+            44,
+            35,
+            210,
+            223
+          ]
+        },
+        {
+          "grid_cell": 3,
+          "row": 0,
+          "col": 3,
+          "source_bbox": [
+            940,
+            155,
+            1223,
+            314
+          ],
+          "source_alpha_area": 25393,
+          "pose": "crouch",
+          "source_floor_anchor": [
+            1122,
+            311
+          ],
+          "baked_bbox": [
+            15,
+            124,
+            190,
+            222
+          ]
+        },
+        {
+          "grid_cell": 4,
+          "row": 1,
+          "col": 0,
+          "source_bbox": [
+            9,
+            342,
+            340,
+            604
+          ],
+          "source_alpha_area": 34286,
+          "pose": "run_contact_a",
+          "source_floor_anchor": [
+            190,
+            600
+          ],
+          "baked_bbox": [
+            16,
+            61,
+            221,
+            223
+          ]
+        },
+        {
+          "grid_cell": 5,
+          "row": 1,
+          "col": 1,
+          "source_bbox": [
+            323,
+            346,
+            591,
+            612
+          ],
+          "source_alpha_area": 26115,
+          "pose": "run_pass_a",
+          "source_floor_anchor": [
+            490,
+            609
+          ],
+          "baked_bbox": [
+            25,
+            58,
+            191,
+            223
+          ]
+        },
+        {
+          "grid_cell": 6,
+          "row": 1,
+          "col": 2,
+          "source_bbox": [
+            633,
+            341,
+            964,
+            600
+          ],
+          "source_alpha_area": 29423,
+          "pose": "run_contact_b",
+          "source_floor_anchor": [
+            810,
+            598
+          ],
+          "baked_bbox": [
+            18,
+            62,
+            223,
+            222
+          ]
+        },
+        {
+          "grid_cell": 7,
+          "row": 1,
+          "col": 3,
+          "source_bbox": [
+            974,
+            344,
+            1227,
+            613
+          ],
+          "source_alpha_area": 26905,
+          "pose": "run_pass_b",
+          "source_floor_anchor": [
+            1127,
+            610
+          ],
+          "baked_bbox": [
+            33,
+            56,
+            190,
+            222
+          ]
+        },
+        {
+          "grid_cell": 8,
+          "row": 2,
+          "col": 0,
+          "source_bbox": [
+            11,
+            654,
+            310,
+            928
+          ],
+          "source_alpha_area": 33380,
+          "pose": "attack_windup",
+          "source_floor_anchor": [
+            169,
+            925
+          ],
+          "baked_bbox": [
+            30,
+            53,
+            215,
+            223
+          ]
+        },
+        {
+          "grid_cell": 9,
+          "row": 2,
+          "col": 1,
+          "source_bbox": [
+            290,
+            711,
+            723,
+            920
+          ],
+          "source_alpha_area": 28808,
+          "pose": "horizontal_slash",
+          "source_floor_anchor": [
+            475,
+            916
+          ],
+          "baked_bbox": [
+            14,
+            94,
+            282,
+            223
+          ]
+        },
+        {
+          "grid_cell": 10,
+          "row": 2,
+          "col": 2,
+          "source_bbox": [
+            649,
+            598,
+            990,
+            935
+          ],
+          "source_alpha_area": 29506,
+          "pose": "rising_cut",
+          "source_floor_anchor": [
+            773,
+            932
+          ],
+          "baked_bbox": [
+            51,
+            14,
+            262,
+            223
+          ]
+        },
+        {
+          "grid_cell": 11,
+          "row": 2,
+          "col": 3,
+          "source_bbox": [
+            952,
+            633,
+            1243,
+            936
+          ],
+          "source_alpha_area": 32060,
+          "pose": "heavy_cut",
+          "source_floor_anchor": [
+            1110,
+            932
+          ],
+          "baked_bbox": [
+            30,
+            36,
+            210,
+            224
+          ]
+        },
+        {
+          "grid_cell": 12,
+          "row": 3,
+          "col": 0,
+          "source_bbox": [
+            12,
+            939,
+            286,
+            1216
+          ],
+          "source_alpha_area": 27822,
+          "pose": "airborne",
+          "source_floor_anchor": [
+            145,
+            1212
+          ],
+          "baked_bbox": [
+            46,
+            52,
+            216,
+            223
+          ]
+        },
+        {
+          "grid_cell": 13,
+          "row": 3,
+          "col": 1,
+          "source_bbox": [
+            355,
+            948,
+            617,
+            1226
+          ],
+          "source_alpha_area": 34617,
+          "pose": "hit_recoil",
+          "source_floor_anchor": [
+            454,
+            1223
+          ],
+          "baked_bbox": [
+            67,
+            51,
+            229,
+            223
+          ]
+        },
+        {
+          "grid_cell": 14,
+          "row": 3,
+          "col": 2,
+          "source_bbox": [
+            632,
+            1114,
+            947,
+            1230
+          ],
+          "source_alpha_area": 19764,
+          "pose": "knocked_down",
+          "source_floor_anchor": [
+            790,
+            1226
+          ],
+          "baked_bbox": [
+            30,
+            152,
+            225,
+            224
+          ]
+        },
+        {
+          "grid_cell": 15,
+          "row": 3,
+          "col": 3,
+          "source_bbox": [
+            957,
+            1006,
+            1241,
+            1217
+          ],
+          "source_alpha_area": 32383,
+          "pose": "kneeling_getup",
+          "source_floor_anchor": [
+            1119,
+            1213
+          ],
+          "baked_bbox": [
+            28,
+            93,
+            204,
+            224
+          ]
+        }
+      ]
+    },
+    "monster": {
+      "source_atlas": "art/sheets/monster_demo_v2.png",
+      "scale": 0.5387755102040817,
+      "target_body_h": 132,
+      "standing_body_h_source": 245,
+      "frame_w": 239,
+      "frame_h": 222,
+      "ax": 114,
+      "ay": 201,
+      "keyframes": [
+        {
+          "grid_cell": 0,
+          "row": 0,
+          "col": 0,
+          "source_bbox": [
+            37,
+            45,
+            303,
+            324
+          ],
+          "source_alpha_area": 37988,
+          "pose": "ready",
+          "source_floor_anchor": [
+            190,
+            320
+          ],
+          "baked_bbox": [
+            32,
+            53,
+            175,
+            203
+          ]
+        },
+        {
+          "grid_cell": 1,
+          "row": 0,
+          "col": 1,
+          "source_bbox": [
+            359,
+            64,
+            616,
+            324
+          ],
+          "source_alpha_area": 36344,
+          "pose": "ready_breathe",
+          "source_floor_anchor": [
+            510,
+            320
+          ],
+          "baked_bbox": [
+            33,
+            63,
+            171,
+            203
+          ]
+        },
+        {
+          "grid_cell": 2,
+          "row": 0,
+          "col": 2,
+          "source_bbox": [
+            671,
+            63,
+            898,
+            324
+          ],
+          "source_alpha_area": 33811,
+          "pose": "alert",
+          "source_floor_anchor": [
+            795,
+            320
+          ],
+          "baked_bbox": [
+            47,
+            63,
+            169,
+            204
+          ]
+        },
+        {
+          "grid_cell": 3,
+          "row": 0,
+          "col": 3,
+          "source_bbox": [
+            957,
+            113,
+            1223,
+            324
+          ],
+          "source_alpha_area": 30699,
+          "pose": "crouch",
+          "source_floor_anchor": [
+            1110,
+            320
+          ],
+          "baked_bbox": [
+            32,
+            89,
+            175,
+            203
+          ]
+        },
+        {
+          "grid_cell": 4,
+          "row": 1,
+          "col": 0,
+          "source_bbox": [
+            27,
+            353,
+            324,
+            612
+          ],
+          "source_alpha_area": 35064,
+          "pose": "run_contact_a",
+          "source_floor_anchor": [
+            213,
+            608
+          ],
+          "baked_bbox": [
+            14,
+            65,
+            174,
+            204
+          ]
+        },
+        {
+          "grid_cell": 5,
+          "row": 1,
+          "col": 1,
+          "source_bbox": [
+            326,
+            347,
+            618,
+            595
+          ],
+          "source_alpha_area": 30911,
+          "pose": "run_pass_a",
+          "source_floor_anchor": [
+            509,
+            590
+          ],
+          "baked_bbox": [
+            15,
+            70,
+            172,
+            204
+          ]
+        },
+        {
+          "grid_cell": 6,
+          "row": 1,
+          "col": 2,
+          "source_bbox": [
+            629,
+            357,
+            920,
+            615
+          ],
+          "source_alpha_area": 34935,
+          "pose": "run_contact_b",
+          "source_floor_anchor": [
+            806,
+            611
+          ],
+          "baked_bbox": [
+            19,
+            64,
+            176,
+            203
+          ]
+        },
+        {
+          "grid_cell": 7,
+          "row": 1,
+          "col": 3,
+          "source_bbox": [
+            930,
+            378,
+            1218,
+            613
+          ],
+          "source_alpha_area": 32954,
+          "pose": "run_pass_b",
+          "source_floor_anchor": [
+            1106,
+            609
+          ],
+          "baked_bbox": [
+            19,
+            77,
+            174,
+            204
+          ]
+        },
+        {
+          "grid_cell": 8,
+          "row": 2,
+          "col": 0,
+          "source_bbox": [
+            55,
+            635,
+            322,
+            945
+          ],
+          "source_alpha_area": 36294,
+          "pose": "attack_windup",
+          "source_floor_anchor": [
+            201,
+            941
+          ],
+          "baked_bbox": [
+            35,
+            36,
+            179,
+            203
+          ]
+        },
+        {
+          "grid_cell": 9,
+          "row": 2,
+          "col": 1,
+          "source_bbox": [
+            380,
+            592,
+            590,
+            942
+          ],
+          "source_alpha_area": 35760,
+          "pose": "attack_overhead",
+          "source_floor_anchor": [
+            499,
+            939
+          ],
+          "baked_bbox": [
+            50,
+            14,
+            163,
+            203
+          ]
+        },
+        {
+          "grid_cell": 10,
+          "row": 2,
+          "col": 2,
+          "source_bbox": [
+            620,
+            695,
+            967,
+            936
+          ],
+          "source_alpha_area": 36023,
+          "pose": "club_smash",
+          "source_floor_anchor": [
+            761,
+            932
+          ],
+          "baked_bbox": [
+            38,
+            73,
+            225,
+            203
+          ]
+        },
+        {
+          "grid_cell": 11,
+          "row": 2,
+          "col": 3,
+          "source_bbox": [
+            973,
+            714,
+            1244,
+            950
+          ],
+          "source_alpha_area": 32141,
+          "pose": "club_followthrough",
+          "source_floor_anchor": [
+            1080,
+            937
+          ],
+          "baked_bbox": [
+            56,
+            82,
+            202,
+            208
+          ]
+        },
+        {
+          "grid_cell": 12,
+          "row": 3,
+          "col": 0,
+          "source_bbox": [
+            28,
+            981,
+            330,
+            1224
+          ],
+          "source_alpha_area": 33620,
+          "pose": "hit_recoil",
+          "source_floor_anchor": [
+            211,
+            1220
+          ],
+          "baked_bbox": [
+            15,
+            72,
+            178,
+            203
+          ]
+        },
+        {
+          "grid_cell": 13,
+          "row": 3,
+          "col": 1,
+          "source_bbox": [
+            356,
+            964,
+            636,
+            1191
+          ],
+          "source_alpha_area": 29503,
+          "pose": "airborne_knockback",
+          "source_floor_anchor": [
+            505,
+            1187
+          ],
+          "baked_bbox": [
+            34,
+            81,
+            185,
+            203
+          ]
+        },
+        {
+          "grid_cell": 14,
+          "row": 3,
+          "col": 2,
+          "source_bbox": [
+            628,
+            1062,
+            966,
+            1224
+          ],
+          "source_alpha_area": 29317,
+          "pose": "knocked_down",
+          "source_floor_anchor": [
+            801,
+            1220
+          ],
+          "baked_bbox": [
+            21,
+            116,
+            203,
+            203
+          ]
+        },
+        {
+          "grid_cell": 15,
+          "row": 3,
+          "col": 3,
+          "source_bbox": [
+            972,
+            997,
+            1235,
+            1222
+          ],
+          "source_alpha_area": 33115,
+          "pose": "kneeling_getup",
+          "source_floor_anchor": [
+            1111,
+            1218
+          ],
+          "baked_bbox": [
+            39,
+            82,
+            181,
+            203
+          ]
+        }
+      ]
+    }
+  }
+}

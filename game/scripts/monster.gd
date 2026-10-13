@@ -1,17 +1,9 @@
 class_name Monster
 extends CharacterBody2D
-## 哥布林：AI（巡逻/追击/攻击）+ 完整受击链（硬直/浮空/弹地/倒地/受身）+ 异常状态
-##
-## 渲染：骨骼动画帧条贴图（game/art/monster/*.png + art/anim.json），
-## 由 tools/bake_game_assets.py 从 tools/render_preview.py 烘焙 —— 美术只在 Python 那一份。
-## 本脚本只按状态取帧、按脚底锚点 + depth_y 定位、朝左时水平翻转。
-
+## 方向锁定前摇、活动窗口判定、景深追击与完整受击链。
 const AnimLib := preload("res://scripts/anim_lib.gd")
-
 signal died(m: Monster)
-
 enum St { IDLE, PATROL, CHASE, ATTACK, HIT, AIR, DOWN, GETUP }
-
 var cfg: Dictionary = {}
 var state: int = St.IDLE
 var facing := -1
@@ -27,12 +19,16 @@ var player_ref: Node2D
 var fx: BattleFX
 var atk_hit_done := false
 var dead := false
-## 纯视觉景深偏移（伪 3D 远近层次），不参与物理
+var control_enabled := true
 var depth_y := 0.0
-## 地面线（由 main 注入），用于把落地阴影钉在地面上
-var ground_y := 0.0
-
-# 帧条动画（由 art/anim.json 驱动；取不到就退回占位绘制）
+var ground_y := 576.0
+var arena_left := 64.0
+var arena_right := 1216.0
+var attack_facing := -1
+var attack_cooldown := 0
+var invincible := 0
+var hit_chain := 0
+var air_frames := 0
 var anims: Dictionary = {}
 var anim_name := ""
 var anim_frame := 0
@@ -41,236 +37,293 @@ var anim_tick := 0
 func _ready() -> void:
 	var shape := CollisionShape2D.new()
 	var rect := RectangleShape2D.new()
-	rect.size = Vector2(26, 50)
+	rect.size = Vector2(38, 90)
 	shape.shape = rect
-	shape.position = Vector2(0, -25)
+	shape.position = Vector2(0, -45)
 	add_child(shape)
-	z_index = 1
 	collision_layer = 4
 	collision_mask = 1
 	anims = AnimLib.load_group("monster")
 	anim_name = _pick_anim()
-	if anims.is_empty():
-		push_warning("[ART] 哥布林帧条不可用，退回占位绘制（先跑 python tools/bake_game_assets.py）")
-	else:
-		print("[ART] monster anims=%d" % anims.size())
 
 func setup(data: Dictionary, player: Node2D, battle_fx: BattleFX) -> void:
-	cfg = data
-	hp = data["hp"]
+	cfg = data.duplicate(true)
+	hp = float(cfg.get("hp", 200))
 	player_ref = player
 	fx = battle_fx
+	attack_cooldown = randi_range(0, int(cfg.get("attack_cooldown", 42)))
 
-func _physics_process(_delta: float) -> void:
-	if dead:
+func visual_position() -> Vector2:
+	return position + Vector2(0, depth_y)
+
+func hurtbox() -> Rect2:
+	var height := float(cfg.get("hurtbox_height", 132))
+	if state == St.DOWN:
+		height *= 0.45
+	return Rect2(position + Vector2(-24, depth_y - height), Vector2(48, height))
+
+func _physics_process(delta: float) -> void:
+	if dead or not control_enabled:
 		return
 	if fx != null and fx.freeze > 0:
 		return
-	if flash > 0:
-		flash -= 1
-		modulate = Color(3, 3, 3) if flash % 2 == 0 else Color.WHITE
-	else:
-		modulate = Color.WHITE
-	if bleed_left > 0.0:
-		bleed_left -= _delta
-		bleed_tick -= _delta
-		if bleed_tick <= 0.0:
-			bleed_tick = 0.5
-			hp -= bleed_dps * 0.5
-			fx.spawn_number(position + Vector2(0, -90), str(roundi(bleed_dps * 0.5)), Color(0.9, 0.2, 0.15), 14)
-			print("[M1] bleed tick dmg=%.0f hp=%.0f" % [bleed_dps * 0.5, hp])
-		if bleed_left <= 0.0:
-			print("[M1] bleed end")
+	invincible = maxi(0, invincible - 1)
+	attack_cooldown = maxi(0, attack_cooldown - 1)
+	flash = maxi(0, flash - 1)
+	modulate = Color(2.2, 2.2, 2.2) if flash > 0 else Color.WHITE
+	_tick_bleed(delta)
+	if dead:
+		return
 	match state:
 		St.IDLE:
 			_idle()
 		St.PATROL:
 			_patrol()
 		St.CHASE:
-			_chase()
+			_chase(delta)
 		St.ATTACK:
 			_attack()
 		St.HIT:
-			_hit_state(_delta)
+			velocity.x = move_toward(velocity.x, 0.0, 380.0 * delta)
+			st_t -= 1
+			if st_t <= 0:
+				_set_state(St.CHASE)
 		St.AIR:
-			_air_state(_delta)
+			velocity.x = move_toward(velocity.x, 0.0, 200.0 * delta)
+			air_frames += 1
+			if air_frames >= int(cfg.get("max_air_frames", 150)):
+				bounce_used = true
+				velocity.y = maxf(velocity.y, 340.0)
 		St.DOWN:
+			velocity.x = move_toward(velocity.x, 0.0, 700.0 * delta)
 			st_t -= 1
 			if st_t <= 0:
 				_getup()
 		St.GETUP:
+			velocity.x = 0.0
 			st_t -= 1
 			if st_t <= 0:
 				_set_state(St.IDLE)
+	if not is_on_floor() or velocity.y < 0.0:
+		velocity.y += float(cfg.get("gravity", 1700)) * delta
+	else:
+		velocity.y = 0.0
+	var falling_speed := velocity.y
+	move_and_slide()
+	position.x = clampf(position.x, arena_left, arena_right)
+	if state == St.AIR and is_on_floor() and falling_speed >= 0.0:
+		if not bounce_used and falling_speed > float(cfg.get("bounce_threshold", 400)):
+			bounce_used = true
+			# 必须使用碰撞之前的落速，move_and_slide 会把 velocity.y 清零。
+			velocity.y = -falling_speed * float(cfg.get("bounce_ratio", 0.42))
+			if fx != null:
+				fx.add_shake(2.0)
+				fx.spawn_dust(visual_position(), 6)
+			print("[M1] monster bounce")
+		else:
+			_set_state(St.DOWN)
+			st_t = int(cfg.get("knockdown_time", 36))
+			print("[M1] monster state: AIR -> DOWN")
+	z_index = 100 + int(round(depth_y))
 	_anim_step()
 	queue_redraw()
 
-## 每物理帧推进帧条动画（命中停顿期间 _physics_process 提前返回 → 动画也跟着停）
+func _tick_bleed(delta: float) -> void:
+	if bleed_left <= 0.0:
+		return
+	bleed_left = maxf(0.0, bleed_left - delta)
+	bleed_tick -= delta
+	if bleed_tick <= 0.0:
+		bleed_tick += 0.5
+		var damage := bleed_dps * 0.5
+		hp = maxf(0.0, hp - damage)
+		if fx != null:
+			fx.spawn_number(visual_position() + Vector2(0, -132), str(roundi(damage)), Color(0.9, 0.2, 0.15), 14)
+		print("[M1] bleed tick dmg=%.0f hp=%.0f" % [damage, hp])
+		if hp <= 0.0:
+			_die()
+
+func _player_alive() -> bool:
+	return is_instance_valid(player_ref) and not (player_ref as Player).dead
+
+func _idle() -> void:
+	velocity.x = 0.0
+	if not _player_alive():
+		return
+	var d := player_ref.position.x - position.x
+	facing = 1 if d >= 0 else -1
+	st_t += 1
+	if absf(d) <= float(cfg.get("detect_range", 680)):
+		_set_state(St.CHASE)
+	elif st_t >= int(cfg.get("idle_time", 45)):
+		_set_state(St.PATROL)
+
+func _patrol() -> void:
+	if not _player_alive():
+		velocity.x = 0.0
+		return
+	if absf(player_ref.position.x - position.x) <= float(cfg.get("detect_range", 680)):
+		_set_state(St.CHASE)
+		return
+	st_t += 1
+	if position.x <= arena_left + 30 or position.x >= arena_right - 30:
+		patrol_dir = 1 if position.x <= arena_left + 30 else -1
+	facing = patrol_dir
+	velocity.x = patrol_dir * float(cfg.get("move_speed", 130))
+	if st_t >= int(cfg.get("patrol_time", 80)):
+		patrol_dir *= -1
+		_set_state(St.IDLE)
+
+func _chase(delta: float) -> void:
+	if not _player_alive():
+		_set_state(St.IDLE)
+		velocity.x = 0.0
+		return
+	var player := player_ref as Player
+	var distance := player.position.x - position.x
+	facing = 1 if distance >= 0 else -1
+	depth_y = move_toward(depth_y, player.depth_y, float(cfg.get("lane_speed", 65)) * delta)
+	var reach := float(cfg.get("attack_move", {}).get("range", 100))
+	if absf(distance) <= reach and absf(depth_y - player.depth_y) <= float(cfg.get("attack_lane", 20)):
+		velocity.x = 0.0
+		if attack_cooldown == 0 and absf(player.position.y - position.y) <= float(cfg.get("attack_height", 100)):
+			attack_facing = facing
+			_set_state(St.ATTACK)
+	else:
+		velocity.x = facing * float(cfg.get("chase_speed", 180))
+
+func _attack() -> void:
+	st_t += 1
+	velocity.x = 0.0
+	facing = attack_facing
+	var move: Dictionary = cfg.get("attack_move", {})
+	var windup := int(move.get("windup", 20))
+	var active := int(move.get("active", 4))
+	if st_t > windup and st_t <= windup + active and not atk_hit_done and _player_alive():
+		var reach := float(move.get("range", 100)) + float(move.get("extension", 12))
+		var x0 := position.x if attack_facing > 0 else position.x - reach
+		var attack_box := Rect2(Vector2(x0, position.y + depth_y - float(move.get("height", 150))), Vector2(reach, float(move.get("height", 150))))
+		var player := player_ref as Player
+		if absf(depth_y - player.depth_y) <= float(cfg.get("attack_lane", 20)) and attack_box.intersects(player.hurtbox()):
+			if player.take_hit(float(move.get("damage", cfg.get("attack", 25))), attack_facing, move):
+				atk_hit_done = true
+				print("[M1] goblin hit player")
+	if st_t >= windup + active + int(move.get("recovery", 20)):
+		attack_cooldown = int(cfg.get("attack_cooldown", 42))
+		_set_state(St.CHASE)
+
+func _getup() -> void:
+	_set_state(St.GETUP)
+	st_t = int(cfg.get("getup_time", 12))
+	invincible = st_t + 1
+	attack_cooldown = int(cfg.get("attack_cooldown", 42))
+	print("[M1] monster state: DOWN -> GETUP")
+
+func _set_state(value: int) -> void:
+	state = value
+	st_t = 0
+	if value == St.ATTACK:
+		atk_hit_done = false
+	if value in [St.IDLE, St.PATROL, St.CHASE]:
+		hit_chain = 0
+		air_frames = 0
+	# 状态切换与贴图选择同步；命中后的停帧不能先把贴图清空。
+	anim_name = _pick_anim()
+	anim_frame = 0
+	anim_tick = 0
+
+func take_hit(hit: Dictionary, from_dir: int) -> bool:
+	if dead or invincible > 0 or state == St.GETUP:
+		return false
+	var damage := float(hit.get("damage", 0))
+	hp = maxf(0.0, hp - damage)
+	hit_chain += 1
+	flash = int(cfg.get("hit_flash", 2)) + 1
+	if fx != null:
+		var feedback := hit.duplicate(true)
+		if hit.has("launch"):
+			feedback["kind"] = "launch"
+		elif hit.get("knockdown", false):
+			feedback["kind"] = "knock"
+		fx.on_hit(visual_position(), from_dir, damage, feedback)
+	if hit.has("bleed"):
+		bleed_dps = float(hit["bleed"].get("dps", 10))
+		bleed_left = float(hit["bleed"].get("time", 3))
+		bleed_tick = 0.5
+	if hp <= 0.0:
+		_die()
+		return true
+	attack_cooldown = maxi(attack_cooldown, int(cfg.get("hit_attack_delay", 18)))
+	if hit_chain >= int(cfg.get("max_hit_chain", 8)) and state != St.AIR and is_on_floor():
+		_getup()
+		invincible = int(cfg.get("protection_invincible", 18)) + 1
+		velocity = Vector2.ZERO
+		return true
+	if hit.has("launch"):
+		var launch: Dictionary = hit["launch"]
+		velocity = Vector2(from_dir * float(launch.get("vx", 120)), float(launch.get("vy", -680)))
+		_set_state(St.AIR)
+		bounce_used = false
+		print("[M1] monster launch")
+	elif hit.get("knockdown", false):
+		velocity = Vector2(from_dir * float(hit.get("knockback", 180)), 300.0 if state == St.AIR else -260.0)
+		_set_state(St.AIR)
+		bounce_used = false
+	elif state == St.AIR and air_frames < int(cfg.get("max_air_frames", 150)):
+		velocity.y = minf(velocity.y, float(cfg.get("juggle_vy", -240)))
+		velocity.x = from_dir * float(hit.get("knockback", 90))
+		print("[M1] monster juggled in air")
+	elif state == St.AIR:
+		# 浮空保护：仍然结算伤害，但不再重置下落，避免无限悬空。
+		velocity.y = maxf(velocity.y, 340.0)
+	else:
+		velocity.x = from_dir * float(hit.get("knockback", 80))
+		_set_state(St.HIT)
+		st_t = int(hit.get("hardstun", cfg.get("hardstun", 12)))
+		print("[M1] monster HIT")
+	queue_redraw()
+	return true
+
+func _die() -> void:
+	if dead:
+		return
+	dead = true
+	control_enabled = false
+	bleed_left = 0.0
+	velocity = Vector2.ZERO
+	state = St.DOWN
+	_anim_step()
+	anim_frame = maxi(0, int(anims.get(anim_name, {}).get("frames", 1)) - 1)
+	queue_redraw()
+	if fx != null:
+		fx.play_sound("death")
+	print("[M1] goblin died")
+	died.emit(self)
+	var tween := create_tween()
+	tween.tween_property(self, "modulate:a", 0.0, 0.65)
+	tween.tween_callback(queue_free)
+
+func _pick_anim() -> String:
+	var names := {St.IDLE: "idle", St.PATROL: "patrol", St.CHASE: "chase", St.ATTACK: "attack", St.HIT: "hit", St.AIR: "air", St.DOWN: "down", St.GETUP: "getup"}
+	return AnimLib.pick(anims, [names.get(state, "idle"), "idle"], "idle")
+
 func _anim_step() -> void:
-	var want := _pick_anim()
-	if want != anim_name:
-		anim_name = want
+	var wanted := _pick_anim()
+	if wanted != anim_name:
+		anim_name = wanted
 		anim_frame = 0
 		anim_tick = 0
 	if not anims.has(anim_name):
 		return
-	var r: Array = AnimLib.advance(anims[anim_name], anim_frame, anim_tick)
-	anim_frame = r[0]
-	anim_tick = r[1]
-
-## 状态 → 帧条名（与 render_preview.py 里的 MONSTER_STATE_NAMES 一一对应）
-func _pick_anim() -> String:
-	var want := "idle"
-	match state:
-		St.IDLE:
-			want = "idle"
-		St.PATROL:
-			want = "patrol"
-		St.CHASE:
-			want = "chase"
-		St.ATTACK:
-			want = "attack"
-		St.HIT:
-			want = "hit"
-		St.AIR:
-			want = "air"
-		St.DOWN:
-			want = "down"
-		St.GETUP:
-			want = "getup"
-	return AnimLib.pick(anims, [want, "idle"], "idle")
-
-func _idle() -> void:
-	var d: float = player_ref.position.x - position.x
-	facing = 1 if d > 0 else -1
-	if absf(d) < cfg["detect_range"]:
-		_set_state(St.CHASE)
-	elif randf() < 0.01:
-		_set_state(St.PATROL)
-
-func _patrol() -> void:
-	if not is_on_floor():
-		velocity.y += 1500.0 * (1.0 / 60.0)
-		move_and_slide()
-		return
-	velocity.x = patrol_dir * cfg["move_speed"]
-	velocity.y = 0
-	move_and_slide()
-	if is_on_wall():
-		patrol_dir = -patrol_dir
-		st_t += 1
-		if st_t > 90:
-			st_t = 0
-			_set_state(St.IDLE)
-
-func _chase() -> void:
-	var d: float = player_ref.position.x - position.x
-	facing = 1 if d > 0 else -1
-	if absf(d) > cfg["detect_range"] * 1.6:
-		_set_state(St.PATROL)
-		patrol_dir = facing
-		return
-	if absf(d) < cfg["attack_move"]["range"]:
-		_set_state(St.ATTACK)
-		return
-	velocity.x = facing * cfg["chase_speed"]
-	velocity.y = 0
-	move_and_slide()
-
-func _attack() -> void:
-	st_t += 1
-	var mv: Dictionary = cfg["attack_move"]
-	velocity.x = 0
-	move_and_slide()
-	var d: float = player_ref.position.x - position.x
-	facing = 1 if d > 0 else -1
-	if st_t >= mv["windup"] and not atk_hit_done:
-		atk_hit_done = true
-		if absf(d) < mv["range"] + 20 and absf(player_ref.position.y - position.y) < 80:
-			var p := player_ref as Player
-			p.take_hit(mv["damage"])
-			print("[M1] goblin hit player dmg=%d" % mv["damage"])
-	if st_t >= mv["windup"] + mv["active"] + mv["recovery"]:
-		atk_hit_done = false
-		_set_state(St.CHASE)
-
-func _hit_state(_delta: float) -> void:
-	velocity.y += 1500.0 * (1.0 / 60.0)
-	move_and_slide()
-	st_t -= 1
-	if st_t <= 0:
-		_set_state(St.CHASE)
-
-func _air_state(_delta: float) -> void:
-	velocity.x = move_toward(velocity.x, 0, 200.0 * (1.0 / 60.0))
-	velocity.y += 1500.0 * _delta
-	var vy_before := velocity.y
-	move_and_slide()
-	if is_on_floor():
-		if not bounce_used and vy_before > 480.0:
-			bounce_used = true
-			velocity.y = -velocity.y * 0.45
-			fx.add_shake(2.0)
-			print("[M1] monster bounce")
-		else:
-			bounce_used = false
-			_set_state(St.DOWN)
-			st_t = cfg["knockdown_time"]
-			print("[M1] monster state: AIR -> DOWN")
-
-func _getup() -> void:
-	_set_state(St.GETUP)
-	st_t = cfg["getup_time"]
-	print("[M1] monster state: DOWN -> GETUP (受身)")
-
-func _set_state(s: int) -> void:
-	state = s
-	st_t = 0
-
-func take_hit(hit: Dictionary, from_dir: int) -> void:
-	if dead:
-		return
-	hp -= hit.get("damage", 0)
-	flash = 2
-	# 命中表现一站式入口（停帧 + 震屏 + 跳字 + 火花 + 重击刀光），别在这里再各调一遍
-	if fx != null:
-		fx.on_hit(position, from_dir, float(hit.get("damage", 0)), hit)
-	if hit.has("bleed"):
-		bleed_dps = hit["bleed"]["dps"]
-		bleed_left = hit["bleed"]["time"]
-		bleed_tick = 0.0
-		print("[M1] monster bleed start dps=%.0f time=%.1f" % [bleed_dps, bleed_left])
-	if hit.has("launch"):
-		var l: Dictionary = hit["launch"]
-		velocity = Vector2(from_dir * l["vx"], l["vy"])
-		_set_state(St.AIR)
-		bounce_used = false
-		print("[M1] monster state: HIT -> AIR (launch vy=%.0f)" % l["vy"])
-	elif state == St.AIR:
-		velocity.y = minf(velocity.y, -160.0)
-		velocity.x = from_dir * 120.0
-		print("[M1] monster juggled in air")
-	elif hit.get("knockdown", false):
-		velocity = Vector2(from_dir * 240.0, -220.0)
-		_set_state(St.AIR)
-		bounce_used = false
-		print("[M1] monster state: HIT -> AIR (knockdown)")
+	if state == St.ATTACK:
+		var move: Dictionary = cfg.get("attack_move", {})
+		anim_frame = AnimLib.frame_for_move(anims[anim_name], float(st_t), move)
+	elif state == St.GETUP:
+		anim_frame = AnimLib.frame_at_progress(anims[anim_name], 1.0 - float(st_t) / maxf(1.0, float(cfg.get("getup_time", 12))))
 	else:
-		velocity.x = from_dir * hit.get("knockback", 80)
-		_set_state(St.HIT)
-		st_t = hit.get("hardstun", 12)
-		print("[M1] monster state: HIT hardstun=%d" % st_t)
-	if hp <= 0:
-		_die()
-
-func _die() -> void:
-	dead = true
-	velocity = Vector2(120.0 * -facing, -420.0)
-	print("[M1] goblin died")
-	died.emit(self)
-	var tw := create_tween()
-	tw.tween_property(self, "modulate:a", 0.0, 0.8)
-	tw.tween_callback(queue_free)
+		var result: Array = AnimLib.advance(anims[anim_name], anim_frame, anim_tick)
+		anim_frame = int(result[0])
+		anim_tick = int(result[1])
 
 func _draw() -> void:
 	# 视觉景深：只偏移绘制，物理仍共用 GROUND_Y 一条地面线
@@ -282,6 +335,19 @@ func _draw() -> void:
 		var sh_w := 80.0 * (1.0 - minf(absf(gy), 280.0) / 560.0)
 		draw_set_transform(Vector2(0.0, depth_y + gy), 0.0, Vector2(1.0, 0.25))
 		draw_circle(Vector2.ZERO, sh_w * 0.5, Color(0.0, 0.0, 0.0, 0.45))
+		draw_set_transform(base, 0.0, Vector2.ONE)
+	# 地面的红色范围与朝向线让前摇可读；锁定后玩家可绕到身后。
+	if state == St.ATTACK:
+		var attack: Dictionary = cfg.get("attack_move", {})
+		var startup := maxf(1.0, float(attack.get("windup", 20)))
+		var progress := clampf(float(st_t) / startup, 0.0, 1.0)
+		var reach := float(attack.get("range", 96))
+		var warning := Color(1.0, 0.23, 0.12, 0.25 + progress * 0.6)
+		if st_t > startup:
+			warning = Color(1.0, 0.72, 0.25, 0.65)
+		draw_set_transform(Vector2(0, depth_y + gy), 0.0, Vector2(1, 0.32))
+		draw_arc(Vector2.ZERO, reach, -PI, PI, 40, warning, 2.5)
+		draw_line(Vector2.ZERO, Vector2(attack_facing * reach * progress, 0), warning, 5.0)
 		draw_set_transform(base, 0.0, Vector2.ONE)
 	# 骨骼动画帧条：position 即脚底，锚点反推左上角，depth_y 只影响绘制；朝左时以脚底为轴翻转
 	var clip: Dictionary = anims.get(anim_name, {})

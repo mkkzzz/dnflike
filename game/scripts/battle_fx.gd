@@ -1,6 +1,13 @@
 class_name BattleFX
 extends Node2D
-## 战斗表现管理：命中停帧 / 震屏 / 伤害跳字（数字与中文均需字体，由 Main 注入）
+## One combat presentation clock: hitstop freezes trails, particles and floating numbers.
+## Main decrements freeze at 60 Hz; actor scripts share that counter.
+
+const TRAIL_LIFE := 0.075
+const TRAIL_MAX := 14
+const MAX_PARTICLES := 120
+const MAX_LABELS := 32
+const AUDIO_SCRIPT := preload("res://scripts/combat_audio.gd")
 
 var freeze := 0
 var shake := 0.0
@@ -9,213 +16,298 @@ var number_font: Font
 var pool: Array[Label] = []
 var log_hits := 0
 
+var _audio: CombatAudio
+var _numbers: Array = []
+var _trails: Array = []
+var _slashes: Array = []
+var _glows: Array = []
+var _parts: Array = []
+var _flashes: Array = []
+var _swing_group := 0
+var _swing_progress := -1.0
+var _last_swing_tick := 0
+var _last_swing_pos := Vector2.ZERO
+
+
+func _ready() -> void:
+	_audio = AUDIO_SCRIPT.new()
+	add_child(_audio)
+
+
+func play_sound(kind: String) -> void:
+	if _audio != null:
+		_audio.play_sound(kind)
+
+
 func hitstop(frames: int) -> void:
 	freeze = maxi(freeze, frames)
 
-func add_shake(amount: float) -> void:
-	shake = maxf(shake, amount)
 
-func spawn_number(world_pos: Vector2, text: String, color: Color, size := 18) -> void:
-	var lb := _take_label()
-	lb.text = text
-	lb.add_theme_font_size_override("font_size", size)
-	lb.add_theme_color_override("font_color", color)
-	lb.position = world_pos + Vector2(randf_range(-8, 8), -40)
-	lb.scale = Vector2(1.6, 1.6)
-	lb.modulate.a = 1.0
-	var tw := create_tween()
-	tw.set_parallel(true)
-	tw.tween_property(lb, "position:y", lb.position.y - 46.0, 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tw.tween_property(lb, "scale", Vector2(1.0, 1.0), 0.12)
-	tw.chain().tween_property(lb, "modulate:a", 0.0, 0.25).set_delay(0.2)
-	tw.chain().tween_callback(_recycle.bind(lb))
+func add_shake(amount: float) -> void:
+	shake = clampf(maxf(shake, amount), 0.0, 8.0)
+	# The first impact offset remains visible throughout hitstop.
+	if camera != null:
+		camera.offset = Vector2(randf_range(-1, 1), randf_range(-0.45, 0.45)) * shake
+
+
+func spawn_number(world_pos: Vector2, text: String, color: Color, size: int = 18) -> void:
+	var label := _take_label()
+	label.text = text
+	label.add_theme_font_size_override("font_size", size)
+	label.add_theme_color_override("font_color", color)
+	var origin := world_pos + Vector2(randf_range(-14, 14), -20)
+	label.position = origin
+	label.scale = Vector2.ONE * 1.10
+	label.modulate.a = 1.0
+	_numbers.append({"label": label, "origin": origin, "age": 0.0, "life": 0.72})
+
 
 func _take_label() -> Label:
-	for lb in pool:
-		if not lb.visible:
-			lb.visible = true
-			return lb
-	var lb := Label.new()
-	lb.z_index = 50
-	if number_font:
-		lb.add_theme_font_override("font", number_font)
-	lb.add_theme_color_override("font_outline_color", Color(0, 0, 0))
-	lb.add_theme_constant_override("outline_size", 4)
-	add_child(lb)
-	pool.append(lb)
-	return lb
+	for label in pool:
+		if not label.visible:
+			label.visible = true
+			return label
+	if pool.size() >= MAX_LABELS:
+		var recycled: Dictionary = _numbers.pop_front()
+		return recycled["label"] as Label
+	var label := Label.new()
+	label.z_index = 50
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if number_font != null:
+		label.add_theme_font_override("font", number_font)
+	label.add_theme_color_override("font_outline_color", Color(0.04, 0.02, 0.025))
+	label.add_theme_constant_override("outline_size", 3)
+	add_child(label)
+	pool.append(label)
+	return label
 
-func _recycle(lb: Label) -> void:
-	lb.visible = false
 
-func _process(_delta: float) -> void:
-	_update_fx(_delta)
-	if camera == null:
+func _process(delta: float) -> void:
+	if freeze > 0:
 		return
-	if shake > 0.2:
-		camera.offset = Vector2(randf_range(-1, 1), randf_range(-0.5, 0.5)) * shake
-		shake *= 0.82
+	_update_fx(delta)
+	_update_numbers(delta)
+	if shake > 0.12:
+		shake *= exp(-18.0 * delta)
+		if camera != null:
+			camera.offset = Vector2(randf_range(-1, 1), randf_range(-0.45, 0.45)) * shake
 	else:
 		shake = 0.0
-		camera.offset = Vector2.ZERO
+		if camera != null:
+			camera.offset = Vector2.ZERO
 
 
-# ============================================================ 刀光 / 冲击波 / 发光
-# preview(render_preview.py) 里 draw_trails() / crescent_poly() / add_glow() / 粒子 的实机对应实现。
-# 攻击特效只在 BattleFX 里画，player.gd / monster.gd 不要重复画一遍。
-# 调用方：在攻击判定帧 spawn_*，其余生命周期由本文件负责。
+func _update_numbers(delta: float) -> void:
+	for index in range(_numbers.size() - 1, -1, -1):
+		var entry: Dictionary = _numbers[index]
+		entry["age"] = float(entry["age"]) + delta
+		var age := float(entry["age"])
+		var label: Label = entry["label"]
+		if age >= float(entry["life"]):
+			label.visible = false
+			_numbers.remove_at(index)
+			continue
+		var origin: Vector2 = entry["origin"]
+		label.position = origin + Vector2(0, -40.0 * (1.0 - exp(-age * 4.0)))
+		label.scale = Vector2.ONE * (1.0 + 0.10 * exp(-age * 25.0))
+		label.modulate.a = clampf((float(entry["life"]) - age) / 0.22, 0.0, 1.0)
 
-## 拖尾存活秒数 —— 对齐 preview 的 4.5 帧 @60fps 量级。
-## 太长会糊成实心扇面，太短则刀光读不出来。
-const TRAIL_LIFE := 0.10
-const TRAIL_MAX := 14
 
-var _trails: Array = []    # {p0, p1, t}
-var _slashes: Array = []   # {pos, facing, r, arc, th, col, t, life}
-var _glows: Array = []     # {pos, r, col, t, life}
-var _parts: Array = []     # {pos, vel, col, t, life, grav}
-
-## 剑刃轨迹采样点（base = 护手, tip = 剑尖），每帧调用一次形成刀光带
 func spawn_trail(base: Vector2, tip: Vector2) -> void:
-	_trails.append({"p0": base, "p1": tip, "t": 0.0})
+	_trails.append({"p0": base, "p1": tip, "t": 0.0, "group": _swing_group})
 	if _trails.size() > TRAIL_MAX:
 		_trails.pop_front()
+	queue_redraw()
 
-## 弯月刀光：大范围斩击/十字斩/地裂波
-func spawn_slash(pos: Vector2, facing: int, radius := 96.0, arc_deg := 150.0,
-		thickness := 30.0, col := Color(0.45, 0.72, 1.0)) -> void:
+
+func spawn_slash(pos: Vector2, facing: int, radius: float = 96.0, arc_deg: float = 150.0,
+		thickness: float = 14.0, color: Color = Color(0.73, 0.81, 0.87)) -> void:
 	_slashes.append({"pos": pos, "facing": facing, "r": radius, "arc": deg_to_rad(arc_deg),
-		"th": thickness, "col": col, "t": 0.0, "life": 0.18})
+		"th": thickness, "col": color, "t": 0.0, "life": 0.12})
+	queue_redraw()
 
-## 加色发光团：左臂暗红火焰 / 技能蓄力 / 火把
-func spawn_glow(pos: Vector2, radius := 40.0, col := Color(1.0, 0.3, 0.28), life := 0.25) -> void:
-	_glows.append({"pos": pos, "r": radius, "col": col, "t": 0.0, "life": life})
 
-## 命中火花（朝 dir 方向溅射）
-func spawn_sparks(pos: Vector2, dir: int = 1, count := 7) -> void:
-	for i in count:
-		var a := randf_range(-1.1, 1.1)
-		var sp := randf_range(140.0, 340.0)
-		_parts.append({"pos": pos, "vel": Vector2(cos(a) * sp * float(dir), sin(a) * sp - 70.0),
-			"col": Color(1.0, 0.93, 0.62), "t": 0.0, "life": randf_range(0.16, 0.32), "grav": 900.0})
+func spawn_glow(pos: Vector2, radius: float = 40.0,
+		color: Color = Color(0.95, 0.22, 0.16), life: float = 0.25) -> void:
+	_glows.append({"pos": pos, "r": radius, "col": color, "t": 0.0, "life": life})
+	queue_redraw()
 
-## 落地/起跳尘土
-func spawn_dust(pos: Vector2, count := 5) -> void:
-	for i in count:
-		_parts.append({"pos": pos + Vector2(randf_range(-11.0, 11.0), 0.0),
-			"vel": Vector2(randf_range(-70.0, 70.0), randf_range(-95.0, -30.0)),
-			"col": Color(0.72, 0.68, 0.62), "t": 0.0, "life": randf_range(0.24, 0.44), "grav": 120.0})
 
-## 命中表现一站式入口：停帧 + 震屏 + 跳字 + 火花 + 重击刀光。
-## 调用方只需传命中信息，避免各脚本各画一套导致表现不一致。
-func on_hit(world_pos: Vector2, dir: int, damage: float, hit: Dictionary) -> void:
+func spawn_sparks(pos: Vector2, direction: int = 1, count: int = 7) -> void:
+	for index in range(count):
+		var angle := randf_range(-1.1, 1.1)
+		var speed := randf_range(160.0, 390.0)
+		_parts.append({"pos": pos,
+			"vel": Vector2(cos(angle) * speed * direction, sin(angle) * speed - 65.0),
+			"col": Color(1.0, 0.76, 0.39), "t": 0.0, "life": randf_range(0.10, 0.21),
+			"grav": 740.0, "spark": true})
+	_limit_particles()
+	queue_redraw()
+
+
+func spawn_dust(pos: Vector2, count: int = 5) -> void:
+	for index in range(count):
+		_parts.append({"pos": pos + Vector2(randf_range(-10, 10), 0),
+			"vel": Vector2(randf_range(-70, 70), randf_range(-72, -20)),
+			"col": Color(0.52, 0.46, 0.39, 0.6), "t": 0.0, "life": randf_range(0.18, 0.32),
+			"grav": 130.0, "spark": false})
+	_limit_particles()
+	queue_redraw()
+
+
+func _limit_particles() -> void:
+	while _parts.size() > MAX_PARTICLES:
+		_parts.pop_front()
+
+
+func on_hit(world_pos: Vector2, direction: int, damage: float, hit: Dictionary) -> void:
+	log_hits += 1
 	hitstop(int(hit.get("hitstop", 4)))
-	add_shake(float(hit.get("shake", 2)))
-	spawn_number(world_pos + Vector2(0, -100), str(roundi(damage)),
-		Color(1.0, 0.9, 0.3), 20)
-	spawn_sparks(world_pos, dir, 8)
-	var kind := String(hit.get("kind", ""))
-	if kind == "knock" or kind == "launch":
-		spawn_slash(world_pos, dir, 124.0, 155.0, 36.0, Color(0.50, 0.75, 1.0))
+	add_shake(float(hit.get("shake", 2.0)))
+	var launch: bool = hit.has("launch") or str(hit.get("kind", "")) == "launch"
+	var heavy: bool = launch or bool(hit.get("knockdown", false)) or str(hit.get("kind", "")) == "knock" or int(hit.get("hitstop", 4)) >= 6
+	var impact := world_pos + Vector2(0, -float(hit.get("impact_height", 72.0)))
+	spawn_number(world_pos + Vector2(0, -108), str(roundi(damage)),
+		Color(1.0, 0.87, 0.63) if heavy else Color(0.95, 0.91, 0.78), 25 if heavy else 21)
+	spawn_sparks(impact, direction, 10 if heavy else 6)
+	_flashes.append({"pos": impact, "t": 0.0, "life": 0.065, "size": 20.0 if heavy else 14.0})
+	if heavy:
+		spawn_slash(impact, direction, 62.0, 115.0, 9.0, Color(0.94, 0.73, 0.48))
+	play_sound("launch" if launch else ("heavy" if heavy else "light"))
+	queue_redraw()
 
-## 挥砍轨迹采样：攻击判定附近每帧调用，生成刀光带。
-## Godot 侧没有骨骼，按「肩 → 剑尖」近似剑刃位置；swing01 为这一刀 0→1 的进度。
-func on_swing(pos: Vector2, facing: int, swing01: float, reach := 78.0) -> void:
-	var shoulder := pos + Vector2(0.0, -92.0)
-	var a := lerpf(-2.3, 0.7, clampf(swing01, 0.0, 1.0))
-	var dx := cos(a) * float(facing)
-	var dy := sin(a)
-	spawn_trail(shoulder + Vector2(dx * 0.35 * reach, dy * 0.35 * reach),
-		shoulder + Vector2(dx * reach, dy * reach))
+
+func start_swing() -> void:
+	_trails.clear()
+	_swing_group += 1
+	_swing_progress = -1.0
+	_last_swing_tick = 0
+	queue_redraw()
+
+
+func on_swing(pos: Vector2, facing: int, swing01: float, reach: float = 158.0) -> void:
+	# Shoulder matches a 190px actor. Sounds are issued once by the action state.
+	var now := Time.get_ticks_msec()
+	if swing01 < _swing_progress or now - _last_swing_tick > 100 or pos.distance_to(_last_swing_pos) > 42.0:
+		_swing_group += 1
+	_swing_progress = swing01
+	_last_swing_tick = now
+	_last_swing_pos = pos
+	var shoulder := pos + Vector2(0.0, -136.0)
+	var angle := lerpf(-1.95, 0.95, clampf(swing01, 0.0, 1.0))
+	var direction := Vector2(cos(angle) * facing, sin(angle))
+	spawn_trail(shoulder + direction * reach * 0.40, shoulder + direction * reach)
+
 
 func clear_fx() -> void:
+	freeze = 0
+	shake = 0.0
+	if camera != null:
+		camera.offset = Vector2.ZERO
 	_trails.clear()
 	_slashes.clear()
 	_glows.clear()
 	_parts.clear()
+	_flashes.clear()
+	_numbers.clear()
+	for label in pool:
+		label.visible = false
+		label.modulate.a = 0.0
+	_swing_progress = -1.0
+	_last_swing_tick = 0
+	_swing_group += 1
+	if _audio != null:
+		_audio.stop_all()
 	queue_redraw()
 
+
 func _update_fx(delta: float) -> void:
-	# 注意：Node2D 的 _draw 结果会被缓存并每帧重绘，
-	# 所以「本帧还有东西」和「本帧刚清空」都必须 queue_redraw，否则残影会留在屏幕上。
-	var had := not (_trails.is_empty() and _slashes.is_empty() and _glows.is_empty() and _parts.is_empty())
-	for arr in [_trails, _slashes, _glows, _parts]:
-		var i: int = arr.size() - 1
-		while i >= 0:
-			var e: Dictionary = arr[i]
-			e["t"] = e["t"] + delta
-			var life: float = e.get("life", TRAIL_LIFE)
-			if e["t"] >= life:
-				arr.remove_at(i)
-			i -= 1
-	for e in _parts:
-		e["vel"] = (e["vel"] as Vector2) + Vector2(0.0, e["grav"] * delta)
-		e["pos"] = (e["pos"] as Vector2) + (e["vel"] as Vector2) * delta
-		e["vel"] = (e["vel"] as Vector2) * 0.94
-	if had:
+	var had_fx := not (_trails.is_empty() and _slashes.is_empty() and _glows.is_empty()
+		and _parts.is_empty() and _flashes.is_empty())
+	for collection in [_trails, _slashes, _glows, _parts, _flashes]:
+		for index in range(collection.size() - 1, -1, -1):
+			var entry: Dictionary = collection[index]
+			entry["t"] = float(entry["t"]) + delta
+			if float(entry["t"]) >= float(entry.get("life", TRAIL_LIFE)):
+				collection.remove_at(index)
+	for entry in _parts:
+		var velocity: Vector2 = entry["vel"]
+		velocity += Vector2(0, float(entry["grav"]) * delta)
+		entry["pos"] = (entry["pos"] as Vector2) + velocity * delta
+		entry["vel"] = velocity * exp(-3.0 * delta)
+	if had_fx:
 		queue_redraw()
 
+
 func _draw() -> void:
-	# --- 刀光带：三层（宽淡外层 → 中层 → 白芯），与 preview 的 draw_trails 一致
-	var n := _trails.size()
-	for i in range(1, n):
-		var a: Dictionary = _trails[i - 1]
-		var b: Dictionary = _trails[i]
-		var k := clampf(1.0 - maxf(a["t"], b["t"]) / TRAIL_LIFE, 0.0, 1.0)
-		if k <= 0.0:
+	for index in range(1, _trails.size()):
+		var previous: Dictionary = _trails[index - 1]
+		var current: Dictionary = _trails[index]
+		if previous["group"] != current["group"]:
 			continue
-		var ab: Vector2 = a["p0"]
-		var at: Vector2 = a["p1"]
-		var bb: Vector2 = b["p0"]
-		var bt: Vector2 = b["p1"]
-		_quad(ab, at, bt, bb, Color(0.27, 0.47, 1.0, 0.62 * k))          # 外层
-		_quad(ab.lerp(at, 0.25), at.lerp(ab, 0.25), bt.lerp(bb, 0.25), bb.lerp(ab, 0.25),
-			Color(0.67, 0.80, 1.0, 0.80 * k))                            # 中层
-		_quad(ab.lerp(at, 0.45), at.lerp(ab, 0.45), bt.lerp(bb, 0.45), bb.lerp(ab, 0.45),
-			Color(1.0, 1.0, 1.0, 0.95 * k))                              # 白芯
-
-	# --- 弯月刀光
-	for s in _slashes:
-		var u: float = clampf(s["t"] / s["life"], 0.0, 1.0)
-		var k2 := 1.0 - u
-		var col: Color = s["col"]
-		col.a = 0.85 * k2
-		var r: float = s["r"] * (0.72 + 0.28 * u)
-		_crescent(s["pos"], float(s["facing"]), r, s["arc"], s["th"] * (1.0 - 0.35 * u), col)
-
-	# --- 发光团：同心圆近似加色辉光
-	for g in _glows:
-		var u2: float = clampf(g["t"] / g["life"], 0.0, 1.0)
-		var gc: Color = g["col"]
-		var rr: float = g["r"] * (0.85 + 0.5 * u2)
+		var fade := clampf(1.0 - maxf(previous["t"], current["t"]) / TRAIL_LIFE, 0.0, 1.0)
+		var base_a: Vector2 = previous["p0"]
+		var tip_a: Vector2 = previous["p1"]
+		var base_b: Vector2 = current["p0"]
+		var tip_b: Vector2 = current["p1"]
+		_quad(base_a, tip_a, tip_b, base_b, Color(0.65, 0.75, 0.82, fade * 0.22))
+		_quad(base_a.lerp(tip_a, 0.66), tip_a, tip_b, base_b.lerp(tip_b, 0.66),
+			Color(0.95, 0.91, 0.78, fade * 0.53))
+		draw_line(tip_a, tip_b, Color(1.0, 0.96, 0.84, fade * 0.82), 1.5, true)
+	for slash in _slashes:
+		var progress := clampf(float(slash["t"]) / float(slash["life"]), 0.0, 1.0)
+		var color: Color = slash["col"]
+		color.a *= (1.0 - progress) * 0.65
+		_crescent(slash["pos"], float(slash["facing"]), float(slash["r"]) * (0.9 + 0.1 * progress),
+			float(slash["arc"]), float(slash["th"]) * (1.0 - progress * 0.5), color)
+	for glow in _glows:
+		var progress := clampf(float(glow["t"]) / float(glow["life"]), 0.0, 1.0)
+		var color: Color = glow["col"]
 		for ring in range(4, 0, -1):
-			var f := float(ring) / 4.0
-			var c := gc
-			c.a = 0.16 * (1.0 - u2) * (1.0 - f + 0.35)
-			draw_circle(g["pos"], rr * f, c)
+			var radius := float(glow["r"]) * float(ring) / 4.0 * (1.0 + progress * 0.2)
+			color.a = (1.0 - progress) * 0.035
+			draw_circle(glow["pos"], radius, color)
+	for flash in _flashes:
+		var color := Color(1.0, 0.94, 0.75, 1.0 - float(flash["t"]) / float(flash["life"]))
+		var center: Vector2 = flash["pos"]
+		var size := float(flash["size"])
+		draw_line(center + Vector2(-size, -size * 0.55), center + Vector2(size, size * 0.55), color, 2.0, true)
+		draw_line(center + Vector2(-size * 0.6, size), center + Vector2(size * 0.6, -size), color, 2.0, true)
+		draw_circle(center, 3.0, Color(1.0, 0.98, 0.90, color.a))
+	for particle in _parts:
+		var progress := clampf(float(particle["t"]) / float(particle["life"]), 0.0, 1.0)
+		var color: Color = particle["col"]
+		color.a *= 1.0 - progress
+		var position: Vector2 = particle["pos"]
+		if bool(particle["spark"]):
+			var velocity: Vector2 = particle["vel"]
+			draw_line(position, position - velocity.normalized() * (7.0 - progress * 4.0), color, 1.7, true)
+		else:
+			draw_circle(position, 2.0 + progress * 2.0, color)
 
-	# --- 粒子
-	for p in _parts:
-		var u3: float = clampf(p["t"] / p["life"], 0.0, 1.0)
-		var pc: Color = p["col"]
-		pc.a = 1.0 - u3
-		draw_circle(p["pos"], maxf(1.0, 3.0 * (1.0 - u3 * 0.6)), pc)
 
-func _quad(p0: Vector2, p1: Vector2, p2: Vector2, p3: Vector2, col: Color) -> void:
-	draw_colored_polygon(PackedVector2Array([p0, p1, p2, p3]), col)
+func _quad(point_a: Vector2, point_b: Vector2, point_c: Vector2, point_d: Vector2, color: Color) -> void:
+	# A moving/turning actor can fold the ribbon into a bow tie. Draw two explicit
+	# triangles, skipping zero area samples, instead of asking Godot to triangulate it.
+	_triangle(point_a, point_b, point_c, color)
+	_triangle(point_a, point_c, point_d, color)
 
-## 弯月形：外弧与内弧之间填充，朝 facing 方向开口
+
+func _triangle(point_a: Vector2, point_b: Vector2, point_c: Vector2, color: Color) -> void:
+	if absf((point_b - point_a).cross(point_c - point_a)) < 0.20:
+		return
+	draw_colored_polygon(PackedVector2Array([point_a, point_b, point_c]), color)
+
+
 func _crescent(center: Vector2, facing: float, radius: float, arc: float,
-		thickness: float, col: Color) -> void:
-	var steps := 14
+		thickness: float, color: Color) -> void:
 	var outer := PackedVector2Array()
 	var inner := PackedVector2Array()
-	var base := -arc * 0.5
-	for i in range(steps + 1):
-		var t := base + arc * float(i) / float(steps)
-		var dir := Vector2(cos(t) * facing, sin(t))
-		outer.append(center + dir * radius)
-		inner.append(center + dir * maxf(2.0, radius - thickness))
+	for index in range(17):
+		var angle := -arc * 0.5 + arc * float(index) / 16.0
+		var direction := Vector2(cos(angle) * facing, sin(angle))
+		outer.append(center + direction * radius)
+		inner.append(center + direction * maxf(2.0, radius - thickness))
 	inner.reverse()
 	outer.append_array(inner)
-	draw_colored_polygon(outer, col)
+	draw_colored_polygon(outer, color)

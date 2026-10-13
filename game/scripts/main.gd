@@ -1,273 +1,452 @@
 extends Node2D
-## 主场景：输入注册、地面、玩家、怪物、战斗表现、调试与验收日志
-
+## 职业选择 → 三波遭遇战 → 胜负结算 → 重玩。
+enum BattleState { READY, FIGHT, WAVE_BREAK, VICTORY, DEFEAT, PAUSED }
 const VIEW_W := 1280.0
 const VIEW_H := 720.0
-const WORLD_W := 4000.0
-## 物理地面线 = 玩家脚底视觉落点。
-## preview 是伪 3D：脚底 = (GROUND0 224 + z) × 2，玩家 z=64 → 576。
-## 怪物不共用这条线，而是用纯视觉 depth_y 复现远近层次（见 SPAWNS）。
 const GROUND_Y := 576.0
-## 出生点 [x, 视觉景深]。景深取自 preview：E1 z=56 → -8，E2 z=80 → +16（相对玩家 z=64）
-const SPAWNS := [[620.0, -8.0], [900.0, 16.0]]
-## 角色绘制层级基准，必须大于 0（背景在 z_index 0），景深在此基础上加减
-const Z_ACTOR := 10
+const JOB_NAMES := ["鬼剑士", "狂战士", "剑魂"]
+const JOB_DESCRIPTIONS := ["三段剑击与上挑，掌握距离和浮空追击。", "血怒强化攻速，怒斩以霸体压制敌人。", "蓄力拔刀与三连突刺，快速衔接连击。"]
+const SLOT_INDEX := {"A": 0, "S": 1, "1": 6, "2": 7}
 
 var bm: BattleFX
 var player: Player
 var monsters: Array = []
-var info_label: Label
-var font: FontFile
-var bg_tex: Texture2D
-var vignette_tex: Texture2D
+var camera: Camera2D
 var hud: Hud
+var font: Font
+var bg_tex: Texture2D
+var demo_config: Dictionary = {}
+var battle_state := BattleState.READY
+var resume_state := BattleState.FIGHT
+var selected_job := 2
+var wave_index := 0
+var transition_left := 0.0
+var elapsed := 0.0
+var kills := 0
+var hit_count := 0
+var damage_taken := 0.0
+var best_chain := 0
+var last_hit_time := -10.0
+var hit_chain := 0
+var _clock := 0.0
+var _last_hp := 0.0
+var _overlay: CanvasLayer
+var _shade: ColorRect
+var _card: PanelContainer
+var _content: VBoxContainer
+var _job_buttons: Array[Button] = []
+var _description: Label
+var _wave_notice: Label
+var _hint: Label
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	GameConfig.load_all()
+	demo_config = GameConfig._load_json("res://data/demo.json")
 	_register_actions()
-	_load_font()
-	_load_art()
+	var system_font := SystemFont.new()
+	system_font.font_names = PackedStringArray(["Microsoft YaHei", "Noto Sans CJK SC", "sans-serif"])
+	font = system_font
+	if ResourceLoader.exists("res://assets/demo/bg_dungeon.png"):
+		bg_tex = load("res://assets/demo/bg_dungeon.png")
 	_build_world()
 	_build_hud()
-	_build_vignette()
-	print("[M1] scene ready")
-
-## 烘焙贴图由 tools/bake_game_assets.py 产出（美术源为 tools/render_preview.py）
-func _load_art() -> void:
-	bg_tex = load("res://art/bg_dungeon.png") as Texture2D
-	vignette_tex = load("res://art/vignette.png") as Texture2D
-	if bg_tex == null or vignette_tex == null:
-		push_warning("[ART] 缺烘焙贴图：先跑 python tools/bake_game_assets.py")
-	else:
-		print("[ART] bg=%dx%d vignette ok" % [bg_tex.get_width(), bg_tex.get_height()])
+	_build_overlay()
+	_show_ready()
+	print("[DEMO] scene ready")
 
 func _register_actions() -> void:
 	var actions := {
-		"move_left": [KEY_LEFT],
-		"move_right": [KEY_RIGHT],
-		"move_down": [KEY_DOWN],
-		"jump": [KEY_C, KEY_SPACE],
-		"attack": [KEY_X],
-		"generic_skill": [KEY_Z],
-		"guard": [KEY_V],
-		"skill_a": [KEY_A],
-		"skill_s": [KEY_S],
-		"skill_d": [KEY_D],
-		"skill_f": [KEY_F],
-		"debug_job": [KEY_T],
-		"debug_reset": [KEY_R],
+		"move_left": [KEY_LEFT], "move_right": [KEY_RIGHT], "move_up": [KEY_UP], "move_down": [KEY_DOWN],
+		"jump": [KEY_C, KEY_SPACE], "attack": [KEY_X], "generic_skill": [KEY_Z], "guard": [KEY_V], "dash": [KEY_SHIFT],
+		"skill_a": [KEY_A], "skill_s": [KEY_S], "skill_d": [KEY_D], "skill_f": [KEY_F],
+		"debug_job": [KEY_T], "debug_reset": [KEY_R], "potion_hp": [KEY_1], "potion_mp": [KEY_2],
+		"pause_demo": [KEY_ESCAPE], "start_demo": [KEY_ENTER], "toggle_help": [KEY_F1],
 	}
 	for action in actions:
 		if not InputMap.has_action(action):
 			InputMap.add_action(action)
 		for key in actions[action]:
-			var ev := InputEventKey.new()
-			ev.physical_keycode = key
-			InputMap.action_add_event(action, ev)
-
-func _load_font() -> void:
-	font = FontFile.new()
-	for path in ["C:/Windows/Fonts/msyh.ttc", "C:/Windows/Fonts/simhei.ttf"]:
-		if font.load_dynamic_font(path) == OK:
-			print("[M1] font loaded: " + path)
-			return
-	font = null
+			var event := InputEventKey.new()
+			event.physical_keycode = key
+			InputMap.action_add_event(action, event)
 
 func _build_world() -> void:
 	var ground := StaticBody2D.new()
-	ground.name = "Ground"
 	var shape := CollisionShape2D.new()
 	var rect := RectangleShape2D.new()
-	rect.size = Vector2(4000, 100)
+	rect.size = Vector2(VIEW_W + 256, 100)
 	shape.shape = rect
-	shape.position = Vector2(2000, GROUND_Y + 50)
+	shape.position = Vector2(VIEW_W / 2, GROUND_Y + 50)
 	ground.add_child(shape)
 	add_child(ground)
-
 	bm = BattleFX.new()
 	bm.name = "BattleFX"
+	bm.process_mode = Node.PROCESS_MODE_PAUSABLE
 	bm.number_font = font
-	# 特效要画在角色之上：bm 先于 player/monster 入树，默认会被它们盖住
-	bm.z_index = 40
+	bm.z_index = 200
 	add_child(bm)
-	var cam := Camera2D.new()
-	cam.position = Vector2(400, 360)
-	cam.zoom = Vector2.ONE
-	cam.limit_left = 0
-	cam.limit_right = 4000
-	cam.limit_top = -200
-	cam.limit_bottom = 720
-	add_child(cam)
-	bm.camera = cam
-	camera = cam
-
+	camera = Camera2D.new()
+	camera.position = Vector2(VIEW_W / 2, VIEW_H / 2)
+	add_child(camera)
+	bm.camera = camera
 	player = Player.new()
 	player.name = "Player"
-	player.position = Vector2(300, GROUND_Y)
+	player.process_mode = Node.PROCESS_MODE_PAUSABLE
+	player.position = Vector2(240, GROUND_Y)
 	player.ground_y = GROUND_Y
-	player.z_index = Z_ACTOR
 	add_child(player)
 	player.setup(GameConfig.player, bm, monsters)
-
-	for s in SPAWNS:
-		_spawn_goblin(s[0], s[1])
-
-func _spawn_goblin(x: float, depth_y: float = NAN) -> void:
-	var m := Monster.new()
-	m.name = "Goblin"
-	m.position = Vector2(x, GROUND_Y)
-	var cfg: Dictionary = GameConfig.monsters["goblin"]
-	m.depth_y = float(cfg.get("depth_y", 0.0)) if is_nan(depth_y) else depth_y
-	m.ground_y = GROUND_Y
-	add_child(m)
-	# 按景深决定绘制层级：站得靠前（depth_y 大）的压在玩家前面，靠后的被玩家挡住。
-	# 基准 Z_ACTOR 必须 > 0 —— 背景是 main 自己在 z_index 0 画的，
-	# 直接用 depth_y 当 z_index 会让靠后的怪（depth_y 为负）跑到背景背后消失。
-	# 必须在 add_child 之后设，否则被 monster.gd 的 _ready 覆盖。
-	m.z_index = Z_ACTOR + int(round(m.depth_y))
-	m.setup(cfg, player, bm)
-	monsters.append(m)
+	player.died.connect(_on_player_died)
+	player.hp_changed.connect(_on_hp_changed)
+	player.landed_hit.connect(_on_landed_hit)
+	player.set_job(selected_job)
+	player.control_enabled = false
 
 func _build_hud() -> void:
-	# 正式 HUD：CanvasLayer 由 Hud 内部自建，因此不会随相机滚动
 	hud = Hud.new()
-	hud.name = "Hud"
 	add_child(hud)
 	hud.set_font(font)
-	hud.set_player_info("幽影剑士", 30, 0)
-	# M2 房间系统尚未实现：不设房间时隐藏房间块，避免显示假数据。
-	# 接口已就绪并验证过渲染（set_room(idx, total, difficulty) → 「第 N / M 间 · 难度：X」），
-	# M2 落地后把这里换成 hud.set_room(...) 即可。
+	player.action_feedback.connect(hud.set_feedback)
+	hud.set_player_info("幽影剑士", 30, selected_job)
 	hud.clear_room()
+	hud.visible = false
 
-	# 调试层：只留操作提示与状态。正式数值已由 HUD 接管，这里不再重复显示。
-	var layer := CanvasLayer.new()
-	layer.name = "DebugLayer"
-	layer.layer = 11
-	add_child(layer)
-	info_label = Label.new()
-	info_label.position = Vector2(16, 76)
-	info_label.add_theme_font_size_override("font_size", 13)
-	info_label.modulate = Color(1.0, 1.0, 1.0, 0.72)
-	if font:
-		info_label.add_theme_font_override("font", font)
-	layer.add_child(info_label)
+func _build_overlay() -> void:
+	_overlay = CanvasLayer.new()
+	_overlay.layer = 30
+	add_child(_overlay)
+	_shade = ColorRect.new()
+	_shade.color = Color(0.015, 0.019, 0.028, 0.72)
+	_shade.size = Vector2(VIEW_W, VIEW_H)
+	_overlay.add_child(_shade)
+	_card = PanelContainer.new()
+	_card.position = Vector2(310, 150)
+	_card.size = Vector2(660, 440)
+	_card.add_theme_stylebox_override("panel", _style(Color(0.038, 0.043, 0.06, 0.97), Color(0.42, 0.33, 0.22), 28))
+	_overlay.add_child(_card)
+	_content = VBoxContainer.new()
+	_content.add_theme_constant_override("separation", 15)
+	_card.add_child(_content)
+	_wave_notice = _label("", 30, Color(1.0, 0.88, 0.65))
+	_wave_notice.position = Vector2(340, 200)
+	_wave_notice.size = Vector2(600, 100)
+	_wave_notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_wave_notice.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_wave_notice.add_theme_constant_override("outline_size", 8)
+	_wave_notice.add_theme_color_override("font_outline_color", Color(0.01, 0.01, 0.015, 0.9))
+	_overlay.add_child(_wave_notice)
+	_hint = _label("", 14, Color(0.8, 0.81, 0.84))
+	_hint.position = Vector2(260, 104)
+	_hint.size = Vector2(760, 62)
+	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_hint.visible = false
+	_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_overlay.add_child(_hint)
 
+func _style(background: Color, border: Color, padding := 10) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = background
+	style.border_color = border
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(5)
+	style.content_margin_left = padding
+	style.content_margin_right = padding
+	style.content_margin_top = padding
+	style.content_margin_bottom = padding
+	return style
 
-## HUD 顶部铭牌的目标：最近的存活怪物
+func _label(text: String, size: int, color := Color(0.89, 0.87, 0.82)) -> Label:
+	var label := Label.new()
+	label.text = text
+	label.add_theme_font_override("font", font)
+	label.add_theme_font_size_override("font_size", size)
+	label.add_theme_color_override("font_color", color)
+	return label
+
+func _button(text: String, callback: Callable, primary := false) -> Button:
+	var button := Button.new()
+	button.text = text
+	button.custom_minimum_size = Vector2(0, 46)
+	button.add_theme_font_override("font", font)
+	button.add_theme_font_size_override("font_size", 18)
+	var tint := Color(0.27, 0.09, 0.105) if primary else Color(0.08, 0.085, 0.105)
+	button.add_theme_stylebox_override("normal", _style(tint, Color(0.48, 0.36, 0.25)))
+	button.add_theme_stylebox_override("hover", _style(tint.lightened(0.16), Color(0.85, 0.66, 0.39)))
+	button.add_theme_stylebox_override("pressed", _style(tint.lightened(0.08), Color(0.95, 0.72, 0.44)))
+	button.add_theme_stylebox_override("focus", _style(Color(0, 0, 0, 0), Color(0.95, 0.72, 0.44)))
+	button.pressed.connect(callback)
+	return button
+
+func _clear_card() -> void:
+	for child in _content.get_children():
+		_content.remove_child(child)
+		child.queue_free()
+	_job_buttons.clear()
+	_shade.show()
+	_card.show()
+	_wave_notice.hide()
+	_hint.hide()
+
+func _show_ready() -> void:
+	get_tree().paused = false
+	battle_state = BattleState.READY
+	_set_actor_control(false)
+	hud.visible = false
+	_clear_card()
+	_content.add_child(_label("SHADOW HALL  /  COMBAT DEMO", 13, Color(0.67, 0.55, 0.37)))
+	_content.add_child(_label("幽暗回廊", 42))
+	_content.add_child(_label("选择战斗风格，突破三波哥布林围攻。", 17, Color(0.66, 0.69, 0.73)))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	_content.add_child(row)
+	for index in 3:
+		var button := _button(JOB_NAMES[index], _select_job.bind(index))
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(button)
+		_job_buttons.append(button)
+	_description = _label("", 16)
+	_content.add_child(_description)
+	_select_job(selected_job)
+	_content.add_child(_label("方向键移动 · Shift 奔跑 · X 连击 · Z 上挑 · C 跳跃\nV 格挡 · ↓+C 后跳 · A/S 职业技能 · 1/2 药水", 15, Color(0.6, 0.63, 0.68)))
+	_content.add_child(_button("进入回廊    ↵", _start_demo.bind(-1), true))
+
+func _select_job(index: int) -> void:
+	selected_job = clampi(index, 0, 2)
+	player.set_job(selected_job)
+	if _description:
+		_description.text = JOB_DESCRIPTIONS[selected_job]
+	for i in _job_buttons.size():
+		_job_buttons[i].modulate = Color.WHITE if i == selected_job else Color(0.6, 0.64, 0.7)
+
+func _start_demo(job_id := -1) -> void:
+	get_tree().paused = false
+	if job_id >= 0:
+		selected_job = clampi(job_id, 0, 2)
+	_clear_monsters()
+	bm.clear_fx()
+	player.reset_combat(Vector2(float(demo_config.get("player_x", 220)), GROUND_Y))
+	player.set_job(selected_job)
+	wave_index = 0
+	elapsed = 0.0
+	kills = 0
+	hit_count = 0
+	damage_taken = 0.0
+	best_chain = 0
+	hit_chain = 0
+	last_hit_time = -10.0
+	_last_hp = player.hp
+	_shade.hide()
+	_card.hide()
+	_hint.hide()
+	hud.visible = true
+	hud.set_combo(0)
+	hud.set_feedback("")
+	hud.set_player_info("幽影剑士", 30, selected_job)
+	_spawn_wave()
+	print("[DEMO] started job=%d" % selected_job)
+
+func _clear_monsters() -> void:
+	for monster in monsters:
+		if is_instance_valid(monster):
+			monster.control_enabled = false
+			monster.queue_free()
+	monsters.clear()
+
+func _spawn_wave() -> void:
+	_clear_monsters()
+	var wave: Dictionary = demo_config["waves"][wave_index]
+	for spawn in wave["spawns"]:
+		var cfg: Dictionary = GameConfig.monsters["goblin"].duplicate(true)
+		for key in spawn.get("overrides", {}):
+			cfg[key] = spawn["overrides"][key]
+		var monster := Monster.new()
+		monster.name = "Goblin"
+		monster.process_mode = Node.PROCESS_MODE_PAUSABLE
+		monster.position = Vector2(float(spawn["x"]), GROUND_Y)
+		monster.ground_y = GROUND_Y
+		monster.depth_y = float(spawn.get("depth", 0))
+		add_child(monster)
+		monster.setup(cfg, player, bm)
+		monster.died.connect(_on_monster_died)
+		monsters.append(monster)
+	battle_state = BattleState.FIGHT
+	_set_actor_control(true)
+	_wave_notice.text = "第 %d / %d 波\n%s" % [wave_index + 1, demo_config["waves"].size(), wave["name"]]
+	_wave_notice.show()
+	transition_left = 1.8
+	bm.play_sound("wave")
+	print("[DEMO] wave=%d enemies=%d" % [wave_index + 1, monsters.size()])
+
+func _set_actor_control(enabled: bool) -> void:
+	player.control_enabled = enabled and not player.dead
+	for monster in monsters:
+		if is_instance_valid(monster):
+			monster.control_enabled = enabled and not monster.dead
+
+func alive_count() -> int:
+	var count := 0
+	for monster in monsters:
+		if is_instance_valid(monster) and not monster.dead:
+			count += 1
+	return count
+
+func _on_monster_died(_monster) -> void:
+	kills += 1
+
+func _on_landed_hit(_monster, _damage: float) -> void:
+	hit_count += 1
+	hit_chain = hit_chain + 1 if elapsed - last_hit_time < 2.2 else 1
+	last_hit_time = elapsed
+	best_chain = maxi(best_chain, hit_chain)
+	hud.set_combo(hit_chain)
+
+func _on_player_died() -> void:
+	_finish(false)
+
+func _on_hp_changed(health: float, _max_health: float) -> void:
+	if battle_state in [BattleState.FIGHT, BattleState.WAVE_BREAK]:
+		damage_taken += maxf(0.0, _last_hp - health)
+	_last_hp = health
+
+func _finish(victory: bool) -> void:
+	battle_state = BattleState.VICTORY if victory else BattleState.DEFEAT
+	_set_actor_control(false)
+	damage_taken += maxf(0.0, _last_hp - player.hp)
+	_last_hp = player.hp
+	bm.clear_fx()
+	bm.play_sound("victory" if victory else "death")
+	_clear_card()
+	_content.add_child(_label("ENCOUNTER COMPLETE" if victory else "ENCOUNTER FAILED", 13, Color(0.67, 0.55, 0.37)))
+	_content.add_child(_label("回廊已肃清" if victory else "挑战失败", 38))
+	var rank := "S" if damage_taken < 100 and elapsed < 100 else ("A" if damage_taken < 250 else "B")
+	_content.add_child(_label("战斗评价  %s" % rank if victory else "观察挥棒前摇，以格挡或后跳争取反击机会。", 22))
+	_content.add_child(_label("用时 %s    击败 %d    最长连击 %d\n有效命中 %d    承受伤害 %.0f" % [_time_text(elapsed), kills, best_chain, hit_count, damage_taken], 18))
+	_content.add_child(_button("再次挑战    R / ↵", _start_demo.bind(-1), true))
+	_content.add_child(_button("选择战斗风格", _show_ready))
+	print("[DEMO] result=%s kills=%d hits=%d" % ["victory" if victory else "defeat", kills, hit_count])
+
+func _toggle_pause() -> void:
+	if battle_state == BattleState.PAUSED:
+		battle_state = resume_state
+		get_tree().paused = false
+		_shade.hide()
+		_card.hide()
+		_set_actor_control(battle_state in [BattleState.FIGHT, BattleState.WAVE_BREAK])
+		return
+	if battle_state not in [BattleState.FIGHT, BattleState.WAVE_BREAK]:
+		return
+	resume_state = battle_state
+	battle_state = BattleState.PAUSED
+	_set_actor_control(false)
+	get_tree().paused = true
+	_clear_card()
+	_content.add_child(_label("战斗已暂停", 34))
+	_content.add_child(_label("Esc 继续 · R 重新挑战 · F1 操作说明", 17))
+	_content.add_child(_button("继续战斗    Esc", _toggle_pause, true))
+	_content.add_child(_button("重新挑战", _start_demo.bind(-1)))
+	_content.add_child(_button("选择战斗风格", _show_ready))
+
+func _reset_battle() -> void:
+	_start_demo(selected_job)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause_demo"):
+		_toggle_pause()
+	elif event.is_action_pressed("debug_reset"):
+		_reset_battle()
+	elif event.is_action_pressed("start_demo"):
+		if battle_state in [BattleState.READY, BattleState.VICTORY, BattleState.DEFEAT]:
+			_start_demo()
+	elif event.is_action_pressed("debug_job") and battle_state == BattleState.FIGHT:
+		selected_job = (player.job + 1) % 3
+		player.set_job(selected_job)
+	elif event.is_action_pressed("toggle_help"):
+		_hint.text = "←→ 移动 / ↑↓ 调整纵深 / 双击方向或 Shift 奔跑\nX 三连击 / Z 上挑后 C 起跳追击 / V 格挡 / ↓+C 后跳 / A S 技能 / 1 2 药水"
+		_hint.visible = not _hint.visible
+
+func _physics_process(delta: float) -> void:
+	if battle_state == BattleState.PAUSED:
+		return
+	if bm.freeze > 0:
+		bm.freeze -= 1
+	if battle_state == BattleState.FIGHT:
+		elapsed += delta
+		damage_taken += maxf(0.0, _last_hp - player.hp)
+		_last_hp = player.hp
+		if alive_count() == 0:
+			if wave_index + 1 == demo_config["waves"].size():
+				_finish(true)
+			else:
+				battle_state = BattleState.WAVE_BREAK
+				transition_left = float(demo_config.get("wave_delay", 2.0))
+				_set_actor_control(true)
+				_wave_notice.text = "第 %d 波已清理\n下一波即将进入" % [wave_index + 1]
+				_wave_notice.show()
+		elif transition_left > 0.0:
+			transition_left -= delta
+			if transition_left <= 0.0:
+				_wave_notice.hide()
+	elif battle_state == BattleState.WAVE_BREAK:
+		elapsed += delta
+		transition_left -= delta
+		if transition_left <= 0.0:
+			wave_index += 1
+			_spawn_wave()
+
 func _pick_target():
 	var best = null
-	var best_d := INF
-	for m in monsters:
-		if not is_instance_valid(m) or m.dead:
+	var best_distance := INF
+	for monster in monsters:
+		if not is_instance_valid(monster) or monster.dead:
 			continue
-		var d: float = absf(m.position.x - player.position.x)
-		if d < best_d:
-			best_d = d
-			best = m
+		var distance: float = absf(monster.position.x - player.position.x)
+		if distance < best_distance:
+			best_distance = distance
+			best = monster
 	return best
 
-
-## 技能格按键 → HUD 格子索引（与 hud_manifest.json 的 slots 顺序一致）
-const SLOT_INDEX := {"A": 0, "S": 1, "D": 2, "F": 3, "G": 4, "H": 5, "1": 6, "2": 7}
-
-## player.cds（技能 id → 剩余帧数）+ skills.json 的 slot/cd 字段 → HUD 冷却遮罩
 func _hud_cooldowns() -> void:
 	var left := {}
 	var total := {}
-	for sid in player.cds.keys():
-		var sk: Dictionary = GameConfig.skills.get(sid, {})
-		if sk.is_empty():
-			continue
-		var idx: int = SLOT_INDEX.get(str(sk.get("slot", "")), -1)
-		if idx < 0:
-			continue
-		var l := float(player.cds[sid]) / 60.0
-		if l > 0.0:
-			left[idx] = l
-			total[idx] = float(sk.get("cd", 0))
+	for sid in player.cds:
+		var skill: Dictionary = GameConfig.skills.get(sid, {})
+		var index: int = SLOT_INDEX.get(str(skill.get("slot", "")), -1)
+		if index >= 0:
+			left[index] = float(player.cds[sid]) / 60.0
+			total[index] = float(skill.get("cd", 0))
+	for index in [6, 7]:
+		left[index] = float(player.potion_cd) / 60.0
+		total[index] = float(player.cfg.get("potion_cd", 5))
 	hud.set_cooldowns(left, total)
 
-
-## 暗角叠加层：固定屏幕空间。
-## 层号必须低于 HUD —— preview 的合成顺序是 world(含暗角) → hud → 动态 UI。
-func _build_vignette() -> void:
-	if vignette_tex == null:
-		return
-	var layer := CanvasLayer.new()
-	layer.name = "VignetteLayer"
-	layer.layer = 1
-	var tr := TextureRect.new()
-	tr.texture = vignette_tex
-	tr.position = Vector2.ZERO
-	tr.size = Vector2(VIEW_W, VIEW_H)
-	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	layer.add_child(tr)
-	add_child(layer)
-
-func _physics_process(_delta: float) -> void:
-	if bm.freeze > 0:
-		bm.freeze -= 1
-	_check_debug_keys()
-
-func _check_debug_keys() -> void:
-	if Input.is_action_just_pressed("debug_job"):
-		player.set_job((player.job + 1) % 3)
-	if Input.is_action_just_pressed("debug_reset"):
-		_reset_battle()
-
-var camera: Camera2D
-
-func _reset_battle() -> void:
-	player.hp = player.cfg["max_hp"]
-	for m in monsters:
-		if is_instance_valid(m):
-			m.queue_free()
-	monsters.clear()
-	for s in SPAWNS:
-		_spawn_goblin(s[0], s[1])
-	print("[M1] battle reset")
-
-func _process(_delta: float) -> void:
-	if camera != null and player != null:
-		camera.position.x = clampf(player.position.x, 640, 3360)
-		camera.position.y = 360
-	if hud != null and player != null:
+func _process(delta: float) -> void:
+	if battle_state != BattleState.PAUSED:
+		_clock += delta
+		queue_redraw()
+	if hud and player:
 		hud.set_vitals(player.hp, player.cfg["max_hp"], player.mp, player.cfg["max_mp"])
-		hud.set_combo(player.combo)
 		hud.set_job(player.job)
 		hud.set_target(_pick_target())
+		hud.set_encounter(wave_index + 1, demo_config["waves"].size(), alive_count(), elapsed)
 		_hud_cooldowns()
-	if info_label == null:
-		return
-	var job_name: String = ["基础鬼剑士", "狂战士", "剑魂"][player.job]
-	var st_name: String = Player.St.keys()[player.state]
-	var skills := ""
-	if player.job == 1:
-		skills = "A血怒 S怒斩"
-	elif player.job == 2:
-		skills = "A拔刀斩 S连突刺"
-	var alive := 0
-	for m in monsters:
-		if is_instance_valid(m) and not m.dead:
-			alive += 1
-	info_label.text = "X普攻 C跳 Z上挑 V格挡 ↓+C后跳 T转职 R重置\n职业: %s | 状态: %s | 连段: %d | HP: %.0f/%.0f | 怪物存活: %d | 技能: %s" % \
-		[job_name, st_name, player.combo, player.hp, player.cfg["max_hp"], alive, skills]
+		if elapsed - last_hit_time > 2.2:
+			hit_chain = 0
+			hud.set_combo(0)
+
+func _time_text(seconds: float) -> String:
+	return "%02d:%02d" % [int(seconds / 60.0), int(seconds) % 60]
 
 func _draw() -> void:
-	if bg_tex == null:
-		draw_rect(Rect2(0, 0, WORLD_W, VIEW_H), Color(0.09, 0.08, 0.13))
-		return
-	# 沿世界横向镜像平铺，减轻重复感（M2 房间制后换成按房间取景）
-	var tw := float(bg_tex.get_width())
-	var th := float(bg_tex.get_height())
-	var n := int(ceil((WORLD_W + VIEW_W) / tw)) + 1
-	for i in range(n):
-		var x := float(i) * tw
-		if i % 2 == 1:
-			draw_set_transform(Vector2(x + tw, 0.0), 0.0, Vector2(-1.0, 1.0))
-			draw_texture_rect(bg_tex, Rect2(0.0, 0.0, tw, th), false)
-		else:
-			draw_set_transform(Vector2(x, 0.0), 0.0, Vector2.ONE)
-			draw_texture_rect(bg_tex, Rect2(0.0, 0.0, tw, th), false)
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	if bg_tex:
+		draw_texture_rect(bg_tex, Rect2(0, 0, VIEW_W, VIEW_H), false)
+	else:
+		draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color(0.07, 0.07, 0.105))
+	for point in [Vector2(125, 303), Vector2(1120, 291)]:
+		var flicker := 0.78 + 0.09 * sin(_clock * 5.3 + point.x)
+		for radius in [70.0, 45.0, 24.0]:
+			draw_circle(point, radius, Color(1.0, 0.37, 0.08, 0.018 * flicker))
+	for index in 14:
+		var x := fposmod(index * 103.7 + _clock * (3.0 + index % 3), VIEW_W)
+		var y := 290 + fposmod(index * 53.9 - _clock * 6, 280)
+		draw_circle(Vector2(x, y), 1.2, Color(0.9, 0.67, 0.42, 0.17))

@@ -6,5 +6,21 @@
   "gravity": 2600,
   "attack_speed": 1.0,
   "move_speed": 1.0,
-  "defense": 1.0
+  "defense": 1.0,
+  "hurtbox_height": 190,
+  "lane_min": -40,
+  "lane_max": 24,
+  "lane_speed": 90,
+  "lane_hit_tolerance": 24,
+  "input_buffer_frames": 12,
+  "combo_window": 12,
+  "double_tap_ms": 280,
+  "down_time": 36,
+  "getup_time": 12,
+  "hit_stun": 14,
+  "hit_invincible": 10,
+  "guard_damage_scale": 0.2,
+  "potion_cd": 5,
+  "potion_hp_ratio": 0.3,
+  "potion_mp_ratio": 0.4
 }

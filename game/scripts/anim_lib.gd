@@ -9,7 +9,7 @@ extends RefCounted
 ## 帧条约定：水平排列、所有帧共用同一画布尺寸与锚点、一律朝右（facing = +1）。
 ## 清单缺失 / 贴图缺失 / 解析失败时返回空表，调用方退回占位绘制 —— 绝不报错崩溃。
 
-const MANIFEST := "res://art/anim.json"
+const MANIFEST := "res://assets/demo/anim.json"
 
 static var _cache := {}
 
@@ -94,6 +94,62 @@ static func advance(clip: Dictionary, frame: int, tick: int) -> Array:
 			t = 0
 			break
 	return [f, t]
+
+
+## 动作动画跟随战斗帧表；攻速与取消不会让贴图停留在错误的动作阶段。
+static func frame_at_progress(clip: Dictionary, progress: float) -> int:
+	var durations: Array = clip.get("durations", [1])
+	var duration := 0.0
+	for span in durations:
+		duration += float(span)
+	var clock := clampf(progress, 0.0, 0.999999) * duration
+	for index in durations.size():
+		if clock < float(durations[index]):
+			return index
+		clock -= float(durations[index])
+	return maxi(0, int(clip.get("frames", 1)) - 1)
+
+
+## Demo 清单按动作准备/出手/收势排列，贴图必须与真正活动判定同步。
+static func frame_for_move(clip: Dictionary, clock: float, data: Dictionary) -> int:
+	var frames := int(clip.get("frames", 1))
+	if not data.has("hits") and float(data.get("active", 0)) == 0.0:
+		return frame_at_progress(clip, clock / maxf(1.0, move_duration(data)))
+	if data.has("hits"):
+		var hits: Array = data["hits"]
+		for index in hits.size():
+			var hit: Dictionary = hits[index]
+			var start := float(hit.get("delay", 0))
+			if clock <= start:
+				return mini(index * 2, frames - 1)
+			if clock <= start + float(hit.get("active", 3)):
+				return mini(index * 2 + 1, frames - 1)
+		return frames - 1
+	var startup := float(data.get("charge", data.get("windup", 0)))
+	# 哥布林五帧动作有两个前摇关键姿态；玩家的3/4帧有一个前摇。
+	var active_frame := 2 if String(clip.get("name", "")) == "attack" and frames >= 5 else 1
+	if clock <= startup:
+		return 1 if active_frame == 2 and clock > startup * 0.5 else 0
+	if clock <= startup + float(data.get("active", 0)):
+		return mini(active_frame, frames - 1)
+	var recovery_start := mini(active_frame + 1, frames - 1)
+	var spans: Array = clip.get("durations", [1])
+	var recovery_spans := 0.0
+	for index in range(recovery_start, frames):
+		recovery_spans += float(spans[index])
+	var recovery_clock := clampf((clock - startup - float(data.get("active", 0))) / maxf(1.0, float(data.get("recovery", 0))), 0.0, 0.999999) * recovery_spans
+	for index in range(recovery_start, frames):
+		if recovery_clock < float(spans[index]):
+			return index
+		recovery_clock -= float(spans[index])
+	return frames - 1
+
+
+static func move_duration(data: Dictionary) -> float:
+	if data.has("hits"):
+		var last: Dictionary = data["hits"][-1]
+		return float(last.get("delay", 0)) + float(last.get("active", 3)) + float(data.get("recovery", 0))
+	return float(data.get("charge", data.get("windup", 0))) + float(data.get("active", 0)) + float(data.get("recovery", 0))
 
 
 ## 按优先级挑第一个存在的动作名；都不存在时退回 fallback（可能也不存在 → 返回空串）
