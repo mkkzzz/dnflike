@@ -1,0 +1,25 @@
+{
+  "note": "临时规格：用 art/ 里的定稿立绘当**单帧静态占位**，目的是在 AI 动作帧图产出之前，就能在实机上看到正确画风。动作帧图就位后请改用 tools/ai_anim_spec.json。",
+  "why_static": "立绘只有 1 个姿势，所以每个动作只有 1 帧、不会动。它替代的是「画风」，不是「动画」。",
+  "key": "flat 表示按纯色底抠图（立绘是灰底）；AI 帧图请用绿幕，即 key=green",
+  "groups": {
+    "player": {
+      "target_body_h": 190,
+      "pixel": 2,
+      "posterize": 40,
+      "key": "flat",
+      "actions": {
+        "idle": {"sheet": "art/characters/hero_cool.png", "rows": 1, "cols": 1, "loop": true, "fps": 10, "durations_ms": [200]}
+      }
+    },
+    "monster": {
+      "target_body_h": 140,
+      "pixel": 2,
+      "posterize": 40,
+      "key": "flat",
+      "actions": {
+        "idle": {"sheet": "art/characters/goblin.png", "rows": 1, "cols": 1, "loop": true, "fps": 10, "durations_ms": [200]}
+      }
+    }
+  }
+}

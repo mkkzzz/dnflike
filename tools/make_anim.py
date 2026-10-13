@@ -9,15 +9,16 @@ from scipy import ndimage
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PROJ = os.path.dirname(ROOT)
-SHEET = sys.argv[1] if len(sys.argv) > 1 else os.path.join(PROJ, "temp", "animation_tests", "sheet_hero_slash.png")
-OUT = os.path.join(PROJ, "temp", "animation_tests", "processed")
 BG = os.path.join(PROJ, "art", "environments", "dungeon_hall.png")
-os.makedirs(OUT, exist_ok=True)
 
-ROWS, COLS = 2, 3
+# 本文件同时是「单张帧图预览」CLI 和「多动作 ingest」的算法库：
+# tools/bake_ai_frames.py 直接 import 这里的 key_green / split_frames / anchor_of。
+# 因此所有算法函数都不依赖模块级可变状态，**导入时无副作用**。
+DEF_ROWS, DEF_COLS = 2, 3
 PIXEL = 2            # 像素块边长（屏幕像素），2 = 很微弱的像素感
 POSTERIZE = 40       # 每通道色阶数，越小像素画味越重
 DURATIONS = [180, 150, 70, 80, 170, 220]   # 每帧时长 ms：预备慢、出刀快、命中定格
+OUT = ""             # 由 main() 设定；算法函数不使用它
 
 
 def key_green(rgb):
@@ -33,10 +34,10 @@ def key_green(rgb):
     return out, fg
 
 
-def split_frames(fg):
-    """逐步腐蚀直到分离出 ROWS*COLS 个主体，再按最近主体回填全部前景像素（剑身/刀光/火焰归属最近的角色）。"""
+def split_frames(fg, rows=DEF_ROWS, cols=DEF_COLS):
+    """逐步腐蚀直到分离出 rows*cols 个主体，再按最近主体回填全部前景像素（剑身/刀光/火焰归属最近的角色）。"""
     h, w = fg.shape
-    need = ROWS * COLS
+    need = rows * cols
     seeds = None
     for k in range(1, 25):
         er = ndimage.binary_erosion(fg, iterations=k)
@@ -69,9 +70,9 @@ def split_frames(fg):
     cells = [[] for _ in range(need)]
     centers = ndimage.center_of_mass(seeds > 0, seeds, range(1, need + 1))
     for j, (cy, cx) in enumerate(centers):
-        r = min(ROWS - 1, int(cy / (h / ROWS)))
-        c = min(COLS - 1, int(cx / (w / COLS)))
-        cells[r * COLS + c].append((j + 1, int((seeds == j + 1).sum())))
+        r = min(rows - 1, int(cy / (h / rows)))
+        c = min(cols - 1, int(cx / (w / cols)))
+        cells[r * cols + c].append((j + 1, int((seeds == j + 1).sum())))
     return lab, cells
 
 
@@ -86,7 +87,12 @@ def anchor_of(mask):
 
 
 def main():
-    rgb = np.array(Image.open(SHEET).convert("RGB"))
+    global OUT
+    OUT = os.path.join(PROJ, "temp", "animation_tests", "processed")
+    os.makedirs(OUT, exist_ok=True)
+    sheet = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
+        PROJ, "temp", "animation_tests", "sheet_hero_slash.png")
+    rgb = np.array(Image.open(sheet).convert("RGB"))
     rgb, fg = key_green(rgb)
     lab, cells = split_frames(fg)
 

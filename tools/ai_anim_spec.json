@@ -1,0 +1,67 @@
+{
+  "note": "AI 动作帧图 → 实机帧条的规格。改完后跑 python tools/bake_ai_frames.py；产物写 game/art/anim.json，Godot 侧零改动。",
+  "how_to": {
+    "背景": "纯绿幕（#00FF00 附近），不要加影子/地面/渐变；绿幕抠图见 make_anim.key_green",
+    "网格": "每张图按 rows x cols 均分，每格一个动作帧，格内角色不越界、不重叠",
+    "一致性": "同一张图内角色外形必须完全一致（同一提示词一次出图，这是文档里验证过的做法）",
+    "朝向": "一律朝右（+1）。朝左由 Godot 水平翻转，不要出朝左的图",
+    "尺寸": "单格不要小于 512x512，出图越大越好，脚本会归一化到 target_body_h",
+    "禁止": "不要在图上画刀光/残影/速度线（那是实机 FX 的活，会切帧错位）；不要画血条/UI",
+    "命名": "art/sheets/<group>/<action>.png"
+  },
+  "reference": {
+    "定稿标杆": "art/characters/hero_cool.png —— 银白刺发带一缕红挑染、左眼角刀疤、红瞳、黑色皮革长风衣、血红内衬、银扣、左臂缠红绷带冒暗红火焰、黑柄长刀",
+    "哥布林": "art/characters/goblin.png —— 尖耳、黄眼、獠牙、钉刺木棒",
+    "已弃用勿参照": [
+      "art/characters/benchmark_board.png",
+      "art/characters/hero_idle.png",
+      "art/characters/hero_attack.png"
+    ]
+  },
+  "tuning": {
+    "target_body_h": "角色**身体**（不含刀/发梢）在 1280x720 实机上的目标高度。改了必须同步按同比例改碰撞盒，否则视觉和判定会错位。",
+    "player_192": "当前实机观感尺度（与地牢背景构图已验证协调）。若用这档，碰撞盒需按 ~1.8x 放大：moves.json 的 hitbox.h 100~110 → 180~200、hitbox.x 42~52 → 76~94；player.gd 近战怪物盒 60 → 108；monster.gd 碰撞体 50 → 90",
+    "player_104": "M1 碰撞盒实际假定的尺度（旧 draw_rect 占位约 95px 高）。用这档无需改任何判定数值，但角色在 720p 画面上偏小",
+    "reach_note": "另外还有一个独立问题：preview 的攻击前伸约为身高的 98%，Godot 现在只有 44%。即使角色尺度对齐，攻击距离仍需单独调 moves.json 的 hitbox.x"
+  },
+  "groups": {
+    "player": {
+      "target_body_h": 190,
+      "pixel": 2,
+      "posterize": 40,
+      "actions": {
+        "idle":       {"sheet": "art/sheets/player/idle.png",       "rows": 2, "cols": 3, "loop": true,  "fps": 12, "durations_ms": [220, 220, 220, 220, 220, 220]},
+        "run":        {"sheet": "art/sheets/player/run.png",        "rows": 2, "cols": 3, "loop": true,  "fps": 14, "durations_ms": [70, 70, 70, 70, 70, 70]},
+        "jump":       {"sheet": "art/sheets/player/jump.png",       "rows": 2, "cols": 3, "loop": false, "fps": 14, "durations_ms": [70, 60, 60, 80, 80, 90]},
+        "back_dash":  {"sheet": "art/sheets/player/back_dash.png",  "rows": 2, "cols": 3, "loop": false, "fps": 16, "durations_ms": [60, 50, 50, 50, 70, 90]},
+        "guard":      {"sheet": "art/sheets/player/guard.png",      "rows": 1, "cols": 4, "loop": true,  "fps": 10, "durations_ms": [140, 140, 140, 140]},
+        "attack1":    {"sheet": "art/sheets/player/attack1.png",    "rows": 2, "cols": 3, "loop": false, "fps": 14, "durations_ms": [150, 110, 60, 50, 90, 140]},
+        "attack2":    {"sheet": "art/sheets/player/attack2.png",    "rows": 2, "cols": 3, "loop": false, "fps": 14, "durations_ms": [140, 100, 60, 50, 90, 140]},
+        "attack3":    {"sheet": "art/sheets/player/attack3.png",    "rows": 2, "cols": 3, "loop": false, "fps": 12, "durations_ms": [180, 140, 70, 60, 120, 180]},
+        "upper":      {"sheet": "art/sheets/player/upper.png",      "rows": 2, "cols": 3, "loop": false, "fps": 14, "durations_ms": [140, 120, 60, 50, 100, 150]},
+        "hit":        {"sheet": "art/sheets/player/hit.png",        "rows": 2, "cols": 3, "loop": false, "fps": 16, "durations_ms": [60, 60, 60, 80, 90, 100]},
+        "air":        {"sheet": "art/sheets/player/air.png",        "rows": 2, "cols": 3, "loop": true,  "fps": 12, "durations_ms": [120, 120, 120, 120, 120, 120]},
+        "down":       {"sheet": "art/sheets/player/down.png",       "rows": 2, "cols": 3, "loop": false, "fps": 10, "durations_ms": [80, 80, 80, 90, 110, 140]},
+        "getup":      {"sheet": "art/sheets/player/getup.png",      "rows": 2, "cols": 3, "loop": false, "fps": 12, "durations_ms": [110, 100, 90, 90, 100, 120]},
+        "quick_draw": {"sheet": "art/sheets/player/quick_draw.png", "rows": 2, "cols": 3, "loop": false, "fps": 12, "durations_ms": [200, 200, 120, 50, 80, 120]},
+        "rage_slash": {"sheet": "art/sheets/player/rage_slash.png", "rows": 2, "cols": 3, "loop": false, "fps": 14, "durations_ms": [160, 120, 70, 60, 90, 130]},
+        "thrust":     {"sheet": "art/sheets/player/thrust.png",     "rows": 2, "cols": 3, "loop": false, "fps": 16, "durations_ms": [90, 70, 55, 50, 70, 110]}
+      }
+    },
+    "monster": {
+      "target_body_h": 140,
+      "pixel": 2,
+      "posterize": 40,
+      "actions": {
+        "idle":    {"sheet": "art/sheets/monster/idle.png",    "rows": 2, "cols": 3, "loop": true,  "fps": 10, "durations_ms": [220, 220, 220, 220, 220, 220]},
+        "patrol":  {"sheet": "art/sheets/monster/patrol.png",  "rows": 2, "cols": 3, "loop": true,  "fps": 12, "durations_ms": [120, 120, 120, 120, 120, 120]},
+        "chase":   {"sheet": "art/sheets/monster/chase.png",   "rows": 2, "cols": 3, "loop": true,  "fps": 14, "durations_ms": [90, 90, 90, 90, 90, 90]},
+        "attack":  {"sheet": "art/sheets/monster/attack.png",  "rows": 2, "cols": 3, "loop": false, "fps": 14, "durations_ms": [140, 110, 60, 50, 90, 130]},
+        "hit":     {"sheet": "art/sheets/monster/hit.png",     "rows": 1, "cols": 4, "loop": false, "fps": 16, "durations_ms": [60, 60, 70, 90]},
+        "air":     {"sheet": "art/sheets/monster/air.png",     "rows": 2, "cols": 3, "loop": true,  "fps": 12, "durations_ms": [120, 120, 120, 120, 120, 120]},
+        "down":    {"sheet": "art/sheets/monster/down.png",    "rows": 1, "cols": 4, "loop": false, "fps": 10, "durations_ms": [90, 90, 110, 140]},
+        "getup":   {"sheet": "art/sheets/monster/getup.png",   "rows": 2, "cols": 3, "loop": false, "fps": 12, "durations_ms": [100, 90, 90, 90, 100, 120]}
+      }
+    }
+  }
+}

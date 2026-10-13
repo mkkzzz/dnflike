@@ -225,7 +225,7 @@ def _merge_manifest(groups):
     data = {
         "version": 1,
         "generator": "tools/bake_game_assets.py",
-        "source": "tools/render_preview.py",
+        "art_source": "占位：tools/render_preview.py（程序化几何）；正式：AI 帧图经 tools/bake_ai_frames.py 写入的条目优先保留",
         "note": "帧条一律朝右（facing=+1）；锚点 (ax,ay) = 脚底相对帧左上角的实机像素偏移",
         "game": {"width": GAME_W, "height": GAME_H},
         "preview": {"width": RP.W, "height": RP.H},
@@ -240,8 +240,17 @@ def _merge_manifest(groups):
         except Exception:
             data["groups"] = {}
     for g, entries in groups.items():
-        if entries:
-            data["groups"][g] = entries
+        if not entries:
+            continue
+        dst = data["groups"].setdefault(g, {})
+        for name, e in entries.items():
+            # 正式美术（AI 帧图，tools/bake_ai_frames.py 写入）优先，绝不用占位覆盖它。
+            # 注意必须**逐条**合并：整组替换会把 AI 帧条条目一起抹掉。
+            if str(dst.get(name, {}).get("source", "")) == "ai":
+                print(f"[BAKE]   保留 AI 帧条 {g}/{name}（跳过占位）")
+                continue
+            e["source"] = "procedural"
+            dst[name] = e
     os.makedirs(OUT, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=1, sort_keys=True)

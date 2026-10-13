@@ -1,8 +1,10 @@
 extends RefCounted
 ## 帧条贴图仓库（实机表现层）
 ##
-## 数据来自 `res://art/anim.json` —— 由 `tools/bake_game_assets.py` 从 `tools/render_preview.py`
-## 烘焙（单一美术源原则：本文件与 player.gd / monster.gd 都不含任何美术细节）。
+## 数据来自 `res://art/anim.json`。帧条有两个来源（见 docs/design/11_实机表现层管线.md）：
+##   - **正式**：AI 帧图 → `tools/make_anim.py` → `tools/bake_ai_frames.py`（定稿画风）
+##   - **占位**：`tools/bake_game_assets.py` 从 `tools/render_preview.py` 烘焙的程序化几何图形
+## 两种产物格式相同，本文件与 player.gd / monster.gd 都不含任何美术细节。
 ##
 ## 帧条约定：水平排列、所有帧共用同一画布尺寸与锚点、一律朝右（facing = +1）。
 ## 清单缺失 / 贴图缺失 / 解析失败时返回空表，调用方退回占位绘制 —— 绝不报错崩溃。
@@ -18,7 +20,7 @@ static func load_group(group: String) -> Dictionary:
 		return _cache[group]
 	var out := {}
 	if not FileAccess.file_exists(MANIFEST):
-		push_warning("[ANIM] 缺 %s：先跑 python tools/bake_game_assets.py" % MANIFEST)
+		push_warning("[ANIM] 缺 %s：先跑 python tools/bake_ai_frames.py（正式）或 tools/bake_game_assets.py（占位）" % MANIFEST)
 		return out
 	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(MANIFEST))
 	if typeof(data) != TYPE_DICTIONARY:
