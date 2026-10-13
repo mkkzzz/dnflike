@@ -21,6 +21,10 @@ var player_ref: Node2D
 var fx: BattleFX
 var atk_hit_done := false
 var dead := false
+## 纯视觉景深偏移（伪 3D 远近层次），不参与物理
+var depth_y := 0.0
+## 地面线（由 main 注入），用于把落地阴影钉在地面上
+var ground_y := 0.0
 
 func _ready() -> void:
 	var shape := CollisionShape2D.new()
@@ -215,6 +219,16 @@ func _die() -> void:
 	tw.tween_callback(queue_free)
 
 func _draw() -> void:
+	# 视觉景深：只偏移绘制，物理仍共用 GROUND_Y 一条地面线
+	var base := Vector2(0.0, depth_y)
+	draw_set_transform(base, 0.0, Vector2.ONE)
+	# 落地阴影：钉在地面线上，随离地高度收缩
+	var gy := ground_y - position.y
+	if gy > -10.0 and gy < 160.0:
+		var sh_w := 40.0 * (1.0 - minf(absf(gy), 140.0) / 280.0)
+		draw_set_transform(Vector2(0.0, depth_y + gy), 0.0, Vector2(1.0, 0.22))
+		draw_circle(Vector2.ZERO, sh_w * 0.5, Color(0.0, 0.0, 0.0, 0.45))
+		draw_set_transform(base, 0.0, Vector2.ONE)
 	# 哥布林占位：绿身 + 大耳 + 木棒
 	draw_rect(Rect2(-13, -46, 26, 26), Color(0.44, 0.62, 0.27))  # 身
 	draw_rect(Rect2(-13, -20, 26, 20), Color(0.36, 0.5, 0.22))  # 腿

@@ -13,6 +13,8 @@ var state := St.IDLE
 var facing := 1
 var hp := 1000.0
 var mp := 300.0
+## 地面线（由 main 注入），用于把落地阴影钉在地面上
+var ground_y := 0.0
 
 # 移动 / 双击奔跑
 var running := false
@@ -415,10 +417,13 @@ func set_job(j: int) -> void:
 	print("[M1] job switch: %d" % job)
 
 func _draw() -> void:
-	# 地面影子
-	var gy := 650.0 - position.y
-	if gy > -10 and gy < 120:
-		draw_rect(Rect2(-20, gy - 4, 40, 8), Color(0, 0, 0, 0.35))
+	# 落地阴影：钉在地面线上，随离地高度收缩（对齐 preview 的椭圆投影）
+	var gy := ground_y - position.y
+	if gy > -10.0 and gy < 160.0:
+		var sh_w := 40.0 * (1.0 - minf(absf(gy), 140.0) / 280.0)
+		draw_set_transform(Vector2(0.0, gy), 0.0, Vector2(1.0, 0.22))
+		draw_circle(Vector2.ZERO, sh_w * 0.5, Color(0.0, 0.0, 0.0, 0.45))
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	# 腿
 	draw_rect(Rect2(-14, -40, 12, 40), Color(0.24, 0.22, 0.3))
 	draw_rect(Rect2(2, -40, 12, 40), Color(0.28, 0.25, 0.34))

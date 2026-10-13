@@ -9,6 +9,7 @@
     "attack_move": {"windup": 12, "active": 4, "recovery": 10, "range": 46, "damage": 25},
     "hardstun": 12,
     "knockdown_time": 36,
-    "getup_time": 12
+    "getup_time": 12,
+    "depth_y": -8
   }
 }

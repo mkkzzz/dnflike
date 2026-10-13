@@ -7,6 +7,9 @@ tools/godot/
 # Godot 工程本地缓存
 game/.godot/
 
+# 烘焙贴图：由 tools/bake_game_assets.py 从 render_preview.py 生成，不入库
+game/art/
+
 # Python
 __pycache__/
 *.pyc
