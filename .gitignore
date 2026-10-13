@@ -1,6 +1,12 @@
 # 临时产物，不提交
 temp/
 
+# Godot 编辑器二进制（另机用 tools/setup_godot.ps1 安装）
+tools/godot/
+
+# Godot 工程本地缓存
+game/.godot/
+
 # Python
 __pycache__/
 *.pyc
