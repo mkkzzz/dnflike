@@ -1,0 +1,10 @@
+{
+  "max_hp": 1000,
+  "max_mp": 300,
+  "walk_speed": 200,
+  "run_speed": 420,
+  "gravity": 2600,
+  "attack_speed": 1.0,
+  "move_speed": 1.0,
+  "defense": 1.0
+}

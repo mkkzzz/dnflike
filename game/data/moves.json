@@ -1,0 +1,8 @@
+{
+  "attack1": {"windup": 6, "active": 4, "recovery": 10, "move": 8.0, "hitbox": {"x": 42, "h": 100}, "damage": 30, "hitstop": 4, "shake": 2, "hardstun": 14, "knockback": 60, "cancel_after": 14},
+  "attack2": {"windup": 5, "active": 4, "recovery": 12, "move": 6.0, "hitbox": {"x": 46, "h": 100}, "damage": 35, "hitstop": 4, "shake": 2, "hardstun": 15, "knockback": 70, "cancel_after": 14},
+  "attack3": {"windup": 8, "active": 5, "recovery": 18, "move": 12.0, "hitbox": {"x": 52, "h": 100}, "damage": 55, "hitstop": 6, "shake": 4, "hardstun": 20, "knockback": 160, "knockdown": true, "cancel_after": 20},
+  "upper": {"windup": 5, "active": 3, "recovery": 12, "move": 4.0, "hitbox": {"x": 44, "h": 110}, "damage": 40, "hitstop": 5, "shake": 3, "hardstun": 16, "launch": {"vx": 120, "vy": -520}, "cancel_after": 14},
+  "back_dash": {"windup": 0, "active": 0, "recovery": 18, "move": -120.0, "invincible": 6},
+  "jump": {"windup": 8, "active": 0, "recovery": 0, "vy": -840, "height": 140}
+}

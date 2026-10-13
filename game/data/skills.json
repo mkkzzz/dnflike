@@ -1,0 +1,6 @@
+{
+  "blood_rage": {"name": "血怒", "slot": "A", "cd": 30, "buff_time": 8.0, "atk_speed": 1.3, "move_speed": 1.2, "defense": 0.7},
+  "rage_slash": {"name": "怒斩", "slot": "S", "cd": 8, "hits": [{"delay": 6, "damage": 40, "hitbox": {"x": 70, "h": 110}, "hitstop": 4, "shake": 3, "hardstun": 16, "knockback": 120}, {"delay": 14, "damage": 40, "hitbox": {"x": 78, "h": 110}, "hitstop": 4, "shake": 3, "hardstun": 16, "knockback": 120, "bleed": {"dps": 10, "time": 3.0}}], "recovery": 24, "super_armor": true},
+  "quick_draw": {"name": "拔刀斩", "slot": "A", "cd": 12, "charge": 18, "active": 6, "damage": 80, "hitbox": {"x": 90, "h": 110}, "hitstop": 8, "shake": 5, "hardstun": 22, "knockback": 220, "invincible_active": 6, "recovery": 14},
+  "thrust": {"name": "连突刺", "slot": "S", "cd": 7, "hits": [{"delay": 4, "damage": 25, "move": 30.0, "hitbox": {"x": 56, "h": 100}, "hitstop": 3, "shake": 2, "hardstun": 12, "knockback": 60}, {"delay": 10, "damage": 25, "move": 30.0, "hitbox": {"x": 56, "h": 100}, "hitstop": 3, "shake": 2, "hardstun": 12, "knockback": 60}, {"delay": 16, "damage": 30, "move": 36.0, "hitbox": {"x": 60, "h": 100}, "hitstop": 4, "shake": 3, "hardstun": 14, "knockback": 100}], "recovery": 16, "attack_speed_scaled": true}
+}

@@ -26,7 +26,9 @@ dnf/
 
 - 本机：`tools/godot/Godot_v4.7.2-stable_win64.exe --path game`
 - 新机器：先跑一次 `tools/setup_godot.ps1`，再按上一步启动；或手动下载同版本 Godot 后打开 `game/project.godot`
-- 操作：A/D 或方向键移动，C 跳跃，X 普攻（M1 占位实现）
+- 操作（M1 手感原型）：←/→ 移动（双击奔跑），C/空格 跳，X 普攻（三段连招），Z 上挑，V 格挡，↓+C 后跳；A~H 转职技能（T 切换转职调试：基础/狂战士/剑魂，R 重置战斗）
+- 自动化验收：`tools/godot/Godot_v4.7.2-stable_win64_console.exe --headless --fixed-fps 60 --path game --quit-after 800 -- --test`（日志 grep `[M1]` 判定）
+- 数据驱动：动作帧表/技能/怪物/玩家属性在 `game/data/*.json`，改完即生效
 
 ## 协作约定
 
