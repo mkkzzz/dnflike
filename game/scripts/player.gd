@@ -497,8 +497,21 @@ func _sample_input(delta := 1.0 / 60.0) -> void:
 				entry["released"] = true
 
 func buffer_action(action: String) -> void:
-	var ttl := int(cfg.get("jump_buffer_frames", 6) if action == "jump" else cfg.get("input_buffer_frames", 14))
 	var crouching := InputMap.has_action("move_down") and Input.is_action_pressed("move_down")
+	var grounded := (is_on_floor() or _reset_grounded) and velocity.y >= 0.0
+	# Resolve the chord before choosing its buffer or cancel rule. A ground
+	# back hop must not inherit a normal jump's short buffer or uppercut cancel.
+	if action == "jump" and crouching and grounded:
+		action = "back_dash"
+	if action == "attack" and not grounded and air_attack_count >= air_attack_limit():
+		return
+	var ttl := int(cfg.get("jump_buffer_frames", 6) if action == "jump" else cfg.get("input_buffer_frames", 14))
+	if action == "back_dash":
+		ttl = int(cfg.get("back_dash_buffer_frames", 28))
+		if state in FRAME_STATES and state != St.BACK_DASH and action in move_data.get("cancel_to", []):
+			# Slow attack speed can make the first legal cancel more than 28 real
+			# ticks away. Preserve this explicit request until that window opens.
+			ttl = maxi(ttl, int(ceil(maxf(0.0, _back_dash_cancel_threshold() - phase_t) / maxf(0.01, move_scale))) + 2)
 	for entry in input_buffer:
 		if entry["action"] == action:
 			entry["ttl"] = ttl
@@ -582,9 +595,12 @@ func _tick_cooldowns() -> void:
 
 func _move_lane(delta: float, airborne := false) -> void:
 	var lane := Input.get_axis("move_up", "move_down") if InputMap.has_action("move_up") else 0.0
-	var speed := float(cfg.get("lane_speed", 100)) * (float(cfg.get("air_lane_scale", 0.65)) if airborne else 1.0)
+	var speed := float(cfg.get("lane_speed", 140)) * (float(cfg.get("air_lane_scale", 0.65)) if airborne else 1.0)
 	_lane_velocity = move_toward(_lane_velocity, lane * speed, float(cfg.get("lane_acceleration", 2200)) * delta)
+	var previous_depth := depth_y
 	depth_y = clampf(depth_y + _lane_velocity * delta, float(cfg.get("lane_min", -40)), float(cfg.get("lane_max", 24)))
+	# Use travelled depth, including the arena clamp, for gait and footsteps.
+	_lane_velocity = (depth_y - previous_depth) / maxf(delta, 0.0001)
 
 func _free_state(delta: float) -> void:
 	var direction := _dir_input()
@@ -602,7 +618,8 @@ func _free_state(delta: float) -> void:
 	elif velocity.x * direction < 0.0:
 		accel = float(cfg.get("run_turn_acceleration", 18000) if sprinting else cfg.get("turn_acceleration", 12500))
 	velocity.x = move_toward(velocity.x, direction * speed, accel * delta)
-	state = (St.RUN if sprinting else St.WALK) if direction != 0.0 else St.IDLE
+	var moving := Vector2(velocity.x, _lane_velocity).length() > 0.1
+	state = (St.RUN if sprinting and absf(velocity.x) > 0.1 else St.WALK) if moving else St.IDLE
 	if direction != 0.0 and sprinting:
 		_run_request_left = 0
 	if fx != null:
@@ -613,13 +630,13 @@ func _free_state(delta: float) -> void:
 		elif state == St.RUN and previous_state != St.RUN and direction != 0.0:
 			fx.locomotion_event(visual_position(), facing, "run", 0.6)
 	_last_move_input = direction
-	_step_distance += absf(velocity.x) * delta
-	var stride := float(cfg.get("run_stride", 152) if sprinting else cfg.get("walk_stride", 108))
-	if direction != 0.0 and _step_distance >= stride:
+	_step_distance += Vector2(velocity.x, _lane_velocity).length() * delta
+	var stride := float(cfg.get("run_stride", 152) if state == St.RUN else cfg.get("walk_stride", 108))
+	if moving and _step_distance >= stride:
 		_step_distance = fmod(_step_distance, stride)
 		if fx != null:
-			fx.locomotion_event(visual_position(), facing, "run" if sprinting else "step", 0.9 if sprinting else 0.5)
-	elif direction == 0.0:
+			fx.locomotion_event(visual_position(), facing, "run" if state == St.RUN else "step", 0.9 if state == St.RUN else 0.5)
+	elif not moving:
 		_step_distance = 0.0
 	if not _consume_buffer() and Input.is_action_pressed("guard"):
 		_start_guard()
@@ -649,17 +666,21 @@ func _consume_buffer(cancel_only := false) -> bool:
 			if _use_potion(action):
 				return true
 			continue
+		var grounded := (is_on_floor() or _reset_grounded) and velocity.y >= 0.0
+		# An airborne Down+C may have been buffered just before landing.
+		if action == "jump" and bool(entry.get("down", false)) and grounded:
+			action = "back_dash"
+		if action == "attack" and not grounded and air_attack_count >= air_attack_limit():
+			# An exhausted air attack is discarded, never delayed into a ground cut.
+			input_buffer.remove_at(idx)
+			continue
 		if cancel_only and not _can_cancel(action):
 			idx += 1
 			continue
-		var grounded := (is_on_floor() or _reset_grounded) and velocity.y >= 0.0
 		if action == "jump" and not grounded and coyote_left <= 0:
 			idx += 1
 			continue
 		if action in ["back_dash", "guard", "generic_skill"] and not grounded:
-			idx += 1
-			continue
-		if action == "attack" and not grounded and air_attack_count >= int(cfg.get("air_attacks_per_jump", 2)):
 			idx += 1
 			continue
 		if action in ["skill_a", "skill_s"] and not grounded and not _skill_air_allowed(action):
@@ -668,7 +689,7 @@ func _consume_buffer(cancel_only := false) -> bool:
 		var basic_id := ""
 		if action == "generic_skill":
 			basic_id = "upper"
-		elif action == "back_dash" or (action == "jump" and bool(entry.get("down", false)) and grounded):
+		elif action == "back_dash":
 			basic_id = "back_dash"
 		if not basic_id.is_empty() and not _basic_move_ready(basic_id):
 			# A rejected cooldown request is discarded, but another valid input in
@@ -680,10 +701,7 @@ func _consume_buffer(cancel_only := false) -> bool:
 			"attack": _start_attack()
 			"generic_skill": _start_move("upper")
 			"jump":
-				if bool(entry.get("down", false)) and grounded:
-					_start_move("back_dash")
-				else:
-					_start_jump(bool(entry.get("released", false)))
+				_start_jump(bool(entry.get("released", false)))
 			"back_dash": _start_move("back_dash")
 			"guard": _start_guard()
 			"skill_a", "skill_s":
@@ -708,10 +726,17 @@ func _can_cancel(action: String) -> bool:
 			return false
 	if action == "jump" and state == St.UPPER and upper_connected:
 		return phase_t >= float(move_data.get("jump_cancel_after", 8))
+	if action == "back_dash":
+		return phase_t >= _back_dash_cancel_threshold()
 	var threshold := float(move_data.get("hit_cancel_after", move_data.get("cancel_after", _move_duration()))) if hit_emitted else float(move_data.get("cancel_after", _move_duration()))
 	if action in ["back_dash", "guard", "jump"]:
 		threshold = float(move_data.get("defensive_cancel_after", threshold)) if hit_emitted else float(move_data.get("whiff_defensive_cancel_after", threshold))
 	return phase_t >= threshold
+
+func _back_dash_cancel_threshold() -> float:
+	var fallback := float(move_data.get("hit_cancel_after", move_data.get("cancel_after", _move_duration()))) if hit_emitted else float(move_data.get("cancel_after", _move_duration()))
+	fallback = float(move_data.get("defensive_cancel_after", fallback)) if hit_emitted else float(move_data.get("whiff_defensive_cancel_after", fallback))
+	return float(move_data.get("back_dash_cancel_after", fallback)) if hit_emitted else float(move_data.get("whiff_back_dash_cancel_after", fallback))
 
 func _start_guard() -> void:
 	_clear_move()
@@ -751,9 +776,15 @@ func _apply_jump_cut() -> void:
 		velocity.y = maxf(velocity.y * float(cfg.get("jump_cut_ratio", 0.62)), float(cfg.get("jump_cut_speed", -535)))
 	_jump_cut_pending = false
 
+## Normal air cuts have a per-jump budget. Explicit skill buffs can add cuts;
+## multi-hit skills retain their own hit list and never consume this budget.
+func air_attack_limit() -> int:
+	var bonus := maxi(0, int(buff_data.get("extra_air_attacks", 0))) if buff_t > 0.0 else 0
+	return maxi(1, int(cfg.get("air_attacks_per_jump", 1))) + bonus
+
 func _start_attack() -> void:
 	if (not is_on_floor() and not _reset_grounded) or velocity.y < 0.0:
-		if air_attack_count >= int(cfg.get("air_attacks_per_jump", 2)):
+		if air_attack_count >= air_attack_limit():
 			return
 		air_attack_count += 1
 		combo = 0
@@ -1140,7 +1171,7 @@ func _back_dash_offset(clock: float) -> float:
 	return float(move_data.get("move", -120)) * progress
 
 func _can_locomotion_cancel() -> bool:
-	if phase != "recovery" or not is_on_floor() or _dir_input() == 0.0:
+	if phase != "recovery" or not is_on_floor() or (_dir_input() == 0.0 and Input.get_axis("move_up", "move_down") == 0.0):
 		return false
 	var threshold := float(move_data.get("locomotion_cancel_after", _move_duration()))
 	if _is_sprinting():
@@ -1444,7 +1475,7 @@ func _anim_step() -> void:
 		var speed := 1.0
 		if state in [St.WALK, St.RUN]:
 			var reference := float(cfg.get("run_speed", 450) if state == St.RUN else cfg.get("walk_speed", 225))
-			speed = clampf(absf(velocity.x) / maxf(1.0, reference), float(cfg.get("locomotion_anim_min", 0.55)), float(cfg.get("locomotion_anim_max", 1.4)))
+			speed = clampf(Vector2(velocity.x, _lane_velocity).length() / maxf(1.0, reference), float(cfg.get("locomotion_anim_min", 0.55)), float(cfg.get("locomotion_anim_max", 1.4)))
 		_anim_fraction += speed
 		while _anim_fraction >= 1.0:
 			var result: Array = AnimLib.advance(anims[anim_name], anim_frame, anim_tick)

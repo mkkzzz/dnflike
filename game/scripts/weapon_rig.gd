@@ -54,7 +54,16 @@ func socket_pose(clip: Dictionary, frame: int) -> Dictionary:
 	var sockets: Array = clip.get("sockets", [])
 	if sockets.is_empty():
 		return {"hand": [14, -107], "angle": 32, "layer": "front"}
-	return sockets[clampi(frame, 0, sockets.size() - 1)]
+	var pose: Dictionary = sockets[clampi(frame, 0, sockets.size() - 1)]
+	if str(clip.get("name", "")) == "run" and bool(clip.get("weapon_separated", false)):
+		# The run art carries its sword in the near-side red-gloved hand. The
+		# legacy back layer hid the blade under the coat between grip and tip,
+		# making it appear to pierce the hem. Keep every authored grip socket;
+		# carry the blade ahead of the coat and above the feet at a shallow angle.
+		pose = pose.duplicate()
+		pose["angle"] = 155.0
+		pose["layer"] = "front"
+	return pose
 
 func update_attachment() -> void:
 	if not is_instance_valid(actor):

@@ -6,6 +6,7 @@ var main_ref
 var checks := 0
 var failures := 0
 var observed_moves: Array = []
+var _feedback_actions: Array[String] = []
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -19,6 +20,10 @@ func _ready() -> void:
 		_run_seq6_showcase.call_deferred()
 	elif "--v6-freeze-test" in OS.get_cmdline_user_args():
 		_run_v6_freeze_only.call_deferred()
+	elif "--movement-feedback-test" in OS.get_cmdline_user_args():
+		_run_movement_feedback_only.call_deferred()
+	elif "--movement-feedback-capture" in OS.get_cmdline_user_args():
+		_run_movement_feedback_capture.call_deferred()
 
 func _frames(count: int) -> void:
 	for _index in count:
@@ -49,6 +54,9 @@ func _check(condition: bool, label: String) -> void:
 
 func _observe(_monster, _damage: float) -> void:
 	observed_moves.append(main_ref.player.move_name)
+
+func _observe_feedback_action(identifier: String) -> void:
+	_feedback_actions.append(identifier)
 
 func _fresh(job_id := 0) -> Monster:
 	_release_inputs()
@@ -372,6 +380,7 @@ func _run_checks() -> void:
 	await _run_v3_checks()
 	await _run_v4_checks()
 	await _run_v6_checks()
+	await _run_movement_feedback_checks()
 	main_ref._show_ready()
 	_check(main_ref.battle_state == main_ref.BattleState.READY and not p.control_enabled, "result returns to class selection")
 	print("[DEMO_TEST] COMPLETE checks=%d failures=%d" % [checks, failures])
@@ -1090,6 +1099,245 @@ func _run_v6_freeze_only() -> void:
 	await _run_v6_freeze_checks()
 	print("[DEMO_TEST] FREEZE COMPLETE checks=%d failures=%d" % [checks, failures])
 	get_tree().quit(0 if failures == 0 else 1)
+
+
+## Gameplay feedback checks use actual direction/attack/jump edges and observed
+## action signals. They guard against passing state-only tests with frozen poses,
+## attacks queued into a later landing, or a retreat delayed until the full move.
+func _run_movement_feedback_only() -> void:
+	main_ref = get_parent()
+	await _frames(3)
+	await _run_movement_feedback_checks()
+	_release_inputs()
+	print("[DEMO_TEST] COMPLETE checks=%d failures=%d" % [checks, failures])
+	get_tree().quit(0 if failures == 0 else 1)
+
+
+func _feedback_jump_attacks(extra: int = 0, active_bonus := false) -> Dictionary:
+	var target: Monster = await _fresh()
+	target.position.x = 1120
+	var p: Player = main_ref.player
+	p.buff_data = {"extra_air_attacks": extra}
+	p.buff_t = 2.0 if active_bonus else 0.0
+	_feedback_actions.clear()
+	Input.action_press("jump")
+	await _frames(4)
+	var maximum := 0
+	var landed := false
+	for tick in 80:
+		if tick % 4 == 0:
+			Input.action_press("attack")
+		elif tick % 4 == 2:
+			Input.action_release("attack")
+		await _frames(1)
+		maximum = maxi(maximum, p.air_attack_count)
+		if p.is_on_floor() and p.velocity.y >= 0.0:
+			landed = true
+			break
+	_release_inputs()
+	await _frames(9)
+	return {"air": _feedback_actions.count("air_attack"), "ground": _feedback_actions.count("attack1"),
+		"maximum": maximum, "landed": landed, "count_after_landing": p.air_attack_count}
+
+
+func _feedback_backhop(move: String, connect: bool, attack_speed := 1.0, press_during_hitstop := false) -> Dictionary:
+	var target: Monster = await _fresh(2 if move == "quick_draw" else 0)
+	var p: Player = main_ref.player
+	target.position.x = 620 if connect else 1120
+	if move == "quick_draw" and connect:
+		p.position.x = target.position.x - 205.0
+	p.cfg["attack_speed"] = attack_speed
+	_start_v6_move(p, move)
+	if press_during_hitstop:
+		for tick in 55:
+			await _frames(1)
+			if p.hit_emitted and main_ref.bm.freeze > 0:
+				break
+	else:
+		await _frames(2)
+	var request_tick := p.phase_t
+	var clock_before_freeze := p.phase_t
+	Input.action_press("move_down")
+	Input.action_press("jump")
+	await _frames(2)
+	var early_preserved := p.move_name == move
+	var frozen_preserved := p.phase_t == clock_before_freeze and p._has_buffer("back_dash")
+	Input.action_release("jump")
+	Input.action_release("move_down")
+	var previous_clock := p.phase_t
+	var final_clock := -1.0
+	var connected := p.hit_emitted
+	var saw_idle := false
+	var stopped_after_active := false
+	var prior_data := p.move_data.duplicate(true)
+	for tick in 100:
+		await _frames(1)
+		if p.move_name == "back_dash":
+			final_clock = previous_clock
+			stopped_after_active = previous_clock + p.move_scale >= float(prior_data.get("windup", prior_data.get("charge", 0))) + float(prior_data.get("active", 0))
+			break
+		saw_idle = saw_idle or p.state == Player.St.IDLE
+		connected = connected or p.hit_emitted
+		previous_clock = p.phase_t
+	_release_inputs()
+	return {"started": p.move_name == "back_dash", "connected": connected, "request_tick": request_tick,
+		"cancel_tick": final_clock, "early_preserved": early_preserved, "frozen_preserved": frozen_preserved,
+		"saw_idle": saw_idle, "after_active": stopped_after_active}
+
+
+func _run_movement_feedback_checks() -> void:
+	var p: Player = main_ref.player
+	if not p.action_started.is_connected(_observe_feedback_action):
+		p.action_started.connect(_observe_feedback_action)
+	for direction in ["move_up", "move_down"]:
+		var target: Monster = await _fresh()
+		target.position.x = 1120
+		var upper := float(p.cfg["lane_min"])
+		var lower := float(p.cfg["lane_max"])
+		p.depth_y = lower if direction == "move_up" else upper
+		p.facing = -1 if direction == "move_up" else 1
+		var initial_facing := p.facing
+		var initial_x := p.position.x
+		var destination := upper if direction == "move_up" else lower
+		var walking_frames: Dictionary = {}
+		var animated_while_moving := true
+		var travel_ticks := 0
+		Input.action_press(direction)
+		while not is_equal_approx(p.depth_y, destination) and travel_ticks < 60:
+			var previous_depth := p.depth_y
+			await _frames(1)
+			travel_ticks += 1
+			if p.depth_y != previous_depth:
+				animated_while_moving = animated_while_moving and p.state == Player.St.WALK and p.anim_name == "walk"
+				walking_frames[p.anim_frame] = true
+		_check(animated_while_moving and walking_frames.size() >= 3, direction + " alone advances multiple walk poses instead of sliding in idle")
+		_check(p.facing == initial_facing and is_equal_approx(p.position.x, initial_x), direction + " preserves horizontal facing and does not drift sideways")
+		_check(is_equal_approx(p.depth_y, destination) and travel_ticks <= 33, direction + " crosses the full 64px lane faster than the former 100px/s movement")
+		await _frames(4)
+		_check(p.state == Player.St.IDLE and p.anim_name == "idle", direction + " stops the walk gait at the lane boundary even while the key stays held")
+		_release_inputs()
+		await _frames(10)
+	var target: Monster = await _fresh()
+	target.position.x = 1120
+	Input.action_press("move_right")
+	Input.action_press("move_up")
+	await _frames(7)
+	_check(p.state == Player.St.WALK and p.velocity.x > 200 and p.depth_y < -8, "diagonal movement combines the established horizontal gait with faster lane travel")
+	_release_inputs()
+	await _frames(12)
+	_check(p.state == Player.St.IDLE and absf(p.velocity.x) < 1, "releasing diagonal movement settles into idle promptly")
+	var ordinary: Dictionary = await _feedback_jump_attacks()
+	_check(ordinary["air"] == 1 and ordinary["maximum"] == 1, "repeated attack edges launch only one ordinary air slash per default jump")
+	_check(ordinary["landed"] and ordinary["count_after_landing"] == 0, "landing restores the ordinary aerial attack allowance")
+	_check(ordinary["ground"] == 0, "rejected extra aerial attacks do not leak into a ground slash after landing")
+	_feedback_actions.clear()
+	Input.action_press("jump")
+	await _frames(4)
+	await _tap("attack")
+	_check(_feedback_actions.count("air_attack") == 1, "a subsequent real jump can attack again after the previous landing")
+	_release_inputs()
+	var bonus: Dictionary = await _feedback_jump_attacks(1, true)
+	_check(bonus["air"] == 2 and bonus["maximum"] == 2 and bonus["ground"] == 0, "an explicit active skill bonus grants exactly one additional aerial attack")
+	var inactive: Dictionary = await _feedback_jump_attacks(3, false)
+	_check(inactive["air"] == 1, "inactive or expired skill bonus data does not increase aerial attack allowance")
+	var negative: Dictionary = await _feedback_jump_attacks(-2, true)
+	_check(negative["air"] == 1, "invalid negative skill bonus cannot remove the default single aerial attack")
+	target = await _fresh(1)
+	target.position.x = 1120
+	_feedback_actions.clear()
+	Input.action_press("jump")
+	await _frames(4)
+	await _tap("attack")
+	await _frames(19)
+	await _tap("skill_a")
+	await _tap("attack")
+	_check(_feedback_actions.has("blood_rage") and _feedback_actions.count("air_attack") == 1 and p.buff_t > 0, "a permitted airborne skill remains usable after the ordinary slash without silently granting extra slashes")
+	_release_inputs()
+	for move: String in ["attack1", "attack2", "attack3", "quick_draw"]:
+		for connect: bool in [false, true]:
+			var retreat: Dictionary = await _feedback_backhop(move, connect)
+			var context := move + (" hit" if connect else " whiff")
+			_check(retreat["connected"] == connect, context + " retreat test exercised its real contact condition")
+			_check(retreat["started"] and retreat["early_preserved"] and not retreat["saw_idle"] and retreat["after_active"], context + " preserves early Down+C and enters backhop directly after the active swing")
+			var earliest: float = float({"attack1": 16, "attack2": 16, "attack3": 21, "quick_draw": 25}[move]) + float(0 if connect else 2)
+			_check(retreat["cancel_tick"] >= float(earliest) - 1.0 and retreat["cancel_tick"] <= float(earliest) + 1.0, context + " retreats in the first approved safe recovery window")
+	var slow: Dictionary = await _feedback_backhop("attack3", false, 0.5)
+	_check(slow["started"] and slow["cancel_tick"] >= 22 and slow["cancel_tick"] <= 23, "early backhop request survives a slow heavy swing beyond the ordinary fixed input lifetime")
+	var frozen: Dictionary = await _feedback_backhop("attack3", true, 1.0, true)
+	_check(frozen["frozen_preserved"] and frozen["started"] and not frozen["saw_idle"], "real heavy-hit stop preserves Down+C and resumes straight into a legal backhop")
+	target = await _fresh()
+	target.position.x = 1120
+	_feedback_actions.clear()
+	p._start_move("attack3")
+	await _frames(2)
+	await _tap("jump")
+	await _frames(55)
+	_check(not _feedback_actions.has("jump") and not _feedback_actions.has("back_dash"), "an early plain jump keeps its short buffer and is not reinterpreted as a retreat")
+	target = await _fresh()
+	p._start_move("upper")
+	for tick in 25:
+		await _frames(1)
+		if p.upper_connected and p.phase_t >= 9:
+			break
+	_feedback_actions.clear()
+	await _tap("jump")
+	await _frames(6)
+	_check(_feedback_actions.has("jump") and not _feedback_actions.has("back_dash") and p.position.y < main_ref.GROUND_Y, "connected uppercut still accepts a plain jump for its aerial follow-up")
+	_release_inputs()
+
+
+func _feedback_capture_pose(name_text: String) -> void:
+	get_tree().paused = true
+	await _capture(name_text)
+	get_tree().paused = false
+
+
+func _run_movement_feedback_capture() -> void:
+	main_ref = get_parent()
+	await _frames(8)
+	for face in [1, -1]:
+		var target: Monster = await _fresh()
+		target.position.x = 1120
+		var p: Player = main_ref.player
+		p.invincible = 0
+		p.position.x = 660
+		p.reset_physics_interpolation()
+		await _hold_double_tap("move_right" if face > 0 else "move_left")
+		await _frames(10)
+		await _feedback_capture_pose("10_movement_run_" + ("right" if face > 0 else "left"))
+		await _frames(5)
+		await _feedback_capture_pose("10_movement_run_" + ("right" if face > 0 else "left") + "_next_pose")
+		_release_inputs()
+	for direction in ["move_up", "move_down"]:
+		var target: Monster = await _fresh()
+		target.position.x = 1120
+		var p: Player = main_ref.player
+		p.invincible = 0
+		p.depth_y = float(p.cfg["lane_max"] if direction == "move_up" else p.cfg["lane_min"])
+		p.reset_physics_interpolation()
+		Input.action_press(direction)
+		await _frames(7)
+		await _feedback_capture_pose("10_movement_" + direction + "_walk")
+		await _frames(9)
+		await _feedback_capture_pose("10_movement_" + direction + "_walk_next_pose")
+		_release_inputs()
+	var target: Monster = await _fresh()
+	var p: Player = main_ref.player
+	p.invincible = 0
+	target.position.x = 620
+	await _tap("attack")
+	Input.action_press("move_down")
+	await _tap("jump")
+	Input.action_release("move_down")
+	for tick in 55:
+		await _frames(1)
+		if p.move_name == "back_dash":
+			break
+	await _frames(7)
+	await _feedback_capture_pose("10_movement_attack_to_backhop")
+	_release_inputs()
+	await _frames(3)
+	get_tree().quit()
 
 
 func _run_v6_geometry_checks() -> void:

@@ -61,6 +61,8 @@
     "hit_cancel_after": 19,
     "defensive_cancel_after": 22,
     "whiff_defensive_cancel_after": 34,
+    "back_dash_cancel_after": 25,
+    "whiff_back_dash_cancel_after": 27,
     "locomotion_cancel_after": 33,
     "cancel_to": [
       "generic_skill",
@@ -99,6 +101,8 @@
     "hit_cancel_after": 24,
     "defensive_cancel_after": 25,
     "whiff_defensive_cancel_after": 33,
+    "back_dash_cancel_after": 25,
+    "whiff_back_dash_cancel_after": 27,
     "locomotion_cancel_after": 33,
     "cancel_to": [
       "generic_skill",
