@@ -1,0 +1,38 @@
+[
+  {
+    "move": "attack1",
+    "tick": 21,
+    "local_t": 9.5,
+    "theta": 33.4,
+    "contact": [
+      555.8,
+      495.4
+    ],
+    "blade_samples_inside": 6,
+    "target_x": 596.0
+  },
+  {
+    "move": "attack2",
+    "tick": 48,
+    "local_t": 10.5,
+    "theta": 4.9,
+    "contact": [
+      587.8,
+      452.4
+    ],
+    "blade_samples_inside": 5,
+    "target_x": 616.0
+  },
+  {
+    "move": "attack3",
+    "tick": 83,
+    "local_t": 16.0,
+    "theta": -37.1,
+    "contact": [
+      610.8,
+      458.4
+    ],
+    "blade_samples_inside": 10,
+    "target_x": 640.0
+  }
+]
