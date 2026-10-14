@@ -81,21 +81,21 @@
     "slot": "A",
     "cd": 12,
     "charge": 16,
-    "active": 6,
+    "active": 4,
     "damage": 80,
     "hitbox": {
       "x": 220,
       "h": 200,
       "lane": 28
     },
-    "hitstop": 8,
+    "hitstop": 7,
     "shake": 5,
     "hardstun": 22,
     "knockback": 220,
-    "invincible_active": 6,
-    "recovery": 13,
+    "invincible_active": 4,
+    "recovery": 16,
     "mp": 45,
-    "cancel_after": 32,
+    "cancel_after": 31,
     "hit_cancel_after": 24,
     "defensive_cancel_after": 25,
     "whiff_defensive_cancel_after": 33,
@@ -111,7 +111,8 @@
     "recovery_drag": 2000,
     "fx_style": "quick_draw",
     "run_cancel_after": 28,
-    "whiff_run_cancel_after": 33
+    "whiff_run_cancel_after": 33,
+    "seq6": true
   },
   "thrust": {
     "name": "连突刺",

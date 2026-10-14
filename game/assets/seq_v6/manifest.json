@@ -1,0 +1,4561 @@
+{
+  "version": 6,
+  "status": "review_candidate",
+  "fps": 60,
+  "hitstop_baked": false,
+  "actor_includes_weapon": true,
+  "normal_formula": "dst = rgb * alpha + dst * (1-alpha)",
+  "add_formula": "dst = dst + rgb * alpha",
+  "coordinate_system": "pixels, right-facing, y-down; anchors are not centered",
+  "clips": {
+    "actor/attack1": {
+      "size": [
+        512,
+        320
+      ],
+      "anchor": [
+        224,
+        280
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "start_tick": 0,
+      "duration_ticks": 30,
+      "frames": [
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 0.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 1,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 0.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 2,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 0.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f001.png",
+          "start_tick": 3,
+          "duration_ticks": 1,
+          "source_pose": "forehand:1",
+          "root_dx": 0.0,
+          "grip": [
+            60.0,
+            -114.5
+          ],
+          "guard": [
+            49.0,
+            -117.0
+          ],
+          "tip": [
+            -54.0,
+            -119.0
+          ]
+        },
+        {
+          "file": "actor/attack1/f001.png",
+          "start_tick": 4,
+          "duration_ticks": 1,
+          "source_pose": "forehand:1",
+          "root_dx": 0.0,
+          "grip": [
+            60.0,
+            -114.5
+          ],
+          "guard": [
+            49.0,
+            -117.0
+          ],
+          "tip": [
+            -54.0,
+            -119.0
+          ]
+        },
+        {
+          "file": "actor/attack1/f001.png",
+          "start_tick": 5,
+          "duration_ticks": 1,
+          "source_pose": "forehand:1",
+          "root_dx": 0.0,
+          "grip": [
+            60.0,
+            -114.5
+          ],
+          "guard": [
+            49.0,
+            -117.0
+          ],
+          "tip": [
+            -54.0,
+            -119.0
+          ]
+        },
+        {
+          "file": "actor/attack1/f001.png",
+          "start_tick": 6,
+          "duration_ticks": 1,
+          "source_pose": "forehand:1",
+          "root_dx": 0.0,
+          "grip": [
+            60.0,
+            -114.5
+          ],
+          "guard": [
+            49.0,
+            -117.0
+          ],
+          "tip": [
+            -54.0,
+            -119.0
+          ]
+        },
+        {
+          "file": "actor/attack1/f001.png",
+          "start_tick": 7,
+          "duration_ticks": 1,
+          "source_pose": "forehand:1",
+          "root_dx": 0.0,
+          "grip": [
+            60.0,
+            -114.5
+          ],
+          "guard": [
+            49.0,
+            -117.0
+          ],
+          "tip": [
+            -54.0,
+            -119.0
+          ]
+        },
+        {
+          "file": "actor/attack1/f002.png",
+          "start_tick": 8,
+          "duration_ticks": 1,
+          "source_pose": "forehand:2",
+          "root_dx": 1.875,
+          "grip": [
+            -28.5,
+            -148.0
+          ],
+          "guard": [
+            -23.0,
+            -141.5
+          ],
+          "tip": [
+            76.5,
+            -113.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f003.png",
+          "start_tick": 9,
+          "duration_ticks": 1,
+          "source_pose": "forehand:3",
+          "root_dx": 6.0,
+          "grip": [
+            36.5,
+            -145.0
+          ],
+          "guard": [
+            46.0,
+            -146.0
+          ],
+          "tip": [
+            142.0,
+            -166.0
+          ]
+        },
+        {
+          "file": "actor/attack1/f003.png",
+          "start_tick": 10,
+          "duration_ticks": 1,
+          "source_pose": "forehand:3",
+          "root_dx": 10.125,
+          "grip": [
+            36.5,
+            -145.0
+          ],
+          "guard": [
+            46.0,
+            -146.0
+          ],
+          "tip": [
+            142.0,
+            -166.0
+          ]
+        },
+        {
+          "file": "actor/attack1/f004.png",
+          "start_tick": 11,
+          "duration_ticks": 1,
+          "source_pose": "forehand:4",
+          "root_dx": 12.0,
+          "grip": [
+            28.5,
+            -122.0
+          ],
+          "guard": [
+            18.0,
+            -118.0
+          ],
+          "tip": [
+            -77.5,
+            -109.0
+          ]
+        },
+        {
+          "file": "actor/attack1/f004.png",
+          "start_tick": 12,
+          "duration_ticks": 1,
+          "source_pose": "forehand:4",
+          "root_dx": 12.0,
+          "grip": [
+            28.5,
+            -122.0
+          ],
+          "guard": [
+            18.0,
+            -118.0
+          ],
+          "tip": [
+            -77.5,
+            -109.0
+          ]
+        },
+        {
+          "file": "actor/attack1/f004.png",
+          "start_tick": 13,
+          "duration_ticks": 1,
+          "source_pose": "forehand:4",
+          "root_dx": 12.0,
+          "grip": [
+            28.5,
+            -122.0
+          ],
+          "guard": [
+            18.0,
+            -118.0
+          ],
+          "tip": [
+            -77.5,
+            -109.0
+          ]
+        },
+        {
+          "file": "actor/attack1/f004.png",
+          "start_tick": 14,
+          "duration_ticks": 1,
+          "source_pose": "forehand:4",
+          "root_dx": 12.0,
+          "grip": [
+            28.5,
+            -122.0
+          ],
+          "guard": [
+            18.0,
+            -118.0
+          ],
+          "tip": [
+            -77.5,
+            -109.0
+          ]
+        },
+        {
+          "file": "actor/attack1/f004.png",
+          "start_tick": 15,
+          "duration_ticks": 1,
+          "source_pose": "forehand:4",
+          "root_dx": 12.0,
+          "grip": [
+            28.5,
+            -122.0
+          ],
+          "guard": [
+            18.0,
+            -118.0
+          ],
+          "tip": [
+            -77.5,
+            -109.0
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 16,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 17,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 18,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 19,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 20,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 21,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 22,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 23,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 24,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 25,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 26,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 27,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 28,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        },
+        {
+          "file": "actor/attack1/f000.png",
+          "start_tick": 29,
+          "duration_ticks": 1,
+          "source_pose": "forehand:0",
+          "root_dx": 12.0,
+          "grip": [
+            -17.5,
+            -89.0
+          ],
+          "guard": [
+            -10.0,
+            -81.0
+          ],
+          "tip": [
+            90.0,
+            -38.5
+          ]
+        }
+      ],
+      "unique_images": 5
+    },
+    "slash_back/attack1": {
+      "size": [
+        640,
+        360
+      ],
+      "anchor": [
+        256,
+        288
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "start_tick": 0,
+      "duration_ticks": 30,
+      "frames": [
+        {
+          "file": "slash_back/attack1/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 8
+        },
+        {
+          "file": "slash_back/attack1/f001.png",
+          "start_tick": 8,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack1/f002.png",
+          "start_tick": 9,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack1/f003.png",
+          "start_tick": 10,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack1/f004.png",
+          "start_tick": 11,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack1/f005.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack1/f006.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack1/f007.png",
+          "start_tick": 14,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack1/f008.png",
+          "start_tick": 15,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack1/f000.png",
+          "start_tick": 16,
+          "duration_ticks": 14
+        }
+      ],
+      "unique_images": 9
+    },
+    "slash_front/attack1": {
+      "size": [
+        640,
+        360
+      ],
+      "anchor": [
+        256,
+        288
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "start_tick": 0,
+      "duration_ticks": 30,
+      "frames": [
+        {
+          "file": "slash_front/attack1/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 8
+        },
+        {
+          "file": "slash_front/attack1/f001.png",
+          "start_tick": 8,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack1/f002.png",
+          "start_tick": 9,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack1/f003.png",
+          "start_tick": 10,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack1/f004.png",
+          "start_tick": 11,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack1/f005.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack1/f006.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack1/f007.png",
+          "start_tick": 14,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack1/f008.png",
+          "start_tick": 15,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack1/f000.png",
+          "start_tick": 16,
+          "duration_ticks": 14
+        }
+      ],
+      "unique_images": 9
+    },
+    "actor/attack2": {
+      "size": [
+        512,
+        320
+      ],
+      "anchor": [
+        224,
+        280
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "start_tick": 0,
+      "duration_ticks": 32,
+      "frames": [
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 0.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 1,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 0.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 2,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 0.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 3,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 0.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 4,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 0.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 5,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 0.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f001.png",
+          "start_tick": 6,
+          "duration_ticks": 1,
+          "source_pose": "backhand:0",
+          "root_dx": 0.0,
+          "grip": [
+            -24.783,
+            -148.696
+          ],
+          "guard": [
+            -15.886,
+            -149.331
+          ],
+          "tip": [
+            99.766,
+            -159.498
+          ]
+        },
+        {
+          "file": "actor/attack2/f001.png",
+          "start_tick": 7,
+          "duration_ticks": 1,
+          "source_pose": "backhand:0",
+          "root_dx": 0.0,
+          "grip": [
+            -24.783,
+            -148.696
+          ],
+          "guard": [
+            -15.886,
+            -149.331
+          ],
+          "tip": [
+            99.766,
+            -159.498
+          ]
+        },
+        {
+          "file": "actor/attack2/f002.png",
+          "start_tick": 8,
+          "duration_ticks": 1,
+          "source_pose": "backhand:3",
+          "root_dx": 1.5625,
+          "grip": [
+            63.545,
+            -142.341
+          ],
+          "guard": [
+            55.92,
+            -128.997
+          ],
+          "tip": [
+            10.803,
+            -103.579
+          ]
+        },
+        {
+          "file": "actor/attack2/f003.png",
+          "start_tick": 9,
+          "duration_ticks": 1,
+          "source_pose": "backhand:4",
+          "root_dx": 5.0,
+          "grip": [
+            119.465,
+            -141.706
+          ],
+          "guard": [
+            132.174,
+            -138.528
+          ],
+          "tip": [
+            250.368,
+            -148.06
+          ]
+        },
+        {
+          "file": "actor/attack2/f003.png",
+          "start_tick": 10,
+          "duration_ticks": 1,
+          "source_pose": "backhand:4",
+          "root_dx": 8.4375,
+          "grip": [
+            119.465,
+            -141.706
+          ],
+          "guard": [
+            132.174,
+            -138.528
+          ],
+          "tip": [
+            250.368,
+            -148.06
+          ]
+        },
+        {
+          "file": "actor/attack2/f004.png",
+          "start_tick": 11,
+          "duration_ticks": 1,
+          "source_pose": "backhand:5",
+          "root_dx": 10.0,
+          "grip": [
+            94.047,
+            -121.371
+          ],
+          "guard": [
+            104.849,
+            -113.746
+          ],
+          "tip": [
+            217.96,
+            -78.161
+          ]
+        },
+        {
+          "file": "actor/attack2/f004.png",
+          "start_tick": 12,
+          "duration_ticks": 1,
+          "source_pose": "backhand:5",
+          "root_dx": 10.0,
+          "grip": [
+            94.047,
+            -121.371
+          ],
+          "guard": [
+            104.849,
+            -113.746
+          ],
+          "tip": [
+            217.96,
+            -78.161
+          ]
+        },
+        {
+          "file": "actor/attack2/f004.png",
+          "start_tick": 13,
+          "duration_ticks": 1,
+          "source_pose": "backhand:5",
+          "root_dx": 10.0,
+          "grip": [
+            94.047,
+            -121.371
+          ],
+          "guard": [
+            104.849,
+            -113.746
+          ],
+          "tip": [
+            217.96,
+            -78.161
+          ]
+        },
+        {
+          "file": "actor/attack2/f004.png",
+          "start_tick": 14,
+          "duration_ticks": 1,
+          "source_pose": "backhand:5",
+          "root_dx": 10.0,
+          "grip": [
+            94.047,
+            -121.371
+          ],
+          "guard": [
+            104.849,
+            -113.746
+          ],
+          "tip": [
+            217.96,
+            -78.161
+          ]
+        },
+        {
+          "file": "actor/attack2/f004.png",
+          "start_tick": 15,
+          "duration_ticks": 1,
+          "source_pose": "backhand:5",
+          "root_dx": 10.0,
+          "grip": [
+            94.047,
+            -121.371
+          ],
+          "guard": [
+            104.849,
+            -113.746
+          ],
+          "tip": [
+            217.96,
+            -78.161
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 16,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 17,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 18,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 19,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 20,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 21,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 22,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 23,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 24,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 25,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 26,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 27,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 28,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 29,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 30,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        },
+        {
+          "file": "actor/attack2/f000.png",
+          "start_tick": 31,
+          "duration_ticks": 1,
+          "source_pose": "backhand:6",
+          "root_dx": 10.0,
+          "grip": [
+            -18.428,
+            -70.535
+          ],
+          "guard": [
+            -31.137,
+            -77.525
+          ],
+          "tip": [
+            -132.174,
+            -151.237
+          ]
+        }
+      ],
+      "unique_images": 5
+    },
+    "slash_back/attack2": {
+      "size": [
+        640,
+        360
+      ],
+      "anchor": [
+        256,
+        288
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "start_tick": 0,
+      "duration_ticks": 32,
+      "frames": [
+        {
+          "file": "slash_back/attack2/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 32
+        }
+      ],
+      "unique_images": 1
+    },
+    "slash_front/attack2": {
+      "size": [
+        640,
+        360
+      ],
+      "anchor": [
+        256,
+        288
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "start_tick": 0,
+      "duration_ticks": 32,
+      "frames": [
+        {
+          "file": "slash_front/attack2/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 8
+        },
+        {
+          "file": "slash_front/attack2/f001.png",
+          "start_tick": 8,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack2/f002.png",
+          "start_tick": 9,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack2/f003.png",
+          "start_tick": 10,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack2/f004.png",
+          "start_tick": 11,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack2/f005.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack2/f006.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack2/f007.png",
+          "start_tick": 14,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack2/f008.png",
+          "start_tick": 15,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack2/f000.png",
+          "start_tick": 16,
+          "duration_ticks": 16
+        }
+      ],
+      "unique_images": 9
+    },
+    "actor/attack3": {
+      "size": [
+        512,
+        320
+      ],
+      "anchor": [
+        224,
+        280
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "start_tick": 0,
+      "duration_ticks": 41,
+      "frames": [
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 0.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 1,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 0.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 2,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 0.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f001.png",
+          "start_tick": 3,
+          "duration_ticks": 1,
+          "source_pose": "chop:1",
+          "root_dx": 0.0,
+          "grip": [
+            30.381,
+            -192.411
+          ],
+          "guard": [
+            21.218,
+            -190.0
+          ],
+          "tip": [
+            -67.513,
+            -154.315
+          ]
+        },
+        {
+          "file": "actor/attack3/f001.png",
+          "start_tick": 4,
+          "duration_ticks": 1,
+          "source_pose": "chop:1",
+          "root_dx": 0.0,
+          "grip": [
+            30.381,
+            -192.411
+          ],
+          "guard": [
+            21.218,
+            -190.0
+          ],
+          "tip": [
+            -67.513,
+            -154.315
+          ]
+        },
+        {
+          "file": "actor/attack3/f001.png",
+          "start_tick": 5,
+          "duration_ticks": 1,
+          "source_pose": "chop:1",
+          "root_dx": 0.0,
+          "grip": [
+            30.381,
+            -192.411
+          ],
+          "guard": [
+            21.218,
+            -190.0
+          ],
+          "tip": [
+            -67.513,
+            -154.315
+          ]
+        },
+        {
+          "file": "actor/attack3/f001.png",
+          "start_tick": 6,
+          "duration_ticks": 1,
+          "source_pose": "chop:1",
+          "root_dx": 0.0,
+          "grip": [
+            30.381,
+            -192.411
+          ],
+          "guard": [
+            21.218,
+            -190.0
+          ],
+          "tip": [
+            -67.513,
+            -154.315
+          ]
+        },
+        {
+          "file": "actor/attack3/f001.png",
+          "start_tick": 7,
+          "duration_ticks": 1,
+          "source_pose": "chop:1",
+          "root_dx": 0.0,
+          "grip": [
+            30.381,
+            -192.411
+          ],
+          "guard": [
+            21.218,
+            -190.0
+          ],
+          "tip": [
+            -67.513,
+            -154.315
+          ]
+        },
+        {
+          "file": "actor/attack3/f001.png",
+          "start_tick": 8,
+          "duration_ticks": 1,
+          "source_pose": "chop:1",
+          "root_dx": 0.0,
+          "grip": [
+            30.381,
+            -192.411
+          ],
+          "guard": [
+            21.218,
+            -190.0
+          ],
+          "tip": [
+            -67.513,
+            -154.315
+          ]
+        },
+        {
+          "file": "actor/attack3/f002.png",
+          "start_tick": 9,
+          "duration_ticks": 1,
+          "source_pose": "chop:2",
+          "root_dx": 0.0,
+          "grip": [
+            12.056,
+            -210.254
+          ],
+          "guard": [
+            2.411,
+            -206.878
+          ],
+          "tip": [
+            -82.462,
+            -160.102
+          ]
+        },
+        {
+          "file": "actor/attack3/f002.png",
+          "start_tick": 10,
+          "duration_ticks": 1,
+          "source_pose": "chop:2",
+          "root_dx": 0.0,
+          "grip": [
+            12.056,
+            -210.254
+          ],
+          "guard": [
+            2.411,
+            -206.878
+          ],
+          "tip": [
+            -82.462,
+            -160.102
+          ]
+        },
+        {
+          "file": "actor/attack3/f002.png",
+          "start_tick": 11,
+          "duration_ticks": 1,
+          "source_pose": "chop:2",
+          "root_dx": 2.8125,
+          "grip": [
+            12.056,
+            -210.254
+          ],
+          "guard": [
+            2.411,
+            -206.878
+          ],
+          "tip": [
+            -82.462,
+            -160.102
+          ]
+        },
+        {
+          "file": "actor/attack3/f003.png",
+          "start_tick": 12,
+          "duration_ticks": 1,
+          "source_pose": "chop:3",
+          "root_dx": 9.0,
+          "grip": [
+            3.376,
+            -63.655
+          ],
+          "guard": [
+            8.198,
+            -57.386
+          ],
+          "tip": [
+            82.462,
+            -1.447
+          ]
+        },
+        {
+          "file": "actor/attack3/f003.png",
+          "start_tick": 13,
+          "duration_ticks": 1,
+          "source_pose": "chop:3",
+          "root_dx": 15.1875,
+          "grip": [
+            3.376,
+            -63.655
+          ],
+          "guard": [
+            8.198,
+            -57.386
+          ],
+          "tip": [
+            82.462,
+            -1.447
+          ]
+        },
+        {
+          "file": "actor/attack3/f004.png",
+          "start_tick": 14,
+          "duration_ticks": 1,
+          "source_pose": "chop:4",
+          "root_dx": 18.0,
+          "grip": [
+            12.538,
+            -37.132
+          ],
+          "guard": [
+            18.325,
+            -31.345
+          ],
+          "tip": [
+            92.589,
+            -2.411
+          ]
+        },
+        {
+          "file": "actor/attack3/f004.png",
+          "start_tick": 15,
+          "duration_ticks": 1,
+          "source_pose": "chop:4",
+          "root_dx": 18.0,
+          "grip": [
+            12.538,
+            -37.132
+          ],
+          "guard": [
+            18.325,
+            -31.345
+          ],
+          "tip": [
+            92.589,
+            -2.411
+          ]
+        },
+        {
+          "file": "actor/attack3/f004.png",
+          "start_tick": 16,
+          "duration_ticks": 1,
+          "source_pose": "chop:4",
+          "root_dx": 18.0,
+          "grip": [
+            12.538,
+            -37.132
+          ],
+          "guard": [
+            18.325,
+            -31.345
+          ],
+          "tip": [
+            92.589,
+            -2.411
+          ]
+        },
+        {
+          "file": "actor/attack3/f004.png",
+          "start_tick": 17,
+          "duration_ticks": 1,
+          "source_pose": "chop:4",
+          "root_dx": 18.0,
+          "grip": [
+            12.538,
+            -37.132
+          ],
+          "guard": [
+            18.325,
+            -31.345
+          ],
+          "tip": [
+            92.589,
+            -2.411
+          ]
+        },
+        {
+          "file": "actor/attack3/f004.png",
+          "start_tick": 18,
+          "duration_ticks": 1,
+          "source_pose": "chop:4",
+          "root_dx": 18.0,
+          "grip": [
+            12.538,
+            -37.132
+          ],
+          "guard": [
+            18.325,
+            -31.345
+          ],
+          "tip": [
+            92.589,
+            -2.411
+          ]
+        },
+        {
+          "file": "actor/attack3/f004.png",
+          "start_tick": 19,
+          "duration_ticks": 1,
+          "source_pose": "chop:4",
+          "root_dx": 18.0,
+          "grip": [
+            12.538,
+            -37.132
+          ],
+          "guard": [
+            18.325,
+            -31.345
+          ],
+          "tip": [
+            92.589,
+            -2.411
+          ]
+        },
+        {
+          "file": "actor/attack3/f004.png",
+          "start_tick": 20,
+          "duration_ticks": 1,
+          "source_pose": "chop:4",
+          "root_dx": 18.0,
+          "grip": [
+            12.538,
+            -37.132
+          ],
+          "guard": [
+            18.325,
+            -31.345
+          ],
+          "tip": [
+            92.589,
+            -2.411
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 21,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 22,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 23,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 24,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 25,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 26,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 27,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 28,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 29,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 30,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 31,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 32,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 33,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 34,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 35,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 36,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 37,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 38,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 39,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        },
+        {
+          "file": "actor/attack3/f000.png",
+          "start_tick": 40,
+          "duration_ticks": 1,
+          "source_pose": "chop:0",
+          "root_dx": 18.0,
+          "grip": [
+            -17.36,
+            -96.447
+          ],
+          "guard": [
+            -9.645,
+            -92.107
+          ],
+          "tip": [
+            88.249,
+            -47.741
+          ]
+        }
+      ],
+      "unique_images": 5
+    },
+    "slash_back/attack3": {
+      "size": [
+        640,
+        360
+      ],
+      "anchor": [
+        256,
+        288
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "start_tick": 0,
+      "duration_ticks": 41,
+      "frames": [
+        {
+          "file": "slash_back/attack3/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 12
+        },
+        {
+          "file": "slash_back/attack3/f001.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack3/f002.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack3/f003.png",
+          "start_tick": 14,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack3/f004.png",
+          "start_tick": 15,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack3/f005.png",
+          "start_tick": 16,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack3/f006.png",
+          "start_tick": 17,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack3/f007.png",
+          "start_tick": 18,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/attack3/f000.png",
+          "start_tick": 19,
+          "duration_ticks": 22
+        }
+      ],
+      "unique_images": 8
+    },
+    "slash_front/attack3": {
+      "size": [
+        640,
+        360
+      ],
+      "anchor": [
+        256,
+        288
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "start_tick": 0,
+      "duration_ticks": 41,
+      "frames": [
+        {
+          "file": "slash_front/attack3/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 12
+        },
+        {
+          "file": "slash_front/attack3/f001.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack3/f002.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack3/f003.png",
+          "start_tick": 14,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack3/f004.png",
+          "start_tick": 15,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack3/f005.png",
+          "start_tick": 16,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack3/f006.png",
+          "start_tick": 17,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack3/f007.png",
+          "start_tick": 18,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack3/f008.png",
+          "start_tick": 19,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack3/f009.png",
+          "start_tick": 20,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/attack3/f000.png",
+          "start_tick": 21,
+          "duration_ticks": 20
+        }
+      ],
+      "unique_images": 10
+    },
+    "actor/quick_draw": {
+      "size": [
+        512,
+        320
+      ],
+      "anchor": [
+        224,
+        280
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "start_tick": 0,
+      "duration_ticks": 36,
+      "frames": [
+        {
+          "file": "actor/quick_draw/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:0",
+          "root_dx": 0.0,
+          "grip": [
+            -11.138,
+            -99.586
+          ],
+          "guard": [
+            5.241,
+            -98.276
+          ],
+          "tip": [
+            5.241,
+            -98.276
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f000.png",
+          "start_tick": 1,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:0",
+          "root_dx": 0.0,
+          "grip": [
+            -11.138,
+            -99.586
+          ],
+          "guard": [
+            5.241,
+            -98.276
+          ],
+          "tip": [
+            5.241,
+            -98.276
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f000.png",
+          "start_tick": 2,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:0",
+          "root_dx": 0.0,
+          "grip": [
+            -11.138,
+            -99.586
+          ],
+          "guard": [
+            5.241,
+            -98.276
+          ],
+          "tip": [
+            5.241,
+            -98.276
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f000.png",
+          "start_tick": 3,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:0",
+          "root_dx": 0.0,
+          "grip": [
+            -11.138,
+            -99.586
+          ],
+          "guard": [
+            5.241,
+            -98.276
+          ],
+          "tip": [
+            5.241,
+            -98.276
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f001.png",
+          "start_tick": 4,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:1",
+          "root_dx": 0.0,
+          "grip": [
+            -19.0,
+            -101.552
+          ],
+          "guard": [
+            -13.103,
+            -96.966
+          ],
+          "tip": [
+            11.793,
+            -91.724
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f001.png",
+          "start_tick": 5,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:1",
+          "root_dx": 0.0,
+          "grip": [
+            -19.0,
+            -101.552
+          ],
+          "guard": [
+            -13.103,
+            -96.966
+          ],
+          "tip": [
+            11.793,
+            -91.724
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f001.png",
+          "start_tick": 6,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:1",
+          "root_dx": 0.0,
+          "grip": [
+            -19.0,
+            -101.552
+          ],
+          "guard": [
+            -13.103,
+            -96.966
+          ],
+          "tip": [
+            11.793,
+            -91.724
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f001.png",
+          "start_tick": 7,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:1",
+          "root_dx": 0.0,
+          "grip": [
+            -19.0,
+            -101.552
+          ],
+          "guard": [
+            -13.103,
+            -96.966
+          ],
+          "tip": [
+            11.793,
+            -91.724
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f001.png",
+          "start_tick": 8,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:1",
+          "root_dx": 0.0,
+          "grip": [
+            -19.0,
+            -101.552
+          ],
+          "guard": [
+            -13.103,
+            -96.966
+          ],
+          "tip": [
+            11.793,
+            -91.724
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f001.png",
+          "start_tick": 9,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:1",
+          "root_dx": 0.0,
+          "grip": [
+            -19.0,
+            -101.552
+          ],
+          "guard": [
+            -13.103,
+            -96.966
+          ],
+          "tip": [
+            11.793,
+            -91.724
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f001.png",
+          "start_tick": 10,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:1",
+          "root_dx": 0.0,
+          "grip": [
+            -19.0,
+            -101.552
+          ],
+          "guard": [
+            -13.103,
+            -96.966
+          ],
+          "tip": [
+            11.793,
+            -91.724
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f001.png",
+          "start_tick": 11,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:1",
+          "root_dx": 0.0,
+          "grip": [
+            -19.0,
+            -101.552
+          ],
+          "guard": [
+            -13.103,
+            -96.966
+          ],
+          "tip": [
+            11.793,
+            -91.724
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f001.png",
+          "start_tick": 12,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:1",
+          "root_dx": 0.0,
+          "grip": [
+            -19.0,
+            -101.552
+          ],
+          "guard": [
+            -13.103,
+            -96.966
+          ],
+          "tip": [
+            11.793,
+            -91.724
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f001.png",
+          "start_tick": 13,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:1",
+          "root_dx": 0.0,
+          "grip": [
+            -19.0,
+            -101.552
+          ],
+          "guard": [
+            -13.103,
+            -96.966
+          ],
+          "tip": [
+            11.793,
+            -91.724
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f001.png",
+          "start_tick": 14,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:1",
+          "root_dx": 0.0,
+          "grip": [
+            -19.0,
+            -101.552
+          ],
+          "guard": [
+            -13.103,
+            -96.966
+          ],
+          "tip": [
+            11.793,
+            -91.724
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f001.png",
+          "start_tick": 15,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:1",
+          "root_dx": 0.0,
+          "grip": [
+            -19.0,
+            -101.552
+          ],
+          "guard": [
+            -13.103,
+            -96.966
+          ],
+          "tip": [
+            11.793,
+            -91.724
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f002.png",
+          "start_tick": 16,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:2",
+          "root_dx": 16.25,
+          "grip": [
+            -51.759,
+            -121.207
+          ],
+          "guard": [
+            -39.31,
+            -117.931
+          ],
+          "tip": [
+            82.552,
+            -78.621
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f003.png",
+          "start_tick": 17,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:4",
+          "root_dx": 52.0,
+          "grip": [
+            74.034,
+            -132.345
+          ],
+          "guard": [
+            81.897,
+            -132.345
+          ],
+          "tip": [
+            184.759,
+            -148.069
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f003.png",
+          "start_tick": 18,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:4",
+          "root_dx": 87.75,
+          "grip": [
+            74.034,
+            -132.345
+          ],
+          "guard": [
+            81.897,
+            -132.345
+          ],
+          "tip": [
+            184.759,
+            -148.069
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f004.png",
+          "start_tick": 19,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:5",
+          "root_dx": 104.0,
+          "grip": [
+            112.69,
+            -143.483
+          ],
+          "guard": [
+            100.241,
+            -140.207
+          ],
+          "tip": [
+            -11.138,
+            -122.517
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f004.png",
+          "start_tick": 20,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:5",
+          "root_dx": 104.0,
+          "grip": [
+            112.69,
+            -143.483
+          ],
+          "guard": [
+            100.241,
+            -140.207
+          ],
+          "tip": [
+            -11.138,
+            -122.517
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f004.png",
+          "start_tick": 21,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:5",
+          "root_dx": 104.0,
+          "grip": [
+            112.69,
+            -143.483
+          ],
+          "guard": [
+            100.241,
+            -140.207
+          ],
+          "tip": [
+            -11.138,
+            -122.517
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f004.png",
+          "start_tick": 22,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:5",
+          "root_dx": 104.0,
+          "grip": [
+            112.69,
+            -143.483
+          ],
+          "guard": [
+            100.241,
+            -140.207
+          ],
+          "tip": [
+            -11.138,
+            -122.517
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f004.png",
+          "start_tick": 23,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:5",
+          "root_dx": 104.0,
+          "grip": [
+            112.69,
+            -143.483
+          ],
+          "guard": [
+            100.241,
+            -140.207
+          ],
+          "tip": [
+            -11.138,
+            -122.517
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f004.png",
+          "start_tick": 24,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:5",
+          "root_dx": 104.0,
+          "grip": [
+            112.69,
+            -143.483
+          ],
+          "guard": [
+            100.241,
+            -140.207
+          ],
+          "tip": [
+            -11.138,
+            -122.517
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f005.png",
+          "start_tick": 25,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:6",
+          "root_dx": 104.0,
+          "grip": [
+            5.897,
+            -102.862
+          ],
+          "guard": [
+            17.034,
+            -98.276
+          ],
+          "tip": [
+            120.552,
+            -71.414
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f005.png",
+          "start_tick": 26,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:6",
+          "root_dx": 104.0,
+          "grip": [
+            5.897,
+            -102.862
+          ],
+          "guard": [
+            17.034,
+            -98.276
+          ],
+          "tip": [
+            120.552,
+            -71.414
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f005.png",
+          "start_tick": 27,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:6",
+          "root_dx": 104.0,
+          "grip": [
+            5.897,
+            -102.862
+          ],
+          "guard": [
+            17.034,
+            -98.276
+          ],
+          "tip": [
+            120.552,
+            -71.414
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f005.png",
+          "start_tick": 28,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:6",
+          "root_dx": 104.0,
+          "grip": [
+            5.897,
+            -102.862
+          ],
+          "guard": [
+            17.034,
+            -98.276
+          ],
+          "tip": [
+            120.552,
+            -71.414
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f005.png",
+          "start_tick": 29,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:6",
+          "root_dx": 104.0,
+          "grip": [
+            5.897,
+            -102.862
+          ],
+          "guard": [
+            17.034,
+            -98.276
+          ],
+          "tip": [
+            120.552,
+            -71.414
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f005.png",
+          "start_tick": 30,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:6",
+          "root_dx": 104.0,
+          "grip": [
+            5.897,
+            -102.862
+          ],
+          "guard": [
+            17.034,
+            -98.276
+          ],
+          "tip": [
+            120.552,
+            -71.414
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f005.png",
+          "start_tick": 31,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:6",
+          "root_dx": 104.0,
+          "grip": [
+            5.897,
+            -102.862
+          ],
+          "guard": [
+            17.034,
+            -98.276
+          ],
+          "tip": [
+            120.552,
+            -71.414
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f005.png",
+          "start_tick": 32,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:6",
+          "root_dx": 104.0,
+          "grip": [
+            5.897,
+            -102.862
+          ],
+          "guard": [
+            17.034,
+            -98.276
+          ],
+          "tip": [
+            120.552,
+            -71.414
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f005.png",
+          "start_tick": 33,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:6",
+          "root_dx": 104.0,
+          "grip": [
+            5.897,
+            -102.862
+          ],
+          "guard": [
+            17.034,
+            -98.276
+          ],
+          "tip": [
+            120.552,
+            -71.414
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f005.png",
+          "start_tick": 34,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:6",
+          "root_dx": 104.0,
+          "grip": [
+            5.897,
+            -102.862
+          ],
+          "guard": [
+            17.034,
+            -98.276
+          ],
+          "tip": [
+            120.552,
+            -71.414
+          ]
+        },
+        {
+          "file": "actor/quick_draw/f005.png",
+          "start_tick": 35,
+          "duration_ticks": 1,
+          "source_pose": "quick_draw:6",
+          "root_dx": 104.0,
+          "grip": [
+            5.897,
+            -102.862
+          ],
+          "guard": [
+            17.034,
+            -98.276
+          ],
+          "tip": [
+            120.552,
+            -71.414
+          ]
+        }
+      ],
+      "unique_images": 6
+    },
+    "slash_back/quick_draw": {
+      "size": [
+        640,
+        360
+      ],
+      "anchor": [
+        256,
+        288
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "start_tick": 0,
+      "duration_ticks": 36,
+      "frames": [
+        {
+          "file": "slash_back/quick_draw/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 16
+        },
+        {
+          "file": "slash_back/quick_draw/f001.png",
+          "start_tick": 16,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/quick_draw/f002.png",
+          "start_tick": 17,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/quick_draw/f003.png",
+          "start_tick": 18,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/quick_draw/f004.png",
+          "start_tick": 19,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/quick_draw/f005.png",
+          "start_tick": 20,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/quick_draw/f006.png",
+          "start_tick": 21,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/quick_draw/f007.png",
+          "start_tick": 22,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/quick_draw/f008.png",
+          "start_tick": 23,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/quick_draw/f009.png",
+          "start_tick": 24,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_back/quick_draw/f000.png",
+          "start_tick": 25,
+          "duration_ticks": 11
+        }
+      ],
+      "unique_images": 10
+    },
+    "slash_front/quick_draw": {
+      "size": [
+        640,
+        360
+      ],
+      "anchor": [
+        256,
+        288
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "start_tick": 0,
+      "duration_ticks": 36,
+      "frames": [
+        {
+          "file": "slash_front/quick_draw/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 16
+        },
+        {
+          "file": "slash_front/quick_draw/f001.png",
+          "start_tick": 16,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/quick_draw/f002.png",
+          "start_tick": 17,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/quick_draw/f003.png",
+          "start_tick": 18,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/quick_draw/f004.png",
+          "start_tick": 19,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/quick_draw/f005.png",
+          "start_tick": 20,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/quick_draw/f006.png",
+          "start_tick": 21,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/quick_draw/f007.png",
+          "start_tick": 22,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/quick_draw/f008.png",
+          "start_tick": 23,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/quick_draw/f009.png",
+          "start_tick": 24,
+          "duration_ticks": 1
+        },
+        {
+          "file": "slash_front/quick_draw/f000.png",
+          "start_tick": 25,
+          "duration_ticks": 11
+        }
+      ],
+      "unique_images": 10
+    },
+    "hit_light/light": {
+      "size": [
+        384,
+        320
+      ],
+      "anchor": [
+        192,
+        192
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "effect",
+      "start_tick": 0,
+      "duration_ticks": 24,
+      "frames": [
+        {
+          "file": "hit_light/light/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f001.png",
+          "start_tick": 1,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f002.png",
+          "start_tick": 2,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f003.png",
+          "start_tick": 3,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f004.png",
+          "start_tick": 4,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f005.png",
+          "start_tick": 5,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f006.png",
+          "start_tick": 6,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f007.png",
+          "start_tick": 7,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f008.png",
+          "start_tick": 8,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f009.png",
+          "start_tick": 9,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f010.png",
+          "start_tick": 10,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f011.png",
+          "start_tick": 11,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f012.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f013.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f014.png",
+          "start_tick": 14,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f015.png",
+          "start_tick": 15,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f016.png",
+          "start_tick": 16,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f017.png",
+          "start_tick": 17,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f018.png",
+          "start_tick": 18,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f019.png",
+          "start_tick": 19,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/light/f020.png",
+          "start_tick": 20,
+          "duration_ticks": 4
+        }
+      ],
+      "unique_images": 21
+    },
+    "hit_matter/light": {
+      "size": [
+        384,
+        320
+      ],
+      "anchor": [
+        192,
+        192
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "effect",
+      "start_tick": 0,
+      "duration_ticks": 24,
+      "frames": [
+        {
+          "file": "hit_matter/light/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 24
+        }
+      ],
+      "unique_images": 1
+    },
+    "hit_light/heavy": {
+      "size": [
+        384,
+        320
+      ],
+      "anchor": [
+        192,
+        192
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "effect",
+      "start_tick": 0,
+      "duration_ticks": 32,
+      "frames": [
+        {
+          "file": "hit_light/heavy/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f001.png",
+          "start_tick": 1,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f002.png",
+          "start_tick": 2,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f003.png",
+          "start_tick": 3,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f004.png",
+          "start_tick": 4,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f005.png",
+          "start_tick": 5,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f006.png",
+          "start_tick": 6,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f007.png",
+          "start_tick": 7,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f008.png",
+          "start_tick": 8,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f009.png",
+          "start_tick": 9,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f010.png",
+          "start_tick": 10,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f011.png",
+          "start_tick": 11,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f012.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f013.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f014.png",
+          "start_tick": 14,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f015.png",
+          "start_tick": 15,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f016.png",
+          "start_tick": 16,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f017.png",
+          "start_tick": 17,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f018.png",
+          "start_tick": 18,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f019.png",
+          "start_tick": 19,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/heavy/f020.png",
+          "start_tick": 20,
+          "duration_ticks": 12
+        }
+      ],
+      "unique_images": 21
+    },
+    "hit_matter/heavy": {
+      "size": [
+        384,
+        320
+      ],
+      "anchor": [
+        192,
+        192
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "effect",
+      "start_tick": 0,
+      "duration_ticks": 32,
+      "frames": [
+        {
+          "file": "hit_matter/heavy/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f001.png",
+          "start_tick": 1,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f002.png",
+          "start_tick": 2,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f003.png",
+          "start_tick": 3,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f004.png",
+          "start_tick": 4,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f005.png",
+          "start_tick": 5,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f006.png",
+          "start_tick": 6,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f007.png",
+          "start_tick": 7,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f008.png",
+          "start_tick": 8,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f009.png",
+          "start_tick": 9,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f010.png",
+          "start_tick": 10,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f011.png",
+          "start_tick": 11,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f012.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f013.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f014.png",
+          "start_tick": 14,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f015.png",
+          "start_tick": 15,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f016.png",
+          "start_tick": 16,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f017.png",
+          "start_tick": 17,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f018.png",
+          "start_tick": 18,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f019.png",
+          "start_tick": 19,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f020.png",
+          "start_tick": 20,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f021.png",
+          "start_tick": 21,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f022.png",
+          "start_tick": 22,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f023.png",
+          "start_tick": 23,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f024.png",
+          "start_tick": 24,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f025.png",
+          "start_tick": 25,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f026.png",
+          "start_tick": 26,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f027.png",
+          "start_tick": 27,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f028.png",
+          "start_tick": 28,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f029.png",
+          "start_tick": 29,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f030.png",
+          "start_tick": 30,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/heavy/f031.png",
+          "start_tick": 31,
+          "duration_ticks": 1
+        }
+      ],
+      "unique_images": 32
+    },
+    "hit_light/iai": {
+      "size": [
+        384,
+        320
+      ],
+      "anchor": [
+        192,
+        192
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "effect",
+      "start_tick": 0,
+      "duration_ticks": 32,
+      "frames": [
+        {
+          "file": "hit_light/iai/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f001.png",
+          "start_tick": 1,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f002.png",
+          "start_tick": 2,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f003.png",
+          "start_tick": 3,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f004.png",
+          "start_tick": 4,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f005.png",
+          "start_tick": 5,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f006.png",
+          "start_tick": 6,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f007.png",
+          "start_tick": 7,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f008.png",
+          "start_tick": 8,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f009.png",
+          "start_tick": 9,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f010.png",
+          "start_tick": 10,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f011.png",
+          "start_tick": 11,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f012.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f013.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f014.png",
+          "start_tick": 14,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f015.png",
+          "start_tick": 15,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f016.png",
+          "start_tick": 16,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f017.png",
+          "start_tick": 17,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f018.png",
+          "start_tick": 18,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f019.png",
+          "start_tick": 19,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_light/iai/f020.png",
+          "start_tick": 20,
+          "duration_ticks": 12
+        }
+      ],
+      "unique_images": 21
+    },
+    "hit_matter/iai": {
+      "size": [
+        384,
+        320
+      ],
+      "anchor": [
+        192,
+        192
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "effect",
+      "start_tick": 0,
+      "duration_ticks": 32,
+      "frames": [
+        {
+          "file": "hit_matter/iai/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f001.png",
+          "start_tick": 1,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f002.png",
+          "start_tick": 2,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f003.png",
+          "start_tick": 3,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f004.png",
+          "start_tick": 4,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f005.png",
+          "start_tick": 5,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f006.png",
+          "start_tick": 6,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f007.png",
+          "start_tick": 7,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f008.png",
+          "start_tick": 8,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f009.png",
+          "start_tick": 9,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f010.png",
+          "start_tick": 10,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f011.png",
+          "start_tick": 11,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f012.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f013.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f014.png",
+          "start_tick": 14,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f015.png",
+          "start_tick": 15,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f016.png",
+          "start_tick": 16,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f017.png",
+          "start_tick": 17,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f018.png",
+          "start_tick": 18,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f019.png",
+          "start_tick": 19,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f020.png",
+          "start_tick": 20,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f021.png",
+          "start_tick": 21,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f022.png",
+          "start_tick": 22,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f023.png",
+          "start_tick": 23,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f024.png",
+          "start_tick": 24,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f025.png",
+          "start_tick": 25,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f026.png",
+          "start_tick": 26,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f027.png",
+          "start_tick": 27,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f028.png",
+          "start_tick": 28,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f029.png",
+          "start_tick": 29,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f030.png",
+          "start_tick": 30,
+          "duration_ticks": 1
+        },
+        {
+          "file": "hit_matter/iai/f031.png",
+          "start_tick": 31,
+          "duration_ticks": 1
+        }
+      ],
+      "unique_images": 32
+    },
+    "ground/matter": {
+      "size": [
+        512,
+        192
+      ],
+      "anchor": [
+        256,
+        128
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "effect",
+      "start_tick": 0,
+      "duration_ticks": 36,
+      "frames": [
+        {
+          "file": "ground/matter/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f001.png",
+          "start_tick": 1,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f002.png",
+          "start_tick": 2,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f003.png",
+          "start_tick": 3,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f004.png",
+          "start_tick": 4,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f005.png",
+          "start_tick": 5,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f006.png",
+          "start_tick": 6,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f007.png",
+          "start_tick": 7,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f008.png",
+          "start_tick": 8,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f009.png",
+          "start_tick": 9,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f010.png",
+          "start_tick": 10,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f011.png",
+          "start_tick": 11,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f012.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f013.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f014.png",
+          "start_tick": 14,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f015.png",
+          "start_tick": 15,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f016.png",
+          "start_tick": 16,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f017.png",
+          "start_tick": 17,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f018.png",
+          "start_tick": 18,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f019.png",
+          "start_tick": 19,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f020.png",
+          "start_tick": 20,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f021.png",
+          "start_tick": 21,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f022.png",
+          "start_tick": 22,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f023.png",
+          "start_tick": 23,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f024.png",
+          "start_tick": 24,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f025.png",
+          "start_tick": 25,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f026.png",
+          "start_tick": 26,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f027.png",
+          "start_tick": 27,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f028.png",
+          "start_tick": 28,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f029.png",
+          "start_tick": 29,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f030.png",
+          "start_tick": 30,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f031.png",
+          "start_tick": 31,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f032.png",
+          "start_tick": 32,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f033.png",
+          "start_tick": 33,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f034.png",
+          "start_tick": 34,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/matter/f035.png",
+          "start_tick": 35,
+          "duration_ticks": 1
+        }
+      ],
+      "unique_images": 36
+    },
+    "ground/light": {
+      "size": [
+        512,
+        192
+      ],
+      "anchor": [
+        256,
+        128
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "effect",
+      "start_tick": 0,
+      "duration_ticks": 36,
+      "frames": [
+        {
+          "file": "ground/light/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f001.png",
+          "start_tick": 1,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f002.png",
+          "start_tick": 2,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f003.png",
+          "start_tick": 3,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f004.png",
+          "start_tick": 4,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f005.png",
+          "start_tick": 5,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f006.png",
+          "start_tick": 6,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f007.png",
+          "start_tick": 7,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f008.png",
+          "start_tick": 8,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f009.png",
+          "start_tick": 9,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f010.png",
+          "start_tick": 10,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f011.png",
+          "start_tick": 11,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f012.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f013.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "ground/light/f014.png",
+          "start_tick": 14,
+          "duration_ticks": 22
+        }
+      ],
+      "unique_images": 15
+    },
+    "iai/flash": {
+      "size": [
+        960,
+        80
+      ],
+      "anchor": [
+        480,
+        40
+      ],
+      "blend": "add",
+      "alpha_mode": "straight",
+      "clock": "effect",
+      "start_tick": 0,
+      "duration_ticks": 22,
+      "frames": [
+        {
+          "file": "iai/flash/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f001.png",
+          "start_tick": 1,
+          "duration_ticks": 6
+        },
+        {
+          "file": "iai/flash/f002.png",
+          "start_tick": 7,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f003.png",
+          "start_tick": 8,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f004.png",
+          "start_tick": 9,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f005.png",
+          "start_tick": 10,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f006.png",
+          "start_tick": 11,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f007.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f008.png",
+          "start_tick": 13,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f009.png",
+          "start_tick": 14,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f010.png",
+          "start_tick": 15,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f011.png",
+          "start_tick": 16,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f012.png",
+          "start_tick": 17,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f013.png",
+          "start_tick": 18,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f014.png",
+          "start_tick": 19,
+          "duration_ticks": 1
+        },
+        {
+          "file": "iai/flash/f015.png",
+          "start_tick": 20,
+          "duration_ticks": 2
+        }
+      ],
+      "unique_images": 16
+    }
+  },
+  "moves": {
+    "attack1": {
+      "sheet": "forehand",
+      "label": "一段·正手横斩",
+      "keys": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          0,
+          14
+        ]
+      ],
+      "active": [
+        8,
+        12
+      ],
+      "contact_tick": 9,
+      "hitstop": 3,
+      "travel": [
+        7,
+        11,
+        12
+      ],
+      "fx": "light",
+      "trail_life": 5,
+      "length": 30,
+      "sword_points": "actor frame guard/tip relative to root",
+      "slash_anchor": "root at move start, not moving root",
+      "ground_tick": null
+    },
+    "attack2": {
+      "sheet": "backhand",
+      "label": "二段·反手横斩",
+      "keys": [
+        [
+          6,
+          6
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          6,
+          16
+        ]
+      ],
+      "active": [
+        8,
+        12
+      ],
+      "contact_tick": 9,
+      "hitstop": 3,
+      "travel": [
+        7,
+        11,
+        10
+      ],
+      "fx": "light",
+      "trail_life": 5,
+      "length": 32,
+      "sword_points": "actor frame guard/tip relative to root",
+      "slash_anchor": "root at move start, not moving root",
+      "ground_tick": null
+    },
+    "attack3": {
+      "sheet": "chop",
+      "label": "三段·重劈",
+      "keys": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          0,
+          20
+        ]
+      ],
+      "active": [
+        12,
+        15
+      ],
+      "contact_tick": 12,
+      "hitstop": 6,
+      "travel": [
+        10,
+        14,
+        18
+      ],
+      "fx": "heavy",
+      "trail_life": 7,
+      "length": 41,
+      "sword_points": "actor frame guard/tip relative to root",
+      "slash_anchor": "root at move start, not moving root",
+      "ground_tick": 12
+    },
+    "quick_draw": {
+      "sheet": "quick_draw",
+      "label": "拔刀·一闪",
+      "keys": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          12
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          6,
+          11
+        ]
+      ],
+      "active": [
+        16,
+        20
+      ],
+      "contact_tick": 17,
+      "hitstop": 7,
+      "travel": [
+        15,
+        19,
+        104
+      ],
+      "fx": "iai",
+      "trail_life": 6,
+      "length": 36,
+      "sword_points": "actor frame guard/tip relative to root",
+      "slash_anchor": "root at move start, not moving root",
+      "ground_tick": null
+    }
+  }
+}

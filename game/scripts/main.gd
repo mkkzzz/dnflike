@@ -13,6 +13,8 @@ const DISPLAY_CONFIG := "user://display.cfg"
 var bm: BattleFX
 var player: Player
 var weapon_rig: WeaponRig
+var seq_fx: SeqFX
+var seq_config: Dictionary = {}
 var monsters: Array = []
 var camera: Camera2D
 var hud: Hud
@@ -127,6 +129,15 @@ func _build_world() -> void:
 	player.add_child(weapon_rig)
 	weapon_rig.setup(player, bm)
 	player.weapon_attachment = weapon_rig
+	# V6 序列帧表现层：三段普攻与拔刀斩的刀光/受击/地裂/一闪
+	seq_config = GameConfig._load_json("res://data/seq_v6.json")
+	seq_fx = SeqFX.new()
+	seq_fx.name = "SeqFX"
+	seq_fx.process_mode = Node.PROCESS_MODE_PAUSABLE
+	add_child(seq_fx)
+	seq_fx.setup(player, bm, seq_config)
+	player.seq_fx = seq_fx
+	player.seq_hitstop.connect(_on_seq_hitstop)
 	player.died.connect(_on_player_died)
 	player.hp_changed.connect(_on_hp_changed)
 	player.landed_hit.connect(_on_landed_hit)
@@ -360,6 +371,7 @@ func _start_demo(job_id := -1) -> void:
 		selected_job = clampi(job_id, 0, 2)
 	_clear_monsters()
 	bm.clear_fx()
+	seq_fx.reset()
 	player.reset_combat(Vector2(float(demo_config.get("player_x", 220)), GROUND_Y))
 	player.set_job(selected_job)
 	wave_index = 0
@@ -387,6 +399,7 @@ func _start_training(job_id := -1) -> void:
 	training_mode = true
 	training_free_skills = true
 	_clear_monsters()
+	seq_fx.reset()
 	player.reset_combat(Vector2(430, GROUND_Y))
 	player.set_job(selected_job)
 	weapon_rig.reset_pose()
@@ -448,6 +461,11 @@ func _spawn_wave() -> void:
 	bm.play_sound("wave")
 	print("[DEMO] wave=%d enemies=%d" % [wave_index + 1, monsters.size()])
 
+func _on_seq_hitstop(tick: float, frame: int, blade: Vector2, point: Vector2, hitstop: int) -> void:
+	if is_instance_valid(seq_fx):
+		seq_fx.note_freeze(tick, frame, blade, point, hitstop)
+
+
 func _set_actor_control(enabled: bool) -> void:
 	player.control_enabled = enabled and not player.dead
 	for monster in monsters:
@@ -492,6 +510,7 @@ func _finish(victory: bool) -> void:
 	damage_taken += maxf(0.0, _last_hp - player.hp)
 	_last_hp = player.hp
 	bm.clear_fx()
+	seq_fx.reset()
 	bm.play_sound("victory" if victory else "death")
 	_clear_card()
 	_content.add_child(_label("ENCOUNTER COMPLETE" if victory else "ENCOUNTER FAILED", 13, Color(0.67, 0.55, 0.37)))

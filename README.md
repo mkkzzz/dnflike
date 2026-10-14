@@ -1,12 +1,12 @@
 # 幽暗回廊 · DNF-like
 
-原创手绘风单机横版动作 RPG，Godot 4.7.2。当前交付**战斗 demo v4**：保留三波遭遇、双转职与连段训练，按试玩反馈打磨待机/后跳、双击奔跑衔接、更高跳跃与标准攻速，加入曲线月牙刀光、原生粒子、更强受击表现和 F3 帧率设置。身体与武器继续独立。
+原创手绘风单机横版动作 RPG，Godot 4.7.2。当前交付**战斗 demo v4 + V6 四招**：保留三波遭遇、双转职与连段训练，按试玩反馈打磨待机/后跳、双击奔跑衔接、更高跳跃与标准攻速，加入曲线月牙刀光、原生粒子、更强受击表现和 F3 帧率设置。三段普攻与拔刀斩已换成角色与剑一体原画 + 分层序列帧特效；其余动作仍为身体与武器独立。
 
 ## 双工作区与美术设计入口
 
 - 两边 Agent 开工先读 [AGENTS.md](AGENTS.md)，完成相关产出后自动提交并推送；接收区先同步再接入，不覆盖他人修改。
-- 当前工作区先继续设计，另一工作区承担实装。共享规范见 [美术全流程](docs/design/14_美术资源全流程.md)、[统一风格与题材](docs/design/15_统一风格与题材规范.md)、[资源总清单](docs/design/16_美术资源总清单.md)、[任务模板](docs/design/17_美术资源任务模板.md)。
-- V6四招和配套效果已获预览认可、尚未实装：[资源与接入待办](docs/design/13_V6动作资源与实装待办.md)，预览位于 `docs/previews/v6_art/`。可玩工程仍是下方V4版本。
+- 本工作区为接收区，已按 [V6 接入契约](docs/design/13_V6动作资源与实装待办.md) 完成四招实装并跑通 161 项回归；设计区仍可继续产出新素材。共享规范见 [美术全流程](docs/design/14_美术资源全流程.md)、[统一风格与题材](docs/design/15_统一风格与题材规范.md)、[资源总清单](docs/design/16_美术资源总清单.md)、[任务模板](docs/design/17_美术资源任务模板.md)。
+- V6 四招已接入，预览位于 `docs/previews/v6_art/`；实装改动与两项必要调整记录见该文第四节。力量感与风格仍待试玩评审。
 
 ## 开始试玩
 
@@ -53,7 +53,7 @@ M1 双转职各提供两个代表技能，D/F/G/H 尚未开放。最后一波含
 ## 验证与资源重建
 
 ```powershell
-# 123 项战斗与集成检查
+# 161 项战斗与集成检查
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_demo.ps1 -Test
 
 # 真实渲染截图：标题、场景、命中、训练和设置 → temp/demo/
@@ -67,24 +67,30 @@ python -m pip install -r requirements.txt
 python tools/bake_body_v3.py
 python tools/bake_body_v4.py
 python tools/bake_combat_audio.py
+
+# V6 序列帧（角色与剑一体原画 + 分层特效）重烘与预览
+python tools/bake_seq_v6.py
+python tools/test_seq_v6.py
+python tools/preview_v6.py
 ```
 
-123 项检查包含攻击/停帧中的双击跑、左右跑动反转、近距离冲斩命中后接第二/第三击、跳跃四阶段、暂停中松键短跳、基础技能冷却、真实曲线刀光、原生粒子/形变冻结与重置，并回归此前连段、技能、训练统计与完整通关。真实渲染、无缓存新副本、30/120 FPS 渲染步长均通过；物理固定 60 Hz，启用物理插值。回归静音但验证资源，普通试玩与录像保留音效。`-Test` 同时检查引擎错误、完成标记和退出码。
+161 项检查包含攻击/停帧中的双击跑、左右跑动反转、近距离冲斩命中后接第二/第三击、跳跃四阶段、暂停中松键短跳、基础技能冷却、真实曲线刀光、原生粒子/形变冻结与重置，并回归此前连段、技能、训练统计与完整通关。V6 新增段落覆盖：四招逐 tick 帧表、manifest → SpriteFrames 的整数时长、单帧 PNG 全图 UV、一体原画期间不挂第二把剑、刀光锚点固定在出招起点 root、停帧只停一次且动作时钟与帧号一起冻结、受击/地裂/一闪走独立特效时钟、接触点落在目标自身素材轮廓上、地裂恰触发一次、拔刀压暗、左右朝向镜像，以及序列帧不被程序化拖尾与粒子重复一遍。真实渲染、无缓存新副本、30/120 FPS 渲染步长均通过；物理固定 60 Hz，启用物理插值。回归静音但验证资源，普通试玩与录像保留音效。`-Test` 同时检查引擎错误、完成标记和退出码。
 
-主角使用内置 imagegen 的无武器身体源图：V4 新增 24 个独立源姿势，待机、后跳、跳跃各 8 帧，并细分跳跃阶段；保留 V3 的 17 个其它动作，共 24 个播放片段，阶段片段复用同一套跳跃姿势。逐帧握点与阶段映射由烘焙工具校验，武器在 Godot 中独立绘制。普攻、技能和 buff 接入软边纹理的原生 `CPUParticles2D`，最多 20 个发射器、每个 28 粒。音频沿用 27 事件 × 3 变体的 81 个原创 PCM16 WAV。完整源图/提示词见 [V4 身体动画](art/sheets/v4/README.md)、[V3 战斗动作](art/sheets/v3/README.md)，配方/试听见 [拟音记录](audio/combat_v3/README.md)。
+主角仍使用内置 imagegen 的无武器身体源图：V4 新增 24 个独立源姿势，待机、后跳、跳跃各 8 帧，并细分跳跃阶段；保留 V3 的 17 个其它动作。**三段普攻与拔刀斩改读 `game/assets/seq_v6/manifest.json`**：角色与剑同一张原画、逐 tick 排帧，前后两层刀光、受击 light/matter、地裂与拔刀一闪都由该 manifest 回放；这四招停用独立武器层。其余动作继续使用逐帧握点，武器在 Godot 中独立绘制。普攻、技能和 buff 接入软边纹理的原生 `CPUParticles2D`，最多 20 个发射器、每个 28 粒。音频沿用 27 事件 × 3 变体的 81 个原创 PCM16 WAV。完整源图/提示词见 [V4 身体动画](art/sheets/v4/README.md)、[V3 战斗动作](art/sheets/v3/README.md)，V6 见 [V6 接入契约](docs/design/13_V6动作资源与实装待办.md) 与 `art/sheets/v6/`，配方/试听见 [拟音记录](audio/combat_v3/README.md)。
 
-实机录像可复现：在 Godot 的 `--write-movie` 参数传入仓库内 `temp/v4_showcase.avi` 的**绝对路径**，再传 `--fixed-fps 60 -- --showcase`；完成后运行 `python tools/export_showcase.py --version v4` 导出 MP4。录像驱动使用真实游戏输入与战斗系统。
+实机录像可复现：在 Godot 的 `--write-movie` 参数传入仓库内 `temp/v4_showcase.avi` 的**绝对路径**，再传 `--fixed-fps 60 -- --showcase`；完成后运行 `python tools/export_showcase.py --version v4` 导出 MP4。V6 四招另有 `-- --seq6` 驱动，按 manifest 间距依次打出三段普攻、拔刀斩与左向镜像。录像驱动使用真实游戏输入与战斗系统。
 
 ## 工程内容
 
-- `game/scripts/`：战斗、AI、训练、HUD、武器层、特效、音频与回归。
-- `game/data/`：动作帧表、技能、属性、武器 profile 与三波遭遇配置。
+- `game/scripts/`：战斗、AI、训练、HUD、武器层、特效、音频与回归；`seq_lib.gd` 读 V6 manifest 并提供帧表/UV/刀身采样线，`seq_fx.gd` 回放 V6 分层特效。
+- `game/data/`：动作帧表、技能、属性、武器 profile 与三波遭遇配置；`seq_v6.json` 是 V6 接线参数（帧表本体仍在 manifest）。
 - `game/assets/actors_v3/`：无武器主角帧条、逐帧握点和阶段元数据。
-- `game/assets/actors_v4/`：待机/后跳/跳跃新增片段，当前动画入口。
+- `game/assets/actors_v4/`：待机/后跳/跳跃新增片段，其余动作的动画入口。
+- `game/assets/seq_v6/`：V6 manifest 与 282 张逐 tick PNG（角色与剑一体原画 + 刀光/受击/地裂/一闪）。
 - `game/assets/audio_v3/`：正式拟音 WAV，保留无损导入。
 - `game/assets/demo/`：怪物、背景、头像与上一轮资产。
 - `art/characters/`：已确认角色参照；主角唯一造型标杆为 `hero_cool.png`。
-- `art/sheets/v3/`、`art/sheets/v4/`、`audio/combat_v3/`：源文件、生成记录、校准与审核资料。
+- `art/sheets/v3/`、`art/sheets/v4/`、`art/sheets/v6/`、`art/seq_v6/`、`audio/combat_v3/`：源文件、生成记录、校准与审核资料。
 - `docs/design/`：设计；`docs/previews/`、`docs/screenshots/`：实际游戏证据。
 - `tools/`：安装、启动、烘焙与录像导出。
 

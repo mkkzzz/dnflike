@@ -12,8 +12,27 @@ extends RefCounted
 const MANIFEST := "res://assets/demo/anim.json"
 const BODY_MANIFEST := "res://assets/actors_v3/manifest.json"
 const POLISH_MANIFEST := "res://assets/actors_v4/manifest.json"
+const MANIFESTS := [MANIFEST, BODY_MANIFEST, POLISH_MANIFEST]
 
 static var _cache := {}
+
+
+static func _merged_entries(group: String) -> Dictionary:
+	# 后面的清单覆盖前面的同名动作；条目里保留 file，供需要回到源像素的调用方使用。
+	var merged := {}
+	for path in MANIFESTS:
+		if not FileAccess.file_exists(path):
+			continue
+		var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+		if typeof(data) != TYPE_DICTIONARY:
+			push_warning("[ANIM] %s 解析失败（JSON 坏了？重跑烘焙脚本）" % path)
+			continue
+		var groups: Dictionary = (data as Dictionary).get("groups", {})
+		if not groups.has(group):
+			continue
+		for key in (groups[group] as Dictionary):
+			merged[String(key)] = groups[group][key]
+	return merged
 
 
 ## 读取一组动作：{动作名: {tex, frames, frame_w, frame_h, durations, loop, ax, ay}}
@@ -21,21 +40,13 @@ static func load_group(group: String) -> Dictionary:
 	if _cache.has(group):
 		return _cache[group]
 	var out := {}
-	var manifest_path := BODY_MANIFEST if group == "player" and FileAccess.file_exists(BODY_MANIFEST) else MANIFEST
-	if group == "player" and FileAccess.file_exists(POLISH_MANIFEST):
-		manifest_path = POLISH_MANIFEST
-	if not FileAccess.file_exists(manifest_path):
+	if not FileAccess.file_exists(MANIFEST) and not FileAccess.file_exists(BODY_MANIFEST) and not FileAccess.file_exists(POLISH_MANIFEST):
 		push_warning("[ANIM] 缺 %s：先跑 python tools/bake_ai_frames.py（正式）或 tools/bake_game_assets.py（占位）" % MANIFEST)
 		return out
-	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(manifest_path))
-	if typeof(data) != TYPE_DICTIONARY:
-		push_warning("[ANIM] %s 解析失败（JSON 坏了？重跑烘焙脚本）" % MANIFEST)
+	var entries := _merged_entries(group)
+	if entries.is_empty():
+		push_warning("[ANIM] 清单里没有分组 %s" % group)
 		return out
-	var groups: Dictionary = (data as Dictionary).get("groups", {})
-	if not groups.has(group):
-		push_warning("[ANIM] %s 里没有分组 %s" % [MANIFEST, group])
-		return out
-	var entries: Dictionary = groups[group]
 	for key in entries:
 		var e: Dictionary = entries[key]
 		var path := "res://" + str(e.get("file", ""))
@@ -58,6 +69,7 @@ static func load_group(group: String) -> Dictionary:
 		out[String(key)] = {
 			"name": String(key),
 			"tex": tex,
+			"file": path,
 			"frames": frames,
 			"frame_w": float(e.get("frame_w", 1.0)),
 			"frame_h": float(e.get("frame_h", 1.0)),

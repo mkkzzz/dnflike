@@ -3,11 +3,13 @@ extends CharacterBody2D
 ## Input, physical movement and combat clocks share the 60 Hz simulation.
 ## Artwork and the detachable weapon consume the same body_transform().
 const AnimLib := preload("res://scripts/anim_lib.gd")
+const SeqLib := preload("res://scripts/seq_lib.gd")
 signal hp_changed(hp: float, max_hp: float)
 signal died
 signal landed_hit(monster: Node, damage: float)
 signal action_feedback(message: String)
 signal action_started(move_id: String)
+signal seq_hitstop(tick: float, frame: int, blade: Vector2, point: Vector2, hitstop: int)
 signal landed(impact_speed: float)
 
 # Append states so existing scene/debug enum values remain stable.
@@ -59,6 +61,12 @@ var anims: Dictionary = {}
 var anim_name := ""
 var anim_frame := 0
 var anim_tick := 0
+var seq_data: Dictionary = {}
+var seq_clips: Dictionary = {}
+var seq_fx: Node = null
+var last_hitstop := 0
+var last_contact: Vector2 = Vector2.ZERO
+var contact_log: Array = []
 
 var coyote_left := 0
 var _reset_grounded := false
@@ -78,6 +86,7 @@ var _death_t := 0.0
 var _last_move_input := 0.0
 var _guard_frames := 0
 var _landing_visual_left := 0
+var _seq_ground_done := false
 var _input_clock_ms := 0.0
 var _left_was_down := false
 var _right_was_down := false
@@ -95,7 +104,168 @@ func _ready() -> void:
 	collision_layer = 2
 	collision_mask = 1
 	anims = AnimLib.load_group("player")
+	_merge_seq_clips()
 	anim_name = _pick_anim()
+
+## V6：把 manifest 里 actor/<move> 的一体帧（角色与剑同一张原画）接到对应动作名上。
+## 这四个 clip 自带逐 tick 时间轴与刀身采样线；其余动作仍走 V4 帧条。
+func _merge_seq_clips() -> void:
+	seq_data = GameConfig._load_json("res://data/seq_v6.json")
+	seq_clips = SeqLib.load_clips()
+	if seq_clips.is_empty():
+		return
+	var integrated := 0
+	for name in seq_clips.keys():
+		var prefix := "actor/"
+		if not String(name).begins_with(prefix):
+			continue
+		var move := String(name).substr(prefix.length())
+		var clip: Dictionary = seq_clips[name]
+		if not _seq_move_valid(move, clip):
+			continue
+		anims[move] = _seq_clip_entry(move, clip)
+		integrated += 1
+	if integrated > 0:
+		print("[SEQ6] integrated %d authored moves: %s" % [integrated, ", ".join(_seq_move_ids())])
+
+
+func _seq_move_ids() -> Array:
+	var ids: Array = []
+	for move in anims:
+		if anims[move].get("seq6", false):
+			ids.append(String(move))
+	ids.sort()
+	return ids
+
+
+## 只接管 manifest 明确按 tick 授权、且招式帧表长度与资源一致的招式
+func _seq_move_valid(move: String, clip: Dictionary) -> bool:
+	var authored: Dictionary = SeqLib.moves().get(move, {})
+	if authored.is_empty():
+		return false
+	if int(authored.get("length", -1)) != int(clip["length_ticks"]):
+		push_warning("[SEQ6] %s 帧表 %d tick 与 manifest %d 不一致，保留原表现" % [move, int(clip["length_ticks"]), int(authored.get("length", -1))])
+		return false
+	if not _seq_has_move_data(move):
+		push_warning("[SEQ6] moves.json / skills.json 缺 %s，跳过接入" % move)
+		return false
+	return true
+
+
+## 三段普攻在 moves.json，拔刀斩在 skills.json —— 两者都用同一套 manifest 帧表
+func _seq_has_move_data(move: String) -> bool:
+	return GameConfig.moves.has(move) or GameConfig.skills.has(move)
+
+
+## 逐 tick 排帧的 clip 条目：durations 一个 tick 一项，actor 帧带刀身采样线。
+func _seq_clip_entry(move: String, clip: Dictionary) -> Dictionary:
+	# manifest 的 root_dx 是逐 tick 的累积参考位移；贴图本身已按固定解剖比例摆在画布上，
+	# 所以这一项只做贴图偏移，绝不再平移角色节点。
+	var durations: Array = []
+	var blades: Array = []
+	var offsets: Array = []
+	var tick := 0
+	for index in int(clip["length_ticks"]):
+		durations.append(int(clip["spans"][index]))
+		blades.append(clip["blade"][index * 2])
+		blades.append(clip["blade"][index * 2 + 1])
+		for _repeat in int(clip["spans"][index]):
+			offsets.append(float(clip["root_dx"][tick]))
+			tick += 1
+	return {
+		"name": move,
+		"tex": clip["textures"][0],
+		"frames": int(clip["length_ticks"]),
+		"frame_w": float(clip["frame_w"]),
+		"frame_h": float(clip["frame_h"]),
+		"durations": durations,
+		"loop": false,
+		"ax": float(clip["anchor"].x),
+		"ay": float(clip["anchor"].y),
+		# 角色与剑一体原画：禁止再挂运行时武器，否则剑上会多一把剑
+		"weapon_separated": false,
+		"sockets": [],
+		"phase_frames": {},
+		"segments": [],
+		"seq6": true,
+		"seq_textures": clip["textures"],
+		"seq_spans": clip["spans"],
+		"seq_blade": blades,
+		"seq_root_dx": offsets,
+	}
+
+
+## 本 tick 的 root_dx（美术参考位移，正数朝角色前方）。已经烘进原画，不能再平移节点。
+func seq_root_offset(tick := -1.0) -> float:
+	var offsets: Array = anims.get(anim_name, {}).get("seq_root_dx", [])
+	if offsets.is_empty():
+		return 0.0
+	var at := phase_t if tick < 0.0 else tick
+	return float(offsets[clampi(int(floor(at)), 0, offsets.size() - 1)])
+
+
+## 该 tick 贴图相对 root 的左上角（含参考前冲）。1.0x 攻速时与预览逐像素一致。
+func seq_texture_rect(tick := -1.0) -> Rect2:
+	var clip: Dictionary = anims.get(anim_name, {})
+	if clip.is_empty() or not clip.get("seq6", false):
+		return Rect2()
+	var at := phase_t if tick < 0.0 else tick
+	var index := clampi(int(floor(at)), 0, int(clip["frames"]) - 1)
+	return Rect2(Vector2(-float(clip["ax"]) + float(clip["seq_root_dx"][index]), -float(clip["ay"])),
+		Vector2(float(clip["frame_w"]), float(clip["frame_h"])))
+
+
+## 当前 action 是否由 V6 逐 tick 帧表驱动
+func seq_active() -> bool:
+	return bool(anims.get(anim_name, {}).get("seq6", false))
+
+
+## V6 逐 tick 帧表的帧号换算（1.0x 攻速下帧号 == tick）
+func _seq_frame_at(tick: float) -> int:
+	var clip: Dictionary = anims.get(anim_name, {})
+	if not clip.get("seq6", false):
+		return anim_frame
+	return AnimLib.frame_at_progress(clip, clampf(tick / maxf(1.0, _move_duration()), 0.0, 0.999999))
+
+
+func _seq_blade_local(tick: float) -> Array:
+	var clip: Dictionary = anims.get(anim_name, {})
+	var blade: Array = clip.get("seq_blade", [])
+	if blade.is_empty():
+		return [Vector2.ZERO, Vector2.ZERO]
+	var index := clampi(int(floor(tick)), 0, int(clip["frames"]) - 1)
+	return [blade[index * 2], blade[index * 2 + 1]]
+
+
+## 本 tick 的刀身采样线（世界坐标）。判定与刀光都用这一条实际可见的刃线。
+func seq_blade_world(tick := -1.0) -> Array:
+	var at := phase_t if tick < 0.0 else tick
+	var local: Array = _seq_blade_local(at)
+	var origin := visual_position()
+	var guard: Vector2 = local[0]
+	var tip: Vector2 = local[1]
+	return [origin + Vector2(guard.x * float(facing), guard.y),
+		origin + Vector2(tip.x * float(facing), tip.y)]
+
+
+## 记录由战斗碰撞给出的真实接触点
+func report_contact(point: Vector2, move: String, tick: float, segment: int, target: Node = null) -> void:
+	last_contact = point
+	# 记录命中那一刻目标的身体姿态，供验收核对接触点确实落在可见身体上
+	var pose := {}
+	if is_instance_valid(target):
+		pose = {"anim": target.anim_name, "frame": target.anim_frame}
+	contact_log.append({"move": move, "tick": tick, "segment": segment, "point": point, "target": pose, "id": target.get_instance_id() if is_instance_valid(target) else 0})
+	if contact_log.size() > 64:
+		contact_log.pop_front()
+
+
+func _clear_seq_action() -> void:
+	last_hitstop = 0
+	if is_instance_valid(seq_fx):
+		# 收招只清画面，接触/地裂/一闪记录留给验收日志
+		seq_fx.call("reset", true)
+
 
 func setup(data: Dictionary, battle_fx: BattleFX, monster_list: Array) -> void:
 	cfg = data.duplicate(true)
@@ -137,6 +307,7 @@ func reset_combat(origin: Vector2) -> void:
 	move_scale = 1.0
 	hit_targets.clear()
 	input_buffer.clear()
+	contact_log.clear()
 	_event_segments.clear()
 	coyote_left = int(cfg.get("coyote_frames", 6))
 	air_attack_count = 0
@@ -164,6 +335,7 @@ func reset_combat(origin: Vector2) -> void:
 	anim_frame = 0
 	anim_tick = 0
 	modulate = Color.WHITE
+	_clear_seq_action()
 	_anim_step()
 	reset_physics_interpolation()
 	hp_changed.emit(hp, float(cfg.get("max_hp", 1000)))
@@ -606,6 +778,7 @@ func _start_frame_move() -> void:
 	velocity.x = _move_inertia
 	_lane_velocity = 0.0
 	move_scale = _attack_speed() if move_name in ["attack1", "attack2", "attack3", "air_attack", "dash_attack"] or bool(move_data.get("attack_speed_scaled", false)) else 1.0
+	_seq_ground_done = false
 	if move_name in ["upper", "back_dash"]:
 		cds[move_name] = int(round(float(move_data.get("cd", 0)) * 60.0))
 	match move_name:
@@ -624,6 +797,7 @@ func _start_frame_move() -> void:
 	anim_frame = 0
 	anim_tick = 0
 	_anim_fraction = 0.0
+	# V6 表现层必须在 phase_t 前进前拿到出招起点 root（刀光锚点固定在这里）
 	action_started.emit(move_name)
 	_emit_attack_event("windup", -1, move_data)
 
@@ -656,6 +830,16 @@ func _tick_frame_move(delta := 1.0 / 60.0) -> void:
 	if state == St.BACK_DASH:
 		phase = "recovery"
 		velocity.x = float(facing) * (_back_dash_offset(phase_t) - _back_dash_offset(previous)) / maxf(delta, 0.0001)
+	elif seq_active():
+		# V6：phase_t 就是 manifest 的动作 tick，前冲位移已经烘进原画，不再叠加节点平移
+		phase = _seq_phase(phase_t)
+		_seq_tick(previous)
+		# 命中即停帧，但贴图必须停在真正的接触姿势上，所以先同步一次帧号再冻结
+		_anim_step()
+		if fx != null and fx.freeze > 0:
+			return
+		_finish_or_cancel_frame_move(delta)
+		return
 	elif move_data.has("hits"):
 		phase = "windup"
 		var hits: Array = move_data["hits"]
@@ -709,6 +893,10 @@ func _tick_frame_move(delta := 1.0 / 60.0) -> void:
 			velocity.x = _move_inertia
 	if fx != null and fx.freeze > 0:
 		return
+	_finish_or_cancel_frame_move(delta)
+
+## 招式收尾判定：V6 逐 tick 帧表与旧帧表共用同一条结束/取消路径
+func _finish_or_cancel_frame_move(delta: float) -> void:
 	if _landed_air_attack:
 		_landing_attack_left -= 1
 		if _landing_attack_left <= 0:
@@ -722,6 +910,184 @@ func _tick_frame_move(delta := 1.0 / 60.0) -> void:
 				_start_guard()
 			elif _can_locomotion_cancel():
 				_finish_move_and_resume(delta)
+
+## V6 动作阶段按 manifest 的 active 窗口划分；命中窗口内每 tick 都用真实刃线做判定
+func _seq_phase(tick: float) -> String:
+	var window: Array = _seq_window()
+	var start := float(window[0])
+	var end := float(window[1])
+	if tick < start:
+		return "windup"
+	return "active" if tick < end else "recovery"
+
+
+func _seq_window() -> Array:
+	if not is_instance_valid(seq_fx):
+		return [0.0, 0.0]
+	var entry: Dictionary = seq_fx.call("current_window")
+	if entry.is_empty():
+		return [0.0, 0.0]
+	return [float(entry.get("start", 0.0)), float(entry.get("end", 0.0))]
+
+
+## 逐 tick 推进 V6 招式：前冲只做视觉展现代价，不改存档的 move_data 位移
+func _seq_tick(previous: float) -> void:
+	var window: Array = _seq_window()
+	var start := float(window[0])
+	var end := float(window[1])
+	var overlapping := _window_overlaps(previous, phase_t, start, end - start)
+	if overlapping:
+		if not _event_segments.has(0):
+			_event_segments[0] = true
+			var event := move_data.duplicate(true)
+			event["seq6"] = true
+			event["fx_kind"] = _seq_fx_kind()
+			event["trail_life"] = _seq_trail_life()
+			_emit_attack_event("active", 0, event)
+			if fx != null:
+				fx.call("seq_swing_sound", move_name, visual_position().x)
+		_seq_hit(start, end)
+		skill_hit_idx = 1
+	if not _seq_ground_done and _seq_ground_reached():
+		_seq_ground_done = true
+		if is_instance_valid(seq_fx):
+			seq_fx.call("spawn_ground", seq_ground_point())
+
+
+func _seq_fx_kind() -> String:
+	return str(_seq_move_data().get("fx", "light"))
+
+
+func _seq_trail_life() -> int:
+	return int(_seq_move_data().get("trail_life", 5))
+
+
+func _seq_move_data() -> Dictionary:
+	if is_instance_valid(seq_fx):
+		return seq_fx.call("move_params")
+	return {}
+
+
+## 重劈地裂：只在可见刀尖真正落到地面线时触发一次，锚点取落地坐标
+func _seq_ground_reached() -> bool:
+	if not bool(_seq_move_data().get("ground", false)):
+		return false
+	var blade: Array = seq_blade_world()
+	var tip: Vector2 = blade[1]
+	return tip.y >= ground_y + depth_y - 3.5
+
+
+func seq_ground_point() -> Vector2:
+	var blade: Array = seq_blade_world()
+	var tip: Vector2 = blade[1]
+	return Vector2(tip.x, tip.y)
+
+
+## 命中检测：沿本帧护手→刀尖的有效刃线逐点采样，与目标身体区域相交。
+## 接触点必须是真实刃线接触，不能到了参考 tick 就强制伤害，也不能拿目标中心替代。
+func _seq_hit(start: float, end: float) -> void:
+	var hb: Dictionary = move_data.get("hitbox", {})
+	if hb.is_empty():
+		return
+	# 上一 tick 的刃线 + 本 tick 的刃线：快速挥砍让刀刃在 tick 之间扫过目标也要算接触。
+	# phase_t 用真实值而非夹到窗口末尾，这样停在末帧时停在真实的接触姿势上。
+	var blade: Array = seq_blade_world()
+	var guard: Vector2 = blade[0]
+	var tip: Vector2 = blade[1]
+	var swept_start := maxf(start, phase_t - 1.0)
+	var swept: Array = seq_blade_world(swept_start)
+	for monster in monsters.duplicate():
+		if not is_instance_valid(monster) or monster.dead:
+			continue
+		if absf(depth_y - monster.depth_y) > float(hb.get("lane", cfg.get("lane_hit_tolerance", 24))):
+			continue
+		if not _within_reach(monster, hb):
+			continue
+		var key := "seq:%d" % monster.get_instance_id()
+		if hit_targets.has(key):
+			continue
+		var contact := _blade_contact(swept[0], swept[1], guard, tip, monster, float(hb.get("lane", 24)) * 0.75)
+		if contact == Vector2.INF:
+			continue
+		var payload := move_data.duplicate(true)
+		payload["move_id"] = move_name
+		payload["job"] = job
+		payload["airborne"] = false
+		payload["seq6"] = true
+		payload["fx_kind"] = _seq_fx_kind()
+		payload["contact_point"] = contact
+		payload["material"] = "metal"
+		if monster.take_hit(payload, facing):
+			hit_targets[key] = true
+			hit_emitted = true
+			# 停帧只登记一次：动作时钟与两层刀光共享它，特效走独立时钟
+			last_hitstop = int(move_data.get("hitstop", 0))
+			report_contact(contact, move_name, phase_t, 0, monster)
+			# 受击特效挂在真实接触点上，light 与 matter 分开按各自混合模式入层
+			if is_instance_valid(seq_fx):
+				seq_fx.call("spawn_hit", contact, str(payload.get("fx_kind", "light")))
+			# 停帧第一帧的现场：动作时钟、actor 贴图与刀身采样线必须是同一 tick
+			seq_hitstop.emit(phase_t, _seq_frame_at(phase_t), tip, contact, last_hitstop)
+			landed_hit.emit(monster, float(move_data.get("damage", 0)))
+
+
+## 刃线采样与目标可见身体轮廓的首个交点；返回 Vector2.INF 表示未接触。
+## 接触点是真实刃线落在身体上的位置，所以火花出现在实际受击处，而不是被挪到胸口。
+## 判定用「真实刃线 × 目标可见身体」；宽高全部取自 move_data 的 hitbox，不复制某一种怪的 ROI。
+func _blade_contact(from_guard: Vector2, from_tip: Vector2, guard: Vector2, tip: Vector2, monster: Node, tolerance: float) -> Vector2:
+	# 沿刃线密集取样：浅曲刀刃扫过身体侧面的有效区间可能只有几个像素宽。
+	var samples := 48
+	var box: Rect2 = monster.hurtbox()
+	var window := box.grow(tolerance)
+	var union := window.merge(monster.call("body_box"))
+	var best := Vector2.INF
+	var best_distance := INF
+	for index in samples + 1:
+		var k := float(index) / samples
+		for candidate in [from_guard.lerp(from_tip, k), guard.lerp(tip, k)]:
+			if _point_hits(window, box, monster, candidate):
+				return candidate
+			# 记住整段刃线上最接近判定区的一点：身体轮廓与 hurtbox 都不覆盖时用它做接触点
+			var distance := _rect_distance(union, candidate)
+			if distance < best_distance:
+				best_distance = distance
+				best = candidate
+	if best != Vector2.INF and best_distance <= maxf(3.0, tolerance * 0.5):
+		return best
+	# 完全擦肩而过：接受 hurtbox 上最近的刃线点，避免整刀判成空挥
+	if box.intersects(Rect2(guard, tip - guard).abs()):
+		return best
+	return Vector2.INF
+
+
+## 点是否落在目标的可见身体或收纳 hurtbox 内
+func _point_hits(window: Rect2, box: Rect2, monster: Node, point: Vector2) -> bool:
+	if box.has_point(point):
+		return true
+	if not window.has_point(point):
+		return false
+	return bool(monster.call("body_contains", point))
+
+
+func _rect_distance(box: Rect2, point: Vector2) -> float:
+	var dx := maxf(maxf(box.position.x - point.x, point.x - box.end.x), 0.0)
+	var dy := maxf(maxf(box.position.y - point.y, point.y - box.end.y), 0.0)
+	return Vector2(dx, dy).length()
+
+## 配置范围决定“够不够得着”，刃线轮廓决定“有没有真的碰到”。
+## V6 的可见刃线比收纳 hurtbox 的窄矩形更靠前，所以横向范围按实际触及区域放宽；
+## 只保留挥击方向那一侧，匕首朝后的余势不会打到身后的敌人。
+func _within_reach(monster: Node, hb: Dictionary) -> bool:
+	var reach := float(hb.get("x", 110)) * 1.55
+	var height := float(hb.get("h", 190))
+	var near := global_position.x - height * 0.14
+	var far := global_position.x + reach
+	if facing < 0:
+		near = global_position.x - reach
+		far = global_position.x + height * 0.14
+	var box := Rect2(Vector2(near, global_position.y + depth_y - height), Vector2(far - near, height))
+	return box.intersects(monster.hurtbox())
+
 
 func _back_dash_offset(clock: float) -> float:
 	var progress := clampf(clock / maxf(1.0, float(move_data.get("motion_frames", _move_duration()))), 0.0, 1.0)
@@ -806,7 +1172,9 @@ func _clear_move() -> void:
 	_move_inertia = 0.0
 	_landed_air_attack = false
 	_landing_attack_left = 0
+	_seq_ground_done = false
 	_event_segments.clear()
+	_clear_seq_action()
 
 func _end_frame_move() -> void:
 	var was_attack := move_name in ["attack1", "attack2", "attack3", "dash_attack"]
@@ -1008,7 +1376,12 @@ func _anim_step() -> void:
 	if not anims.has(anim_name):
 		return
 	if state in FRAME_STATES:
-		anim_frame = AnimLib.frame_for_move(anims[anim_name], phase_t, move_data)
+		if seq_active():
+			# V6：帧序就是相位刻度，不按 durations 二次推进。
+			# 1.0x 攻速下逐 tick 与美术预览一致；攻速加成只缩短实际时长，不改帧序。
+			anim_frame = AnimLib.frame_at_progress(anims[anim_name], phase_t / maxf(1.0, _move_duration()))
+		else:
+			anim_frame = AnimLib.frame_for_move(anims[anim_name], phase_t, move_data)
 	elif state == St.GETUP:
 		anim_frame = AnimLib.frame_at_progress(anims[anim_name], 1.0 - float(st_hit_left) / maxf(1.0, float(cfg.get("getup_time", 12))))
 	elif anim_name == "jump_land":
@@ -1041,6 +1414,8 @@ func _draw() -> void:
 	var clip: Dictionary = anims.get(anim_name, {})
 	if clip.is_empty():
 		_draw_placeholder()
+	elif clip.get("seq6", false):
+		_draw_seq_body(clip)
 	else:
 		var dst := Rect2(-clip["ax"], -clip["ay"], clip["frame_w"], clip["frame_h"])
 		draw_texture_rect_region(clip["tex"], dst, AnimLib.src_rect(clip, anim_frame))
@@ -1051,6 +1426,18 @@ func _draw() -> void:
 		modulate = Color(1, 1, 1, 0.72)
 	else:
 		modulate = Color.WHITE
+
+func _draw_seq_body(clip: Dictionary) -> void:
+	# 每个 tick 一张独立 PNG，UV 取样区就是整张图。不能用水平帧条的 src_rect：
+	# 那会把单帧贴图当成第 N 格去采样，UV 落在纹理外，角色会整段消失。
+	var full := Rect2(Vector2.ZERO, Vector2(float(clip["frame_w"]), float(clip["frame_h"])))
+	var tex: Texture2D = clip["seq_textures"][anim_frame]
+	# 拔刀一闪：预览在出刀窗口叠一层 13% 亮度的残影，偏移 25 px
+	if move_name == "quick_draw" and phase_t >= 16.0 and phase_t < 20.0:
+		var ghost := seq_texture_rect(phase_t - 2.0)
+		draw_texture_rect_region(tex, Rect2(ghost.position - Vector2(25.0, 0.0), ghost.size), full, Color(1.0, 1.0, 1.0, 0.13))
+	draw_texture_rect_region(tex, seq_texture_rect(), full)
+
 
 func _draw_placeholder() -> void:
 	# The body fallback deliberately has no weapon: WeaponRig owns its rendering.

@@ -93,6 +93,88 @@ func hurtbox() -> Rect2:
 		height *= 0.45
 	return Rect2(position + Vector2(-24, depth_y - height), Vector2(48, height))
 
+
+## 实际身体轮廓遮罩（按帧贴图 alpha 粗采样，整张纹理只算一次）。
+## 目标的受击区域来自它自己的素材，不复制某一种怪的 ROI 当成所有怪物的固定规则。
+const MASK_CELL := 1
+
+static var _body_masks := {}
+
+
+## 轮廓遮罩直接从帧条源文件解码（headless 下 Texture2D.get_image() 不可用），整张纹理只算一次。
+static func _texture_mask(source: String, texture: Texture2D) -> Dictionary:
+	var key := source if not source.is_empty() else str(texture.get_instance_id())
+	if _body_masks.has(key):
+		return _body_masks[key]
+	var image := Image.new()
+	if not source.is_empty() and image.load(source) == OK and not image.is_empty():
+		# 直接从源文件解码：headless 下 Texture2D.get_image() 不可用。
+		# 导出构建请改用 Image 资源导入，这里只服务于编辑器与自动化。
+		pass
+	elif texture != null and texture.get_image() != null:
+		image = texture.get_image()
+	else:
+		image = Image.new()
+	var mask := {}
+	if not image.is_empty():
+		image.convert(Image.FORMAT_RGBA8)
+		for row in int(image.get_height() / MASK_CELL):
+			for column in int(image.get_width() / MASK_CELL):
+				if image.get_pixel(column * MASK_CELL + MASK_CELL / 2, row * MASK_CELL + MASK_CELL / 2).a > 0.5:
+					mask[Vector2i(column, row)] = true
+	_body_masks[key] = mask
+	return mask
+
+
+## 验收用：世界坐标是否落在目标的**指定**动作帧可见身体上（命中后目标会切到受击帧，
+## 所以接触点必须按命中当帧核对，而不是按当前帧）。
+func body_contains_at(point: Vector2, anim: String, frame: int) -> bool:
+	var saved_name := anim_name
+	var saved_frame := anim_frame
+	anim_name = anim
+	anim_frame = frame
+	var hit := body_contains(point)
+	anim_name = saved_name
+	anim_frame = saved_frame
+	return hit
+
+
+## 当前帧可见身体在世界坐标里的包围盒（轮廓遮罩的换算与 body_contains 完全一致）
+func body_box() -> Rect2:
+	var clip: Dictionary = anims.get(anim_name, {})
+	if clip.is_empty():
+		return Rect2()
+	var model := maxf(0.05, float(cfg.get("model_scale", 1.0)))
+	var frame := AnimLib.src_rect(clip, anim_frame)
+	var center := position + Vector2(0, depth_y)
+	var local := Vector2(-float(clip["ax"]) * model, -float(clip["ay"]) * model)
+	if facing > 0:
+		return Rect2(center + local, frame.size * model)
+	return Rect2(center + Vector2(-(local.x + frame.size.x * model), local.y), frame.size * model)
+
+
+## 世界坐标是否落在该目标当前帧的可见身体上（横向不再被 hurtbox 宽度截断，
+## 因为刀刃扫过的可见身体比收纳判定用的窄矩形更宽）。
+func body_contains(point: Vector2) -> bool:
+	var clip: Dictionary = anims.get(anim_name, {})
+	if clip.is_empty():
+		return false
+	var frame_rect := AnimLib.src_rect(clip, anim_frame)
+	if frame_rect.size.x <= 0.0 or frame_rect.size.y <= 0.0:
+		return false
+	var local := point - (position + Vector2(0, depth_y))
+	if facing < 0:
+		local.x = -local.x
+	var model := maxf(0.05, float(cfg.get("model_scale", 1.0)))
+	local /= model
+	var texture_point := local - Vector2(-float(clip["ax"]), -float(clip["ay"]))
+	var column := int(texture_point.x) / MASK_CELL
+	var row := int(texture_point.y) / MASK_CELL
+	if column < 0 or row < 0 or column * MASK_CELL >= int(frame_rect.size.x) or row * MASK_CELL >= int(frame_rect.size.y):
+		return false
+	return (_texture_mask(str(clip.get("file", "")), clip["tex"] as Texture2D) as Dictionary).has(
+		Vector2i(int(frame_rect.position.x) / MASK_CELL + column, int(frame_rect.position.y) / MASK_CELL + row))
+
 func _physics_process(delta: float) -> void:
 	if dead or not control_enabled:
 		return
@@ -179,7 +261,7 @@ func impact_visual_state() -> Dictionary:
 	# Render offsets never move the body collider, hurtbox or combat position.
 	var pressure := exp(-_impact_age * 18.0) * _impact_strength if _impact_age < _impact_life else 0.0
 	var recoil := sin(_impact_age * 57.0) * exp(-_impact_age * 22.0) * 1.5 * _impact_strength
-	var contact_flash := clampf(exp(-_impact_age * 43.0) * _impact_strength * 0.77, 0, 0.96) if _impact_age < 0.13 else 0.0
+	var contact_flash := clampf(exp(-_impact_age * 43.0) * _impact_strength * 0.42, 0, 0.55) if _impact_age < 0.13 else 0.0
 	return {"age": _impact_age, "offset": Vector2(_impact_direction * (pressure * 7.5 + recoil), -pressure * 1.2),
 		"scale": Vector2(1.0 - pressure * 0.11, 1.0 + pressure * 0.065),
 		"rotation": _impact_direction * pressure * 0.032,
@@ -195,9 +277,11 @@ func _sync_body_visual() -> void:
 		return
 	var visual := impact_visual_state()
 	var squash: Vector2 = visual["scale"]
+	# 模型比例只影响画面；碰撞盒与 hurtbox 各自独立配置，不随贴图缩放
+	var model := maxf(0.05, float(cfg.get("model_scale", 1.0)))
 	_body_sprite.position = Vector2(0, depth_y) + (visual["offset"] as Vector2)
 	_body_sprite.rotation = float(visual["rotation"])
-	_body_sprite.scale = Vector2(float(facing) * squash.x, squash.y)
+	_body_sprite.scale = Vector2(float(facing) * squash.x * model, squash.y * model)
 	_body_sprite.texture = clip["tex"]
 	_body_sprite.region_rect = AnimLib.src_rect(clip, anim_frame)
 	_body_sprite.offset = Vector2(-float(clip["ax"]), -float(clip["ay"]))

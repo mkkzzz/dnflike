@@ -15,6 +15,8 @@ func _ready() -> void:
 		_run_capture.call_deferred()
 	elif "--showcase" in OS.get_cmdline_user_args():
 		_run_showcase.call_deferred()
+	elif "--seq6" in OS.get_cmdline_user_args():
+		_run_seq6_showcase.call_deferred()
 
 func _frames(count: int) -> void:
 	for _index in count:
@@ -68,6 +70,21 @@ func _fresh(job_id := 0) -> Monster:
 	await _frames(2)
 	return target
 
+## 在指定 tick 上取一次 V6 刃线（确定性，不依赖物理帧到达顺序）
+func _blade_at(actor: Player, move: String, tick: float, face: int) -> Array:
+	actor._start_move(move)
+	actor.facing = face
+	actor.phase_t = tick
+	actor.anim_name = move
+	return actor.seq_blade_world(tick)
+
+
+func _rect_gap(box: Rect2, point: Vector2) -> float:
+	var dx := maxf(maxf(box.position.x - point.x, point.x - box.end.x), 0.0)
+	var dy := maxf(maxf(box.position.y - point.y, point.y - box.end.y), 0.0)
+	return Vector2(dx, dy).length()
+
+
 func _attack_duration(speed: float) -> int:
 	var target: Monster = await _fresh()
 	target.position.x = 1000
@@ -100,10 +117,13 @@ func _run_checks() -> void:
 	var p: Player = main_ref.player
 	_check(p.anims.size() >= 20 and m.anims.size() == 8, "separate body animations and monster animations load")
 	var first_attack: Dictionary = GameConfig.moves["attack1"]
-	var attack_pose: int = AnimLib.frame_for_move(p.anims["attack1"], float(first_attack["windup"]) + 1, first_attack)
-	var active_pose_valid := false
-	for pose_index in p.anims["attack1"]["phase_frames"]["active"]:
-		active_pose_valid = active_pose_valid or attack_pose == int(pose_index)
+	# V6 三段普攻与拔刀斩改由 manifest 的逐 tick 帧表驱动，帧序就是相位刻度；
+	# 其余动作仍走 V4 的相位关键姿势映射。
+	var seq_tick := int(float(first_attack["windup"])) + 1
+	var seq_pose: int = AnimLib.frame_at_progress(p.anims["attack1"], float(seq_tick) / float(p.anims["attack1"]["frames"]))
+	var active_pose_valid := seq_pose == seq_tick
+	for pose_index in p.anims["attack1"].get("phase_frames", {}).get("active", []):
+		active_pose_valid = active_pose_valid or seq_pose == int(pose_index)
 	_check(active_pose_valid, "attack pose matches active hit frame")
 	_check(AnimLib.frame_for_move(p.anims["attack3"], 1, GameConfig.moves["attack3"]) == 0, "windup uses preparation pose")
 	var club: Dictionary = GameConfig.monsters["goblin"]["attack_move"]
@@ -123,12 +143,12 @@ func _run_checks() -> void:
 	var slow: int = await _attack_duration(0.7)
 	var fast: int = await _attack_duration(1.3)
 	_check(fast < slow and slow - fast >= 6, "fractional attack speed changes actual duration")
-	# A target entering after the first active frame must still be hit.
+	# A target entering during the authored active window must still be hit.
 	m = await _fresh()
 	m.position.x = 900
 	p._start_attack()
 	await _frames(int(GameConfig.moves["attack1"]["windup"]) + 3)
-	m.position.x = p.position.x + 100
+	m.position.x = p.position.x + 120
 	await _frames(30)
 	_check(observed_moves.size() == 1, "late active-window entry connects once")
 	m = await _fresh()
@@ -290,6 +310,7 @@ func _run_checks() -> void:
 		await _capture("04_result")
 	await _run_v3_checks()
 	await _run_v4_checks()
+	await _run_v6_checks()
 	main_ref._show_ready()
 	_check(main_ref.battle_state == main_ref.BattleState.READY and not p.control_enabled, "result returns to class selection")
 	print("[DEMO_TEST] COMPLETE checks=%d failures=%d" % [checks, failures])
@@ -415,6 +436,10 @@ func _run_v3_checks() -> void:
 	_check(rig.visible and bool(p.anims["idle"].get("weapon_separated", false)), "weapon is a visible independent layer on weaponless body art")
 	var sockets_valid := true
 	for clip in p.anims.values():
+		if bool(clip.get("seq6", false)):
+			# V6 是角色与剑一体的原画，本来就不该有独立武器插槽
+			sockets_valid = sockets_valid and not bool(clip.get("weapon_separated", true))
+			continue
 		sockets_valid = sockets_valid and bool(clip.get("weapon_separated", false)) and clip.get("sockets", []).size() == int(clip["frames"])
 	_check(sockets_valid, "every body frame has an authored weapon socket")
 	p.position.y = main_ref.GROUND_Y - 85
@@ -430,13 +455,36 @@ func _run_v3_checks() -> void:
 		await _frames(1)
 		if p.hit_emitted:
 			break
-	_check(main_ref.bm._trails.size() >= 2 and main_ref.bm.freeze > 0, "contact frame already has real blade trail during hitstop")
+	# V6 命中帧的表现是两层序列帧刀光 + 受击特效，不再依赖运行时刀身拖尾。
+	var seq_move: String = p.move_name
+	var seq_frame: int = p.anim_frame
+	var seq_contact: Vector2 = p.last_contact
+	_check(main_ref.bm.freeze > 0 and main_ref.seq_fx.contacts.size() >= 1, "contact frame already has real blade trail during hitstop [freeze=%d hits=%d]" % [main_ref.bm.freeze, main_ref.seq_fx.contacts.size()])
+	var held_blade: Array = p.seq_blade_world()
+	_check(seq_contact != Vector2.ZERO and held_blade[1].distance_to(seq_contact) < 110.0, "contact point comes from the actual blade line [pt=%s tip=%s face=%d]" % [str(seq_contact), str(held_blade[1]), p.facing])
+	await _frames(4)
+	var frozen: Dictionary = main_ref.seq_fx.freeze_samples[-1] if not main_ref.seq_fx.freeze_samples.is_empty() else {}
+	var held: Dictionary = main_ref.seq_fx.debug_state()
+	_check(not frozen.is_empty() and int(frozen["frame"]) == int(float(frozen["tick"])), "actor artwork freezes on the same tick as the action clock")
+	_check(held["slash_back_visible"] and held["slash_front_visible"], "both slash layers stay on screen during hitstop")
+	await _frames(14)
+	var after: Dictionary = main_ref.seq_fx.debug_state()
+	_check(after["hit_nodes"] >= 1 or int(main_ref.seq_fx.effect_clock * 60.0) > 0, "hit effects keep their own clock while the action clock is frozen")
 	main_ref.bm.clear_fx()
+	main_ref.seq_fx.reset()
 	m = await _fresh()
-	m.position.x = p.position.x + float(GameConfig.moves["attack1"]["hitbox"]["x"]) + float(GameConfig.moves["attack1"]["move"]) + 28
+	m.position.x = p.position.x + float(GameConfig.moves["attack1"]["move"]) + 118.0
 	p._start_attack()
-	await _frames(30)
-	_check(m.hp < 2000, "visible blade reach contributes to the actual melee hit region")
+	var probe := ""
+	for _index in 30:
+		await _frames(1)
+		if p.phase_t >= 8.0 and p.phase_t <= 12.0:
+			var bl: Array = p.seq_blade_world()
+			probe += "|t%.0f tip=%s body=%s anim=%s det=%s" % [p.phase_t, str(bl[1]), str(m.body_contains(bl[1])), m.anim_name,
+				str(m.body_contains(m.position + Vector2(0, -66))) + "/" + str(m.body_contains(m.position + Vector2(0, -30))) + "/" + str(m.body_contains(m.position + Vector2(0, -120)))]
+	_check(m.hp < 2000, "visible blade reach contributes to the actual melee hit region [hp=%.0f%s]" % [m.hp, probe])
+	_check(p.contact_log.size() >= 1 and p.contact_log[-1]["point"].x > 0.0, "melee contact is logged from the real blade sample [n=%d]" % p.contact_log.size())
+	p.contact_log.clear()
 	m = await _fresh()
 	var body_texture = p.anims["idle"]["tex"]
 	var long_reach := rig.blade_tip_global().distance_to(rig.blade_base_global())
@@ -662,6 +710,204 @@ func _run_v4_fx_checks() -> void:
 	_check(int(main_ref.bm.native_particle_stats()["bursts"]) > before_bursts + 1 and int(main_ref.bm.native_particle_stats()["active"]) > 0, "blood rage feeds a persistent live ember particle effect")
 	main_ref.bm.clear_fx()
 
+func _run_v6_checks() -> void:
+	## V6 接入验收：帧表、一体原画、刀光锚点、停帧只停一次、真实接触点、地裂与拔刀一闪。
+	var p: Player = main_ref.player
+	var seq: SeqFX = main_ref.seq_fx
+	var seq_lib = load("res://scripts/seq_lib.gd")
+	var manifest: Dictionary = seq_lib.moves()
+	_check(seq_lib.clip_names().size() == 21 and not bool(seq_lib.hitstop_baked()), "V6 manifest exposes 21 clips with no baked hit-stop")
+	_check(manifest.size() == 4 and p.seq_clips.size() == 21, "authored V6 move parameters and clips load for four moves")
+	var lengths := {"attack1": 30, "attack2": 32, "attack3": 41, "quick_draw": 36}
+	var timeline_ok := true
+	var seq_integrated := 0
+	for move in lengths:
+		var clip: Dictionary = p.anims.get(move, {})
+		if not bool(clip.get("seq6", false)):
+			seq_integrated -= 1
+			continue
+		seq_integrated += 1
+		timeline_ok = timeline_ok and int(clip["frames"]) == int(lengths[move])
+		timeline_ok = timeline_ok and clip["seq_spans"].size() == int(lengths[move])
+		timeline_ok = timeline_ok and clip["seq_blade"].size() == int(lengths[move]) * 2
+		timeline_ok = timeline_ok and clip["durations"].size() == int(lengths[move])
+		timeline_ok = timeline_ok and int(p.seq_clips["actor/%s" % move]["length_ticks"]) == int(lengths[move])
+		timeline_ok = timeline_ok and not bool(clip["weapon_separated"])
+	_check(timeline_ok and seq_integrated == 4, "four authored moves play integer tick timelines instead of PNG indices")
+	# 每个 tick 一张独立 PNG：UV 必须取整张图，帧条式 src_rect 会让角色整段消失
+	var uv_ok := true
+	for name in main_ref.seq_fx.clips:
+		var seq_clip: Dictionary = main_ref.seq_fx.clips[name]
+		for index in range(0, seq_clip["textures"].size(), 7):
+			var tex: Texture2D = seq_clip["textures"][index]
+			uv_ok = uv_ok and int(tex.get_width()) == int(seq_clip["frame_w"]) and int(tex.get_height()) == int(seq_clip["frame_h"])
+	_check(uv_ok, "every authored tick texture matches its canvas so full-image UV sampling is valid")
+	# manifest 逐 tick 转成 SpriteFrames：每个 tick 一格，作者写的整数时长保留
+	var frames_clip: Dictionary = p.seq_clips["actor/attack3"]
+	var sprite_frames: SpriteFrames = seq_lib.sprite_frames(frames_clip, "attack3")
+	var named: PackedStringArray = sprite_frames.get_animation_names()
+	var tick_frames := 0
+	if named.size() > 0:
+		tick_frames = sprite_frames.get_frame_count(named[0])
+	var duration_total := 0.0
+	for index in tick_frames:
+		duration_total += sprite_frames.get_frame_duration(named[0], index)
+	_check(named.size() == 1 and named[0] == "attack3" and tick_frames == 41 and is_equal_approx(duration_total, 41.0), "manifest converts to SpriteFrames without losing authored integer tick durations")
+	# 逐帧抓取：帧序就是相位刻度，1.0x 攻速下与美术预览逐 tick 对齐
+	await _fresh()
+	var p_v6: Player = p
+	var frame_ok := true
+	for tick in [0, 7, 8, 9, 12, 21, 29]:
+		p_v6._start_move("attack1")
+		p_v6.phase_t = float(tick)
+		p_v6.anim_name = "attack1"
+		p_v6._anim_step()
+		frame_ok = frame_ok and p_v6.anim_frame == tick
+	_check(frame_ok, "every authored tick maps to its own frame during a swing")
+	var m: Monster = await _fresh()
+	p_v6.position.x = m.position.x - 128.0
+	var log_before: int = p_v6.contact_log.size()
+	var samples_before: int = main_ref.seq_fx.freeze_samples.size()
+	p_v6._start_attack()
+	await _frames(40)
+	_check(p_v6.contact_log.size() == log_before + 1 and observed_moves.has("attack1"), "manifest spacing lands exactly one authentic blade contact")
+	var contact_tick := float(p_v6.contact_log[-1]["tick"]) if p_v6.contact_log.size() > log_before else -1.0
+	_check(contact_tick >= 8.0 and contact_tick < 12.0, "contact lands inside the authored active window, not at a forced reference tick")
+	var launch_sample: Dictionary = main_ref.seq_fx.freeze_samples[-1] if main_ref.seq_fx.freeze_samples.size() > samples_before else {}
+	_check(int(launch_sample.get("hitstop", -1)) == int(manifest["attack1"]["hitstop"]), "the recorded freeze uses the authored hit-stop length")
+	_check(p_v6.hit_targets.size() == 1, "one target is hit once per swing segment")
+	# 接触点必须落在命中当帧目标可见身体上，而不是被挪到胸口或脚底
+	var record: Dictionary = p_v6.contact_log[-1] if p_v6.contact_log.size() > log_before else {}
+	var contact: Vector2 = record.get("point", Vector2.ZERO)
+	var pose: Dictionary = record.get("target", {})
+	_check(m.body_contains_at(contact, str(pose.get("anim", "idle")), int(pose.get("frame", 0))), "impact point registers on the target's own painted body silhouette")
+	# 可见刀刃能扫到伸出 hurtbox 的头与手臂，接触点必须落在刃线上并紧贴判定区
+	var sample_tip: Vector2 = launch_sample.get("blade", Vector2.ZERO) if launch_sample.get("blade", Vector2.ZERO) is Vector2 else Vector2.ZERO
+	_check(launch_sample.is_empty() or contact.distance_to(sample_tip) < 120.0, "impact point sits on the recorded blade line")
+	_check(_rect_gap(m.hurtbox(), contact) <= 24.0, "impact point stays on the target's hurt region or the body that overlaps it")
+	# 停帧只停一次：actor 与两层刀光共享动作时钟，特效走自己的时钟
+	m = await _fresh()
+	var stop_p: Player = p
+	m.position.x = stop_p.position.x + 118.0
+	var hitstops_before: int = main_ref.bm.hitstops
+	var effects_before: float = main_ref.seq_fx.effect_clock
+	var grounds_before_stop: int = main_ref.seq_fx.ground_events.size()
+	var freeze_before: int = main_ref.seq_fx.freeze_samples.size()
+	stop_p._start_attack()
+	var froze := false
+	for _index in 20:
+		await _frames(1)
+		if main_ref.bm.freeze > 0:
+			froze = true
+			break
+	var sample: Dictionary = main_ref.seq_fx.freeze_samples[-1] if main_ref.seq_fx.freeze_samples.size() > freeze_before else {}
+	# 停帧期间动作时钟与演员贴图必须一起冻住，特效走自己的时钟
+	var effect_tick_before: float = main_ref.seq_fx.effect_clock
+	while main_ref.bm.freeze > 0:
+		await _frames(1)
+	await _frames(2)
+	_check(froze and main_ref.bm.hitstops == hitstops_before + 1, "a V6 connect freezes exactly once")
+	_check(not sample.is_empty() and int(sample["frame"]) == int(float(sample["tick"])), "the action clock and sequence frame are frozen on the contact tick")
+	_check(main_ref.seq_fx.effect_clock > effect_tick_before and main_ref.seq_fx.effect_clock > effects_before, "V6 hit effects keep playing on their own clock")
+	await _frames(24)
+	# 刀光锚点固定在出招起点 root，序列里的参考前冲不再随当前 root 平移第二次
+	m = await _fresh()
+	var slash_p: Player = p
+	m.position.x = 1180
+	slash_p.position.x = 400.0
+	slash_p._start_attack()
+	await _frames(10)
+	var start_origin: Vector2 = main_ref.seq_fx.slash_origin
+	var baked_offset: float = slash_p.seq_root_offset(9.0)
+	await _frames(12)
+	_check(is_equal_approx(slash_p.position.x, 400.0), "the authored reference travel is never applied to the node a second time")
+	_check(main_ref.seq_fx.slash_origin == start_origin, "slash layers stay anchored to the move start root")
+	var texture_offset := slash_p.seq_texture_rect(9.0)
+	var base_offset := float(slash_p.anims["attack1"]["seq_root_dx"][0])
+	_check(baked_offset > base_offset and is_equal_approx(texture_offset.position.x, -float(slash_p.anims["attack1"]["ax"]) + baked_offset) and is_equal_approx(main_ref.seq_fx.slash_origin.x, 400.0), "authored reference travel rides on the sprite, never on the node twice [baked=%.1f base=%.1f]" % [baked_offset, base_offset])
+	# 重劈：地裂只在可见刀尖真正落地时触发一次
+	m = await _fresh()
+	var ground_p: Player = p
+	m.position.x = ground_p.position.x + 120.0
+	ground_p.position.x = 300.0
+	var grounds_before: int = main_ref.seq_fx.ground_events.size()
+	ground_p._start_move("attack3")
+	await _frames(60)
+	var ground_events: Array = main_ref.seq_fx.ground_events
+	_check(ground_events.size() == grounds_before + 1, "the heavy chop cracks the ground exactly once")
+	if ground_events.size() > grounds_before:
+		var ground_point: Vector2 = ground_events[-1]["point"]
+		_check(absf(ground_point.y - (main_ref.GROUND_Y + ground_p.depth_y)) <= 3.5, "ground crack anchors at the visible blade tip's landing coordinate")
+	# 拔刀斩：独立一闪 + 短暂压暗，长线挂接触点
+	m = await _fresh(2)
+	var iai_p: Player = p
+	m.position.x = iai_p.position.x + 205.0
+	iai_p.mp = 300.0
+	var flash_before: int = main_ref.seq_fx.dims.size()
+	var contacts_before: int = main_ref.seq_fx.contacts.size()
+	var flashes_before: int = main_ref.seq_fx._flashes.size()
+	var freeze_before_iai: int = main_ref.seq_fx.freeze_samples.size()
+	_check(iai_p._try_skill_action("skill_a"), "quick draw casts with the authored charge window")
+	var dim_seen := 0.0
+	var peak_alpha := 0.0
+	for _index in 30:
+		await _frames(1)
+		peak_alpha = maxf(peak_alpha, float(main_ref.seq_fx.debug_state()["dim_alpha"]))
+		if main_ref.seq_fx.contacts.size() > contacts_before:
+			dim_seen = float(main_ref.seq_fx.debug_state()["dim_left"])
+			break
+	# 接触点由战斗碰撞给出，一闪与压暗必须在同一物理帧内挂上
+	var iai_freeze: Dictionary = main_ref.seq_fx.freeze_samples[-1] if main_ref.seq_fx.freeze_samples.size() > freeze_before_iai else {}
+	var iai_point: Vector2 = iai_freeze.get("point", Vector2.ZERO)
+	var flash_at: Vector2 = iai_freeze.get("flash", Vector2.INF)
+	var dim_at_hit: float = float(iai_freeze.get("dim_alpha", 0.0))
+	var flash_node: Sprite2D = main_ref.seq_fx.last_flash
+	var iai_events: int = main_ref.seq_fx.dims.size()
+	_check(main_ref.seq_fx.contacts.size() == contacts_before + 1 and int(iai_freeze.get("hitstop", -1)) == int(manifest["quick_draw"]["hitstop"]), "iai contact uses the authored hit-stop and lands once")
+	_check(flash_node != null and flash_at == iai_point and str(main_ref.seq_fx.last_kind) == "iai", "the long streak is attached to the real contact point [node=%s at=%s pt=%s]" % ["null" if flash_node == null else str(flash_node.position), str(flash_at), str(iai_point)])
+	_check(iai_events == flash_before + 1 and dim_at_hit > 0.0 and peak_alpha > 0.0, "iai contact dims the world and releases it on its own clock [ev=%d/%d at=%.2f peak=%.2f]" % [iai_events, flash_before, dim_at_hit, peak_alpha])
+	if flash_node != null:
+		_check(int(flash_node.texture.get_width()) == 960 and absf(flash_node.offset.x) <= 480.0, "the streak keeps its full canvas width instead of being cropped")
+	_check(bool(main_ref.seq_fx.config.get("iai", {}).get("no_bloom", false)), "iai presentation adds no extra bloom")
+	# 左右朝向翻转：整套图像与锚点一起镜像
+	m = await _fresh()
+	var flip_p: Player = p
+	m.position.x = 1180
+	flip_p.position.x = 500.0
+	var right_blade: Array = _blade_at(flip_p, "attack1", 9.0, 1)
+	var left_blade: Array = _blade_at(flip_p, "attack1", 9.0, -1)
+	_check(is_equal_approx(right_blade[1].x + left_blade[1].x, flip_p.position.x * 2.0), "facing mirrors the authored blade line about the actor root")
+	flip_p.facing = -1
+	main_ref.seq_fx._seq_apply(main_ref.seq_fx._slash_front, main_ref.seq_fx.clips["slash_front/attack1"], 9.0, true)
+	var slash_clip: Dictionary = main_ref.seq_fx.clips["slash_front/attack1"]
+	_check(main_ref.seq_fx._slash_front.flip_h and is_equal_approx(main_ref.seq_fx._slash_front.offset.x, -(float(slash_clip["frame_w"]) - float(slash_clip["anchor"].x))), "left facing mirrors non-centred artwork with width - anchor.x")
+	# 序列帧自带火花与刀光，不能再叠一份程序化拖尾/粒子
+	m = await _fresh()
+	var fx_p: Player = p
+	m.position.x = fx_p.position.x + 118.0
+	var bursts_before: int = int(main_ref.bm.native_particle_stats()["bursts"])
+	var trails_before: int = main_ref.bm._trails.size()
+	fx_p._start_attack()
+	await _frames(30)
+	_check(main_ref.bm._trails.size() == trails_before and int(main_ref.bm.native_particle_stats()["bursts"]) == bursts_before, "authored V6 clips are not duplicated by procedural trails or particles [trails=%d/%d bursts=%d/%d]" % [main_ref.bm._trails.size(), trails_before, int(main_ref.bm.native_particle_stats()["bursts"]), bursts_before])
+	# 一体原画：这四招期间旧武器层必须完全停用，回归时也要还原
+	var rig: WeaponRig = main_ref.weapon_rig
+	m = await _fresh()
+	var w_p: Player = p
+	m.position.x = 1180
+	w_p._start_attack()
+	await _frames(10)
+	rig.update_attachment()
+	_check(not rig.visible and w_p.move_name == "attack1", "the four authored moves never attach a second runtime blade")
+	await _frames(24)
+	rig.update_attachment()
+	_check(rig.visible, "the independent weapon layer returns for moves that still need it")
+	main_ref._start_training(2)
+	await _frames(4)
+	_check(main_ref.weapon_rig.visible and bool(w_p.anims["idle"].get("weapon_separated", false)), "idle still renders the independent weapon after V6 moves")
+	main_ref.bm.clear_fx()
+	main_ref.seq_fx.reset()
+
 func _run_capture() -> void:
 	main_ref = get_parent()
 	await _frames(8)
@@ -698,6 +944,45 @@ func _run_capture() -> void:
 	main_ref.bm.clear_fx()
 	await _frames(3)
 	get_tree().quit()
+
+func _run_seq6_showcase() -> void:
+	## V6 四招实机录像驱动：同一镜头下依次打出一段/二段/三段与拔刀斩，
+	## 用来逐帧核对一体原画、前后两层刀光、受击 light/matter、地裂与一闪。
+	main_ref = get_parent()
+	await _frames(30)
+	main_ref._start_training(2)
+	main_ref._wave_notice.hide()
+	var target: Monster = main_ref.monsters[0]
+	target.position.x = 620
+	main_ref.monsters[1].position.x = 1100
+	await _frames(24)
+	# 三段普攻连段：贴着 manifest 的接触间距
+	for pair in [["attack1", 40], ["attack2", 40], ["attack3", 54]]:
+		main_ref.player.position.x = target.position.x - 120.0
+		main_ref.player.depth_y = target.depth_y
+		main_ref.player.cfg["attack_speed"] = 1.0
+		await _frames(3)
+		main_ref.player._start_move(str(pair[0]))
+		await _frames(int(pair[1]))
+	# 拔刀斩：蓄力、前冲、命中一闪与压暗
+	main_ref.player.position.x = target.position.x - 210.0
+	main_ref.player.mp = 300.0
+	main_ref.player.cds.clear()
+	main_ref.player.cfg["attack_speed"] = 1.0
+	await _frames(4)
+	main_ref.player._try_skill_action("skill_a")
+	await _frames(70)
+	# 左向翻转验收：同一套图像与锚点一起镜像
+	main_ref.player.position.x = target.position.x + 120.0
+	main_ref.player.facing = -1
+	await _frames(3)
+	main_ref.player._start_move("attack1")
+	await _frames(40)
+	_release_inputs()
+	main_ref.bm.clear_fx()
+	await _frames(3)
+	get_tree().quit()
+
 
 func _run_showcase() -> void:
 	main_ref = get_parent()

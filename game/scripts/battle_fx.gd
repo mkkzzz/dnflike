@@ -45,6 +45,7 @@ var _particle_textures: Dictionary = {}
 var _particle_bursts := 0
 var _blade_particle_clock := 0.0
 var _trail_width := 22.0
+var hitstops := 0
 
 
 func _ready() -> void:
@@ -66,6 +67,7 @@ func set_listener_position(world_x: float) -> void:
 
 func hitstop(frames: int) -> void:
 	freeze = maxi(freeze, frames)
+	hitstops += 1
 	_set_particles_frozen(true)
 
 
@@ -184,6 +186,15 @@ func on_swing(_pos: Vector2, _facing: int, _swing01: float, _reach: float = 158.
 	pass
 
 
+## V6 招式的出招音：序列帧里没有声音，这一层仍然由战斗侧触发
+func seq_swing_sound(move_id: String, world_x: float) -> void:
+	var cues := {"attack1": "swing_light", "attack2": "swing_back", "attack3": "swing_heavy",
+		"quick_draw": "draw_strike"}
+	var cue: String = str(cues.get(move_id, ""))
+	if not cue.is_empty():
+		play_sound(cue, world_x)
+
+
 func attack_event(pos: Vector2, facing: int, move_id: String, data: Dictionary,
 		phase: String = "start", segment: int = 0) -> void:
 	phase = str(data.get("phase", phase))
@@ -197,6 +208,13 @@ func attack_event(pos: Vector2, facing: int, move_id: String, data: Dictionary,
 	var widths := {"attack1": 22.0, "attack2": 26.0, "attack3": 38.0, "upper": 32.0,
 		"air_attack": 24.0, "dash_attack": 27.0, "quick_draw": 11.0, "thrust": 8.0, "rage_slash": 40.0}
 	_trail_width = float(widths.get(move_id, 22.0))
+	if bool(data.get("seq6", false)):
+		# V6：刀光、受击与一闪由 SeqFX 按 manifest 的序列帧回放。
+		# 这里只留不属于序列帧的次要反馈（出招音与震屏），
+		# 不再叠程序化拖尾/粒子，避免和已烘进素材的火花重复一遍。
+		if phase == "active":
+			start_swing()
+		return
 	if phase == "start":
 		match move_id:
 			"quick_draw":
@@ -544,6 +562,7 @@ func on_hit(world_pos: Vector2, direction: int, damage: float, hit: Dictionary) 
 	var move_id := str(hit.get("move_id", _active_move))
 	var launch: bool = hit.has("launch") or str(hit.get("kind", "")) == "launch"
 	var heavy: bool = launch or bool(hit.get("knockdown", false)) or str(hit.get("kind", "")) == "knock" or int(hit.get("hitstop", 4)) >= 6
+	var authored: bool = bool(hit.get("seq6", false))
 	hitstop(int(hit.get("hitstop", 4)) + (1 if heavy else 0))
 	var vertical := -0.45 if launch else 0.12
 	add_shake(float(hit.get("shake", 2.0)) * (1.20 if heavy else 1.08), Vector2(direction, vertical))
@@ -552,6 +571,12 @@ func on_hit(world_pos: Vector2, direction: int, damage: float, hit: Dictionary) 
 		impact = hit["contact_point"]
 	spawn_number(world_pos + Vector2(0, -112), str(roundi(damage)),
 		Color(1.0, 0.87, 0.63) if heavy else Color(0.96, 0.93, 0.86), 26 if heavy else 21)
+	if authored:
+		# V6：闪光、火花与尘已烘进 hit_light / hit_matter 序列帧，这里不再叠第二份；
+		# 停帧、震屏、跳字与音效不属于序列帧，继续保留。
+		play_sound("metal_hit" if str(hit.get("material", "flesh")) == "metal" else ("launch" if launch else ("heavy" if heavy else "light")), world_pos.x)
+		queue_redraw()
+		return
 	var material := str(hit.get("material", "flesh"))
 	spawn_sparks(impact, direction, 12 if heavy else 6, material)
 	var hit_color := BLOOD if move_id == "rage_slash" else (STEEL if material == "metal" else IVORY)
