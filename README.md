@@ -22,9 +22,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/setup_godot.ps1
 
 选择职业后点**连段训练**，可以在两个保留浮空、倒地与受身反应的训练目标上练习。默认无限魔力与职业技能补给，上挑和后跳始终保留基础冷却。HUD 显示最近 5 秒 DPS、本段/累计伤害和最长连击；流血也计入伤害。点三波挑战则进入完整遭遇战。
 
-[V4 实机演示（含音效）](docs/previews/combat_v4_showcase.mp4) · [12 点反馈的实现与验收](docs/2026-10-14_战斗DemoV4_反馈修正与帧率设置.md)
+[V4 实机演示（含音效）](docs/previews/combat_v4_showcase.mp4) · [V6 四招实机演示](docs/previews/combat_v6_showcase.mp4) · [12 点反馈的实现与验收](docs/2026-10-14_战斗DemoV4_反馈修正与帧率设置.md)
 
-![连段训练实机](docs/screenshots/demo_v4_combat.png)
+![V6 三段普攻命中](docs/screenshots/demo_v6_attack1.png)
+
+V6 四招的接触帧与实机演示：一段·正手横斩、三段·重劈与拔刀·一闪见 `docs/screenshots/demo_v6_*.png`，
+`docs/previews/combat_v6_showcase.mp4` 为同一驱动录制的实速演示（复现：`--write-movie <绝对路径> --fixed-fps 60 -- --seq6`）。
 
 ## 操作
 
