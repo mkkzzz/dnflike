@@ -1,26 +1,26 @@
 [
   {
     "move": "attack1",
-    "tick": 21,
-    "local_t": 9.5,
-    "theta": 33.4,
+    "tick": 20,
+    "local_t": 9.0,
+    "theta": 74.8,
     "contact": [
-      555.8,
-      495.4
+      542.6,
+      478.6
     ],
-    "blade_samples_inside": 6,
+    "blade_samples_inside": 3,
     "target_x": 596.0
   },
   {
     "move": "attack2",
-    "tick": 48,
-    "local_t": 10.5,
-    "theta": 4.9,
+    "tick": 49,
+    "local_t": 11.25,
+    "theta": 52.6,
     "contact": [
-      587.8,
-      452.4
+      589.1,
+      448.0
     ],
-    "blade_samples_inside": 5,
+    "blade_samples_inside": 3,
     "target_x": 616.0
   },
   {

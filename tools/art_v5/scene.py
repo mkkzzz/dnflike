@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw
 
 from . import fx as F
 from .monster import monster_pose, READY as M_READY, BREATHE, CROUCH, RECOIL, AIRBORNE, DOWN
-from .moves import GROUND_Y, HIT_PALETTE, MOVES, PALETTES, READY
+from .moves import GROUND_Y, HIT_PALETTE, MOVES, PALETTES, READY, RETRACT
 from .poses import pose
 from .weapon import PROFILE, draw_katana
 
@@ -137,7 +137,7 @@ class Player:
         """(direction3, theta|None, motion tangent3|None, move name|None)."""
         cur = self.current(int(math.floor(t)))
         if cur is None:
-            return READY, None, None, None
+            return self._sheath(t)
         _, start, name = cur
         m = MOVES[name]
         lt = t - start
@@ -158,6 +158,29 @@ class Player:
             tan = (-math.sin(r) * u + math.cos(r) * v) * sign
             return d, th, tan, name
         return slerp(np.asarray(a), np.asarray(b), k), None, None, name
+
+    def _last_move(self, t: float):
+        name, start = None, None
+        for s, n in self.schedule:
+            if s <= t:
+                name, start = n, s
+        return name, start
+
+    def _move_last_blade(self, name: str):
+        m = MOVES[name]
+        t0, t1, kind, a, b, e = m['blade'][-1]
+        if kind == 'arc':
+            return F.plane_dir(m['plane'], b)
+        return np.asarray(b)
+
+    def _sheath(self, t: float):
+        """After a move the blade glides back to the hip instead of snapping there."""
+        name, start = self._last_move(t)
+        if name is None:
+            return READY, None, None, None
+        k = min(1.0, (t - (start + MOVES[name]['length'])) / RETRACT)
+        d0 = self._move_last_blade(name)
+        return slerp(d0, np.asarray(READY), ease('smooth', k)), None, None, None
 
     def hand_world(self, t: float):
         sheet, cell = self.pose_key(t)
@@ -329,39 +352,42 @@ class Particles:
         self.items = alive
 
     def draw(self, bufs: F.Buffers, w2r):
-        S = w2r.S
         for p in self.items:
-            k = p.age / p.life
-            x, y = w2r(p.x, p.y)
-            speed = math.hypot(p.vx, p.vy)
-            if p.kind == 'spark':
-                hot = HIT_PALETTE['spark_hot'] if k < 0.25 else (HIT_PALETTE['spark_mid'] if k < 0.6 else HIT_PALETTE['spark_cool'])
-                length = max(p.size * 2.2, speed * 0.030) * S
-                d = (p.vx / (speed + 1e-6), p.vy / (speed + 1e-6))
-                F.paint_spindle(bufs, 'top', (x - d[0] * length * 0.3, y - d[1] * length * 0.3), d, length,
-                                p.size * S, (1.0, 0.98, 0.9), hot, gain=(1 - k) ** 0.8 * 1.25)
-            elif p.kind == 'mote':
-                col = p.col or (0.6, 0.85, 1.0)
-                F.paint_glow(bufs, 'top', (x, y), p.size * S, col, gain=(1 - k) * 0.9 + 0.2)
-                F.paint_glow(bufs, 'top', (x, y), p.size * S * 0.35, (1, 1, 1), gain=0.9 * (1 - k))
-            elif p.kind == 'blood':
-                d = math.atan2(p.vy, p.vx)
-                stretch = 1 + min(2.2, speed / 260)
-                F.paint_disc(bufs, 'front', (x, y), p.size * S * stretch, p.size * S, d,
-                             HIT_PALETTE['blood'], 0.92 * (1 - k ** 3))
-                F.paint_disc(bufs, 'front', (x - math.cos(d) * p.size * S * 0.4, y - math.sin(d) * p.size * S * 0.4),
-                             p.size * S * 0.45, p.size * S * 0.35, d, HIT_PALETTE['blood_hi'], 0.7 * (1 - k ** 2))
-            elif p.kind == 'chip':
-                F.paint_disc(bufs, 'front', (x, y), p.size * S, p.size * S * 0.7, p.seed + p.age * 0.4,
-                             (0.20, 0.18, 0.17), 0.95 * (1 - k ** 4))
-            elif p.kind == 'dust':
-                r = p.size * S * (0.6 + 1.4 * k ** 0.6)
-                F.paint_blob(bufs, 'front', (x, y), r, p.col or (0.42, 0.37, 0.33), 0.42 * (1 - k) ** 1.4,
-                             seed=p.seed, grain=0.8, stretch=(1.35, 0.85))
-            elif p.kind == 'mist':
-                r = p.size * S * (0.7 + 1.1 * k ** 0.5)
-                F.paint_blob(bufs, 'front', (x, y), r, HIT_PALETTE['mist'], 0.45 * (1 - k) ** 1.6,
-                             seed=p.seed, grain=0.9)
+            self.draw_particle(p, bufs, w2r)
+
+    def draw_particle(self, p, bufs: F.Buffers, w2r):
+        S = w2r.S
+        k = p.age / p.life
+        x, y = w2r(p.x, p.y)
+        speed = math.hypot(p.vx, p.vy)
+        if p.kind == 'spark':
+            hot = HIT_PALETTE['spark_hot'] if k < 0.25 else (HIT_PALETTE['spark_mid'] if k < 0.6 else HIT_PALETTE['spark_cool'])
+            length = max(p.size * 2.2, speed * 0.030) * S
+            d = (p.vx / (speed + 1e-6), p.vy / (speed + 1e-6))
+            F.paint_spindle(bufs, 'top', (x - d[0] * length * 0.3, y - d[1] * length * 0.3), d, length,
+                            p.size * S, (1.0, 0.98, 0.9), hot, gain=(1 - k) ** 0.8 * 1.25)
+        elif p.kind == 'mote':
+            col = p.col or (0.6, 0.85, 1.0)
+            F.paint_glow(bufs, 'top', (x, y), p.size * S, col, gain=(1 - k) * 0.9 + 0.2)
+            F.paint_glow(bufs, 'top', (x, y), p.size * S * 0.35, (1, 1, 1), gain=0.9 * (1 - k))
+        elif p.kind == 'blood':
+            d = math.atan2(p.vy, p.vx)
+            stretch = 1 + min(2.2, speed / 260)
+            F.paint_disc(bufs, 'front', (x, y), p.size * S * stretch, p.size * S, d,
+                         HIT_PALETTE['blood'], 0.92 * (1 - k ** 3))
+            F.paint_disc(bufs, 'front', (x - math.cos(d) * p.size * S * 0.4, y - math.sin(d) * p.size * S * 0.4),
+                         p.size * S * 0.45, p.size * S * 0.35, d, HIT_PALETTE['blood_hi'], 0.7 * (1 - k ** 2))
+        elif p.kind == 'chip':
+            F.paint_disc(bufs, 'front', (x, y), p.size * S, p.size * S * 0.7, p.seed + p.age * 0.4,
+                         (0.20, 0.18, 0.17), 0.95 * (1 - k ** 4))
+        elif p.kind == 'dust':
+            r = p.size * S * (0.6 + 1.4 * k ** 0.6)
+            F.paint_blob(bufs, 'front', (x, y), r, p.col or (0.42, 0.37, 0.33), 0.42 * (1 - k) ** 1.4,
+                         seed=p.seed, grain=0.8, stretch=(1.35, 0.85))
+        elif p.kind == 'mist':
+            r = p.size * S * (0.7 + 1.1 * k ** 0.5)
+            F.paint_blob(bufs, 'front', (x, y), r, HIT_PALETTE['mist'], 0.45 * (1 - k) ** 1.6,
+                         seed=p.seed, grain=0.9)
 
 
 class SlashTrail:
@@ -939,13 +965,14 @@ class Scene:
             lt = t - p.current(t)[1]
             tr = m['trail']
             if tr['t0'] <= lt <= tr['t1'] - 1:
+                # Motion-blur ghosts fan out from the CURRENT grip with slightly lagged angles.
                 for g, alpha in ((1.4, 0.26), (0.7, 0.42)):
                     gd, gth, gtan, _ = p.blade(t - g)
                     if gth is not None:
-                        ghosts.append((gd, gtan, alpha))
+                        ghosts.append((hand_r, gd, gtan, alpha))
         weapon = []
-        for gd, gtan, alpha in ghosts:
-            weapon.append(draw_katana(hand_r, gd, gtan, self.S, alpha=alpha, tint=(0.75, 0.88, 1.0, 0.55)))
+        for ghand, gd, gtan, alpha in ghosts:
+            weapon.append(draw_katana(ghand, gd, gtan, self.S, alpha=alpha, tint=(0.75, 0.88, 1.0, 0.55)))
         weapon.append(draw_katana(hand_r, d, edge, self.S))
         body = premult_of(('p', (sheet, cell)), sp.image)
         if layer == 'back':

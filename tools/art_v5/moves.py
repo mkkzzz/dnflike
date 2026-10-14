@@ -12,6 +12,8 @@ from .fx import plane, plane_dir
 
 SCREEN = plane(90, 0)
 READY = plane_dir(SCREEN, 35)
+# Ticks the blade takes to glide back to the hip after a move ends.
+RETRACT = 6
 
 
 def vec(basis, theta):
@@ -30,8 +32,8 @@ QD_PLANE = plane(-3, 2)
 MOVES = {
     'attack1': {
         'label': '一段·右横斩', 'length': 30, 'plane': A1_PLANE, 'sweep': -1,
-        'poses': [(0, 'combo12', 0), (2, 'base', 8), (8, 'combo12', 14), (10, 'airdash', 11),
-                  (12, 'combo12', 4), (15, 'combo12', 6), (21, 'combo3upper', 14), (26, 'combo12', 7)],
+        'poses': [(0, 'slash1', 0), (3, 'slash1', 1), (8, 'slash1', 2), (10, 'slash1', 3),
+                  (14, 'slash1', 4), (18, 'slash1', 5), (21, 'slash1', 5)],
         'blade': [(0, 2, 'vec', READY, vec(A1_PLANE, 160), 'smooth'),
                   (2, 8, 'arc', 160, 186, 'out'),
                   (8, 14, 'arc', 186, -78, 'out3'),
@@ -44,8 +46,8 @@ MOVES = {
     },
     'attack2': {
         'label': '二段·反手横斩', 'length': 32, 'plane': A2_PLANE, 'sweep': 1,
-        'poses': [(0, 'combo3upper', 6), (9, 'combo12', 14), (11, 'base', 9), (13, 'airdash', 8),
-                  (22, 'combo3upper', 14), (27, 'combo12', 15)],
+        'poses': [(0, 'slash2', 0), (4, 'slash2', 0), (9, 'slash2', 1), (11, 'slash2', 2),
+                  (14, 'slash2', 3), (18, 'slash2', 4), (24, 'slash2', 5), (30, 'slash2', 5)],
         'blade': [(0, 9, 'arc', -128, -150, 'out'),
                   (9, 15, 'arc', -150, 118, 'out3'),
                   (15, 22, 'arc', 118, 150, 'out'),

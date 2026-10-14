@@ -17,11 +17,14 @@ if str(TOOLS) not in sys.path:
 
 from bake_body_v3 import CALIBRATION as V3_CAL, SHEETS as V3_SHEETS, extract  # noqa: E402
 from bake_body_v4 import CALIBRATION as V4_CAL, SHEETS as V4_SHEETS  # noqa: E402
+from bake_body_v5 import CALIBRATION as V5_CAL, SHEETS as V5_SHEETS  # noqa: E402
 
 BODY_H = 190.0
 
 
 def _sheet(name: str):
+    if name in V5_CAL:
+        return V5_SHEETS / f'body_{name}.png', V5_CAL[name]
     if name in V3_CAL:
         return V3_SHEETS / f'body_{name}.png', V3_CAL[name]
     return V4_SHEETS / f'body_{name}.png', V4_CAL[name]
@@ -30,7 +33,11 @@ def _sheet(name: str):
 @lru_cache(maxsize=None)
 def _cells(name: str):
     path, cal = _sheet(name)
-    poses, report = extract(path, len(cal['points']))
+    if name in V5_CAL:
+        from bake_body_v5 import extract_grid
+        poses, report = extract_grid(path, len(cal['points']))
+    else:
+        poses, report = extract(path, len(cal['points']))
     return poses, report, cal
 
 
