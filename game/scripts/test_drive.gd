@@ -943,6 +943,41 @@ func _run_capture() -> void:
 	main_ref._toggle_display_settings()
 	main_ref.bm.clear_fx()
 	await _frames(3)
+	# V6 三段普攻与拔刀斩：接触帧截图（一体原画 + 分层序列帧特效）
+	main_ref._start_training(0)
+	main_ref._wave_notice.hide()
+	var v6_target: Monster = main_ref.monsters[0]
+	v6_target.position.x = 700
+	main_ref.monsters[1].position.x = 1100
+	main_ref.player.position.x = 580
+	main_ref.player.depth_y = 0
+	main_ref.player.invincible = 99999
+	await _frames(18)
+	for pair in [["attack3", 13], ["attack1", 9]]:
+		main_ref.player.position.x = v6_target.position.x - 120.0
+		main_ref.player.cfg["attack_speed"] = 1.0
+		await _frames(3)
+		main_ref.player._start_move(str(pair[0]))
+		while main_ref.player.phase_t < float(pair[1]):
+			await _frames(1)
+		await _capture("07_v6_%s" % str(pair[0]))
+		while main_ref.player.move_name == str(pair[0]):
+			await _frames(1)
+		await _frames(4)
+	main_ref.player.position.x = v6_target.position.x - 210.0
+	# 拔刀斩属于剑魂（job 2）的技能槽
+	main_ref.player.set_job(2)
+	main_ref.player.mp = 300.0
+	main_ref.player.cds.clear()
+	await _frames(3)
+	main_ref.player._try_skill_action("skill_a")
+	var guard := 0
+	while main_ref.player.phase_t < 17.0 and guard < 200:
+		guard += 1
+		await _frames(1)
+	await _capture("08_v6_quick_draw")
+	main_ref.bm.clear_fx()
+	await _frames(3)
 	get_tree().quit()
 
 func _run_seq6_showcase() -> void:
