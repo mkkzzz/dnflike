@@ -1,5 +1,6 @@
 {
   "_comment": "V6 接入参数（docs/design/13_V6动作资源与实装待办.md）。资源根 game/assets/seq_v6，manifest 为唯一帧数据来源；本文件只存实装接线参数，不重复帧表。",
+  "_root_motion": "manifest 每条 actor 帧的 root_dx 是角色 root 的真实前冲曲线：实机节点逐 tick 按它前进，贴图、两层刀光与接触特效因此共用同一个 root。不要在 moves.json 再配一段 move/motion_*，那会把位移叠两次。",
   "version": 6,
   "fps": 60,
   "resource_root": "res://assets/seq_v6",

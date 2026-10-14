@@ -473,7 +473,7 @@ func _run_v3_checks() -> void:
 	main_ref.bm.clear_fx()
 	main_ref.seq_fx.reset()
 	m = await _fresh()
-	m.position.x = p.position.x + float(GameConfig.moves["attack1"]["move"]) + 118.0
+	m.position.x = p.position.x + float(p.anims["attack1"]["seq_root_dx"][-1]) + 118.0
 	p._start_attack()
 	var probe := ""
 	for _index in 30:
@@ -810,7 +810,7 @@ func _run_v6_checks() -> void:
 	_check(not sample.is_empty() and int(sample["frame"]) == int(float(sample["tick"])), "the action clock and sequence frame are frozen on the contact tick")
 	_check(main_ref.seq_fx.effect_clock > effect_tick_before and main_ref.seq_fx.effect_clock > effects_before, "V6 hit effects keep playing on their own clock")
 	await _frames(24)
-	# 刀光锚点固定在出招起点 root，序列里的参考前冲不再随当前 root 平移第二次
+	# 参考前冲：节点必须按 manifest 的 root_dx 真实前进，否则贴图/刀光/接触特效会整体偏离实际位置
 	m = await _fresh()
 	var slash_p: Player = p
 	m.position.x = 1180
@@ -818,13 +818,41 @@ func _run_v6_checks() -> void:
 	slash_p._start_attack()
 	await _frames(10)
 	var start_origin: Vector2 = main_ref.seq_fx.slash_origin
-	var baked_offset: float = slash_p.seq_root_offset(9.0)
-	await _frames(12)
-	_check(is_equal_approx(slash_p.position.x, 400.0), "the authored reference travel is never applied to the node a second time")
+	var travel_seen := 0.0
+	var aligned := true
+	var worst := 0.0
+	var worst_detail := ""
+	while true:
+		await _frames(1)
+		# 招式结束时 anim_name 已切回 idle，必须先判结束再读参考曲线
+		if not slash_p.seq_active():
+			break
+		travel_seen = maxf(travel_seen, absf(slash_p.position.x - 400.0))
+		# 贴图偏移必须等于节点已走的参考位移：视觉 root 与物理 root 重合
+		var reference := slash_p.seq_root_offset()
+		var gap := absf(absf(slash_p.position.x - 400.0) - reference)
+		if gap > worst:
+			worst = gap
+			worst_detail = "tick=%.1f node=%.2f ref=%.2f" % [slash_p.phase_t, slash_p.position.x - 400.0, reference]
+		aligned = aligned and gap <= 0.51
+	_check(aligned, "sprite travel and node travel use the same reference curve every tick [worst=%.2f %s]" % [worst, worst_detail])
+	_check(travel_seen >= 10.0, "authored forward travel actually moves the actor root")
 	_check(main_ref.seq_fx.slash_origin == start_origin, "slash layers stay anchored to the move start root")
-	var texture_offset := slash_p.seq_texture_rect(9.0)
-	var base_offset := float(slash_p.anims["attack1"]["seq_root_dx"][0])
-	_check(baked_offset > base_offset and is_equal_approx(texture_offset.position.x, -float(slash_p.anims["attack1"]["ax"]) + baked_offset) and is_equal_approx(main_ref.seq_fx.slash_origin.x, 400.0), "authored reference travel rides on the sprite, never on the node twice [baked=%.1f base=%.1f]" % [baked_offset, base_offset])
+	# 拔刀斩的前冲量级最大，单独确认节点真的走满了参考位移
+	await _fresh(2)
+	var dash_p: Player = p
+	main_ref.monsters[0].position.x = 1180
+	dash_p.position.x = 400.0
+	dash_p.mp = 300.0
+	dash_p.cds.clear()
+	dash_p._try_skill_action("skill_a")
+	var dash_seen := 0.0
+	while true:
+		await _frames(1)
+		if not dash_p.seq_active():
+			break
+		dash_seen = maxf(dash_seen, absf(dash_p.position.x - 400.0))
+	_check(dash_seen >= float(dash_p.anims["quick_draw"]["seq_root_dx"][-1]) - 1.0, "the quick-draw dash covers its authored 104 px reference")
 	# 重劈：地裂只在可见刀尖真正落地时触发一次
 	m = await _fresh()
 	var ground_p: Player = p

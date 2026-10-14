@@ -106,9 +106,9 @@
       "guard",
       "jump"
     ],
-    "momentum_retention": 0.2,
-    "momentum_drag": 1700,
-    "recovery_drag": 2000,
+    "momentum_retention": 0.0,
+    "momentum_drag": 4000,
+    "recovery_drag": 4000,
     "fx_style": "quick_draw",
     "run_cancel_after": 28,
     "whiff_run_cancel_after": 33,

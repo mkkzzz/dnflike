@@ -228,6 +228,32 @@ func _seq_frame_at(tick: float) -> int:
 	return AnimLib.frame_at_progress(clip, clampf(tick / maxf(1.0, _move_duration()), 0.0, 0.999999))
 
 
+## V6 参考前冲：manifest 的 root_dx 是**角色 root 的真实位移曲线**。
+## 节点必须按它逐 tick 前进，否则贴图/刀光/接触特效会整体偏离实际位置
+## （出招时偏 10–18 px，拔刀斩接触帧偏 104 px）。
+## 返回本 tick 应附加的位移增量；停帧时 phase_t 不前进，增量自然为 0。
+func _seq_root_step(previous: float) -> float:
+	var offsets: Array = anims.get(anim_name, {}).get("seq_root_dx", [])
+	if offsets.is_empty():
+		return 0.0
+	var last := offsets.size() - 1
+	var tick := maxf(0.0, phase_t)
+	var previous_tick := maxf(0.0, previous)
+	var now := float(offsets[clampi(int(floor(tick)), 0, last)])
+	var before := float(offsets[clampi(int(floor(previous_tick)), 0, last)])
+	# 同一 tick 内按小数部分线性推进，保证低帧率下也不会跳步
+	var span := tick - previous_tick
+	if span > 0.0 and int(floor(tick)) == int(floor(previous_tick)):
+		now = lerpf(before, now, clampf(tick - floorf(tick), 0.0, 1.0))
+	return now - before
+
+
+## 整招的参考位移总量（收招判定与验收用）
+func seq_root_total() -> float:
+	var offsets: Array = anims.get(anim_name, {}).get("seq_root_dx", [])
+	return float(offsets[-1]) if not offsets.is_empty() else 0.0
+
+
 func _seq_blade_local(tick: float) -> Array:
 	var clip: Dictionary = anims.get(anim_name, {})
 	var blade: Array = clip.get("seq_blade", [])
@@ -831,8 +857,14 @@ func _tick_frame_move(delta := 1.0 / 60.0) -> void:
 		phase = "recovery"
 		velocity.x = float(facing) * (_back_dash_offset(phase_t) - _back_dash_offset(previous)) / maxf(delta, 0.0001)
 	elif seq_active():
-		# V6：phase_t 就是 manifest 的动作 tick，前冲位移已经烘进原画，不再叠加节点平移
+		# V6：phase_t 就是 manifest 的动作 tick；参考前冲由图内 root_dx 决定，
+		# 节点按同一曲线前进，贴图、刀光、接触特效与实际位置保持一致。
 		phase = _seq_phase(phase_t)
+		_move_inertia = 0.0
+		velocity.x = 0.0
+		# 先按参考曲线前冲，再判定命中，保证接触点用的是本 tick 的真实位置
+		position.x = clampf(position.x + float(facing) * _seq_root_step(previous),
+			arena_left, arena_right)
 		_seq_tick(previous)
 		# 命中即停帧，但贴图必须停在真正的接触姿势上，所以先同步一次帧号再冻结
 		_anim_step()
