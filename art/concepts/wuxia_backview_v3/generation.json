@@ -1,0 +1,105 @@
+{
+  "task_id": "wuxia_backview",
+  "revision": "v3",
+  "date": "2026-10-14",
+  "status": "awaiting_user_review",
+  "scope": "Two simplified mature wuxia static concepts: ready standoff and weapon clash. No animation, camera implementation or Godot integration.",
+  "tool": "built-in image_gen",
+  "model_version": "not exposed",
+  "seed": "not exposed",
+  "requested_aspect_ratio": "16:9",
+  "transparent_background": false,
+  "user_feedback": "V2 looks cool but too AI-like, excessively detailed and unlike game graphics; iterate once more.",
+  "rendering_target": "Mature game-readable 2D illustration; large coherent shapes, fewer garment/hair/stone/mountain details, limited shading and restrained contact sparks.",
+  "dependencies": [
+    {
+      "path": "docs/previews/wuxia_backview_v2/idle_standoff.png",
+      "role": "retain mature xia-ke identity and preparation, discard dense rendering"
+    },
+    {
+      "path": "art/concepts/wuxia_backview_v2/reference_composition.png",
+      "role": "user supplied screenshot for camera/scale only; not runtime artwork"
+    }
+  ],
+  "sources": [
+    {
+      "role": "idle_attempt01",
+      "file": "idle_attempt01.png",
+      "selected": false,
+      "mode": "reference redraw",
+      "generation_output": "C:/Users/ASUS/.codex/generated_images/01a13a52-a55b-7253-a4df-68f6e94a3c2a/exec-0dfc267d-8804-45df-a19d-4fdc5136beb4.png",
+      "referenced_image_paths": [
+        "D:/dnf like/dnflike/docs/previews/wuxia_backview_v2/idle_standoff.png",
+        "D:/dnf like/dnflike/art/concepts/wuxia_backview_v2/reference_composition.png"
+      ],
+      "prompt": "Use case: stylized-concept / style-transfer. Redraw the wuxia READY STANDOFF as clean production art for a premium 2D game. This is a deliberate simplification pass, not another hyper-detailed cinematic AI painting.\nInput image 1: V2 standoff. Retain only the cool mature xia-ke identity, long black tied hair, ink-teal travelling robe, off-white inner sleeve, red waist tie, jade belt accent, straight Chinese jian, opposing russet bamboo-hat swordsman, and poised armed standoff. Replace the entire rendering language and remove its excess detail.\nInput image 2: user's game screenshot. Reference ONLY the rear three-quarter camera, large hero at left foreground, smaller enemy at center-right, distance and open fighting floor. No copying UI, characters or environment.\nArt direction: sharply designed, handsome and graceful adult Chinese wuxia characters, drawn with precise economical shapes. Clearly a hand-painted 2D video game battle screen, with a mature illustration style and a lightly ink-painted atmosphere. Clean silhouettes, selective tapered edges, broad organized value masses. Limit every cloth material to a base colour, one main shadow and a restrained highlight; permit subtle gradients within large planes. Confident designed lines and modest hand-painted edge accents. NOT children's cartoon, thick black comic contours, round toy-like anatomy or juvenile anime faces. NOT photorealism, 3D cinematic rendering, glossy fantasy splash art or a movie still.\nHero simplification: natural adult anatomy, tall lean proportions and sharp mature profile. ONE clean long outer robe with two broad flowing tails, ONE inner shirt, simple belt, ONE red tie and a plain jade disc. Cloth has about six major structural folds, NO shredded hems, frayed scraps, tangled strips or ornamental stitching. Hair is 4–5 broad coherent locks plus one clear ponytail, not hundreds of individual flyaways. A simple blade with a straight readable silver edge and modest guard, no ornate filigree. His whole outfit and hair should be plausible to draw repeatedly for animation.\nPose and composition: wide 16:9 image, rear three-quarter battle camera. Hero centered around x=25%, approximately 66–70% of frame height, entire head and both feet in frame. Enemy around x=68%, approximately 24–27% of frame height. A generous clean, traversable fighting surface separates them. Hero knees bent, hips sunk, right hand firmly holding his single jian beside the waist in low forward guard, shoulder/elbow/wrist/hilt/blade visibly continuous. Left hand empty and open behind for balance. Robe tails and hair make two graceful wind curves. Enemy guarded with his single curved dao, hat and russet robe form simple strong masses.\nEnvironment simplification: a quiet mountain stone terrace, drawn as a few large walkable slabs and one plain low stone railing. ONE small distant pavilion silhouette. Mountains form THREE deliberate layered silhouettes, with broad ink-wash transitions and muted atmospheric colour. No forest of spires, no countless buildings, no dense rubble, no leaves filling the air, no visible tile-by-tile texture. The ground is matte painted stone with only a few broad wet reflection patches, not a sparkling sea of tiny highlights. Background contrast and detail are distinctly lower than the characters.\nLighting: simple directional late-day warm rim accent against cool grey-jade atmosphere. Medium contrast, readable steel and faces. Avoid blazing sunset, HDR glow, lens blur, bloom, bokeh, lens flare, volumetric spectacle, realistic fabric microtexture and noisy brush-grain. The beautiful effect must come from designed shapes, posture, palette and clear depth.\nFX: standoff has no attack effects, explosions or debris. At most one subtle translucent brush curve beside the sword, preferably none. Exactly two people and two held weapons. No extra swords, detached hilts, wrong fingers, floating sword, shield, UI, captions, text, logos, watermarks or collage.\nThe result should read immediately at gameplay viewing size: calm uncluttered floor, memorable elegant xia-ke silhouette, clear opponent, simplified original environment. Reduce secondary detail roughly 80% compared with image 1 while retaining the hero's coolness and visual tension.",
+      "review": "Not selected: garment debris reduced but ground, mountains and large foreground remained too dense; followed by a targeted shape simplification redraw."
+    },
+    {
+      "role": "ready_standoff",
+      "asset_id": "concept.battle.rear_view.idle",
+      "file": "idle_standoff_source.png",
+      "selected": true,
+      "preview": "docs/previews/wuxia_backview_v3/idle_standoff.png",
+      "mode": "targeted reference redraw",
+      "generation_output": "C:/Users/ASUS/.codex/generated_images/01a13a52-a55b-7253-a4df-68f6e94a3c2a/exec-1763add0-92b6-4b88-a9e2-251b4a1ad96f.png",
+      "referenced_image_paths": [
+        "D:/dnf like/dnflike/art/concepts/wuxia_backview_v3/idle_attempt01.png"
+      ],
+      "prompt": "Use case: style-transfer. Completely REDRAW this image as restrained, mature 2D GAME PRODUCTION ART. Keep the original Chinese wuxia men, armed preparation and near/far arrangement, but make a LARGE unmistakable change to the rendering style. Merely removing a few particles is insufficient.\nThis needs clean illustrative game artwork with deliberate shapes and low visual noise: tall handsome adult swordsman, narrow mature face, graceful hair and cloth curves. A sharp, sophisticated xia-ke silhouette; not cute, not a young cartoon character. Use crisp, selective fine edges and smooth large surfaces. The medium should look like hand-drawn game character art composited with a simply painted background. It must not look like a cinematic 3D render, hyper-detailed fantasy painting or AI splash illustration.\nCHARACTERS: Give the hero ONE clean dark ink-teal long robe with TWO uninterrupted large tails, an off-white shirt, a plain black belt and one red tie, a simple jade belt disc. No shredded edges, layered strips or tiny trim. Describe all his cloth with only 5–6 LARGE folds; each material has a main flat local colour, one broad shadow plane and one small controlled highlight. Hair is ONE main ponytail and 3 large sweeping locks, no web of flyaway strands. Plain cuffs and boots, smooth surfaces, no fabric grain or filigree. Keep realistic adult proportions and solid shoulder, hip and leg construction. One readable straight Chinese sword held in the right hand in low guard, empty left hand balancing behind. The older opponent has a SIMPLE russet robe and plain dark bamboo-hat silhouette, one curved dao and a poised guarded stance.\nLAYOUT: widescreen 16:9 gameplay battle frame. Rear three-quarter hero at left, full body. REDUCE hero's screen size: his crown must sit around 25–28% down the picture and his feet at about 92%; his height occupies only about 65–68% of the image. Opponent at center-right about 25% of image height. Leave open walkable arena between them, with a calm clear upper quarter above the hero. Do not zoom to an enormous foreground hero.\nBACKGROUND: Paint ONLY THREE broad mountain silhouettes as smooth ink-grey and jade-grey atmospheric masses. No tiny rock ledges, crevices, forest of peaks or random trees. ONE small distant pavilion shown with a simple roof shape. Low stone railing in a few unornamented blocks. The ground is a single calm matte slate plane with about SIX large slab divisions; no rubble, cracks, sand, tessellated texture or pebbles. At most TWO broad soft reflection shapes, not detailed sparkling wet stone. The sky is a simple peach-grey gradient with TWO broad designed cloud shapes, no intricate sunset-cloud texture, sun glare or elaborate fog.\nSTYLE: clear shape design and controlled 3-level illustrative shading, saturated dark teal hero with one cinnabar accent against quiet desaturated grey-green background. Selective smooth painterly transitions, no all-over speckle, no noisy brush texture, no photo materials, no volumetric or lens effects, no depth-of-field blur. Mature beautiful game art rather than children's cel animation. Every visible shape should have an intentional function; large calm areas are essential.\nNo debris, floating leaves, dust, fire, sparks or attack glow in this ready stance. Exactly two people, one weapon each, continuous wrist/hilt/blade geometry. No extra limbs, UI, text, labels, logos, watermark, panels or collage. Strongly prioritize SIMPLE GAME-READABLE SHAPES over impressive detail.",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "format": "RGB PNG, opaque",
+      "sha256": "980f3c95b5878560d475ad4895d1bcbeaaa23fb13f4d9219bb31b813671fac41",
+      "review": "Primary and independent visual review: major cloth/hair masses and ground divisions now simpler; hero roughly 68% of frame height, opponent roughly 21%; single sword each and no obvious severe limb/weapon faults. User aesthetic approval pending."
+    },
+    {
+      "role": "weapon_clash",
+      "asset_id": "concept.battle.rear_view.weapon_parry",
+      "file": "weapon_parry_source.png",
+      "selected": true,
+      "preview": "docs/previews/wuxia_backview_v3/weapon_parry.png",
+      "mode": "new close clash with selected simplified standoff as reference",
+      "generation_output": "C:/Users/ASUS/.codex/generated_images/01a13a52-a55b-7253-a4df-68f6e94a3c2a/exec-11aeb7c8-5228-4b87-a458-e34153336f42.png",
+      "referenced_image_paths": [
+        "D:/dnf like/dnflike/art/concepts/wuxia_backview_v3/idle_standoff_source.png"
+      ],
+      "prompt": "Use case: stylized-concept / style-transfer. Create a single widescreen 16:9 wuxia blade-clash keyframe in exactly the simplified mature 2D GAME ART style of the input reference.\nInput image 1 is the selected V3 ready-standoff. Preserve those SAME two original Chinese swordsmen, clean ink-teal hero robe, off-white inner sleeves, black tied hair, simple red waist tie and jade disc, plain straight jian, russet opponent robe, simple bamboo hat and curved dao. Preserve the quiet palette, simple stone arena and restrained ink-grey mountain backdrop. Change the camera and pose for the forceful clash.\nAim: retain the handsome hero and powerful sword-duel tension, with deliberately low visual complexity. Character shapes should be repeatable production art for a game, with clean local colours, one broad shadow plane and a small highlight per material. Selected fine edges, a few structural folds, smooth surfaces, mature natural anatomy. No microtexture, photorealistic skin/fabric, scratched glittering steel, ornamental filigree, frayed clothing, infinite hair strands, messy tiny brush marks or cinematic 3D rendering. Do not make cute anime or a children's cartoon.\nCamera: low three-quarter medium close view, very slight dynamic tilt. Hero occupies the left, opponent the right; both are framed from thighs to head so hips, shoulders, arms and gripping hands remain visible. Their opposite diagonals press toward a single central blade contact. The background is a calm subdued plane and TWO broad mountain shapes, with just a simple low railing. Strong readable character silhouettes and clear separated weapons; no elaborate scenery competes for attention.\nAction: hero sinks over a flexed forward knee, twists his hips and braces his right shoulder and elbow to intercept the enemy's descending dao. His right hand firmly holds the jian HANDLE; left hand empty, held back for balance. A continuous shoulder/elbow/wrist/fist/hilt/guard/blade relationship. Opponent leans forward into the sword lock, his right arm and shoulder driving against the hero; tense face below his hat. Their blades physically cross edge-to-edge near center, cleanly visible before and after contact. One straight jian and one curved dao, no detached sword, extra weapon or gripping the sharpened edge. The frame should communicate the weight of both bodies resisting each other, not two relaxed men crossing swords.\nSimplified characters: hero's hairstyle is one tied ponytail and about three large flowing locks. Hero robe has two broad clean tails, one off-white shirt, plain belt, single red accent and jade disc, at most 5–6 main folds per major visible garment. Opponent similarly has one russet robe and large clearly designed folds. Both adult masculine faces are drawn with a few precise handsome/severe planes, not full photo detail. Cloth moves in two or three clear curves that amplify the opposed force.\nFX: ONE tiny white contact mark and just SIX to EIGHT short gold spark strokes where the real blades touch. At most two slim teal brushstroke accents behind the sword direction. No large blast, glowing sphere, radial laser lines, swarm of sparks, dust cloud, water spray, falling leaves, floating debris, bokeh or sparkles. Force must primarily come from body pose, close camera and blade leverage.\nLighting and palette: restrained warm edge accents on cheek and steel, dark teal hero against low-contrast cool-grey background, russet enemy. Simple local colour and controlled shadow grouping. No HDR sunset, lens effects, volumetric rays, shiny wet stone noise or shallow depth-of-field. Keep the same thoughtfully designed, smooth 2D illustration finish as the reference.\nExactly two people, one held weapon each. No UI, captions, text, symbols, logos, watermark, split panels or collage. Maintain a mature, cool xia-ke identity and genuine confrontation while keeping the image clear at one-quarter display size. This is a static concept keyframe, not proof of animation or a runtime screenshot.",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "format": "RGB PNG, opaque",
+      "sha256": "e726759a2a6a2743a183eefeb44262ef08957bdf31c924e92197c9cf8d84258c",
+      "review": "Primary and independent visual review: simplified cloth/hair/background and sparse contact sparks, clear crossed blades and opposing body force; one jian and one dao, opponent supports the same dao hilt with both hands. No obvious severe anatomy or detached weapon fault. Hero sword tip overlaps the hat edge locally. User aesthetic approval pending."
+    }
+  ],
+  "processing": "Selected original images copied unchanged into source and preview locations. No script-based pixel edits, cropping, resizing, grading or quantization.",
+  "validation": {
+    "selected_image_count": 2,
+    "decoded_with": "Windows System.Drawing",
+    "png_decode_passed": true,
+    "dimensions_both": [
+      1672,
+      941
+    ],
+    "native_pixel_format": "Format24bppRgb",
+    "source_preview_sha256_equal": true
+  },
+  "lifecycle": {
+    "source_review": true,
+    "preview_approved": false,
+    "integrated": false,
+    "runtime_approved": false
+  },
+  "limitations": [
+    "This is static concept artwork, not a captured game screen or animation.",
+    "Some illustrative detail remains in mountains and clouds; aesthetic success and game fit require user review.",
+    "Simplification was evaluated visually, not asserted from a numeric detail-density metric.",
+    "Real reference inputs improve continuity but do not guarantee identical faces, costume construction or weapon geometry across images.",
+    "Clash crops lower legs, so complete footing and force through a whole animation are not verified.",
+    "Hero sword tip locally overlaps the opponent hat edge; it is less readable there than the central blade crossing."
+  ]
+}
