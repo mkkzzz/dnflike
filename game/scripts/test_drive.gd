@@ -1185,6 +1185,53 @@ func _feedback_backhop(move: String, connect: bool, attack_speed := 1.0, press_d
 		"saw_idle": saw_idle, "after_active": stopped_after_active}
 
 
+## 原版 DNF 手感：起跳后仍可自由加速、转向并保留惯性。用真实 Input 边沿与
+## 完整游戏流程验证空中机动，防止又退回“起跳即锁方向”的弱手感。
+func _feedback_air_steer(from_run: bool) -> Dictionary:
+	var target: Monster = await _fresh()
+	target.position.x = 1120
+	var p: Player = main_ref.player
+	if from_run:
+		await _hold_double_tap("move_right")
+		await _frames(6)
+	Input.action_press("jump")
+	await _frames(4)
+	var cap := float(p.cfg["air_run_speed"] if from_run else p.cfg["air_walk_speed"])
+	Input.action_press("move_right")
+	var accel_ticks := 0
+	while p.velocity.x < cap * 0.9 and accel_ticks < 12:
+		await _frames(1)
+		accel_ticks += 1
+	var accelerated := p.velocity.x >= cap * 0.9
+	Input.action_release("move_right")
+	Input.action_press("move_left")
+	var reverse_ticks := 0
+	while p.velocity.x > -cap * 0.9 and reverse_ticks < 16 and not p.is_on_floor():
+		await _frames(1)
+		reverse_ticks += 1
+	var reversed := p.velocity.x <= -cap * 0.9
+	Input.action_release("move_left")
+	var glide_speed := p.velocity.x
+	var glide_ticks := 0
+	while not p.is_on_floor() and glide_ticks < 6:
+		await _frames(1)
+		glide_ticks += 1
+	var glide := absf(p.velocity.x) >= absf(glide_speed) * 0.55
+	var landed := false
+	for _tick in 60:
+		if p.is_on_floor() and p.velocity.y >= 0.0:
+			landed = true
+			break
+		await _frames(1)
+	var landed_ok := landed
+	if landed:
+		await _frames(8)
+		landed_ok = p.is_on_floor() and p.state in [Player.St.IDLE, Player.St.WALK, Player.St.RUN]
+	_release_inputs()
+	return {"accelerated": accelerated, "accel_ticks": accel_ticks, "reversed": reversed,
+		"reverse_ticks": reverse_ticks, "glide": glide, "landed_ok": landed_ok}
+
+
 func _run_movement_feedback_checks() -> void:
 	var p: Player = main_ref.player
 	if not p.action_started.is_connected(_observe_feedback_action):
@@ -1283,6 +1330,23 @@ func _run_movement_feedback_checks() -> void:
 	await _tap("jump")
 	await _frames(6)
 	_check(_feedback_actions.has("jump") and not _feedback_actions.has("back_dash") and p.position.y < main_ref.GROUND_Y, "connected uppercut still accepts a plain jump for its aerial follow-up")
+	_release_inputs()
+	# 空中机动：起跳后按方向应能快速加速、反向与保留惯性（原版 DNF 手感）。
+	var steer: Dictionary = await _feedback_air_steer(false)
+	_check(steer["accelerated"] and steer["accel_ticks"] <= 6, "a standing jump accelerates sideways to air speed within a few ticks")
+	_check(steer["reversed"] and steer["reverse_ticks"] <= 8, "mid-air reversal completes in about an eighth of a second")
+	_check(steer["glide"], "releasing the stick in mid-air keeps the jump's horizontal momentum")
+	_check(steer["landed_ok"], "landing returns to grounded movement without a stuck drift")
+	var run_steer: Dictionary = await _feedback_air_steer(true)
+	_check(run_steer["accelerated"] and run_steer["reversed"] and run_steer["reverse_ticks"] <= 9, "a sprint jump keeps its speed and still reverses cleanly before landing")
+	target = await _fresh()
+	target.position.x = 1120
+	Input.action_press("jump")
+	await _frames(4)
+	var air_lane_start := p.depth_y
+	Input.action_press("move_up")
+	await _frames(8)
+	_check(p.depth_y <= air_lane_start - 8.0, "jump air lane movement still adjusts depth like on the ground")
 	_release_inputs()
 
 

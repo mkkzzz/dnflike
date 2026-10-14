@@ -17,9 +17,9 @@ if ($importExit -ne 0 -or ($importOutput -match 'SCRIPT ERROR|ERROR:')) {
     throw "Godot import failed."
 }
 if ($Test) {
-    $testArgs = @("--headless", "--fixed-fps", "60", "--path", $gamePath, "--quit-after", "5000", "--", "--test")
+    $testArgs = @("--headless", "--fixed-fps", "60", "--path", $gamePath, "--quit-after", "6000", "--", "--test")
     if ($Capture) {
-        $testArgs = @("--fixed-fps", "60", "--path", $gamePath, "--quit-after", "5000", "--", "--test", "--capture")
+        $testArgs = @("--fixed-fps", "60", "--path", $gamePath, "--quit-after", "6000", "--", "--test", "--capture")
     }
     $ErrorActionPreference = "Continue"
     $testOutput = & $GodotPath @testArgs 2>&1
