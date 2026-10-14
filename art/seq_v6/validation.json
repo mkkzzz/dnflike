@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "unique_pngs_checked": 282,
+  "issues": [],
+  "checks": [
+    "RGBA and dimensions",
+    "complete integer tick timelines",
+    "transparent canvas edges",
+    "no target/hit-stop in actor assets"
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "combo": [
+    {
+      "move": "attack1",
+      "action_tick": 9,
+      "real_tick": 21,
+      "contact": [
+        358.0,
+        196.5
+      ],
+      "guard": [
+        322.0,
+        204.0
+      ],
+      "tip": [
+        418.0,
+        184.0
+      ],
+      "freeze_ticks": 3
+    },
+    {
+      "move": "attack2",
+      "action_tick": 11,
+      "real_tick": 56,
+      "contact": [
+        396.85,
+        236.25
+      ],
+      "guard": [
+        396.85,
+        236.25
+      ],
+      "tip": [
+        509.96,
+        271.84
+      ],
+      "freeze_ticks": 3
+    },
+    {
+      "move": "attack3",
+      "action_tick": 12,
+      "real_tick": 92,
+      "contact": [
+        375.42,
+        342.49
+      ],
+      "guard": [
+        309.2,
+        292.61
+      ],
+      "tip": [
+        383.46,
+        348.55
+      ],
+      "freeze_ticks": 6
+    }
+  ],
+  "quick_draw": [
+    {
+      "move": "quick_draw",
+      "action_tick": 17,
+      "real_tick": 29,
+      "contact": [
+        398.47,
+        210.84
+      ],
+      "guard": [
+        353.9,
+        217.66
+      ],
+      "tip": [
+        456.76,
+        201.93
+      ],
+      "freeze_ticks": 7
+    }
+  ]
+}
