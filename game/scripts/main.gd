@@ -7,6 +7,8 @@ const GROUND_Y := 576.0
 const JOB_NAMES := ["鬼剑士", "狂战士", "剑魂"]
 const JOB_DESCRIPTIONS := ["三段剑击与上挑，掌握距离和浮空追击。", "血怒强化攻速，怒斩以霸体压制敌人。", "蓄力拔刀与三连突刺，快速衔接连击。"]
 const SLOT_INDEX := {"A": 0, "S": 1, "1": 6, "2": 7}
+const FPS_PRESETS := [30, 60, 90, 120, 144, 165, 240, 0]
+const DISPLAY_CONFIG := "user://display.cfg"
 
 var bm: BattleFX
 var player: Player
@@ -44,11 +46,22 @@ var training_free_skills := true
 var training_damage := 0.0
 var training_chain_damage := 0.0
 var damage_samples: Array = []
+var fps_limit := 60
+var vsync_enabled := true
+var _automated_run := false
+var _settings_card: PanelContainer
+var _fps_choice: OptionButton
+var _vsync_choice: CheckButton
+var _fps_readout: Label
+var _settings_resume_fight := false
+var _pause_jump_held := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	GameConfig.load_all()
 	demo_config = GameConfig._load_json("res://data/demo.json")
+	_automated_run = "--test" in OS.get_cmdline_user_args() or "--capture" in OS.get_cmdline_user_args() or "--showcase" in OS.get_cmdline_user_args()
+	_load_display_settings()
 	_register_actions()
 	var system_font := SystemFont.new()
 	system_font.font_names = PackedStringArray(["Microsoft YaHei", "Noto Sans CJK SC", "sans-serif"])
@@ -64,12 +77,15 @@ func _ready() -> void:
 func _register_actions() -> void:
 	var actions := {
 		"move_left": [KEY_LEFT], "move_right": [KEY_RIGHT], "move_up": [KEY_UP], "move_down": [KEY_DOWN],
-		"jump": [KEY_C, KEY_SPACE], "attack": [KEY_X], "generic_skill": [KEY_Z], "guard": [KEY_V], "dash": [KEY_SHIFT],
+		"jump": [KEY_C, KEY_SPACE], "attack": [KEY_X], "generic_skill": [KEY_Z], "guard": [KEY_V],
 		"skill_a": [KEY_A], "skill_s": [KEY_S], "skill_d": [KEY_D], "skill_f": [KEY_F],
 		"debug_job": [KEY_T], "debug_reset": [KEY_R], "potion_hp": [KEY_1], "potion_mp": [KEY_2],
 		"pause_demo": [KEY_ESCAPE], "start_demo": [KEY_ENTER], "toggle_help": [KEY_F1],
 		"reset_training": [KEY_TAB], "toggle_training_supply": [KEY_F2],
+		"display_settings": [KEY_F3],
 	}
+	if InputMap.has_action("dash"):
+		InputMap.erase_action("dash")
 	for action in actions:
 		if not InputMap.has_action(action):
 			InputMap.add_action(action)
@@ -94,6 +110,7 @@ func _build_world() -> void:
 	bm.z_index = 200
 	add_child(bm)
 	camera = Camera2D.new()
+	camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 	camera.position = Vector2(VIEW_W / 2, VIEW_H / 2)
 	add_child(camera)
 	bm.camera = camera
@@ -156,6 +173,105 @@ func _build_overlay() -> void:
 	_hint.visible = false
 	_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_overlay.add_child(_hint)
+	_build_display_settings()
+
+func _load_display_settings() -> void:
+	if not _automated_run:
+		var saved := ConfigFile.new()
+		if saved.load(DISPLAY_CONFIG) == OK:
+			var requested := int(saved.get_value("display", "fps_limit", 60))
+			fps_limit = requested if requested in FPS_PRESETS else 60
+			vsync_enabled = bool(saved.get_value("display", "vsync", true))
+	_apply_display_settings(false)
+
+func _apply_display_settings(persist := true) -> void:
+	# Automated captures use --fixed-fps and never alter the player's saved choice.
+	if not _automated_run:
+		Engine.max_fps = fps_limit
+		if DisplayServer.get_name() != "headless":
+			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if vsync_enabled else DisplayServer.VSYNC_DISABLED)
+	if persist and not _automated_run:
+		var saved := ConfigFile.new()
+		saved.set_value("display", "fps_limit", fps_limit)
+		saved.set_value("display", "vsync", vsync_enabled)
+		if saved.save(DISPLAY_CONFIG) != OK:
+			hud.set_feedback("本次显示设置已生效，保存失败。")
+
+func _set_fps_choice(index: int) -> void:
+	if index < 0 or index >= FPS_PRESETS.size():
+		return
+	fps_limit = int(FPS_PRESETS[index])
+	_apply_display_settings()
+
+func _set_vsync_choice(enabled: bool) -> void:
+	vsync_enabled = enabled
+	_apply_display_settings()
+
+func _build_display_settings() -> void:
+	var settings_button := _button("显示设置 · F3", _toggle_display_settings)
+	settings_button.position = Vector2(1084, 92)
+	settings_button.size = Vector2(171, 34)
+	settings_button.custom_minimum_size = Vector2(171, 34)
+	settings_button.add_theme_font_size_override("font_size", 14)
+	_overlay.add_child(settings_button)
+	_fps_readout = _label("", 12, Color(0.7, 0.73, 0.77))
+	_fps_readout.position = Vector2(1084, 70)
+	_fps_readout.size = Vector2(171, 20)
+	_fps_readout.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_fps_readout.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_overlay.add_child(_fps_readout)
+	_settings_card = PanelContainer.new()
+	_settings_card.position = Vector2(380, 150)
+	_settings_card.size = Vector2(520, 420)
+	_settings_card.add_theme_stylebox_override("panel", _style(Color(0.038, 0.043, 0.06, 0.99), Color(0.42, 0.33, 0.22), 28))
+	_overlay.add_child(_settings_card)
+	var settings_content := VBoxContainer.new()
+	settings_content.add_theme_constant_override("separation", 18)
+	_settings_card.add_child(settings_content)
+	settings_content.add_child(_label("显示设置", 32))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 20)
+	row.add_child(_label("帧率上限", 18))
+	_fps_choice = OptionButton.new()
+	_fps_choice.custom_minimum_size = Vector2(255, 42)
+	_fps_choice.add_theme_font_override("font", font)
+	_fps_choice.add_theme_font_size_override("font_size", 18)
+	for preset in FPS_PRESETS:
+		_fps_choice.add_item("不限" if preset == 0 else "%d FPS" % preset)
+	_fps_choice.select(FPS_PRESETS.find(fps_limit))
+	_fps_choice.item_selected.connect(_set_fps_choice)
+	row.add_child(_fps_choice)
+	settings_content.add_child(row)
+	_vsync_choice = CheckButton.new()
+	_vsync_choice.text = "垂直同步"
+	_vsync_choice.add_theme_font_override("font", font)
+	_vsync_choice.add_theme_font_size_override("font_size", 18)
+	_vsync_choice.button_pressed = vsync_enabled
+	_vsync_choice.toggled.connect(_set_vsync_choice)
+	settings_content.add_child(_vsync_choice)
+	settings_content.add_child(_label("垂直同步可减少画面撕裂，也可能受显示器刷新率限制。\n若希望超过显示器刷新率，请关闭垂直同步。", 14, Color(0.65, 0.69, 0.74)))
+	settings_content.add_child(_label("帧率上限只影响画面流畅度。\n攻速属性、技能冷却和跳跃节奏保持不变。", 15))
+	settings_content.add_child(_button("完成    Esc / F3", _toggle_display_settings, true))
+	_settings_card.hide()
+
+func _toggle_display_settings() -> void:
+	if _settings_card.visible:
+		_settings_card.hide()
+		if _settings_resume_fight:
+			_toggle_pause()
+		else:
+			_card.show()
+		_settings_resume_fight = false
+		return
+	_settings_resume_fight = battle_state in [BattleState.FIGHT, BattleState.WAVE_BREAK]
+	if _settings_resume_fight:
+		_toggle_pause()
+	_shade.show()
+	_card.hide()
+	_settings_card.show()
+	_fps_choice.select(FPS_PRESETS.find(fps_limit))
+	_vsync_choice.set_pressed_no_signal(vsync_enabled)
+	_fps_choice.grab_focus()
 
 func _style(background: Color, border: Color, padding := 10) -> StyleBoxFlat:
 	var style := StyleBoxFlat.new()
@@ -221,7 +337,7 @@ func _show_ready() -> void:
 	_description = _label("", 16)
 	_content.add_child(_description)
 	_select_job(selected_job)
-	_content.add_child(_label("方向键移动 · Shift 奔跑 · 跑动 X 冲斩 · 空中 X 空斩\nC 长短跳 · Z 上挑 · V 格挡 · ↓+C 后跳 · A/S 技能", 15, Color(0.6, 0.63, 0.68)))
+	_content.add_child(_label("方向键移动 · 双击方向奔跑 · 跑动 X 冲斩 · 空中 X 空斩\nC 长短跳 · Z 上挑 · V 格挡 · ↓+C 后跳 · A/S 技能", 15, Color(0.6, 0.63, 0.68)))
 	_content.add_child(_button("连段训练    无限补给 / 实时 DPS", _start_training.bind(-1), true))
 	_content.add_child(_button("进入回廊    ↵", _start_demo.bind(-1), true))
 
@@ -235,6 +351,7 @@ func _select_job(index: int) -> void:
 
 func _start_demo(job_id := -1) -> void:
 	get_tree().paused = false
+	_pause_jump_held = false
 	training_mode = false
 	damage_samples.clear()
 	training_damage = 0.0
@@ -293,7 +410,7 @@ func _start_training(job_id := -1) -> void:
 		monsters.append(target)
 	battle_state = BattleState.FIGHT
 	_set_actor_control(true)
-	_wave_notice.text = "连段训练\nTab 重置  ·  F2 切换无限 / 实战补给"
+	_wave_notice.text = "连段训练\nTab 重置  ·  F2 切换补给\n上挑与后跳始终保留冷却"
 	_wave_notice.show()
 	transition_left = 2.2
 	print("[DEMO] training started")
@@ -392,11 +509,15 @@ func _toggle_pause() -> void:
 		get_tree().paused = false
 		_shade.hide()
 		_card.hide()
+		if _pause_jump_held and not Input.is_action_pressed("jump") and player.velocity.y < 0:
+			player._jump_cut_pending = true
+		_pause_jump_held = false
 		_set_actor_control(battle_state in [BattleState.FIGHT, BattleState.WAVE_BREAK])
 		return
 	if battle_state not in [BattleState.FIGHT, BattleState.WAVE_BREAK]:
 		return
 	resume_state = battle_state
+	_pause_jump_held = Input.is_action_pressed("jump")
 	battle_state = BattleState.PAUSED
 	_set_actor_control(false)
 	get_tree().paused = true
@@ -414,6 +535,12 @@ func _reset_battle() -> void:
 		_start_demo(selected_job)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("display_settings") or (_settings_card.visible and event.is_action_pressed("pause_demo")):
+		_toggle_display_settings()
+		get_viewport().set_input_as_handled()
+		return
+	if _settings_card.visible:
+		return
 	if event.is_action_pressed("pause_demo"):
 		_toggle_pause()
 	elif event.is_action_pressed("debug_reset"):
@@ -422,7 +549,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_reset_battle()
 	elif event.is_action_pressed("toggle_training_supply") and training_mode:
 		training_free_skills = not training_free_skills
-		hud.set_feedback("无限补给" if training_free_skills else "实战蓝耗与冷却")
+		hud.set_feedback("职业技能无限补给" if training_free_skills else "实战蓝耗与冷却")
 	elif event.is_action_pressed("start_demo"):
 		if battle_state in [BattleState.READY, BattleState.VICTORY, BattleState.DEFEAT]:
 			_start_demo()
@@ -431,7 +558,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		player.set_job(selected_job)
 	elif event.is_action_pressed("toggle_help"):
 		_hint.position.y = 20 if battle_state == BattleState.PAUSED else 104
-		_hint.text = "←→ 移动 / ↑↓ 景深 / Shift 奔跑 / X 三连、冲斩或空斩\nC 按住高跳、松开短跳 / Z 上挑后 C 追击 / V 正面格挡，起手精确格挡\n↓+C 后跳 / A S 技能 / 1 2 药水 / 训练：Tab 重置、F2 补给"
+		_hint.text = "←→ 移动，双击奔跑 / ↑↓ 景深 / X 三连、冲斩或空斩\nC 按住高跳、松开短跳 / Z 上挑后 C 追击 / V 正面格挡，起手精准格挡\n↓+C 后跳 / A S 技能 / 1 2 药水 / Tab 重置、F2 补给、F3 帧率设置"
 		_hint.visible = not _hint.visible
 
 func _physics_process(delta: float) -> void:
@@ -447,7 +574,8 @@ func _physics_process(delta: float) -> void:
 			if training_free_skills:
 				player.mp = float(player.cfg.get("max_mp", 300))
 				for identifier in player.cds:
-					player.cds[identifier] = 0
+					if GameConfig.skills.has(identifier):
+						player.cds[identifier] = 0
 			if transition_left > 0:
 				transition_left -= delta
 				if transition_left <= 0:
@@ -487,18 +615,24 @@ func _pick_target():
 func _hud_cooldowns() -> void:
 	var left := {}
 	var total := {}
-	for sid in player.cds:
+	for sid in Player.JOB_SKILLS.get(player.job, []):
 		var skill: Dictionary = GameConfig.skills.get(sid, {})
 		var index: int = SLOT_INDEX.get(str(skill.get("slot", "")), -1)
 		if index >= 0:
-			left[index] = float(player.cds[sid]) / 60.0
+			left[index] = float(player.cds.get(sid, 0)) / 60.0
 			total[index] = float(skill.get("cd", 0))
 	for index in [6, 7]:
 		left[index] = float(player.potion_cd) / 60.0
 		total[index] = float(player.cfg.get("potion_cd", 5))
+	for move_id in ["upper", "back_dash"]:
+		var index := 8 if move_id == "upper" else 9
+		left[index] = float(player.cds.get(move_id, 0)) / 60.0
+		total[index] = float(GameConfig.moves[move_id].get("cd", 0))
 	hud.set_cooldowns(left, total)
 
 func _process(delta: float) -> void:
+	if _fps_readout:
+		_fps_readout.text = "%d FPS  ·  %s" % [roundi(Engine.get_frames_per_second()), "不限" if fps_limit == 0 else "上限 %d" % fps_limit]
 	if battle_state != BattleState.PAUSED:
 		_clock += delta
 		queue_redraw()
@@ -506,6 +640,7 @@ func _process(delta: float) -> void:
 		bm.set_listener_position(player.visual_position().x)
 		hud.set_vitals(player.hp, player.cfg["max_hp"], player.mp, player.cfg["max_mp"])
 		hud.set_job(player.job)
+		hud.set_attack_speed(float(player.cfg.get("attack_speed", 1.0)) * (float(player.buff_data.get("atk_speed", 1.0)) if player.buff_t > 0 else 1.0))
 		hud.set_target(_pick_target())
 		hud.set_encounter(wave_index + 1, demo_config["waves"].size(), alive_count(), elapsed)
 		while not damage_samples.is_empty() and elapsed - float(damage_samples[0]["time"]) > 5.0:

@@ -21,13 +21,18 @@ func _frames(count: int) -> void:
 		await get_tree().physics_frame
 
 func _release_inputs() -> void:
-	for action in ["attack", "jump", "generic_skill", "skill_a", "skill_s", "guard", "dash", "move_left", "move_right", "move_up", "move_down", "potion_hp", "potion_mp"]:
+	for action in ["attack", "jump", "generic_skill", "skill_a", "skill_s", "guard", "move_left", "move_right", "move_up", "move_down", "potion_hp", "potion_mp"]:
 		Input.action_release(action)
 
 func _tap(action: String) -> void:
 	Input.action_press(action)
 	await _frames(2)
 	Input.action_release(action)
+	await _frames(1)
+
+func _hold_double_tap(direction: String) -> void:
+	await _tap(direction)
+	Input.action_press(direction)
 	await _frames(1)
 
 func _check(condition: bool, label: String) -> void:
@@ -122,7 +127,7 @@ func _run_checks() -> void:
 	m = await _fresh()
 	m.position.x = 900
 	p._start_attack()
-	await _frames(8)
+	await _frames(int(GameConfig.moves["attack1"]["windup"]) + 3)
 	m.position.x = p.position.x + 100
 	await _frames(30)
 	_check(observed_moves.size() == 1, "late active-window entry connects once")
@@ -284,6 +289,7 @@ func _run_checks() -> void:
 	if "--capture" in OS.get_cmdline_user_args() and main_ref.battle_state == main_ref.BattleState.VICTORY:
 		await _capture("04_result")
 	await _run_v3_checks()
+	await _run_v4_checks()
 	main_ref._show_ready()
 	_check(main_ref.battle_state == main_ref.BattleState.READY and not p.control_enabled, "result returns to class selection")
 	print("[DEMO_TEST] COMPLETE checks=%d failures=%d" % [checks, failures])
@@ -328,23 +334,20 @@ func _run_v3_checks() -> void:
 	_check(p.velocity.x >= 0 and p.velocity.x < float(p.cfg["walk_speed"]), "release brakes movement without reversing")
 	await _frames(10)
 	_check(absf(p.velocity.x) < 1, "braking settles quickly with no indefinite slide")
-	Input.action_press("move_right")
-	Input.action_press("dash")
+	await _hold_double_tap("move_right")
 	await _frames(14)
-	_check(p.state == Player.St.RUN and p.velocity.x > 380, "sprint transitions to run with its own gait")
+	_check(p.state == Player.St.RUN and p.velocity.x > 380, "double tapping transitions to run with its own gait")
 	await _tap("attack")
 	_check(p.move_name == "dash_attack", "running attack has a dedicated forward cut")
 	Input.action_release("move_right")
-	Input.action_release("dash")
 	await _frames(60)
 	m = await _fresh()
 	m.position.x = 1120
-	Input.action_press("move_right")
-	Input.action_press("dash")
+	await _hold_double_tap("move_right")
 	await _frames(12)
 	Input.action_press("jump")
 	await _frames(3)
-	_check(p.position.y < main_ref.GROUND_Y and p.velocity.x >= 300, "sprint jump keeps horizontal momentum")
+	_check(p.position.y < main_ref.GROUND_Y and p.velocity.x >= 300, "running jump keeps horizontal momentum")
 	_release_inputs()
 	var short_height: float = await _jump_height(true)
 	var full_height: float = await _jump_height(false)
@@ -402,9 +405,9 @@ func _run_v3_checks() -> void:
 	_check(p.move_name == "attack1", "whiffed basic attacks cannot cancel at the early hit-confirm window")
 	m = await _fresh()
 	p._start_attack()
-	await _frames(9)
+	await _frames(int(GameConfig.moves["attack1"]["windup"]) + 2)
 	p.buffer_action("generic_skill")
-	await _frames(7)
+	await _frames(int(GameConfig.moves["attack1"]["hit_cancel_after"]) - int(GameConfig.moves["attack1"]["windup"]) + int(GameConfig.moves["attack1"]["hitstop"]) + 2)
 	_check(observed_moves.has("upper") or p.move_name == "upper", "connected basic attacks can cancel into uppercut early")
 	m = await _fresh()
 	var rig: WeaponRig = main_ref.weapon_rig
@@ -423,7 +426,10 @@ func _run_v3_checks() -> void:
 	_check(p.move_name == "attack1", "immediate attack after an airborne retry stays grounded")
 	m = await _fresh()
 	p._start_attack()
-	await _frames(8)
+	for _index in int(GameConfig.moves["attack1"]["windup"]) + 5:
+		await _frames(1)
+		if p.hit_emitted:
+			break
 	_check(main_ref.bm._trails.size() >= 2 and main_ref.bm.freeze > 0, "contact frame already has real blade trail during hitstop")
 	main_ref.bm.clear_fx()
 	m = await _fresh()
@@ -489,6 +495,173 @@ func _run_v3_checks() -> void:
 	main_ref._toggle_pause()
 	_check(p.control_enabled and main_ref.training_mode, "training resumes its own mode")
 
+func _run_v4_checks() -> void:
+	var m: Monster = await _fresh()
+	var p: Player = main_ref.player
+	m.position.x = 1120
+	_check(not InputMap.has_action("dash"), "Shift sprint has been removed from gameplay bindings")
+	_check(is_equal_approx(float(p.cfg["attack_speed"]), 1.0), "fresh combat uses the standard attack speed attribute")
+	var standard_duration: int = await _attack_duration(1.0)
+	_check(standard_duration >= 29 and standard_duration <= 34, "standard first slash has a readable preparation and recovery")
+	m = await _fresh()
+	await _hold_double_tap("move_right")
+	await _frames(10)
+	await _tap("attack")
+	Input.action_release("move_right")
+	await _frames(18)
+	await _tap("attack")
+	await _frames(20)
+	await _tap("attack")
+	await _frames(70)
+	_check(observed_moves.has("dash_attack") and observed_moves.has("attack2") and observed_moves.has("attack3"), "close running cut connects into the second and third strikes without passing through its target")
+	m = await _fresh()
+	m.position.x = 1120
+	p._start_move("attack3")
+	await _frames(4)
+	await _hold_double_tap("move_right")
+	_check(p.state == Player.St.ATK, "double tap does not erase heavy attack preparation")
+	await _frames(40)
+	_check(p.state == Player.St.RUN and p.velocity.x > 380, "double tap during an attack flows directly into a run")
+	m = await _fresh()
+	m.position.x = 1120
+	p._start_attack()
+	main_ref.bm.freeze = 12
+	var frozen_x := p.position.x
+	await _hold_double_tap("move_left")
+	_check(is_equal_approx(p.position.x, frozen_x) and p.running, "double tap is recorded while hitstop freezes movement")
+	main_ref.bm.freeze = 0
+	await _frames(35)
+	_check(p.state == Player.St.RUN and p.velocity.x < -380, "hitstop run request survives into the legal recovery cancel")
+	Input.action_release("move_left")
+	await _frames(1)
+	Input.action_press("move_right")
+	await _frames(5)
+	_check(p.state == Player.St.RUN and p.facing == 1 and p.velocity.x > 380, "left run reverses into right run without falling back to walk")
+	Input.action_release("move_right")
+	await _frames(13)
+	_check(not p.running and absf(p.velocity.x) < 1, "a deliberate release clears run intention and stops the actor")
+	var full_height: float = await _jump_height(false)
+	_check(full_height >= 165 and full_height <= 195, "held jump reaches a higher controlled apex")
+	m = await _fresh()
+	m.position.x = 1120
+	var jump_phases: Dictionary = {}
+	Input.action_press("jump")
+	for index in 61:
+		await _frames(1)
+		jump_phases[p.anim_name] = true
+	Input.action_release("jump")
+	_check(jump_phases.has("jump_rise") and jump_phases.has("jump_apex") and jump_phases.has("jump_fall") and jump_phases.has("jump_land"), "jump animation follows rising apex falling and landing phases")
+	_check(p.is_on_floor() and p.state == Player.St.IDLE, "holding jump never repeats the jump after landing")
+	m = await _fresh()
+	m.position.x = 1120
+	Input.action_press("jump")
+	await _frames(4)
+	main_ref._toggle_pause()
+	Input.action_release("jump")
+	await _frames(3)
+	main_ref._toggle_pause()
+	await _frames(2)
+	_check(p.velocity.y < 0 and p.velocity.y > -535, "releasing jump while paused still shortens the jump when combat resumes")
+	m = await _fresh()
+	m.position.x = 1120
+	_check(p._start_move("back_dash") and int(p.cds.get("back_dash", 0)) > 0, "backjump starts a real short cooldown")
+	_check(not p._start_move("back_dash"), "backjump cannot be restarted during its cooldown")
+	var hop_top := 0.0
+	var retreat := p.position.x
+	var hop_frames: Dictionary = {}
+	for index in 30:
+		await _frames(1)
+		hop_top = maxf(hop_top, main_ref.GROUND_Y - p.position.y)
+		if p.state == Player.St.BACK_DASH:
+			hop_frames[p.anim_frame] = true
+	_check(hop_top >= 15 and hop_top < 55 and retreat - p.position.x >= 110 and p.is_on_floor(), "backjump completes a low retreat arc and lands cleanly")
+	_check(hop_frames.size() >= 5, "backjump plays distinct preparation flight and landing poses")
+	_check(p._start_move("back_dash"), "backjump cooldown expires by the next nearly seamless retreat")
+	m = await _fresh()
+	m.position.x = 1120
+	_check(p._start_move("upper") and int(p.cds.get("upper", 0)) >= 119, "uppercut starts its two-second cooldown at release")
+	await _frames(36)
+	var cooldown_before := int(p.cds["upper"])
+	_check(not p._start_move("upper") and int(p.cds["upper"]) == cooldown_before, "uppercut cooldown rejection preserves the current timer")
+	p.buffer_action("generic_skill")
+	p.buffer_action("attack")
+	await _frames(2)
+	_check(p.move_name == "attack1", "a cooling-down uppercut does not swallow a following attack input")
+	p.cfg["attack_speed"] = 1.8
+	main_ref.bm.freeze = 8
+	var frozen_cd := int(p.cds["upper"])
+	await _frames(4)
+	_check(abs(int(p.cds["upper"]) - (frozen_cd - 4)) <= 1, "basic cooldown follows real ticks through hitstop independently of attack speed")
+	main_ref.bm.clear_fx()
+	await _run_v4_fx_checks()
+	main_ref._start_training(2)
+	await _frames(3)
+	p.cds["upper"] = 60
+	p.cds["back_dash"] = 15
+	p.cds["quick_draw"] = 400
+	await _frames(3)
+	_check(int(p.cds["upper"]) > 0 and int(p.cds["back_dash"]) > 0 and int(p.cds["quick_draw"]) == 0, "unlimited training preserves basic skill cooldowns")
+	main_ref._hud_cooldowns()
+	_check(float(main_ref.hud._cooldowns.get(8, 0)) > 0 and float(main_ref.hud._cooldowns.get(9, 0)) > 0, "HUD exposes uppercut and backjump cooldowns")
+	p.set_job(1)
+	p.cds["blood_rage"] = 600
+	p.set_job(2)
+	main_ref._hud_cooldowns()
+	_check(float(main_ref.hud._cooldowns.get(0, 0)) == 0, "changing class never overlays the old class cooldown on the new skill")
+	_check(int(p.anims["idle"]["frames"]) >= 8 and int(p.anims["back_dash"]["frames"]) >= 8, "idle and backjump use expanded dedicated body frames")
+	var old_limit: int = main_ref.fps_limit
+	var old_vsync: bool = main_ref.vsync_enabled
+	main_ref._toggle_display_settings()
+	_check(main_ref._settings_card.visible and get_tree().paused and not p.control_enabled, "display settings pause combat without losing training state")
+	if "--capture" in OS.get_cmdline_user_args():
+		await _capture("06_display_settings")
+	main_ref._fps_choice.item_selected.emit(3)
+	main_ref._vsync_choice.toggled.emit(false)
+	_check(main_ref.fps_limit == 120 and not main_ref.vsync_enabled and Engine.physics_ticks_per_second == 60 and is_equal_approx(Engine.time_scale, 1), "frame limit and vsync controls preserve combat simulation speed")
+	main_ref._toggle_display_settings()
+	_check(main_ref.training_mode and not get_tree().paused and p.control_enabled, "closing display settings resumes the same training session")
+	main_ref.fps_limit = old_limit
+	main_ref.vsync_enabled = old_vsync
+	main_ref._apply_display_settings(false)
+
+func _run_v4_fx_checks() -> void:
+	var m: Monster = await _fresh()
+	var p: Player = main_ref.player
+	var ribbon: Array = main_ref.bm.blade_ribbon_points({"p0": Vector2.ZERO, "p1": Vector2(100, 0), "t": 0}, {"p0": Vector2.ZERO, "p1": Vector2(0, 100), "t": 0})
+	var ribbon_middle: Vector2 = ribbon[int(ribbon.size() / 2)]["tip"]
+	_check(ribbon.size() >= 19 and ribbon_middle.length() > 99 and ribbon_middle.x > 65 and ribbon_middle.y > 65, "rotating blade trail follows a rounded sweep instead of a straight chord")
+	_check((ribbon[0]["tip"] as Vector2).is_equal_approx(Vector2(100, 0)) and (ribbon[-1]["tip"] as Vector2).is_equal_approx(Vector2(0, 100)), "curved trail preserves both actual blade endpoints")
+	p.control_enabled = false
+	var before_box := m.hurtbox()
+	var before_position := m.position
+	m.take_hit({"damage": 10, "hitstop": 8, "hardstun": 8, "knockback": 0}, 1)
+	var impact: Dictionary = m.impact_visual_state()
+	_check(float(impact["flash"]) > 0.5 and (impact["scale"] as Vector2) != Vector2.ONE and (impact["offset"] as Vector2).length() > 3, "connected hits immediately flash compress and recoil the visible body")
+	_check(m.position == before_position and m.hurtbox() == before_box, "impact deformation leaves collision position and hurtbox intact")
+	var particle_stats: Dictionary = main_ref.bm.native_particle_stats()
+	var native_nodes := true
+	for emitter in main_ref.bm._particle_emitters:
+		native_nodes = native_nodes and emitter is CPUParticles2D and emitter.texture != null and emitter.amount <= 28
+	_check(native_nodes and int(particle_stats["active"]) > 0, "impact produces textured native Godot particle emitters")
+	var impact_age := float(impact["age"])
+	await _frames(3)
+	_check(bool(main_ref.bm.native_particle_stats()["all_active_frozen"]) and is_equal_approx(float(m.impact_visual_state()["age"]), impact_age), "hitstop freezes native particles and hit deformation together")
+	main_ref.bm.clear_fx()
+	_check(int(main_ref.bm.native_particle_stats()["active"]) == 0, "reset clears every native particle burst")
+	await _frames(6)
+	_check(float(m.impact_visual_state()["age"]) > impact_age, "impact deformation resumes decay when hitstop ends")
+	for index in 60:
+		main_ref.bm.burst_particles(Vector2(640, 400), "steel", Vector2.RIGHT, 28, 0.25, 140, Color.WHITE, 1)
+	particle_stats = main_ref.bm.native_particle_stats()
+	_check(int(particle_stats["emitters"]) <= 20 and int(particle_stats["particle_capacity"]) <= 560, "repeated native bursts stay inside a fixed emitter and particle budget")
+	main_ref.bm.clear_fx()
+	m = await _fresh(1)
+	var before_bursts: int = main_ref.bm.native_particle_stats()["bursts"]
+	p._try_skill_action("skill_a")
+	await _frames(20)
+	_check(int(main_ref.bm.native_particle_stats()["bursts"]) > before_bursts + 1 and int(main_ref.bm.native_particle_stats()["active"]) > 0, "blood rage feeds a persistent live ember particle effect")
+	main_ref.bm.clear_fx()
+
 func _run_capture() -> void:
 	main_ref = get_parent()
 	await _frames(8)
@@ -518,6 +691,10 @@ func _run_capture() -> void:
 	main_ref.player.buffer_action("skill_s")
 	await _frames(19)
 	await _capture("05_training_rage")
+	main_ref._toggle_display_settings()
+	await _frames(2)
+	await _capture("06_display_settings")
+	main_ref._toggle_display_settings()
 	main_ref.bm.clear_fx()
 	await _frames(3)
 	get_tree().quit()
@@ -527,31 +704,50 @@ func _run_showcase() -> void:
 	await _frames(36)
 	main_ref._start_training(2)
 	main_ref._wave_notice.hide()
-	await _frames(36)
+	await _frames(132)
 	Input.action_press("move_right")
 	await _frames(20)
-	Input.action_press("dash")
+	Input.action_release("move_right")
+	await _frames(1)
+	await _hold_double_tap("move_right")
 	await _frames(16)
 	await _tap("attack")
-	Input.action_release("dash")
 	Input.action_release("move_right")
-	await _frames(14)
+	await _frames(18)
 	await _tap("attack")
-	await _frames(14)
+	await _frames(20)
 	await _tap("attack")
 	await _frames(58)
+	await _tap("attack")
+	await _hold_double_tap("move_right")
+	await _frames(30)
+	Input.action_release("move_right")
+	await _frames(1)
+	await _hold_double_tap("move_left")
+	await _frames(18)
+	Input.action_release("move_left")
+	await _frames(10)
 	main_ref._reset_battle()
 	main_ref._wave_notice.hide()
 	Input.action_press("move_right")
 	await _frames(27)
 	Input.action_release("move_right")
 	await _tap("generic_skill")
-	await _frames(9)
+	await _frames(13)
 	Input.action_press("jump")
-	await _frames(9)
+	await _frames(17)
 	await _tap("attack")
+	await _frames(12)
 	Input.action_release("jump")
 	await _frames(60)
+	Input.action_press("move_down")
+	await _tap("jump")
+	Input.action_release("move_down")
+	await _frames(30)
+	Input.action_press("move_right")
+	await _frames(29)
+	Input.action_release("move_right")
+	await _frames(5)
 	await _tap("skill_a")
 	await _frames(52)
 	await _tap("skill_s")
@@ -566,9 +762,9 @@ func _run_showcase() -> void:
 	await _tap("skill_s")
 	await _frames(75)
 	await _tap("attack")
-	await _frames(10)
+	await _frames(18)
 	await _tap("attack")
-	await _frames(10)
+	await _frames(20)
 	await _tap("attack")
 	await _frames(60)
 	_release_inputs()

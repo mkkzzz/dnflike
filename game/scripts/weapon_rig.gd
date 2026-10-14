@@ -48,6 +48,7 @@ func reset_pose() -> void:
 	_previous_move = ""
 	_afterimage_clock = 0.0
 	update_attachment()
+	reset_physics_interpolation()
 
 func socket_pose(clip: Dictionary, frame: int) -> Dictionary:
 	var sockets: Array = clip.get("sockets", [])
@@ -98,7 +99,13 @@ func _smooth_angle(pose: Dictionary) -> float:
 	var frames := int(_clip.get("frames", 1))
 	var authored: Dictionary = _clip.get("phase_frames", {})
 	if authored.is_empty() or actor.move_data.is_empty():
-		return angle
+		var durations: Array = _clip.get("durations", [])
+		if durations.is_empty() or frames <= 1:
+			return angle
+		var next_frame := (_frame + 1) % frames if bool(_clip.get("loop", false)) else mini(_frame + 1, frames - 1)
+		var next_pose := socket_pose(_clip, next_frame)
+		var blend := clampf((float(actor.anim_tick) + actor._anim_fraction) / maxf(1.0, float(durations[_frame])), 0, 1)
+		return lerp_angle(angle, deg_to_rad(float(next_pose.get("angle", 32))), smoothstep(0, 1, blend))
 	var indices: Array = authored.get("windup", [])
 	var start := 0.0
 	var duration := float(actor.move_data.get("charge", actor.move_data.get("windup", 1)))
@@ -134,12 +141,27 @@ func _smooth_angle(pose: Dictionary) -> float:
 		duration = float(actor.move_data.get("recovery", 1))
 	if indices.is_empty():
 		return angle
-	var clock := clampf((actor.phase_t - start) / maxf(1, duration), 0, 0.99999) * indices.size()
+	var progress := clampf((actor.phase_t - start) / maxf(1, duration), 0, 1)
+	if actor.phase == "active":
+		var whip := 0.70
+		if actor.move_name in ["attack3", "rage_slash"]:
+			whip = 0.48
+		elif actor.move_name in ["upper", "dash_attack"]:
+			whip = 0.58
+		elif actor.move_name == "thrust":
+			whip = 0.85
+		progress = ease(progress, whip)
+	else:
+		progress = smoothstep(0, 1, progress)
+	# Sample the entire authored phase, including its last interval, with no end hold.
+	var clock := progress * maxf(0, indices.size() - 1)
 	var index := mini(indices.size() - 1, int(clock))
 	var next_index := mini(index + 1, indices.size() - 1)
+	var from_frame := clampi(int(indices[index]), 0, frames - 1)
+	var from_pose := socket_pose(_clip, from_frame)
 	var next_frame := clampi(int(indices[next_index]), 0, frames - 1)
 	var next_pose := socket_pose(_clip, next_frame)
-	return lerp_angle(angle, deg_to_rad(float(next_pose.get("angle", 32))), clock - floorf(clock))
+	return lerp_angle(deg_to_rad(float(from_pose.get("angle", 32))), deg_to_rad(float(next_pose.get("angle", 32))), clock - floorf(clock))
 
 func blade_base_global() -> Vector2:
 	return global_transform * Vector2(13, 0)

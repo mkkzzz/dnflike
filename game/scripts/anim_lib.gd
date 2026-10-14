@@ -11,6 +11,7 @@ extends RefCounted
 
 const MANIFEST := "res://assets/demo/anim.json"
 const BODY_MANIFEST := "res://assets/actors_v3/manifest.json"
+const POLISH_MANIFEST := "res://assets/actors_v4/manifest.json"
 
 static var _cache := {}
 
@@ -21,6 +22,8 @@ static func load_group(group: String) -> Dictionary:
 		return _cache[group]
 	var out := {}
 	var manifest_path := BODY_MANIFEST if group == "player" and FileAccess.file_exists(BODY_MANIFEST) else MANIFEST
+	if group == "player" and FileAccess.file_exists(POLISH_MANIFEST):
+		manifest_path = POLISH_MANIFEST
 	if not FileAccess.file_exists(manifest_path):
 		push_warning("[ANIM] 缺 %s：先跑 python tools/bake_ai_frames.py（正式）或 tools/bake_game_assets.py（占位）" % MANIFEST)
 		return out

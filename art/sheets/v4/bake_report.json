@@ -1,0 +1,1011 @@
+{
+  "source_silhouettes": 32,
+  "unique_used_body_poses": 24,
+  "frame_canvas": [
+    320,
+    248
+  ],
+  "root": [
+    144,
+    230
+  ],
+  "source_calibration": {
+    "idleback": [
+      {
+        "cell": 0,
+        "bbox": [
+          59,
+          8,
+          285,
+          351
+        ],
+        "area": 38877,
+        "centroid": [
+          176,
+          196
+        ],
+        "root": [
+          189,
+          348
+        ],
+        "hand": [
+          125,
+          195
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.558824,
+        "used": true,
+        "baked_offset": [
+          71,
+          40
+        ]
+      },
+      {
+        "cell": 1,
+        "bbox": [
+          367,
+          7,
+          592,
+          351
+        ],
+        "area": 39066,
+        "centroid": [
+          487,
+          194
+        ],
+        "root": [
+          500,
+          348
+        ],
+        "hand": [
+          438,
+          195
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.558824,
+        "used": true,
+        "baked_offset": [
+          70,
+          39
+        ]
+      },
+      {
+        "cell": 2,
+        "bbox": [
+          670,
+          4,
+          919,
+          351
+        ],
+        "area": 42709,
+        "centroid": [
+          800,
+          197
+        ],
+        "root": [
+          812,
+          348
+        ],
+        "hand": [
+          749,
+          198
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.558824,
+        "used": true,
+        "baked_offset": [
+          65,
+          38
+        ]
+      },
+      {
+        "cell": 3,
+        "bbox": [
+          973,
+          0,
+          1228,
+          351
+        ],
+        "area": 42558,
+        "centroid": [
+          1119,
+          195
+        ],
+        "root": [
+          1132,
+          348
+        ],
+        "hand": [
+          1092,
+          189
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.558824,
+        "used": true,
+        "baked_offset": [
+          55,
+          36
+        ]
+      },
+      {
+        "cell": 4,
+        "bbox": [
+          26,
+          353,
+          269,
+          693
+        ],
+        "area": 40720,
+        "centroid": [
+          154,
+          539
+        ],
+        "root": [
+          165,
+          690
+        ],
+        "hand": [
+          101,
+          537
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.558824,
+        "used": true,
+        "baked_offset": [
+          66,
+          42
+        ]
+      },
+      {
+        "cell": 5,
+        "bbox": [
+          348,
+          354,
+          597,
+          693
+        ],
+        "area": 42216,
+        "centroid": [
+          479,
+          540
+        ],
+        "root": [
+          488,
+          690
+        ],
+        "hand": [
+          429,
+          538
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.558824,
+        "used": true,
+        "baked_offset": [
+          66,
+          42
+        ]
+      },
+      {
+        "cell": 6,
+        "bbox": [
+          656,
+          350,
+          918,
+          693
+        ],
+        "area": 42193,
+        "centroid": [
+          792,
+          538
+        ],
+        "root": [
+          798,
+          690
+        ],
+        "hand": [
+          746,
+          536
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.558824,
+        "used": true,
+        "baked_offset": [
+          65,
+          40
+        ]
+      },
+      {
+        "cell": 7,
+        "bbox": [
+          990,
+          353,
+          1227,
+          693
+        ],
+        "area": 39919,
+        "centroid": [
+          1116,
+          539
+        ],
+        "root": [
+          1123,
+          690
+        ],
+        "hand": [
+          1063,
+          538
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.558824,
+        "used": true,
+        "baked_offset": [
+          70,
+          42
+        ]
+      },
+      {
+        "cell": 8,
+        "bbox": [
+          32,
+          685,
+          270,
+          982
+        ],
+        "area": 34998,
+        "centroid": [
+          158,
+          849
+        ],
+        "root": [
+          168,
+          980
+        ],
+        "hand": [
+          98,
+          858
+        ],
+        "angle": 145,
+        "layer": "back",
+        "scale": 0.558824,
+        "used": false
+      },
+      {
+        "cell": 9,
+        "bbox": [
+          326,
+          736,
+          587,
+          978
+        ],
+        "area": 32682,
+        "centroid": [
+          470,
+          867
+        ],
+        "root": [
+          480,
+          975
+        ],
+        "hand": [
+          440,
+          857
+        ],
+        "angle": 145,
+        "layer": "back",
+        "scale": 0.558824,
+        "used": false
+      },
+      {
+        "cell": 10,
+        "bbox": [
+          637,
+          707,
+          905,
+          983
+        ],
+        "area": 35126,
+        "centroid": [
+          778,
+          844
+        ],
+        "root": [
+          790,
+          981
+        ],
+        "hand": [
+          767,
+          831
+        ],
+        "angle": 145,
+        "layer": "back",
+        "scale": 0.558824,
+        "used": false
+      },
+      {
+        "cell": 11,
+        "bbox": [
+          939,
+          685,
+          1222,
+          912
+        ],
+        "area": 30639,
+        "centroid": [
+          1095,
+          802
+        ],
+        "root": [
+          1133,
+          952
+        ],
+        "hand": [
+          1067,
+          811
+        ],
+        "angle": 145,
+        "layer": "back",
+        "scale": 0.558824,
+        "used": false
+      },
+      {
+        "cell": 12,
+        "bbox": [
+          33,
+          988,
+          283,
+          1221
+        ],
+        "area": 28415,
+        "centroid": [
+          172,
+          1092
+        ],
+        "root": [
+          185,
+          1245
+        ],
+        "hand": [
+          145,
+          1106
+        ],
+        "angle": 145,
+        "layer": "back",
+        "scale": 0.558824,
+        "used": false
+      },
+      {
+        "cell": 13,
+        "bbox": [
+          332,
+          986,
+          580,
+          1248
+        ],
+        "area": 32091,
+        "centroid": [
+          466,
+          1109
+        ],
+        "root": [
+          490,
+          1245
+        ],
+        "hand": [
+          436,
+          1120
+        ],
+        "angle": 145,
+        "layer": "back",
+        "scale": 0.558824,
+        "used": false
+      },
+      {
+        "cell": 14,
+        "bbox": [
+          640,
+          1035,
+          913,
+          1248
+        ],
+        "area": 30322,
+        "centroid": [
+          789,
+          1149
+        ],
+        "root": [
+          812,
+          1245
+        ],
+        "hand": [
+          742,
+          1137
+        ],
+        "angle": 145,
+        "layer": "back",
+        "scale": 0.558824,
+        "used": false
+      },
+      {
+        "cell": 15,
+        "bbox": [
+          987,
+          951,
+          1223,
+          1251
+        ],
+        "area": 34741,
+        "centroid": [
+          1111,
+          1118
+        ],
+        "root": [
+          1124,
+          1247
+        ],
+        "hand": [
+          1058,
+          1124
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.558824,
+        "used": false
+      }
+    ],
+    "back": [
+      {
+        "cell": 0,
+        "bbox": [
+          12,
+          169,
+          272,
+          585
+        ],
+        "area": 53817,
+        "centroid": [
+          149,
+          394
+        ],
+        "root": [
+          169,
+          582
+        ],
+        "hand": [
+          88,
+          389
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.460048,
+        "used": true,
+        "baked_offset": [
+          72,
+          40
+        ]
+      },
+      {
+        "cell": 1,
+        "bbox": [
+          305,
+          257,
+          588,
+          577
+        ],
+        "area": 47396,
+        "centroid": [
+          465,
+          438
+        ],
+        "root": [
+          484,
+          574
+        ],
+        "hand": [
+          483,
+          366
+        ],
+        "angle": -115,
+        "layer": "front",
+        "scale": 0.460048,
+        "used": true,
+        "baked_offset": [
+          62,
+          84
+        ]
+      },
+      {
+        "cell": 2,
+        "bbox": [
+          644,
+          208,
+          953,
+          585
+        ],
+        "area": 50741,
+        "centroid": [
+          777,
+          404
+        ],
+        "root": [
+          774,
+          582
+        ],
+        "hand": [
+          736,
+          311
+        ],
+        "angle": -125,
+        "layer": "front",
+        "scale": 0.460048,
+        "used": true,
+        "baked_offset": [
+          84,
+          58
+        ]
+      },
+      {
+        "cell": 3,
+        "bbox": [
+          960,
+          170,
+          1240,
+          497
+        ],
+        "area": 41072,
+        "centroid": [
+          1103,
+          347
+        ],
+        "root": [
+          1145,
+          558
+        ],
+        "hand": [
+          1111,
+          277
+        ],
+        "angle": -130,
+        "layer": "front",
+        "scale": 0.460048,
+        "used": true,
+        "baked_offset": [
+          59,
+          52
+        ]
+      },
+      {
+        "cell": 4,
+        "bbox": [
+          53,
+          691,
+          350,
+          1000
+        ],
+        "area": 40412,
+        "centroid": [
+          176,
+          849
+        ],
+        "root": [
+          180,
+          1070
+        ],
+        "hand": [
+          174,
+          790
+        ],
+        "angle": -135,
+        "layer": "front",
+        "scale": 0.460048,
+        "used": true,
+        "baked_offset": [
+          86,
+          56
+        ]
+      },
+      {
+        "cell": 5,
+        "bbox": [
+          381,
+          709,
+          694,
+          1119
+        ],
+        "area": 53809,
+        "centroid": [
+          516,
+          911
+        ],
+        "root": [
+          535,
+          1123
+        ],
+        "hand": [
+          517,
+          818
+        ],
+        "angle": -120,
+        "layer": "front",
+        "scale": 0.460048,
+        "used": true,
+        "baked_offset": [
+          73,
+          40
+        ]
+      },
+      {
+        "cell": 6,
+        "bbox": [
+          674,
+          765,
+          935,
+          1128
+        ],
+        "area": 47093,
+        "centroid": [
+          812,
+          962
+        ],
+        "root": [
+          819,
+          1126
+        ],
+        "hand": [
+          796,
+          972
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.460048,
+        "used": true,
+        "baked_offset": [
+          77,
+          64
+        ]
+      },
+      {
+        "cell": 7,
+        "bbox": [
+          965,
+          707,
+          1240,
+          1128
+        ],
+        "area": 56084,
+        "centroid": [
+          1111,
+          937
+        ],
+        "root": [
+          1124,
+          1125
+        ],
+        "hand": [
+          1057,
+          929
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.460048,
+        "used": true,
+        "baked_offset": [
+          71,
+          38
+        ]
+      }
+    ],
+    "jump": [
+      {
+        "cell": 0,
+        "bbox": [
+          43,
+          51,
+          274,
+          431
+        ],
+        "area": 44719,
+        "centroid": [
+          164,
+          258
+        ],
+        "root": [
+          185,
+          428
+        ],
+        "hand": [
+          112,
+          257
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.503979,
+        "used": true,
+        "baked_offset": [
+          72,
+          40
+        ]
+      },
+      {
+        "cell": 1,
+        "bbox": [
+          335,
+          190,
+          607,
+          431
+        ],
+        "area": 34955,
+        "centroid": [
+          476,
+          321
+        ],
+        "root": [
+          495,
+          428
+        ],
+        "hand": [
+          434,
+          321
+        ],
+        "angle": 145,
+        "layer": "back",
+        "scale": 0.503979,
+        "used": true,
+        "baked_offset": [
+          63,
+          110
+        ]
+      },
+      {
+        "cell": 2,
+        "bbox": [
+          642,
+          45,
+          866,
+          433
+        ],
+        "area": 43605,
+        "centroid": [
+          773,
+          254
+        ],
+        "root": [
+          789,
+          430
+        ],
+        "hand": [
+          725,
+          238
+        ],
+        "angle": 145,
+        "layer": "back",
+        "scale": 0.503979,
+        "used": true,
+        "baked_offset": [
+          70,
+          36
+        ]
+      },
+      {
+        "cell": 3,
+        "bbox": [
+          949,
+          42,
+          1206,
+          404
+        ],
+        "area": 39937,
+        "centroid": [
+          1089,
+          228
+        ],
+        "root": [
+          1137,
+          430
+        ],
+        "hand": [
+          1045,
+          228
+        ],
+        "angle": 145,
+        "layer": "back",
+        "scale": 0.503979,
+        "used": true,
+        "baked_offset": [
+          49,
+          34
+        ]
+      },
+      {
+        "cell": 4,
+        "bbox": [
+          21,
+          462,
+          314,
+          749
+        ],
+        "area": 33405,
+        "centroid": [
+          169,
+          623
+        ],
+        "root": [
+          185,
+          839
+        ],
+        "hand": [
+          127,
+          658
+        ],
+        "angle": 145,
+        "layer": "back",
+        "scale": 0.503979,
+        "used": true,
+        "baked_offset": [
+          61,
+          40
+        ]
+      },
+      {
+        "cell": 5,
+        "bbox": [
+          340,
+          456,
+          586,
+          801
+        ],
+        "area": 38098,
+        "centroid": [
+          476,
+          637
+        ],
+        "root": [
+          490,
+          839
+        ],
+        "hand": [
+          443,
+          648
+        ],
+        "angle": 145,
+        "layer": "back",
+        "scale": 0.503979,
+        "used": true,
+        "baked_offset": [
+          68,
+          37
+        ]
+      },
+      {
+        "cell": 6,
+        "bbox": [
+          648,
+          479,
+          889,
+          839
+        ],
+        "area": 36336,
+        "centroid": [
+          781,
+          651
+        ],
+        "root": [
+          798,
+          840
+        ],
+        "hand": [
+          768,
+          648
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.503979,
+        "used": true,
+        "baked_offset": [
+          68,
+          48
+        ]
+      },
+      {
+        "cell": 7,
+        "bbox": [
+          963,
+          577,
+          1216,
+          832
+        ],
+        "area": 33829,
+        "centroid": [
+          1108,
+          716
+        ],
+        "root": [
+          1129,
+          829
+        ],
+        "hand": [
+          1088,
+          711
+        ],
+        "angle": 35,
+        "layer": "front",
+        "scale": 0.503979,
+        "used": true,
+        "baked_offset": [
+          60,
+          103
+        ]
+      }
+    ]
+  },
+  "overridden_clips": [
+    "idle",
+    "back_dash",
+    "jump"
+  ],
+  "new_phase_clips": [
+    "jump_rise",
+    "jump_apex",
+    "jump_fall",
+    "jump_land"
+  ],
+  "new_clip_checks": {
+    "idle": {
+      "frames": 8,
+      "distinct_pixel_frames": 8,
+      "sockets": 8,
+      "grips_touch_body": true,
+      "no_canvas_crop": true
+    },
+    "back_dash": {
+      "frames": 8,
+      "distinct_pixel_frames": 8,
+      "sockets": 8,
+      "grips_touch_body": true,
+      "no_canvas_crop": true
+    },
+    "jump": {
+      "frames": 8,
+      "distinct_pixel_frames": 8,
+      "sockets": 8,
+      "grips_touch_body": true,
+      "no_canvas_crop": true
+    },
+    "jump_rise": {
+      "frames": 3,
+      "distinct_pixel_frames": 3,
+      "sockets": 3,
+      "grips_touch_body": true,
+      "no_canvas_crop": true
+    },
+    "jump_apex": {
+      "frames": 2,
+      "distinct_pixel_frames": 2,
+      "sockets": 2,
+      "grips_touch_body": true,
+      "no_canvas_crop": true
+    },
+    "jump_fall": {
+      "frames": 2,
+      "distinct_pixel_frames": 2,
+      "sockets": 2,
+      "grips_touch_body": true,
+      "no_canvas_crop": true
+    },
+    "jump_land": {
+      "frames": 3,
+      "distinct_pixel_frames": 3,
+      "sockets": 3,
+      "grips_touch_body": true,
+      "no_canvas_crop": true
+    }
+  },
+  "verified_unchanged_v3_clips": 17
+}

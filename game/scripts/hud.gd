@@ -48,6 +48,11 @@ var _hp_chip := 0.0
 var _target_chip := 0.0
 var _target_id := 0
 var _vitals_initialized := false
+var displayed_attack_speed := 1.0
+
+func set_attack_speed(speed: float) -> void:
+	displayed_attack_speed = speed
+	_refresh()
 
 
 func _init() -> void:
@@ -122,7 +127,7 @@ func set_target(monster) -> void:
 
 
 func set_cooldowns(slot_to_left: Dictionary, slot_to_total: Dictionary = {}) -> void:
-	# Existing indices stay intact: A=0, S=1, 1=6, 2=7. Z uses index 8.
+	# Existing indices stay intact: A=0, S=1, 1=6, 2=7, Z=8, backjump=9.
 	_cooldowns = slot_to_left.duplicate()
 	_cooldown_max = slot_to_total.duplicate()
 	_refresh()
@@ -290,6 +295,9 @@ func _draw_bottom() -> void:
 		IVORY, "center", true)
 	_text(Vector2(216, 680), "%d / %d" % [ceili(vitals_mp), ceili(vitals_mp_max)], 10,
 		IVORY, "center", true)
+	_text(Vector2(100, 695), "攻速 %.0f%%" % (displayed_attack_speed * 100), 11, MUTED)
+	var backjump_left := float(_cooldowns.get(9, 0.0))
+	_text(Vector2(331, 695), "后跳 %.1fs" % backjump_left if backjump_left > 0 else "后跳就绪", 11, GOLD if backjump_left <= 0 else MUTED, "right")
 	var attack_name := "三连斩"
 	if str(training_stats.get("action", "")) == "air_attack":
 		attack_name = "空中斩"
@@ -308,9 +316,9 @@ func _draw_bottom() -> void:
 	_draw_action(4, "V", "格挡", -1, "guard", true)
 	_draw_action(5, "1", "生命药水", 6, "hp", true)
 	_draw_action(6, "2", "魔力药水", 7, "mp", true)
-	_text(Vector2(25, 705), "← → 移动  ·  Shift / 双击奔跑  ·  ↑ ↓ 景深", 12, MUTED)
-	_text(Vector2(639, 705), "C / 空格 跳跃  ·  ↓ + C 后跳", 12, MUTED, "center")
-	_text(Vector2(1255, 705), "T 切换职业  ·  R 重玩", 12, MUTED, "right")
+	_text(Vector2(25, 715), "← → 移动  ·  双击奔跑  ·  ↑ ↓ 景深", 11, MUTED)
+	_text(Vector2(639, 715), "C / 空格 跳跃  ·  ↓ + C 后跳", 11, MUTED, "center")
+	_text(Vector2(1255, 715), "T 切换职业  ·  R 重玩  ·  F3 显示设置", 11, MUTED, "right")
 
 
 func _draw_portrait() -> void:

@@ -2,11 +2,10 @@
 from pathlib import Path
 import subprocess
 import sys
+import argparse
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "temp/v3_showcase.avi"
 OUT = ROOT / "docs/previews"
-QA = ROOT / "temp/v3_qa"
 
 try:
     import imageio_ffmpeg
@@ -16,18 +15,25 @@ except ImportError:
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--version", choices=["v3", "v4"], default="v4")
+    version = parser.parse_args().version
+    source = ROOT / "temp" / f"{version}_showcase.avi"
+    qa = ROOT / "temp" / f"{version}_qa"
     OUT.mkdir(parents=True, exist_ok=True)
-    QA.mkdir(parents=True, exist_ok=True)
+    qa.mkdir(parents=True, exist_ok=True)
     ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
-    subprocess.run([ffmpeg, "-y", "-v", "error", "-i", str(SOURCE),
+    subprocess.run([ffmpeg, "-y", "-v", "error", "-i", str(source),
                     "-c:v", "libx264", "-preset", "slow", "-crf", "19",
                     "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k",
-                    "-movflags", "+faststart", str(OUT / "combat_v3_showcase.mp4")], check=True)
-    for frame in [80, 108, 128, 155, 220, 245, 280, 330, 375, 458, 500, 570]:
-        subprocess.run([ffmpeg, "-y", "-v", "error", "-i", str(SOURCE),
+                    "-movflags", "+faststart", str(OUT / f"combat_{version}_showcase.mp4")], check=True)
+    frames = ([80, 108, 128, 155, 220, 245, 280, 330, 375, 458, 500, 570] if version == "v3"
+              else [100, 125, 150, 220, 244, 273, 350, 370, 442, 527, 540, 610, 670, 759, 789, 874])
+    for frame in frames:
+        subprocess.run([ffmpeg, "-y", "-v", "error", "-i", str(source),
                         "-vf", f"select=eq(n\\,{frame})", "-frames:v", "1",
-                        str(QA / f"frame_{frame:03d}.png")], check=True)
-    print(f"[VIDEO] {OUT / 'combat_v3_showcase.mp4'}")
+                        str(qa / f"frame_{frame:03d}.png")], check=True)
+    print(f"[VIDEO] {OUT / f'combat_{version}_showcase.mp4'}")
 
 
 if __name__ == "__main__":

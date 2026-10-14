@@ -3,7 +3,7 @@
   "max_mp": 300,
   "walk_speed": 225,
   "run_speed": 450,
-  "gravity": 2500,
+  "gravity": 2100,
   "attack_speed": 1.0,
   "move_speed": 1.0,
   "defense": 1.0,
@@ -12,8 +12,8 @@
   "lane_max": 24,
   "lane_speed": 100,
   "lane_hit_tolerance": 24,
-  "input_buffer_frames": 14,
-  "combo_window": 16,
+  "input_buffer_frames": 22,
+  "combo_window": 20,
   "double_tap_ms": 250,
   "down_time": 36,
   "getup_time": 12,
@@ -38,7 +38,7 @@
   "jump_buffer_frames": 6,
   "coyote_frames": 6,
   "jump_cut_ratio": 0.62,
-  "jump_cut_speed": -500,
+  "jump_cut_speed": -535,
   "dash_attack_min_speed": 270,
   "lane_acceleration": 2200,
   "air_lane_scale": 0.65,
@@ -71,5 +71,8 @@
   "guard_directional": true,
   "perfect_guard_frames": 3,
   "perfect_guard_damage_scale": 0.05,
-  "perfect_guard_hitstop": 3
+  "perfect_guard_hitstop": 3,
+  "run_release_grace_ms": 140,
+  "run_input_buffer_frames": 36,
+  "run_turn_acceleration": 18000
 }

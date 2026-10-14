@@ -4,7 +4,7 @@
     "slot": "A",
     "cd": 30,
     "buff_time": 8.0,
-    "atk_speed": 1.3,
+    "atk_speed": 1.12,
     "move_speed": 1.2,
     "defense": 0.7,
     "mp": 30,
@@ -72,7 +72,9 @@
     "momentum_drag": 750,
     "recovery_drag": 1800,
     "attack_speed_scaled": true,
-    "fx_style": "blood_cleave"
+    "fx_style": "blood_cleave",
+    "run_cancel_after": 24,
+    "whiff_run_cancel_after": 33
   },
   "quick_draw": {
     "name": "拔刀斩",
@@ -107,7 +109,9 @@
     "momentum_retention": 0.2,
     "momentum_drag": 1700,
     "recovery_drag": 2000,
-    "fx_style": "quick_draw"
+    "fx_style": "quick_draw",
+    "run_cancel_after": 28,
+    "whiff_run_cancel_after": 33
   },
   "thrust": {
     "name": "连突刺",
@@ -180,6 +184,8 @@
     "momentum_retention": 0.3,
     "momentum_drag": 650,
     "recovery_drag": 2000,
-    "fx_style": "pierce"
+    "fx_style": "pierce",
+    "run_cancel_after": 24,
+    "whiff_run_cancel_after": 29
   }
 }

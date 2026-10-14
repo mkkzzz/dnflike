@@ -77,6 +77,13 @@ var _step_distance := 0.0
 var _death_t := 0.0
 var _last_move_input := 0.0
 var _guard_frames := 0
+var _landing_visual_left := 0
+var _input_clock_ms := 0.0
+var _left_was_down := false
+var _right_was_down := false
+var _run_release_ms := 0.0
+var _run_request_left := 0
+var _run_request_dir := 0
 
 func _ready() -> void:
 	var shape := CollisionShape2D.new()
@@ -146,11 +153,19 @@ func reset_combat(origin: Vector2) -> void:
 	_death_t = 0.0
 	_last_move_input = 0.0
 	_guard_frames = 0
+	_landing_visual_left = 0
+	_input_clock_ms = 0.0
+	_left_was_down = false
+	_right_was_down = false
+	_run_release_ms = 0.0
+	_run_request_left = 0
+	_run_request_dir = 0
 	anim_name = ""
 	anim_frame = 0
 	anim_tick = 0
 	modulate = Color.WHITE
 	_anim_step()
+	reset_physics_interpolation()
 	hp_changed.emit(hp, float(cfg.get("max_hp", 1000)))
 	queue_redraw()
 
@@ -161,7 +176,7 @@ func body_transform() -> Transform2D:
 	var squash := _land_squash
 	var stretch := 0.0
 	if not is_on_floor() and not dead and state != St.AIR:
-		stretch = clampf(-velocity.y / maxf(1.0, absf(float(GameConfig.moves.get("jump", {}).get("vy", -780)))), 0.0, 1.0)
+		stretch = clampf(-velocity.y / maxf(1.0, absf(float(GameConfig.moves.get("jump", {}).get("vy", -870)))), 0.0, 1.0)
 	var breathe := sin(_visual_clock * float(cfg.get("breath_rate", 3.4))) * float(cfg.get("breath_amount", 0.003)) if state == St.IDLE else 0.0
 	var sx := 1.0 + squash * float(cfg.get("landing_squash_x", 0.045)) - stretch * float(cfg.get("jump_stretch_x", 0.015))
 	var sy := 1.0 - squash * float(cfg.get("landing_squash_y", 0.065)) + stretch * float(cfg.get("jump_stretch_y", 0.025)) + breathe
@@ -182,7 +197,8 @@ func _physics_process(delta: float) -> void:
 		input_buffer.clear()
 		return
 	# Hitstop pauses simulation, but never loses an input edge.
-	_sample_input()
+	_sample_input(delta)
+	_tick_cooldowns()
 	if fx != null and fx.freeze > 0:
 		return
 	_update_timers(delta)
@@ -222,7 +238,7 @@ func _physics_process(delta: float) -> void:
 	_apply_jump_cut()
 	if not is_on_floor() or velocity.y < 0.0:
 		var gravity_scale := float(move_data.get("gravity_scale", 1.0)) if state in FRAME_STATES else 1.0
-		velocity.y += float(cfg.get("gravity", 2500)) * gravity_scale * delta
+		velocity.y += float(cfg.get("gravity", 2100)) * gravity_scale * delta
 	else:
 		velocity.y = 0.0
 	var falling_speed := velocity.y
@@ -250,7 +266,18 @@ func _physics_process(delta: float) -> void:
 		fx.rage_aura(visual_position(), facing)
 	queue_redraw()
 
-func _sample_input() -> void:
+func _sample_input(delta := 1.0 / 60.0) -> void:
+	# Direction edges belong to input, not the free movement state. A double tap
+	# during a slash or hitstop must survive until its legal movement cancel.
+	_input_clock_ms += delta * 1000.0
+	_update_double_tap(_dir_input())
+	if _dir_input() == 0.0:
+		_run_release_ms += delta * 1000.0
+		if _run_release_ms > float(cfg.get("run_release_grace_ms", 140)) and (_run_request_left <= 0 or not state in FRAME_STATES):
+			running = false
+			_run_request_dir = 0
+	else:
+		_run_release_ms = 0.0
 	for action in BUFFER_ACTIONS:
 		if InputMap.has_action(action) and Input.is_action_just_pressed(action):
 			buffer_action(action)
@@ -278,6 +305,7 @@ func _has_buffer(action: String) -> bool:
 	return false
 
 func _update_timers(delta: float) -> void:
+	_landing_visual_left = maxi(0, _landing_visual_left - 1)
 	invincible = maxi(0, invincible - 1)
 	potion_cd = maxi(0, potion_cd - 1)
 	_visual_clock += delta
@@ -296,8 +324,7 @@ func _update_timers(delta: float) -> void:
 		combo_window -= 1
 	elif state not in [St.ATK, St.DASH_ATK]:
 		combo = 0
-	for key in cds:
-		cds[key] = maxi(0, int(cds[key]) - 1)
+	_run_request_left = maxi(0, _run_request_left - 1)
 	for idx in range(input_buffer.size() - 1, -1, -1):
 		input_buffer[idx]["ttl"] -= 1
 		if int(input_buffer[idx]["ttl"]) < 0:
@@ -307,21 +334,42 @@ func _dir_input() -> float:
 	return Input.get_axis("move_left", "move_right")
 
 func _is_sprinting() -> bool:
-	return running or (InputMap.has_action("dash") and Input.is_action_pressed("dash"))
+	return running
+
+func buffer_run(direction: int) -> void:
+	if direction == 0:
+		return
+	running = true
+	_run_request_dir = signi(direction)
+	_run_request_left = int(cfg.get("run_input_buffer_frames", 36))
+	_run_release_ms = 0.0
 
 func _update_double_tap(d: float) -> void:
-	if d == 0.0:
-		running = false
-		return
-	var direction := int(signf(d))
-	if Input.is_action_just_pressed("move_left") or Input.is_action_just_pressed("move_right"):
-		var now := Time.get_ticks_msec()
+	var left_down := Input.is_action_pressed("move_left")
+	var right_down := Input.is_action_pressed("move_right")
+	var pressed := 0
+	if left_down and not _left_was_down:
+		pressed = -1
+	if right_down and not _right_was_down:
+		pressed = 1
+	_left_was_down = left_down
+	_right_was_down = right_down
+	if pressed != 0:
+		var direction := pressed
+		var now := int(round(_input_clock_ms))
 		if last_tap_dir == direction and now - last_tap_ms <= int(cfg.get("double_tap_ms", 250)):
-			running = true
-		elif last_tap_dir != direction:
-			running = false
+			buffer_run(direction)
 		last_tap_dir = direction
 		last_tap_ms = now
+	# Once running, a held opposite direction requests another run gait rather
+	# than downgrading to walk. A prolonged release still clears the intention.
+	if running and d != 0.0:
+		_run_request_dir = int(signf(d))
+
+func _tick_cooldowns() -> void:
+	# One real physical tick, independently of attack speed and hitstop.
+	for key in cds:
+		cds[key] = maxi(0, int(cds[key]) - 1)
 
 func _move_lane(delta: float, airborne := false) -> void:
 	var lane := Input.get_axis("move_up", "move_down") if InputMap.has_action("move_up") else 0.0
@@ -333,7 +381,6 @@ func _free_state(delta: float) -> void:
 	var direction := _dir_input()
 	var previous_velocity := velocity.x
 	var previous_state := state
-	_update_double_tap(direction)
 	_move_lane(delta)
 	if direction != 0.0:
 		facing = int(signf(direction))
@@ -344,9 +391,11 @@ func _free_state(delta: float) -> void:
 	if direction == 0.0:
 		accel = float(cfg.get("ground_brake", 6500))
 	elif velocity.x * direction < 0.0:
-		accel = float(cfg.get("turn_acceleration", 12500))
+		accel = float(cfg.get("run_turn_acceleration", 18000) if sprinting else cfg.get("turn_acceleration", 12500))
 	velocity.x = move_toward(velocity.x, direction * speed, accel * delta)
 	state = (St.RUN if sprinting else St.WALK) if direction != 0.0 else St.IDLE
+	if direction != 0.0 and sprinting:
+		_run_request_left = 0
 	if fx != null:
 		if direction == 0.0 and _last_move_input != 0.0 and absf(previous_velocity) > float(cfg.get("stop_fx_speed", 260)):
 			fx.locomotion_event(visual_position(), facing, "stop", clampf(absf(previous_velocity) / speed, 0.4, 1.0))
@@ -407,6 +456,16 @@ func _consume_buffer(cancel_only := false) -> bool:
 		if action in ["skill_a", "skill_s"] and not grounded and not _skill_air_allowed(action):
 			idx += 1
 			continue
+		var basic_id := ""
+		if action == "generic_skill":
+			basic_id = "upper"
+		elif action == "back_dash" or (action == "jump" and bool(entry.get("down", false)) and grounded):
+			basic_id = "back_dash"
+		if not basic_id.is_empty() and not _basic_move_ready(basic_id):
+			# A rejected cooldown request is discarded, but another valid input in
+			# the same buffer may still execute during this physical frame.
+			input_buffer.remove_at(idx)
+			continue
 		input_buffer.remove_at(idx)
 		match action:
 			"attack": _start_attack()
@@ -427,7 +486,7 @@ func _consume_buffer(cancel_only := false) -> bool:
 
 func _can_cancel(action: String) -> bool:
 	if state == St.BACK_DASH:
-		return false
+		return is_on_floor() and phase_t >= float(move_data.get("cancel_after", _move_duration())) and action in move_data.get("cancel_to", [])
 	if state == St.AIR_ATK and _landed_air_attack:
 		return _landing_attack_left <= int(move_data.get("landing_cancel_frames", 2))
 	var allowed: Array = move_data.get("cancel_to", ["attack", "generic_skill", "skill_a", "skill_s", "back_dash", "guard", "jump"])
@@ -456,13 +515,14 @@ func _start_guard() -> void:
 	action_started.emit("guard")
 
 func _start_jump(short_jump := false) -> void:
+	_landing_visual_left = 0
 	_clear_move()
 	_reset_grounded = false
 	combo = 0
 	combo_window = 0
 	_jump_running = _is_sprinting() or absf(velocity.x) > float(cfg.get("jump_run_threshold", 290))
 	_jump_cut_pending = short_jump
-	velocity.y = float(GameConfig.moves["jump"].get("vy", -780))
+	velocity.y = float(GameConfig.moves["jump"].get("vy", -870))
 	state = St.JUMP
 	coyote_left = 0
 	air_attack_count = 0
@@ -479,7 +539,7 @@ func _apply_jump_cut() -> void:
 	if not _jump_cut_pending:
 		return
 	if state in [St.JUMP, St.AIR_ATK] and velocity.y < 0.0:
-		velocity.y = maxf(velocity.y * float(cfg.get("jump_cut_ratio", 0.44)), float(cfg.get("jump_cut_speed", -315)))
+		velocity.y = maxf(velocity.y * float(cfg.get("jump_cut_ratio", 0.62)), float(cfg.get("jump_cut_speed", -535)))
 	_jump_cut_pending = false
 
 func _start_attack() -> void:
@@ -501,18 +561,34 @@ func _start_attack() -> void:
 	combo = idx + 1
 	combo_window = 0
 
-func _start_move(action: String) -> void:
+func _basic_move_ready(identifier: String, feedback := true) -> bool:
+	if int(cds.get(identifier, 0)) <= 0:
+		return true
+	if feedback:
+		var label := "上挑" if identifier == "upper" else "后跳"
+		_notify("%s 冷却 %.1fs" % [label, float(cds[identifier]) / 60.0], Color(0.65, 0.78, 1.0))
+	return false
+
+func basic_cooldown_fraction(identifier: String) -> float:
+	var data: Dictionary = GameConfig.moves.get(identifier, {})
+	return clampf(float(cds.get(identifier, 0)) / maxf(1.0, float(data.get("cd", 0)) * 60.0), 0.0, 1.0)
+
+func _start_move(action: String) -> bool:
 	if action == "jump":
 		_start_jump()
-		return
+		return true
+	if action in ["upper", "back_dash"] and not _basic_move_ready(action):
+		return false
 	move_name = action
 	move_data = GameConfig.moves[action]
 	if action != "upper":
 		combo = 0
 		combo_window = 0
 	_start_frame_move()
+	return true
 
 func _start_frame_move() -> void:
+	_landing_visual_left = 0
 	var direction := _dir_input()
 	if direction != 0.0:
 		facing = int(signf(direction))
@@ -530,12 +606,14 @@ func _start_frame_move() -> void:
 	velocity.x = _move_inertia
 	_lane_velocity = 0.0
 	move_scale = _attack_speed() if move_name in ["attack1", "attack2", "attack3", "air_attack", "dash_attack"] or bool(move_data.get("attack_speed_scaled", false)) else 1.0
+	if move_name in ["upper", "back_dash"]:
+		cds[move_name] = int(round(float(move_data.get("cd", 0)) * 60.0))
 	match move_name:
 		"upper": state = St.UPPER
 		"back_dash":
 			state = St.BACK_DASH
 			invincible = maxi(invincible, int(move_data.get("invincible", 7)))
-			velocity.y = float(move_data.get("vy", -260))
+			velocity.y = float(move_data.get("vy", -340))
 			_move_inertia = 0.0
 			coyote_left = 0
 		"air_attack": state = St.AIR_ATK
@@ -577,7 +655,7 @@ func _tick_frame_move(delta := 1.0 / 60.0) -> void:
 	velocity.x = _move_inertia
 	if state == St.BACK_DASH:
 		phase = "recovery"
-		velocity.x = facing * float(move_data.get("move", -108)) * 60.0 / maxf(_move_duration(), 1.0)
+		velocity.x = float(facing) * (_back_dash_offset(phase_t) - _back_dash_offset(previous)) / maxf(delta, 0.0001)
 	elif move_data.has("hits"):
 		phase = "windup"
 		var hits: Array = move_data["hits"]
@@ -616,6 +694,11 @@ func _tick_frame_move(delta := 1.0 / 60.0) -> void:
 			if int(move_data.get("invincible_active", 0)) > 0:
 				invincible = maxi(invincible, 1)
 			_emit_melee(move_data, 0.0)
+	# Connected lunges plant the lead foot. Continuing the authored travel after
+	# contact would pass through a close target and strand the following combo.
+	if state == St.DASH_ATK and hit_emitted:
+		_move_inertia = 0.0
+		velocity.x = 0.0
 	if state == St.AIR_ATK and not _landed_air_attack:
 		_move_lane(delta, true)
 		# Steering remains possible; attacking never grants upward velocity.
@@ -629,18 +712,37 @@ func _tick_frame_move(delta := 1.0 / 60.0) -> void:
 	if _landed_air_attack:
 		_landing_attack_left -= 1
 		if _landing_attack_left <= 0:
-			_end_frame_move()
-			_consume_buffer()
+			_finish_move_and_resume(delta)
 			return
 	if phase_t >= _move_duration():
-		_end_frame_move()
-		_consume_buffer()
+		_finish_move_and_resume(delta)
 	else:
 		if not _consume_buffer(true):
 			if Input.is_action_pressed("guard") and is_on_floor() and _can_cancel("guard"):
 				_start_guard()
-			elif phase == "recovery" and is_on_floor() and _dir_input() != 0.0 and phase_t >= float(move_data.get("locomotion_cancel_after", _move_duration())):
-				_end_frame_move()
+			elif _can_locomotion_cancel():
+				_finish_move_and_resume(delta)
+
+func _back_dash_offset(clock: float) -> float:
+	var progress := clampf(clock / maxf(1.0, float(move_data.get("motion_frames", _move_duration()))), 0.0, 1.0)
+	if str(move_data.get("motion_profile", "smoothstep")) == "smoothstep":
+		progress = progress * progress * (3.0 - 2.0 * progress)
+	return float(move_data.get("move", -120)) * progress
+
+func _can_locomotion_cancel() -> bool:
+	if phase != "recovery" or not is_on_floor() or _dir_input() == 0.0:
+		return false
+	var threshold := float(move_data.get("locomotion_cancel_after", _move_duration()))
+	if _is_sprinting():
+		threshold = float(move_data.get("run_cancel_after", threshold) if hit_emitted else move_data.get("whiff_run_cancel_after", threshold))
+	return phase_t >= threshold
+
+func _finish_move_and_resume(delta: float) -> void:
+	_end_frame_move()
+	if not _consume_buffer() and is_on_floor():
+		# Move on the very same legal recovery frame; don't spend another tick in
+		# IDLE and drop the run request captured during the preceding attack.
+		_free_state(delta)
 
 func _window_overlaps(begin: float, end: float, start: float, length: float) -> bool:
 	return length > 0.0 and end > start and begin < start + length
@@ -677,6 +779,8 @@ func _emit_melee(hit: Dictionary, segment: float = 0.0) -> void:
 			landed_hit.emit(monster, float(hit.get("damage", 0)))
 
 func _on_landed(impact_speed: float) -> void:
+	if state == St.JUMP and impact_speed > float(cfg.get("landing_fx_speed", 140)):
+		_landing_visual_left = 8
 	air_attack_count = 0
 	_jump_cut_pending = false
 	_jump_running = false
@@ -690,7 +794,7 @@ func _on_landed(impact_speed: float) -> void:
 		_move_inertia = velocity.x * float(cfg.get("landing_momentum_retention", 0.8))
 	landed.emit(impact_speed)
 	if fx != null and impact_speed > float(cfg.get("landing_fx_speed", 140)):
-		var reference_speed := maxf(1.0, absf(float(GameConfig.moves["jump"].get("vy", -780))))
+		var reference_speed := maxf(1.0, absf(float(GameConfig.moves["jump"].get("vy", -870))))
 		fx.locomotion_event(visual_position(), facing, "land", clampf(impact_speed / reference_speed, 0.4, 1.0))
 
 func _clear_move() -> void:
@@ -867,7 +971,7 @@ func _tick_dead(delta: float) -> void:
 	_death_t += delta
 	velocity.x = move_toward(velocity.x, 0.0, float(cfg.get("death_brake", 950)) * delta)
 	if not is_on_floor():
-		velocity.y += float(cfg.get("gravity", 2500)) * delta
+		velocity.y += float(cfg.get("gravity", 2100)) * delta
 	else:
 		velocity.y = 0.0
 	move_and_slide()
@@ -887,7 +991,10 @@ func _pick_anim() -> String:
 	if state == St.RUN:
 		return AnimLib.pick(anims, ["run", "walk", "idle"], "idle")
 	if state == St.JUMP:
-		return AnimLib.pick(anims, ["jump_fall" if velocity.y >= 0.0 else "jump", "jump", "idle"], "idle")
+		var jump_phase := "jump_apex" if absf(velocity.y) < 140 else ("jump_rise" if velocity.y < 0 else "jump_fall")
+		return AnimLib.pick(anims, [jump_phase, "jump", "idle"], "idle")
+	if state == St.IDLE and _landing_visual_left > 0:
+		return AnimLib.pick(anims, ["jump_land", "idle"], "idle")
 	var names := {St.IDLE: "idle", St.GUARD: "guard", St.HIT: "hit", St.AIR: "air", St.DOWN: "down", St.GETUP: "getup"}
 	return AnimLib.pick(anims, [names.get(state, "idle"), "idle"], "idle")
 
@@ -904,6 +1011,14 @@ func _anim_step() -> void:
 		anim_frame = AnimLib.frame_for_move(anims[anim_name], phase_t, move_data)
 	elif state == St.GETUP:
 		anim_frame = AnimLib.frame_at_progress(anims[anim_name], 1.0 - float(st_hit_left) / maxf(1.0, float(cfg.get("getup_time", 12))))
+	elif anim_name == "jump_land":
+		anim_frame = AnimLib.frame_at_progress(anims[anim_name], 1.0 - float(_landing_visual_left) / 8.0)
+	elif anim_name == "jump_rise":
+		var launch_speed := absf(float(GameConfig.moves["jump"].get("vy", -870)))
+		anim_frame = AnimLib.frame_at_progress(anims[anim_name], 1.0 - absf(velocity.y) / maxf(1, launch_speed))
+	elif anim_name == "jump_fall":
+		var launch_speed := absf(float(GameConfig.moves["jump"].get("vy", -870)))
+		anim_frame = AnimLib.frame_at_progress(anims[anim_name], velocity.y / maxf(1, launch_speed))
 	else:
 		var speed := 1.0
 		if state in [St.WALK, St.RUN]:

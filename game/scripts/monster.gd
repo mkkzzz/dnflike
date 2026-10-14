@@ -38,6 +38,13 @@ var training_mode := false
 var training_origin := Vector2.ZERO
 var training_depth := 0.0
 var training_rest := 0.0
+var _body_sprite: Sprite2D
+var _impact_material: ShaderMaterial
+var _impact_age := 1.0
+var _impact_life := 0.24
+var _impact_strength := 0.0
+var _impact_direction := 1
+var _impact_tint := Color(1.0, 0.96, 0.84)
 
 func _ready() -> void:
 	var shape := CollisionShape2D.new()
@@ -50,6 +57,25 @@ func _ready() -> void:
 	collision_mask = 1
 	anims = AnimLib.load_group("monster")
 	anim_name = _pick_anim()
+	var impact_shader := Shader.new()
+	impact_shader.code = """shader_type canvas_item;
+uniform float hit_flash : hint_range(0.0, 1.0) = 0.0;
+uniform vec4 impact_tint : source_color = vec4(1.0, 0.96, 0.84, 1.0);
+void fragment() {
+	COLOR.rgb = mix(COLOR.rgb, impact_tint.rgb, hit_flash);
+}
+"""
+	_impact_material = ShaderMaterial.new()
+	_impact_material.shader = impact_shader
+	_body_sprite = Sprite2D.new()
+	_body_sprite.name = "ImpactBodyVisual"
+	_body_sprite.centered = false
+	_body_sprite.region_enabled = true
+	_body_sprite.region_filter_clip_enabled = true
+	_body_sprite.material = _impact_material
+	_body_sprite.z_index = 1
+	add_child(_body_sprite)
+	_sync_body_visual()
 
 func setup(data: Dictionary, player: Node2D, battle_fx: BattleFX) -> void:
 	cfg = data.duplicate(true)
@@ -81,7 +107,7 @@ func _physics_process(delta: float) -> void:
 	invincible = maxi(0, invincible - 1)
 	attack_cooldown = maxi(0, attack_cooldown - 1)
 	flash = maxi(0, flash - 1)
-	modulate = Color(2.2, 2.2, 2.2) if flash > 0 else Color.WHITE
+	modulate = Color.WHITE
 	_tick_bleed(delta)
 	if dead:
 		return
@@ -137,7 +163,46 @@ func _physics_process(delta: float) -> void:
 			print("[M1] monster state: AIR -> DOWN")
 	z_index = 100 + int(round(depth_y))
 	_anim_step()
+	_sync_body_visual()
 	queue_redraw()
+
+
+func _process(delta: float) -> void:
+	if fx != null and fx.freeze > 0:
+		return
+	if _impact_age < _impact_life:
+		_impact_age += delta
+		_sync_body_visual()
+
+
+func impact_visual_state() -> Dictionary:
+	# Render offsets never move the body collider, hurtbox or combat position.
+	var pressure := exp(-_impact_age * 18.0) * _impact_strength if _impact_age < _impact_life else 0.0
+	var recoil := sin(_impact_age * 57.0) * exp(-_impact_age * 22.0) * 1.5 * _impact_strength
+	var contact_flash := clampf(exp(-_impact_age * 43.0) * _impact_strength * 0.77, 0, 0.96) if _impact_age < 0.13 else 0.0
+	return {"age": _impact_age, "offset": Vector2(_impact_direction * (pressure * 7.5 + recoil), -pressure * 1.2),
+		"scale": Vector2(1.0 - pressure * 0.11, 1.0 + pressure * 0.065),
+		"rotation": _impact_direction * pressure * 0.032,
+		"flash": contact_flash}
+
+
+func _sync_body_visual() -> void:
+	if _body_sprite == null:
+		return
+	var clip: Dictionary = anims.get(anim_name, {})
+	_body_sprite.visible = not clip.is_empty()
+	if clip.is_empty():
+		return
+	var visual := impact_visual_state()
+	var squash: Vector2 = visual["scale"]
+	_body_sprite.position = Vector2(0, depth_y) + (visual["offset"] as Vector2)
+	_body_sprite.rotation = float(visual["rotation"])
+	_body_sprite.scale = Vector2(float(facing) * squash.x, squash.y)
+	_body_sprite.texture = clip["tex"]
+	_body_sprite.region_rect = AnimLib.src_rect(clip, anim_frame)
+	_body_sprite.offset = Vector2(-float(clip["ax"]), -float(clip["ay"]))
+	_impact_material.set_shader_parameter("hit_flash", float(visual["flash"]))
+	_impact_material.set_shader_parameter("impact_tint", _impact_tint)
 
 func _tick_bleed(delta: float) -> void:
 	if bleed_left <= 0.0:
@@ -265,8 +330,17 @@ func take_hit(hit: Dictionary, from_dir: int) -> bool:
 	damaged.emit(self, damage, true)
 	hit_chain += 1
 	flash = int(cfg.get("hit_flash", 2)) + 1
+	var heavy: bool = hit.has("launch") or bool(hit.get("knockdown", false)) or int(hit.get("hitstop", 4)) >= 6
+	_impact_age = 0.0
+	_impact_strength = 1.6 if heavy else 1.0
+	_impact_direction = from_dir if from_dir != 0 else -facing
+	_impact_tint = Color(0.83, 0.95, 1.0) if str(hit.get("material", "flesh")) == "metal" else Color(1.0, 0.96, 0.84)
+	_sync_body_visual()
 	if fx != null:
 		var feedback := hit.duplicate(true)
+		feedback["material"] = str(cfg.get("hit_material", hit.get("material", "flesh")))
+		if not feedback.has("contact_point"):
+			feedback["contact_point"] = _blade_contact_point(from_dir)
 		if hit.has("launch"):
 			feedback["kind"] = "launch"
 		elif hit.get("knockdown", false):
@@ -284,6 +358,7 @@ func take_hit(hit: Dictionary, from_dir: int) -> bool:
 		_getup()
 		invincible = int(cfg.get("protection_invincible", 18)) + 1
 		velocity = Vector2.ZERO
+		_sync_body_visual()
 		return true
 	if hit.has("launch"):
 		var launch: Dictionary = hit["launch"]
@@ -307,8 +382,25 @@ func take_hit(hit: Dictionary, from_dir: int) -> bool:
 		_set_state(St.HIT)
 		st_t = int(hit.get("hardstun", cfg.get("hardstun", 12)))
 		print("[M1] monster HIT")
+	_sync_body_visual()
 	queue_redraw()
 	return true
+
+
+func _blade_contact_point(from_dir: int) -> Vector2:
+	var bounds := hurtbox()
+	var contact := visual_position() + Vector2(-from_dir * 10.0, -bounds.size.y * 0.64)
+	if player_ref is Player:
+		var attachment: Node2D = (player_ref as Player).weapon_attachment
+		if is_instance_valid(attachment) and attachment.has_method("blade_base_global"):
+			var blade_base: Vector2 = attachment.call("blade_base_global")
+			var blade_tip: Vector2 = attachment.call("blade_tip_global")
+			var edge := blade_tip - blade_base
+			var along := clampf((contact - blade_base).dot(edge) / maxf(edge.length_squared(), 0.001), 0, 1)
+			var closest := blade_base + edge * along
+			contact = Vector2(clampf(closest.x, bounds.position.x + 4, bounds.end.x - 4),
+				clampf(closest.y, bounds.position.y + 9, bounds.end.y - 10))
+	return contact
 
 func _die() -> void:
 	if training_mode:
@@ -323,6 +415,7 @@ func _die() -> void:
 	state = St.DOWN
 	_anim_step()
 	anim_frame = maxi(0, int(anims.get(anim_name, {}).get("frames", 1)) - 1)
+	_sync_body_visual()
 	queue_redraw()
 	if fx != null:
 		fx.play_sound("death")
@@ -379,16 +472,8 @@ func _draw() -> void:
 		draw_line(Vector2.ZERO, Vector2(attack_facing * reach * progress, 0), warning, 5.0)
 		draw_set_transform(base, 0.0, Vector2.ONE)
 	# 骨骼动画帧条：position 即脚底，锚点反推左上角，depth_y 只影响绘制；朝左时以脚底为轴翻转
-	var clip: Dictionary = anims.get(anim_name, {})
-	if clip.is_empty():
+	if anims.get(anim_name, {}).is_empty():
 		_draw_placeholder()
-	else:
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-		var dst := Rect2(-clip["ax"], -clip["ay"] + depth_y, clip["frame_w"], clip["frame_h"])
-		if facing < 0:
-			draw_set_transform(Vector2.ZERO, 0.0, Vector2(-1.0, 1.0))
-		draw_texture_rect_region(clip["tex"], dst, AnimLib.src_rect(clip, anim_frame))
-		draw_set_transform(base, 0.0, Vector2.ONE)
 	# 头顶血条已移除：preview 里怪物只有屏幕顶部中央的目标铭牌（HUD 负责），世界空间不画血条
 
 ## 帧条缺失时的兜底：沿用 M1 的 draw_rect 占位哥布林
