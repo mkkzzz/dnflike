@@ -8,7 +8,9 @@
     "move_speed": 1.2,
     "defense": 0.7,
     "mp": 30,
-    "super_armor": true
+    "super_armor": true,
+    "air_allowed": true,
+    "fx_style": "blood_aura"
   },
   "rage_slash": {
     "name": "怒斩",
@@ -25,9 +27,11 @@
         },
         "hitstop": 4,
         "shake": 3,
-        "hardstun": 16,
-        "knockback": 120,
-        "active": 3
+        "hardstun": 18,
+        "knockback": 75,
+        "active": 4,
+        "move": 12,
+        "fx_style": "blood_cleave"
       },
       {
         "delay": 14,
@@ -37,26 +41,44 @@
           "h": 200,
           "lane": 28
         },
-        "hitstop": 4,
-        "shake": 3,
-        "hardstun": 16,
-        "knockback": 120,
+        "hitstop": 5,
+        "shake": 4,
+        "hardstun": 21,
+        "knockback": 125,
         "bleed": {
           "dps": 10,
           "time": 3.0
         },
-        "active": 4
+        "active": 5,
+        "move": 18,
+        "fx_style": "blood_cleave"
       }
     ],
-    "recovery": 24,
+    "recovery": 17,
     "super_armor": true,
-    "mp": 40
+    "mp": 40,
+    "cancel_after": 33,
+    "hit_cancel_after": 19,
+    "defensive_cancel_after": 22,
+    "whiff_defensive_cancel_after": 34,
+    "locomotion_cancel_after": 33,
+    "cancel_to": [
+      "generic_skill",
+      "back_dash",
+      "guard",
+      "jump"
+    ],
+    "momentum_retention": 0.3,
+    "momentum_drag": 750,
+    "recovery_drag": 1800,
+    "attack_speed_scaled": true,
+    "fx_style": "blood_cleave"
   },
   "quick_draw": {
     "name": "拔刀斩",
     "slot": "A",
     "cd": 12,
-    "charge": 18,
+    "charge": 16,
     "active": 6,
     "damage": 80,
     "hitbox": {
@@ -69,8 +91,23 @@
     "hardstun": 22,
     "knockback": 220,
     "invincible_active": 6,
-    "recovery": 14,
-    "mp": 45
+    "recovery": 13,
+    "mp": 45,
+    "cancel_after": 32,
+    "hit_cancel_after": 24,
+    "defensive_cancel_after": 25,
+    "whiff_defensive_cancel_after": 33,
+    "locomotion_cancel_after": 33,
+    "cancel_to": [
+      "generic_skill",
+      "back_dash",
+      "guard",
+      "jump"
+    ],
+    "momentum_retention": 0.2,
+    "momentum_drag": 1700,
+    "recovery_drag": 2000,
+    "fx_style": "quick_draw"
   },
   "thrust": {
     "name": "连突刺",
@@ -90,7 +127,8 @@
         "shake": 2,
         "hardstun": 12,
         "knockback": 60,
-        "active": 3
+        "active": 3,
+        "fx_style": "pierce"
       },
       {
         "delay": 10,
@@ -105,7 +143,8 @@
         "shake": 2,
         "hardstun": 12,
         "knockback": 60,
-        "active": 3
+        "active": 3,
+        "fx_style": "pierce"
       },
       {
         "delay": 16,
@@ -120,12 +159,27 @@
         "shake": 3,
         "hardstun": 14,
         "knockback": 100,
-        "active": 3
+        "active": 3,
+        "fx_style": "pierce"
       }
     ],
-    "recovery": 16,
+    "recovery": 12,
     "attack_speed_scaled": true,
     "mp": 30,
-    "cancel_after": 25
+    "cancel_after": 28,
+    "hit_cancel_after": 20,
+    "defensive_cancel_after": 22,
+    "whiff_defensive_cancel_after": 29,
+    "locomotion_cancel_after": 29,
+    "cancel_to": [
+      "generic_skill",
+      "back_dash",
+      "guard",
+      "jump"
+    ],
+    "momentum_retention": 0.3,
+    "momentum_drag": 650,
+    "recovery_drag": 2000,
+    "fx_style": "pierce"
   }
 }

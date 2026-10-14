@@ -3,6 +3,7 @@ extends CharacterBody2D
 ## 方向锁定前摇、活动窗口判定、景深追击与完整受击链。
 const AnimLib := preload("res://scripts/anim_lib.gd")
 signal died(m: Monster)
+signal damaged(m: Monster, amount: float, direct: bool)
 enum St { IDLE, PATROL, CHASE, ATTACK, HIT, AIR, DOWN, GETUP }
 var cfg: Dictionary = {}
 var state: int = St.IDLE
@@ -33,6 +34,10 @@ var anims: Dictionary = {}
 var anim_name := ""
 var anim_frame := 0
 var anim_tick := 0
+var training_mode := false
+var training_origin := Vector2.ZERO
+var training_depth := 0.0
+var training_rest := 0.0
 
 func _ready() -> void:
 	var shape := CollisionShape2D.new()
@@ -67,6 +72,12 @@ func _physics_process(delta: float) -> void:
 		return
 	if fx != null and fx.freeze > 0:
 		return
+	if training_mode:
+		training_rest += delta
+		if training_rest > 4.0 and state in [St.IDLE, St.PATROL, St.CHASE]:
+			position.x = move_toward(position.x, training_origin.x, delta * 210)
+			depth_y = move_toward(depth_y, training_depth, delta * 65)
+			hp = float(cfg.get("hp", 4000))
 	invincible = maxi(0, invincible - 1)
 	attack_cooldown = maxi(0, attack_cooldown - 1)
 	flash = maxi(0, flash - 1)
@@ -137,6 +148,7 @@ func _tick_bleed(delta: float) -> void:
 		bleed_tick += 0.5
 		var damage := bleed_dps * 0.5
 		hp = maxf(0.0, hp - damage)
+		damaged.emit(self, damage, false)
 		if fx != null:
 			fx.spawn_number(visual_position() + Vector2(0, -132), str(roundi(damage)), Color(0.9, 0.2, 0.15), 14)
 		print("[M1] bleed tick dmg=%.0f hp=%.0f" % [damage, hp])
@@ -148,6 +160,8 @@ func _player_alive() -> bool:
 
 func _idle() -> void:
 	velocity.x = 0.0
+	if training_mode:
+		return
 	if not _player_alive():
 		return
 	var d := player_ref.position.x - position.x
@@ -159,6 +173,10 @@ func _idle() -> void:
 		_set_state(St.PATROL)
 
 func _patrol() -> void:
+	if training_mode:
+		velocity.x = 0
+		_set_state(St.IDLE)
+		return
 	if not _player_alive():
 		velocity.x = 0.0
 		return
@@ -175,6 +193,10 @@ func _patrol() -> void:
 		_set_state(St.IDLE)
 
 func _chase(delta: float) -> void:
+	if training_mode:
+		velocity.x = 0
+		_set_state(St.IDLE)
+		return
 	if not _player_alive():
 		_set_state(St.IDLE)
 		velocity.x = 0.0
@@ -237,6 +259,10 @@ func take_hit(hit: Dictionary, from_dir: int) -> bool:
 		return false
 	var damage := float(hit.get("damage", 0))
 	hp = maxf(0.0, hp - damage)
+	if training_mode:
+		training_rest = 0.0
+		hp = maxf(1, hp)
+	damaged.emit(self, damage, true)
 	hit_chain += 1
 	flash = int(cfg.get("hit_flash", 2)) + 1
 	if fx != null:
@@ -285,6 +311,9 @@ func take_hit(hit: Dictionary, from_dir: int) -> bool:
 	return true
 
 func _die() -> void:
+	if training_mode:
+		hp = 1
+		return
 	if dead:
 		return
 	dead = true

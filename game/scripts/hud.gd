@@ -35,6 +35,8 @@ var wave := 0
 var wave_total := 0
 var enemies_remaining := 0
 var elapsed := 0.0
+var training_mode := false
+var training_stats: Dictionary = {}
 
 var _root: Control
 var _portrait: Texture2D
@@ -152,6 +154,11 @@ func set_feedback(text: String) -> void:
 	_feedback_left = 1.7 if not text.is_empty() else 0.0
 	_refresh()
 
+func set_training(enabled: bool, stats: Dictionary) -> void:
+	training_mode = enabled
+	training_stats = stats
+	_refresh()
+
 
 func set_data(data: Dictionary) -> void:
 	if data.has("target"):
@@ -207,6 +214,8 @@ func _draw_hud() -> void:
 	_draw_target()
 	_draw_bottom()
 	_draw_combo()
+	if training_mode:
+		_draw_training()
 	if _feedback_left > 0.0:
 		var color := IVORY
 		color.a = minf(1.0, _feedback_left * 3.0)
@@ -215,16 +224,20 @@ func _draw_hud() -> void:
 
 func _draw_encounter() -> void:
 	_root.draw_line(Vector2(26, 27), Vector2(26, 83), GOLD, 2.0)
-	_text(Vector2(40, 43), "幽暗回廊", 24, IVORY)
+	_text(Vector2(40, 43), "回廊训练场" if training_mode else "幽暗回廊", 24, IVORY)
 	var subtitle := "战斗试炼"
-	if wave_total > 0:
+	if training_mode:
+		subtitle = "连段练习  /  " + ("无限补给" if training_stats.get("free", true) else "实战消耗")
+	elif wave_total > 0:
 		subtitle += "  /  第 %d · %d 波" % [maxi(1, wave), wave_total]
 	elif has_room:
 		subtitle += "  /  第 %d · %d 间" % [room_idx + 1, room_total]
 		if not room_difficulty.is_empty():
 			subtitle += "  " + room_difficulty
 	_text(Vector2(40, 65), subtitle, 13, GOLD)
-	if wave_total > 0:
+	if training_mode:
+		_text(Vector2(40, 87), "Tab 重置  ·  F2 补给模式", 13, MUTED)
+	elif wave_total > 0:
 		var objective := "清除本波敌人  ·  剩余 %d" % enemies_remaining
 		if enemies_remaining == 0:
 			objective = "本波已肃清"
@@ -232,6 +245,18 @@ func _draw_encounter() -> void:
 	var seconds := floori(elapsed)
 	_text(Vector2(1246, 37), "%02d:%02d" % [int(seconds / 60.0), seconds % 60], 19, IVORY, "right", true)
 	_text(Vector2(1246, 60), "ESC  暂停", 12, MUTED, "right")
+
+func _draw_training() -> void:
+	_root.draw_rect(Rect2(26, 111, 222, 153), Color(0.025, 0.027, 0.04, 0.78))
+	_root.draw_line(Vector2(26, 111), Vector2(248, 111), GOLD_DIM, 1)
+	_text(Vector2(40, 135), "DPS  /  最近 5 秒", 12, MUTED)
+	_text(Vector2(40, 169), "%.1f" % float(training_stats.get("dps", 0)), 30, IVORY, "left", true)
+	_text(Vector2(40, 196), "本段伤害   %.0f" % float(training_stats.get("chain_damage", 0)), 14, GOLD)
+	_text(Vector2(40, 219), "累计伤害   %.0f" % float(training_stats.get("damage", 0)), 13, MUTED)
+	_text(Vector2(40, 246), "命中 %d     最长连击 %d" % [int(training_stats.get("hits", 0)), int(training_stats.get("best", 0))], 13, IVORY)
+	var buff := float(training_stats.get("buff", 0))
+	if buff > 0:
+		_text(Vector2(40, 291), "血怒  %.1fs" % buff, 15, Color(0.96, 0.34, 0.37))
 
 
 func _draw_target() -> void:
@@ -265,7 +290,12 @@ func _draw_bottom() -> void:
 		IVORY, "center", true)
 	_text(Vector2(216, 680), "%d / %d" % [ceili(vitals_mp), ceili(vitals_mp_max)], 10,
 		IVORY, "center", true)
-	_draw_action(0, "X", "三连斩", -1, "basic", true)
+	var attack_name := "三连斩"
+	if str(training_stats.get("action", "")) == "air_attack":
+		attack_name = "空中斩"
+	elif str(training_stats.get("action", "")) == "dash_attack":
+		attack_name = "奔跑冲斩"
+	_draw_action(0, "X", attack_name, -1, "basic", true)
 	_draw_action(1, "Z", "上挑", 8, "upper", true)
 	var skill_names: Array = ["转职解锁", "转职解锁"]
 	if JOB_SKILLS.has(job):

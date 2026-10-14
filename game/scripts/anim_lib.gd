@@ -10,6 +10,7 @@ extends RefCounted
 ## 清单缺失 / 贴图缺失 / 解析失败时返回空表，调用方退回占位绘制 —— 绝不报错崩溃。
 
 const MANIFEST := "res://assets/demo/anim.json"
+const BODY_MANIFEST := "res://assets/actors_v3/manifest.json"
 
 static var _cache := {}
 
@@ -19,10 +20,11 @@ static func load_group(group: String) -> Dictionary:
 	if _cache.has(group):
 		return _cache[group]
 	var out := {}
-	if not FileAccess.file_exists(MANIFEST):
+	var manifest_path := BODY_MANIFEST if group == "player" and FileAccess.file_exists(BODY_MANIFEST) else MANIFEST
+	if not FileAccess.file_exists(manifest_path):
 		push_warning("[ANIM] 缺 %s：先跑 python tools/bake_ai_frames.py（正式）或 tools/bake_game_assets.py（占位）" % MANIFEST)
 		return out
-	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(MANIFEST))
+	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(manifest_path))
 	if typeof(data) != TYPE_DICTIONARY:
 		push_warning("[ANIM] %s 解析失败（JSON 坏了？重跑烘焙脚本）" % MANIFEST)
 		return out
@@ -60,6 +62,10 @@ static func load_group(group: String) -> Dictionary:
 			"loop": bool(e.get("loop", false)),
 			"ax": float(e.get("ax", 0.0)),
 			"ay": float(e.get("ay", 0.0)),
+			"weapon_separated": bool(e.get("weapon_separated", false)),
+			"sockets": e.get("sockets", []),
+			"phase_frames": e.get("phase_frames", {}),
+			"segments": e.get("segments", []),
 		}
 	if not out.is_empty():
 		_cache[group] = out
@@ -113,6 +119,29 @@ static func frame_at_progress(clip: Dictionary, progress: float) -> int:
 ## Demo 清单按动作准备/出手/收势排列，贴图必须与真正活动判定同步。
 static func frame_for_move(clip: Dictionary, clock: float, data: Dictionary) -> int:
 	var frames := int(clip.get("frames", 1))
+	var authored: Dictionary = clip.get("phase_frames", {})
+	if not authored.is_empty():
+		var startup := float(data.get("charge", data.get("windup", 0)))
+		if data.has("hits"):
+			var hits: Array = data["hits"]
+			var segments: Array = clip.get("segments", [])
+			var previous_end := 0.0
+			for index in hits.size():
+				var hit: Dictionary = hits[index]
+				var start := float(hit.get("delay", 0))
+				var active_end := start + float(hit.get("active", 3))
+				var phase_map: Dictionary = segments[mini(index, segments.size() - 1)] if not segments.is_empty() else authored
+				if clock <= start:
+					return _phase_frame(phase_map.get("windup", [0]), (clock - previous_end) / maxf(1, start - previous_end), frames)
+				if clock <= active_end:
+					return _phase_frame(phase_map.get("active", [1]), (clock - start) / maxf(1, active_end - start), frames)
+				previous_end = active_end
+			return _phase_frame(authored.get("recovery", [frames - 1]), (clock - previous_end) / maxf(1, float(data.get("recovery", 1))), frames)
+		if clock <= startup:
+			return _phase_frame(authored.get("windup", [0]), clock / maxf(1, startup), frames)
+		if clock <= startup + float(data.get("active", 0)):
+			return _phase_frame(authored.get("active", [1]), (clock - startup) / maxf(1, float(data.get("active", 1))), frames)
+		return _phase_frame(authored.get("recovery", [frames - 1]), (clock - startup - float(data.get("active", 0))) / maxf(1, float(data.get("recovery", 1))), frames)
 	if not data.has("hits") and float(data.get("active", 0)) == 0.0:
 		return frame_at_progress(clip, clock / maxf(1.0, move_duration(data)))
 	if data.has("hits"):
@@ -143,6 +172,11 @@ static func frame_for_move(clip: Dictionary, clock: float, data: Dictionary) -> 
 			return index
 		recovery_clock -= float(spans[index])
 	return frames - 1
+
+static func _phase_frame(indices: Array, progress: float, frames: int) -> int:
+	if indices.is_empty():
+		return 0
+	return clampi(int(indices[mini(indices.size() - 1, int(clampf(progress, 0, 0.99999) * indices.size()))]), 0, frames - 1)
 
 
 static func move_duration(data: Dictionary) -> float:

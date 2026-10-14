@@ -8,8 +8,11 @@ if (-not (Test-Path -LiteralPath $GodotPath)) {
     throw "Godot missing. Run tools/setup_godot.ps1, or provide -GodotPath to a Godot 4 executable."
 }
 $gamePath = Join-Path $repoRoot "game"
+$ErrorActionPreference = "Continue"
 $importOutput = & $GodotPath --headless --path $gamePath --editor --import --quit 2>&1
-if ($LASTEXITCODE -ne 0 -or ($importOutput -match 'SCRIPT ERROR|ERROR:')) {
+$importExit = $LASTEXITCODE
+$ErrorActionPreference = "Stop"
+if ($importExit -ne 0 -or ($importOutput -match 'SCRIPT ERROR|ERROR:')) {
     $importOutput | Write-Output
     throw "Godot import failed."
 }
@@ -18,8 +21,10 @@ if ($Test) {
     if ($Capture) {
         $testArgs = @("--fixed-fps", "60", "--path", $gamePath, "--quit-after", "5000", "--", "--test", "--capture")
     }
+    $ErrorActionPreference = "Continue"
     $testOutput = & $GodotPath @testArgs 2>&1
     $engineExit = $LASTEXITCODE
+    $ErrorActionPreference = "Stop"
     $testOutput | Write-Output
     if ($engineExit -ne 0 -or ($testOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($testOutput -match '\[DEMO_TEST\] COMPLETE checks=\d+ failures=0')) {
         throw "Combat demo regression checks failed or did not complete."

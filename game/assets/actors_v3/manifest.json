@@ -1,0 +1,2022 @@
+{
+  "version": 3,
+  "fps": 60,
+  "generator": "tools/bake_body_v3.py",
+  "art_source": "built-in image_gen transparent weaponless hand-painted body atlases",
+  "note": "All bodies face right. Weapon profiles render separately with reviewed per-frame grip sockets. Frame/root is common. Real source poses only; no fake crossfade frames.",
+  "groups": {
+    "player": {
+      "idle": {
+        "name": "idle",
+        "file": "assets/actors_v3/player/idle.png",
+        "frames": 2,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          24,
+          24
+        ],
+        "fps": 12,
+        "loop": true,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "base:0",
+          "base:1"
+        ],
+        "unique_source_poses": 2,
+        "sockets": [
+          {
+            "hand": [
+              -33.43,
+              -87.96
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "base:0"
+          },
+          {
+            "hand": [
+              -25.22,
+              -85.62
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "base:1"
+          }
+        ],
+        "phase_frames": {}
+      },
+      "walk": {
+        "name": "walk",
+        "file": "assets/actors_v3/player/walk.png",
+        "frames": 8,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "fps": 12,
+        "loop": true,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "walk:0",
+          "walk:1",
+          "walk:2",
+          "walk:3",
+          "walk:4",
+          "walk:5",
+          "walk:6",
+          "walk:7"
+        ],
+        "unique_source_poses": 8,
+        "sockets": [
+          {
+            "hand": [
+              -14.96,
+              -90.26
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "walk:0"
+          },
+          {
+            "hand": [
+              -13.96,
+              -91.76
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "walk:1"
+          },
+          {
+            "hand": [
+              -4.99,
+              -93.75
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "walk:2"
+          },
+          {
+            "hand": [
+              -2.99,
+              -91.76
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "walk:3"
+          },
+          {
+            "hand": [
+              -22.44,
+              -85.77
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "walk:4"
+          },
+          {
+            "hand": [
+              -16.96,
+              -85.77
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "walk:5"
+          },
+          {
+            "hand": [
+              -5.49,
+              -89.76
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "walk:6"
+          },
+          {
+            "hand": [
+              -6.98,
+              -87.77
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "walk:7"
+          }
+        ],
+        "phase_frames": {}
+      },
+      "run": {
+        "name": "run",
+        "file": "assets/actors_v3/player/run.png",
+        "frames": 8,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "fps": 12,
+        "loop": true,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "locomotion:8",
+          "locomotion:9",
+          "locomotion:10",
+          "locomotion:11",
+          "locomotion:12",
+          "locomotion:13",
+          "locomotion:14",
+          "locomotion:15"
+        ],
+        "unique_source_poses": 8,
+        "sockets": [
+          {
+            "hand": [
+              -46.04,
+              -104.33
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "locomotion:8"
+          },
+          {
+            "hand": [
+              -29.72,
+              -101.41
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "locomotion:9"
+          },
+          {
+            "hand": [
+              -17.48,
+              -69.36
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "locomotion:10"
+          },
+          {
+            "hand": [
+              -40.8,
+              -105.49
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "locomotion:11"
+          },
+          {
+            "hand": [
+              -46.04,
+              -109.57
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "locomotion:12"
+          },
+          {
+            "hand": [
+              -29.14,
+              -90.34
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "locomotion:13"
+          },
+          {
+            "hand": [
+              -19.82,
+              -81.6
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "locomotion:14"
+          },
+          {
+            "hand": [
+              -32.64,
+              -99.08
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "locomotion:15"
+          }
+        ],
+        "phase_frames": {}
+      },
+      "attack1": {
+        "name": "attack1",
+        "file": "assets/actors_v3/player/attack1.png",
+        "frames": 8,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          3,
+          3,
+          2,
+          2,
+          2,
+          3,
+          3,
+          4
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "combo12:0",
+          "combo12:1",
+          "combo12:2",
+          "combo12:3",
+          "combo12:4",
+          "combo12:5",
+          "combo12:6",
+          "combo12:7"
+        ],
+        "unique_source_poses": 8,
+        "sockets": [
+          {
+            "hand": [
+              -38.58,
+              -84.18
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo12:0"
+          },
+          {
+            "hand": [
+              -36.83,
+              -157.85
+            ],
+            "angle": -155,
+            "layer": "back",
+            "source_pose": "combo12:1"
+          },
+          {
+            "hand": [
+              -15.78,
+              -152.0
+            ],
+            "angle": -160,
+            "layer": "back",
+            "source_pose": "combo12:2"
+          },
+          {
+            "hand": [
+              76.58,
+              -111.08
+            ],
+            "angle": 0,
+            "layer": "front",
+            "source_pose": "combo12:3"
+          },
+          {
+            "hand": [
+              74.83,
+              -81.85
+            ],
+            "angle": 10,
+            "layer": "front",
+            "source_pose": "combo12:4"
+          },
+          {
+            "hand": [
+              57.29,
+              -68.4
+            ],
+            "angle": 65,
+            "layer": "front",
+            "source_pose": "combo12:5"
+          },
+          {
+            "hand": [
+              -23.38,
+              -80.09
+            ],
+            "angle": 45,
+            "layer": "front",
+            "source_pose": "combo12:6"
+          },
+          {
+            "hand": [
+              -39.75,
+              -81.85
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo12:7"
+          }
+        ],
+        "phase_frames": {
+          "windup": [
+            0,
+            1,
+            2
+          ],
+          "active": [
+            3,
+            4
+          ],
+          "recovery": [
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "attack2": {
+        "name": "attack2",
+        "file": "assets/actors_v3/player/attack2.png",
+        "frames": 8,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          3,
+          3,
+          2,
+          2,
+          2,
+          3,
+          3,
+          4
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "combo12:8",
+          "combo12:9",
+          "combo12:10",
+          "combo12:11",
+          "combo12:12",
+          "combo12:13",
+          "combo12:14",
+          "combo12:15"
+        ],
+        "unique_source_poses": 8,
+        "sockets": [
+          {
+            "hand": [
+              -40.92,
+              -75.42
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo12:8"
+          },
+          {
+            "hand": [
+              30.4,
+              -35.66
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo12:9"
+          },
+          {
+            "hand": [
+              49.69,
+              -28.06
+            ],
+            "angle": 60,
+            "layer": "front",
+            "source_pose": "combo12:10"
+          },
+          {
+            "hand": [
+              63.14,
+              -142.65
+            ],
+            "angle": -50,
+            "layer": "front",
+            "source_pose": "combo12:11"
+          },
+          {
+            "hand": [
+              40.34,
+              -167.78
+            ],
+            "angle": -85,
+            "layer": "front",
+            "source_pose": "combo12:12"
+          },
+          {
+            "hand": [
+              47.94,
+              -160.18
+            ],
+            "angle": -50,
+            "layer": "front",
+            "source_pose": "combo12:13"
+          },
+          {
+            "hand": [
+              -0.58,
+              -104.65
+            ],
+            "angle": -10,
+            "layer": "front",
+            "source_pose": "combo12:14"
+          },
+          {
+            "hand": [
+              -38.58,
+              -78.34
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo12:15"
+          }
+        ],
+        "phase_frames": {
+          "windup": [
+            0,
+            1,
+            2
+          ],
+          "active": [
+            3,
+            4
+          ],
+          "recovery": [
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "attack3": {
+        "name": "attack3",
+        "file": "assets/actors_v3/player/attack3.png",
+        "frames": 8,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          4,
+          4,
+          3,
+          2,
+          3,
+          4,
+          4,
+          5
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "combo3upper:0",
+          "combo3upper:1",
+          "combo3upper:2",
+          "combo3upper:3",
+          "combo3upper:4",
+          "combo3upper:5",
+          "combo3upper:6",
+          "combo3upper:7"
+        ],
+        "unique_source_poses": 8,
+        "sockets": [
+          {
+            "hand": [
+              -20.48,
+              -96.14
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo3upper:0"
+          },
+          {
+            "hand": [
+              -17.63,
+              -155.3
+            ],
+            "angle": -150,
+            "layer": "back",
+            "source_pose": "combo3upper:1"
+          },
+          {
+            "hand": [
+              11.38,
+              -183.74
+            ],
+            "angle": -100,
+            "layer": "front",
+            "source_pose": "combo3upper:2"
+          },
+          {
+            "hand": [
+              34.13,
+              -51.77
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo3upper:3"
+          },
+          {
+            "hand": [
+              49.49,
+              -54.61
+            ],
+            "angle": 65,
+            "layer": "front",
+            "source_pose": "combo3upper:4"
+          },
+          {
+            "hand": [
+              44.94,
+              -47.78
+            ],
+            "angle": 75,
+            "layer": "front",
+            "source_pose": "combo3upper:5"
+          },
+          {
+            "hand": [
+              10.24,
+              -113.77
+            ],
+            "angle": -15,
+            "layer": "front",
+            "source_pose": "combo3upper:6"
+          },
+          {
+            "hand": [
+              -22.75,
+              -94.43
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo3upper:7"
+          }
+        ],
+        "phase_frames": {
+          "windup": [
+            0,
+            1,
+            2
+          ],
+          "active": [
+            3,
+            4
+          ],
+          "recovery": [
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "upper": {
+        "name": "upper",
+        "file": "assets/actors_v3/player/upper.png",
+        "frames": 8,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          3,
+          3,
+          2,
+          2,
+          3,
+          4,
+          3,
+          4
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "combo3upper:8",
+          "combo3upper:9",
+          "combo3upper:10",
+          "combo3upper:11",
+          "combo3upper:12",
+          "combo3upper:13",
+          "combo3upper:14",
+          "combo3upper:15"
+        ],
+        "unique_source_poses": 8,
+        "sockets": [
+          {
+            "hand": [
+              30.15,
+              -46.65
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo3upper:8"
+          },
+          {
+            "hand": [
+              35.84,
+              -33.56
+            ],
+            "angle": 55,
+            "layer": "front",
+            "source_pose": "combo3upper:9"
+          },
+          {
+            "hand": [
+              48.92,
+              -89.31
+            ],
+            "angle": 20,
+            "layer": "front",
+            "source_pose": "combo3upper:10"
+          },
+          {
+            "hand": [
+              48.92,
+              -163.83
+            ],
+            "angle": -55,
+            "layer": "front",
+            "source_pose": "combo3upper:11"
+          },
+          {
+            "hand": [
+              22.19,
+              -160.42
+            ],
+            "angle": -100,
+            "layer": "front",
+            "source_pose": "combo3upper:12"
+          },
+          {
+            "hand": [
+              5.12,
+              -168.38
+            ],
+            "angle": -105,
+            "layer": "front",
+            "source_pose": "combo3upper:13"
+          },
+          {
+            "hand": [
+              -26.17,
+              -95.57
+            ],
+            "angle": -20,
+            "layer": "front",
+            "source_pose": "combo3upper:14"
+          },
+          {
+            "hand": [
+              -22.19,
+              -87.04
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo3upper:15"
+          }
+        ],
+        "phase_frames": {
+          "windup": [
+            0,
+            1,
+            2
+          ],
+          "active": [
+            3,
+            4
+          ],
+          "recovery": [
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "air_attack": {
+        "name": "air_attack",
+        "file": "assets/actors_v3/player/air_attack.png",
+        "frames": 8,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          3,
+          3,
+          2,
+          2,
+          3,
+          4,
+          4,
+          5
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "airdash:0",
+          "airdash:1",
+          "airdash:2",
+          "airdash:3",
+          "airdash:4",
+          "airdash:5",
+          "airdash:6",
+          "airdash:7"
+        ],
+        "unique_source_poses": 8,
+        "sockets": [
+          {
+            "hand": [
+              -45.21,
+              -89.2
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "airdash:0"
+          },
+          {
+            "hand": [
+              -31.16,
+              -147.85
+            ],
+            "angle": -150,
+            "layer": "back",
+            "source_pose": "airdash:1"
+          },
+          {
+            "hand": [
+              3.05,
+              -201.61
+            ],
+            "angle": -105,
+            "layer": "front",
+            "source_pose": "airdash:2"
+          },
+          {
+            "hand": [
+              59.26,
+              -54.37
+            ],
+            "angle": 45,
+            "layer": "front",
+            "source_pose": "airdash:3"
+          },
+          {
+            "hand": [
+              29.94,
+              -48.87
+            ],
+            "angle": 65,
+            "layer": "front",
+            "source_pose": "airdash:4"
+          },
+          {
+            "hand": [
+              29.32,
+              -47.65
+            ],
+            "angle": 80,
+            "layer": "front",
+            "source_pose": "airdash:5"
+          },
+          {
+            "hand": [
+              -35.43,
+              -125.24
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "airdash:6"
+          },
+          {
+            "hand": [
+              -36.05,
+              -86.14
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "airdash:7"
+          }
+        ],
+        "phase_frames": {
+          "windup": [
+            0,
+            1,
+            2
+          ],
+          "active": [
+            3,
+            4
+          ],
+          "recovery": [
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "dash_attack": {
+        "name": "dash_attack",
+        "file": "assets/actors_v3/player/dash_attack.png",
+        "frames": 8,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          3,
+          3,
+          2,
+          2,
+          3,
+          3,
+          4,
+          5
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "airdash:8",
+          "airdash:9",
+          "airdash:10",
+          "airdash:11",
+          "airdash:12",
+          "airdash:13",
+          "airdash:14",
+          "airdash:15"
+        ],
+        "unique_source_poses": 8,
+        "sockets": [
+          {
+            "hand": [
+              -60.48,
+              -111.19
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "airdash:8"
+          },
+          {
+            "hand": [
+              12.83,
+              -119.13
+            ],
+            "angle": -160,
+            "layer": "back",
+            "source_pose": "airdash:9"
+          },
+          {
+            "hand": [
+              -32.99,
+              -127.07
+            ],
+            "angle": -170,
+            "layer": "back",
+            "source_pose": "airdash:10"
+          },
+          {
+            "hand": [
+              68.42,
+              -109.97
+            ],
+            "angle": 0,
+            "layer": "front",
+            "source_pose": "airdash:11"
+          },
+          {
+            "hand": [
+              34.82,
+              -67.81
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "airdash:12"
+          },
+          {
+            "hand": [
+              4.89,
+              -42.15
+            ],
+            "angle": 65,
+            "layer": "front",
+            "source_pose": "airdash:13"
+          },
+          {
+            "hand": [
+              -6.11,
+              -113.63
+            ],
+            "angle": -15,
+            "layer": "front",
+            "source_pose": "airdash:14"
+          },
+          {
+            "hand": [
+              -27.49,
+              -77.59
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "airdash:15"
+          }
+        ],
+        "phase_frames": {
+          "windup": [
+            0,
+            1,
+            2
+          ],
+          "active": [
+            3,
+            4
+          ],
+          "recovery": [
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "jump": {
+        "name": "jump",
+        "file": "assets/actors_v3/player/jump.png",
+        "frames": 2,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          4,
+          12
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "base:3",
+          "base:12"
+        ],
+        "unique_source_poses": 2,
+        "sockets": [
+          {
+            "hand": [
+              -53.36,
+              -79.75
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "base:3"
+          },
+          {
+            "hand": [
+              -38.12,
+              -128.43
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "base:12"
+          }
+        ],
+        "phase_frames": {},
+        "pose_note": "Reviewed weaponless foundation poses; holds and limited purposeful pose reuse remain for this secondary action."
+      },
+      "air": {
+        "name": "air",
+        "file": "assets/actors_v3/player/air.png",
+        "frames": 1,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          12
+        ],
+        "fps": 12,
+        "loop": true,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "base:12"
+        ],
+        "unique_source_poses": 1,
+        "sockets": [
+          {
+            "hand": [
+              -38.12,
+              -128.43
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "base:12"
+          }
+        ],
+        "phase_frames": {},
+        "pose_note": "Reviewed weaponless foundation poses; holds and limited purposeful pose reuse remain for this secondary action."
+      },
+      "back_dash": {
+        "name": "back_dash",
+        "file": "assets/actors_v3/player/back_dash.png",
+        "frames": 4,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          3,
+          8,
+          3,
+          4
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "base:3",
+          "base:12",
+          "base:3",
+          "base:1"
+        ],
+        "unique_source_poses": 3,
+        "sockets": [
+          {
+            "hand": [
+              -53.36,
+              -79.75
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "base:3"
+          },
+          {
+            "hand": [
+              -38.12,
+              -128.43
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "base:12"
+          },
+          {
+            "hand": [
+              -53.36,
+              -79.75
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "base:3"
+          },
+          {
+            "hand": [
+              -25.22,
+              -85.62
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "base:1"
+          }
+        ],
+        "phase_frames": {},
+        "pose_note": "Reviewed weaponless foundation poses; holds and limited purposeful pose reuse remain for this secondary action."
+      },
+      "guard": {
+        "name": "guard",
+        "file": "assets/actors_v3/player/guard.png",
+        "frames": 1,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          12
+        ],
+        "fps": 12,
+        "loop": true,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "base:2"
+        ],
+        "unique_source_poses": 1,
+        "sockets": [
+          {
+            "hand": [
+              34.01,
+              -130.19
+            ],
+            "angle": -135,
+            "layer": "front",
+            "source_pose": "base:2"
+          }
+        ],
+        "phase_frames": {},
+        "pose_note": "Reviewed weaponless foundation poses; holds and limited purposeful pose reuse remain for this secondary action."
+      },
+      "hit": {
+        "name": "hit",
+        "file": "assets/actors_v3/player/hit.png",
+        "frames": 3,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          7,
+          4,
+          5
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "base:13",
+          "base:3",
+          "base:1"
+        ],
+        "unique_source_poses": 3,
+        "sockets": [
+          {
+            "hand": [
+              -14.66,
+              -76.82
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "base:13"
+          },
+          {
+            "hand": [
+              -53.36,
+              -79.75
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "base:3"
+          },
+          {
+            "hand": [
+              -25.22,
+              -85.62
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "base:1"
+          }
+        ],
+        "phase_frames": {},
+        "pose_note": "Reviewed weaponless foundation poses; holds and limited purposeful pose reuse remain for this secondary action."
+      },
+      "down": {
+        "name": "down",
+        "file": "assets/actors_v3/player/down.png",
+        "frames": 2,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          5,
+          24
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "base:13",
+          "base:14"
+        ],
+        "unique_source_poses": 2,
+        "sockets": [
+          {
+            "hand": [
+              -14.66,
+              -76.82
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "base:13"
+          },
+          {
+            "hand": [
+              -4.1,
+              -9.38
+            ],
+            "angle": 5,
+            "layer": "front",
+            "source_pose": "base:14"
+          }
+        ],
+        "phase_frames": {},
+        "pose_note": "Reviewed weaponless foundation poses; holds and limited purposeful pose reuse remain for this secondary action."
+      },
+      "getup": {
+        "name": "getup",
+        "file": "assets/actors_v3/player/getup.png",
+        "frames": 4,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          4,
+          7,
+          4,
+          5
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "base:14",
+          "base:15",
+          "base:3",
+          "base:1"
+        ],
+        "unique_source_poses": 4,
+        "sockets": [
+          {
+            "hand": [
+              -4.1,
+              -9.38
+            ],
+            "angle": 5,
+            "layer": "front",
+            "source_pose": "base:14"
+          },
+          {
+            "hand": [
+              -3.52,
+              -10.56
+            ],
+            "angle": -75,
+            "layer": "front",
+            "source_pose": "base:15"
+          },
+          {
+            "hand": [
+              -53.36,
+              -79.75
+            ],
+            "angle": 145,
+            "layer": "back",
+            "source_pose": "base:3"
+          },
+          {
+            "hand": [
+              -25.22,
+              -85.62
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "base:1"
+          }
+        ],
+        "phase_frames": {},
+        "pose_note": "Reviewed weaponless foundation poses; holds and limited purposeful pose reuse remain for this secondary action."
+      },
+      "blood_rage": {
+        "name": "blood_rage",
+        "file": "assets/actors_v3/player/blood_rage.png",
+        "frames": 4,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          6,
+          4,
+          4,
+          6
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "base:2",
+          "base:8",
+          "base:2",
+          "base:1"
+        ],
+        "unique_source_poses": 3,
+        "sockets": [
+          {
+            "hand": [
+              34.01,
+              -130.19
+            ],
+            "angle": -135,
+            "layer": "front",
+            "source_pose": "base:2"
+          },
+          {
+            "hand": [
+              -62.16,
+              -136.64
+            ],
+            "angle": -165,
+            "layer": "back",
+            "source_pose": "base:8"
+          },
+          {
+            "hand": [
+              34.01,
+              -130.19
+            ],
+            "angle": -135,
+            "layer": "front",
+            "source_pose": "base:2"
+          },
+          {
+            "hand": [
+              -25.22,
+              -85.62
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "base:1"
+          }
+        ],
+        "phase_frames": {},
+        "pose_note": "Reviewed weaponless foundation poses; holds and limited purposeful pose reuse remain for this secondary action."
+      },
+      "quick_draw": {
+        "name": "quick_draw",
+        "file": "assets/actors_v3/player/quick_draw.png",
+        "frames": 8,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          6,
+          8,
+          6,
+          2,
+          2,
+          4,
+          4,
+          5
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "combo12:0",
+          "combo12:1",
+          "combo12:2",
+          "combo12:3",
+          "combo12:4",
+          "combo12:5",
+          "combo12:6",
+          "combo12:7"
+        ],
+        "unique_source_poses": 8,
+        "sockets": [
+          {
+            "hand": [
+              -38.58,
+              -84.18
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo12:0"
+          },
+          {
+            "hand": [
+              -36.83,
+              -157.85
+            ],
+            "angle": -155,
+            "layer": "back",
+            "source_pose": "combo12:1"
+          },
+          {
+            "hand": [
+              -15.78,
+              -152.0
+            ],
+            "angle": -160,
+            "layer": "back",
+            "source_pose": "combo12:2"
+          },
+          {
+            "hand": [
+              76.58,
+              -111.08
+            ],
+            "angle": 0,
+            "layer": "front",
+            "source_pose": "combo12:3"
+          },
+          {
+            "hand": [
+              74.83,
+              -81.85
+            ],
+            "angle": 10,
+            "layer": "front",
+            "source_pose": "combo12:4"
+          },
+          {
+            "hand": [
+              57.29,
+              -68.4
+            ],
+            "angle": 65,
+            "layer": "front",
+            "source_pose": "combo12:5"
+          },
+          {
+            "hand": [
+              -23.38,
+              -80.09
+            ],
+            "angle": 45,
+            "layer": "front",
+            "source_pose": "combo12:6"
+          },
+          {
+            "hand": [
+              -39.75,
+              -81.85
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo12:7"
+          }
+        ],
+        "phase_frames": {
+          "windup": [
+            0,
+            1,
+            2
+          ],
+          "active": [
+            3,
+            4
+          ],
+          "recovery": [
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "rage_slash": {
+        "name": "rage_slash",
+        "file": "assets/actors_v3/player/rage_slash.png",
+        "frames": 16,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          3,
+          3,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          4,
+          5,
+          6
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "combo12:8",
+          "combo12:9",
+          "combo12:10",
+          "combo12:11",
+          "combo12:12",
+          "combo12:13",
+          "combo12:14",
+          "combo12:15",
+          "combo3upper:0",
+          "combo3upper:1",
+          "combo3upper:2",
+          "combo3upper:3",
+          "combo3upper:4",
+          "combo3upper:5",
+          "combo3upper:6",
+          "combo3upper:7"
+        ],
+        "unique_source_poses": 16,
+        "sockets": [
+          {
+            "hand": [
+              -40.92,
+              -75.42
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo12:8"
+          },
+          {
+            "hand": [
+              30.4,
+              -35.66
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo12:9"
+          },
+          {
+            "hand": [
+              49.69,
+              -28.06
+            ],
+            "angle": 60,
+            "layer": "front",
+            "source_pose": "combo12:10"
+          },
+          {
+            "hand": [
+              63.14,
+              -142.65
+            ],
+            "angle": -50,
+            "layer": "front",
+            "source_pose": "combo12:11"
+          },
+          {
+            "hand": [
+              40.34,
+              -167.78
+            ],
+            "angle": -85,
+            "layer": "front",
+            "source_pose": "combo12:12"
+          },
+          {
+            "hand": [
+              47.94,
+              -160.18
+            ],
+            "angle": -50,
+            "layer": "front",
+            "source_pose": "combo12:13"
+          },
+          {
+            "hand": [
+              -0.58,
+              -104.65
+            ],
+            "angle": -10,
+            "layer": "front",
+            "source_pose": "combo12:14"
+          },
+          {
+            "hand": [
+              -38.58,
+              -78.34
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo12:15"
+          },
+          {
+            "hand": [
+              -20.48,
+              -96.14
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo3upper:0"
+          },
+          {
+            "hand": [
+              -17.63,
+              -155.3
+            ],
+            "angle": -150,
+            "layer": "back",
+            "source_pose": "combo3upper:1"
+          },
+          {
+            "hand": [
+              11.38,
+              -183.74
+            ],
+            "angle": -100,
+            "layer": "front",
+            "source_pose": "combo3upper:2"
+          },
+          {
+            "hand": [
+              34.13,
+              -51.77
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo3upper:3"
+          },
+          {
+            "hand": [
+              49.49,
+              -54.61
+            ],
+            "angle": 65,
+            "layer": "front",
+            "source_pose": "combo3upper:4"
+          },
+          {
+            "hand": [
+              44.94,
+              -47.78
+            ],
+            "angle": 75,
+            "layer": "front",
+            "source_pose": "combo3upper:5"
+          },
+          {
+            "hand": [
+              10.24,
+              -113.77
+            ],
+            "angle": -15,
+            "layer": "front",
+            "source_pose": "combo3upper:6"
+          },
+          {
+            "hand": [
+              -22.75,
+              -94.43
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo3upper:7"
+          }
+        ],
+        "phase_frames": {
+          "windup": [
+            0,
+            1,
+            2
+          ],
+          "active": [
+            3,
+            4,
+            11,
+            12
+          ],
+          "recovery": [
+            13,
+            14,
+            15
+          ]
+        },
+        "segments": [
+          {
+            "windup": [
+              0,
+              1,
+              2
+            ],
+            "active": [
+              3,
+              4
+            ]
+          },
+          {
+            "windup": [
+              8,
+              9,
+              10
+            ],
+            "active": [
+              11,
+              12
+            ]
+          }
+        ]
+      },
+      "thrust": {
+        "name": "thrust",
+        "file": "assets/actors_v3/player/thrust.png",
+        "frames": 15,
+        "frame_w": 320,
+        "frame_h": 248,
+        "ax": 144,
+        "ay": 230,
+        "durations": [
+          3,
+          3,
+          2,
+          2,
+          3,
+          3,
+          2,
+          2,
+          3,
+          3,
+          2,
+          2,
+          5,
+          5,
+          6
+        ],
+        "fps": 12,
+        "loop": false,
+        "weapon_separated": true,
+        "source": "ai_keyframes",
+        "source_poses": [
+          "combo12:0",
+          "combo12:1",
+          "combo12:3",
+          "combo12:4",
+          "combo12:6",
+          "combo12:2",
+          "combo12:3",
+          "combo12:4",
+          "combo12:6",
+          "combo12:2",
+          "combo12:3",
+          "combo12:4",
+          "combo12:5",
+          "combo12:6",
+          "combo12:7"
+        ],
+        "unique_source_poses": 8,
+        "sockets": [
+          {
+            "hand": [
+              -38.58,
+              -84.18
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo12:0"
+          },
+          {
+            "hand": [
+              -36.83,
+              -157.85
+            ],
+            "angle": -155,
+            "layer": "back",
+            "source_pose": "combo12:1"
+          },
+          {
+            "hand": [
+              76.58,
+              -111.08
+            ],
+            "angle": 0,
+            "layer": "front",
+            "source_pose": "combo12:3"
+          },
+          {
+            "hand": [
+              74.83,
+              -81.85
+            ],
+            "angle": 10,
+            "layer": "front",
+            "source_pose": "combo12:4"
+          },
+          {
+            "hand": [
+              -23.38,
+              -80.09
+            ],
+            "angle": 45,
+            "layer": "front",
+            "source_pose": "combo12:6"
+          },
+          {
+            "hand": [
+              -15.78,
+              -152.0
+            ],
+            "angle": -160,
+            "layer": "back",
+            "source_pose": "combo12:2"
+          },
+          {
+            "hand": [
+              76.58,
+              -111.08
+            ],
+            "angle": 0,
+            "layer": "front",
+            "source_pose": "combo12:3"
+          },
+          {
+            "hand": [
+              74.83,
+              -81.85
+            ],
+            "angle": 10,
+            "layer": "front",
+            "source_pose": "combo12:4"
+          },
+          {
+            "hand": [
+              -23.38,
+              -80.09
+            ],
+            "angle": 45,
+            "layer": "front",
+            "source_pose": "combo12:6"
+          },
+          {
+            "hand": [
+              -15.78,
+              -152.0
+            ],
+            "angle": -160,
+            "layer": "back",
+            "source_pose": "combo12:2"
+          },
+          {
+            "hand": [
+              76.58,
+              -111.08
+            ],
+            "angle": 0,
+            "layer": "front",
+            "source_pose": "combo12:3"
+          },
+          {
+            "hand": [
+              74.83,
+              -81.85
+            ],
+            "angle": 10,
+            "layer": "front",
+            "source_pose": "combo12:4"
+          },
+          {
+            "hand": [
+              57.29,
+              -68.4
+            ],
+            "angle": 65,
+            "layer": "front",
+            "source_pose": "combo12:5"
+          },
+          {
+            "hand": [
+              -23.38,
+              -80.09
+            ],
+            "angle": 45,
+            "layer": "front",
+            "source_pose": "combo12:6"
+          },
+          {
+            "hand": [
+              -39.75,
+              -81.85
+            ],
+            "angle": 35,
+            "layer": "front",
+            "source_pose": "combo12:7"
+          }
+        ],
+        "phase_frames": {
+          "windup": [
+            0,
+            1
+          ],
+          "active": [
+            2,
+            3,
+            6,
+            7,
+            10,
+            11
+          ],
+          "recovery": [
+            12,
+            13,
+            14
+          ]
+        },
+        "segments": [
+          {
+            "windup": [
+              0,
+              1
+            ],
+            "active": [
+              2,
+              3
+            ]
+          },
+          {
+            "windup": [
+              4,
+              5
+            ],
+            "active": [
+              6,
+              7
+            ]
+          },
+          {
+            "windup": [
+              8,
+              9
+            ],
+            "active": [
+              10,
+              11
+            ]
+          }
+        ],
+        "pose_note": "Three sword thrusts reuse the authored forward-extension body pose; each segment has its own sockets and hit phase."
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "default": "blacksteel",
+  "profiles": {
+    "blacksteel": {
+      "name": "墨钢长刀", "length": 144, "blade_width": 6.5,
+      "curve": 5.0, "guard": 10, "grip": 24,
+      "steel": "#b9cedb", "edge": "#ecf4f2", "spine": "#465e70",
+      "handle": "#151822", "wrap": "#8e2736", "metal": "#a89b7d",
+      "trail": "#c7e6fa"
+    },
+    "verification_short_blade": {
+      "name": "结构验证短刀", "length": 86, "blade_width": 9,
+      "curve": 1.5, "guard": 13, "grip": 20,
+      "steel": "#bec4d1", "edge": "#fff1d8", "spine": "#514860",
+      "handle": "#25202d", "wrap": "#806137", "metal": "#b5a383",
+      "trail": "#e6d4aa"
+    }
+  }
+}

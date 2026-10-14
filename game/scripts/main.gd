@@ -10,6 +10,7 @@ const SLOT_INDEX := {"A": 0, "S": 1, "1": 6, "2": 7}
 
 var bm: BattleFX
 var player: Player
+var weapon_rig: WeaponRig
 var monsters: Array = []
 var camera: Camera2D
 var hud: Hud
@@ -38,6 +39,11 @@ var _job_buttons: Array[Button] = []
 var _description: Label
 var _wave_notice: Label
 var _hint: Label
+var training_mode := false
+var training_free_skills := true
+var training_damage := 0.0
+var training_chain_damage := 0.0
+var damage_samples: Array = []
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -62,6 +68,7 @@ func _register_actions() -> void:
 		"skill_a": [KEY_A], "skill_s": [KEY_S], "skill_d": [KEY_D], "skill_f": [KEY_F],
 		"debug_job": [KEY_T], "debug_reset": [KEY_R], "potion_hp": [KEY_1], "potion_mp": [KEY_2],
 		"pause_demo": [KEY_ESCAPE], "start_demo": [KEY_ENTER], "toggle_help": [KEY_F1],
+		"reset_training": [KEY_TAB], "toggle_training_supply": [KEY_F2],
 	}
 	for action in actions:
 		if not InputMap.has_action(action):
@@ -97,6 +104,12 @@ func _build_world() -> void:
 	player.ground_y = GROUND_Y
 	add_child(player)
 	player.setup(GameConfig.player, bm, monsters)
+	weapon_rig = WeaponRig.new()
+	weapon_rig.name = "WeaponRig"
+	weapon_rig.process_mode = Node.PROCESS_MODE_PAUSABLE
+	player.add_child(weapon_rig)
+	weapon_rig.setup(player, bm)
+	player.weapon_attachment = weapon_rig
 	player.died.connect(_on_player_died)
 	player.hp_changed.connect(_on_hp_changed)
 	player.landed_hit.connect(_on_landed_hit)
@@ -121,8 +134,8 @@ func _build_overlay() -> void:
 	_shade.size = Vector2(VIEW_W, VIEW_H)
 	_overlay.add_child(_shade)
 	_card = PanelContainer.new()
-	_card.position = Vector2(310, 150)
-	_card.size = Vector2(660, 440)
+	_card.position = Vector2(310, 116)
+	_card.size = Vector2(660, 510)
 	_card.add_theme_stylebox_override("panel", _style(Color(0.038, 0.043, 0.06, 0.97), Color(0.42, 0.33, 0.22), 28))
 	_overlay.add_child(_card)
 	_content = VBoxContainer.new()
@@ -196,7 +209,7 @@ func _show_ready() -> void:
 	_clear_card()
 	_content.add_child(_label("SHADOW HALL  /  COMBAT DEMO", 13, Color(0.67, 0.55, 0.37)))
 	_content.add_child(_label("幽暗回廊", 42))
-	_content.add_child(_label("选择战斗风格，突破三波哥布林围攻。", 17, Color(0.66, 0.69, 0.73)))
+	_content.add_child(_label("选择战斗风格，练习连段或突破三波围攻。", 17, Color(0.66, 0.69, 0.73)))
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
 	_content.add_child(row)
@@ -208,7 +221,8 @@ func _show_ready() -> void:
 	_description = _label("", 16)
 	_content.add_child(_description)
 	_select_job(selected_job)
-	_content.add_child(_label("方向键移动 · Shift 奔跑 · X 连击 · Z 上挑 · C 跳跃\nV 格挡 · ↓+C 后跳 · A/S 职业技能 · 1/2 药水", 15, Color(0.6, 0.63, 0.68)))
+	_content.add_child(_label("方向键移动 · Shift 奔跑 · 跑动 X 冲斩 · 空中 X 空斩\nC 长短跳 · Z 上挑 · V 格挡 · ↓+C 后跳 · A/S 技能", 15, Color(0.6, 0.63, 0.68)))
+	_content.add_child(_button("连段训练    无限补给 / 实时 DPS", _start_training.bind(-1), true))
 	_content.add_child(_button("进入回廊    ↵", _start_demo.bind(-1), true))
 
 func _select_job(index: int) -> void:
@@ -221,6 +235,10 @@ func _select_job(index: int) -> void:
 
 func _start_demo(job_id := -1) -> void:
 	get_tree().paused = false
+	training_mode = false
+	damage_samples.clear()
+	training_damage = 0.0
+	training_chain_damage = 0.0
 	if job_id >= 0:
 		selected_job = clampi(job_id, 0, 2)
 	_clear_monsters()
@@ -228,6 +246,7 @@ func _start_demo(job_id := -1) -> void:
 	player.reset_combat(Vector2(float(demo_config.get("player_x", 220)), GROUND_Y))
 	player.set_job(selected_job)
 	wave_index = 0
+	weapon_rig.reset_pose()
 	elapsed = 0.0
 	kills = 0
 	hit_count = 0
@@ -245,6 +264,39 @@ func _start_demo(job_id := -1) -> void:
 	hud.set_player_info("幽影剑士", 30, selected_job)
 	_spawn_wave()
 	print("[DEMO] started job=%d" % selected_job)
+
+func _start_training(job_id := -1) -> void:
+	_start_demo(job_id)
+	training_mode = true
+	training_free_skills = true
+	_clear_monsters()
+	player.reset_combat(Vector2(430, GROUND_Y))
+	player.set_job(selected_job)
+	weapon_rig.reset_pose()
+	for index in 2:
+		var target := Monster.new()
+		target.name = "TrainingTarget"
+		target.process_mode = Node.PROCESS_MODE_PAUSABLE
+		target.position = Vector2(680 + index * 350, GROUND_Y)
+		target.depth_y = 0 if index == 0 else -18
+		target.ground_y = GROUND_Y
+		add_child(target)
+		var cfg: Dictionary = GameConfig.monsters["goblin"].duplicate(true)
+		cfg["name"] = "训练替身" if index == 0 else "范围训练替身"
+		cfg["hp"] = 4000
+		cfg["max_hit_chain"] = 999
+		target.setup(cfg, player, bm)
+		target.damaged.connect(_on_damage_dealt)
+		target.training_mode = true
+		target.training_origin = target.position
+		target.training_depth = target.depth_y
+		monsters.append(target)
+	battle_state = BattleState.FIGHT
+	_set_actor_control(true)
+	_wave_notice.text = "连段训练\nTab 重置  ·  F2 切换无限 / 实战补给"
+	_wave_notice.show()
+	transition_left = 2.2
+	print("[DEMO] training started")
 
 func _clear_monsters() -> void:
 	for monster in monsters:
@@ -269,6 +321,7 @@ func _spawn_wave() -> void:
 		add_child(monster)
 		monster.setup(cfg, player, bm)
 		monster.died.connect(_on_monster_died)
+		monster.damaged.connect(_on_damage_dealt)
 		monsters.append(monster)
 	battle_state = BattleState.FIGHT
 	_set_actor_control(true)
@@ -301,6 +354,13 @@ func _on_landed_hit(_monster, _damage: float) -> void:
 	best_chain = maxi(best_chain, hit_chain)
 	hud.set_combo(hit_chain)
 
+func _on_damage_dealt(_monster, amount: float, direct: bool) -> void:
+	if direct and elapsed - last_hit_time >= 2.2:
+		training_chain_damage = 0.0
+	training_damage += amount
+	training_chain_damage += amount
+	damage_samples.append({"time": elapsed, "damage": amount})
+
 func _on_player_died() -> void:
 	_finish(false)
 
@@ -322,7 +382,7 @@ func _finish(victory: bool) -> void:
 	var rank := "S" if damage_taken < 100 and elapsed < 100 else ("A" if damage_taken < 250 else "B")
 	_content.add_child(_label("战斗评价  %s" % rank if victory else "观察挥棒前摇，以格挡或后跳争取反击机会。", 22))
 	_content.add_child(_label("用时 %s    击败 %d    最长连击 %d\n有效命中 %d    承受伤害 %.0f" % [_time_text(elapsed), kills, best_chain, hit_count, damage_taken], 18))
-	_content.add_child(_button("再次挑战    R / ↵", _start_demo.bind(-1), true))
+	_content.add_child(_button("再次挑战    R / ↵", _reset_battle, true))
 	_content.add_child(_button("选择战斗风格", _show_ready))
 	print("[DEMO] result=%s kills=%d hits=%d" % ["victory" if victory else "defeat", kills, hit_count])
 
@@ -344,17 +404,25 @@ func _toggle_pause() -> void:
 	_content.add_child(_label("战斗已暂停", 34))
 	_content.add_child(_label("Esc 继续 · R 重新挑战 · F1 操作说明", 17))
 	_content.add_child(_button("继续战斗    Esc", _toggle_pause, true))
-	_content.add_child(_button("重新挑战", _start_demo.bind(-1)))
+	_content.add_child(_button("重置训练" if training_mode else "重新挑战", _reset_battle))
 	_content.add_child(_button("选择战斗风格", _show_ready))
 
 func _reset_battle() -> void:
-	_start_demo(selected_job)
+	if training_mode:
+		_start_training(selected_job)
+	else:
+		_start_demo(selected_job)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause_demo"):
 		_toggle_pause()
 	elif event.is_action_pressed("debug_reset"):
 		_reset_battle()
+	elif event.is_action_pressed("reset_training") and training_mode:
+		_reset_battle()
+	elif event.is_action_pressed("toggle_training_supply") and training_mode:
+		training_free_skills = not training_free_skills
+		hud.set_feedback("无限补给" if training_free_skills else "实战蓝耗与冷却")
 	elif event.is_action_pressed("start_demo"):
 		if battle_state in [BattleState.READY, BattleState.VICTORY, BattleState.DEFEAT]:
 			_start_demo()
@@ -362,7 +430,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		selected_job = (player.job + 1) % 3
 		player.set_job(selected_job)
 	elif event.is_action_pressed("toggle_help"):
-		_hint.text = "←→ 移动 / ↑↓ 调整纵深 / 双击方向或 Shift 奔跑\nX 三连击 / Z 上挑后 C 起跳追击 / V 格挡 / ↓+C 后跳 / A S 技能 / 1 2 药水"
+		_hint.position.y = 20 if battle_state == BattleState.PAUSED else 104
+		_hint.text = "←→ 移动 / ↑↓ 景深 / Shift 奔跑 / X 三连、冲斩或空斩\nC 按住高跳、松开短跳 / Z 上挑后 C 追击 / V 正面格挡，起手精确格挡\n↓+C 后跳 / A S 技能 / 1 2 药水 / 训练：Tab 重置、F2 补给"
 		_hint.visible = not _hint.visible
 
 func _physics_process(delta: float) -> void:
@@ -374,7 +443,16 @@ func _physics_process(delta: float) -> void:
 		elapsed += delta
 		damage_taken += maxf(0.0, _last_hp - player.hp)
 		_last_hp = player.hp
-		if alive_count() == 0:
+		if training_mode:
+			if training_free_skills:
+				player.mp = float(player.cfg.get("max_mp", 300))
+				for identifier in player.cds:
+					player.cds[identifier] = 0
+			if transition_left > 0:
+				transition_left -= delta
+				if transition_left <= 0:
+					_wave_notice.hide()
+		elif alive_count() == 0:
 			if wave_index + 1 == demo_config["waves"].size():
 				_finish(true)
 			else:
@@ -425,10 +503,19 @@ func _process(delta: float) -> void:
 		_clock += delta
 		queue_redraw()
 	if hud and player:
+		bm.set_listener_position(player.visual_position().x)
 		hud.set_vitals(player.hp, player.cfg["max_hp"], player.mp, player.cfg["max_mp"])
 		hud.set_job(player.job)
 		hud.set_target(_pick_target())
 		hud.set_encounter(wave_index + 1, demo_config["waves"].size(), alive_count(), elapsed)
+		while not damage_samples.is_empty() and elapsed - float(damage_samples[0]["time"]) > 5.0:
+			damage_samples.pop_front()
+		var rolling_damage := 0.0
+		for sample in damage_samples:
+			rolling_damage += float(sample["damage"])
+		hud.set_training(training_mode, {"damage": training_damage, "chain_damage": training_chain_damage,
+			"hits": hit_count, "best": best_chain, "dps": rolling_damage / minf(5.0, maxf(1, elapsed)),
+			"free": training_free_skills, "action": player.move_name, "buff": player.buff_t})
 		_hud_cooldowns()
 		if elapsed - last_hit_time > 2.2:
 			hit_chain = 0
