@@ -563,7 +563,11 @@ func on_hit(world_pos: Vector2, direction: int, damage: float, hit: Dictionary) 
 	var launch: bool = hit.has("launch") or str(hit.get("kind", "")) == "launch"
 	var heavy: bool = launch or bool(hit.get("knockdown", false)) or str(hit.get("kind", "")) == "knock" or int(hit.get("hitstop", 4)) >= 6
 	var authored: bool = bool(hit.get("seq6", false))
-	hitstop(int(hit.get("hitstop", 4)) + (1 if heavy else 0))
+	# BattleFX runs before Player and consumes one counter tick before Player
+	# checks it. For authored moves account for that tick, so a hit adds exactly
+	# manifest.hitstop real ticks to the whiff duration, as preview_v6 does.
+	# This is scheduling compensation; do not also add the legacy heavy bonus.
+	hitstop(int(hit.get("hitstop", 4)) + (1 if authored or heavy else 0))
 	var vertical := -0.45 if launch else 0.12
 	add_shake(float(hit.get("shake", 2.0)) * (1.20 if heavy else 1.08), Vector2(direction, vertical))
 	var impact := world_pos + Vector2(0, -float(hit.get("impact_height", 88.0)))

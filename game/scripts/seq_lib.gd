@@ -99,18 +99,21 @@ static func _build_clip(name: String, raw: Dictionary) -> Dictionary:
 		if texture == null:
 			push_warning("[SEQ6] 帧贴图加载失败：%s" % path)
 			return {}
-		textures.append(texture)
-		sequences.append(span)
-		# actor 帧带参考位移与刀身采样线；特效帧没有，用 0 保持字段形状一致。
-		roots.append(float(entry.get("root_dx", 0.0)))
+		# Records are run-length encoded. Every consumer uses an action/effect tick,
+		# so expand duration_ticks here instead of treating a record index as a tick.
+		var guard_point := Vector2.ZERO
+		var tip_point := Vector2.ZERO
 		if entry.has("guard") and entry.has("tip"):
 			var guard: Array = entry["guard"]
 			var tip: Array = entry["tip"]
-			bladed.append(Vector2(float(guard[0]), float(guard[1])))
-			bladed.append(Vector2(float(tip[0]), float(tip[1])))
-		else:
-			bladed.append(Vector2.ZERO)
-			bladed.append(Vector2.ZERO)
+			guard_point = Vector2(float(guard[0]), float(guard[1]))
+			tip_point = Vector2(float(tip[0]), float(tip[1]))
+		for _tick in span:
+			textures.append(texture)
+			sequences.append(1)
+			roots.append(float(entry.get("root_dx", 0.0)))
+			bladed.append(guard_point)
+			bladed.append(tip_point)
 		next_tick += span
 	var declared := int(raw.get("duration_ticks", next_tick))
 	if next_tick != declared:

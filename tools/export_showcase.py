@@ -16,7 +16,7 @@ except ImportError:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--version", choices=["v3", "v4"], default="v4")
+    parser.add_argument("--version", choices=["v3", "v4", "v6"], default="v4")
     version = parser.parse_args().version
     source = ROOT / "temp" / f"{version}_showcase.avi"
     qa = ROOT / "temp" / f"{version}_qa"
@@ -29,6 +29,8 @@ def main():
                     "-movflags", "+faststart", str(OUT / f"combat_{version}_showcase.mp4")], check=True)
     frames = ([80, 108, 128, 155, 220, 245, 280, 330, 375, 458, 500, 570] if version == "v3"
               else [100, 125, 150, 220, 244, 273, 350, 370, 442, 527, 540, 610, 670, 759, 789, 874])
+    if version == "v6":
+        frames = [52, 55, 114, 184, 189, 265, 270, 330, 333]
     for frame in frames:
         subprocess.run([ffmpeg, "-y", "-v", "error", "-i", str(source),
                         "-vf", f"select=eq(n\\,{frame})", "-frames:v", "1",

@@ -1,64 +1,10 @@
 {
-  "_comment": "V6 接入参数（docs/design/13_V6动作资源与实装待办.md）。资源根 game/assets/seq_v6，manifest 为唯一帧数据来源；本文件只存实装接线参数，不重复帧表。",
-  "_root_motion": "manifest 每条 actor 帧的 root_dx 是角色 root 的真实前冲曲线：实机节点逐 tick 按它前进，贴图、两层刀光与接触特效因此共用同一个 root。不要在 moves.json 再配一段 move/motion_*，那会把位移叠两次。",
+  "_comment": "V6 实机接线参数。动作窗口、时长、hitstop、前冲、帧序、锚点和混合均读取资源 manifest，避免重复配置漂移。",
+  "_root_motion": "actor PNG 不含前冲：节点只应用一次 root_dx；slash PNG 已含参考前冲，放在 actual_root - facing*root_dx；命中特效出生后固定在接触点。",
   "version": 6,
   "fps": 60,
   "resource_root": "res://assets/seq_v6",
   "manifest": "res://assets/seq_v6/manifest.json",
-  "moves": {
-    "attack1": {
-      "fx": "light",
-      "hitstop": 3,
-      "active": [8, 12],
-      "contact_tick": 9,
-      "trail_life": 5,
-      "length": 30,
-      "ground": false,
-      "motion": [7, 11, 12],
-      "slash_anchor": "move_start_root",
-      "body_height": 190,
-      "slash_dim": false
-    },
-    "attack2": {
-      "fx": "light",
-      "hitstop": 3,
-      "active": [8, 12],
-      "contact_tick": 9,
-      "trail_life": 5,
-      "length": 32,
-      "ground": false,
-      "motion": [7, 11, 10],
-      "slash_anchor": "move_start_root",
-      "body_height": 190,
-      "slash_dim": false
-    },
-    "attack3": {
-      "fx": "heavy",
-      "hitstop": 6,
-      "active": [12, 15],
-      "contact_tick": 12,
-      "trail_life": 7,
-      "length": 41,
-      "ground": true,
-      "motion": [10, 14, 18],
-      "slash_anchor": "move_start_root",
-      "body_height": 190,
-      "slash_dim": false
-    },
-    "quick_draw": {
-      "fx": "iai",
-      "hitstop": 7,
-      "active": [16, 20],
-      "contact_tick": 17,
-      "trail_life": 6,
-      "length": 36,
-      "ground": false,
-      "motion": [15, 19, 104],
-      "slash_anchor": "move_start_root",
-      "body_height": 190,
-      "slash_dim": true
-    }
-  },
   "clips": {
     "body": "actor/{move}",
     "slash_back": "slash_back/{move}",
@@ -69,33 +15,11 @@
     "ground_matter": "ground/matter",
     "ground_light": "ground/light"
   },
-  "clock": {
-    "action": ["actor/{move}", "slash_back/{move}", "slash_front/{move}"],
-    "effect": ["hit_light/{fx}", "hit_matter/{fx}", "iai/flash", "ground/matter", "ground/light"]
-  },
-  "blend": {
-    "actor/{move}": "normal",
-    "slash_back/{move}": "add",
-    "slash_front/{move}": "add",
-    "hit_light/{fx}": "add",
-    "hit_matter/{fx}": "normal",
-    "iai/flash": "add",
-    "ground/matter": "normal",
-    "ground/light": "add"
-  },
   "iai": {
-    "dim": 0.30,
+    "dim": 0.3,
     "dim_hold": 7,
     "dim_fade": 8,
     "no_bloom": true
   },
-  "_draw_order": "预览顺序为 地面→目标→后侧刀光→actor→前侧刀光→受击 light/matter→一闪；实机 actor 与目标各占自己的 z_index，因此用相对层级表达同一顺序：地面 90 → 后侧刀光 95 → 角色/目标 100+ → 受击与一闪 300+。",
-  "z_layer": {
-    "ground": 90,
-    "slash_back": 95,
-    "actors": 100,
-    "slash_front": 105,
-    "hit": 300,
-    "iai_flash": 320
-  }
+  "_draw_order": "同纵深：目标 body < slash_back(player z-1) < player < slash_front(player z+1)；ground 为 player z-3，hit/flash 为300/320。HUD独立。"
 }

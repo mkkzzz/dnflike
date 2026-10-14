@@ -1,0 +1,1044 @@
+[
+	{
+		"capture": "07_v6_attack1",
+		"contact": [
+			598.0,
+			424.583343505859
+		],
+		"effects": [
+			{
+				"clip": "slash_back/attack1",
+				"effective_z": 102,
+				"flip_h": false,
+				"png_anchor_world": [
+					520.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/attack1/f002.png",
+				"tick": 9.0
+			},
+			{
+				"clip": "slash_front/attack1",
+				"effective_z": 104,
+				"flip_h": false,
+				"png_anchor_world": [
+					520.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/attack1/f002.png",
+				"tick": 9.0
+			},
+			{
+				"clip": "hit_matter/light",
+				"effective_z": 300,
+				"flip_h": false,
+				"png_anchor_world": [
+					598.0,
+					424.583343505859
+				],
+				"texture": "res://assets/seq_v6/hit_matter/light/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "hit_light/light",
+				"effective_z": 300,
+				"flip_h": false,
+				"png_anchor_world": [
+					598.0,
+					424.583343505859
+				],
+				"texture": "res://assets/seq_v6/hit_light/light/f000.png",
+				"tick": 0.0
+			}
+		],
+		"facing": 1,
+		"freeze": 3,
+		"move": "attack1",
+		"root": [
+			526.0,
+			576.0
+		],
+		"tick": 9.0,
+		"tip": [
+			668.0,
+			410.0
+		]
+	},
+	{
+		"capture": "07_v6_attack2",
+		"contact": [
+			657.174011230469,
+			437.471984863281
+		],
+		"effects": [
+			{
+				"clip": "slash_back/attack2",
+				"effective_z": 102,
+				"flip_h": false,
+				"png_anchor_world": [
+					520.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/attack2/f000.png",
+				"tick": 9.0
+			},
+			{
+				"clip": "slash_front/attack2",
+				"effective_z": 104,
+				"flip_h": false,
+				"png_anchor_world": [
+					520.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/attack2/f002.png",
+				"tick": 9.0
+			},
+			{
+				"clip": "hit_matter/light",
+				"effective_z": 300,
+				"flip_h": false,
+				"png_anchor_world": [
+					657.174011230469,
+					437.471984863281
+				],
+				"texture": "res://assets/seq_v6/hit_matter/light/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "hit_light/light",
+				"effective_z": 300,
+				"flip_h": false,
+				"png_anchor_world": [
+					657.174011230469,
+					437.471984863281
+				],
+				"texture": "res://assets/seq_v6/hit_light/light/f000.png",
+				"tick": 0.0
+			}
+		],
+		"facing": 1,
+		"freeze": 3,
+		"move": "attack2",
+		"root": [
+			525.0,
+			576.0
+		],
+		"tick": 9.0,
+		"tip": [
+			775.367980957031,
+			427.940002441406
+		]
+	},
+	{
+		"capture": "07_v6_attack3",
+		"contact": [
+			599.08349609375,
+			560.568237304688
+		],
+		"effects": [
+			{
+				"clip": "slash_back/attack3",
+				"effective_z": 102,
+				"flip_h": false,
+				"png_anchor_world": [
+					520.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/attack3/f002.png",
+				"tick": 13.0
+			},
+			{
+				"clip": "slash_front/attack3",
+				"effective_z": 104,
+				"flip_h": false,
+				"png_anchor_world": [
+					520.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/attack3/f002.png",
+				"tick": 13.0
+			},
+			{
+				"clip": "hit_matter/heavy",
+				"effective_z": 300,
+				"flip_h": false,
+				"png_anchor_world": [
+					599.08349609375,
+					560.568237304688
+				],
+				"texture": "res://assets/seq_v6/hit_matter/heavy/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "hit_light/heavy",
+				"effective_z": 300,
+				"flip_h": false,
+				"png_anchor_world": [
+					599.08349609375,
+					560.568237304688
+				],
+				"texture": "res://assets/seq_v6/hit_light/heavy/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "ground/matter",
+				"effective_z": 100,
+				"flip_h": false,
+				"png_anchor_world": [
+					611.461975097656,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/ground/matter/f001.png",
+				"tick": 1.0
+			},
+			{
+				"clip": "ground/light",
+				"effective_z": 100,
+				"flip_h": false,
+				"png_anchor_world": [
+					611.461975097656,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/ground/light/f001.png",
+				"tick": 1.0
+			}
+		],
+		"facing": 1,
+		"freeze": 6,
+		"move": "attack3",
+		"root": [
+			535.1875,
+			576.0
+		],
+		"tick": 13.0,
+		"tip": [
+			617.649475097656,
+			574.552978515625
+		]
+	},
+	{
+		"capture": "07_v6_attack3_fx_age5",
+		"contact": [
+			599.08349609375,
+			560.568237304688
+		],
+		"effects": [
+			{
+				"clip": "slash_back/attack3",
+				"effective_z": 102,
+				"flip_h": false,
+				"png_anchor_world": [
+					520.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/attack3/f002.png",
+				"tick": 13.0
+			},
+			{
+				"clip": "slash_front/attack3",
+				"effective_z": 104,
+				"flip_h": false,
+				"png_anchor_world": [
+					520.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/attack3/f002.png",
+				"tick": 13.0
+			},
+			{
+				"clip": "hit_matter/heavy",
+				"effective_z": 300,
+				"flip_h": false,
+				"png_anchor_world": [
+					599.08349609375,
+					560.568237304688
+				],
+				"texture": "res://assets/seq_v6/hit_matter/heavy/f004.png",
+				"tick": 4.0
+			},
+			{
+				"clip": "hit_light/heavy",
+				"effective_z": 300,
+				"flip_h": false,
+				"png_anchor_world": [
+					599.08349609375,
+					560.568237304688
+				],
+				"texture": "res://assets/seq_v6/hit_light/heavy/f004.png",
+				"tick": 4.0
+			},
+			{
+				"clip": "ground/matter",
+				"effective_z": 100,
+				"flip_h": false,
+				"png_anchor_world": [
+					611.461975097656,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/ground/matter/f005.png",
+				"tick": 5.0
+			},
+			{
+				"clip": "ground/light",
+				"effective_z": 100,
+				"flip_h": false,
+				"png_anchor_world": [
+					611.461975097656,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/ground/light/f005.png",
+				"tick": 5.0
+			}
+		],
+		"facing": 1,
+		"freeze": 1,
+		"move": "attack3",
+		"root": [
+			535.1875,
+			576.0
+		],
+		"tick": 13.0,
+		"tip": [
+			617.649475097656,
+			574.552978515625
+		]
+	},
+	{
+		"capture": "08_v6_quick_draw",
+		"contact": [
+			596.755432128906,
+			439.396423339844
+		],
+		"effects": [
+			{
+				"clip": "slash_back/quick_draw",
+				"effective_z": 102,
+				"flip_h": false,
+				"png_anchor_world": [
+					435.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/quick_draw/f002.png",
+				"tick": 17.0
+			},
+			{
+				"clip": "slash_front/quick_draw",
+				"effective_z": 104,
+				"flip_h": false,
+				"png_anchor_world": [
+					435.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/quick_draw/f002.png",
+				"tick": 17.0
+			},
+			{
+				"clip": "hit_matter/iai",
+				"effective_z": 300,
+				"flip_h": false,
+				"png_anchor_world": [
+					596.755432128906,
+					439.396423339844
+				],
+				"texture": "res://assets/seq_v6/hit_matter/iai/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "hit_light/iai",
+				"effective_z": 300,
+				"flip_h": false,
+				"png_anchor_world": [
+					596.755432128906,
+					439.396423339844
+				],
+				"texture": "res://assets/seq_v6/hit_light/iai/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "iai/flash",
+				"effective_z": 320,
+				"flip_h": false,
+				"png_anchor_world": [
+					596.755432128906,
+					439.396423339844
+				],
+				"texture": "res://assets/seq_v6/iai/flash/f000.png",
+				"tick": 0.0
+			}
+		],
+		"facing": 1,
+		"freeze": 7,
+		"move": "quick_draw",
+		"root": [
+			487.0,
+			576.0
+		],
+		"tick": 17.0,
+		"tip": [
+			671.759033203125,
+			427.930999755859
+		]
+	},
+	{
+		"capture": "08_v6_quick_draw_fx_age5",
+		"contact": [
+			596.755432128906,
+			439.396423339844
+		],
+		"effects": [
+			{
+				"clip": "slash_back/quick_draw",
+				"effective_z": 102,
+				"flip_h": false,
+				"png_anchor_world": [
+					435.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/quick_draw/f002.png",
+				"tick": 17.0
+			},
+			{
+				"clip": "slash_front/quick_draw",
+				"effective_z": 104,
+				"flip_h": false,
+				"png_anchor_world": [
+					435.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/quick_draw/f002.png",
+				"tick": 17.0
+			},
+			{
+				"clip": "hit_matter/iai",
+				"effective_z": 300,
+				"flip_h": false,
+				"png_anchor_world": [
+					596.755432128906,
+					439.396423339844
+				],
+				"texture": "res://assets/seq_v6/hit_matter/iai/f004.png",
+				"tick": 4.0
+			},
+			{
+				"clip": "hit_light/iai",
+				"effective_z": 300,
+				"flip_h": false,
+				"png_anchor_world": [
+					596.755432128906,
+					439.396423339844
+				],
+				"texture": "res://assets/seq_v6/hit_light/iai/f004.png",
+				"tick": 4.0
+			},
+			{
+				"clip": "iai/flash",
+				"effective_z": 320,
+				"flip_h": false,
+				"png_anchor_world": [
+					596.755432128906,
+					439.396423339844
+				],
+				"texture": "res://assets/seq_v6/iai/flash/f001.png",
+				"tick": 4.0
+			}
+		],
+		"facing": 1,
+		"freeze": 2,
+		"move": "quick_draw",
+		"root": [
+			487.0,
+			576.0
+		],
+		"tick": 17.0,
+		"tip": [
+			671.759033203125,
+			427.930999755859
+		]
+	},
+	{
+		"capture": "07_v6_attack1_left",
+		"contact": [
+			662.0,
+			420.416656494141
+		],
+		"effects": [
+			{
+				"clip": "slash_back/attack1",
+				"effective_z": 102,
+				"flip_h": true,
+				"png_anchor_world": [
+					760.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/attack1/f002.png",
+				"tick": 9.0
+			},
+			{
+				"clip": "slash_front/attack1",
+				"effective_z": 104,
+				"flip_h": true,
+				"png_anchor_world": [
+					760.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/attack1/f002.png",
+				"tick": 9.0
+			},
+			{
+				"clip": "hit_matter/light",
+				"effective_z": 300,
+				"flip_h": true,
+				"png_anchor_world": [
+					662.0,
+					420.416656494141
+				],
+				"texture": "res://assets/seq_v6/hit_matter/light/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "hit_light/light",
+				"effective_z": 300,
+				"flip_h": true,
+				"png_anchor_world": [
+					662.0,
+					420.416656494141
+				],
+				"texture": "res://assets/seq_v6/hit_light/light/f000.png",
+				"tick": 0.0
+			}
+		],
+		"facing": -1,
+		"freeze": 3,
+		"move": "attack1",
+		"root": [
+			754.0,
+			576.0
+		],
+		"tick": 9.0,
+		"tip": [
+			612.0,
+			410.0
+		]
+	},
+	{
+		"capture": "07_v6_attack2_left",
+		"contact": [
+			622.825988769531,
+			437.471984863281
+		],
+		"effects": [
+			{
+				"clip": "slash_back/attack2",
+				"effective_z": 102,
+				"flip_h": true,
+				"png_anchor_world": [
+					760.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/attack2/f000.png",
+				"tick": 9.0
+			},
+			{
+				"clip": "slash_front/attack2",
+				"effective_z": 104,
+				"flip_h": true,
+				"png_anchor_world": [
+					760.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/attack2/f002.png",
+				"tick": 9.0
+			},
+			{
+				"clip": "hit_matter/light",
+				"effective_z": 300,
+				"flip_h": true,
+				"png_anchor_world": [
+					622.825988769531,
+					437.471984863281
+				],
+				"texture": "res://assets/seq_v6/hit_matter/light/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "hit_light/light",
+				"effective_z": 300,
+				"flip_h": true,
+				"png_anchor_world": [
+					622.825988769531,
+					437.471984863281
+				],
+				"texture": "res://assets/seq_v6/hit_light/light/f000.png",
+				"tick": 0.0
+			}
+		],
+		"facing": -1,
+		"freeze": 3,
+		"move": "attack2",
+		"root": [
+			755.0,
+			576.0
+		],
+		"tick": 9.0,
+		"tip": [
+			504.632019042969,
+			427.940002441406
+		]
+	},
+	{
+		"capture": "07_v6_attack3_left",
+		"contact": [
+			663.897705078125,
+			573.387573242188
+		],
+		"effects": [
+			{
+				"clip": "slash_back/attack3",
+				"effective_z": 102,
+				"flip_h": true,
+				"png_anchor_world": [
+					760.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/attack3/f002.png",
+				"tick": 13.0
+			},
+			{
+				"clip": "slash_front/attack3",
+				"effective_z": 104,
+				"flip_h": true,
+				"png_anchor_world": [
+					760.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/attack3/f002.png",
+				"tick": 13.0
+			},
+			{
+				"clip": "hit_matter/heavy",
+				"effective_z": 300,
+				"flip_h": true,
+				"png_anchor_world": [
+					663.897705078125,
+					573.387573242188
+				],
+				"texture": "res://assets/seq_v6/hit_matter/heavy/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "hit_light/heavy",
+				"effective_z": 300,
+				"flip_h": true,
+				"png_anchor_world": [
+					663.897705078125,
+					573.387573242188
+				],
+				"texture": "res://assets/seq_v6/hit_light/heavy/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "ground/matter",
+				"effective_z": 100,
+				"flip_h": true,
+				"png_anchor_world": [
+					668.538024902344,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/ground/matter/f001.png",
+				"tick": 1.0
+			},
+			{
+				"clip": "ground/light",
+				"effective_z": 100,
+				"flip_h": true,
+				"png_anchor_world": [
+					668.538024902344,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/ground/light/f001.png",
+				"tick": 1.0
+			}
+		],
+		"facing": -1,
+		"freeze": 6,
+		"move": "attack3",
+		"root": [
+			744.8125,
+			576.0
+		],
+		"tick": 13.0,
+		"tip": [
+			662.350524902344,
+			574.552978515625
+		]
+	},
+	{
+		"capture": "07_v6_attack3_left_fx_age5",
+		"contact": [
+			663.897705078125,
+			573.387573242188
+		],
+		"effects": [
+			{
+				"clip": "slash_back/attack3",
+				"effective_z": 102,
+				"flip_h": true,
+				"png_anchor_world": [
+					760.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/attack3/f002.png",
+				"tick": 13.0
+			},
+			{
+				"clip": "slash_front/attack3",
+				"effective_z": 104,
+				"flip_h": true,
+				"png_anchor_world": [
+					760.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/attack3/f002.png",
+				"tick": 13.0
+			},
+			{
+				"clip": "hit_matter/heavy",
+				"effective_z": 300,
+				"flip_h": true,
+				"png_anchor_world": [
+					663.897705078125,
+					573.387573242188
+				],
+				"texture": "res://assets/seq_v6/hit_matter/heavy/f004.png",
+				"tick": 4.0
+			},
+			{
+				"clip": "hit_light/heavy",
+				"effective_z": 300,
+				"flip_h": true,
+				"png_anchor_world": [
+					663.897705078125,
+					573.387573242188
+				],
+				"texture": "res://assets/seq_v6/hit_light/heavy/f004.png",
+				"tick": 4.0
+			},
+			{
+				"clip": "ground/matter",
+				"effective_z": 100,
+				"flip_h": true,
+				"png_anchor_world": [
+					668.538024902344,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/ground/matter/f005.png",
+				"tick": 5.0
+			},
+			{
+				"clip": "ground/light",
+				"effective_z": 100,
+				"flip_h": true,
+				"png_anchor_world": [
+					668.538024902344,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/ground/light/f005.png",
+				"tick": 5.0
+			}
+		],
+		"facing": -1,
+		"freeze": 1,
+		"move": "attack3",
+		"root": [
+			744.8125,
+			576.0
+		],
+		"tick": 13.0,
+		"tip": [
+			662.350524902344,
+			574.552978515625
+		]
+	},
+	{
+		"capture": "08_v6_quick_draw_left",
+		"contact": [
+			663.957885742188,
+			436.448181152344
+		],
+		"effects": [
+			{
+				"clip": "slash_back/quick_draw",
+				"effective_z": 102,
+				"flip_h": true,
+				"png_anchor_world": [
+					845.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/quick_draw/f002.png",
+				"tick": 17.0
+			},
+			{
+				"clip": "slash_front/quick_draw",
+				"effective_z": 104,
+				"flip_h": true,
+				"png_anchor_world": [
+					845.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/quick_draw/f002.png",
+				"tick": 17.0
+			},
+			{
+				"clip": "hit_matter/iai",
+				"effective_z": 300,
+				"flip_h": true,
+				"png_anchor_world": [
+					663.957885742188,
+					436.448181152344
+				],
+				"texture": "res://assets/seq_v6/hit_matter/iai/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "hit_light/iai",
+				"effective_z": 300,
+				"flip_h": true,
+				"png_anchor_world": [
+					663.957885742188,
+					436.448181152344
+				],
+				"texture": "res://assets/seq_v6/hit_light/iai/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "iai/flash",
+				"effective_z": 320,
+				"flip_h": true,
+				"png_anchor_world": [
+					663.957885742188,
+					436.448181152344
+				],
+				"texture": "res://assets/seq_v6/iai/flash/f000.png",
+				"tick": 0.0
+			}
+		],
+		"facing": -1,
+		"freeze": 7,
+		"move": "quick_draw",
+		"root": [
+			793.0,
+			576.0
+		],
+		"tick": 17.0,
+		"tip": [
+			608.240966796875,
+			427.930999755859
+		]
+	},
+	{
+		"capture": "08_v6_quick_draw_left_fx_age5",
+		"contact": [
+			663.957885742188,
+			436.448181152344
+		],
+		"effects": [
+			{
+				"clip": "slash_back/quick_draw",
+				"effective_z": 102,
+				"flip_h": true,
+				"png_anchor_world": [
+					845.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/quick_draw/f002.png",
+				"tick": 17.0
+			},
+			{
+				"clip": "slash_front/quick_draw",
+				"effective_z": 104,
+				"flip_h": true,
+				"png_anchor_world": [
+					845.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/quick_draw/f002.png",
+				"tick": 17.0
+			},
+			{
+				"clip": "hit_matter/iai",
+				"effective_z": 300,
+				"flip_h": true,
+				"png_anchor_world": [
+					663.957885742188,
+					436.448181152344
+				],
+				"texture": "res://assets/seq_v6/hit_matter/iai/f004.png",
+				"tick": 4.0
+			},
+			{
+				"clip": "hit_light/iai",
+				"effective_z": 300,
+				"flip_h": true,
+				"png_anchor_world": [
+					663.957885742188,
+					436.448181152344
+				],
+				"texture": "res://assets/seq_v6/hit_light/iai/f004.png",
+				"tick": 4.0
+			},
+			{
+				"clip": "iai/flash",
+				"effective_z": 320,
+				"flip_h": true,
+				"png_anchor_world": [
+					663.957885742188,
+					436.448181152344
+				],
+				"texture": "res://assets/seq_v6/iai/flash/f001.png",
+				"tick": 4.0
+			}
+		],
+		"facing": -1,
+		"freeze": 2,
+		"move": "quick_draw",
+		"root": [
+			793.0,
+			576.0
+		],
+		"tick": 17.0,
+		"tip": [
+			608.240966796875,
+			427.930999755859
+		]
+	},
+	{
+		"capture": "09_v6_ground_whiff",
+		"contact": [
+			663.957885742188,
+			436.448181152344
+		],
+		"effects": [
+			{
+				"clip": "slash_back/attack3",
+				"effective_z": 102,
+				"flip_h": false,
+				"png_anchor_world": [
+					500.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/attack3/f001.png",
+				"tick": 12.0
+			},
+			{
+				"clip": "slash_front/attack3",
+				"effective_z": 104,
+				"flip_h": false,
+				"png_anchor_world": [
+					500.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/attack3/f001.png",
+				"tick": 12.0
+			},
+			{
+				"clip": "ground/matter",
+				"effective_z": 100,
+				"flip_h": false,
+				"png_anchor_world": [
+					591.461975097656,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/ground/matter/f000.png",
+				"tick": 0.0
+			},
+			{
+				"clip": "ground/light",
+				"effective_z": 100,
+				"flip_h": false,
+				"png_anchor_world": [
+					591.461975097656,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/ground/light/f000.png",
+				"tick": 0.0
+			}
+		],
+		"facing": 1,
+		"freeze": 0,
+		"move": "attack3",
+		"root": [
+			509.0,
+			576.0
+		],
+		"tick": 12.0,
+		"tip": [
+			591.461975097656,
+			574.552978515625
+		]
+	},
+	{
+		"capture": "09_v6_ground_whiff_fx_age5",
+		"contact": [
+			663.957885742188,
+			436.448181152344
+		],
+		"effects": [
+			{
+				"clip": "slash_back/attack3",
+				"effective_z": 102,
+				"flip_h": false,
+				"png_anchor_world": [
+					500.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_back/attack3/f005.png",
+				"tick": 16.0
+			},
+			{
+				"clip": "slash_front/attack3",
+				"effective_z": 104,
+				"flip_h": false,
+				"png_anchor_world": [
+					500.0,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/slash_front/attack3/f005.png",
+				"tick": 16.0
+			},
+			{
+				"clip": "ground/matter",
+				"effective_z": 100,
+				"flip_h": false,
+				"png_anchor_world": [
+					591.461975097656,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/ground/matter/f004.png",
+				"tick": 4.0
+			},
+			{
+				"clip": "ground/light",
+				"effective_z": 100,
+				"flip_h": false,
+				"png_anchor_world": [
+					591.461975097656,
+					576.0
+				],
+				"texture": "res://assets/seq_v6/ground/light/f004.png",
+				"tick": 4.0
+			}
+		],
+		"facing": 1,
+		"freeze": 0,
+		"move": "attack3",
+		"root": [
+			518.0,
+			576.0
+		],
+		"tick": 16.0,
+		"tip": [
+			610.588989257813,
+			573.588989257813
+		]
+	}
+]

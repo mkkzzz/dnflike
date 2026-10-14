@@ -61,7 +61,6 @@ var anims: Dictionary = {}
 var anim_name := ""
 var anim_frame := 0
 var anim_tick := 0
-var seq_data: Dictionary = {}
 var seq_clips: Dictionary = {}
 var seq_fx: Node = null
 var last_hitstop := 0
@@ -110,7 +109,6 @@ func _ready() -> void:
 ## V6：把 manifest 里 actor/<move> 的一体帧（角色与剑同一张原画）接到对应动作名上。
 ## 这四个 clip 自带逐 tick 时间轴与刀身采样线；其余动作仍走 V4 帧条。
 func _merge_seq_clips() -> void:
-	seq_data = GameConfig._load_json("res://data/seq_v6.json")
 	seq_clips = SeqLib.load_clips()
 	if seq_clips.is_empty():
 		return
@@ -159,8 +157,8 @@ func _seq_has_move_data(move: String) -> bool:
 
 ## 逐 tick 排帧的 clip 条目：durations 一个 tick 一项，actor 帧带刀身采样线。
 func _seq_clip_entry(move: String, clip: Dictionary) -> Dictionary:
-	# manifest 的 root_dx 是逐 tick 的累积参考位移；贴图本身已按固定解剖比例摆在画布上，
-	# 所以这一项只做贴图偏移，绝不再平移角色节点。
+	# Actor PNGs are rooted at their anchor; root_dx drives the character node
+	# exactly once. Slash PNGs already contain that travel relative to move start.
 	var durations: Array = []
 	var blades: Array = []
 	var offsets: Array = []
@@ -195,7 +193,7 @@ func _seq_clip_entry(move: String, clip: Dictionary) -> Dictionary:
 	}
 
 
-## 本 tick 的 root_dx（美术参考位移，正数朝角色前方）。已经烘进原画，不能再平移节点。
+## 本 tick 的累积参考前冲，仅驱动节点，不再附加到 actor PNG。
 func seq_root_offset(tick := -1.0) -> float:
 	var offsets: Array = anims.get(anim_name, {}).get("seq_root_dx", [])
 	if offsets.is_empty():
@@ -204,14 +202,12 @@ func seq_root_offset(tick := -1.0) -> float:
 	return float(offsets[clampi(int(floor(at)), 0, offsets.size() - 1)])
 
 
-## 该 tick 贴图相对 root 的左上角（含参考前冲）。1.0x 攻速时与预览逐像素一致。
-func seq_texture_rect(tick := -1.0) -> Rect2:
+## Actor PNG 的左上角；前冲已由节点承担，贴图锚点始终不变。
+func seq_texture_rect(_tick := -1.0) -> Rect2:
 	var clip: Dictionary = anims.get(anim_name, {})
 	if clip.is_empty() or not clip.get("seq6", false):
 		return Rect2()
-	var at := phase_t if tick < 0.0 else tick
-	var index := clampi(int(floor(at)), 0, int(clip["frames"]) - 1)
-	return Rect2(Vector2(-float(clip["ax"]) + float(clip["seq_root_dx"][index]), -float(clip["ay"])),
+	return Rect2(Vector2(-float(clip["ax"]), -float(clip["ay"])),
 		Vector2(float(clip["frame_w"]), float(clip["frame_h"])))
 
 
@@ -241,10 +237,6 @@ func _seq_root_step(previous: float) -> float:
 	var previous_tick := maxf(0.0, previous)
 	var now := float(offsets[clampi(int(floor(tick)), 0, last)])
 	var before := float(offsets[clampi(int(floor(previous_tick)), 0, last)])
-	# 同一 tick 内按小数部分线性推进，保证低帧率下也不会跳步
-	var span := tick - previous_tick
-	if span > 0.0 and int(floor(tick)) == int(floor(previous_tick)):
-		now = lerpf(before, now, clampf(tick - floorf(tick), 0.0, 1.0))
 	return now - before
 
 
@@ -268,6 +260,17 @@ func seq_blade_world(tick := -1.0) -> Array:
 	var at := phase_t if tick < 0.0 else tick
 	var local: Array = _seq_blade_local(at)
 	var origin := visual_position()
+	# A swept sample from an earlier tick also needs that tick's root. Reusing
+	# today's root would shift quick-draw history forward by up to 35.75 px.
+	var requested_dx := float(facing) * seq_root_offset(at)
+	var current_dx := float(facing) * seq_root_offset()
+	if is_instance_valid(seq_fx):
+		var start_root: Vector2 = seq_fx.get("slash_origin")
+		# Past and current roots must each respect the arena clamp; subtracting
+		# an unclamped reference delta invents travel after the node hit a wall.
+		origin.x += clampf(start_root.x + requested_dx, arena_left, arena_right) - clampf(start_root.x + current_dx, arena_left, arena_right)
+	else:
+		origin.x += requested_dx - current_dx
 	var guard: Vector2 = local[0]
 	var tip: Vector2 = local[1]
 	return [origin + Vector2(guard.x * float(facing), guard.y),
@@ -289,8 +292,8 @@ func report_contact(point: Vector2, move: String, tick: float, segment: int, tar
 func _clear_seq_action() -> void:
 	last_hitstop = 0
 	if is_instance_valid(seq_fx):
-		# 收招只清画面，接触/地裂/一闪记录留给验收日志
-		seq_fx.call("reset", true)
+		# Independent contact effects are allowed to finish across a cancel.
+		seq_fx.call("clear_action")
 
 
 func setup(data: Dictionary, battle_fx: BattleFX, monster_list: Array) -> void:
@@ -362,6 +365,8 @@ func reset_combat(origin: Vector2) -> void:
 	anim_tick = 0
 	modulate = Color.WHITE
 	_clear_seq_action()
+	if is_instance_valid(seq_fx):
+		seq_fx.call("reset")
 	_anim_step()
 	reset_physics_interpolation()
 	hp_changed.emit(hp, float(cfg.get("max_hp", 1000)))
@@ -371,6 +376,10 @@ func visual_position() -> Vector2:
 	return global_position + Vector2(0, depth_y)
 
 func body_transform() -> Transform2D:
+	if seq_active():
+		# Authored body and slash PNGs share rigid pixel geometry. Applying the
+		# legacy squash/lean only to the body would detach its blade from the FX.
+		return Transform2D(0.0, Vector2(float(facing), 1.0), 0.0, Vector2(0, depth_y))
 	var squash := _land_squash
 	var stretch := 0.0
 	if not is_on_floor() and not dead and state != St.AIR:
@@ -458,7 +467,9 @@ func _physics_process(delta: float) -> void:
 				st_hit_left = int(cfg.get("down_time", 36))
 	elif state in [St.IDLE, St.WALK, St.RUN]:
 		state = St.JUMP
-	z_index = 100 + int(round(depth_y))
+	# Same-lane target body is 101+depth. Leave a slot between it and the
+	# player for the authored back slash, then one above for the front slash.
+	z_index = 103 + int(round(depth_y))
 	_anim_step()
 	if fx != null and buff_t > 0.0 and not buff_data.is_empty():
 		fx.rage_aura(visual_position(), facing)
@@ -962,7 +973,7 @@ func _seq_window() -> Array:
 	return [float(entry.get("start", 0.0)), float(entry.get("end", 0.0))]
 
 
-## 逐 tick 推进 V6 招式：前冲只做视觉展现代价，不改存档的 move_data 位移
+## 逐 tick 推进 V6 招式；角色节点、刀线和原画共用一次参考前冲。
 func _seq_tick(previous: float) -> void:
 	var window: Array = _seq_window()
 	var start := float(window[0])
@@ -1002,7 +1013,8 @@ func _seq_move_data() -> Dictionary:
 
 ## 重劈地裂：只在可见刀尖真正落到地面线时触发一次，锚点取落地坐标
 func _seq_ground_reached() -> bool:
-	if not bool(_seq_move_data().get("ground", false)):
+	var ground_tick: Variant = _seq_move_data().get("ground_tick")
+	if ground_tick == null or phase_t < float(ground_tick):
 		return false
 	var blade: Array = seq_blade_world()
 	var tip: Vector2 = blade[1]
@@ -1012,7 +1024,7 @@ func _seq_ground_reached() -> bool:
 func seq_ground_point() -> Vector2:
 	var blade: Array = seq_blade_world()
 	var tip: Vector2 = blade[1]
-	return Vector2(tip.x, tip.y)
+	return Vector2(tip.x, ground_y + depth_y)
 
 
 ## 命中检测：沿本帧护手→刀尖的有效刃线逐点采样，与目标身体区域相交。
@@ -1407,6 +1419,10 @@ func _anim_step() -> void:
 		_anim_fraction = 0.0
 	if not anims.has(anim_name):
 		return
+	var interpolation_mode := Node.PHYSICS_INTERPOLATION_MODE_OFF if seq_active() else Node.PHYSICS_INTERPOLATION_MODE_INHERIT
+	if physics_interpolation_mode != interpolation_mode:
+		physics_interpolation_mode = interpolation_mode
+		reset_physics_interpolation()
 	if state in FRAME_STATES:
 		if seq_active():
 			# V6：帧序就是相位刻度，不按 durations 二次推进。
@@ -1466,7 +1482,7 @@ func _draw_seq_body(clip: Dictionary) -> void:
 	var tex: Texture2D = clip["seq_textures"][anim_frame]
 	# 拔刀一闪：预览在出刀窗口叠一层 13% 亮度的残影，偏移 25 px
 	if move_name == "quick_draw" and phase_t >= 16.0 and phase_t < 20.0:
-		var ghost := seq_texture_rect(phase_t - 2.0)
+		var ghost := seq_texture_rect()
 		draw_texture_rect_region(tex, Rect2(ghost.position - Vector2(25.0, 0.0), ghost.size), full, Color(1.0, 1.0, 1.0, 0.13))
 	draw_texture_rect_region(tex, seq_texture_rect(), full)
 

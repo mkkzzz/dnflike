@@ -107,7 +107,7 @@ static func _texture_mask(source: String, texture: Texture2D) -> Dictionary:
 	if _body_masks.has(key):
 		return _body_masks[key]
 	var image := Image.new()
-	if not source.is_empty() and image.load(source) == OK and not image.is_empty():
+	if not source.is_empty() and FileAccess.file_exists(source) and image.load_png_from_buffer(FileAccess.get_file_as_bytes(source)) == OK and not image.is_empty():
 		# 直接从源文件解码：headless 下 Texture2D.get_image() 不可用。
 		# 导出构建请改用 Image 资源导入，这里只服务于编辑器与自动化。
 		pass
