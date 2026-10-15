@@ -1,0 +1,70 @@
+{
+ "source": "art\\characters\\standard_v1\\sheet_main_c1.png",
+ "view": "A1_front",
+ "parts": [
+  {
+   "id": "hair",
+   "name": "头发（银白）",
+   "pixels": 2714,
+   "base": "#bdbcc0",
+   "light": "#d7d6d7",
+   "shadow": "#9b9aa0"
+  },
+  {
+   "id": "streak",
+   "name": "挑染（深红）",
+   "pixels": 223,
+   "base": "#602b39",
+   "light": "#864255",
+   "shadow": "#441e27"
+  },
+  {
+   "id": "skin",
+   "name": "皮肤",
+   "pixels": 1329,
+   "base": "#e8cabb",
+   "light": "#ebd0c3",
+   "shadow": "#caaea2"
+  },
+  {
+   "id": "lining",
+   "name": "内衬（深红）",
+   "pixels": 3860,
+   "base": "#5c1e30",
+   "light": "#6e2639",
+   "shadow": "#3e1021"
+  },
+  {
+   "id": "bandage",
+   "name": "绷带（深红）",
+   "pixels": 3646,
+   "base": "#561e2c",
+   "light": "#6e2534",
+   "shadow": "#431420"
+  },
+  {
+   "id": "coat",
+   "name": "风衣 / 内衣（黑）",
+   "pixels": 47082,
+   "base": "#1e1d21",
+   "light": "#313135",
+   "shadow": "#0c080b"
+  },
+  {
+   "id": "steel",
+   "name": "护膝护胫（深钢）",
+   "pixels": 4870,
+   "base": "#393a40",
+   "light": "#71737a",
+   "shadow": "#313239"
+  },
+  {
+   "id": "boots",
+   "name": "靴（黑）",
+   "pixels": 3874,
+   "base": "#1a1b1f",
+   "light": "#2c2c31",
+   "shadow": "#050508"
+  }
+ ]
+}

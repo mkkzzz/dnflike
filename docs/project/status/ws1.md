@@ -6,7 +6,7 @@
 |---|---|
 | 使用者 | 负责人 |
 | 状态 | 等待 |
-| 正在做 | 鬼剑士标准原画设定 standard_v1：已出 3 张候选，等负责人选母版 |
+| 正在做 | 鬼剑士标准原画设定 standard_v1：母版 c1 已定并拆图、出色号表；A2/A3/A5/A7 待负责人评审 |
 | 产出位置 | `art/characters/standard_v1/`、`docs/previews/standard_v1/`、`docs/tasks/art_tasks/char_swordsman_standard_v1.md` |
 
 ## 最近完成
