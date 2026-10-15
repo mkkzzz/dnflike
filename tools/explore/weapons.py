@@ -136,13 +136,14 @@ def _frame_vectors(view, blade, width_cm, min_width_px=1.4):
     return G, Dc, Ec
 
 
-def render_weapon(view, buf, sprite, blade, stamp=False):
+def render_weapon(view, buf, sprite, blade, stamp=False, min_width_px=1.4):
     """返回 (front_rgba, back_rgba, landmarks)，均为超采样分辨率的 premultiplied float。
 
     stamp=True 时把武器的可见像素写回 buf（供深度 / 分件 / 线稿引导图使用）。
+    min_width_px：刀身侧对镜头时保证的最小可见宽度（输出像素）。
     """
     spec = sprite["spec"]
-    G, Dc, Ec = _frame_vectors(view, blade, spec["width"])
+    G, Dc, Ec = _frame_vectors(view, blade, spec["width"], min_width_px)
     a0, a1 = sprite["a0"], sprite["a0"] + sprite["W"] / PX_PER_CM
     hw = sprite["hw"]
     corners = [G + Dc * a + Ec * e for a in (a0, a1) for e in (-hw, hw)]

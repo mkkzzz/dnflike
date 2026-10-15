@@ -146,6 +146,8 @@ EASES = {
     "inout": lambda s: s * s * (3 - 2 * s),
     "in": lambda s: s * s,
     "out": lambda s: 1 - (1 - s) * (1 - s),
+    "snap": lambda s: 1 - (1 - s) ** 4,
+    "step": lambda s: 0.0,
 }
 
 
