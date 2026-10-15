@@ -144,6 +144,52 @@ def run_3d(mod, token, image, faces=40000):
     print(f"[OK] 3d: {files} ({log['seconds']}s)")
 
 
+def make_v6_ref():
+    """V6 forehand 第 1 帧（READY）裁出单人，绿幕换成浅灰，作为标准身份参考图。"""
+    from PIL import Image
+    import numpy as np
+    src = ROOT / "art" / "sheets" / "v6" / "forehand" / "Production_2D_action_RPG_anima_2026-10-14T08-17-58.png"
+    a = np.asarray(Image.open(src).convert("RGB").crop((10, 40, 370, 450)), np.float32)
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    green = (g > 150) & (g > r * 1.35) & (g > b * 1.35)
+    a[green] = (226, 226, 230)
+    out = EXP / "probe_v6_ref.png"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    Image.fromarray(a.astype(np.uint8)).save(out)
+    return out
+
+
+def run_v3(mod, token, image_mode="b64"):
+    """E5：混元生图 3.0（SubmitTextToImageJob）的 Images 参考图能否经代理调用、能否保持身份。"""
+    ref = make_v6_ref()
+    b64 = base64.b64encode(ref.read_bytes()).decode()
+    img = {"b64": b64, "datauri": "data:image/png;base64," + b64}[image_mode]
+    prompt = ("参考图中的角色，保持其发型、脸、服装、配色与绷带完全一致。画成同一角色的标准设定图："
+              "正面站立，双臂自然下垂略张开（A 字站姿），不拿武器，全身完整，纯浅灰背景，无文字。"
+              "韩式横版动作网游手绘风，清晰深色描边，赛璐璐明暗。")
+    body = {"Prompt": prompt, "Images": [img], "Resolution": "768:1024", "LogoAdd": 0, "Revise": 0}
+    provider = mod._PROVIDER_MAP["image"]["provider"]
+    t0 = time.time()
+    sub = mod._call_api(mod._DEFAULT_ENDPOINT, provider, "aiart", "2022-12-29", "SubmitTextToImageJob", body, token)
+    job = sub.get("JobId")
+    print("[INFO] submitted", job)
+    res = mod._poll_job(mod._DEFAULT_ENDPOINT, provider, "aiart", "2022-12-29", "QueryTextToImageJob", job, token,
+                        5, 600)
+    urls = res.get("ResultImage") or []
+    OUT.mkdir(parents=True, exist_ok=True)
+    files = []
+    for k, u in enumerate(urls if isinstance(urls, list) else [urls]):
+        path = OUT / f"p5_v3_ref_{k}.png"
+        with urllib.request.urlopen(u, timeout=120) as r:
+            path.write_bytes(r.read())
+        files.append(path.name)
+    log = {"probe": "p5_v3_ref", "api": "aiart/SubmitTextToImageJob", "input": str(ref.relative_to(ROOT)),
+           "image_mode": image_mode, "prompt": prompt, "revised_prompt": res.get("RevisedPrompt"),
+           "files": files, "seconds": round(time.time() - t0, 1), "request_id": res.get("RequestId")}
+    (OUT / "p5_v3_ref.json").write_text(json.dumps(log, ensure_ascii=False, indent=1), "utf-8")
+    print(f"[OK] p5_v3_ref: {files} ({log['seconds']}s)")
+
+
 def main():
     token = os.environ.get("BUDDY_CLOUD_TOKEN", "")
     if not token:
@@ -154,6 +200,8 @@ def main():
         try:
             if name == "hero3d":
                 run_3d(mod, token, ROOT / "art" / "characters" / "hero_cool.png")
+            elif name.startswith("v3ref"):
+                run_v3(mod, token, "datauri" if name.endswith("_uri") else "b64")
             else:
                 run(mod, name, token)
         except SystemExit:

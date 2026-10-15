@@ -6,8 +6,8 @@
 |---|---|
 | 使用者 | 负责人 |
 | 状态 | 等待 |
-| 正在做 | 角色锚定与动作管线：结论已落盘（`docs/design/18_角色锚定与动作管线.md`），等 S4 首轮测试与 3 项待确认 |
-| 产出位置 | `docs/design/18_角色锚定与动作管线.md`、`docs/reports/ws1/2026-10/` |
+| 正在做 | 鬼剑士标准原画设定 standard_v1：已出 3 张候选，等负责人选母版 |
+| 产出位置 | `art/characters/standard_v1/`、`docs/previews/standard_v1/`、`docs/tasks/art_tasks/char_swordsman_standard_v1.md` |
 
 ## 最近完成
 

@@ -1,0 +1,42 @@
+{
+  "task_id": "char_swordsman_standard",
+  "revision": "standard_v1",
+  "date": "2026-10-15",
+  "workspace": "ws1",
+  "status": "source_review",
+  "identity_source": "art/sheets/v6/forehand/Production_2D_action_RPG_anima_2026-10-14T08-17-58.png (READY frame), per decision D027",
+  "tool": "image_gen (text-to-image only)",
+  "reference_input": "none — the tool has no image input; V6 identity was transcribed into text after visual inspection",
+  "model_version": "not exposed",
+  "seed": "not exposed",
+  "requested_size": "1344x768",
+  "actual_size": "1376x768",
+  "note": "n=4 was requested on the first call but the tool returned 1 image per call",
+  "sources": [
+    {
+      "file": "sheet_main_c1.png",
+      "content": "A1 + A4: front / three-quarter / side (facing right) / back + base body",
+      "prompt": "Production character model sheet (turnaround) for a Korean 2D side-scrolling action MMORPG, hand-painted anime game art style: clean confident dark outlines, cel shading with soft gradients, high-resolution illustration, crisp readable silhouettes. Plain flat light gray background. The SAME character drawn five times in one horizontal row at identical scale, all feet standing on the same ground line, evenly spaced, full body from head to toe, nothing cropped: (1) front view, (2) three-quarter front view, (3) side profile facing right, (4) back view, (5) front view of the same character's base body wearing only the fitted black inner suit, the bandages and the boots (no coat, no armor plates, no weapon). Neutral A-pose standing, arms relaxed slightly away from the body, hands empty, calm stern expression. Character: lean athletic young adult male swordsman, about 7.5 heads tall; messy spiky silver-white hair with one crimson streak at the front left; sharp dark gray eyes; long black leather coat reaching below the knees, high stand-up collar and notched lapels, deep crimson lining visible on the collar, lapels, front opening and inner hem; coat sleeves end at mid forearm; black fitted turtleneck inner shirt; two black leather straps with silver buckles across the chest and a black belt with a silver buckle; both hands and forearms wrapped in crimson cloth bandages up to the elbow, fingers exposed; black trousers tucked into black boots with dark steel knee guards and shin greaves; a katana in a black lacquered scabbard with a silver end cap worn on the left hip in views 1 to 4, black hilt with crimson diamond wrap and a round dark iron guard. Identical design, colors and proportions across all five figures. No text, no labels, no watermark, no extra characters.",
+      "review": "Closest to V6; bandages and chest straps consistent in all views. Issues: side view has no knee guards/greaves; back view shows no scabbard; base body kept knee guards."
+    },
+    {
+      "file": "sheet_main_c2.png",
+      "content": "A1 + A4, second attempt with stricter consistency wording",
+      "prompt": "Same as c1 with these changes: thin ground line; base body = fitted black long-sleeve inner suit, black trousers, forearm bandages and plain black boots, no coat, no knee guards, no greaves, no straps, no weapon; views 1-4 must all show the steel knee guards and shin greaves; crimson hair streak visible in front, three-quarter and side views; scabbard also visible behind the hip in the back view.",
+      "review": "Fixed greaves in side view, clean base body, scabbard visible from back. New issue: steel vambraces appear on one forearm in three-quarter and side views (not in spec); back view greaves missing."
+    },
+    {
+      "file": "sheet_pose_head_c1.png",
+      "content": "A2 + A3: in-game camera ready stance holding katana + 6 head close-ups (front, 3/4, side, angry, pained, smirk)",
+      "prompt": "Production character reference sheet for a Korean 2D side-scrolling action MMORPG, hand-painted anime game art style: clean confident dark outlines, cel shading with soft gradients, high-resolution illustration. Plain flat light gray background, no text. Left half: one full-body figure in the in-game camera angle (side view facing right, turned slightly toward the viewer), in a low ready combat stance holding a katana in the right hand, blade angled forward and down, left hand open near the hip, weight on bent knees, feet apart. Right half: a neat 2 by 3 grid of head-and-shoulders close-ups of the SAME character: front neutral, three-quarter neutral, side profile, angry shout, pained grimace, confident smirk. Character description identical to c1 (no armor on the arms).",
+      "review": "Style and identity strong. Issues: the full-body figure faces LEFT instead of right; crimson streak side drifts between close-ups."
+    }
+  ],
+  "not_generated": {
+    "A5_part_breakdown": "pending",
+    "A7_katana_three_view": "approval prompt timed out, not generated"
+  },
+  "derived": {
+    "palette_auto.json": "python tools/explore/standard_board.py — k-means colours + per-part averages of c1/c2 (A6 draft)"
+  }
+}
