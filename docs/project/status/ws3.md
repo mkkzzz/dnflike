@@ -5,17 +5,17 @@
 | 字段 | 内容 |
 |---|---|
 | 使用者 | 负责人（kirisawa） |
-| 状态 | 搁置 |
+| 状态 | 空闲 |
 | 正在做 | — |
-| 产出位置 | `docs/tasks/art_tasks/upper_lean_windup_rev2.md`（`on_hold`）、`art/sheets/v3/upper_lean_windup_rev2/generation.json` |
+| 产出位置 | 见下「最近完成」；上挑 rev2 资料在 `art/sheets/v3/upper_lean_windup_rev2/` |
 
 ## 最近完成
 
+- 2026-10-15 工程状态核对与文档同步：在 `59c488c` 实跑回归确认基线 **271 项 / failures=0**；补版本注册表缺失项（v6 依 D031 为现行版本、standard_v1 的 c2 面向修正、upper rev2 登记为并入 D031）
+- 2026-10-15 记录 D030（选母版 c1）与 D031（全量动作重做路线）并同步看板/待办
+- 2026-10-15 更正协作中枢：人员与工作区归属（删除不存在的「开发者A」）、本区身份 ws2→ws3
 - 2026-10-15 上挑专属升腾刃特效实装（`game/scripts/battle_fx.gd`，271 项回归通过）
 - 2026-10-15 上挑起手深蹲体态问题定位：逐帧实测身高 + 排除代码原因，立项为美术 revision
-- 2026-10-15 本区接入：登记 ws3 为 `D:/dnflike`、初始化 `.workspace`、本机环境记录
-- 2026-10-15 本机安装目录迁出仓库（`_tools/`、`_dl/` → `D:/dnflike_local/`），修复 `check_docs.py` 假断链
-- 2026-10-14 承接 ws2 转交的上挑表现层工作
 
 ## 本机环境（供后续在本机开工的 Agent 参考）
 
