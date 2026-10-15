@@ -1,0 +1,130 @@
+{
+  "asset": "goblin_hurt",
+  "purpose": "怪物（哥布林）受击的生物叫声层。与撞击拟音 light/heavy/launch/metal_hit 分层并存，不替换。",
+  "note": "本类别是工程中唯一使用外部素材的音频。其余 27 类 81 个 WAV 仍为原创程序化拟音，见 ../combat_v3/source_spec.json。",
+  "format": "48 kHz mono PCM16",
+  "variants": 3,
+  "pitch_shift_semitones": 16,
+  "pitch_ratio": 2.5198,
+  "target_peak": 0.72,
+  "source_files": [
+    {
+      "file": "Monster growls.ogg",
+      "page": "https://commons.wikimedia.org/wiki/File:Monster_growls.ogg",
+      "direct": "https://upload.wikimedia.org/wikipedia/commons/7/71/Monster_growls.ogg",
+      "license": "Public domain",
+      "author": "stilgar",
+      "sha256": "a5b5fdb22aae087d0c96a5b5e0d70c6f79a3b4b273e0dfa86c4be767132f74a9",
+      "bytes": 771883,
+      "duration_s": 53.71,
+      "decoded": "44100 Hz mono"
+    },
+    {
+      "file": "Monster growls 2.ogg",
+      "page": "https://commons.wikimedia.org/wiki/File:Monster_growls_2.ogg",
+      "direct": "https://upload.wikimedia.org/wikipedia/commons/3/36/Monster_growls_2.ogg",
+      "license": "Public domain",
+      "author": "stilgar",
+      "sha256": "fa4fa975f940b49de68bbf629a4caa3c28425fac0c60528906f67684c105dbbd",
+      "bytes": 460289,
+      "duration_s": 28.44,
+      "decoded": "44100 Hz mono"
+    }
+  ],
+  "license_note": "两者均为公有领域，可自由使用、修改与再分发，无需署名。选择公有领域而非 CC BY，是为了不给项目留下署名义务。",
+  "container_note": "源为多流 Ogg：含 Ogg Skeleton（fishead/fisbone/index）与 Vorbis 两条复用流。stb_vorbis 不支持多流，必须先按 serial 解复用。",
+  "tooling": {
+    "decoder": "stb-vorbis (WASM, Apache-2.0, 无原生依赖)",
+    "decoder_installed_outside_repo": "D:/dnflike_local/audio_src/",
+    "note": "本机无 ffmpeg，Python 仅有 numpy，故采用纯 WASM 解码链路。"
+  },
+  "derivation": [
+    "按 serial 解复用出 Vorbis 单流",
+    "stb-vorbis 同步解码为 44100 Hz 单声道 f32",
+    "20 ms 窗 RMS 找叫声段，按平顶长度与时长排序选取",
+    "首尾留 8 ms / 45 ms 余量截取，避免切进发声中间",
+    "重采样到 48000 Hz",
+    "升 16 个半音（倍率 2.5198）——用重采样实现变调，因此时长同比缩短",
+    "去直流、归一化到峰值 0.72、首尾各 3 ms 渐变",
+    "输出 48 kHz 单声道 16 bit PCM"
+  ],
+  "variant_mapping": [
+    {
+      "output": "goblin_hurt_1.wav",
+      "source_segment": "Monster_growls_2__0",
+      "source_file": "Monster growls 2.ogg",
+      "seconds": 0.4258,
+      "chosen_by": "负责人试听选定"
+    },
+    {
+      "output": "goblin_hurt_2.wav",
+      "source_segment": "Monster_growls__2",
+      "source_file": "Monster growls.ogg",
+      "seconds": 0.3623,
+      "chosen_by": "同批素材，音高一致、音色有区分"
+    },
+    {
+      "output": "goblin_hurt_3.wav",
+      "source_segment": "Monster_growls_2__4",
+      "source_file": "Monster growls 2.ogg",
+      "seconds": 0.3385,
+      "chosen_by": "同批素材，音高一致、音色有区分"
+    }
+  ],
+  "runtime": {
+    "mix_base_db": -12.0,
+    "throttle_ms": 320,
+    "intensity_heavy": 1.1,
+    "intensity_light": 0.9,
+    "trigger": "battle_fx.gd on_hit()，位于 V6 与 legacy 两条分支之前",
+    "layering": "分层并存（A 方案），保留撞击拟音"
+  },
+  "headroom": {
+    "budget": 0.86,
+    "measured": [
+      {
+        "scene": "轻击",
+        "peak_sum": 0.57,
+        "trim": 1.0
+      },
+      {
+        "scene": "重击",
+        "peak_sum": 0.64,
+        "trim": 1.0
+      },
+      {
+        "scene": "上挑",
+        "peak_sum": 0.93,
+        "trim": 0.92
+      },
+      {
+        "scene": "三段普攻命中",
+        "peak_sum": 1.02,
+        "trim": 0.82
+      }
+    ],
+    "note": "三段普攻/拔刀斩命中时所有声道被压低约 18%。这是既有混音架构的必然结果，不是本层引入的缺陷。"
+  },
+  "rejected_candidates": [
+    {
+      "file": "439280 schots angry-tiger.wav",
+      "license": "CC0",
+      "reason": "虎吼，生物感与哥布林不符"
+    },
+    {
+      "file": "Swipe / Stab Damage (Monster) x3",
+      "license": "CC BY 4.0",
+      "reason": "需署名；已有公有领域素材够用"
+    },
+    {
+      "file": "Beast laughter.ogg",
+      "license": "Public domain",
+      "reason": "源峰值仅 0.05~0.50，归一化会把底噪一起放大"
+    },
+    {
+      "file": "Male pain grunts.ogg / Grunt of pain.ogg",
+      "license": "Public domain",
+      "reason": "人声痛呼，非怪物"
+    }
+  ]
+}

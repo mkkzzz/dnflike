@@ -608,6 +608,10 @@ func on_hit(world_pos: Vector2, direction: int, damage: float, hit: Dictionary) 
 		impact = hit["contact_point"]
 	spawn_number(world_pos + Vector2(0, -112), str(roundi(damage)),
 		Color(1.0, 0.87, 0.63) if heavy else Color(0.96, 0.93, 0.86), 26 if heavy else 21)
+	# 怪物受击的生物叫声。放在两条分支之前，让 V6 招式与旧动作都覆盖到。
+	# on_hit() 目前只有 monster.take_hit() 一处调用入口，玩家被打不会走到这里，
+	# 所以无需按攻击方区分；将来若加入召唤物/友军互击，需要在此加参数区分。
+	play_sound("goblin_hurt", world_pos.x, 1.10 if heavy else 0.90)
 	if authored:
 		# V6：闪光、火花与尘已烘进 hit_light / hit_matter 序列帧，这里不再叠第二份；
 		# 停帧、震屏、跳字与音效不属于序列帧，继续保留。

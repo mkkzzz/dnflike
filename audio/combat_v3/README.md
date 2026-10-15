@@ -1,6 +1,8 @@
 # Combat foley v3
 
-声音全部为本工程原创的离线程序化拟音，没有下载素材、第三方录音或音频模型输出。可入库的游戏 WAV 位于 `game/assets/audio_v3/`，生成程序是 `tools/bake_combat_audio.py`。
+本目录记录的 27 类声音（81 个 WAV）全部为本工程原创的离线程序化拟音，没有下载素材、第三方录音或音频模型输出。可入库的游戏 WAV 位于 `game/assets/audio_v3/`，生成程序是 `tools/bake_combat_audio.py`。
+
+> **例外（2026-10-15 追加）**：`game/assets/audio_v3/` 下另有 `goblin_hurt_1~3.wav`（怪物受击生物叫声），**使用了外部素材**（Wikimedia Commons 公有领域录音）。因此本节开头的声明对**本目录的 27 类**成立，对 `goblin_hurt` 不成立。该类的来源、许可与派生链单独记录在 [../goblin_hurt/README.md](../goblin_hurt/README.md)。运行时合计 28 类 / 84 个 WAV。
 
 27 类声音各有 3 个独立随机种子演奏版本，共 81 个 48 kHz / 单声道 / 16 bit PCM 文件。运行时轻微音高变化和不连续重复的变体选择进一步减轻机械重复感。单声道资产通过 Godot `AudioStreamPlayer2D` 做相对听者的位置声像和距离衰减。
 

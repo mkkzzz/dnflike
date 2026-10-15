@@ -2,7 +2,7 @@
   "format": "48 kHz mono PCM16",
   "variants": 3,
   "seed_scheme": "SHA256 combat-v3:kind:variant",
-  "source": "Original procedural foley model; no downloaded or recorded material",
+  "source": "Original procedural foley model; no downloaded or recorded material. Applies to the 27 kinds below only: goblin_hurt uses external public-domain recordings and is documented separately in ../goblin_hurt/source.json",
   "recipes": {
     "swing_light": "cloth + narrow blade air shear + steel micro resonance",
     "swing_back": "backhand air shear + grip creak + trailing blade ring",

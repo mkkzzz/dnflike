@@ -1,0 +1,45 @@
+{
+  "format": "48 kHz mono PCM16",
+  "asset": "goblin_hurt",
+  "files": {
+    "goblin_hurt_1.wav": {
+      "sample_rate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "seconds": 0.4258,
+      "peak": 0.72,
+      "rms": 0.248,
+      "first_sample": 0,
+      "last_sample": 0,
+      "clipped_samples": 0,
+      "bytes": 40922,
+      "sha256": "13fdc8dd804961ac2ffff3f1681e3b8de7d410c189d5f15c0f8ca3472ab52e00"
+    },
+    "goblin_hurt_2.wav": {
+      "sample_rate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "seconds": 0.3623,
+      "peak": 0.72,
+      "rms": 0.203,
+      "first_sample": 0,
+      "last_sample": 0,
+      "clipped_samples": 0,
+      "bytes": 34828,
+      "sha256": "d73e1a60fdb4624fce3472cbd6af6f5e3d096797f5461ed56c1630d8adfff21b"
+    },
+    "goblin_hurt_3.wav": {
+      "sample_rate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "seconds": 0.3385,
+      "peak": 0.72,
+      "rms": 0.2088,
+      "first_sample": 0,
+      "last_sample": 0,
+      "clipped_samples": 0,
+      "bytes": 32542,
+      "sha256": "0d679a8aee2bb9118ec89cef328f7461447f2d1d95c71fda0bb3a526c1f16a6b"
+    }
+  }
+}
