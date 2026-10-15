@@ -16,6 +16,9 @@ const AUDIO_SCRIPT := preload("res://scripts/combat_audio.gd")
 const STEEL := Color(0.67, 0.88, 1.0)
 const IVORY := Color(1.0, 0.94, 0.79)
 const BLOOD := Color(1.0, 0.21, 0.12)
+## 上挑专属：比 STEEL 更冷的刃色 + 暖色升腾边缘，与普攻的钢白/象牙拉开区分。
+const RISING_BLADE := Color(0.84, 0.97, 1.0)
+const RISING_EDGE := Color(1.0, 0.83, 0.55)
 
 var freeze := 0
 var shake := 0.0
@@ -32,6 +35,8 @@ var _parts: Array = []
 var _flashes: Array = []
 var _strokes: Array = []
 var _rings: Array = []
+## 上挑的竖直升腾刃迹（与沿水平轴扫过的 _crescent 不同，需要旋转任意角度）。
+var _tails: Array = []
 var _charges: Array = []
 var _afterimages: Array = []
 var _swing_group := 0
@@ -267,10 +272,7 @@ func attack_event(pos: Vector2, facing: int, move_id: String, data: Dictionary,
 				_stroke(hand - forward * 30.0, hand + forward * (reach + 24.0), STEEL, 1.8, 0.12, 0.65)
 				play_sound("dash_strike", pos.x)
 			"upper":
-				var rise := pos + Vector2(facing * 67.0, -112.0)
-				burst_particles(rise, "steel", Vector2(facing * 0.3, -1), 12, 0.30, 190.0, STEEL, 2)
-				for index in range(5):
-					_particle(rise + Vector2(randf_range(-14, 14), 26), Vector2(facing * randf_range(10, 45), randf_range(-240, -135)), STEEL, 0.17, "spark", 180.0, 1.2)
+				_rising_cut(pos, facing)
 				play_sound("swing_upper", pos.x)
 			"quick_draw":
 				_charges.clear()
@@ -366,6 +368,37 @@ func spawn_slash(pos: Vector2, facing: int, radius: float = 96.0, arc_deg: float
 	_slashes.append({"pos": pos, "facing": facing, "r": radius, "arc": deg_to_rad(arc_deg),
 		"th": thickness, "col": color, "t": 0.0, "life": 0.10})
 	_bound(_slashes, 12)
+	queue_redraw()
+
+
+## 上挑（rising_cut）专属表现：竖直升腾刃弧 + 地面起手环 + 升腾残迹 + 垂直火花。
+## 与普攻的水平横扫拉开区分：普攻沿水平轴向前扫，上挑自下而上、由暖到冷、有明确高度。
+func _rising_cut(pos: Vector2, facing: int) -> void:
+	var f := float(facing)
+	var base := pos + Vector2(f * 10.0, -26.0)
+	# 1) 地面起手环：横向压扁（flat 0.34），表示打击从地面爆发。
+	_ring(base, 8.0, 58.0, RISING_EDGE, 0.24, 0.62, 0.34)
+	# 2) 大范围暖色泛光：让升腾的起始帧一眼可读。
+	spawn_glow(base, 44.0, RISING_EDGE, 0.18)
+	# 3) 竖直主刃弧：两片错开，内亮外冷，构成本招的签名形状。
+	_tails.append({"pos": base, "facing": facing, "r": 96.0, "th": 10.0,
+		"col": RISING_BLADE, "t": 0.0, "life": 0.17})
+	_tails.append({"pos": base, "facing": facing, "r": 128.0, "th": 5.0,
+		"col": STEEL, "t": 0.0, "life": 0.20})
+	_bound(_tails, 8)
+	# 4) 竖直光柱：两段描边从地面向上拉出，取代普攻的横向 _speed_lines。
+	var column_top := base + Vector2(f * 26.0, -176.0)
+	_stroke(base + Vector2(f * 4.0, 0), column_top, RISING_BLADE, 2.6, 0.16, 0.82)
+	_stroke(base + Vector2(-f * 17.0, -6.0), column_top + Vector2(-f * 9.0, -26.0), STEEL, 1.4, 0.19, 0.46)
+	# 5) 向上喷发的粒子：方向明确朝上，与普攻的向前扇形不同。
+	burst_particles(base, "steel", Vector2(f * 0.24, -1.0), 18, 0.32, 232.0, RISING_BLADE, 2)
+	burst_particles(base + Vector2(0, -46.0), "mote", Vector2.UP, 14, 0.36, 168.0, RISING_EDGE, 1)
+	# 6) 拖尾火花：低重力让它们贴着升腾轨迹走，而不是像普攻那样迅速下坠。
+	for index in range(11):
+		_particle(base + Vector2(randf_range(-17.0, 17.0), randf_range(-14.0, 8.0)),
+			Vector2(f * randf_range(8.0, 52.0), randf_range(-330.0, -170.0)),
+			RISING_EDGE if index % 3 == 0 else RISING_BLADE,
+			randf_range(0.15, 0.34), "spark", 140.0, randf_range(1.1, 2.0))
 	queue_redraw()
 
 
@@ -621,7 +654,7 @@ func clear_fx() -> void:
 		_emitter_state[index]["age"] = 0.0
 	if camera != null:
 		camera.offset = Vector2.ZERO
-	for collection in [_trails, _slashes, _glows, _parts, _flashes, _strokes, _rings, _charges, _afterimages, _numbers]:
+	for collection in [_trails, _slashes, _glows, _parts, _flashes, _strokes, _rings, _charges, _afterimages, _tails, _numbers]:
 		collection.clear()
 	for label in pool:
 		label.visible = false
@@ -634,7 +667,7 @@ func clear_fx() -> void:
 
 func _update_fx(delta: float) -> void:
 	var had_fx := false
-	for collection in [_trails, _slashes, _glows, _parts, _flashes, _strokes, _rings, _charges, _afterimages]:
+	for collection in [_trails, _slashes, _glows, _parts, _flashes, _strokes, _rings, _charges, _afterimages, _tails]:
 		had_fx = had_fx or not collection.is_empty()
 		for index in range(collection.size() - 1, -1, -1):
 			var entry: Dictionary = collection[index]
@@ -697,6 +730,12 @@ func _draw() -> void:
 		var color: Color = slash["col"]
 		color.a *= (1.0 - progress) * 0.35
 		_crescent(slash["pos"], float(slash["facing"]), float(slash["r"]) * (0.9 + 0.1 * progress), float(slash["arc"]), float(slash["th"]) * (1.0 - progress * 0.5), color)
+	for tail in _tails:
+		var progress := float(tail["t"]) / float(tail["life"])
+		var color: Color = tail["col"]
+		color.a *= pow(1.0 - progress, 1.35) * 0.52
+		_draw_rising_cut(tail["pos"], float(tail["facing"]), float(tail["r"]) * (0.94 + 0.10 * progress),
+			float(tail["th"]) * (1.0 - progress * 0.45), color)
 	for flash in _flashes:
 		var color: Color = flash["col"]
 		color.a *= pow(1.0 - float(flash["t"]) / float(flash["life"]), 0.7)
@@ -729,6 +768,25 @@ func _draw() -> void:
 				draw_line(pos, pos + Vector2(0, 5.0 * (1.0 - progress)), color, size, true)
 			_:
 				draw_circle(pos, size * (1.0 - progress * 0.5), color)
+
+
+## 任意朝向的刃弧。`_crescent` 只能沿水平轴（向前）扫，
+## 上挑需要自下而上的竖直弧，故用 draw_arc 直接绘制。
+## 弧心角固定在 PI（屏幕上方，与 facing 无关）；facing 只翻转水平镜像。
+func _draw_rising_cut(center: Vector2, facing: float, radius: float, thickness: float, color: Color) -> void:
+	var half := deg_to_rad(72.0)
+	var start := PI - half
+	var span := half * 2.0
+	var inner := radius - maxf(thickness, 2.0)
+	draw_arc(center, radius, start, start + span, 20, color, maxf(thickness * 0.85, 1.5), true)
+	var soft := color
+	soft.a *= 0.38
+	draw_arc(center, inner, start + 0.20, start + span - 0.20, 20, soft, maxf(thickness * 0.50, 1.0), true)
+	if facing >= 0.0:
+		return
+	var mirrored := color
+	mirrored.a *= 0.60
+	draw_arc(center, radius * 1.26, start + 0.55, start + span - 0.55, 20, mirrored, maxf(thickness * 0.45, 1.0), true)
 
 
 func blade_ribbon_points(previous: Dictionary, current: Dictionary) -> Array:
