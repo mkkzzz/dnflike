@@ -4,7 +4,7 @@
   "asset_id": "actor.player.upper",
   "purpose": "重画上挑起手段：由深蹲下沉改为前倾蓄力。本轮只出两版起手样张供用户选定方向，不批量出图。",
   "status": "prompts_ready_pending_image_gen",
-  "blocked_by": "本文件由接收区（ws2）撰写。接收区没有图像生成工具（项目出图使用 Codex 内置 image_gen.imagegen），因此只交付可直接使用的提示词与参数，未生成图片。图片需由具备 imagegen 的会话执行。",
+  "blocked_by": "本文件由接收区（ws3）撰写。接收区没有图像生成工具（项目出图使用 Codex 内置 image_gen.imagegen），因此只交付可直接使用的提示词与参数，未生成图片。图片需由具备 imagegen 的会话执行。",
   "tool": "built-in image_gen.imagegen",
   "transparent_background": true,
   "reference_images": [
