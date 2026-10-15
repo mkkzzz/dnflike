@@ -5,7 +5,14 @@ if (-not $GodotPath) {
     $GodotPath = Join-Path $PSScriptRoot "godot/Godot_v4.7.2-stable_win64_console.exe"
 }
 if (-not (Test-Path -LiteralPath $GodotPath)) {
-    throw "Godot missing. Run tools/setup_godot.ps1, or provide -GodotPath to a Godot 4 executable."
+    throw "Godot missing. Run tools/setup_godot.ps1, or provide -GodotPath to a Godot 4.7.2 executable."
+}
+$requiredVersion = "4.7.2."
+$ErrorActionPreference = "Continue"
+$versionText = "$(& $GodotPath --version 2>$null | Select-Object -First 1)".Trim()
+$ErrorActionPreference = "Stop"
+if (-not $versionText.StartsWith($requiredVersion)) {
+    throw "Godot 4.7.2 required, found '$versionText'. Other versions rewrite .import files across the repo; run tools/setup_godot.ps1."
 }
 $gamePath = Join-Path $repoRoot "game"
 $ErrorActionPreference = "Continue"
