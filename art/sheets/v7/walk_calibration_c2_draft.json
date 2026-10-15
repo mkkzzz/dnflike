@@ -1,0 +1,233 @@
+{
+  "revision": "standard_actions_pilot_walk_c2_review_only",
+  "output_dir": "../../seq_v7/pilot",
+  "canvas": [
+    512,
+    320
+  ],
+  "anchor": [
+    224,
+    280
+  ],
+  "target_standing_height": 190,
+  "contact_columns": 4,
+  "sources": {
+    "walk_c2": {
+      "file": "walk_c2.png",
+      "standing_height": 465,
+      "standing_height_note": "The same shared 465-source-pixel baseline as c1 is retained to expose size drift rather than normalize each frame. C2 hair-top to supporting-sole spans are approximately 468-482 px, slightly taller than c1. No per-pose stretch or rescaling is used.",
+      "actual_size": [
+        1536,
+        1024
+      ],
+      "actual_pose_count": 8,
+      "layout_note": "Actual silhouettes were inspected and measured again. Source positions changed from c1. Bottom-row poses 5 and 6 have overlapping rectangular extents at x419-422 at different y positions, so rectangular cropping alone cannot isolate both complete poses cleanly.",
+      "alpha_note": "True RGBA: 943420 pixels have alpha 0; maximum alpha 254. Edge noise is mostly alpha 1-6. Pose-5/6 crop edges also contain neighboring visible anatomy/weapon pixels up to alpha 249; these are not noise and no edge allowance is granted for them."
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": true,
+    "weapon_layering": "not_attempted",
+    "G1": "pending_review",
+    "G2": "pending_review",
+    "G3": "not_passed",
+    "G4": "source_rejected_incomplete_walk_cycle"
+  },
+  "calibration_review": {
+    "status": "draft_only_return_for_redraw",
+    "export_authorized": false,
+    "recommendation": "Return c2 for redraw. Do not treat it as a complete walk candidate and do not batch-generate or integrate it.",
+    "coordinate_convention": "Absolute source pixels; bbox right/bottom exclusive. root x follows pelvis projection; root y follows supporting sole. foot marks one visible sole contact point.",
+    "comparison_source": "walk_c1.png",
+    "visual_observations": [
+      "The targeted edit did not repair the missing opposite half-cycle. Poses 1/4/5/8 remain broad contact/extended-stride variants, poses 2/6 remain a similar rear-foot recovery, and poses 3/7 remain a similar front-knee lift. Eight occupied cells represent approximately three gait classes, not eight valid alternating phases.",
+      "The near/far legs do not clearly exchange their weight-bearing and recovery roles across the second half. The extended pose returns after a knee lift and repeats, so ordering the cells cannot establish a complete alternating walk. Do not repair this by programmatic warping or mirroring a painted pose.",
+      "Torso, sword and free-arm motion stay small and nearly static. Lower-row body/leg extents are slightly taller than upper-row, and c2 is slightly larger than c1 under the same source-to-output scale. Loop, weight transfer and foot sliding remain unapproved.",
+      "Basic identity cues persist: silver hair with visible red forelock, black long coat with red lining, chest buckles, double red forearm wraps, dark segmented greaves. This does not establish G1/G2 or weapon-proportion acceptance.",
+      "The katana appears broadly similar to c1; c1 had an approximately 104-pixel guard-to-tip length against standard A7 128 px at 190-pixel actor scale. C2 has not been assigned validated weapon landmarks and no correction is claimed."
+    ],
+    "rectangular_crop_blockers": [
+      "Pose 5 meaningful alpha>16 bbox [43,513,422,989] and pose 6 bbox [419,513,765,986] overlap in x. Their different vertical shapes are separable by a manual source mask or redraw, but no such operation is performed here.",
+      "The preserving bboxes for poses 5/6 include small fragments of the neighboring pose and intersect those fragments at alpha up to 249. allow_edge_alpha=false is deliberate for these two poses so the current crop-only tool refuses accidental export. Do not override as low-alpha noise."
+    ],
+    "required_next_source_change": "Create the missing opposite-leg contact/down/passing/up half with explicit near-leg/far-leg labels and adequate transparent gutters. Re-review actual gait phases before treating the eight-cell sheet as a loop."
+  },
+  "clips": {
+    "walk": {
+      "asset_id": "actor.player.base.walk",
+      "loop": true,
+      "root_mode": "ground",
+      "loop_review": "Requested cyclic review only. C2 is rejected as a complete cycle because the opposite half-step is missing; loop=true expresses desired playback semantics, not an acceptance result.",
+      "poses": [
+        {
+          "id": "walk_c2_01",
+          "source": "walk_c2",
+          "crop_bbox": [
+            24,
+            8,
+            407,
+            503
+          ],
+          "root": [
+            246,
+            490
+          ],
+          "foot": [
+            335,
+            490
+          ],
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "Measured all four crop edges: maximum alpha 3; no edge pixels above alpha 16. Own alpha>16 silhouette bbox is [38, 22, 406, 490], including entire visible weapon. The allowance covers only faint gap-edge noise, and does not establish visual acceptance."
+        },
+        {
+          "id": "walk_c2_02",
+          "source": "walk_c2",
+          "crop_bbox": [
+            407,
+            8,
+            760,
+            503
+          ],
+          "root": [
+            598,
+            492
+          ],
+          "foot": [
+            635,
+            492
+          ],
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "Measured all four crop edges: maximum alpha 6; no edge pixels above alpha 16. Own alpha>16 silhouette bbox is [408, 24, 753, 493], including entire visible weapon. The allowance covers only faint gap-edge noise, and does not establish visual acceptance."
+        },
+        {
+          "id": "walk_c2_03",
+          "source": "walk_c2",
+          "crop_bbox": [
+            760,
+            8,
+            1128,
+            503
+          ],
+          "root": [
+            950,
+            493
+          ],
+          "foot": [
+            951,
+            493
+          ],
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "Measured all four crop edges: maximum alpha 1; no edge pixels above alpha 16. Own alpha>16 silhouette bbox is [768, 21, 1116, 493], including entire visible weapon. The allowance covers only faint gap-edge noise, and does not establish visual acceptance."
+        },
+        {
+          "id": "walk_c2_04",
+          "source": "walk_c2",
+          "crop_bbox": [
+            1128,
+            8,
+            1520,
+            503
+          ],
+          "root": [
+            1327,
+            491
+          ],
+          "foot": [
+            1427,
+            491
+          ],
+          "duration_ticks": 5,
+          "allow_edge_alpha": false,
+          "edge_alpha_reason": "All crop edges have alpha 0; no allowance needed. Own alpha>16 silhouette bbox is [1138, 21, 1505, 491], including entire visible weapon."
+        },
+        {
+          "id": "walk_c2_05",
+          "source": "walk_c2",
+          "crop_bbox": [
+            26,
+            502,
+            424,
+            1008
+          ],
+          "root": [
+            250,
+            989
+          ],
+          "foot": [
+            342,
+            989
+          ],
+          "duration_ticks": 5,
+          "allow_edge_alpha": false,
+          "edge_alpha_reason": "Maximum crop-edge alpha 249; meaningful adjacent-pose pixels cross this crop edge. Own complete alpha>16 silhouette bbox is [43, 513, 422, 989]. The bbox preserves the full own weapon but includes a small neighboring fragment because x extents overlap. This is a real crop blocker, not transparent noise; edge allowance is intentionally disabled."
+        },
+        {
+          "id": "walk_c2_06",
+          "source": "walk_c2",
+          "crop_bbox": [
+            417,
+            502,
+            773,
+            1008
+          ],
+          "root": [
+            610,
+            986
+          ],
+          "foot": [
+            631,
+            986
+          ],
+          "duration_ticks": 5,
+          "allow_edge_alpha": false,
+          "edge_alpha_reason": "Maximum crop-edge alpha 249; meaningful adjacent-pose pixels cross this crop edge. Own complete alpha>16 silhouette bbox is [419, 513, 765, 986]. The bbox preserves the full own weapon but includes a small neighboring fragment because x extents overlap. This is a real crop blocker, not transparent noise; edge allowance is intentionally disabled."
+        },
+        {
+          "id": "walk_c2_07",
+          "source": "walk_c2",
+          "crop_bbox": [
+            773,
+            502,
+            1130,
+            1008
+          ],
+          "root": [
+            969,
+            994
+          ],
+          "foot": [
+            963,
+            994
+          ],
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "Measured all four crop edges: maximum alpha 4; no edge pixels above alpha 16. Own alpha>16 silhouette bbox is [776, 512, 1124, 994], including entire visible weapon. The allowance covers only faint gap-edge noise, and does not establish visual acceptance."
+        },
+        {
+          "id": "walk_c2_08",
+          "source": "walk_c2",
+          "crop_bbox": [
+            1130,
+            502,
+            1520,
+            1008
+          ],
+          "root": [
+            1329,
+            987
+          ],
+          "foot": [
+            1432,
+            987
+          ],
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "Measured all four crop edges: maximum alpha 1; no edge pixels above alpha 16. Own alpha>16 silhouette bbox is [1136, 513, 1508, 988], including entire visible weapon. The allowance covers only faint gap-edge noise, and does not establish visual acceptance."
+        }
+      ]
+    }
+  }
+}

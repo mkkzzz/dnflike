@@ -1,0 +1,235 @@
+{
+  "prompt": [
+    0,
+    "24ba9d22-3577-4f1d-be72-7fe07c25db93",
+    {
+      "1": {
+        "class_type": "CheckpointLoaderSimple",
+        "inputs": {
+          "ckpt_name": "NoobAI-XL-v1.0.safetensors"
+        }
+      },
+      "2": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "text": "masterpiece, best quality, very aesthetic, solo, 1boy, adult male, full body, three-quarter side view, facing right, looking right, walking, contrapposto, left leg forward, right leg back, left heel touching ground in front, right foot behind on tiptoe, long legs, lean athletic build, silver spiky hair, dark red hair streak, grey eyes, serious face, black high collar shirt, black leather long coat, dark crimson coat lining, two horizontal chest straps with silver buckles, black belt, black pants, dark steel knee guards, shin armor, black boots, dark red bandages on both forearms and hands, bare fingers, holding one katana in right hand low at side, left hand open, shallow curved steel blade, black scabbard on left hip, hand painted anime action game character, crisp dark outlines, cel shading, clean detail, plain neutral grey background, no floor shadow",
+          "clip": [
+            "1",
+            1
+          ]
+        }
+      },
+      "3": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "text": "worst quality, low quality, blurry, text, watermark, logo, multiple views, multiple people, sprite sheet, cropped, out of frame, deformed, bad anatomy, extra limbs, extra legs, missing hands, fused legs, running, jumping, both feet airborne, right leg forward, left leg back, metal forearm armor, fire, glow, motion blur, slash effects, two swords, two handed grip, photo, 3d",
+          "clip": [
+            "1",
+            1
+          ]
+        }
+      },
+      "4": {
+        "class_type": "LoadImage",
+        "inputs": {
+          "image": "dnflike_v7_probe/standard_a2_reference.png"
+        }
+      },
+      "5": {
+        "class_type": "IPAdapterUnifiedLoader",
+        "inputs": {
+          "model": [
+            "1",
+            0
+          ],
+          "preset": "PLUS (high strength)"
+        }
+      },
+      "6": {
+        "class_type": "IPAdapterAdvanced",
+        "inputs": {
+          "model": [
+            "5",
+            0
+          ],
+          "ipadapter": [
+            "5",
+            1
+          ],
+          "image": [
+            "4",
+            0
+          ],
+          "weight": 0.55,
+          "weight_type": "linear",
+          "combine_embeds": "concat",
+          "start_at": 0.0,
+          "end_at": 0.85,
+          "embeds_scaling": "V only"
+        }
+      },
+      "7": {
+        "class_type": "ControlNetLoader",
+        "inputs": {
+          "control_net_name": "diffusion_pytorch_model_promax.safetensors"
+        }
+      },
+      "8": {
+        "class_type": "SetUnionControlNetType",
+        "inputs": {
+          "control_net": [
+            "7",
+            0
+          ],
+          "type": "openpose"
+        }
+      },
+      "9": {
+        "class_type": "LoadImage",
+        "inputs": {
+          "image": "dnflike_v7_probe/walk_opposite_openpose.png"
+        }
+      },
+      "10": {
+        "class_type": "ControlNetApplyAdvanced",
+        "inputs": {
+          "positive": [
+            "2",
+            0
+          ],
+          "negative": [
+            "3",
+            0
+          ],
+          "control_net": [
+            "8",
+            0
+          ],
+          "image": [
+            "9",
+            0
+          ],
+          "strength": 1.1,
+          "start_percent": 0.0,
+          "end_percent": 1.0,
+          "vae": [
+            "1",
+            2
+          ]
+        }
+      },
+      "11": {
+        "class_type": "EmptyLatentImage",
+        "inputs": {
+          "width": 768,
+          "height": 1024,
+          "batch_size": 1
+        }
+      },
+      "12": {
+        "class_type": "KSampler",
+        "inputs": {
+          "model": [
+            "6",
+            0
+          ],
+          "seed": 73150415,
+          "steps": 24,
+          "cfg": 5.5,
+          "sampler_name": "euler_ancestral",
+          "scheduler": "normal",
+          "positive": [
+            "10",
+            0
+          ],
+          "negative": [
+            "10",
+            1
+          ],
+          "latent_image": [
+            "11",
+            0
+          ],
+          "denoise": 1.0
+        }
+      },
+      "13": {
+        "class_type": "VAEDecode",
+        "inputs": {
+          "samples": [
+            "12",
+            0
+          ],
+          "vae": [
+            "1",
+            2
+          ]
+        }
+      },
+      "14": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "13",
+            0
+          ],
+          "filename_prefix": "dnflike_v7_probe/walk_opposite_s4b"
+        }
+      }
+    },
+    {
+      "client_id": "dnflike-v7-single-pose",
+      "create_time": 1792079217902
+    },
+    [
+      "14"
+    ]
+  ],
+  "outputs": {
+    "14": {
+      "images": [
+        {
+          "filename": "walk_opposite_s4b_00001_.png",
+          "subfolder": "dnflike_v7_probe",
+          "type": "output"
+        }
+      ]
+    }
+  },
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "24ba9d22-3577-4f1d-be72-7fe07c25db93",
+          "timestamp": 1792079217903
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [],
+          "prompt_id": "24ba9d22-3577-4f1d-be72-7fe07c25db93",
+          "timestamp": 1792079217903
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "24ba9d22-3577-4f1d-be72-7fe07c25db93",
+          "timestamp": 1792079261465
+        }
+      ]
+    ]
+  },
+  "meta": {
+    "14": {
+      "node_id": "14",
+      "display_node": "14",
+      "parent_node": null,
+      "real_node_id": "14"
+    }
+  }
+}

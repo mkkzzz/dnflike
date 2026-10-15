@@ -1,0 +1,128 @@
+{
+  "revision": "standard_actions_pilot_v1",
+  "output_dir": "../../seq_v7/pilot",
+  "canvas": [512, 320],
+  "anchor": [224, 280],
+  "target_standing_height": 190,
+  "contact_columns": 4,
+  "sources": {
+    "walk_c1": {
+      "file": "walk_c1.png",
+      "standing_height": 465,
+      "standing_height_note": "All eight poses share one 465-source-pixel standing-equivalent calibration. Observed hair-top to supporting-sole spans are approximately 460-477 px; no per-pose height normalization is applied.",
+      "actual_size": [1536, 1024],
+      "actual_pose_count": 8,
+      "layout_note": "Manually inspected two rows of four independent poses. Crops follow measured silhouettes, not equal-width grid cells. Lower-left sword reaches x418 and crosses a nominal 384 px cell boundary.",
+      "alpha_note": "True RGBA source: 946505 pixels have alpha 0; maximum alpha is 254. Low-alpha 1-5 noise exists in otherwise transparent gaps. No background removal or noise erasure is performed by this configuration."
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": true,
+    "weapon_layering": "not_attempted",
+    "G1": "pending_review",
+    "G2": "pending_review",
+    "G3": "not_passed",
+    "G4": "pending_review"
+  },
+  "calibration_review": {
+    "status": "draft_manual_calibration_not_exported",
+    "coordinate_convention": "Absolute source pixels; bbox right/bottom exclusive. root x follows the pelvis projection, root y follows the measured supporting sole. foot marks a supporting sole contact point rather than recentering the actor on that foot.",
+    "visual_observations": [
+      "Eight source poses are present, but poses 1/4/5/8 repeat a broadly similar extended-stride silhouette; 2/6 and 3/7 are also close. A complete alternating walking cycle is not established by the source sheet alone.",
+      "Upper body, sword and free arm remain rather static; repeated coat-tail shapes and stance changes may read as pose substitutions rather than weight transfer. Real-speed playback and foot-sliding review remain required.",
+      "Silver hair with red forelock, black coat with red lining, double red forearm wraps, black trousers and segmented greaves are visible across the poses. Small buckle/strap details and exact weapon proportions still require comparison against standard_v1.",
+      "Weapon proportion needs review: a rough pose-1 guard [158,266] to tip [396,354] measurement gives approximately 104 output pixels at this shared body scale, versus the standard A7 guard-to-tip target of 128 pixels for a 190-pixel actor. This is an approximate visual measurement, not a validated weapon landmark contract.",
+      "The candidate contains the painted katana. No separated weapon, finger layer, weapon switching, combat timing, hit event or engine integration is claimed."
+    ]
+  },
+  "clips": {
+    "walk": {
+      "asset_id": "actor.player.base.walk",
+      "loop": true,
+      "root_mode": "ground",
+      "loop_review": "Requested cyclic playback only; loop continuity, weight transfer and foot sliding are not accepted yet.",
+      "poses": [
+        {
+          "id": "walk_01",
+          "source": "walk_c1",
+          "crop_bbox": [28, 10, 406, 500],
+          "root": [246, 483],
+          "foot": [325, 483],
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "All four crop edges were measured: maximum alpha 1, zero edge pixels above alpha 5. The meaningful alpha>16 silhouette bbox is [41,22,398,484], including the entire sword. The allowance preserves faint background-edge noise without cutting visible anatomy or blade."
+        },
+        {
+          "id": "walk_02",
+          "source": "walk_c1",
+          "crop_bbox": [406, 10, 756, 500],
+          "root": [598, 489],
+          "foot": [629, 489],
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "All four crop edges were measured: maximum alpha 1, zero edge pixels above alpha 5. The meaningful alpha>16 silhouette bbox is [415,25,748,490], including the entire sword. Only negligible gap noise touches the crop."
+        },
+        {
+          "id": "walk_03",
+          "source": "walk_c1",
+          "crop_bbox": [756, 8, 1122, 500],
+          "root": [950, 488],
+          "foot": [948, 488],
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "All four crop edges were measured: maximum alpha 1, zero edge pixels above alpha 5. The meaningful alpha>16 silhouette bbox is [763,20,1102,489], including the entire sword. Only negligible gap noise touches the crop."
+        },
+        {
+          "id": "walk_04",
+          "source": "walk_c1",
+          "crop_bbox": [1122, 8, 1510, 500],
+          "root": [1327, 484],
+          "foot": [1256, 484],
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "All four crop edges were measured: maximum alpha 1, zero edge pixels above alpha 5. The meaningful alpha>16 silhouette bbox is [1133,19,1492,485], including the entire sword. Only negligible gap noise touches the crop."
+        },
+        {
+          "id": "walk_05",
+          "source": "walk_c1",
+          "crop_bbox": [30, 501, 422, 1004],
+          "root": [250, 983],
+          "foot": [347, 983],
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "All four crop edges were measured: maximum alpha 1, zero edge pixels above alpha 5. The meaningful alpha>16 silhouette bbox is [47,514,418,984]. Right boundary 422 deliberately lies beyond the nominal first cell so the long sword tip and forward boot remain complete. Only negligible gap noise touches the crop."
+        },
+        {
+          "id": "walk_06",
+          "source": "walk_c1",
+          "crop_bbox": [422, 501, 768, 1004],
+          "root": [610, 985],
+          "foot": [631, 985],
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "All four crop edges were measured: maximum alpha 2, zero edge pixels above alpha 5. The meaningful alpha>16 silhouette bbox is [426,514,760,986], including the entire sword. The left boundary is in the narrow transparent gap after pose 5, without visible overlap."
+        },
+        {
+          "id": "walk_07",
+          "source": "walk_c1",
+          "crop_bbox": [768, 501, 1126, 1004],
+          "root": [969, 990],
+          "foot": [965, 990],
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "All four crop edges were measured: maximum alpha 1, zero edge pixels above alpha 5. The meaningful alpha>16 silhouette bbox is [776,512,1118,991], including the entire sword. Only negligible gap noise touches the crop."
+        },
+        {
+          "id": "walk_08",
+          "source": "walk_c1",
+          "crop_bbox": [1126, 501, 1510, 1004],
+          "root": [1329, 986],
+          "foot": [1423, 986],
+          "duration_ticks": 5,
+          "allow_edge_alpha": false,
+          "edge_alpha_reason": "All crop edges have alpha 0, so no edge allowance is required. The meaningful alpha>16 silhouette bbox is [1138,512,1491,986], including the entire sword."
+        }
+      ]
+    }
+  }
+}

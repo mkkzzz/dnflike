@@ -1,0 +1,515 @@
+{
+  "revision": "standard_v1_jump_c2_calibration",
+  "status": "manual_calibration_draft_not_exported",
+  "output_dir": "../../seq_v7/pilot_c2",
+  "canvas": [
+    512,
+    400
+  ],
+  "anchor": [
+    224,
+    360
+  ],
+  "target_standing_height": 190,
+  "contact_columns": 4,
+  "sources": {
+    "jump_sheet": {
+      "file": "jump_c2.png",
+      "standing_height": 400,
+      "source_size": [
+        1774,
+        887
+      ],
+      "height_basis": "One shared approximate equivalent erect height of 400 source pixels. C2 push-off now extends the trailing leg; no per-pose bbox rescaling. Manual root uncertainty and any proportional drift need naked playback review."
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": true,
+    "weapon_layering": "not_attempted",
+    "G1": "pending_review",
+    "G2": "pending_review",
+    "G3": "not_passed",
+    "G4": "pending_review"
+  },
+  "calibration": {
+    "actual_source_pose_count": 8,
+    "configured_pose_references": 15,
+    "coordinate_system": "absolute source pixels, x right, y down, bbox max exclusive",
+    "order": "Row major for source identity only; actual pose bounds explicitly measured. C2 push-off extends beyond the former x=887 grid line.",
+    "root_contract": "Grounded stages 0/5/6/7 use actual local support-line proxies. Airborne stages 1/2/3/4 use local virtual standing-foot proxies estimated beneath the pelvis with legs extended. C2 push-off root is explicitly recalibrated to [701,446]. Source roots remove sheet-layout offsets when aligning to anchor; source row or hair-height differences are never added as jump movement.",
+    "height_contract": "Independent OUTPUT heights for source stages 0..7 are [0,8,50,80,50,0,0,0]. separate_height preview applies height_px to the entire normalized PNG once. Do not also apply source root_y/row differences, and do not normalize every airborne pose by the lowest foot.",
+    "foot_contract": "foot is one actual visible lower boot-sole point for overlay review; it is not the root estimator for airborne poses.",
+    "timing_contract": "jump_demo uses source stages 1..7, [3,6,5,6,2,5,5] = 32 ticks. It starts with push-off immediately; the 6-tick preparation pose is an optional separate jump_prepare clip and is not a mandatory input delay. Phase clips reuse the same 8 source IDs. Runtime phase changes follow physics, not these demo holds.",
+    "alpha_observation": "C2 is actual transparent RGBA (alpha 0..255). At alpha>24 it has exactly 8 substantial components. Faint lower-alpha speckles remain outside major shapes; allow_edge_alpha=true is explicit draft acceptance of those existing remnants, not final alpha cleanup. Source image unchanged.",
+    "bbox_contract": "Every bbox includes complete visible actor, sword and scabbard with padding around the substantial alpha component. No source pixel processing was performed.",
+    "visual_limitations": [
+      "C2 fixes the major missing leg extension in push-off, but does not prove timing or force quality until playback is reviewed.",
+      "Push-off source silhouette is taller after extension; shared standing_height=400 is retained and any proportional drift requires comparison, not individual resizing.",
+      "Sword angles remain similar in airborne poses; fingers, hand-to-hilt contact and off-hand balance need review at final size.",
+      "Prepare and compression remain combat crouches; compression reaches the off hand toward the floor.",
+      "Recovery still has flexed knees and a wide combat stance; a neutral standing transition is missing.",
+      "Manual source roots have +/-10 pixels estimated uncertainty, +/-15 for edited push-off. No art approval or runtime timing approval claimed."
+    ],
+    "verification": "Viewed C2 original; measured its 8 alpha>24 components; explicit bboxes, coordinates and JSON checked. No exporter invocation or output PNG/GIF/manifest generation performed.",
+    "substantial_alpha_bboxes_by_source_stage": [
+      [
+        40,
+        128,
+        427,
+        446
+      ],
+      [
+        498,
+        14,
+        914,
+        444
+      ],
+      [
+        925,
+        30,
+        1308,
+        411
+      ],
+      [
+        1359,
+        15,
+        1763,
+        327
+      ],
+      [
+        37,
+        449,
+        397,
+        831
+      ],
+      [
+        468,
+        505,
+        854,
+        851
+      ],
+      [
+        928,
+        587,
+        1295,
+        850
+      ],
+      [
+        1350,
+        463,
+        1738,
+        852
+      ]
+    ]
+  },
+  "clips": {
+    "jump_demo": {
+      "asset_id": "actor.player.base.jump",
+      "loop": false,
+      "root_mode": "separate_height",
+      "timing_note": "Preview-only 32-tick demonstration. Starts at push-off; no preparation input delay baked. Runtime jump duration remains physics driven.",
+      "poses": [
+        {
+          "id": "jump_01_push_off",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            486,
+            3,
+            922,
+            448
+          ],
+          "root": [
+            701,
+            446
+          ],
+          "foot": [
+            535,
+            441
+          ],
+          "height_px": 8,
+          "duration_ticks": 3,
+          "allow_edge_alpha": true,
+          "calibration_note": "push off: c2 extends trailing support leg and lifts leading knee; explicit crop crosses former grid boundary x=887",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 15
+        },
+        {
+          "id": "jump_02_rise",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            913,
+            18,
+            1320,
+            424
+          ],
+          "root": [
+            1113,
+            427
+          ],
+          "foot": [
+            1014,
+            408
+          ],
+          "height_px": 50,
+          "duration_ticks": 6,
+          "allow_edge_alpha": true,
+          "calibration_note": "rise: both feet airborne and knees flex",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 10
+        },
+        {
+          "id": "jump_03_apex",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            1347,
+            3,
+            1774,
+            340
+          ],
+          "root": [
+            1553,
+            407
+          ],
+          "foot": [
+            1520,
+            324
+          ],
+          "height_px": 80,
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "calibration_note": "apex: tucked legs; c2 right edge expands to x=1763",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 10
+        },
+        {
+          "id": "jump_04_fall",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            25,
+            447,
+            410,
+            843
+          ],
+          "root": [
+            228,
+            850
+          ],
+          "foot": [
+            262,
+            825
+          ],
+          "height_px": 50,
+          "duration_ticks": 6,
+          "allow_edge_alpha": true,
+          "calibration_note": "fall: lower boots extend below pelvis; head begins y=449 in c2",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 10
+        },
+        {
+          "id": "jump_05_contact",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            455,
+            493,
+            867,
+            864
+          ],
+          "root": [
+            671,
+            850
+          ],
+          "foot": [
+            802,
+            848
+          ],
+          "height_px": 0,
+          "duration_ticks": 2,
+          "allow_edge_alpha": true,
+          "calibration_note": "landing contact: forward boot sole is on local support line",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10
+        },
+        {
+          "id": "jump_06_compress",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            916,
+            575,
+            1308,
+            863
+          ],
+          "root": [
+            1118,
+            850
+          ],
+          "foot": [
+            1053,
+            848
+          ],
+          "height_px": 0,
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "calibration_note": "landing compression: deep crouch and off hand near floor",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10
+        },
+        {
+          "id": "jump_07_recover",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            1338,
+            451,
+            1751,
+            865
+          ],
+          "root": [
+            1547,
+            850
+          ],
+          "foot": [
+            1693,
+            850
+          ],
+          "height_px": 0,
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "calibration_note": "recover: wide bent-knee combat stance, not neutral standing",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10
+        }
+      ]
+    },
+    "jump_rise": {
+      "asset_id": "actor.player.base.jump.rise",
+      "loop": false,
+      "root_mode": "separate_height",
+      "timing_note": "Reused c2 stages 1 and 2; 9 ticks in this sample. Start physics impulse immediately; do not wait for an animation windup.",
+      "poses": [
+        {
+          "id": "jump_01_push_off",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            486,
+            3,
+            922,
+            448
+          ],
+          "root": [
+            701,
+            446
+          ],
+          "foot": [
+            535,
+            441
+          ],
+          "height_px": 8,
+          "duration_ticks": 3,
+          "allow_edge_alpha": true,
+          "calibration_note": "push off: c2 extends trailing support leg and lifts leading knee; explicit crop crosses former grid boundary x=887",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 15
+        },
+        {
+          "id": "jump_02_rise",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            913,
+            18,
+            1320,
+            424
+          ],
+          "root": [
+            1113,
+            427
+          ],
+          "foot": [
+            1014,
+            408
+          ],
+          "height_px": 50,
+          "duration_ticks": 6,
+          "allow_edge_alpha": true,
+          "calibration_note": "rise: both feet airborne and knees flex",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 10
+        }
+      ]
+    },
+    "jump_apex": {
+      "asset_id": "actor.player.base.jump.apex",
+      "loop": false,
+      "root_mode": "separate_height",
+      "timing_note": "Reused c2 stage 3; 5-tick sample only. Runtime transition follows vertical velocity.",
+      "poses": [
+        {
+          "id": "jump_03_apex",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            1347,
+            3,
+            1774,
+            340
+          ],
+          "root": [
+            1553,
+            407
+          ],
+          "foot": [
+            1520,
+            324
+          ],
+          "height_px": 80,
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "calibration_note": "apex: tucked legs; c2 right edge expands to x=1763",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 10
+        }
+      ]
+    },
+    "jump_fall": {
+      "asset_id": "actor.player.base.jump.fall",
+      "loop": false,
+      "root_mode": "separate_height",
+      "timing_note": "Reused c2 stage 4; 6-tick sample only. Runtime holds until actual landing contact.",
+      "poses": [
+        {
+          "id": "jump_04_fall",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            25,
+            447,
+            410,
+            843
+          ],
+          "root": [
+            228,
+            850
+          ],
+          "foot": [
+            262,
+            825
+          ],
+          "height_px": 50,
+          "duration_ticks": 6,
+          "allow_edge_alpha": true,
+          "calibration_note": "fall: lower boots extend below pelvis; head begins y=449 in c2",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 10
+        }
+      ]
+    },
+    "jump_land": {
+      "asset_id": "actor.player.base.jump.land",
+      "loop": false,
+      "root_mode": "separate_height",
+      "timing_note": "Reused c2 stages 5/6/7, 12-tick landing sample triggered by real contact.",
+      "poses": [
+        {
+          "id": "jump_05_contact",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            455,
+            493,
+            867,
+            864
+          ],
+          "root": [
+            671,
+            850
+          ],
+          "foot": [
+            802,
+            848
+          ],
+          "height_px": 0,
+          "duration_ticks": 2,
+          "allow_edge_alpha": true,
+          "calibration_note": "landing contact: forward boot sole is on local support line",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10
+        },
+        {
+          "id": "jump_06_compress",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            916,
+            575,
+            1308,
+            863
+          ],
+          "root": [
+            1118,
+            850
+          ],
+          "foot": [
+            1053,
+            848
+          ],
+          "height_px": 0,
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "calibration_note": "landing compression: deep crouch and off hand near floor",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10
+        },
+        {
+          "id": "jump_07_recover",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            1338,
+            451,
+            1751,
+            865
+          ],
+          "root": [
+            1547,
+            850
+          ],
+          "foot": [
+            1693,
+            850
+          ],
+          "height_px": 0,
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "calibration_note": "recover: wide bent-knee combat stance, not neutral standing",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10
+        }
+      ]
+    },
+    "jump_prepare": {
+      "asset_id": "actor.player.base.jump.prepare",
+      "loop": false,
+      "root_mode": "separate_height",
+      "timing_note": "Optional isolated 6-tick anticipation study; excluded from jump_demo and immediate jump input flow.",
+      "poses": [
+        {
+          "id": "jump_00_prepare",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            28,
+            116,
+            440,
+            448
+          ],
+          "root": [
+            228,
+            445
+          ],
+          "foot": [
+            314,
+            443
+          ],
+          "height_px": 0,
+          "duration_ticks": 6,
+          "allow_edge_alpha": true,
+          "calibration_note": "prepare: crouched contact stance; optional preparation clip only",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10
+        }
+      ]
+    }
+  }
+}

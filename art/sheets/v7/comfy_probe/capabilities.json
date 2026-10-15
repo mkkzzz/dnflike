@@ -1,0 +1,35 @@
+{
+  "comfyui_version": "0.9.2",
+  "python_version": "3.13.11 (tags/v3.13.11:6278944, Dec  5 2025, 16:26:58) [MSC v.1944 64 bit (AMD64)]",
+  "pytorch_version": "2.9.1+cu130",
+  "devices": [
+    {
+      "name": "cuda:0 NVIDIA GeForce RTX 3060 Ti : cudaMallocAsync",
+      "type": "cuda",
+      "index": 0,
+      "vram_total": 8589410304,
+      "vram_free": 7472152576,
+      "torch_vram_total": 0,
+      "torch_vram_free": 0
+    }
+  ],
+  "required_nodes_present": [
+    "CLIPTextEncode",
+    "CheckpointLoaderSimple",
+    "ControlNetApplyAdvanced",
+    "ControlNetLoader",
+    "EmptyLatentImage",
+    "IPAdapterAdvanced",
+    "IPAdapterUnifiedLoader",
+    "KSampler",
+    "LoadImage",
+    "SaveImage",
+    "SetUnionControlNetType",
+    "VAEDecode"
+  ],
+  "checkpoint_listed": true,
+  "controlnet_listed": true,
+  "offline_start": true,
+  "actual_inference_validated": true,
+  "visual_source_approved": false
+}

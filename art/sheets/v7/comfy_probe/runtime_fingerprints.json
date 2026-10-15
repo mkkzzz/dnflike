@@ -1,0 +1,35 @@
+{
+  "model_files": [
+    {
+      "file": "models/checkpoints/NoobAI-XL-v1.0.safetensors",
+      "bytes": 6938040416,
+      "sha256": "ff827fc34584853257d6de64b8bc3e34156814f6b0cfd1a5112a5e9164806df1"
+    },
+    {
+      "file": "models/controlnet/diffusion_pytorch_model_promax.safetensors",
+      "bytes": 2513342408,
+      "sha256": "9fae2e50cb431bfcbe05822b59ec2228df545ef27f711dea8949e9f4ed9f7cdc"
+    },
+    {
+      "file": "models/ipadapter/ip-adapter-plus_sdxl_vit-h.safetensors",
+      "bytes": 847517512,
+      "sha256": "3f5062b8400c94b7159665b21ba5c62acdcd7682262743d7f2aefedef00e6581"
+    },
+    {
+      "file": "models/clip_vision/CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors",
+      "bytes": 2528373448,
+      "sha256": "6ca9667da1ca9e0b0f75e46bb030f7e011f44f86cbfb8d5a36590fcd7507b030"
+    }
+  ],
+  "source_revisions": [
+    {
+      "component": ".",
+      "git_commit": "8f40b43e0204d5b9780f3e9618e140e929e80594"
+    },
+    {
+      "component": "custom_nodes/ComfyUI_IPAdapter_plus",
+      "git_commit": "a0f451a5113cf9becb0847b92884cb10cbdec0ef"
+    }
+  ],
+  "model_header_prediction_metadata": "absent; EPS versus v_prediction cannot be established from metadata"
+}

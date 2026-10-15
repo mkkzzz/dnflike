@@ -1,0 +1,250 @@
+{
+  "revision": "v7_pilot_c2",
+  "output_dir": "../../seq_v7/pilot_c2",
+  "canvas": [
+    512,
+    400
+  ],
+  "anchor": [
+    224,
+    360
+  ],
+  "target_standing_height": 190,
+  "contact_columns": 4,
+  "declarations": {
+    "actor_includes_weapon": true,
+    "weapon_layering": "not_attempted",
+    "G1": "pending_review",
+    "G2": "pending_review",
+    "G3": "not_passed",
+    "G4": "pending_review"
+  },
+  "sources": {
+    "run_c2": {
+      "file": "run_c2.png",
+      "standing_height": 430
+    }
+  },
+  "calibration_review": {
+    "status": "manual_candidate_pending_export_and_visual_review",
+    "body_scale": "one source standing-equivalent height; no per-pose bounding-box normalization",
+    "mask": "explicit component seed isolates the painted actor where rectangular source crops overlap; no painted pose synthesis",
+    "limitations": [
+      "c2 changes lower-row legs but full alternating cycle and toe-off still require playback review.",
+      "Airborne poses share a virtual ground line, not their lowest foot."
+    ]
+  },
+  "clips": {
+    "run": {
+      "asset_id": "actor.player.base.run",
+      "loop": true,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "run_01",
+          "source": "run_c2",
+          "crop_bbox": [
+            5,
+            10,
+            468,
+            447
+          ],
+          "root": [
+            270,
+            440
+          ],
+          "foot": [
+            418,
+            438
+          ],
+          "component_seed": [
+            270,
+            245
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "run_02",
+          "source": "run_c2",
+          "crop_bbox": [
+            470,
+            10,
+            900,
+            447
+          ],
+          "root": [
+            690,
+            440
+          ],
+          "foot": [
+            649,
+            439
+          ],
+          "component_seed": [
+            690,
+            245
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "run_03",
+          "source": "run_c2",
+          "crop_bbox": [
+            902,
+            10,
+            1334,
+            447
+          ],
+          "root": [
+            1120,
+            440
+          ],
+          "foot": [
+            979,
+            436
+          ],
+          "component_seed": [
+            1120,
+            245
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "run_04",
+          "source": "run_c2",
+          "crop_bbox": [
+            1340,
+            0,
+            1774,
+            447
+          ],
+          "root": [
+            1555,
+            440
+          ],
+          "foot": [
+            1416,
+            396
+          ],
+          "component_seed": [
+            1570,
+            230
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "Candidate body/blade is complete but close to the source canvas edge; source edge has been visually inspected. Export canvas adds space; source is preserved."
+        },
+        {
+          "id": "run_05",
+          "source": "run_c2",
+          "crop_bbox": [
+            5,
+            445,
+            505,
+            885
+          ],
+          "root": [
+            260,
+            867
+          ],
+          "foot": [
+            447,
+            856
+          ],
+          "component_seed": [
+            270,
+            670
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "run_06",
+          "source": "run_c2",
+          "crop_bbox": [
+            480,
+            445,
+            900,
+            885
+          ],
+          "root": [
+            690,
+            867
+          ],
+          "foot": [
+            662,
+            865
+          ],
+          "component_seed": [
+            690,
+            670
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "run_07",
+          "source": "run_c2",
+          "crop_bbox": [
+            902,
+            445,
+            1337,
+            885
+          ],
+          "root": [
+            1120,
+            867
+          ],
+          "foot": [
+            1240,
+            862
+          ],
+          "component_seed": [
+            1120,
+            670
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "run_08",
+          "source": "run_c2",
+          "crop_bbox": [
+            1340,
+            440,
+            1774,
+            885
+          ],
+          "root": [
+            1555,
+            867
+          ],
+          "foot": [
+            1416,
+            809
+          ],
+          "component_seed": [
+            1570,
+            650
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "Candidate body/blade is complete but close to the source canvas edge; source edge has been visually inspected. Export canvas adds space; source is preserved."
+        }
+      ]
+    }
+  }
+}

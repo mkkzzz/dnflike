@@ -1,0 +1,19 @@
+{
+  "scope": "local S4b feasibility probe only; not an actor export or production workflow",
+  "attempt_count": 2,
+  "runtime": "both API graphs validated and executed successfully; no node compatibility or VRAM exception",
+  "result": "both images rejected after direct visual inspection",
+  "sampling_hypothesis": "initial loader reported EPS; checkpoint metadata has no prediction type; one explicit v_prediction + zero-terminal-SNR retry was worse, so the cause remains unproven",
+  "actual_references": "both input PNGs uploaded through /upload/image; see upload_receipts.json hashes and server receipts",
+  "pose_input": "hand-authored canonical OpenPose COCO body-18, not the custom IK guide",
+  "repeatability": "workflow_api*.json + input/ + runtime_fingerprints.json; same seed, 24 Euler ancestral steps, one output per attempt",
+  "not_done": [
+    "no installs or downloads",
+    "no third-party code edits",
+    "no identity LoRA training",
+    "no batch generation",
+    "no game integration",
+    "no transparent cutout"
+  ],
+  "next_minimal_diagnostic_if_later_authorized": "isolate checkpoint text-to-image, then IPAdapter only, then Union OpenPose; verify exact model distribution/sample settings before another art attempt"
+}

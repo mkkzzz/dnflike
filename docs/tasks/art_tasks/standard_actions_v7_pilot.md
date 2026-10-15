@@ -1,0 +1,107 @@
+# 任务：standard_v1 动作首轮小样 v7
+
+## 1. 身份与需求
+
+| 字段 | 内容 |
+|---|---|
+| task_id | standard_actions_v7_pilot |
+| revision | v7；候选通过并验收前不替代现行资源 |
+| asset_type / workflow | 玩家动作；[14](../../design/14_美术资源全流程.md) B |
+| style / theme | handpainted_action_v1 / dark_fantasy_v1 |
+| owner / integration_owner | ws2 制作小样；正式接入待候选认可后分配 |
+| lifecycle | 源图制作（source_review）；奔跑/跳跃/attack1 候选待评审，行走退回；未实装 |
+| 批准范围 | 2026-10-15 使用者同意 attack1 首轮测试，并授权行走、奔跑、跳跃基础动作小样；这不是源图/成品或实机批准 |
+
+本轮逐组制作代表小样，不扩展其它攻击、时装或技能；共用标准原画的脸、比例、服装、色板、游戏机位和右手单手持刀规则。
+
+| 语义 ID | 小样范围 | 成功表现 |
+|---|---|---|
+| actor.player.base.combo.1 | attack1 蓄势、释放、接触、余势与恢复 | 刀手同方案、髋肩发力；与 V6 同比例对比 |
+| actor.player.base.walk | 完整左右腿交替循环 | 接触、压低、经过、抬高清楚；避免只有左右大跨步 |
+| actor.player.base.run | 完整左右腿交替循环 | 蹬地、腾空、着地、缓冲清楚，区别于加速行走 |
+| actor.player.base.jump | 准备、蹬离、上升、顶点、下落、着地、缓冲、恢复 | 空中收腿、衣摆滞后；虚拟地面 root 保留高度 |
+
+## 2. 依赖与影响
+
+- 身份：standard_v1，按 [D030](../../design/决策清单.md) 与[标准原画任务](char_swordsman_standard_v1.md)文字规格优先；A8 握法与 A5 重出不阻塞本轮。
+- 动作路线：[18](../../design/18_角色锚定与动作管线.md) S4，骨架提供姿势约束，参考原画提供身份。
+- 现行基线：V3/V4 的移动和跳跃、V6 的 attack1；小样仅发布候选，不修改 game 资源、玩法时长、物理移动或碰撞。
+- 下游：候选认可后才补武器/手指层、刀光与事件、接入映射；动作带刀小样不能代表 G3 换武器已通过。
+- 回退：现行资源保持原路径与映射；新目录与旧版并存。
+
+## 3. 参考与生成能力
+
+| 参考 | 用途 | 实际输入 |
+|---|---|---|
+| `art/characters/standard_v1/sheet_pose_head_c2.png` | 朝右游戏机位、脸、握刀和服装 | 各次调用的真实路径列表记 generation.json |
+| `art/characters/standard_v1/sheet_main_c1.png` | 四向身份、材质与比例 | 同上；图的已知瑕疵以文字规格纠正 |
+| 本任务各动作骨架引导板 | 格子位置、相位、关节、握点和刀向 | 同上；引导不是最终人物画面 |
+
+使用内置 image_gen，直接传入参考图片并请求真实透明背景；不是在提示词中写路径代替输入。完整提示词、输入列表、工具返回与实际透明度检查保存于 v7 的生成和加工记录。不调用收费 API/CLI，不上传本机 ComfyUI 安装路径。
+
+## 4. 小样与导出规格
+
+- 生成请求为每组 4 列 × 2 行、8 个真实关键姿势；实际主体数量与布局须看图后显式标定，不能按生成请求假定成功。
+- 固定朝右三分之四游戏机位，约 8 头身；统一缩至站立等效身高 190 px，不按每帧外接框分别拉伸，不把下蹲/腾空姿势拉成等高。
+- 单手持标准太刀的候选先验证动作设计；不得宣称武器分层或任意换武器已实现。右手为持刀手，左手作平衡；无额外武器、刀光、残影或地面阴影。
+- 统一 RGBA、straight alpha、normal 混合；实际输出 alpha 和边缘须检查。
+- 用显式 bbox/root/duration_ticks 导出；60 Hz 整数动作时钟，不预烘命中停帧。跳跃以虚拟地面 root 和高度记录，禁止逐帧把最低鞋底吸回地面。
+- 预览直接回放同一导出 PNG 和 manifest；GIF 的时长量化与真正时速须如实说明。
+
+## 5. 源图、加工与证据（2026-10-16）
+
+- 源图与完整提示词：`art/sheets/v7/generation.json`；各组 c1 首轮与 c2 定向修图均保留，实际传入身份原图和骨架引导板。
+- **行走退回**：c1/c2 都重复同一半步，未形成清楚左右腿交替；没有导入正式候选包。标定草案保留失败依据，不能按格数宣称完整循环。
+- **候选**：attack1_c2 补回蓄势缺失的刀身；run_c2 修了后半圈部分腿位，但完整左右交换仍不清楚，只可评跑姿/节奏，不能标完整循环通过；jump_c2 加强蹬离伸展。源图仍有比例/太刀长度、脚滑、横斩轨迹与收势待评审，未获源图或成品批准。
+- 加工配置：`art/sheets/v7/pilot_c2.json`；自包含导出入口 `art/seq_v7/pilot_c2/manifest.json`。v7 JSON 固定 LF 换行，保证跨 clone 的文件哈希一致。
+- attack1/run 按显式种子与 alpha 核心连通域隔离跨格主体，mask 随包保存；跳跃使用显式独立裁切、保留低 alpha 噪点，未强行丢弃细碎头发/手指。只做裁切、等比缩放和定锚，没有程序扭曲或伪造姿势。
+- 跳跃拆 rise/apex/fall/land，prepare 单独保留；jump_demo 从蹬离开始，外部高度曲线仅为评审演示，不固定实机跳跃时长，不增加输入延迟。
+- `preview_report.json` 记录实际帧引用与 GIF 误差；`preview_publication.json` 记录评审目录与包内回放文件逐字节一致；`independent_review.json` 记录独立技术重建及实际看图结论。
+
+复现（Python 环境需已具备 `requirements.txt` 所列对应依赖；引导脚本需 numpy/Pillow，导出只需 Pillow）：
+
+```powershell
+python tools/explore/standard_actions_guides.py walk run jump attack1
+python tools/explore/standard_actions_pilot.py art/sheets/v7/pilot_c2.json
+```
+
+导出目录已存在时，请用新的候选目录，或对同一候选显式加 `--overwrite`；随机生图以已入库源图为准，不能靠再跑提示词保证相同结果。
+
+评审入口（均在仓库 `docs/previews/v7_pilot/`，绝对路径根为当前 clone）：
+
+| 文件 | 用途 |
+|---|---|
+| `docs/previews/v7_pilot/actions_naked.gif` | 奔跑、跳跃演示、attack1 同场裸动作总览；短招结束后保持末帧，仅为总览复看 |
+| `docs/previews/v7_pilot/run_naked.gif` | 奔跑实速循环 |
+| `docs/previews/v7_pilot/jump_demo_naked.gif` | 跳跃分段拼接演示，非实机物理固定时长 |
+| `docs/previews/v7_pilot/attack1_compare.gif` | 同比例与 V6 裸动作并排，供 G2/G4 评审 |
+| `docs/previews/v7_pilot/attack1_contact.png` | 普攻全部关键姿势与 root |
+| `docs/previews/v7_pilot/run_contact.png` | 奔跑关键姿势与 root |
+| `docs/previews/v7_pilot/jump_demo_contact.png` | 跳跃相位与独立高度 |
+
+GIF 为整数动作 tick 经累计 10 ms 量化，准确时钟以 manifest 为准；本轮没有制作 MP4 或实机录像。
+
+### S4b 后备探针：能运行，画质未过
+
+本机 ComfyUI 的 SDXL + IPAdapter + Union OpenPose 实际上传了身份裁切和标准色骨架，并完成两次单帧推理；首图严重几何化/身份漂移，一次 v_prediction + zsnr 重试近乎全灰，全部拒收。工具可运行不等于美术管线可用，不进入正式回放；服务已停止。
+
+真实工作流、输入上传回执、模型哈希、节点版本、结果与失败评审见 `art/sheets/v7/comfy_probe/review.json`；探针入口 `tools/explore/comfy_pose_probe.py`。本机安装/运行时路径仅存 `.workspace`，不入库。后续须先分别隔离验证 checkpoint、IPAdapter、ControlNet，不继续盲目批量出图。
+
+## 6. 验收门与当前结果
+
+| 检查 | 要求 | 结果 |
+|---|---|---|
+| 格式与回放 | 引用、RGBA、边界、显式时长、锚点和朝向 | 导出校验及独立重建通过，详见包内报告；握点/护手/刀尖保护点未标定，不宣称自动验证通过 |
+| G1 身份 | 各动作与 standard_v1 同角色，跨图同服装和比例 | 有候选待用户评审；已知比例/太刀长度偏差待核对 |
+| G2 画质 | attack1 与 V6 并排；最多两轮，不达标则按18退回S0 | 并排回放已提供，待用户判断；生图次数与提交均不算通过 |
+| G3 武器 | 去刀补握拳/手指层，挂回太刀并换巨剑/短剑 | 未执行；带刀小样不算通过 |
+| G4 裸动作 | 实速先看步态、重心、跳跃与发力；再看特效 | 裸动作已回放；行走退回，奔跑/跳跃/attack1 待用户评审 |
+
+## 7. 发布与实装待办
+
+- [x] 源图、真实输入/提示词、骨架、标定、导出包与预览自包含入库；发布结果以交接日志及远程提交核对为准。
+- [ ] 用户认可小样身份、画质与裸动作。
+- [ ] 完成 G3 武器分层/换武器验证，补真实握点和刀线。
+- [ ] 逐动作补过渡与整套资源，明确替换映射并交接。
+- [ ] 接收区接入、受影响回归与实机证据。
+- [ ] 用户实机验收后升级状态。

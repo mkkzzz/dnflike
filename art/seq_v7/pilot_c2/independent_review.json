@@ -1,0 +1,152 @@
+{
+  "schema": "standard_actions_pilot_independent_review/1",
+  "review_date": "2026-10-16",
+  "package": "art/seq_v7/pilot_c2",
+  "status": "technical_checks_passed_visual_candidate_only",
+  "original_config": "art/sheets/v7/pilot_c2.json",
+  "automated_checks": {
+    "frame_references": 31,
+    "unique_source_poses": 24,
+    "unique_rgba_pixel_payloads": 24,
+    "per_source": {
+      "attack1_c2": {
+        "references": 8,
+        "unique_source_poses": 8
+      },
+      "run_c2": {
+        "references": 8,
+        "unique_source_poses": 8
+      },
+      "jump_sheet": {
+        "references": 15,
+        "unique_source_poses": 8
+      }
+    },
+    "source_image_hashes_match": true,
+    "source_image_count": 3,
+    "original_config_hash_matches": true,
+    "saved_config_semantically_matches_original": true,
+    "source_crop_root_mapping_rebuilt_pngs_exactly": 31,
+    "rgba_png_count": 31,
+    "canvas_alpha_edges_clear": 31,
+    "recorded_alpha_bboxes_match_actual_pngs": 31,
+    "positive_integer_frame_durations_and_contiguous_timeline": true,
+    "main_durations_ticks": {
+      "attack1": 30,
+      "run": 24,
+      "jump_demo": 32
+    },
+    "component_masks": 16,
+    "component_mask_hashes_match": 16,
+    "component_isolation_metadata_exactly_reproduced": 16,
+    "discarded_nonzero_alpha_pixels_total": 64378,
+    "other_alpha_cores_excluded_by_seeded_masks": true,
+    "automatic_grip_guard_tip_protection_checks": 0,
+    "automatic_grip_guard_tip_protection_note": "No explicit grip/guard/tip landmarks were configured. Reproducible component isolation does not substitute for automatic protected-point validation.",
+    "requested_contact_pngs_rebuilt_from_exported_pngs_exactly": [
+      "attack1_contact.png",
+      "run_contact.png",
+      "jump_demo_contact.png"
+    ],
+    "naked_first_frame_pngs_rebuilt_from_exported_pngs_exactly": [
+      "attack1_naked.png",
+      "run_naked.png",
+      "jump_demo_naked.png"
+    ],
+    "attack1_comparison_first_frame_exactly_matches_exported_candidate_and_v6_pngs": true,
+    "gif_duration_reports_match_actual_files": true,
+    "gif_maximum_total_quantization_error_ms": 3.3333333333333712,
+    "gif_timing_authority": "manifest.json at 60 Hz; GIF is cumulatively quantized to 10 ms",
+    "main_gif_timing": [
+      {
+        "file": "attack1_naked.gif",
+        "intended_duration_ticks": 30,
+        "intended_duration_ms": 500.0,
+        "gif_duration_ms": 500,
+        "total_error_ms": 0.0,
+        "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+        "loop": false
+      },
+      {
+        "file": "run_naked.gif",
+        "intended_duration_ticks": 24,
+        "intended_duration_ms": 400.0,
+        "gif_duration_ms": 400,
+        "total_error_ms": 0.0,
+        "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+        "loop": true
+      },
+      {
+        "file": "jump_demo_naked.gif",
+        "intended_duration_ticks": 32,
+        "intended_duration_ms": 533.3333333333334,
+        "gif_duration_ms": 530,
+        "total_error_ms": -3.3333333333333712,
+        "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+        "loop": false
+      }
+    ]
+  },
+  "visual_review": {
+    "basis": [
+      "previews/attack1_contact.png",
+      "previews/run_contact.png",
+      "previews/jump_demo_contact.png",
+      "previews/jump_prepare_contact.png",
+      "previews/attack1_compare.png",
+      "source run_c1.png compared with run_c2.png"
+    ],
+    "scope": "Static exported contact sheets and comparison still, plus original run source comparison. This review does not claim uninterrupted animation viewing or an engine playtest.",
+    "neighbor_fragments_observed": false,
+    "isolation_limit": "No obvious neighboring body or sword fragments appear in the inspected exported contacts. Connected defects already painted into a selected source body cannot be ruled out by connected-component tests.",
+    "identity": "Silver/red hair, black/red coat, chest straps, double red forearm wraps and dark segmented greaves remain recognizable. Approval against standard_v1 remains with the user.",
+    "attack1": {
+      "recommendation": "Keep as a source/quality review candidate, not an approved replacement.",
+      "positive": "Clear ready, drawn-back windup, forward release and recovery poses; the restored blade in pose 2 is attached to the grip and no neighboring body fragment is visible.",
+      "issues": [
+        "Poses 3/4 read as a forward extension, then pose 5 turns the torso away and carries the blade backward again. Whether this reads as one forceful slash rather than a second windup needs real-speed user review.",
+        "The recovery poses 7/8 hold 14 of the 30 ticks. This may be intentional, but perceived weight and recovery length are not established by a contact sheet.",
+        "Visible blade length and angle vary between poses; perspective may explain part of it, but no validated grip/guard/tip or G3 weapon-layer contract is present.",
+        "The V6 comparison still aligns body scale and shows a recognizable common identity; it cannot establish that the new whole action meets the V6 motion and quality gate."
+      ]
+    },
+    "run": {
+      "recommendation": "Enough to review running pose/style and proposed rhythm as a partial-cycle candidate. Do not label it a complete accepted run loop.",
+      "comparison_with_c1": "C2 has real second-half changes, especially poses 5 and 7; it is more than an unchanged repeated row.",
+      "issues": [
+        "Poses 2/6 and 4/8 remain very close. The second half does not clearly communicate the opposite near/far-leg roles through all contact, passing and flight phases.",
+        "Eight occupied cells must not be counted as eight verified gait phases. The opposite half-cycle still needs a clear leg-role check before batch production or integration.",
+        "The upper body, free fist and sword remain comparatively rigid; the contact sheet shows leg changes and bobbing more clearly than coordinated arm/shoulder motion.",
+        "The two flight poses have visibly different ground clearances, about 19 and 26 output pixels for the marked foot. This can be intentional, but symmetry, loop seam and support-foot sliding remain unapproved."
+      ]
+    },
+    "jump_demo": {
+      "recommendation": "Keep as a phase/arc review candidate; the staged sequence is readable but is not runtime-approved.",
+      "positive": "Push-off, ascent, tuck at apex, descent, contact, compression and recovery are distinct. Separate output heights 8/50/80/50/0/0/0 preserve a complete visible arc without snapping every lowest foot to ground.",
+      "issues": [
+        "The 32-tick arc is represented by a few held poses and discrete height changes. Smoothness and matching engine jump physics remain unverified.",
+        "Contact to deep compression changes the marked support point substantially; actual same-foot anchoring and landing continuity require motion review.",
+        "The preparatory crouch is a separate clip and is not included in the 32-tick jump_demo. A full gameplay state sequence must explicitly connect that clip if preparation is desired."
+      ]
+    }
+  },
+  "approval_and_integration": {
+    "G1": "pending_user_review",
+    "G2": "pending_user_review",
+    "G3": "not_passed",
+    "G4": "pending_user_review",
+    "actor_includes_weapon": true,
+    "weapon_layering": "not_attempted",
+    "runtime_validation": "not_performed",
+    "engine_import": "not_performed",
+    "existing_v6_replaced": false,
+    "user_preview_approval": "not_recorded"
+  },
+  "post_lf_recheck": {
+    "config_sha256": "f13aa1f090d61239f6a5bfe917caceebd276617f5d231cfcb1fa163edc4f8c3e",
+    "source_hashes": "matched",
+    "published_preview_hashes": "unchanged after LF-normalized re-export",
+    "json_line_endings": "LF enforced in .gitattributes",
+    "date": "2026-10-16"
+  }
+}
