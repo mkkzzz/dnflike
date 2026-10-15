@@ -3,7 +3,7 @@
   "revision": "standard_v1",
   "date": "2026-10-15",
   "workspace": "ws1",
-  "status": "source_review",
+  "status": "source_approved",
   "master": "sheet_main_c1.png (selected by owner 2026-10-15)",
   "identity_source": "art/sheets/v6/forehand/Production_2D_action_RPG_anima_2026-10-14T08-17-58.png (READY frame), per decision D027",
   "tool": "image_gen (text-to-image only)",
@@ -42,21 +42,21 @@
     },
     {
       "file": "sheet_pose_head_c2.png",
-      "selected": "pending review",
+      "selected": true,
       "content": "A2 + A3: in-game camera ready stance facing right holding katana + 6 head close-ups",
       "prompt": "Production character reference sheet for a Korean 2D side-scrolling action MMORPG, hand-painted anime game art style: clean confident dark outlines, cel shading with soft gradients, high-resolution illustration. Plain flat light gray background, no text. LEFT HALF: one full-body figure in the in-game camera angle: side view with the character FACING TO THE RIGHT EDGE OF THE IMAGE, body turned slightly toward the viewer, low ready combat stance, katana held in the right hand (the hand nearer the viewer) with the blade angled forward and down toward the right, left hand open near the hip, knees bent, feet apart, full body head to toe, nothing cropped. RIGHT HALF: a neat 2 by 3 grid of head-and-shoulders close-ups of the SAME character: front neutral, three-quarter neutral facing right, side profile facing right, angry shout, pained grimace, confident smirk. Character: lean athletic young adult male swordsman; messy spiky silver-white hair with ONE crimson streak on the right side of his forehead (the character's own right; it appears on the viewer's left in front views and is visible when he faces right), same position in every drawing; sharp dark gray eyes; long black leather coat reaching mid-calf, high stand-up collar and notched lapels, deep crimson lining visible on collar, lapels, front opening and inner hem; coat sleeves rolled to mid forearm; black fitted turtleneck; two black leather chest straps with silver buckles and a black belt with silver buckle; both hands and forearms wrapped in crimson cloth bandages up to the elbow, fingers exposed, NO metal armor on the arms; black trousers with a thin strap on the thigh, tucked into black boots with dark steel knee guards and shin greaves; katana with black hilt, crimson diamond wrap, round dark iron guard, slightly curved steel blade; black lacquered scabbard with silver end cap on the left hip. Same design and colors in every drawing. No labels, no watermark, no extra characters.",
       "review": "Faces right; streak mostly consistent. Minor: streak in the three-quarter close-up sits slightly right of centre."
     },
     {
       "file": "sheet_parts_c1.png",
-      "selected": "pending review",
+      "selected": true,
       "content": "A5: costume breakdown (coat front/back, inner shirt, straps and belt, trousers, boots with knee guards and greaves, bandage wraps, scabbard)",
       "prompt": "Production costume breakdown sheet (flat lay of separate outfit parts) for a Korean 2D side-scrolling action MMORPG character, hand-painted anime game art style, clean dark outlines, cel shading, high resolution. Plain flat light gray background, no text, no labels. Each part drawn separately, front view, neatly arranged with space between them, no person wearing them: (1) long black leather coat reaching mid-calf, shown open, high stand-up collar and notched lapels, deep crimson lining visible on collar, lapels, front edges and inner hem, sleeves rolled to mid forearm; (2) the same coat seen from the back, with a central back vent and a half belt; (3) black fitted long-sleeve turtleneck inner shirt; (4) two black leather chest straps with silver buckles, and a black waist belt with a silver buckle; (5) black slim trousers with a thin thigh strap; (6) a pair of black boots with dark steel knee guards and segmented dark steel shin greaves; (7) a pair of crimson cloth bandage wraps for hands and forearms up to the elbow, fingerless; (8) a black lacquered katana scabbard with silver end cap and short crimson cord, with its hip hanger strap. Consistent colors: black leather, deep crimson, dark steel, silver buckles. No characters, no mannequins, no watermark.",
       "review": "Usable. Minor: circled numbers drawn although no labels were requested; chest straps drawn as a harness (c1 shows two horizontal straps); scabbard drawn with the sword inside."
     },
     {
       "file": "sheet_weapon_c1.png",
-      "selected": "pending review",
+      "selected": true,
       "content": "A7: standard katana — drawn side view, spine view, sheathed, empty scabbard",
       "prompt": "Production weapon reference sheet for a Korean 2D side-scrolling action MMORPG, hand-painted anime game art style, clean dark outlines, cel shading, high resolution. Plain flat light gray background, no text. One katana shown horizontally with the blade pointing to the right, drawn four times stacked vertically and left-aligned at the pommel, identical scale: (1) the drawn sword in full side view, cutting edge facing down; (2) the same drawn sword seen from the spine (top view, very thin); (3) the same sword sheathed in its scabbard, side view; (4) the empty scabbard alone, side view. Design: slightly curved single-edged steel blade with a subtle wavy temper line and a bright polished edge, small brass collar at the base of the blade, round dark iron guard with a thin bronze rim, black hilt with crimson diamond cord wrap and a small dark metal pommel cap, black lacquered scabbard with a silver end cap and a short crimson cord near the mouth. Blade about three times as long as the hilt. Consistent design across all four drawings. No labels, no watermark, no hands, no characters.",
       "review": "Usable. Minor: the empty scabbard (4) is drawn with a guard attached."
@@ -66,6 +66,16 @@
     "views/*.png": "python tools/explore/standard_master.py — master c1 background removed and split into 5 transparent views",
     "measure.json": "per-view height / feet line / approximate heads-tall (same script)",
     "palette.json": "A6 formal palette from master front view: base / light / shadow per part (same script)",
-    "palette_auto.json": "earlier k-means draft from c1/c2 (tools/explore/standard_board.py), superseded by palette.json"
-  }
+    "palette_auto.json": "earlier k-means draft from c1/c2 (tools/explore/standard_board.py), superseded by palette.json",
+    "views/A2_ready_right.png": "tools/explore/standard_sheet.py — A2 full-body figure cut out of sheet_pose_head_c2",
+    "sheet_parts_c1_clean.png": "tools/explore/standard_parts.py — circled numbers painted over with background",
+    "parts/*.png, parts/parts.json": "tools/explore/standard_parts.py — A5 parts cut out and mapped to costume slots",
+    "weapon/*.png, weapon/katana.json": "tools/explore/standard_weapon.py — A7 cutouts and pommel/grip/guard/tip calibration, game size from V6 manifest",
+    "manifest.json": "tools/explore/standard_sheet.py — standard set index"
+  },
+  "locked": "2026-10-15, owner accepted ws1 recommendations (A2/A3 = sheet_pose_head_c2; c1 errata kept, text spec governs)",
+  "pending_generation": [
+    "A8 hands and grips",
+    "A5 regenerated by slot (with hair piece, two horizontal chest straps, empty scabbard) — two image_gen approval prompts timed out on 2026-10-15"
+  ]
 }

@@ -1,0 +1,195 @@
+{
+ "source": "art\\characters\\standard_v1\\sheet_parts_c1.png",
+ "clean_source": "sheet_parts_c1_clean.png",
+ "slots": {
+  "top": "上衣（时装）",
+  "bottom": "下装（时装）",
+  "belt": "腰带（时装）",
+  "shoes": "鞋（时装，含护膝护胫）",
+  "base": "素体（职业固定）",
+  "fixed": "绷带（职业固定）",
+  "equip": "装备（武器系统）"
+ },
+ "parts": [
+  {
+   "slot": "top",
+   "slot_cn": "上衣（时装）",
+   "part": "coat_front",
+   "name": "风衣（正，敞开）",
+   "file": "parts/top__coat_front.png",
+   "source_box": [
+    32,
+    34,
+    346,
+    708
+   ],
+   "note": ""
+  },
+  {
+   "slot": "top",
+   "slot_cn": "上衣（时装）",
+   "part": "coat_back",
+   "name": "风衣（背）",
+   "file": "parts/top__coat_back.png",
+   "source_box": [
+    368,
+    35,
+    673,
+    703
+   ],
+   "note": ""
+  },
+  {
+   "slot": "base",
+   "slot_cn": "素体（职业固定）",
+   "part": "inner_turtleneck",
+   "name": "贴身高领内衣",
+   "file": "parts/base__inner_turtleneck.png",
+   "source_box": [
+    702,
+    47,
+    937,
+    322
+   ],
+   "note": "属于 A4 素体"
+  },
+  {
+   "slot": "top",
+   "slot_cn": "上衣（时装）",
+   "part": "chest_straps",
+   "name": "胸前束带",
+   "file": "parts/top__chest_straps.png",
+   "source_box": [
+    966,
+    73,
+    1148,
+    214
+   ],
+   "note": "图中画成背带式；规格为两道横向银扣皮带"
+  },
+  {
+   "slot": "belt",
+   "slot_cn": "腰带（时装）",
+   "part": "waist_belt",
+   "name": "腰带",
+   "file": "parts/belt__waist_belt.png",
+   "source_box": [
+    971,
+    226,
+    1143,
+    278
+   ],
+   "note": ""
+  },
+  {
+   "slot": "bottom",
+   "slot_cn": "下装（时装）",
+   "part": "trousers",
+   "name": "长裤（含右腿绑带）",
+   "file": "parts/bottom__trousers.png",
+   "source_box": [
+    743,
+    318,
+    898,
+    722
+   ],
+   "note": ""
+  },
+  {
+   "slot": "shoes",
+   "slot_cn": "鞋（时装，含护膝护胫）",
+   "part": "boot_pair",
+   "name": "靴 + 护膝 + 护胫",
+   "file": "parts/shoes__boot_pair.png",
+   "source_box": [
+    955,
+    435,
+    1180,
+    730
+   ],
+   "note": ""
+  },
+  {
+   "slot": "fixed",
+   "slot_cn": "绷带（职业固定）",
+   "part": "bandage_pair",
+   "name": "双前臂绷带",
+   "file": "parts/fixed__bandage_pair.png",
+   "source_box": [
+    1181,
+    73,
+    1333,
+    334
+   ],
+   "note": "跨转职保留（D027）"
+  },
+  {
+   "slot": "equip",
+   "slot_cn": "装备（武器系统）",
+   "part": "scabbard",
+   "name": "刀鞘（含挂带）",
+   "file": "parts/equip__scabbard.png",
+   "source_box": [
+    1230,
+    343,
+    1327,
+    722
+   ],
+   "note": "图中鞘内带刀；空鞘以 A7 为准"
+  }
+ ],
+ "badges_removed": [
+  [
+   59,
+   46,
+   92,
+   78
+  ],
+  [
+   396,
+   46,
+   429,
+   78
+  ],
+  [
+   706,
+   46,
+   739,
+   79
+  ],
+  [
+   946,
+   46,
+   979,
+   79
+  ],
+  [
+   1161,
+   46,
+   1193,
+   79
+  ],
+  [
+   707,
+   357,
+   740,
+   389
+  ],
+  [
+   1206,
+   368,
+   1238,
+   400
+  ],
+  [
+   957,
+   445,
+   989,
+   477
+  ]
+ ],
+ "missing": {
+  "hair": "发型单件未单独画；以 A1 / A3 为准",
+  "headwear": "默认装扮无头饰"
+ }
+}

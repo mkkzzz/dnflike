@@ -1,0 +1,83 @@
+{
+ "asset_id": "char.swordsman.standard",
+ "revision": "standard_v1",
+ "date": "2026-10-15",
+ "spec": "docs/tasks/art_tasks/char_swordsman_standard_v1.md（第一节文字规格优先于图）",
+ "decisions": [
+  "D025",
+  "D026",
+  "D027",
+  "D029",
+  "D030"
+ ],
+ "master": "sheet_main_c1.png",
+ "items": {
+  "A0": {
+   "name": "身份辨识点",
+   "preview": "docs/previews/standard_v1/identity_callouts.png"
+  },
+  "A1": {
+   "name": "四向转面",
+   "source": "sheet_main_c1.png",
+   "files": [
+    "views/A1_front.png",
+    "views/A1_three_quarter.png",
+    "views/A1_side_right.png",
+    "views/A1_back.png"
+   ]
+  },
+  "A2": {
+   "name": "游戏机位持刀（朝右）",
+   "source": "sheet_pose_head_c2.png",
+   "files": [
+    "views/A2_ready_right.png"
+   ]
+  },
+  "A3": {
+   "name": "头部与表情",
+   "source": "sheet_pose_head_c2.png（右半）"
+  },
+  "A4": {
+   "name": "素体",
+   "source": "sheet_main_c1.png",
+   "files": [
+    "views/A4_base_body.png"
+   ]
+  },
+  "A5": {
+   "name": "槽位拆解",
+   "source": "sheet_parts_c1.png",
+   "clean": "sheet_parts_c1_clean.png",
+   "index": "parts/parts.json"
+  },
+  "A6": {
+   "name": "色号表",
+   "file": "palette.json"
+  },
+  "A7": {
+   "name": "标准太刀与标定",
+   "source": "sheet_weapon_c1.png",
+   "index": "weapon/katana.json"
+  }
+ },
+ "errata": [
+  "A1 侧面缺护膝护胫；A1 背面看不到刀鞘；A4 素体不应带护膝（护具属鞋槽位）——保留母版，以文字规格为准（方式乙）",
+  "A3 的 3/4 头像挑染略偏中",
+  "A5 胸前束带画成背带式（规格为两道横向银扣皮带）；刀鞘内带刀（空鞘以 A7 为准）；无单独发型件（以 A1/A3 为准）",
+  "A7 空鞘行原图多画的镡已在切图中去掉"
+ ],
+ "not_used": {
+  "sheet_main_c2.png": "手臂多出金属护臂",
+  "sheet_pose_head_c1.png": "全身像朝左"
+ },
+ "followups": [
+  "A8 手部与握法（正手 / 反手 / 拔刀 / 空握拳 / 张手）：生图确认超时未生成",
+  "A5 按槽位重出（含单独发型件、两道横带、空鞘）：生图确认超时未生成"
+ ],
+ "tools": [
+  "tools/explore/standard_master.py",
+  "tools/explore/standard_weapon.py",
+  "tools/explore/standard_parts.py",
+  "tools/explore/standard_sheet.py"
+ ]
+}
