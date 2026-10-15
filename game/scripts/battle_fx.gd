@@ -19,6 +19,17 @@ const BLOOD := Color(1.0, 0.21, 0.12)
 ## 上挑专属：比 STEEL 更冷的刃色 + 暖色升腾边缘，与普攻的钢白/象牙拉开区分。
 const RISING_BLADE := Color(0.84, 0.97, 1.0)
 const RISING_EDGE := Color(1.0, 0.83, 0.55)
+## 普通攻击（X 键三段）命中时改播人物挥剑声，取代原来的金属撞击音 metal_hit。
+## 出招帧（active 第一帧）已经播过该招自身的挥剑音，这里刻意用**交叉映射**
+## （attack1→swing_back 等），避开 combat_audio 的 50 ms 同类节流，
+## 同时让"剑砍出去"这层多一次音色变化。
+## 注：出招音与命中几乎同帧，故这一层听起来是一次更厚的挥剑声，不是回声。
+## 技能不在此列——按需求留待逐技能配声，暂仍用撞击音。
+const NORMAL_ATTACK_HIT_SWING := {
+	"attack1": "swing_back",
+	"attack2": "swing_light",
+	"attack3": "swing_heavy",
+}
 
 var freeze := 0
 var shake := 0.0
@@ -590,6 +601,16 @@ func _speed_lines(pos: Vector2, facing: int, color: Color, count: int, life: flo
 		_stroke(origin, origin - Vector2(facing * randf_range(28, 75), 0), color, 1.0, life * randf_range(0.7, 1.0), 0.28)
 
 
+## 命中层的发声：普通攻击改播人物挥剑声，其余仍用撞击/浮空/金属音。
+## 原本两条分支各自内联同一段三元表达式，这里统一，避免两处再改一次。
+func _impact_sound(move_id: String, hit: Dictionary, launch: bool, heavy: bool, world_x: float) -> void:
+	if NORMAL_ATTACK_HIT_SWING.has(move_id):
+		# 普通攻击：金属撞击音 metal_hit 被移除，换成挥剑声（交叉映射见常量注释）。
+		play_sound(str(NORMAL_ATTACK_HIT_SWING[move_id]), world_x)
+		return
+	play_sound("metal_hit" if str(hit.get("material", "flesh")) == "metal" else ("launch" if launch else ("heavy" if heavy else "light")), world_x)
+
+
 func on_hit(world_pos: Vector2, direction: int, damage: float, hit: Dictionary) -> void:
 	log_hits += 1
 	var move_id := str(hit.get("move_id", _active_move))
@@ -612,10 +633,10 @@ func on_hit(world_pos: Vector2, direction: int, damage: float, hit: Dictionary) 
 	# on_hit() 目前只有 monster.take_hit() 一处调用入口，玩家被打不会走到这里，
 	# 所以无需按攻击方区分；将来若加入召唤物/友军互击，需要在此加参数区分。
 	play_sound("goblin_hurt", world_pos.x, 1.10 if heavy else 0.90)
+	_impact_sound(move_id, hit, launch, heavy, world_pos.x)
 	if authored:
 		# V6：闪光、火花与尘已烘进 hit_light / hit_matter 序列帧，这里不再叠第二份；
 		# 停帧、震屏、跳字与音效不属于序列帧，继续保留。
-		play_sound("metal_hit" if str(hit.get("material", "flesh")) == "metal" else ("launch" if launch else ("heavy" if heavy else "light")), world_pos.x)
 		queue_redraw()
 		return
 	var material := str(hit.get("material", "flesh"))
@@ -633,7 +654,6 @@ func on_hit(world_pos: Vector2, direction: int, damage: float, hit: Dictionary) 
 		spawn_glow(impact, 37.0, hit_color, 0.12)
 		for index in range(4):
 			_particle(impact, Vector2(direction * randf_range(90, 220), randf_range(-155, -55)), Color(0.26, 0.21, 0.18), 0.24, "chip", 1000.0, randf_range(2.0, 3.8))
-	play_sound("metal_hit" if material == "metal" else ("launch" if launch else ("heavy" if heavy else "light")), world_pos.x)
 	queue_redraw()
 
 
