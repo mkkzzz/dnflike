@@ -58,14 +58,14 @@
 
 | 预览 | 变化 |
 |---|---|
-| [idle_standoff.png](../previews/wuxia_backview_v2/idle_standoff.png) | 背后三分之四近景，侠客沉腰低位持剑，近大远小、风中衣发与山间逆光 |
-| [weapon_parry.png](../previews/wuxia_backview_v2/weapon_parry.png) | 低位近景、倾斜构图，两人肩臂承压，交刃处集中金属火星，主角侧脸可见 |
+| [idle_standoff.png](../../previews/wuxia_backview_v2/idle_standoff.png) | 背后三分之四近景，侠客沉腰低位持剑，近大远小、风中衣发与山间逆光 |
+| [weapon_parry.png](../../previews/wuxia_backview_v2/weapon_parry.png) | 低位近景、倾斜构图，两人肩臂承压，交刃处集中金属火星，主角侧脸可见 |
 
 完整提示词、真实图像输入、两次内置 imagegen 调用产物、尺寸和哈希见 `art/concepts/wuxia_backview_v2/generation.json`。截图使用的是用户本轮上传附件，已另存持久参考副本；将来复用应传入仓库中的副本，不依赖上传时的临时路径。
 
-![V2 对峙](../previews/wuxia_backview_v2/idle_standoff.png)
+![V2 对峙](../../previews/wuxia_backview_v2/idle_standoff.png)
 
-![V2 拼刀](../previews/wuxia_backview_v2/weapon_parry.png)
+![V2 拼刀](../../previews/wuxia_backview_v2/weapon_parry.png)
 
 ## 已知限制与批准范围
 

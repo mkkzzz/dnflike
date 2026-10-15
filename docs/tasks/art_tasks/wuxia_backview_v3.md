@@ -55,16 +55,16 @@
 
 | 评审图 | 本轮变化 |
 |---|---|
-| [对峙](../previews/wuxia_backview_v3/idle_standoff.png) | 主角约占画面高度 68%，衣发大形、较完整衣摆、规整石板和安静的分层山景 |
-| [拼刀](../previews/wuxia_backview_v3/weapon_parry.png) | 保留双方肩臂承压与交刃点，减少服装纹理、碎边和火星，强化清楚的色块 |
+| [对峙](../../previews/wuxia_backview_v3/idle_standoff.png) | 主角约占画面高度 68%，衣发大形、较完整衣摆、规整石板和安静的分层山景 |
+| [拼刀](../../previews/wuxia_backview_v3/weapon_parry.png) | 保留双方肩臂承压与交刃点，减少服装纹理、碎边和火星，强化清楚的色块 |
 
 两张均为 **1672×941 RGB PNG**，System.Drawing 实际解码成功；源/预览 SHA256 分别一致，未做脚本滤镜、重采样或像素修补。
 
 对峙初试仍过细，保留为 `art/concepts/wuxia_backview_v3/idle_attempt01.png` 并标为未选用；再次按大形简化重绘后选择当前对峙。全三次调用提示词和真实输入见 `generation.json`。
 
-![V3 对峙](../previews/wuxia_backview_v3/idle_standoff.png)
+![V3 对峙](../../previews/wuxia_backview_v3/idle_standoff.png)
 
-![V3 拼刀](../previews/wuxia_backview_v3/weapon_parry.png)
+![V3 拼刀](../../previews/wuxia_backview_v3/weapon_parry.png)
 
 已知限制：山云仍有一定插画质感；没有数值指标能证明“AI味”消除，本轮按视觉对比记录简化结果。近景拼刀裁掉下肢末端，尚不能验证完整脚步和连续发力；主角剑尖与斗笠前缘局部重叠，轮廓不如交刃点清楚。敌人双手握同一刀柄辅助承压，不是多余武器。是否达到用户希望的游戏画面，仍待其评审。
 

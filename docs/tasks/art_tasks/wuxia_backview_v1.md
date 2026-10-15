@@ -21,9 +21,9 @@
 
 | 文件 | 内容 |
 |---|---|
-| [battle_view_board.png](../previews/wuxia_backview_v1/battle_view_board.png) | 并排评审：左对峙，右武器格挡 |
-| [idle_standoff.png](../previews/wuxia_backview_v1/idle_standoff.png) | 无UI的完整对峙构图 |
-| [weapon_parry.png](../previews/wuxia_backview_v1/weapon_parry.png) | 无UI的格挡效果构图 |
+| [battle_view_board.png](../../previews/wuxia_backview_v1/battle_view_board.png) | 并排评审：左对峙，右武器格挡 |
+| [idle_standoff.png](../../previews/wuxia_backview_v1/idle_standoff.png) | 无UI的完整对峙构图 |
+| [weapon_parry.png](../../previews/wuxia_backview_v1/weapon_parry.png) | 无UI的格挡效果构图 |
 
 单图实际1376×768；评审板2752×832，顶部添加状态标签。生成请求为1280×720，实际工具输出不同，因此记录实际尺寸，不把请求参数冒充真实文件规格。
 

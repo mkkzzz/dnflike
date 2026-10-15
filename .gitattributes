@@ -1,0 +1,7 @@
+# 行尾规范
+#
+# Godot 在导入资源时用 LF 重写 .import 文件；而本机 core.autocrlf=true 期望工作区为 CRLF。
+# 两者不一致会让 git status 把数百个 .import 判定为已修改，实际内容完全一致（git diff 为空）。
+# 每次打开引擎或跑一次回归都会产生这批假脏文件，淹没真实改动、制造假冲突。
+# 显式声明该类型为 LF，让索引与工作区期望一致，从根上消除假脏。
+*.import text eol=lf
