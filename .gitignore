@@ -20,3 +20,7 @@ Thumbs.db
 
 # 本地工作区标识与同步位置（每个 clone 各自不同），由 tools/sync_status.py --init 生成
 .workspace
+
+# 本机安装辅助（git 本体与下载缓存，非项目产物）
+_dl/
+_tools/
