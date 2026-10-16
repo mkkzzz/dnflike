@@ -1,0 +1,93 @@
+{
+  "task_id": "forest_10001_reference_redesign",
+  "revision": "reference_redesign_v2",
+  "dungeon_id": "10001",
+  "layout_id": "10001-A",
+  "owner": "ws2",
+  "lifecycle": "source_review",
+  "runtime_integrated": false,
+  "path_base": "repository_root",
+  "task": "docs/tasks/art_tasks/forest_10001_reference_redesign_v2.md",
+  "reference": "art/concepts/scenes/forest/10001/v1/source/style_reference.png",
+  "selected_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+  "selected_candidate_approval": "pending_user_review",
+  "generation_record": "art/concepts/scenes/forest/10001/reference_redesign_v2/generation.json",
+  "validation": "art/concepts/scenes/forest/10001/reference_redesign_v2/validation.json",
+  "review_board": "docs/previews/forest_10001_reference_redesign_v2/review_board.png",
+  "preview_075": "docs/previews/forest_10001_reference_redesign_v2/r01_c2_075.png",
+  "sample_actual_size": [
+    1672,
+    941
+  ],
+  "sample_requested_size": [
+    2560,
+    1440
+  ],
+  "upscale_allowed": false,
+  "production_exports": [],
+  "shared_visual_contract": {
+    "camera": "Low three-quarter side-on belt-scroller, modest downward view, flat ground.",
+    "tree_layout": "Horizontal background band distributed across width including middle; roots hidden behind rear vegetation.",
+    "rear_walkable_boundary_one_screen_ratio_y": 0.4,
+    "palette": "Olive/moss foliage, muted brown-green bark, gray-teal depth, warm tan/brown fine earth.",
+    "light": "Soft upper-left moderate daylight, low contrast background.",
+    "collidable_props_baked_into_background": false,
+    "layers": "Representative RGB scene combines forest and ground; formal room layers not delivered."
+  },
+  "rooms": [
+    {
+      "module_id": "10001-R01",
+      "asset_id": "scene.10001.r01.background",
+      "native_target": [
+        5120,
+        1600
+      ],
+      "lifecycle": "source_review",
+      "production_exports": []
+    },
+    {
+      "module_id": "10001-R02",
+      "asset_id": "scene.10001.r02.background",
+      "native_target": [
+        5120,
+        1600
+      ],
+      "lifecycle": "planned",
+      "production_exports": []
+    },
+    {
+      "module_id": "10001-R03",
+      "asset_id": "scene.10001.r03.background",
+      "native_target": [
+        3840,
+        1600
+      ],
+      "lifecycle": "planned",
+      "production_exports": []
+    },
+    {
+      "module_id": "10001-R04",
+      "asset_id": "scene.10001.r04.background",
+      "native_target": [
+        2816,
+        3200
+      ],
+      "lifecycle": "planned",
+      "production_exports": []
+    },
+    {
+      "module_id": "10001-R05",
+      "asset_id": "scene.10001.r05.background",
+      "native_target": [
+        5120,
+        1600
+      ],
+      "lifecycle": "planned",
+      "production_exports": []
+    }
+  ],
+  "blocks": [
+    "User must approve the representative sample before batch generation.",
+    "Current returned PNGs do not satisfy native 2K or full room canvas sizes; exact-size high-resolution route remains unresolved."
+  ]
+}

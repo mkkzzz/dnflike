@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-16",
+  "owner": "ws2",
+  "revision": "reference_redesign_v2",
+  "user_authorization": "User requested restart of 10001 scene background generation using the standard approved concept, consistent across all rooms.",
+  "tool": "image_gen.imagegen",
+  "mode": "built_in",
+  "model": "not_exposed",
+  "seed": null,
+  "reference_image_input_supported": true,
+  "exact_size_parameter_exposed": false,
+  "calls": [
+    {
+      "candidate": "r01_c1",
+      "use_case": "stylized-concept",
+      "intent": "generate_with_style_reference",
+      "requested_native_size_in_prompt": [
+        2560,
+        1440
+      ],
+      "dedicated_size_parameter": null,
+      "transparent_background": false,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/concepts/scenes/forest/10001/v1/source/style_reference.png",
+          "sha256": "c64c870bb5ad704df7c305f8f0667744b58228d055973f696910db55bce410c9"
+        }
+      ],
+      "prompt_file": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c1/prompt.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: original 2D belt-scrolling action RPG dungeon 10001, R01 entrance-room BACKGROUND + walkable ground, first representative production-style candidate.\nInput image 1: the supplied approved forest concept is the authoritative STYLE, PALETTE, MATERIAL, CAMERA and HORIZONTAL TREE ARRANGEMENT reference. Actually use its visible visual information; this is not a request for a new art direction. The wooden doors, torches, fruit tree, fences, stump, bones and rocks in that reference are separate gameplay props and MUST BE ABSENT from this background.\nPrimary request: Paint one clean, finished, continuous forest game background matching the reference, with a requested native canvas of 2560 x 1440 pixels, 16:9, no borders, no labels, no panels. Original artwork. This is one screen of the entrance room, not a poster.\nComposition/camera: Locked low three-quarter belt-scroller camera with only a modest downward view of the ground, identical scale and perspective to the reference. The forest is a broad horizontal tree band seen from its SIDE: several vertical brown/olive tree trunks distributed ACROSS the entire width at comparable rear depth, including trunks around the middle, with staggered teal distant trunks behind. The tree line and grass/soil boundary run roughly horizontally from left edge to right edge at about 40 percent of image height. Trees belong entirely behind that far grass boundary, their roots concealed by low back vegetation. The scene continues laterally off both image edges. Keep the trunk size restrained and consistent across the full width.\nGround: The lower approximately 60 percent is one broad FLAT warm tan-brown beaten-earth clearing, traversable laterally and in shallow depth, a generous clean continuous central fighting space. Subtle patches of warm ochre/taupe soil and tiny embedded grains; a few small leaves, very fine understated gravel marks, no separate rock props. Natural irregular low olive/moss grass margins; modest grass fringe at bottom. Ground has readable painted form and subtle depth, never an empty flat solid color or a stone floor. No steps, banks, pits or raised roots.\nStyle/material: Closely preserve the reference's mature hand-painted fantasy game bitmap treatment, confidently designed tree shapes, restrained dark contour accents, layered opaque painted foliage clumps, convincing bark planes and occasional fine wood striations. Clear large shadow shapes with controlled soft transitions and selective detail. Finished 2D game art, gently semi-realistic painterly detail at gameplay scale; no heavy comic outline, no generic children's storybook, no photoreal texture, no 3D rendering. Preserve the reference's olive and moss foliage, dark desaturated brown-green trunks, cool gray-teal misty forest depth, medium warm brown/ochre earth. Moderate readable DAYLIGHT from upper left, soft low-contrast soil shadows, no glowing center or sunbeams, no yellow wash. Background value separation supports characters without washing out the forest.\nStrict constraints: This is a SIDE-VIEW HORIZONTAL WOODLAND BORDER, not a road pointing into the forest. NO trees on left and right leaning inward to frame a central opening, NO tunnel, NO corridor, NO central vanishing-point path, NO center gap surrounded by symmetric edge trees, NO arch-like canopy frame, NO enormous foreground trunks, NO black foreground silhouettes. Distribute the trees naturally across the back plane. No mirror symmetry or repeated tiled texture. No gates, torches, fences, fruit trees, stumps, bones, independent shrubs/rocks, interactive items, characters, creatures, weapons, UI, text, logos or watermark. No effects hiding the artwork. Match the supplied reference, improve finish and native clarity, do not reinterpret its art style.\n",
+      "output": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c1/source.png",
+      "output_sha256": "403490cba66e2232a481ef6abdc4ba52d3b7a9675cb75befe015e9ad8b778502",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "actual_mode": "RGB",
+      "source_copy": "Original generated PNG copied byte-for-byte; no crop, recolor, resize or upscale.",
+      "state": "superseded",
+      "review": "Internal: ground boundary too low, approximately 56 percent; targeted revision c2."
+    },
+    {
+      "candidate": "r01_c2",
+      "use_case": "stylized-concept",
+      "intent": "edit_composition_with_style_reference",
+      "requested_native_size_in_prompt": [
+        2560,
+        1440
+      ],
+      "dedicated_size_parameter": null,
+      "transparent_background": false,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/concepts/scenes/forest/10001/v1/source/style_reference.png",
+          "sha256": "c64c870bb5ad704df7c305f8f0667744b58228d055973f696910db55bce410c9"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c1/source.png",
+          "sha256": "403490cba66e2232a481ef6abdc4ba52d3b7a9675cb75befe015e9ad8b778502"
+        }
+      ],
+      "prompt_file": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/prompt.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: original 2D belt-scroller game dungeon 10001 R01 forest entrance, corrected representative sample.\nInput 1 is the authoritative APPROVED STYLE CONCEPT. Input 2 is the just-generated R01 candidate to correct. Keep input 2's successful color palette, painting quality, foliage and bark language, gray-teal depth, horizontal tree-band concept, warm earth material and soft daylight. Change only the spatial composition and amount of walkable ground as specified below.\nCreate ONE complete opaque 16:9 game scene, requested native 2560x1440 pixels, no panels or titles.\nCritical spatial correction: the rear boundary of the walkable ground must run nearly horizontally at y=40% of the canvas height (roughly 576 pixels if 1440 high), rather than at y=56% as in input 2. The ENTIRE lower 60% is broad flat usable warm tan-brown EARTH with only thin grass fringes near its far and bottom edges. This is a spacious side-scrolling arena with generous fore-aft movement, not a narrow path or a shallow road stripe. Shrink the entire scenic rear tree band and move it up accordingly; trunks and their supporting shrub line finish behind the y=40% far boundary. Do not merely crop input 2, stretch it, or blank out the foreground. Newly paint the continuous ground with natural restrained mature soil detail, subtle warm taupe/ochre patches, occasional tiny leaves, very understated tiny embedded gravel, low sparse grass encroachment at edges, no artificial tiles, no large stone plates or cracks. Keep central 75% width of this broad field clear. The bottom is walkable soil too, with only a sparse thin grass fringe, not a thick dark mass.\nThe ordinary forest trees must be in one horizontally spread BACKGROUND plane, several vertical olive/brown trunks distributed across the image, including center-left and center-right; smaller tree silhouettes layered in mist across the full width. No paired edge trees framing an empty center, no overhead arch, no corridor or tunnel, no narrowing road going into depth, no giant foreground trunks or roots, no mirror symmetry. Branches may extend naturally across the upper area without forming a center-opening arch. All roots stay behind rear vegetation, outside the playable area.\nMatch the approved concept's mature hand-painted fantasy RPG bitmap finish: olive/moss foliage, dark desaturated brown-green bark with clear painted planes, muted cool gray-teal distant forest, warm brown/tan earth. Moderate soft daylight from upper left, cohesive large shadow shapes and controlled fine details. No photorealism, 3D, heavy comic outlines, children's book simplification, yellow-green wash, bright sky hole, glowing mist, shafts of light or pitch-black foreground.\nCamera stays the low three-quarter side-on belt-scroller camera of the approved concept, slight downward view of flat ground, no steps, slopes, water, pits or raised roots. Doors, torches, fences, stumps, fruit trees, bones, independent rocks/bush props, characters and monsters from the reference are gameplay objects and MUST NOT appear in this background. No text, UI, logos, border or watermark. Preserve the painting style and palette; adjust the ground-to-forest ratio only.\n",
+      "output": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+      "output_sha256": "44e52517457f18caa6d840fce6162f89492af9d863bf7ad920f25b351b397860",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "actual_mode": "RGB",
+      "source_copy": "Original generated PNG copied byte-for-byte; no crop, recolor, resize or upscale.",
+      "state": "source_review",
+      "review": "Awaiting user approval; boundary moved to approximately 40 percent, horizontal tree band retained."
+    }
+  ],
+  "user_approval": null,
+  "production_status": "R01 representative sample only; native 2K requirement unmet, remaining room batch awaits sample approval."
+}

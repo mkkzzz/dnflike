@@ -1,0 +1,56 @@
+{
+  "technical_integrity_passed": true,
+  "sources": [
+    {
+      "candidate": "r01_c1",
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c1/source.png",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "sha256": "403490cba66e2232a481ef6abdc4ba52d3b7a9675cb75befe015e9ad8b778502",
+      "original_bytes_unchanged": true,
+      "requested_2k_met": false,
+      "reference_files_exist_and_unchanged": true,
+      "prompt_matches_record": true
+    },
+    {
+      "candidate": "r01_c2",
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "sha256": "44e52517457f18caa6d840fce6162f89492af9d863bf7ad920f25b351b397860",
+      "original_bytes_unchanged": true,
+      "requested_2k_met": false,
+      "reference_files_exist_and_unchanged": true,
+      "prompt_matches_record": true
+    }
+  ],
+  "review_board_scales": [
+    0.7267441860465116,
+    0.5980861244019139,
+    0.5980861244019139
+  ],
+  "selected_075_size": [
+    1254,
+    706
+  ],
+  "upscaled": false,
+  "artwork_modified": false,
+  "user_approved": false,
+  "native_2k_ready": false,
+  "full_room_canvases_delivered": 0,
+  "production_ready": false,
+  "runtime_integrated": false,
+  "limitations": [
+    "Actual tool output is smaller than requested native 2K.",
+    "R01 is a one-screen representative sample, not a complete room.",
+    "Other four rooms, layer exports, seams and runtime remain unmade.",
+    "0.75 preview refers to actual sample size, not 1080p validation.",
+    "Visual observations and integrity checks do not imply user approval."
+  ]
+}

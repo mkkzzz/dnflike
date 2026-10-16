@@ -150,6 +150,7 @@
   "assets": {
     "ordinary_goblin": "art/concepts/characters/monsters/goblin/standard_v1/manifest.json",
     "swordsman_standard": "art/concepts/characters/players/swordsman/standard_v1/manifest.json",
-    "goblin_chief_candidate": "art/concepts/characters/monsters/goblin_chief/v1/generation.json"
+    "goblin_chief_candidate": "art/concepts/characters/monsters/goblin_chief/v1/generation.json",
+    "forest_10001_background_redesign_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/manifest.json"
   }
 }
