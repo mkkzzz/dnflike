@@ -106,8 +106,9 @@
       ],
       "actual_mode": "RGB",
       "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
-      "state": "source_review",
-      "review": "Minor boundary shrub addition within the approved direction. Full room panorama generated separately."
+      "state": "source_approved",
+      "review": "Minor boundary shrub addition within the approved direction. Full room panorama generated separately.",
+      "artwork_approval_date": "2026-10-17"
     },
     {
       "candidate": "r01_room_c1",
@@ -145,8 +146,9 @@
       ],
       "actual_mode": "RGB",
       "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
-      "state": "source_review",
-      "review": "Selected entry-room long design candidate. Unique generated pixels; no mirroring or tiling."
+      "state": "source_approved",
+      "review": "Selected entry-room long design candidate. Unique generated pixels; no mirroring or tiling.",
+      "artwork_approval_date": "2026-10-17"
     },
     {
       "candidate": "r02_room_c1",
@@ -184,8 +186,9 @@
       ],
       "actual_mode": "RGB",
       "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
-      "state": "source_review",
-      "review": "Selected ordinary encounter long design candidate."
+      "state": "source_approved",
+      "review": "Selected ordinary encounter long design candidate.",
+      "artwork_approval_date": "2026-10-17"
     },
     {
       "candidate": "r03_room_c1",
@@ -262,8 +265,9 @@
       ],
       "actual_mode": "RGB",
       "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
-      "state": "source_review",
-      "review": "Selected portrait design candidate. Explicit gameplay viewport crop leaves both canopy and lower foreground camera margin."
+      "state": "source_approved",
+      "review": "Selected portrait design candidate. Explicit gameplay viewport crop leaves both canopy and lower foreground camera margin.",
+      "artwork_approval_date": "2026-10-17"
     },
     {
       "candidate": "r05_room_c1",
@@ -301,8 +305,9 @@
       ],
       "actual_mode": "RGB",
       "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
-      "state": "source_review",
-      "review": "Selected boss long design candidate; same forest/daylight, no added new biome or altar."
+      "state": "source_approved",
+      "review": "Selected boss long design candidate; same forest/daylight, no added new biome or altar.",
+      "artwork_approval_date": "2026-10-17"
     },
     {
       "candidate": "r03_room_c2",
@@ -336,8 +341,9 @@
       ],
       "actual_mode": "RGB",
       "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
-      "state": "source_review",
-      "review": "Selected short room candidate with a slightly higher rear ground edge."
+      "state": "source_approved",
+      "review": "Selected short room candidate with a slightly higher rear ground edge.",
+      "artwork_approval_date": "2026-10-17"
     },
     {
       "candidate": "r04_room_c2",
@@ -390,5 +396,47 @@
       "runtime integration"
     ]
   },
-  "production_status": "Five unique room design candidates plus boundary-shrub R01 revision. New room final artwork review and native 2K remain pending."
+  "production_status": "Selected five room design artwork and R01 c3 boundary revision user-approved. Formal native 2K, layers and runtime remain incomplete.",
+  "artwork_approval": {
+    "date": "2026-10-17",
+    "user_quote": "我觉得没问题",
+    "context": "User replied after the five room overview, viewport comparison and left/right boundary revision were delivered.",
+    "lifecycle": "source_approved",
+    "scope": [
+      "Selected five room design artwork",
+      "R01 c3 low boundary shrub revision",
+      "consistent forest style, palette and room composition"
+    ],
+    "not_approved": [
+      "Native 2K resolution waiver",
+      "formal layer exports",
+      "runtime integration, camera or collision acceptance"
+    ],
+    "files": [
+      {
+        "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c3/source.png",
+        "sha256": "83077fbc75faf7251869cee7df35ce4fa312a1d5583bfea1d58bea469a350001"
+      },
+      {
+        "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_room_c1/source.png",
+        "sha256": "60915fe007cd0b3dd7a75590d1d341724de928123c533672ecdd71fe7be40fbb"
+      },
+      {
+        "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r02_room_c1/source.png",
+        "sha256": "ff9537138c35c8512f64ced36f566747f64e1952cd446c6a10ad4129ebc31752"
+      },
+      {
+        "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c2/source.png",
+        "sha256": "022d1099a760647f58f62202dd32ac769b8e23e2ab77a36cd1f939cd8362fb54"
+      },
+      {
+        "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c1/source.png",
+        "sha256": "91d220a942c6f2cb3e10c5422ee26026f7d50b34a675f3efe3972d9521b243bd"
+      },
+      {
+        "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r05_room_c1/source.png",
+        "sha256": "0b47b16c21acea7f6445076a941372904baf0c06a232efcbd5ceda6b59237092"
+      }
+    ]
+  }
 }

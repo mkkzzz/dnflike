@@ -137,7 +137,10 @@ def main():
     validation = {
         'software': {'python': platform.python_version(), 'pillow': pillow_version},
         'technical_integrity_passed': integrity, 'sources': records,
-        'baseline_style_approved': True, 'new_room_artwork_user_approved': False,
+        'baseline_style_approved': True,
+        'new_room_artwork_user_approved': all(room['design_candidate_approval'] == 'source_approved'
+                                             for room in manifest['rooms']),
+        'artwork_approval_record': manifest.get('artwork_approval'),
         'room_design_candidates': len(manifest['rooms']),
         'production_exports': len(manifest['production_exports']),
         'native_2k_ready': all(record['native_size_met'] for record in records
@@ -149,7 +152,7 @@ def main():
             'gameplay_viewports.png', 'rooms_overview.png', 'r01_boundary_revision.png', 'r01_c3_075.png']],
         'limitations': [
             'All returned native room resolutions are lower than formal targets; no upscale performed.',
-            'Room designs and requested edge-shrub revision have not received final user artwork approval.',
+            'Design source artwork approval is recorded separately; native resolution, layers and runtime remain unapproved.',
             'Camera windows and warm-soil color heuristic are preview guides, not runtime/collision data.',
             'R04 c2 failed its requested geometry edit; c1 retained with an explicit preview camera window.',
             'No layer exports, collision gates, characters or engine/runtime validation included.',

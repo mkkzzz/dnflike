@@ -1,6 +1,6 @@
 # 10001 首副本（森林）设计单
 
-状态：源图制作（`source_review`）。2026-10-16 用户基本认可新版 R01 c2，要求左右补少量灌木；ws2 已真实传参考图完成该修订与 R01~R05 不同画幅的设计候选，新五房待成品评审。完整环境包与原生 2K 交付未完成。
+状态：源图制作（`source_approved`）。2026-10-17 用户认可选定 R01~R05 五房设计图与左右低灌木修订；批准限当前设计源图。完整环境包、正式原生 2K、分层与实机交付未完成。
 [旧作废结论](../../reports/ws1/2026-10/2026-10-16_10001房间场景作废结论.md) · [旧清单](../../../art/concepts/scenes/forest/10001/lowres_release_v1/manifest.json)：旧五房仍删除禁用；新授权只启动新版，不复活作废资源。
 背景重制入口：[reference_redesign_v2 任务包](../art_tasks/forest_10001_reference_redesign_v2.md) · [新版 manifest](../../../art/concepts/scenes/forest/10001/reference_redesign_v2/manifest.json)。旧计划入口：[10001 v1 制作规格](../../../art/concepts/scenes/forest/10001/v1/production.json)（分层、实体/门及动效计划保留；其中工具能力与停止状态属于旧会话记录）。
 编号约定：**10001 = 整个副本**；布局 **10001-A**（基础布局，后续变体 10001-B…）；房间模块 **10001-R01 ~ R05**。

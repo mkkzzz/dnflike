@@ -177,7 +177,7 @@
     }
   ],
   "baseline_style_approved": true,
-  "new_room_artwork_user_approved": false,
+  "new_room_artwork_user_approved": true,
   "room_design_candidates": 5,
   "production_exports": 0,
   "native_2k_ready": false,
@@ -335,9 +335,10 @@
   ],
   "limitations": [
     "All returned native room resolutions are lower than formal targets; no upscale performed.",
-    "Room designs and requested edge-shrub revision have not received final user artwork approval.",
+    "Design source artwork approved 2026-10-17; native resolution, layers and runtime remain unapproved.",
     "Camera windows and warm-soil color heuristic are preview guides, not runtime/collision data.",
     "R04 c2 failed its requested geometry edit; c1 retained with an explicit preview camera window.",
     "No layer exports, collision gates, characters or engine/runtime validation included."
-  ]
+  ],
+  "artwork_approval_record": "art/concepts/scenes/forest/10001/reference_redesign_v2/artwork_approval.json"
 }

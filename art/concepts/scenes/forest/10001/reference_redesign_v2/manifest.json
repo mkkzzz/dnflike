@@ -4,13 +4,13 @@
   "dungeon_id": "10001",
   "layout_id": "10001-A",
   "owner": "ws2",
-  "lifecycle": "source_review",
+  "lifecycle": "source_approved",
   "runtime_integrated": false,
   "path_base": "repository_root",
   "task": "docs/tasks/art_tasks/forest_10001_reference_redesign_v2.md",
   "reference": "art/concepts/scenes/forest/10001/v1/source/style_reference.png",
   "selected_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c3/source.png",
-  "selected_candidate_approval": "minor_edge_revision_of_user_approved_c2; final_artwork_review_pending",
+  "selected_candidate_approval": "source_approved",
   "generation_record": "art/concepts/scenes/forest/10001/reference_redesign_v2/generation.json",
   "validation": "art/concepts/scenes/forest/10001/reference_redesign_v2/validation_batch_01.json",
   "review_board": "docs/previews/forest_10001_reference_redesign_v2/batch_01/gameplay_viewports.png",
@@ -44,10 +44,10 @@
         5120,
         1600
       ],
-      "lifecycle": "source_review",
+      "lifecycle": "source_approved",
       "production_exports": [],
       "design_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_room_c1/source.png",
-      "design_candidate_approval": "pending_final_artwork_review",
+      "design_candidate_approval": "source_approved",
       "actual_size": [
         2243,
         701
@@ -60,10 +60,10 @@
         5120,
         1600
       ],
-      "lifecycle": "source_review",
+      "lifecycle": "source_approved",
       "production_exports": [],
       "design_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r02_room_c1/source.png",
-      "design_candidate_approval": "pending_final_artwork_review",
+      "design_candidate_approval": "source_approved",
       "actual_size": [
         2243,
         701
@@ -76,10 +76,10 @@
         3840,
         1600
       ],
-      "lifecycle": "source_review",
+      "lifecycle": "source_approved",
       "production_exports": [],
       "design_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c2/source.png",
-      "design_candidate_approval": "pending_final_artwork_review",
+      "design_candidate_approval": "source_approved",
       "actual_size": [
         1942,
         809
@@ -92,10 +92,10 @@
         2816,
         3200
       ],
-      "lifecycle": "source_review",
+      "lifecycle": "source_approved",
       "production_exports": [],
       "design_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c1/source.png",
-      "design_candidate_approval": "pending_final_artwork_review",
+      "design_candidate_approval": "source_approved",
       "actual_size": [
         1176,
         1337
@@ -108,10 +108,10 @@
         5120,
         1600
       ],
-      "lifecycle": "source_review",
+      "lifecycle": "source_approved",
       "production_exports": [],
       "design_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r05_room_c1/source.png",
-      "design_candidate_approval": "pending_final_artwork_review",
+      "design_candidate_approval": "source_approved",
       "actual_size": [
         2243,
         701
@@ -137,5 +137,6 @@
     ]
   },
   "room_overview": "docs/previews/forest_10001_reference_redesign_v2/batch_01/rooms_overview.png",
-  "boundary_comparison": "docs/previews/forest_10001_reference_redesign_v2/batch_01/r01_boundary_revision.png"
+  "boundary_comparison": "docs/previews/forest_10001_reference_redesign_v2/batch_01/r01_boundary_revision.png",
+  "artwork_approval": "art/concepts/scenes/forest/10001/reference_redesign_v2/artwork_approval.json"
 }

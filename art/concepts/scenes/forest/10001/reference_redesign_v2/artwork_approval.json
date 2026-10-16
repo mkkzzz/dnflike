@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-17",
+  "user_quote": "我觉得没问题",
+  "context": "User replied after the five room overview, viewport comparison and left/right boundary revision were delivered.",
+  "lifecycle": "source_approved",
+  "scope": [
+    "Selected five room design artwork",
+    "R01 c3 low boundary shrub revision",
+    "consistent forest style, palette and room composition"
+  ],
+  "not_approved": [
+    "Native 2K resolution waiver",
+    "formal layer exports",
+    "runtime integration, camera or collision acceptance"
+  ],
+  "files": [
+    {
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c3/source.png",
+      "sha256": "83077fbc75faf7251869cee7df35ce4fa312a1d5583bfea1d58bea469a350001"
+    },
+    {
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_room_c1/source.png",
+      "sha256": "60915fe007cd0b3dd7a75590d1d341724de928123c533672ecdd71fe7be40fbb"
+    },
+    {
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r02_room_c1/source.png",
+      "sha256": "ff9537138c35c8512f64ced36f566747f64e1952cd446c6a10ad4129ebc31752"
+    },
+    {
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c2/source.png",
+      "sha256": "022d1099a760647f58f62202dd32ac769b8e23e2ab77a36cd1f939cd8362fb54"
+    },
+    {
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c1/source.png",
+      "sha256": "91d220a942c6f2cb3e10c5422ee26026f7d50b34a675f3efe3972d9521b243bd"
+    },
+    {
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r05_room_c1/source.png",
+      "sha256": "0b47b16c21acea7f6445076a941372904baf0c06a232efcbd5ceda6b59237092"
+    }
+  ]
+}
