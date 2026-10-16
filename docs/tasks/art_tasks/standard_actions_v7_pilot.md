@@ -9,7 +9,7 @@
 | asset_type / workflow | 玩家动作；[14](../../design/14_美术资源全流程.md) B |
 | style / theme | handpainted_action_v1 / dark_fantasy_v1 |
 | owner / integration_owner | ws2；既有可切换试玩授权保留，但 c2 比例失败暂不接入；须先有新的过门候选 |
-| lifecycle | 源图制作（source_review）：c2 已退回（rejected），c3 直立/准备双姿态基准数值过门、待用户看图；整套动作未重做、未实装 |
+| lifecycle | 源图制作（source_review）：c2 已退回，c3 直立/准备比例基准已获用户认可；完整动作与武器分层未通过、未实装 |
 | 批准范围 | 2026-10-15 使用者同意 attack1 首轮测试，并授权行走、奔跑、跳跃基础动作小样；这不是源图/成品或实机批准 |
 
 本轮逐组制作代表小样，不扩展其它攻击、时装或技能；共用标准原画的脸、比例、服装、色板、游戏机位和右手单手持刀规则。
@@ -26,7 +26,7 @@
 - 身份：standard_v1，按 [D030](../../design/决策清单.md) 与[标准原画任务](char_swordsman_standard_v1.md)文字规格优先；A8 握法与 A5 重出不阻塞本轮。
 - 动作路线：[18](../../design/18_角色锚定与动作管线.md) S4，骨架提供姿势约束，参考原画提供身份。
 - 现行基线：V3/V4 的移动和跳跃、V6 的 attack1；小样仅发布候选，不修改 game 资源、玩法时长、物理移动或碰撞。
-- 下游：候选认可后才补武器/手指层、刀光与事件、接入映射；动作带刀小样不能代表 G3 换武器已通过。
+- 下游：代表小样须完成武器/手指层及三武器 G3 验证后才铺量；再按合格动作补刀光/事件与接入映射。带刀设计图不代表可换武器成品，不能先批量一体图再补拆分。
 - 回退：现行资源保持原路径与映射；新目录与旧版并存。
 
 ## 3. 参考与生成能力
@@ -115,7 +115,7 @@ GIF 为整数动作 tick 经累计 10 ms 量化，准确时钟以 manifest 为�
 用户指出 v7 头偏大。抽测确认旧配置的头部显示尺度不合格，见[最终对照](../../previews/v7_proportions_2026-10-17/measurement_comparison_refined.png)与[审计报告](../../reports/ws2/2026-10/2026-10-17_V7头部比例核查与重做准入.md)。导出器没有局部放大头部；站高估值和源图比例控制未形成闭环，不应直接将 c2 接入试玩。具体源姿态应重标还是重画，要在可靠直立基准下逐一复核，不能仅据 3 个样本宣称全部原画都变形。
 
 - c2 现行 [manifest](../../../art/animations/players/swordsman/v7/exports/pilot_c2/manifest.json) 已标拒收；原 PNG/配置保留，旧 manifest 另存快照。历史重建专用标志不允许新配置借用，也不通过 G1。
-- c3 只做一张“直立＋准备”基准：[源图和完整提示词](../../../art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/generation.json)；[导出包](../../../art/animations/players/swordsman/v7/exports/proportion_reset_c3_pair_c1/manifest.json)；[同包对照](../../previews/v7_proportions_2026-10-17/c3_reference_compare.png)。同图站高实测 855 px、向下导出 380 px，两个头部尺度均过门，未获用户美术认可。
+- c3 只做一张“直立＋准备”基准：[源图和完整提示词](../../../art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/generation.json)；[导出包](../../../art/animations/players/swordsman/v7/exports/proportion_reset_c3_pair_c1/manifest.json)；[同包对照](../../previews/v7_proportions_2026-10-17/c3_reference_compare.png)。同图站高实测 855 px、向下导出 380 px；用户随后回复“我觉得这一版没问题”，已将比例认可记录在[批准单](../../../art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/artwork_approval.json)，不含动作/分层/实机认可。
 - 新导出必须给 `proportion_check`，校验参考/源图哈希、全部姿态的可见发顶/下巴与同图站立高度；缺项、超差、放大在写文件前就停止。`tools/test_actor_proportions.py` 覆盖这些拒收条件。
 - 这不是完整动作重做。旧行走半步、奔跑腿序、普攻轨迹/收势、跳跃相位与 G3 换武器仍须处理；c3 中立姿态的入鞘刀柄与空鞘要求也尚有差别。
-- 后续先确认 c3 基准的人体与成熟感，再逐组重做源关键姿态；完整 G1/G2/G3/G4 和实机验收未通过前，不替代现行 V6。
+- 后续按[不含技能基础动作任务](swordsman_base_actions_v7.md)先验证一招的完整动作与三种武器分层，过 G1/G2/G3/G4 再铺量；现行 V6 继续使用。

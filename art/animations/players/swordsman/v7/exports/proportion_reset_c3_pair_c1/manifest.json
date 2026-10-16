@@ -402,5 +402,6 @@
     "failures": [],
     "artwork_approved": false,
     "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
-  }
+  },
+  "baseline_approval": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/artwork_approval.json"
 }

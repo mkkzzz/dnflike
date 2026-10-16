@@ -60,5 +60,8 @@
   },
   "tool_output_basename": "exec-cdf60312-66d1-42b1-b929-3d770d2361e2.png",
   "original_tool_png_sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
-  "source_copy_byte_identical": true
+  "source_copy_byte_identical": true,
+  "proportion_baseline_approved": true,
+  "approval_record": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/artwork_approval.json",
+  "user_approved_scope_note": "The full production asset remains unapproved; the direct user approval is limited to the body-proportion baseline in approval_record."
 }

@@ -1,0 +1,36 @@
+{
+  "schema": "artwork_approval/1",
+  "date": "2026-10-17",
+  "reviewer": "rainmk",
+  "evidence": "Direct user message in this chat after the c3 reference comparison was displayed.",
+  "user_message": "我觉得这一版没问题，下一步是不是铺量完成鬼剑士的基础动作？（不包含技能）\n另外之前不是说要支持武器自由切换吗？你现在把武器也放到动作里了，会不会有问题啊",
+  "approved": true,
+  "scope": "c3 neutral/ready adult head, torso and leg proportion baseline only",
+  "assets": [
+    {
+      "path": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+      "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+    },
+    {
+      "path": "docs/previews/v7_proportions_2026-10-17/c3_reference_compare.png",
+      "sha256": "2d1a93894ed7c36a3393c92a0b7c196b353c713d93becdd966d3b62086784e73"
+    },
+    {
+      "path": "art/animations/players/swordsman/v7/exports/proportion_reset_c3_pair_c1/actor/neutral/f000.png",
+      "sha256": "75eda95d65979ce5f4d7f709f8f2934ff74a4e7dc70fc5c7a40e6e0fca8373c5"
+    },
+    {
+      "path": "art/animations/players/swordsman/v7/exports/proportion_reset_c3_pair_c1/actor/ready/f000.png",
+      "sha256": "2ab78990695cad5c2987319b92baf721a65dd0b700f211fc1c5384b280c68e2b"
+    }
+  ],
+  "production_scope": "Non-skill base actions, with interchangeable one-handed sword-family weapons; representative G1/G2/G3/G4 validation must precede bulk production.",
+  "not_approved": [
+    "Complete motion or action-set quality",
+    "Weapon removal, finger occlusion and three-weapon G3 compatibility",
+    "Fixed in-body sword/hilt/scabbard as final interchangeable-weapon assets",
+    "Runtime integration or playtest acceptance"
+  ],
+  "remaining_known_issue": "The source and current proportion-only exports include a blade and/or sheathed hilt. These are design references, not layered swappable-weapon deliverables.",
+  "task": "docs/tasks/art_tasks/swordsman_base_actions_v7.md"
+}
