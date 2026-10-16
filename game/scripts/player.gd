@@ -302,6 +302,14 @@ func setup(data: Dictionary, battle_fx: BattleFX, monster_list: Array) -> void:
 	monsters = monster_list
 	reset_combat(position)
 
+## 可行动范围。旧单屏遭遇战固定 64~1216；副本房间比一屏宽时由 Main 按当前房宽放宽，
+## 否则门口会落在夹取范围之外、玩家走不到。
+func set_arena(left: float, right: float) -> void:
+	arena_left = left
+	arena_right = maxf(left + 8.0, right)
+	position.x = clampf(position.x, arena_left, arena_right)
+
+
 func reset_combat(origin: Vector2) -> void:
 	position = origin
 	_reset_grounded = absf(origin.y - ground_y) < 1.0

@@ -383,6 +383,7 @@ func _show_ready() -> void:
 		if _ground_shape != null:
 			(_ground_shape.shape as RectangleShape2D).size.x = VIEW_W + 256
 			_ground_shape.position.x = VIEW_W * 0.5
+		player.set_arena(64.0, 1216.0)
 		_update_camera()
 	_clear_settlement()
 	hud.clear_dungeon_room()
@@ -436,6 +437,7 @@ func _start_demo(job_id := -1) -> void:
 	_clear_settlement()
 	hud.clear_room()
 	hud.clear_dungeon_room()
+	player.set_arena(64.0, 1216.0)
 	if _ground_shape != null:
 		(_ground_shape.shape as RectangleShape2D).size.x = VIEW_W + 256
 		_ground_shape.position.x = VIEW_W * 0.5
@@ -836,6 +838,7 @@ func _load_room() -> void:
 		(_ground_shape.shape as RectangleShape2D).size.x = room_world_width + 256.0
 		_ground_shape.position.x = room_world_width * 0.5
 	player.reset_combat(Vector2(200, GROUND_Y))
+	player.set_arena(64.0, room_world_width - 64.0)
 	player.set_job(selected_job)
 	player.invincible = 0
 	player.control_enabled = true

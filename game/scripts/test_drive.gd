@@ -418,10 +418,27 @@ func _run_dungeon_checks() -> void:
 	p.invincible = 999999
 	_check(main_ref.alive_count() == 0 and main_ref.room_cleared, "gm clear wipes the room")
 	_check(main_ref.current_door.opened and main_ref.battle_state == main_ref.BattleState.ROOM_CLEAR, "cleared room opens its door")
-	p.position = main_ref.current_door.position
+	# 真实输入走到门口。整房 2000+ px 走完会吃掉 --quit-after 预算，
+	# 所以先确认夹取上界能到门，再用真实输入走最后一程并触发切房。
+	_check(main_ref.current_door.position.x <= p.arena_right and main_ref.current_door.position.x >= p.arena_left, "the opened door sits inside the player's walkable arena")
+	p.position = Vector2(main_ref.current_door.position.x - 220.0, main_ref.GROUND_Y)
 	await _frames(3)
+	if "--capture" in OS.get_cmdline_user_args():
+		await _capture("14_dungeon_door_open")
+	_release_inputs()
+	Input.action_press("move_right")
+	var walk_frames := 0
+	while main_ref.dungeon.room_number() == 2 and walk_frames < 240:
+		p.invincible = 999999
+		await _frames(1)
+		walk_frames += 1
+	Input.action_release("move_right")
+	await _frames(2)
 	p.invincible = 999999
-	_check(main_ref.dungeon.room_number() == 3 and main_ref.dungeon.module_id() == "10001-R03", "walking into the door advances to room 3")
+	print("[DEMO_TEST] walk frames=%d player_x=%.0f door_x=%.0f state=%d room=%d control=%s" % [
+		walk_frames, p.position.x, main_ref.current_door.position.x if main_ref.current_door != null else -1.0,
+		main_ref.battle_state, main_ref.dungeon.room_number(), str(p.control_enabled)])
+	_check(main_ref.dungeon.room_number() == 3 and main_ref.dungeon.module_id() == "10001-R03", "walking into the opened door advances to room 3 with real input")
 
 	# 精英房：单只精英，血量高于普通怪
 	_check(main_ref.alive_count() == 1 and float(main_ref.monsters[0].cfg.get("hp", 0)) > 200.0, "elite room spawns one stronger elite")
@@ -434,6 +451,22 @@ func _run_dungeon_checks() -> void:
 	_check(main_ref.alive_count() == 1 and str(main_ref.monsters[0].cfg.get("name", "")) == "哥布林头目", "boss room spawns the goblin chief")
 	if "--capture" in OS.get_cmdline_user_args():
 		await _capture("12_dungeon_boss")
+	# BOSS 必须能被真实攻击打到（1500 血打满会超出 --quit-after 预算，所以只验伤害，
+	# 死亡到结算的链路走下面同一条死亡处理）
+	var boss = main_ref.monsters[0]
+	p.invincible = 999999
+	p.depth_y = boss.depth_y
+	p.position = Vector2(clampf(boss.position.x - 88.0, 60.0, main_ref.room_world_width - 60.0), main_ref.GROUND_Y)
+	p.facing = 1
+	var boss_hp_before: float = boss.hp
+	var swings := 0
+	while boss.hp >= boss_hp_before and swings < 40:
+		p.position = Vector2(clampf(boss.position.x - 88.0, 60.0, main_ref.room_world_width - 60.0), main_ref.GROUND_Y)
+		p.buffer_action("attack")
+		await _frames(3)
+		p.invincible = 999999
+		swings += 1
+	_check(boss.hp < boss_hp_before, "the boss takes damage from real player attacks")
 	main_ref._on_gm_command("clear", PackedStringArray())
 	await _frames(5)
 	p.invincible = 999999
