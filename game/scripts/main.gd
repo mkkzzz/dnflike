@@ -82,6 +82,7 @@ var _toast: Label
 var _toast_left := 0.0
 var _ground_shape: CollisionShape2D
 var _last_result: Dictionary = {}
+var _control_suppressed_by_gm := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -665,6 +666,13 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if battle_state == BattleState.PAUSED:
 		return
+	# GM 输入框拿到焦点时，方向键会同时带动角色，这里临时收回操作权
+	if gm_panel != null and gm_panel.is_typing():
+		player.control_enabled = false
+		_control_suppressed_by_gm = true
+	elif _control_suppressed_by_gm:
+		_control_suppressed_by_gm = false
+		_set_actor_control(battle_state in [BattleState.FIGHT, BattleState.WAVE_BREAK, BattleState.ROOM_CLEAR] and not player.dead)
 	if bm.freeze > 0:
 		bm.freeze -= 1
 	if battle_state == BattleState.ROOM_CLEAR:

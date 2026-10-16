@@ -494,6 +494,35 @@ func _run_dungeon_checks() -> void:
 	main_ref._on_gm_command("nonsense", PackedStringArray())
 	_check(main_ref.dungeon_mode and main_ref.dungeon.room_number() == 1, "unknown gm command leaves the game state untouched")
 
+	# GM 面板本体：P 键开关、输入框聚焦时收回操作权、按钮真的派发命令
+	var panel = main_ref.gm_panel
+	_check(not panel.is_open(), "gm panel starts closed")
+	var p_key := InputEventKey.new()
+	p_key.physical_keycode = KEY_P
+	p_key.keycode = KEY_P
+	p_key.pressed = true
+	Input.parse_input_event(p_key)
+	await _frames(3)
+	_check(panel.is_open(), "P key opens the gm panel")
+	Input.parse_input_event(p_key)
+	await _frames(3)
+	_check(not panel.is_open(), "P key closes the gm panel again")
+	Input.parse_input_event(p_key)
+	await _frames(2)
+	p.invincible = 999999
+	panel._input.grab_focus()
+	await _frames(3)
+	_check(panel.is_typing() and not p.control_enabled, "focusing the command box takes gameplay control away")
+	panel.close()
+	await _frames(4)
+	p.invincible = 999999
+	_check(not panel.is_typing() and p.control_enabled, "closing the panel gives gameplay control back")
+	var first_button: Button = panel._grid.get_child(0) as Button
+	_check(first_button != null and first_button.text == "选择模式", "panel exposes the extendable button grid")
+	first_button.emit_signal("pressed")
+	await _frames(3)
+	_check(not main_ref.dungeon_mode and main_ref.battle_state == main_ref.BattleState.READY, "a panel button dispatches its command")
+
 
 func _capture(name_text: String) -> void:
 	await RenderingServer.frame_post_draw

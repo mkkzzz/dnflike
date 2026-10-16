@@ -36,6 +36,7 @@ var _input: LineEdit
 var _log: Label
 var _history: Array[String] = []
 var _history_cursor := -1
+var _typing := false
 
 
 func build(ui_font: Font, view: Vector2) -> void:
@@ -82,6 +83,8 @@ func build(ui_font: Font, view: Vector2) -> void:
 	_input.add_theme_font_size_override("font_size", 15)
 	_input.text_submitted.connect(_on_submit_text)
 	_input.gui_input.connect(_on_input_gui)
+	_input.focus_entered.connect(_on_input_focus.bind(true))
+	_input.focus_exited.connect(_on_input_focus.bind(false))
 	row.add_child(_input)
 	var run := Button.new()
 	run.text = "执行"
@@ -103,6 +106,16 @@ func build(ui_font: Font, view: Vector2) -> void:
 
 func is_open() -> bool:
 	return _root != null and _root.visible
+
+
+func _on_input_focus(focused: bool) -> void:
+	_typing = focused
+
+
+## 输入框拿到焦点时，方向键会同时被角色轮询到；Main 据此临时关掉角色操作。
+## 只在“打字”期间生效：点按钮、看效果时角色照常可控。
+func is_typing() -> bool:
+	return is_open() and _typing
 
 
 func toggle() -> void:
