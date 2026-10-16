@@ -8,6 +8,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
+from forest_release_assets import append_assets
+
 
 def extend_room(scene: Image.Image, overlap: int = 64) -> Image.Image:
     width, height = scene.size
@@ -178,6 +180,9 @@ def package(root: Path) -> None:
             ImageDraw.Draw(r02_view).text((min(dx + 12, r02.width - 140), dy - 18), direction.upper() + " ANCHOR", fill="white", stroke_width=2, stroke_fill="black")
         r02_view.save(preview / "r02_handoff.png")
         manifest["blocker"] = "R02 generated and exported; R03 request timed out awaiting user approval. R03-R05 and remaining props/gates/animations not yet generated."
+    append_assets(root, manifest, extend_room)
+    if not all(checks.values()):
+        raise ValueError(f"Batch checks failed: {checks}")
     (root / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (root / "validation.json").write_text(json.dumps({"result": "PARTIAL_ASSETS_OK", "checks": checks, "complete_environment_package": False}, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"result": "PARTIAL_ASSETS_OK", "room_size": [w, h], "ready_room_count": len(manifest["rooms"]), "ready_entity_count": len(manifest["entities"]), "environment_complete": False}, ensure_ascii=False))

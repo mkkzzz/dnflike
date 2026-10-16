@@ -1,15 +1,31 @@
 {
-  "result": "PARTIAL_ASSETS_OK",
-  "checks": {
-    "room_has_no_upscale": true,
-    "room_longer_than_two_reference_screens": true,
-    "door_anchors_in_walkable_region": true,
-    "stump_transparent": true,
-    "shadow_transparent_nonempty": true,
-    "stump_source_bytes_preserved": true,
-    "shadow_source_bytes_preserved": true,
-    "r02_native_height_preserved": true,
-    "r02_anchors_in_walkable_region": true
+  "result": "ASSET_PACKAGE_CHECK_OK",
+  "rooms": 5,
+  "entity_types": 7,
+  "static_states": 11,
+  "shadow_exports": 11,
+  "complete_environment_package": false,
+  "missing": {
+    "rooms": [],
+    "entities": [
+      "fruit_tree.with_fruit",
+      "fruit_tree.without_fruit"
+    ],
+    "gates": [
+      "up.closed",
+      "up.open",
+      "down.closed",
+      "down.open",
+      "left.closed",
+      "left.open",
+      "right.closed",
+      "right.open"
+    ],
+    "animations": [
+      "torch_flame",
+      "gate_lamp_flash",
+      "destructible_hit"
+    ]
   },
-  "complete_environment_package": false
+  "art_and_runtime_approved": false
 }

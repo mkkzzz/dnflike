@@ -5,7 +5,7 @@
   "style": "natural",
   "reference_input": null,
   "seed": null,
-  "batch_state": "partial_waiting_for_approval_retry",
+  "batch_state": "rooms_and_props_exported_fruit_tree_approval_timeout",
   "calls": [
     {
       "subject": "10001-R02",
@@ -26,5 +26,42 @@
   "processing": "python tools/package_forest_release.py art/concepts/scenes/forest/10001/lowres_release_v1",
   "mirrored_extension": "Generated native source plus mirrored copy and 64px overlap; intentionally repeated artwork, not unique panorama generation or upscaling.",
   "reference": "../pilot_lowres_v3/manifest.json; textual interpretation only",
+  "retry_calls": [
+    {
+      "subject": "10001-R03",
+      "requested_size": "1344x756",
+      "status": "success",
+      "file": "sources/r03/原创10001_R03森林精英遭遇房间背景_单张16_9成熟_2026-10-16T13-28-02.png",
+      "prompt_reuse": "Exact prompt of the original 10001-R03 call recorded in calls[1]."
+    },
+    {
+      "subject": "10001-R04",
+      "requested_size": "1024x1024",
+      "status": "success",
+      "file": "sources/r04/原创10001_R04森林竖幅房间背景_正方形构图_完整一体_2026-10-16T13-28-56.png",
+      "prompt": "原创10001-R04森林竖幅房间背景，正方形构图，完整一体场景。成熟怀旧韩式横版动作游戏手绘位图，灰青绿树林、自然中绿色短草、暖米棕细泥土，清楚的大形明暗和局部柔和渐变，温和明亮白天，不改变已认可的暖土森林风格。上方约65%是高耸树冠与层叠林木，远景灰青绿薄雾，顶上是错落阔叶枝叶和浅淡树冠间隙，中上部自然细树与中等粗度树干，低对比不抢眼，成熟材质，非幼稚卡通非3D非照片。所有树干底部藏在远处低草丛之后，绝不生在近处路面上，不画近景巨大树根。下方约35%是可横向行走的宽阔暖米棕土路，土地左右贯穿且平坦，细颗粒少量碎叶，没有台阶、巨石、沟、桥或河。草土边自然、地面不是灰石板、不画大裂纹。横版格斗侧向三分之四轻微俯角，竖向空间用于树冠展示，不是纵向走向的道路，不是俯视地图。两端通畅，中间空旷，近景没有黑色遮挡。纯森林与地面，不含门、果树、火把、木桩、栅栏、骨堆、人物、怪物、动物、实体道具。没有文字UI水印。"
+    },
+    {
+      "subject": "10001-R05",
+      "requested_size": "1344x756",
+      "status": "success",
+      "file": "sources/r05/原创10001_R05森林BOSS房间完整背景_16_9_与_2026-10-16T13-31-05.png",
+      "prompt": "原创10001-R05森林BOSS房间完整背景，16:9。与暖米棕土路、青绿薄雾树林的怀旧韩式横版动作游戏统一，成熟手绘位图、大形明暗清楚、局部柔和渐变，适度细节，非儿童绘本非照片非3D。上部约40%是灰青绿色层叠古林，远景有较粗的成熟阔叶树藏在后方植被后，枝叶略厚、中央有清澈林间薄雾，林间环境比普通房庄重但仍是明亮白天，左上温和日光。下方约60%为宽阔平坦战斗空地，中央暖米棕泥土、自然中绿和橄榄短草，细土色块与少量碎叶、小碎石纹理，草土边自然，路面平整干净、不画石板大裂纹坑洞。横版格斗側向三分之四、轻微俯角，左到右贯穿且具前后纵深，不收缩到远处，无高低差。所有景观树退后，不让树根伸入战斗场地；顶部树冠可略作框景，不要近处巨大黑柱。BOSS与所有可碰撞实体将另行摆放，本图无人物、怪物、动物、门、木桩、火把、果树、栅栏、骨堆、灌木石头道具，中央至少70%空间无遮蔽。无UI文字水印和标志。"
+    },
+    {
+      "subject": "props_sheet",
+      "requested_size": "1024x1024",
+      "status": "success",
+      "file": "sources/props/原创韩式怀旧2D横版动作游戏森林道具源图_纯白RGB255背_2026-10-16T13-34-56.png",
+      "prompt": "原创韩式怀旧2D横版动作游戏森林道具源图，纯白RGB255背景，无文字无UI水印。干净2行3列等大网格、无网格线，每格唯一独立完整物件，物件四边留白不跨格。成熟细致手绘位图、清楚明暗分面、局部柔和渐变，温和左上白天光，暖棕木材、自然橄榄中绿叶、暖灰岩石，非照片非3D非幼稚Q版，无夸张粗描边。低机位侧向三分之四轻微俯角，与平坦暖土路游戏场景匹配。所有物件不画地面底座、外部投影或背景。\n从左到右从上到下六格固定：第一格一根窄棕木杆火把，顶部黑褐绑布火盆与麻绳，没有火焰，完整竖杆与平整底部；第二格一截独立棕木栅栏，由四根短粗立木和两横木、麻绳捆绑，完整稳定，不是门，无灯藤蔓；第三格小堆浅棕白风化动物骨头，几个肢骨与一个小动物头骨，不恐怖，无血无尸体，横向紧凑平堆；第四格一丛低矮紧凑自然中绿灌木，圆润但真实枝叶，低底部，完整独立不带草地基座；第五格一块暖灰褐粗糙圆岩石，低矮形体，明暗可信，非宝石，无绿色苔藓；第六格一个红色野果，短棕果柄和小绿叶，单一果实，成熟暖红色无高亮魔法效果。每件必须可单独切格抠透明，不互相遮挡、不连接，格内脚底位置统一在底部附近。纯白背景。",
+      "observed_difference": "Model drew black cell separator lines; export processing crops 10px within each cell to remove separators. Intact states generated; damaged/debris states derived by masks/fragments, not new generated drawings."
+    },
+    {
+      "subject": "fruit_tree_two_states",
+      "requested_size": "1024x1024",
+      "status": "approval_timeout_no_output",
+      "prompt": "原创怀旧韩式2D横版动作游戏森林可交互矮果树源图，纯白RGB255背景，两个等大竖格横向并排，无格线无文字无UI水印。左格有果状态，右格无果状态，是完全同一株树的同一透视与轮廓，位置尺寸枝叶分布一模一样，唯一差别左格树冠挂六个清楚暖红色小果，右格没有果实。树是矮紧凑的独立实体，棕色粗干和短枝，自然橄榄中绿色阔叶树冠、左右稍展开，树冠不是巨大球形卡通蘑菇，矮树底部短小根脚不伸长。完整不裁切，两个格都留白，树脚同一高度，不能跨格，没有地面草地底座、外部投影或背景森林。成熟手绘位图、大形明暗清楚、局部柔和渐变，暖棕木材、中绿叶片，左上温和白天照明，低机位侧向三分之四轻微俯角，与暖土地面配套，非3D非照片非幼稚绘本，细节自然克制。格内树占高度80%、宽度75%，每格一个完整树，只有两株同款不同果状态。"
+    }
+  ],
   "full_environment_complete": false
 }

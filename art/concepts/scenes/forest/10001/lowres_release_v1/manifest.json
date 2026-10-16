@@ -90,6 +90,135 @@
       "source_sha256": "9a0bf680d3a3a9533f97cfcaa733d3bbb7984c97800bebedd9729a4ccd5490fc",
       "build": "Native source plus reflected tile; 64px blended overlap; repeated artwork, no upscale.",
       "visual_review_of_extension": "pending"
+    },
+    "10001-R03": {
+      "file": "exports/rooms/10001-R03.png",
+      "size": [
+        1920,
+        768
+      ],
+      "anchor": [
+        0,
+        0
+      ],
+      "reference_viewport": [
+        1280,
+        720
+      ],
+      "walkable_rect": [
+        32,
+        492,
+        1856,
+        192
+      ],
+      "door_anchors": {
+        "left": [
+          32,
+          588
+        ],
+        "right": [
+          1888,
+          588
+        ],
+        "up": [
+          960,
+          492
+        ],
+        "down": [
+          960,
+          684
+        ]
+      },
+      "source": "sources/r03/原创10001_R03森林精英遭遇房间背景_单张16_9成熟_2026-10-16T13-28-02.png",
+      "source_sha256": "8cfa81c9e4b78bdd3dc4b0596950e9147e116f2c119910915fbdefa963bea490",
+      "build": "Native scene and horizontal mirrored extension with 64px blend; intentional repeated art, no upscale.",
+      "visual_review_of_extension": "pending"
+    },
+    "10001-R04": {
+      "file": "exports/rooms/10001-R04.png",
+      "size": [
+        1024,
+        1280
+      ],
+      "anchor": [
+        0,
+        0
+      ],
+      "reference_viewport": [
+        960,
+        540
+      ],
+      "walkable_rect": [
+        24,
+        1044,
+        976,
+        174
+      ],
+      "door_anchors": {
+        "left": [
+          24,
+          1131
+        ],
+        "right": [
+          1000,
+          1131
+        ],
+        "up": [
+          512,
+          1044
+        ],
+        "down": [
+          512,
+          1218
+        ]
+      },
+      "source": "sources/r04/原创10001_R04森林竖幅房间背景_正方形构图_完整一体_2026-10-16T13-28-56.png",
+      "source_sha256": "f7d60ac4457d7b95584e220bbe40c7ac400191791fe8912b13d35a22b7fe98cc",
+      "build": "Native square scene with a 256px vertically reflected canopy extension; original ground preserved; repeated canopy, no upscale.",
+      "visual_review_of_extension": "pending"
+    },
+    "10001-R05": {
+      "file": "exports/rooms/10001-R05.png",
+      "size": [
+        2688,
+        768
+      ],
+      "anchor": [
+        0,
+        0
+      ],
+      "reference_viewport": [
+        1280,
+        720
+      ],
+      "walkable_rect": [
+        32,
+        522,
+        2624,
+        123
+      ],
+      "door_anchors": {
+        "left": [
+          32,
+          583
+        ],
+        "right": [
+          2656,
+          583
+        ],
+        "up": [
+          1344,
+          522
+        ],
+        "down": [
+          1344,
+          645
+        ]
+      },
+      "source": "sources/r05/原创10001_R05森林BOSS房间完整背景_16_9_与_2026-10-16T13-31-05.png",
+      "source_sha256": "728a02e1269714a22ebece38fd343fda3c1f6c285c2dae76eebcdba9b77635c2",
+      "build": "Native scene and horizontal mirrored extension with 64px blend; intentional repeated art, no upscale.",
+      "visual_review_of_extension": "pending"
     }
   },
   "entities": {
@@ -129,27 +258,327 @@
         300,
         515
       ]
+    },
+    "torch": {
+      "size": [
+        48,
+        170
+      ],
+      "anchor": [
+        24,
+        169
+      ],
+      "states": {
+        "intact": {
+          "file": "exports/entities/torch/intact.png",
+          "shadow": {
+            "file": "exports/entities/torch/intact_shadow.png",
+            "size": [
+              112,
+              234
+            ],
+            "anchor": [
+              56,
+              201
+            ]
+          }
+        }
+      },
+      "footprint_rect_relative_to_anchor": [
+        -12,
+        -5,
+        24,
+        10
+      ],
+      "source": "sources/props/原创韩式怀旧2D横版动作游戏森林道具源图_纯白RGB255背_2026-10-16T13-34-56.png",
+      "source_cell": [
+        10,
+        10,
+        331,
+        502
+      ],
+      "source_sha256": "748e04598be2336259f627cdd77d036f39a89858dff212a90a3edd1a2fd097e4",
+      "upscale": false,
+      "build": "Generated intact prop, white-matte alpha and native/downsampled cell crop. Damaged state uses a cutout mask; debris uses rotated/downsampled native fragments, not independently generated art.",
+      "art_review": "pending"
+    },
+    "fence": {
+      "size": [
+        183,
+        160
+      ],
+      "anchor": [
+        91,
+        159
+      ],
+      "states": {
+        "intact": {
+          "file": "exports/entities/fence/intact.png",
+          "shadow": {
+            "file": "exports/entities/fence/intact_shadow.png",
+            "size": [
+              247,
+              224
+            ],
+            "anchor": [
+              123,
+              191
+            ]
+          }
+        },
+        "damaged": {
+          "file": "exports/entities/fence/damaged.png",
+          "shadow": {
+            "file": "exports/entities/fence/damaged_shadow.png",
+            "size": [
+              247,
+              224
+            ],
+            "anchor": [
+              123,
+              191
+            ]
+          }
+        },
+        "debris": {
+          "file": "exports/entities/fence/debris.png",
+          "shadow": {
+            "file": "exports/entities/fence/debris_shadow.png",
+            "size": [
+              247,
+              224
+            ],
+            "anchor": [
+              123,
+              191
+            ]
+          }
+        }
+      },
+      "footprint_rect_relative_to_anchor": [
+        -105,
+        -12,
+        210,
+        24
+      ],
+      "source": "sources/props/原创韩式怀旧2D横版动作游戏森林道具源图_纯白RGB255背_2026-10-16T13-34-56.png",
+      "source_cell": [
+        351,
+        10,
+        673,
+        502
+      ],
+      "source_sha256": "748e04598be2336259f627cdd77d036f39a89858dff212a90a3edd1a2fd097e4",
+      "upscale": false,
+      "build": "Generated intact prop, white-matte alpha and native/downsampled cell crop. Damaged state uses a cutout mask; debris uses rotated/downsampled native fragments, not independently generated art.",
+      "art_review": "pending"
+    },
+    "bone_pile": {
+      "size": [
+        140,
+        87
+      ],
+      "anchor": [
+        70,
+        86
+      ],
+      "states": {
+        "intact": {
+          "file": "exports/entities/bone_pile/intact.png",
+          "shadow": {
+            "file": "exports/entities/bone_pile/intact_shadow.png",
+            "size": [
+              204,
+              151
+            ],
+            "anchor": [
+              102,
+              118
+            ]
+          }
+        },
+        "damaged": {
+          "file": "exports/entities/bone_pile/damaged.png",
+          "shadow": {
+            "file": "exports/entities/bone_pile/damaged_shadow.png",
+            "size": [
+              204,
+              151
+            ],
+            "anchor": [
+              102,
+              118
+            ]
+          }
+        },
+        "debris": {
+          "file": "exports/entities/bone_pile/debris.png",
+          "shadow": {
+            "file": "exports/entities/bone_pile/debris_shadow.png",
+            "size": [
+              204,
+              151
+            ],
+            "anchor": [
+              102,
+              118
+            ]
+          }
+        }
+      },
+      "footprint_rect_relative_to_anchor": [
+        -55,
+        -8,
+        110,
+        16
+      ],
+      "source": "sources/props/原创韩式怀旧2D横版动作游戏森林道具源图_纯白RGB255背_2026-10-16T13-34-56.png",
+      "source_cell": [
+        693,
+        10,
+        1014,
+        502
+      ],
+      "source_sha256": "748e04598be2336259f627cdd77d036f39a89858dff212a90a3edd1a2fd097e4",
+      "upscale": false,
+      "build": "Generated intact prop, white-matte alpha and native/downsampled cell crop. Damaged state uses a cutout mask; debris uses rotated/downsampled native fragments, not independently generated art.",
+      "art_review": "pending"
+    },
+    "bush": {
+      "size": [
+        178,
+        135
+      ],
+      "anchor": [
+        89,
+        134
+      ],
+      "states": {
+        "intact": {
+          "file": "exports/entities/bush/intact.png",
+          "shadow": {
+            "file": "exports/entities/bush/intact_shadow.png",
+            "size": [
+              242,
+              199
+            ],
+            "anchor": [
+              121,
+              166
+            ]
+          }
+        }
+      },
+      "footprint_rect_relative_to_anchor": [
+        -70,
+        -12,
+        140,
+        24
+      ],
+      "source": "sources/props/原创韩式怀旧2D横版动作游戏森林道具源图_纯白RGB255背_2026-10-16T13-34-56.png",
+      "source_cell": [
+        10,
+        522,
+        331,
+        1014
+      ],
+      "source_sha256": "748e04598be2336259f627cdd77d036f39a89858dff212a90a3edd1a2fd097e4",
+      "upscale": false,
+      "build": "Generated intact prop, white-matte alpha and native/downsampled cell crop. Damaged state uses a cutout mask; debris uses rotated/downsampled native fragments, not independently generated art.",
+      "art_review": "pending"
+    },
+    "rock": {
+      "size": [
+        138,
+        120
+      ],
+      "anchor": [
+        69,
+        119
+      ],
+      "states": {
+        "intact": {
+          "file": "exports/entities/rock/intact.png",
+          "shadow": {
+            "file": "exports/entities/rock/intact_shadow.png",
+            "size": [
+              202,
+              184
+            ],
+            "anchor": [
+              101,
+              151
+            ]
+          }
+        }
+      },
+      "footprint_rect_relative_to_anchor": [
+        -55,
+        -12,
+        110,
+        24
+      ],
+      "source": "sources/props/原创韩式怀旧2D横版动作游戏森林道具源图_纯白RGB255背_2026-10-16T13-34-56.png",
+      "source_cell": [
+        351,
+        522,
+        673,
+        1014
+      ],
+      "source_sha256": "748e04598be2336259f627cdd77d036f39a89858dff212a90a3edd1a2fd097e4",
+      "upscale": false,
+      "build": "Generated intact prop, white-matte alpha and native/downsampled cell crop. Damaged state uses a cutout mask; debris uses rotated/downsampled native fragments, not independently generated art.",
+      "art_review": "pending"
+    },
+    "fruit_pickup": {
+      "size": [
+        38,
+        48
+      ],
+      "anchor": [
+        19,
+        47
+      ],
+      "states": {
+        "idle": {
+          "file": "exports/entities/fruit_pickup/idle.png",
+          "shadow": {
+            "file": "exports/entities/fruit_pickup/idle_shadow.png",
+            "size": [
+              102,
+              112
+            ],
+            "anchor": [
+              51,
+              79
+            ]
+          }
+        }
+      },
+      "footprint_rect_relative_to_anchor": [
+        -12,
+        -5,
+        24,
+        10
+      ],
+      "source": "sources/props/原创韩式怀旧2D横版动作游戏森林道具源图_纯白RGB255背_2026-10-16T13-34-56.png",
+      "source_cell": [
+        693,
+        522,
+        1014,
+        1014
+      ],
+      "source_sha256": "748e04598be2336259f627cdd77d036f39a89858dff212a90a3edd1a2fd097e4",
+      "upscale": false,
+      "build": "Generated intact prop, white-matte alpha and native/downsampled cell crop. Damaged state uses a cutout mask; debris uses rotated/downsampled native fragments, not independently generated art.",
+      "art_review": "pending"
     }
   },
   "missing": {
-    "rooms": [
-      "10001-R03",
-      "10001-R04",
-      "10001-R05"
-    ],
+    "rooms": [],
     "entities": [
-      "torch",
       "fruit_tree.with_fruit",
-      "fruit_tree.without_fruit",
-      "fence.intact",
-      "fence.damaged",
-      "fence.debris",
-      "bone_pile.intact",
-      "bone_pile.damaged",
-      "bone_pile.debris",
-      "bush",
-      "rock",
-      "fruit_pickup"
+      "fruit_tree.without_fruit"
     ],
     "gates": [
       "up.closed",
@@ -175,7 +604,7 @@
     "paths": "Copy this self-contained export package under the future game's resource directory and resolve files relative to manifest. Current game has no automatic reader for this schema.",
     "zoom": "Do not resize only texture without scaling anchors/collision/placement consistently. This batch is low-resolution, not a native 2K delivery."
   },
-  "blocker": "R02 generated and exported; R03 request timed out awaiting user approval. R03-R05 and remaining props/gates/animations not yet generated.",
+  "blocker": "All five room images and six intact prop types exported. Fruit-tree request timed out awaiting approval; fruit-tree states, gates and animations remain missing.",
   "technical_checks": {
     "room_has_no_upscale": true,
     "room_longer_than_two_reference_screens": true,
@@ -185,7 +614,23 @@
     "stump_source_bytes_preserved": true,
     "shadow_source_bytes_preserved": true,
     "r02_native_height_preserved": true,
-    "r02_anchors_in_walkable_region": true
+    "r02_anchors_in_walkable_region": true,
+    "r03_anchors_in_bounds": true,
+    "r03_walkable_rect_in_bounds": true,
+    "r04_anchors_in_bounds": true,
+    "r04_walkable_rect_in_bounds": true,
+    "r05_anchors_in_bounds": true,
+    "r05_walkable_rect_in_bounds": true,
+    "torch_intact_nonempty_transparent": true,
+    "fence_intact_nonempty_transparent": true,
+    "fence_damaged_nonempty_transparent": true,
+    "fence_debris_nonempty_transparent": true,
+    "bone_pile_intact_nonempty_transparent": true,
+    "bone_pile_damaged_nonempty_transparent": true,
+    "bone_pile_debris_nonempty_transparent": true,
+    "bush_intact_nonempty_transparent": true,
+    "rock_intact_nonempty_transparent": true,
+    "fruit_pickup_idle_nonempty_transparent": true
   },
   "game_integrated": false,
   "runtime_approved": false
