@@ -1,0 +1,32 @@
+{
+  "task_id": "goblin_standard_v1",
+  "asset_id": "concept.enemy.goblin.standard",
+  "revision": "v1",
+  "date": "2026-10-16",
+  "candidate": "c1",
+  "tool": "image_gen",
+  "tool_version": null,
+  "model_version": null,
+  "seed": null,
+  "method": "text_to_image",
+  "actual_reference_images": [],
+  "references_viewed_by_agent_only": [
+    "art/characters/goblin.png",
+    "art/sheets/monster_demo_v2_review.png"
+  ],
+  "request": {
+    "prompt": "Original enemy character concept art for a hand-painted side-scrolling fantasy action RPG. ONE ordinary green goblin, full body, horizontal-game three-quarter side view FACING SCREEN RIGHT, neutral readable ready standing pose, head to toes and entire weapon visible, evenly lit on a completely flat light neutral gray background. No text, labels, watermarks, borders, panels, scenery or magical effects. IMPORTANT anatomy: compact SHORT adult nonhuman goblin with SMALL head and distinct torso and leg length, approximately 4.5 heads tall excluding hair and ears. The crown-to-chin skull occupies only about 22 percent of standing body height. NOT a chibi, NOT a giant head, NOT baby proportions, NOT a tall orc. Narrow wiry build, slightly forward shoulders, elbows and knees visibly separated, knees only mildly bent so shins remain long enough. Mildly sly scruffy expression rather than exaggerated grotesque grin. Olive green skin, small yellow eyes without light bloom, long tapered pointed ears proportional to the smaller skull, modest hooked nose, two small lower fangs, short messy swept-back charcoal-black hair (not a huge mane). Clothing: simple weathered dark-brown leather cross-body harness, rough modest sleeveless brown leather vest, a torn dark-brown cloth wrap over short trousers, leather waist belt with ONE dull iron buckle, simple wrist wraps and open-toed leather sandals. No elaborate armor, no crown, no large metal shoulder plates. Only one weapon: a SMALL WOODEN BEATER CLUB held securely in its anatomical RIGHT hand at low ready position, kept clear of the torso so the gripping fingers and shaft are visible. The weapon is a SHORT one-piece wooden pestle-shaped club with a modest rounded thick bulbous end and thinner handle, NOT a T-shaped carpenter mallet; total weapon length about 38 percent of goblin body height, thick head no bigger than goblin skull width; warm worn brown wood grain and a simple cord grip. Absolutely NO spikes, nails, blades or metal weapon head; NOT a giant tree trunk, NOT a long staff. Weapon points diagonally downward in front of the feet without touching ground; left empty hand loosely raised near waist. Both feet on one ground line, no extreme perspective, full silhouette separated from background, generous empty margins. Visual style: polished Korean-style hand-painted 2D side-scroller sprite concept, clear confident dark contour ink stronger outside than inside, readable cel-shaded large shadow masses with soft painterly gradients, restrained rich olive-green/brown palette, worn leather and wood rendered coherently under top-left light, high-definition bitmap finish with only VERY subtle pixel character. Preserve old-school hand-painted action-game feel, avoid 3D rendering, avoid flat vector art, avoid heavy pixelation, avoid realistic horror textures and noisy spots. Single full-body design candidate, not an animation sheet.",
+    "size": "1024x1024",
+    "n": 1,
+    "quality": "high",
+    "style": "vivid",
+    "output_dir": "art/characters/goblin_standard_v1/candidates/c1"
+  },
+  "status": "cancelled_approval_timeout",
+  "result_message": "Permission request timed out with no user response; this was not an explicit user rejection.",
+  "outputs": [],
+  "image_count": 0,
+  "validation": "not_run_no_image",
+  "approval": "none",
+  "resume": "Ask user whether to retry; do not retry automatically or use another tool to bypass the unanswered approval."
+}

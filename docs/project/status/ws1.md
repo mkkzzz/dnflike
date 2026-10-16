@@ -5,9 +5,9 @@
 | 字段 | 内容 |
 |---|---|
 | 使用者 | 负责人 |
-| 状态 | 空闲 |
-| 正在做 | — |
-| 产出位置 | `art/characters/standard_v1/`、`docs/previews/standard_v1/`、`docs/tasks/art_tasks/char_swordsman_standard_v1.md` |
+| 状态 | 等待 |
+| 正在做 | 普通哥布林原画：规格与产出路径已完成；生图审批超时未出图，等使用者确认重试 |
+| 产出位置 | `docs/tasks/art_tasks/goblin_standard_v1.md`、`art/characters/goblin_standard_v1/generation.json` |
 
 ## 最近完成
 
