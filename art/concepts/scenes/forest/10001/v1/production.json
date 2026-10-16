@@ -1,0 +1,127 @@
+{
+  "task_id": "dungeon_10001_forest_v1",
+  "revision": "v1",
+  "created_at": "2026-10-16",
+  "owner": "ws1",
+  "integration_owner": "unassigned",
+  "lifecycle": "blocked",
+  "low_resolution_pilot": {
+    "authorization_date": "2026-10-16",
+    "scope": "One-screen R01 background and ground layers plus one stump; user review required before further batches.",
+    "manifest": "../pilot_lowres_v1/manifest.json",
+    "preview": "../pilot_lowres_v1/previews/review_board.png",
+    "native_2k_target_unchanged": true,
+    "counts_toward_native_2k_delivery": false
+  },
+  "scope": "Five room modules, separate background/ground/foreground layers, independent entity states and four-direction gates. No game integration or audio.",
+  "style_profile": "handpainted_action_v1",
+  "style_reference": {
+    "file": "source/style_reference.png",
+    "role": "approved_combination_reference_only",
+    "approval_date": "2026-10-16",
+    "approval_quote": "这波我觉得ok",
+    "approved_scope": ["style", "palette", "background_and_ground_separation_direction", "entity_and_gate_design_direction"],
+    "unapproved_scope": ["production_exports", "alpha_and_layer_contract", "all_entity_states", "gate_direction_geometry", "native_2k_assets", "runtime"],
+    "native_size": [1376, 768],
+    "mode": "RGB",
+    "reference_input_supported_by_current_generator": false,
+    "must_not_use_as_runtime_background": true,
+    "upscale_allowed": false
+  },
+  "style_constraints": {
+    "palette": "olive, moss green, gray teal depth, medium brown earth and wood; modest daylight lift",
+    "painting": "mature hand-painted bitmap look matching approved reference",
+    "avoid": ["pale yellow-green cartoon reinterpretation", "nighttime darkness", "new style direction"],
+    "ordinary_trees": "Background layers only; roots and trunks must not grow from or cross the walkable ground layer.",
+    "fruit_tree": "Independent interactive entity, not an ordinary scenic background tree."
+  },
+  "production_contract": {
+    "viewport_native": [2560, 1440],
+    "viewport_secondary": [1920, 1080],
+    "secondary_scale": 0.75,
+    "upscale_allowed": false,
+    "coordinate_system": "x right, y down",
+    "alpha": "straight RGBA for ground, foreground and entities; background may be RGB if fully opaque",
+    "camera": "side-on three-quarter belt-scroller perspective, no height steps",
+    "room_layer_alignment": "All four exports share the exact room canvas and world origin; no independent reframing or resizing.",
+    "room_layers": ["background_far", "background_mid", "ground", "foreground"],
+    "walkable_area": "Broad flat area, approximately lower 60 percent of one-screen composition; exact room bounds remain separate layout data.",
+    "collision_objects": "Entities and gates are independent sprites, never baked into room layers.",
+    "gate_connections": ["up", "down", "left", "right"],
+    "source_to_export_rule": "Every crop or tile must retain original pixels or downsample. Any tile extension needs generated new native detail and checked joins, not stretching or repetition to mimic resolution."
+  },
+  "room_modules": [
+    {"id": "10001-R01", "role": "entry", "canvas": [5120, 1600], "state": "planned", "exports": []},
+    {"id": "10001-R02", "role": "normal_encounter", "canvas": [5120, 1600], "state": "planned", "exports": []},
+    {"id": "10001-R03", "role": "elite_encounter", "canvas": [3840, 1600], "state": "planned", "exports": []},
+    {"id": "10001-R04", "role": "vertical_room", "canvas": [2816, 3200], "state": "planned", "exports": []},
+    {"id": "10001-R05", "role": "boss", "canvas": [5120, 1600], "state": "planned", "exports": []}
+  ],
+  "entity_specs": [
+    {"id": "entity.forest.stump", "canvas": [384, 256], "states": ["intact"], "state": "planned"},
+    {"id": "entity.forest.torch", "canvas": [192, 512], "states": ["body"], "state": "planned"},
+    {"id": "entity.forest.fruit_tree", "canvas": [640, 768], "states": ["with_fruit", "without_fruit"], "state": "planned"},
+    {"id": "entity.forest.fence", "canvas": [768, 384], "states": ["intact", "damaged", "debris"], "state": "planned"},
+    {"id": "entity.forest.bone_pile", "canvas": [384, 256], "states": ["intact", "damaged", "debris"], "state": "planned"},
+    {"id": "entity.forest.bush", "canvas": [384, 256], "states": ["intact"], "state": "planned"},
+    {"id": "entity.forest.rock", "canvas": [384, 256], "states": ["intact"], "state": "planned"},
+    {"id": "pickup.forest.fruit", "canvas": [96, 96], "states": ["idle"], "state": "planned"}
+  ],
+  "gate_specs": {
+    "id": "gate.forest.room_connection",
+    "canvas_default": [640, 768],
+    "directions": ["up", "down", "left", "right"],
+    "states": ["closed", "open"],
+    "same_root_across_states": true,
+    "rendering": "Export complete geometry and explicit root for each direction. Bottom-edge clipping belongs to room composition, not destructive source trimming. Mirror left/right only after perspective and lamp consistency review.",
+    "style": "Weathered wood, vines, rope joints and paired amber lamps",
+    "state": "planned",
+    "exports": []
+  },
+  "animation_specs": [
+    {"id": "fx.forest.torch_flame", "canvas": [128, 192], "frames": 12, "duration_ticks_per_frame": 5, "clock_hz": 60, "loop": true, "state": "planned"},
+    {"id": "fx.forest.gate_lamp", "canvas": [64, 96], "frames": 8, "duration_ticks_per_frame": 6, "clock_hz": 60, "loop": true, "direction_review_required": true, "state": "planned"},
+    {"id": "fx.forest.destructible_hit", "canvas": [256, 256], "frames": 8, "duration_ticks_per_frame": 3, "clock_hz": 60, "loop": false, "state": "planned"}
+  ],
+  "required_delivery_counts": {
+    "room_modules": 5,
+    "aligned_room_layer_exports": 20,
+    "static_entity_and_pickup_state_exports": 13,
+    "gate_direction_state_exports": 8,
+    "animation_clips": 3,
+    "actual_production_exports": 0
+  },
+  "root_and_collision": {
+    "policy": "Specify foot root, trim_offset and collision bounds from actual validated export geometry; same root and canvas across each object's state variants.",
+    "actual_calibration": null
+  },
+  "blockers": [
+    {
+      "id": "native_background_resolution",
+      "evidence": "Current image_gen schema limits width/height to 512..2048 and pixel count to 1048576; invalid sizes fall back to 1024x1024. This cannot directly create a native 2560x1440 viewport or the required room canvases.",
+      "resolution": "Use a user-approved high-resolution generation route with native detail and verified extension/joins. Never upscale the approved preview."
+    },
+    {
+      "id": "approved_reference_input",
+      "evidence": "Current image_gen accepts only textual prompts and exposes no image reference or edit input.",
+      "resolution": "Use an approved reference-image-capable generator and re-review a representative production sample after changing models."
+    },
+    {
+      "id": "tool_approval",
+      "evidence": "image_gen requests a user approval prompt. Assistant cannot bypass it; no verified image-specific auto-approval setting found in official overview documentation.",
+      "resolution": "User must control any available permission setting; do not change or circumvent approvals through scripts."
+    }
+  ],
+  "validation_required": [
+    "Actual dimensions/mode and source-to-export sampling scale verified; no upscale.",
+    "All 20 room layers have matching canvases and origins; seams and transparent borders checked.",
+    "No collidable entities, gates or ordinary scenic tree roots baked into the ground.",
+    "13 entity/pickup state exports and 8 gate state/direction exports present; roots, bounds and alpha checked.",
+    "Torch flame, gate lamp and destructible-hit clips include real frames and documented timing.",
+    "Source hashes, real input references, prompts, crop/join records and model outputs retained without credentials.",
+    "Native 2K and 0.75-scale offline combinations reviewed; engine/runtime integration remains separate."
+  ],
+  "validation_status": "specification_only_no_production_exports",
+  "generation_records": [],
+  "runtime_integrated": false
+}

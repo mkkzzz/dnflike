@@ -1,0 +1,96 @@
+{
+  "task_id": "dungeon_10001_lowres_pilot",
+  "revision": "pilot_lowres_v1",
+  "status": "source_review",
+  "resolution_exception": "User authorized a lower-resolution partial pilot on 2026-10-16; native 2K production targets unchanged.",
+  "canvas": [
+    1376,
+    768
+  ],
+  "scope": "One screen of R01, combined forest background layer, separate ground layer and one stump sprite. Not the complete long room or four-layer production package.",
+  "reference_image_input": false,
+  "upscale": false,
+  "sources": {
+    "background": {
+      "path": "sources/background/原创2D横版动作RPG森林副本10001入口房的小批试制资源_2026-10-16T11-48-36.png",
+      "size": [
+        1376,
+        768
+      ],
+      "sha256": "736c8b7c8f3bb0457aa6a16194a21b751c913f0ba2ab9e66864afd4000da14f1"
+    },
+    "ground": {
+      "path": "sources/ground/原创2D横版格斗游戏森林房间的独立可行走地面贴片_横向16__2026-10-16T11-49-17.png",
+      "size": [
+        1376,
+        768
+      ],
+      "sha256": "886525b4ad8428e44580003ba25a24dfb27417f5bd7b13ce40b92172df38def3"
+    },
+    "stump": {
+      "path": "sources/stump/原创2D横版动作RPG森林副本的一个独立木桩实体源图_只画一_2026-10-16T11-51-36.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "e27bf6afff8b345fb9f529956cb72a65cd92a832f667bd85384be99e8736e4d2"
+    }
+  },
+  "exports": {
+    "background": "exports/r01_background.png",
+    "ground": "exports/r01_ground.png",
+    "stump": "exports/stump_intact.png"
+  },
+  "processing": {
+    "tool": "tools/bake_forest_pilot.py",
+    "pillow_version": "12.2.0",
+    "matte": "White backdrop: alpha clamps (249-min(R,G,B))*255/24; white edge decontamination; no semantic forest segmentation.",
+    "ground_bounds": [
+      0,
+      292,
+      1376,
+      768
+    ],
+    "stump_source_crop": [
+      185,
+      168,
+      841,
+      868
+    ],
+    "stump_sprite_size": [
+      160,
+      171
+    ],
+    "stump_scale": 0.24390243902439024,
+    "alpha": "straight",
+    "composition_shadow": "Independent procedural elliptical shadow; only in previews."
+  },
+  "stump": {
+    "root": [
+      80,
+      170
+    ],
+    "preview_root": [
+      261,
+      515
+    ],
+    "collision": null
+  },
+  "preview": "previews/review_board.png",
+  "checks": {
+    "matching_room_canvases": true,
+    "ground_has_transparency": true,
+    "ground_bottom_is_opaque": true,
+    "stump_has_transparency": true,
+    "stump_placement_in_bounds": true,
+    "no_upscaling": true
+  },
+  "known_limits": [
+    "Text-only generation may drift from the approved combination reference.",
+    "Background far/mid forest currently share one layer; no true four-layer full-room production yet.",
+    "Transparency is white-matte postprocessing, not native generator alpha; edges need visual review.",
+    "Room seams, extended room sizes, other entities, gates and animations are not part of this pilot.",
+    "No game integration or runtime acceptance."
+  ],
+  "user_approved": false
+}
