@@ -18,6 +18,7 @@ LINK = re.compile(r"(!?\[[^\]]*\]\()([^)]+)(\))")
 ART_PATH = re.compile(r"(?<![\w/])art/[\w./\\\-\u0080-\uffff]+")
 PATH_CHAIN = re.compile(r"(['\"])art\1(?:\s*/\s*(['\"])[^'\"\n]+\2)+")
 RELATIVE = re.compile(r"(?P<quote>['\"])(?P<path>\.\./[^'\"\n]+)(?P=quote)")
+JSON_STRING = re.compile(r'"(?:[^"\\]|\\.)*"')
 
 
 def load_catalog() -> dict:
@@ -74,6 +75,14 @@ def rewrite(text: str, old_file: str, new_file: str, moves: list[dict]) -> str:
     else:
         text = RELATIVE.sub(lambda m: m["quote"] + relative_target(m["path"]) + m["quote"], text)
     text = PATH_CHAIN.sub(lambda m: repr(relocate("/".join(re.findall(r"['\"]([^'\"]+)['\"]", m[0])), moves)), text)
+    if old_file.endswith(".json"):
+        def json_repo_path(match):
+            value = json.loads(match[0])
+            if not value.replace("\\", "/").startswith("art/"):
+                return match[0]
+            updated = relocate(value, moves)
+            return json.dumps(updated, ensure_ascii=False) if updated != value else match[0]
+        text = JSON_STRING.sub(json_repo_path, text)
     return ART_PATH.sub(lambda m: relocate(m[0], moves), text)
 
 
@@ -162,6 +171,83 @@ def apply(catalog: dict) -> None:
     print(f"ART_MIGRATION_APPLIED moved_verified={len(before)} text_updated={len(edited)} binary_unchanged={len(unchanged_binary)}")
 
 
+def json_strings(value):
+    if isinstance(value, str):
+        yield value
+    elif isinstance(value, dict):
+        for item in value.values():
+            yield from json_strings(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from json_strings(item)
+
+
+def require_file(base: Path, name: str) -> Path:
+    path = (base / name.replace("\\", "/")).resolve()
+    if repository_path(path) is None or not path.is_file():
+        raise FileNotFoundError(str(path))
+    return path
+
+
+def check_references(catalog: dict) -> dict:
+    counts = {"json_files": 0, "standard_files": 0, "frame_references": 0, "published_files": 0}
+    for path in (ROOT / "art").rglob("*.json"):
+        if path == CATALOG:
+            continue
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+        counts["json_files"] += 1
+        for value in json_strings(data):
+            normalized = value.replace("\\", "/")
+            if normalized.startswith("art/") and relocate(normalized, catalog["migration"]["moves"]) != normalized:
+                raise ValueError(f"Retired JSON reference in {path}: {value}")
+    standard = ROOT / "art/concepts/characters/players/swordsman/standard_v1"
+    for file, key in (("measure.json", "master"), ("palette.json", "source"), ("parts/parts.json", "source"), ("weapon/katana.json", "source")):
+        data = json.loads((standard / file).read_text(encoding="utf-8"))
+        require_file(ROOT, data[key])
+        counts["standard_files"] += 1
+    parts = json.loads((standard / "parts/parts.json").read_text(encoding="utf-8"))
+    require_file(standard, parts["clean_source"])
+    for part in parts["parts"]:
+        require_file(standard, part["file"])
+        counts["standard_files"] += 1
+    weapon = json.loads((standard / "weapon/katana.json").read_text(encoding="utf-8"))
+    for file in weapon["images"].values():
+        require_file(standard, file)
+        counts["standard_files"] += 1
+    goblin = ROOT / "art/concepts/characters/monsters/goblin/standard_v1"
+    data = json.loads((goblin / "manifest.json").read_text(encoding="utf-8"))
+    require_file(goblin, data["source"]["file"])
+    require_file(ROOT, data["source"]["repository_origin"])
+    require_file(ROOT, data["rejected_candidate"]["repository_file"])
+    for detail in data["details"]:
+        require_file(goblin, detail["file"])
+    for version, relative in ((5, "exports"), (6, "exports"), (7, "exports/pilot_c2")):
+        package = ROOT / f"art/animations/players/swordsman/v{version}/{relative}"
+        manifest = json.loads((package / "manifest.json").read_text(encoding="utf-8"))
+        for key, clip in manifest["clips"].items():
+            for frame in clip["frames"]:
+                require_file(package / key if version == 5 else package, frame["f"] if version == 5 else frame["file"])
+                counts["frame_references"] += 1
+                if frame.get("component_isolation", {}).get("mask_file"):
+                    require_file(package, frame["component_isolation"]["mask_file"])
+    v7 = ROOT / "art/animations/players/swordsman/v7"
+    config = json.loads((v7 / "sources/pilot_c2.json").read_text(encoding="utf-8"))
+    if (v7 / "sources" / config["output_dir"]).resolve() != (v7 / "exports/pilot_c2").resolve():
+        raise ValueError("V7 output_dir resolves outside its intended package")
+    for source in config["sources"].values():
+        require_file(v7 / "sources", source["file"])
+    for clip in config["clips"].values():
+        if clip.get("compare"):
+            require_file(v7 / "sources", clip["compare"]["manifest"])
+    publication = json.loads((v7 / "exports/pilot_c2/preview_publication.json").read_text(encoding="utf-8"))
+    for item in publication["files"]:
+        for key in ("source", "published"):
+            if digest(require_file(ROOT, item[key])) != item["sha256"]:
+                raise ValueError(f"V7 publication hash mismatch: {item[key]}")
+        counts["published_files"] += 1
+    return counts
+
+
 def check(catalog: dict) -> None:
     if catalog["migration"]["status"] != "applied":
         raise ValueError("Migration not applied")
@@ -183,7 +269,9 @@ def check(catalog: dict) -> None:
     manifest = json.loads((v7 / "exports/pilot_c2/manifest.json").read_text(encoding="utf-8"))
     if config != saved or manifest["config_sha256"] != digest(config_path):
         raise ValueError("V7 saved config or config hash does not match relocated source")
+    references = check_references(catalog)
     print(f"ART_LAYOUT_CHECK_OK binary_unchanged={len(audit['binary_integrity'])} assets={len(catalog['assets'])} v7_config_hash=matched")
+    print("ART_REFERENCES_CHECK_OK " + json.dumps(references, ensure_ascii=False))
 
 
 def main() -> None:

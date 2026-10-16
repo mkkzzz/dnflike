@@ -1,5 +1,5 @@
 {
- "source": "art\\characters\\standard_v1\\sheet_weapon_c1.png",
+ "source": "art/concepts/characters/players/swordsman/standard_v1/sheet_weapon_c1.png",
  "coordinate_system": "每张切图自己的像素坐标，x 向右（刀尖方向），y 向下",
  "images": {
   "katana_drawn": "weapon/katana_drawn.png",

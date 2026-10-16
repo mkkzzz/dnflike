@@ -2,6 +2,20 @@
   "date": "2026-10-16",
   "verified_art_files": 857,
   "v7_path_migration_recheck": {"rgba_frames_rebuilt_exactly": 31, "saved_config_matches_source": true, "config_hash_matches": true, "images_regenerated_on_disk": false},
+  "late_audit_reference_recheck": {
+    "date": "2026-10-16",
+    "fixed_files": ["measure.json", "palette.json", "parts/parts.json", "weapon/katana.json"],
+    "scope": "escaped Windows provenance paths only; images and gameplay unchanged",
+    "json_files_parsed": 55,
+    "standard_file_references_checked": 17,
+    "v5_v6_v7_frame_references_checked": 730,
+    "v7_publication_pairs_hash_verified": 9,
+    "escaped_path_regression": "passed",
+    "package_relative_fields_preserved": true,
+    "missing_file_rejection_verified": true,
+    "tool_syntax_and_docs": "passed",
+    "godot_runtime": "not_run"
+  },
   "binary_integrity": [
     {
       "from": "art/environments/dungeon_hall.png",

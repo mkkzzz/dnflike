@@ -1,5 +1,5 @@
 {
- "source": "art\\characters\\standard_v1\\sheet_parts_c1.png",
+ "source": "art/concepts/characters/players/swordsman/standard_v1/sheet_parts_c1.png",
  "clean_source": "sheet_parts_c1_clean.png",
  "slots": {
   "top": "上衣（时装）",
