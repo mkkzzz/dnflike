@@ -19,8 +19,11 @@
   "output": "candidates/c1/Original_concept_art_of_ONE_GO_2026-10-16T04-08-05.png",
   "path_base": "record_directory",
   "status": "success",
-  "lifecycle": "source_review",
-  "user_approval": "none",
+  "lifecycle": "source_approved",
+  "user_approval": "approved",
+  "approval_date": "2026-10-16",
+  "approval_scope": "c1 造型与石筐/木棒方向；不含动作、投射物与实机",
+  "next_action_task": "动作生成登记 ws2 待办，见 docs/project/02_待办.md",
   "integration": "not_done",
   "technical_validation": {"format": "PNG", "size": [1024, 1024], "mode": "RGB", "alpha": "none", "opened_and_verified": true},
   "visual_inspection": "Full body, basket visibly full of gray stones, one hand holding stone, other hand holding wood club; stout rough goblin silhouette. Shoulder straps and hand laterality need closer review; no claim of locked identity or completed animation."
