@@ -5,6 +5,14 @@
   "owner": "ws1",
   "integration_owner": "unassigned",
   "lifecycle": "blocked",
+  "current_low_resolution_delivery": {
+    "manifest": "../lowres_release_v1/manifest.json",
+    "status": "partial_blocked",
+    "approval": "v3 style and production mode approved on 2026-10-16; remaining environment batch authorized at low resolution.",
+    "complete_package": false,
+    "blocker": "First remaining-room image_gen approval timed out; no R02 output. Waiting for user-approved retry.",
+    "native_2k_target_unchanged": true
+  },
   "low_resolution_pilot": {
     "authorization_date": "2026-10-16",
     "scope": "Revised partial R01 pilot: forest and ground generated together; independent brown stump; user review required before further batches.",

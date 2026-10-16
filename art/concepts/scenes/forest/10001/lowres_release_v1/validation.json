@@ -1,0 +1,13 @@
+{
+  "result": "PARTIAL_ASSETS_OK",
+  "checks": {
+    "room_has_no_upscale": true,
+    "room_longer_than_two_reference_screens": true,
+    "door_anchors_in_walkable_region": true,
+    "stump_transparent": true,
+    "shadow_transparent_nonempty": true,
+    "stump_source_bytes_preserved": true,
+    "shadow_source_bytes_preserved": true
+  },
+  "complete_environment_package": false
+}

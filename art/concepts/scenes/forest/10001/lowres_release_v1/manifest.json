@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "package_id": "dungeon.10001.environment.lowres.v1",
+  "status": "partial_blocked",
+  "path_base": "manifest_directory",
+  "reference_viewport": [
+    1280,
+    720
+  ],
+  "pixel_unit": "one exported pixel equals one world unit at scale 1",
+  "coordinate_system": "x right, y down; anchors are pixel offsets from image top-left",
+  "alpha": "straight RGBA, normal blend",
+  "style_reference": "../pilot_lowres_v3/manifest.json",
+  "native_2k": false,
+  "upscale": false,
+  "rooms": {
+    "10001-R01": {
+      "file": "exports/rooms/10001-R01.png",
+      "size": [
+        2688,
+        768
+      ],
+      "anchor": [
+        0,
+        0
+      ],
+      "walkable_rect": [
+        32,
+        384,
+        2624,
+        292
+      ],
+      "door_anchors": {
+        "left": [
+          32,
+          530
+        ],
+        "right": [
+          2656,
+          530
+        ],
+        "up": [
+          1344,
+          384
+        ],
+        "down": [
+          1344,
+          676
+        ]
+      },
+      "build": "Approved native scene plus reflected tile, blended across 64-pixel overlap. Intentional repeated art; not an AI-generated unique panorama or 2K asset.",
+      "source_sha256": "29f61ca61f48156d62cd436d832681e3f36ee78fdcb388e2ed1f26654c1ac628",
+      "visual_review_of_extension": "pending"
+    }
+  },
+  "entities": {
+    "stump": {
+      "size": [
+        140,
+        122
+      ],
+      "anchor": [
+        70,
+        121
+      ],
+      "states": {
+        "intact": {
+          "file": "exports/entities/stump/intact.png"
+        }
+      },
+      "shadow": {
+        "file": "exports/entities/stump/shadow.png",
+        "size": [
+          204,
+          186
+        ],
+        "anchor": [
+          102,
+          153
+        ]
+      },
+      "footprint_rect_relative_to_anchor": [
+        -45,
+        -10,
+        90,
+        20
+      ],
+      "collision_policy": "Suggested XY ground footprint only; not the full upright sprite rectangle; tune in future gameplay integration.",
+      "default_preview_position": [
+        300,
+        515
+      ]
+    }
+  },
+  "missing": {
+    "rooms": [
+      "10001-R02",
+      "10001-R03",
+      "10001-R04",
+      "10001-R05"
+    ],
+    "entities": [
+      "torch",
+      "fruit_tree.with_fruit",
+      "fruit_tree.without_fruit",
+      "fence.intact",
+      "fence.damaged",
+      "fence.debris",
+      "bone_pile.intact",
+      "bone_pile.damaged",
+      "bone_pile.debris",
+      "bush",
+      "rock",
+      "fruit_pickup"
+    ],
+    "gates": [
+      "up.closed",
+      "up.open",
+      "down.closed",
+      "down.open",
+      "left.closed",
+      "left.open",
+      "right.closed",
+      "right.open"
+    ],
+    "animations": [
+      "torch_flame",
+      "gate_lamp_flash",
+      "destructible_hit"
+    ]
+  },
+  "godot4_usage": {
+    "background": "Load room PNG into Sprite2D, centered=false, position=room_origin, scale=(1,1).",
+    "entity": "Sprite2D centered=false, offset=-Vector2(anchor[0],anchor[1]); set position to foot world position.",
+    "shadow": "Use a sibling Sprite2D with shadow offset=-shadow.anchor, same foot world position, drawn below entity.",
+    "collision": "Attach RectangleShape2D using the footprint relative to the entity foot position; game behavior is not included.",
+    "paths": "Copy this self-contained export package under the future game's resource directory and resolve files relative to manifest. Current game has no automatic reader for this schema.",
+    "zoom": "Do not resize only texture without scaling anchors/collision/placement consistently. This batch is low-resolution, not a native 2K delivery."
+  },
+  "blocker": "First remaining-room image_gen request timed out awaiting approval on 2026-10-16. No R02 output created; further generation awaits user-approved retry.",
+  "technical_checks": {
+    "room_has_no_upscale": true,
+    "room_longer_than_two_reference_screens": true,
+    "door_anchors_in_walkable_region": true,
+    "stump_transparent": true,
+    "shadow_transparent_nonempty": true,
+    "stump_source_bytes_preserved": true,
+    "shadow_source_bytes_preserved": true
+  },
+  "game_integrated": false,
+  "runtime_approved": false
+}

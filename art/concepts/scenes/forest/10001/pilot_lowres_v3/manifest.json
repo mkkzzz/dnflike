@@ -1,7 +1,7 @@
 {
   "task_id": "dungeon_10001_lowres_pilot",
   "revision": "pilot_lowres_v3",
-  "status": "source_review",
+  "status": "preview_approved",
   "resolution_exception": "User authorized a lower-resolution partial pilot on 2026-10-16; native 2K production targets unchanged.",
   "canvas": [
     1376,
@@ -90,5 +90,11 @@
     "Room seams, extended room sizes, other entities, gates and animations are not part of this pilot.",
     "No game integration or runtime acceptance."
   ],
-  "user_approved": false
+  "user_approved": true,
+  "approval": {
+    "date": "2026-10-16",
+    "quote": "可以了，确定下这个风格和模式",
+    "scope": "Shown v3 combined scene, brown stump and exported contact shadow; low-resolution workflow authorized for remaining environment batch.",
+    "runtime_approved": false
+  }
 }
