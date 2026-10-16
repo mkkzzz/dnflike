@@ -1,0 +1,44 @@
+{
+  "tool": "Pillow 12.2.0",
+  "inputs": [
+    {
+      "path": "art/concepts/characters/monsters/goblin/legacy/goblin.png",
+      "crop": [
+        56,
+        100,
+        880,
+        978
+      ],
+      "crown_y": 110,
+      "ground_y": 967,
+      "center_x": 325,
+      "label": "ORIGINAL - large head / spiked club"
+    },
+    {
+      "path": "art/concepts/characters/monsters/goblin/rejected_v1/candidates/c1/Original_enemy_character_conce_2026-10-16T03-30-13.png",
+      "crop": [
+        280,
+        88,
+        752,
+        945
+      ],
+      "crown_y": 96,
+      "ground_y": 940,
+      "center_x": 975,
+      "label": "C1 - slimmer / plain wooden beater"
+    }
+  ],
+  "output": "docs/previews/goblin_standard_v1/c1_compare.png",
+  "canvas": [
+    1300,
+    1060
+  ],
+  "baseline_y": 744,
+  "target_crown_to_sole_height": 610,
+  "thumbnail_height": 120,
+  "thumbnail_baseline_y": 990,
+  "crop_coordinates": "manual inspection; includes full actor and weapon",
+  "resize": "LANCZOS, original aspect ratio",
+  "background_removal": false,
+  "runtime_claim": false
+}

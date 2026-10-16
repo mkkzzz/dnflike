@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter
 from bake_demo_art import components
 
 ROOT = Path(__file__).resolve().parents[1]
-SHEETS = ROOT / 'art' / 'sheets' / 'v3'
+SHEETS = ROOT / 'art/animations/players/swordsman/v3/sources'
 OUT = ROOT / 'game' / 'assets' / 'actors_v3'
 
 FRAME_W, FRAME_H, AX, AY = 320, 248, 144, 230

@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-15",
+  "task": "upper_lean_windup_rev2",
+  "asset_id": "actor.player.upper",
+  "purpose": "重画上挑起手段：由深蹲下沉改为前倾蓄力。本轮只出两版起手样张供用户选定方向，不批量出图。",
+  "status": "prompts_ready_pending_image_gen",
+  "blocked_by": "本文件由接收区（ws3）撰写。接收区没有图像生成工具（项目出图使用 Codex 内置 image_gen.imagegen），因此只交付可直接使用的提示词与参数，未生成图片。图片需由具备 imagegen 的会话执行。",
+  "tool": "built-in image_gen.imagegen",
+  "transparent_background": true,
+  "reference_images": [
+    {
+      "file": "game/assets/actors_v3/player/attack1.png",
+      "why": "三连第一段的 f3/f5 是已认可的前倾箭步发力姿态，正是用户要的 lean 观感；作为体态参考",
+      "frame_hint": "帧 3 与帧 5（160px 宽帧，8 帧条）"
+    },
+    {
+      "file": "art/animations/players/swordsman/v3/sources/body_combo3upper.png",
+      "why": "现有 upper 第 3、4 格（源 cell 10/11）已接近目标体态，可作正向起点；其第 1、2 格（cell 8/9）是待替换的深蹲",
+      "frame_hint": "对比 cell 8/9（深蹲，待改）与 cell 10/11（已接近前倾起身）"
+    }
+  ],
+  "do_not_change": [
+    "角色身份：银白色刺猬短发带红色挑染、黑色立领长皮衣配红色内衬、近侧手臂红绷带缠绕、深色长裤、黑色装甲靴、朝右 3/4 侧固定机位",
+    "无武器：只画空握拳，绝不出现剑/刀身/剑柄/护手/剑鞘/特效",
+    "画布：8 帧条，单帧 320x248，脚底 root 固定 (144,230)，人物朝右",
+    "整个 sheet 按同一骨架比例缩放（不对单帧单独缩放）",
+    "透明 RGBA、无背景、无阴影、无文字、无参考线"
+  ],
+  "variants": [
+    {
+      "id": "A_slight_lean",
+      "label": "A · 轻微前倾（推荐先看）",
+      "design_intent": "重心前移、膝盖微屈，身高相对站姿落差控制在约 10~15%。保留蓄力读感但完全不出现蹲姿。",
+      "prompt": "Use case: stylized-concept. Create one transparent 2D action game animation sprite strip with EXACTLY 8 evenly spaced full-body poses in a single horizontal row.\nCharacter identity from the attached reference: silver spiky hair with a red streak, black high-collar leather long coat with red inner lining, red wrapped near arm, dark pants, armored black boots, facing RIGHT with a fixed 3/4 side camera, consistent head size and body scale in every cell. He grips an INVISIBLE sword that is added at runtime: draw only an EMPTY closed gripping fist. NO sword, blade, handle, hilt, guard or scabbard in any cell.\nThis strip is the WINDUP-to-STRIKE of a RISING UPPERCUT slash. The first three frames are the preparation and are the entire point of this revision:\nFRAME 1: the fighter leans FORWARD from the hips with his weight clearly over the front foot, knees only SLIGHTLY bent, torso pitched ahead, red fist drawn down and forward near the front thigh. He is leaning, NOT squatting. His standing height stays close to an upright stance.\nFRAME 2: the lean deepens a little and the shoulders begin to rotate, red fist pulling back and low, still clearly a forward pitch rather than a crouch. Hips stay HIGH. The lowest point of the head must not drop dramatically.\nFRAME 3: beginning to drive upward, spine straightening, red fist starting to rise in front of the body.\nFRAME 4: powerful upward extension, red fist forward-right at chest height, legs pushing, coat lagging behind.\nFRAME 5: fully extended tall, red fist ABOVE the head, body ascending and lengthening.\nFRAME 6: apex with slightly bent knees, red fist still high.\nFRAME 7: descending, red fist returning toward the chest, legs extending for landing.\nFRAME 8: grounded recovery stance, red fist back at the hip.\nCRITICAL CONSTRAINT: frames 1 and 2 must NOT be a deep crouch, NOT a kneeling pose, and NOT a compressed squat. The character must never fold his torso down over his knees. Keep the hips high and the head at a height close to the standing pose. Read it as a forward lean loading power into the legs, like a fencer's forward press, not as ducking.\nCoat and hair lag and flare with the motion. Distinct silhouettes in every frame, no duplicated poses, anatomically consistent legs and head size. Clean detailed cel-shaded anime painted game sprite with strong readable dark contour, matching the attached reference style.\nReal transparent RGBA background, generous transparent gutters, no backdrop, no shadows, no text, no borders, no guides."
+    },
+    {
+      "id": "B_marked_bend",
+      "label": "B · 明显压腰（对比用）",
+      "design_intent": "明确的前倾压腰，身高相对站姿落差约 20%，仍无蹲姿。用于对比 A 版，判定用户想要的幅度落点。",
+      "prompt": "Use case: stylized-concept. Create one transparent 2D action game animation sprite strip with EXACTLY 8 evenly spaced full-body poses in a single horizontal row.\nCharacter identity from the attached reference: silver spiky hair with a red streak, black high-collar leather long coat with red inner lining, red wrapped near arm, dark pants, armored black boots, facing RIGHT with a fixed 3/4 side camera, consistent head size and body scale in every cell. He grips an INVISIBLE sword added at runtime: draw only an EMPTY closed gripping fist. NO sword, blade, handle, hilt, guard or scabbard in any cell.\nThis strip is the WINDUP-to-STRIKE of a RISING UPPERCUT slash, drawn with a MARKED forward hip hinge:\nFRAME 1: the fighter hinges forward strongly at the HIPS with a straight-ish back, weight loaded over the front leg, rear leg extended behind driving into the ground, red fist drawn low and forward near the front shin. Deep forward pitch, but the knees do NOT collapse and he is NOT sitting down.\nFRAME 2: maximum forward load, shoulders coiled, red fist at its lowest point near the front ankle, back still angled not rounded, hips still high relative to a squat.\nFRAME 3: hips drive forward and up, spine snapping upright.\nFRAME 4: strong upward extension, red fist forward-right at chest height, coat thrown back.\nFRAME 5: fully extended tall, red fist ABOVE head, body rising.\nFRAME 6: apex with bent knees, red fist high.\nFRAME 7: descending with red fist returning to chest.\nFRAME 8: grounded recovery, red fist at hip.\nCRITICAL CONSTRAINT: this is a forward HINGE at the hips with a driving rear leg, NOT a deep squat and NOT a kneel. The head must stay well forward and high, the buttocks must never sink toward the heels, and the body must never fold chest-onto-thighs. Think of a fencer's deep forward press or a boxer loading a low lead hand, not a duck.\nCoat and hair lag and flare. Distinct silhouettes, no duplicates, consistent anatomy and head size. Clean detailed cel-shaded anime painted game sprite with strong readable dark contour, matching the attached reference style.\nReal transparent RGBA background, generous transparent gutters, no backdrop, no shadows, no text, no borders, no guides."
+    }
+  ],
+  "post_checks": [
+    "量每帧 alpha 包围盒高度：帧1/帧2 相对 idle(189px) 落差应落在 A≈10~15% / B≈20% 内",
+    "确认帧1/帧2 的髋部未下沉到接近脚跟（蹲姿特征）",
+    "确认无武器残留、透明背景、8 帧等距、单帧 320x248 可切",
+    "与 idle、attack1 同屏并排对照，确认不再有『跪下』读感"
+  ],
+  "note": "V3 原提示词中 upper 段写的是 '1 low crouch RED fist forward-right near knee; 2 deepest crouch RED fist near ankle preparing power'，即深蹲是当时的明确要求。本轮修改必须换掉这两句，否则会生成同样的姿态。"
+}

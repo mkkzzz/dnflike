@@ -283,7 +283,7 @@ def cmd_probe_inputs():
         view = pp.View(1024, 768, 3.5, (root_x, 735))
         fr = render_frame(keys, t, view=view)
         save(flatten(pp.downsample_pm(view, composite(fr)), bg=bg), f"probe_pose_t{t}.png")
-    hero = Image.open(ROOT / "art" / "characters" / "hero_cool.png").convert("RGB").crop((232, 0, 792, 1024))
+    hero = Image.open(ROOT / 'art/concepts/characters/players/swordsman/legacy/hero_cool.png').convert("RGB").crop((232, 0, 792, 1024))
     canvas = Image.new("RGB", (1024, 768), bg)
     hs = 760 / hero.height
     hero_s = hero.resize((int(hero.width * hs), 760), Image.LANCZOS)
@@ -496,7 +496,7 @@ def cmd_review():
     import shutil
     cloud = OUT / "cloud"
     rows = []
-    for src, res, cap in ((ROOT / "art" / "characters" / "hero_cool.png", "p1_identity",
+    for src, res, cap in ((ROOT / 'art/concepts/characters/players/swordsman/legacy/hero_cool.png', "p1_identity",
                            "P1 参考图=标杆立绘：要求保持身份改画侧身站姿"),
                           (OUT / "probe_pose_t9.png", "p2_pose_t9", "P2 参考图=人偶色块：要求按姿势重绘")):
         log = json.loads((cloud / f"{res}.json").read_text("utf-8"))

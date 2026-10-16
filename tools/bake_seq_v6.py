@@ -14,8 +14,8 @@ from scipy import ndimage
 from art_v5 import fx as F
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCES = ROOT / 'art/sheets/v6'
-OUT = ROOT / 'art/seq_v6'
+SOURCES = ROOT / 'art/animations/players/swordsman/v6/sources'
+OUT = ROOT / 'art/animations/players/swordsman/v6/exports'
 CONFIG = SOURCES / 'calibration.json'
 BODY_SIZE, BODY_ANCHOR = (512, 320), (224, 280)
 SLASH_SIZE, SLASH_ANCHOR = (640, 360), (256, 288)

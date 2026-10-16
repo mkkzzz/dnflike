@@ -1,0 +1,51 @@
+{
+  "revision": "v7_pilot_c2",
+  "method": "byte-for-byte copies of previews replayed from exported PNGs and manifest",
+  "files": [
+    {
+      "source": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/actions_naked.gif",
+      "published": "docs/previews/v7_pilot/actions_naked.gif",
+      "sha256": "1b155f6b94f6f9756124bccffc228577cf9ff539754914758cfecb0e7db4a634"
+    },
+    {
+      "source": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/actions_naked.png",
+      "published": "docs/previews/v7_pilot/actions_naked.png",
+      "sha256": "1a736d7e0c8a4320bcb354ad481967b2f7712bf96120d094bd2bc59e23164bdc"
+    },
+    {
+      "source": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/attack1_compare.gif",
+      "published": "docs/previews/v7_pilot/attack1_compare.gif",
+      "sha256": "24095a3bf1d7263139dd0de3fc9aa6395b2cf9ab8eb47ad8cfd934eec010bdaf"
+    },
+    {
+      "source": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/attack1_compare.png",
+      "published": "docs/previews/v7_pilot/attack1_compare.png",
+      "sha256": "854db104e1b37fdabf230b0000539ca212b7b010091a6571ea2910ea4dfc1f81"
+    },
+    {
+      "source": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/attack1_contact.png",
+      "published": "docs/previews/v7_pilot/attack1_contact.png",
+      "sha256": "e010b02d477f2eb4a2f796af4a792db68e2e1cdbbda4adf2b54350e6ed9d4824"
+    },
+    {
+      "source": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/run_naked.gif",
+      "published": "docs/previews/v7_pilot/run_naked.gif",
+      "sha256": "2943da1ef246f627d2f1c63b3e07c581249ad89ed703a0a4b93bcb2b3a957ac7"
+    },
+    {
+      "source": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/run_contact.png",
+      "published": "docs/previews/v7_pilot/run_contact.png",
+      "sha256": "c8e8ff368759f80fe3a9a06bdde0b58cb26c6ab6c4b1c43342b7c287da4c38db"
+    },
+    {
+      "source": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_demo_naked.gif",
+      "published": "docs/previews/v7_pilot/jump_demo_naked.gif",
+      "sha256": "0b0479fb039375932f0ed95a7426768560a66939d7422a5fb6d48cc651c8982d"
+    },
+    {
+      "source": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_demo_contact.png",
+      "published": "docs/previews/v7_pilot/jump_demo_contact.png",
+      "sha256": "e600383adbbb37f567fd527eb7a72259bb73b05c95b89b8de0832b0807bbc461"
+    }
+  ]
+}

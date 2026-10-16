@@ -16,16 +16,16 @@
 
 原图 1024×1024 的已有细节足够，不必重画更精细的全身。真正缺口是不可见视角、武器/握法规格及比例/颜色标定。
 
-唯一待确认的设计点：人物造型用原版，武器也保留原图带钉木棒，还是仍按前述需求换小木棒槌？当前仅保留原图，不替用户默认撤回小棒槌需求。
+2026-10-16 用户进一步确认“就这样就行”：保留现行原版与武器，不再补画或调整。下列侧/背视图、武器与色板等只保留为未来动作制作按需补充的规划，不属于当前待办。
 
 ## 2. 正式原画路径与补充路线
 
 | 用途 | 正式位置 | 当前范围 |
 |---|---|---|
-| 正式原画资产入口 | [manifest](../../../art/monsters/goblin/standard_v1/manifest.json) | 源图、批准范围、裁切参数、待补项 |
-| 原版主源图 | [goblin_original.png](../../../art/monsters/goblin/standard_v1/source/goblin_original.png) | 字节一致复制，无重绘/镜像/缩放 |
-| 细节与材质参考 | [details](../../../art/monsters/goblin/standard_v1/details/) | 脸、服装、握持、原武器、脚部的原生裁切；非新原画 |
-| 历史生成候选 | [原候选目录](../../../art/characters/goblin_standard_v1/) | `c1` 弃用，保留追溯，不作为正式母版 |
+| 正式原画资产入口 | [manifest](../../../art/concepts/characters/monsters/goblin/standard_v1/manifest.json) | 源图、批准范围、裁切参数、待补项 |
+| 原版主源图 | [goblin_original.png](../../../art/concepts/characters/monsters/goblin/standard_v1/source/goblin_original.png) | 字节一致复制，无重绘/镜像/缩放 |
+| 细节与材质参考 | [details](../../../art/concepts/characters/monsters/goblin/standard_v1/details) | 脸、服装、握持、原武器、脚部的原生裁切；非新原画 |
+| 历史生成候选 | [原候选目录](../../../art/concepts/characters/monsters/goblin/rejected_v1) | `c1` 弃用，保留追溯，不作为正式母版 |
 | 评审媒体 | [旧新对比](../../previews/goblin_standard_v1/c1_compare.png) | 仅历史对比，不是正式资源入口 |
 | 引擎消费资源 | `game/assets/demo/` | 保留现行动作，不引用 previews 作为源资产 |
 
@@ -36,20 +36,20 @@
 | P3 标准设定完整化 | 复核跨视图身份，按需补手部遮挡、透明主体/部件与组合标定 | 待 P2，原画包齐备才记完整 |
 | P4 动作交接 | 另立动作任务，真实参考输入、相位/root/方向/接触/受击链明确 | 本轮不做 |
 
-正式源图/细节/后续导出放 `art/`，运行资源放 `game/assets/`，`docs/previews/` 只放评审媒体。这轮仅建立哥布林正式目录，不迁移全仓已有资源。
+正式源图/细节放角色原画分类，动作源与导出归动作分类，运行资源放 `game/assets/`；`docs/previews/` 只放评审媒体。2026-10-16 全仓 art 分类已整理，具体规则见 [21](../../design/21_美术目录与资产归档.md)。
 
 ## 3. 参考、来源与能力边界
 
 | 文件 | 用途/批准依据 | 是否作为图片传入生成器 |
 |---|---|---|
-| [原版立绘](../../../art/characters/goblin.png) | 2026-10-16 用户选回原版主体；原武器是否也保留待确认 | 本轮只原样归档，不调用生成器 |
-| [旧动作审查板](../../../art/sheets/monster_demo_v2_review.png) | 看现行小图轮廓与攻击路线；不是新动作批准 | 否 |
+| [原版立绘](../../../art/concepts/characters/monsters/goblin/legacy/goblin.png) | 2026-10-16 用户选回原版主体；原武器是否也保留待确认 | 本轮只原样归档，不调用生成器 |
+| [旧动作审查板](../../../art/animations/shared/demo_v2/sources/monster_demo_v2_review.png) | 看现行小图轮廓与攻击路线；不是新动作批准 | 否 |
 | [风格规范](../../design/15_统一风格与题材规范.md) | 高清手绘、深描边、主明暗加柔和渐变、微弱像素感 | 文本规格 |
 | [全流程](../../design/14_美术资源全流程.md) | 原画与动作、技术通过与美术认可分开 | 文本流程 |
 
 本轮加工为原样复制及 Pillow 原生像素裁切，无新生图、重绘、增细节、放大或去背景。原图最初生成模型/种子未核实，不编造来源记录。
 
-历史 `c1` 的完整请求/首次取消见 [generation.json](../../../art/characters/goblin_standard_v1/generation.json)，成功生成及用户否决见 [generation_c1_retry1.json](../../../art/characters/goblin_standard_v1/generation_c1_retry1.json)。本会话工具没有参考图片输入接口；后续补新视角时仍须解决身份保持，不能用另一只哥布林拼设定。
+历史 `c1` 的完整请求/首次取消见 [generation.json](../../../art/concepts/characters/monsters/goblin/rejected_v1/generation.json)，成功生成及用户否决见 [generation_c1_retry1.json](../../../art/concepts/characters/monsters/goblin/rejected_v1/generation_c1_retry1.json)。本会话工具没有参考图片输入接口；后续补新视角时仍须解决身份保持，不能用另一只哥布林拼设定。
 
 ## 4. 静态规格与后续动作意图
 
@@ -65,8 +65,8 @@
 
 | 现行文件/映射 | 后续需检查 | 本轮处理 |
 |---|---|---|
-| `art/characters/goblin.png` | 与正式复制源保持一致；后续以 manifest 找正式包 | 保留旧文件，不破坏旧引用 |
-| `art/sheets/monster_demo_v2.png` / monster 动作组 | 若只保留原版不强制重做；换小棒槌才重验持械姿势/接触 | 保留现行映射 |
+| `art/concepts/characters/monsters/goblin/legacy/goblin.png` | 与正式复制源保持一致；后续以 manifest 找正式包 | 保留旧文件，不破坏旧引用 |
+| `art/animations/shared/demo_v2/sources/monster_demo_v2.png` / monster 动作组 | 若只保留原版不强制重做；换小棒槌才重验持械姿势/接触 | 保留现行映射 |
 | `game/data/monsters.json` 中 goblin | 改武器时复核范围；原版继续使用不因此改碰撞 | 不修改数值 |
 | 受击/倒地/起身/死亡 | 新动作需要时另列；已有姿势不是纯侧/背标准设定 | 不新增帧 |
 | 现有音效 | 换武器后再判断接触材质是否需变 | 不制作或改音频 |
@@ -77,8 +77,8 @@
 
 | 对象 | 文件 | 用户结论 |
 |---|---|---|
-| 原版 | [正式主源图](../../../art/monsters/goblin/standard_v1/source/goblin_original.png) | 2026-10-16 采用原版主体；保留怪物气质 |
-| 新候选 `c1` | [历史源图](../../../art/characters/goblin_standard_v1/candidates/c1/Original_enemy_character_conce_2026-10-16T03-30-13.png) | `rejected`：不如原版像怪物，停止迭代，不删除历史 |
+| 原版 | [正式主源图](../../../art/concepts/characters/monsters/goblin/standard_v1/source/goblin_original.png) | 2026-10-16 采用原版主体；保留怪物气质 |
+| 新候选 `c1` | [历史源图](../../../art/concepts/characters/monsters/goblin/rejected_v1/candidates/c1/Original_enemy_character_conce_2026-10-16T03-30-13.png) | `rejected`：不如原版像怪物，停止迭代，不删除历史 |
 
 - [x] 正式源图与旧原图字节一致，未修改旧文件；五张细节都是原图裁切。
 - [x] 原图、脸部和握持细节已查看：现有纹理/五官/手指细节足够，无需再重画更精细全身。
@@ -90,6 +90,6 @@
 
 ## 7. 交接与后续
 
-本轮实际交付是 `art/monsters/goblin/standard_v1/` 中的原版主源图、五张原生细节参考、manifest 及本文。已确认主体采用原版，尚缺新视角/武器规格/色板等完整设定，也没有透明成品或动作帧；不因为已有正式路径就记为全套完成。
+本轮实际交付是 `art/concepts/characters/monsters/goblin/standard_v1/` 中的原版主源图、五张原生细节参考、manifest 及本文。已确认主体采用原版，尚缺新视角/武器规格/色板等完整设定，也没有透明成品或动作帧；不因为已有正式路径就记为全套完成。
 
-后续先确认武器 → 补纯侧/背视图与原版一致性 → 标定比例/色板/握点 → 按需透明加工 → 另立动作任务。原图不能看见的部位才需补绘，不批量重画已清晰的脸/服装。上一笔推送被中断，本轮仍本地保存，尚未远程发布。
+当前不继续补画。将来动作工作需要时再补不可见视角 → 标定比例/色板/握点 → 按需透明加工 → 另立动作任务；不批量重画已清晰的脸/服装。接收区按最新提交同步资源，不能从正式目录存在推断已经实装。

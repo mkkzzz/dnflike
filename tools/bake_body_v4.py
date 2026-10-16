@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw
 from bake_body_v3 import extract, draw_socket, FRAME_W, FRAME_H, AX, AY
 
 ROOT = Path(__file__).resolve().parents[1]
-SHEETS = ROOT/'art'/'sheets'/'v4'
+SHEETS = ROOT/'art/animations/players/swordsman/v4/sources'
 OUT = ROOT/'game'/'assets'/'actors_v4'
 BASE = ROOT/'game'/'assets'/'actors_v3'/'manifest.json'
 

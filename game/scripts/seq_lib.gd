@@ -25,7 +25,7 @@ static func load_clips() -> Dictionary:
 		return _clips
 	_loaded = true
 	if not FileAccess.file_exists(MANIFEST):
-		push_warning("[SEQ6] 缺 %s：先同步 art/seq_v6 与 game/assets/seq_v6" % MANIFEST)
+		push_warning("[SEQ6] 缺 %s：先同步 art/animations/players/swordsman/v6/exports 与 game/assets/seq_v6" % MANIFEST)
 		return _clips
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(MANIFEST))
 	if typeof(parsed) != TYPE_DICTIONARY:

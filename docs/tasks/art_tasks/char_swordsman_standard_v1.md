@@ -6,8 +6,8 @@
 | revision | standard_v1 |
 | 状态 | **源图已批准，锁定**（2026-10-15；负责人认可 ws1 建议并授权收尾锁定，见 [D030](../../design/决策清单.md)） |
 | 身份来源 | V6 造型（[D027](../../design/决策清单.md)），以 V6 forehand 起手帧为参照 |
-| 工具 | 文字生图（无参考图输入）；完整提示词见 `art/characters/standard_v1/generation.json` |
-| 源文件 | `art/characters/standard_v1/`，索引 `manifest.json` |
+| 工具 | 文字生图（无参考图输入）；完整提示词见 `art/concepts/characters/players/swordsman/standard_v1/generation.json` |
+| 源文件 | `art/concepts/characters/players/swordsman/standard_v1/`，索引 `manifest.json` |
 | 评审 | `docs/previews/standard_v1/standard_sheet.jpg`（设定集总图） |
 | 规划 | [18 角色锚定与动作管线](../../design/18_角色锚定与动作管线.md) 第七节 |
 

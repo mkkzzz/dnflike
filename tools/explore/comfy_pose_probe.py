@@ -21,7 +21,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "art/sheets/v7/comfy_probe"
+OUT = ROOT / "art/animations/players/swordsman/v7/sources/comfy_probe"
 BASE_URL = "http://127.0.0.1:8188"
 SEED = 73150415
 SIZE = (768, 1024)
@@ -123,7 +123,7 @@ def upload(path: Path):
 def prepare_inputs():
     folder = OUT / "input"
     folder.mkdir(parents=True, exist_ok=True)
-    source = ROOT / "art/characters/standard_v1/sheet_pose_head_c2.png"
+    source = ROOT / "art/concepts/characters/players/swordsman/standard_v1/sheet_pose_head_c2.png"
     # Source RGB sheet, not the old transparent cutout with noisy hidden RGB.
     reference = Image.open(source).convert("RGB").crop((0, 20, 610, 760))
     reference.thumbnail((748, 748), Image.Resampling.LANCZOS)

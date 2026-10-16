@@ -32,13 +32,13 @@
 | 输入 | 用途 | 是否传入 |
 |---|---|---|
 | docs/previews/wuxia_backview_v2/idle_standoff.png | V2 人物气质与动作；不延续过密渲染 | 对峙初试实际传入 |
-| art/concepts/wuxia_backview_v2/reference_composition.png | 用户截图，只参考镜头、主体比例和空地，不复制人物/UI | 对峙初试实际传入 |
-| art/concepts/wuxia_backview_v3/idle_attempt01.png | 针对初试再次强化大形简化 | 对峙选用图重绘实际传入 |
+| art/explorations/themes/wuxia/backview_v2/reference_composition.png | 用户截图，只参考镜头、主体比例和空地，不复制人物/UI | 对峙初试实际传入 |
+| art/explorations/themes/wuxia/backview_v3/idle_attempt01.png | 针对初试再次强化大形简化 | 对峙选用图重绘实际传入 |
 | V3 本轮对峙原图 | 同轮人物、简化衣装和场景连续性 | 拼刀图实际传入 |
 
-使用内置 imagegen 做参考图重绘；源图、完整实际提示词、真实输入、返回路径及核查保存到 `art/concepts/wuxia_backview_v3/generation.json`。模型版本与随机种子未暴露，不承诺跨图严格一致或随机生图可重现。
+使用内置 imagegen 做参考图重绘；源图、完整实际提示词、真实输入、返回路径及核查保存到 `art/explorations/themes/wuxia/backview_v3/generation.json`。模型版本与随机种子未暴露，不承诺跨图严格一致或随机生图可重现。
 
-源图保存在 `art/concepts/wuxia_backview_v3/`；评审副本保存在 `docs/previews/wuxia_backview_v3/`。副本从选用原图逐字节复制，脚本不修补、滤镜化、降色或锐化。
+源图保存在 `art/explorations/themes/wuxia/backview_v3/`；评审副本保存在 `docs/previews/wuxia_backview_v3/`。副本从选用原图逐字节复制，脚本不修补、滤镜化、降色或锐化。
 
 ## 验收与交接
 
@@ -60,7 +60,7 @@
 
 两张均为 **1672×941 RGB PNG**，System.Drawing 实际解码成功；源/预览 SHA256 分别一致，未做脚本滤镜、重采样或像素修补。
 
-对峙初试仍过细，保留为 `art/concepts/wuxia_backview_v3/idle_attempt01.png` 并标为未选用；再次按大形简化重绘后选择当前对峙。全三次调用提示词和真实输入见 `generation.json`。
+对峙初试仍过细，保留为 `art/explorations/themes/wuxia/backview_v3/idle_attempt01.png` 并标为未选用；再次按大形简化重绘后选择当前对峙。全三次调用提示词和真实输入见 `generation.json`。
 
 ![V3 对峙](../../previews/wuxia_backview_v3/idle_standoff.png)
 

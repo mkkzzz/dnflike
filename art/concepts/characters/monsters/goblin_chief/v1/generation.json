@@ -1,0 +1,27 @@
+{
+  "asset_id": "concept.enemy.goblin_chief.standard",
+  "revision": "v1",
+  "candidate": "c1",
+  "date": "2026-10-16",
+  "method": "text_to_image",
+  "tool": "image_gen",
+  "model_version": null,
+  "seed": null,
+  "actual_reference_images": [],
+  "reference_viewed_by_agent": "art/concepts/characters/monsters/goblin/legacy/goblin.png",
+  "request": {
+    "prompt": "Original concept art of ONE GOBLIN CHIEF, the beginner dungeon boss in a Korean-style hand-painted 2D side-scrolling fantasy action RPG. Single full-body character on a plain neutral gray background, three-quarter side view facing screen right, complete feet and weapon and backpack visible, generous margins, no text, labels, panels, scenery, VFX, motion blur or watermark. IMPORTANT identity: looks genuinely like a wicked scruffy GOBLIN MONSTER, not a handsome green human, not an elf, not a tall orc, not a cute chibi mascot. Keep an exaggerated angular goblin skull with huge tapered pointed ears, hooked long nose, deeply furrowed brow, bright yellow eyes, broad malicious grin full of irregular pointed teeth, visible lower fangs, rough olive-green skin with small bumps and a few healed nicks. Thick charcoal-black wild swept-back mane. Body SHORT and STOUT, wider muscular forearms and shoulders and a prominent pot belly, heavy bent-knee grounded stance and splayed broad feet, approximately 3.5 to 4 heads tall including the head but excluding hair. He belongs to the same ragged forest goblin tribe as an ordinary goblin: crisscross worn brown leather chest straps with dull iron buckles, rough torn brown loincloth over ragged short trousers, patched wrist wraps and leather bracers, little waist pouch, rough open-toed sandals, no regal crown, no polished armor, no elegant uniform. Distinguish him as CHIEF using a stockier heavier build, a scar over one brow, one crude patched shoulder pad, and his signature equipment, NOT giant glowing armor. Signature MUST be a LARGE OPEN-TOP WOVEN WICKER BASKET strapped tightly to HIS BACK with TWO thick shoulder straps: shown BEHIND his shoulders and torso on the rear LEFT side of the picture. Basket mouth rises visibly behind shoulder to approximately ear base height, filled with several clearly visible rough gray palm-sized THROWING STONES; weave and reinforced wood rim clearly readable; basket attached to his back, not floating, not carried in a hand, not covering his face. Basket extends behind torso and upper pelvis, compact enough he can run and swing. Front-most anatomical RIGHT hand firmly grips ONE worn WOODEN CLUB held diagonally low clear of his legs, moderate heavy round wooden head with a few crude dull iron studs, shaft wrapped in cloth at grip, not a gigantic tree trunk. Anatomical LEFT hand displays ONE loose gray stone at chest/waist level, clearly separated from body; this is a ready equipment pose showing he can throw stones with one hand and club with the other, NOT a simultaneous attack pose. Two hands exactly, five readable digits per hand where visible, natural grip, no extra weapons. Weight and basket load shown by forward hunched shoulders and sturdy legs. Art style should be rich classic hand-painted action-game monster sprite illustration: strong variable deep brown/black exterior contour, finely drawn face and leather details, large readable cel-shaded shadow masses plus nuanced soft painterly gradients; green skin texture, splintered wood, woven straw and scuffed leather coherently lit from top-left, warm muted earthy brown and olive palette, high-definition bitmap appearance with only a faint pixel character. Avoid overly flat simplified cartoon coloring; avoid 3D rendering, glossy plastic, heavy pixelation, photoreal horror, blood or gore. Make the malicious goblin face and stone-filled basket immediately readable even when reduced to small gameplay sprite size. Deliver ONE original full-body source design candidate, no duplicated figures or animation sheet.",
+    "size": "1024x1024",
+    "n": 1,
+    "quality": "high",
+    "style": "vivid"
+  },
+  "output": "candidates/c1/Original_concept_art_of_ONE_GO_2026-10-16T04-08-05.png",
+  "path_base": "record_directory",
+  "status": "success",
+  "lifecycle": "source_review",
+  "user_approval": "none",
+  "integration": "not_done",
+  "technical_validation": {"format": "PNG", "size": [1024, 1024], "mode": "RGB", "alpha": "none", "opened_and_verified": true},
+  "visual_inspection": "Full body, basket visibly full of gray stones, one hand holding stone, other hand holding wood club; stout rough goblin silhouette. Shoulder straps and hand laterality need closer review; no claim of locked identity or completed animation."
+}

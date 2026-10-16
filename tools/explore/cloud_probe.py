@@ -35,7 +35,7 @@ EXP = ROOT / "temp" / "explore"
 
 PROBES = {
     "p1_identity": {
-        "image": ROOT / "art" / "characters" / "hero_cool.png", "res": "768:1024",
+        "image": ROOT / 'art/concepts/characters/players/swordsman/legacy/hero_cool.png', "res": "768:1024",
         "prompt": "保持参考图中角色的身份、发型、脸部与服装细节完全一致，改画为全身侧身站姿（面朝画面右侧），"
                   "右手持黑柄长刀、刀尖斜指前下方。" + IDENTITY + "。" + STYLE,
     },
@@ -148,7 +148,7 @@ def make_v6_ref():
     """V6 forehand 第 1 帧（READY）裁出单人，绿幕换成浅灰，作为标准身份参考图。"""
     from PIL import Image
     import numpy as np
-    src = ROOT / "art" / "sheets" / "v6" / "forehand" / "Production_2D_action_RPG_anima_2026-10-14T08-17-58.png"
+    src = ROOT / 'art/animations/players/swordsman/v6/sources/forehand/Production_2D_action_RPG_anima_2026-10-14T08-17-58.png'
     a = np.asarray(Image.open(src).convert("RGB").crop((10, 40, 370, 450)), np.float32)
     r, g, b = a[..., 0], a[..., 1], a[..., 2]
     green = (g > 150) & (g > r * 1.35) & (g > b * 1.35)
@@ -199,7 +199,7 @@ def main():
     for name in names:
         try:
             if name == "hero3d":
-                run_3d(mod, token, ROOT / "art" / "characters" / "hero_cool.png")
+                run_3d(mod, token, ROOT / 'art/concepts/characters/players/swordsman/legacy/hero_cool.png')
             elif name.startswith("v3ref"):
                 run_v3(mod, token, "datauri" if name.endswith("_uri") else "b64")
             else:

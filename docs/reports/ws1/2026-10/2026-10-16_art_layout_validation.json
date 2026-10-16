@@ -1,0 +1,4082 @@
+{
+  "date": "2026-10-16",
+  "verified_art_files": 857,
+  "v7_path_migration_recheck": {"rgba_frames_rebuilt_exactly": 31, "saved_config_matches_source": true, "config_hash_matches": true, "images_regenerated_on_disk": false},
+  "binary_integrity": [
+    {
+      "from": "art/environments/dungeon_hall.png",
+      "to": "art/concepts/scenes/dungeon/legacy/dungeon_hall.png",
+      "sha256": "4172ea7702de8f3d30e03737c061248933f62462b85fffa0c48a4a025f4224bc"
+    },
+    {
+      "from": "art/seq_v6/landmark_review.png",
+      "to": "art/animations/players/swordsman/v6/exports/landmark_review.png",
+      "sha256": "326f20bd3108f04f9fcd9d2f5c5fc8f7411114e7032a1c3aba05e1a454a44240"
+    },
+    {
+      "from": "art/sheets/monster_attack_demo_v2.gif",
+      "to": "art/animations/shared/demo_v2/sources/monster_attack_demo_v2.gif",
+      "sha256": "e0635de2dbce08e45395ba9fda6ab5fe6f9e5a433cf06f08f6c668031f1c22da"
+    },
+    {
+      "from": "art/sheets/monster_chase_demo_v2.gif",
+      "to": "art/animations/shared/demo_v2/sources/monster_chase_demo_v2.gif",
+      "sha256": "d25ab76d03df1ee7f3c9c4b8873c43d00a422c4a511194d0f4419f32c9950ee7"
+    },
+    {
+      "from": "art/sheets/monster_demo_v2.png",
+      "to": "art/animations/shared/demo_v2/sources/monster_demo_v2.png",
+      "sha256": "47e0ba0c5bf3755c7db94b67bfc606a139813d5a26bf77a69ffd08ebbfb19ee7"
+    },
+    {
+      "from": "art/sheets/monster_demo_v2_review.png",
+      "to": "art/animations/shared/demo_v2/sources/monster_demo_v2_review.png",
+      "sha256": "2c495ce807e4d7e94bc6f2c6aef9244ab612c1df861dc063b72ba658799597e1"
+    },
+    {
+      "from": "art/sheets/player_attack3_demo_v2.gif",
+      "to": "art/animations/shared/demo_v2/sources/player_attack3_demo_v2.gif",
+      "sha256": "9a2f97fcaa583fee65a1c4866f46745e44e73413fbede122566e8ab931288d91"
+    },
+    {
+      "from": "art/sheets/player_demo_v2.png",
+      "to": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
+      "sha256": "bebc20093de1d46ed9f563f69d6d8e7d287da30e25d8074085ae835acdd429f4"
+    },
+    {
+      "from": "art/sheets/player_demo_v2_review.png",
+      "to": "art/animations/shared/demo_v2/sources/player_demo_v2_review.png",
+      "sha256": "1611c0d7cb9bfed7458bb0fda529256fbb973863f59c81ccdd312b36527db8e1"
+    },
+    {
+      "from": "art/sheets/player_rage_slash_demo_v2.gif",
+      "to": "art/animations/shared/demo_v2/sources/player_rage_slash_demo_v2.gif",
+      "sha256": "afb23ed4578752697271ba1fba8f8e06728ee8f597f692b682ebd13babda14ae"
+    },
+    {
+      "from": "art/sheets/player_run_demo_v2.gif",
+      "to": "art/animations/shared/demo_v2/sources/player_run_demo_v2.gif",
+      "sha256": "fbd525175893c5e609cda75aebe73ad7fbeb03c66d445c6d191afd1552a15440"
+    },
+    {
+      "from": "art/characters/benchmark_board.png",
+      "to": "art/concepts/style/benchmark_board.png",
+      "sha256": "678a1c42f41a3a938c1007fe72b2aa2e10a84702d140c6025bf5c0a3394250ea"
+    },
+    {
+      "from": "art/concepts/wuxia_backview_v2/idle_standoff_source.png",
+      "to": "art/explorations/themes/wuxia/backview_v2/idle_standoff_source.png",
+      "sha256": "59526271eb6930e236ff5adbba0cd94931b1c2f0d711a5835f07dbe303df4540"
+    },
+    {
+      "from": "art/concepts/wuxia_backview_v2/reference_composition.png",
+      "to": "art/explorations/themes/wuxia/backview_v2/reference_composition.png",
+      "sha256": "56a227733d1798b3115840db95b9dc668ca5c0091cf05cc1a6baa83c717b1feb"
+    },
+    {
+      "from": "art/concepts/wuxia_backview_v2/weapon_parry_source.png",
+      "to": "art/explorations/themes/wuxia/backview_v2/weapon_parry_source.png",
+      "sha256": "554f116c453c519ff7690d9fbd3fdb31110a36ef30ebcd9229e573c8449ef2eb"
+    },
+    {
+      "from": "art/concepts/wuxia_backview_v3/idle_attempt01.png",
+      "to": "art/explorations/themes/wuxia/backview_v3/idle_attempt01.png",
+      "sha256": "07db7e74038514853fd4bf3ae9f2567b770538fdd2396c357859065e20de5301"
+    },
+    {
+      "from": "art/concepts/wuxia_backview_v3/idle_standoff_source.png",
+      "to": "art/explorations/themes/wuxia/backview_v3/idle_standoff_source.png",
+      "sha256": "980f3c95b5878560d475ad4895d1bcbeaaa23fb13f4d9219bb31b813671fac41"
+    },
+    {
+      "from": "art/concepts/wuxia_backview_v3/weapon_parry_source.png",
+      "to": "art/explorations/themes/wuxia/backview_v3/weapon_parry_source.png",
+      "sha256": "e726759a2a6a2743a183eefeb44262ef08957bdf31c924e92197c9cf8d84258c"
+    },
+    {
+      "from": "art/characters/goblin.png",
+      "to": "art/concepts/characters/monsters/goblin/legacy/goblin.png",
+      "sha256": "bfcfd4a0046d00e0292fbab08a0b1a569b8e57a8741874f66f9c8f0dd95befe6"
+    },
+    {
+      "from": "art/characters/goblin_standard_v1/candidates/c1/Original_enemy_character_conce_2026-10-16T03-30-13.png",
+      "to": "art/concepts/characters/monsters/goblin/rejected_v1/candidates/c1/Original_enemy_character_conce_2026-10-16T03-30-13.png",
+      "sha256": "b48259d899275a28957776f3b19c8a0b502df118a24c2c64e1def1e97541d3b0"
+    },
+    {
+      "from": "art/concepts/characters/monsters/goblin_chief/v1/candidates/c1/Original_concept_art_of_ONE_GO_2026-10-16T04-08-05.png",
+      "to": "art/concepts/characters/monsters/goblin_chief/v1/candidates/c1/Original_concept_art_of_ONE_GO_2026-10-16T04-08-05.png",
+      "sha256": "51345c931675970410d17ef48fd4e246b030d56aed12bfc90c84c890027efcd6"
+    },
+    {
+      "from": "art/characters/hero_attack.png",
+      "to": "art/concepts/characters/players/swordsman/legacy/hero_attack.png",
+      "sha256": "20f598782eeab5df1f41723b2af9889deddee0489a7e08d02d73a33881600859"
+    },
+    {
+      "from": "art/characters/hero_cool.png",
+      "to": "art/concepts/characters/players/swordsman/legacy/hero_cool.png",
+      "sha256": "5827433d5c4660ac215857878b80fda9e6a333fe281946941d0d1f0a9960a43b"
+    },
+    {
+      "from": "art/characters/hero_idle.png",
+      "to": "art/concepts/characters/players/swordsman/legacy/hero_idle.png",
+      "sha256": "afccce0524f1fd01766858a75ac2e11de739e80a90173cf785a7d131e1e73084"
+    },
+    {
+      "from": "art/characters/standard_v1/sheet_main_c1.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+      "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9"
+    },
+    {
+      "from": "art/characters/standard_v1/sheet_main_c2.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c2.png",
+      "sha256": "a19e4ff08bbf9663367662a2ba17630812f056a12957d63e2226e6e8092318f3"
+    },
+    {
+      "from": "art/characters/standard_v1/sheet_parts_c1.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/sheet_parts_c1.png",
+      "sha256": "8309b6d42b7953ee715bd84713c3306f65db7e964126f6b7a3a229ee6a189ddc"
+    },
+    {
+      "from": "art/characters/standard_v1/sheet_parts_c1_clean.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/sheet_parts_c1_clean.png",
+      "sha256": "71681ae723f0e1f940004a00f6862cd53add81a68529f0d134f8f90704f57ff7"
+    },
+    {
+      "from": "art/characters/standard_v1/sheet_pose_head_c1.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/sheet_pose_head_c1.png",
+      "sha256": "f1a2b6b92a482f8f296b2b3c43146e6d92d25eb1425387b4c114e9a2f48839b1"
+    },
+    {
+      "from": "art/characters/standard_v1/sheet_pose_head_c2.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/sheet_pose_head_c2.png",
+      "sha256": "ded80dce46b46518c7f06fa2ac91da32a775b2b77373cd93c56846b1bc64ec42"
+    },
+    {
+      "from": "art/characters/standard_v1/sheet_weapon_c1.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/sheet_weapon_c1.png",
+      "sha256": "1ececde43c3df044f61378324b17f7cfa0afe6c648a92988da67bef3bc687b4f"
+    },
+    {
+      "from": "art/characters/standard_v1/parts/base__inner_turtleneck.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/parts/base__inner_turtleneck.png",
+      "sha256": "94f84e14b96adb7468d0e991d01b3fd11f822ea495bb12d41de19439a9b383b9"
+    },
+    {
+      "from": "art/characters/standard_v1/parts/belt__waist_belt.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/parts/belt__waist_belt.png",
+      "sha256": "106ab15193540793a88c5c93eff89bbeed0aec49e877af1c029825a9a9b76fc6"
+    },
+    {
+      "from": "art/characters/standard_v1/parts/bottom__trousers.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/parts/bottom__trousers.png",
+      "sha256": "9335ee5852139eb43ef5da82c79c08487aa36b28037b218db6cb23e833ca49b8"
+    },
+    {
+      "from": "art/characters/standard_v1/parts/equip__scabbard.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/parts/equip__scabbard.png",
+      "sha256": "0907b6c1aff77f32d030862f811b6c76e2afc1f8e093b1b8a2944e01bc6d4fad"
+    },
+    {
+      "from": "art/characters/standard_v1/parts/fixed__bandage_pair.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/parts/fixed__bandage_pair.png",
+      "sha256": "7ff107af66214bc485175cfdb642d2473b084ed634a20825c3586c1a70bfb023"
+    },
+    {
+      "from": "art/characters/standard_v1/parts/shoes__boot_pair.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/parts/shoes__boot_pair.png",
+      "sha256": "de0a1d7b1778e835a38fdd58d812dd748f6c729abf1070faf112cb0128b56307"
+    },
+    {
+      "from": "art/characters/standard_v1/parts/top__chest_straps.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/parts/top__chest_straps.png",
+      "sha256": "0f7fb0b4a6cc4d8bf9d24d3769bb89a730352fb7761b7383171f6ca42a4ef0d6"
+    },
+    {
+      "from": "art/characters/standard_v1/parts/top__coat_back.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/parts/top__coat_back.png",
+      "sha256": "75d79e3b4714f077b97e7adc2ea8d3c4f4bf354c07e98e0d21e03eae7f3b319f"
+    },
+    {
+      "from": "art/characters/standard_v1/parts/top__coat_front.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/parts/top__coat_front.png",
+      "sha256": "d8b190ff77d853f33dc81eb2142f271c3ca5704286caeaa0a2944fac608fc65e"
+    },
+    {
+      "from": "art/characters/standard_v1/views/A1_back.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/views/A1_back.png",
+      "sha256": "8b7a59d563facb762e02f45cd836f8be9434487685e244f07434aa7cf438cba2"
+    },
+    {
+      "from": "art/characters/standard_v1/views/A1_front.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/views/A1_front.png",
+      "sha256": "50e4dd2a7a9982f43c42550c7d3b011f76d41ca0da355d32116d0e6fb6d43a87"
+    },
+    {
+      "from": "art/characters/standard_v1/views/A1_side_right.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/views/A1_side_right.png",
+      "sha256": "8fc88aa5544504e0de25ab5804b7f6d3b31cf58f5a6c2b9a7eb15b06cc0ad682"
+    },
+    {
+      "from": "art/characters/standard_v1/views/A1_three_quarter.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/views/A1_three_quarter.png",
+      "sha256": "be59111114b2be445327a8462cd931e834cebeb91ddf823992dd47e72e983800"
+    },
+    {
+      "from": "art/characters/standard_v1/views/A2_ready_right.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/views/A2_ready_right.png",
+      "sha256": "d1593da418bde967aeb61dc06927b549595efd0a5358a3316b0a064c233415c6"
+    },
+    {
+      "from": "art/characters/standard_v1/views/A4_base_body.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/views/A4_base_body.png",
+      "sha256": "9aa97e36bf1e7181e739ef8c80693182e8c622dafae15aaf953d9c507c60fde7"
+    },
+    {
+      "from": "art/characters/standard_v1/weapon/katana_drawn.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/weapon/katana_drawn.png",
+      "sha256": "56a9b000da574895d2a7b0b22b946af01cdb676ceba50c84a3998050e75318ed"
+    },
+    {
+      "from": "art/characters/standard_v1/weapon/katana_sheathed.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/weapon/katana_sheathed.png",
+      "sha256": "fba53c7069883dcd8913378c78c6b32e52491a38298908adf769619fa7b6e659"
+    },
+    {
+      "from": "art/characters/standard_v1/weapon/katana_spine.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/weapon/katana_spine.png",
+      "sha256": "c0b37090c9f99fc0e9e962e5b50439d7657f72b6699262f741031de453a32c9a"
+    },
+    {
+      "from": "art/characters/standard_v1/weapon/scabbard_empty.png",
+      "to": "art/concepts/characters/players/swordsman/standard_v1/weapon/scabbard_empty.png",
+      "sha256": "c90f99cbe7432019228ee474ee466453456d9b60dee858f12371eec3463cd18e"
+    },
+    {
+      "from": "art/concepts/wuxia_backview_v1/idle/Create_ONE_polished_widescreen_2026-10-14T10-12-17.png",
+      "to": "art/explorations/themes/wuxia/backview_v1/idle/Create_ONE_polished_widescreen_2026-10-14T10-12-17.png",
+      "sha256": "ef5d6795e949017034298e628cc59c32d0b11f9a52a3727d51988ecda1a17d35"
+    },
+    {
+      "from": "art/concepts/wuxia_backview_v1/parry/Create_ONE_polished_widescreen_2026-10-14T10-14-24.png",
+      "to": "art/explorations/themes/wuxia/backview_v1/parry/Create_ONE_polished_widescreen_2026-10-14T10-14-24.png",
+      "sha256": "300f2bc5e7a96fc7595256c0a25906ebb0261d08030fc31f2688437f400e58d7"
+    },
+    {
+      "from": "art/concepts/wuxia_backview_v1/parry/ONE_full_widescreen_16_9_2D_ha_2026-10-14T10-18-41.png",
+      "to": "art/explorations/themes/wuxia/backview_v1/parry/ONE_full_widescreen_16_9_2D_ha_2026-10-14T10-18-41.png",
+      "sha256": "d1c9b10477d240417681a7166b2392528a1b97e7feeabdc886b12425dbcade8c"
+    },
+    {
+      "from": "art/monsters/goblin/standard_v1/details/face.png",
+      "to": "art/concepts/characters/monsters/goblin/standard_v1/details/face.png",
+      "sha256": "08aae324cb921d10ec5d976319a6f831032bed209bd1f7266cfde4786e413b00"
+    },
+    {
+      "from": "art/monsters/goblin/standard_v1/details/feet.png",
+      "to": "art/concepts/characters/monsters/goblin/standard_v1/details/feet.png",
+      "sha256": "32e2ef8208e9b1dfc94858a3827f3cf7d5fe860178e021431b8402eb4f625a99"
+    },
+    {
+      "from": "art/monsters/goblin/standard_v1/details/grip.png",
+      "to": "art/concepts/characters/monsters/goblin/standard_v1/details/grip.png",
+      "sha256": "06e20d290d55aa824357186439c03ea69a2ddf5e7e1b3d0845f8295f36eda4ad"
+    },
+    {
+      "from": "art/monsters/goblin/standard_v1/details/torso_clothing.png",
+      "to": "art/concepts/characters/monsters/goblin/standard_v1/details/torso_clothing.png",
+      "sha256": "fc9f641d1e3a2b7b721e03762e44f311ad86fa4ee61d820875f5753c9a0e4eae"
+    },
+    {
+      "from": "art/monsters/goblin/standard_v1/details/weapon_legacy.png",
+      "to": "art/concepts/characters/monsters/goblin/standard_v1/details/weapon_legacy.png",
+      "sha256": "e1f5dab4e56371b3311444e012292cc4f12dce9efdf766fd863d8aeb64ef2fa5"
+    },
+    {
+      "from": "art/monsters/goblin/standard_v1/source/goblin_original.png",
+      "to": "art/concepts/characters/monsters/goblin/standard_v1/source/goblin_original.png",
+      "sha256": "bfcfd4a0046d00e0292fbab08a0b1a569b8e57a8741874f66f9c8f0dd95befe6"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f000.png",
+      "sha256": "7c565c360d93e55a3d0bbc299db9ae0d8baaba8859724cbb41ee0145d85541fc"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f001.png",
+      "sha256": "c6753a28b6ab7bdd8d8937ba0d6526c4f8cb18572de1c8a4fbdf3e499fa4809a"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f002.png",
+      "sha256": "354605b0a22e215ec8062b5a7f7f5ab15e81f87a7fb601b822d5f18849c0839f"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f003.png",
+      "sha256": "1a60ac31520d58cd666e9d818e4907a25b9ed9bd90b3c3447302ef2693dc9036"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f004.png",
+      "sha256": "6c542e378ed930465190343d4164110aa399079cd47fd380e685e6014347ecd3"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f005.png",
+      "sha256": "34cc79dc714b90ff0dca936a417bd81e47a7d54dbde0174467af0897f6fd1dee"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f006.png",
+      "sha256": "917ef8fdf74a1927dff505f395a652bfcd2cb2c06cbe00e3adf64fd6bf1d185f"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f007.png",
+      "sha256": "3d5f8b4c43495a742013c45abf28d1878d9f1c30c117a8bdf7b2c9f5488053f2"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f008.png",
+      "sha256": "ca6a2141341bb405851202eb9f477f5f463d0d860f1f8c2bc843e42c51065983"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f009.png",
+      "sha256": "6e92d5bf71242209bbd0496a60f2f00d7a51e8c2272ac631015c4e3322930b30"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f010.png",
+      "sha256": "c46c4973afef635e861ce9410430b87271f212a438de169e3b8851c0cd170aa5"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f011.png",
+      "sha256": "f2f2121346fe994763742a24f4e09ee31e5156a2023af5df212ee92f45f94cb3"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f012.png",
+      "sha256": "d778f82eb41e0b3c9496a88c440ef9dd3ca8dd870c84357f6095b8aaf35d0e8e"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f013.png",
+      "sha256": "b60ae42f00dd115510944e521c93a6e6d95bfdcae9a072e0f20eccf211af4d49"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f014.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f014.png",
+      "sha256": "98216b99d6dcfc578267a339a3c988aef221fa9ded4a46c9c829136ae966e820"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f015.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f015.png",
+      "sha256": "9969b2ac82aa9371d48435953bc798801dc2443d2b1c66c85286e29a73749d66"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f016.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f016.png",
+      "sha256": "0762fff8be1186d0a91c26c96919d4843bdff7b09d7b80401c68c26b30754c81"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f017.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f017.png",
+      "sha256": "f0c63ff89bf97c6052d22b6f24bc43ea0c3d6fc1c98ee74b6d24947edaa06ac1"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f018.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f018.png",
+      "sha256": "a84469b010ce5ae0d7c2086540872ec454f55c276f56655a894a40766051fe3c"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f019.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f019.png",
+      "sha256": "8d1df389f5ff8099a90420e1d7e676b518b849450ba995a0a1903a37f22d9074"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f020.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f020.png",
+      "sha256": "17b495f5cc45394f822ac8bcec80793d239e9c9e01197b86a1c51e30f46b8107"
+    },
+    {
+      "from": "art/seq_v5/body/attack1/f021.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack1/f021.png",
+      "sha256": "5e55ded6ede5190ceb8bfc680f1e527982703ef21b341324ced3bc4c9930ecfd"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f000.png",
+      "sha256": "a1ebfd3179d95248d09f689fe908ba05ae4b767e21c7d5abad63bb3234b2d825"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f001.png",
+      "sha256": "52628a60e82a6a1868caad07eb2ba3265d24d9a3523932da33e235e5305801b3"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f002.png",
+      "sha256": "2f8ac73e9632d2ad3b5279f21d6bf392c6c157a7730a8722440d23238428823e"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f003.png",
+      "sha256": "c261012215564c05cfdc7a7bd667d03b6b5b7bb7eb3c73d0bedef6e256fb6255"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f004.png",
+      "sha256": "4c19fa120f64c7213ee06f95bbe48530da743ad659c16773c62ba4cc519bfeaa"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f005.png",
+      "sha256": "7e991c0c4af89e80347292a86c536aa646128c1d7adf8503c2b4195de84f67eb"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f006.png",
+      "sha256": "3f305dacc5dfc2e41d2e0021ad65788f9e759d7aabfeaa0b18c2a587fd92d1d3"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f007.png",
+      "sha256": "6a8b234263913ee49be3ca4286c22164a9d91553d7c3f1d3d02dfcf0f7b7148b"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f008.png",
+      "sha256": "0c848d72b1a84a0a6d8543ba5a2eb681da013117cac7bcc647f35028b0acf64d"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f009.png",
+      "sha256": "d8105738baf2f7c7bb9446ea3bb2e967257dae3da95140bd75eef3036ba219bd"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f010.png",
+      "sha256": "081b53e170606dc7f02642ec7a90988788427666d09ca5ab624ae44b6400ccc4"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f011.png",
+      "sha256": "a2ac6118994a9aa18ec8ab56ef21c765803ffc77ab1a0a09e5096a291962e1bd"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f012.png",
+      "sha256": "684c16b43784de4fe020157854af0cbb285f9fe8fc293ea9981965abdb95ec45"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f013.png",
+      "sha256": "cbd7d94f4cc719a6c1a2eed359ff87ab436e67a40197954464f7e3f848dce430"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f014.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f014.png",
+      "sha256": "859d47dbf193705604bc973398f8fff26c2b66c0179ba6d9743d30ceeac79eb9"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f015.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f015.png",
+      "sha256": "3c85d08620d1260d4db086fc1a8f91c8f3416527845ef6cd7e53864cbf4d0605"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f016.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f016.png",
+      "sha256": "0dd405b9b2aa19677a5ea778c1fa6c1135c3485785875b1ffeefeafecb2c1402"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f017.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f017.png",
+      "sha256": "ebdba8c5af4183fcbb7adfa77cc05f8c34a0f9a121dfef7c71b214edc8d01c1c"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f018.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f018.png",
+      "sha256": "bc14954959522e5ae53468d5d599eefca921652bc12849dceffc37211c76f97e"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f019.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f019.png",
+      "sha256": "ad478f3bea56448c9d06d220c899a370266c49856ff97b083af46a0eddb1e6aa"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f020.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f020.png",
+      "sha256": "3603fa65be68751995470e5797b533f1788c802e8d3eac399e53dd7f3423c535"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f021.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f021.png",
+      "sha256": "4069a08fe7bc5e828c8619815e5dbbf36262257664409a88576758dbe68225f9"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f022.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f022.png",
+      "sha256": "393b7893ab9eb51c94a576ed66868449a14db92847908fd742e21f756ef87114"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f023.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f023.png",
+      "sha256": "dde11f6a59ec58039f31356c9dda557307f61a62077ec3b53b0844286e345332"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f024.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f024.png",
+      "sha256": "7210ebe8c7a020523b406464bd6261388a589e84532cb263387fd263780318da"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f025.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f025.png",
+      "sha256": "106f03aa1ead7c14f80224097733a6bb41b57c4c4bbcfcba755866bf5b7a09b5"
+    },
+    {
+      "from": "art/seq_v5/body/attack2/f026.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack2/f026.png",
+      "sha256": "7ef7b302bcb1aa4642f09c2b0a34121f693afd1874ab7620f2490e9ca4e565b5"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f000.png",
+      "sha256": "e4bf6dca6b96979f49b043468f9fc6a9af064f45d62e82e989940626f1157e84"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f001.png",
+      "sha256": "aaad3cde494279478790449ec38535c8bd34ec2f46a104b7dca5bc1402d0b534"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f002.png",
+      "sha256": "eb2a53a4bc347b7324a83dd11884c4773fbc377b2833b17184c974cd38c208d7"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f003.png",
+      "sha256": "96fa423b8c09f5b390e3a179bedb73906b4cdb940b6a49dee71e2035ada60016"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f004.png",
+      "sha256": "c4b6c30eb964058b1be4811c4b56cbb896c4f7cf40c93b0d738bdd3f900fb0a5"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f005.png",
+      "sha256": "70808c18ae9c3ca8fcbecb40935da2a941fef4b5f58eb4de8be90c0a63545ccd"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f006.png",
+      "sha256": "22628cabc2b21c000c25b2e918214b760bf40c4d4ac78885f9ac7260d5860ab1"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f007.png",
+      "sha256": "0bec12361baeaedc327c7101f697ad1471c1abf6a080a397d31e16e6afce47de"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f008.png",
+      "sha256": "b6c42d859f568439beddfbf3a300ec1b158a0264d77c2a2889c24b281a93b404"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f009.png",
+      "sha256": "88da81ac7b5c1398b300b01795afa896f6972e1b54d95c100cc02791136723cc"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f010.png",
+      "sha256": "6bc0dd51dee1c1f9fa5e7816f904db2edfdc28ea06c17f78665ba37090f2b8f7"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f011.png",
+      "sha256": "9669b9d7a3081e1fdec393cea94522eab82b21a30a3cf90daa581e1a31d09dd7"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f012.png",
+      "sha256": "ee804079462aeba5a75111261331271af068a6ebd0d7ec232688ba265d624d1a"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f013.png",
+      "sha256": "ce5e7df7bba2b515be6a19fe93de27695ad6d20641d3cd58e307ff931df764dd"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f014.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f014.png",
+      "sha256": "224139df257c6d9e1e839344ca3a912346825e694845e8978d1cf39f0891a111"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f015.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f015.png",
+      "sha256": "670001b1d4291c861cd522a8b2fec61af310ba3a3c1322bb93f09d5c882fd2de"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f016.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f016.png",
+      "sha256": "c40b0aa5ae8b2d7ed151de1a861fcb18472b77b5b5ba1f7b55334b3ca4cd81d0"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f017.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f017.png",
+      "sha256": "a44160866657628a03c9ebda3c2a981adefd0bde3e06b61e6c7da19d28c35f6e"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f018.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f018.png",
+      "sha256": "b16658724a60d200336fd234dd4fb49b466ae38af864ebc7ca860d5cdccba82a"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f019.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f019.png",
+      "sha256": "d7b550ca70f8f89578d6fb5edd6d969d99621781b2c3a949373ebbb4961f5dfd"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f020.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f020.png",
+      "sha256": "239a0f04fcd82e3b2b4ff49f4df38af979f7ebf86c8e8b7674003cd91520d8cc"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f021.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f021.png",
+      "sha256": "0e7a2bf16fde0b06cd66a6fac932e12c2798cdb2f0805ecd6efa361e3e1d75f1"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f022.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f022.png",
+      "sha256": "5ce8047a1e591fcde4787d07e974616e76917d40e28cb1e9fb9c01e28913fa5c"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f023.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f023.png",
+      "sha256": "3e4cfd568cca0469eee10fe0728505b7ed5ab069407927fd4a61862bb38d5b01"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f024.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f024.png",
+      "sha256": "fb947bfb93cd2297a51afe7845026b80dc01f6adef193116791fb762fdd24887"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f025.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f025.png",
+      "sha256": "d7680decb79c71b01db4904e2fcc9511c1fea4e4a89fd42e2dbfa62cf8f7436c"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f026.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f026.png",
+      "sha256": "6f39f3f0e6bcb8eedc32d6f0a1f54b011a935acaa6c789e5726037c0f7f8a39c"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f027.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f027.png",
+      "sha256": "2483c4d28585d8141f44899e733e9a9c13c86c94ab0e1b9085a5d3d0839e1f84"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f028.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f028.png",
+      "sha256": "c0add74f7e61a68037c60e931a984e81266836ff1a3ae711b7d66204bb8dc9f6"
+    },
+    {
+      "from": "art/seq_v5/body/attack3/f029.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/attack3/f029.png",
+      "sha256": "7ac3a1a194973c96373d2a85664051ebc5a08f6dac77e25b19a837e1d2ada88d"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f000.png",
+      "sha256": "91295ceab93ae50323db2fbb91d117acbf7cafcd317939233a53aef9733b5934"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f001.png",
+      "sha256": "39c0c6ca2c92c69d225bc1e4d1c4f96986db1419f59bcfd1460264b6791a9e6a"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f002.png",
+      "sha256": "49597431b5f521cc13cf6accf0b279b71d29b422c6947496de10bf64cc789d58"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f003.png",
+      "sha256": "43b313bbed9db1e714ea1202ebed00e2aecc8246344abcf5c6e4df6ddeb6b292"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f004.png",
+      "sha256": "aed5f4f5aaaf74b361d342a762ad8eaf85a655fee0e07737f899409290ad297d"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f005.png",
+      "sha256": "dab3630134afbeba5aaee8113eed95c555c9e72f452638b63fb09cb07f012aa6"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f006.png",
+      "sha256": "04b604c35960e0689c2e6c69f28371f677098088e4ed510028a0e848f423b1fe"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f007.png",
+      "sha256": "023335c74b04c39f9af692e67eefd23965292ffcd4f3a1053550d50490aa535c"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f008.png",
+      "sha256": "63360fe592ff64750b5329e5031a049e6883827595ff9a59e384a43474caa791"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f009.png",
+      "sha256": "e14ec2d65bd1ba7956c2c1e05753da1fd9c543accd4fb97b3cdaf4153bafd3e0"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f010.png",
+      "sha256": "6494579e224c3b158d2cc0e33d665b224194ac4aef476fb743fecb1b0693c601"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f011.png",
+      "sha256": "1442ede831a65e0d6a5f071ddf484823d8dfc0fbc7268b41aca341e241a66b78"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f012.png",
+      "sha256": "f907fa84cfc956beae36dbaee818365ae35d1601aad7a0ecae3d97c9f5b8faf8"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f013.png",
+      "sha256": "fff531863632dd75e6e34a105199d0326ebd0c87cc872735958ba6bf998fda38"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f014.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f014.png",
+      "sha256": "86fc9c219dc8d2e7064ce45ad53d564a58c5cbdb345f73291f620cd634dc5b90"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f015.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f015.png",
+      "sha256": "4ca1d006ae18fac5d856d3a6f9424d50f373c07ef52f21a9f920ef32fbc3c634"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f016.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f016.png",
+      "sha256": "a15db866f119f838887247c5b32aac72faab17866dd44bfc951dd46876d79e71"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f017.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f017.png",
+      "sha256": "d58a686a4b3d4de2ce5f131a400ef2310decec54111f41c550347d755163b171"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f018.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f018.png",
+      "sha256": "2dec433727507330a3cd649bba10612c62ac9d81dafc0f560f2ed0d1b9087dd2"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f019.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f019.png",
+      "sha256": "2049daf5f8eea2003239f3702dce5f44acb376043c8e8f4ff83cfe7484cae67f"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f020.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f020.png",
+      "sha256": "333506d284ef817e41c788f069d12e32660dad067119c1888938d14fd989f939"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f021.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f021.png",
+      "sha256": "d951c8ea42a86d0efb5b1c2056f94f2942eb6e5e3c9af209dc64c242192a7f3a"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f022.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f022.png",
+      "sha256": "274c0d340284b76b89f11f77b4eebabbd0a2f610121b6ce911c8c501e33c6589"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f023.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f023.png",
+      "sha256": "3b46de26190118aa0afeeb54590b97246bbb3080e82707f44c68223ef39fc253"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f024.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f024.png",
+      "sha256": "6c2b955cb7ad131fab0c07d2817d155f8052a5d6669e95be6b8cfe9a75cfc3cf"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f025.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f025.png",
+      "sha256": "b35882a6977238ba6bca87dbc1807d467a960c048bbcfe9ef56e5d48e41d00d9"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f026.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f026.png",
+      "sha256": "b4995e299998ded2b237c8ba7bce33ea149b1ffbe6c006ffe6c6d93d72e61ea5"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f027.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f027.png",
+      "sha256": "95d7aaf5fd1d2cc3b588f103ae7864b642d62eb20f057b1f3411747cba782da7"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f028.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f028.png",
+      "sha256": "25fd25f510ff014ec7fa418e3c3641910164df58ff009099eb574567fd7b5cbf"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f029.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f029.png",
+      "sha256": "b2bbeed886d7c646e846447d677e90d9e98aa14fa68b3edd7c7acbcb35b82dc8"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f030.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f030.png",
+      "sha256": "d9d32f47074c6f657fe8f30383e51dfe44183a07ef61ba6ee720bac6e84e4e68"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f031.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f031.png",
+      "sha256": "24e69fbe5835ba3bcb8605624558491b50c76b59b06fbaa35d0f5c67efd1113e"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f032.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f032.png",
+      "sha256": "a7413f4b80ff27f0bc7e6501fd81204797f3e8594097c98b57065dd6128dd261"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f033.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f033.png",
+      "sha256": "7f67f7ab463f1d48d5a5aea92f107c5f2bb28c23f1f98056d33e608bac37bd49"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f034.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f034.png",
+      "sha256": "350b567338447198eddfc4cb71cf0a64e97383569806dee1673f430237e425b7"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f035.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f035.png",
+      "sha256": "5dc8db2fb029d6f47efc86e6cc5cff84ab2285ac8104c8a59eed8398fc555edc"
+    },
+    {
+      "from": "art/seq_v5/body/quick_draw/f036.png",
+      "to": "art/animations/players/swordsman/v5/exports/body/quick_draw/f036.png",
+      "sha256": "b0640ea4a6a6b21b93f9cad80e546603826545336a27ae03238ef0983b2dfa3c"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f000.png",
+      "sha256": "3dda3a277ecb155d8095b3d8c3dee6a5e66356f0509cb8c6fcc839618761ae90"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f001.png",
+      "sha256": "68836288747f6f1574765eb49fc929771ff2bf8bfc0bc7f3544f76b8933c3f25"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f002.png",
+      "sha256": "df2adb07cead7cfab616154655fd95900a8c72f4c2037ea7c06913bb7d146583"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f003.png",
+      "sha256": "16dbc96b63f641fdd773322a24c98abeef8b8fdea99b4b8c8594116ce4238eb9"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f004.png",
+      "sha256": "e807acb40a3a345a598a5fc82405816e27716646dee1ef1475dc1077e54f37ea"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f005.png",
+      "sha256": "36341ce5deb571afbf260107017cb105cf15ade1e5aa970ba9394a9f71998a94"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f006.png",
+      "sha256": "8f9f075bd389176dc8130e81d63185c1ac0acbffc42219ecea97b6e6a595eff4"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f007.png",
+      "sha256": "54cf3f64b2916fbfe426ed1497400a786f086f196b7b1c94284283038b4f9350"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f008.png",
+      "sha256": "70d4413d1fa971e8d36ba8f7400024c03f311f78a773d929512cce8186fc8c0b"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f009.png",
+      "sha256": "238abe8585dfdcd194cd66213054799b7e955e9867022a36511275f74882e56c"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f010.png",
+      "sha256": "e44dc2238a13c03c74f6948ea511b4e7a8707a76c0e23092f786692dec4f50ed"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f011.png",
+      "sha256": "6be6e424ca287e313ada8e75e4a7372dea57194a7e7a521b42886b494c47e66d"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f012.png",
+      "sha256": "df7658b3287f0a927d565a15088a3a34994ff529f7fe2ba0955095fb618ea51d"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f013.png",
+      "sha256": "027e6f2f9246c2d943ee1daf1df888e4b881f9a13018c06241e8a3c0da7b1dce"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f014.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f014.png",
+      "sha256": "b14b64bbf2956ad09f2145ccce23d482ed03c237cb2aaf3d9c1bf024c970c521"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f015.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f015.png",
+      "sha256": "dedbf280137abee0a9728cd82a9752355fae3f6001ad3db23c1906858641da44"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f016.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f016.png",
+      "sha256": "3f9618d53f82b7cfc9efa8b870911b2683cb906a59dc66e91a196f15a0e2b621"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f017.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f017.png",
+      "sha256": "2c959be61ca97ab596c1ccea577f19248b4acdc0c8a84b1bdb567ea09486324f"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f018.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f018.png",
+      "sha256": "2996aecd353adfa6f1baaa0a33a255033d7d0f49317b759314d3258de5ee0fb2"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f019.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f019.png",
+      "sha256": "c53fdf27bf9374b71b05d1459d9f7240cd62479c201b646706098241d6299776"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f020.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f020.png",
+      "sha256": "75ddd8eb7c26d24d1b91a8bfed4909cd3168749976ba796daf3cf04b37603412"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f021.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f021.png",
+      "sha256": "79acbccc335bd54f893938b9f02b09b03a389f3cf48a80ebb5f648b04ce6f2a0"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f022.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f022.png",
+      "sha256": "ad5e0db6f56025f006884f83a2760431f79c85e253f8833ee14aa13f04110a84"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f023.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f023.png",
+      "sha256": "270e51ee0618f3344d5b674903432d635f7c24251d39eda8cce03b3b42f12813"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f024.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f024.png",
+      "sha256": "84d29c2d3fdbac61aa89a81a999e2bcd4b6625134460b8cda2a8d3cc525cfcd8"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy/f025.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy/f025.png",
+      "sha256": "6516c4d5768a8c5272eb7a689d93d121589bb4ae04710c37d25d0afca6d1d181"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f000.png",
+      "sha256": "030af7274b34f11308be72563025aa2a7ff361f197b92da34fa5e01fc2ae12a7"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f001.png",
+      "sha256": "9f72311fcdf6b5b26204890e8fb1dbabd02312d11dc7c6af2214456957f4bff1"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f002.png",
+      "sha256": "35a2e6552cf3121319616bfcca046a56c19a15724edaeb51f2c296e80fb17422"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f003.png",
+      "sha256": "b197a2ce4d1b213d348e9a5a1d087801e833aac93955e9fe41834573ba1479b1"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f004.png",
+      "sha256": "75447c4375166d0d1cad96b0576e52d82921afcbdfccd92a09d8a09bb486c6a2"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f005.png",
+      "sha256": "4085813cb778d01a8fc8b426fad2b5f51fd55b09f0a3d7df8cccdb0d1fac3152"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f006.png",
+      "sha256": "03a1cf8ffae3aee94357ca6b5c9009f968c4270a8ecb9414537301b9e18f3e13"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f007.png",
+      "sha256": "332843d59eb99e672a48c13f330f1b94ee2d992853c34c01b9b09f6c5df41252"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f008.png",
+      "sha256": "79150de5f455922b24e2e37052e79ca443482b0f1b8d073665bf09f1e0862c25"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f009.png",
+      "sha256": "ad0ed8e87b0c9650bbfdabd13b31dc83e44ff7c2b4e19ecaa46ccbe93b0fb962"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f010.png",
+      "sha256": "1805590d290d1db1365c17e8915ed3d4e1061313d35464b67972daecde3a006c"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f011.png",
+      "sha256": "563199d0eb49879817974cc9d61a9df0e5b4e48d260e23da1b29dc22587c47e8"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f012.png",
+      "sha256": "4ee339310c0b7c0775108fc02dd8110e22e3437a6b0f13cc3ea94f1b33cad203"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f013.png",
+      "sha256": "9a76b93a8f6442b095297b77a31c70d577d987a8d6c83f7a85a576df04df585f"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f014.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f014.png",
+      "sha256": "b3441f15191e06b359c4b4704a5201c47374f3bccb09ee2ecc84cb52071ac542"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f015.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f015.png",
+      "sha256": "7b37c0d4f7523af99d75f06e89d015ff37b34c8a263b3fa10213999f37b45106"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f016.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f016.png",
+      "sha256": "f404f76dde450fc2fcf55be2cc11fb3df6f7689a9328b27f77875c5e2ed4aefe"
+    },
+    {
+      "from": "art/seq_v5/ground/heavy_glow/f017.png",
+      "to": "art/animations/players/swordsman/v5/exports/ground/heavy_glow/f017.png",
+      "sha256": "74f4bb3fe363a419a6ff6f796b5db216fa35658fcee6541772f01540fe2420bf"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f000.png",
+      "sha256": "9030d8609bba7b1ddb0464d7a365aa67c6ffe5a912be8eb489e034bb00fa46bd"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f001.png",
+      "sha256": "47956b70d7d8c058e2849b073feac6af0cc7eb620e6c5fa3330693e10bc99279"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f002.png",
+      "sha256": "ef0d1dd9032fd49ad8487495fc98d511ac295a2d2677aaabb772051f9961000c"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f003.png",
+      "sha256": "b1b62a4ba544cd72d5c7629d6ee80885266859173839d655be796abbe178e117"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f004.png",
+      "sha256": "acba8c569bafa6dd5f4c2dbd78a9bc8b9511c29e28e0cf4591eea7f9d042ba52"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f005.png",
+      "sha256": "8ed757480cc5bfa308b7213fccc406a02e555a64aa3a99c5eee134156548788f"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f006.png",
+      "sha256": "b95a3d1b3d4c84a0446000108e75f0609e6ec2d1b83478085d81c130e7847de8"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f007.png",
+      "sha256": "ae1d15e1d8e57d995f16d994404fc558f0f550a483752a37e7d2dbd227b46cbd"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f008.png",
+      "sha256": "005d7db06bbf31f996e8ddb3da64f83d010daee56adb772d752a4844c649f4db"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f009.png",
+      "sha256": "dc3f485d15eb7fcee344d2a7fae2640b887fc118197e9d7282f7140eac4652e7"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f010.png",
+      "sha256": "3bf2c24ca812c203ac446bf768697b5f112922384967c8a295dfda0c2ac72772"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f011.png",
+      "sha256": "2d1cb158a26d8ff08ff8564351d5be5e360f23e5d16e40645971f0ffd2d88c96"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f012.png",
+      "sha256": "b4881aac8b68f8caf4ef9701b142029476cc214056bcb78718d38bbd1b3c1a8a"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f013.png",
+      "sha256": "31b3f8887176ca77f9ed1b60e0525e13bff8bd020f1f1030d85a3c994cbccc65"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f014.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f014.png",
+      "sha256": "373c1132b834a2e733686ad072560bdc3012a39584c58bde212bf2373f8a2eef"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f015.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f015.png",
+      "sha256": "84412f633b00a5c2ecd818191cd6ac5ca1d84d5fd938858bdf62a0dadfa8ee64"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f016.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f016.png",
+      "sha256": "7e592a5fb01f5f5d33cee6d60048da9d491a9eba47e4d9ac8def0f06c1c5ed1f"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f017.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f017.png",
+      "sha256": "1da98095e08062978dbe9e131c1c43ef6c104f61b034cda2e91e6426f4d18686"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f018.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f018.png",
+      "sha256": "f41913f3bafaa42919b8594d113be46bdb9c68e1fe340d69ba03f53511f0090d"
+    },
+    {
+      "from": "art/seq_v5/hit/heavy/f019.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/heavy/f019.png",
+      "sha256": "06c91097963ce6dfb3ff42a7bf23b7def88849323413126b85d0a0f5c0a5b8e5"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f000.png",
+      "sha256": "c65272c685aa27b154109fa981b64e49d6497c6ac63d202dec55d83a0041fce2"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f001.png",
+      "sha256": "67694a5c382006362f3c9e1d57a4b42d76e6e04aebeb8069c675359817ecc09e"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f002.png",
+      "sha256": "83be7932415faeec776ad4005b391f4f69e930b540827b4c3aa6d0764947192e"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f003.png",
+      "sha256": "94f8631d26d2a993ba443847c309e0d00a214082ade6745ee6527b6803b64ccc"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f004.png",
+      "sha256": "bc81659dc97e721e7ed05e26c3d653288ddf5e099eb99765a5e28e5d791a87bb"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f005.png",
+      "sha256": "fb58fd838b78222bd4864d06e107bb8af90539c72db0113f71a059a021db6fe0"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f006.png",
+      "sha256": "8f0f62f367ba7a4e4458a64505dedc4dc4c330204d4aadc441c4cfb4338838bc"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f007.png",
+      "sha256": "c54a65842f01ec3f43329b08a6645dc1f1c2ccbac28d30e7f5da1da529a63cb4"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f008.png",
+      "sha256": "8da9d0fbb4878b9004bbe01afe50dccb5015db86823ff3a89be2528abfb3294e"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f009.png",
+      "sha256": "83d3a2997284cecc888945f06e94d1494f183d6109887e58da16b2696321160d"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f010.png",
+      "sha256": "5fa8243a3969fb2498e3fdeb7a8b8e71d98e859880ca64360799404f8f85181f"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f011.png",
+      "sha256": "3b65a3a4e27dc45a1c716bba9854aca125ec0822909b299ea3b09c1e1d76c866"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f012.png",
+      "sha256": "dfda5ef9be782317b73518a8cc0070285b667c784974db272a6f18a5e0a8b136"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f013.png",
+      "sha256": "c1271b736e846d82fcddee6f6c0a9a49e6ab46bc37caebaf4fd37539159430f9"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f014.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f014.png",
+      "sha256": "9287d1742270b3a59c6bc74a05e890d5c18cc2d98b1f00787715553595ae46c0"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f015.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f015.png",
+      "sha256": "01b60522421f0f2d8cac628841f335efb1921d2579f377bad3437bb1107e9141"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f016.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f016.png",
+      "sha256": "f115b05906d0744d8fa8b30ec2dd5b62a7b0c2b0a8bbca76e35c444645ce6477"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f017.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f017.png",
+      "sha256": "34e9aa0e702a08c235b4921390c93c4d0053744af3397178ccca28c448bf8dd8"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f018.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f018.png",
+      "sha256": "042f2d989547baf465669471e698ed8202b94800ee32769a9d3b19c85fba69be"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f019.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f019.png",
+      "sha256": "339ec61de5ee9062e7ef7dc1e6e3fb80ef3612a72adabd328e1315b57f56cd64"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f020.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f020.png",
+      "sha256": "746c99fd844d6aaf17d1cf460673b5e1c256ea3efa5deb684b57897fa20fd2ce"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f021.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f021.png",
+      "sha256": "0c951daf054af99539522c3bef2848b285b9a608c573a2470d51b5cc57fca816"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f022.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f022.png",
+      "sha256": "ab20cb648c81bd09070409f7e8e19ba980b4f40c01de9ecedcd6b6e287125260"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f023.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f023.png",
+      "sha256": "deaef7965b981fa09e8c682231a6869bfae943188db8111067b52bfdd5aedd63"
+    },
+    {
+      "from": "art/seq_v5/hit/iai/f024.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/iai/f024.png",
+      "sha256": "06c91097963ce6dfb3ff42a7bf23b7def88849323413126b85d0a0f5c0a5b8e5"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f000.png",
+      "sha256": "f53c40aa72487c52b93eec9b22cdd72d526a3b14e1e6e871d90237f5f0739d67"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f001.png",
+      "sha256": "47206a18f6fd736f4a6f39efcdfaaea6c5d3968a71262d500f4553d7def01bd2"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f002.png",
+      "sha256": "5c745b7fe98abd3d3a26f7acb72a213a180b9497390dc03d68365ae8dc2c083c"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f003.png",
+      "sha256": "8615c978e176bc09b0a7a989901fde0c3582b7532d92ad16c60538f6fca7b24b"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f004.png",
+      "sha256": "0bd7d026ce325a990efc6ad79a1db3b0b2e5da71cccd037060e00ee30b58fa05"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f005.png",
+      "sha256": "82aa6df16645c0094ea8a00cc7e7af14b4f923bd125933047c25d385c0e218f6"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f006.png",
+      "sha256": "501f04e06eeeff8a520308a17630c3ddf6804693ab46f8a332df3e32141d4abd"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f007.png",
+      "sha256": "0963fba53efbfdacc4e5b600b9b876369f8e9090b176d23aa5f43b8599362b9b"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f008.png",
+      "sha256": "3c4c144aec884e8eccc898539772c17d6484290cd0fb0ac44b03341f4335b53b"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f009.png",
+      "sha256": "0ee11652c2c38690c93170b729eeb58ec78ff64efbecaec73ad8636b6a4afda4"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f010.png",
+      "sha256": "2fffd2963404c70a0a3b86f4fe731a4342c8d74c4172fda812b0c486583401d1"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f011.png",
+      "sha256": "930a6cb06b646eff185c63c9bedf302e0185b3fd3f9e72846ac77063b626bbd5"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f012.png",
+      "sha256": "05b54c33f24017a9e4a97910dc0477c2fc22cbf07e6767807da0d5b621120e0d"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f013.png",
+      "sha256": "3dd28fa003a59751036025b401784b0d4d67cb21991b1b094d80635658c3409a"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f014.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f014.png",
+      "sha256": "60e15afb13950f0f671abfba406b19766f02d3b7993145efe2a0d8ac20d20335"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f015.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f015.png",
+      "sha256": "80a756eb90212137a60d2e6d7020a76e3d79e5b916b7bca0f56e0a44a2ebde64"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f016.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f016.png",
+      "sha256": "a8240eb091251367a4fd0e40a5c04fba66c3c05f4a659ce5b009f9fc74a93d33"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f017.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f017.png",
+      "sha256": "06c91097963ce6dfb3ff42a7bf23b7def88849323413126b85d0a0f5c0a5b8e5"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f018.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f018.png",
+      "sha256": "6e12af3588a022cd4172f38c6ea5e4842b78ed28df65aea1bba825f19d82d9ad"
+    },
+    {
+      "from": "art/seq_v5/hit/light/f019.png",
+      "to": "art/animations/players/swordsman/v5/exports/hit/light/f019.png",
+      "sha256": "06c91097963ce6dfb3ff42a7bf23b7def88849323413126b85d0a0f5c0a5b8e5"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f000.png",
+      "sha256": "886056c7f3d8f3f3af0335b34ab6ebcfaddf1e0e95711edb92efa2dbb6bbeae9"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f001.png",
+      "sha256": "7bb47686dfc7d7e374bee2b134648f5e59fd21b20f736a1b69b8bf6538255eaa"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f002.png",
+      "sha256": "30c490bd0cb6ad0bb885fc321f65d745814910e37552bdadecb780662eb66466"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f003.png",
+      "sha256": "afe12558a65672afc86d337c67bad5bb894a2dfe3d3e9cd5e224e3ba2121022b"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f004.png",
+      "sha256": "f11b4436a4bf4811ef6cdf7498644c61aaa50f2e8e21f5e02979fb61e625e6a2"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f005.png",
+      "sha256": "6998f93d4b16588a9801bd58c896ee6874009d61809f2c47de0985f4e117c323"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f006.png",
+      "sha256": "f17dcb39de464053d399743203a34e97de6d5050b0ea849a90db4925019b518b"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f007.png",
+      "sha256": "f5d018fb34f240c2eeb22640682336e0f38eb31df54e0a4b43a8e634d7642d54"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f008.png",
+      "sha256": "ab8a124aec886ebcecbcf736d67b919e0ca1a787aaa2b2a8598458a368928f70"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f009.png",
+      "sha256": "3c12a68c8264a4fe9123ae2d0a114bd833242a38c5c07e656be68bc711dff006"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f010.png",
+      "sha256": "3c2f8dc3ddd53ce89282eafd9e3c6f2bdb1d4e630bc3adfbbafd2a1014a96f2d"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f011.png",
+      "sha256": "46328162874ec952a1fbd4717f633be29c8fe09a06dac63410f91c9f3d162c8f"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f012.png",
+      "sha256": "146bfe027543f360a6b4d3c771fcd93be9bc5e991dca00083e965a68cf0427ed"
+    },
+    {
+      "from": "art/seq_v5/slash/attack1/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack1/f013.png",
+      "sha256": "886056c7f3d8f3f3af0335b34ab6ebcfaddf1e0e95711edb92efa2dbb6bbeae9"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f000.png",
+      "sha256": "886056c7f3d8f3f3af0335b34ab6ebcfaddf1e0e95711edb92efa2dbb6bbeae9"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f001.png",
+      "sha256": "478cad0e25b1cf9f635f9a45e9fab4cc91438fb5f0cd40c325b52b9e859eaca6"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f002.png",
+      "sha256": "f875fad46351ff0e9008535b53da0d14feab3352d5c60fc851813a32d341e31c"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f003.png",
+      "sha256": "b17691f70e432ad0190b607fc6bbf0a3c40bf5cac06c02ddebf8fb2b167e19e5"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f004.png",
+      "sha256": "7faff7144e9653a6298e677d56e4c3f3fe030febb6f641e6a8269d05b8a7f35c"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f005.png",
+      "sha256": "2224ecfbf3ae3b79f2ae21724a03e42f1a90c8dc252069384f3d7c4f863e4c31"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f006.png",
+      "sha256": "3c50acad32404833e394657fcd42d7e4aaf03d7fd22e49f4c9886fcd9b46a510"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f007.png",
+      "sha256": "82fb372479142de5b049c029b409515bdb7846759becc56cb722999c1bd29b7d"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f008.png",
+      "sha256": "1b02a01ff49184780137df7a336a24f23e7609180468f2338c806b5321057f39"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f009.png",
+      "sha256": "185fa926b3d3969c75edae901af24cffdad17689bc6db5b3ad9dd42066c17ae5"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f010.png",
+      "sha256": "a5beaef02a089e1c4d4f07190afc8f15a4d54050b27d8c13c1123196c2212eb7"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f011.png",
+      "sha256": "78e22fb0d29be52fbc0f724c8529af2afd4a7b387d546caa0113e51a611dff53"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f012.png",
+      "sha256": "afdcc6d2f033e27a4329fdd94d1fb5ae68ed744d1e1ab8e89fc5e12c9a85aab3"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f013.png",
+      "sha256": "7d08349800310e016100c60b827be5567d83fd033cc04276abb00035009812ca"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f014.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f014.png",
+      "sha256": "72b0b53f571a0d915e5c95460f094c3ee0964f35e2385687b52c278f036df9e6"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f015.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f015.png",
+      "sha256": "f1cff5ec835b59ff136c79de7a12681a4abcc8faac3f75f63745f4f3535a712c"
+    },
+    {
+      "from": "art/seq_v5/slash/attack2/f016.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack2/f016.png",
+      "sha256": "886056c7f3d8f3f3af0335b34ab6ebcfaddf1e0e95711edb92efa2dbb6bbeae9"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f000.png",
+      "sha256": "886056c7f3d8f3f3af0335b34ab6ebcfaddf1e0e95711edb92efa2dbb6bbeae9"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f001.png",
+      "sha256": "204c256bf368ddffec3b9c19eed0ce3a7d6c47715adc10e703341b9a1d5787ca"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f002.png",
+      "sha256": "6f916fb241e5af5861577b6745815ff394e5f5c4ac22561b9f848033e168ef38"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f003.png",
+      "sha256": "1f95c591f77d89f41c67336025ac8f76dccf0b348ce947ad70ec526397364073"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f004.png",
+      "sha256": "722e79e6e55685cb905378946b632766fdac4b0519e479c5800c4dcd13da6a69"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f005.png",
+      "sha256": "41bc761647b99863c9587050014c259b41f9f2995a41e29a07f50ce7a7e064c7"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f006.png",
+      "sha256": "16e8c40afc1f7b3f5e666f62cd75d5e4d968b88031759df0fc28af55cd63e26d"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f007.png",
+      "sha256": "5da074e228d758d8b34bbee3f719d34ac2469ad7b35c87edeb27d732e4af8507"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f008.png",
+      "sha256": "c15c502b9f6aee748d20aa0d3b7c5d3b23bf480f187fdda54e8a0b75aa7049d1"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f009.png",
+      "sha256": "9c7cccbf7e5107c01904bea14172aca19511d7df7871c321cbe45b0c2279158f"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f010.png",
+      "sha256": "6d0549705456d076e5d425939f048771ea54aef5017f6f4eb736b7e26de298a5"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f011.png",
+      "sha256": "e714139fdbc1aeac217eafd6cc98ae901bdb4378202c012ba7b9973f48a62f8e"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f012.png",
+      "sha256": "b0cd97743da36aaad057875a55702269b0d4935bd25df7610b62335819e01d9a"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f013.png",
+      "sha256": "410c23eda4d0dc5fb37921767297d7c95af524d17c84cff9177fa4cddf4ca5ba"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f014.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f014.png",
+      "sha256": "0bde4382999d7ede85395d90350db8a81dc58149281f837c4c3c4e766e00bf0f"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f015.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f015.png",
+      "sha256": "674701b09a303e74610367b5f85f51302504b508984007465420452da8c2b4cb"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f016.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f016.png",
+      "sha256": "05adf9c5d241c7527e497497ffdb1aca039a93b42a2a28da6363014a1f806b1b"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f017.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f017.png",
+      "sha256": "19197ebb9901b91677cbbe5f3c25cad02bf17eb965e1582561962261c6a0051f"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f018.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f018.png",
+      "sha256": "e2f239c12692612e1f8ac941b66224f13a90c46b8700ed18ec43dffb9786af76"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f019.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f019.png",
+      "sha256": "a2b8f4e775ce5f32c87ebdb40f6c1dbed45e50dae78c72fbb02234e6ebe1fee1"
+    },
+    {
+      "from": "art/seq_v5/slash/attack3/f020.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/attack3/f020.png",
+      "sha256": "886056c7f3d8f3f3af0335b34ab6ebcfaddf1e0e95711edb92efa2dbb6bbeae9"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f000.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f000.png",
+      "sha256": "886056c7f3d8f3f3af0335b34ab6ebcfaddf1e0e95711edb92efa2dbb6bbeae9"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f001.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f001.png",
+      "sha256": "0d2391ec8d9bffbeb7b5fc25966a0446301f374e71b1556a904541ef1b75bfcf"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f002.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f002.png",
+      "sha256": "8034879f10f9350cecdb26d02646451a8a9d93f9b248251136a6cccc77f13940"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f003.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f003.png",
+      "sha256": "735e2ae68f126c2c0c6d0250fb62cc4173d6c7f347a0d9d0f54056839749d9e3"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f004.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f004.png",
+      "sha256": "d19a53bc9d59b1e2bb7616a5e64c13654dbf5e7f5e7cbd3002c5fc61fe95751e"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f005.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f005.png",
+      "sha256": "d56bf3471fc436eee2126c51b6d8a282d503180faf94132de6054d1e104a27f5"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f006.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f006.png",
+      "sha256": "6c7d084833cdfc8a0b2435cc2c7f464adb2f701ce14c7849f06615fee21620eb"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f007.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f007.png",
+      "sha256": "da6446033649a111fe3b0f87b823cc9dd57526ebb814f42ebb967e4d1322f8b7"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f008.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f008.png",
+      "sha256": "ba4e2e71890b75584dd5d304f9946c3cafe611f6293a4e1da2bced46bfd34966"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f009.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f009.png",
+      "sha256": "5b0d9bfd3e0daa3f18a491338377899cb0581c7803aa5b360f8c464bb7e86acd"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f010.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f010.png",
+      "sha256": "ec5f0a64bf9ed8596a57849bdf85c37dfde1ca344f4629b234bb9a29a7827b39"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f011.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f011.png",
+      "sha256": "99950590923a8b74ee401375fed9d7c0738e180830fbf298590f372808c28ee2"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f012.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f012.png",
+      "sha256": "8dee87db386c8c819a36b4c05103c8ffd3c18899668e3ef9d962c87e6d107c83"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f013.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f013.png",
+      "sha256": "19e39ddcef70015b55cebdef495333dcc1f4484c13cdc448f01d259a310d5369"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f014.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f014.png",
+      "sha256": "6e8f01e4db389382d0b7792a258675f256b9317aec04db0c6156fca46a23ea04"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f015.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f015.png",
+      "sha256": "7b8ab3b5ab164e435d52352c51e2d2501d650c8c1ba30a0abaa0f9134f70c128"
+    },
+    {
+      "from": "art/seq_v5/slash/quick_draw/f016.png",
+      "to": "art/animations/players/swordsman/v5/exports/slash/quick_draw/f016.png",
+      "sha256": "886056c7f3d8f3f3af0335b34ab6ebcfaddf1e0e95711edb92efa2dbb6bbeae9"
+    },
+    {
+      "from": "art/seq_v6/actor/attack1/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack1/f000.png",
+      "sha256": "0a9130e51727cfe2bd208e98569bf757043960fcf95b3f6929ce32ab013cbc57"
+    },
+    {
+      "from": "art/seq_v6/actor/attack1/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack1/f001.png",
+      "sha256": "08829424f627f5a9601c5efdec467c58e91423f615245ce1b9a3d51230aa70fd"
+    },
+    {
+      "from": "art/seq_v6/actor/attack1/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack1/f002.png",
+      "sha256": "816e7d2484ce0179434ceb3aca7edefd0c360d6729617b5c7f26712d1bf170a4"
+    },
+    {
+      "from": "art/seq_v6/actor/attack1/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack1/f003.png",
+      "sha256": "c75b4c613997280d3669c6d33a2d41ff3212ce6dbf30170f852f640dfbc0dd78"
+    },
+    {
+      "from": "art/seq_v6/actor/attack1/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack1/f004.png",
+      "sha256": "01c43ee44c0c196101ed2351da2c0cc205ba3eb436c693217d39d707150f686d"
+    },
+    {
+      "from": "art/seq_v6/actor/attack2/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack2/f000.png",
+      "sha256": "457769cc2d35893c60261a0db13d5cd84431e62a3c26de80962f65af68021cf1"
+    },
+    {
+      "from": "art/seq_v6/actor/attack2/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack2/f001.png",
+      "sha256": "27aba80e0c27433233964cb923922b359c39e07c6c49f7a4ea3070f2b26ef138"
+    },
+    {
+      "from": "art/seq_v6/actor/attack2/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack2/f002.png",
+      "sha256": "ffe18dddcd3fa3d02e2c56b7362ff541214e4105cc84ced9c4ce131924895a28"
+    },
+    {
+      "from": "art/seq_v6/actor/attack2/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack2/f003.png",
+      "sha256": "3d8612f3501e7607d384f7a05224407b0a0fdc24ca074000bcb417bafd8f2c05"
+    },
+    {
+      "from": "art/seq_v6/actor/attack2/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack2/f004.png",
+      "sha256": "de73fc4b2332e288e5611cb9ac4cf40c34030789086bdd96911a4608a74c284b"
+    },
+    {
+      "from": "art/seq_v6/actor/attack3/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack3/f000.png",
+      "sha256": "831c286ec8a0f1ddfef88877c5c49ec177518f49adc9bd56cf2e9d6654d2b811"
+    },
+    {
+      "from": "art/seq_v6/actor/attack3/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack3/f001.png",
+      "sha256": "b89e6c08e5c81365a9d3bca907adab29fe469d8f653925ef5bd24139d9a1d618"
+    },
+    {
+      "from": "art/seq_v6/actor/attack3/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack3/f002.png",
+      "sha256": "705ec0b5ad42170f439b3a42571a1427bb0294a0a5f27bc3566f2bef74d451bf"
+    },
+    {
+      "from": "art/seq_v6/actor/attack3/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack3/f003.png",
+      "sha256": "96f76e1132ed4b2e9c32612eb18efe0b8730b8fefbab24b8022628e66f9038d5"
+    },
+    {
+      "from": "art/seq_v6/actor/attack3/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/attack3/f004.png",
+      "sha256": "3184b02d7246c589424ea618011c28d1d5ccb291e0108361acb8d696345de4fe"
+    },
+    {
+      "from": "art/seq_v6/actor/quick_draw/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/quick_draw/f000.png",
+      "sha256": "e86b18b8535f9709f079e462c70033d6e96a48389edf86ce3fc61df363118834"
+    },
+    {
+      "from": "art/seq_v6/actor/quick_draw/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/quick_draw/f001.png",
+      "sha256": "6ab07d5b2f4450f2ddc418a958efe31bf42dc574960d3542f2e663bf552448b8"
+    },
+    {
+      "from": "art/seq_v6/actor/quick_draw/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/quick_draw/f002.png",
+      "sha256": "3d18a4fbd32188b396b52c52f2b600129a6afdaae7ee28529d258951e7a9f1e9"
+    },
+    {
+      "from": "art/seq_v6/actor/quick_draw/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/quick_draw/f003.png",
+      "sha256": "49b779b50c57102ce6322b883848d43815a2fed66800cad1c15ac5cc786a9162"
+    },
+    {
+      "from": "art/seq_v6/actor/quick_draw/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/quick_draw/f004.png",
+      "sha256": "b52157f8f86450f50eb58c940029075ba4d6b7e1414845cf1d85be0716ab72bb"
+    },
+    {
+      "from": "art/seq_v6/actor/quick_draw/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/actor/quick_draw/f005.png",
+      "sha256": "687841b1c27732298a0c822998a77c930408cd45c770e70488dfede0aa3f9d98"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f000.png",
+      "sha256": "d48a7fe00b512c1fadc63576a5477e152119d32f1e908349a24eaf16ad6e6ec7"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f001.png",
+      "sha256": "f9246a9086286d83370412dd165dc442352e113fee6b957f90d694a1b5c03b7f"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f002.png",
+      "sha256": "ac219ec7eebb7f36877f4ed95eec54b2cf1902912487c4e41ba261e6428b380e"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f003.png",
+      "sha256": "513847c1dee227d6ef5352f595ef0599324122caf469feca99d5ab072dbd142b"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f004.png",
+      "sha256": "0926ee632383e5ece6fa5c4d524518982b09a35e24fb3c7d8510f19f3a87669a"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f005.png",
+      "sha256": "5c64db2f65b5ee9b566125cc91c6134cfd694d141ff829a3a82d645fa28a3d0d"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f006.png",
+      "sha256": "ed5cf47a4e0867d39736e1a5eaccd9a1191fb2b7b8cb9d4401823f59d269471d"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f007.png",
+      "sha256": "3e6c4f442a0ac69bdaa4fb03a461e41c2d51f869449c2738d2b76fa4b46bb412"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f008.png",
+      "sha256": "de26b7b9904d8b383059b562422ae89db28adc4f848a49f02d76d47708a14e49"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f009.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f009.png",
+      "sha256": "362c8b379df8192c043546db31f8d8761ba464605d66d9c4c4d3312d657015ff"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f010.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f010.png",
+      "sha256": "2a79aeebd6cf36bd1f535337bac6704e3b16c142ef8e04ade1d82e66fdbbe897"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f011.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f011.png",
+      "sha256": "1857e35a33a78f0162e7926f0604e0e048230120cff2b9048ece430d3150d743"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f012.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f012.png",
+      "sha256": "3efc78c684d86791035c29012849a6eb892dc4cb38e196530de3a8d5e5ea9e6f"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f013.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f013.png",
+      "sha256": "110a0ca28be97028624da6cd653fc7e349ba048628a3573c7aac45c5599b8678"
+    },
+    {
+      "from": "art/seq_v6/ground/light/f014.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/light/f014.png",
+      "sha256": "d82fe42c088eb6523002cfa1331dc5b14ded39c6fb9669bcabe46d143477cf8e"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f000.png",
+      "sha256": "90c038096216f400a9bb80bf0c78ad324185316d34460a4005eeda3fca5fc35c"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f001.png",
+      "sha256": "ef8440de42430cbe71eeaa6213413c11834622b84700518d0ceeceede68905ae"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f002.png",
+      "sha256": "1471ef61b0019b7399929f58a2493047cc97a116425457e27b93d35a394cb74f"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f003.png",
+      "sha256": "719f13f3c97fc7e8e38cfe29fa36545cc5cd9cbc3b74397dba0cec5b29706517"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f004.png",
+      "sha256": "22ae0498832b27bda8719b028fb7fd4abf77cfe8bde0edfb6aa47adb1a1264ea"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f005.png",
+      "sha256": "d7071d354766f1a2e796ea0ee2f4a0b9c86e49a54992583032f7e565fd1a0332"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f006.png",
+      "sha256": "270055b943f65d67da9067898851eb2b21fd6b0b0e3e7f064e80ffa02a144642"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f007.png",
+      "sha256": "8f5de0d1d22b5c121edb366275fdafbdd935ce6833cdf57559cdb96600df4996"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f008.png",
+      "sha256": "5c9783daff775a644cd03439a26fda22fedc25633179f996eaafa1a7c82fc60b"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f009.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f009.png",
+      "sha256": "9e25771a563d91d14527c4279cbdfb0e4957cb9247f1e0b77e26e462beac5708"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f010.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f010.png",
+      "sha256": "5bf7fbc1808fbe0dca8aee9f7f0844f5c2a84d160b6c788b43c4af89f0608959"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f011.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f011.png",
+      "sha256": "011b52168e8f7f2744550154380cd6be8d79edfaa1b72e75d7b09d7d0a76652e"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f012.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f012.png",
+      "sha256": "8ef250c53a2d2f72c697a246193ea8bbfda4e8555b78035fab8e6dff74ff98f1"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f013.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f013.png",
+      "sha256": "c8e7c4562442e8ecfe4e002786cdd49e655e4b84512e1ba2905e4eed07e6c1db"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f014.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f014.png",
+      "sha256": "d2bbda411396e8775cb8e87c4f81c56bb0fd3dc0cbb4c77bc4f4e2a79a9c192b"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f015.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f015.png",
+      "sha256": "376207e97a9109a7cbfcd12e7879f9cffb5cf8df9cb104bfd188e4ea8f271a51"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f016.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f016.png",
+      "sha256": "5722a5fa336dc88462687182e12b3107a7b513f8d5bcc4019ef9aaa6564903e1"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f017.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f017.png",
+      "sha256": "8d137422405d340c0079beb8dd1da9d3124a58ce4d5ed178734adff8cc7e530f"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f018.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f018.png",
+      "sha256": "1b33b720af91112be60cd57d49a518dd1fc0d77890696ba045db24564b23eae1"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f019.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f019.png",
+      "sha256": "caae33ffa6fc9fdd23755261b50027e5aaea061b96968a4578bcbc97473e9002"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f020.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f020.png",
+      "sha256": "7583e61f2ed74ca917732c5e869ccced2947fdcaca588b9bc342a66b07af5bae"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f021.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f021.png",
+      "sha256": "84a643f51bf8e43213836a92728f99ceaa4e45cc64e678e567161ec62289b2cd"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f022.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f022.png",
+      "sha256": "e35c2fd128d729365c9379c0686c49bedbd8966b6bb5fa1c0f5d0f1fb2b5463b"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f023.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f023.png",
+      "sha256": "1e9321f5df07b3fa67d890645ec41203b3495c259559f92f1c1e97d5901f8ee4"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f024.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f024.png",
+      "sha256": "7e3346825f90d0317ce88e7133e2bb4bd7f4057449274b5f6ca04a9ce35df20b"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f025.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f025.png",
+      "sha256": "03086b21596686319e751cd695f0333694950c21debf667713996c8d60b34688"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f026.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f026.png",
+      "sha256": "14ba527a6eb2a0f0a71427e183c4b6ca70dab1fc7be083671aa6de0390107f28"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f027.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f027.png",
+      "sha256": "dd3bcdf67be7b0da3a5fcdaf9a5af7a70b25e7930ef89689335cf2086519f962"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f028.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f028.png",
+      "sha256": "941244ad4eba7973ffd729c072028bdf5c22c39a4638b570ad8f72d9426c5ab9"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f029.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f029.png",
+      "sha256": "c3719f0eee0fecb570ca43e3b872c5778dcb53e674d4a648f2b5198fcaa1058a"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f030.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f030.png",
+      "sha256": "8d1a39d4da5f2b13414fda343f05dc4c69d1c521885f19878bee5bb2dff18b67"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f031.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f031.png",
+      "sha256": "5163131dd89363b6aba611a85e88414f4600011e8dd7f0cb993b995ff39a9a1c"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f032.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f032.png",
+      "sha256": "bdb3dcec5d9fdd8a06ce574fda915165cea0d698f6a71df1ae59452dcad1f18d"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f033.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f033.png",
+      "sha256": "8db76e2af90d25d1a2131635339693b75b82ff6a1de07b34dd9ad569e8331eac"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f034.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f034.png",
+      "sha256": "b255941866a4f6f6719408bfc7403216c100db6418c38eb0e518b89202995f0d"
+    },
+    {
+      "from": "art/seq_v6/ground/matter/f035.png",
+      "to": "art/animations/players/swordsman/v6/exports/ground/matter/f035.png",
+      "sha256": "e9ca77c018674fba196072437fba9b5c1e394b1dd82c1d559e733966eec30b71"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f000.png",
+      "sha256": "ce40de1a7bab042638b2064507fdfe146fb313ccb05f8e572574654cd6544b1e"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f001.png",
+      "sha256": "079bbaf011edd066b2b74df9559f96426af4f1488aa7d0aa26addc788fb420da"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f002.png",
+      "sha256": "440d658eaa007bab07eeafa1fb8014f49df4e26122e99da1c7c4d6cc23b4909f"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f003.png",
+      "sha256": "6e08347fdaac202b9498d351c347d72a5d2e681387acaa46788d459e7ed3b8e0"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f004.png",
+      "sha256": "180f98956de8aaf13d9520ee61f2689f45326e50d3c7974a0e68da5f403b487e"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f005.png",
+      "sha256": "afbe7c0af81a4344d4ef5290b4c6d719a6b0d1336792e8ad4f5a34ca2ced44f5"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f006.png",
+      "sha256": "e6df204f595a37b9ea5220c0ade8d86206c9c09da7060de357d8f0038d0487cd"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f007.png",
+      "sha256": "469d1e3567be90b2002c29e268ed00e2c24cea3686b1871347bfea7773009f03"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f008.png",
+      "sha256": "31295c478165e936bc3e5ece8a07a767557c086558c048fc71b9f8a3b18799bc"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f009.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f009.png",
+      "sha256": "19e83d2b7d7e592962d1ccbf634e288a43d917aba14092ab8fd2114746816635"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f010.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f010.png",
+      "sha256": "f79f3e94d292df0db9c4363bbc989cffaf0acae1c6d9321480f24f8a1c596765"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f011.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f011.png",
+      "sha256": "c1761c0c6c6d9496beafbc5613b498b27258bf6ebf8f98e6f858c986068347f9"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f012.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f012.png",
+      "sha256": "8eb4fe380d938bde452162fb441afd84778c7b275c280f58b4ad06b2265994aa"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f013.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f013.png",
+      "sha256": "9f446b95e58651a9810404e1737c5082ba955a2471c63f5af60782a4a325285a"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f014.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f014.png",
+      "sha256": "80f782cc436cea0751946d1703e7d5f365305dff743e165e1f15c35223f1bff4"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f015.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f015.png",
+      "sha256": "57a680f2c9f6dfaef4cc420b13cef5f47ac5b1bad21aecac4cf7d262dc3f196f"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f016.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f016.png",
+      "sha256": "9ed5ec2e883379a2736fe1659fc54e8fbe913cd4170762dc97a43dbb7eeb3ca5"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f017.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f017.png",
+      "sha256": "bdce24c1162a7775dc68ca22e031231f381187b296610ac57e07d75d60e9def3"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f018.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f018.png",
+      "sha256": "f5a1793f46289e9dcb3536f27b0a505e4e39190e15e6fad937103cbbd60f8ad9"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f019.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f019.png",
+      "sha256": "0abef9ca10d704e0e0500effb5d5484b6201840667aac784b8f122b2bbc71cf8"
+    },
+    {
+      "from": "art/seq_v6/hit_light/heavy/f020.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/heavy/f020.png",
+      "sha256": "f9878b0c741705ce055aaecfff99b67edea2d2da136c41bf25b0520e34c577a6"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f000.png",
+      "sha256": "dac9f20004a6e776e755750818c7c2846f6aee9ac018c19f3633b1b5b4c6000c"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f001.png",
+      "sha256": "f78056ba7e7e0ed904e7f94482113b1e85856c4057ab68586adc2d24fb631238"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f002.png",
+      "sha256": "449117bea6a898e1568e8c9e0b082404f7c08ae33d78ea43ba8919f83e64b03f"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f003.png",
+      "sha256": "c3f665b3c04d6cd2c53d18897acd8cbc54cae828c61f61caa99583f2b0f35224"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f004.png",
+      "sha256": "6bcce64dd0c5ad30822cd639af163975cde4f38f66674d7809673d749fe6c85a"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f005.png",
+      "sha256": "c6488d64864cde8b4159b3628345837779bfdac10fd65207cdd7a06ad02ee13e"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f006.png",
+      "sha256": "8495ccc8815dca250a61c4752885906e72b267001b450cad7b1fbb8055d23982"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f007.png",
+      "sha256": "d7c654b38db6fd69e7446dccdfe25d57b877de8976fa006d45818e3420b3db1d"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f008.png",
+      "sha256": "ab7c962cb6158f94645358079ffe2e4652503b2c415657b77e761179345f3ad3"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f009.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f009.png",
+      "sha256": "7427397a816258a841e4f6306e90232c9012fcbd8606cbc7115570edcbc2e756"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f010.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f010.png",
+      "sha256": "1341654712998f71065a77e6692b1f4cc3881d78fb5c29433ed031fc26a4c340"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f011.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f011.png",
+      "sha256": "0a61afbdb19860f2cb43cd0ac0b127b0412aa721b97014ef30f1882587a93c76"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f012.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f012.png",
+      "sha256": "d3fa4c6efd77f6895b68813fb854d6ea3209c78d33b061e4e8e8e955c3f9619f"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f013.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f013.png",
+      "sha256": "50d8a770d3e7f68b978dfb4fb4437c4d0a3ae683cfad2a62cffc37104ff62102"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f014.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f014.png",
+      "sha256": "ad9a0feac6ae8a7975bdebf9bc5edf30a48182405a9edade48fc2ea08ae3e612"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f015.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f015.png",
+      "sha256": "c2444f6a853f39e3724d702bc6c17d3c88ceebb77fbaaef38fc2fab698daba5c"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f016.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f016.png",
+      "sha256": "93c8668b7fe0b516e956907d3f990ac54a64b8a0adc4b4988b7a65458b212480"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f017.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f017.png",
+      "sha256": "d764ed686d3cc962672a4c77c8a99207edcbe211ec0d2d57ac3316949b86ffc7"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f018.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f018.png",
+      "sha256": "6286715b09a98017892eb82c721a323bf1a5f1cb232e435b34bb276af4578d92"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f019.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f019.png",
+      "sha256": "abe2b07d2f5aa87d5305d90153ac94c6c6ef4b9defe3ed19703788a8db339559"
+    },
+    {
+      "from": "art/seq_v6/hit_light/iai/f020.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/iai/f020.png",
+      "sha256": "f9878b0c741705ce055aaecfff99b67edea2d2da136c41bf25b0520e34c577a6"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f000.png",
+      "sha256": "9370aca5e35671be018c30065bfc4d1d61a64ad147f6e8810d09a1c88ecb80d7"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f001.png",
+      "sha256": "5083619e2713aa52559e934d5e438ad2a91b1125ad14c7c8184b00bed09cdb57"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f002.png",
+      "sha256": "9c252ad54f7dee5238485e3d3d394b52e11486e71e19cddae54ef0fc3dfdc334"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f003.png",
+      "sha256": "13da4dd32fa6acf1f6905e37bfe6a7f3c45b26507ef5f63ac5c03a58b1e83a06"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f004.png",
+      "sha256": "39de7914b0605ac9963943bed47a933061fe474f1250cb672a9400d4526b30d5"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f005.png",
+      "sha256": "9254b8de0e4c3249800529d07a6bf607862e4105cb7d8481058ebb63425e2b3d"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f006.png",
+      "sha256": "c3dd8646592b8fbb362f2cb49829e6767d87f1840472a13324370726162f9f06"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f007.png",
+      "sha256": "a77f41389b0f703249c8bcf66b9da6c6fe5f362a55181ab8ff4c2298cf5aff24"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f008.png",
+      "sha256": "07c556316557099ecc9d964013a1bafe0f33ac9604e9dc344bddb7a4824c4e62"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f009.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f009.png",
+      "sha256": "73237c5436c771f0e638329ca55198b8eca53b95e362fe24fcfb3935f2e5eee7"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f010.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f010.png",
+      "sha256": "677ca0c5946fb2132b91d529a0862414772bbb3000e3312febae9755e5924e23"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f011.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f011.png",
+      "sha256": "54d4b02272e36cc30b8c1f8abe37f5f70bbd4074530fbb371508ee186400209d"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f012.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f012.png",
+      "sha256": "94ce219d3d6622a724b4d77ad699861993443abdf99c403e538345b2b6b42796"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f013.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f013.png",
+      "sha256": "15958f12ada320d4462723a1463846f45814bc5e70f8fc39547c76dae34da3de"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f014.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f014.png",
+      "sha256": "297574f3ed4e068a886f5ae01e71a9e1c88dd475fdf36d7d0d81883ea99f2da2"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f015.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f015.png",
+      "sha256": "716c9fbaf80e224fe7e70f65356266d85b606d441c85e727be376fb347ec3ca2"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f016.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f016.png",
+      "sha256": "910db95659db099040a5fe8952b2b77a555d7f19caa6661af5272e8e87ef31eb"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f017.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f017.png",
+      "sha256": "994fa2332f726df074967f0145e373372c3f253e07ca189304c7ec10ab624cc6"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f018.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f018.png",
+      "sha256": "6286715b09a98017892eb82c721a323bf1a5f1cb232e435b34bb276af4578d92"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f019.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f019.png",
+      "sha256": "abe2b07d2f5aa87d5305d90153ac94c6c6ef4b9defe3ed19703788a8db339559"
+    },
+    {
+      "from": "art/seq_v6/hit_light/light/f020.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_light/light/f020.png",
+      "sha256": "f9878b0c741705ce055aaecfff99b67edea2d2da136c41bf25b0520e34c577a6"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f000.png",
+      "sha256": "82e94c5c9ef6e6bd9b795a86f9df0c119366266a1bda1cad7d6e2a786f96999f"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f001.png",
+      "sha256": "6a59d528dea7f0b77dfff932c7a4bfa8305d8b5c488d3a370e975ab1b2e4be18"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f002.png",
+      "sha256": "097be375a8d3246876757d8b74882d61df379db34c1f0a1d462cb50c258bc9ef"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f003.png",
+      "sha256": "dab9c066c16837aa9aee3bcb1bde8f85202ba8e1def21e5a8086305e028d9297"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f004.png",
+      "sha256": "27009dc42e0b1bb784a6018ae065bbc10d62e7105f9b5301e2d4f68f3b3aadf0"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f005.png",
+      "sha256": "a45c15fe4c0b8b314dfe755e3b1880d2860bdfb8038c1384e4153a9bbdd9c264"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f006.png",
+      "sha256": "c57a0693a21a5ce737aa331e35fa78dbfe34b45c8b995e633777ff5cdfe6accc"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f007.png",
+      "sha256": "5752290b68ea983dea2e565b9398c842f5a7ad59b6d8e2395e2e495fd7b6624f"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f008.png",
+      "sha256": "1aacd2797e97ed9eb5fac84e2b1e54cf95541a50acbf20b0e0244e279fa2fa07"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f009.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f009.png",
+      "sha256": "7a1e05f3eb082b712625dddb522b24ec9e8f828c28dc4771349f61dc70dec23f"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f010.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f010.png",
+      "sha256": "3eb13c1fb931e5a0292b9dc6f8d37362d4db8f5880c4b1eb1ea3b0ba93c670dc"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f011.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f011.png",
+      "sha256": "9a6c88e7111fac0c6d8ee444ac771dfe1f373589d7697d26a290a207af4e0013"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f012.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f012.png",
+      "sha256": "b350e2517b5955ee76db076432980f2322be413e1ebf2d63b81f3a91898f06ea"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f013.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f013.png",
+      "sha256": "d89721ce30ec5308a303482168a8f5770f6d5d29b3fbf81a0c5ca2a5cf176858"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f014.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f014.png",
+      "sha256": "48ce0d35f3129a831b5d9d442db94ea56ebebe8f609e57b0fc6284e877587a35"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f015.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f015.png",
+      "sha256": "e02c5c9e8671d505a03cad201e9d7d32da269052580a13a76220cd0e4a2298f1"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f016.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f016.png",
+      "sha256": "f272637b76c8ec2a6d5c23203fed98774c0173d74d0f822650a5a6768e8b4ec8"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f017.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f017.png",
+      "sha256": "54ef81afdb9cf24f723e57837940c5a2e0fe3a0c95acedd67f4369a56645c13b"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f018.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f018.png",
+      "sha256": "a79ba0755af418bbd2b261c4e161bd6274c02e5ae61493c44ae5c4da0f43c551"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f019.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f019.png",
+      "sha256": "84bc0fa82c4513e596d2562f6f3bb1a9dcbf18534bdad77f0a7cc9a39520775b"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f020.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f020.png",
+      "sha256": "b498adf9f27ec290b3015308b38e824d31976f10c1095a82f3b1b3538ccbbef7"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f021.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f021.png",
+      "sha256": "fc6ec46131992ab9626e6c83167c34d9c4bd06720813fc1b10e84b8ccd009da1"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f022.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f022.png",
+      "sha256": "a123787e7a65fd4ab73795400bc0ca76cd1d480f70017682baa2399ff9b8691c"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f023.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f023.png",
+      "sha256": "ff323659bc0ba74bd289428bd7f0860ded47785f789fcb125ccb68815d3a698f"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f024.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f024.png",
+      "sha256": "b8e3cfefcab5ee01241a5696810de5fee942f1cc40ca003202b0c3ce59e1f951"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f025.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f025.png",
+      "sha256": "b9f46b07d9cbbbeb3152189f68457fd4cd8f7e614c728b2c0c042f7aa64b404a"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f026.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f026.png",
+      "sha256": "d95957d92f3e47785185cad7b0a4b8a475c3c4f2e4eb2e29ef3dea7ad7cd1c01"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f027.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f027.png",
+      "sha256": "639ee7ecd041c87dba7b4f63bd1a6219288146d79a8c8477fc96cf2241073c2d"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f028.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f028.png",
+      "sha256": "49040d2787aab45fdf5aaffdbdfc5504eabe33a22c6019fab538726870f295be"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f029.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f029.png",
+      "sha256": "d7fd8ed060e4328f2c06c88d22ea9c446d34eff86d25f58b5982e5739e73b219"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f030.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f030.png",
+      "sha256": "f50f5aaddeb325c546ad84485b473a5fe26e0e9c6ef3ca9379d6645fdcd5b1f8"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/heavy/f031.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/heavy/f031.png",
+      "sha256": "90d2ad8c2b820fe7436855c71e42f8d4c71f2633ed8495500c012cd26a53a402"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f000.png",
+      "sha256": "82e94c5c9ef6e6bd9b795a86f9df0c119366266a1bda1cad7d6e2a786f96999f"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f001.png",
+      "sha256": "6a59d528dea7f0b77dfff932c7a4bfa8305d8b5c488d3a370e975ab1b2e4be18"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f002.png",
+      "sha256": "097be375a8d3246876757d8b74882d61df379db34c1f0a1d462cb50c258bc9ef"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f003.png",
+      "sha256": "dab9c066c16837aa9aee3bcb1bde8f85202ba8e1def21e5a8086305e028d9297"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f004.png",
+      "sha256": "27009dc42e0b1bb784a6018ae065bbc10d62e7105f9b5301e2d4f68f3b3aadf0"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f005.png",
+      "sha256": "a45c15fe4c0b8b314dfe755e3b1880d2860bdfb8038c1384e4153a9bbdd9c264"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f006.png",
+      "sha256": "c57a0693a21a5ce737aa331e35fa78dbfe34b45c8b995e633777ff5cdfe6accc"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f007.png",
+      "sha256": "5752290b68ea983dea2e565b9398c842f5a7ad59b6d8e2395e2e495fd7b6624f"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f008.png",
+      "sha256": "1aacd2797e97ed9eb5fac84e2b1e54cf95541a50acbf20b0e0244e279fa2fa07"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f009.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f009.png",
+      "sha256": "7a1e05f3eb082b712625dddb522b24ec9e8f828c28dc4771349f61dc70dec23f"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f010.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f010.png",
+      "sha256": "3eb13c1fb931e5a0292b9dc6f8d37362d4db8f5880c4b1eb1ea3b0ba93c670dc"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f011.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f011.png",
+      "sha256": "9a6c88e7111fac0c6d8ee444ac771dfe1f373589d7697d26a290a207af4e0013"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f012.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f012.png",
+      "sha256": "b350e2517b5955ee76db076432980f2322be413e1ebf2d63b81f3a91898f06ea"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f013.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f013.png",
+      "sha256": "d89721ce30ec5308a303482168a8f5770f6d5d29b3fbf81a0c5ca2a5cf176858"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f014.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f014.png",
+      "sha256": "48ce0d35f3129a831b5d9d442db94ea56ebebe8f609e57b0fc6284e877587a35"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f015.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f015.png",
+      "sha256": "e02c5c9e8671d505a03cad201e9d7d32da269052580a13a76220cd0e4a2298f1"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f016.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f016.png",
+      "sha256": "f272637b76c8ec2a6d5c23203fed98774c0173d74d0f822650a5a6768e8b4ec8"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f017.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f017.png",
+      "sha256": "54ef81afdb9cf24f723e57837940c5a2e0fe3a0c95acedd67f4369a56645c13b"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f018.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f018.png",
+      "sha256": "a79ba0755af418bbd2b261c4e161bd6274c02e5ae61493c44ae5c4da0f43c551"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f019.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f019.png",
+      "sha256": "84bc0fa82c4513e596d2562f6f3bb1a9dcbf18534bdad77f0a7cc9a39520775b"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f020.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f020.png",
+      "sha256": "b498adf9f27ec290b3015308b38e824d31976f10c1095a82f3b1b3538ccbbef7"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f021.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f021.png",
+      "sha256": "fc6ec46131992ab9626e6c83167c34d9c4bd06720813fc1b10e84b8ccd009da1"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f022.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f022.png",
+      "sha256": "a123787e7a65fd4ab73795400bc0ca76cd1d480f70017682baa2399ff9b8691c"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f023.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f023.png",
+      "sha256": "ff323659bc0ba74bd289428bd7f0860ded47785f789fcb125ccb68815d3a698f"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f024.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f024.png",
+      "sha256": "b8e3cfefcab5ee01241a5696810de5fee942f1cc40ca003202b0c3ce59e1f951"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f025.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f025.png",
+      "sha256": "b9f46b07d9cbbbeb3152189f68457fd4cd8f7e614c728b2c0c042f7aa64b404a"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f026.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f026.png",
+      "sha256": "d95957d92f3e47785185cad7b0a4b8a475c3c4f2e4eb2e29ef3dea7ad7cd1c01"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f027.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f027.png",
+      "sha256": "639ee7ecd041c87dba7b4f63bd1a6219288146d79a8c8477fc96cf2241073c2d"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f028.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f028.png",
+      "sha256": "49040d2787aab45fdf5aaffdbdfc5504eabe33a22c6019fab538726870f295be"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f029.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f029.png",
+      "sha256": "d7fd8ed060e4328f2c06c88d22ea9c446d34eff86d25f58b5982e5739e73b219"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f030.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f030.png",
+      "sha256": "f50f5aaddeb325c546ad84485b473a5fe26e0e9c6ef3ca9379d6645fdcd5b1f8"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/iai/f031.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/iai/f031.png",
+      "sha256": "90d2ad8c2b820fe7436855c71e42f8d4c71f2633ed8495500c012cd26a53a402"
+    },
+    {
+      "from": "art/seq_v6/hit_matter/light/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/hit_matter/light/f000.png",
+      "sha256": "f9878b0c741705ce055aaecfff99b67edea2d2da136c41bf25b0520e34c577a6"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f000.png",
+      "sha256": "e9de98fc3919e736ef75b9ba4f6984c092f58a69e40f008dfbaea66befa59828"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f001.png",
+      "sha256": "417d401de01d20c46ccc08805c4af8812755a080dc3667cc5439d2c039968957"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f002.png",
+      "sha256": "b401d8ae6ebaa2480c03507b39cba58bc802c2e5fe11b496e0db8debf73a148a"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f003.png",
+      "sha256": "b36b4058eb5a3d06e833d59429d030b0dc1ce27de0a8e1e51ea7b0be8a0b56a5"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f004.png",
+      "sha256": "2c986addf3eb45f70b70a4f0dc00b149ec97297177ee391c6fa6aa6c78366093"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f005.png",
+      "sha256": "48363996129d2a8d5ed172fd0ad26408815b474a6a0e8ba31d6c24addc1af887"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f006.png",
+      "sha256": "7097f29e9a55b428d025494e7462ab435aa0125d3a769ff16296731fe01024df"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f007.png",
+      "sha256": "3559cfc238f84112939f15f00a52320ab9aed573c6931f0eeae4d18b801cac4d"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f008.png",
+      "sha256": "f9f9de4512e996b0cb175da96d51a039c3f21ec3b6abe06515520e58aed72354"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f009.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f009.png",
+      "sha256": "5bfb82581f2c65fb75167cadb3583e389bfab955c061e89b852362da4e2cbb96"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f010.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f010.png",
+      "sha256": "3e50bcf9489fe0acffc8ec0009b12d5defebfe786eb299b2f611936f7ecf1ac6"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f011.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f011.png",
+      "sha256": "ace0f223c7e527d1d8208b8b17c705dbde91fc96b9fdd22f25608c4a17c344f6"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f012.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f012.png",
+      "sha256": "f0c812ff522bc37e56ca599339822a77c283855fc068b5a4720ffd990d9c4651"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f013.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f013.png",
+      "sha256": "0bfbd3032e4a168c92f3c2775b9aec6c891028c34f485d5a2a3d4c4e1cfdcdd4"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f014.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f014.png",
+      "sha256": "009a5abb81747ccac0f782b2b4315b752872f5f5d4f809d873c35db47529927f"
+    },
+    {
+      "from": "art/seq_v6/iai/flash/f015.png",
+      "to": "art/animations/players/swordsman/v6/exports/iai/flash/f015.png",
+      "sha256": "0107f0447a150e6b53f8a5f976b259d62d3c6dee18257fa851c94d68d865921b"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack1/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack1/f000.png",
+      "sha256": "d3e8f3b4b0e6ea49a19e2cac24aa1ce8a993ba5878ab7276a9f9b6f0571300dd"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack1/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack1/f001.png",
+      "sha256": "afa4e70d911c0e9d5a6bc18ec5bcfd55553194b2cd2c60be756af0aabe452938"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack1/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack1/f002.png",
+      "sha256": "280b3c56a0528538c475af014e891ffacdebbf180468668c0f25f902d2f3cbd2"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack1/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack1/f003.png",
+      "sha256": "52c03a0a4a0c14426367117b45c884b838cc7222a4013990306c08b3bab5220f"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack1/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack1/f004.png",
+      "sha256": "3c5da37f865ef0810c4d563bec2d5b5fef595405763a39f55efaf10026eb334a"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack1/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack1/f005.png",
+      "sha256": "63af2cb0795aa0d1afd62b8978adb7c6a4fb17ded554a66c827cd1bc7ad1081a"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack1/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack1/f006.png",
+      "sha256": "831afd256d8cfbd983ec51e39a7334439b9d647a2c041b898cf6fd6ac4edcb2f"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack1/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack1/f007.png",
+      "sha256": "fce65458699265d4173fd5696fe023347f3475f7b59b0e41bd5f28f870e9ab10"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack1/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack1/f008.png",
+      "sha256": "f0bce6290c868cf2587e59641d6b6a9c8070d8c34d6bcbb8c96a9d99e39d7d23"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack2/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack2/f000.png",
+      "sha256": "d3e8f3b4b0e6ea49a19e2cac24aa1ce8a993ba5878ab7276a9f9b6f0571300dd"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack3/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack3/f000.png",
+      "sha256": "d3e8f3b4b0e6ea49a19e2cac24aa1ce8a993ba5878ab7276a9f9b6f0571300dd"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack3/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack3/f001.png",
+      "sha256": "3631deacce304e2e8d6453a8b445f3d6a88f127880abaa48e4590a738d0178e9"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack3/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack3/f002.png",
+      "sha256": "de5a25398cac32694183e3758254d64ad63218bff8205cf237fab9df52523ce7"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack3/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack3/f003.png",
+      "sha256": "cd0f2a4051b15f7a67dce29b5f8212fbb9f4c7a7f6ccc66a1ebf6ce24a26023f"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack3/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack3/f004.png",
+      "sha256": "149ff6119c85b61789cc173252cb9851a75f0e44545943a4feccda7cf2ff9f2a"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack3/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack3/f005.png",
+      "sha256": "a3182040b8feda088cbdb208a2c1c97e19dc170a4bd613ef6c6b11c1c8864a60"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack3/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack3/f006.png",
+      "sha256": "4bb84f898da34f44a4a2aa141b47c98107131ade6f2302b86982e651639a3269"
+    },
+    {
+      "from": "art/seq_v6/slash_back/attack3/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/attack3/f007.png",
+      "sha256": "4a638afaba73dd136a49584a54015997aac66c623f0c44144e567dc9fd52010b"
+    },
+    {
+      "from": "art/seq_v6/slash_back/quick_draw/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/quick_draw/f000.png",
+      "sha256": "d3e8f3b4b0e6ea49a19e2cac24aa1ce8a993ba5878ab7276a9f9b6f0571300dd"
+    },
+    {
+      "from": "art/seq_v6/slash_back/quick_draw/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/quick_draw/f001.png",
+      "sha256": "3242500cb242484e884b9778fcc9d64f34dc0c54536c4462ac0cb3bc740a4d48"
+    },
+    {
+      "from": "art/seq_v6/slash_back/quick_draw/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/quick_draw/f002.png",
+      "sha256": "1129d79e1f0dbc7429c816f38e12b4b80e5dea5a9dce807a5e8713cc0c20de1b"
+    },
+    {
+      "from": "art/seq_v6/slash_back/quick_draw/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/quick_draw/f003.png",
+      "sha256": "feda0599f1b2b70f8383cf7fc320257a67d54630c578e31861bc2dddc8b811a2"
+    },
+    {
+      "from": "art/seq_v6/slash_back/quick_draw/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/quick_draw/f004.png",
+      "sha256": "e68ccb7299338a94c397367a0d90c9d5364519ea566a10c79ce407c4ec282553"
+    },
+    {
+      "from": "art/seq_v6/slash_back/quick_draw/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/quick_draw/f005.png",
+      "sha256": "308ac31570f663d29c7eeacb984f832308abadd77a799affa318b66f966ca4ef"
+    },
+    {
+      "from": "art/seq_v6/slash_back/quick_draw/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/quick_draw/f006.png",
+      "sha256": "80d6ea172fbcb955030e47b7193c11276e76dc4ad38bae6342c77c13d53f8ed6"
+    },
+    {
+      "from": "art/seq_v6/slash_back/quick_draw/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/quick_draw/f007.png",
+      "sha256": "3630ac304d06d546cfb0995c6f596f824304f8465304f83175d7982bd7bb52a9"
+    },
+    {
+      "from": "art/seq_v6/slash_back/quick_draw/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/quick_draw/f008.png",
+      "sha256": "d64e5e2d7aa3c817c5f97ec2c9e0752ca4a0d320c183cadc233551bd1888e594"
+    },
+    {
+      "from": "art/seq_v6/slash_back/quick_draw/f009.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_back/quick_draw/f009.png",
+      "sha256": "f1b646679c3edf5d4a67d081e7a3c4bf16221e8bbad1f595c89ef0daa701642e"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack1/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack1/f000.png",
+      "sha256": "d3e8f3b4b0e6ea49a19e2cac24aa1ce8a993ba5878ab7276a9f9b6f0571300dd"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack1/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack1/f001.png",
+      "sha256": "5c990587010a9b3e2350d40ad575b3d9554c7927a2ec5ebb85b90212cc1274a2"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack1/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack1/f002.png",
+      "sha256": "49991b4385f91a995e2b7bd39660c2d354e35849efc4b232cd456125dd27e416"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack1/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack1/f003.png",
+      "sha256": "190695b2d5f140a3900d7c66f7721ba99bf54092cc089621a73b3ee680279af1"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack1/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack1/f004.png",
+      "sha256": "c123d9fc3ebcb1c3eabbdbbd3407299d9518ecb1e6b14ec144bfec9097ef2924"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack1/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack1/f005.png",
+      "sha256": "d579c960bb5e5cb392703c31a8e711d4d9423df773e264993704fbf5a3eab387"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack1/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack1/f006.png",
+      "sha256": "79a07270daa02753a1e78a5c17f49e647b181f562bfdfc5b46a1cf74a8487b18"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack1/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack1/f007.png",
+      "sha256": "87bcbc50ec3b994ecbdf4183203c4b6310ff31a81da6ba6fc631b340787a5554"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack1/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack1/f008.png",
+      "sha256": "4d7ca396ecfbb3582eb5c67bd7521fee9517824f82dab0c420a1a541e34da06a"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack2/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack2/f000.png",
+      "sha256": "d3e8f3b4b0e6ea49a19e2cac24aa1ce8a993ba5878ab7276a9f9b6f0571300dd"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack2/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack2/f001.png",
+      "sha256": "ad79ed70268d10b0b484422173b363a30e9a594124b0144e01a4a901c74b0069"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack2/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack2/f002.png",
+      "sha256": "b5a2909f768e840ece10cc83dd3e5ccdd73545e0cd0e10063b56c612b4d6fd0b"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack2/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack2/f003.png",
+      "sha256": "32664ead1a0542ca9e183ead097007f378a91583594bc3b31d6390fb2cf680bf"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack2/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack2/f004.png",
+      "sha256": "a1f3cb45bbb14e8ad4a87333fe6c3eaa67f9e872f64a4f637b651ec21dcacd8a"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack2/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack2/f005.png",
+      "sha256": "68f7b064f36b8f1f75a75ceddd04ce0105dc055da3c672499a7ed55673d8aae5"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack2/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack2/f006.png",
+      "sha256": "49c1758c40d5ec42e225769fb56a0218031c0b28e6fb80bd3628aa631863619d"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack2/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack2/f007.png",
+      "sha256": "b8e90f7f554348eef326523cd2bb6422b5031b0bcfc6bd8218d7bc315c9110b7"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack2/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack2/f008.png",
+      "sha256": "f9cb9f0e54b93fcc594a86bb22227f6dd94bde101deb15bf118b5bb6f0796f62"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack3/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack3/f000.png",
+      "sha256": "d3e8f3b4b0e6ea49a19e2cac24aa1ce8a993ba5878ab7276a9f9b6f0571300dd"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack3/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack3/f001.png",
+      "sha256": "628233b34959f31d33ff4ea7ba648d455b98be7e788b0ccffe755d1c9378cb97"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack3/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack3/f002.png",
+      "sha256": "022732d26aa06cdee02228ee1a0fd3898183f3b8c37b55c920976754ada90419"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack3/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack3/f003.png",
+      "sha256": "40ddaac357b250aa54cb1c894c598e1eea492e3a68d3a5a6cc7e0f9d3fe654ff"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack3/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack3/f004.png",
+      "sha256": "c8ba9350d747f884d0d6af5183b3c17a1366faf9d3f69d3b13e336dd0a8faf98"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack3/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack3/f005.png",
+      "sha256": "cd26854bef4b692dc867ad8722870c57c8278a96d0cf60764d868e7edcf26402"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack3/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack3/f006.png",
+      "sha256": "8523cca97f7efa6e5c5c76a5341507a251ca3895ec81dc7aad0067d13e5be509"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack3/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack3/f007.png",
+      "sha256": "6e5a42dcdb8f33f65dc436ed24e470533a7124da6f8ce874ed291c00c6f2eac1"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack3/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack3/f008.png",
+      "sha256": "7e5689e37b5b82be93fb578284a2651fc0a719807424bec6346a1f89e91a04fe"
+    },
+    {
+      "from": "art/seq_v6/slash_front/attack3/f009.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/attack3/f009.png",
+      "sha256": "9b186e6eb67700526e6877f23446d81a7a9d6fa584bd7022fb73b0fe03fc4022"
+    },
+    {
+      "from": "art/seq_v6/slash_front/quick_draw/f000.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/quick_draw/f000.png",
+      "sha256": "d3e8f3b4b0e6ea49a19e2cac24aa1ce8a993ba5878ab7276a9f9b6f0571300dd"
+    },
+    {
+      "from": "art/seq_v6/slash_front/quick_draw/f001.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/quick_draw/f001.png",
+      "sha256": "c77ef7d31ca5f324384f4907f2aa11c72ba12c9760191d5ecb7e2a060e5e30ae"
+    },
+    {
+      "from": "art/seq_v6/slash_front/quick_draw/f002.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/quick_draw/f002.png",
+      "sha256": "db4f9ba84a51faf45bc601af29ba02b3088c93e305d0fb5b29a967097de74bc4"
+    },
+    {
+      "from": "art/seq_v6/slash_front/quick_draw/f003.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/quick_draw/f003.png",
+      "sha256": "4d231b0e25869291a0dddd09ea4051aff63c87ab85f4041831b82bbd71ce5660"
+    },
+    {
+      "from": "art/seq_v6/slash_front/quick_draw/f004.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/quick_draw/f004.png",
+      "sha256": "780aebf781861150afaf11833fd38b6307fe650793b4090704804b71b6ae5b9b"
+    },
+    {
+      "from": "art/seq_v6/slash_front/quick_draw/f005.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/quick_draw/f005.png",
+      "sha256": "24ee6d9401a1aa22a52971ce85288208e2ad352a7b15bb639496759146e960b0"
+    },
+    {
+      "from": "art/seq_v6/slash_front/quick_draw/f006.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/quick_draw/f006.png",
+      "sha256": "a38b84d9582f879e3882927d7a23ecf3fe952ca0a000e5902308fcdcd7ed9a4e"
+    },
+    {
+      "from": "art/seq_v6/slash_front/quick_draw/f007.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/quick_draw/f007.png",
+      "sha256": "121c4add7023747f45d96ddeecd2a582bd5c274766dbc1013c2b1c3975a0121d"
+    },
+    {
+      "from": "art/seq_v6/slash_front/quick_draw/f008.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/quick_draw/f008.png",
+      "sha256": "1e8e405f72a845471b13c46dd2bec5499ce9b93da360e1dc2c586d92da903de6"
+    },
+    {
+      "from": "art/seq_v6/slash_front/quick_draw/f009.png",
+      "to": "art/animations/players/swordsman/v6/exports/slash_front/quick_draw/f009.png",
+      "sha256": "6a20c4789dadd30e680027cbf7ccd37a771ca88846ec6abd78eef3d63dfec086"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/attack1_01_10ac66f3a0fa1365.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/attack1_01_10ac66f3a0fa1365.png",
+      "sha256": "e11d87b517e23b21187837850cfc88ca837f85f424ac18ede36802386ab68b94"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/attack1_02_fb32759da7855ef2.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/attack1_02_fb32759da7855ef2.png",
+      "sha256": "3dd05bcce60dcc603d919ac7c4d7fb9502c332a0dc54b5f30ed58153b4aa4fc8"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/attack1_03_769cd8af392db390.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/attack1_03_769cd8af392db390.png",
+      "sha256": "efca386e802f66095cda73d0c92cb16f521a86862154f7aa5993de1c642905dd"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/attack1_04_64e91c8df21416a6.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/attack1_04_64e91c8df21416a6.png",
+      "sha256": "36f843483a5384dbc2de7eb183f5f52aa40da305d957b5d8859167d5206db654"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/attack1_05_2c1183147d8bdb2c.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/attack1_05_2c1183147d8bdb2c.png",
+      "sha256": "cf8f8fcf2bf6ec25e50bc0ced741df567901a8af41decfeaad2a86a206329e84"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/attack1_06_bc566ea4f1f736fe.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/attack1_06_bc566ea4f1f736fe.png",
+      "sha256": "d1a8c9888e8bb942156cdbea1fcc54e2b7a333e3f946bcd8c7eb0e8eb9c1de15"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/attack1_07_942bb86a68bef28e.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/attack1_07_942bb86a68bef28e.png",
+      "sha256": "e9ca065e1042f074ab882222f6a74260aaa995c166abfbfe77e6a123be8c974d"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/attack1_08_66cdfa6db3e5b344.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/attack1_08_66cdfa6db3e5b344.png",
+      "sha256": "51c2a78ad8cde8838e2bcf9b98474352df1846bc88b45297d60b09be56dde05b"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/run_01_276390403e2a1b4f.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/run_01_276390403e2a1b4f.png",
+      "sha256": "b3055ed271efc22cfcfe9235f3bd5c897939a31355392042f81262a6bc15fc6d"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/run_02_2d4aaa0565669c69.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/run_02_2d4aaa0565669c69.png",
+      "sha256": "1611af6390bae1fb4cb54f2627a0ab935890c8a11d141791f25de12f5f992761"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/run_03_e9994ea0187fb0b4.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/run_03_e9994ea0187fb0b4.png",
+      "sha256": "c8f0bf39b0d042cf302b77f3037b8040b4bbc48f031c2302e575f6a567175657"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/run_04_9e42609b81c0d1f4.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/run_04_9e42609b81c0d1f4.png",
+      "sha256": "64d712a5f68f0112d9c81959ea28349a74306f0029894ca8692e67e022599a31"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/run_05_6bda5da6ca42df46.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/run_05_6bda5da6ca42df46.png",
+      "sha256": "38bcda4c675894a9183285b23ce88a95cc3610155f84e44b1c57ec83e94875de"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/run_06_e00d6c2af9c5d121.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/run_06_e00d6c2af9c5d121.png",
+      "sha256": "ecec86c1c7bab6d725ece01e0fe6f2e5c1f8c178e999636e8e710213537f7e81"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/run_07_b17a957b5e3edf93.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/run_07_b17a957b5e3edf93.png",
+      "sha256": "e7b9ae23155a6c3ce78f1c01e2282d53eb611da15279d64ea0e82fe9655b62cf"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/masks/run_08_ff07df24d5dd6982.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/masks/run_08_ff07df24d5dd6982.png",
+      "sha256": "b72d1c7ac7a3f7193ce423d95b425edee7b4f9da5f5ff445d1e5a1db3711226d"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/actions_naked.gif",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/actions_naked.gif",
+      "sha256": "1b155f6b94f6f9756124bccffc228577cf9ff539754914758cfecb0e7db4a634"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/actions_naked.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/actions_naked.png",
+      "sha256": "1a736d7e0c8a4320bcb354ad481967b2f7712bf96120d094bd2bc59e23164bdc"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/attack1_compare.gif",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/attack1_compare.gif",
+      "sha256": "24095a3bf1d7263139dd0de3fc9aa6395b2cf9ab8eb47ad8cfd934eec010bdaf"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/attack1_compare.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/attack1_compare.png",
+      "sha256": "854db104e1b37fdabf230b0000539ca212b7b010091a6571ea2910ea4dfc1f81"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/attack1_contact.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/attack1_contact.png",
+      "sha256": "e010b02d477f2eb4a2f796af4a792db68e2e1cdbbda4adf2b54350e6ed9d4824"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/attack1_naked.gif",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/attack1_naked.gif",
+      "sha256": "9c536584888122f7aa7bfd9f90c19a41df3e5c300caed046d8311a5f5bd6b3f2"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/attack1_naked.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/attack1_naked.png",
+      "sha256": "4d9b6b80c9874a9a57f66c1b6ffdc60090db91ee1284ee08620960223f3ab54c"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_apex_contact.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_apex_contact.png",
+      "sha256": "461857dbb6daed3bce0331b09e4245739ddf45d1fd5f07959f998dc09b0d766a"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_apex_naked.gif",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_apex_naked.gif",
+      "sha256": "80166d8fd33f094e892ab07193a19735edb77571fb3e0ade4a5272a90cd9b830"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_apex_naked.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_apex_naked.png",
+      "sha256": "0461e42a44ca97e5ac9b2e5455985d27a4d2d97a2ce195089ac2975c0ad2195e"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_demo_contact.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_demo_contact.png",
+      "sha256": "e600383adbbb37f567fd527eb7a72259bb73b05c95b89b8de0832b0807bbc461"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_demo_naked.gif",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_demo_naked.gif",
+      "sha256": "0b0479fb039375932f0ed95a7426768560a66939d7422a5fb6d48cc651c8982d"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_demo_naked.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_demo_naked.png",
+      "sha256": "69fcba33a32ac119a63e6676c7f4395a7605d099eb86d7fa0f760a79e446f109"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_fall_contact.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_fall_contact.png",
+      "sha256": "0a8c64b8e57860ebe8c4cebcb80054f2d69fe70f66fb7207784274ac05ec1a84"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_fall_naked.gif",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_fall_naked.gif",
+      "sha256": "6c3dd223e6021168740b1bd3ae7aed678583d25507fdb53c942c07675b2fa2a2"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_fall_naked.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_fall_naked.png",
+      "sha256": "29e9a7e6cbafd47a7dd4af65a53bb8cac1eb48d57649a8e9c1baadafee2054f1"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_land_contact.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_land_contact.png",
+      "sha256": "621ce3caf5d31f2cd74c4bd270a7092df24a26dd71d99dd387cb681ce25cdf47"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_land_naked.gif",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_land_naked.gif",
+      "sha256": "1cff1ae0882e2dd473cd78f781bc91d60f99152b0812807c63357ace91cc83d7"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_land_naked.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_land_naked.png",
+      "sha256": "43cf732e2a66cc990ca4fbc332cbae14a118e328cd4a44b133762576bd4b7b5b"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_prepare_contact.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_prepare_contact.png",
+      "sha256": "d4512af0c3c2c2682b07f17d1eba5b2848d8762fb4d8cfa11094246f49b9650b"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_prepare_naked.gif",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_prepare_naked.gif",
+      "sha256": "96f040e76791464c37620a1c93facba5cf6f8dac439c0238b3a152948950164b"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_prepare_naked.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_prepare_naked.png",
+      "sha256": "a75121c3a3e487a3a0d12c19d68c16ab9a334ea2fcc4070a49237e8d6aeacca5"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_rise_contact.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_rise_contact.png",
+      "sha256": "6742b5fc8b88e9a055a92820c05cac682377febc5a91f921039e3887b20442a7"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_rise_naked.gif",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_rise_naked.gif",
+      "sha256": "4d45dffddf6ff068566fb2612aca9ca6f47e40b1f76e6b0f13aac3b7449da116"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/jump_rise_naked.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/jump_rise_naked.png",
+      "sha256": "c5a64e46c322ce24610c3c4bbb4bd32a3c5e69897447ef4f6ce290202fcd1053"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/run_contact.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/run_contact.png",
+      "sha256": "c8e8ff368759f80fe3a9a06bdde0b58cb26c6ab6c4b1c43342b7c287da4c38db"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/run_naked.gif",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/run_naked.gif",
+      "sha256": "2943da1ef246f627d2f1c63b3e07c581249ad89ed703a0a4b93bcb2b3a957ac7"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/previews/run_naked.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/previews/run_naked.png",
+      "sha256": "be26da76fa6adc8f16e5766c225cb9ebd04f890389a15a5f3a874103bc98dd6a"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/attack1/f000.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/attack1/f000.png",
+      "sha256": "038256b2ac990b0cafce1ee5ecb1387017aeeddf09f90dd74a704dcc3829b846"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/attack1/f001.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/attack1/f001.png",
+      "sha256": "8e6dfc3ef85f72f718ec9afd05da1de3c0fa79f0df3edd701fb638778e692104"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/attack1/f002.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/attack1/f002.png",
+      "sha256": "1ecb2a01350b6347f9f0030f04599977e5eebaa38a1b9e6c30fa4cdfc2111b5b"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/attack1/f003.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/attack1/f003.png",
+      "sha256": "f634dad48b5a92d5d2a4edf10263c43868a5f730348a7b32139bf0d35e676f73"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/attack1/f004.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/attack1/f004.png",
+      "sha256": "23add770e989b8b92ecd03f3c12c44eaa6b5a45dc6631638f382593a1c32c8e6"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/attack1/f005.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/attack1/f005.png",
+      "sha256": "d43283e4514149277a522ba3a5496e20484d46355332de4d39bf7939e5356982"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/attack1/f006.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/attack1/f006.png",
+      "sha256": "297ff2f5838fad975577c3b040f613a350a5b5cfe528f5f2927a0e99eb6a5f53"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/attack1/f007.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/attack1/f007.png",
+      "sha256": "58f63ac975cbaf40294dce001aa9a51f7fc0c08718c837ba529a7f409002d723"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_apex/f000.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_apex/f000.png",
+      "sha256": "5ebb97edfd1a8f4ef4df9dc61a08ee22b42c5cb397d0b6c1db38d7118e8f64ef"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_demo/f000.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_demo/f000.png",
+      "sha256": "1ac4293508077a7b5e9bfbd4d62a3235c0a279971dcd733013d20e5900672e4d"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_demo/f001.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_demo/f001.png",
+      "sha256": "42232c03cd79f994fcd85b6fa0e1208d243d5ae3703933c89d29259e5af60be5"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_demo/f002.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_demo/f002.png",
+      "sha256": "5ebb97edfd1a8f4ef4df9dc61a08ee22b42c5cb397d0b6c1db38d7118e8f64ef"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_demo/f003.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_demo/f003.png",
+      "sha256": "368a415e305b314b4d195d5c58f2f6ee14db025505bceda2dac04e47ca3c6fb7"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_demo/f004.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_demo/f004.png",
+      "sha256": "34aa6cd8efcef167d749862b5213208106364efe5ef3cb8314260e4029763643"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_demo/f005.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_demo/f005.png",
+      "sha256": "7ad92f9890118cacba7b1196a621ac711d04d9a3e713844a6b0bbb656f464429"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_demo/f006.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_demo/f006.png",
+      "sha256": "70b1620d267f4e78988cb6263247f5d7734876dff56b14d8ab3f0a10692b1f2b"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_fall/f000.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_fall/f000.png",
+      "sha256": "368a415e305b314b4d195d5c58f2f6ee14db025505bceda2dac04e47ca3c6fb7"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_land/f000.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_land/f000.png",
+      "sha256": "34aa6cd8efcef167d749862b5213208106364efe5ef3cb8314260e4029763643"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_land/f001.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_land/f001.png",
+      "sha256": "7ad92f9890118cacba7b1196a621ac711d04d9a3e713844a6b0bbb656f464429"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_land/f002.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_land/f002.png",
+      "sha256": "70b1620d267f4e78988cb6263247f5d7734876dff56b14d8ab3f0a10692b1f2b"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_prepare/f000.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_prepare/f000.png",
+      "sha256": "b7436746acc0ab09a31195ce0fa96f98f610f302973a7735885abca6e6b802d5"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_rise/f000.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_rise/f000.png",
+      "sha256": "1ac4293508077a7b5e9bfbd4d62a3235c0a279971dcd733013d20e5900672e4d"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/jump_rise/f001.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/jump_rise/f001.png",
+      "sha256": "42232c03cd79f994fcd85b6fa0e1208d243d5ae3703933c89d29259e5af60be5"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/run/f000.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/run/f000.png",
+      "sha256": "aa6a7989930bdcdb5823318c04ab0da63d8e92c18d1451f1e62977b09e3629e0"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/run/f001.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/run/f001.png",
+      "sha256": "ae08f62d8f288d5ebd5f867597394d99ca5847c430f5c6092ebddd07d797f7bc"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/run/f002.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/run/f002.png",
+      "sha256": "b7c22ed7bc180df909b09ed137ec11a7fe798c2cedeb84b76d5cb3023a09677f"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/run/f003.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/run/f003.png",
+      "sha256": "39e775fefcb8d59a81cb6e13aac191ba5d1949afd6009a0c731ea440bba1559e"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/run/f004.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/run/f004.png",
+      "sha256": "13b591859c8b93e4ba212852f0640ef537e4637a206441da0148a092f8f87a95"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/run/f005.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/run/f005.png",
+      "sha256": "30cd1df85e36696c84594fff2e3fdabf135a377cf57f195e8a50c10bca45b058"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/run/f006.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/run/f006.png",
+      "sha256": "2b5f9da4f24e77dfb70503950d5eecb4bb9864f55c04e8a4eb4376ab3700a971"
+    },
+    {
+      "from": "art/seq_v7/pilot_c2/actor/run/f007.png",
+      "to": "art/animations/players/swordsman/v7/exports/pilot_c2/actor/run/f007.png",
+      "sha256": "09d46c9daff22fe9615ac7b1c39b3fa54eb5180aba65e2e6f0f81ea14121a9c9"
+    },
+    {
+      "from": "art/sheets/v3/air_attack.gif",
+      "to": "art/animations/players/swordsman/v3/sources/air_attack.gif",
+      "sha256": "c7ced30b221b453299e34fde378149a0dab6e4e7219bfc56ccf4ed7d702f1efb"
+    },
+    {
+      "from": "art/sheets/v3/attack1.gif",
+      "to": "art/animations/players/swordsman/v3/sources/attack1.gif",
+      "sha256": "0f7d25aa689c511efdb8d1db0bbff80a41fb72df91432e2a2258f79af40a06a2"
+    },
+    {
+      "from": "art/sheets/v3/attack2.gif",
+      "to": "art/animations/players/swordsman/v3/sources/attack2.gif",
+      "sha256": "197870b1c763a7041442b819370b690ae66323239076f1e0e507c00ec088338b"
+    },
+    {
+      "from": "art/sheets/v3/attack3.gif",
+      "to": "art/animations/players/swordsman/v3/sources/attack3.gif",
+      "sha256": "ee69179cd52dc2b1550fdba417d4dfc45b6c73236652837982d9a066660883b3"
+    },
+    {
+      "from": "art/sheets/v3/body_airdash.png",
+      "to": "art/animations/players/swordsman/v3/sources/body_airdash.png",
+      "sha256": "c3ba08f051dcc63a29e6179dfdc4a5d69418f36c76a12c370e638c8556239256"
+    },
+    {
+      "from": "art/sheets/v3/body_base.png",
+      "to": "art/animations/players/swordsman/v3/sources/body_base.png",
+      "sha256": "c30e0c2a4fe4b0dbf43087c6432af5829d76156b4a0cedbb65c40a9d54e0e286"
+    },
+    {
+      "from": "art/sheets/v3/body_combo12.png",
+      "to": "art/animations/players/swordsman/v3/sources/body_combo12.png",
+      "sha256": "7ba74de3b9fb0021231ff200716ee659e1b7d51aad437beec4ab58ba050069e9"
+    },
+    {
+      "from": "art/sheets/v3/body_combo3upper.png",
+      "to": "art/animations/players/swordsman/v3/sources/body_combo3upper.png",
+      "sha256": "fcf6bc66cbda1be706df75d12c04e7aabc03da1d53d12127ca4b94106a427d03"
+    },
+    {
+      "from": "art/sheets/v3/body_locomotion.png",
+      "to": "art/animations/players/swordsman/v3/sources/body_locomotion.png",
+      "sha256": "a8e6bb469494fa671e0a5d835e927109f0bb952f3601c4e901de08fb3ed44578"
+    },
+    {
+      "from": "art/sheets/v3/body_walk.png",
+      "to": "art/animations/players/swordsman/v3/sources/body_walk.png",
+      "sha256": "e7fb1a4ec163415e5842055c41cba5cd07800a14036a608a3c83a9ca994db2e6"
+    },
+    {
+      "from": "art/sheets/v3/calibration_airdash.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/calibration_airdash.jpg",
+      "sha256": "caea6fa6904723959e307eb9fa3e8241dfcde0f6d5fd94f99fdf577378ad11be"
+    },
+    {
+      "from": "art/sheets/v3/calibration_base.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/calibration_base.jpg",
+      "sha256": "0993625a372b4b66a388ec1460d7a64804ea1cb601eebf5d866a595899fcc3d0"
+    },
+    {
+      "from": "art/sheets/v3/calibration_combo12.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/calibration_combo12.jpg",
+      "sha256": "1b0b0242aff409b0f0e79da3c479de39235fd5c08efcbf50ce736f52e3646b40"
+    },
+    {
+      "from": "art/sheets/v3/calibration_combo3upper.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/calibration_combo3upper.jpg",
+      "sha256": "a4c2df8dcf503440d8981cfaa2030008404027b9a064b3392ce0cdf75cc26d1e"
+    },
+    {
+      "from": "art/sheets/v3/calibration_locomotion.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/calibration_locomotion.jpg",
+      "sha256": "f8414be79b936276dc7bd066d0e4cf8776a33dfd69626583776cddaa4c4283e1"
+    },
+    {
+      "from": "art/sheets/v3/calibration_walk.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/calibration_walk.jpg",
+      "sha256": "045bd542b091e6ba73891485560360eea9fb489be565a1069d0be554fd307bda"
+    },
+    {
+      "from": "art/sheets/v3/dash_attack.gif",
+      "to": "art/animations/players/swordsman/v3/sources/dash_attack.gif",
+      "sha256": "9663092e8dcc8bfa398c38b12c89f1a75c66e7c1c1959d2f2100f7f904aa226a"
+    },
+    {
+      "from": "art/sheets/v3/review_air.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_air.jpg",
+      "sha256": "6e32647b6371b39cb4bf890849237b74e367fd6e523ba8ac954bfd4ddd89d3d7"
+    },
+    {
+      "from": "art/sheets/v3/review_air_attack.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_air_attack.jpg",
+      "sha256": "a994b4d3d1a9effd9380e89952245577c00a90e48da7349a7dae392c310bc793"
+    },
+    {
+      "from": "art/sheets/v3/review_attack1.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_attack1.jpg",
+      "sha256": "2271c423816663042357e6e3677ff54e7e289df9ca84376a3c6dfe2428950627"
+    },
+    {
+      "from": "art/sheets/v3/review_attack2.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_attack2.jpg",
+      "sha256": "6bcd157d51868ac2aadfddb6d9f0e284eaf6218bac1d8c69b37a4db3fc7628cf"
+    },
+    {
+      "from": "art/sheets/v3/review_attack3.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_attack3.jpg",
+      "sha256": "2051dd7cb1f2e848d41eb6d47e58ed23d35b3f1c537fdb8dc1e500c9aa063fdd"
+    },
+    {
+      "from": "art/sheets/v3/review_back_dash.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_back_dash.jpg",
+      "sha256": "fa9728ad10a493d910ff1a3b2e05ee83af329d524068722fde56903363695014"
+    },
+    {
+      "from": "art/sheets/v3/review_blood_rage.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_blood_rage.jpg",
+      "sha256": "43c1627a9b32c8492a4200b53822c850215e9494f0c2637e75ee4a0b2db58459"
+    },
+    {
+      "from": "art/sheets/v3/review_dash_attack.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_dash_attack.jpg",
+      "sha256": "0c9bf258eb3e0e457e43715f9b7eaf3bd2980e20126287e9311c239a46e58210"
+    },
+    {
+      "from": "art/sheets/v3/review_down.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_down.jpg",
+      "sha256": "3b28e867f638ce7cd7ca20ce8c55b10bb71cde91de53afb2bf0e73be5e5828b4"
+    },
+    {
+      "from": "art/sheets/v3/review_getup.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_getup.jpg",
+      "sha256": "80453709abd4b8e66829076bc28cd18d4b5e0ded42a4fa97144447c7672857cc"
+    },
+    {
+      "from": "art/sheets/v3/review_guard.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_guard.jpg",
+      "sha256": "6c2e296b2df5833f483ef8fb3c76d3b6454bd0fb21473dbfdb4fd5ecd9b22541"
+    },
+    {
+      "from": "art/sheets/v3/review_hit.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_hit.jpg",
+      "sha256": "74472be519e94accaf9aaeb1b080b2db92d6d8b985a42fa8ba83e54707a03570"
+    },
+    {
+      "from": "art/sheets/v3/review_idle.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_idle.jpg",
+      "sha256": "5400f8f4a72c3525cd3b941c3798ef721eeb2f92c3df3420954f8141dac3fdd4"
+    },
+    {
+      "from": "art/sheets/v3/review_jump.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_jump.jpg",
+      "sha256": "e84c3c35a67f7f361330115bda21385a83d63476234b9540aad1fbcfe2b4972e"
+    },
+    {
+      "from": "art/sheets/v3/review_quick_draw.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_quick_draw.jpg",
+      "sha256": "fe7e64130a1da3726528982363ba521064b98ac991d8bc1ea5eeff1a1519c3f9"
+    },
+    {
+      "from": "art/sheets/v3/review_rage_slash.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_rage_slash.jpg",
+      "sha256": "0bd6f111b852b725ed909be5e85e773cb4e718a6e960b9ae78603b3bd57f3842"
+    },
+    {
+      "from": "art/sheets/v3/review_run.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_run.jpg",
+      "sha256": "13d7f2353cfd2f8e3add4edaddb80fcd7c1a00eed8c31ed716f938692984b514"
+    },
+    {
+      "from": "art/sheets/v3/review_thrust.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_thrust.jpg",
+      "sha256": "6150dd14ce8c071ce249d93eed5cafe2d8dd9125f0b5ce933696e176893a2659"
+    },
+    {
+      "from": "art/sheets/v3/review_upper.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_upper.jpg",
+      "sha256": "e20dc75afb5f8d9284d3c84653eb9a18d3b96117d93e0bab28599e365b11b5ff"
+    },
+    {
+      "from": "art/sheets/v3/review_walk.jpg",
+      "to": "art/animations/players/swordsman/v3/sources/review_walk.jpg",
+      "sha256": "e685730b258f2669e4821b53ccf1168e1c6c50f285a9298019dbe6f7332bfe16"
+    },
+    {
+      "from": "art/sheets/v3/run.gif",
+      "to": "art/animations/players/swordsman/v3/sources/run.gif",
+      "sha256": "5d6f0aa06454861a652046f6c927498a02ba75d59093f5d3d728e2433a55aa2b"
+    },
+    {
+      "from": "art/sheets/v3/upper.gif",
+      "to": "art/animations/players/swordsman/v3/sources/upper.gif",
+      "sha256": "34e118a3ac4ae54cbe75ac5b74f78809c08be58362d4bff9607408d84ab04bca"
+    },
+    {
+      "from": "art/sheets/v3/walk.gif",
+      "to": "art/animations/players/swordsman/v3/sources/walk.gif",
+      "sha256": "7e118ed1f81d6502efa76dab938f6d96ada966815c648027c2d1dcef768b43ba"
+    },
+    {
+      "from": "art/sheets/v4/back_dash.gif",
+      "to": "art/animations/players/swordsman/v4/sources/back_dash.gif",
+      "sha256": "23c78ea8640c36de5f393188e92bfe7a05d4688ad1a00824a6656fc018161868"
+    },
+    {
+      "from": "art/sheets/v4/body_back.png",
+      "to": "art/animations/players/swordsman/v4/sources/body_back.png",
+      "sha256": "5e3db83b47d905de67d1aa34dc0d54250f86e02f73d832cd1df41785a010bda0"
+    },
+    {
+      "from": "art/sheets/v4/body_idleback.png",
+      "to": "art/animations/players/swordsman/v4/sources/body_idleback.png",
+      "sha256": "9b9de8a8e705447315e38d6c44d9cec88ab8f22b743c1b96200bcc79593ddd3b"
+    },
+    {
+      "from": "art/sheets/v4/body_jump.png",
+      "to": "art/animations/players/swordsman/v4/sources/body_jump.png",
+      "sha256": "cf926a6f575c77bb846fc30ab74facaa50b138e0fd76b6f1b713dfac8ec09ce9"
+    },
+    {
+      "from": "art/sheets/v4/calibration_back.jpg",
+      "to": "art/animations/players/swordsman/v4/sources/calibration_back.jpg",
+      "sha256": "58654b211a34cd8d317f93f827542de7d3fa7dfe41a2ace659f4761c23756f22"
+    },
+    {
+      "from": "art/sheets/v4/calibration_idleback.jpg",
+      "to": "art/animations/players/swordsman/v4/sources/calibration_idleback.jpg",
+      "sha256": "63dd1bd748891fe9202ce1b2c8e15efc5761b2ad2f07fccc6d778a39c499386f"
+    },
+    {
+      "from": "art/sheets/v4/calibration_jump.jpg",
+      "to": "art/animations/players/swordsman/v4/sources/calibration_jump.jpg",
+      "sha256": "31341cda0138e347f129c9b252d49513c7ef260aea6ef6acb54f5aba67ecd500"
+    },
+    {
+      "from": "art/sheets/v4/idle.gif",
+      "to": "art/animations/players/swordsman/v4/sources/idle.gif",
+      "sha256": "5b8f392b887f332c9085d601d51c76295d19e310a3f9d9ee85c97ae64a4019ec"
+    },
+    {
+      "from": "art/sheets/v4/jump.gif",
+      "to": "art/animations/players/swordsman/v4/sources/jump.gif",
+      "sha256": "17aed57c44bfa4d9bea5d18fcd139333d1213491653b655f5195421128d3edce"
+    },
+    {
+      "from": "art/sheets/v4/jump_apex.gif",
+      "to": "art/animations/players/swordsman/v4/sources/jump_apex.gif",
+      "sha256": "72b2d4e5bb15ed965890827b28b3bfb1413048b15e754337bc717eb3e5b97c3a"
+    },
+    {
+      "from": "art/sheets/v4/jump_fall.gif",
+      "to": "art/animations/players/swordsman/v4/sources/jump_fall.gif",
+      "sha256": "e6391e9862b8af7ca76085788ed418d0cdd2b0bdb8a8d08ff0dccc52150ba9df"
+    },
+    {
+      "from": "art/sheets/v4/jump_land.gif",
+      "to": "art/animations/players/swordsman/v4/sources/jump_land.gif",
+      "sha256": "c8e102f7d18ebf8312125c603e63d80474c45cf61b81a075129dd231f18e4f95"
+    },
+    {
+      "from": "art/sheets/v4/jump_rise.gif",
+      "to": "art/animations/players/swordsman/v4/sources/jump_rise.gif",
+      "sha256": "b3b0c6b037f9dc7febbe7aea7588add58d890497fe45b3f70d5deb28a018a438"
+    },
+    {
+      "from": "art/sheets/v4/review_back_dash.jpg",
+      "to": "art/animations/players/swordsman/v4/sources/review_back_dash.jpg",
+      "sha256": "05448b1b2f6799aa06ec3ecde10593bed5b55c7886611a53f7c4ce3a56cffc36"
+    },
+    {
+      "from": "art/sheets/v4/review_idle.jpg",
+      "to": "art/animations/players/swordsman/v4/sources/review_idle.jpg",
+      "sha256": "42ef4b90e3c7af1bc1497054f0e2e790268f9e644da7ca5210bc324313dd0f76"
+    },
+    {
+      "from": "art/sheets/v4/review_jump.jpg",
+      "to": "art/animations/players/swordsman/v4/sources/review_jump.jpg",
+      "sha256": "3931d1f980044dfb7986c7d21a5c97c1e1fcc640edd30dba99a51314dbfa1c5a"
+    },
+    {
+      "from": "art/sheets/v4/review_jump_apex.jpg",
+      "to": "art/animations/players/swordsman/v4/sources/review_jump_apex.jpg",
+      "sha256": "e9b55071d6709221b68fb161623df23087dfaf699eac67cea9ad7c5e8d7dcf03"
+    },
+    {
+      "from": "art/sheets/v4/review_jump_fall.jpg",
+      "to": "art/animations/players/swordsman/v4/sources/review_jump_fall.jpg",
+      "sha256": "f1644464a273de742eee3cc354feabe4cfaae920d26fb178dc4f90f27ac5ec2c"
+    },
+    {
+      "from": "art/sheets/v4/review_jump_land.jpg",
+      "to": "art/animations/players/swordsman/v4/sources/review_jump_land.jpg",
+      "sha256": "42ce76a40db3f97d005d17ec33ea78563dcbe9bff54ecc5b384506ab9527f73f"
+    },
+    {
+      "from": "art/sheets/v4/review_jump_rise.jpg",
+      "to": "art/animations/players/swordsman/v4/sources/review_jump_rise.jpg",
+      "sha256": "3b913c3ca437d95caf8c002d2d8e0fa70c37022a47a11df1825bfd21b26e0a87"
+    },
+    {
+      "from": "art/sheets/v5/body_slash1.png",
+      "to": "art/animations/players/swordsman/v5/sources/body_slash1.png",
+      "sha256": "a068bd4728cfa8d78e37ccd371c24ac7c22552177a3b57089eab19e3fb65dd45"
+    },
+    {
+      "from": "art/sheets/v5/body_slash2.png",
+      "to": "art/animations/players/swordsman/v5/sources/body_slash2.png",
+      "sha256": "0e5984b21da337f483a4ad7462c8223cf5d0fcd2399d52daf5e3988ee1d97c36"
+    },
+    {
+      "from": "art/sheets/v5/calibration_slash1.jpg",
+      "to": "art/animations/players/swordsman/v5/sources/calibration_slash1.jpg",
+      "sha256": "1e44df3642e5bf07ab3ed88ccc0b30d24eef1ccddc0d04b9c249a9ffcb11666a"
+    },
+    {
+      "from": "art/sheets/v5/calibration_slash2.jpg",
+      "to": "art/animations/players/swordsman/v5/sources/calibration_slash2.jpg",
+      "sha256": "e37f309cee23d0831f368045538014863e2279c4f3adeb2f6ba16cb66c8e4f7a"
+    },
+    {
+      "from": "art/sheets/v5/grid_slash1.png",
+      "to": "art/animations/players/swordsman/v5/sources/grid_slash1.png",
+      "sha256": "2bac3b6fab8eceec388e98f7405ccdf95898f76b0660eaf4c541380936de734c"
+    },
+    {
+      "from": "art/sheets/v5/grid_slash2.png",
+      "to": "art/animations/players/swordsman/v5/sources/grid_slash2.png",
+      "sha256": "cc45de035e6f68d1786b4be8624be6df12a4e542a7ae7202e48906ee85905ea9"
+    },
+    {
+      "from": "art/sheets/v5/source_slash1.png",
+      "to": "art/animations/players/swordsman/v5/sources/source_slash1.png",
+      "sha256": "e1e308dda89dca2cb21d6f5f107949519b0c1c6529fcbfc8db55d1f3ed835365"
+    },
+    {
+      "from": "art/sheets/v5/source_slash2.png",
+      "to": "art/animations/players/swordsman/v5/sources/source_slash2.png",
+      "sha256": "be3a49116ab39ae13df8680ce2963fffabdc64475bfbc7370eafd667166078c4"
+    },
+    {
+      "from": "art/sheets/v7/attack1_c1.png",
+      "to": "art/animations/players/swordsman/v7/sources/attack1_c1.png",
+      "sha256": "da83cc919c85c0093ccf9e60fde7355836172b3b68585a65a521f6a1ae416460"
+    },
+    {
+      "from": "art/sheets/v7/attack1_c2.png",
+      "to": "art/animations/players/swordsman/v7/sources/attack1_c2.png",
+      "sha256": "9088dcbac31dd377982ab1b8a62de29a593e486d0864f61cbea9bfcdb3943e3b"
+    },
+    {
+      "from": "art/sheets/v7/jump_c1.png",
+      "to": "art/animations/players/swordsman/v7/sources/jump_c1.png",
+      "sha256": "e83eb0c4880448a99b229d38bd6552cf9700aa1baafa7de87e8ad7f8ea3ec093"
+    },
+    {
+      "from": "art/sheets/v7/jump_c2.png",
+      "to": "art/animations/players/swordsman/v7/sources/jump_c2.png",
+      "sha256": "112936e3426dbcc84055bd10b6d0763c465e4ef0dc9f313ce4477606fe781fe8"
+    },
+    {
+      "from": "art/sheets/v7/run_c1.png",
+      "to": "art/animations/players/swordsman/v7/sources/run_c1.png",
+      "sha256": "2159a61549eff222279c8688942e02c08786eddbed990e503f6440e8189e7ec1"
+    },
+    {
+      "from": "art/sheets/v7/run_c2.png",
+      "to": "art/animations/players/swordsman/v7/sources/run_c2.png",
+      "sha256": "4a53e7386fd98edde4deb20f70c1c98a18fb7a3398d6c57c790b5b4656958052"
+    },
+    {
+      "from": "art/sheets/v7/walk_c1.png",
+      "to": "art/animations/players/swordsman/v7/sources/walk_c1.png",
+      "sha256": "dcc6e282da9219ba9197488367b5158231dc80911bff15aa366afa63b57e126b"
+    },
+    {
+      "from": "art/sheets/v7/walk_c2.png",
+      "to": "art/animations/players/swordsman/v7/sources/walk_c2.png",
+      "sha256": "a3d5bd5808edb63b168974c7965e66abf2dc22051acef2a12002b69252fe4e02"
+    },
+    {
+      "from": "art/sheets/v6/backhand/Production_anime_hand_painted__2026-10-14T08-25-11.png",
+      "to": "art/animations/players/swordsman/v6/sources/backhand/Production_anime_hand_painted__2026-10-14T08-25-11.png",
+      "sha256": "ab1af71f46072c0e6e2a5bfb7308834eac4e571fa87dec36cfb1ef8515cde66d"
+    },
+    {
+      "from": "art/sheets/v6/chop/High_quality_2D_anime_action_g_2026-10-14T08-26-47.png",
+      "to": "art/animations/players/swordsman/v6/sources/chop/High_quality_2D_anime_action_g_2026-10-14T08-26-47.png",
+      "sha256": "1a69c65bc643e781a5407499a7dd64d7075855c6fd287e8577e0dbd680f1db8c"
+    },
+    {
+      "from": "art/sheets/v6/forehand/Production_2D_action_RPG_anima_2026-10-14T08-17-58.png",
+      "to": "art/animations/players/swordsman/v6/sources/forehand/Production_2D_action_RPG_anima_2026-10-14T08-17-58.png",
+      "sha256": "cf2cbbb99157776d6b42ce24479ca96e96f258ad7f166250eed8f704ed6c65ad"
+    },
+    {
+      "from": "art/sheets/v6/quick_draw/A_production_hand_painted_anim_2026-10-14T08-22-51.png",
+      "to": "art/animations/players/swordsman/v6/sources/quick_draw/A_production_hand_painted_anim_2026-10-14T08-22-51.png",
+      "sha256": "eed29a9ef9445c34f6893f45f2fd3c0f97b17ba20a68e1f8dff6449be3174530"
+    },
+    {
+      "from": "art/sheets/v7/guides/attack1_guide.png",
+      "to": "art/animations/players/swordsman/v7/sources/guides/attack1_guide.png",
+      "sha256": "509fdca9069c2359a42328b027c2f678dfafde69c46f98b77f6a2e6065814c39"
+    },
+    {
+      "from": "art/sheets/v7/guides/jump_guide.png",
+      "to": "art/animations/players/swordsman/v7/sources/guides/jump_guide.png",
+      "sha256": "4a154ba61aebb753fbee2c8ba4a6983d310f972f3cc61001e0a65548c0b3dfab"
+    },
+    {
+      "from": "art/sheets/v7/guides/run_guide.png",
+      "to": "art/animations/players/swordsman/v7/sources/guides/run_guide.png",
+      "sha256": "78aece16be51b8519c22ec65eb686d7de47809b4c4aa4faac94e81b605bce903"
+    },
+    {
+      "from": "art/sheets/v7/guides/walk_guide.png",
+      "to": "art/animations/players/swordsman/v7/sources/guides/walk_guide.png",
+      "sha256": "f8eab9942921a83d53a34845b354035bad2ad9aaf5b9f097897e448232666e07"
+    },
+    {
+      "from": "art/sheets/v7/comfy_probe/input/standard_a2_reference.png",
+      "to": "art/animations/players/swordsman/v7/sources/comfy_probe/input/standard_a2_reference.png",
+      "sha256": "bf138d04a9d54b61cc00ac867bd804110fee9058c1232d9208ef7347e206bd6c"
+    },
+    {
+      "from": "art/sheets/v7/comfy_probe/input/walk_opposite_openpose.png",
+      "to": "art/animations/players/swordsman/v7/sources/comfy_probe/input/walk_opposite_openpose.png",
+      "sha256": "54197ccbb5bbf04f913c3bcd56f5cf288505983289b744b26cdd1d095981773f"
+    },
+    {
+      "from": "art/sheets/v7/comfy_probe/output/walk_opposite_s4b_00001_.png",
+      "to": "art/animations/players/swordsman/v7/sources/comfy_probe/output/walk_opposite_s4b_00001_.png",
+      "sha256": "b4d3d1cc2a6e571b476514acd004c3c7fc0a489ce31cc3ab31bca2149fd78eaa"
+    },
+    {
+      "from": "art/sheets/v7/comfy_probe/output/walk_opposite_s4b_vpred_00001_.png",
+      "to": "art/animations/players/swordsman/v7/sources/comfy_probe/output/walk_opposite_s4b_vpred_00001_.png",
+      "sha256": "260fd8fad13f3cc1d585e90bfdd383af380360460cc87ff639755fcffca6a0d2"
+    },
+    {
+      "from": "art/characters/portrait_hero.png",
+      "to": "art/ui/hud/portraits/portrait_hero.png",
+      "sha256": "8bf61a69ca998e745ebeee8a1d1e5bbb21bc28aa43996db178fde40df9c9ed56"
+    }
+  ],
+  "updated_text_files": [
+    "art/concepts/characters/monsters/goblin/rejected_v1/generation.json",
+    "art/concepts/characters/monsters/goblin/rejected_v1/generation_c1_retry1.json",
+    "art/concepts/characters/monsters/goblin/rejected_v1/preview_processing.json",
+    "art/concepts/characters/players/swordsman/standard_v1/generation.json",
+    "art/concepts/characters/monsters/goblin_chief/v1/generation.json",
+    "art/concepts/characters/monsters/goblin_chief/v1/preview_processing.json",
+    "art/explorations/themes/wuxia/backview_v2/generation.json",
+    "art/explorations/themes/wuxia/backview_v3/generation.json",
+    "art/concepts/characters/monsters/goblin/standard_v1/manifest.json",
+    "art/animations/players/swordsman/v7/exports/pilot_c2/calibration_used.json",
+    "art/animations/players/swordsman/v7/exports/pilot_c2/independent_review.json",
+    "art/animations/players/swordsman/v7/exports/pilot_c2/preview_publication.json",
+    "art/animations/shared/demo_v2/sources/demo_v2_bake_report.json",
+    "art/animations/shared/demo_v2/sources/demo_v2_generation.json",
+    "art/animations/players/swordsman/v3/sources/upper_lean_windup_rev2/generation.json",
+    "art/animations/players/swordsman/v4/sources/generation.json",
+    "art/animations/players/swordsman/v7/sources/attack1_calibration_c2.json",
+    "art/animations/players/swordsman/v7/sources/comfy_probe/input/pose.json",
+    "art/animations/players/swordsman/v7/sources/comfy_probe/result.json",
+    "art/animations/players/swordsman/v7/sources/comfy_probe/result_vpred.json",
+    "art/animations/players/swordsman/v7/sources/comfy_probe/upload_receipts.json",
+    "art/animations/players/swordsman/v7/sources/generation.json",
+    "art/animations/players/swordsman/v7/sources/jump_calibration_c2.json",
+    "art/animations/players/swordsman/v7/sources/pilot_c2.json",
+    "art/animations/players/swordsman/v7/sources/run_calibration_c2.json",
+    "docs/design/10_美术与音频管线.md",
+    "docs/design/11_实机表现层管线.md",
+    "docs/design/12_序列帧资源实装指南.md",
+    "docs/design/13_V6动作资源与实装待办.md",
+    "docs/design/15_统一风格与题材规范.md",
+    "docs/design/16_美术资源总清单.md",
+    "docs/design/18_角色锚定与动作管线.md",
+    "docs/project/05_版本注册表.md",
+    "docs/project/status/ws1.md",
+    "docs/tasks/art_tasks/char_swordsman_standard_v1.md",
+    "docs/tasks/art_tasks/goblin_standard_v1.md",
+    "docs/tasks/art_tasks/standard_actions_v7_pilot.md",
+    "docs/tasks/art_tasks/upper_lean_windup_rev2.md",
+    "docs/tasks/art_tasks/wuxia_archive.md",
+    "docs/tasks/art_tasks/wuxia_backview_v1.md",
+    "docs/tasks/art_tasks/wuxia_backview_v2.md",
+    "docs/tasks/art_tasks/wuxia_backview_v3.md",
+    "game/assets/demo/anim.json",
+    "game/scripts/seq_lib.gd",
+    "tools/ai_anim_spec.json",
+    "tools/ai_anim_spec_portrait.json",
+    "tools/bake_body_v3.py",
+    "tools/bake_body_v4.py",
+    "tools/bake_body_v5.py",
+    "tools/bake_demo_art.py",
+    "tools/bake_demo_environment.py",
+    "tools/bake_seq_v5.py",
+    "tools/bake_seq_v6.py",
+    "tools/explore/cloud_probe.py",
+    "tools/explore/comfy_pose_probe.py",
+    "tools/explore/render_anchor.py",
+    "tools/explore/s2b.py",
+    "tools/explore/standard_actions_guides.py",
+    "tools/explore/standard_board.py",
+    "tools/explore/standard_master.py",
+    "tools/explore/standard_parts.py",
+    "tools/explore/standard_sheet.py",
+    "tools/explore/standard_weapon.py",
+    "tools/preview_v6.py"
+  ],
+  "checks": {
+    "layout_integrity": "passed",
+    "docs": "passed",
+    "v6_static_tests": "6 passed",
+    "demo_strip_validation": "83 frames passed",
+    "v7_source_paths": "3 source images passed",
+    "python_syntax": "passed",
+    "godot_runtime": "not_run"
+  },
+  "recovery": {
+    "error": "git mv art/monsters/goblin/standard_v1 failed with Permission denied",
+    "source_files_intact": true,
+    "strategy": "explicitly resume verified completed moves; move remaining tracked files individually without elevated permissions"
+  }
+}

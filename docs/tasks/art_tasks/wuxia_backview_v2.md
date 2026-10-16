@@ -21,7 +21,7 @@
 
 ## 参考与真实输入
 
-- `art/concepts/wuxia_backview_v2/reference_composition.png`：用户提供的游戏截图，仅参考近景主角/中远景敌人的尺度、背后机位和纵深空地。它不是本项目原创素材，不用于实装，也不复制角色、UI、标识或环境设计。
+- `art/explorations/themes/wuxia/backview_v2/reference_composition.png`：用户提供的游戏截图，仅参考近景主角/中远景敌人的尺度、背后机位和纵深空地。它不是本项目原创素材，不用于实装，也不复制角色、UI、标识或环境设计。
 - 对峙图：将上述截图实际传入内置 imagegen 的 `referenced_image_paths`；以成熟半写实二维绘画、彩色水墨气氛重新设计原创武侠人物和场景。
 - 拼刀图：已将本轮选用对峙图实际传入 `referenced_image_paths`，作为角色/衣装/场景连续性参考；镜头改成近景对抗，实际调用结果写入 `generation.json`。
 - V1 是反馈对照，未作为本轮生成器的画风输入，避免继承用户指出的粗描边与卡通人物。
@@ -37,7 +37,7 @@
 
 ## 制作与交付
 
-- 源图/完整记录：`art/concepts/wuxia_backview_v2/`。
+- 源图/完整记录：`art/explorations/themes/wuxia/backview_v2/`。
 - 评审副本：`docs/previews/wuxia_backview_v2/`，从选用源图直接复制；不对图像进行脚本修补。
 - 技术核查：两张均为实际 **1672×941 RGB PNG**，背景不透明；System.Drawing 解码成功，源/预览 SHA256 一致。未缩放、裁切、量化或脚本修补，逐张直接看生成器原图检查人物、武器、构图与接触。
 - 生命周期：方向评审通过后才确定后续角色一致性板、短序列与分层方案；本轮静态图不能证明运镜、拼刀动作或新题材已经实装。
@@ -61,7 +61,7 @@
 | [idle_standoff.png](../../previews/wuxia_backview_v2/idle_standoff.png) | 背后三分之四近景，侠客沉腰低位持剑，近大远小、风中衣发与山间逆光 |
 | [weapon_parry.png](../../previews/wuxia_backview_v2/weapon_parry.png) | 低位近景、倾斜构图，两人肩臂承压，交刃处集中金属火星，主角侧脸可见 |
 
-完整提示词、真实图像输入、两次内置 imagegen 调用产物、尺寸和哈希见 `art/concepts/wuxia_backview_v2/generation.json`。截图使用的是用户本轮上传附件，已另存持久参考副本；将来复用应传入仓库中的副本，不依赖上传时的临时路径。
+完整提示词、真实图像输入、两次内置 imagegen 调用产物、尺寸和哈希见 `art/explorations/themes/wuxia/backview_v2/generation.json`。截图使用的是用户本轮上传附件，已另存持久参考副本；将来复用应传入仓库中的副本，不依赖上传时的临时路径。
 
 ![V2 对峙](../../previews/wuxia_backview_v2/idle_standoff.png)
 

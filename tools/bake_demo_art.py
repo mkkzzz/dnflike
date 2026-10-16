@@ -14,7 +14,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
-SHEETS = ROOT / "art" / "sheets"
+SHEETS = ROOT / 'art/animations/shared/demo_v2/sources'
 OUT = ROOT / "game" / "assets" / "demo"
 
 # Reviewed source-space floor/root landmarks. These belong to the 16 logical

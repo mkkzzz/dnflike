@@ -431,7 +431,7 @@ def add_glow(arr, x, y, r, col, inten):
 
 
 # ---------------------------------------------------------------- background
-BG_PATH = os.path.join(_PROJ, "art", "environments", "dungeon_hall.png")
+BG_PATH = os.path.join(_PROJ, "art", "concepts", "scenes", "dungeon", "legacy", "dungeon_hall.png")
 TORCHES = [(58, 134), (566, 136)]
 
 
@@ -1496,7 +1496,7 @@ def update_particles():
 
 
 # ---------------------------------------------------------------- HUD
-PORTRAIT_PATH = os.path.join(_PROJ, "art", "characters", "portrait_hero.png")
+PORTRAIT_PATH = os.path.join(_PROJ, "art", "ui", "hud", "portraits", "portrait_hero.png")
 
 
 def make_icon(kind, c1, c2, sz=46):

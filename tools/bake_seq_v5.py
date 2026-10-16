@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bake V5 sequence-frame assets into art/seq_v5/ for engine-side ingest.
+"""Bake V5 sequence-frame assets into art/animations/players/swordsman/v5/exports/ for engine-side ingest.
 
 DNF-style separation, all 60 fps (one frame per simulation tick):
   body/<move>/      weaponless body + blade, NORMAL blend, root-anchored
@@ -32,7 +32,7 @@ from art_v5.weapon import draw_katana  # noqa: E402
 from preview_v5 import CLIPS  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'art' / 'seq_v5'
+OUT = ROOT / 'art/animations/players/swordsman/v5/exports'
 S = 2.0
 MS = 1000.0 / 60.0
 

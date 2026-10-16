@@ -1,0 +1,42 @@
+{
+  "tool": "Pillow 12.2.0",
+  "inputs": [
+    {
+      "path": "art/concepts/characters/monsters/goblin/legacy/goblin.png",
+      "crop": [
+        56,
+        100,
+        880,
+        978
+      ],
+      "crown_y": 110,
+      "ground_y": 967,
+      "height": 400,
+      "x": 285,
+      "label": "ORDINARY GOBLIN - approved original"
+    },
+    {
+      "path": "art/concepts/characters/monsters/goblin_chief/v1/candidates/c1/Original_concept_art_of_ONE_GO_2026-10-16T04-08-05.png",
+      "crop": [
+        142,
+        40,
+        904,
+        996
+      ],
+      "crown_y": 55,
+      "ground_y": 987,
+      "height": 480,
+      "x": 855,
+      "label": "CHIEF C1 - candidate, stone basket + club"
+    }
+  ],
+  "canvas": [
+    1140,
+    780
+  ],
+  "baseline_y": 610,
+  "output": "docs/previews/goblin_chief_v1/c1_compare.png",
+  "resize": "LANCZOS, original aspect ratio",
+  "background_removal": false,
+  "runtime_claim": false
+}

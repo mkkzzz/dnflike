@@ -1,0 +1,55 @@
+{
+  "status": "completed",
+  "submitted_utc": "2026-10-15T15:46:57.903258+00:00",
+  "prompt_id": "24ba9d22-3577-4f1d-be72-7fe07c25db93",
+  "receipt": {
+    "prompt_id": "24ba9d22-3577-4f1d-be72-7fe07c25db93",
+    "number": 0,
+    "node_errors": {}
+  },
+  "scope": "one single-pose S4b feasibility probe, no game integration",
+  "transparency": "RGB generation; no transparent-background promise",
+  "checkpoint": "NoobAI-XL-v1.0.safetensors",
+  "controlnet": "diffusion_pytorch_model_promax.safetensors",
+  "seed": 73150415,
+  "execution_status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "24ba9d22-3577-4f1d-be72-7fe07c25db93",
+          "timestamp": 1792079217903
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [],
+          "prompt_id": "24ba9d22-3577-4f1d-be72-7fe07c25db93",
+          "timestamp": 1792079217903
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "24ba9d22-3577-4f1d-be72-7fe07c25db93",
+          "timestamp": 1792079261465
+        }
+      ]
+    ]
+  },
+  "outputs": [
+    "art/animations/players/swordsman/v7/sources/comfy_probe/output/walk_opposite_s4b_00001_.png"
+  ],
+  "completed_utc": "2026-10-15T15:48:05.957040+00:00",
+  "visual_review": {
+    "G1_identity": "failed: simplified red/blue geometric character; standard face, silver hair streak, chest straps, red lining and armor not retained",
+    "G2_quality": "failed: flat angular vector-like rendering far below the approved native reference",
+    "G3_weapon": "failed: distorted multiple blade-like shapes, no valid one-handed katana",
+    "G4_pose": "partial silhouette response only: facing right and separated legs; cannot establish correct near/far anatomical support",
+    "decision": "rejected_source; excluded from v7 candidate animation exports"
+  },
+  "inference_duration_seconds": 43.562
+}

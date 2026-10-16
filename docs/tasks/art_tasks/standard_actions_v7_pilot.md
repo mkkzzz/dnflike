@@ -33,8 +33,8 @@
 
 | 参考 | 用途 | 实际输入 |
 |---|---|---|
-| `art/characters/standard_v1/sheet_pose_head_c2.png` | 朝右游戏机位、脸、握刀和服装 | 各次调用的真实路径列表记 generation.json |
-| `art/characters/standard_v1/sheet_main_c1.png` | 四向身份、材质与比例 | 同上；图的已知瑕疵以文字规格纠正 |
+| `art/concepts/characters/players/swordsman/standard_v1/sheet_pose_head_c2.png` | 朝右游戏机位、脸、握刀和服装 | 各次调用的真实路径列表记 generation.json |
+| `art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png` | 四向身份、材质与比例 | 同上；图的已知瑕疵以文字规格纠正 |
 | 本任务各动作骨架引导板 | 格子位置、相位、关节、握点和刀向 | 同上；引导不是最终人物画面 |
 
 使用内置 image_gen，直接传入参考图片并请求真实透明背景；不是在提示词中写路径代替输入。完整提示词、输入列表、工具返回与实际透明度检查保存于 v7 的生成和加工记录。不调用收费 API/CLI，不上传本机 ComfyUI 安装路径。
@@ -50,10 +50,10 @@
 
 ## 5. 源图、加工与证据（2026-10-16）
 
-- 源图与完整提示词：`art/sheets/v7/generation.json`；各组 c1 首轮与 c2 定向修图均保留，实际传入身份原图和骨架引导板。
+- 源图与完整提示词：`art/animations/players/swordsman/v7/sources/generation.json`；各组 c1 首轮与 c2 定向修图均保留，实际传入身份原图和骨架引导板。
 - **行走退回**：c1/c2 都重复同一半步，未形成清楚左右腿交替；没有导入正式候选包。标定草案保留失败依据，不能按格数宣称完整循环。
 - **候选**：attack1_c2 补回蓄势缺失的刀身；run_c2 修了后半圈部分腿位，但完整左右交换仍不清楚，只可评跑姿/节奏，不能标完整循环通过；jump_c2 加强蹬离伸展。源图仍有比例/太刀长度、脚滑、横斩轨迹与收势待评审，未获源图或成品批准。
-- 加工配置：`art/sheets/v7/pilot_c2.json`；自包含导出入口 `art/seq_v7/pilot_c2/manifest.json`。v7 JSON 固定 LF 换行，保证跨 clone 的文件哈希一致。
+- 加工配置：`art/animations/players/swordsman/v7/sources/pilot_c2.json`；自包含导出入口 `art/animations/players/swordsman/v7/exports/pilot_c2/manifest.json`。v7 JSON 固定 LF 换行，保证跨 clone 的文件哈希一致。
 - attack1/run 按显式种子与 alpha 核心连通域隔离跨格主体，mask 随包保存；跳跃使用显式独立裁切、保留低 alpha 噪点，未强行丢弃细碎头发/手指。只做裁切、等比缩放和定锚，没有程序扭曲或伪造姿势。
 - 跳跃拆 rise/apex/fall/land，prepare 单独保留；jump_demo 从蹬离开始，外部高度曲线仅为评审演示，不固定实机跳跃时长，不增加输入延迟。
 - `preview_report.json` 记录实际帧引用与 GIF 误差；`preview_publication.json` 记录评审目录与包内回放文件逐字节一致；`independent_review.json` 记录独立技术重建及实际看图结论。
@@ -62,7 +62,7 @@
 
 ```powershell
 python tools/explore/standard_actions_guides.py walk run jump attack1
-python tools/explore/standard_actions_pilot.py art/sheets/v7/pilot_c2.json
+python tools/explore/standard_actions_pilot.py art/animations/players/swordsman/v7/sources/pilot_c2.json
 ```
 
 导出目录已存在时，请用新的候选目录，或对同一候选显式加 `--overwrite`；随机生图以已入库源图为准，不能靠再跑提示词保证相同结果。
@@ -85,7 +85,7 @@ GIF 为整数动作 tick 经累计 10 ms 量化，准确时钟以 manifest 为�
 
 本机 ComfyUI 的 SDXL + IPAdapter + Union OpenPose 实际上传了身份裁切和标准色骨架，并完成两次单帧推理；首图严重几何化/身份漂移，一次 v_prediction + zsnr 重试近乎全灰，全部拒收。工具可运行不等于美术管线可用，不进入正式回放；服务已停止。
 
-真实工作流、输入上传回执、模型哈希、节点版本、结果与失败评审见 `art/sheets/v7/comfy_probe/review.json`；探针入口 `tools/explore/comfy_pose_probe.py`。本机安装/运行时路径仅存 `.workspace`，不入库。后续须先分别隔离验证 checkpoint、IPAdapter、ControlNet，不继续盲目批量出图。
+真实工作流、输入上传回执、模型哈希、节点版本、结果与失败评审见 `art/animations/players/swordsman/v7/sources/comfy_probe/review.json`；探针入口 `tools/explore/comfy_pose_probe.py`。本机安装/运行时路径仅存 `.workspace`，不入库。后续须先分别隔离验证 checkpoint、IPAdapter、ControlNet，不继续盲目批量出图。
 
 ## 6. 验收门与当前结果
 

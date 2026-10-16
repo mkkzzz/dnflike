@@ -4,7 +4,7 @@
   2. A0 身份标注总览（正面 + 侧面，辨识点引线 + 头身比例尺）→ docs/previews/standard_v1/identity_callouts.png
   3. 游戏尺寸剪影与 1:1 缩略图 → docs/previews/standard_v1/game_scale.png
   4. 设定集总图 → docs/previews/standard_v1/standard_sheet.jpg
-  5. 设定集索引 → art/characters/standard_v1/manifest.json
+  5. 设定集索引 → art/concepts/characters/players/swordsman/standard_v1/manifest.json
 
 先跑 standard_master.py、standard_weapon.py、standard_parts.py，再跑本脚本：
   python tools/explore/standard_sheet.py
@@ -21,7 +21,7 @@ from scipy import ndimage
 from standard_master import fit_h, font, hstack, label, on_gray, vstack
 
 ROOT = Path(__file__).resolve().parents[2]
-STD = ROOT / "art" / "characters" / "standard_v1"
+STD = ROOT / 'art/concepts/characters/players/swordsman/standard_v1'
 PREV = ROOT / "docs" / "previews" / "standard_v1"
 GAME_H = 190
 GRAY = (205, 205, 210)

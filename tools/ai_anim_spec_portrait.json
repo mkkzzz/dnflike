@@ -9,7 +9,7 @@
       "posterize": 40,
       "key": "flat",
       "actions": {
-        "idle": {"sheet": "art/characters/hero_cool.png", "rows": 1, "cols": 1, "loop": true, "fps": 10, "durations_ms": [200]}
+        "idle": {"sheet": "art/concepts/characters/players/swordsman/legacy/hero_cool.png", "rows": 1, "cols": 1, "loop": true, "fps": 10, "durations_ms": [200]}
       }
     },
     "monster": {
@@ -18,7 +18,7 @@
       "posterize": 40,
       "key": "flat",
       "actions": {
-        "idle": {"sheet": "art/characters/goblin.png", "rows": 1, "cols": 1, "loop": true, "fps": 10, "durations_ms": [200]}
+        "idle": {"sheet": "art/concepts/characters/monsters/goblin/legacy/goblin.png", "rows": 1, "cols": 1, "loop": true, "fps": 10, "durations_ms": [200]}
       }
     }
   }

@@ -9,7 +9,7 @@ from scipy import ndimage
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PROJ = os.path.dirname(ROOT)
-BG = os.path.join(PROJ, "art", "environments", "dungeon_hall.png")
+BG = os.path.join(PROJ, "art", "concepts", "scenes", "dungeon", "legacy", "dungeon_hall.png")
 
 # 本文件同时是「单张帧图预览」CLI 和「多动作 ingest」的算法库：
 # tools/bake_ai_frames.py 直接 import 这里的 key_green / split_frames / anchor_of。

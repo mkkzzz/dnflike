@@ -77,8 +77,8 @@
 
 | 依赖 ID/文件 | 版本/批准依据 | 用途 | 变化后本任务的动作 |
 |---|---|---|---|
-| `art/sheets/v3/body_combo3upper.png` | V3 已认可源图 | 上挑源姿势所在图 | **需重画对应源姿势**，旧图保留 |
-| `art/sheets/v3/bake_report.json` | V3 标定 | combo3upper 的 cell/bbox/root/hand 标定 | 重烘后更新 |
+| `art/animations/players/swordsman/v3/sources/body_combo3upper.png` | V3 已认可源图 | 上挑源姿势所在图 | **需重画对应源姿势**，旧图保留 |
+| `art/animations/players/swordsman/v3/sources/bake_report.json` | V3 标定 | combo3upper 的 cell/bbox/root/hand 标定 | 重烘后更新 |
 | `tools/bake_body_v3.py` | V3 烘焙管线 | 由身体源图产出台词帧条 | 需按新源姿势重跑 |
 | `game/assets/actors_v3/player/upper.png` | v3 实装产物 | 上挑帧条 | 被 rev2 替换（保留旧版回退） |
 | `game/assets/actors_v3/manifest.json` 的 `upper` 条目 | v3 | 帧宽/锚点/时长/sockets | **预期只需保持契约**；若源姿势改了握点，需同步更新 8 个 sockets |
@@ -94,11 +94,11 @@
 |---|---|---|---|
 | `game/assets/actors_v3/player/idle.png` | 身高基准（189px），落差以此为分母 | V3 已认可 | 待执行会话确认 |
 | `game/assets/actors_v3/player/attack1.png` | **前倾发力姿态的正面参照**——用户要的 lean 已存在于普攻 f3/f5 | V3 已认可 | 待执行会话确认 |
-| `art/sheets/v3/body_combo3upper.png` | 复现问题（cell 8/9 深蹲）与正向起点（cell 10/11 已接近前倾起身） | V3 已认可 | 待执行会话确认 |
+| `art/animations/players/swordsman/v3/sources/body_combo3upper.png` | 复现问题（cell 8/9 深蹲）与正向起点（cell 10/11 已接近前倾起身） | V3 已认可 | 待执行会话确认 |
 
 - 版权/原创范围：沿用项目自研源图与既有生成管线，不引入外部素材。
 - 工具：`built-in image_gen.imagegen`（与 V3 六张源图同一工具）。
-- 完整提示词（两版）与参考图清单：已写入 `art/sheets/v3/upper_lean_windup_rev2/generation.json`，含两版差异与反向约束。
+- 完整提示词（两版）与参考图清单：已写入 `art/animations/players/swordsman/v3/sources/upper_lean_windup_rev2/generation.json`，含两版差异与反向约束。
 - 实际工具版本、返回文件路径与种子：**由执行会话生成后回填**（旧记录中模型版本与种子未暴露，不承诺随机生图可复现）。
 - 接收区未生成任何新图；本任务不含接收区的美术产出。
 
@@ -107,7 +107,7 @@
 
 | 公共字段 | 约定 |
 |---|---|
-| 文件与路径基准 | 源 `art/sheets/v3/body_combo3upper.png`；产物 `game/assets/actors_v3/player/upper.png` |
+| 文件与路径基准 | 源 `art/animations/players/swordsman/v3/sources/body_combo3upper.png`；产物 `game/assets/actors_v3/player/upper.png` |
 | 尺寸 | 帧 320×248，8 帧条，共 2560×248（**保持不变**） |
 | 像素/色彩处理 | 沿用 V3 烘焙设置，不新增后处理 |
 | 透明与混合 | RGBA straight alpha，不变 |
@@ -122,14 +122,14 @@
 
 ## 5. 源图样张与批准
 
-**两版样张的完整提示词已就绪，见 [`art/sheets/v3/upper_lean_windup_rev2/generation.json`](../../../art/sheets/v3/upper_lean_windup_rev2/generation.json)。**
+**两版样张的完整提示词已就绪，见 [`art/animations/players/swordsman/v3/sources/upper_lean_windup_rev2/generation.json`](../../../art/animations/players/swordsman/v3/sources/upper_lean_windup_rev2/generation.json)。**
 
 | 候选/批次 | 源文件 | 实际主体/原画数 | 接受/弃用与原因 |
 |---|---|---|---|
 | A · 轻微前倾 | 待生成 | 8 帧条（起手段为设计重点） | 待用户评审 |
 | B · 明显压腰 | 待生成 | 8 帧条（起手段为设计重点） | 待用户评审 |
 
-- **为什么必须换提示词**：V3 原提示词 upper 段写的是 `1 low crouch RED fist forward-right near knee; 2 deepest crouch RED fist near ankle preparing power` —— **深蹲是当时的明确要求**。「蹲伏蓄力」也写在 `art/sheets/v3/README.md` 的 upper 行里。所以本问题是**设计意图与实机观感冲突**，不是制作失误；照旧提示词重跑只会再生成同样的蹲姿。
+- **为什么必须换提示词**：V3 原提示词 upper 段写的是 `1 low crouch RED fist forward-right near knee; 2 deepest crouch RED fist near ankle preparing power` —— **深蹲是当时的明确要求**。「蹲伏蓄力」也写在 `art/animations/players/swordsman/v3/sources/README.md` 的 upper 行里。所以本问题是**设计意图与实机观感冲突**，不是制作失误；照旧提示词重跑只会再生成同样的蹲姿。
 - 两版共用同一身份锁定与约束（无武器空握拳、8 帧条、320×248、脚底 root `(144,230)`、朝右、同一骨架比例整体缩放）。
 - 差异只在起手两帧的体态：**A 版前倾蓄力、身高落差约 10~15%**；**B 版前倾压腰、约 20%**。
 - 两版提示词均含**反向约束**：明确禁止深蹲 / 跪姿 / 髋部沉向脚跟 / 躯干折叠压到腿上，并给出"击剑前压 / 拳击压低前手"的语义锚点。

@@ -1,0 +1,97 @@
+{
+  "task_id": "wuxia_backview",
+  "revision": "v2",
+  "date": "2026-10-14",
+  "status": "awaiting_user_review",
+  "scope": "Two original wuxia static concept images: ready standoff and forceful weapon clash; no Godot integration or animation.",
+  "tool": "built-in image_gen",
+  "model_version": "not exposed",
+  "seed": "not exposed",
+  "requested_aspect_ratio": "16:9",
+  "transparent_background": false,
+  "feedback": [
+    "Reduce cartoon look; cool, handsome, graceful mature xia-ke.",
+    "Use user screenshot for relative foreground/background scale and camera composition.",
+    "Show armed sword preparation, not passive upright standing.",
+    "Allow camera change/close-up and make blade clash forceful and tense.",
+    "Redesign hero visual toward a travelling xia-ke."
+  ],
+  "references": [
+    {
+      "path": "reference_composition.png",
+      "origin": "user supplied attachment from Clair Obscur: Expedition 33",
+      "sha256": "56a227733d1798b3115840db95b9dc668ca5c0091cf05cc1a6baa83c717b1feb",
+      "role": "composition and scale only; no copied character, HUD or environment; not a project runtime asset"
+    }
+  ],
+  "sources": [
+    {
+      "role": "ready_standoff",
+      "asset_id": "concept.battle.rear_view.idle",
+      "file": "idle_standoff_source.png",
+      "preview": "docs/previews/wuxia_backview_v2/idle_standoff.png",
+      "referenced_image_paths": [
+        "art/explorations/themes/wuxia/backview_v2/reference_composition.png"
+      ],
+      "actual_tool_reference_path": "C:/Users/ASUS/AppData/Local/Temp/codex-clipboard-0efdd81d-c325-4806-8c80-97108397d2ee.png",
+      "mode": "new concept with composition reference",
+      "generation_output": "C:/Users/ASUS/.codex/generated_images/01a13a52-a55b-7253-a4df-68f6e94a3c2a/exec-95420632-4d3d-48c3-ade0-803fb1f76104.png",
+      "prompt": "Use case: stylized-concept. Create ONE exceptionally polished widescreen 16:9 2D painted wuxia game concept image: an armed READY STANDOFF, with a cool, graceful wandering swordsman in the near foreground and his opponent much farther away.\nInput image 1 is the user's Clair Obscur: Expedition 33 screenshot. Use it ONLY to guide camera height, foreground/background character scale, asymmetrical left foreground framing, deep perspective, and the open space between combatants. Invent original Chinese wuxia characters and scenery. Do not copy its people, monster, architecture, colors exactly, UI, logos, writing, or watermark.\nComposition: camera close behind the hero, slightly left of his spine, around lower chest height; widescreen battle-camera view, not a front-facing character poster. Hero occupies the left third and about 68–72% of frame height, with his head around the upper third and both feet readable at the bottom; silhouette is large and elegant. Enemy stands near center-right in the middle distance, only 22–27% of frame height, separated by about 9 metres of open fighting ground. Ground perspective and atmospheric depth clearly establish the distance. Center fighting space stays clean. Strong cinematic near/far contrast, elegant negative space and a clear eye path from the hero's sword to the opponent.\nHero: original Chinese male xia-ke, late twenties, tall, lean, handsome and severe, long black hair tied loosely high with several wind-blown strands. Restrained charcoal and deep ink-teal layered traveller's robes, long split outer garment and asymmetric flowing shoulder cloth, warm off-white inner collar, worn leather sword belt, a single small cinnabar tie and restrained jade fitting. Natural adult anatomy, strong shoulders and slender waist, practical boots, no bulky armor or ornate fantasy costume. His posture communicates skilled, composed danger and effortless grace.\nPose: an active poised sword preparation, NOT relaxed upright standing. Knees flexed, weight sunk over the rear leg, torso subtly twisted, one foot forward. He holds ONE long slim straight Chinese jian firmly in his right hand in a low forward guard: hilt beside the right hip, blade extends diagonally forward into the open arena, with a continuous physically legible connection from shoulder through elbow, wrist, fingers, hilt and blade. Left hand opens behind him for balance. Wind pulls the long garment and hair away from the planted stance; the body stays grounded. Visible three-quarter rear profile suggests a sharp mature face without turning him to face the viewer.\nOpponent: a lean older travelling dao swordsman, dark russet and charcoal clothing, low broad bamboo hat obscuring his eyes, one broad Chinese dao lifted in a compact guarded preparation; smaller and distant but clearly human, threatening and balanced.\nEnvironment: an ancient weathered stone fighting terrace at a steep misty mountain pass after rain. Broken stair and low stone edge lead the eye into enormous ink-dark mountain cliffs; a restrained distant timber pavilion is swallowed by mist. Pale warm sunlight cuts through storm cloud and grazes the wet stone. A few windblown leaves, a very light trailing jade-ink breath near the sword, absolutely no attack explosion. The world is richly layered and dramatic without cluttering the fight.\nStyle: premium mature semi-realistic TWO-DIMENSIONAL digital concept painting with coloured Chinese ink atmosphere, fine painterly edge control, convincing anatomy, beautiful light on silk, fabric and steel, sophisticated value hierarchy and restrained brushwork. Visually cool, handsome, ethereal and cinematic. The characters must have sculptural painted form and nuanced shading; no thick black cartoon contours, no flat cel shading, no chibi or youthful anime design, no toy-like faces. Do not make a 3D render, photograph or monochrome ink sketch. Keep subtle hand-painted texture, ink-teal shadows, warm muted amber rim light, and sparse cinnabar accent.\nConstraints: one continuous full scene, exactly TWO people, exactly ONE sword for the hero and ONE dao for the opponent. No extra blades, detached handles, extra hands, magic shield, UI, captions, text, logos, watermark, panels or collage. This is a concept image, not a sprite sheet. Prioritize striking composition, original xia-ke identity, coherent sword preparation, grace and atmospheric depth.",
+      "review": "Selected V2 candidate. Strong near/far composition, adult anatomy and sword-ready pose; no obvious extra weapon or severe limb fault. Actual hero/enemy height is roughly 85%/18%, more heroic foreground framing than the target brief. User aesthetic approval is pending.",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "format": "PNG RGB, opaque",
+      "sha256": "59526271eb6930e236ff5adbba0cd94931b1c2f0d711a5835f07dbe303df4540"
+    },
+    {
+      "role": "weapon_clash",
+      "asset_id": "concept.battle.rear_view.weapon_parry",
+      "file": "weapon_parry_source.png",
+      "preview": "docs/previews/wuxia_backview_v2/weapon_parry.png",
+      "referenced_image_paths": [
+        "art/explorations/themes/wuxia/backview_v2/idle_standoff_source.png"
+      ],
+      "mode": "new concept with this revision's selected standoff as identity and scene reference",
+      "prompt": "Use case: stylized-concept. Create ONE striking widescreen 16:9 premium TWO-DIMENSIONAL painted wuxia combat concept: the decisive, physically forceful instant when two swordsmen CLASH AND LOCK BLADES. This is the second frame in the concept set, after the ready standoff.\nInput image 1 is our newly generated ready-standoff concept. Use it as the actual visual reference for the SAME two original men, the hero's hair and clothing, weapons, colour/mood and mountain terrace. Change the camera and poses aggressively for the clash. Preserve the young Chinese hero with long black high-tied loose hair, worn flowing charcoal/ink-teal robes, off-white sleeve and collar, narrow cinnabar waist tie, dark forearm wraps, restrained jade belt fitting, slim straight Chinese jian with bronze guard. Preserve the opposing lean older swordsman with bamboo hat, dark russet robes and single curved Chinese dao. No unrelated new characters.\nCamera/composition: dramatically push in from the wide battle view to a LOW three-quarter close view, about waist-height and very close to the crossing weapons. A subtle 10-degree Dutch tilt, strong depth and foreshortening, as though a camera move has arrived at the critical impact frame. Show the hero on the left in a readable three-quarter profile and his opponent on the right. Frame roughly from thighs/hips upward; heads, upper bodies, both gripping hands, hilts and the blade crossing must be readable. The two figures and weapons dominate at least 80% of the picture; mountain scenery is now distant, softly painted and secondary. Their opposing body diagonals press from opposite sides into ONE central blade-contact point. This is combat, not two men politely posing across a gap, not a wide establishing view, not a symmetrical poster.\nThe hero is a cool, handsome, mature wandering xia-ke in his late twenties: sharp face, narrowed concentrated eyes, black hair whipping back, long fabric torn through the air. He sinks his hips and drives up through a bent forward leg and grounded rear leg, torso twisted, right shoulder and bent right elbow visibly bearing load. He grips the sword HILT in his right hand with natural fingers and correct wrist alignment. His left hand stays empty and balances behind his shoulder/body; do not add a second sword or make him grab the sharp blade. His sword intercepts and forces away the opponent's descending dao with its strong section near the guard.\nThe opponent bears DOWN and FORWARD into the lock, jaw set and brow visible beneath the tipped bamboo hat, shoulder driving his right hand and dao. His russet robe and hair recoil in the opposite direction to the hero's. Make the contact look like both people are actively resisting a violent impulse: twisted hips, flexed shoulders, compressed forearms, directional cloth and muscle tension. Maintain credible adult anatomy and continuous shoulder/elbow/wrist/fist/hilt/steel structure. Clearly separate the two blades before and after their actual crossing; do not merge them into one beam. ONE sword for the hero, ONE dao for the enemy.\nImpact: a SMALL intensely bright warm-metal contact core where the real steel surfaces touch, with thin sharply directed gold sparks. A restrained cyan/ink-teal brushstroke wake wraps behind the hero's actual sword path, and darker torn-ink marks trail the enemy's force. Rain droplets and a few grit fragments kick outward; wind snaps hair and cloth. Use light motion streaks only in background and loose fabric tips; keep eyes, wrists, hilts and crossing blade edges sharply readable. The tension comes from posture, lever arms, opposite forces and close camera, not from a giant explosion or magical light ball hiding the swords. No blood or wounds.\nLighting and finish: warm grazing light on blade edges and cheekbones against dark ink-teal shadows, rich but restrained steel, cloth and wet stone textures, high cinematic value contrast. Elegant coloured ink atmosphere with sophisticated hand-painted transitions and visible selective brushwork. Mature semi-realistic 2D illustration, sculptural anatomy, graceful sharp silhouettes; avoid thick cartoon outlines, flat cel shading, childish anime faces, oversize heads, a 3D-rendered look or a photographic collage. Aim for a memorable, powerful sword-duel keyframe with the cinematic intensity of an excellent martial-arts action scene.\nConstraints: one continuous widescreen scene; exactly two people, two held weapons; no extra hands, extra fingers, loose sword, double sword on a body, shield, magic barrier, UI, captions, text, logos, watermark, multi-panels or collage. This is a single concept keyframe for evaluating camera and force; it does not claim an animation exists.",
+      "review": "Selected V2 candidate. Close low-angle sword lock, opposed arm/shoulder drive, hero face visible, local metal sparks at the visible blade crossing. User aesthetic approval is pending.",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "format": "PNG RGB, opaque",
+      "sha256": "554f116c453c519ff7690d9fbd3fdb31110a36ef30ebcd9229e573c8449ef2eb",
+      "actual_tool_reference_path": "D:/dnf like/dnflike/art/concepts/wuxia_backview_v2/idle_standoff_source.png",
+      "generation_output": "C:/Users/ASUS/.codex/generated_images/01a13a52-a55b-7253-a4df-68f6e94a3c2a/exec-52158efc-05e9-4f8f-9136-01171cb20398.png"
+    }
+  ],
+  "processing": "Selected output copied unchanged to source and preview; no scripted image edits, no grading/cropping/repainting.",
+  "lifecycle": {
+    "preview_approved": false,
+    "integrated": false,
+    "runtime_approved": false
+  },
+  "limitations": [
+    "Single images do not prove animation, camera movement or runtime behavior.",
+    "Image generation is not guaranteed deterministic; saved source PNGs are the reproducible artifacts.",
+    "Passing a reference image does not guarantee exact cross-image identity or perfectly correct weapon geometry.",
+    "The generated standoff uses larger hero / smaller opponent framing than the initial numerical target; it is retained as a candidate, not described as an exact screenshot proportion match."
+  ],
+  "validation": {
+    "decoded_with": "Windows System.Drawing",
+    "image_count": 2,
+    "png_decode_passed": true,
+    "dimensions_both": [
+      1672,
+      941
+    ],
+    "native_pixel_format": "Format24bppRgb",
+    "source_preview_sha256_equal": true,
+    "image_editing": "none; exact byte copies",
+    "visual_review": "Both original tool outputs viewed by primary and independent review agent; no obvious extra weapon, detached hilt or severe limb error. Aesthetic approval remains pending.",
+    "game_changed": false,
+    "approval_status": "awaiting_user_review",
+    "clash_limitations": "Close camera crops the lower legs; complete footing and continuous action are not validated. Sparks are dense but the two blades remain visible."
+  }
+}

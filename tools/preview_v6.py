@@ -88,7 +88,7 @@ def render(names, manifest, naked=False, debug=False):
     total = start + 30
     clock, freeze, frames, marks, contacts = 0, 0, [], [], []
     effects, hit_done, ground_done = [], set(), set()
-    bg = Image.open(ROOT / 'art/environments/dungeon_hall.png').convert('RGB').crop((220, 226, 1020, 646))
+    bg = Image.open(ROOT / 'art/concepts/scenes/dungeon/legacy/dungeon_hall.png').convert('RGB').crop((220, 226, 1020, 646))
     base = np.asarray(bg, np.float32) / 255
     initial_x = 220 if names == ['quick_draw'] else 270
     enemy_base = initial_x + (218 if names == ['quick_draw'] else 128)

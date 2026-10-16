@@ -13,7 +13,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "temp" / "standard"
-V6_READY = ROOT / "art/sheets/v6/forehand/Production_2D_action_RPG_anima_2026-10-14T08-17-58.png"
+V6_READY = ROOT / "art/animations/players/swordsman/v6/sources/forehand/Production_2D_action_RPG_anima_2026-10-14T08-17-58.png"
 FONT = Path("C:/Windows/Fonts/msyh.ttc")
 
 # 标准身份规格里的关键部件，按候选图中实际取样区域给出（相对正面像的归一化框，由人工核对）

@@ -1,0 +1,997 @@
+{
+  "revision": "v7_pilot_c2",
+  "output_dir": "../exports/pilot_c2",
+  "canvas": [
+    512,
+    400
+  ],
+  "anchor": [
+    224,
+    360
+  ],
+  "target_standing_height": 190,
+  "contact_columns": 4,
+  "declarations": {
+    "actor_includes_weapon": true,
+    "weapon_layering": "not_attempted",
+    "G1": "pending_review",
+    "G2": "pending_review",
+    "G3": "not_passed",
+    "G4": "pending_review"
+  },
+  "sources": {
+    "attack1_c2": {
+      "file": "attack1_c2.png",
+      "standing_height": 410
+    },
+    "run_c2": {
+      "file": "run_c2.png",
+      "standing_height": 430
+    },
+    "jump_sheet": {
+      "file": "jump_c2.png",
+      "standing_height": 400,
+      "source_size": [
+        1774,
+        887
+      ],
+      "height_basis": "One shared approximate equivalent erect height of 400 source pixels. C2 push-off now extends the trailing leg; no per-pose bbox rescaling. Manual root uncertainty and any proportional drift need naked playback review."
+    }
+  },
+  "clips": {
+    "attack1": {
+      "asset_id": "actor.player.base.combo.1",
+      "loop": false,
+      "root_mode": "ground",
+      "compare": {
+        "manifest": "../../v6/exports/manifest.json",
+        "clip": "actor/attack1",
+        "label": "V6 attack1"
+      },
+      "poses": [
+        {
+          "id": "attack1_01",
+          "source": "attack1_c2",
+          "crop_bbox": [
+            20,
+            20,
+            402,
+            450
+          ],
+          "root": [
+            216,
+            440
+          ],
+          "foot": [
+            88,
+            438
+          ],
+          "component_seed": [
+            215,
+            240
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "attack1_02",
+          "source": "attack1_c2",
+          "crop_bbox": [
+            350,
+            12,
+            884,
+            449
+          ],
+          "root": [
+            665,
+            438
+          ],
+          "foot": [
+            524,
+            437
+          ],
+          "component_seed": [
+            680,
+            260
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 5
+        },
+        {
+          "id": "attack1_03",
+          "source": "attack1_c2",
+          "crop_bbox": [
+            880,
+            48,
+            1348,
+            449
+          ],
+          "root": [
+            1105,
+            438
+          ],
+          "foot": [
+            935,
+            437
+          ],
+          "component_seed": [
+            1100,
+            260
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 1
+        },
+        {
+          "id": "attack1_04",
+          "source": "attack1_c2",
+          "crop_bbox": [
+            1295,
+            45,
+            1774,
+            449
+          ],
+          "root": [
+            1535,
+            437
+          ],
+          "foot": [
+            1350,
+            434
+          ],
+          "component_seed": [
+            1530,
+            255
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 2,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "Candidate body/blade is complete but close to the source canvas edge; source edge has been visually inspected. Export canvas adds space; source is preserved."
+        },
+        {
+          "id": "attack1_05",
+          "source": "attack1_c2",
+          "crop_bbox": [
+            10,
+            445,
+            485,
+            875
+          ],
+          "root": [
+            290,
+            855
+          ],
+          "foot": [
+            127,
+            851
+          ],
+          "component_seed": [
+            320,
+            635
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "attack1_06",
+          "source": "attack1_c2",
+          "crop_bbox": [
+            475,
+            445,
+            880,
+            875
+          ],
+          "root": [
+            700,
+            855
+          ],
+          "foot": [
+            575,
+            851
+          ],
+          "component_seed": [
+            690,
+            640
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 2
+        },
+        {
+          "id": "attack1_07",
+          "source": "attack1_c2",
+          "crop_bbox": [
+            870,
+            445,
+            1320,
+            878
+          ],
+          "root": [
+            1100,
+            855
+          ],
+          "foot": [
+            995,
+            850
+          ],
+          "component_seed": [
+            1090,
+            640
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 8
+        },
+        {
+          "id": "attack1_08",
+          "source": "attack1_c2",
+          "crop_bbox": [
+            1328,
+            445,
+            1748,
+            878
+          ],
+          "root": [
+            1545,
+            855
+          ],
+          "foot": [
+            1450,
+            854
+          ],
+          "component_seed": [
+            1540,
+            640
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 6,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "Candidate body/blade is complete but close to the source canvas edge; source edge has been visually inspected. Export canvas adds space; source is preserved."
+        }
+      ],
+      "include_in_overview": true
+    },
+    "run": {
+      "asset_id": "actor.player.base.run",
+      "loop": true,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "run_01",
+          "source": "run_c2",
+          "crop_bbox": [
+            5,
+            10,
+            468,
+            447
+          ],
+          "root": [
+            270,
+            440
+          ],
+          "foot": [
+            418,
+            438
+          ],
+          "component_seed": [
+            270,
+            245
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "run_02",
+          "source": "run_c2",
+          "crop_bbox": [
+            470,
+            10,
+            900,
+            447
+          ],
+          "root": [
+            690,
+            440
+          ],
+          "foot": [
+            649,
+            439
+          ],
+          "component_seed": [
+            690,
+            245
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "run_03",
+          "source": "run_c2",
+          "crop_bbox": [
+            902,
+            10,
+            1334,
+            447
+          ],
+          "root": [
+            1120,
+            440
+          ],
+          "foot": [
+            979,
+            436
+          ],
+          "component_seed": [
+            1120,
+            245
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "run_04",
+          "source": "run_c2",
+          "crop_bbox": [
+            1340,
+            0,
+            1774,
+            447
+          ],
+          "root": [
+            1555,
+            440
+          ],
+          "foot": [
+            1416,
+            396
+          ],
+          "component_seed": [
+            1570,
+            230
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "Candidate body/blade is complete but close to the source canvas edge; source edge has been visually inspected. Export canvas adds space; source is preserved."
+        },
+        {
+          "id": "run_05",
+          "source": "run_c2",
+          "crop_bbox": [
+            5,
+            445,
+            505,
+            885
+          ],
+          "root": [
+            260,
+            867
+          ],
+          "foot": [
+            447,
+            856
+          ],
+          "component_seed": [
+            270,
+            670
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "run_06",
+          "source": "run_c2",
+          "crop_bbox": [
+            480,
+            445,
+            900,
+            885
+          ],
+          "root": [
+            690,
+            867
+          ],
+          "foot": [
+            662,
+            865
+          ],
+          "component_seed": [
+            690,
+            670
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "run_07",
+          "source": "run_c2",
+          "crop_bbox": [
+            902,
+            445,
+            1337,
+            885
+          ],
+          "root": [
+            1120,
+            867
+          ],
+          "foot": [
+            1240,
+            862
+          ],
+          "component_seed": [
+            1120,
+            670
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3
+        },
+        {
+          "id": "run_08",
+          "source": "run_c2",
+          "crop_bbox": [
+            1340,
+            440,
+            1774,
+            885
+          ],
+          "root": [
+            1555,
+            867
+          ],
+          "foot": [
+            1416,
+            809
+          ],
+          "component_seed": [
+            1570,
+            650
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 3,
+          "allow_edge_alpha": true,
+          "edge_alpha_reason": "Candidate body/blade is complete but close to the source canvas edge; source edge has been visually inspected. Export canvas adds space; source is preserved."
+        }
+      ],
+      "include_in_overview": true
+    },
+    "jump_demo": {
+      "asset_id": "actor.player.base.jump",
+      "loop": false,
+      "root_mode": "separate_height",
+      "timing_note": "Preview-only 32-tick demonstration. Starts at push-off; no preparation input delay baked. Runtime jump duration remains physics driven.",
+      "poses": [
+        {
+          "id": "jump_01_push_off",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            486,
+            3,
+            922,
+            448
+          ],
+          "root": [
+            701,
+            446
+          ],
+          "foot": [
+            535,
+            441
+          ],
+          "height_px": 8,
+          "duration_ticks": 3,
+          "allow_edge_alpha": true,
+          "calibration_note": "push off: c2 extends trailing support leg and lifts leading knee; explicit crop crosses former grid boundary x=887",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 15,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        },
+        {
+          "id": "jump_02_rise",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            913,
+            18,
+            1320,
+            424
+          ],
+          "root": [
+            1113,
+            427
+          ],
+          "foot": [
+            1014,
+            408
+          ],
+          "height_px": 50,
+          "duration_ticks": 6,
+          "allow_edge_alpha": true,
+          "calibration_note": "rise: both feet airborne and knees flex",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        },
+        {
+          "id": "jump_03_apex",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            1347,
+            3,
+            1774,
+            340
+          ],
+          "root": [
+            1553,
+            407
+          ],
+          "foot": [
+            1520,
+            324
+          ],
+          "height_px": 80,
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "calibration_note": "apex: tucked legs; c2 right edge expands to x=1763",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        },
+        {
+          "id": "jump_04_fall",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            25,
+            447,
+            410,
+            843
+          ],
+          "root": [
+            228,
+            850
+          ],
+          "foot": [
+            262,
+            825
+          ],
+          "height_px": 50,
+          "duration_ticks": 6,
+          "allow_edge_alpha": true,
+          "calibration_note": "fall: lower boots extend below pelvis; head begins y=449 in c2",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        },
+        {
+          "id": "jump_05_contact",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            455,
+            493,
+            867,
+            864
+          ],
+          "root": [
+            671,
+            850
+          ],
+          "foot": [
+            802,
+            848
+          ],
+          "height_px": 0,
+          "duration_ticks": 2,
+          "allow_edge_alpha": true,
+          "calibration_note": "landing contact: forward boot sole is on local support line",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        },
+        {
+          "id": "jump_06_compress",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            916,
+            575,
+            1308,
+            863
+          ],
+          "root": [
+            1118,
+            850
+          ],
+          "foot": [
+            1053,
+            848
+          ],
+          "height_px": 0,
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "calibration_note": "landing compression: deep crouch and off hand near floor",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        },
+        {
+          "id": "jump_07_recover",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            1338,
+            451,
+            1751,
+            865
+          ],
+          "root": [
+            1547,
+            850
+          ],
+          "foot": [
+            1693,
+            850
+          ],
+          "height_px": 0,
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "calibration_note": "recover: wide bent-knee combat stance, not neutral standing",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        }
+      ],
+      "include_in_overview": true
+    },
+    "jump_rise": {
+      "asset_id": "actor.player.base.jump.rise",
+      "loop": false,
+      "root_mode": "separate_height",
+      "timing_note": "Reused c2 stages 1 and 2; 9 ticks in this sample. Start physics impulse immediately; do not wait for an animation windup.",
+      "poses": [
+        {
+          "id": "jump_01_push_off",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            486,
+            3,
+            922,
+            448
+          ],
+          "root": [
+            701,
+            446
+          ],
+          "foot": [
+            535,
+            441
+          ],
+          "height_px": 8,
+          "duration_ticks": 3,
+          "allow_edge_alpha": true,
+          "calibration_note": "push off: c2 extends trailing support leg and lifts leading knee; explicit crop crosses former grid boundary x=887",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 15,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        },
+        {
+          "id": "jump_02_rise",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            913,
+            18,
+            1320,
+            424
+          ],
+          "root": [
+            1113,
+            427
+          ],
+          "foot": [
+            1014,
+            408
+          ],
+          "height_px": 50,
+          "duration_ticks": 6,
+          "allow_edge_alpha": true,
+          "calibration_note": "rise: both feet airborne and knees flex",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        }
+      ],
+      "include_in_overview": false
+    },
+    "jump_apex": {
+      "asset_id": "actor.player.base.jump.apex",
+      "loop": false,
+      "root_mode": "separate_height",
+      "timing_note": "Reused c2 stage 3; 5-tick sample only. Runtime transition follows vertical velocity.",
+      "poses": [
+        {
+          "id": "jump_03_apex",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            1347,
+            3,
+            1774,
+            340
+          ],
+          "root": [
+            1553,
+            407
+          ],
+          "foot": [
+            1520,
+            324
+          ],
+          "height_px": 80,
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "calibration_note": "apex: tucked legs; c2 right edge expands to x=1763",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        }
+      ],
+      "include_in_overview": false
+    },
+    "jump_fall": {
+      "asset_id": "actor.player.base.jump.fall",
+      "loop": false,
+      "root_mode": "separate_height",
+      "timing_note": "Reused c2 stage 4; 6-tick sample only. Runtime holds until actual landing contact.",
+      "poses": [
+        {
+          "id": "jump_04_fall",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            25,
+            447,
+            410,
+            843
+          ],
+          "root": [
+            228,
+            850
+          ],
+          "foot": [
+            262,
+            825
+          ],
+          "height_px": 50,
+          "duration_ticks": 6,
+          "allow_edge_alpha": true,
+          "calibration_note": "fall: lower boots extend below pelvis; head begins y=449 in c2",
+          "root_measurement": "local virtual standing-foot proxy: pelvis plus estimated straightened leg projection; independent of current foot minimum",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        }
+      ],
+      "include_in_overview": false
+    },
+    "jump_land": {
+      "asset_id": "actor.player.base.jump.land",
+      "loop": false,
+      "root_mode": "separate_height",
+      "timing_note": "Reused c2 stages 5/6/7, 12-tick landing sample triggered by real contact.",
+      "poses": [
+        {
+          "id": "jump_05_contact",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            455,
+            493,
+            867,
+            864
+          ],
+          "root": [
+            671,
+            850
+          ],
+          "foot": [
+            802,
+            848
+          ],
+          "height_px": 0,
+          "duration_ticks": 2,
+          "allow_edge_alpha": true,
+          "calibration_note": "landing contact: forward boot sole is on local support line",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        },
+        {
+          "id": "jump_06_compress",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            916,
+            575,
+            1308,
+            863
+          ],
+          "root": [
+            1118,
+            850
+          ],
+          "foot": [
+            1053,
+            848
+          ],
+          "height_px": 0,
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "calibration_note": "landing compression: deep crouch and off hand near floor",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        },
+        {
+          "id": "jump_07_recover",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            1338,
+            451,
+            1751,
+            865
+          ],
+          "root": [
+            1547,
+            850
+          ],
+          "foot": [
+            1693,
+            850
+          ],
+          "height_px": 0,
+          "duration_ticks": 5,
+          "allow_edge_alpha": true,
+          "calibration_note": "recover: wide bent-knee combat stance, not neutral standing",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        }
+      ],
+      "include_in_overview": false
+    },
+    "jump_prepare": {
+      "asset_id": "actor.player.base.jump.prepare",
+      "loop": false,
+      "root_mode": "separate_height",
+      "timing_note": "Optional isolated 6-tick anticipation study; excluded from jump_demo and immediate jump input flow.",
+      "poses": [
+        {
+          "id": "jump_00_prepare",
+          "source": "jump_sheet",
+          "crop_bbox": [
+            28,
+            116,
+            440,
+            448
+          ],
+          "root": [
+            228,
+            445
+          ],
+          "foot": [
+            314,
+            443
+          ],
+          "height_px": 0,
+          "duration_ticks": 6,
+          "allow_edge_alpha": true,
+          "calibration_note": "prepare: crouched contact stance; optional preparation clip only",
+          "root_measurement": "grounded support proxy",
+          "manual_root_uncertainty_source_px": 10,
+          "edge_alpha_reason": "Explicit isolated jump crop retains existing low-alpha noise; no connected-component filter is used because fingertips/hair include separate tiny alpha cores."
+        }
+      ],
+      "include_in_overview": false
+    }
+  },
+  "review_scope": "Native c2 attack1/run/jump candidates only; failed walk c1/c2 excluded. User art approval and G3 weapon switching are pending.",
+  "calibration_notes": {
+    "sources": [
+      {
+        "status": "manual_candidate_pending_export_and_visual_review",
+        "body_scale": "one source standing-equivalent height; no per-pose bounding-box normalization",
+        "mask": "explicit component seed isolates the painted actor where rectangular source crops overlap; no painted pose synthesis",
+        "limitations": [
+          "Windup missing blade fixed in c2; contact blade remains close to source edge, complete silhouette must be checked.",
+          "Bare timing comparison only; G3 not attempted, gameplay/root_dx/events unchanged."
+        ]
+      },
+      {
+        "status": "manual_candidate_pending_export_and_visual_review",
+        "body_scale": "one source standing-equivalent height; no per-pose bounding-box normalization",
+        "mask": "explicit component seed isolates the painted actor where rectangular source crops overlap; no painted pose synthesis",
+        "limitations": [
+          "c2 changes lower-row legs but full alternating cycle and toe-off still require playback review.",
+          "Airborne poses share a virtual ground line, not their lowest foot."
+        ]
+      },
+      {
+        "actual_source_pose_count": 8,
+        "configured_pose_references": 15,
+        "coordinate_system": "absolute source pixels, x right, y down, bbox max exclusive",
+        "order": "Row major for source identity only; actual pose bounds explicitly measured. C2 push-off extends beyond the former x=887 grid line.",
+        "root_contract": "Grounded stages 0/5/6/7 use actual local support-line proxies. Airborne stages 1/2/3/4 use local virtual standing-foot proxies estimated beneath the pelvis with legs extended. C2 push-off root is explicitly recalibrated to [701,446]. Source roots remove sheet-layout offsets when aligning to anchor; source row or hair-height differences are never added as jump movement.",
+        "height_contract": "Independent OUTPUT heights for source stages 0..7 are [0,8,50,80,50,0,0,0]. separate_height preview applies height_px to the entire normalized PNG once. Do not also apply source root_y/row differences, and do not normalize every airborne pose by the lowest foot.",
+        "foot_contract": "foot is one actual visible lower boot-sole point for overlay review; it is not the root estimator for airborne poses.",
+        "timing_contract": "jump_demo uses source stages 1..7, [3,6,5,6,2,5,5] = 32 ticks. It starts with push-off immediately; the 6-tick preparation pose is an optional separate jump_prepare clip and is not a mandatory input delay. Phase clips reuse the same 8 source IDs. Runtime phase changes follow physics, not these demo holds.",
+        "alpha_observation": "C2 is actual transparent RGBA (alpha 0..255). At alpha>24 it has exactly 8 substantial components. Faint lower-alpha speckles remain outside major shapes; allow_edge_alpha=true is explicit draft acceptance of those existing remnants, not final alpha cleanup. Source image unchanged.",
+        "bbox_contract": "Every bbox includes complete visible actor, sword and scabbard with padding around the substantial alpha component. No source pixel processing was performed.",
+        "visual_limitations": [
+          "C2 fixes the major missing leg extension in push-off, but does not prove timing or force quality until playback is reviewed.",
+          "Push-off source silhouette is taller after extension; shared standing_height=400 is retained and any proportional drift requires comparison, not individual resizing.",
+          "Sword angles remain similar in airborne poses; fingers, hand-to-hilt contact and off-hand balance need review at final size.",
+          "Prepare and compression remain combat crouches; compression reaches the off hand toward the floor.",
+          "Recovery still has flexed knees and a wide combat stance; a neutral standing transition is missing.",
+          "Manual source roots have +/-10 pixels estimated uncertainty, +/-15 for edited push-off. No art approval or runtime timing approval claimed."
+        ],
+        "verification": "Viewed C2 original; measured its 8 alpha>24 components; explicit bboxes, coordinates and JSON checked. No exporter invocation or output PNG/GIF/manifest generation performed.",
+        "substantial_alpha_bboxes_by_source_stage": [
+          [
+            40,
+            128,
+            427,
+            446
+          ],
+          [
+            498,
+            14,
+            914,
+            444
+          ],
+          [
+            925,
+            30,
+            1308,
+            411
+          ],
+          [
+            1359,
+            15,
+            1763,
+            327
+          ],
+          [
+            37,
+            449,
+            397,
+            831
+          ],
+          [
+            468,
+            505,
+            854,
+            851
+          ],
+          [
+            928,
+            587,
+            1295,
+            850
+          ],
+          [
+            1350,
+            463,
+            1738,
+            852
+          ]
+        ]
+      }
+    ],
+    "jump": "height curve is preview only; physical runtime jump remains variable; no preparation delay baked",
+    "jump_alpha": "Jump uses manually separated full crops; alpha speckles retained. Attack1/run use explicit component masks where adjacent rectangular crops overlap."
+  }
+}

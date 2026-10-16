@@ -1,9 +1,9 @@
 """标准原画母版处理（纯离线，不开窗口）。
 
-以 art/characters/standard_v1/sheet_main_c1.png 为母版：
-  1. 去掉浅灰底与地平线，按人物拆出 5 个视角的透明图 → art/characters/standard_v1/views/
+以 art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png 为母版：
+  1. 去掉浅灰底与地平线，按人物拆出 5 个视角的透明图 → art/concepts/characters/players/swordsman/standard_v1/views/
   2. 比例与一致性自检（各视角身高、脚底线、近似头身比）
-  3. 按部位取正式色号表（中值 + 亮部 + 暗部）→ art/characters/standard_v1/palette.json
+  3. 按部位取正式色号表（中值 + 亮部 + 暗部）→ art/concepts/characters/players/swordsman/standard_v1/palette.json
   4. 游戏尺寸可读性检查 + 评审板 → docs/previews/standard_v1/
 
   python tools/explore/standard_master.py
@@ -18,11 +18,11 @@ from PIL import Image, ImageDraw, ImageFont
 from scipy import ndimage
 
 ROOT = Path(__file__).resolve().parents[2]
-STD = ROOT / "art" / "characters" / "standard_v1"
+STD = ROOT / 'art/concepts/characters/players/swordsman/standard_v1'
 PREV = ROOT / "docs" / "previews" / "standard_v1"
 TMP = ROOT / "temp" / "standard"
 MASTER = STD / "sheet_main_c1.png"
-V6_READY = ROOT / "art/sheets/v6/forehand/Production_2D_action_RPG_anima_2026-10-14T08-17-58.png"
+V6_READY = ROOT / "art/animations/players/swordsman/v6/sources/forehand/Production_2D_action_RPG_anima_2026-10-14T08-17-58.png"
 FONT = Path("C:/Windows/Fonts/msyh.ttc")
 VIEWS = ["A1_front", "A1_three_quarter", "A1_side_right", "A1_back", "A4_base_body"]
 VIEW_CN = {"A1_front": "正面", "A1_three_quarter": "3/4", "A1_side_right": "侧面（朝右）", "A1_back": "背面",

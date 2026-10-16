@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "path_base": "repository_root",
+  "layout": {
+    "concepts/characters/players": "玩家角色原画，按身份/版本细分",
+    "concepts/characters/monsters": "怪物与 Boss 原画，按身份/版本细分",
+    "concepts/characters/npcs": "NPC 原画，按身份/版本细分；有任务再建目录",
+    "concepts/scenes": "区域/房间场景原画",
+    "concepts/items": "独立武器/装备/道具原画；有任务再建目录",
+    "concepts/style": "跨角色画风对照板",
+    "animations/players": "玩家动作 sources/exports，按身份/版本细分",
+    "animations/monsters": "怪物动作，按身份/版本细分；有任务再建目录",
+    "animations/shared": "历史玩家与怪物共用烘焙契约的演示包",
+    "effects": "独立可复用特效；强耦合特效仍放动作版本包内",
+    "ui": "HUD、头像、图标、面板等 UI 源资源",
+    "explorations": "按题材或技术细分的历史实验"
+  },
+  "migration": {
+    "date": "2026-10-16",
+    "status": "applied",
+    "completed_moves": [
+      "art/characters/standard_v1",
+      "art/characters/goblin_standard_v1",
+      "art/characters/goblin.png",
+      "art/characters/hero_cool.png",
+      "art/characters/hero_idle.png",
+      "art/characters/hero_attack.png",
+      "art/characters/portrait_hero.png",
+      "art/characters/benchmark_board.png",
+      "art/monsters/goblin/standard_v1",
+      "art/environments",
+      "art/concepts/wuxia_backview_v1",
+      "art/concepts/wuxia_backview_v2",
+      "art/concepts/wuxia_backview_v3",
+      "art/sheets/v3",
+      "art/sheets/v4",
+      "art/sheets/v5",
+      "art/sheets/v6",
+      "art/sheets/v7",
+      "art/seq_v5",
+      "art/seq_v6",
+      "art/seq_v7",
+      "art/sheets"
+    ],
+    "recovery": {
+      "error": "git mv art/monsters/goblin/standard_v1 failed with Permission denied",
+      "source_files_intact": true,
+      "strategy": "explicitly resume verified completed moves; move remaining tracked files individually without elevated permissions"
+    },
+    "preserve_historical_documents": [
+      "docs/reports/",
+      "docs/project/04_交接日志.md",
+      "docs/project/status/ws2.md",
+      "docs/project/status/ws3.md"
+    ],
+    "moves": [
+      {
+        "from": "art/characters/standard_v1",
+        "to": "art/concepts/characters/players/swordsman/standard_v1"
+      },
+      {
+        "from": "art/characters/goblin_standard_v1",
+        "to": "art/concepts/characters/monsters/goblin/rejected_v1"
+      },
+      {
+        "from": "art/characters/goblin.png",
+        "to": "art/concepts/characters/monsters/goblin/legacy/goblin.png"
+      },
+      {
+        "from": "art/characters/hero_cool.png",
+        "to": "art/concepts/characters/players/swordsman/legacy/hero_cool.png"
+      },
+      {
+        "from": "art/characters/hero_idle.png",
+        "to": "art/concepts/characters/players/swordsman/legacy/hero_idle.png"
+      },
+      {
+        "from": "art/characters/hero_attack.png",
+        "to": "art/concepts/characters/players/swordsman/legacy/hero_attack.png"
+      },
+      {
+        "from": "art/characters/portrait_hero.png",
+        "to": "art/ui/hud/portraits/portrait_hero.png"
+      },
+      {
+        "from": "art/characters/benchmark_board.png",
+        "to": "art/concepts/style/benchmark_board.png"
+      },
+      {
+        "from": "art/monsters/goblin/standard_v1",
+        "to": "art/concepts/characters/monsters/goblin/standard_v1"
+      },
+      {
+        "from": "art/environments",
+        "to": "art/concepts/scenes/dungeon/legacy"
+      },
+      {
+        "from": "art/concepts/wuxia_backview_v1",
+        "to": "art/explorations/themes/wuxia/backview_v1"
+      },
+      {
+        "from": "art/concepts/wuxia_backview_v2",
+        "to": "art/explorations/themes/wuxia/backview_v2"
+      },
+      {
+        "from": "art/concepts/wuxia_backview_v3",
+        "to": "art/explorations/themes/wuxia/backview_v3"
+      },
+      {
+        "from": "art/sheets/v3",
+        "to": "art/animations/players/swordsman/v3/sources"
+      },
+      {
+        "from": "art/sheets/v4",
+        "to": "art/animations/players/swordsman/v4/sources"
+      },
+      {
+        "from": "art/sheets/v5",
+        "to": "art/animations/players/swordsman/v5/sources"
+      },
+      {
+        "from": "art/sheets/v6",
+        "to": "art/animations/players/swordsman/v6/sources"
+      },
+      {
+        "from": "art/sheets/v7",
+        "to": "art/animations/players/swordsman/v7/sources"
+      },
+      {
+        "from": "art/seq_v5",
+        "to": "art/animations/players/swordsman/v5/exports"
+      },
+      {
+        "from": "art/seq_v6",
+        "to": "art/animations/players/swordsman/v6/exports"
+      },
+      {
+        "from": "art/seq_v7",
+        "to": "art/animations/players/swordsman/v7/exports"
+      },
+      {
+        "from": "art/sheets",
+        "to": "art/animations/shared/demo_v2/sources"
+      }
+    ],
+    "audit_file": "docs/reports/ws1/2026-10/2026-10-16_art_layout_validation.json",
+    "verified_art_files": 857,
+    "binary_file_count": 799
+  },
+  "assets": {
+    "ordinary_goblin": "art/concepts/characters/monsters/goblin/standard_v1/manifest.json",
+    "swordsman_standard": "art/concepts/characters/players/swordsman/standard_v1/manifest.json",
+    "goblin_chief_candidate": "art/concepts/characters/monsters/goblin_chief/v1/generation.json"
+  }
+}

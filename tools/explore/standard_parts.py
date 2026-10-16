@@ -1,8 +1,8 @@
 """A5 槽位拆解后处理（纯离线，不开窗口）。
 
-输入 art/characters/standard_v1/sheet_parts_c1.png：
+输入 art/concepts/characters/players/swordsman/standard_v1/sheet_parts_c1.png：
   1. 去掉生图多画的圈号（用底色覆盖），另存 sheet_parts_c1_clean.png
-  2. 按部件切出透明图 → art/characters/standard_v1/parts/<槽位>__<部件>.png
+  2. 按部件切出透明图 → art/concepts/characters/players/swordsman/standard_v1/parts/<槽位>__<部件>.png
   3. 按 18 号文档第七节槽位框架标注 → docs/previews/standard_v1/parts_slots.jpg，并写 parts/parts.json
 
   python tools/explore/standard_parts.py
@@ -19,7 +19,7 @@ from scipy import ndimage
 from standard_master import font, label
 
 ROOT = Path(__file__).resolve().parents[2]
-STD = ROOT / "art" / "characters" / "standard_v1"
+STD = ROOT / 'art/concepts/characters/players/swordsman/standard_v1'
 SRC = STD / "sheet_parts_c1.png"
 OUT = STD / "parts"
 PREV = ROOT / "docs" / "previews" / "standard_v1"

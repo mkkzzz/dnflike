@@ -20,7 +20,7 @@
         "fps": 12,
         "loop": true,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           0,
           1
@@ -43,7 +43,7 @@
         "fps": 12,
         "loop": true,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           4,
           5,
@@ -67,7 +67,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           8,
           9,
@@ -91,7 +91,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           8,
           10,
@@ -116,7 +116,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           8,
           11,
@@ -141,7 +141,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           3,
           10,
@@ -164,7 +164,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           3,
           12
@@ -184,7 +184,7 @@
         "fps": 12,
         "loop": true,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           12
         ],
@@ -206,7 +206,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           3,
           12,
@@ -228,7 +228,7 @@
         "fps": 12,
         "loop": true,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           2
         ],
@@ -249,7 +249,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           13,
           3,
@@ -271,7 +271,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           13,
           14
@@ -294,7 +294,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           14,
           15,
@@ -319,7 +319,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           2,
           8,
@@ -344,7 +344,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           8,
           9,
@@ -370,7 +370,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           8,
           10,
@@ -399,7 +399,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/player_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/player_demo_v2.png",
         "source_cells": [
           8,
           9,
@@ -427,7 +427,7 @@
         "fps": 12,
         "loop": true,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/monster_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/monster_demo_v2.png",
         "source_cells": [
           0,
           1
@@ -450,7 +450,7 @@
         "fps": 12,
         "loop": true,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/monster_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/monster_demo_v2.png",
         "source_cells": [
           4,
           5,
@@ -475,7 +475,7 @@
         "fps": 12,
         "loop": true,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/monster_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/monster_demo_v2.png",
         "source_cells": [
           4,
           5,
@@ -501,7 +501,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/monster_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/monster_demo_v2.png",
         "source_cells": [
           8,
           9,
@@ -526,7 +526,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/monster_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/monster_demo_v2.png",
         "source_cells": [
           12,
           3,
@@ -547,7 +547,7 @@
         "fps": 12,
         "loop": true,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/monster_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/monster_demo_v2.png",
         "source_cells": [
           13
         ],
@@ -567,7 +567,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/monster_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/monster_demo_v2.png",
         "source_cells": [
           13,
           14
@@ -590,7 +590,7 @@
         "fps": 12,
         "loop": false,
         "source": "ai_keyframes",
-        "atlas": "art/sheets/monster_demo_v2.png",
+        "atlas": "art/animations/shared/demo_v2/sources/monster_demo_v2.png",
         "source_cells": [
           14,
           15,

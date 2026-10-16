@@ -30,7 +30,7 @@
 ## 来源、加工与自检
 
 - 工具：`image_gen`，本轮是文字生图，没有输入参考图片；不宣称跨图严格一致。
-- 源图、完整实际提示词、生成与弃用记录：`art/concepts/wuxia_backview_v1/generation.json`，图像在同目录的 `idle/`、`parry/` 中。
+- 源图、完整实际提示词、生成与弃用记录：`art/explorations/themes/wuxia/backview_v1/generation.json`，图像在同目录的 `idle/`、`parry/` 中。
 - 初版格挡画出额外玩家剑并截掉鞋底，视觉自检后弃用，不出现在正式评审板；原图保留用于溯源。
 - 选用格挡图可见双方各一把武器和局部接触火星，玩家保持背视、左手空手；双方头脚完整。
 - 选用对峙图没有攻击碰撞，保持低强度青墨气韵。

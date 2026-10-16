@@ -21,7 +21,10 @@ import re
 import sys
 from pathlib import Path
 
+from migrate_art_layout import CATALOG, frozen, load_catalog, relocate
+
 REPO = Path(__file__).resolve().parents[1]
+ART_CATALOG = load_catalog() if CATALOG.exists() else None
 LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 CODE = re.compile(r"`([^`\n]+)`")
 SEP_CELL = re.compile(r"^:?-{3,}:?$")
@@ -48,6 +51,20 @@ def rel(path: Path) -> str:
     return path.relative_to(REPO).as_posix()
 
 
+def target_exists(md: Path, target: Path) -> bool:
+    target = target.resolve()
+    if target.exists():
+        return True
+    if not ART_CATALOG or not frozen(rel(md), ART_CATALOG):
+        return False
+    try:
+        old = target.relative_to(REPO).as_posix()
+    except ValueError:
+        return False
+    new = relocate(old, ART_CATALOG["migration"]["moves"])
+    return new != old and (REPO / new).exists()
+
+
 def check_links(md: Path, text: str) -> list[str]:
     problems = []
     for match in LINK.finditer(text):
@@ -55,7 +72,7 @@ def check_links(md: Path, text: str) -> list[str]:
         if not raw or raw.startswith(("http://", "https://", "mailto:", "#")):
             continue
         target = raw.split("#")[0].strip()
-        if target and not (md.parent / target).resolve().exists():
+        if target and not target_exists(md, md.parent / target):
             problems.append(f"{rel(md)} -> {raw}")
     return problems
 
@@ -70,7 +87,7 @@ def check_code_paths(md: Path, text: str) -> list[str]:
             continue
         if " " in token or PLACEHOLDER & set(token):
             continue
-        if not (REPO / token).exists():
+        if not target_exists(md, REPO / token):
             problems.append(f"{rel(md)} -> `{token}`")
     return problems
 

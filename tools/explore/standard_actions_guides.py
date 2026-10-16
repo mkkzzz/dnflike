@@ -18,7 +18,7 @@ import puppet as pp
 from poses import ATTACK1
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "art/sheets/v7/guides"
+OUT = ROOT / "art/animations/players/swordsman/v7/sources/guides"
 CELL = (512, 512)
 SCALE = 1.52
 ORIGIN = (235, 452)

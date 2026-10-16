@@ -1,11 +1,11 @@
 """A7 标准太刀标定（纯离线，不开窗口）。
 
-输入 art/characters/standard_v1/sheet_weapon_c1.png（四行：出鞘侧面 / 刀背俯视 / 入鞘 / 空鞘）：
-  1. 去底，按行拆出 4 张透明图 → art/characters/standard_v1/weapon/
+输入 art/concepts/characters/players/swordsman/standard_v1/sheet_weapon_c1.png（四行：出鞘侧面 / 刀背俯视 / 入鞘 / 空鞘）：
+  1. 去底，按行拆出 4 张透明图 → art/concepts/characters/players/swordsman/standard_v1/weapon/
      空鞘行原图多画了一个镡，切图时去掉（镡属于刀，不属于鞘）
   2. 标定柄头 / 握点 / 护手 / 刀尖（出鞘与俯视）、柄头 / 护手 / 鞘口 / 鞘尾（入鞘）、鞘口 / 鞘尾（空鞘）
   3. 换算实机尺寸：刀身（护手→刀尖）以 V6 实机最长测量值为准，握点距护手取 V6 中位值
-     → art/characters/standard_v1/weapon/katana.json + docs/previews/standard_v1/weapon_calibration.png
+     → art/concepts/characters/players/swordsman/standard_v1/weapon/katana.json + docs/previews/standard_v1/weapon_calibration.png
 
   python tools/explore/standard_weapon.py
 """
@@ -22,7 +22,7 @@ from scipy import ndimage
 from standard_master import font, label
 
 ROOT = Path(__file__).resolve().parents[2]
-STD = ROOT / "art" / "characters" / "standard_v1"
+STD = ROOT / 'art/concepts/characters/players/swordsman/standard_v1'
 SRC = STD / "sheet_weapon_c1.png"
 OUT = STD / "weapon"
 PREV = ROOT / "docs" / "previews" / "standard_v1"

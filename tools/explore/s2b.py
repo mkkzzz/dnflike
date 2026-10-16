@@ -490,7 +490,7 @@ def run_scene(actor, weapon="katana", naked=False, enemy_gap=150, lead=12, tail=
     import preview_v6 as v6
     from art_v5.monster import READY as M_READY, RECOIL
     manifest = json.loads((v6.ASSETS / "manifest.json").read_text("utf-8"))
-    bg = Image.open(ROOT / "art/environments/dungeon_hall.png").convert("RGB").crop((220, 226, 1020, 646))
+    bg = Image.open(ROOT / "art/concepts/scenes/dungeon/legacy/dungeon_hall.png").convert("RGB").crop((220, 226, 1020, 646))
     base = np.asarray(bg, np.float32) / 255
     enemy_x, enemy_age, enemy_cell = START_X + enemy_gap, None, M_READY
     origin = np.array([START_X - CANVAS[2][0], GROUND - CANVAS[2][1]], float)

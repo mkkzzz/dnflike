@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw, ImageFilter
 from bake_body_v3 import extract  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-SHEETS = ROOT / 'art' / 'sheets' / 'v5'
+SHEETS = ROOT / 'art/animations/players/swordsman/v5/sources'
 GEN = ROOT / 'temp' / 'v5_gen'
 
 # Landmarks reviewed against the generated sheets (1024x1024, 2 rows x 3 cols):
