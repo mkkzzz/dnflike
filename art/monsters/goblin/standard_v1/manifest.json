@@ -1,0 +1,58 @@
+{
+  "asset_id": "concept.enemy.goblin.standard",
+  "revision": "standard_v1_original",
+  "path_base": "manifest_directory",
+  "style_profile": "handpainted_action_v1",
+  "theme_pack": "dark_fantasy_v1",
+  "identity_status": "source_approved",
+  "approval": {
+    "date": "2026-10-16",
+    "user_statement": "这版新的哥布林不如原版的，原版的更像怪物。要不不要新的了，就用原版的作为哥布林",
+    "scope": "原版主体造型、比例、怪物气质与画风；不是新动作或游戏接入验收",
+    "weapon_scope": "未独立确认原图带钉木棒与前述小木棒槌之间的选择；本次不改武器"
+  },
+  "source": {
+    "file": "source/goblin_original.png",
+    "repository_origin": "art/characters/goblin.png",
+    "copy_policy": "byte_identical_keep_origin",
+    "sha256": "bfcfd4a0046d00e0292fbab08a0b1a569b8e57a8741874f66f9c8f0dd95befe6",
+    "size": [1024, 1024],
+    "mode": "RGB",
+    "alpha": "none",
+    "generation_method": "existing_original_source_reused; not regenerated this round",
+    "original_generation_model_and_seed": "unknown"
+  },
+  "details": [
+    {"id": "face", "file": "details/face.png", "crop_xyxy": [304, 100, 696, 448]},
+    {"id": "torso_clothing", "file": "details/torso_clothing.png", "crop_xyxy": [370, 350, 752, 852]},
+    {"id": "grip", "file": "details/grip.png", "crop_xyxy": [248, 482, 462, 704]},
+    {"id": "weapon_legacy", "file": "details/weapon_legacy.png", "crop_xyxy": [56, 110, 384, 706], "scope": "原图武器参考，不是已批准的新小木棒槌"},
+    {"id": "feet", "file": "details/feet.png", "crop_xyxy": [286, 796, 784, 980]}
+  ],
+  "processing": {
+    "tool": "Pillow 12.2.0",
+    "operation": "native_pixel_crop",
+    "crop_coordinates": "x0,y0,x1,y1; Pillow right/bottom exclusive",
+    "source_retouch": false,
+    "upscale": false,
+    "background_removal": false,
+    "note": "细节为原图裁切，不是新增视角、手部补绘或透明独立部件；不能直接作为动作成品"
+  },
+  "supplement_plan": [
+    {"item": "pure_side_and_back_views", "status": "planned", "reason": "显示原图看不见的背部、服装与耳鼻轮廓；只在保持原版身份的前提下补齐"},
+    {"item": "weapon_and_grip_spec", "status": "needs_design_confirmation", "reason": "确认原带钉棒或新小木棒槌，再标定棒长、握点与攻击时尺寸"},
+    {"item": "body_scale_and_color_material_spec", "status": "planned", "reason": "从原图和实机现行尺寸标定，不重新规定理想化头身比"},
+    {"item": "transparent_body_and_parts", "status": "not_done", "reason": "后续加工；原图及细节裁切都有背景，不能冒充透明成品"},
+    {"item": "action_generation", "status": "not_in_scope", "reason": "另立动作任务，需要真实原画参考输入工具与相位契约"}
+  ],
+  "rejected_candidate": {
+    "repository_file": "art/characters/goblin_standard_v1/candidates/c1/Original_enemy_character_conce_2026-10-16T03-30-13.png",
+    "date": "2026-10-16",
+    "reason": "用户认为不如原版、缺少怪物感；停止迭代，保留历史文件"
+  },
+  "runtime": {
+    "new_integration_done": false,
+    "legacy_sprite_mapping_changed": false,
+    "resolver_implemented": false
+  }
+}

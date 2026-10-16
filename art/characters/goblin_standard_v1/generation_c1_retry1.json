@@ -24,8 +24,10 @@
     "inspection_tool": "Pillow 12.2.0",
     "visual_review": "Full body, feet and wooden club visible; facing right; no spikes or VFX. Slimmer physique and longer visible legs than old design. Club still looks relatively long; simplified shading and calmer face differ from the old design. Anatomy ratios and hand laterality are not independently measured or approved."
   },
-  "lifecycle": "source_review",
-  "user_approval": "none",
+  "lifecycle": "rejected",
+  "user_approval": "rejected",
+  "rejection_date": "2026-10-16",
+  "rejection_reason": "用户认为新版不如原版，原版更像怪物；选回原版，停止新版迭代",
   "integration": "not_done",
   "historical_cancelled_attempt": "generation.json",
   "notes": "This is a single new concept candidate, not a locked master, animation set or image-to-image edit."
