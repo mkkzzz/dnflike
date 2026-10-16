@@ -12,6 +12,12 @@ def validate(root: Path) -> dict:
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     assert all(manifest["technical_checks"].values()), "Packaging checks failed"
     assert not manifest["upscale"] and not manifest["native_2k"]
+    rejected = manifest.get("status") == "scenes_rejected_stopped"
+    if rejected:
+        assert not manifest["rooms"], "Rejected rooms must not remain active"
+        assert not list((root / "exports/rooms").glob("*.png")), "Rejected room files remain"
+        assert not list((root / "previews").glob("*.png")), "Rejected scene previews remain"
+        assert all(not list((root / "sources" / f"r{number:02}").glob("*.png")) for number in range(2, 6)), "Rejected room sources remain"
     state_count = shadow_count = 0
     for room_id, room in manifest["rooms"].items():
         with Image.open(root / room["file"]) as image:
@@ -43,7 +49,9 @@ def validate(root: Path) -> dict:
             shadow_count += 1
     complete = not any(manifest["missing"].values())
     result = {
-        "result": "ASSET_PACKAGE_CHECK_OK",
+        "result": "SCENE_REJECTION_CLEANUP_OK" if rejected else "ASSET_PACKAGE_CHECK_OK",
+        "scene_exports_usable": not rejected,
+        "production_stopped": rejected,
         "rooms": len(manifest["rooms"]),
         "entity_types": len(manifest["entities"]),
         "static_states": state_count,

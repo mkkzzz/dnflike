@@ -32,6 +32,9 @@ def package(root: Path) -> None:
     if not source_manifest["user_approved"]:
         raise ValueError("The v3 reference must be approved before packaging")
     root = root.resolve()
+    existing_manifest = root / "manifest.json"
+    if existing_manifest.exists() and json.loads(existing_manifest.read_text(encoding="utf-8")).get("status") == "scenes_rejected_stopped":
+        raise ValueError("Room scenes were rejected and production stopped; do not rebuild this package")
     rooms = root / "exports/rooms"
     entities = root / "exports/entities/stump"
     preview = root / "previews"

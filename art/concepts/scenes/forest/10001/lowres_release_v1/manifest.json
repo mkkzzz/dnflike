@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "package_id": "dungeon.10001.environment.lowres.v1",
-  "status": "partial_blocked",
+  "status": "scenes_rejected_stopped",
   "path_base": "manifest_directory",
   "reference_viewport": [
     1280,
@@ -13,214 +13,7 @@
   "style_reference": "../pilot_lowres_v3/manifest.json",
   "native_2k": false,
   "upscale": false,
-  "rooms": {
-    "10001-R01": {
-      "file": "exports/rooms/10001-R01.png",
-      "size": [
-        2688,
-        768
-      ],
-      "anchor": [
-        0,
-        0
-      ],
-      "walkable_rect": [
-        32,
-        384,
-        2624,
-        292
-      ],
-      "door_anchors": {
-        "left": [
-          32,
-          530
-        ],
-        "right": [
-          2656,
-          530
-        ],
-        "up": [
-          1344,
-          384
-        ],
-        "down": [
-          1344,
-          676
-        ]
-      },
-      "build": "Approved native scene plus reflected tile, blended across 64-pixel overlap. Intentional repeated art; not an AI-generated unique panorama or 2K asset.",
-      "source_sha256": "29f61ca61f48156d62cd436d832681e3f36ee78fdcb388e2ed1f26654c1ac628",
-      "visual_review_of_extension": "pending"
-    },
-    "10001-R02": {
-      "file": "exports/rooms/10001-R02.png",
-      "size": [
-        2688,
-        768
-      ],
-      "anchor": [
-        0,
-        0
-      ],
-      "walkable_rect": [
-        32,
-        507,
-        2624,
-        169
-      ],
-      "door_anchors": {
-        "left": [
-          32,
-          591
-        ],
-        "right": [
-          2656,
-          591
-        ],
-        "up": [
-          1344,
-          507
-        ],
-        "down": [
-          1344,
-          676
-        ]
-      },
-      "source": "sources/r02/原创2D横版动作网游10001_R02普通怪森林房间_一张完_2026-10-16T13-10-16.png",
-      "source_sha256": "9a0bf680d3a3a9533f97cfcaa733d3bbb7984c97800bebedd9729a4ccd5490fc",
-      "build": "Native source plus reflected tile; 64px blended overlap; repeated artwork, no upscale.",
-      "visual_review_of_extension": "pending"
-    },
-    "10001-R03": {
-      "file": "exports/rooms/10001-R03.png",
-      "size": [
-        1920,
-        768
-      ],
-      "anchor": [
-        0,
-        0
-      ],
-      "reference_viewport": [
-        1280,
-        720
-      ],
-      "walkable_rect": [
-        32,
-        492,
-        1856,
-        192
-      ],
-      "door_anchors": {
-        "left": [
-          32,
-          588
-        ],
-        "right": [
-          1888,
-          588
-        ],
-        "up": [
-          960,
-          492
-        ],
-        "down": [
-          960,
-          684
-        ]
-      },
-      "source": "sources/r03/原创10001_R03森林精英遭遇房间背景_单张16_9成熟_2026-10-16T13-28-02.png",
-      "source_sha256": "8cfa81c9e4b78bdd3dc4b0596950e9147e116f2c119910915fbdefa963bea490",
-      "build": "Native scene and horizontal mirrored extension with 64px blend; intentional repeated art, no upscale.",
-      "visual_review_of_extension": "pending"
-    },
-    "10001-R04": {
-      "file": "exports/rooms/10001-R04.png",
-      "size": [
-        1024,
-        1280
-      ],
-      "anchor": [
-        0,
-        0
-      ],
-      "reference_viewport": [
-        960,
-        540
-      ],
-      "walkable_rect": [
-        24,
-        1044,
-        976,
-        174
-      ],
-      "door_anchors": {
-        "left": [
-          24,
-          1131
-        ],
-        "right": [
-          1000,
-          1131
-        ],
-        "up": [
-          512,
-          1044
-        ],
-        "down": [
-          512,
-          1218
-        ]
-      },
-      "source": "sources/r04/原创10001_R04森林竖幅房间背景_正方形构图_完整一体_2026-10-16T13-28-56.png",
-      "source_sha256": "f7d60ac4457d7b95584e220bbe40c7ac400191791fe8912b13d35a22b7fe98cc",
-      "build": "Native square scene with a 256px vertically reflected canopy extension; original ground preserved; repeated canopy, no upscale.",
-      "visual_review_of_extension": "pending"
-    },
-    "10001-R05": {
-      "file": "exports/rooms/10001-R05.png",
-      "size": [
-        2688,
-        768
-      ],
-      "anchor": [
-        0,
-        0
-      ],
-      "reference_viewport": [
-        1280,
-        720
-      ],
-      "walkable_rect": [
-        32,
-        522,
-        2624,
-        123
-      ],
-      "door_anchors": {
-        "left": [
-          32,
-          583
-        ],
-        "right": [
-          2656,
-          583
-        ],
-        "up": [
-          1344,
-          522
-        ],
-        "down": [
-          1344,
-          645
-        ]
-      },
-      "source": "sources/r05/原创10001_R05森林BOSS房间完整背景_16_9_与_2026-10-16T13-31-05.png",
-      "source_sha256": "728a02e1269714a22ebece38fd343fda3c1f6c285c2dae76eebcdba9b77635c2",
-      "build": "Native scene and horizontal mirrored extension with 64px blend; intentional repeated art, no upscale.",
-      "visual_review_of_extension": "pending"
-    }
-  },
+  "rooms": {},
   "entities": {
     "stump": {
       "size": [
@@ -575,7 +368,13 @@
     }
   },
   "missing": {
-    "rooms": [],
+    "rooms": [
+      "10001-R01",
+      "10001-R02",
+      "10001-R03",
+      "10001-R04",
+      "10001-R05"
+    ],
     "entities": [
       "fruit_tree.with_fruit",
       "fruit_tree.without_fruit"
@@ -604,8 +403,43 @@
     "paths": "Copy this self-contained export package under the future game's resource directory and resolve files relative to manifest. Current game has no automatic reader for this schema.",
     "zoom": "Do not resize only texture without scaling anchors/collision/placement consistently. This batch is low-resolution, not a native 2K delivery."
   },
-  "blocker": "All five room images and six intact prop types exported. Fruit-tree request timed out awaiting approval; fruit-tree states, gates and animations remain missing.",
+  "blocker": "User rejected every room scene and stopped further production; this is not an approval-timeout waiting task.",
   "technical_checks": {
+    "stump_transparent": true,
+    "shadow_transparent_nonempty": true,
+    "stump_source_bytes_preserved": true,
+    "shadow_source_bytes_preserved": true,
+    "torch_intact_nonempty_transparent": true,
+    "fence_intact_nonempty_transparent": true,
+    "fence_damaged_nonempty_transparent": true,
+    "fence_debris_nonempty_transparent": true,
+    "bone_pile_intact_nonempty_transparent": true,
+    "bone_pile_damaged_nonempty_transparent": true,
+    "bone_pile_debris_nonempty_transparent": true,
+    "bush_intact_nonempty_transparent": true,
+    "rock_intact_nonempty_transparent": true,
+    "fruit_pickup_idle_nonempty_transparent": true
+  },
+  "game_integrated": false,
+  "runtime_approved": false,
+  "rejection": {
+    "date": "2026-10-16",
+    "scope": "All five room scene exports and their generated batch sources/previews deleted; independent entities and approved example references preserved.",
+    "rejected_room_ids": [
+      "10001-R01",
+      "10001-R02",
+      "10001-R03",
+      "10001-R04",
+      "10001-R05"
+    ],
+    "reasons": [
+      "Trees extend inward from both sides instead of a horizontally arranged background tree band.",
+      "Batch painting style is inferior to and inconsistent with the approved example."
+    ],
+    "decision": "Stop generation and subsequent work. No automatic retry or integration.",
+    "conclusion": "../../../../../../docs/reports/ws1/2026-10/2026-10-16_10001房间场景作废结论.md"
+  },
+  "historical_technical_checks": {
     "room_has_no_upscale": true,
     "room_longer_than_two_reference_screens": true,
     "door_anchors_in_walkable_region": true,
@@ -632,6 +466,6 @@
     "rock_intact_nonempty_transparent": true,
     "fruit_pickup_idle_nonempty_transparent": true
   },
-  "game_integrated": false,
-  "runtime_approved": false
+  "scene_exports_usable": false,
+  "entities_review_status": "preserved_without_new_approval"
 }

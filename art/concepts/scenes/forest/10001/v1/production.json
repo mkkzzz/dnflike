@@ -7,10 +7,11 @@
   "lifecycle": "blocked",
   "current_low_resolution_delivery": {
     "manifest": "../lowres_release_v1/manifest.json",
-    "status": "partial_blocked",
-    "approval": "v3 style and production mode approved on 2026-10-16; remaining environment batch authorized at low resolution.",
+    "status": "scenes_rejected_stopped",
+    "approval": "Example/pilot style reference retained. All five batch room scenes rejected on 2026-10-16; production authorization paused by user.",
     "complete_package": false,
-    "blocker": "Five rooms and seven entity types (11 static states) exported with shadows; fruit-tree request timed out awaiting approval. Fruit-tree states, four-direction gates and animations remain missing. New art/room extensions await visual review.",
+    "scene_exports_usable": false,
+    "blocker": "User rejected inward-extending side trees and inferior painting style. All batch room exports, batch room sources and related previews deleted; entities retained. Stop production, no automatic retry.",
     "native_2k_target_unchanged": true
   },
   "low_resolution_pilot": {

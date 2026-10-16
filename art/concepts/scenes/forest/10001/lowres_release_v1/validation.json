@@ -1,12 +1,20 @@
 {
-  "result": "ASSET_PACKAGE_CHECK_OK",
-  "rooms": 5,
+  "result": "SCENE_REJECTION_CLEANUP_OK",
+  "scene_exports_usable": false,
+  "production_stopped": true,
+  "rooms": 0,
   "entity_types": 7,
   "static_states": 11,
   "shadow_exports": 11,
   "complete_environment_package": false,
   "missing": {
-    "rooms": [],
+    "rooms": [
+      "10001-R01",
+      "10001-R02",
+      "10001-R03",
+      "10001-R04",
+      "10001-R05"
+    ],
     "entities": [
       "fruit_tree.with_fruit",
       "fruit_tree.without_fruit"
