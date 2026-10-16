@@ -1,0 +1,28 @@
+{
+  "tool": "image_gen",
+  "date": "2026-10-16",
+  "revision": "pilot_lowres_v3",
+  "reason": "User said the previous scene was close but the ground looked poor and the stump did not appear grounded. Revise soil material, stump perspective and contact shadow; retain combined-scene approach.",
+  "reference_image_input": null,
+  "reference_usage": "Approved reference visually inspected by assistant; generator received text only.",
+  "seed": null,
+  "quality": "high",
+  "style": "natural",
+  "calls": [
+    {
+      "subject": "scene",
+      "requested_size": "1344x756",
+      "n": 1,
+      "prompt": "原创2D横版动作网游副本10001入口房的一体式森林场景试制v3，单张16:9完整图，森林远景和路面一起画，不分层、不拼板。保持成熟怀旧韩式手绘横版游戏的已定森林方向：青绿雾中树林、暗橄榄树冠、自然中绿草地、温和暖棕土路，朴素手绘位图，清楚细致的形体明暗与局部柔和渐变，克制的轮廓和纹理。参考经典DNF洛兰的森林新手区美术气氛，所有构图和内容原创。不改成童话绘本、公园卡通、大片平涂、鲜黄荧光绿、写实照片或3D渲染。\n此次重点是地面：不要上一类灰白石板、坚硬岩层或干裂地表。下方约60%画一整片平坦宽阔、可左右与前后移动的地面，中央约70%宽度无遮挡。中央横贯左右的是暖米棕、浅赭褐的踩实细土路，柔和温润但不橙黄过亮，层层小色块和细小颗粒呈现扎实泥土，不是水泥或岩石。大部分路面平整干净，只有少量细小不规则土印、几粒碎石、几片小落叶；不要巨大裂纹、块状石板、坑洼、密集花纹、肮脏斑块或大片粗灰笔刷。路宽有足够前后纵深，不向远方收束。两侧短小中绿草自然稀疏地渗进土边，边界柔和不规则，既没有一刀切草带，也不要长条台阶状草边；少量细草、小叶片，近侧无厚黑草丛。地面仍有适度绘画细节，不能变成无质感纯色色块。\n森林部分延续青绿景深：上方约40%为层层灰青绿树干和低对比远林，适度成熟树冠和细叶；树林全部退到路面远边植被带后，根脚藏住，普通树不能从可行走场地长出，也不能让粗大树根贴在道路上。左右树木只是远景框景而不是近景黑柱，中央背景空间通透，有薄雾和温和白天天光，无大片蓝天，不漆黑。背景比路面略暗但从远处草叶过渡到近处暖土色自然，视角和光向统一。左上光线柔和，路面仅极淡的斑驳明暗，没有大片强烈树影或舞台光柱。\n相机是横版格斗房间的低机位侧向三分之四视角，轻微俯看地面，不是俯视地图或等距视角。画面左右连通、地形完全平坦，无台阶、河流、坡、坑洞和桥。本次背景不放任何门、木桩、火把、果树、木栅、骨堆、石块实体或独立灌木道具，全部可碰撞实体之后独立摆放。无人物、怪物、动物、武器、UI、文字、水印或边框。保持统一稳定的成熟2D游戏森林美术，优化暖土色泥路的美观、干净与可读性，不改变接近定稿的森林画风。"
+    },
+    {
+      "subject": "stump",
+      "requested_size": "1024x1024",
+      "n": 1,
+      "prompt": "原创2D横版动作网游森林道具：一个棕色矮粗木桩，独立实体白底源图。全图只一个木桩，纯白RGB255背景、四周留足白边，无地面底座、草丛、阴影、文字、UI、水印、棋盘格或其它物品。之后会抠透明放进森林路面，木桩必须以横版游戏侧向的机位来画。\n最重要的体型透视：木桩矮而稳，整体宽是高的约1.5倍，像被砍断的短粗圆木，而不是高耸圆柱、桶或树干。镜头低机位侧向三分之四，顶面是扁平的椭圆，椭圆高度仅为宽的约20%至25%，不能像俯视圆盘那样大面积看到顶面。前侧木材占主体，脚底平稳落地、不悬空。底部略微宽于上部，仅短小的木质边角，绝无长树根或分叉根脚。\n材质颜色：中棕、深棕的天然木材侧面，有克制纵向木纹和少量风化棕树皮，顶面是略浅的棕褐截面，少量年轮和小裂纹。侧面绝不是灰白色、石头色；不要苔藓、藤蔓、植物或绿色覆盖。木桩下部受地面环境光影响略带温暖土褐，足部颜色比上部更暗，底沿与短根脚的接触面有很薄的深棕自身遮蔽，左上柔和日光，右下阴影温暖而不纯黑，不能像单体摄影棚强打光。\n画风与成熟怀旧韩式手绘森林网游一致：自然精细的手绘位图、清楚的大形明暗、局部柔和渐变、棕色细轮廓、质朴木材。不要3D渲染、写实照片、低龄卡通、漫画粗描边、亮橙黄色或装饰性复杂花纹。木桩居中约占画面宽60%，无任何外部投影和地面贴片，便于生成独立透明图，再用统一场景光向的接触阴影与投影使它真正站在地面上。保留矮粗比例、低视角小椭圆顶面、棕木色和自然底沿，不画高大灰树墩。"
+    }
+  ],
+  "processing_command": "python tools/bake_forest_pilot.py art/concepts/scenes/forest/10001/pilot_lowres_v3 --combined-scene --ground-contact",
+  "composition": "Scene retained at source pixels; independent stump downsampled with premultiplied alpha; tight bottom-contour contact and soft projected silhouette exported as a separate shadow sprite with shared foot root.",
+  "approval": "Pending visual review; technical checks do not imply visual approval."
+}

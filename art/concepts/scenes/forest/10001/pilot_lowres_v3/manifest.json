@@ -1,0 +1,94 @@
+{
+  "task_id": "dungeon_10001_lowres_pilot",
+  "revision": "pilot_lowres_v3",
+  "status": "source_review",
+  "resolution_exception": "User authorized a lower-resolution partial pilot on 2026-10-16; native 2K production targets unchanged.",
+  "canvas": [
+    1376,
+    768
+  ],
+  "scope": "One screen of R01, forest and walkable ground generated together in one scene plus an independent brown stump. Not the full room package.",
+  "combined_scene": true,
+  "reference_image_input": false,
+  "upscale": false,
+  "sources": {
+    "scene": {
+      "path": "sources/scene/原创2D横版动作网游副本10001入口房的一体式森林场景试制_2026-10-16T12-36-47.png",
+      "size": [
+        1376,
+        768
+      ],
+      "sha256": "21c1310b58c9c04b20fcdb95bdf87ab8772f26aa557ea82ef2806d084f36f436"
+    },
+    "stump": {
+      "path": "sources/stump/原创2D横版动作网游森林道具_一个棕色矮粗木桩_独立实体白底_2026-10-16T12-37-23.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "4d7ec03582368d2b3cf7d31ffc5c386478ecbebab45f4b72e7365585525b1981"
+    }
+  },
+  "exports": {
+    "scene": "exports/r01_scene.png",
+    "stump": "exports/stump_intact.png",
+    "stump_shadow": "exports/stump_shadow.png"
+  },
+  "processing": {
+    "tool": "tools/bake_forest_pilot.py",
+    "pillow_version": "12.2.0",
+    "matte": "White backdrop: alpha clamps (249-min(R,G,B))*255/24; white edge decontamination; no semantic forest segmentation.",
+    "ground_bounds": null,
+    "stump_source_crop": [
+      161,
+      237,
+      853,
+      839
+    ],
+    "stump_sprite_size": [
+      140,
+      122
+    ],
+    "stump_scale": 0.2023121387283237,
+    "alpha": "straight",
+    "composition_shadow": "Independent bottom-contour contact mask and down-right projected alpha shadow, exported with shared root."
+  },
+  "stump": {
+    "root": [
+      70,
+      121
+    ],
+    "preview_root": [
+      261,
+      515
+    ],
+    "collision": null
+  },
+  "ground_contact": {
+    "enabled": true,
+    "shadow_root": [
+      102,
+      153
+    ],
+    "light_direction": "upper_left",
+    "cast_direction": "lower_right"
+  },
+  "preview": "previews/review_board.png",
+  "checks": {
+    "scene_preserves_source_pixels": true,
+    "scene_is_opaque": true,
+    "stump_has_transparency": true,
+    "stump_placement_in_bounds": true,
+    "no_upscaling": true,
+    "contact_shadow_has_transparency": true,
+    "contact_shadow_in_bounds": true
+  },
+  "known_limits": [
+    "Text-only generation may drift from the approved combination reference.",
+    "Forest and ground share one scene per the user's revised pilot direction.",
+    "Transparency is white-matte postprocessing, not native generator alpha; edges need visual review.",
+    "Room seams, extended room sizes, other entities, gates and animations are not part of this pilot.",
+    "No game integration or runtime acceptance."
+  ],
+  "user_approved": false
+}
