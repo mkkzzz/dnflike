@@ -1,0 +1,343 @@
+{
+  "software": {
+    "python": "3.13.16",
+    "pillow": "12.3.0"
+  },
+  "technical_integrity_passed": true,
+  "sources": [
+    {
+      "candidate": "r01_c1",
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c1/source.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "requested_native_size": [
+        2560,
+        1440
+      ],
+      "mode": "RGB",
+      "original_bytes_unchanged": true,
+      "reference_files_unchanged": true,
+      "prompt_matches_record": true,
+      "native_size_met": false
+    },
+    {
+      "candidate": "r01_c2",
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "requested_native_size": [
+        2560,
+        1440
+      ],
+      "mode": "RGB",
+      "original_bytes_unchanged": true,
+      "reference_files_unchanged": true,
+      "prompt_matches_record": true,
+      "native_size_met": false
+    },
+    {
+      "candidate": "r01_c3",
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c3/source.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "requested_native_size": [
+        2560,
+        1440
+      ],
+      "mode": "RGB",
+      "original_bytes_unchanged": true,
+      "reference_files_unchanged": true,
+      "prompt_matches_record": true,
+      "native_size_met": false
+    },
+    {
+      "candidate": "r01_room_c1",
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_room_c1/source.png",
+      "actual_size": [
+        2243,
+        701
+      ],
+      "requested_native_size": [
+        5120,
+        1600
+      ],
+      "mode": "RGB",
+      "original_bytes_unchanged": true,
+      "reference_files_unchanged": true,
+      "prompt_matches_record": true,
+      "native_size_met": false
+    },
+    {
+      "candidate": "r02_room_c1",
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r02_room_c1/source.png",
+      "actual_size": [
+        2243,
+        701
+      ],
+      "requested_native_size": [
+        5120,
+        1600
+      ],
+      "mode": "RGB",
+      "original_bytes_unchanged": true,
+      "reference_files_unchanged": true,
+      "prompt_matches_record": true,
+      "native_size_met": false
+    },
+    {
+      "candidate": "r03_room_c1",
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c1/source.png",
+      "actual_size": [
+        1942,
+        809
+      ],
+      "requested_native_size": [
+        3840,
+        1600
+      ],
+      "mode": "RGB",
+      "original_bytes_unchanged": true,
+      "reference_files_unchanged": true,
+      "prompt_matches_record": true,
+      "native_size_met": false
+    },
+    {
+      "candidate": "r04_room_c1",
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c1/source.png",
+      "actual_size": [
+        1176,
+        1337
+      ],
+      "requested_native_size": [
+        2816,
+        3200
+      ],
+      "mode": "RGB",
+      "original_bytes_unchanged": true,
+      "reference_files_unchanged": true,
+      "prompt_matches_record": true,
+      "native_size_met": false
+    },
+    {
+      "candidate": "r05_room_c1",
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r05_room_c1/source.png",
+      "actual_size": [
+        2243,
+        701
+      ],
+      "requested_native_size": [
+        5120,
+        1600
+      ],
+      "mode": "RGB",
+      "original_bytes_unchanged": true,
+      "reference_files_unchanged": true,
+      "prompt_matches_record": true,
+      "native_size_met": false
+    },
+    {
+      "candidate": "r03_room_c2",
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c2/source.png",
+      "actual_size": [
+        1942,
+        809
+      ],
+      "requested_native_size": [
+        3840,
+        1600
+      ],
+      "mode": "RGB",
+      "original_bytes_unchanged": true,
+      "reference_files_unchanged": true,
+      "prompt_matches_record": true,
+      "native_size_met": false
+    },
+    {
+      "candidate": "r04_room_c2",
+      "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c2/source.png",
+      "actual_size": [
+        1176,
+        1337
+      ],
+      "requested_native_size": [
+        2816,
+        3200
+      ],
+      "mode": "RGB",
+      "original_bytes_unchanged": true,
+      "reference_files_unchanged": true,
+      "prompt_matches_record": true,
+      "native_size_met": false
+    }
+  ],
+  "baseline_style_approved": true,
+  "new_room_artwork_user_approved": false,
+  "room_design_candidates": 5,
+  "production_exports": 0,
+  "native_2k_ready": false,
+  "upscaled": false,
+  "artwork_modified_by_review_script": false,
+  "mirrored_or_tiled_extension": false,
+  "runtime_integrated": false,
+  "viewport_review": [
+    {
+      "module_id": "10001-R01",
+      "source": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_room_c1/source.png",
+      "source_size": [
+        2243,
+        701
+      ],
+      "native_target": [
+        5120,
+        1600
+      ],
+      "preview_rect_source_pixels": [
+        560,
+        67,
+        1682,
+        698
+      ],
+      "viewport_native_target": [
+        2560,
+        1440
+      ],
+      "soil_transition_heuristic_y": 319,
+      "soil_transition_ratio_in_view": 0.3994,
+      "guide_only_not_runtime_or_collision_data": true
+    },
+    {
+      "module_id": "10001-R02",
+      "source": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r02_room_c1/source.png",
+      "source_size": [
+        2243,
+        701
+      ],
+      "native_target": [
+        5120,
+        1600
+      ],
+      "preview_rect_source_pixels": [
+        560,
+        70,
+        1682,
+        701
+      ],
+      "viewport_native_target": [
+        2560,
+        1440
+      ],
+      "soil_transition_heuristic_y": 337,
+      "soil_transition_ratio_in_view": 0.4231,
+      "guide_only_not_runtime_or_collision_data": true
+    },
+    {
+      "module_id": "10001-R03",
+      "source": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c2/source.png",
+      "source_size": [
+        1942,
+        809
+      ],
+      "native_target": [
+        3840,
+        1600
+      ],
+      "preview_rect_source_pixels": [
+        323,
+        72,
+        1618,
+        800
+      ],
+      "viewport_native_target": [
+        2560,
+        1440
+      ],
+      "soil_transition_heuristic_y": 363,
+      "soil_transition_ratio_in_view": 0.3997,
+      "guide_only_not_runtime_or_collision_data": true
+    },
+    {
+      "module_id": "10001-R04",
+      "source": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c1/source.png",
+      "source_size": [
+        1176,
+        1337
+      ],
+      "native_target": [
+        2816,
+        3200
+      ],
+      "preview_rect_source_pixels": [
+        53,
+        567,
+        1122,
+        1169
+      ],
+      "viewport_native_target": [
+        2560,
+        1440
+      ],
+      "soil_transition_heuristic_y": 808,
+      "soil_transition_ratio_in_view": 0.4003,
+      "guide_only_not_runtime_or_collision_data": true
+    },
+    {
+      "module_id": "10001-R05",
+      "source": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r05_room_c1/source.png",
+      "source_size": [
+        2243,
+        701
+      ],
+      "native_target": [
+        5120,
+        1600
+      ],
+      "preview_rect_source_pixels": [
+        560,
+        70,
+        1682,
+        701
+      ],
+      "viewport_native_target": [
+        2560,
+        1440
+      ],
+      "soil_transition_heuristic_y": 348,
+      "soil_transition_ratio_in_view": 0.4406,
+      "guide_only_not_runtime_or_collision_data": true
+    }
+  ],
+  "review_thumbnail_scales": [
+    0.430622009569378,
+    0.6417112299465241,
+    0.6417112299465241,
+    0.555984555984556,
+    0.6725912067352666,
+    0.6417112299465241,
+    0.6241640659830584,
+    0.6241640659830584,
+    0.7209062821833162,
+    0.6130952380952381,
+    0.6241640659830584,
+    0.430622009569378,
+    0.430622009569378
+  ],
+  "previews": [
+    "docs/previews/forest_10001_reference_redesign_v2/batch_01/gameplay_viewports.png",
+    "docs/previews/forest_10001_reference_redesign_v2/batch_01/rooms_overview.png",
+    "docs/previews/forest_10001_reference_redesign_v2/batch_01/r01_boundary_revision.png",
+    "docs/previews/forest_10001_reference_redesign_v2/batch_01/r01_c3_075.png"
+  ],
+  "limitations": [
+    "All returned native room resolutions are lower than formal targets; no upscale performed.",
+    "Room designs and requested edge-shrub revision have not received final user artwork approval.",
+    "Camera windows and warm-soil color heuristic are preview guides, not runtime/collision data.",
+    "R04 c2 failed its requested geometry edit; c1 retained with an explicit preview camera window.",
+    "No layer exports, collision gates, characters or engine/runtime validation included."
+  ]
+}

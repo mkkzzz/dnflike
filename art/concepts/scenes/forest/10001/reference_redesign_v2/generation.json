@@ -71,10 +71,324 @@
       ],
       "actual_mode": "RGB",
       "source_copy": "Original generated PNG copied byte-for-byte; no crop, recolor, resize or upscale.",
+      "state": "source_approved",
+      "review": "User basically approved style/composition; requested a little shrubbery on left/right room edges."
+    },
+    {
+      "candidate": "r01_c3",
+      "module_id": "10001-R01",
+      "use_case": "precise-object-edit",
+      "intent": "targeted_edit_with_approved_reference",
+      "requested_native_size_in_prompt": [
+        2560,
+        1440
+      ],
+      "dedicated_size_parameter": null,
+      "transparent_background": false,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+          "sha256": "44e52517457f18caa6d840fce6162f89492af9d863bf7ad920f25b351b397860"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/v1/source/style_reference.png",
+          "sha256": "c64c870bb5ad704df7c305f8f0667744b58228d055973f696910db55bce410c9"
+        }
+      ],
+      "prompt_file": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c3/prompt.txt",
+      "prompt": "Use case: precise-object-edit\nAsset type: dungeon 10001 R01 forest background candidate c3, minimal boundary-vegetation revision.\nInput image 1 is the approved R01 c2 base and EDIT TARGET. Input image 2 is the authoritative original approved concept for style only.\nThe user basically approves input 1 and requests just a little shrubbery on the left and right edges to create a sense of the room boundary. Change ONLY that detail: add a few modest low olive/moss-green bushes partially cropped by the extreme left and right edges, next to the existing foreground grass margin and a little way up the far side margins. Irregular natural clusters, with small layered painted leaf groups matching the existing rear bushes. Keep them low, restrained, asymmetrical and no more than roughly the outermost 6-8 percent of image width on each side. Their height should be modest at gameplay scale. Leave clearly visible open soil breaks through both side margins around the main lateral passage band so future side doors and characters can pass. They are decorative boundary vegetation, not individual interactive bush props.\nPreserve ALL the approved scene's camera, tree sizes and positions, horizontal tree band including the center, rear ground boundary at about y=40 percent, spacious lower 60 percent warm-earth ground, teal forest depth, palette, bark and foliage painting, soft upper-left daylight, ground grain and large-scale proportions. No new giant trunks, no inward leaning tree frame, no central vanishing-point path or tunnel. Do not close the left/right passages, build a hedge wall, make oversized foreground foliage, darken the scene, or turn the room into a corridor. No props, rocks, stumps, fruit trees, torches, gates, characters, UI, text, border or watermark.\nOutput one complete opaque 16:9 scene. Requested native 2560x1440 if supported; do not upscale or interpolate the supplied input. Retain crisp natural hand-painted pixels and only add the restrained edge shrubs.\n",
+      "output": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c3/source.png",
+      "output_sha256": "83077fbc75faf7251869cee7df35ce4fa312a1d5583bfea1d58bea469a350001",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "actual_mode": "RGB",
+      "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
       "state": "source_review",
-      "review": "Awaiting user approval; boundary moved to approximately 40 percent, horizontal tree band retained."
+      "review": "Minor boundary shrub addition within the approved direction. Full room panorama generated separately."
+    },
+    {
+      "candidate": "r01_room_c1",
+      "module_id": "10001-R01",
+      "use_case": "stylized-concept",
+      "intent": "generate_with_approved_style_references",
+      "requested_native_size_in_prompt": [
+        5120,
+        1600
+      ],
+      "dedicated_size_parameter": null,
+      "transparent_background": false,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/concepts/scenes/forest/10001/v1/source/style_reference.png",
+          "sha256": "c64c870bb5ad704df7c305f8f0667744b58228d055973f696910db55bce410c9"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+          "sha256": "44e52517457f18caa6d840fce6162f89492af9d863bf7ad920f25b351b397860"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c3/source.png",
+          "sha256": "83077fbc75faf7251869cee7df35ce4fa312a1d5583bfea1d58bea469a350001"
+        }
+      ],
+      "prompt_file": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_room_c1/prompt.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: complete room background DESIGN CANDIDATE for an original 2D belt-scrolling action RPG, dungeon 10001.\nInput 1 is the authoritative original approved STYLE CONCEPT; ignore/remove its gameplay props. Input 2 is the user-approved R01 c2 STYLE/PALETTE/CAMERA baseline. Input 3 is the small revision adding the user's requested low shrubs at extreme left and right boundaries; use its restrained boundary treatment. These three images are actual references for this painting. Keep the same art direction, species, leaf-clump treatment, bark planes, earth material, lighting and camera across the dungeon.\nShared visual contract: Mature hand-painted fantasy game bitmap, designed natural shapes with restrained contour accents and selective painterly detail, no heavy comic linework, no photorealism or 3D. Olive/moss green foliage, desaturated warm brown-green trunks, layered cool gray-teal distant trees, moderate soft upper-left DAYLIGHT, medium warm tan/ochre-brown fine soil. No yellow wash, pale mint fog wash, glowing forest center, dark night, sun shafts or heavy black foreground. Ground shadows soft and quiet. Match the references' finish; do not invent a new style.\nThe woodland is a HORIZONTAL background tree band viewed from its side. Several vertical tree trunks distributed ACROSS the full width, including the center, sit behind a continuous low rear shrub/grass border. Roots stay behind this rear border, outside the walkable ground. No paired giant edge trees making an arch or inward frame, no tunnel, no corridor, no vanishing-point road, no symmetric center opening. Keep the low three-quarter side-on belt-scroller camera, slight view downward onto perfectly flat ground.\nThe warm earth playable field is broad and quiet with subtle painted taupe/ochre soil patches, occasional tiny leaves and embedded gravel marks, not a stone floor, giant cracked plates, noisy repetitive pattern or flat solid fill. Lower foreground has only a modest grass fringe. At the extreme left and right room edges add a SMALL amount of natural low olive/moss shrubbery, cropped by the edges and irregular/asymmetric, occupying only the outermost approximately 5-7% width. They suggest room boundaries without making a hedge wall or hiding the fighting space. Leave clear soil openings through side edges at the lateral passage band; doors and passage clearances will be configured later. Edge shrubs are static boundary decor, not interactive individual bushes.\nNo elevations, steps, banks, pits, rivers, bridges, raised roots or obstacles. No gates, doors, torches, fences, stumps, fruit trees, bones, independent rock props or interactive bush props; no characters, creatures, weapons, effects, UI, text, logos, border or watermark. All collidable gameplay objects stay independent. Paint a new unique complete scene with original native detail, no mirrored extension, tiling, stretching or software upscaling. One uninterrupted image, no storyboard or panels.\nRoom specification: 10001-R01. Requested native canvas 5120x1600, extra-wide horizontal panorama, exact aspect ratio 3.2:1. Generate at the requested native size if the tool supports it; never upscale an image to claim that size.\nRoom-specific design: Entrance room: a long spacious forest edge with moderately spaced mature trees across the back, clear small teal gaps distributed evenly, calm welcoming daylight. Match the approved R01 as the visual center, but freshly paint the additional length with unique tree groups, not copied or mirrored sections.\nComposition: The continuous rear grass/soil boundary runs approximately horizontally at 40% of the canvas height. The lower 60% is broad ground, a deep lateral fighting field, not a narrow path. Tree scale relative to the gameplay viewport remains consistent with approved reference.\nEnsure the entire canvas is the complete room panorama; do not constrain the scene inside a 16:9 frame or surround it with borders. Keep all rooms recognizably the same dungeon; room variety comes only from tree grouping, forest depth and canopy density.\n",
+      "output": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_room_c1/source.png",
+      "output_sha256": "60915fe007cd0b3dd7a75590d1d341724de928123c533672ecdd71fe7be40fbb",
+      "actual_size": [
+        2243,
+        701
+      ],
+      "actual_mode": "RGB",
+      "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
+      "state": "source_review",
+      "review": "Selected entry-room long design candidate. Unique generated pixels; no mirroring or tiling."
+    },
+    {
+      "candidate": "r02_room_c1",
+      "module_id": "10001-R02",
+      "use_case": "stylized-concept",
+      "intent": "generate_with_approved_style_references",
+      "requested_native_size_in_prompt": [
+        5120,
+        1600
+      ],
+      "dedicated_size_parameter": null,
+      "transparent_background": false,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/concepts/scenes/forest/10001/v1/source/style_reference.png",
+          "sha256": "c64c870bb5ad704df7c305f8f0667744b58228d055973f696910db55bce410c9"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+          "sha256": "44e52517457f18caa6d840fce6162f89492af9d863bf7ad920f25b351b397860"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c3/source.png",
+          "sha256": "83077fbc75faf7251869cee7df35ce4fa312a1d5583bfea1d58bea469a350001"
+        }
+      ],
+      "prompt_file": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r02_room_c1/prompt.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: complete room background DESIGN CANDIDATE for an original 2D belt-scrolling action RPG, dungeon 10001.\nInput 1 is the authoritative original approved STYLE CONCEPT; ignore/remove its gameplay props. Input 2 is the user-approved R01 c2 STYLE/PALETTE/CAMERA baseline. Input 3 is the small revision adding the user's requested low shrubs at extreme left and right boundaries; use its restrained boundary treatment. These three images are actual references for this painting. Keep the same art direction, species, leaf-clump treatment, bark planes, earth material, lighting and camera across the dungeon.\nShared visual contract: Mature hand-painted fantasy game bitmap, designed natural shapes with restrained contour accents and selective painterly detail, no heavy comic linework, no photorealism or 3D. Olive/moss green foliage, desaturated warm brown-green trunks, layered cool gray-teal distant trees, moderate soft upper-left DAYLIGHT, medium warm tan/ochre-brown fine soil. No yellow wash, pale mint fog wash, glowing forest center, dark night, sun shafts or heavy black foreground. Ground shadows soft and quiet. Match the references' finish; do not invent a new style.\nThe woodland is a HORIZONTAL background tree band viewed from its side. Several vertical tree trunks distributed ACROSS the full width, including the center, sit behind a continuous low rear shrub/grass border. Roots stay behind this rear border, outside the walkable ground. No paired giant edge trees making an arch or inward frame, no tunnel, no corridor, no vanishing-point road, no symmetric center opening. Keep the low three-quarter side-on belt-scroller camera, slight view downward onto perfectly flat ground.\nThe warm earth playable field is broad and quiet with subtle painted taupe/ochre soil patches, occasional tiny leaves and embedded gravel marks, not a stone floor, giant cracked plates, noisy repetitive pattern or flat solid fill. Lower foreground has only a modest grass fringe. At the extreme left and right room edges add a SMALL amount of natural low olive/moss shrubbery, cropped by the edges and irregular/asymmetric, occupying only the outermost approximately 5-7% width. They suggest room boundaries without making a hedge wall or hiding the fighting space. Leave clear soil openings through side edges at the lateral passage band; doors and passage clearances will be configured later. Edge shrubs are static boundary decor, not interactive individual bushes.\nNo elevations, steps, banks, pits, rivers, bridges, raised roots or obstacles. No gates, doors, torches, fences, stumps, fruit trees, bones, independent rock props or interactive bush props; no characters, creatures, weapons, effects, UI, text, logos, border or watermark. All collidable gameplay objects stay independent. Paint a new unique complete scene with original native detail, no mirrored extension, tiling, stretching or software upscaling. One uninterrupted image, no storyboard or panels.\nRoom specification: 10001-R02. Requested native canvas 5120x1600, extra-wide horizontal panorama, exact aspect ratio 3.2:1. Generate at the requested native size if the tool supports it; never upscale an image to claim that size.\nRoom-specific design: Ordinary goblin encounter room: the same forest and soil, with slightly denser distant slender trunks and a few thin vines on back-plane trees. Shift the arrangement of tree groups and grass clumps naturally, keeping the same light, palette, trunk scale, open ground and horizontal arrangement. No goblins or camp props in the painting.\nComposition: The continuous rear grass/soil boundary runs approximately horizontally at 40% of the canvas height. The lower 60% is broad ground, a deep lateral fighting field, not a narrow path. Tree scale relative to the gameplay viewport remains consistent with approved reference.\nEnsure the entire canvas is the complete room panorama; do not constrain the scene inside a 16:9 frame or surround it with borders. Keep all rooms recognizably the same dungeon; room variety comes only from tree grouping, forest depth and canopy density.\n",
+      "output": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r02_room_c1/source.png",
+      "output_sha256": "ff9537138c35c8512f64ced36f566747f64e1952cd446c6a10ad4129ebc31752",
+      "actual_size": [
+        2243,
+        701
+      ],
+      "actual_mode": "RGB",
+      "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
+      "state": "source_review",
+      "review": "Selected ordinary encounter long design candidate."
+    },
+    {
+      "candidate": "r03_room_c1",
+      "module_id": "10001-R03",
+      "use_case": "stylized-concept",
+      "intent": "generate_with_approved_style_references",
+      "requested_native_size_in_prompt": [
+        3840,
+        1600
+      ],
+      "dedicated_size_parameter": null,
+      "transparent_background": false,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/concepts/scenes/forest/10001/v1/source/style_reference.png",
+          "sha256": "c64c870bb5ad704df7c305f8f0667744b58228d055973f696910db55bce410c9"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+          "sha256": "44e52517457f18caa6d840fce6162f89492af9d863bf7ad920f25b351b397860"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c3/source.png",
+          "sha256": "83077fbc75faf7251869cee7df35ce4fa312a1d5583bfea1d58bea469a350001"
+        }
+      ],
+      "prompt_file": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c1/prompt.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: complete room background DESIGN CANDIDATE for an original 2D belt-scrolling action RPG, dungeon 10001.\nInput 1 is the authoritative original approved STYLE CONCEPT; ignore/remove its gameplay props. Input 2 is the user-approved R01 c2 STYLE/PALETTE/CAMERA baseline. Input 3 is the small revision adding the user's requested low shrubs at extreme left and right boundaries; use its restrained boundary treatment. These three images are actual references for this painting. Keep the same art direction, species, leaf-clump treatment, bark planes, earth material, lighting and camera across the dungeon.\nShared visual contract: Mature hand-painted fantasy game bitmap, designed natural shapes with restrained contour accents and selective painterly detail, no heavy comic linework, no photorealism or 3D. Olive/moss green foliage, desaturated warm brown-green trunks, layered cool gray-teal distant trees, moderate soft upper-left DAYLIGHT, medium warm tan/ochre-brown fine soil. No yellow wash, pale mint fog wash, glowing forest center, dark night, sun shafts or heavy black foreground. Ground shadows soft and quiet. Match the references' finish; do not invent a new style.\nThe woodland is a HORIZONTAL background tree band viewed from its side. Several vertical tree trunks distributed ACROSS the full width, including the center, sit behind a continuous low rear shrub/grass border. Roots stay behind this rear border, outside the walkable ground. No paired giant edge trees making an arch or inward frame, no tunnel, no corridor, no vanishing-point road, no symmetric center opening. Keep the low three-quarter side-on belt-scroller camera, slight view downward onto perfectly flat ground.\nThe warm earth playable field is broad and quiet with subtle painted taupe/ochre soil patches, occasional tiny leaves and embedded gravel marks, not a stone floor, giant cracked plates, noisy repetitive pattern or flat solid fill. Lower foreground has only a modest grass fringe. At the extreme left and right room edges add a SMALL amount of natural low olive/moss shrubbery, cropped by the edges and irregular/asymmetric, occupying only the outermost approximately 5-7% width. They suggest room boundaries without making a hedge wall or hiding the fighting space. Leave clear soil openings through side edges at the lateral passage band; doors and passage clearances will be configured later. Edge shrubs are static boundary decor, not interactive individual bushes.\nNo elevations, steps, banks, pits, rivers, bridges, raised roots or obstacles. No gates, doors, torches, fences, stumps, fruit trees, bones, independent rock props or interactive bush props; no characters, creatures, weapons, effects, UI, text, logos, border or watermark. All collidable gameplay objects stay independent. Paint a new unique complete scene with original native detail, no mirrored extension, tiling, stretching or software upscaling. One uninterrupted image, no storyboard or panels.\nRoom specification: 10001-R03. Requested native canvas 3840x1600, wide horizontal panorama, exact aspect ratio 2.4:1. Generate at the requested native size if the tool supports it; never upscale an image to claim that size.\nRoom-specific design: Short elite encounter room: a tighter stretch of the same woodland, slightly thicker continuous rear shrub belt and a few more mature back-plane trees, but exactly the same daytime value range and materials. Compact open fighting field, no special ruin, altar, glow, architecture or elite creature. Distinguish by tree spacing and foliage grouping only.\nComposition: The continuous rear grass/soil boundary runs approximately horizontally at 40% of the canvas height. The lower 60% is broad ground, a deep lateral fighting field, not a narrow path. Tree scale relative to the gameplay viewport remains consistent with approved reference.\nEnsure the entire canvas is the complete room panorama; do not constrain the scene inside a 16:9 frame or surround it with borders. Keep all rooms recognizably the same dungeon; room variety comes only from tree grouping, forest depth and canopy density.\n",
+      "output": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c1/source.png",
+      "output_sha256": "0cff9ba2690ea626b6c74e941d4888c28f5ae2d62989a957596dfc2f944c3cbb",
+      "actual_size": [
+        1942,
+        809
+      ],
+      "actual_mode": "RGB",
+      "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
+      "state": "superseded",
+      "review": "Rear ground edge lower than intended; c2 moves it upward."
+    },
+    {
+      "candidate": "r04_room_c1",
+      "module_id": "10001-R04",
+      "use_case": "stylized-concept",
+      "intent": "generate_with_approved_style_references",
+      "requested_native_size_in_prompt": [
+        2816,
+        3200
+      ],
+      "dedicated_size_parameter": null,
+      "transparent_background": false,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/concepts/scenes/forest/10001/v1/source/style_reference.png",
+          "sha256": "c64c870bb5ad704df7c305f8f0667744b58228d055973f696910db55bce410c9"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+          "sha256": "44e52517457f18caa6d840fce6162f89492af9d863bf7ad920f25b351b397860"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c3/source.png",
+          "sha256": "83077fbc75faf7251869cee7df35ce4fa312a1d5583bfea1d58bea469a350001"
+        }
+      ],
+      "prompt_file": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c1/prompt.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: complete room background DESIGN CANDIDATE for an original 2D belt-scrolling action RPG, dungeon 10001.\nInput 1 is the authoritative original approved STYLE CONCEPT; ignore/remove its gameplay props. Input 2 is the user-approved R01 c2 STYLE/PALETTE/CAMERA baseline. Input 3 is the small revision adding the user's requested low shrubs at extreme left and right boundaries; use its restrained boundary treatment. These three images are actual references for this painting. Keep the same art direction, species, leaf-clump treatment, bark planes, earth material, lighting and camera across the dungeon.\nShared visual contract: Mature hand-painted fantasy game bitmap, designed natural shapes with restrained contour accents and selective painterly detail, no heavy comic linework, no photorealism or 3D. Olive/moss green foliage, desaturated warm brown-green trunks, layered cool gray-teal distant trees, moderate soft upper-left DAYLIGHT, medium warm tan/ochre-brown fine soil. No yellow wash, pale mint fog wash, glowing forest center, dark night, sun shafts or heavy black foreground. Ground shadows soft and quiet. Match the references' finish; do not invent a new style.\nThe woodland is a HORIZONTAL background tree band viewed from its side. Several vertical tree trunks distributed ACROSS the full width, including the center, sit behind a continuous low rear shrub/grass border. Roots stay behind this rear border, outside the walkable ground. No paired giant edge trees making an arch or inward frame, no tunnel, no corridor, no vanishing-point road, no symmetric center opening. Keep the low three-quarter side-on belt-scroller camera, slight view downward onto perfectly flat ground.\nThe warm earth playable field is broad and quiet with subtle painted taupe/ochre soil patches, occasional tiny leaves and embedded gravel marks, not a stone floor, giant cracked plates, noisy repetitive pattern or flat solid fill. Lower foreground has only a modest grass fringe. At the extreme left and right room edges add a SMALL amount of natural low olive/moss shrubbery, cropped by the edges and irregular/asymmetric, occupying only the outermost approximately 5-7% width. They suggest room boundaries without making a hedge wall or hiding the fighting space. Leave clear soil openings through side edges at the lateral passage band; doors and passage clearances will be configured later. Edge shrubs are static boundary decor, not interactive individual bushes.\nNo elevations, steps, banks, pits, rivers, bridges, raised roots or obstacles. No gates, doors, torches, fences, stumps, fruit trees, bones, independent rock props or interactive bush props; no characters, creatures, weapons, effects, UI, text, logos, border or watermark. All collidable gameplay objects stay independent. Paint a new unique complete scene with original native detail, no mirrored extension, tiling, stretching or software upscaling. One uninterrupted image, no storyboard or panels.\nRoom specification: 10001-R04. Requested native canvas 2816x3200, tall portrait room canvas, exact aspect ratio 0.88:1. Generate at the requested native size if the tool supports it; never upscale an image to claim that size.\nRoom-specific design: Vertical room: the SAME low side-on three-quarter camera and flat fighting field at the BOTTOM of a tall canvas; the extra height is only overhead forest/canopy and camera margin, NEVER a path travelling upward into the forest or a top-down map. A 2816x1584 bottom viewport is the gameplay composition within a 2816x3200 canvas. Therefore the far edge of the ground is at about 70% of FULL CANVAS height (so within the bottom viewport it appears at y=40%); the bottom about 30% of full canvas is broad traversable soil. Above it, upright mature trees and the same teal depth extend UPWARD into layered olive canopy. Show coherent natural trunks and branches without making enormous close foreground pillars. No platforms, elevation changes or vertical paths.\nComposition: Use the explicitly defined bottom-viewport ground placement above; do not put the ground boundary at 40% of the tall full canvas.\nEnsure the entire canvas is the complete room panorama; do not constrain the scene inside a 16:9 frame or surround it with borders. Keep all rooms recognizably the same dungeon; room variety comes only from tree grouping, forest depth and canopy density.\n",
+      "output": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c1/source.png",
+      "output_sha256": "91d220a942c6f2cb3e10c5422ee26026f7d50b34a675f3efe3972d9521b243bd",
+      "actual_size": [
+        1176,
+        1337
+      ],
+      "actual_mode": "RGB",
+      "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
+      "state": "source_review",
+      "review": "Selected portrait design candidate. Explicit gameplay viewport crop leaves both canopy and lower foreground camera margin."
+    },
+    {
+      "candidate": "r05_room_c1",
+      "module_id": "10001-R05",
+      "use_case": "stylized-concept",
+      "intent": "generate_with_approved_style_references",
+      "requested_native_size_in_prompt": [
+        5120,
+        1600
+      ],
+      "dedicated_size_parameter": null,
+      "transparent_background": false,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/concepts/scenes/forest/10001/v1/source/style_reference.png",
+          "sha256": "c64c870bb5ad704df7c305f8f0667744b58228d055973f696910db55bce410c9"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+          "sha256": "44e52517457f18caa6d840fce6162f89492af9d863bf7ad920f25b351b397860"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c3/source.png",
+          "sha256": "83077fbc75faf7251869cee7df35ce4fa312a1d5583bfea1d58bea469a350001"
+        }
+      ],
+      "prompt_file": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r05_room_c1/prompt.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: complete room background DESIGN CANDIDATE for an original 2D belt-scrolling action RPG, dungeon 10001.\nInput 1 is the authoritative original approved STYLE CONCEPT; ignore/remove its gameplay props. Input 2 is the user-approved R01 c2 STYLE/PALETTE/CAMERA baseline. Input 3 is the small revision adding the user's requested low shrubs at extreme left and right boundaries; use its restrained boundary treatment. These three images are actual references for this painting. Keep the same art direction, species, leaf-clump treatment, bark planes, earth material, lighting and camera across the dungeon.\nShared visual contract: Mature hand-painted fantasy game bitmap, designed natural shapes with restrained contour accents and selective painterly detail, no heavy comic linework, no photorealism or 3D. Olive/moss green foliage, desaturated warm brown-green trunks, layered cool gray-teal distant trees, moderate soft upper-left DAYLIGHT, medium warm tan/ochre-brown fine soil. No yellow wash, pale mint fog wash, glowing forest center, dark night, sun shafts or heavy black foreground. Ground shadows soft and quiet. Match the references' finish; do not invent a new style.\nThe woodland is a HORIZONTAL background tree band viewed from its side. Several vertical tree trunks distributed ACROSS the full width, including the center, sit behind a continuous low rear shrub/grass border. Roots stay behind this rear border, outside the walkable ground. No paired giant edge trees making an arch or inward frame, no tunnel, no corridor, no vanishing-point road, no symmetric center opening. Keep the low three-quarter side-on belt-scroller camera, slight view downward onto perfectly flat ground.\nThe warm earth playable field is broad and quiet with subtle painted taupe/ochre soil patches, occasional tiny leaves and embedded gravel marks, not a stone floor, giant cracked plates, noisy repetitive pattern or flat solid fill. Lower foreground has only a modest grass fringe. At the extreme left and right room edges add a SMALL amount of natural low olive/moss shrubbery, cropped by the edges and irregular/asymmetric, occupying only the outermost approximately 5-7% width. They suggest room boundaries without making a hedge wall or hiding the fighting space. Leave clear soil openings through side edges at the lateral passage band; doors and passage clearances will be configured later. Edge shrubs are static boundary decor, not interactive individual bushes.\nNo elevations, steps, banks, pits, rivers, bridges, raised roots or obstacles. No gates, doors, torches, fences, stumps, fruit trees, bones, independent rock props or interactive bush props; no characters, creatures, weapons, effects, UI, text, logos, border or watermark. All collidable gameplay objects stay independent. Paint a new unique complete scene with original native detail, no mirrored extension, tiling, stretching or software upscaling. One uninterrupted image, no storyboard or panels.\nRoom specification: 10001-R05. Requested native canvas 5120x1600, extra-wide horizontal panorama, exact aspect ratio 3.2:1. Generate at the requested native size if the tool supports it; never upscale an image to claim that size.\nRoom-specific design: Boss room: a broad long clearing in the SAME forest, with a few older thicker trees evenly spread across the REAR plane and slightly fuller canopy clumps; unobstructed generous central ground, same soil, same daylight and same palette. A composed final encounter space, without changing the biome, darkening the scene, introducing a central giant tree, arch, shrine, altar, ruins, camp furniture or boss.\nComposition: The continuous rear grass/soil boundary runs approximately horizontally at 40% of the canvas height. The lower 60% is broad ground, a deep lateral fighting field, not a narrow path. Tree scale relative to the gameplay viewport remains consistent with approved reference.\nEnsure the entire canvas is the complete room panorama; do not constrain the scene inside a 16:9 frame or surround it with borders. Keep all rooms recognizably the same dungeon; room variety comes only from tree grouping, forest depth and canopy density.\n",
+      "output": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r05_room_c1/source.png",
+      "output_sha256": "0b47b16c21acea7f6445076a941372904baf0c06a232efcbd5ceda6b59237092",
+      "actual_size": [
+        2243,
+        701
+      ],
+      "actual_mode": "RGB",
+      "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
+      "state": "source_review",
+      "review": "Selected boss long design candidate; same forest/daylight, no added new biome or altar."
+    },
+    {
+      "candidate": "r03_room_c2",
+      "module_id": "10001-R03",
+      "use_case": "precise-object-edit",
+      "intent": "targeted_edit_with_approved_reference",
+      "requested_native_size_in_prompt": [
+        3840,
+        1600
+      ],
+      "dedicated_size_parameter": null,
+      "transparent_background": false,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c1/source.png",
+          "sha256": "0cff9ba2690ea626b6c74e941d4888c28f5ae2d62989a957596dfc2f944c3cbb"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+          "sha256": "44e52517457f18caa6d840fce6162f89492af9d863bf7ad920f25b351b397860"
+        }
+      ],
+      "prompt_file": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c2/prompt.txt",
+      "prompt": "Use case: precise-object-edit\nAsset: dungeon 10001-R03 short elite forest room, geometry correction c2.\nInput 1 is the R03 complete room painting to EDIT. Input 2 is the approved R01 c2 style and ground proportion baseline. Keep input 1's 2.4:1 aspect, hand-painted style, palette, soft daylight, horizontal rear tree groups, low extreme side shrubs and unobstructed warm soil.\nOnly correct the vertical placement of the rear ground boundary: in input 1 the flat soil starts too low, around y=400 on an approximately 1942x809 canvas. Move the rear grass/soil boundary UP to approximately y=350 on that canvas (43% of full canvas height). This corresponds to about y=40% inside a bottom-aligned gameplay viewport after allowing room overscan. Thus modestly shrink and move the entire back-plane forest band upward. Newly paint the freed strip with continuous matching warm earth; do not stretch or simply crop the old pixels. Leave generous flat ground to the bottom, low sparse foreground grass, and a little edge shrubbery only at outermost left/right. Preserve the existing tree arrangement and material style as much as possible; no tunnel, corridor or new central opening.\nRequested native formal room size 3840x1600 if supported; no software upscaling to claim this. One opaque seamless 2.4:1 complete room scene, no borders/panels/text/UI/characters or gameplay props. Change the ground boundary placement only; do not change art direction.\n",
+      "output": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c2/source.png",
+      "output_sha256": "022d1099a760647f58f62202dd32ac769b8e23e2ab77a36cd1f939cd8362fb54",
+      "actual_size": [
+        1942,
+        809
+      ],
+      "actual_mode": "RGB",
+      "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
+      "state": "source_review",
+      "review": "Selected short room candidate with a slightly higher rear ground edge."
+    },
+    {
+      "candidate": "r04_room_c2",
+      "module_id": "10001-R04",
+      "use_case": "precise-object-edit",
+      "intent": "targeted_edit_with_approved_reference",
+      "requested_native_size_in_prompt": [
+        2816,
+        3200
+      ],
+      "dedicated_size_parameter": null,
+      "transparent_background": false,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c1/source.png",
+          "sha256": "91d220a942c6f2cb3e10c5422ee26026f7d50b34a675f3efe3972d9521b243bd"
+        },
+        {
+          "path": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+          "sha256": "44e52517457f18caa6d840fce6162f89492af9d863bf7ad920f25b351b397860"
+        }
+      ],
+      "prompt_file": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c2/prompt.txt",
+      "prompt": "Use case: precise-object-edit\nAsset: dungeon 10001-R04 portrait room, bottom-viewport geometry correction c2.\nInput 1 is the complete TALL R04 painting to EDIT. Input 2 is the approved R01 c2 style and gameplay ground proportion reference. Keep input 1's portrait aspect ratio 0.88:1, palette, olive/moss foliage, painted leaf/bark detail, cool teal depth, upper-left soft daylight, horizontal tree-band idea, modest left/right edge shrubs, same low side-on three-quarter belt-scroller camera.\nOnly correct the relative position of the rear grass/earth boundary. In input 1 the bare earth starts around y=800 of a 1176x1337 image, too high in the full canvas. It MUST instead start around y=930-940 (70% of full canvas height), almost horizontally across the width. The BOTTOM gameplay viewport is 1176x662 pixels (16:9) inside the 1176x1337 portrait canvas, so its top is at y=675. A ground boundary at y=940 places it at y=40% inside that bottom gameplay viewport, preserving the same perspective and approximately lower 60% playable ground as the other rooms. The remaining extra upper canvas is forest canopy/camera margin, not extra walkable land.\nAchieve the correction by painting the rear forest/understory farther DOWN into part of the old upper soil area, with coherent trunks rooted behind the new rear grass line. Keep their visual size within the bottom viewport in line with the approved side-on reference; no huge foreground pillar. Keep a broad flat unobstructed soil area from about y=940 to the bottom, with fine warm tan/brown painted soil, a sparse bottom grass fringe and restrained low boundary vegetation at extreme left/right, leaving side passage gaps. Do not turn it into a receding upward road, top-down map, slope, platform or vertical path. No arches or trees leaning in from two sides.\nRequested native formal canvas 2816x3200 if supported, one opaque continuous 0.88:1 portrait room. Do not stretch/upscale old pixels, crop to a landscape, add panels, titles, UI, characters, doors or interactive props. Preserve the approved painting style; correct the ground boundary only.\n",
+      "output": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c2/source.png",
+      "output_sha256": "e4821a4dd4ca841cac5c1ae9c6eef99a66fb562db94e3507035ae4b97afc5d65",
+      "actual_size": [
+        1176,
+        1337
+      ],
+      "actual_mode": "RGB",
+      "source_copy": "Original generated PNG copied byte-for-byte. No artwork recolor, crop, resize, mirror, tile or upscale.",
+      "state": "rejected",
+      "review": "Internal geometry retry did not move the ground boundary to requested full-canvas y=70%. Not selected. User did not reject this version."
     }
   ],
-  "user_approval": null,
-  "production_status": "R01 representative sample only; native 2K requirement unmet, remaining room batch awaits sample approval."
+  "user_approval": {
+    "date": "2026-10-16",
+    "approved_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+    "quote": "基本认可，不过对于房间的左右侧，最好能有一点灌木丛，营造一些边界感",
+    "scope": [
+      "c2 style and composition baseline",
+      "minor left/right decorative boundary shrubs",
+      "continue the five room design candidates under this baseline"
+    ],
+    "not_approved": [
+      "new room candidate final artwork",
+      "native 2K waiver",
+      "runtime integration"
+    ]
+  },
+  "production_status": "Five unique room design candidates plus boundary-shrub R01 revision. New room final artwork review and native 2K remain pending."
 }

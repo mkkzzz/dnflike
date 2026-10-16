@@ -91,4 +91,9 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    current = json.loads((PACKAGE / 'manifest.json').read_text(encoding='utf-8'))
+    if 'baseline_approval' in current:
+        from build_batch_review import main as build_batch
+        build_batch()
+    else:
+        main()

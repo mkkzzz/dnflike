@@ -9,12 +9,12 @@
   "path_base": "repository_root",
   "task": "docs/tasks/art_tasks/forest_10001_reference_redesign_v2.md",
   "reference": "art/concepts/scenes/forest/10001/v1/source/style_reference.png",
-  "selected_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
-  "selected_candidate_approval": "pending_user_review",
+  "selected_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c3/source.png",
+  "selected_candidate_approval": "minor_edge_revision_of_user_approved_c2; final_artwork_review_pending",
   "generation_record": "art/concepts/scenes/forest/10001/reference_redesign_v2/generation.json",
-  "validation": "art/concepts/scenes/forest/10001/reference_redesign_v2/validation.json",
-  "review_board": "docs/previews/forest_10001_reference_redesign_v2/review_board.png",
-  "preview_075": "docs/previews/forest_10001_reference_redesign_v2/r01_c2_075.png",
+  "validation": "art/concepts/scenes/forest/10001/reference_redesign_v2/validation_batch_01.json",
+  "review_board": "docs/previews/forest_10001_reference_redesign_v2/batch_01/gameplay_viewports.png",
+  "preview_075": "docs/previews/forest_10001_reference_redesign_v2/batch_01/r01_c3_075.png",
   "sample_actual_size": [
     1672,
     941
@@ -32,7 +32,9 @@
     "palette": "Olive/moss foliage, muted brown-green bark, gray-teal depth, warm tan/brown fine earth.",
     "light": "Soft upper-left moderate daylight, low contrast background.",
     "collidable_props_baked_into_background": false,
-    "layers": "Representative RGB scene combines forest and ground; formal room layers not delivered."
+    "layers": "Representative RGB scene combines forest and ground; formal room layers not delivered.",
+    "boundary_vegetation": "User-requested low noninteractive decorative shrubs at extreme left/right edges, with soil openings for side passages. Interactive bushes remain separate assets.",
+    "room_camera_review": "Compare explicit same-scale native-viewport crops; R04 leaves both overhead and lower foreground camera margin. Exact world/collision camera bounds remain an integration task."
   },
   "rooms": [
     {
@@ -43,7 +45,13 @@
         1600
       ],
       "lifecycle": "source_review",
-      "production_exports": []
+      "production_exports": [],
+      "design_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_room_c1/source.png",
+      "design_candidate_approval": "pending_final_artwork_review",
+      "actual_size": [
+        2243,
+        701
+      ]
     },
     {
       "module_id": "10001-R02",
@@ -52,8 +60,14 @@
         5120,
         1600
       ],
-      "lifecycle": "planned",
-      "production_exports": []
+      "lifecycle": "source_review",
+      "production_exports": [],
+      "design_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r02_room_c1/source.png",
+      "design_candidate_approval": "pending_final_artwork_review",
+      "actual_size": [
+        2243,
+        701
+      ]
     },
     {
       "module_id": "10001-R03",
@@ -62,8 +76,14 @@
         3840,
         1600
       ],
-      "lifecycle": "planned",
-      "production_exports": []
+      "lifecycle": "source_review",
+      "production_exports": [],
+      "design_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c2/source.png",
+      "design_candidate_approval": "pending_final_artwork_review",
+      "actual_size": [
+        1942,
+        809
+      ]
     },
     {
       "module_id": "10001-R04",
@@ -72,8 +92,14 @@
         2816,
         3200
       ],
-      "lifecycle": "planned",
-      "production_exports": []
+      "lifecycle": "source_review",
+      "production_exports": [],
+      "design_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c1/source.png",
+      "design_candidate_approval": "pending_final_artwork_review",
+      "actual_size": [
+        1176,
+        1337
+      ]
     },
     {
       "module_id": "10001-R05",
@@ -82,12 +108,34 @@
         5120,
         1600
       ],
-      "lifecycle": "planned",
-      "production_exports": []
+      "lifecycle": "source_review",
+      "production_exports": [],
+      "design_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r05_room_c1/source.png",
+      "design_candidate_approval": "pending_final_artwork_review",
+      "actual_size": [
+        2243,
+        701
+      ]
     }
   ],
   "blocks": [
-    "User must approve the representative sample before batch generation.",
-    "Current returned PNGs do not satisfy native 2K or full room canvas sizes; exact-size high-resolution route remains unresolved."
-  ]
+    "Returned PNGs do not satisfy native 2K or full native room canvas sizes; high-resolution route remains unresolved."
+  ],
+  "baseline_approval": {
+    "date": "2026-10-16",
+    "approved_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_c2/source.png",
+    "quote": "基本认可，不过对于房间的左右侧，最好能有一点灌木丛，营造一些边界感",
+    "scope": [
+      "c2 style and composition baseline",
+      "minor left/right decorative boundary shrubs",
+      "continue the five room design candidates under this baseline"
+    ],
+    "not_approved": [
+      "new room candidate final artwork",
+      "native 2K waiver",
+      "runtime integration"
+    ]
+  },
+  "room_overview": "docs/previews/forest_10001_reference_redesign_v2/batch_01/rooms_overview.png",
+  "boundary_comparison": "docs/previews/forest_10001_reference_redesign_v2/batch_01/r01_boundary_revision.png"
 }
