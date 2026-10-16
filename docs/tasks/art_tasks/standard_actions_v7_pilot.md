@@ -8,8 +8,8 @@
 | revision | v7；候选通过并验收前不替代现行资源 |
 | asset_type / workflow | 玩家动作；[14](../../design/14_美术资源全流程.md) B |
 | style / theme | handpainted_action_v1 / dark_fantasy_v1 |
-| owner / integration_owner | ws2 制作小样；使用者已授权 ws2 接入可切换试玩（尚未实施），正式替换待后续验收 |
-| lifecycle | 源图制作（source_review）；奔跑/跳跃/attack1 候选待评审，行走退回；未实装 |
+| owner / integration_owner | ws2；既有可切换试玩授权保留，但 c2 比例失败暂不接入；须先有新的过门候选 |
+| lifecycle | 源图制作（source_review）：c2 已退回（rejected），c3 直立/准备双姿态基准数值过门、待用户看图；整套动作未重做、未实装 |
 | 批准范围 | 2026-10-15 使用者同意 attack1 首轮测试，并授权行走、奔跑、跳跃基础动作小样；这不是源图/成品或实机批准 |
 
 本轮逐组制作代表小样，不扩展其它攻击、时装或技能；共用标准原画的脸、比例、服装、色板、游戏机位和右手单手持刀规则。
@@ -41,6 +41,8 @@
 
 ## 4. 小样与导出规格
 
+以下 190 px 及 c2 帧表是历史试制规格，不用于新制作准入。2026-10-17 后先按 [人工比例表](../../../art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json) 和本任务末节建立同源直立基准；新角色导出按站立等效 380 px，不放大源像素。
+
 - 生成请求为每组 4 列 × 2 行、8 个真实关键姿势；实际主体数量与布局须看图后显式标定，不能按生成请求假定成功。
 - 固定朝右三分之四游戏机位，约 8 头身；统一缩至站立等效身高 190 px，不按每帧外接框分别拉伸，不把下蹲/腾空姿势拉成等高。
 - 单手持标准太刀的候选先验证动作设计；不得宣称武器分层或任意换武器已实现。右手为持刀手，左手作平衡；无额外武器、刀光、残影或地面阴影。
@@ -62,7 +64,7 @@
 
 ```powershell
 python tools/explore/standard_actions_guides.py walk run jump attack1
-python tools/explore/standard_actions_pilot.py art/animations/players/swordsman/v7/sources/pilot_c2.json
+python tools/explore/standard_actions_pilot.py art/animations/players/swordsman/v7/sources/pilot_c2.json --legacy-rebuild
 ```
 
 导出目录已存在时，请用新的候选目录，或对同一候选显式加 `--overwrite`；随机生图以已入库源图为准，不能靠再跑提示词保证相同结果。
@@ -92,7 +94,7 @@ GIF 为整数动作 tick 经累计 10 ms 量化，准确时钟以 manifest 为�
 | 检查 | 要求 | 结果 |
 |---|---|---|
 | 格式与回放 | 引用、RGBA、边界、显式时长、锚点和朝向 | 导出校验及独立重建通过，详见包内报告；握点/护手/刀尖保护点未标定，不宣称自动验证通过 |
-| G1 身份 | 各动作与 standard_v1 同角色，跨图同服装和比例 | 有候选待用户评审；已知比例/太刀长度偏差待核对 |
+| G1 身份 | 各动作与 standard_v1 同角色，跨图同服装和比例 | c2 头部显示尺度抽测失败、站高未经验证，已退回；c3 双姿态头高数值过门，完整身份/细节仍待评 |
 | G2 画质 | attack1 与 V6 并排；最多两轮，不达标则按18退回S0 | 并排回放已提供，待用户判断；生图次数与提交均不算通过 |
 | G3 武器 | 去刀补握拳/手指层，挂回太刀并换巨剑/短剑 | 未执行；带刀小样不算通过 |
 | G4 裸动作 | 实速先看步态、重心、跳跃与发力；再看特效 | 裸动作已回放；行走退回，奔跑/跳跃/attack1 待用户评审 |
@@ -107,3 +109,13 @@ GIF 为整数动作 tick 经累计 10 ms 量化，准确时钟以 manifest 为�
 - [ ] 逐动作补过渡与整套资源，明确替换映射并交接。
 - [ ] 接收区接入、受影响回归与实机证据。
 - [ ] 用户实机验收后升级状态。
+
+## 8. 2026-10-17 比例复核与 c3 基准
+
+用户指出 v7 头偏大。抽测确认旧配置的头部显示尺度不合格，见[最终对照](../../previews/v7_proportions_2026-10-17/measurement_comparison_refined.png)与[审计报告](../../reports/ws2/2026-10/2026-10-17_V7头部比例核查与重做准入.md)。导出器没有局部放大头部；站高估值和源图比例控制未形成闭环，不应直接将 c2 接入试玩。具体源姿态应重标还是重画，要在可靠直立基准下逐一复核，不能仅据 3 个样本宣称全部原画都变形。
+
+- c2 现行 [manifest](../../../art/animations/players/swordsman/v7/exports/pilot_c2/manifest.json) 已标拒收；原 PNG/配置保留，旧 manifest 另存快照。历史重建专用标志不允许新配置借用，也不通过 G1。
+- c3 只做一张“直立＋准备”基准：[源图和完整提示词](../../../art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/generation.json)；[导出包](../../../art/animations/players/swordsman/v7/exports/proportion_reset_c3_pair_c1/manifest.json)；[同包对照](../../previews/v7_proportions_2026-10-17/c3_reference_compare.png)。同图站高实测 855 px、向下导出 380 px，两个头部尺度均过门，未获用户美术认可。
+- 新导出必须给 `proportion_check`，校验参考/源图哈希、全部姿态的可见发顶/下巴与同图站立高度；缺项、超差、放大在写文件前就停止。`tools/test_actor_proportions.py` 覆盖这些拒收条件。
+- 这不是完整动作重做。旧行走半步、奔跑腿序、普攻轨迹/收势、跳跃相位与 G3 换武器仍须处理；c3 中立姿态的入鞘刀柄与空鞘要求也尚有差别。
+- 后续先确认 c3 基准的人体与成熟感，再逐组重做源关键姿态；完整 G1/G2/G3/G4 和实机验收未通过前，不替代现行 V6。

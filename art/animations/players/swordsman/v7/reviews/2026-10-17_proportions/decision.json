@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-17",
+  "user_request": "Confirm whether v7 heads drift from approved original proportions and prevent recurrence.",
+  "package": "art/animations/players/swordsman/v7/exports/pilot_c2/manifest.json",
+  "lifecycle": "rejected",
+  "integration_allowed": false,
+  "G1": "failed_head_scale_and_unverified_standing_height",
+  "scope": "Current c2 metadata is rejected for new integration; original PNG/config bytes and pre-rejection manifest snapshot are retained. Current V6 stays active.",
+  "findings": [
+    "Current screen head envelope is oversized relative to locked A1 at configured standing-equivalent scale in all three representative samples.",
+    "Exporter uses one uniform scale per source; there is no isolated head enlargement step.",
+    "Old standing-height estimates are not neutral-pose measurements; exact source-anatomy drift versus normalization error is not fully separated.",
+    "Do not claim all 24 poses were measured, or that uniform downscaling fixes intrinsic head/body anatomy."
+  ],
+  "rework_order": [
+    "Create/review a same-scale neutral standing companion plus one game-ready pose against locked original.",
+    "Derive standing-equivalent scale from that neutral pose, never from crouched/running/jumping alpha bbox.",
+    "Check head scale on every unique pose; redraw only the source poses still failing after reliable normalization.",
+    "Preserve missing-blade, run leg-role, jump timing and G3 weapon-layering requirements; proportion correction alone does not approve them."
+  ],
+  "audit": "audit.json",
+  "numerical_report": "report.json",
+  "new_assets_generated": true,
+  "game_modified": false,
+  "original_manifest_snapshot": {
+    "path": "art/animations/players/swordsman/v7/reviews/2026-10-17_proportions/pilot_c2_manifest_before_rejection.json",
+    "sha256": "4c64f938980836042e5ee5da846c9f4c8512da2bcd0c3ab1fed951a061916552"
+  },
+  "new_assets_scope": "Only c3 neutral/ready proportion-lock pair, not a replacement action animation set."
+}

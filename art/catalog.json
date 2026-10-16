@@ -151,6 +151,7 @@
     "ordinary_goblin": "art/concepts/characters/monsters/goblin/standard_v1/manifest.json",
     "swordsman_standard": "art/concepts/characters/players/swordsman/standard_v1/manifest.json",
     "goblin_chief_candidate": "art/concepts/characters/monsters/goblin_chief/v1/generation.json",
-    "forest_10001_background_redesign_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/manifest.json"
+    "forest_10001_background_redesign_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/manifest.json",
+    "swordsman_proportion_reset_c3_candidate": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/generation.json"
   }
 }

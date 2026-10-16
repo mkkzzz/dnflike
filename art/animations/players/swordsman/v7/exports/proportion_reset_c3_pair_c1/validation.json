@@ -1,0 +1,52 @@
+{
+  "software": {
+    "python": "3.13.16",
+    "pillow": "12.3.0"
+  },
+  "head_scale_gate_passed": true,
+  "measured_unique_poses": 2,
+  "standing_height_measured_on_same_source": 855,
+  "target_standing_height": 380,
+  "source_sha256_matches": true,
+  "config_sha256_matches": true,
+  "frames": [
+    {
+      "file": "actor/neutral/f000.png",
+      "mode": "RGBA",
+      "size": [
+        1024,
+        800
+      ],
+      "canvas_edges_clear": true,
+      "source_sampling_scale": 0.4444444444444444,
+      "protected_head_points_retained": true
+    },
+    {
+      "file": "actor/ready/f000.png",
+      "mode": "RGBA",
+      "size": [
+        1024,
+        800
+      ],
+      "canvas_edges_clear": true,
+      "source_sampling_scale": 0.4444444444444444,
+      "protected_head_points_retained": true
+    }
+  ],
+  "upscaled": false,
+  "user_artwork_approved": false,
+  "runtime_integrated": false,
+  "scope": "Only a two-static-pose normalization/proportion-lock sample. Full action set has NOT been redone.",
+  "known_limits": [
+    "Neutral companion still has a sheathed hilt although requested empty scabbard.",
+    "Identity, detailed limb anatomy, full motion/G2/G3/G4 and runtime remain unapproved.",
+    "Connected-component mask retains original pixels at core alpha>=24, padding 0; low-alpha fringe is dropped. Both protected head points survived."
+  ],
+  "rebuild_identical_png_gif_count": 12,
+  "source_reference_and_prompt_provenance_matches": true,
+  "automatic_head_landmark_protection": true,
+  "policy_regression_tests": {
+    "command": "python tools/test_actor_proportions.py",
+    "passed": 14
+  }
+}

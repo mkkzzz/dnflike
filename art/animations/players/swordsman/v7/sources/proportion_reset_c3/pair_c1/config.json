@@ -1,0 +1,114 @@
+{
+  "revision": "v7_proportion_reset_c3_pair_c1",
+  "output_dir": "../../../exports/proportion_reset_c3_pair_c1",
+  "canvas": [
+    1024,
+    800
+  ],
+  "anchor": [
+    448,
+    720
+  ],
+  "target_standing_height": 380,
+  "proportion_check": "proportions.json",
+  "sources": {
+    "pair": {
+      "file": "source.png",
+      "standing_height": 855
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": true,
+    "weapon_layering": "not_attempted",
+    "G1": "head_scale_numerically_checked_identity_pending",
+    "G2": "pending_review",
+    "G3": "not_passed",
+    "G4": "static_pair_not_action_animation"
+  },
+  "clips": {
+    "neutral": {
+      "asset_id": "actor.player.proportion.neutral",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "neutral_01",
+          "source": "pair",
+          "crop_bbox": [
+            190,
+            3,
+            745,
+            884
+          ],
+          "root": [
+            480,
+            872
+          ],
+          "foot": [
+            375,
+            872
+          ],
+          "duration_ticks": 30,
+          "component_seed": [
+            475,
+            350
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "landmarks": {
+            "head_top": [
+              498,
+              17
+            ],
+            "chin": [
+              506,
+              146
+            ]
+          }
+        }
+      ]
+    },
+    "ready": {
+      "asset_id": "actor.player.proportion.ready",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "ready_01",
+          "source": "pair",
+          "crop_bbox": [
+            820,
+            190,
+            1680,
+            884
+          ],
+          "root": [
+            1225,
+            872
+          ],
+          "foot": [
+            935,
+            872
+          ],
+          "duration_ticks": 30,
+          "component_seed": [
+            1270,
+            510
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "landmarks": {
+            "head_top": [
+              1365,
+              222
+            ],
+            "chin": [
+              1357,
+              357
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-17",
+  "tool": "image_gen.imagegen",
+  "mode": "built_in",
+  "model": "not_exposed",
+  "seed": null,
+  "intent": "One neutral/ready proportion-lock rework sample after confirmed c2 display-scale failure; not a new action batch.",
+  "reference_parameter": "referenced_image_paths",
+  "references": [
+    {
+      "path": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+      "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9"
+    },
+    {
+      "path": "art/concepts/characters/players/swordsman/standard_v1/views/A2_ready_right.png",
+      "sha256": "d1593da418bde967aeb61dc06927b549595efd0a5358a3316b0a064c233415c6"
+    },
+    {
+      "path": "docs/previews/v7_proportions_2026-10-17/measurement_comparison.png",
+      "sha256": "2a1ed2befb9a6701fcd0acf08a95e992eaf0741c59762b19d9138824d7cdf88d"
+    }
+  ],
+  "transparent_background_requested": true,
+  "requested_canvas_in_prompt": [
+    2048,
+    1024
+  ],
+  "actual_size": [
+    1774,
+    887
+  ],
+  "actual_mode": "RGBA",
+  "alpha_extrema": [
+    0,
+    255
+  ],
+  "output": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+  "output_sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+  "prompt_file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/prompt.txt",
+  "prompt": "Use case: stylized-concept\nAsset type: a proportion-lock MODEL CHECK PAIR for a 2D side-scrolling action RPG hero. This is a small controlled rework sample before any action-sheet regeneration.\nInput 1 is the APPROVED original A1 character turnaround and body proportions. Use its clothed FRONT and THREE-QUARTER figures as the authoritative skull-to-torso and limb proportion reference, NOT the fifth nude/base-body figure. Input 2 is the approved A2 right-facing game-ready costume/camera reference. Use that for facing, outfit details and the one-handed weapon pose; preserve input 1's lean adult body proportions. Input 3 is a diagnostic comparison of the rejected v7 candidate: it shows the ERROR to avoid, not a style or body reference. Do not copy the oversized v7 heads or squat leg proportions from input 3.\nCreate exactly TWO full-body figures of the SAME young adult male at the SAME anatomical pixel scale, side by side, on genuine transparent RGBA. One row, two generously separated columns. Request 2048x1024 native canvas if supported, with both figures complete and abundant alpha margins. Aim for the standing figure to be at least 650 native pixels tall so a 380-pixel gameplay-height export can downsample it. Do not enlarge old source pixels.\nLEFT: neutral upright standing companion in right-facing three-quarter game camera, legs nearly straight and feet grounded, arms relaxed slightly away from the torso, empty left-hip scabbard, no drawn sword. This is a measurable body-scale reference, not a combat pose. RIGHT: the same man, same camera and anatomical scale, in a moderately lowered wide one-handed katana ready stance resembling approved A2: visible RIGHT hand holds the drawn shallow-curved katana low across the body, left hand free for balance, empty scabbard on left hip. Its bent knees must naturally lower his head and shorten its silhouette height relative to the upright LEFT figure. Do NOT scale the crouched right figure up to the same bounding-box height as the standing one.\nCritical proportion lock: faithfully match the original approved A1's slender ADULT skull, long neck-to-waist and leg proportions. The vertical visible head envelope from highest hair tip to chin is approximately 15.2% of the complete upright hair-tip-to-sole height in A1; this includes flared spiky hair and is NOT a traditional anatomical head-count formula. For a 700-pixel standing body that means roughly a 106-pixel visible head envelope. Keep the SAME skull/hair/chin dimensions on both figures, within a few percent. Do not enlarge the face, hair mass or cranium for sprite readability. Do not shorten the torso, thighs or shins to fit the canvas. Do not give a childlike large-head/small-body appearance. The upright companion and ready figure must be visibly the same adult of the same stature, not two independently sized illustrations.\nIdentity and costume: silver-white spiky hair with a small dark-red streak on HIS own right-front fringe, grey eyes, lean athletic youthful adult male; black high-collar undershirt; black leather mid-calf long coat with dark-crimson lining and lapels, rolled forearm sleeves, TWO horizontal silver-buckle chest straps and silver-buckle waist belt; black fitted trousers, right-thigh narrow strap, dark-steel knee guards and segmented shin guards, black boots. BOTH forearms and hands wrapped in deep red cloth to the elbows with bare fingers, no metal forearm bracers or flames. Standard shallow-curved single-edged steel katana with modest wave hamon, round dark guard with copper rim, black/deep-red wrapped hilt. One-handed RIGHT grip only. Body, hand and sword must be one coherent drawing.\nStyle: match the originals' polished mature hand-painted 2D action-game illustration, crisp controlled dark contours, well-designed cel-shaded planes with restrained leather and metal highlights, coherent upper-left light. Do not make a cute chibi, soft toy, 3D render or photograph. Preserve the approved face and clothing without importing any unrelated design.\nNo labels, rulers, skeleton lines, numbers, grid, text, logos, watermark, frame or panels. No environment, shadow, ground strip, fake checkerboard or haze: true transparent empty pixels. No action blur, effects, auras, extra arms, extra blades or overlapping figures. All boots, hair tips, coat, hands, katana and scabbard fully visible and inside their own column.\n",
+  "source_upscaled_or_repainted_by_script": false,
+  "status": "source_review",
+  "user_approved": false,
+  "known_limits": [
+    "Only two static body/proportion poses, no complete attack/run/jump animation.",
+    "Head-scale arithmetic does not approve face/costume/limb anatomy or perceived motion.",
+    "Neutral companion retained a sheathed sword hilt although prompt requested empty scabbard; not G3-ready.",
+    "Actual source is smaller than requested sheet canvas, but its measured 855px body allows a 380px actor to DOWNSAMPLE."
+  ],
+  "processing": {
+    "command": "python tools/explore/standard_actions_pilot.py art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/config.json",
+    "method": "Crop, seeded four-connected alpha core>=24, padding 0, uniform 380/855 downsample and root alignment. Original source PNG unchanged.",
+    "attempts": [
+      "Initial unmasked crop rejected nonzero edge alpha.",
+      "Padded isolation (3 then 1 pixels) rejected reaching another alpha core.",
+      "Zero-padding 24-alpha isolation passed, protected hair/chin retained; low-alpha fringe discarded."
+    ],
+    "export_manifest": "art/animations/players/swordsman/v7/exports/proportion_reset_c3_pair_c1/manifest.json",
+    "validation": "art/animations/players/swordsman/v7/exports/proportion_reset_c3_pair_c1/validation.json"
+  },
+  "tool_output_basename": "exec-cdf60312-66d1-42b1-b929-3d770d2361e2.png",
+  "original_tool_png_sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+  "source_copy_byte_identical": true
+}

@@ -7,7 +7,10 @@
 
 # v7 的源配置与导出记录含文件哈希，跨 clone 保持 LF，避免换行改写导致校验不一致。
 art/animations/players/swordsman/v7/sources/**/*.json text eol=lf
+art/animations/players/swordsman/v7/sources/proportion_reset_c3/**/prompt.txt text eol=lf
 art/animations/players/swordsman/v7/exports/**/*.json text eol=lf
+art/animations/players/swordsman/v7/reviews/**/*.json text eol=lf
+art/concepts/characters/players/swordsman/standard_v1/measurements/*.json text eol=lf
 
 # 交接日志只在末尾追加：按行合并，两个工作区同时追加不会冲突（改旧行会产生重复行，故禁止改旧行）
 docs/project/04_交接日志.md merge=union

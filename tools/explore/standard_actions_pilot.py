@@ -13,9 +13,10 @@ Minimal configuration, with every real source pose explicitly enumerated:
 {
   "revision": "standard_actions_pilot_v1",
   "output_dir": "export",
-  "canvas": [512, 400], "anchor": [224, 360],
-  "target_standing_height": 190,
-  "sources": {"walk_sheet": {"file": "walk.png", "standing_height": 300}},
+  "canvas": [1024, 800], "anchor": [448, 720],
+  "target_standing_height": 380,
+  "proportion_check": "proportions.json",
+  "sources": {"walk_sheet": {"file": "walk.png", "standing_height": 800}},
   "declarations": {
     "actor_includes_weapon": true, "weapon_layering": "not_attempted",
     "G1": "pending_review", "G2": "pending_review",
@@ -67,11 +68,14 @@ import hashlib
 import json
 import math
 import re
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 REPO = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO / 'tools'))
+from check_actor_proportions import preflight as proportion_preflight, legacy_rebuild
 FPS = 60
 SCHEMA = "standard_actions_pilot/1"
 
@@ -386,9 +390,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("config", type=Path)
     parser.add_argument("--overwrite", action="store_true", help="replace this candidate's generated files")
+    parser.add_argument("--legacy-rebuild", action="store_true",
+                        help="reproduce ONLY a pinned historical config; does not pass G1 or authorize integration")
     args = parser.parse_args()
     config_path = args.config.resolve()
     config, base = read_json(config_path), config_path.parent
+    # Fail before creating output directories, masks or PNGs. The archived c2
+    # exception is bound to both path and byte hash; it cannot exempt new art.
+    proportion_report = (legacy_rebuild(config_path) if args.legacy_rebuild
+                         else proportion_preflight(config_path, config))
     output = resolve(base, config["output_dir"])
     assert_output_safe(output)
     if output.exists() and any(output.iterdir()) and not args.overwrite:
@@ -404,20 +414,26 @@ def main():
         raise ValueError("target_standing_height must be positive")
     sources = load_sources(config, base)
     declarations = config.get("declarations", {})
+    if args.legacy_rebuild:
+        declarations = {**declarations, 'G1': 'failed_proportions_historical_rebuild_only'}
     if declarations.get("G3") in ("passed", "approved"):
         raise ValueError("A crop/preview tool cannot claim G3 weapon-layering approval")
     manifest = {
-        "schema": SCHEMA, "revision": config["revision"], "status": "review_candidate",
+        "schema": SCHEMA, "revision": config["revision"],
+        "status": "rejected_historical_rebuild" if args.legacy_rebuild else "review_candidate",
         "fps": FPS, "hitstop_baked": False, "actor_includes_weapon": declarations.get("actor_includes_weapon", True),
         "declarations": {"weapon_layering": "not_attempted", "G3": "not_passed", **declarations},
         "coordinate_system": "right-facing pixels, y-down; anchor is ground root except separate_height body proxy",
         "target_standing_height": target_height,
         "sources": {key: value[2] for key, value in sources.items()},
         "config_sha256": hashlib.sha256(config_path.read_bytes()).hexdigest(), "clips": {},
+        "proportion_gate": proportion_report,
     }
     if not config["clips"]:
         raise ValueError("At least one explicitly configured clip is required")
     # Validate every pose before writing any candidate frame.
+    protected_heads = {(row['source'], row['pose_id']): row['head_landmarks']
+                       for row in proportion_report.get('measurements', [])}
     prepared, mask_files = [], []
     for name, spec in config["clips"].items():
         safe_name(name)
@@ -436,6 +452,11 @@ def main():
                 "duration_ticks": 0, "frames": []}
         seen = set()
         for index, pose in enumerate(spec["poses"]):
+            pose = dict(pose)
+            if (pose['source'], pose['id']) in protected_heads:
+                head = protected_heads[(pose['source'], pose['id'])]
+                pose['landmarks'] = {**pose.get('landmarks', {}),
+                                     'proportion_hair_top': head['hair_top'], 'proportion_chin': head['chin']}
             safe_name(pose["id"])
             if pose["id"] in seen:
                 raise ValueError(f"{name}: duplicate source-pose id {pose['id']}")

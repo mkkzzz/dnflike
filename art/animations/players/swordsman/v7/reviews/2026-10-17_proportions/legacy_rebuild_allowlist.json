@@ -1,0 +1,17 @@
+{
+  "purpose": "Historical rebuild only; no G1 approval or integration permission. Exact config paths and byte hashes are pinned.",
+  "configs": {
+    "art/animations/players/swordsman/v7/sources/pilot_c2.json": {
+      "sha256": "c2dbae6aedaebd57d6760094fd3465bc07680f51e5a6bff88aacef2ff795bcc3"
+    },
+    "art/animations/players/swordsman/v7/sources/attack1_calibration_c2.json": {
+      "sha256": "d61328891e7a9f9011bb2dbc83c7561e06730f0daff05f802d5cf84ec5148214"
+    },
+    "art/animations/players/swordsman/v7/sources/run_calibration_c2.json": {
+      "sha256": "66b429f33d0331b6107020d10209da7ccab2ca9e22c3c76200aad31e29c6732a"
+    },
+    "art/animations/players/swordsman/v7/sources/jump_calibration_c2.json": {
+      "sha256": "4116257b598fa7d9bc05514ac7bf13cab7813dd8cf4b5e62f26c0a6c210e2ea5"
+    }
+  }
+}

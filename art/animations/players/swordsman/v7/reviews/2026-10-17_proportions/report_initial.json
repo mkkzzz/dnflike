@@ -1,0 +1,162 @@
+{
+  "schema": "actor_proportions/1",
+  "passed": false,
+  "config": "art/animations/players/swordsman/v7/sources/pilot_c2.json",
+  "audit": "art/animations/players/swordsman/v7/reviews/2026-10-17_proportions/audit.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "reference_visible_head_ratio": 0.15216004589375082,
+  "tolerance_fraction": 0.08,
+  "target_standing_height": 190,
+  "measured_unique_poses": 3,
+  "required_unique_poses": 24,
+  "missing_pose_annotations": [
+    [
+      "attack1_c2",
+      "attack1_02"
+    ],
+    [
+      "attack1_c2",
+      "attack1_03"
+    ],
+    [
+      "attack1_c2",
+      "attack1_04"
+    ],
+    [
+      "attack1_c2",
+      "attack1_05"
+    ],
+    [
+      "attack1_c2",
+      "attack1_06"
+    ],
+    [
+      "attack1_c2",
+      "attack1_07"
+    ],
+    [
+      "attack1_c2",
+      "attack1_08"
+    ],
+    [
+      "jump_sheet",
+      "jump_00_prepare"
+    ],
+    [
+      "jump_sheet",
+      "jump_01_push_off"
+    ],
+    [
+      "jump_sheet",
+      "jump_02_rise"
+    ],
+    [
+      "jump_sheet",
+      "jump_03_apex"
+    ],
+    [
+      "jump_sheet",
+      "jump_04_fall"
+    ],
+    [
+      "jump_sheet",
+      "jump_05_contact"
+    ],
+    [
+      "jump_sheet",
+      "jump_06_compress"
+    ],
+    [
+      "run_c2",
+      "run_02"
+    ],
+    [
+      "run_c2",
+      "run_03"
+    ],
+    [
+      "run_c2",
+      "run_04"
+    ],
+    [
+      "run_c2",
+      "run_05"
+    ],
+    [
+      "run_c2",
+      "run_06"
+    ],
+    [
+      "run_c2",
+      "run_07"
+    ],
+    [
+      "run_c2",
+      "run_08"
+    ]
+  ],
+  "unknown_pose_annotations": [],
+  "neutral_checks": [],
+  "measurements": [
+    {
+      "source": "attack1_c2",
+      "pose_id": "attack1_01",
+      "head_source_px": 74,
+      "source_standing_height": 410,
+      "scale_basis_verified": false,
+      "head_output_px": 34.292682926829265,
+      "reference_head_output_px": 28.910408719812654,
+      "relative_error": 0.18617080993836232,
+      "landmark_only_error_interval": [
+        0.13808280413005014,
+        0.2342588157466743
+      ],
+      "caveat": "Legacy standing-height uncertainty is NOT included in this interval."
+    },
+    {
+      "source": "run_c2",
+      "pose_id": "run_01",
+      "head_source_px": 89,
+      "source_standing_height": 430,
+      "scale_basis_verified": false,
+      "head_output_px": 39.325581395348834,
+      "reference_head_output_px": 28.910408719812654,
+      "relative_error": 0.3602568464692282,
+      "landmark_only_error_interval": [
+        0.31440549209386104,
+        0.4061082008445953
+      ],
+      "caveat": "Legacy standing-height uncertainty is NOT included in this interval."
+    },
+    {
+      "source": "jump_sheet",
+      "pose_id": "jump_07_recover",
+      "head_source_px": 75,
+      "source_standing_height": 400,
+      "scale_basis_verified": false,
+      "head_output_px": 35.625,
+      "reference_head_output_px": 28.910408719812654,
+      "relative_error": 0.2322551488379947,
+      "landmark_only_error_interval": [
+        0.18296494288447485,
+        0.2815453547915143
+      ],
+      "caveat": "Legacy standing-height uncertainty is NOT included in this interval."
+    }
+  ],
+  "failures": [
+    "below_new_native_actor_height",
+    "missing_pose_annotations",
+    "unverified_standing_height:attack1_c2",
+    "unverified_standing_height:run_c2",
+    "unverified_standing_height:jump_sheet",
+    "head_scale_out_of_range:attack1_01",
+    "head_landmark_not_visible:run_01",
+    "head_scale_out_of_range:run_01",
+    "head_landmark_not_visible:jump_07_recover",
+    "head_scale_out_of_range:jump_07_recover"
+  ],
+  "artwork_approved": false,
+  "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+}

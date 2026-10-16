@@ -1,0 +1,85 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/pilot_c2.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Agent inspected original source grids and marked hair top/chin; +/-3 source pixels.",
+  "coverage": "Representative spot check of one visible upright-head pose per action, NOT all 24 unique source poses.",
+  "sources": {
+    "attack1_c2": {
+      "file": "art/animations/players/swordsman/v7/sources/attack1_c2.png",
+      "sha256": "9088dcbac31dd377982ab1b8a62de29a593e486d0864f61cbea9bfcdb3943e3b",
+      "scale_basis": {
+        "kind": "legacy_estimate",
+        "note": "410/430/400 are old manual guesses, not measured neutral standing companions; do not claim source anatomy proved by these heights."
+      }
+    },
+    "run_c2": {
+      "file": "art/animations/players/swordsman/v7/sources/run_c2.png",
+      "sha256": "4a53e7386fd98edde4deb20f70c1c98a18fb7a3398d6c57c790b5b4656958052",
+      "scale_basis": {
+        "kind": "legacy_estimate",
+        "note": "410/430/400 are old manual guesses, not measured neutral standing companions; do not claim source anatomy proved by these heights."
+      }
+    },
+    "jump_sheet": {
+      "file": "art/animations/players/swordsman/v7/sources/jump_c2.png",
+      "sha256": "112936e3426dbcc84055bd10b6d0763c465e4ef0dc9f313ce4477606fe781fe8",
+      "scale_basis": {
+        "kind": "legacy_estimate",
+        "note": "410/430/400 are old manual guesses, not measured neutral standing companions; do not claim source anatomy proved by these heights."
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "attack1_c2",
+      "pose_id": "attack1_01",
+      "head": {
+        "hair_top": [
+          247,
+          32
+        ],
+        "chin": [
+          269,
+          106
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "run_c2",
+      "pose_id": "run_01",
+      "head": {
+        "hair_top": [
+          353,
+          25
+        ],
+        "chin": [
+          389,
+          114
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "jump_sheet",
+      "pose_id": "jump_07_recover",
+      "head": {
+        "hair_top": [
+          1589,
+          460
+        ],
+        "chin": [
+          1628,
+          535
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "schema": "standard_actions_pilot/1",
   "revision": "v7_pilot_c2",
-  "status": "review_candidate",
+  "status": "rejected_G1_head_scale",
   "fps": 60,
   "hitstop_baked": false,
   "actor_includes_weapon": true,
@@ -9,7 +9,7 @@
     "weapon_layering": "not_attempted",
     "G3": "not_passed",
     "actor_includes_weapon": true,
-    "G1": "pending_review",
+    "G1": "failed_head_scale_and_unverified_standing_height",
     "G2": "pending_review",
     "G4": "pending_review"
   },
@@ -2213,5 +2213,7 @@
         }
       ]
     }
-  }
+  },
+  "current_review": "art/animations/players/swordsman/v7/reviews/2026-10-17_proportions/decision.json",
+  "integration_allowed": false
 }

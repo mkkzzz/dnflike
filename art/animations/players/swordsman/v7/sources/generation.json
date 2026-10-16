@@ -2,7 +2,7 @@
   "revision": "v7",
   "date": "2026-10-15",
   "tool_mode": "built-in, image references supplied; no API/CLI fallback",
-  "stage": "source_review candidate samples",
+  "stage": "pilot_c2 rejected for G1 head display scale; c3 neutral/ready proportion-reset sample pending user review",
   "candidates": [
     {
       "id": "walk",
@@ -104,10 +104,11 @@
       "reference_delivery": "actual referenced_image_paths argument",
       "transparent_background": true,
       "prompt": "Use case: identity-preserve. Image 1 is the EDIT TARGET eight-pose RUN sheet. Image 2 supplies approved identity. Image 3 is the phase guide, with RED near/right limbs and BLUE far/left limbs. Preserve faces, upper body lean, clothing detail, right-hand one-handed katana carry and art style from Image 1. Keep exactly 4x2 full-body figures, same scale and facing RIGHT, complete sword within each cell with clear transparent gutters.\nFix the real running gait. The lower row currently DUPLICATES the first row instead of switching legs. Keep row1 contact/compression/drive/flight, but cell3 must show near leg fully trailing at TOE PUSH-OFF, boot toe just contacting the ground behind the hip while far knee drives forwards; it must not duplicate airborne cell4.\nRepaint lower row legs and modest corresponding coat follow-through so it is truly opposite-leg: cell5 FAR/LEFT leg lands stretched FORWARD while visible NEAR/RIGHT leg folds BEHIND, with opposite leg occlusion from cell1; cell6 FAR support knee compresses under hip, NEAR heel lifted/folded towards rear; cell7 FAR leg extends BEHIND to final toe push-off while NEAR knee drives forward; cell8 airborne, NEAR leg reaching forwards and FAR leg folded backwards, opposite to cell4. The NEAR leg remains on camera-facing layer in overlap, not magically becoming far leg. Both knees/shins still have dark steel armor. No horizontal mirroring of whole figure and no change of sword hand.\nAll eight phases should read as contact/compression/toe drive/flight twice with alternating legs, not eight air poses. Same anatomy and scale, crisp painted contour. No extra blade, blur or afterimage. True transparent background, ZERO alpha in empty gutters; no haze, floor line, gradient, text, grids or shadows.",
-      "status": "exported_review_candidate_not_approved",
+      "status": "rejected_current_normalization_G1",
       "seed": "not provided",
       "output_basename": "exec-5dd6652b-65e3-4b62-9cc4-ab7290d6f8b5.png",
-      "review_note": "c1 duplicates the same half-run; c2 changes lower-row legs, playback candidate pending review."
+      "review_note": "c1 duplicates the same half-run; c2 changes lower-row legs, playback candidate pending review.",
+      "proportion_note": "Representative screen-head scale failed; standing-height guesses unverified. Full intrinsic source-anatomy rework scope not yet isolated."
     },
     {
       "id": "jump_c2",
@@ -122,10 +123,11 @@
       "reference_delivery": "actual referenced_image_paths argument",
       "transparent_background": true,
       "prompt": "Use case: precise-object-edit. Image 1 is the EDIT TARGET eight-pose JUMP sheet. Image 2 is approved character identity; Image 3 is the 8-phase skeleton plan. Keep all eight full-body figures in 4x2 layout, same painted identity, costume, proportions, right-facing camera, right-hand one-handed katana, and true transparent background. Correct ONLY TOP ROW SECOND CELL (toe push-off): the current figure is still crouched with bent legs. Draw a clear explosive TAKE-OFF body extension: torso rising, hips and support knee open, supporting leg almost straight to a plantar-flexed toe pushing off below/behind, other knee beginning to drive upward; free LEFT arm opens for balance, secure right-hand katana stays at safe side. This must be recognizably different from crouched frame1 and compact rising frame3. Do not add any input-delay phase or duplicate body. Preserve every other cell's artwork and eight-phase sequence, keep all blade/coat/boots inside cell with transparent margins. No blur, floor, shadows, gradient, haze, labels or effects.",
-      "status": "exported_review_candidate_not_approved",
+      "status": "rejected_current_normalization_G1",
       "seed": "not provided",
       "output_basename": "exec-1d2e3d3d-a0db-43fb-a040-b8afb3239932.png",
-      "review_note": "c1 push-off underextended; c2 strengthens take-off, recovery still crouched, phase timing is preview only."
+      "review_note": "c1 push-off underextended; c2 strengthens take-off, recovery still crouched, phase timing is preview only.",
+      "proportion_note": "Representative screen-head scale failed; standing-height guesses unverified. Full intrinsic source-anatomy rework scope not yet isolated."
     },
     {
       "id": "attack1_c2",
@@ -140,13 +142,16 @@
       "reference_delivery": "actual referenced_image_paths argument",
       "transparent_background": true,
       "prompt": "Use case: precise-object-edit. Image 1 is the EDIT TARGET eight-pose first attack sheet. Image 2 is approved character and sword proportion reference. Image 3 is the action guide. Preserve the eight painted figures, poses, faces, costume, cell locations, colors, camera and rendering. Correct missing or clipped sword only: in the SECOND cell of the TOP row (maximum windup), the RIGHT hand holds a hilt but the blade is missing. Add ONE anatomically attached complete katana blade emerging from its circular guard on the opposite end of the grip, pointing back/left along the windup arm with a fully visible silver blade. Pose stays a single-handed right-hand forehand windup; left hand remains free. If necessary tighten only that blade's projected angle/foreshortening slightly so its whole blade and tip fit the second cell without touching any adjacent character. Do not invent a second hilt or blade elsewhere.\nAlso ensure the FOURTH top-row cell's forward horizontal katana tip has 20 pixels of genuinely transparent breathing space before the image edge, preserving the extended arm and sword scale as closely as possible. No blade should be cut off by the sheet or overlap another pose. Keep all other cells unchanged. True transparent RGBA, ZERO-alpha empty space, no new background/blur/trail/effects/shadows/text.",
-      "status": "exported_review_candidate_not_approved",
+      "status": "rejected_current_normalization_G1",
       "seed": "not provided",
       "output_basename": "exec-55201401-3581-4504-9608-ef8c66d27c5e.png",
-      "review_note": "c1 windup blade missing; c2 repaired, bare motion and V6 comparison pending user review."
+      "review_note": "c1 windup blade missing; c2 repaired, bare motion and V6 comparison pending user review.",
+      "proportion_note": "Representative screen-head scale failed; standing-height guesses unverified. Full intrinsic source-anatomy rework scope not yet isolated."
     }
   ],
   "export_entry": "art/animations/players/swordsman/v7/sources/pilot_c2.json",
   "actual_input_delivery": "All native calls supplied local images through referenced_image_paths; Comfy probe receipts/workflows are separate.",
-  "comfy_probe": "art/animations/players/swordsman/v7/sources/comfy_probe/review.json; outputs rejected and excluded from published previews"
+  "comfy_probe": "art/animations/players/swordsman/v7/sources/comfy_probe/review.json; outputs rejected and excluded from published previews",
+  "proportion_review": "art/animations/players/swordsman/v7/reviews/2026-10-17_proportions/decision.json",
+  "proportion_reset_sample": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/generation.json"
 }

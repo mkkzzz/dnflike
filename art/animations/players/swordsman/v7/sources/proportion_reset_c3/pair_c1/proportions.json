@@ -1,0 +1,74 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Agent visual grid annotations, +/-3 source pixels. Highest meaningful hair core selected; detached faint RGBA fringe is not cranium.",
+  "sources": {
+    "pair": {
+      "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+      "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 17,
+        "standing_bottom_y": 872,
+        "head": {
+          "hair_top": [
+            498,
+            17
+          ],
+          "chin": [
+            506,
+            146
+          ],
+          "projection": "upright_head"
+        },
+        "sole": [
+          375,
+          872
+        ],
+        "crop_bbox": [
+          190,
+          3,
+          745,
+          884
+        ]
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "pair",
+      "pose_id": "neutral_01",
+      "head": {
+        "hair_top": [
+          498,
+          17
+        ],
+        "chin": [
+          506,
+          146
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "pair",
+      "pose_id": "ready_01",
+      "head": {
+        "hair_top": [
+          1365,
+          222
+        ],
+        "chin": [
+          1357,
+          357
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ]
+}

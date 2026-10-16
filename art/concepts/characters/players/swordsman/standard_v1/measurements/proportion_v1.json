@@ -1,0 +1,63 @@
+{
+  "schema": "actor_proportion_profile/1",
+  "id": "swordsman_standard_v1_visible_head",
+  "date": "2026-10-17",
+  "style_identity_approval": "D030 locked standard_v1; existing original artwork unchanged",
+  "measurement_approval": "Agent visual landmark annotations, +/-3 source pixels; quantitative calibration is not new user artwork approval.",
+  "definition": "Visible upright-head envelope from highest hair tip to chin, normalized by measured standing height. This is NOT traditional anatomical head count.",
+  "legacy_measure_warning": "measure.json neck_y is the minimum silhouette row inside a search band. For A1 front it lands at y=136, above the observed chin near y=155; its old heads_tall estimate cannot validate proportion consistency.",
+  "references": [
+    {
+      "id": "A1_front",
+      "file": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+      "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9",
+      "standing_top_y": 51,
+      "standing_bottom_y": 732,
+      "head": {
+        "hair_top": [
+          182,
+          51
+        ],
+        "chin": [
+          184,
+          155
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "id": "A1_three_quarter",
+      "file": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+      "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9",
+      "standing_top_y": 51,
+      "standing_bottom_y": 737,
+      "head": {
+        "hair_top": [
+          446,
+          51
+        ],
+        "chin": [
+          473,
+          155
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ],
+  "supporting_camera_reference": {
+    "file": "art/concepts/characters/players/swordsman/standard_v1/views/A2_ready_right.png",
+    "sha256": "d1593da418bde967aeb61dc06927b549595efd0a5358a3316b0a064c233415c6",
+    "use": "Matched game camera/pose visual review only; crouched silhouette is not standing height."
+  },
+  "max_head_scale_error_fraction": 0.08,
+  "max_neutral_height_error_fraction": 0.02,
+  "min_new_target_standing_height": 380,
+  "policy": [
+    "Every source batch needs an upright neutral companion at the SAME anatomical pixel scale, with explicit feet and hair/chin landmarks.",
+    "Every unique pose needs head landmarks bound to the exact source hash; no per-pose bbox normalization.",
+    "Strong head tilt, rear view or occlusion requires separately reviewed projection evidence, never a guessed pass.",
+    "A head-size pass is not identity, limb anatomy, motion, weapon, style or runtime approval."
+  ]
+}

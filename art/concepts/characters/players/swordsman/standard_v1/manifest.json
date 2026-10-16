@@ -79,5 +79,7 @@
   "tools/explore/standard_weapon.py",
   "tools/explore/standard_parts.py",
   "tools/explore/standard_sheet.py"
- ]
+ ],
+ "proportion_profile": "measurements/proportion_v1.json",
+ "legacy_measure_warning": "Old neck-row/head-count heuristic is not G1 evidence. Use the appended explicit hair/chin/standing-foot measurement profile; no original drawing was replaced."
 }
