@@ -10,7 +10,7 @@
     "status": "partial_blocked",
     "approval": "v3 style and production mode approved on 2026-10-16; remaining environment batch authorized at low resolution.",
     "complete_package": false,
-    "blocker": "First remaining-room image_gen approval timed out; no R02 output. Waiting for user-approved retry.",
+    "blocker": "R02 generated and exported after retry; R03 approval timed out. R03-R05 and remaining entities/gates/animations await user-approved retry.",
     "native_2k_target_unchanged": true
   },
   "low_resolution_pilot": {

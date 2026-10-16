@@ -7,7 +7,9 @@
     "stump_transparent": true,
     "shadow_transparent_nonempty": true,
     "stump_source_bytes_preserved": true,
-    "shadow_source_bytes_preserved": true
+    "shadow_source_bytes_preserved": true,
+    "r02_native_height_preserved": true,
+    "r02_anchors_in_walkable_region": true
   },
   "complete_environment_package": false
 }

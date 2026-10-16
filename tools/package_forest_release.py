@@ -9,6 +9,20 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 
+def extend_room(scene: Image.Image, overlap: int = 64) -> Image.Image:
+    width, height = scene.size
+    if not 1 < overlap < width:
+        raise ValueError("Invalid room overlap")
+    tile = scene.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+    output = Image.new("RGBA", (width * 2 - overlap, height))
+    output.paste(scene, (0, 0))
+    output.paste(tile, (width - overlap, 0))
+    transition = Image.new("L", (overlap, height))
+    transition.putdata([round(x * 255 / (overlap - 1)) for _ in range(height) for x in range(overlap)])
+    output.paste(Image.composite(tile.crop((0, 0, overlap, height)), scene.crop((width - overlap, 0, width, height)), transition), (width - overlap, 0))
+    return output
+
+
 def package(root: Path) -> None:
     repository = Path(__file__).resolve().parents[1]
     pilot = repository / "art/concepts/scenes/forest/10001/pilot_lowres_v3"
@@ -127,14 +141,46 @@ def package(root: Path) -> None:
             "paths": "Copy this self-contained export package under the future game's resource directory and resolve files relative to manifest. Current game has no automatic reader for this schema.",
             "zoom": "Do not resize only texture without scaling anchors/collision/placement consistently. This batch is low-resolution, not a native 2K delivery.",
         },
-        "blocker": "First remaining-room image_gen request timed out awaiting approval on 2026-10-16. No R02 output created; further generation awaits user-approved retry.",
+        "blocker": "Remaining-room generation awaits user-approved retry; generation status is recorded in generation.json.",
         "technical_checks": checks,
         "game_integrated": False,
         "runtime_approved": False,
     }
+    r02_sources = list((root / "sources/r02").glob("*.png"))
+    if len(r02_sources) > 1:
+        raise ValueError("Select one R02 source explicitly instead of guessing")
+    if r02_sources:
+        r02_source = Image.open(r02_sources[0]).convert("RGBA")
+        r02 = extend_room(r02_source)
+        r02_path = rooms / "10001-R02.png"
+        r02.save(r02_path)
+        r02_walkable = [32, round(r02.height * 0.66), r02.width - 64, round(r02.height * 0.22)]
+        rx, ry, rw2, rh2 = r02_walkable
+        r02_anchors = {"left": [rx, ry + rh2 // 2], "right": [rx + rw2, ry + rh2 // 2], "up": [r02.width // 2, ry], "down": [r02.width // 2, ry + rh2]}
+        manifest["rooms"]["10001-R02"] = {
+            "file": "exports/rooms/10001-R02.png", "size": list(r02.size), "anchor": [0, 0],
+            "walkable_rect": r02_walkable, "door_anchors": r02_anchors,
+            "source": str(r02_sources[0].relative_to(root)).replace("\\", "/"),
+            "source_sha256": hashlib.sha256(r02_sources[0].read_bytes()).hexdigest(),
+            "build": "Native source plus reflected tile; 64px blended overlap; repeated artwork, no upscale.",
+            "visual_review_of_extension": "pending",
+        }
+        manifest["missing"]["rooms"].remove("10001-R02")
+        checks["r02_native_height_preserved"] = r02.height == r02_source.height
+        checks["r02_anchors_in_walkable_region"] = all(rx <= p[0] <= rx + rw2 and ry <= p[1] <= ry + rh2 for p in r02_anchors.values())
+        if not all(checks.values()):
+            raise ValueError(f"R02 checks failed: {checks}")
+        r02.save(preview / "r02_clean.png")
+        r02_view = r02.copy()
+        ImageDraw.Draw(r02_view).rectangle((rx, ry, rx + rw2, ry + rh2), outline=(100, 230, 145, 255), width=3)
+        for direction, (dx, dy) in r02_anchors.items():
+            ImageDraw.Draw(r02_view).ellipse((dx - 7, dy - 7, dx + 7, dy + 7), fill=(255, 190, 70, 255))
+            ImageDraw.Draw(r02_view).text((min(dx + 12, r02.width - 140), dy - 18), direction.upper() + " ANCHOR", fill="white", stroke_width=2, stroke_fill="black")
+        r02_view.save(preview / "r02_handoff.png")
+        manifest["blocker"] = "R02 generated and exported; R03 request timed out awaiting user approval. R03-R05 and remaining props/gates/animations not yet generated."
     (root / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (root / "validation.json").write_text(json.dumps({"result": "PARTIAL_ASSETS_OK", "checks": checks, "complete_environment_package": False}, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"result": "PARTIAL_ASSETS_OK", "room_size": [w, h], "ready_room_count": 1, "ready_entity_count": 1, "environment_complete": False}, ensure_ascii=False))
+    print(json.dumps({"result": "PARTIAL_ASSETS_OK", "room_size": [w, h], "ready_room_count": len(manifest["rooms"]), "ready_entity_count": len(manifest["entities"]), "environment_complete": False}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

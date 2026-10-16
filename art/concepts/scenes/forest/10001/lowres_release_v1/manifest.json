@@ -51,6 +51,45 @@
       "build": "Approved native scene plus reflected tile, blended across 64-pixel overlap. Intentional repeated art; not an AI-generated unique panorama or 2K asset.",
       "source_sha256": "29f61ca61f48156d62cd436d832681e3f36ee78fdcb388e2ed1f26654c1ac628",
       "visual_review_of_extension": "pending"
+    },
+    "10001-R02": {
+      "file": "exports/rooms/10001-R02.png",
+      "size": [
+        2688,
+        768
+      ],
+      "anchor": [
+        0,
+        0
+      ],
+      "walkable_rect": [
+        32,
+        507,
+        2624,
+        169
+      ],
+      "door_anchors": {
+        "left": [
+          32,
+          591
+        ],
+        "right": [
+          2656,
+          591
+        ],
+        "up": [
+          1344,
+          507
+        ],
+        "down": [
+          1344,
+          676
+        ]
+      },
+      "source": "sources/r02/原创2D横版动作网游10001_R02普通怪森林房间_一张完_2026-10-16T13-10-16.png",
+      "source_sha256": "9a0bf680d3a3a9533f97cfcaa733d3bbb7984c97800bebedd9729a4ccd5490fc",
+      "build": "Native source plus reflected tile; 64px blended overlap; repeated artwork, no upscale.",
+      "visual_review_of_extension": "pending"
     }
   },
   "entities": {
@@ -94,7 +133,6 @@
   },
   "missing": {
     "rooms": [
-      "10001-R02",
       "10001-R03",
       "10001-R04",
       "10001-R05"
@@ -137,7 +175,7 @@
     "paths": "Copy this self-contained export package under the future game's resource directory and resolve files relative to manifest. Current game has no automatic reader for this schema.",
     "zoom": "Do not resize only texture without scaling anchors/collision/placement consistently. This batch is low-resolution, not a native 2K delivery."
   },
-  "blocker": "First remaining-room image_gen request timed out awaiting approval on 2026-10-16. No R02 output created; further generation awaits user-approved retry.",
+  "blocker": "R02 generated and exported; R03 request timed out awaiting user approval. R03-R05 and remaining props/gates/animations not yet generated.",
   "technical_checks": {
     "room_has_no_upscale": true,
     "room_longer_than_two_reference_screens": true,
@@ -145,7 +183,9 @@
     "stump_transparent": true,
     "shadow_transparent_nonempty": true,
     "stump_source_bytes_preserved": true,
-    "shadow_source_bytes_preserved": true
+    "shadow_source_bytes_preserved": true,
+    "r02_native_height_preserved": true,
+    "r02_anchors_in_walkable_region": true
   },
   "game_integrated": false,
   "runtime_approved": false

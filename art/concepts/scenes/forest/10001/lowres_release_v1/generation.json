@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-16",
+  "tool": "image_gen",
+  "quality": "high",
+  "style": "natural",
+  "reference_input": null,
+  "seed": null,
+  "batch_state": "partial_waiting_for_approval_retry",
+  "calls": [
+    {
+      "subject": "10001-R02",
+      "size_requested": "1344x756",
+      "n": 1,
+      "status": "success",
+      "file": "sources/r02/原创2D横版动作网游10001_R02普通怪森林房间_一张完_2026-10-16T13-10-16.png",
+      "prompt": "原创2D横版动作网游10001-R02普通怪森林房间，一张完整16:9场景，树林和地面一体绘制。成熟怀旧韩式手绘位图，清楚形体明暗，局部柔和渐变，自然中绿与橄榄色草叶、灰青绿雾中树林、暖米棕和浅赭棕踩实土路。温和白天中等明度，不荧光、不阴暗、非照片非3D、非幼稚绘本，不改变既定暖土森林风格。上方40%为低对比层叠树干与树冠，枝叶自然，普通树全部退在远处草带之后，背景中央轻薄青绿雾；下方60%为宽阔横向行走平地，中央约70%空旷。泥土平整细腻、温暖米棕而非灰色石板，少量碎叶与细土印，不画大裂纹和岩层，近远边缘短草自然过渡。左上柔光，树阴很淡。横版格斗侧向三分之四、轻微俯角，非俯视地图非等距。与入口差异：左远侧有几株细长白天林木，右侧枝叶更茂密，远景中央留清澈的林间开口，地面仍横贯左右不往远处收窄。背景不放任何门、木桩、火把、果树、木栅、骨堆、独立灌木石块等实体。无怪物、人物、UI、水印、文字、高低差或路中树根。左右边自然延伸适合后期镜像卷轴拼接，地面边界高度统一，避免明显单一中心地标。"
+    },
+    {
+      "subject": "10001-R03",
+      "size_requested": "1344x756",
+      "n": 1,
+      "status": "approval_timeout_no_output",
+      "prompt": "原创10001-R03森林精英遭遇房间背景，单张16:9成熟怀旧韩式2D横版格斗手绘位图。沿用暖米棕细土路、中绿短草、灰青绿薄雾树林、温和白天光照。镜头侧向三分之四、轻微俯角，非等距非俯视。下方60%是一大片宽阔横贯左右的平坦土路，无障碍，细小土色块与稀疏碎叶点缀，不画灰石板、大裂纹、坑洼，草土边自然不规则。上方40%是较浓的灰青绿远景树林，左远侧有弯树枝框住顶部，右远侧几根细树，树脚被低草带藏住，中央林间稍幽深但明亮可读。与普通怪房区分是更紧凑的林间空地，后景有少量小藤蔓，泥土留足战斗面积，地面仍是暖米棕而非灰或橙黄。轮廓克制、大形明暗清楚、局部柔和渐变；非照片非3D非幼稚绘本。所有可碰撞物、门、实体、角色、怪物、果树、木桩、栅栏、骨堆、火把均不画。无文字水印UI。所有景观树退在远景，无树根侵入行走区，无高低差、桥或河流，左右边自然可延伸。"
+    }
+  ],
+  "processing": "python tools/package_forest_release.py art/concepts/scenes/forest/10001/lowres_release_v1",
+  "mirrored_extension": "Generated native source plus mirrored copy and 64px overlap; intentionally repeated artwork, not unique panorama generation or upscaling.",
+  "reference": "../pilot_lowres_v3/manifest.json; textual interpretation only",
+  "full_environment_complete": false
+}
