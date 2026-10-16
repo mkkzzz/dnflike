@@ -1,0 +1,169 @@
+{
+  "schema": "dnflike/dungeon-assets/v1",
+  "dungeon_id": "10001",
+  "imported_utc": "2026-10-16T17:57:43.712658+00:00",
+  "purpose": "runtime placeholder art for the 10001 vertical slice",
+  "rooms": {
+    "approval": "source_approved (reference_redesign_v2/artwork_approval.json, 2026-10-17)",
+    "approval_scope_excludes": [
+      "native 2K resolution",
+      "formal layer exports",
+      "runtime integration, camera or collision acceptance"
+    ],
+    "note": "design-size candidates (sub-2K) imported as-is; never upscaled in game",
+    "items": {
+      "r01": {
+        "room_id": "10001-R01",
+        "role": "入口",
+        "source": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r01_room_c1/source.png",
+        "source_sha256": "60915fe007cd0b3dd7a75590d1d341724de928123c533672ecdd71fe7be40fbb",
+        "file": "rooms/r01.png",
+        "width": 2243,
+        "height": 701,
+        "ground_line_y": 320,
+        "ground_line_ratio": 0.4565,
+        "columns_measured": 161
+      },
+      "r02": {
+        "room_id": "10001-R02",
+        "role": "小怪",
+        "source": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r02_room_c1/source.png",
+        "source_sha256": "ff9537138c35c8512f64ced36f566747f64e1952cd446c6a10ad4129ebc31752",
+        "file": "rooms/r02.png",
+        "width": 2243,
+        "height": 701,
+        "ground_line_y": 336,
+        "ground_line_ratio": 0.4793,
+        "columns_measured": 161
+      },
+      "r03": {
+        "room_id": "10001-R03",
+        "role": "精英",
+        "source": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r03_room_c2/source.png",
+        "source_sha256": "022d1099a760647f58f62202dd32ac769b8e23e2ab77a36cd1f939cd8362fb54",
+        "file": "rooms/r03.png",
+        "width": 1942,
+        "height": 809,
+        "ground_line_y": 365,
+        "ground_line_ratio": 0.4512,
+        "columns_measured": 162
+      },
+      "r04": {
+        "room_id": "10001-R04",
+        "role": "小怪竖",
+        "source": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r04_room_c1/source.png",
+        "source_sha256": "91d220a942c6f2cb3e10c5422ee26026f7d50b34a675f3efe3972d9521b243bd",
+        "file": "rooms/r04.png",
+        "width": 1176,
+        "height": 1337,
+        "ground_line_y": 807,
+        "ground_line_ratio": 0.6036,
+        "columns_measured": 168
+      },
+      "r05": {
+        "room_id": "10001-R05",
+        "role": "BOSS",
+        "source": "art/concepts/scenes/forest/10001/reference_redesign_v2/candidates/r05_room_c1/source.png",
+        "source_sha256": "0b47b16c21acea7f6445076a941372904baf0c06a232efcbd5ceda6b59237092",
+        "file": "rooms/r05.png",
+        "width": 2243,
+        "height": 701,
+        "ground_line_y": 349,
+        "ground_line_ratio": 0.4979,
+        "columns_measured": 161
+      }
+    }
+  },
+  "entities": {
+    "approval": "preserved_without_new_approval (lowres_release_v1/manifest.json)",
+    "note": "entity exports survived the room-scene rejection; no separate approval on record",
+    "items": {
+      "stump": {
+        "intact.png": {
+          "file": "entities/stump/intact.png",
+          "sha256": "1ae90167d2177bdee5d5635b9d18533b5d77c1260df7cb5da15f64d5be9267bc"
+        },
+        "shadow.png": {
+          "file": "entities/stump/shadow.png",
+          "sha256": "ae5e2b8206090b62b2b482333e851be619fb2cbb9a2e1e0d43721312a129641f"
+        }
+      },
+      "bush": {
+        "intact.png": {
+          "file": "entities/bush/intact.png",
+          "sha256": "ba298aed374d3aca74013d9e21fa7604e1e0afe861c3affe77271741f7b8c73a"
+        },
+        "intact_shadow.png": {
+          "file": "entities/bush/intact_shadow.png",
+          "sha256": "dc97a0624a5382837281c1291463d8663f7f57206167921bab5fdf6a7d3fe96f"
+        }
+      },
+      "rock": {
+        "intact.png": {
+          "file": "entities/rock/intact.png",
+          "sha256": "d049ca5f965355c8c335a20b1a910130be936e86ce25e7a0a0b4e116b991ff3b"
+        },
+        "intact_shadow.png": {
+          "file": "entities/rock/intact_shadow.png",
+          "sha256": "60e831d35fa250c1b84844658381471eac1a14524238a3b36523bec87c1d7454"
+        }
+      },
+      "torch": {
+        "intact.png": {
+          "file": "entities/torch/intact.png",
+          "sha256": "a327517bc27ef6796c315d2f8a89c532b82ceb275a1b0f056eec2f786df2203f"
+        },
+        "intact_shadow.png": {
+          "file": "entities/torch/intact_shadow.png",
+          "sha256": "2b6481c5fa40e6eb7de8606592704f1c25eba08d6dbc673557205ed654ada1d4"
+        }
+      },
+      "fence": {
+        "intact.png": {
+          "file": "entities/fence/intact.png",
+          "sha256": "3ca4d1c2e76aef3f3d9d3318c4666f6a5144c5a91f1a1d982948d3487746c567"
+        },
+        "damaged.png": {
+          "file": "entities/fence/damaged.png",
+          "sha256": "5156b635263e6ad4b427e5abc083c6b96d321e3a34131a2c3965802678773bde"
+        },
+        "debris.png": {
+          "file": "entities/fence/debris.png",
+          "sha256": "05daf97c97f3b664d84d79a832dc19c968d64a6c2f9c6905bf9d402a3d046a1a"
+        },
+        "intact_shadow.png": {
+          "file": "entities/fence/intact_shadow.png",
+          "sha256": "8954e71d1cce392af09087060fcc65573c9ef03e9a2df70c2d4d757a923bfc33"
+        }
+      },
+      "bone_pile": {
+        "intact.png": {
+          "file": "entities/bone_pile/intact.png",
+          "sha256": "dd86ffe2098813a70f29d17d926b775918f86e4dc0e058766bb9ee1121766ee8"
+        },
+        "damaged.png": {
+          "file": "entities/bone_pile/damaged.png",
+          "sha256": "620942235e6f24f47e855f2ef69fde814d8bc007c2715878c0484217b62f1367"
+        },
+        "debris.png": {
+          "file": "entities/bone_pile/debris.png",
+          "sha256": "8157a7e277315eaef3c4804e10a9f35a7a3f155b855a0f8d5b6ac9dcb184a7c9"
+        },
+        "intact_shadow.png": {
+          "file": "entities/bone_pile/intact_shadow.png",
+          "sha256": "d800c801e458a27a70bb73551a5c2fad162eaf55805771a68a0ecb84066b92d3"
+        }
+      },
+      "fruit_pickup": {
+        "idle.png": {
+          "file": "entities/fruit_pickup/idle.png",
+          "sha256": "43c82d4f5107ad4ad817ab3b2dab957e14c3cc2baa84fbc734e6f34c3d50e39b"
+        },
+        "idle_shadow.png": {
+          "file": "entities/fruit_pickup/idle_shadow.png",
+          "sha256": "df6313f2bdeddfba0325cfbf0c11f879af26f29cb8de449be0a068e91556eea3"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "schema": "dnflike/dungeons/v1",
+  "note": "副本→布局→房间模块。布局是配置层；本文件不含美术产出。实体尺寸/锚点取自 lowres_release_v1 的实体台账（保留、未单独重新批准），文件已复制到 game/assets/dungeon/10001/。",
+
+  "entity_catalog": {
+    "stump": {
+      "file": "entities/stump/intact.png", "size": [140, 122], "anchor": [70, 121],
+      "shadow": {"file": "entities/stump/shadow.png", "size": [204, 186], "anchor": [102, 153]},
+      "footprint": [-45, -10, 90, 20]
+    },
+    "torch": {
+      "file": "entities/torch/intact.png", "size": [48, 170], "anchor": [24, 169],
+      "shadow": {"file": "entities/torch/intact_shadow.png", "size": [112, 234], "anchor": [56, 201]},
+      "footprint": [-12, -5, 24, 10]
+    },
+    "fence": {
+      "file": "entities/fence/intact.png", "size": [183, 160], "anchor": [91, 159],
+      "shadow": {"file": "entities/fence/intact_shadow.png", "size": [247, 224], "anchor": [123, 191]},
+      "footprint": [-105, -12, 210, 24]
+    },
+    "bone_pile": {
+      "file": "entities/bone_pile/intact.png", "size": [140, 87], "anchor": [70, 86],
+      "shadow": {"file": "entities/bone_pile/intact_shadow.png", "size": [204, 151], "anchor": [102, 118]},
+      "footprint": [-55, -8, 110, 16]
+    },
+    "bush": {
+      "file": "entities/bush/intact.png", "size": [178, 135], "anchor": [89, 134],
+      "shadow": {"file": "entities/bush/intact_shadow.png", "size": [242, 199], "anchor": [121, 166]},
+      "footprint": [-70, -12, 140, 24]
+    },
+    "rock": {
+      "file": "entities/rock/intact.png", "size": [138, 120], "anchor": [69, 119],
+      "shadow": {"file": "entities/rock/intact_shadow.png", "size": [202, 184], "anchor": [101, 151]},
+      "footprint": [-55, -12, 110, 24]
+    },
+    "fruit_pickup": {
+      "file": "entities/fruit_pickup/idle.png", "size": [38, 48], "anchor": [19, 47],
+      "shadow": {"file": "entities/fruit_pickup/idle_shadow.png", "size": [102, 112], "anchor": [51, 79]},
+      "footprint": [-12, -5, 24, 10]
+    }
+  },
+
+  "monster_presets": {
+    "goblin": {},
+    "elite": {
+      "name": "哥布林精英", "hp": 620, "attack": 38, "model_scale": 1.62,
+      "attack_cooldown": 34, "detect_range": 820, "hurtbox_height": 200,
+      "tint": [1.0, 0.86, 0.86]
+    },
+    "chief": {
+      "name": "哥布林头目", "hp": 1500, "attack": 55, "model_scale": 2.05,
+      "attack_cooldown": 48, "detect_range": 900, "hurtbox_height": 250,
+      "move_speed": 120, "chase_speed": 170, "hardstun": 8, "max_hit_chain": 12,
+      "tint": [0.86, 1.0, 0.82],
+      "attack_move": {
+        "windup": 26, "active": 6, "recovery": 24, "range": 118, "damage": 55,
+        "extension": 20, "height": 175, "hardstun": 18, "knockback": 215
+      }
+    }
+  },
+
+  "dungeons": {
+    "10001": {
+      "id": "10001",
+      "name": "森林 · 首副本",
+      "layout": "10001-A",
+      "asset_root": "res://assets/dungeon/10001/",
+      "rooms": [
+        {
+          "index": 1, "module": "10001-R01", "name": "入口", "role": "entrance",
+          "background": "rooms/r01.png", "ground_line_ratio": 0.4565,
+          "monsters": [],
+          "door": {"side": "right"},
+          "entities": [
+            {"id": "torch", "x": 1150, "depth_y": -58},
+            {"id": "stump", "x": 560, "depth_y": -96},
+            {"id": "bush", "x": 1520, "depth_y": -70},
+            {"id": "rock", "x": 1960, "depth_y": -34}
+          ]
+        },
+        {
+          "index": 2, "module": "10001-R02", "name": "林间小径", "role": "normal",
+          "background": "rooms/r02.png", "ground_line_ratio": 0.4793,
+          "monsters": [
+            {"preset": "goblin", "x": 900, "depth": -18},
+            {"preset": "goblin", "x": 1230, "depth": 14},
+            {"preset": "goblin", "x": 1560, "depth": -4}
+          ],
+          "door": {"side": "right"},
+          "entities": [
+            {"id": "bush", "x": 560, "depth_y": -44},
+            {"id": "bone_pile", "x": 1180, "depth_y": -86},
+            {"id": "stump", "x": 1880, "depth_y": -60}
+          ]
+        },
+        {
+          "index": 3, "module": "10001-R03", "name": "精英哨点", "role": "elite",
+          "background": "rooms/r03.png", "ground_line_ratio": 0.4512,
+          "monsters": [
+            {"preset": "elite", "x": 1180, "depth": -8}
+          ],
+          "door": {"side": "right"},
+          "entities": [
+            {"id": "fence", "x": 420, "depth_y": -70},
+            {"id": "torch", "x": 1560, "depth_y": -56},
+            {"id": "bone_pile", "x": 980, "depth_y": -100}
+          ]
+        },
+        {
+          "index": 4, "module": "10001-R04", "name": "密林深处", "role": "normal",
+          "background": "rooms/r04.png", "ground_line_ratio": 0.6036,
+          "monsters": [
+            {"preset": "goblin", "x": 660, "depth": -16},
+            {"preset": "goblin", "x": 980, "depth": 16}
+          ],
+          "door": {"side": "right"},
+          "entities": [
+            {"id": "bush", "x": 520, "depth_y": -40},
+            {"id": "rock", "x": 1080, "depth_y": -30}
+          ]
+        },
+        {
+          "index": 5, "module": "10001-R05", "name": "头目营地", "role": "boss",
+          "background": "rooms/r05.png", "ground_line_ratio": 0.4979,
+          "monsters": [
+            {"preset": "chief", "x": 1520, "depth": -6}
+          ],
+          "door": null,
+          "entities": [
+            {"id": "torch", "x": 1180, "depth_y": -66},
+            {"id": "bone_pile", "x": 760, "depth_y": -58},
+            {"id": "fence", "x": 1460, "depth_y": -50},
+            {"id": "torch", "x": 2080, "depth_y": -66}
+          ]
+        }
+      ]
+    }
+  }
+}

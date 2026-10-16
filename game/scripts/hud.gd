@@ -31,6 +31,8 @@ var room_idx := 0
 var room_total := 0
 var room_difficulty := ""
 var has_room := false
+var dungeon_mode := false
+var room_title := ""
 var wave := 0
 var wave_total := 0
 var enemies_remaining := 0
@@ -146,6 +148,25 @@ func clear_room() -> void:
 	_refresh()
 
 
+## 副本模式专用：标题换成副本名，副标题给出房间进度与角色，第三行给清房目标。
+## 用独立入口而不是复用 set_room，避免影响旧的“第 X · Y 波”显示。
+func set_dungeon_room(title: String, idx: int, total: int, role_label: String, remaining: int) -> void:
+	dungeon_mode = true
+	room_title = title
+	room_idx = idx
+	room_total = total
+	room_difficulty = role_label
+	has_room = total > 0
+	enemies_remaining = maxi(0, remaining)
+	_refresh()
+
+
+func clear_dungeon_room() -> void:
+	dungeon_mode = false
+	room_title = ""
+	_refresh()
+
+
 func set_encounter(current_wave: int, total: int, remaining: int, time_elapsed: float) -> void:
 	wave = current_wave
 	wave_total = total
@@ -229,10 +250,14 @@ func _draw_hud() -> void:
 
 func _draw_encounter() -> void:
 	_root.draw_line(Vector2(26, 27), Vector2(26, 83), GOLD, 2.0)
-	_text(Vector2(40, 43), "回廊训练场" if training_mode else "幽暗回廊", 24, IVORY)
+	_text(Vector2(40, 43), "回廊训练场" if training_mode else ("幽暗回廊" if not (dungeon_mode and has_room) else room_title), 24, IVORY)
 	var subtitle := "战斗试炼"
 	if training_mode:
 		subtitle = "连段练习  /  " + ("无限补给" if training_stats.get("free", true) else "实战消耗")
+	elif dungeon_mode and has_room:
+		subtitle = "第 %d · %d 间" % [room_idx + 1, room_total]
+		if not room_difficulty.is_empty():
+			subtitle += "  ·  " + room_difficulty
 	elif wave_total > 0:
 		subtitle += "  /  第 %d · %d 波" % [maxi(1, wave), wave_total]
 	elif has_room:
@@ -242,6 +267,11 @@ func _draw_encounter() -> void:
 	_text(Vector2(40, 65), subtitle, 13, GOLD)
 	if training_mode:
 		_text(Vector2(40, 87), "Tab 重置  ·  F2 补给模式", 13, MUTED)
+	elif dungeon_mode and has_room:
+		var room_objective := "清除本房间敌人  ·  剩余 %d" % enemies_remaining
+		if enemies_remaining == 0:
+			room_objective = "房间已清空  ·  门已开启"
+		_text(Vector2(40, 87), room_objective, 14, MUTED)
 	elif wave_total > 0:
 		var objective := "清除本波敌人  ·  剩余 %d" % enemies_remaining
 		if enemies_remaining == 0:

@@ -170,8 +170,10 @@ func _run_checks() -> void:
 	main_ref = get_parent()
 	main_ref.player.landed_hit.connect(_observe)
 	await _frames(3)
-	_check(main_ref.battle_state == main_ref.BattleState.READY, "title starts without combat")
-	_check(not main_ref.player.control_enabled, "title blocks gameplay input")
+	# 默认入口是副本 10001 的入口房（10001-R01：无怪、门已开启）
+	_check(main_ref.dungeon_mode and main_ref.dungeon != null and main_ref.dungeon.room_count() == 5, "boot enters dungeon 10001-A with five rooms")
+	_check(main_ref.battle_state == main_ref.BattleState.ROOM_CLEAR and main_ref.alive_count() == 0, "entrance room starts without combat")
+	_check(main_ref.player.control_enabled and main_ref.current_door != null and main_ref.current_door.opened, "entrance door is open and the player can move")
 	var audio: CombatAudio = main_ref.bm._audio
 	_check(audio._voices.size() >= 8 and audio._voices.size() <= 12 and audio._streams.size() >= 18, "audio loads layered variants with a bounded voice pool")
 	var audio_valid := true
@@ -381,12 +383,84 @@ func _run_checks() -> void:
 	await _run_v4_checks()
 	await _run_v6_checks()
 	await _run_movement_feedback_checks()
+	await _run_dungeon_checks()
 	main_ref._show_ready()
 	_check(main_ref.battle_state == main_ref.BattleState.READY and not p.control_enabled, "result returns to class selection")
 	print("[DEMO_TEST] COMPLETE checks=%d failures=%d" % [checks, failures])
 	main_ref.bm.clear_fx()
 	await _frames(3)
 	get_tree().quit(0 if failures == 0 else 1)
+
+## 副本 10001-A 竖切：房间推进、清怪开门、BOSS 结算与 GM 面板命令。
+func _run_dungeon_checks() -> void:
+	var p: Player = main_ref.player
+	main_ref.gm_panel.close()
+	main_ref._enter_dungeon("10001")
+	await _frames(3)
+	_check(main_ref.dungeon_mode and main_ref.dungeon.room_number() == 1, "dungeon restart returns to room 1")
+	_check(main_ref.alive_count() == 0 and main_ref.room_cleared and main_ref.current_door != null and main_ref.current_door.opened, "entrance room has no enemies and an open door")
+	if "--capture" in OS.get_cmdline_user_args():
+		await _capture("10_dungeon_entrance")
+
+	# GM 命令切房：第 2 房按配置刷 3 只普通哥布林，门保持未开启
+	main_ref._on_gm_command("room", PackedStringArray(["2"]))
+	await _frames(3)
+	p.invincible = 999999
+	_check(main_ref.dungeon.room_number() == 2 and main_ref.alive_count() == 3, "gm room command loads room 2 with three goblins")
+	_check(not main_ref.room_cleared and main_ref.current_door != null and not main_ref.current_door.opened, "room 2 door stays locked while enemies live")
+	_check(main_ref.battle_state == main_ref.BattleState.FIGHT, "room with enemies runs the fight state")
+	if "--capture" in OS.get_cmdline_user_args():
+		await _capture("11_dungeon_room2")
+
+	# 清空本房 -> 门开启 -> 走进门切到第 3 房
+	main_ref._on_gm_command("clear", PackedStringArray())
+	await _frames(4)
+	p.invincible = 999999
+	_check(main_ref.alive_count() == 0 and main_ref.room_cleared, "gm clear wipes the room")
+	_check(main_ref.current_door.opened and main_ref.battle_state == main_ref.BattleState.ROOM_CLEAR, "cleared room opens its door")
+	p.position = main_ref.current_door.position
+	await _frames(3)
+	p.invincible = 999999
+	_check(main_ref.dungeon.room_number() == 3 and main_ref.dungeon.module_id() == "10001-R03", "walking into the door advances to room 3")
+
+	# 精英房：单只精英，血量高于普通怪
+	_check(main_ref.alive_count() == 1 and float(main_ref.monsters[0].cfg.get("hp", 0)) > 200.0, "elite room spawns one stronger elite")
+
+	# BOSS 房：无出口门；击败 BOSS 直接结束副本并结算
+	main_ref._on_gm_command("room", PackedStringArray(["5"]))
+	await _frames(3)
+	p.invincible = 999999
+	_check(main_ref.dungeon.is_boss_room() and main_ref.current_door == null, "boss room has no exit door")
+	_check(main_ref.alive_count() == 1 and str(main_ref.monsters[0].cfg.get("name", "")) == "哥布林头目", "boss room spawns the goblin chief")
+	if "--capture" in OS.get_cmdline_user_args():
+		await _capture("12_dungeon_boss")
+	main_ref._on_gm_command("clear", PackedStringArray())
+	await _frames(5)
+	p.invincible = 999999
+	_check(main_ref.battle_state == main_ref.BattleState.VICTORY and main_ref.dungeon_finished, "defeating the boss ends the dungeon with victory")
+	_check(main_ref._settlement.visible and p.control_enabled, "settlement shows and the player keeps control afterwards")
+	if "--capture" in OS.get_cmdline_user_args():
+		await _capture("13_dungeon_settlement")
+
+	# 结算按钮：再打一次 / 离开地下城（只给提示）
+	main_ref._on_retry_dungeon()
+	await _frames(3)
+	p.invincible = 999999
+	_check(main_ref.dungeon_mode and main_ref.dungeon.room_number() == 1 and not main_ref.dungeon_finished, "retry button restarts the dungeon at room 1")
+	main_ref._on_leave_dungeon()
+	_check(main_ref._toast.visible and main_ref._toast.text.contains("尚未开放"), "leave-dungeon button only shows a toast")
+
+	# GM 模式命令在两个模式之间切换；未知命令不改状态
+	main_ref._on_gm_command("mode", PackedStringArray(["demo"]))
+	await _frames(2)
+	_check(not main_ref.dungeon_mode and main_ref.battle_state == main_ref.BattleState.READY, "gm mode command returns to the legacy encounter mode")
+	main_ref._on_gm_command("dungeon", PackedStringArray(["10001"]))
+	await _frames(2)
+	p.invincible = 999999
+	_check(main_ref.dungeon_mode and main_ref.dungeon.room_number() == 1, "gm dungeon command re-enters the dungeon")
+	main_ref._on_gm_command("nonsense", PackedStringArray())
+	_check(main_ref.dungeon_mode and main_ref.dungeon.room_number() == 1, "unknown gm command leaves the game state untouched")
+
 
 func _capture(name_text: String) -> void:
 	await RenderingServer.frame_post_draw

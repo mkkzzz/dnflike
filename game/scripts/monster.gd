@@ -83,6 +83,13 @@ func setup(data: Dictionary, player: Node2D, battle_fx: BattleFX) -> void:
 	player_ref = player
 	fx = battle_fx
 	attack_cooldown = randi_range(0, int(cfg.get("attack_cooldown", 42)))
+	# 可选整体着色（占位区分 BOSS/精英用）。用 self_modulate：modulate 每帧会被
+	# 受击闪白逻辑重置，这里不能占用那一路。
+	var tint = cfg.get("tint", null)
+	if tint is Array and (tint as Array).size() >= 3:
+		self_modulate = Color(float(tint[0]), float(tint[1]), float(tint[2]))
+	else:
+		self_modulate = Color.WHITE
 
 func visual_position() -> Vector2:
 	return position + Vector2(0, depth_y)

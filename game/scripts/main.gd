@@ -1,6 +1,8 @@
 extends Node2D
-## 职业选择 → 三波遭遇战 → 胜负结算 → 重玩。
-enum BattleState { READY, FIGHT, WAVE_BREAK, VICTORY, DEFEAT, PAUSED }
+## 默认入口：副本 10001（入口房 → 清怪开门 → BOSS 房 → 结算）；
+## 旧的职业选择三波遭遇战保留为可测模式（GM 面板 "选择模式" 或 _show_ready）。
+## ROOM_CLEAR 追加在末尾，避免改动既有枚举值。
+enum BattleState { READY, FIGHT, WAVE_BREAK, VICTORY, DEFEAT, PAUSED, ROOM_CLEAR }
 const VIEW_W := 1280.0
 const VIEW_H := 720.0
 const GROUND_Y := 576.0
@@ -58,6 +60,29 @@ var _fps_readout: Label
 var _settings_resume_fight := false
 var _pause_jump_held := false
 
+# --- 副本 10001（布局 10001-A）---
+const DUNGEON_CONFIG := "res://data/dungeons.json"
+const DOOR_INSET := 70.0
+var dungeon_config: Dictionary = {}
+var dungeon: DungeonRun
+var dungeon_mode := false
+var dungeon_finished := false
+var room_cleared := false
+var room_root: Node2D
+var room_bg_tex: Texture2D
+var room_bg_sprite: Sprite2D
+var room_bg_rect := Rect2()
+var room_world_width := VIEW_W
+var current_door: DungeonDoor
+var gm_panel: GmPanel
+var _settlement: PanelContainer
+var _settlement_title: Label
+var _settlement_stats: Label
+var _toast: Label
+var _toast_left := 0.0
+var _ground_shape: CollisionShape2D
+var _last_result: Dictionary = {}
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	GameConfig.load_all()
@@ -70,10 +95,12 @@ func _ready() -> void:
 	font = system_font
 	if ResourceLoader.exists("res://assets/demo/bg_dungeon.png"):
 		bg_tex = load("res://assets/demo/bg_dungeon.png")
+	dungeon_config = GameConfig._load_json(DUNGEON_CONFIG)
 	_build_world()
 	_build_hud()
 	_build_overlay()
-	_show_ready()
+	_build_gm_panel()
+	_enter_dungeon("10001")
 	print("[DEMO] scene ready")
 
 func _register_actions() -> void:
@@ -85,6 +112,7 @@ func _register_actions() -> void:
 		"pause_demo": [KEY_ESCAPE], "start_demo": [KEY_ENTER], "toggle_help": [KEY_F1],
 		"reset_training": [KEY_TAB], "toggle_training_supply": [KEY_F2],
 		"display_settings": [KEY_F3],
+		"gm_panel": [KEY_P],
 	}
 	if InputMap.has_action("dash"):
 		InputMap.erase_action("dash")
@@ -105,6 +133,15 @@ func _build_world() -> void:
 	shape.position = Vector2(VIEW_W / 2, GROUND_Y + 50)
 	ground.add_child(shape)
 	add_child(ground)
+	_ground_shape = shape
+	# 房间背景必须是独立节点并压在很低的 z_index：Main 自己的 _draw 会盖住
+	# z_index 为负的子节点，实体/门都用负 z 表示“站在角色后面”。
+	room_bg_sprite = Sprite2D.new()
+	room_bg_sprite.name = "RoomBackground"
+	room_bg_sprite.centered = false
+	room_bg_sprite.z_index = -1000
+	room_bg_sprite.visible = false
+	add_child(room_bg_sprite)
 	bm = BattleFX.new()
 	bm.name = "BattleFX"
 	bm.process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -184,6 +221,8 @@ func _build_overlay() -> void:
 	_hint.visible = false
 	_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_overlay.add_child(_hint)
+	_build_toast()
+	_build_settlement()
 	_build_display_settings()
 
 func _load_display_settings() -> void:
@@ -330,6 +369,23 @@ func _clear_card() -> void:
 
 func _show_ready() -> void:
 	get_tree().paused = false
+	if dungeon_mode:
+		dungeon_mode = false
+		dungeon_finished = false
+		room_bg_tex = null
+		if room_bg_sprite != null:
+			room_bg_sprite.visible = false
+		room_world_width = VIEW_W
+		_clear_room_nodes()
+		_clear_monsters()
+		bm.clear_fx()
+		seq_fx.reset()
+		if _ground_shape != null:
+			(_ground_shape.shape as RectangleShape2D).size.x = VIEW_W + 256
+			_ground_shape.position.x = VIEW_W * 0.5
+		_update_camera()
+	_clear_settlement()
+	hud.clear_dungeon_room()
 	battle_state = BattleState.READY
 	_set_actor_control(false)
 	hud.visible = false
@@ -369,6 +425,21 @@ func _start_demo(job_id := -1) -> void:
 	training_chain_damage = 0.0
 	if job_id >= 0:
 		selected_job = clampi(job_id, 0, 2)
+	# 退出副本模式，恢复旧的单屏三波场景
+	dungeon_mode = false
+	dungeon_finished = false
+	room_bg_tex = null
+	if room_bg_sprite != null:
+		room_bg_sprite.visible = false
+	room_world_width = VIEW_W
+	_clear_room_nodes()
+	_clear_settlement()
+	hud.clear_room()
+	hud.clear_dungeon_room()
+	if _ground_shape != null:
+		(_ground_shape.shape as RectangleShape2D).size.x = VIEW_W + 256
+		_ground_shape.position.x = VIEW_W * 0.5
+	_update_camera()
 	_clear_monsters()
 	bm.clear_fx()
 	seq_fx.reset()
@@ -497,7 +568,10 @@ func _on_damage_dealt(_monster, amount: float, direct: bool) -> void:
 	damage_samples.append({"time": elapsed, "damage": amount})
 
 func _on_player_died() -> void:
-	_finish(false)
+	if dungeon_mode:
+		_finish_dungeon(false)
+	else:
+		_finish(false)
 
 func _on_hp_changed(health: float, _max_health: float) -> void:
 	if battle_state in [BattleState.FIGHT, BattleState.WAVE_BREAK]:
@@ -560,6 +634,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if _settings_card.visible:
 		return
+	if gm_panel != null and event.is_action_pressed("gm_panel"):
+		gm_panel.toggle()
+		get_viewport().set_input_as_handled()
+		return
+	if gm_panel != null and gm_panel.is_open():
+		return
 	if event.is_action_pressed("pause_demo"):
 		_toggle_pause()
 	elif event.is_action_pressed("debug_reset"):
@@ -585,11 +665,24 @@ func _physics_process(delta: float) -> void:
 		return
 	if bm.freeze > 0:
 		bm.freeze -= 1
-	if battle_state == BattleState.FIGHT:
+	if battle_state == BattleState.ROOM_CLEAR:
 		elapsed += delta
 		damage_taken += maxf(0.0, _last_hp - player.hp)
 		_last_hp = player.hp
-		if training_mode:
+		_clamp_player_to_room()
+		_tick_room_notice(delta)
+		if not dungeon_finished and current_door != null and current_door.contains_actor(player.position):
+			_advance_room()
+	elif battle_state == BattleState.FIGHT:
+		elapsed += delta
+		damage_taken += maxf(0.0, _last_hp - player.hp)
+		_last_hp = player.hp
+		if dungeon_mode:
+			if alive_count() == 0:
+				_on_room_cleared()
+			_clamp_player_to_room()
+			_tick_room_notice(delta)
+		elif training_mode:
 			if training_free_skills:
 				player.mp = float(player.cfg.get("max_mp", 300))
 				for identifier in player.cds:
@@ -618,6 +711,490 @@ func _physics_process(delta: float) -> void:
 		if transition_left <= 0.0:
 			wave_index += 1
 			_spawn_wave()
+
+# ============================ 副本 10001 ============================
+
+func _build_gm_panel() -> void:
+	gm_panel = GmPanel.new()
+	gm_panel.name = "GmPanel"
+	add_child(gm_panel)
+	gm_panel.build(font, Vector2(VIEW_W, VIEW_H))
+	gm_panel.command_requested.connect(_on_gm_command)
+
+
+func _build_toast() -> void:
+	_toast = _label("", 18, Color(1.0, 0.92, 0.72))
+	_toast.position = Vector2(0, 636)
+	_toast.size = Vector2(VIEW_W, 40)
+	_toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_toast.add_theme_constant_override("outline_size", 7)
+	_toast.add_theme_color_override("font_outline_color", Color(0.02, 0.02, 0.03, 0.92))
+	_toast.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_toast.hide()
+	_overlay.add_child(_toast)
+
+
+func _build_settlement() -> void:
+	_settlement = PanelContainer.new()
+	_settlement.position = Vector2(VIEW_W - 404, 168)
+	_settlement.custom_minimum_size = Vector2(384, 0)
+	_settlement.add_theme_stylebox_override("panel", _style(Color(0.038, 0.043, 0.06, 0.96), Color(0.44, 0.35, 0.23), 18))
+	_overlay.add_child(_settlement)
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 12)
+	_settlement.add_child(column)
+	_settlement_title = _label("", 26)
+	column.add_child(_settlement_title)
+	_settlement_stats = _label("", 15, Color(0.78, 0.81, 0.85))
+	_settlement_stats.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	column.add_child(_settlement_stats)
+	column.add_child(_button("再打一次", _on_retry_dungeon, true))
+	column.add_child(_button("离开地下城", _on_leave_dungeon))
+	_settlement.hide()
+
+
+func _show_settlement(victory: bool) -> void:
+	if _settlement == null:
+		return
+	_settlement_title.text = "副本完成" if victory else "挑战失败"
+	_settlement_title.add_theme_color_override("font_color",
+		Color(1.0, 0.88, 0.55) if victory else Color(0.95, 0.62, 0.58))
+	var rank := "S" if damage_taken < 100 and elapsed < 100 else ("A" if damage_taken < 250 else "B")
+	var tail := "" if victory else "\n点“再打一次”可重新挑战"
+	_settlement_stats.text = "%s · %s\n用时 %s    击败 %d\n最长连击 %d    有效命中 %d\n承受伤害 %.0f\n战斗评价 %s%s" % [
+		dungeon.display_name(), dungeon.layout(), _time_text(elapsed), kills,
+		best_chain, hit_count, damage_taken, rank if victory else "—", tail]
+	_settlement.show()
+
+
+func _clear_settlement() -> void:
+	if _settlement != null:
+		_settlement.hide()
+
+
+func _toast_show(text: String) -> void:
+	if _toast == null:
+		return
+	_toast.text = text
+	_toast_left = 2.6
+	_toast.show()
+
+
+func _enter_dungeon(dungeon_id := "10001") -> void:
+	get_tree().paused = false
+	_pause_jump_held = false
+	dungeon = DungeonRun.new()
+	if not dungeon.load_from(dungeon_config, dungeon_id):
+		hud.set_feedback("副本 %s 没有配置" % dungeon_id)
+		_show_ready()
+		return
+	dungeon_mode = true
+	dungeon_finished = false
+	training_mode = false
+	_clear_settlement()
+	_reset_run_stats()
+	_load_room()
+	print("[DEMO] dungeon=%s layout=%s rooms=%d" % [dungeon.id(), dungeon.layout(), dungeon.room_count()])
+
+
+func _reset_run_stats() -> void:
+	elapsed = 0.0
+	kills = 0
+	hit_count = 0
+	damage_taken = 0.0
+	best_chain = 0
+	hit_chain = 0
+	last_hit_time = -10.0
+	damage_samples.clear()
+	training_damage = 0.0
+	training_chain_damage = 0.0
+	hud.set_combo(0)
+
+
+func _load_room() -> void:
+	_clear_monsters()
+	_clear_room_nodes()
+	bm.clear_fx()
+	seq_fx.reset()
+	weapon_rig.reset_pose()
+	room_cleared = false
+	dungeon_finished = false
+	_clear_settlement()
+	room_bg_tex = null
+	var bg_path := dungeon.background_path()
+	if ResourceLoader.exists(bg_path):
+		room_bg_tex = load(bg_path) as Texture2D
+	room_bg_rect = _compute_room_rect(room_bg_tex, dungeon.ground_line_ratio())
+	room_world_width = maxf(VIEW_W, room_bg_rect.size.x)
+	if room_bg_sprite != null:
+		room_bg_sprite.texture = room_bg_tex
+		room_bg_sprite.visible = room_bg_tex != null
+		if room_bg_tex != null:
+			room_bg_sprite.position = room_bg_rect.position
+			room_bg_sprite.scale = Vector2.ONE * (room_bg_rect.size.x / float(room_bg_tex.get_size().x))
+	if _ground_shape != null:
+		(_ground_shape.shape as RectangleShape2D).size.x = room_world_width + 256.0
+		_ground_shape.position.x = room_world_width * 0.5
+	player.reset_combat(Vector2(200, GROUND_Y))
+	player.set_job(selected_job)
+	player.invincible = 0
+	player.control_enabled = true
+	_last_hp = player.hp
+	var props := Node2D.new()
+	props.name = "RoomProps"
+	add_child(props)
+	room_root = props
+	var catalog: Dictionary = dungeon_config.get("entity_catalog", {})
+	for item in dungeon.entity_plan():
+		var entry: Dictionary = catalog.get(item["id"], {})
+		if entry.is_empty():
+			continue
+		var entity := DungeonEntity.new()
+		entity.entity_id = item["id"]
+		props.add_child(entity)
+		entity.setup(entry, dungeon.asset_root(), Vector2(item["x"], GROUND_Y), item["depth_y"])
+		entity.apply_actor_order(item["depth_y"])
+	var plan := dungeon.monster_plan(GameConfig.monsters["goblin"], dungeon_config.get("monster_presets", {}))
+	for spawn in plan:
+		_spawn_room_monster(spawn)
+	var door_plan := dungeon.door_plan()
+	if not door_plan.is_empty():
+		var door := DungeonDoor.new()
+		door.font = font
+		props.add_child(door)
+		door.setup(str(door_plan.get("side", "right")), Vector2(room_world_width - DOOR_INSET, GROUND_Y))
+		current_door = door
+	hud.visible = true
+	hud.set_dungeon_room(dungeon.display_name(), dungeon.room_index, dungeon.room_count(), _role_label(), alive_count())
+	hud.set_feedback("")
+	print("[DEMO] room=%d module=%s props=%d monsters=%d door=%s" % [dungeon.room_number(),
+		dungeon.module_id(), props.get_child_count(), monsters.size(), str(not door_plan.is_empty())])
+	_shade.hide()
+	_card.hide()
+	_hint.hide()
+	_update_camera()
+	if plan.is_empty():
+		_on_room_cleared(true)
+	else:
+		battle_state = BattleState.FIGHT
+		_set_actor_control(true)
+	_show_room_notice()
+
+
+func _show_room_notice() -> void:
+	_wave_notice.text = "第 %d / %d 房 · %s\n%s" % [dungeon.room_number(), dungeon.room_count(),
+		dungeon.room_name(), dungeon.module_id()]
+	_wave_notice.show()
+	transition_left = 1.8
+
+
+## 等比放大到覆盖 1280×720，再在不露出空白的前提下把地面线尽量对准 GROUND_Y
+func _compute_room_rect(tex: Texture2D, ratio: float) -> Rect2:
+	if tex == null:
+		return Rect2(0, 0, VIEW_W, VIEW_H)
+	var size := tex.get_size()
+	var factor := maxf(VIEW_W / size.x, VIEW_H / size.y)
+	var draw_size := size * factor
+	var offset_y := clampf(GROUND_Y - ratio * draw_size.y, VIEW_H - draw_size.y, 0.0)
+	return Rect2(0.0, offset_y, draw_size.x, draw_size.y)
+
+
+func _clear_room_nodes() -> void:
+	if current_door != null and is_instance_valid(current_door):
+		current_door.queue_free()
+	current_door = null
+	if room_root != null and is_instance_valid(room_root):
+		room_root.queue_free()
+	room_root = null
+
+
+func _spawn_room_monster(spawn: Dictionary) -> Monster:
+	var monster := Monster.new()
+	monster.name = "DungeonMonster"
+	monster.process_mode = Node.PROCESS_MODE_PAUSABLE
+	monster.position = Vector2(float(spawn["x"]), GROUND_Y)
+	monster.ground_y = GROUND_Y
+	monster.depth_y = float(spawn.get("depth", 0.0))
+	add_child(monster)
+	monster.setup(spawn["cfg"], player, bm)
+	monster.died.connect(_on_monster_died)
+	monster.damaged.connect(_on_damage_dealt)
+	monsters.append(monster)
+	return monster
+
+
+func _on_room_cleared(silent := false) -> void:
+	if room_cleared:
+		return
+	room_cleared = true
+	battle_state = BattleState.ROOM_CLEAR
+	_set_actor_control(true)
+	if current_door != null:
+		current_door.set_opened(true)
+	if dungeon.is_boss_room():
+		_finish_dungeon(true)
+		return
+	if not silent:
+		hud.set_feedback("房间已清空 · 门已开启")
+		_wave_notice.text = "房间已清空\n走向右侧的门继续前进"
+		_wave_notice.show()
+		transition_left = 1.8
+		bm.play_sound("ui")
+
+
+func _tick_room_notice(delta: float) -> void:
+	if transition_left > 0.0:
+		transition_left -= delta
+		if transition_left <= 0.0:
+			_wave_notice.hide()
+
+
+func _clamp_player_to_room() -> void:
+	player.position.x = clampf(player.position.x, 40.0, maxf(80.0, room_world_width - 40.0))
+
+
+func _advance_room() -> void:
+	if not dungeon.advance():
+		return
+	_load_room()
+	print("[DEMO] room=%d module=%s" % [dungeon.room_number(), dungeon.module_id()])
+
+
+func _role_label() -> String:
+	match dungeon.role():
+		"entrance":
+			return "入口"
+		"elite":
+			return "精英"
+		"boss":
+			return "BOSS"
+		_:
+			return "小怪"
+
+
+func _finish_dungeon(victory: bool) -> void:
+	if dungeon_finished:
+		return
+	dungeon_finished = true
+	battle_state = BattleState.VICTORY if victory else BattleState.DEFEAT
+	damage_taken += maxf(0.0, _last_hp - player.hp)
+	_last_hp = player.hp
+	bm.clear_fx()
+	seq_fx.reset()
+	bm.play_sound("victory" if victory else "death")
+	_last_result = {"victory": victory, "kills": kills, "hits": hit_count,
+		"best_chain": best_chain, "damage_taken": damage_taken, "elapsed": elapsed}
+	_show_settlement(victory)
+	# 结算后角色仍可自由移动：只有死亡本身会锁住操作
+	player.control_enabled = not player.dead
+	for monster in monsters:
+		if is_instance_valid(monster):
+			monster.control_enabled = false
+	print("[DEMO] dungeon_result=%s kills=%d hits=%d" % ["victory" if victory else "defeat", kills, hit_count])
+
+
+func _on_retry_dungeon() -> void:
+	var target := "10001"
+	if dungeon != null and dungeon.is_loaded():
+		target = dungeon.id()
+	_enter_dungeon(target)
+
+
+func _on_leave_dungeon() -> void:
+	_toast_show("离开地下城功能尚未开放")
+	gm_log("离开地下城：功能尚未实现（本按钮只给提示）")
+
+
+func _update_camera() -> void:
+	if camera == null or player == null:
+		return
+	var half := VIEW_W * 0.5
+	var target_x := half
+	if room_world_width > VIEW_W:
+		target_x = clampf(player.position.x, half, room_world_width - half)
+	camera.position = Vector2(target_x, VIEW_H * 0.5)
+
+
+# ---------------------------- GM 命令 ----------------------------
+
+func gm_log(text: String) -> void:
+	if gm_panel != null:
+		gm_panel.set_log(text)
+
+
+func _on_gm_command(command: String, args: PackedStringArray) -> void:
+	var verb := command.to_lower()
+	match verb:
+		"help":
+			gm_log("命令：help | mode <demo|dungeon> | dungeon [id|restart] | room <n|next|prev>\nclear | spawn <goblin|elite|chief> [n] | god | heal | job <0-2|next>\nwin | lose | settings | fps <n>")
+		"mode":
+			_gm_mode(args)
+		"dungeon":
+			_gm_dungeon(args)
+		"room":
+			_gm_room(args)
+		"clear", "kill":
+			_gm_clear()
+		"spawn":
+			_gm_spawn(args)
+		"god":
+			player.invincible = 0 if player.invincible > 0 else 99999999
+			gm_log("无敌：%s" % ("开" if player.invincible > 0 else "关"))
+		"heal":
+			player.hp = float(player.cfg.get("max_hp", player.hp))
+			player.mp = float(player.cfg.get("max_mp", player.mp))
+			gm_log("已回满 HP / MP")
+		"job":
+			_gm_job(args)
+		"win":
+			if dungeon_mode:
+				_finish_dungeon(true)
+				gm_log("已直接结算为胜利")
+			else:
+				gm_log("当前不是副本模式（先执行 dungeon 10001）")
+		"lose":
+			if dungeon_mode:
+				_finish_dungeon(false)
+			else:
+				_finish(false)
+			gm_log("已直接结算为失败")
+		"settings":
+			_toggle_display_settings()
+			gm_log("已打开显示设置（等同 F3）")
+		"fps":
+			_gm_fps(args)
+		_:
+			gm_log("未知命令：%s（输入 help 查看全部命令）" % command)
+
+
+func _gm_mode(args: PackedStringArray) -> void:
+	var target := ""
+	if args.size() > 0:
+		target = args[0].to_lower()
+	if target == "demo":
+		_show_ready()
+		gm_log("已切到旧的“选择战斗风格 / 三波遭遇战”模式")
+	elif target == "dungeon":
+		_enter_dungeon("10001")
+		gm_log("已切到副本模式 · 10001")
+	else:
+		gm_log("用法：mode <demo|dungeon>")
+
+
+func _gm_dungeon(args: PackedStringArray) -> void:
+	var target := "10001"
+	if args.size() > 0:
+		target = args[0]
+	if target == "restart":
+		if dungeon != null and dungeon.is_loaded():
+			target = dungeon.id()
+		else:
+			target = "10001"
+	_enter_dungeon(target)
+	if dungeon != null and dungeon.is_loaded() and dungeon.id() == target:
+		gm_log("进入副本 %s · 布局 %s · 第 %d/%d 房" % [dungeon.id(), dungeon.layout(),
+			dungeon.room_number(), dungeon.room_count()])
+
+
+func _gm_room(args: PackedStringArray) -> void:
+	if not dungeon_mode or dungeon == null or not dungeon.is_loaded():
+		gm_log("当前不是副本模式，无法切房")
+		return
+	var token := "next"
+	if args.size() > 0:
+		token = args[0].to_lower()
+	var target_index := dungeon.room_index
+	if token == "next":
+		target_index += 1
+	elif token == "prev":
+		target_index -= 1
+	elif token.is_valid_int():
+		target_index = int(token) - 1
+	else:
+		gm_log("用法：room <序号|next|prev>")
+		return
+	if target_index < 0 or target_index >= dungeon.room_count():
+		gm_log("房间序号超出范围（1 ~ %d）" % dungeon.room_count())
+		return
+	dungeon.room_index = target_index
+	dungeon_finished = false
+	_clear_settlement()
+	_load_room()
+	gm_log("已切到第 %d 房 %s（%s）" % [dungeon.room_number(), dungeon.room_name(), dungeon.module_id()])
+
+
+func _gm_clear() -> void:
+	var cleared_count := 0
+	for monster in monsters.duplicate():
+		if is_instance_valid(monster) and not monster.dead and not monster.training_mode:
+			monster._die()
+			cleared_count += 1
+	if cleared_count == 0:
+		gm_log("本房没有存活怪物")
+	else:
+		gm_log("已清空本房 %d 只怪物" % cleared_count)
+
+
+func _gm_spawn(args: PackedStringArray) -> void:
+	var preset := "goblin"
+	if args.size() > 0:
+		preset = args[0].to_lower()
+	var count := 1
+	if args.size() > 1 and args[1].is_valid_int():
+		count = clampi(int(args[1]), 1, 8)
+	var presets: Dictionary = dungeon_config.get("monster_presets", {})
+	if not presets.has(preset):
+		gm_log("未知怪物预设：%s（可用 goblin / elite / chief）" % preset)
+		return
+	if not dungeon_mode:
+		_enter_dungeon("10001")
+	for index in count:
+		var cfg: Dictionary = GameConfig.monsters["goblin"].duplicate(true)
+		var overrides: Dictionary = presets[preset]
+		for key in overrides:
+			cfg[key] = overrides[key]
+		var spawn_x := clampf(player.position.x + 220.0 + float(index) * 130.0, 120.0,
+			maxf(160.0, room_world_width - 90.0))
+		_spawn_room_monster({"cfg": cfg, "x": spawn_x, "depth": 0.0, "preset": preset})
+	room_cleared = false
+	dungeon_finished = false
+	_clear_settlement()
+	if current_door != null:
+		current_door.set_opened(false)
+	if battle_state != BattleState.FIGHT:
+		battle_state = BattleState.FIGHT
+	_set_actor_control(true)
+	gm_log("已生成 %d 只 %s" % [count, preset])
+
+
+func _gm_job(args: PackedStringArray) -> void:
+	var token := "next"
+	if args.size() > 0:
+		token = args[0].to_lower()
+	if token == "next":
+		selected_job = (player.job + 1) % 3
+	elif token.is_valid_int():
+		selected_job = clampi(int(token), 0, 2)
+	else:
+		gm_log("用法：job <0-2|next>")
+		return
+	player.set_job(selected_job)
+	hud.set_player_info("幽影剑士", 30, selected_job)
+	gm_log("职业已切换为 %s" % JOB_NAMES[selected_job])
+
+
+func _gm_fps(args: PackedStringArray) -> void:
+	if args.size() == 0 or not args[0].is_valid_int():
+		gm_log("用法：fps <0|30|60|90|120|144|165|240>（0 为不限）")
+		return
+	var requested := int(args[0])
+	if not FPS_PRESETS.has(requested):
+		gm_log("不支持的帧率：%d" % requested)
+		return
+	fps_limit = requested
+	_apply_display_settings()
+	gm_log("帧率上限已设为 %s" % ("不限" if fps_limit == 0 else str(fps_limit)))
+
 
 func _pick_target():
 	var best = null
@@ -655,13 +1232,22 @@ func _process(delta: float) -> void:
 	if battle_state != BattleState.PAUSED:
 		_clock += delta
 		queue_redraw()
+	if _toast_left > 0.0:
+		_toast_left -= delta
+		if _toast_left <= 0.0 and _toast != null:
+			_toast.hide()
+	if dungeon_mode:
+		_update_camera()
 	if hud and player:
 		bm.set_listener_position(player.visual_position().x)
 		hud.set_vitals(player.hp, player.cfg["max_hp"], player.mp, player.cfg["max_mp"])
 		hud.set_job(player.job)
 		hud.set_attack_speed(float(player.cfg.get("attack_speed", 1.0)) * (float(player.buff_data.get("atk_speed", 1.0)) if player.buff_t > 0 else 1.0))
 		hud.set_target(_pick_target())
-		hud.set_encounter(wave_index + 1, demo_config["waves"].size(), alive_count(), elapsed)
+		if dungeon_mode and dungeon != null and dungeon.is_loaded():
+			hud.set_dungeon_room(dungeon.display_name(), dungeon.room_index, dungeon.room_count(), _role_label(), alive_count())
+		else:
+			hud.set_encounter(wave_index + 1, demo_config["waves"].size(), alive_count(), elapsed)
 		while not damage_samples.is_empty() and elapsed - float(damage_samples[0]["time"]) > 5.0:
 			damage_samples.pop_front()
 		var rolling_damage := 0.0
@@ -679,6 +1265,10 @@ func _time_text(seconds: float) -> String:
 	return "%02d:%02d" % [int(seconds / 60.0), int(seconds) % 60]
 
 func _draw() -> void:
+	# 副本模式的房间背景由 room_bg_sprite 负责（见 _build_world 的 z_index 说明），
+	# 这里直接返回，避免 Main 自己的绘制盖住负 z 的实体。
+	if dungeon_mode:
+		return
 	if bg_tex:
 		draw_texture_rect(bg_tex, Rect2(0, 0, VIEW_W, VIEW_H), false)
 	else:
