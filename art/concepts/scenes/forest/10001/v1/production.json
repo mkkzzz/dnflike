@@ -7,9 +7,11 @@
   "lifecycle": "blocked",
   "low_resolution_pilot": {
     "authorization_date": "2026-10-16",
-    "scope": "One-screen R01 background and ground layers plus one stump; user review required before further batches.",
-    "manifest": "../pilot_lowres_v1/manifest.json",
-    "preview": "../pilot_lowres_v1/previews/review_board.png",
+    "scope": "Revised partial R01 pilot: forest and ground generated together; independent brown stump; user review required before further batches.",
+    "combined_scene": true,
+    "manifest": "../pilot_lowres_v2/manifest.json",
+    "preview": "../pilot_lowres_v2/previews/review_board.png",
+    "previous_pilot": "../pilot_lowres_v1/manifest.json",
     "native_2k_target_unchanged": true,
     "counts_toward_native_2k_delivery": false
   },
