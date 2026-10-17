@@ -6,6 +6,8 @@ extends RefCounted
 var dungeon: Dictionary = {}
 var room_index := 0
 var cleared := false
+## 已清空的房间（按 0 基房间序号）：回退时保持已清状态，不重新刷怪
+var cleared_rooms: Dictionary = {}
 
 
 func load_from(config: Dictionary, dungeon_id: String) -> bool:
@@ -16,6 +18,7 @@ func load_from(config: Dictionary, dungeon_id: String) -> bool:
 	dungeon = all[dungeon_id]
 	room_index = 0
 	cleared = false
+	cleared_rooms.clear()
 	return true
 
 
@@ -108,8 +111,29 @@ func advance() -> bool:
 	if is_last_room():
 		return false
 	room_index += 1
-	cleared = false
+	cleared = is_room_cleared(room_index)
 	return true
+
+
+## 退回上一间（门是双向的）；已是第一间则返回 false。
+func retreat() -> bool:
+	if room_index <= 0:
+		return false
+	room_index -= 1
+	cleared = is_room_cleared(room_index)
+	return true
+
+
+func mark_room_cleared(index: int) -> void:
+	cleared_rooms[index] = true
+
+
+func is_room_cleared(index: int) -> bool:
+	return bool(cleared_rooms.get(index, false))
+
+
+func has_previous_room() -> bool:
+	return room_index > 0
 
 
 func monster_plan(base_config: Dictionary, presets: Dictionary) -> Array:

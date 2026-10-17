@@ -29,7 +29,14 @@
         90,
         20
       ],
-      "collision": true
+      "collision": true,
+      "collision_rect": [
+        -53,
+        -118,
+        106,
+        109
+      ],
+      "collision_rect_source": "把贴图 alpha 逐列/逐行取覆盖率>=0.5 的最长连续段作实心核心"
     },
     "torch": {
       "file": "entities/torch/intact.png",
@@ -58,7 +65,14 @@
         24,
         10
       ],
-      "collision": false
+      "collision": false,
+      "collision_rect": [
+        -5,
+        -161,
+        11,
+        43
+      ],
+      "collision_rect_source": "把贴图 alpha 逐列/逐行取覆盖率>=0.5 的最长连续段作实心核心"
     },
     "fence": {
       "file": "entities/fence/intact.png",
@@ -87,7 +101,14 @@
         210,
         24
       ],
-      "collision": true
+      "collision": true,
+      "collision_rect": [
+        -85,
+        -140,
+        170,
+        140
+      ],
+      "collision_rect_source": "手工覆盖：整段栅栏（实测核心仅栏柱宽度，不成立）"
     },
     "bone_pile": {
       "file": "entities/bone_pile/intact.png",
@@ -116,7 +137,14 @@
         110,
         16
       ],
-      "collision": true
+      "collision": true,
+      "collision_rect": [
+        -4,
+        -65,
+        49,
+        51
+      ],
+      "collision_rect_source": "把贴图 alpha 逐列/逐行取覆盖率>=0.5 的最长连续段作实心核心"
     },
     "bush": {
       "file": "entities/bush/intact.png",
@@ -145,7 +173,14 @@
         140,
         24
       ],
-      "collision": false
+      "collision": false,
+      "collision_rect": [
+        -66,
+        -104,
+        138,
+        95
+      ],
+      "collision_rect_source": "把贴图 alpha 逐列/逐行取覆盖率>=0.5 的最长连续段作实心核心"
     },
     "rock": {
       "file": "entities/rock/intact.png",
@@ -174,7 +209,14 @@
         110,
         24
       ],
-      "collision": true
+      "collision": true,
+      "collision_rect": [
+        -58,
+        -107,
+        117,
+        100
+      ],
+      "collision_rect_source": "把贴图 alpha 逐列/逐行取覆盖率>=0.5 的最长连续段作实心核心"
     },
     "fruit_pickup": {
       "file": "entities/fruit_pickup/idle.png",
@@ -203,7 +245,14 @@
         24,
         10
       ],
-      "collision": false
+      "collision": false,
+      "collision_rect": [
+        -14,
+        -38,
+        26,
+        35
+      ],
+      "collision_rect_source": "把贴图 alpha 逐列/逐行取覆盖率>=0.5 的最长连续段作实心核心"
     }
   },
   "monster_presets": {

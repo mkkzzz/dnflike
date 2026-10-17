@@ -455,10 +455,11 @@ func _run_dungeon_checks() -> void:
 		if child is DungeonEntity and child.entity_id == "bush":
 			bush = child
 	_check(stump != null and bush != null, "entrance room places both a stump and a bush")
-	_check(absf(stump.collision_rect.size.x - 140.0) <= 2.0 and absf(stump.collision_rect.size.y - 122.0) <= 2.0, "collision box matches the stump sprite, not the ledger ground strip")
+	# 碰撞框＝实测“实心核心”（木桩贴图 140x122 -> 106x109），不是整张贴图
+	_check(absf(stump.collision_rect.size.x - 106.0) <= 2.0 and absf(stump.collision_rect.size.y - 109.0) <= 2.0, "the stump collider uses the measured solid core, not the whole sprite")
 	_check(bush != null and not bush.collision_enabled and bush.collision_rect == Rect2(), "decorative entities carry no collision at all")
-	# 同一条景深上会被挡住
 	var stump_depth: float = stump.position.y - main_ref.GROUND_Y
+	# 1) 同一景深从左侧撞过去 -> 被挡住
 	p.depth_y = stump_depth
 	p.position = Vector2(stump.position.x - 240.0, main_ref.GROUND_Y)
 	Input.action_press("move_right")
@@ -470,11 +471,11 @@ func _run_dungeon_checks() -> void:
 	Input.action_release("move_right")
 	await _frames(2)
 	p.invincible = 999999
-	_check(p.position.x < stump.position.x - 50.0, "the stump blocks the player standing in the same depth lane")
+	_check(p.position.x < stump.position.x - 40.0, "the stump blocks the player standing in the same depth lane")
 	if "--capture" in OS.get_cmdline_user_args():
 		await _capture("15_dungeon_entity_block")
-	# 换一条景深就能绕过去（本引擎碰撞只有一个平面，靠实体自带景深门控实现）
-	p.depth_y = stump_depth - 150.0
+	# 2) 站在实体前面（脚更靠前）-> 放行，且画在实体前面
+	p.depth_y = stump_depth + 90.0
 	p.position = Vector2(stump.position.x - 240.0, main_ref.GROUND_Y)
 	Input.action_press("move_right")
 	var cross_frames := 0
@@ -483,9 +484,32 @@ func _run_dungeon_checks() -> void:
 		await _frames(1)
 		cross_frames += 1
 	Input.action_release("move_right")
-	await _frames(2)
+	await _frames(3)
 	p.invincible = 999999
-	_check(p.position.x > stump.position.x + 60.0, "the same stump lets the player pass on another depth lane")
+	_check(p.position.x > stump.position.x + 60.0, "the player walks past the stump when standing in front of it")
+	_check(p.z_index > stump.z_index, "feet further front means drawn on top of the prop")
+	# 3) 沿景深方向撞进去 -> 停在实体的景深线边缘，不会被挤歪也不会抖动穿过去
+	p.depth_y = stump_depth + 120.0
+	p.position = Vector2(stump.position.x - 10.0, main_ref.GROUND_Y)
+	await _frames(2)
+	var stop_x: float = p.position.x
+	Input.action_press("move_up")
+	var axis_frames := 0
+	while axis_frames < 90:
+		p.invincible = 999999
+		await _frames(1)
+		axis_frames += 1
+	Input.action_release("move_up")
+	await _frames(3)
+	p.invincible = 999999
+	_check(absf(p.depth_y - (stump_depth + 24.0)) < 4.0, "walking into the prop along depth stops at its lane edge")
+	_check(absf(p.position.x - stop_x) < 6.0, "stopping on the depth axis does not shove the player sideways")
+	# 4) 脚在实体后面时画在实体之后
+	p.depth_y = stump_depth - 120.0
+	p.position = Vector2(stump.position.x + 200.0, main_ref.GROUND_Y)
+	await _frames(4)
+	p.invincible = 999999
+	_check(p.z_index < stump.z_index, "feet further back means drawn behind the prop")
 	# 区分有无碰撞：灌木是装饰，站在它的景深上也应该直接穿过去
 	p.depth_y = bush.position.y - main_ref.GROUND_Y
 	p.position = Vector2(bush.position.x - 200.0, main_ref.GROUND_Y)
@@ -499,7 +523,7 @@ func _run_dungeon_checks() -> void:
 	await _frames(2)
 	p.invincible = 999999
 	_check(p.position.x > bush.position.x + 90.0, "the player walks straight through a decorative bush")
-	# 怪物同样会被实体挡住（Monster 是 CharacterBody2D、collision_mask=1）
+	# 怪物同样会被实体挡住
 	p.depth_y = stump_depth
 	p.position = Vector2(stump.position.x - 260.0, main_ref.GROUND_Y)
 	main_ref._spawn_room_monster({"cfg": GameConfig.monsters["goblin"].duplicate(true),
@@ -605,6 +629,25 @@ func _run_dungeon_checks() -> void:
 	_check(main_ref.dungeon_mode and main_ref.dungeon.room_number() == 1 and not main_ref.dungeon_finished, "retry button restarts the dungeon at room 1")
 	main_ref._on_leave_dungeon()
 	_check(main_ref._toast.visible and main_ref._toast.text.contains("尚未开放"), "leave-dungeon button only shows a toast")
+
+	# 门是双向的：第 2 房左侧应有回门，走进去回到第 1 房且第 1 房保持已清空
+	main_ref._on_gm_command("room", PackedStringArray(["2"]))
+	await _frames(3)
+	p.invincible = 999999
+	_check(main_ref.retreat_door != null, "room 2 has a door back to room 1")
+	p.depth_y = 0.0
+	p.position = Vector2(main_ref.retreat_door.position.x + 70.0, main_ref.GROUND_Y)
+	Input.action_press("move_left")
+	var back_frames := 0
+	while back_frames < 100:
+		p.invincible = 999999
+		await _frames(1)
+		back_frames += 1
+	Input.action_release("move_left")
+	await _frames(3)
+	p.invincible = 999999
+	_check(main_ref.dungeon.room_number() == 1, "walking into the left door returns to room 1")
+	_check(main_ref.room_cleared and main_ref.alive_count() == 0, "the room you return to keeps its cleared state")
 
 	# GM 模式命令在两个模式之间切换；未知命令不改状态
 	main_ref._on_gm_command("mode", PackedStringArray(["demo"]))

@@ -80,13 +80,21 @@ var room_depth_max := 24.0
 const ROAD_INSET := 44.0
 ## 路面地平线的目标屏幕高度（画面比例）
 const ROAD_LINE_RATIO := 0.45
-## 实体只在“有演员与它同一条景深”时才挡人（本引擎碰撞只有一个平面，见 DungeonEntity 注释）
-const LANE_GATE_TOLERANCE := 36.0
+## 景深判定半宽：演员脚部落在实体景深线 ±该值以内、且不在其前面时视为同一层，会被阻挡。
+## 站在实体前面（depth 更大）时放行——那时角色本来就该画在实体前面。
+const LANE_HALF_DEPTH := 24.0
+## 门的层级：压在房间背景之上、所有演员之下
+const DOOR_Z := -900
 ## 底部 HUD 让位区间：脚底进入这个 y 区间后底栏逐渐淡出。
 ## 世界 y 与屏幕 y 一致（镜头只做横向平移），所以可以直接比较。
 const HUD_FADE_START_Y := 606.0
 const HUD_FADE_FULL_Y := 690.0
 var current_door: DungeonDoor
+var retreat_door: DungeonDoor
+## 当前房的阻挡矩形 [{rect: Rect2（世界）, depth: float}]，由实体台账的实心核心算出
+var _room_solids: Array = []
+## 刚进场时的开门保护帧：避免角色出生点落在门口触发区里被立刻送走
+var _door_guard := 0
 var gm_panel: GmPanel
 var _settlement: PanelContainer
 var _settlement_title: Label
@@ -184,6 +192,7 @@ func _build_world() -> void:
 	seq_config = GameConfig._load_json("res://data/seq_v6.json")
 	seq_fx = SeqFX.new()
 	seq_fx.name = "SeqFX"
+	seq_fx.z_index = 900
 	seq_fx.process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_child(seq_fx)
 	seq_fx.setup(player, bm, seq_config)
@@ -690,14 +699,16 @@ func _physics_process(delta: float) -> void:
 		_set_actor_control(battle_state in [BattleState.FIGHT, BattleState.WAVE_BREAK, BattleState.ROOM_CLEAR] and not player.dead)
 	if bm.freeze > 0:
 		bm.freeze -= 1
+	if _door_guard > 0:
+		_door_guard -= 1
 	if battle_state == BattleState.ROOM_CLEAR:
 		elapsed += delta
 		damage_taken += maxf(0.0, _last_hp - player.hp)
 		_last_hp = player.hp
 		_clamp_player_to_room()
 		_tick_room_notice(delta)
-		if not dungeon_finished and current_door != null and current_door.contains_actor(player.position):
-			_advance_room()
+		if not dungeon_finished:
+			_try_room_door()
 	elif battle_state == BattleState.FIGHT:
 		elapsed += delta
 		damage_taken += maxf(0.0, _last_hp - player.hp)
@@ -707,6 +718,8 @@ func _physics_process(delta: float) -> void:
 				_on_room_cleared()
 			_clamp_player_to_room()
 			_tick_room_notice(delta)
+			if not dungeon_finished:
+				_try_room_door()
 		elif training_mode:
 			if training_free_skills:
 				player.mp = float(player.cfg.get("max_mp", 300))
@@ -736,6 +749,13 @@ func _physics_process(delta: float) -> void:
 		if transition_left <= 0.0:
 			wave_index += 1
 			_spawn_wave()
+	# 实体阻挡与前后遮挡每帧结算（旧遭遇战没有实体，两个函数都会直接返回）
+	if dungeon_mode:
+		_resolve_solids(player, 20.0)
+		for monster in monsters:
+			if is_instance_valid(monster) and not monster.dead:
+				_resolve_solids(monster, 19.0)
+		_update_depth_order()
 
 # ============================ 副本 10001 ============================
 
@@ -879,7 +899,9 @@ func _load_room() -> void:
 	player.reset_combat(Vector2(200, GROUND_Y))
 	player.set_arena(room_road_left + ROAD_INSET, room_road_right - ROAD_INSET)
 	player.set_lane_limits(room_depth_min, room_depth_max)
-	player.position.x = clampf(player.position.x, player.arena_left, player.arena_right)
+	# 出生点离开左侧回门：左界就是回门位置，站在那儿会被立刻吸回上一房
+	player.position.x = clampf(player.arena_left + 130.0, player.arena_left, player.arena_right)
+	_door_guard = 12
 	player.set_job(selected_job)
 	player.invincible = 0
 	player.control_enabled = true
@@ -889,6 +911,7 @@ func _load_room() -> void:
 	add_child(props)
 	room_root = props
 	var catalog: Dictionary = dungeon_config.get("entity_catalog", {})
+	_room_solids.clear()
 	for item in dungeon.entity_plan():
 		var entry: Dictionary = catalog.get(item["id"], {})
 		if entry.is_empty():
@@ -897,29 +920,41 @@ func _load_room() -> void:
 		entity.entity_id = item["id"]
 		props.add_child(entity)
 		entity.setup(entry, dungeon.asset_root(), Vector2(item["x"], GROUND_Y), item["depth_y"])
-		entity.enable_lane_gate(Callable(self, "_actor_depths"), LANE_GATE_TOLERANCE)
-		entity.apply_actor_order(item["depth_y"])
+		if entity.collision_enabled:
+			_room_solids.append({"rect": entity.world_solid_rect(), "depth": entity.actor_depth})
+	var already_cleared := dungeon.is_room_cleared(dungeon.room_index)
 	var plan := dungeon.monster_plan(GameConfig.monsters["goblin"], dungeon_config.get("monster_presets", {}))
-	for spawn in plan:
-		_spawn_room_monster(spawn)
+	if not already_cleared:
+		for spawn in plan:
+			_spawn_room_monster(spawn)
+	# 门是双向的：右侧是前进门，左侧（非首间）是回退门，位置与相邻房同一相对位置
 	var door_plan := dungeon.door_plan()
 	if not door_plan.is_empty():
 		var door := DungeonDoor.new()
 		door.font = font
+		door.z_index = DOOR_Z
 		props.add_child(door)
-		# 门放在路面右端之内，否则玩家走不到（可行动范围已贴合路面）
 		door.setup(str(door_plan.get("side", "right")), Vector2(room_road_right - DOOR_INSET, GROUND_Y))
 		current_door = door
+	if dungeon.has_previous_room():
+		var back := DungeonDoor.new()
+		back.font = font
+		back.z_index = DOOR_Z
+		props.add_child(back)
+		back.setup("left", Vector2(room_road_left + ROAD_INSET, GROUND_Y))
+		back.set_opened(true)
+		retreat_door = back
 	hud.visible = true
 	hud.set_dungeon_room(dungeon.display_name(), dungeon.room_index, dungeon.room_count(), _role_label(), alive_count())
 	hud.set_feedback("")
-	print("[DEMO] room=%d module=%s props=%d monsters=%d door=%s" % [dungeon.room_number(),
-		dungeon.module_id(), props.get_child_count(), monsters.size(), str(not door_plan.is_empty())])
+	print("[DEMO] room=%d module=%s props=%d monsters=%d door=%s back=%s cleared=%s" % [dungeon.room_number(),
+		dungeon.module_id(), props.get_child_count(), monsters.size(), str(not door_plan.is_empty()),
+		str(retreat_door != null), str(already_cleared)])
 	_shade.hide()
 	_card.hide()
 	_hint.hide()
 	_update_camera()
-	if plan.is_empty():
+	if already_cleared or plan.is_empty():
 		_on_room_cleared(true)
 	else:
 		battle_state = BattleState.FIGHT
@@ -952,9 +987,13 @@ func _clear_room_nodes() -> void:
 	if current_door != null and is_instance_valid(current_door):
 		current_door.queue_free()
 	current_door = null
+	if retreat_door != null and is_instance_valid(retreat_door):
+		retreat_door.queue_free()
+	retreat_door = null
 	if room_root != null and is_instance_valid(room_root):
 		room_root.queue_free()
 	room_root = null
+	_room_solids.clear()
 
 
 func _spawn_room_monster(spawn: Dictionary) -> Monster:
@@ -976,6 +1015,7 @@ func _on_room_cleared(silent := false) -> void:
 	if room_cleared:
 		return
 	room_cleared = true
+	dungeon.mark_room_cleared(dungeon.room_index)
 	battle_state = BattleState.ROOM_CLEAR
 	_set_actor_control(true)
 	if current_door != null:
@@ -1002,23 +1042,79 @@ func _clamp_player_to_room() -> void:
 	player.position.x = clampf(player.position.x, player.arena_left, player.arena_right)
 
 
-func _advance_room() -> void:
+func _advance_room() -> bool:
 	if not dungeon.advance():
-		return
+		return false
 	_load_room()
 	print("[DEMO] room=%d module=%s" % [dungeon.room_number(), dungeon.module_id()])
+	return true
 
 
-## 供实体景深门控使用：当前所有演员（玩家 + 存活怪物）的景深。
-## 怪物也是 CharacterBody2D 且 mask=1，会撞实体，所以门控必须把怪物算进来。
-func _actor_depths() -> PackedFloat32Array:
-	var depths := PackedFloat32Array()
+func _retreat_room() -> bool:
+	if not dungeon.retreat():
+		return false
+	_load_room()
+	print("[DEMO] back to room=%d module=%s" % [dungeon.room_number(), dungeon.module_id()])
+	return true
+
+
+## 门是双向的：走进右侧前进门去下一间，走进左侧回退门回上一间。
+func _try_room_door() -> bool:
+	if _door_guard > 0:
+		return false
+	if retreat_door != null and retreat_door.contains_actor(player.position):
+		return _retreat_room()
+	if room_cleared and current_door != null and current_door.contains_actor(player.position):
+		return _advance_room()
+	return false
+
+
+## 代码级阻挡。本引擎碰撞只有一个平面（演员 depth_y 只改绘制偏移，碰撞体固定在
+## GROUND_Y），用开关静态碰撞体会抖动也能被绕过，所以这里按“景深线 + 实心核心矩形”
+## 逐帧解算：站在实体前面（depth 更大）时放行；否则按最小推出量沿 x 或深度推开。
+func _resolve_solids(actor: Node2D, half_width: float) -> void:
+	if _room_solids.is_empty() or actor == null:
+		return
+	var depth := float(actor.get("depth_y"))
+	for solid in _room_solids:
+		var rect: Rect2 = solid["rect"]
+		var line: float = solid["depth"]
+		if depth > line + LANE_HALF_DEPTH:
+			continue
+		var left := actor.position.x - half_width
+		var right := actor.position.x + half_width
+		if right <= rect.position.x or left >= rect.position.x + rect.size.x:
+			continue
+		var push_left := right - rect.position.x
+		var push_right := (rect.position.x + rect.size.x) - left
+		var push_x := minf(push_left, push_right)
+		var push_depth := (line + LANE_HALF_DEPTH) - depth
+		if push_x <= push_depth:
+			if push_left < push_right:
+				actor.position.x = rect.position.x - half_width
+			else:
+				actor.position.x = rect.position.x + rect.size.x + half_width
+		else:
+			actor.set("depth_y", line + LANE_HALF_DEPTH)
+
+
+## 前后遮挡按“脚部景深”排序：脚更靠前（depth 更大）的画在上层。
+## 之前用 depth_y > 0 的固定符号判断，实体在 -70、角色在 -200 时角色仍被画在后面，那是错的。
+func _update_depth_order() -> void:
+	if room_root == null:
+		return
+	var stack: Array = []
 	if player != null:
-		depths.append(player.depth_y)
+		stack.append({"node": player, "depth": player.depth_y})
 	for monster in monsters:
 		if is_instance_valid(monster) and not monster.dead:
-			depths.append(monster.depth_y)
-	return depths
+			stack.append({"node": monster, "depth": monster.depth_y})
+	for child in room_root.get_children():
+		if child is DungeonEntity:
+			stack.append({"node": child, "depth": child.actor_depth})
+	stack.sort_custom(func(a, b): return float(a["depth"]) < float(b["depth"]))
+	for index in stack.size():
+		(stack[index]["node"] as Node2D).z_index = index
 
 
 ## 角色越靠前（脚底越靠下），底部栏越淡。景深可动范围本身仍严格按该图路面取值，

@@ -48,10 +48,12 @@ func set_opened(value: bool) -> void:
 func reach_rect() -> Rect2:
 	var h := GATE_H
 	var w := 92.0
+	# 纵向一律盖住整条景深带；横向朝“房间内侧”延伸（右侧门往左、左侧门往右）
+	# 左侧门的触发区特意收窄：它就在可行走左界附近，太宽会把刚出生的角色立刻吸回去
 	if side == "left":
-		return Rect2(position + Vector2(-8, -h), Vector2(w, h))
+		return Rect2(position + Vector2(-6, -(h + 72.0)), Vector2(52, h + 120.0))
 	if side == "up" or side == "down":
-		return Rect2(position + Vector2(-w * 0.5, -h * 0.5), Vector2(w, h * 0.5))
+		return Rect2(position + Vector2(-w * 0.5, -120.0), Vector2(w + 8, 240.0))
 	return Rect2(position + Vector2(-w, -(h + 72.0)), Vector2(w + 8, h + 120.0))
 
 
