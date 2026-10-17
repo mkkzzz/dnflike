@@ -1,0 +1,199 @@
+{
+  "date": "2026-10-17",
+  "task": "docs/tasks/art_tasks/swordsman_base_actions_v7.md",
+  "stage": "source_review",
+  "user_artwork_approved": false,
+  "user_authorization": "Direct user message: 开搞, after the scoped c3 baseline and weapon-layer pilot plan.",
+  "scope": "One representative seven-key attack1, not full base-action bulk production and no skills.",
+  "calls": [
+    {
+      "tool": "image_gen.imagegen",
+      "mode": "built_in",
+      "model": "not_exposed",
+      "seed": null,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+          "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9"
+        },
+        {
+          "path": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        },
+        {
+          "path": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/pose_guide.png",
+          "sha256": "8af4095b394471a62e68e5a76e18091f5807f9eccfee8e1aefd488c1152f209b"
+        }
+      ],
+      "prompt_file": "prompt_design.txt",
+      "prompt": "Use case: stylized-concept\nAsset: one controlled attack1 action-design sprite sheet for a mature hand-painted 2D side-scrolling action RPG. This is a representative weapon-layer trial, not bulk production.\nActual inputs: image 1 = approved A1 original identity and adult proportions (clothed front/three-quarter only, not nude fifth figure); image 2 = newly APPROVED c3 neutral/ready pair, authoritative adult head/torso/leg proportions and polished art style; image 3 = data-only 3x3 pose/phase guide. Follow image 3's phase order and near right-hand weapon direction, NOT its stick-figure appearance or its simplified body proportions. Preserve image 2's lean adult skull and long torso/legs. Do not import oversized heads from old action sprites.\nGenerate a native 2048x2048 square transparent RGBA sheet if supported, exactly EIGHT full-body figures in a strict 3 columns x 3 rows layout: row 1 = neutral upright companion, combat ready, windup; row 2 = release, contact, follow-through; row 3 = recover, return-ready, EMPTY. The last cell is completely transparent. Exactly one figure per occupied cell, no text, grid, labels or rulers. All figures use one fixed anatomical pixel scale, same camera, same identity, same head size. Leave generous completely transparent gutters so swords and clothing never overlap another figure or a canvas edge. Standing neutral should be >=480 native pixels hair-to-sole, enough to DOWNSAMPLE to 380px; do not shrink figures just to add more panels. Spiky-hair-tip-to-chin envelope is 15.2% of upright neutral height (including hair; not traditional anatomical head count), same within a few percent in every figure. Keep adult lean proportions, no cute or chibi skulls.\nNeutral: upright right-facing three-quarter view, legs straight, arms relaxed, empty hands, NO SWORD, NO SCABBARD, NO sheathed hilt anywhere. It is a measured standing companion, never scale crouching figures up to its silhouette height.\nSeven action figures show ONE coherent single-handed RIGHT-handed forehand horizontal slash, grounded throughout, gaze facing screen-right. Near visible arm is the right sword arm; left arm balances freely, never grips the sword. Keep a wide grounded athletic stance, clear hip/shoulder coil and weight shift, not seven copies of the same stance. Frame 01 ready moderately lowered, katana low-forward. Frame 02 windup draws the right hand across/back, blade points screen-left, hips coil. Frame 03 release with shoulder and right elbow driving, blade sweeping diagonally up toward the opponent. Frame 04 contact extends the right arm toward screen-right at waist/chest height, katana edge-on horizontal to screen-right, convincing weight transfer through hips, feet still planted. Frame 05 follow-through rotates hips/chest with blade continuing past contact, coat trails; keep head and face nearly upright so the visible head envelope can be checked. Frame 06 recover visibly brings sword-hand back from extension, weight settles. Frame 07 return to the SAME ready stance as frame 01. No teleporting stance, no left/right grip swap, no deep head tilt or head occlusion.\nDraw one standard katana coherently in the RIGHT hand of each action pose as an intermediate DESIGN REFERENCE for later removal/layer separation. It must be the same modest shallow-curved katana throughout: round dark tsuba with copper rim, black/deep-red wrapped handle, silver single-edged blade and restrained wave hamon. No extra weapon, no scabbard, no fixed sheathed sword on the hip. Blade guard-to-tip true length about 67% of upright body height, and hilt length about 25% of body height; perspective may shorten but never arbitrarily stretch it. Keep grip at the same anatomically plausible location inside the visible right fist, fingers wrap the handle.\nIdentity/costume: silver-white spiky hair, small deep-red streak on his OWN right-front fringe visible near camera, grey eyes, lean athletic young adult man. Black leather mid-calf coat with dark crimson lapels/lining, rolled forearm sleeves, TWO horizontal silver-buckle chest straps and waist belt; black high-collar undershirt, fitted black trousers, right thigh narrow strap, dark steel knee and segmented shin guards, black boots. Deep red cloth wraps on BOTH forearms and hands to elbows, bare fingers; NO metal forearm armor, no flames. Preserve exact approved c3 rendering: crisp controlled contours, mature hand-painted planes, coherent upper-left light, restrained leather and metal highlights, polished action-game illustration, no 3D render.\nGenuine transparent background; full hair, boots, hands, coat and entire swords contained in each cell. No ground, shadows, backdrop, checkerboard, particles, slashes, trails, glows, motion blur, speed lines, text, logos or watermarks. Preserve clean individual silhouettes for later real layer export. The neutral scale figure must be complete and anatomically the SAME man as the seven action frames.",
+      "output": "design_c1.png",
+      "output_sha256": "8c99ed998fabfb4f1678efbaa657127b0f371d1e4ee03401d62c0bf6d7e631cd",
+      "original_tool_basename": "exec-5da6ab1e-c05b-4a23-ad14-aeb11dbbbbaa.png",
+      "copied_byte_identical": true,
+      "actual_size": [
+        1254,
+        1254
+      ],
+      "actual_mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_background_requested": true,
+      "status": "intermediate_design_only"
+    },
+    {
+      "tool": "image_gen.imagegen",
+      "mode": "built_in",
+      "model": "not_exposed",
+      "seed": null,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/design_c1.png",
+          "sha256": "8c99ed998fabfb4f1678efbaa657127b0f371d1e4ee03401d62c0bf6d7e631cd"
+        },
+        {
+          "path": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        }
+      ],
+      "prompt_file": "prompt_body.txt",
+      "prompt": "Use case: precise-object-edit\nImage 1 is the EDIT TARGET: the newly generated 1254x1254 RGBA attack1 design sheet, with exactly eight figures in a 3x3 arrangement and empty bottom-right cell. Image 2 is the approved c3 reference pair for identity and adult proportions only.\nMake ONE precise production edit: remove ALL weapons from the seven combat figures while preserving their exact action poses and anatomical scale. Remove blade, guard, collar, hilt and pommel completely, including the long blade that ends outside the middle-right frame. There must be NO sword, dagger, pole, scabbard, sheathed hilt, suspended fragment, metallic outline, white stripe, ghost blade or second weapon anywhere on the sheet. The upright neutral is already weaponless; preserve it.\nKeep the original 1254x1254 canvas, the same figure positions, same roots, same head sizes, same hair, face, limbs, coat, belt details, two horizontal chest straps, lighting, style and RGBA transparency. Do not globally redraw, enlarge heads, shorten legs, shift figures, move hands, or change which hand grips. All original poses are designed to wield a one-handed sword with the NEAR RIGHT hand; keep that exact wrist/knuckle position, curled fingers and thumb ready to wrap a separately inserted hilt. The LEFT hand remains freely open for balance.\nWhere the weapon had hidden the right hand, paint a convincing anatomically coherent EMPTY gripping fist with curved fingers and thumb, including a small dark empty handle tunnel. Bare fingertips and deep-red cloth hand wraps must match the existing right forearm. Where a blade covered coat/trousers/arm, restore that same underlying material and clean contour. This is a proper weaponless body for later compositing independent weapons and a foreground finger mask, NOT an unrelated punching pose.\nPreserve all eight independent full figures. Keep all hair tips, boots, fingers and coat pieces. No added poses or duplicates, no grid, text, ground, shadow, effects, motion blur or backdrop. Request true transparent RGBA. Preserve visible source pixels outside the removed-weapon and repaired-hand/body regions as strictly as possible.",
+      "output": "body_c1.png",
+      "output_sha256": "3925cf6789df4dabad45d2182eb999a2f1b2b0eb7ff497fa8ad1d65fd0145e00",
+      "original_tool_basename": "exec-e347b227-1b81-4e57-acdf-4b9fc0d66870.png",
+      "copied_byte_identical": true,
+      "actual_size": [
+        1254,
+        1254
+      ],
+      "actual_mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_background_requested": true,
+      "status": "rejected_head_scale"
+    },
+    {
+      "tool": "image_gen.imagegen",
+      "mode": "built_in",
+      "model": "not_exposed",
+      "seed": null,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/concepts/characters/players/swordsman/standard_v1/weapon/katana_drawn.png",
+          "sha256": "56a9b000da574895d2a7b0b22b946af01cdb676ceba50c84a3998050e75318ed"
+        },
+        {
+          "path": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        }
+      ],
+      "prompt_file": "prompt_weapons.txt",
+      "prompt": "Use case: stylized-concept\nAsset: two standalone interchangeable sword sprites for the same mature hand-painted 2D action RPG hero. Image 1 is the approved standard katana asset: authoritative linework, upper-left lighting, steel treatment, dark hilt, deep crimson wrap and restrained copper fittings. Image 2 is the approved c3 hero pair: style and scale context ONLY, do not draw any person or body part.\nGenerate exactly TWO full weapons, HORIZONTAL and parallel, hilt and pommel at LEFT, blade tip at RIGHT. Upper row is a long broad straight GREAT SWORD; lower row is a short straight double-edged SHORT SWORD. Request a 1536x768 native RGBA canvas, generous transparent separation and margins; each entire weapon is isolated and fully contained, do not crop pommels, guards or tips. Both use a single visible grip point on a one-handed black/deep-crimson wrapped handle, like the provided katana. A longer greatsword hilt may extend behind the hand but the game uses ONE right hand, no second grip or hand.\nGreatsword: convincingly heavy wide two-edged blade with clear central fuller and sharpened bevels, modest straight iron crossguard with copper details, straight pointed tip, compact dark-red/black wrapped hilt. Keep its true blade width moderate, about 8-9% of its blade length, not a huge paddle. Short sword: much shorter double-edged blade, narrow central fuller and crisp bevels, modest straight crossguard and the SAME practical grip diameter. It is a sword, not a dagger with an ornamental ring.\nUse coherent polished hand-painted game illustration matching the standard katana, crisp restrained dark outlines, cool silver/grey steel, modest pale edge glints, dark iron guard, small copper fittings. No gems, wings, skulls, flames, fantasy aura, blood, huge gold decorations, runes, writing or brand. Near-flat side view with blade plane visible, NO perspective tilt, NO hands, NO character, NO scabbard, NO shadows, NO background, NO fake checkerboard, NO labels, NO arrows. Genuine transparent pixels throughout empty space. These two are source sprites that will be downsampled and rotated, not a UI card or concept poster.",
+      "output": "weapons_c1.png",
+      "output_sha256": "438f8fffa3ac7ebc7d39556e15e5849ed0127caa81e9767905070456d8b44d24",
+      "original_tool_basename": "exec-9a7b5aad-8b62-4a12-af46-5c7bcadf31cc.png",
+      "copied_byte_identical": true,
+      "actual_size": [
+        1774,
+        887
+      ],
+      "actual_mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_background_requested": true,
+      "status": "candidate_source_review"
+    },
+    {
+      "tool": "image_gen.imagegen",
+      "mode": "built_in",
+      "model": "not_exposed",
+      "seed": null,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c1.png",
+          "sha256": "3925cf6789df4dabad45d2182eb999a2f1b2b0eb7ff497fa8ad1d65fd0145e00"
+        },
+        {
+          "path": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        }
+      ],
+      "prompt_file": "prompt_headfix.txt",
+      "prompt": "Use case: precise-object-edit\nImage 1 is the EDIT TARGET: the 1254x1254 transparent WEAPONLESS attack sheet of eight figures. Image 2 is the APPROVED c3 neutral/ready pair, the authority for lean adult proportions.\nMake only a HEAD-PROPORTION CONSISTENCY REPAIR, preserving all bodies, hands, legs, feet, clothing and the exact eight poses and positions. DO NOT add any weapons. Keep the original 1254x1254 RGBA canvas and the same 3x3 arrangement with an empty bottom-right cell.\nActual standing neutral from top meaningful hair to sole is 439 pixels. Thus every visible hair-tip-to-chin vertical envelope must be approximately 67 pixels (15.2% of that standing body height), within about 3 pixels. This includes the spiky hair and is NOT traditional anatomical head count. Keep all heads nearly upright at the original yaw.\nMeasured current head envelopes at this exact source scale differ: neutral ~69px (already good); top-middle ready ~73px, top-right windup ~75px, middle-left release ~66px (already good), middle-center contact only ~59px, middle-right follow-through ~74px, bottom-left recover ~71px, bottom-middle return-ready ~68px (already good). Precisely REDUCE only the three oversized heads in top-middle, top-right and middle-right by about 8-10%; ENLARGE only the too-small middle-center contact head by about 12-13%; keep the already good neutral, middle-left release, bottom-left recover and bottom-middle return-ready essentially unchanged. All heads should clearly belong to the same adult of the same stature, without growing faces for readability.\nPreserve each repaired head's face direction, eye line, neck attachment and head center. Retain the silver-white spiky hair with his own right-front red streak, grey eyes and approved adult face. Reconstruct a natural neck/raised crimson collar join where necessary; do not create detached heads, long floating necks or duplicated hair silhouettes. Do not change shoulders or arm/hand locations, especially the empty gripping RIGHT fists. Do not turn the contact pose into a different attack. The c3 reference is a style/proportion authority, not a replacement pose.\nPreserve all image pixels outside each necessary head/neck repair as strictly as possible, including the exact seven weaponless action bodies and the neutral. No global rescaling, no new poses, no changed body anatomy, no sword, scabbard, hilt, effects, background, text, labels, grid or shadow. Genuine transparent RGBA, with the full hair tips retained.",
+      "output": "body_c2.png",
+      "output_sha256": "d0cbcad4b19ad0c31cb3b4d4436e1c0f938f5bf36a693d9e46aa99176430c8f8",
+      "original_tool_basename": "exec-618cc60b-f6b7-479e-a878-164661f9fd68.png",
+      "copied_byte_identical": true,
+      "actual_size": [
+        1254,
+        1254
+      ],
+      "actual_mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_background_requested": true,
+      "status": "rejected_invalid_chin_annotation_and_occluded_release"
+    },
+    {
+      "tool": "image_gen.imagegen",
+      "mode": "built_in",
+      "model": "not_exposed",
+      "seed": null,
+      "reference_parameter": "referenced_image_paths",
+      "references": [
+        {
+          "path": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c2.png",
+          "sha256": "d0cbcad4b19ad0c31cb3b4d4436e1c0f938f5bf36a693d9e46aa99176430c8f8"
+        },
+        {
+          "path": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        }
+      ],
+      "prompt_file": "prompt_finalfix.txt",
+      "prompt": "Use case: precise-object-edit\nImage 1 is the EDIT TARGET: weaponless eight-figure attack sheet, exactly 1254x1254 RGBA. Image 2 is the approved c3 adult-proportion reference.\nRepair only the remaining measurable head proportion defects and one face occlusion. Preserve original figure positions, overall bodies and poses. The neutral standing height is 440 pixels. A full head envelope from HIGHEST VISIBLE HAIR TIP to LOWEST FRONT CHIN must be about 67 pixels, safely 65..69, at this original sheet scale. CHIN MEANS THE BOTTOM OF THE JAW, NOT THE MOUTH OR THE LINE JUST BELOW THE LIPS. The previous edit still leaves several too large when the TRUE bottom chin is measured.\nFor the top-middle ready: gently reduce head about 5%, retaining mature approved face and neck connection. Top-right windup: reduce complete head about 9%. Middle-center contact: reduce complete head about 10% (it was over-enlarged in previous edit). Middle-right follow-through: reduce head about 8%. Bottom-left recover: reduce head about 9%. Bottom-middle return-ready is already good: keep essentially unchanged. Upright top-left neutral is already within tolerance and is a scale ruler: keep its head/body essentially unchanged. Avoid chibi/readability enlargement; all figures are one adult man with the same skull/hair dimensions, no style changes.\nMiddle-left RELEASE pose has the lower face hidden by the raised near RIGHT forearm. Keep the same planted feet, torso coil and rising sword-hand release action, but lower and extend that near right forearm/fist a little forward so the ENTIRE face and real bottom chin are visibly separated from the arm. The near right wrist/fist can move about 12px screen-right and 15px down, with a coherent elbow/forearm adjustment. It remains an empty curled right-hand sword grip (single-handed sword direction diagonally up-right), NEVER a two-handed pose, never a second hand near the grip. Show its true upright head with the same ~67px hair-to-bottom-chin size. Restore correct neck/collar anatomy; do not paint a fake detached chin over the forearm.\nKeep exact 3x3 sheet layout: neutral, ready, windup / release, contact, follow-through / recover, return-ready, empty. No weapons or scabbards anywhere. Preserve the same silver-white hair/right-front red streak, grey eyes, deep-red wrapped forearms with bare fingers, black/crimson coat, TWO horizontal chest straps, belt, fitted black pants, knees/shins and boots. No new clothing, metal bracers, head accessories, effects, text, rulers, grid, shadows or background. True transparency. Preserve all pixels outside necessary head/neck and the one release-forearm repair as strictly as possible. No global body rescaling, no re-layout or source enlargement.",
+      "output": "body_c3.png",
+      "output_sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59",
+      "original_tool_basename": "exec-418a00d4-4687-4fbc-97c4-aac6d3fc3bf2.png",
+      "copied_byte_identical": true,
+      "actual_size": [
+        1254,
+        1254
+      ],
+      "actual_mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_background_requested": true,
+      "status": "selected_source_review"
+    }
+  ],
+  "selected_body": "body_c3.png",
+  "selected_body_configuration": "body_config_c3.json",
+  "body_report": "proportion_report_body_c3.json",
+  "layer_configuration": "layer_config.json",
+  "export": "art/animations/players/swordsman/v7/exports/layer_trial_c3/manifest.json",
+  "reference_identity": "standard_v1 plus approved c3 neutral/ready proportion baseline; no new identity approval claimed.",
+  "critical_review_notes": [
+    "c2 initial numerical report was INVALID: lower-mouth points and occluded chin were mistakenly used. Corrected audit rejects c2; initial report, audit and export-manifest snapshots explicitly retained as invalid evidence.",
+    "c3 final point overlay was inspected against true visible bottom jaws; no tolerance change. Manual landmarks still have +/-3 source-pixel uncertainty.",
+    "The generator did not honor the requested full sheet size: design/body sheets are 1254x1254. Actual standing body 434px allows a 380px downsample, without enlargement.",
+    "Original blade tips clipped and generated blade lengths varied. The final trial uses the original guide camera and 3D blade/edge axes for orthographic foreshortening, rotated to authored 2D blade direction; this is a projection proxy, not exact reconstruction of the painted body or original weapon.",
+    "The only new illustration design is the representative attack sheet, followed by removal and two proportion/visibility repairs; prior c1/c2 history is not reset or hidden. G2/G3/G4 still require actual art review."
+  ],
+  "runtime_integrated": false,
+  "bulk_production_started": false
+}

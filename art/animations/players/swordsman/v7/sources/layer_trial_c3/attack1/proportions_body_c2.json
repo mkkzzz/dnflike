@@ -1,0 +1,154 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_config_c2.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Visual inspection of actual alpha-composited 2x diagnostic head crops; manual chin landmarks +/-3 source pixels. No tolerance changes.",
+  "sources": {
+    "body": {
+      "sha256": "d0cbcad4b19ad0c31cb3b4d4436e1c0f938f5bf36a693d9e46aa99176430c8f8",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 9,
+        "standing_bottom_y": 449,
+        "sole": [
+          145,
+          449
+        ],
+        "crop_bbox": [
+          70,
+          0,
+          310,
+          460
+        ],
+        "head": {
+          "hair_top": [
+            207,
+            9
+          ],
+          "chin": [
+            218,
+            80
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "neutral",
+      "head": {
+        "hair_top": [
+          207,
+          9
+        ],
+        "chin": [
+          218,
+          80
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_01",
+      "head": {
+        "hair_top": [
+          670,
+          76
+        ],
+        "chin": [
+          678,
+          148
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_02",
+      "head": {
+        "hair_top": [
+          1150,
+          78
+        ],
+        "chin": [
+          1160,
+          152
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_04",
+      "head": {
+        "hair_top": [
+          602,
+          537
+        ],
+        "chin": [
+          614,
+          612
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_05",
+      "head": {
+        "hair_top": [
+          1085,
+          515
+        ],
+        "chin": [
+          1088,
+          588
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_06",
+      "head": {
+        "hair_top": [
+          266,
+          895
+        ],
+        "chin": [
+          290,
+          969
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_07",
+      "head": {
+        "hair_top": [
+          677,
+          895
+        ],
+        "chin": [
+          690,
+          963
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ],
+  "semantic_review": "The initial report was invalid: several markers were at the lower mouth rather than bottom jaw. Release chin is occluded and is now missing/rejected until repaired or separately reviewed. Full jaw closeups inspected; no numerical tolerance changes."
+}

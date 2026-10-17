@@ -8,6 +8,7 @@
 # v7 的源配置与导出记录含文件哈希，跨 clone 保持 LF，避免换行改写导致校验不一致。
 art/animations/players/swordsman/v7/sources/**/*.json text eol=lf
 art/animations/players/swordsman/v7/sources/proportion_reset_c3/**/prompt.txt text eol=lf
+art/animations/players/swordsman/v7/sources/layer_trial_c3/**/prompt_*.txt text eol=lf
 art/animations/players/swordsman/v7/exports/**/*.json text eol=lf
 art/animations/players/swordsman/v7/reviews/**/*.json text eol=lf
 art/concepts/characters/players/swordsman/standard_v1/measurements/*.json text eol=lf

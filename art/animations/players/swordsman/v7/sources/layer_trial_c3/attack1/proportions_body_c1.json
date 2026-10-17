@@ -1,0 +1,169 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_config_c1.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Visual inspection of actual alpha-composited 2x diagnostic head crops; manual chin landmarks +/-3 source pixels. No tolerance changes.",
+  "sources": {
+    "body": {
+      "sha256": "3925cf6789df4dabad45d2182eb999a2f1b2b0eb7ff497fa8ad1d65fd0145e00",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 9,
+        "standing_bottom_y": 448,
+        "sole": [
+          245,
+          448
+        ],
+        "crop_bbox": [
+          70,
+          0,
+          310,
+          460
+        ],
+        "head": {
+          "hair_top": [
+            205,
+            9
+          ],
+          "chin": [
+            223,
+            78
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "neutral",
+      "head": {
+        "hair_top": [
+          205,
+          9
+        ],
+        "chin": [
+          223,
+          78
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_01",
+      "head": {
+        "hair_top": [
+          664,
+          75
+        ],
+        "chin": [
+          683,
+          148
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_02",
+      "head": {
+        "hair_top": [
+          1140,
+          76
+        ],
+        "chin": [
+          1165,
+          151
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_03",
+      "head": {
+        "hair_top": [
+          195,
+          526
+        ],
+        "chin": [
+          231,
+          592
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_04",
+      "head": {
+        "hair_top": [
+          593,
+          546
+        ],
+        "chin": [
+          626,
+          605
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_05",
+      "head": {
+        "hair_top": [
+          1076,
+          515
+        ],
+        "chin": [
+          1094,
+          589
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_06",
+      "head": {
+        "hair_top": [
+          266,
+          896
+        ],
+        "chin": [
+          292,
+          967
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_07",
+      "head": {
+        "hair_top": [
+          672,
+          893
+        ],
+        "chin": [
+          694,
+          961
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ]
+}

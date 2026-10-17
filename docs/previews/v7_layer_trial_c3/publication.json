@@ -1,0 +1,54 @@
+{
+  "same_package": true,
+  "media": [
+    {
+      "package": "art/animations/players/swordsman/v7/exports/layer_trial_c3/previews/three_weapons.gif",
+      "published": "docs/previews/v7_layer_trial_c3/three_weapons.gif",
+      "sha256": "90d16dc78e80817595da9cb38b831c55ba28bc738ce2134900476f9e6ac7f848",
+      "byte_identical": true
+    },
+    {
+      "package": "art/animations/players/swordsman/v7/exports/layer_trial_c3/previews/three_weapons_slow3x.gif",
+      "published": "docs/previews/v7_layer_trial_c3/three_weapons_slow3x.gif",
+      "sha256": "78387f9e9c18d9fd0d8c66628ba15aa7494ccec2f568b6b4322ef5787be17063",
+      "byte_identical": true
+    },
+    {
+      "package": "art/animations/players/swordsman/v7/exports/layer_trial_c3/previews/three_weapons_left.gif",
+      "published": "docs/previews/v7_layer_trial_c3/three_weapons_left.gif",
+      "sha256": "bced53699b136e3c2e856eee8691c81b738ecba6ff4d837c13e0e357eabe6d23",
+      "byte_identical": true
+    },
+    {
+      "package": "art/animations/players/swordsman/v7/exports/layer_trial_c3/previews/three_weapons_1080p.gif",
+      "published": "docs/previews/v7_layer_trial_c3/three_weapons_1080p.gif",
+      "sha256": "7f415690cb0265374ffa229d75c08e0bfd00d3ed350930d56e57f72b3ca54d3c",
+      "byte_identical": true
+    },
+    {
+      "package": "art/animations/players/swordsman/v7/exports/layer_trial_c3/previews/layers_contact.png",
+      "published": "docs/previews/v7_layer_trial_c3/layers_contact.png",
+      "sha256": "478e0f0931812f0d66ed965d5d42f1c1cb1a39ecd697b502927169d1ff13c2ff",
+      "byte_identical": true
+    },
+    {
+      "package": "art/animations/players/swordsman/v7/exports/layer_trial_c3/previews/katana_contact.png",
+      "published": "docs/previews/v7_layer_trial_c3/katana_contact.png",
+      "sha256": "80e792e520b582be28fc258ba7183f671106540f607d26580ae251e366d9e656",
+      "byte_identical": true
+    },
+    {
+      "package": "art/animations/players/swordsman/v7/exports/layer_trial_c3/previews/v6_compare.gif",
+      "published": "docs/previews/v7_layer_trial_c3/v6_compare.gif",
+      "sha256": "7e0f12881a9e5df72329d1c0d108a44413f8c3d43df0d8399675ceb8af3dc122",
+      "byte_identical": true
+    },
+    {
+      "package": "art/animations/players/swordsman/v7/exports/layer_trial_c3/previews/v6_compare_contact.png",
+      "published": "docs/previews/v7_layer_trial_c3/v6_compare_contact.png",
+      "sha256": "d8c0714698d6fe06a3f76e8cc4295ca43c219480815f18ce4b54411637a65d95",
+      "byte_identical": true
+    }
+  ],
+  "note": "GIFs have 30 action ticks plus 18 review-only end-hold ticks; 3x slow and 0.75 downsample are explicitly named. V6 comparison is at native old 190px, never upscaled."
+}

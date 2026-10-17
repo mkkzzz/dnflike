@@ -1,0 +1,6 @@
+{
+  "command": "python tools/explore/standard_actions_pilot.py art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_config_c1.json",
+  "exit_code": 1,
+  "output_created": false,
+  "stderr_summary": "ValueError: Actor proportion gate FAILED: head_scale_out_of_range:attack1_01, head_scale_out_of_range:attack1_02, head_scale_out_of_range:attack1_04, head_scale_out_of_range:attack1_05"
+}

@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-17",
+  "reason": "The initial report was invalid: several markers were at the lower mouth rather than bottom jaw. Release chin is occluded and is now missing/rejected until repaired or separately reviewed. Full jaw closeups inspected; no numerical tolerance changes.",
+  "failures": [
+    "missing_pose_annotations",
+    "head_scale_out_of_range:attack1_02",
+    "head_scale_out_of_range:attack1_04",
+    "head_scale_out_of_range:attack1_05",
+    "head_scale_out_of_range:attack1_06"
+  ],
+  "old_report_is_not_valid_evidence": true,
+  "integration_allowed": false,
+  "source_png_unchanged": true
+}

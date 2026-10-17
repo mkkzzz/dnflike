@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-17",
+  "source_reference_and_prompt_hashes_match": true,
+  "body_head_proportion_report_passed": true,
+  "measured_poses": 8,
+  "standing_source_height": 434,
+  "target_standing_height": 380,
+  "manual_head_landmark_uncertainty_px": 3,
+  "landmark_semantics_overlay": "docs/previews/v7_layer_trial_c3/head_landmarks.png",
+  "current_body_head_error_range": [
+    -0.0005672525553591656,
+    0.06000442910795223
+  ],
+  "shared_weaponless_body_poses": 7,
+  "weapon_profiles": [
+    "katana",
+    "greatsword",
+    "shortsword"
+  ],
+  "body_and_finger_layer_files_shared": true,
+  "original_pixels_preserved_in_kept_masks": true,
+  "all_delivered_layer_recompositions_match": true,
+  "canvas_edges_clear": true,
+  "rebuild_identical_png_gif_count": 91,
+  "published_same_package_media_count": 8,
+  "regressions": {
+    "python tools/test_swordsman_layer_trial.py": 13,
+    "python tools/test_actor_proportions.py": 14
+  },
+  "authored_3d_blade_edge_projection_implemented": true,
+  "G2_art_quality_approved": false,
+  "G3_original_restoration_and_occlusion_approved": false,
+  "G4_motion_approved": false,
+  "integration_allowed": false,
+  "bulk_production_started": false,
+  "runtime_tested": false,
+  "limitations": [
+    "Review-only asset trial; no user motion/G2/G3/G4 approval or Godot integration.",
+    "One shared weaponless body and one shared hand occlusion per pose; orthographically projected weapon planes and per-pose front/back flags are a limited trial, not a full body depth solver.",
+    "Original design follow-through blade reached the source edge: its full tip is extrapolated from the authored direction and a standard-length reference, not falsely marked observed.",
+    "Release forearm was lowered by a real image edit to expose the chin; its grip is recalibrated and original weapon restoration is not an exact pixel reconstruction.",
+    "Weapon lengths are render parameters for this trial; no damage/reach/gameplay or equipment UI changes.",
+    "New source body is 1254x1254, measured neutral 434px and downsampled to 380px. Windup drops alpha<=96 fringe to retain a clear edge; original source PNG is preserved.",
+    "Authored 3D blade/edge axes are orthographically projected using the original guide camera, then rotated in screen space to the measured hand-painted blade direction. This is an authored projection proxy, not 3D reconstruction of the painted actor; body occlusion is per-pose front/back plus hand masks, not a full depth buffer. No edge-on frame is silently exempted."
+  ]
+}

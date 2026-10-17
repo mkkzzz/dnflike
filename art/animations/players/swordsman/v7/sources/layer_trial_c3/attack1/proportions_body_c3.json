@@ -1,0 +1,170 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_config_c3.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Visual hair tips and BOTTOM FRONT JAW, not lower lip; chin closeups and the explicit marker overlay reviewed. Release forearm was lowered so its chin is visible. Manual uncertainty +/-3 source pixels.",
+  "sources": {
+    "body": {
+      "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 16,
+        "standing_bottom_y": 450,
+        "sole": [
+          145,
+          450
+        ],
+        "crop_bbox": [
+          70,
+          0,
+          310,
+          460
+        ],
+        "head": {
+          "hair_top": [
+            207,
+            16
+          ],
+          "chin": [
+            215,
+            82
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "neutral",
+      "head": {
+        "hair_top": [
+          207,
+          16
+        ],
+        "chin": [
+          215,
+          82
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_01",
+      "head": {
+        "hair_top": [
+          670,
+          82
+        ],
+        "chin": [
+          675,
+          151
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_02",
+      "head": {
+        "hair_top": [
+          1155,
+          84
+        ],
+        "chin": [
+          1160,
+          153
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_03",
+      "head": {
+        "hair_top": [
+          200,
+          529
+        ],
+        "chin": [
+          223,
+          596
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_04",
+      "head": {
+        "hair_top": [
+          610,
+          543
+        ],
+        "chin": [
+          618,
+          610
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_05",
+      "head": {
+        "hair_top": [
+          1093,
+          518
+        ],
+        "chin": [
+          1104,
+          587
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_06",
+      "head": {
+        "hair_top": [
+          266,
+          900
+        ],
+        "chin": [
+          278,
+          970
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_07",
+      "head": {
+        "hair_top": [
+          677,
+          898
+        ],
+        "chin": [
+          695,
+          965
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ],
+  "landmark_semantics_reviewed": true
+}
