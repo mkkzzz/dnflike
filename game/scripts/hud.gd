@@ -41,6 +41,11 @@ var training_mode := false
 var training_stats: Dictionary = {}
 
 var _root: Control
+## 当前绘制目标：默认 _root；画底部栏时切到 _bottom_layer，好让底栏整体让位
+var _target: CanvasItem
+## 底部栏独立节点（y≈616 以下的整条面板 + 技能槽）：角色走到路面前沿时整体淡出
+var _bottom_layer: Control
+var front_occlusion := 0.0
 var _portrait: Texture2D
 var _cooldowns: Dictionary = {}
 var _cooldown_max: Dictionary = {}
@@ -69,6 +74,14 @@ func _ready() -> void:
 	_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_root.draw.connect(_draw_hud)
 	add_child(_root)
+	_target = _root
+	# 底部栏画在自己的子节点里，这样可以让它整体淡出而不影响其它 HUD 元素
+	_bottom_layer = Control.new()
+	_bottom_layer.name = "HudBottom"
+	_bottom_layer.size = Vector2(DESIGN_W, DESIGN_H)
+	_bottom_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_bottom_layer.draw.connect(_draw_bottom_bar)
+	_root.add_child(_bottom_layer)
 	if font == null:
 		font = ThemeDB.fallback_font
 	if ResourceLoader.exists("res://assets/demo/portrait.png"):
@@ -216,6 +229,8 @@ func refresh() -> void:
 func _refresh() -> void:
 	if _root != null:
 		_root.queue_redraw()
+		if _bottom_layer != null:
+			_bottom_layer.queue_redraw()
 
 
 func _process(delta: float) -> void:
@@ -236,9 +251,9 @@ func _process(delta: float) -> void:
 
 
 func _draw_hud() -> void:
+	_target = _root
 	_draw_encounter()
 	_draw_target()
-	_draw_bottom()
 	_draw_combo()
 	if training_mode:
 		_draw_training()
@@ -248,8 +263,22 @@ func _draw_hud() -> void:
 		_text(Vector2(640, 599), _feedback, 17, color, "center")
 
 
+## 底部栏在自己的节点里绘制（y≈616 以下），便于整体让位给走到前景的角色
+func _draw_bottom_bar() -> void:
+	_target = _bottom_layer
+	_draw_bottom()
+
+
+## 角色越靠近该图路面前沿，底栏越淡（0 = 完整显示，1 = 几乎全透明）。
+## 注意：这是显示层让位，景深可动范围本身仍严格按该图路面取值。
+func set_front_occlusion(amount: float) -> void:
+	front_occlusion = clampf(amount, 0.0, 1.0)
+	if _bottom_layer != null:
+		_bottom_layer.modulate.a = 1.0 - 0.85 * front_occlusion
+
+
 func _draw_encounter() -> void:
-	_root.draw_line(Vector2(26, 27), Vector2(26, 83), GOLD, 2.0)
+	_target.draw_line(Vector2(26, 27), Vector2(26, 83), GOLD, 2.0)
 	_text(Vector2(40, 43), "回廊训练场" if training_mode else ("幽暗回廊" if not (dungeon_mode and has_room) else room_title), 24, IVORY)
 	var subtitle := "战斗试炼"
 	if training_mode:
@@ -282,8 +311,8 @@ func _draw_encounter() -> void:
 	_text(Vector2(1246, 60), "ESC  暂停", 12, MUTED, "right")
 
 func _draw_training() -> void:
-	_root.draw_rect(Rect2(26, 111, 222, 153), Color(0.025, 0.027, 0.04, 0.78))
-	_root.draw_line(Vector2(26, 111), Vector2(248, 111), GOLD_DIM, 1)
+	_target.draw_rect(Rect2(26, 111, 222, 153), Color(0.025, 0.027, 0.04, 0.78))
+	_target.draw_line(Vector2(26, 111), Vector2(248, 111), GOLD_DIM, 1)
 	_text(Vector2(40, 135), "DPS  /  最近 5 秒", 12, MUTED)
 	_text(Vector2(40, 169), "%.1f" % float(training_stats.get("dps", 0)), 30, IVORY, "left", true)
 	_text(Vector2(40, 196), "本段伤害   %.0f" % float(training_stats.get("chain_damage", 0)), 14, GOLD)
@@ -302,8 +331,8 @@ func _draw_target() -> void:
 	var hp_max := maxf(1.0, float(cfg.get("hp", 200.0)))
 	var bar := Rect2(467, 50, 386, 9)
 	_text(Vector2(660, 37), str(cfg.get("name", "哥布林")), 16, IVORY, "center")
-	_root.draw_rect(Rect2(463, 46, 394, 17), INK)
-	_root.draw_line(Vector2(463, 46), Vector2(857, 46), GOLD_DIM, 1.0)
+	_target.draw_rect(Rect2(463, 46, 394, 17), INK)
+	_target.draw_line(Vector2(463, 46), Vector2(857, 46), GOLD_DIM, 1.0)
 	_bar(bar, hp / hp_max, RED, _target_chip / hp_max)
 	_text(Vector2(660, 78), "%d / %d" % [ceili(hp), ceili(hp_max)], 12, MUTED, "center", true)
 
@@ -312,9 +341,9 @@ func _draw_bottom() -> void:
 	# The translucent strip begins below the playable ground line (576px).
 	for row in range(104):
 		var alpha := 0.30 + 0.65 * float(row) / 103.0
-		_root.draw_line(Vector2(0, 616 + row), Vector2(DESIGN_W, 616 + row),
+		_target.draw_line(Vector2(0, 616 + row), Vector2(DESIGN_W, 616 + row),
 			Color(INK.r, INK.g, INK.b, alpha), 1.0)
-	_root.draw_line(Vector2(24, 616), Vector2(1256, 616), GOLD_DIM, 1.0)
+	_target.draw_line(Vector2(24, 616), Vector2(1256, 616), GOLD_DIM, 1.0)
 	_draw_portrait()
 	_text(Vector2(100, 641), player_name, 17, IVORY)
 	_text(Vector2(331, 641), "%s  Lv.%d" % [JOB_NAMES[job], player_level], 12, GOLD, "right")
@@ -353,14 +382,14 @@ func _draw_bottom() -> void:
 
 func _draw_portrait() -> void:
 	var rect := Rect2(25, 631, 60, 55)
-	_root.draw_rect(rect.grow(2.0), INK)
+	_target.draw_rect(rect.grow(2.0), INK)
 	if _portrait != null:
 		var source_size := _portrait.get_size()
 		var side := minf(source_size.x, source_size.y)
 		var source := Rect2(Vector2((source_size.x - side) * 0.5, 0), Vector2(side, side))
-		_root.draw_texture_rect_region(_portrait, rect, source)
-	_root.draw_rect(rect.grow(2.0), GOLD_DIM, false, 1.0)
-	_root.draw_line(Vector2(25, 630), Vector2(85, 630), GOLD, 1.0)
+		_target.draw_texture_rect_region(_portrait, rect, source)
+	_target.draw_rect(rect.grow(2.0), GOLD_DIM, false, 1.0)
+	_target.draw_line(Vector2(25, 630), Vector2(85, 630), GOLD, 1.0)
 
 
 func _draw_action(index: int, key: String, title: String, cooldown_index: int,
@@ -373,9 +402,9 @@ func _draw_action(index: int, key: String, title: String, cooldown_index: int,
 		accent = RED
 	if not enabled:
 		accent = MUTED * Color(0.6, 0.6, 0.6, 1.0)
-	_root.draw_rect(rect, INK)
-	_root.draw_rect(rect, GOLD_DIM if enabled else Color(0.17, 0.16, 0.16), false, 1.0)
-	_root.draw_line(rect.position, rect.position + Vector2(rect.size.x, 0), accent, 1.0)
+	_target.draw_rect(rect, INK)
+	_target.draw_rect(rect, GOLD_DIM if enabled else Color(0.17, 0.16, 0.16), false, 1.0)
+	_target.draw_line(rect.position, rect.position + Vector2(rect.size.x, 0), accent, 1.0)
 	var left := maxf(0.0, float(_cooldowns.get(cooldown_index, 0.0)))
 	var total := maxf(left, float(_cooldown_max.get(cooldown_index, 0.0)))
 	var icon_pos := rect.position + Vector2(8, 8)
@@ -383,45 +412,45 @@ func _draw_action(index: int, key: String, title: String, cooldown_index: int,
 	_text(rect.position + Vector2(96, 22), key, 18, IVORY if enabled else MUTED, "right", true)
 	_text(rect.position + Vector2(56, 49), title, 12, IVORY if enabled else MUTED, "center")
 	if left > 0.0:
-		_root.draw_rect(Rect2(rect.position + Vector2(1, 1), Vector2(111, 56)), Color(0, 0, 0, 0.57))
+		_target.draw_rect(Rect2(rect.position + Vector2(1, 1), Vector2(111, 56)), Color(0, 0, 0, 0.57))
 		_text(rect.position + Vector2(29, 34), "%.1f" % left, 18, IVORY, "center", true)
 		_text(rect.position + Vector2(96, 22), key, 18, IVORY, "right", true)
 		if total > 0.0:
-			_root.draw_line(rect.position + Vector2(1, 57),
+			_target.draw_line(rect.position + Vector2(1, 57),
 				rect.position + Vector2(1 + 111 * (1.0 - left / total), 57), GOLD, 2.0)
 
 
 func _draw_symbol(center: Vector2, kind: String, color: Color) -> void:
 	if kind in ["hp", "mp"]:
-		_root.draw_rect(Rect2(center + Vector2(-3, -13), Vector2(6, 6)), GOLD_DIM)
+		_target.draw_rect(Rect2(center + Vector2(-3, -13), Vector2(6, 6)), GOLD_DIM)
 		var flask := PackedVector2Array([center + Vector2(-4, -7), center + Vector2(4, -7),
 			center + Vector2(9, 1), center + Vector2(9, 11), center + Vector2(-9, 11),
 			center + Vector2(-9, 1)])
-		_root.draw_colored_polygon(flask, Color(color.r, color.g, color.b, 0.55))
+		_target.draw_colored_polygon(flask, Color(color.r, color.g, color.b, 0.55))
 		var outline := flask.duplicate()
 		outline.append(flask[0])
-		_root.draw_polyline(outline, color.lightened(0.2), 1.5, true)
-		_root.draw_line(center + Vector2(-6, 3), center + Vector2(6, 3), IVORY, 1.0)
+		_target.draw_polyline(outline, color.lightened(0.2), 1.5, true)
+		_target.draw_line(center + Vector2(-6, 3), center + Vector2(6, 3), IVORY, 1.0)
 	elif kind == "guard":
 		var points := PackedVector2Array([center + Vector2(-10, -12), center + Vector2(10, -12),
 			center + Vector2(8, 6), center + Vector2(0, 13), center + Vector2(-8, 6),
 			center + Vector2(-10, -12)])
-		_root.draw_polyline(points, color, 1.5, true)
-		_root.draw_line(center + Vector2(0, -9), center + Vector2(0, 8), color, 1.0, true)
+		_target.draw_polyline(points, color, 1.5, true)
+		_target.draw_line(center + Vector2(0, -9), center + Vector2(0, 8), color, 1.0, true)
 	elif kind == "A" and job == 1:
-		_root.draw_arc(center, 12, 0, TAU, 24, color, 1.5, true)
-		_root.draw_arc(center, 7, 0, TAU, 18, color.lightened(0.15), 1.0, true)
-		_root.draw_line(center + Vector2(0, -15), center + Vector2(0, 15), IVORY, 1.5)
+		_target.draw_arc(center, 12, 0, TAU, 24, color, 1.5, true)
+		_target.draw_arc(center, 7, 0, TAU, 18, color.lightened(0.15), 1.0, true)
+		_target.draw_line(center + Vector2(0, -15), center + Vector2(0, 15), IVORY, 1.5)
 	else:
-		_root.draw_line(center + Vector2(-10, 11), center + Vector2(10, -11), color, 3.0, true)
-		_root.draw_line(center + Vector2(-11, 2), center + Vector2(-2, 10), IVORY, 2.0, true)
+		_target.draw_line(center + Vector2(-10, 11), center + Vector2(10, -11), color, 3.0, true)
+		_target.draw_line(center + Vector2(-11, 2), center + Vector2(-2, 10), IVORY, 2.0, true)
 		if kind == "upper":
-			_root.draw_arc(center + Vector2(-4, 3), 14, -1.6, 0.3, 14, color, 1.0, true)
+			_target.draw_arc(center + Vector2(-4, 3), 14, -1.6, 0.3, 14, color, 1.0, true)
 		elif kind == "S" and job == 2:
 			for offset in [-7, 0, 7]:
-				_root.draw_line(center + Vector2(-15, offset), center + Vector2(13, offset), color, 1.0)
+				_target.draw_line(center + Vector2(-15, offset), center + Vector2(13, offset), color, 1.0)
 		elif kind in ["A", "S"]:
-			_root.draw_arc(center + Vector2(-5, 0), 16, -1.5, 1.1, 16, color, 1.5, true)
+			_target.draw_arc(center + Vector2(-5, 0), 16, -1.5, 1.1, 16, color, 1.5, true)
 
 
 func _draw_combo() -> void:
@@ -437,14 +466,14 @@ func _draw_combo() -> void:
 
 
 func _bar(rect: Rect2, fraction: float, color: Color, chip: float = 0.0) -> void:
-	_root.draw_rect(rect, Color(0.08, 0.065, 0.07))
+	_target.draw_rect(rect, Color(0.08, 0.065, 0.07))
 	if chip > fraction:
-		_root.draw_rect(Rect2(rect.position, Vector2(rect.size.x * clampf(chip, 0.0, 1.0), rect.size.y)),
+		_target.draw_rect(Rect2(rect.position, Vector2(rect.size.x * clampf(chip, 0.0, 1.0), rect.size.y)),
 			Color(0.65, 0.51, 0.37, 0.55))
 	var width := rect.size.x * clampf(fraction, 0.0, 1.0)
 	if width > 0.0:
-		_root.draw_rect(Rect2(rect.position, Vector2(width, rect.size.y)), color)
-		_root.draw_line(rect.position + Vector2(0, 1), rect.position + Vector2(width, 1),
+		_target.draw_rect(Rect2(rect.position, Vector2(width, rect.size.y)), color)
+		_target.draw_line(rect.position + Vector2(0, 1), rect.position + Vector2(width, 1),
 			color.lightened(0.22), 1.0)
 
 
@@ -463,6 +492,6 @@ func _text(pos: Vector2, text: String, size: int, color: Color, align: String = 
 		baseline.x -= width * 0.5
 	elif align == "right":
 		baseline.x -= width
-	_root.draw_string_outline(selected_font, baseline, text, HORIZONTAL_ALIGNMENT_LEFT, -1,
+	_target.draw_string_outline(selected_font, baseline, text, HORIZONTAL_ALIGNMENT_LEFT, -1,
 		size, 3, Color(0.02, 0.015, 0.02, color.a * 0.75))
-	_root.draw_string(selected_font, baseline, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, color)
+	_target.draw_string(selected_font, baseline, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, color)

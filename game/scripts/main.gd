@@ -82,6 +82,10 @@ const ROAD_INSET := 44.0
 const ROAD_LINE_RATIO := 0.45
 ## 实体只在“有演员与它同一条景深”时才挡人（本引擎碰撞只有一个平面，见 DungeonEntity 注释）
 const LANE_GATE_TOLERANCE := 36.0
+## 底部 HUD 让位区间：脚底进入这个 y 区间后底栏逐渐淡出。
+## 世界 y 与屏幕 y 一致（镜头只做横向平移），所以可以直接比较。
+const HUD_FADE_START_Y := 606.0
+const HUD_FADE_FULL_Y := 690.0
 var current_door: DungeonDoor
 var gm_panel: GmPanel
 var _settlement: PanelContainer
@@ -1017,6 +1021,14 @@ func _actor_depths() -> PackedFloat32Array:
 	return depths
 
 
+## 角色越靠前（脚底越靠下），底部栏越淡。景深可动范围本身仍严格按该图路面取值，
+## 这里只是显示层让位，避免角色下半身被 HUD 吃掉。
+func _front_occlusion() -> float:
+	if player == null:
+		return 0.0
+	return clampf(inverse_lerp(HUD_FADE_START_Y, HUD_FADE_FULL_Y, GROUND_Y + player.depth_y), 0.0, 1.0)
+
+
 func _role_label() -> String:
 	match dungeon.role():
 		"entrance":
@@ -1305,6 +1317,7 @@ func _process(delta: float) -> void:
 			hud.set_dungeon_room(dungeon.display_name(), dungeon.room_index, dungeon.room_count(), _role_label(), alive_count())
 		else:
 			hud.set_encounter(wave_index + 1, demo_config["waves"].size(), alive_count(), elapsed)
+		hud.set_front_occlusion(_front_occlusion())
 		while not damage_samples.is_empty() and elapsed - float(damage_samples[0]["time"]) > 5.0:
 			damage_samples.pop_front()
 		var rolling_damage := 0.0

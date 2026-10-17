@@ -412,24 +412,30 @@ func _run_dungeon_checks() -> void:
 	_check(p.lane_min() >= main_ref.room_depth_min - 1.0 and p.lane_max() <= main_ref.room_depth_max + 1.0, "lane limits follow the room's road band")
 	_check(main_ref.room_depth_max - main_ref.room_depth_min > 160.0, "the depth band is wider than the old fixed strip")
 	var band_room_one: float = main_ref.room_depth_max - main_ref.room_depth_min
-	# 景深方向真的能走：按住“上”把角色推进路面后段
+	# 景深方向真的能走：先站到靠后处，再按住“上”走到该图路面的后端
+	p.depth_y = p.lane_min() + 60.0
+	await _frames(2)
 	var depth_start: float = p.depth_y
 	Input.action_press("move_up")
 	var lane_frames := 0
-	while lane_frames < 180:
+	while lane_frames < 90:
 		p.invincible = 999999
 		await _frames(1)
 		lane_frames += 1
 	Input.action_release("move_up")
 	await _frames(2)
 	p.invincible = 999999
-	_check(depth_start - p.depth_y > 120.0, "the player can actually walk backwards into the road band")
+	_check(depth_start - p.depth_y > 30.0, "the player can actually walk backwards into the road band")
+	_check(absf(p.depth_y - p.lane_min()) < 3.0, "the player reaches the back edge of this image's road")
+	_check(main_ref.hud._bottom_layer.modulate.a > 0.95, "the bottom HUD stays fully opaque while the player is back in the road")
 	if "--capture" in OS.get_cmdline_user_args():
 		await _capture("16_dungeon_depth_back")
-	# 再推到景深带的前沿（该图路面下沿），看最前面能站到哪
+	# 再走到景深带前沿（该图路面下沿）
+	p.depth_y = p.lane_max() - 60.0
+	await _frames(2)
 	Input.action_press("move_down")
 	var front_frames := 0
-	while front_frames < 200:
+	while front_frames < 90:
 		p.invincible = 999999
 		await _frames(1)
 		front_frames += 1
@@ -437,6 +443,7 @@ func _run_dungeon_checks() -> void:
 	await _frames(2)
 	p.invincible = 999999
 	_check(absf(p.depth_y - p.lane_max()) < 3.0, "the player can reach the front edge of this image's road")
+	_check(main_ref.hud._bottom_layer.modulate.a < 0.4, "the bottom HUD fades out so the player stays visible at the road front")
 	if "--capture" in OS.get_cmdline_user_args():
 		await _capture("18_dungeon_depth_front")
 	# 场景实体确实挡人（站到与木桩同一条景深上）
@@ -456,7 +463,7 @@ func _run_dungeon_checks() -> void:
 	p.position = Vector2(stump.position.x - 240.0, main_ref.GROUND_Y)
 	Input.action_press("move_right")
 	var push_frames := 0
-	while push_frames < 130:
+	while push_frames < 100:
 		p.invincible = 999999
 		await _frames(1)
 		push_frames += 1
@@ -471,7 +478,7 @@ func _run_dungeon_checks() -> void:
 	p.position = Vector2(stump.position.x - 240.0, main_ref.GROUND_Y)
 	Input.action_press("move_right")
 	var cross_frames := 0
-	while cross_frames < 150:
+	while cross_frames < 110:
 		p.invincible = 999999
 		await _frames(1)
 		cross_frames += 1
@@ -484,7 +491,7 @@ func _run_dungeon_checks() -> void:
 	p.position = Vector2(bush.position.x - 200.0, main_ref.GROUND_Y)
 	Input.action_press("move_right")
 	var pass_frames := 0
-	while pass_frames < 110:
+	while pass_frames < 90:
 		p.invincible = 999999
 		await _frames(1)
 		pass_frames += 1
@@ -500,7 +507,7 @@ func _run_dungeon_checks() -> void:
 	await _frames(2)
 	var chaser = main_ref.monsters[main_ref.monsters.size() - 1]
 	var chase_frames := 0
-	while chase_frames < 150:
+	while chase_frames < 110:
 		p.invincible = 999999
 		await _frames(1)
 		chase_frames += 1
