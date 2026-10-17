@@ -601,12 +601,41 @@ func _tick_cooldowns() -> void:
 	for key in cds:
 		cds[key] = maxi(0, int(cds[key]) - 1)
 
+## 景深（上下）可动范围。旧单屏遭遇战用 cfg 里的固定 lane_min/lane_max；
+## 副本房间由 Main 按画面路面实测范围覆盖，所以这里留一组可覆盖值。
+var lane_min_override = null
+var lane_max_override = null
+
+
+func set_lane_limits(minimum: float, maximum: float) -> void:
+	lane_min_override = minimum
+	lane_max_override = maxf(minimum + 24.0, maximum)
+	depth_y = clampf(depth_y, lane_min_override, lane_max_override)
+
+
+func clear_lane_limits() -> void:
+	lane_min_override = null
+	lane_max_override = null
+
+
+func lane_min() -> float:
+	if lane_min_override != null:
+		return lane_min_override
+	return float(cfg.get("lane_min", -40))
+
+
+func lane_max() -> float:
+	if lane_max_override != null:
+		return lane_max_override
+	return float(cfg.get("lane_max", 24))
+
+
 func _move_lane(delta: float, airborne := false) -> void:
 	var lane := Input.get_axis("move_up", "move_down") if InputMap.has_action("move_up") else 0.0
 	var speed := float(cfg.get("lane_speed", 140)) * (float(cfg.get("air_lane_scale", 0.65)) if airborne else 1.0)
 	_lane_velocity = move_toward(_lane_velocity, lane * speed, float(cfg.get("lane_acceleration", 2200)) * delta)
 	var previous_depth := depth_y
-	depth_y = clampf(depth_y + _lane_velocity * delta, float(cfg.get("lane_min", -40)), float(cfg.get("lane_max", 24)))
+	depth_y = clampf(depth_y + _lane_velocity * delta, lane_min(), lane_max())
 	# Use travelled depth, including the arena clamp, for gait and footsteps.
 	_lane_velocity = (depth_y - previous_depth) / maxf(delta, 0.0001)
 

@@ -404,26 +404,76 @@ func _run_dungeon_checks() -> void:
 	# 可行动范围必须贴合画面里的路面，而不是整幅图
 	_check(p.arena_left >= main_ref.room_road_left and p.arena_right <= main_ref.room_road_right, "player arena stays inside the painted road")
 	_check(main_ref.current_door.position.x <= main_ref.room_road_right, "the exit door sits inside the painted road")
-	# 场景实体确实挡人：Player 碰撞盒 40x132，实体 footprint 在 layer 1
+	# 景深带由路面纵向范围算出，且明显宽于旧写死的 64px
+	_check(p.lane_min() >= main_ref.room_depth_min - 1.0 and p.lane_max() <= main_ref.room_depth_max + 1.0, "lane limits follow the room's road band")
+	_check(main_ref.room_depth_max - main_ref.room_depth_min > 160.0, "the depth band is wider than the old fixed strip")
+	# 景深方向真的能走：按住“上”把角色推进路面后段
+	var depth_start: float = p.depth_y
+	Input.action_press("move_up")
+	var lane_frames := 0
+	while lane_frames < 180:
+		p.invincible = 999999
+		await _frames(1)
+		lane_frames += 1
+	Input.action_release("move_up")
+	await _frames(2)
+	p.invincible = 999999
+	_check(depth_start - p.depth_y > 120.0, "the player can actually walk backwards into the road band")
+	if "--capture" in OS.get_cmdline_user_args():
+		await _capture("16_dungeon_depth_back")
+	# 场景实体确实挡人（站到与木桩同一条景深上）
 	var stump = null
+	var bush = null
 	for child in main_ref.room_root.get_children():
 		if child is DungeonEntity and child.entity_id == "stump":
 			stump = child
-	_check(stump != null, "entrance room places a stump entity")
-	p.depth_y = 0.0
+		if child is DungeonEntity and child.entity_id == "bush":
+			bush = child
+	_check(stump != null and bush != null, "entrance room places both a stump and a bush")
+	_check(absf(stump.collision_rect.size.x - 140.0) <= 2.0 and absf(stump.collision_rect.size.y - 122.0) <= 2.0, "collision box matches the stump sprite, not the ledger ground strip")
+	_check(bush != null and not bush.collision_enabled and bush.collision_rect == Rect2(), "decorative entities carry no collision at all")
+	# 同一条景深上会被挡住
+	var stump_depth: float = stump.position.y - main_ref.GROUND_Y
+	p.depth_y = stump_depth
 	p.position = Vector2(stump.position.x - 240.0, main_ref.GROUND_Y)
 	Input.action_press("move_right")
 	var push_frames := 0
-	while push_frames < 150:
+	while push_frames < 130:
 		p.invincible = 999999
 		await _frames(1)
 		push_frames += 1
 	Input.action_release("move_right")
 	await _frames(2)
 	p.invincible = 999999
-	_check(p.position.x < stump.position.x - 50.0, "the stump blocks the player, so entity collision is real")
+	_check(p.position.x < stump.position.x - 50.0, "the stump blocks the player standing in the same depth lane")
 	if "--capture" in OS.get_cmdline_user_args():
 		await _capture("15_dungeon_entity_block")
+	# 换一条景深就能绕过去（本引擎碰撞只有一个平面，靠实体自带景深门控实现）
+	p.depth_y = stump_depth - 150.0
+	p.position = Vector2(stump.position.x - 240.0, main_ref.GROUND_Y)
+	Input.action_press("move_right")
+	var cross_frames := 0
+	while cross_frames < 150:
+		p.invincible = 999999
+		await _frames(1)
+		cross_frames += 1
+	Input.action_release("move_right")
+	await _frames(2)
+	p.invincible = 999999
+	_check(p.position.x > stump.position.x + 60.0, "the same stump lets the player pass on another depth lane")
+	# 区分有无碰撞：灌木是装饰，站在它的景深上也应该直接穿过去
+	p.depth_y = bush.position.y - main_ref.GROUND_Y
+	p.position = Vector2(bush.position.x - 200.0, main_ref.GROUND_Y)
+	Input.action_press("move_right")
+	var pass_frames := 0
+	while pass_frames < 110:
+		p.invincible = 999999
+		await _frames(1)
+		pass_frames += 1
+	Input.action_release("move_right")
+	await _frames(2)
+	p.invincible = 999999
+	_check(p.position.x > bush.position.x + 90.0, "the player walks straight through a decorative bush")
 
 	# GM 命令切房：第 2 房按配置刷 3 只普通哥布林，门保持未开启
 	main_ref._on_gm_command("room", PackedStringArray(["2"]))
@@ -465,6 +515,16 @@ func _run_dungeon_checks() -> void:
 
 	# 精英房：单只精英，血量高于普通怪
 	_check(main_ref.alive_count() == 1 and float(main_ref.monsters[0].cfg.get("hp", 0)) > 200.0, "elite room spawns one stronger elite")
+
+	# R04 竖幅房：修正地平线目标后，它的路面与景深带同样要成立
+	main_ref._on_gm_command("room", PackedStringArray(["4"]))
+	await _frames(3)
+	p.invincible = 999999
+	_check(main_ref.dungeon.module_id() == "10001-R04" and main_ref.alive_count() == 2, "portrait room 4 loads its two goblins")
+	_check(main_ref.room_depth_max - main_ref.room_depth_min > 160.0, "the portrait room also gets a usable depth band")
+	_check(p.arena_left >= main_ref.room_road_left and p.arena_right <= main_ref.room_road_right, "the portrait room arena follows its own road")
+	if "--capture" in OS.get_cmdline_user_args():
+		await _capture("17_dungeon_room4_portrait")
 
 	# BOSS 房：无出口门；击败 BOSS 直接结束副本并结算
 	main_ref._on_gm_command("room", PackedStringArray(["5"]))

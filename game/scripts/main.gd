@@ -75,7 +75,16 @@ var room_bg_rect := Rect2()
 var room_world_width := VIEW_W
 var room_road_left := 0.0
 var room_road_right := VIEW_W
+var room_depth_min := -40.0
+var room_depth_max := 24.0
 const ROAD_INSET := 44.0
+## 路面地平线的目标屏幕高度（画面比例）
+const ROAD_LINE_RATIO := 0.45
+## 景深带相对路面的上下留边：上边留一点避免贴住地平线，下边留出底部 HUD 的高度
+const DEPTH_TOP_INSET := 16.0
+const DEPTH_BOTTOM_INSET := 100.0
+## 实体只在“玩家与它同一条景深”时才挡人（本引擎碰撞只有一个平面，见 DungeonEntity 注释）
+const LANE_GATE_TOLERANCE := 36.0
 var current_door: DungeonDoor
 var gm_panel: GmPanel
 var _settlement: PanelContainer
@@ -388,6 +397,7 @@ func _show_ready() -> void:
 			(_ground_shape.shape as RectangleShape2D).size.x = VIEW_W + 256
 			_ground_shape.position.x = VIEW_W * 0.5
 		player.set_arena(64.0, 1216.0)
+		player.clear_lane_limits()
 		_update_camera()
 	_clear_settlement()
 	hud.clear_dungeon_room()
@@ -442,6 +452,7 @@ func _start_demo(job_id := -1) -> void:
 	hud.clear_room()
 	hud.clear_dungeon_room()
 	player.set_arena(64.0, 1216.0)
+	player.clear_lane_limits()
 	if _ground_shape != null:
 		(_ground_shape.shape as RectangleShape2D).size.x = VIEW_W + 256
 		_ground_shape.position.x = VIEW_W * 0.5
@@ -845,6 +856,14 @@ func _load_room() -> void:
 	if room_road_right - room_road_left < 240.0:
 		room_road_left = 0.0
 		room_road_right = room_world_width
+	# 景深（上下）可动范围＝画面里路面的纵向范围，而不是 player.json 的固定值
+	var road_top_y := room_bg_rect.position.y + dungeon.ground_line_ratio() * room_bg_rect.size.y
+	var road_bottom_y := minf(VIEW_H, room_bg_rect.position.y + room_bg_rect.size.y)
+	room_depth_min = road_top_y + DEPTH_TOP_INSET - GROUND_Y
+	room_depth_max = road_bottom_y - DEPTH_BOTTOM_INSET - GROUND_Y
+	if room_depth_max - room_depth_min < 64.0:
+		room_depth_min = -40.0
+		room_depth_max = 24.0
 	if room_bg_sprite != null:
 		room_bg_sprite.texture = room_bg_tex
 		room_bg_sprite.visible = room_bg_tex != null
@@ -856,6 +875,7 @@ func _load_room() -> void:
 		_ground_shape.position.x = room_world_width * 0.5
 	player.reset_combat(Vector2(200, GROUND_Y))
 	player.set_arena(room_road_left + ROAD_INSET, room_road_right - ROAD_INSET)
+	player.set_lane_limits(room_depth_min, room_depth_max)
 	player.position.x = clampf(player.position.x, player.arena_left, player.arena_right)
 	player.set_job(selected_job)
 	player.invincible = 0
@@ -874,6 +894,7 @@ func _load_room() -> void:
 		entity.entity_id = item["id"]
 		props.add_child(entity)
 		entity.setup(entry, dungeon.asset_root(), Vector2(item["x"], GROUND_Y), item["depth_y"])
+		entity.enable_lane_gate(player, LANE_GATE_TOLERANCE)
 		entity.apply_actor_order(item["depth_y"])
 	var plan := dungeon.monster_plan(GameConfig.monsters["goblin"], dungeon_config.get("monster_presets", {}))
 	for spawn in plan:
@@ -910,14 +931,17 @@ func _show_room_notice() -> void:
 	transition_left = 1.8
 
 
-## 等比放大到覆盖 1280×720，再在不露出空白的前提下把地面线尽量对准 GROUND_Y
+## 等比放大到覆盖 1280×720，再把“路面地平线”尽量放到画面 45% 高。
+## 横版四房因比例关系本来就被夹到 0；这条主要修正竖幅 R04——原先把地平线
+## 对齐到 GROUND_Y，会让它的路面只剩屏幕最下面一条，景深几乎没得走。
 func _compute_room_rect(tex: Texture2D, ratio: float) -> Rect2:
 	if tex == null:
 		return Rect2(0, 0, VIEW_W, VIEW_H)
 	var size := tex.get_size()
 	var factor := maxf(VIEW_W / size.x, VIEW_H / size.y)
 	var draw_size := size * factor
-	var offset_y := clampf(GROUND_Y - ratio * draw_size.y, VIEW_H - draw_size.y, 0.0)
+	var target_line := VIEW_H * ROAD_LINE_RATIO
+	var offset_y := clampf(target_line - ratio * draw_size.y, VIEW_H - draw_size.y, 0.0)
 	return Rect2(0.0, offset_y, draw_size.x, draw_size.y)
 
 

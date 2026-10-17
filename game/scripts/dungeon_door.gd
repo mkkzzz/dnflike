@@ -44,6 +44,7 @@ func set_opened(value: bool) -> void:
 
 ## 玩家进入该矩形即视为推门（世界坐标）。
 ## 下沿特意越过地面线：角色脚底正落在 GROUND_Y 上，而 Rect2.has_point 的上界是开区间。
+## 纵向要盖住整条景深带，否则玩家走到带子后段就触发不到门。
 func reach_rect() -> Rect2:
 	var h := GATE_H
 	var w := 92.0
@@ -51,7 +52,7 @@ func reach_rect() -> Rect2:
 		return Rect2(position + Vector2(-8, -h), Vector2(w, h))
 	if side == "up" or side == "down":
 		return Rect2(position + Vector2(-w * 0.5, -h * 0.5), Vector2(w, h * 0.5))
-	return Rect2(position + Vector2(-w, -h), Vector2(w + 8, h + 48))
+	return Rect2(position + Vector2(-w, -(h + 72.0)), Vector2(w + 8, h + 120.0))
 
 
 func contains_actor(actor_pos: Vector2) -> bool:
