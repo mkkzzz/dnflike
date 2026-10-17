@@ -22,7 +22,11 @@
         "height": 701,
         "ground_line_y": 320,
         "ground_line_ratio": 0.4565,
-        "columns_measured": 161
+        "columns_measured": 161,
+        "road_left_px": 115,
+        "road_right_px": 2138,
+        "road_left_ratio": 0.0513,
+        "road_right_ratio": 0.9532
       },
       "r02": {
         "room_id": "10001-R02",
@@ -34,7 +38,11 @@
         "height": 701,
         "ground_line_y": 336,
         "ground_line_ratio": 0.4793,
-        "columns_measured": 161
+        "columns_measured": 161,
+        "road_left_px": 227,
+        "road_right_px": 2117,
+        "road_left_ratio": 0.1012,
+        "road_right_ratio": 0.9438
       },
       "r03": {
         "room_id": "10001-R03",
@@ -46,7 +54,11 @@
         "height": 809,
         "ground_line_y": 365,
         "ground_line_ratio": 0.4512,
-        "columns_measured": 162
+        "columns_measured": 162,
+        "road_left_px": 137,
+        "road_right_px": 1669,
+        "road_left_ratio": 0.0705,
+        "road_right_ratio": 0.8594
       },
       "r04": {
         "room_id": "10001-R04",
@@ -58,7 +70,11 @@
         "height": 1337,
         "ground_line_y": 807,
         "ground_line_ratio": 0.6036,
-        "columns_measured": 168
+        "columns_measured": 168,
+        "road_left_px": 47,
+        "road_right_px": 1118,
+        "road_left_ratio": 0.04,
+        "road_right_ratio": 0.9507
       },
       "r05": {
         "room_id": "10001-R05",
@@ -70,8 +86,18 @@
         "height": 701,
         "ground_line_y": 349,
         "ground_line_ratio": 0.4979,
-        "columns_measured": 161
+        "columns_measured": 161,
+        "road_left_px": 145,
+        "road_right_px": 2080,
+        "road_left_ratio": 0.0646,
+        "road_right_ratio": 0.9273
       }
+    },
+    "measurement": {
+      "method": "在可行走带内按暖色(泥地 R>G+6)与绿色(植被)逐列比较，取暖色占比>=0.9 的最长连续段为“干净路面”",
+      "band": "自地面线起按高度的 10%/22%/35%/50%/65%/80% 采样 6 行",
+      "used_by": "game/data/dungeons.json 的 ground_line_ratio 与 road_*_ratio；游戏按这些比例把物理地面与可行动范围对齐到画面路面",
+      "note": "路面外侧约 4%~10% 是左右边界灌木（用户要求的边界），不可行走"
     }
   },
   "entities": {

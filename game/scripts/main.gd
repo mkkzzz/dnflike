@@ -62,7 +62,7 @@ var _pause_jump_held := false
 
 # --- 副本 10001（布局 10001-A）---
 const DUNGEON_CONFIG := "res://data/dungeons.json"
-const DOOR_INSET := 70.0
+const DOOR_INSET := 30.0
 var dungeon_config: Dictionary = {}
 var dungeon: DungeonRun
 var dungeon_mode := false
@@ -73,6 +73,9 @@ var room_bg_tex: Texture2D
 var room_bg_sprite: Sprite2D
 var room_bg_rect := Rect2()
 var room_world_width := VIEW_W
+var room_road_left := 0.0
+var room_road_right := VIEW_W
+const ROAD_INSET := 44.0
 var current_door: DungeonDoor
 var gm_panel: GmPanel
 var _settlement: PanelContainer
@@ -836,6 +839,12 @@ func _load_room() -> void:
 		room_bg_tex = load(bg_path) as Texture2D
 	room_bg_rect = _compute_room_rect(room_bg_tex, dungeon.ground_line_ratio())
 	room_world_width = maxf(VIEW_W, room_bg_rect.size.x)
+	# 可行走范围贴合画面里的路面（实测比例），而不是整幅图减去固定边距
+	room_road_left = room_bg_rect.position.x + dungeon.road_left_ratio() * room_bg_rect.size.x
+	room_road_right = room_bg_rect.position.x + dungeon.road_right_ratio() * room_bg_rect.size.x
+	if room_road_right - room_road_left < 240.0:
+		room_road_left = 0.0
+		room_road_right = room_world_width
 	if room_bg_sprite != null:
 		room_bg_sprite.texture = room_bg_tex
 		room_bg_sprite.visible = room_bg_tex != null
@@ -846,7 +855,8 @@ func _load_room() -> void:
 		(_ground_shape.shape as RectangleShape2D).size.x = room_world_width + 256.0
 		_ground_shape.position.x = room_world_width * 0.5
 	player.reset_combat(Vector2(200, GROUND_Y))
-	player.set_arena(64.0, room_world_width - 64.0)
+	player.set_arena(room_road_left + ROAD_INSET, room_road_right - ROAD_INSET)
+	player.position.x = clampf(player.position.x, player.arena_left, player.arena_right)
 	player.set_job(selected_job)
 	player.invincible = 0
 	player.control_enabled = true
@@ -873,7 +883,8 @@ func _load_room() -> void:
 		var door := DungeonDoor.new()
 		door.font = font
 		props.add_child(door)
-		door.setup(str(door_plan.get("side", "right")), Vector2(room_world_width - DOOR_INSET, GROUND_Y))
+		# 门放在路面右端之内，否则玩家走不到（可行动范围已贴合路面）
+		door.setup(str(door_plan.get("side", "right")), Vector2(room_road_right - DOOR_INSET, GROUND_Y))
 		current_door = door
 	hud.visible = true
 	hud.set_dungeon_room(dungeon.display_name(), dungeon.room_index, dungeon.room_count(), _role_label(), alive_count())
@@ -961,7 +972,7 @@ func _tick_room_notice(delta: float) -> void:
 
 
 func _clamp_player_to_room() -> void:
-	player.position.x = clampf(player.position.x, 40.0, maxf(80.0, room_world_width - 40.0))
+	player.position.x = clampf(player.position.x, player.arena_left, player.arena_right)
 
 
 func _advance_room() -> void:

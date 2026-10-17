@@ -1,6 +1,6 @@
 {
   "schema": "dnflike/dungeons/v1",
-  "note": "副本→布局→房间模块。布局是配置层；本文件不含美术产出。实体尺寸/锚点取自 lowres_release_v1 的实体台账（保留、未单独重新批准），文件已复制到 game/assets/dungeon/10001/。",
+  "note": "副本→布局→房间模块。布局是配置层；本文件不含美术产出。实体尺寸/锚点取自 lowres_release_v1 的实体台账（保留、未单独重新批准），文件已复制到 game/assets/dungeon/10001/。ground_line_ratio 与 road_*_ratio 由已批准的五房设计源图实测得出（见 game/assets/dungeon/10001/manifest.json），用于把物理地面与可行动范围对齐到画面里的路面。",
 
   "entity_catalog": {
     "stump": {
@@ -69,6 +69,7 @@
         {
           "index": 1, "module": "10001-R01", "name": "入口", "role": "entrance",
           "background": "rooms/r01.png", "ground_line_ratio": 0.4565,
+          "road_left_ratio": 0.0513, "road_right_ratio": 0.9532,
           "monsters": [],
           "door": {"side": "right"},
           "entities": [
@@ -81,6 +82,7 @@
         {
           "index": 2, "module": "10001-R02", "name": "林间小径", "role": "normal",
           "background": "rooms/r02.png", "ground_line_ratio": 0.4793,
+          "road_left_ratio": 0.1012, "road_right_ratio": 0.9438,
           "monsters": [
             {"preset": "goblin", "x": 900, "depth": -18},
             {"preset": "goblin", "x": 1230, "depth": 14},
@@ -96,19 +98,21 @@
         {
           "index": 3, "module": "10001-R03", "name": "精英哨点", "role": "elite",
           "background": "rooms/r03.png", "ground_line_ratio": 0.4512,
+          "road_left_ratio": 0.0705, "road_right_ratio": 0.8594,
           "monsters": [
             {"preset": "elite", "x": 1180, "depth": -8}
           ],
           "door": {"side": "right"},
           "entities": [
             {"id": "fence", "x": 420, "depth_y": -70},
-            {"id": "torch", "x": 1560, "depth_y": -56},
+            {"id": "torch", "x": 1420, "depth_y": -56},
             {"id": "bone_pile", "x": 980, "depth_y": -100}
           ]
         },
         {
           "index": 4, "module": "10001-R04", "name": "密林深处", "role": "normal",
           "background": "rooms/r04.png", "ground_line_ratio": 0.6036,
+          "road_left_ratio": 0.0400, "road_right_ratio": 0.9507,
           "monsters": [
             {"preset": "goblin", "x": 660, "depth": -16},
             {"preset": "goblin", "x": 980, "depth": 16}
@@ -122,6 +126,7 @@
         {
           "index": 5, "module": "10001-R05", "name": "头目营地", "role": "boss",
           "background": "rooms/r05.png", "ground_line_ratio": 0.4979,
+          "road_left_ratio": 0.0646, "road_right_ratio": 0.9273,
           "monsters": [
             {"preset": "chief", "x": 1520, "depth": -6}
           ],

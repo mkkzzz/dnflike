@@ -89,6 +89,15 @@ func ground_line_ratio() -> float:
 	return float(room().get("ground_line_ratio", 0.5))
 
 
+## 画面里“干净路面”的水平范围（比例）。缺省退回满幅，避免配置漏填就不可走。
+func road_left_ratio() -> float:
+	return float(room().get("road_left_ratio", 0.0))
+
+
+func road_right_ratio() -> float:
+	return float(room().get("road_right_ratio", 1.0))
+
+
 ## 推进到下一间；已是最后一间则返回 false 且状态不变。
 func advance() -> bool:
 	if is_last_room():

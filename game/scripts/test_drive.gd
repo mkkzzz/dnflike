@@ -401,6 +401,29 @@ func _run_dungeon_checks() -> void:
 	_check(main_ref.alive_count() == 0 and main_ref.room_cleared and main_ref.current_door != null and main_ref.current_door.opened, "entrance room has no enemies and an open door")
 	if "--capture" in OS.get_cmdline_user_args():
 		await _capture("10_dungeon_entrance")
+	# 可行动范围必须贴合画面里的路面，而不是整幅图
+	_check(p.arena_left >= main_ref.room_road_left and p.arena_right <= main_ref.room_road_right, "player arena stays inside the painted road")
+	_check(main_ref.current_door.position.x <= main_ref.room_road_right, "the exit door sits inside the painted road")
+	# 场景实体确实挡人：Player 碰撞盒 40x132，实体 footprint 在 layer 1
+	var stump = null
+	for child in main_ref.room_root.get_children():
+		if child is DungeonEntity and child.entity_id == "stump":
+			stump = child
+	_check(stump != null, "entrance room places a stump entity")
+	p.depth_y = 0.0
+	p.position = Vector2(stump.position.x - 240.0, main_ref.GROUND_Y)
+	Input.action_press("move_right")
+	var push_frames := 0
+	while push_frames < 150:
+		p.invincible = 999999
+		await _frames(1)
+		push_frames += 1
+	Input.action_release("move_right")
+	await _frames(2)
+	p.invincible = 999999
+	_check(p.position.x < stump.position.x - 50.0, "the stump blocks the player, so entity collision is real")
+	if "--capture" in OS.get_cmdline_user_args():
+		await _capture("15_dungeon_entity_block")
 
 	# GM 命令切房：第 2 房按配置刷 3 只普通哥布林，门保持未开启
 	main_ref._on_gm_command("room", PackedStringArray(["2"]))
@@ -420,7 +443,7 @@ func _run_dungeon_checks() -> void:
 	_check(main_ref.current_door.opened and main_ref.battle_state == main_ref.BattleState.ROOM_CLEAR, "cleared room opens its door")
 	# 真实输入走到门口。整房 2000+ px 走完会吃掉 --quit-after 预算，
 	# 所以先确认夹取上界能到门，再用真实输入走最后一程并触发切房。
-	_check(main_ref.current_door.position.x <= p.arena_right and main_ref.current_door.position.x >= p.arena_left, "the opened door sits inside the player's walkable arena")
+	_check(main_ref.current_door.reach_rect().has_point(Vector2(p.arena_right, main_ref.GROUND_Y)), "the player's rightmost position reaches the door trigger")
 	p.position = Vector2(main_ref.current_door.position.x - 220.0, main_ref.GROUND_Y)
 	await _frames(3)
 	if "--capture" in OS.get_cmdline_user_args():
