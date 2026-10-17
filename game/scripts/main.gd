@@ -80,10 +80,7 @@ var room_depth_max := 24.0
 const ROAD_INSET := 44.0
 ## 路面地平线的目标屏幕高度（画面比例）
 const ROAD_LINE_RATIO := 0.45
-## 景深带相对路面的上下留边：上边留一点避免贴住地平线，下边留出底部 HUD 的高度
-const DEPTH_TOP_INSET := 16.0
-const DEPTH_BOTTOM_INSET := 100.0
-## 实体只在“玩家与它同一条景深”时才挡人（本引擎碰撞只有一个平面，见 DungeonEntity 注释）
+## 实体只在“有演员与它同一条景深”时才挡人（本引擎碰撞只有一个平面，见 DungeonEntity 注释）
 const LANE_GATE_TOLERANCE := 36.0
 var current_door: DungeonDoor
 var gm_panel: GmPanel
@@ -856,11 +853,13 @@ func _load_room() -> void:
 	if room_road_right - room_road_left < 240.0:
 		room_road_left = 0.0
 		room_road_right = room_world_width
-	# 景深（上下）可动范围＝画面里路面的纵向范围，而不是 player.json 的固定值
+	# 景深（上下）可动范围＝该图路面自身的纵向范围。
+	# 每张图的路面上沿（地平线）与下沿（前景草起点）都不同，所以逐图取比例换算，
+	# 不用统一的上下留边；下沿超出屏幕时截到屏幕底。
 	var road_top_y := room_bg_rect.position.y + dungeon.ground_line_ratio() * room_bg_rect.size.y
-	var road_bottom_y := minf(VIEW_H, room_bg_rect.position.y + room_bg_rect.size.y)
-	room_depth_min = road_top_y + DEPTH_TOP_INSET - GROUND_Y
-	room_depth_max = road_bottom_y - DEPTH_BOTTOM_INSET - GROUND_Y
+	var road_front_y := room_bg_rect.position.y + dungeon.road_front_ratio() * room_bg_rect.size.y
+	room_depth_min = road_top_y - GROUND_Y
+	room_depth_max = minf(VIEW_H, road_front_y) - GROUND_Y
 	if room_depth_max - room_depth_min < 64.0:
 		room_depth_min = -40.0
 		room_depth_max = 24.0
@@ -894,7 +893,7 @@ func _load_room() -> void:
 		entity.entity_id = item["id"]
 		props.add_child(entity)
 		entity.setup(entry, dungeon.asset_root(), Vector2(item["x"], GROUND_Y), item["depth_y"])
-		entity.enable_lane_gate(player, LANE_GATE_TOLERANCE)
+		entity.enable_lane_gate(Callable(self, "_actor_depths"), LANE_GATE_TOLERANCE)
 		entity.apply_actor_order(item["depth_y"])
 	var plan := dungeon.monster_plan(GameConfig.monsters["goblin"], dungeon_config.get("monster_presets", {}))
 	for spawn in plan:
@@ -1004,6 +1003,18 @@ func _advance_room() -> void:
 		return
 	_load_room()
 	print("[DEMO] room=%d module=%s" % [dungeon.room_number(), dungeon.module_id()])
+
+
+## 供实体景深门控使用：当前所有演员（玩家 + 存活怪物）的景深。
+## 怪物也是 CharacterBody2D 且 mask=1，会撞实体，所以门控必须把怪物算进来。
+func _actor_depths() -> PackedFloat32Array:
+	var depths := PackedFloat32Array()
+	if player != null:
+		depths.append(player.depth_y)
+	for monster in monsters:
+		if is_instance_valid(monster) and not monster.dead:
+			depths.append(monster.depth_y)
+	return depths
 
 
 func _role_label() -> String:

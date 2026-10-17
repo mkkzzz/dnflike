@@ -98,6 +98,11 @@ func road_right_ratio() -> float:
 	return float(room().get("road_right_ratio", 1.0))
 
 
+## 路面下沿（前景草/植被起点）的比例。每张图不同，景深可动范围靠它逐图取值。
+func road_front_ratio() -> float:
+	return float(room().get("road_front_ratio", 1.0))
+
+
 ## 推进到下一间；已是最后一间则返回 false 且状态不变。
 func advance() -> bool:
 	if is_last_room():

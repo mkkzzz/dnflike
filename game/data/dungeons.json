@@ -293,7 +293,8 @@
               "x": 1960,
               "depth_y": -100
             }
-          ]
+          ],
+          "road_front_ratio": 0.9501
         },
         {
           "index": 2,
@@ -340,7 +341,8 @@
               "x": 1880,
               "depth_y": -90
             }
-          ]
+          ],
+          "road_front_ratio": 0.9529
         },
         {
           "index": 3,
@@ -377,7 +379,8 @@
               "x": 1420,
               "depth_y": -50
             }
-          ]
+          ],
+          "road_front_ratio": 0.9308
         },
         {
           "index": 4,
@@ -414,7 +417,8 @@
               "x": 1080,
               "depth_y": -80
             }
-          ]
+          ],
+          "road_front_ratio": 0.9454
         },
         {
           "index": 5,
@@ -454,7 +458,8 @@
               "x": 2080,
               "depth_y": -120
             }
-          ]
+          ],
+          "road_front_ratio": 0.9515
         }
       ]
     }

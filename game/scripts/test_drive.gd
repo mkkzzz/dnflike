@@ -404,9 +404,14 @@ func _run_dungeon_checks() -> void:
 	# 可行动范围必须贴合画面里的路面，而不是整幅图
 	_check(p.arena_left >= main_ref.room_road_left and p.arena_right <= main_ref.room_road_right, "player arena stays inside the painted road")
 	_check(main_ref.current_door.position.x <= main_ref.room_road_right, "the exit door sits inside the painted road")
-	# 景深带由路面纵向范围算出，且明显宽于旧写死的 64px
+	# 景深带必须逐图取该图自己的路面纵向范围，而不是统一的上下留边
+	var expect_top: float = main_ref.room_bg_rect.position.y + main_ref.dungeon.ground_line_ratio() * main_ref.room_bg_rect.size.y - main_ref.GROUND_Y
+	var expect_front: float = minf(main_ref.VIEW_H, main_ref.room_bg_rect.position.y + main_ref.dungeon.road_front_ratio() * main_ref.room_bg_rect.size.y) - main_ref.GROUND_Y
+	_check(absf(main_ref.room_depth_min - expect_top) < 2.0, "depth band back edge = this image's ground line")
+	_check(absf(main_ref.room_depth_max - expect_front) < 2.0, "depth band front edge = this image's road front")
 	_check(p.lane_min() >= main_ref.room_depth_min - 1.0 and p.lane_max() <= main_ref.room_depth_max + 1.0, "lane limits follow the room's road band")
 	_check(main_ref.room_depth_max - main_ref.room_depth_min > 160.0, "the depth band is wider than the old fixed strip")
+	var band_room_one: float = main_ref.room_depth_max - main_ref.room_depth_min
 	# 景深方向真的能走：按住“上”把角色推进路面后段
 	var depth_start: float = p.depth_y
 	Input.action_press("move_up")
@@ -421,6 +426,19 @@ func _run_dungeon_checks() -> void:
 	_check(depth_start - p.depth_y > 120.0, "the player can actually walk backwards into the road band")
 	if "--capture" in OS.get_cmdline_user_args():
 		await _capture("16_dungeon_depth_back")
+	# 再推到景深带的前沿（该图路面下沿），看最前面能站到哪
+	Input.action_press("move_down")
+	var front_frames := 0
+	while front_frames < 200:
+		p.invincible = 999999
+		await _frames(1)
+		front_frames += 1
+	Input.action_release("move_down")
+	await _frames(2)
+	p.invincible = 999999
+	_check(absf(p.depth_y - p.lane_max()) < 3.0, "the player can reach the front edge of this image's road")
+	if "--capture" in OS.get_cmdline_user_args():
+		await _capture("18_dungeon_depth_front")
 	# 场景实体确实挡人（站到与木桩同一条景深上）
 	var stump = null
 	var bush = null
@@ -474,6 +492,20 @@ func _run_dungeon_checks() -> void:
 	await _frames(2)
 	p.invincible = 999999
 	_check(p.position.x > bush.position.x + 90.0, "the player walks straight through a decorative bush")
+	# 怪物同样会被实体挡住（Monster 是 CharacterBody2D、collision_mask=1）
+	p.depth_y = stump_depth
+	p.position = Vector2(stump.position.x - 260.0, main_ref.GROUND_Y)
+	main_ref._spawn_room_monster({"cfg": GameConfig.monsters["goblin"].duplicate(true),
+		"x": stump.position.x + 240.0, "depth": stump_depth, "preset": "goblin"})
+	await _frames(2)
+	var chaser = main_ref.monsters[main_ref.monsters.size() - 1]
+	var chase_frames := 0
+	while chase_frames < 150:
+		p.invincible = 999999
+		await _frames(1)
+		chase_frames += 1
+	p.invincible = 999999
+	_check(chaser.position.x > stump.position.x + 40.0, "a monster chasing the player is blocked by the stump")
 
 	# GM 命令切房：第 2 房按配置刷 3 只普通哥布林，门保持未开启
 	main_ref._on_gm_command("room", PackedStringArray(["2"]))
@@ -522,6 +554,7 @@ func _run_dungeon_checks() -> void:
 	p.invincible = 999999
 	_check(main_ref.dungeon.module_id() == "10001-R04" and main_ref.alive_count() == 2, "portrait room 4 loads its two goblins")
 	_check(main_ref.room_depth_max - main_ref.room_depth_min > 160.0, "the portrait room also gets a usable depth band")
+	_check(absf((main_ref.room_depth_max - main_ref.room_depth_min) - band_room_one) > 20.0, "the portrait room's depth band differs from room 1's, so values are per image")
 	_check(p.arena_left >= main_ref.room_road_left and p.arena_right <= main_ref.room_road_right, "the portrait room arena follows its own road")
 	if "--capture" in OS.get_cmdline_user_args():
 		await _capture("17_dungeon_room4_portrait")

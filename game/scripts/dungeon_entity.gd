@@ -13,17 +13,16 @@ var collision_enabled := false
 var _body: Sprite2D
 var _shadow: Sprite2D
 var _collision_body: StaticBody2D
-## 景深门控：本引擎的碰撞只有一个平面（玩家 depth_y 只改绘制偏移，碰撞体固定在 GROUND_Y），
-## 所以实体必须自己判断“玩家是否和我站在同一条景深上”，否则要么永远挡不到人、
-## 要么把整条路堵死。默认 0 表示不限（非副本场景）。
+## 景深门控：本引擎的碰撞只有一个平面（玩家/怪物的 depth_y 只改绘制偏移，碰撞体固定在
+## GROUND_Y），所以实体必须自己判断“有没有演员和我站在同一条景深上”，否则要么永远挡不到人、
+## 要么把整条路堵死。probe 返回当前所有演员的景深（玩家 + 存活怪物）。
 var actor_depth := 0.0
 var lane_tolerance := 0.0
-var player_ref: Node2D = null
+var lane_probe: Callable = Callable()
 
 
-## 由 Main 在摆好之后调用：传入玩家引用与景深容差，开启“同层才挡人”。
-func enable_lane_gate(player_node: Node2D, tolerance: float) -> void:
-	player_ref = player_node
+func enable_lane_gate(probe: Callable, tolerance: float) -> void:
+	lane_probe = probe
 	lane_tolerance = maxf(0.0, tolerance)
 	refresh_lane_gate()
 
@@ -32,13 +31,17 @@ func refresh_lane_gate() -> void:
 	if _collision_body == null:
 		return
 	var active := true
-	if player_ref != null and lane_tolerance > 0.0:
-		active = absf(float(player_ref.get("depth_y")) - actor_depth) <= lane_tolerance
+	if lane_probe.is_valid() and lane_tolerance > 0.0:
+		active = false
+		for depth in lane_probe.call():
+			if absf(float(depth) - actor_depth) <= lane_tolerance:
+				active = true
+				break
 	_collision_body.collision_layer = 1 if active else 0
 
 
 func _physics_process(_delta: float) -> void:
-	if lane_tolerance > 0.0 and player_ref != null:
+	if lane_tolerance > 0.0 and lane_probe.is_valid():
 		refresh_lane_gate()
 
 

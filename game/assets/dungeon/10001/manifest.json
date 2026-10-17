@@ -26,7 +26,10 @@
         "road_left_px": 115,
         "road_right_px": 2138,
         "road_left_ratio": 0.0513,
-        "road_right_ratio": 0.9532
+        "road_right_ratio": 0.9532,
+        "road_front_y": 666,
+        "road_front_ratio": 0.9501,
+        "road_band_px": 346
       },
       "r02": {
         "room_id": "10001-R02",
@@ -42,7 +45,10 @@
         "road_left_px": 227,
         "road_right_px": 2117,
         "road_left_ratio": 0.1012,
-        "road_right_ratio": 0.9438
+        "road_right_ratio": 0.9438,
+        "road_front_y": 668,
+        "road_front_ratio": 0.9529,
+        "road_band_px": 332
       },
       "r03": {
         "room_id": "10001-R03",
@@ -58,7 +64,10 @@
         "road_left_px": 137,
         "road_right_px": 1669,
         "road_left_ratio": 0.0705,
-        "road_right_ratio": 0.8594
+        "road_right_ratio": 0.8594,
+        "road_front_y": 753,
+        "road_front_ratio": 0.9308,
+        "road_band_px": 388
       },
       "r04": {
         "room_id": "10001-R04",
@@ -74,7 +83,10 @@
         "road_left_px": 47,
         "road_right_px": 1118,
         "road_left_ratio": 0.04,
-        "road_right_ratio": 0.9507
+        "road_right_ratio": 0.9507,
+        "road_front_y": 1264,
+        "road_front_ratio": 0.9454,
+        "road_band_px": 457
       },
       "r05": {
         "room_id": "10001-R05",
@@ -90,14 +102,19 @@
         "road_left_px": 145,
         "road_right_px": 2080,
         "road_left_ratio": 0.0646,
-        "road_right_ratio": 0.9273
+        "road_right_ratio": 0.9273,
+        "road_front_y": 667,
+        "road_front_ratio": 0.9515,
+        "road_band_px": 318
       }
     },
     "measurement": {
       "method": "在可行走带内按暖色(泥地 R>G+6)与绿色(植被)逐列比较，取暖色占比>=0.9 的最长连续段为“干净路面”",
       "band": "自地面线起按高度的 10%/22%/35%/50%/65%/80% 采样 6 行",
       "used_by": "game/data/dungeons.json 的 ground_line_ratio 与 road_*_ratio；游戏按这些比例把物理地面与可行动范围对齐到画面路面",
-      "note": "路面外侧约 4%~10% 是左右边界灌木（用户要求的边界），不可行走"
+      "note": "路面外侧约 4%~10% 是左右边界灌木（用户要求的边界），不可行走",
+      "vertical_method": "在已测出的水平路面段内逐行统计暖色(泥地)占比，从地平线往下取占比首次跌破 0.5 的行为路面下沿（前景草/植被起点）。各图路面纵向长度本就不同，所以景深带必须逐图取值，不能用统一的上下留边。",
+      "vertical_used_by": "game/data/dungeons.json 的 road_front_ratio；游戏按 ground_line_ratio(上沿) 与 road_front_ratio(下沿) 换算出每间房自己的景深可动范围"
     }
   },
   "entities": {
