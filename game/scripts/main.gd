@@ -123,6 +123,9 @@ func _ready() -> void:
 	_build_overlay()
 	_build_gm_panel()
 	_enter_dungeon("10001")
+	print("[DEMO] window=%s viewport=%s stretch=%s" % [DisplayServer.window_get_size(),
+		get_viewport().get_visible_rect().size,
+		str(ProjectSettings.get_setting("display/window/stretch/mode", "disabled"))])
 	print("[DEMO] scene ready")
 
 func _register_actions() -> void:

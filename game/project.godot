@@ -17,13 +17,17 @@ config/icon="res://icon.svg"
 
 [display]
 
+; 逻辑画布固定 1280x720；窗口默认 1920x1080，靠 canvas_items 拉伸按变换绘制，
+; 所以 UI 与场景坐标不必改，放大后依然清晰。
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/window_width_override=1920
+window/size/window_height_override=1080
 window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
 
 [physics]
 
-common/physics_ticks_per_second=60
 common/physics_interpolation=true
 
 [rendering]
