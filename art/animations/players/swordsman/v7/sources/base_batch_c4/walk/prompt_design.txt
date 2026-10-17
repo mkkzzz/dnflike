@@ -1,0 +1,16 @@
+Use case: stylized-concept
+Asset type: production 2D handpainted game animation source sheet, swordsman locomotion.
+Input images: Image 1 is the locked identity standard; Image 2 is the approved adult proportion/style pair; Image 3 is the approved recent attack body artwork. Preserve the same character and rendering style.
+Primary request: Draw EXACTLY 8 full-body figures, a strict 4 columns x 2 rows sheet, 2560x1440, genuinely transparent background. Every figure is at IDENTICAL anatomical pixel scale. Top-left is the mandatory tall fully upright neutral ruler. The other 7 figures are ONE quiet ready breathing pose and SIX phases of a COMPLETE WALK cycle facing SCREEN RIGHT. Leave generous transparent gutters and fully contain all hair, boots and sword tips. No ground shadow, no labels, no effects.
+Character: same adult slim athletic swordsman, small adult head (~15.2% visible hair-to-bottom-jaw / upright standing height), long legs, sharp mature face, silver spiky hair with one dark red forelock, black high collar long coat with deep red lining, two horizontal silver chest buckles, black fitted shirt/pants, silver-grey knee/shin armor and black boots, red bandages on BOTH forearms. No headband, no metal forearm armor. Match image2's SMALL adult head exactly; never enlarge head for readability. Face and real bottom jaw visible in every figure.
+Weapon/action design: same curved silver katana black/red grip in RIGHT hand only, normal forward grip, cutting edge down while walking, relaxed blade diagonally down-right. Left hand free. No sheath/second sword anywhere. Keep the complete blade within its own cell. Body, wrist, grip and weapon coordinated. Same hand holds weapon in all frames.
+Order row-major:
+1 neutral ruler fully upright (arms relaxed, feet under hips, SAME scale as others).
+2 ready breathing inhale, knees slightly soft, grounded.
+3 walk near/right leg forward heel-contact, far/left leg back toe-off.
+4 walk near/right leg supports below pelvis, far/left leg swings forward with knee bend (passing).
+5 walk near/right leg trailing toe-off, far/left leg reaching forward.
+6 walk far/left leg forward heel-contact, near/right leg back toe-off.
+7 walk far/left leg supports below pelvis, near/right leg swings forward with knee bend.
+8 walk far/left leg trailing toe-off, near/right leg reaching forward, reconnects to frame3.
+Six phases MUST include genuine right-left leg exchange, not six identical stances and not a mirrored whole character. Anatomical scale, head size and camera fixed. Coattails trail gently, no huge billowing. Crisp dark outline, restrained cel-shaded painted material gradients matching references. No watermark, typography, panel borders, UI.

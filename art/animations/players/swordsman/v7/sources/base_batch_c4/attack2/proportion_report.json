@@ -1,0 +1,236 @@
+{
+  "schema": "actor_proportions/1",
+  "passed": true,
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack2/body_config.json",
+  "audit": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack2/proportions.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "reference_visible_head_ratio": 0.15216004589375082,
+  "tolerance_fraction": 0.08,
+  "target_standing_height": 380,
+  "measured_unique_poses": 8,
+  "required_unique_poses": 8,
+  "missing_pose_annotations": [],
+  "unknown_pose_annotations": [],
+  "neutral_checks": [
+    {
+      "source": "body",
+      "neutral_height": 440,
+      "head_ratio_error": -0.014195880929604332,
+      "configured_height_error": 0.0
+    }
+  ],
+  "measurements": [
+    {
+      "source": "body",
+      "pose_id": "attack2_0",
+      "head_source_px": 66,
+      "head_landmarks": {
+        "hair_top": [
+          200,
+          23
+        ],
+        "chin": [
+          214,
+          89
+        ],
+        "projection": "upright_head"
+      },
+      "source_standing_height": 440,
+      "scale_basis_verified": true,
+      "head_output_px": 57.0,
+      "reference_head_output_px": 57.82081743962531,
+      "relative_error": -0.014195880929604332,
+      "landmark_only_error_interval": [
+        -0.0590051590691677,
+        0.030613397209959148
+      ],
+      "caveat": null
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_1",
+      "head_source_px": 66,
+      "head_landmarks": {
+        "hair_top": [
+          687,
+          86
+        ],
+        "chin": [
+          700,
+          152
+        ],
+        "projection": "upright_head"
+      },
+      "source_standing_height": 440,
+      "scale_basis_verified": true,
+      "head_output_px": 57.0,
+      "reference_head_output_px": 57.82081743962531,
+      "relative_error": -0.014195880929604332,
+      "landmark_only_error_interval": [
+        -0.0590051590691677,
+        0.030613397209959148
+      ],
+      "caveat": null
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_2",
+      "head_source_px": 67,
+      "head_landmarks": {
+        "hair_top": [
+          1110,
+          120
+        ],
+        "chin": [
+          1123,
+          187
+        ],
+        "projection": "upright_head"
+      },
+      "source_standing_height": 440,
+      "scale_basis_verified": true,
+      "head_output_px": 57.86363636363637,
+      "reference_head_output_px": 57.82081743962531,
+      "relative_error": 0.000740545116916902,
+      "landmark_only_error_interval": [
+        -0.04406873302264669,
+        0.04554982325648016
+      ],
+      "caveat": null
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_3",
+      "head_source_px": 68,
+      "head_landmarks": {
+        "hair_top": [
+          1483,
+          78
+        ],
+        "chin": [
+          1495,
+          146
+        ],
+        "projection": "upright_head"
+      },
+      "source_standing_height": 440,
+      "scale_basis_verified": true,
+      "head_output_px": 58.72727272727273,
+      "reference_head_output_px": 57.82081743962531,
+      "relative_error": 0.015676971163437914,
+      "landmark_only_error_interval": [
+        -0.029132306976125455,
+        0.060486249303001394
+      ],
+      "caveat": null
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_4",
+      "head_source_px": 67,
+      "head_landmarks": {
+        "hair_top": [
+          241,
+          533
+        ],
+        "chin": [
+          253,
+          600
+        ],
+        "projection": "upright_head"
+      },
+      "source_standing_height": 440,
+      "scale_basis_verified": true,
+      "head_output_px": 57.86363636363637,
+      "reference_head_output_px": 57.82081743962531,
+      "relative_error": 0.000740545116916902,
+      "landmark_only_error_interval": [
+        -0.04406873302264669,
+        0.04554982325648016
+      ],
+      "caveat": null
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_5",
+      "head_source_px": 66,
+      "head_landmarks": {
+        "hair_top": [
+          642,
+          535
+        ],
+        "chin": [
+          654,
+          601
+        ],
+        "projection": "upright_head"
+      },
+      "source_standing_height": 440,
+      "scale_basis_verified": true,
+      "head_output_px": 57.0,
+      "reference_head_output_px": 57.82081743962531,
+      "relative_error": -0.014195880929604332,
+      "landmark_only_error_interval": [
+        -0.0590051590691677,
+        0.030613397209959148
+      ],
+      "caveat": null
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_6",
+      "head_source_px": 66,
+      "head_landmarks": {
+        "hair_top": [
+          1069,
+          530
+        ],
+        "chin": [
+          1082,
+          596
+        ],
+        "projection": "upright_head"
+      },
+      "source_standing_height": 440,
+      "scale_basis_verified": true,
+      "head_output_px": 57.0,
+      "reference_head_output_px": 57.82081743962531,
+      "relative_error": -0.014195880929604332,
+      "landmark_only_error_interval": [
+        -0.0590051590691677,
+        0.030613397209959148
+      ],
+      "caveat": null
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_7",
+      "head_source_px": 66,
+      "head_landmarks": {
+        "hair_top": [
+          1489,
+          534
+        ],
+        "chin": [
+          1501,
+          600
+        ],
+        "projection": "upright_head"
+      },
+      "source_standing_height": 440,
+      "scale_basis_verified": true,
+      "head_output_px": 57.0,
+      "reference_head_output_px": 57.82081743962531,
+      "relative_error": -0.014195880929604332,
+      "landmark_only_error_interval": [
+        -0.0590051590691677,
+        0.030613397209959148
+      ],
+      "caveat": null
+    }
+  ],
+  "failures": [],
+  "artwork_approved": false,
+  "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+}

@@ -1,0 +1,4 @@
+Use case: precise-object-edit
+Image1 is the EDIT TARGET RUN weaponless sheet. Image2 is the corrected WALK body sheet with the approved small adult head size.
+Change ONLY the HEAD SIZE of ALL 8 figures. The run sheet heads are too large compared with the standing ruler and reference. Reduce each complete hair+face head by 12 percent, keep the bottom jaw/neck attachment sensible, and keep body/limbs/costume/poses/empty right fists absolutely unchanged. Neutral body's hair-to-sole is ~455px; its new complete visible head must be ~69px high, not79px. Every running pose's head at same anatomical size as neutral.
+Preserve exactly8 figures4x2, real alternating run poses/flight/brake, all transparent margins. Do not scale the whole figure, do not shorten legs, do not add any weapon or text. Transparent background.

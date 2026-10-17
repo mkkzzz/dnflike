@@ -1,0 +1,4 @@
+Use case: precise-object-edit
+Image1 is the edit target. Its BOTTOM ROW FOURTH prone death figure's head is now TOO SMALL.
+ENLARGE ONLY THAT ENTIRE HEAD (hair+face) by 33 percent relative to current Image1, keep exact lying angle and closed-eye face, reconnect neck naturally. Body stays same size and pose. Image2 is a crop of the neutral head from this SAME sheet at its ORIGINAL PIXEL SCALE; the death head must have the SAME anatomical head dimensions as Image2 after rotation, about72px from hair crown to TRUE FRONT bottom jaw. Do not use neck as jaw.
+Do not change any of the other seven heads or any body/arm/feet/hand/costume. Do not shrink the prone body. Keep genuine transparency, no weapon, no text/effects/shadows.

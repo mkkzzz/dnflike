@@ -1,0 +1,120 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c4/idle/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Manually selected true hair tips and bottom jaw; source crop/point overlay inspected. No lip/neck substitutions, +/-3 source pixels.",
+  "sources": {
+    "body": {
+      "sha256": "fe7cd6a2b70698f334e5ecd04d329bf7f1bbbfa5f3b3949d15cf85c3bb736308",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 17,
+        "standing_bottom_y": 613,
+        "sole": [
+          300,
+          613
+        ],
+        "crop_bbox": [
+          190,
+          5,
+          520,
+          630
+        ],
+        "head": {
+          "hair_top": [
+            382,
+            17
+          ],
+          "chin": [
+            396,
+            109
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "idle_0",
+      "head": {
+        "hair_top": [
+          382,
+          17
+        ],
+        "chin": [
+          396,
+          109
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "idle_1",
+      "head": {
+        "hair_top": [
+          953,
+          63
+        ],
+        "chin": [
+          968,
+          157
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "idle_2",
+      "head": {
+        "hair_top": [
+          387,
+          656
+        ],
+        "chin": [
+          401,
+          748
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "idle_3",
+      "head": {
+        "hair_top": [
+          954,
+          673
+        ],
+        "chin": [
+          969,
+          766
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ],
+  "landmark_semantics_reviewed": true,
+  "visual_review": {
+    "reviewer": "Codex source-pixel visual landmark review; not user art/runtime approval",
+    "annotation_signature": "a855987a923f10979147b1fe43d4a8e46d520ecc9029580ab6b4de06f762b924",
+    "files": [
+      {
+        "file": "marks_body.png",
+        "sha256": "57b0e2c75724898315e5f5643a3c10ffdc2033cf73ffa7a7211b05fd418f8b02"
+      },
+      {
+        "file": "heads_review.png",
+        "sha256": "d4c7fefa298ac1a08306dfa4f5a88677209d5caf6bc39227082fd55e0fb2a8b0"
+      }
+    ]
+  }
+}

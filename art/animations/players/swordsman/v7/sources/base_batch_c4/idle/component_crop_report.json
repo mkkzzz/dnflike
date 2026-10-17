@@ -1,0 +1,73 @@
+{
+  "method": "Explicit authored seeds, connected alpha core, preserve entire existing component plus transparent crop margin; no pose-grid inference or art repair.",
+  "poses": [
+    {
+      "source": "body",
+      "pose": "idle_1",
+      "component_bbox": [
+        735,
+        59,
+        1101,
+        615
+      ],
+      "crop_bbox": [
+        725,
+        49,
+        1111,
+        625
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "idle_2",
+      "component_bbox": [
+        184,
+        654,
+        558,
+        1226
+      ],
+      "crop_bbox": [
+        174,
+        644,
+        568,
+        1236
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "idle_3",
+      "component_bbox": [
+        739,
+        671,
+        1111,
+        1225
+      ],
+      "crop_bbox": [
+        729,
+        661,
+        1121,
+        1235
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "idle_0",
+      "component_bbox": [
+        225,
+        16,
+        491,
+        615
+      ],
+      "crop_bbox": [
+        215,
+        6,
+        501,
+        625
+      ],
+      "source_edge_clipped": false
+    }
+  ]
+}

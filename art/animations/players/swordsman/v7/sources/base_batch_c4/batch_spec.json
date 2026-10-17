@@ -1,0 +1,33 @@
+{
+  "revision": "v7_base_batch_c4",
+  "groups": [
+    "attack1",
+    "walk",
+    "run",
+    "idle",
+    "attack2",
+    "attack3",
+    "dashair",
+    "guard",
+    "jump",
+    "hit",
+    "death"
+  ],
+  "native_canvas": [
+    1024,
+    1080
+  ],
+  "root_anchor": [
+    448,
+    840
+  ],
+  "standing_height": 380,
+  "viewport": [
+    2560,
+    1440
+  ],
+  "1080p_scale": 0.75,
+  "scope": "All non-skill base action art candidates. Same body/fingers across three weapons. No game integration.",
+  "authorization": "2026-10-17 用户：注意刀口方向不能搞乱了，我看到现在的太刀刀口方向就会有相反的情况。暂时没有别的意见，看下能不能继续铺量完成剩余动作？授权继续不含技能的基础动作制作；不等于全套或实机验收。",
+  "artifact_review_default_playback": "slow3x available; same export layers/clock."
+}

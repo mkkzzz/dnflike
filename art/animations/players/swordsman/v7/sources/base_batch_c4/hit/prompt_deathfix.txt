@@ -1,0 +1,4 @@
+Use case: precise-object-edit
+Image1 is the edit target eight-pose weaponless HURT/DOWN sheet.
+Change ONLY the HEAD (entire hair+face) of the BOTTOM ROW FOURTH prone DEATH figure. Reduce this complete head by 14 percent, keep its current lying orientation and closed eyes, reconnect the neck naturally to the SAME body. Current head hair-to-true-front-jaw measured along its rotated axis is ~83px; it needs ~72px at this body's ~472px upright standing scale.
+Do NOT reduce the whole prone body or its limbs. Do not alter other seven figures or their heads. Preserve fists, black/red costume, armor, corpse's full silhouette and transparent margins. No weapon/text/effect/shadow.

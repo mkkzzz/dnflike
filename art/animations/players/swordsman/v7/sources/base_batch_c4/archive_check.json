@@ -1,0 +1,16 @@
+{
+  "schema": "swordsman_archive_check/1",
+  "date": "2026-10-17",
+  "unique_generated_outputs": 29,
+  "unique_reference_files": 25,
+  "checks": [
+    "archived output sha256",
+    "actual native dimensions",
+    "full prompt text (optional terminal LF)",
+    "actual reference sha256"
+  ],
+  "issues": [],
+  "passed": true,
+  "artwork_approved": false,
+  "integration_allowed": false
+}

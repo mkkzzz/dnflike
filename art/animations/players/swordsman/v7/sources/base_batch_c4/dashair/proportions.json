@@ -1,0 +1,184 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c4/dashair/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Manually selected true hair tips and bottom jaw; source crop/point overlay inspected. No lip/neck substitutions, +/-3 source pixels.",
+  "sources": {
+    "body": {
+      "sha256": "68d934158706830d09478bcd3ef46efd32e3a664c5cc58888f42d7cfe6996c5d",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 19,
+        "standing_bottom_y": 474,
+        "sole": [
+          138,
+          474
+        ],
+        "crop_bbox": [
+          65,
+          5,
+          320,
+          488
+        ],
+        "head": {
+          "hair_top": [
+            209,
+            19
+          ],
+          "chin": [
+            223,
+            89
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "dashair_0",
+      "head": {
+        "hair_top": [
+          209,
+          19
+        ],
+        "chin": [
+          223,
+          89
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "dashair_1",
+      "head": {
+        "hair_top": [
+          784,
+          130
+        ],
+        "chin": [
+          797,
+          202
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "dashair_2",
+      "head": {
+        "hair_top": [
+          1155,
+          121
+        ],
+        "chin": [
+          1163,
+          194
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "dashair_3",
+      "head": {
+        "hair_top": [
+          1518,
+          120
+        ],
+        "chin": [
+          1533,
+          191
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "dashair_4",
+      "head": {
+        "hair_top": [
+          288,
+          524
+        ],
+        "chin": [
+          300,
+          595
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "dashair_5",
+      "head": {
+        "hair_top": [
+          682,
+          539
+        ],
+        "chin": [
+          697,
+          610
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "dashair_6",
+      "head": {
+        "hair_top": [
+          1096,
+          537
+        ],
+        "chin": [
+          1111,
+          608
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "dashair_7",
+      "head": {
+        "hair_top": [
+          1515,
+          544
+        ],
+        "chin": [
+          1529,
+          614
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ],
+  "landmark_semantics_reviewed": true,
+  "visual_review": {
+    "reviewer": "Codex source-pixel visual landmark review; not user art/runtime approval",
+    "annotation_signature": "532a8e5238db90ba7e62bdbf66af9cdb75ce2f03eaddb6e7aaa22822b9265c52",
+    "files": [
+      {
+        "file": "marks_body.png",
+        "sha256": "d1fe14446ab7261ca4d839391ae222f890077b4bd39955463d73648f52cea13e"
+      },
+      {
+        "file": "heads_review.png",
+        "sha256": "cd036dcde50d648f8a2e409254a51c8de678980222d0e9a8a632a91d9039d04e"
+      }
+    ]
+  }
+}

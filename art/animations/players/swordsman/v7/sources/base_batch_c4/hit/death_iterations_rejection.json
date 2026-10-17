@@ -1,0 +1,6 @@
+{
+  "body_c2_death": "oversized true rotated head; source body other poses valid after independent audits",
+  "body_c3_death": "head shrink overshot; provisional mark[1206,838] fell off crown, numerical pass invalid and never exported",
+  "body_c4_death": "eyes changed open and head design drift; not selected",
+  "replacement": "../death/body_c1.png; three-figure neutral/kneel/death source for reliable same-source scale"
+}

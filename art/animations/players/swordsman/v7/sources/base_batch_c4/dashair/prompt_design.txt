@@ -1,0 +1,16 @@
+Use case: stylized-concept
+Asset type: production 2D handpainted game animation source sheet.
+Input images: Image1 is the locked swordsman identity, Image2 is the approved adult proportion/style pair, Image3 is the selected latest body artwork, Image4 is the NEW small-adult-head body sheet; use Image4's head scale, NOT a larger cartoon head.
+Draw EXACTLY 8 complete full-body figures in a strict 4 columns x 2 rows, landscape 2560x1440, actual transparent background. Neutral ruler is first, seven action poses follow row-major. All at ONE identical anatomical pixel scale, never normalize crouched/airborne bounding heights. Reserve 20px equivalent outer margin and clear gutters; all hair/boots/full sword tips inside each cell. Small mature head: visible highest hair tip to bottom jaw ~15.2% of upright standing height, long adult legs; each head same size as neutral. Keep real bottom jaw visible.
+Silver spiky hair and dark-red forelock, sharp adult face, black high collar long coat red lining, TWO horizontal silver chest buckles, black shirt/pants, silver-grey knee/shin armor, black boots, BOTH forearms red bandages. Same proportions, costume, camera and restrained painted cel shading/clear dark outline as references.
+SINGLE standard curved katana, right hand forward grip, black/red hilt; LEFT HAND FREE. No sheath or spare hilt, no left-handed weapon. Design wrist, blade and torso together. Full weapon must fit cell. No magical effects, trails, ground shadows, labels, panels, watermark or extra figures.
+Group RUNNING NORMAL ATTACK and AIR NORMAL ATTACK. Facing screen RIGHT; no skills. EXACT row-major:
+1 fully upright neutral ruler.
+2 DASH ATTACK windup: sprint forward low stance, right hand drawn back at hip, blade back-left, weight on pushing leg.
+3 DASH ATTACK contact: front foot plants, right fist drives forward chest height, katana tip screen-right slight down; cutting edge leads downward/forward.
+4 DASH ATTACK follow/recovery: torso rotates through, blade diagonal down-right, rear foot catches, body braking.
+5 AIR ATTACK windup: body fully airborne, knees bent, sword hand above/behind right shoulder, face+bottom jaw visible.
+6 AIR ATTACK release/contact: right arm drives down-forward, blade diagonal down-right, upright head, torso rotates and legs balance airborne.
+7 AIR ATTACK follow: right hand lower front, blade steep down-right, knees begin extending to landing, maintain head upright.
+8 AIR ATTACK recovery: compact airborne guarded pose, blade down-right outside body, prepared to connect to fall/landing.
+Single RIGHT hand grips katana. Left hand only balances and NEVER touches blade/handle. Entire blade visible when possible but preserve full-size body/anatomical scale and all hair/boots. Upright unobscured heads in every cell so hair/jaw size can be audited. Crisp coherent normal-attack effort, no FX.

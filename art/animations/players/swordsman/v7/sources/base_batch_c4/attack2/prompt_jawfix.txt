@@ -1,0 +1,4 @@
+Use case: precise-object-edit
+EDIT Image1 only. It is an eight-pose empty-handed sword animation sheet.
+CRITICAL SINGLE CHANGE: In the BOTTOM ROW FIRST AND SECOND figures, LOWER THE SWORD-HOLDING RIGHT ARM so the whole forearm and fist are clearly BELOW the character's CHIN, at CHEST HEIGHT, leaving a 20px clear vertical gap under the chin. The face and bottom jaw must be fully visible. Do NOT leave either forearm across the mouth/jaw. First affected fist should end horizontally in front at chest level, second affected fist slightly higher but still below chin. Rebuild the upper-arm/elbow transition naturally. This is a rising normal slash; sword will be added later.
+Keep all heads unchanged in position and size, all costumes, legs, left hands, other six figures and transparent background unchanged. No weapons, no text, no FX.

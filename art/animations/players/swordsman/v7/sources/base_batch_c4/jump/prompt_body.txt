@@ -1,0 +1,5 @@
+Use case: precise-object-edit
+Image1 is the edit target JUMP/BACKSTEP design sheet. Image2/3 are selected body references.
+Remove EVERY blade, entire handle, guard, sheath or spare hilt from all8 figures and naturally repair the closed right hand holding an EMPTY grip channel. Preserve each right wrist, arm and ALL body poses, including neutral ruler first, preparation, rise, apex, descent, landing and backward airborne/landing.
+Keep same SMALL ADULT HEAD scale: hair-to-true-bottom-jaw around68-70px for neutral standing450px at this actual-size sheet. Match Image3, not a larger cartoon head. All real jaws visible. No pose stretched to standing height. Preserve knees, boots, forearm bands, black/red coat, silver buckles and armor. All hair/boots inside canvas with15px transparent margin.
+Return actual transparent RGBA, same4x2 positions. No text/effects/shadows or weapons.

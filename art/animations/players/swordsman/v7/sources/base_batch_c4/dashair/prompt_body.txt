@@ -1,0 +1,4 @@
+Use case: precise-object-edit
+Image1 is the DASH/AIR normal-attack design sheet. Images2/3 are body proportion/style references.
+Remove every entire sword (blade, guard, whole handle), sheath and spare hilt from all8 figures. Restore a naturally curled right-hand fist around an EMPTY grip channel at each EXACT wrist position, left hand remains free.
+Keep the eight distinct dash/air phases and neutral ruler in the same4x2 layout. Match approved SMALL adult heads: reduce any visibly larger action head to the same anatomical size as neutral, around68-70px visible hair-to-jaw per450px standing figure. All faces and real bottom jaws must be entirely visible; place any crossing forearm below chin. Preserve black/red coat, silver buckles, both red bandages, leg armor, foot poses and scale. Transparent margin at least15px allouteredges, no cropped hair/boots. True transparent RGBA, no effects/text/shadows/weapons.

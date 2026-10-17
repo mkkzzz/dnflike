@@ -1,0 +1,161 @@
+[
+  {
+    "box": [
+      90,
+      5,
+      555,
+      945
+    ],
+    "root": [
+      334,
+      924
+    ],
+    "seed": [
+      340,
+      410
+    ],
+    "hair": [
+      354,
+      18
+    ],
+    "chin": [
+      371,
+      158
+    ],
+    "grip": [
+      197,
+      505
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        183,
+        492
+      ],
+      [
+        210,
+        492
+      ],
+      [
+        213,
+        505
+      ],
+      [
+        205,
+        515
+      ],
+      [
+        185,
+        513
+      ]
+    ]
+  },
+  {
+    "box": [
+      610,
+      320,
+      1240,
+      940
+    ],
+    "root": [
+      921,
+      915
+    ],
+    "seed": [
+      970,
+      600
+    ],
+    "hair": [
+      1053,
+      340
+    ],
+    "chin": [
+      1075,
+      480
+    ],
+    "grip": [
+      761,
+      620
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        747,
+        607
+      ],
+      [
+        774,
+        607
+      ],
+      [
+        777,
+        620
+      ],
+      [
+        769,
+        630
+      ],
+      [
+        749,
+        628
+      ]
+    ]
+  },
+  {
+    "box": [
+      95,
+      960,
+      1195,
+      1245
+    ],
+    "root": [
+      650,
+      1227
+    ],
+    "seed": [
+      700,
+      1100
+    ],
+    "hair": [
+      133,
+      1107
+    ],
+    "chin": [
+      255,
+      1039
+    ],
+    "grip": [
+      516,
+      1207
+    ],
+    "blade_angle_degrees": 3,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        502,
+        1194
+      ],
+      [
+        529,
+        1194
+      ],
+      [
+        532,
+        1207
+      ],
+      [
+        524,
+        1217
+      ],
+      [
+        504,
+        1215
+      ]
+    ]
+  }
+]

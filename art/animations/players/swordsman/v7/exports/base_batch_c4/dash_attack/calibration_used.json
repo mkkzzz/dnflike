@@ -1,0 +1,317 @@
+{
+  "revision": "v7_base_batch_c4_dash_attack",
+  "clip_name": "dash_attack",
+  "duration_ticks": 32,
+  "output_dir": "../../../exports/base_batch_c4/dash_attack",
+  "body_manifest": "../../../exports/base_batch_c4_body/dashair/manifest.json",
+  "body_config": "body_config.json",
+  "body_audit": "proportions.json",
+  "katana_blade_length_px": 256,
+  "edge_contract": "explicit_texture_edge_to_authored_cut_direction/1",
+  "projection_guide": {
+    "file": "weapon_guide.json",
+    "sha256": "14d4c6e88eb3c6724d38524613fe2e045ffd423ee34bcf2be0b6f5b2375451c4"
+  },
+  "weapons": {
+    "katana": {
+      "file": "../../../../../../../concepts/characters/players/swordsman/standard_v1/weapon/katana_drawn.png",
+      "sha256": "56a9b000da574895d2a7b0b22b946af01cdb676ceba50c84a3998050e75318ed",
+      "crop_bbox": [
+        0,
+        0,
+        1282,
+        153
+      ],
+      "component_seed": [
+        800,
+        75
+      ],
+      "grip": [
+        274.2,
+        71.4
+      ],
+      "guard": [
+        353.5,
+        75.5
+      ],
+      "tip": [
+        1275,
+        14
+      ],
+      "blade_length_multiplier": 1.0,
+      "cutting_edge": [
+        800,
+        96
+      ],
+      "spine": [
+        800,
+        62
+      ],
+      "edge_type": "single"
+    },
+    "greatsword": {
+      "file": "../../layer_trial_c3/attack1/weapons_c1.png",
+      "sha256": "438f8fffa3ac7ebc7d39556e15e5849ed0127caa81e9767905070456d8b44d24",
+      "crop_bbox": [
+        5,
+        150,
+        1765,
+        505
+      ],
+      "component_seed": [
+        900,
+        330
+      ],
+      "grip": [
+        367,
+        333
+      ],
+      "guard": [
+        451,
+        333
+      ],
+      "tip": [
+        1748,
+        333
+      ],
+      "blade_length_multiplier": 1.25,
+      "cutting_edge": [
+        1000,
+        375
+      ],
+      "spine": [
+        1000,
+        290
+      ],
+      "edge_type": "double_reference_lower_edge"
+    },
+    "shortsword": {
+      "file": "../../layer_trial_c3/attack1/weapons_c1.png",
+      "sha256": "438f8fffa3ac7ebc7d39556e15e5849ed0127caa81e9767905070456d8b44d24",
+      "crop_bbox": [
+        180,
+        520,
+        1250,
+        770
+      ],
+      "component_seed": [
+        850,
+        645
+      ],
+      "grip": [
+        500,
+        647
+      ],
+      "guard": [
+        557,
+        647
+      ],
+      "tip": [
+        1228,
+        647
+      ],
+      "blade_length_multiplier": 0.55,
+      "cutting_edge": [
+        850,
+        672
+      ],
+      "spine": [
+        850,
+        624
+      ],
+      "edge_type": "double_reference_lower_edge"
+    }
+  },
+  "poses": {
+    "dashair_1": {
+      "body_sha256": "5a87fd5a70faaebc3158a2d83c2a469ed248cc26cdd5020d312765b1d02c68dd",
+      "grip": [
+        559,
+        202
+      ],
+      "guard": [
+        534.8518543427733,
+        208.47047612756302
+      ],
+      "tip": [
+        283.71113950761554,
+        275.7634278542185
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          545,
+          189
+        ],
+        [
+          572,
+          189
+        ],
+        [
+          575,
+          202
+        ],
+        [
+          567,
+          212
+        ],
+        [
+          547,
+          210
+        ]
+      ],
+      "guide_pose_index": 1,
+      "cutting_direction": [
+        0.258819045102521,
+        0.9659258262890682
+      ],
+      "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+      "allow_edge_roll_from_previous": false,
+      "tip_basis": "authored_axis_after_removal_not_falsely_observed_tip"
+    },
+    "dashair_2": {
+      "body_sha256": "c8c2c96eba375edd7431cf37e87c55e0db523c65c06f5c4b8b9301e63dd9a5ce",
+      "grip": [
+        1225,
+        260
+      ],
+      "guard": [
+        1248.4923155196477,
+        268.55050358314173
+      ],
+      "tip": [
+        1492.812396923984,
+        357.4757408478156
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          1211,
+          247
+        ],
+        [
+          1238,
+          247
+        ],
+        [
+          1241,
+          260
+        ],
+        [
+          1233,
+          270
+        ],
+        [
+          1213,
+          268
+        ]
+      ],
+      "guide_pose_index": 2,
+      "cutting_direction": [
+        -0.3420201433256687,
+        0.9396926207859084
+      ],
+      "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+      "allow_edge_roll_from_previous": false,
+      "tip_basis": "authored_axis_after_removal_not_falsely_observed_tip"
+    },
+    "dashair_3": {
+      "body_sha256": "bae08d6dfd4d751804bc2b43c96cdcb52af2adb152d6cb04546badccc60b6f8e",
+      "grip": [
+        1575,
+        315
+      ],
+      "guard": [
+        1593.5786206369348,
+        331.72826515897145
+      ],
+      "tip": [
+        1786.7962752610574,
+        505.7022228122746
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          1561,
+          302
+        ],
+        [
+          1588,
+          302
+        ],
+        [
+          1591,
+          315
+        ],
+        [
+          1583,
+          325
+        ],
+        [
+          1563,
+          323
+        ]
+      ],
+      "guide_pose_index": 3,
+      "cutting_direction": [
+        -0.6691306063588582,
+        0.7431448254773942
+      ],
+      "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+      "allow_edge_roll_from_previous": false,
+      "tip_basis": "authored_axis_after_removal_not_falsely_observed_tip"
+    },
+    "dashair_0": {
+      "body_sha256": "2900842055e9d4834d1bce6cbbd1f5a91b05b9e72e2db1caa16f55c38a09f577",
+      "grip": [
+        124,
+        267
+      ],
+      "guard": [
+        146.07368982147318,
+        278.7367890696473
+      ],
+      "tip": [
+        375.6400639647942,
+        400.7993953939789
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          110,
+          254
+        ],
+        [
+          137,
+          254
+        ],
+        [
+          140,
+          267
+        ],
+        [
+          132,
+          277
+        ],
+        [
+          112,
+          275
+        ]
+      ],
+      "guide_pose_index": 0,
+      "cutting_direction": [
+        -0.4694715627858908,
+        0.882947592858927
+      ],
+      "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+      "allow_edge_roll_from_previous": false,
+      "tip_basis": "authored_axis_after_removal_not_falsely_observed_tip"
+    }
+  },
+  "limitations": [
+    "Batch art candidate under user-authorized direction; not final art or runtime approval.",
+    "Shared body/finger pixels and clocks across katana/greatsword/shortsword; right-hand forward grip.",
+    "Explicit source-calibrated weapon planes, not full 3D reconstruction or automatic depth solving.",
+    "No skills, FX, equipment UI, damage/reach or gameplay timing changes. Runtime adapter pending."
+  ]
+}

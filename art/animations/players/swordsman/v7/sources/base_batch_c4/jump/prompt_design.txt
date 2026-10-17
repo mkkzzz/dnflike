@@ -1,0 +1,16 @@
+Use case: stylized-concept
+Asset type: production 2D handpainted game animation source sheet.
+Input images: Image1 is the locked swordsman identity, Image2 is the approved adult proportion/style pair, Image3 is the selected latest body artwork, Image4 is the NEW small-adult-head body sheet; use Image4's head scale, NOT a larger cartoon head.
+Draw EXACTLY 8 complete full-body figures in a strict 4 columns x 2 rows, landscape 2560x1440, actual transparent background. Neutral ruler is first, seven action poses follow row-major. All at ONE identical anatomical pixel scale, never normalize crouched/airborne bounding heights. Reserve 20px equivalent outer margin and clear gutters; all hair/boots/full sword tips inside each cell. Small mature head: visible highest hair tip to bottom jaw ~15.2% of upright standing height, long adult legs; each head same size as neutral. Keep real bottom jaw visible.
+Silver spiky hair and dark-red forelock, sharp adult face, black high collar long coat red lining, TWO horizontal silver chest buckles, black shirt/pants, silver-grey knee/shin armor, black boots, BOTH forearms red bandages. Same proportions, costume, camera and restrained painted cel shading/clear dark outline as references.
+SINGLE standard curved katana, right hand forward grip, black/red hilt; LEFT HAND FREE. No sheath or spare hilt, no left-handed weapon. Design wrist, blade and torso together. Full weapon must fit cell. No magical effects, trails, ground shadows, labels, panels, watermark or extra figures.
+Group JUMP AND BACKSTEP. Screen RIGHT throughout; same upright HEAD orientation as neutral for accurate proportional comparison even when torso leans. Body crouches must visibly reduce pose height; never stretch torso to equal standing height. Row-major:
+1 fully upright neutral ruler.
+2 jump preparation deep knee bend, hips low, soles grounded, coattails gather.
+3 ascent: both boots leave ground, near knee bent forward, rear leg extended down, torso upright.
+4 apex: knees tucked moderately under hips, both feet airborne, upright visible face.
+5 descent: legs extend down to prepare landing, knees still soft, coat lifts slightly.
+6 landing compression: both feet grounded, deep knee flex, torso leans forward but head stays near upright, visible chin.
+7 backstep airborne: still faces right, body recoils/travels LEFT, both knees lifted, free left hand extends right for balance.
+8 backstep landing: faces right, rear/leftward foot planted, front knee flexed, weight catches and ready recovery.
+Right hand holds standard katana low and diagonal outside body; cutting edge oriented toward down, complete tip and handle contained. This is base jumping/backstep, no rising slash or skills, no FX. Anatomical figure scale equal across every pose, include clear gutters.

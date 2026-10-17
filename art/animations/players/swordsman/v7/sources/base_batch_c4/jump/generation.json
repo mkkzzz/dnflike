@@ -1,0 +1,86 @@
+{
+  "mode": "builtin",
+  "tool": "image_gen.imagegen",
+  "model": "not_exposed",
+  "seed": null,
+  "generations": [
+    {
+      "output": "design_c1.png",
+      "sha256": "e36de1597f785f3d74ed86b495e2349f083f4b8c95b98f3b68f37840ebc63831",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-ddb83f96-aad0-4214-920c-9554397f918d.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_design.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: production 2D handpainted game animation source sheet.\nInput images: Image1 is the locked swordsman identity, Image2 is the approved adult proportion/style pair, Image3 is the selected latest body artwork, Image4 is the NEW small-adult-head body sheet; use Image4's head scale, NOT a larger cartoon head.\nDraw EXACTLY 8 complete full-body figures in a strict 4 columns x 2 rows, landscape 2560x1440, actual transparent background. Neutral ruler is first, seven action poses follow row-major. All at ONE identical anatomical pixel scale, never normalize crouched/airborne bounding heights. Reserve 20px equivalent outer margin and clear gutters; all hair/boots/full sword tips inside each cell. Small mature head: visible highest hair tip to bottom jaw ~15.2% of upright standing height, long adult legs; each head same size as neutral. Keep real bottom jaw visible.\nSilver spiky hair and dark-red forelock, sharp adult face, black high collar long coat red lining, TWO horizontal silver chest buckles, black shirt/pants, silver-grey knee/shin armor, black boots, BOTH forearms red bandages. Same proportions, costume, camera and restrained painted cel shading/clear dark outline as references.\nSINGLE standard curved katana, right hand forward grip, black/red hilt; LEFT HAND FREE. No sheath or spare hilt, no left-handed weapon. Design wrist, blade and torso together. Full weapon must fit cell. No magical effects, trails, ground shadows, labels, panels, watermark or extra figures.\nGroup JUMP AND BACKSTEP. Screen RIGHT throughout; same upright HEAD orientation as neutral for accurate proportional comparison even when torso leans. Body crouches must visibly reduce pose height; never stretch torso to equal standing height. Row-major:\n1 fully upright neutral ruler.\n2 jump preparation deep knee bend, hips low, soles grounded, coattails gather.\n3 ascent: both boots leave ground, near knee bent forward, rear leg extended down, torso upright.\n4 apex: knees tucked moderately under hips, both feet airborne, upright visible face.\n5 descent: legs extend down to prepare landing, knees still soft, coat lifts slightly.\n6 landing compression: both feet grounded, deep knee flex, torso leans forward but head stays near upright, visible chin.\n7 backstep airborne: still faces right, body recoils/travels LEFT, both knees lifted, free left hand extends right for balance.\n8 backstep landing: faces right, rear/leftward foot planted, front knee flexed, weight catches and ready recovery.\nRight hand holds standard katana low and diagonal outside body; cutting edge oriented toward down, complete tip and handle contained. This is base jumping/backstep, no rising slash or skills, no FX. Anatomical figure scale equal across every pose, include clear gutters.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+          "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    },
+    {
+      "output": "body_c1.png",
+      "sha256": "849353e29ad2ad39a39565ea861cae6d18c49957f7b48fa14971f62211bd9353",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-da9567c1-58f6-435e-87b7-541f311ffbfd.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_body.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the edit target JUMP/BACKSTEP design sheet. Image2/3 are selected body references.\nRemove EVERY blade, entire handle, guard, sheath or spare hilt from all8 figures and naturally repair the closed right hand holding an EMPTY grip channel. Preserve each right wrist, arm and ALL body poses, including neutral ruler first, preparation, rise, apex, descent, landing and backward airborne/landing.\nKeep same SMALL ADULT HEAD scale: hair-to-true-bottom-jaw around68-70px for neutral standing450px at this actual-size sheet. Match Image3, not a larger cartoon head. All real jaws visible. No pose stretched to standing height. Preserve knees, boots, forearm bands, black/red coat, silver buckles and armor. All hair/boots inside canvas with15px transparent margin.\nReturn actual transparent RGBA, same4x2 positions. No text/effects/shadows or weapons.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/jump/design_c1.png",
+          "sha256": "e36de1597f785f3d74ed86b495e2349f083f4b8c95b98f3b68f37840ebc63831"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    },
+    {
+      "output": "body_c2.png",
+      "sha256": "b04f757d49b6c4d4f6256360a12342b3dbfe29c728e572cbca7b1a0936143e9f",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-162d68e4-19e7-43a9-baf9-23be84d0ab0c.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_finalfix.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the EDIT TARGET jump weaponless source sheet. Image2 is the corrected small-head walk reference.\nPrecise corrections:\nA. Reduce ALL eight complete heads (hair+face) by 12 percent relative to current Image1, naturally reconnect neck. Keep the body, legs, costume and overall figure scale unchanged. Same small adult head at every pose. Source neutral standing roughly450px requires visible hair-to-jaw about68px.\nB. EXPOSE THE FULL REAL BOTTOM JAW of every figure. Where a raised right forearm hides the lower face (especially crouched preparation/landing), move that forearm/hand ABOVE the head by at least30 source pixels, or below jaw far enough to show jaw cleanly. Do not leave the arm across face. Preserve a believable normal single-hand sword-grip motion, empty fist, left hand free.\nMaintain exactly8 figures4x2, the original action phases, mature face, silver/red hair, black/red coat, both red bandaged forearms, leg armor, complete boots and transparent outer margins. Do not add any weapon/effect/text/shadow. Actual transparent RGBA.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/jump/body_c1.png",
+          "sha256": "849353e29ad2ad39a39565ea861cae6d18c49957f7b48fa14971f62211bd9353"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    }
+  ]
+}

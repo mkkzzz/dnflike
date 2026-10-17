@@ -1,0 +1,5 @@
+Use case: precise-object-edit
+Image1 is the edit target attack2 normal attack design. Image2 is approved recent body style/proportions, Image3 is corrected small-head walk body.
+REMOVE every complete katana from every figure: all blade, guard AND entire handle; no sheath or spare weapon. Naturally repair the right hand into a closed sword-holding fist with empty gripping channel. Preserve every wrist/arm position unless it blocks the face.
+Mandatory: expose the TRUE BOTTOM JAW in ALL eight figures. In any raised-arm pose where chin is hidden, move that forearm slightly above/outside the face, while retaining the attack's coherent single-hand windup/release. Never invent a head landmark behind the arm.
+Keep all 8 poses in 4x2, upright neutral first, same6-phase-plus-ready attack flow, same small adult head and anatomical scale as references. Specifically highest hair-to-lowest jaw should stay around68 source pixels for neutral standing445px at actual delivered size; do not enlarge heads in crouched poses. Keep every boot/hair/fist complete and within15px outer margin. No background shadow/effects/text/weapon remains. True transparent RGBA.

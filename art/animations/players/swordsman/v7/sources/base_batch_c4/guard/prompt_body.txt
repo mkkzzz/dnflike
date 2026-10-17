@@ -1,0 +1,6 @@
+Use case: precise-object-edit
+Image1 is the guard action design EDIT TARGET. Image2 is the approved recent body style, Image3 is the corrected small-head walk source.
+Remove ALL weapons from every figure, including ALL blades, whole handles, guards, sheath/spare hilt. Repair each RIGHT hand into a natural curled empty single-handed gripping fist at the same wrist position. Left hand stays free; in get-up poses preserve left palm pressing floor.
+Keep exactly8 figures with original action poses and all body/costume details. Reduce all complete heads (hair+face) by 10 percent so adult hair-to-real-bottom-jaw is ~68px per450px straight neutral. Do NOT scale or shorten the body or legs. Keep each head's anatomical size consistent, no cartoon enlargement.
+In bottom-row FIRST deflection figure lower the right forearm below the jaw so the whole face and true bottom jaw remain visible. All other arms must also leave the face clear. Keep top-row fourth figure's boot complete and 15px away from canvas edge.
+No pose is stretched to standing height, no same-height normalization. All hair/boots/fists inside canvas15px transparent outer margin. Actual transparent RGBA background, no shadows/effects/text/weapons.

@@ -1,0 +1,82 @@
+{
+  "mode": "builtin",
+  "tool": "image_gen.imagegen",
+  "model": "not_exposed",
+  "seed": null,
+  "generations": [
+    {
+      "output": "design_c1.png",
+      "sha256": "171c6d531c0e34ae41735880a786372b4d5f2d3a12760d0f8acca1cde2876ed9",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-c589bef4-4841-4846-a4b5-5e65e504b3c6.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_design.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: production 2D handpainted game animation source sheet.\nInput images: Image1 is the locked swordsman identity, Image2 is the approved adult proportion/style pair, Image3 is the selected latest body artwork, Image4 is the NEW small-adult-head body sheet; use Image4's head scale, NOT a larger cartoon head.\nDraw EXACTLY 8 complete full-body figures in a strict 4 columns x 2 rows, landscape 2560x1440, actual transparent background. Neutral ruler is first, seven action poses follow row-major. All at ONE identical anatomical pixel scale, never normalize crouched/airborne bounding heights. Reserve 20px equivalent outer margin and clear gutters; all hair/boots/full sword tips inside each cell. Small mature head: visible highest hair tip to bottom jaw ~15.2% of upright standing height, long adult legs; each head same size as neutral. Keep real bottom jaw visible.\nSilver spiky hair and dark-red forelock, sharp adult face, black high collar long coat red lining, TWO horizontal silver chest buckles, black shirt/pants, silver-grey knee/shin armor, black boots, BOTH forearms red bandages. Same proportions, costume, camera and restrained painted cel shading/clear dark outline as references.\nSINGLE standard curved katana, right hand forward grip, black/red hilt; LEFT HAND FREE. No sheath or spare hilt, no left-handed weapon. Design wrist, blade and torso together. Full weapon must fit cell. No magical effects, trails, ground shadows, labels, panels, watermark or extra figures.\nGroup RUNNING NORMAL ATTACK and AIR NORMAL ATTACK. Facing screen RIGHT; no skills. EXACT row-major:\n1 fully upright neutral ruler.\n2 DASH ATTACK windup: sprint forward low stance, right hand drawn back at hip, blade back-left, weight on pushing leg.\n3 DASH ATTACK contact: front foot plants, right fist drives forward chest height, katana tip screen-right slight down; cutting edge leads downward/forward.\n4 DASH ATTACK follow/recovery: torso rotates through, blade diagonal down-right, rear foot catches, body braking.\n5 AIR ATTACK windup: body fully airborne, knees bent, sword hand above/behind right shoulder, face+bottom jaw visible.\n6 AIR ATTACK release/contact: right arm drives down-forward, blade diagonal down-right, upright head, torso rotates and legs balance airborne.\n7 AIR ATTACK follow: right hand lower front, blade steep down-right, knees begin extending to landing, maintain head upright.\n8 AIR ATTACK recovery: compact airborne guarded pose, blade down-right outside body, prepared to connect to fall/landing.\nSingle RIGHT hand grips katana. Left hand only balances and NEVER touches blade/handle. Entire blade visible when possible but preserve full-size body/anatomical scale and all hair/boots. Upright unobscured heads in every cell so hair/jaw size can be audited. Crisp coherent normal-attack effort, no FX.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+          "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    },
+    {
+      "output": "body_c1.png",
+      "sha256": "68d934158706830d09478bcd3ef46efd32e3a664c5cc58888f42d7cfe6996c5d",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-b589a70d-ae5d-4b7b-9e33-32917cab544a.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_body.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the DASH/AIR normal-attack design sheet. Images2/3 are body proportion/style references.\nRemove every entire sword (blade, guard, whole handle), sheath and spare hilt from all8 figures. Restore a naturally curled right-hand fist around an EMPTY grip channel at each EXACT wrist position, left hand remains free.\nKeep the eight distinct dash/air phases and neutral ruler in the same4x2 layout. Match approved SMALL adult heads: reduce any visibly larger action head to the same anatomical size as neutral, around68-70px visible hair-to-jaw per450px standing figure. All faces and real bottom jaws must be entirely visible; place any crossing forearm below chin. Preserve black/red coat, silver buckles, both red bandages, leg armor, foot poses and scale. Transparent margin at least15px allouteredges, no cropped hair/boots. True transparent RGBA, no effects/text/shadows/weapons.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/dashair/design_c1.png",
+          "sha256": "171c6d531c0e34ae41735880a786372b4d5f2d3a12760d0f8acca1cde2876ed9"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    },
+    {
+      "output": "body_c2.png",
+      "sha256": "4a5f0f39f9240ed056fcfa721c8904dbf61112358bbc10fabf3c119092f2af3e",
+      "actual_size": [
+        1671,
+        941
+      ],
+      "raw_basename": "exec-6f749c20-292d-4d82-873f-06007360c7fd.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_headfix.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the edit target eight-pose DASH/AIR weaponless sheet.\nChange ONLY the HEAD (hair+face) of the TOP ROW THIRD figure (the forward-punching dash CONTACT pose): reduce this complete head by 9 percent, reconnect neck naturally. Its current visible hair-to-true-jaw is about77px, but other action heads need about70px at this body scale.\nKeep all other seven figures, all limbs, hands, costume details, poses, canvas size and transparency unchanged. Do not resize any whole figure. Do not change any other head. No weapons/text/effects.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/dashair/body_c1.png",
+          "sha256": "68d934158706830d09478bcd3ef46efd32e3a664c5cc58888f42d7cfe6996c5d"
+        }
+      ]
+    }
+  ]
+}

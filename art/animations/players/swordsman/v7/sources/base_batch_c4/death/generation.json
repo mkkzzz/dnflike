@@ -1,0 +1,48 @@
+{
+  "mode": "builtin",
+  "tool": "image_gen.imagegen",
+  "model": "not_exposed",
+  "seed": null,
+  "generations": [
+    {
+      "output": "body_c1.png",
+      "sha256": "887e7d0dc8616439c03547693c341b16e96910fa1a34c5095dc7a282b3d83713",
+      "actual_size": [
+        1254,
+        1254
+      ],
+      "raw_basename": "exec-5358e09d-7dea-4804-91d3-a23308e4e9f5.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_body.txt",
+      "prompt": "Use case: identity-preserve\nAsset type: NEW TWO-STATE DEATH/REVIVE source sheet derived from existing swordsman design, with neutral ruler. Actual transparent background, requested2048x2048.\nImage1 is the approved adult proportions/style pair. Image2 is the existing body and right-hand grip design, especially fallen and getting-up body shapes.\nMake EXACTLY THREE full-body figures at ONE IDENTICAL anatomical pixel scale:\nTOP LEFT: upright neutral ruler, fully standing adult height about700px at delivered1254px canvas scale, arms relaxed, empty curled right-hand grip.\nTOP RIGHT: GET-UP KNEEL, same anatomical pixel scale, one knee on floor, one foot planted, free left palm pushes floor, right curled fist keeps its empty sword-grip, torso rising, face upright and fully visible.\nBOTTOM ACROSS FULL WIDTH: FULLY DEAD resting on back/side, head LEFT feet RIGHT, arms/legs relaxed, closed eyes and calm lifeless face, NO wounds/gore. Whole prone length must be consistent with the700px standing person, not shrunken. Right hand keeps an empty relaxed forward sword-grip away from head. Draw full head/boots without crop.\nCRITICAL HEAD SCALE: All THREE heads must be the SAME ANATOMICAL SIZE as each other and approved reference: highest hair-crown to TRUE FRONT bottom jaw ~15.2% of the upright standing height, about106px for700px standing ruler. For the lying head compare after rotating upright: SAME head dimension, neither tiny nor oversized. Neck is NOT the front chin. Preserve head shape when rotated. Dead eyes MUST be CLOSED. No exaggeration of baby-like round head.\nSame silver spiky hair red forelock, sharp adult face, long adult legs, black high collar red-lined long coat, TWO horizontal silver chest buckles, both red bandaged forearms, black pants, silver-grey knee/shin armor. No weapon/guard/handle/sheath, no text/labels/shadows/effects. All figures at least25px away from canvas edges.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/body_c2.png",
+          "sha256": "84b98ba478417480a10c17861825371183ff6fbc432d30a8331b772e4f3295ea"
+        }
+      ]
+    },
+    {
+      "output": "body_c2.png",
+      "sha256": "76bcb9f411c6f37bb791db281f2380ec512191430db44d129270129f52f9fa56",
+      "actual_size": [
+        1254,
+        1254
+      ],
+      "raw_basename": "exec-8e597280-dffe-42fb-9b3a-481713f27384.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_headfix.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the THREE-figure edit target. Single required change: the BOTTOM prone DEAD figure's complete hair+face HEAD is oversized relative to the upright neutral.\nReduce ONLY that entire bottom head by 10 percent, preserve its EXACT closed-eye face, spiky hairstyle, lying angle, silhouette shape and pose, and reconnect neck naturally. Current true hair-crown to FRONT chin measured after rotating upright is160px; target144px, close to the other two heads around140px. Keep eyes CLOSED.\nDo not alter neutral/kneeling heads, any body/hand/leg/coat/armor, canvas size or transparent margins. Do not shrink whole prone figure. No weapons/text/effects/shadows.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/death/body_c1.png",
+          "sha256": "887e7d0dc8616439c03547693c341b16e96910fa1a34c5095dc7a282b3d83713"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "selected": false,
+  "reason": "Original contact head is within tolerance after correcting the jaw x coordinate. A preliminary misplaced jaw caused an unnecessary head reduction request; do not replace valid c1 with this undersized head variant. Hair y132/jaw194 ~62px versus expected69px; outside8%.",
+  "selected_body": "body_c1.png"
+}

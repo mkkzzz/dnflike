@@ -1,0 +1,105 @@
+{
+  "schema": "swordsman_base_batch_coverage/1",
+  "checkpoint_only": true,
+  "complete": false,
+  "groups": {
+    "attack1": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "attack1"
+      ],
+      "landmark_review_pending": false
+    },
+    "walk": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "walk",
+        "walk_start",
+        "walk_stop"
+      ],
+      "landmark_review_pending": false
+    },
+    "run": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "run",
+        "run_start",
+        "run_stop"
+      ],
+      "landmark_review_pending": false
+    },
+    "idle": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "idle"
+      ],
+      "landmark_review_pending": false
+    },
+    "attack2": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "attack2"
+      ],
+      "landmark_review_pending": false
+    },
+    "attack3": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "attack3"
+      ],
+      "landmark_review_pending": false
+    },
+    "dashair": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "dash_attack",
+        "air_attack"
+      ],
+      "landmark_review_pending": false
+    },
+    "guard": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "guard_start",
+        "guard",
+        "guard_recoil",
+        "parry",
+        "guard_end",
+        "turn"
+      ],
+      "landmark_review_pending": false
+    },
+    "jump": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "jump_start",
+        "jump_rise",
+        "jump_apex",
+        "jump_fall",
+        "jump_land",
+        "jump",
+        "back_dash"
+      ],
+      "landmark_review_pending": false
+    },
+    "hit": {
+      "body_manifest_exists": false,
+      "exported_clips": [],
+      "landmark_review_pending": true
+    },
+    "death": {
+      "body_manifest_exists": false,
+      "exported_clips": [],
+      "landmark_review_pending": true
+    }
+  },
+  "pending": [
+    "hit/down/getup source landmark and proportion review",
+    "death/revive source landmark and proportion review",
+    "full clip blade direction and wrist roll continuity visual review",
+    "runtime state/reuse mapping, turn facing switch, jump height override",
+    "aggregate bare/body/weapon playback, V6 and 0.75-scale comparison",
+    "orphan export cleanup and full rebuild verification",
+    "user review and game integration"
+  ]
+}

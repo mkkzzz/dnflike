@@ -1,0 +1,5 @@
+Use case: precise-object-edit
+Image1 is the weaponless HURT/DOWN edit target. Image2 is the upright adult face/body reference.
+Change ONLY the HEADS of TOP ROW THIRD and TOP ROW FOURTH figures (heavy recoil and airborne hit).
+Their current heads tilt back/look upward and cannot be compared with upright head proportions. Repaint both heads UPRIGHT and looking HORIZONTALLY SCREEN RIGHT. Crown directly above jaw as in Image2; true bottom jaw and neck fully visible. Keep the recoil torso/shoulders and neck attachment natural. Preserve head's actual anatomical scale: complete hair-to-bottom-jaw ~72 source pixels at this sheet's ~474px standing-neutral scale. Do not make an undersized or enlarged head.
+Keep other six figures absolutely unchanged, especially the prone/down and death figures, keep all body/hand/feet positions, costume details and transparent margins. No weapons, no text/effects/shadows.

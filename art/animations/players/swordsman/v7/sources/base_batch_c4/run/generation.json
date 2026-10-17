@@ -1,0 +1,104 @@
+{
+  "mode": "builtin",
+  "tool": "image_gen.imagegen",
+  "model": "not_exposed",
+  "seed": null,
+  "generations": [
+    {
+      "output": "design_c1.png",
+      "sha256": "cca3663bafc1a23de7a2cb0c8c11c793b7c2a14581dd266d6f52bd3b4509a9b0",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-8b8235e1-86ef-427e-a194-7050044406d4.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_design.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: production 2D handpainted game animation source sheet.\nInput images: Image1 is the locked swordsman identity, Image2 is the approved adult proportion/style pair, Image3 is the selected latest body artwork, Image4 is the NEW small-adult-head body sheet; use Image4's head scale, NOT a larger cartoon head.\nDraw EXACTLY 8 complete full-body figures in a strict 4 columns x 2 rows, landscape 2560x1440, actual transparent background. Neutral ruler is first, seven action poses follow row-major. All at ONE identical anatomical pixel scale, never normalize crouched/airborne bounding heights. Reserve 20px equivalent outer margin and clear gutters; all hair/boots/full sword tips inside each cell. Small mature head: visible highest hair tip to bottom jaw ~15.2% of upright standing height, long adult legs; each head same size as neutral. Keep real bottom jaw visible.\nSilver spiky hair and dark-red forelock, sharp adult face, black high collar long coat red lining, TWO horizontal silver chest buckles, black shirt/pants, silver-grey knee/shin armor, black boots, BOTH forearms red bandages. Same proportions, costume, camera and restrained painted cel shading/clear dark outline as references.\nSINGLE standard curved katana, right hand forward grip, black/red hilt; LEFT HAND FREE. No sheath or spare hilt, no left-handed weapon. Design wrist, blade and torso together. Full weapon must fit cell. No magical effects, trails, ground shadows, labels, panels, watermark or extra figures.\nGroup RUN. Every figure faces screen RIGHT, game side-three-quarter camera.\nRow-major: 1 fully upright neutral ruler. 2 run near/right foot forward contact with bent landing knee, far leg trails. 3 run near/right leg pushes under pelvis, far knee advances. 4 first flight phase near/right leg trails, far/left leg forward. 5 opposite contact far/left foot forward, near leg trails. 6 far leg pushes under pelvis, near/right knee advances. 7 second flight phase far leg trails, near/right leg forward. 8 braking settle, forward foot plants, torso leans slightly back, weight catches.\nMUST show both genuine alternating leg contacts, two flight phases and loop return, not one half-cycle repeated. Keep weapon-bearing right hand near right hip with the long blade trailing diagonally backward screen LEFT (tip behind, cutting edge down); blade NEVER intersects legs and stays in its cell. The other arm balances naturally. Torso leans 15degrees while head remains upright for scale comparison. Cloth trails left with momentum. Standing-neutral torso/legs calibrate anatomical scale; do not enlarge running heads.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+          "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    },
+    {
+      "output": "body_c1.png",
+      "sha256": "983a85d27dffbd955aadfacd20e5d47c4adcbdd59a2d9c590b9be4d500b7353d",
+      "actual_size": [
+        1671,
+        941
+      ],
+      "raw_basename": "exec-b7b2304b-bb0a-4eb8-bdc0-5fee0e44e880.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_body.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the edit target RUN sheet. Image2 is the approved recent body reference, Image3 is the corrected WALK body reference.\nRemove ALL weapons from all eight figures, including EVERY blade, guard, whole handle, sheath or spare hilt. Preserve right wrist and forearm at exactly the design position; repair a natural closed fist with a small empty gripping channel. Preserve the other balancing hand.\nKeep all eight poses, identity, painted detail, camera, costume and SMALL adult head scale. SAME anatomical scale across sheet, neutral straight standing ruler remains first. Maintain actual opposite near/far leg exchange between the first 3 run poses and the last 3; retain two flight poses. Do not mirror the whole person. Correct any hair or boot cropping by slight cell repositioning; at least15px transparent outer margin. On upright neutral aim visible head height 68px for standing445px; all heads same anatomical size, no extra enlargement. All bottom jaws visible.\nReturn an actual transparent RGBA 4x2 sheet at same layout. No text/effects/shadows/weapons.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/run/design_c1.png",
+          "sha256": "cca3663bafc1a23de7a2cb0c8c11c793b7c2a14581dd266d6f52bd3b4509a9b0"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    },
+    {
+      "output": "body_c2.png",
+      "sha256": "3ca8062a48f80accf8c848752504710b596bb861c5ed15dad13f0b3fe9f3cc36",
+      "actual_size": [
+        1670,
+        941
+      ],
+      "raw_basename": "exec-b566a54f-b873-4954-8de9-912fdbc55fa9.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_headfix.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the EDIT TARGET RUN weaponless sheet. Image2 is the corrected WALK body sheet with the approved small adult head size.\nChange ONLY the HEAD SIZE of ALL 8 figures. The run sheet heads are too large compared with the standing ruler and reference. Reduce each complete hair+face head by 12 percent, keep the bottom jaw/neck attachment sensible, and keep body/limbs/costume/poses/empty right fists absolutely unchanged. Neutral body's hair-to-sole is ~455px; its new complete visible head must be ~69px high, not79px. Every running pose's head at same anatomical size as neutral.\nPreserve exactly8 figures4x2, real alternating run poses/flight/brake, all transparent margins. Do not scale the whole figure, do not shorten legs, do not add any weapon or text. Transparent background.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/run/body_c1.png",
+          "sha256": "983a85d27dffbd955aadfacd20e5d47c4adcbdd59a2d9c590b9be4d500b7353d"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    },
+    {
+      "output": "body_c3.png",
+      "sha256": "c5b04e76ead9ca91103784a48dd0a12fd042f269b92133db6c613a8df2270153",
+      "actual_size": [
+        1670,
+        941
+      ],
+      "raw_basename": "exec-d73ae0ef-32ab-47f5-a30d-40839078be96.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_marginfix.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the RUN weaponless EDIT TARGET. Only one correction: the TOP ROW FOURTH (rightmost airborne run figure) has its extended front boot clipped against the right canvas edge.\nReconstruct that COMPLETE boot toe in the same style, and move that ENTIRE top-right figure 35 pixels LEFT inside its cell, so at least20 transparent pixels remain between its boot and canvas edge. Preserve its anatomical scale and head size; do not shrink the figure.\nKeep every other one of the seven figures, all costume/body/hand details, existing small adult head proportions and4x2 layout unchanged. No added weapons/text/effects/shadows. Keep true transparency.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/run/body_c2.png",
+          "sha256": "3ca8062a48f80accf8c848752504710b596bb861c5ed15dad13f0b3fe9f3cc36"
+        }
+      ]
+    }
+  ]
+}

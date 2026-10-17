@@ -1,0 +1,177 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Manually selected true hair tips and bottom jaw; source crop/point overlay inspected. No lip/neck substitutions, +/-3 source pixels.",
+  "sources": {
+    "body": {
+      "sha256": "21331f83ab43543abb0a1c383e22f25ebeed56666ddb808e144afda4cbe14670",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 63,
+        "standing_bottom_y": 534,
+        "sole": [
+          145,
+          534
+        ],
+        "crop_bbox": [
+          70,
+          45,
+          315,
+          548
+        ],
+        "head": {
+          "hair_top": [
+            211,
+            63
+          ],
+          "chin": [
+            225,
+            134
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "hit_0",
+      "head": {
+        "hair_top": [
+          211,
+          63
+        ],
+        "chin": [
+          225,
+          134
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "hit_1",
+      "head": {
+        "hair_top": [
+          571,
+          100
+        ],
+        "chin": [
+          590,
+          168
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "hit_2",
+      "head": {
+        "hair_top": [
+          974,
+          116
+        ],
+        "chin": [
+          987,
+          187
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "hit_3",
+      "head": {
+        "hair_top": [
+          1368,
+          76
+        ],
+        "chin": [
+          1383,
+          147
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "hit_4",
+      "head": {
+        "hair_top": [
+          87,
+          695
+        ],
+        "chin": [
+          126,
+          755
+        ],
+        "projection": "reviewed_in_plane_roll"
+      },
+      "uncertainty_px": 3,
+      "projection_profile": {
+        "file": "hit_4_projection.json",
+        "sha256": "a4539cca43a9450d562f8b51874cbaa0efcf78f472cffeb9a8bb07d1c8be581b"
+      }
+    },
+    {
+      "source": "body",
+      "pose_id": "hit_5",
+      "head": {
+        "hair_top": [
+          727,
+          620
+        ],
+        "chin": [
+          740,
+          691
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "hit_6",
+      "head": {
+        "hair_top": [
+          1102,
+          577
+        ],
+        "chin": [
+          1113,
+          647
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ],
+  "landmark_semantics_reviewed": false,
+  "checkpoint_review": {
+    "date": "2026-10-17",
+    "pending": true,
+    "reason": "Last export failed head_landmark_not_visible:hit_4. Reinspect true hair crown/front jaw and in-plane roll evidence; no output package accepted."
+  },
+  "provisional_visual_review": {
+    "reviewer": "Codex source-pixel visual landmark review; not user art/runtime approval",
+    "annotation_signature": "e98ee09f861e22d331499d949d06190e68fbc9c79ca005f0ffaf22b211485d60",
+    "files": [
+      {
+        "file": "marks_body.png",
+        "sha256": "bdca19becf28b854caacd5cc712f3676963fcc2277656017079d639580b15965"
+      },
+      {
+        "file": "heads_review.png",
+        "sha256": "07750260723fae6bf5a2499193445e5d956c0d968cd9aed158ac6a823af9afb9"
+      }
+    ]
+  }
+}

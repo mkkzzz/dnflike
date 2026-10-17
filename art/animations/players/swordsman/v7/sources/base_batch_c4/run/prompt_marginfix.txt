@@ -1,0 +1,4 @@
+Use case: precise-object-edit
+Image1 is the RUN weaponless EDIT TARGET. Only one correction: the TOP ROW FOURTH (rightmost airborne run figure) has its extended front boot clipped against the right canvas edge.
+Reconstruct that COMPLETE boot toe in the same style, and move that ENTIRE top-right figure 35 pixels LEFT inside its cell, so at least20 transparent pixels remain between its boot and canvas edge. Preserve its anatomical scale and head size; do not shrink the figure.
+Keep every other one of the seven figures, all costume/body/hand details, existing small adult head proportions and4x2 layout unchanged. No added weapons/text/effects/shadows. Keep true transparency.

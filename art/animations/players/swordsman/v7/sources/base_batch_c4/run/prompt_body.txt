@@ -1,0 +1,5 @@
+Use case: precise-object-edit
+Image1 is the edit target RUN sheet. Image2 is the approved recent body reference, Image3 is the corrected WALK body reference.
+Remove ALL weapons from all eight figures, including EVERY blade, guard, whole handle, sheath or spare hilt. Preserve right wrist and forearm at exactly the design position; repair a natural closed fist with a small empty gripping channel. Preserve the other balancing hand.
+Keep all eight poses, identity, painted detail, camera, costume and SMALL adult head scale. SAME anatomical scale across sheet, neutral straight standing ruler remains first. Maintain actual opposite near/far leg exchange between the first 3 run poses and the last 3; retain two flight poses. Do not mirror the whole person. Correct any hair or boot cropping by slight cell repositioning; at least15px transparent outer margin. On upright neutral aim visible head height 68px for standing445px; all heads same anatomical size, no extra enlargement. All bottom jaws visible.
+Return an actual transparent RGBA 4x2 sheet at same layout. No text/effects/shadows/weapons.

@@ -49,7 +49,8 @@ def select_weapon(path, spec):
     mask=flood.point(lambda a:255 if a==128 else 0)
     # Select existing pixels only; never paint steel, hilt or replacement hands.
     image=Image.composite(image,Image.new('RGBA',image.size),mask)
-    marks={name:[spec[name][0]-x0,spec[name][1]-y0] for name in ['grip','guard','tip']}
+    names=['grip','guard','tip']+[n for n in ['cutting_edge','spine'] if n in spec]
+    marks={name:[spec[name][0]-x0,spec[name][1]-y0] for name in names}
     for name,(x,y) in marks.items():
         if image.getchannel('A').crop((max(0,round(x)-3),max(0,round(y)-3),min(image.width,round(x)+4),min(image.height,round(y)+4))).getextrema()[1]<128:
             raise ValueError('Invisible canonical weapon landmark: '+name)
@@ -92,6 +93,34 @@ def placement_matrix(marks,target_angle,blade_length,basis=None):
     matrix=(scale*(u[0]*sx-v[0]*sy),scale*(u[0]*sy+v[0]*sx),
             scale*(u[1]*sx-v[1]*sy),scale*(u[1]*sy+v[1]*sx))
     return matrix,scale
+
+
+def cutting_edge_basis(basis, marks, cutting_direction):
+    """Bind the real texture's cutting side to an explicitly authored direction.
+
+    A projected blade_edge axis alone has no texture-side semantics. In the
+    first trial that missing binding reversed the katana in several poses.
+    Only reflect the transverse axis; preserve the tip direction/foreshortening.
+    The old trial remains reproducible when no edge contract is requested.
+    """
+    if 'cutting_edge' not in marks or 'spine' not in marks:
+        raise ValueError('Weapon needs explicit cutting_edge and spine landmarks')
+    dx=marks['tip'][0]-marks['guard'][0];dy=marks['tip'][1]-marks['guard'][1]
+    ex=marks['cutting_edge'][0]-marks['spine'][0];ey=marks['cutting_edge'][1]-marks['spine'][1]
+    side=dx*ey-dy*ex
+    if abs(side)<1e-6:raise ValueError('Cutting edge and spine do not define a texture side')
+    u,v=[list(axis) for axis in basis]
+    nx,ny=cutting_direction
+    if math.hypot(nx,ny)<1e-6:raise ValueError('Missing authored cutting direction')
+    # The texture normal is (-dy,dx); source cutting side may be either sign.
+    sign=1 if side>0 else -1
+    alignment=(v[0]*nx+v[1]*ny)*sign/math.hypot(nx,ny)/math.hypot(*v)
+    if abs(alignment)<.2:raise ValueError('Cutting direction is ambiguous relative to blade edge')
+    reflected=alignment<0
+    if reflected:v=[-n for n in v]
+    return (u,v),{'texture_cutting_side':sign,'transverse_axis_reflected':reflected,
+                  'authored_cutting_direction':list(cutting_direction),
+                  'cutting_alignment':abs(alignment)}
 
 
 def weapon_image(image, marks, size, hand, target_angle, blade_length,basis=None):
@@ -138,9 +167,10 @@ def bake(config_path):
     if sha(guide_path)!=config['projection_guide']['sha256']:
         raise ValueError('Projection guide hash changed')
     guide=read(guide_path)
-    clip=body_manifest['clips']['attack1'];anchor=clip['anchor'];size=tuple(clip['size'])
-    if clip['duration_ticks']!=30 or set(config['poses'])!={f['source_pose'] for f in clip['frames']}:
-        raise ValueError('Trial requires the complete measured 30-tick attack1 pose mapping')
+    clip_name=config.get('clip_name','attack1')
+    clip=body_manifest['clips'][clip_name];anchor=clip['anchor'];size=tuple(clip['size'])
+    if clip['duration_ticks']!=config.get('duration_ticks',30) or set(config['poses'])!={f['source_pose'] for f in clip['frames']}:
+        raise ValueError('Trial requires the complete measured clip pose mapping and clock')
     images={};weapons={};prepared=[]
     for name,spec in config['weapons'].items():
         source=(base/spec['file']).resolve()
@@ -177,15 +207,24 @@ def bake(config_path):
              'physical_katana_blade_length':length,'trial_projected_katana_blade_length':length*math.hypot(*basis[0]),
              'projected_blade_axis':basis[0],'projected_edge_axis':basis[1],'guide_pose_index':author['guide_pose_index'],
              'weapon_layer':author['weapon_layer'],'profiles':{}}
+        row['height_px']=frame.get('height_px',0)
+        row['root_dx']=frame.get('root_dx',0)
+        row['edge_intent']=author.get('edge_intent','legacy unspecified')
+        row['allow_edge_roll_from_previous']=author.get('allow_edge_roll_from_previous',False)
         for name,(weapon,marks,spec) in weapons.items():
-            rendered,sampling=weapon_image(weapon,marks,size,hand,angle,length*spec['blade_length_multiplier'],basis)
+            weapon_basis=basis;edge_review=None
+            if config.get('edge_contract'):
+                if 'cutting_direction' not in author:
+                    raise ValueError('Every pose needs an authored cutting direction')
+                weapon_basis,edge_review=cutting_edge_basis(basis,marks,author['cutting_direction'])
+            rendered,sampling=weapon_image(weapon,marks,size,hand,angle,length*spec['blade_length_multiplier'],weapon_basis)
             back=rendered if author['weapon_layer']=='back' else Image.new('RGBA',size)
             front=rendered if author['weapon_layer']=='front' else Image.new('RGBA',size)
             combined=Image.alpha_composite(Image.alpha_composite(Image.alpha_composite(back,body),front),fingers)
             if not edge_clear(combined):raise ValueError('Composite reaches canvas edge')
             prefix=f'{name}/f{index:03d}'
             images[prefix+'_back.png']=back;images[prefix+'_front.png']=front;images[prefix+'_composite.png']=combined
-            matrix,_=placement_matrix(marks,angle,length*spec['blade_length_multiplier'],basis)
+            matrix,_=placement_matrix(marks,angle,length*spec['blade_length_multiplier'],weapon_basis)
             ma,mb,mc,md=matrix
             def placed(mark):
                 u,v=mark[0]-marks['grip'][0],mark[1]-marks['grip'][1]
@@ -195,19 +234,30 @@ def bake(config_path):
                                    'blade_length_px':length*spec['blade_length_multiplier']*math.hypot(*basis[0]),
                                    'physical_blade_length_px':length*spec['blade_length_multiplier'],
                                    'source_to_canvas_matrix':list(matrix)}
+            if edge_review:
+                row['profiles'][name]['cutting_edge']=placed(marks['cutting_edge'])
+                row['profiles'][name]['spine']=placed(marks['spine'])
+                row['profiles'][name]['edge_review']=edge_review
         prepared.append(row)
     return output,config,body_manifest,report,prepared,images
 
 
 def previews(output,frames,images,anchor):
     # Real export pixels only. Cropping panel space never rescales the actors.
-    bounds=[images[p['composite']].getchannel('A').getbbox() for f in frames for p in f['profiles'].values()]
+    def displayed(frame,profile):
+        raw=images[profile['composite']]
+        if not frame.get('height_px') and not frame.get('root_dx'):return raw
+        result=Image.new('RGBA',raw.size)
+        result.alpha_composite(raw,(round(frame.get('root_dx',0)),-round(frame.get('height_px',0))))
+        if not edge_clear(result):raise ValueError('Preview root/height translation clips the canvas')
+        return result
+    bounds=[displayed(f,p).getchannel('A').getbbox() for f in frames for p in f['profiles'].values()]
     left=min(b[0] for b in bounds)-20;right=max(b[2] for b in bounds)+20
     top=min(b[1] for b in bounds)-55;bottom=max(b[3] for b in bounds)+25
     size=(right-left,bottom-top);font=ImageFont.truetype('C:/Windows/Fonts/msyh.ttc',20)
     labels={'katana':'太刀','greatsword':'巨剑','shortsword':'短剑'}
     def panel(f,name,mirror=False):
-        sprite=images[f['profiles'][name]['composite']]
+        sprite=displayed(f,f['profiles'][name])
         # Mirror all assembled layers around the same canvas axis, including hand.
         cut=sprite.crop((left,top,right,bottom))
         if mirror:cut=ImageOps.mirror(cut)
@@ -232,7 +282,7 @@ def previews(output,frames,images,anchor):
         playback[0].save(folder/(stem+'.png'))
         for slow,suffix in [(1,''),(3,'_slow3x')]:
             playback[0].save(folder/(stem+suffix+'.gif'),save_all=True,append_images=playback[1:],duration=[x*slow for x in durations],loop=0,disposal=2,optimize=False)
-        outputs.append({'file':'previews/'+stem+'.gif','action_ticks':30,'review_end_hold_ticks':18,'fps':60,'time_quantization':'cumulative 10ms GIF rounding; slow3x has triple durations'})
+        outputs.append({'file':'previews/'+stem+'.gif','action_ticks':sum(f['duration_ticks'] for f in frames),'review_end_hold_ticks':18,'fps':60,'time_quantization':'cumulative 10ms GIF rounding; slow3x has triple durations'})
     return outputs
 
 
@@ -247,17 +297,19 @@ def main():
     output.mkdir(parents=True,exist_ok=True)
     for name,image in images.items():
         path=output/name;path.parent.mkdir(parents=True,exist_ok=True);image.save(path)
+    clip=body['clips'][config.get('clip_name','attack1')]
     manifest={'schema':'swordsman_layer_trial/1','revision':config['revision'],'status':'review_candidate',
-              'fps':60,'duration_ticks':30,'canvas':body['clips']['attack1']['size'],'anchor':body['clips']['attack1']['anchor'],
+              'fps':60,'duration_ticks':clip['duration_ticks'],'canvas':clip['size'],'anchor':clip['anchor'],
               'target_standing_height':380,'actor_includes_weapon':False,'body_and_fingers_shared_across_profiles':True,
-              'semantic_id':'actor.player.base.combo.1','alpha_mode':'straight','blend':'normal','hitstop_baked':False,
+              'root_mode':clip.get('root_mode','ground'),'height_application':'separate_height translates complete assembled layers once; virtual_ground is already baked',
+              'semantic_id':clip['asset_id'],'alpha_mode':'straight','blend':'normal','hitstop_baked':False,
               'layer_order':['weapon_back','body','weapon_front','fingers'],
               'proportion_gate':report,'artwork_approved':False,'integration_allowed':False,
               'declarations':{'G1':'head_scale_numerically_passed_identity_pending','G2':'pending_user_review','G3':'layer_trial_pending_art_review','G4':'pending_user_review'},
               'config_sha256':sha(args.config),'frames':frames,
               'limitations':config['limitations']}
     manifest['weapons']={name:{'file':'weapons/'+name+'.png',
-        **{key:[spec[key][0]-spec['crop_bbox'][0],spec[key][1]-spec['crop_bbox'][1]] for key in ['grip','guard','tip']},
+        **{key:[spec[key][0]-spec['crop_bbox'][0],spec[key][1]-spec['crop_bbox'][1]] for key in ['grip','guard','tip','cutting_edge','spine'] if key in spec},
         'blade_length_multiplier':spec['blade_length_multiplier'],'source_sha256':spec['sha256']}
         for name,spec in config['weapons'].items()}
     manifest['previews']=previews(output,frames,images,manifest['anchor'])

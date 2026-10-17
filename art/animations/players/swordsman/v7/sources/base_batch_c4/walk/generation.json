@@ -1,0 +1,60 @@
+{
+  "mode": "builtin",
+  "tool": "image_gen.imagegen",
+  "model": "not_exposed",
+  "seed": null,
+  "generations": [
+    {
+      "output": "design_c1.png",
+      "sha256": "cc1bb8c6a1c2584005958d540e29d9bd117477a1013cfff9b07ba86ff5f336a2",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-04f3f991-1622-435a-a64d-829872d0bed3.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_design.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: production 2D handpainted game animation source sheet, swordsman locomotion.\nInput images: Image 1 is the locked identity standard; Image 2 is the approved adult proportion/style pair; Image 3 is the approved recent attack body artwork. Preserve the same character and rendering style.\nPrimary request: Draw EXACTLY 8 full-body figures, a strict 4 columns x 2 rows sheet, 2560x1440, genuinely transparent background. Every figure is at IDENTICAL anatomical pixel scale. Top-left is the mandatory tall fully upright neutral ruler. The other 7 figures are ONE quiet ready breathing pose and SIX phases of a COMPLETE WALK cycle facing SCREEN RIGHT. Leave generous transparent gutters and fully contain all hair, boots and sword tips. No ground shadow, no labels, no effects.\nCharacter: same adult slim athletic swordsman, small adult head (~15.2% visible hair-to-bottom-jaw / upright standing height), long legs, sharp mature face, silver spiky hair with one dark red forelock, black high collar long coat with deep red lining, two horizontal silver chest buckles, black fitted shirt/pants, silver-grey knee/shin armor and black boots, red bandages on BOTH forearms. No headband, no metal forearm armor. Match image2's SMALL adult head exactly; never enlarge head for readability. Face and real bottom jaw visible in every figure.\nWeapon/action design: same curved silver katana black/red grip in RIGHT hand only, normal forward grip, cutting edge down while walking, relaxed blade diagonally down-right. Left hand free. No sheath/second sword anywhere. Keep the complete blade within its own cell. Body, wrist, grip and weapon coordinated. Same hand holds weapon in all frames.\nOrder row-major:\n1 neutral ruler fully upright (arms relaxed, feet under hips, SAME scale as others).\n2 ready breathing inhale, knees slightly soft, grounded.\n3 walk near/right leg forward heel-contact, far/left leg back toe-off.\n4 walk near/right leg supports below pelvis, far/left leg swings forward with knee bend (passing).\n5 walk near/right leg trailing toe-off, far/left leg reaching forward.\n6 walk far/left leg forward heel-contact, near/right leg back toe-off.\n7 walk far/left leg supports below pelvis, near/right leg swings forward with knee bend.\n8 walk far/left leg trailing toe-off, near/right leg reaching forward, reconnects to frame3.\nSix phases MUST include genuine right-left leg exchange, not six identical stances and not a mirrored whole character. Anatomical scale, head size and camera fixed. Coattails trail gently, no huge billowing. Crisp dark outline, restrained cel-shaded painted material gradients matching references. No watermark, typography, panel borders, UI.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+          "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        }
+      ]
+    },
+    {
+      "output": "body_c1.png",
+      "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-3b2edc0d-007d-45de-8a52-e15c0df6a442.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_body.txt",
+      "prompt": "Use case: precise-object-edit\nAsset type: layered game animation body source.\nImage 1 is the EDIT TARGET walk sheet. Image 2 is the approved SMALL ADULT HEAD and body proportion reference. Image 3 is the selected approved recent body artwork.\nEdit Image 1, keep exactly the same 8 figures in 4 columns x 2 rows, same six walk phases, same costume and style.\nREQUIRED CHANGES ONLY:\n1. REMOVE every entire weapon from EVERY figure: blade, guard and ALL handle. No katana, sheath or spare hilt remains. Repair the now-empty right fist into a convincing curled single-hand sword grip with a small empty gripping channel. Preserve exact wrist/arm placement. Left hand stays free.\n2. Correct head scale to the approved adult proportions. On each figure REDUCE the whole visible hair+face head by about 15 percent, retain face identity and spiky silhouette, reconnect neck naturally. Body, shoulders and legs retain their size. The first neutral's hair-to-bottom-jaw should be about 68-70 source pixels for its ~450 pixel standing body height in this delivered-size sheet. Other heads are exactly same anatomical size; no cartoon heads.\n3. Ensure ALL figures have at least 15 pixels of transparent margin at canvas edges, especially the top-left hair and lower-row boots. Reposition figures slightly inside their cells when needed; do not clip anything or resize individual poses to equal bounding heights.\nFace bottom jaw must remain visible. Preserve genuine near/far leg swaps, the six ordered phases and small walking posture bob. Straight-alpha transparent background, no ground shadow, no text, no effect, no weapons, no extra figures.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/design_c1.png",
+          "sha256": "cc1bb8c6a1c2584005958d540e29d9bd117477a1013cfff9b07ba86ff5f336a2"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        }
+      ]
+    }
+  ]
+}

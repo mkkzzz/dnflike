@@ -1,0 +1,6 @@
+{
+  "reason": "Visible head scale drift; neutral true hair tip around y17, bottom jaw y96, sole475. 79/458 exceeds locked standard by approx13.4%. Not allowed to export or normalize body to hide drift.",
+  "status": "rejected",
+  "sha256": "983a85d27dffbd955aadfacd20e5d47c4adcbdd59a2d9c590b9be4d500b7353d",
+  "next": "real image edit head-only revision body_c2"
+}

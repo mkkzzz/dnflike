@@ -1,0 +1,64 @@
+{
+  "mode": "builtin",
+  "tool": "image_gen.imagegen",
+  "model": "not_exposed",
+  "seed": null,
+  "generations": [
+    {
+      "output": "design_c1.png",
+      "sha256": "a46327a32f4308e872a32159abebe4863bc1f04a1a3f0b44402f9f14b5eac523",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-6f0bf199-5099-4e97-82b1-5318d4ffbfc1.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_design.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: production 2D handpainted game animation source sheet.\nInput images: Image1 is the locked swordsman identity, Image2 is the approved adult proportion/style pair, Image3 is the selected latest body artwork, Image4 is the NEW small-adult-head body sheet; use Image4's head scale, NOT a larger cartoon head.\nDraw EXACTLY 8 complete full-body figures in a strict 4 columns x 2 rows, landscape 2560x1440, actual transparent background. Neutral ruler is first, seven action poses follow row-major. All at ONE identical anatomical pixel scale, never normalize crouched/airborne bounding heights. Reserve 20px equivalent outer margin and clear gutters; all hair/boots/full sword tips inside each cell. Small mature head: visible highest hair tip to bottom jaw ~15.2% of upright standing height, long adult legs; each head same size as neutral. Keep real bottom jaw visible.\nSilver spiky hair and dark-red forelock, sharp adult face, black high collar long coat red lining, TWO horizontal silver chest buckles, black shirt/pants, silver-grey knee/shin armor, black boots, BOTH forearms red bandages. Same proportions, costume, camera and restrained painted cel shading/clear dark outline as references.\nSINGLE standard curved katana, right hand forward grip, black/red hilt; LEFT HAND FREE. No sheath or spare hilt, no left-handed weapon. Design wrist, blade and torso together. Full weapon must fit cell. No magical effects, trails, ground shadows, labels, panels, watermark or extra figures.\nGroup GUARD, PERFECT GUARD, TURN and IDLE. Screen RIGHT unless specified frame8, where only body turns to front-three-quarter during transition; don't flip identity.\n1 upright neutral ruler.\n2 guard start: knees bend, right hand lifts sword from hip toward chest.\n3 guard hold: strong planted stance, right fist in front chest, sword steeply UP-RIGHT shielding upper body, sharp edge outward screen-right, left hand free behind.\n4 block recoil: front knee absorbs impact, torso leans back slightly, right elbow flexes but guard line held. No FX.\n5 perfect guard success: short confident forward deflection, right wrist pushes diagonally up-right, body steps into it, left hand free.\n6 guard release/recover: right hand lowers sword toward hip, returns weight center.\n7 idle breathing EXHALE: SAME low-ready stance as Image4 top row second figure, arms and legs unchanged, chest drops subtly and coattails settle, head exactly same size.\n8 turning anticipation/plant: character still looks screen-right, pelvis/shoulders open to front-three-quarter, one heel lifts and weight pivots, right hand carries katana low-right. This is the real intermediate pose for a facing change.\nNo double-handed guarding, no shield, no magical effects. Every face and true bottom jaw unobscured; place arms below jaw or above hair, never across face.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+          "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    },
+    {
+      "output": "body_c1.png",
+      "sha256": "3b7c875969b167d72b25c23fc04baac099eed4cd57a37a0a567e9eb63ef45cdb",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-ef380279-8472-46a2-a1f3-39bd21d943b4.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_body.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the guard action design EDIT TARGET. Image2 is the approved recent body style, Image3 is the corrected small-head walk source.\nRemove ALL weapons from every figure, including ALL blades, whole handles, guards, sheath/spare hilt. Repair each RIGHT hand into a natural curled empty single-handed gripping fist at the same wrist position. Left hand stays free; in get-up poses preserve left palm pressing floor.\nKeep exactly8 figures with original action poses and all body/costume details. Reduce all complete heads (hair+face) by 10 percent so adult hair-to-real-bottom-jaw is ~68px per450px straight neutral. Do NOT scale or shorten the body or legs. Keep each head's anatomical size consistent, no cartoon enlargement.\nIn bottom-row FIRST deflection figure lower the right forearm below the jaw so the whole face and true bottom jaw remain visible. All other arms must also leave the face clear. Keep top-row fourth figure's boot complete and 15px away from canvas edge.\nNo pose is stretched to standing height, no same-height normalization. All hair/boots/fists inside canvas15px transparent outer margin. Actual transparent RGBA background, no shadows/effects/text/weapons.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/guard/design_c1.png",
+          "sha256": "a46327a32f4308e872a32159abebe4863bc1f04a1a3f0b44402f9f14b5eac523"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    }
+  ]
+}

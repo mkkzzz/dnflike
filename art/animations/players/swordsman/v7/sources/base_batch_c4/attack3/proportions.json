@@ -1,0 +1,184 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack3/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Manually selected true hair tips and bottom jaw; source crop/point overlay inspected. No lip/neck substitutions, +/-3 source pixels.",
+  "sources": {
+    "body": {
+      "sha256": "65aa6cf9752df098b51a5f3687019379308f50bcea676a4340930157b7952214",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 49,
+        "standing_bottom_y": 498,
+        "sole": [
+          99,
+          498
+        ],
+        "crop_bbox": [
+          45,
+          35,
+          295,
+          510
+        ],
+        "head": {
+          "hair_top": [
+            185,
+            49
+          ],
+          "chin": [
+            198,
+            113
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "attack3_0",
+      "head": {
+        "hair_top": [
+          185,
+          49
+        ],
+        "chin": [
+          198,
+          113
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack3_1",
+      "head": {
+        "hair_top": [
+          609,
+          127
+        ],
+        "chin": [
+          621,
+          191
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack3_2",
+      "head": {
+        "hair_top": [
+          1000,
+          127
+        ],
+        "chin": [
+          1011,
+          191
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack3_3",
+      "head": {
+        "hair_top": [
+          1486,
+          125
+        ],
+        "chin": [
+          1493,
+          188
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack3_4",
+      "head": {
+        "hair_top": [
+          258,
+          553
+        ],
+        "chin": [
+          271,
+          617
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack3_5",
+      "head": {
+        "hair_top": [
+          672,
+          606
+        ],
+        "chin": [
+          685,
+          671
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack3_6",
+      "head": {
+        "hair_top": [
+          1075,
+          535
+        ],
+        "chin": [
+          1087,
+          599
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack3_7",
+      "head": {
+        "hair_top": [
+          1462,
+          556
+        ],
+        "chin": [
+          1476,
+          620
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ],
+  "landmark_semantics_reviewed": true,
+  "visual_review": {
+    "reviewer": "Codex source-pixel visual landmark review; not user art/runtime approval",
+    "annotation_signature": "6fb1798e784823ad8d4c1e31f1b6144ec6bd08c27a9863575732c8d877bae1ba",
+    "files": [
+      {
+        "file": "marks_body.png",
+        "sha256": "f26540d0b83587c17be65675fc776c1450b25315722c7e6cea6b0fa9da5df380"
+      },
+      {
+        "file": "heads_review.png",
+        "sha256": "a59bdb68fd05553cb485d02d984739a8ab77f160dfaa08b1d905404199db58a8"
+      }
+    ]
+  }
+}

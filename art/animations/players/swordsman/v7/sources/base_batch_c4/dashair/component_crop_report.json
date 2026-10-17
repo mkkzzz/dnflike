@@ -1,0 +1,141 @@
+{
+  "method": "Explicit authored seeds, connected alpha core, preserve entire existing component plus transparent crop margin; no pose-grid inference or art repair.",
+  "poses": [
+    {
+      "source": "body",
+      "pose": "dashair_1",
+      "component_bbox": [
+        450,
+        129,
+        886,
+        473
+      ],
+      "crop_bbox": [
+        440,
+        119,
+        896,
+        483
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "dashair_2",
+      "component_bbox": [
+        854,
+        119,
+        1272,
+        472
+      ],
+      "crop_bbox": [
+        844,
+        109,
+        1282,
+        482
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "dashair_3",
+      "component_bbox": [
+        1323,
+        118,
+        1647,
+        473
+      ],
+      "crop_bbox": [
+        1313,
+        108,
+        1657,
+        483
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "dashair_0",
+      "component_bbox": [
+        84,
+        17,
+        301,
+        477
+      ],
+      "crop_bbox": [
+        74,
+        7,
+        311,
+        487
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "dashair_4",
+      "component_bbox": [
+        23,
+        496,
+        407,
+        913
+      ],
+      "crop_bbox": [
+        13,
+        486,
+        417,
+        923
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "dashair_5",
+      "component_bbox": [
+        432,
+        534,
+        837,
+        895
+      ],
+      "crop_bbox": [
+        422,
+        524,
+        847,
+        905
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "dashair_6",
+      "component_bbox": [
+        853,
+        533,
+        1179,
+        913
+      ],
+      "crop_bbox": [
+        843,
+        523,
+        1189,
+        923
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "dashair_7",
+      "component_bbox": [
+        1267,
+        540,
+        1627,
+        827
+      ],
+      "crop_bbox": [
+        1257,
+        530,
+        1637,
+        837
+      ],
+      "source_edge_clipped": false
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "standard_actions_pilot/1",
+  "source_of_preview": "exported manifest.json and RGBA PNGs only",
+  "nonloop_combination": "hold last frame after end, preview only",
+  "weapon_layering": {
+    "weapon_layering": "not_attempted",
+    "G3": "layered_pending_final_review",
+    "actor_includes_weapon": false,
+    "G1": "source_bound_manual_landmarks",
+    "G2": "batch_candidate_user_direction_accepted",
+    "G4": "pending_final_batch_review"
+  },
+  "previews": [
+    {
+      "file": "jump_start_naked.gif",
+      "intended_duration_ticks": 8,
+      "intended_duration_ms": 133.33333333333334,
+      "gif_duration_ms": 130,
+      "total_error_ms": -3.333333333333343,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": false
+    },
+    {
+      "file": "jump_rise_naked.gif",
+      "intended_duration_ticks": 8,
+      "intended_duration_ms": 133.33333333333334,
+      "gif_duration_ms": 130,
+      "total_error_ms": -3.333333333333343,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": true
+    },
+    {
+      "file": "jump_apex_naked.gif",
+      "intended_duration_ticks": 6,
+      "intended_duration_ms": 100.0,
+      "gif_duration_ms": 100,
+      "total_error_ms": 0.0,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": true
+    },
+    {
+      "file": "jump_fall_naked.gif",
+      "intended_duration_ticks": 9,
+      "intended_duration_ms": 150.0,
+      "gif_duration_ms": 150,
+      "total_error_ms": 0.0,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": true
+    },
+    {
+      "file": "jump_land_naked.gif",
+      "intended_duration_ticks": 13,
+      "intended_duration_ms": 216.66666666666666,
+      "gif_duration_ms": 220,
+      "total_error_ms": 3.333333333333343,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": false
+    },
+    {
+      "file": "jump_naked.gif",
+      "intended_duration_ticks": 38,
+      "intended_duration_ms": 633.3333333333334,
+      "gif_duration_ms": 630,
+      "total_error_ms": -3.3333333333333712,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": false
+    },
+    {
+      "file": "back_dash_naked.gif",
+      "intended_duration_ticks": 24,
+      "intended_duration_ms": 400.0,
+      "gif_duration_ms": 400,
+      "total_error_ms": 0.0,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": false
+    },
+    {
+      "file": "neutral_naked.gif",
+      "intended_duration_ticks": 1,
+      "intended_duration_ms": 16.666666666666668,
+      "gif_duration_ms": 20,
+      "total_error_ms": 3.333333333333332,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": false
+    },
+    {
+      "file": "actions_naked.gif",
+      "intended_duration_ticks": 38,
+      "intended_duration_ms": 633.3333333333334,
+      "gif_duration_ms": 630,
+      "total_error_ms": -3.3333333333333712,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": true
+    }
+  ],
+  "overview_included": [
+    "jump_start",
+    "jump_rise",
+    "jump_apex",
+    "jump_fall",
+    "jump_land",
+    "jump",
+    "back_dash"
+  ],
+  "overview_excluded": [
+    "neutral"
+  ],
+  "component_isolation": {
+    "pose_count": 17,
+    "mask_directory": "masks/",
+    "visual_review": "pending"
+  },
+  "exported_pose_count": 17,
+  "unique_source_pose_count": 8,
+  "automated_check": "passed: explicit crops, alpha bounds, canvas bounds, positive integer ticks; visual review pending"
+}

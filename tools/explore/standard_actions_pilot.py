@@ -450,7 +450,7 @@ def main():
                 "blend": "normal", "alpha_mode": "straight", "clock": "action", "root_mode": mode,
                 "loop": spec["loop"], "include_in_overview": spec.get("include_in_overview", True),
                 "duration_ticks": 0, "frames": []}
-        seen = set()
+        seen = {}
         for index, pose in enumerate(spec["poses"]):
             pose = dict(pose)
             if (pose['source'], pose['id']) in protected_heads:
@@ -458,9 +458,13 @@ def main():
                 pose['landmarks'] = {**pose.get('landmarks', {}),
                                      'proportion_hair_top': head['hair_top'], 'proportion_chin': head['chin']}
             safe_name(pose["id"])
-            if pose["id"] in seen:
-                raise ValueError(f"{name}: duplicate source-pose id {pose['id']}")
-            seen.add(pose["id"])
+            # Replaying the SAME authored pose (A-B-A-C breathing, return to
+            # ready) is explicit reuse, not a new drawing. A reused identity
+            # must retain identical source/crop/root/landmarks and isolation.
+            signature={key:value for key,value in pose.items() if key!='duration_ticks'}
+            if pose["id"] in seen and seen[pose['id']]!=signature:
+                raise ValueError(f"{name}: conflicting reused source-pose id {pose['id']}")
+            seen[pose['id']]=signature
             duration = positive_int(pose["duration_ticks"], "duration_ticks")
             image, record = export_pose(pose, sources[pose["source"]], size, anchor, target_height, mode,
                                         mask_files=mask_files)
@@ -503,6 +507,7 @@ def main():
     report["component_isolation"] = {"pose_count": len(mask_files),
                                      "mask_directory": "masks/", "visual_review": "pending"}
     report["exported_pose_count"] = len(prepared)
+    report["unique_source_pose_count"] = len({(p['source'],p['id']) for c in config['clips'].values() for p in c['poses']})
     report["automated_check"] = "passed: explicit crops, alpha bounds, canvas bounds, positive integer ticks; visual review pending"
     write_json(output / "preview_report.json", report)
     print(f"Exported {len(prepared)} poses across {len(candidates)} clips: {output / 'manifest.json'}")

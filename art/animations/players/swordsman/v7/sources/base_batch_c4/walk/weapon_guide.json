@@ -1,0 +1,130 @@
+{
+  "schema": "authored_weapon_plane/1",
+  "camera": {
+    "yaw": 0,
+    "pitch": 0
+  },
+  "method": "Source-calibrated screen blade angle, explicit cutting side and authored depth proxy. Not a recovered 3D body rig.",
+  "frames": [
+    {
+      "pose_cm": {
+        "blade_dir": [
+          0.882947592858927,
+          -0.4694715627858908,
+          0.0
+        ],
+        "blade_edge": [
+          -0.4694715627858908,
+          -0.882947592858927,
+          0
+        ]
+      },
+      "intent": "relaxed ready edge down; no axial blade flip"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          0.882947592858927,
+          -0.4694715627858908,
+          0.0
+        ],
+        "blade_edge": [
+          -0.4694715627858908,
+          -0.882947592858927,
+          0
+        ]
+      },
+      "intent": "relaxed ready edge down; no axial blade flip"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          0.882947592858927,
+          -0.4694715627858908,
+          0.0
+        ],
+        "blade_edge": [
+          -0.4694715627858908,
+          -0.882947592858927,
+          0
+        ]
+      },
+      "intent": "relaxed ready edge down; no axial blade flip"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          0.882947592858927,
+          -0.4694715627858908,
+          0.0
+        ],
+        "blade_edge": [
+          -0.4694715627858908,
+          -0.882947592858927,
+          0
+        ]
+      },
+      "intent": "relaxed ready edge down; no axial blade flip"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          0.882947592858927,
+          -0.4694715627858908,
+          0.0
+        ],
+        "blade_edge": [
+          -0.4694715627858908,
+          -0.882947592858927,
+          0
+        ]
+      },
+      "intent": "relaxed ready edge down; no axial blade flip"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          0.882947592858927,
+          -0.4694715627858908,
+          0.0
+        ],
+        "blade_edge": [
+          -0.4694715627858908,
+          -0.882947592858927,
+          0
+        ]
+      },
+      "intent": "relaxed ready edge down; no axial blade flip"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          0.882947592858927,
+          -0.4694715627858908,
+          0.0
+        ],
+        "blade_edge": [
+          -0.4694715627858908,
+          -0.882947592858927,
+          0
+        ]
+      },
+      "intent": "relaxed ready edge down; no axial blade flip"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          0.882947592858927,
+          -0.4694715627858908,
+          0.0
+        ],
+        "blade_edge": [
+          -0.4694715627858908,
+          -0.882947592858927,
+          0
+        ]
+      },
+      "intent": "relaxed ready edge down; no axial blade flip"
+    }
+  ]
+}

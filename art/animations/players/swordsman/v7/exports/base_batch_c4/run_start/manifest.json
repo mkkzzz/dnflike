@@ -1,0 +1,933 @@
+{
+  "schema": "swordsman_layer_trial/1",
+  "revision": "v7_base_batch_c4_run_start",
+  "status": "review_candidate",
+  "fps": 60,
+  "duration_ticks": 9,
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448.0,
+    840.0
+  ],
+  "target_standing_height": 380,
+  "actor_includes_weapon": false,
+  "body_and_fingers_shared_across_profiles": true,
+  "root_mode": "separate_height",
+  "height_application": "separate_height translates complete assembled layers once; virtual_ground is already baked",
+  "semantic_id": "actor.player.base.run_start",
+  "alpha_mode": "straight",
+  "blend": "normal",
+  "hitstop_baked": false,
+  "layer_order": [
+    "weapon_back",
+    "body",
+    "weapon_front",
+    "fingers"
+  ],
+  "proportion_gate": {
+    "schema": "actor_proportions/1",
+    "passed": true,
+    "config": "art/animations/players/swordsman/v7/sources/base_batch_c4/run/body_config.json",
+    "audit": "art/animations/players/swordsman/v7/sources/base_batch_c4/run/proportions.json",
+    "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+    "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+    "reference_visible_head_ratio": 0.15216004589375082,
+    "tolerance_fraction": 0.08,
+    "target_standing_height": 380,
+    "measured_unique_poses": 8,
+    "required_unique_poses": 8,
+    "missing_pose_annotations": [],
+    "unknown_pose_annotations": [],
+    "neutral_checks": [
+      {
+        "source": "body",
+        "neutral_height": 441,
+        "head_ratio_error": -0.03133382101926363,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "patch",
+        "neutral_height": 443,
+        "head_ratio_error": 0.008798797543820847,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "brake",
+        "neutral_height": 468,
+        "head_ratio_error": 0.06725232264031433,
+        "configured_height_error": 0.0
+      }
+    ],
+    "measurements": [
+      {
+        "source": "body",
+        "pose_id": "run_0",
+        "head_source_px": 65,
+        "head_landmarks": {
+          "hair_top": [
+            210,
+            34
+          ],
+          "chin": [
+            225,
+            99
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 441,
+        "scale_basis_verified": true,
+        "head_output_px": 56.00907029478458,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.03133382101926363,
+        "landmark_only_error_interval": [
+          -0.07604149081837441,
+          0.013373848779847375
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "run_1",
+        "head_source_px": 67,
+        "head_landmarks": {
+          "hair_top": [
+            684,
+            70
+          ],
+          "chin": [
+            695,
+            137
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 441,
+        "scale_basis_verified": true,
+        "head_output_px": 57.73242630385487,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.0015287078198561455,
+        "landmark_only_error_interval": [
+          -0.04623637761896715,
+          0.04317896197925464
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "run_2",
+        "head_source_px": 67,
+        "head_landmarks": {
+          "hair_top": [
+            1114,
+            82
+          ],
+          "chin": [
+            1125,
+            149
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 441,
+        "scale_basis_verified": true,
+        "head_output_px": 57.73242630385487,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.0015287078198561455,
+        "landmark_only_error_interval": [
+          -0.04623637761896715,
+          0.04317896197925464
+        ],
+        "caveat": null
+      },
+      {
+        "source": "patch",
+        "pose_id": "run_3",
+        "head_source_px": 66,
+        "head_landmarks": {
+          "hair_top": [
+            1478,
+            82
+          ],
+          "chin": [
+            1494,
+            148
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 443,
+        "scale_basis_verified": true,
+        "head_output_px": 56.613995485327315,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.02087175532511487,
+        "landmark_only_error_interval": [
+          -0.06537758462851884,
+          0.02363407397828876
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "run_4",
+        "head_source_px": 66,
+        "head_landmarks": {
+          "hair_top": [
+            318,
+            517
+          ],
+          "chin": [
+            331,
+            583
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 441,
+        "scale_basis_verified": true,
+        "head_output_px": 56.87074829931973,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.016431264419559888,
+        "landmark_only_error_interval": [
+          -0.06113893421867089,
+          0.028276405379551006
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "run_5",
+        "head_source_px": 66,
+        "head_landmarks": {
+          "hair_top": [
+            744,
+            518
+          ],
+          "chin": [
+            756,
+            584
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 441,
+        "scale_basis_verified": true,
+        "head_output_px": 56.87074829931973,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.016431264419559888,
+        "landmark_only_error_interval": [
+          -0.06113893421867089,
+          0.028276405379551006
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "run_6",
+        "head_source_px": 65,
+        "head_landmarks": {
+          "hair_top": [
+            1157,
+            520
+          ],
+          "chin": [
+            1153,
+            585
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 441,
+        "scale_basis_verified": true,
+        "head_output_px": 56.00907029478458,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.03133382101926363,
+        "landmark_only_error_interval": [
+          -0.07604149081837441,
+          0.013373848779847375
+        ],
+        "caveat": null
+      },
+      {
+        "source": "brake",
+        "pose_id": "run_7",
+        "head_source_px": 69,
+        "head_landmarks": {
+          "hair_top": [
+            1540,
+            499
+          ],
+          "chin": [
+            1556,
+            568
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 468,
+        "scale_basis_verified": true,
+        "head_output_px": 56.02564102564103,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.031047233392346163,
+        "landmark_only_error_interval": [
+          -0.07317561454920063,
+          0.011081147764508525
+        ],
+        "caveat": null
+      }
+    ],
+    "failures": [],
+    "artwork_approved": false,
+    "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+  },
+  "artwork_approved": false,
+  "integration_allowed": false,
+  "declarations": {
+    "G1": "head_scale_numerically_passed_identity_pending",
+    "G2": "pending_user_review",
+    "G3": "layer_trial_pending_art_review",
+    "G4": "pending_user_review"
+  },
+  "config_sha256": "f682e22664580f98fe5ef1b07bd75f91867f3b7d100a54a1cb6f0d7cd520a52a",
+  "frames": [
+    {
+      "source_pose": "run_7",
+      "start_tick": 0,
+      "duration_ticks": 3,
+      "body": "body/f000.png",
+      "fingers": "fingers/f000.png",
+      "body_sha256": "dcebb809bc825770db70484492505858a145e827e582350428fb0d41900d87aa",
+      "hand": [
+        460.991452991453,
+        675.982905982906
+      ],
+      "guard_reference": [
+        441.9164959455852,
+        682.9256225675082
+      ],
+      "tip_reference": [
+        243.53694266856007,
+        755.1298750473716
+      ],
+      "angle_radians": 2.7925268031909276,
+      "reference_projected_blade_length": 211.11111111111114,
+      "physical_katana_blade_length": 256,
+      "trial_projected_katana_blade_length": 256.0,
+      "projected_blade_axis": [
+        -0.9396926207859085,
+        0.3420201433256685
+      ],
+      "projected_edge_axis": [
+        0.3420201433256685,
+        0.9396926207859084
+      ],
+      "guide_pose_index": 7,
+      "weapon_layer": "back",
+      "profiles": {
+        "katana": {
+          "back": "katana/f000_back.png",
+          "front": "katana/f000_front.png",
+          "composite": "katana/f000_composite.png",
+          "source_sampling_scale": 0.277191289461327,
+          "grip": [
+            460.991452991453,
+            675.982905982906
+          ],
+          "guard": [
+            441.3412503275372,
+            685.8994240124595
+          ],
+          "tip": [
+            200.77993940634465,
+            773.4565807038306
+          ],
+          "blade_length_px": 256.0,
+          "physical_blade_length_px": 256.0,
+          "source_to_canvas_matrix": [
+            -0.25358330216955455,
+            0.11193980442191939,
+            0.11193980442191939,
+            0.2535833021695545
+          ],
+          "cutting_edge": [
+            330.4110718994805,
+            741.0790043813222
+          ],
+          "spine": [
+            326.6051185491352,
+            732.4571721075573
+          ],
+          "edge_review": {
+            "texture_cutting_side": 1,
+            "transverse_axis_reflected": false,
+            "authored_cutting_direction": [
+              0.3420201433256689,
+              0.9396926207859083
+            ],
+            "cutting_alignment": 0.9999999999999999
+          }
+        },
+        "greatsword": {
+          "back": "greatsword/f000_back.png",
+          "front": "greatsword/f000_front.png",
+          "composite": "greatsword/f000_composite.png",
+          "source_sampling_scale": 0.24672320740169623,
+          "grip": [
+            460.991452991453,
+            675.982905982906
+          ],
+          "guard": [
+            441.51655889220456,
+            683.0711877505189
+          ],
+          "tip": [
+            140.81492024071383,
+            792.5176336147329
+          ],
+          "blade_length_px": 320.0,
+          "physical_blade_length_px": 320.0,
+          "source_to_canvas_matrix": [
+            -0.2318439773720052,
+            0.08438430675729677,
+            0.08438430675729677,
+            0.23184397737200518
+          ],
+          "cutting_edge": [
+            317.77835619878016,
+            739.135619209899
+          ],
+          "spine": [
+            310.60569012440993,
+            719.4288811332787
+          ],
+          "edge_review": {
+            "texture_cutting_side": 1,
+            "transverse_axis_reflected": false,
+            "authored_cutting_direction": [
+              0.3420201433256689,
+              0.9396926207859083
+            ],
+            "cutting_alignment": 0.9999999999999999
+          }
+        },
+        "shortsword": {
+          "back": "shortsword/f000_back.png",
+          "front": "shortsword/f000_front.png",
+          "composite": "shortsword/f000_composite.png",
+          "source_sampling_scale": 0.20983606557377052,
+          "grip": [
+            460.991452991453,
+            675.982905982906
+          ],
+          "guard": [
+            449.75211305497106,
+            680.0736911725849
+          ],
+          "tip": [
+            317.4433920483151,
+            728.230127352839
+          ],
+          "blade_length_px": 140.8,
+          "physical_blade_length_px": 140.8,
+          "source_to_canvas_matrix": [
+            -0.19718140239442017,
+            0.07176816122243536,
+            0.07176816122243536,
+            0.19718140239442017
+          ],
+          "cutting_edge": [
+            393.7721661839668,
+            706.0312974706189
+          ],
+          "spine": [
+            390.3272944452899,
+            696.5665901556868
+          ],
+          "edge_review": {
+            "texture_cutting_side": 1,
+            "transverse_axis_reflected": false,
+            "authored_cutting_direction": [
+              0.3420201433256689,
+              0.9396926207859083
+            ],
+            "cutting_alignment": 0.9999999999999999
+          }
+        }
+      },
+      "height_px": 0.0,
+      "root_dx": 0,
+      "edge_intent": "reuse guard pivot foot plant as braking/start transition; retain downward cutting side with rear-pointing sword",
+      "allow_edge_roll_from_previous": false
+    },
+    {
+      "source_pose": "run_1",
+      "start_tick": 3,
+      "duration_ticks": 3,
+      "body": "body/f001.png",
+      "fingers": "fingers/f001.png",
+      "body_sha256": "e361c508b92b70560b49e3c059e1edea8b14397eb64eaa1081c0fd01bd6d8677",
+      "hand": [
+        348.0453514739229,
+        649.5691609977324
+      ],
+      "guard_reference": [
+        327.55773944488897,
+        656.2259896747437
+      ],
+      "tip_reference": [
+        114.4865743429362,
+        725.4570079156617
+      ],
+      "angle_radians": 2.8274333882308134,
+      "reference_projected_blade_length": 224.03628117913837,
+      "physical_katana_blade_length": 256,
+      "trial_projected_katana_blade_length": 256.0,
+      "projected_blade_axis": [
+        -0.9510565162951534,
+        0.30901699437494795
+      ],
+      "projected_edge_axis": [
+        0.30901699437494795,
+        0.9510565162951534
+      ],
+      "guide_pose_index": 1,
+      "weapon_layer": "front",
+      "profiles": {
+        "katana": {
+          "back": "katana/f001_back.png",
+          "front": "katana/f001_front.png",
+          "composite": "katana/f001_composite.png",
+          "source_sampling_scale": 0.277191289461327,
+          "grip": [
+            348.0453514739229,
+            649.5691609977324
+          ],
+          "guard": [
+            328.06103769426653,
+            658.7938559693648
+          ],
+          "tip": [
+            84.59056952270734,
+            737.9022065293514
+          ],
+          "blade_length_px": 256.0,
+          "physical_blade_length_px": 256.0,
+          "source_to_canvas_matrix": [
+            -0.25733546890876563,
+            0.10302168409970237,
+            0.10302168409970237,
+            0.25733546890876563
+          ],
+          "cutting_edge": [
+            215.2726953505466,
+            710.0684150325116
+          ],
+          "spine": [
+            211.76995809115672,
+            701.3190090896136
+          ],
+          "edge_review": {
+            "texture_cutting_side": 1,
+            "transverse_axis_reflected": false,
+            "authored_cutting_direction": [
+              0.3090169943749475,
+              0.9510565162951535
+            ],
+            "cutting_alignment": 1.0
+          }
+        },
+        "greatsword": {
+          "back": "greatsword/f001_back.png",
+          "front": "greatsword/f001_front.png",
+          "composite": "greatsword/f001_composite.png",
+          "source_sampling_scale": 0.24672320740169623,
+          "grip": [
+            348.0453514739229,
+            649.5691609977324
+          ],
+          "guard": [
+            328.3349434877905,
+            655.9734607732132
+          ],
+          "tip": [
+            23.996858273341388,
+            754.8588989731966
+          ],
+          "blade_length_px": 320.0,
+          "physical_blade_length_px": 320.0,
+          "source_to_canvas_matrix": [
+            -0.23464771412062382,
+            0.07624166399381908,
+            0.07624166399381908,
+            0.23464771412062382
+          ],
+          "cutting_edge": [
+            202.71549832330842,
+            707.6853382988861
+          ],
+          "spine": [
+            196.2349568838338,
+            687.740282598633
+          ],
+          "edge_review": {
+            "texture_cutting_side": 1,
+            "transverse_axis_reflected": false,
+            "authored_cutting_direction": [
+              0.3090169943749475,
+              0.9510565162951535
+            ],
+            "cutting_alignment": 1.0
+          }
+        },
+        "shortsword": {
+          "back": "shortsword/f001_back.png",
+          "front": "shortsword/f001_front.png",
+          "composite": "shortsword/f001_composite.png",
+          "source_sampling_scale": 0.20983606557377052,
+          "grip": [
+            348.0453514739229,
+            649.5691609977324
+          ],
+          "guard": [
+            336.6700918954156,
+            653.2652068845515
+          ],
+          "tip": [
+            202.761334401058,
+            696.7747996925441
+          ],
+          "blade_length_px": 140.8,
+          "physical_blade_length_px": 140.8,
+          "source_to_canvas_matrix": [
+            -0.19956595751767156,
+            0.06484291029507105,
+            0.06484291029507105,
+            0.19956595751767156
+          ],
+          "cutting_edge": [
+            279.81833910011466,
+            677.2533285389491
+          ],
+          "spine": [
+            276.70587940595124,
+            667.6741625781009
+          ],
+          "edge_review": {
+            "texture_cutting_side": 1,
+            "transverse_axis_reflected": false,
+            "authored_cutting_direction": [
+              0.3090169943749475,
+              0.9510565162951535
+            ],
+            "cutting_alignment": 1.0
+          }
+        }
+      },
+      "height_px": 0.0,
+      "root_dx": 0,
+      "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+      "allow_edge_roll_from_previous": false
+    },
+    {
+      "source_pose": "run_2",
+      "start_tick": 6,
+      "duration_ticks": 3,
+      "body": "body/f002.png",
+      "fingers": "fingers/f002.png",
+      "body_sha256": "85e7b3b7d28868b0e63f454d3653942ce052007cc60547011e70750a2be7d6a8",
+      "hand": [
+        363.55555555555554,
+        653.8775510204082
+      ],
+      "guard_reference": [
+        343.1872415687222,
+        660.890923962229
+      ],
+      "tip_reference": [
+        131.35677610565523,
+        733.8300025571657
+      ],
+      "angle_radians": 2.8099800957108703,
+      "reference_projected_blade_length": 224.0362811791384,
+      "physical_katana_blade_length": 256,
+      "trial_projected_katana_blade_length": 256.0,
+      "projected_blade_axis": [
+        -0.9455185755993167,
+        0.32556815445715703
+      ],
+      "projected_edge_axis": [
+        0.32556815445715703,
+        0.9455185755993167
+      ],
+      "guide_pose_index": 2,
+      "weapon_layer": "front",
+      "profiles": {
+        "katana": {
+          "back": "katana/f002_back.png",
+          "front": "katana/f002_front.png",
+          "composite": "katana/f002_composite.png",
+          "source_sampling_scale": 0.277191289461327,
+          "grip": [
+            363.55555555555554,
+            653.8775510204082
+          ],
+          "guard": [
+            343.73527860958893,
+            663.4496153927684
+          ],
+          "tip": [
+            101.6825232561639,
+            746.7950629338005
+          ],
+          "blade_length_px": 256.0,
+          "physical_blade_length_px": 256.0,
+          "source_to_canvas_matrix": [
+            -0.2554982991676571,
+            0.10749711659234194,
+            0.10749711659234194,
+            0.2554982991676571
+          ],
+          "cutting_edge": [
+            231.85897892137305,
+            716.6847930841859
+          ],
+          "spine": [
+            228.20407695723344,
+            707.9978509124855
+          ],
+          "edge_review": {
+            "texture_cutting_side": 1,
+            "transverse_axis_reflected": false,
+            "authored_cutting_direction": [
+              0.3255681544571566,
+              0.9455185755993168
+            ],
+            "cutting_alignment": 1.0
+          }
+        },
+        "greatsword": {
+          "back": "greatsword/f002_back.png",
+          "front": "greatsword/f002_front.png",
+          "composite": "greatsword/f002_composite.png",
+          "source_sampling_scale": 0.24672320740169623,
+          "grip": [
+            363.55555555555554,
+            653.8775510204082
+          ],
+          "guard": [
+            343.9599200026568,
+            660.6248694412319
+          ],
+          "tip": [
+            41.393975810875475,
+            764.8066788675221
+          ],
+          "blade_length_px": 320.0,
+          "physical_blade_length_px": 320.0,
+          "source_to_canvas_matrix": [
+            -0.23328137562974663,
+            0.08032521929552063,
+            0.08032521929552063,
+            0.23328137562974663
+          ],
+          "cutting_edge": [
+            219.26210399233779,
+            714.5212326109222
+          ],
+          "spine": [
+            212.43446035221854,
+            694.6923156823937
+          ],
+          "edge_review": {
+            "texture_cutting_side": 1,
+            "transverse_axis_reflected": false,
+            "authored_cutting_direction": [
+              0.3255681544571566,
+              0.9455185755993168
+            ],
+            "cutting_alignment": 1.0
+          }
+        },
+        "shortsword": {
+          "back": "shortsword/f002_back.png",
+          "front": "shortsword/f002_front.png",
+          "composite": "shortsword/f002_composite.png",
+          "source_sampling_scale": 0.20983606557377052,
+          "grip": [
+            363.55555555555554,
+            653.8775510204082
+          ],
+          "guard": [
+            352.246533379207,
+            657.7715596350301
+          ],
+          "tip": [
+            219.11751793482318,
+            703.6115557825979
+          ],
+          "blade_length_px": 140.8,
+          "physical_blade_length_px": 140.8,
+          "source_to_canvas_matrix": [
+            -0.19840389783067633,
+            0.06831594060740345,
+            0.06831594060740345,
+            0.19840389783067633
+          ],
+          "cutting_edge": [
+            295.8220898300039,
+            682.7482276787663
+          ],
+          "spine": [
+            292.54292468084856,
+            673.2248405828939
+          ],
+          "edge_review": {
+            "texture_cutting_side": 1,
+            "transverse_axis_reflected": false,
+            "authored_cutting_direction": [
+              0.3255681544571566,
+              0.9455185755993168
+            ],
+            "cutting_alignment": 1.0
+          }
+        }
+      },
+      "height_px": 0.0,
+      "root_dx": 0,
+      "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+      "allow_edge_roll_from_previous": false
+    }
+  ],
+  "limitations": [
+    "Batch art candidate under user-authorized direction; not final art or runtime approval.",
+    "Shared body/finger pixels and clocks across katana/greatsword/shortsword; right-hand forward grip.",
+    "Explicit source-calibrated weapon planes, not full 3D reconstruction or automatic depth solving.",
+    "No skills, FX, equipment UI, damage/reach or gameplay timing changes. Runtime adapter pending."
+  ],
+  "weapons": {
+    "katana": {
+      "file": "weapons/katana.png",
+      "grip": [
+        274.2,
+        71.4
+      ],
+      "guard": [
+        353.5,
+        75.5
+      ],
+      "tip": [
+        1275,
+        14
+      ],
+      "cutting_edge": [
+        800,
+        96
+      ],
+      "spine": [
+        800,
+        62
+      ],
+      "blade_length_multiplier": 1.0,
+      "source_sha256": "56a9b000da574895d2a7b0b22b946af01cdb676ceba50c84a3998050e75318ed"
+    },
+    "greatsword": {
+      "file": "weapons/greatsword.png",
+      "grip": [
+        362,
+        183
+      ],
+      "guard": [
+        446,
+        183
+      ],
+      "tip": [
+        1743,
+        183
+      ],
+      "cutting_edge": [
+        995,
+        225
+      ],
+      "spine": [
+        995,
+        140
+      ],
+      "blade_length_multiplier": 1.25,
+      "source_sha256": "438f8fffa3ac7ebc7d39556e15e5849ed0127caa81e9767905070456d8b44d24"
+    },
+    "shortsword": {
+      "file": "weapons/shortsword.png",
+      "grip": [
+        320,
+        127
+      ],
+      "guard": [
+        377,
+        127
+      ],
+      "tip": [
+        1048,
+        127
+      ],
+      "cutting_edge": [
+        670,
+        152
+      ],
+      "spine": [
+        670,
+        104
+      ],
+      "blade_length_multiplier": 0.55,
+      "source_sha256": "438f8fffa3ac7ebc7d39556e15e5849ed0127caa81e9767905070456d8b44d24"
+    }
+  },
+  "previews": [
+    {
+      "file": "previews/three_weapons.gif",
+      "action_ticks": 9,
+      "review_end_hold_ticks": 18,
+      "fps": 60,
+      "time_quantization": "cumulative 10ms GIF rounding; slow3x has triple durations"
+    },
+    {
+      "file": "previews/three_weapons_left.gif",
+      "action_ticks": 9,
+      "review_end_hold_ticks": 18,
+      "fps": 60,
+      "time_quantization": "cumulative 10ms GIF rounding; slow3x has triple durations"
+    }
+  ],
+  "files": {
+    "weapons/katana.png": "889c0612e8af597ceb60f796b9a81a25e09ff89d090f251a669ee93a9725ed2d",
+    "weapons/greatsword.png": "dd3ca3bab7f70504606d7036d33faba8aad676e97f117c3e75ee2bf013cc1f07",
+    "weapons/shortsword.png": "fbab467d3a962b9df07172e90f110b65cb48decd70e7d7edbd56d3b9cb080558",
+    "body/f000.png": "dcebb809bc825770db70484492505858a145e827e582350428fb0d41900d87aa",
+    "fingers/f000.png": "33cf6d480972d363edd4f0f64f9365268f317b53535c0e4cbc4fd42b048a6432",
+    "katana/f000_back.png": "919ae9e62d6bc6fc47af61de1ed811cea10408739a5af6bbe5bfc11cce5f1071",
+    "katana/f000_front.png": "52e0185bc0a0368244b509d15dd3e56e886d2b09aa3203d8726d71472391aa1f",
+    "katana/f000_composite.png": "6696e698a25f02ef6d3f07ddde83e0e0210dbb54d1aa98071b9a1ae282f5283a",
+    "greatsword/f000_back.png": "0fa471e44bc82f4b8c1f5a899e2c432e3e55bdf60ff1d716942d929dae5488c2",
+    "greatsword/f000_front.png": "52e0185bc0a0368244b509d15dd3e56e886d2b09aa3203d8726d71472391aa1f",
+    "greatsword/f000_composite.png": "41323cf17b405fa45b4908c052a7a2f854e300579e432832e943522da7b99792",
+    "shortsword/f000_back.png": "5ff2c573afabff391ba9841695827cc20de4e1487fb945011f79e7f42bbb6fb3",
+    "shortsword/f000_front.png": "52e0185bc0a0368244b509d15dd3e56e886d2b09aa3203d8726d71472391aa1f",
+    "shortsword/f000_composite.png": "f03f1aaf1163fc34349fd61f61850ee455ad9d8b7dedd90e559582f6b9ee1f03",
+    "body/f001.png": "e361c508b92b70560b49e3c059e1edea8b14397eb64eaa1081c0fd01bd6d8677",
+    "fingers/f001.png": "811b158a2d89deede96a384abe5d81b5a5da3ee2d8e8cd20adce0a14c4df712b",
+    "katana/f001_back.png": "52e0185bc0a0368244b509d15dd3e56e886d2b09aa3203d8726d71472391aa1f",
+    "katana/f001_front.png": "b00c1dbad9fece0d104dbee0bde07628eb17a95c31de2d1817f62681c8c2bd5f",
+    "katana/f001_composite.png": "de88d911baf9e11e736de09994655221632ba14aa37c790dd54cbc2162ed5050",
+    "greatsword/f001_back.png": "52e0185bc0a0368244b509d15dd3e56e886d2b09aa3203d8726d71472391aa1f",
+    "greatsword/f001_front.png": "75ccbc3ac0c444ec666c1d560e70654a22cee2da272373eed495eea1cd59bf89",
+    "greatsword/f001_composite.png": "4b470532d2bbf2d10d5397ec336de7da5da2b6c691f7234c126a0d492632a9fa",
+    "shortsword/f001_back.png": "52e0185bc0a0368244b509d15dd3e56e886d2b09aa3203d8726d71472391aa1f",
+    "shortsword/f001_front.png": "562f9eb550cb1882911ca55344db96bf3ee34c067552c12588b2c10bfd503f11",
+    "shortsword/f001_composite.png": "9382cbb856ff33d40168ec16f72cf67521d576e4a679b86301a1d6d4795c7c18",
+    "body/f002.png": "85e7b3b7d28868b0e63f454d3653942ce052007cc60547011e70750a2be7d6a8",
+    "fingers/f002.png": "2c5c2ff189c81122ec9bc56d32638713284df2b43ff4dfeacb8cc4beb3f0a802",
+    "katana/f002_back.png": "52e0185bc0a0368244b509d15dd3e56e886d2b09aa3203d8726d71472391aa1f",
+    "katana/f002_front.png": "18060b991c1930b01029a1366e91c2e75b7e1650f9b3c608b01e41c9e335a09f",
+    "katana/f002_composite.png": "14b4557475131ee1b4ae8e0a6ce777095f1eca3e477ccf3fa8085e2c0cad65ca",
+    "greatsword/f002_back.png": "52e0185bc0a0368244b509d15dd3e56e886d2b09aa3203d8726d71472391aa1f",
+    "greatsword/f002_front.png": "742bc72e96581fd3c766f52a5b3d6daebebf75ae0ae4b4739921ef5ad289158c",
+    "greatsword/f002_composite.png": "cf08941d37c5fc1b7377eea6184cd322bdca0af5e71926b9bc8cb3538835f01f",
+    "shortsword/f002_back.png": "52e0185bc0a0368244b509d15dd3e56e886d2b09aa3203d8726d71472391aa1f",
+    "shortsword/f002_front.png": "d37ab2ac5a75ca9088ceee81f579a711eccd782eb66d743e38dba2a5838d7735",
+    "shortsword/f002_composite.png": "db63ae3295af7111a6039b29b08a0a4ace4620b5bd5bd28006a2ca2213f5e2fa"
+  }
+}

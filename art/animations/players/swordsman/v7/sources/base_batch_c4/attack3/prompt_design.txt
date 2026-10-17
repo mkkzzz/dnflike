@@ -1,0 +1,16 @@
+Use case: stylized-concept
+Asset type: production 2D handpainted game animation source sheet.
+Input images: Image1 is the locked swordsman identity, Image2 is the approved adult proportion/style pair, Image3 is the selected latest body artwork, Image4 is the NEW small-adult-head body sheet; use Image4's head scale, NOT a larger cartoon head.
+Draw EXACTLY 8 complete full-body figures in a strict 4 columns x 2 rows, landscape 2560x1440, actual transparent background. Neutral ruler is first, seven action poses follow row-major. All at ONE identical anatomical pixel scale, never normalize crouched/airborne bounding heights. Reserve 20px equivalent outer margin and clear gutters; all hair/boots/full sword tips inside each cell. Small mature head: visible highest hair tip to bottom jaw ~15.2% of upright standing height, long adult legs; each head same size as neutral. Keep real bottom jaw visible.
+Silver spiky hair and dark-red forelock, sharp adult face, black high collar long coat red lining, TWO horizontal silver chest buckles, black shirt/pants, silver-grey knee/shin armor, black boots, BOTH forearms red bandages. Same proportions, costume, camera and restrained painted cel shading/clear dark outline as references.
+SINGLE standard curved katana, right hand forward grip, black/red hilt; LEFT HAND FREE. No sheath or spare hilt, no left-handed weapon. Design wrist, blade and torso together. Full weapon must fit cell. No magical effects, trails, ground shadows, labels, panels, watermark or extra figures.
+Group ATTACK3: normal combo finishing OVERHEAD DOWNWARD CHOP, not a skill. Screen RIGHT throughout.
+Row-major 1 upright neutral ruler.
+2 low ready stance, blade down-right, rear foot loaded.
+3 OVERHEAD WINDUP: right shoulder/elbow lifts sword above head, right hand above rear shoulder, blade diagonally up-left. Left hand extends for balance but NEVER grips sword.
+4 RELEASE: right wrist starts driving forward from above head, hips and shoulder contract, blade steeply up-right.
+5 CONTACT: grounded forward weight, right arm extended diagonally down-forward, blade down-right around45degrees, sharp edge faces down/forward into strike.
+6 FOLLOW-THROUGH: deep front knee bend, right hand low in front, blade steeper down-right with tip near ground (fully drawn), coattails swing behind.
+7 RECOIL/RECOVERY: lift wrist from low finish, torso rises slightly, weight returns between feet.
+8 RETURN low ready same small-head adult body.
+Strong effort through legs/hips/shoulder, single right hand only. Do not use double-handed overhead pose. Keep actual BOTTOM JAW unobstructed in all poses; tilt torso but keep head close to upright for proportion comparison. Avoid cropping any head, hand or boot. Do not shrink body just to fit weapon; consistent anatomical scale first.

@@ -1,0 +1,4 @@
+Use case: precise-object-edit
+Image1 is the edit target eight-pose DASH/AIR weaponless sheet.
+Change ONLY the HEAD (hair+face) of the TOP ROW THIRD figure (the forward-punching dash CONTACT pose): reduce this complete head by 9 percent, reconnect neck naturally. Its current visible hair-to-true-jaw is about77px, but other action heads need about70px at this body scale.
+Keep all other seven figures, all limbs, hands, costume details, poses, canvas size and transparency unchanged. Do not resize any whole figure. Do not change any other head. No weapons/text/effects.

@@ -1,0 +1,27 @@
+{
+  "schema": "actor_head_roll_review/1",
+  "source_sha256": "21331f83ab43543abb0a1c383e22f25ebeed56666ddb808e144afda4cbe14670",
+  "pose_id": "hit_7",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "head": {
+    "hair_top": [
+      1206,
+      838
+    ],
+    "chin": [
+      1262,
+      797
+    ],
+    "projection": "reviewed_in_plane_roll"
+  },
+  "axis_down": [
+    0.9396926207859084,
+    -0.3420201433256687
+  ],
+  "perspective_scale": 1,
+  "landmark_semantics_reviewed": false,
+  "review_method": "Explicit in-plane head roll; inspect true crown/front jaw after rotating QA back upright next to neutral at identical source pixel scale. No scaling correction or hidden chin guesses.",
+  "evidence_file": "hit_7_roll_review.png",
+  "evidence_sha256": "4b9a16712d83a59e4f34afdf82029df31024da0d4905b193a9926af40921929b",
+  "checkpoint_review_pending": true
+}

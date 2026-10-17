@@ -1,0 +1,126 @@
+{
+  "mode": "builtin",
+  "tool": "image_gen.imagegen",
+  "model": "not_exposed",
+  "seed": null,
+  "generations": [
+    {
+      "output": "design_c1.png",
+      "sha256": "41402fb86f0974d69ce3adef5f7b88515be5e4cc5c099eb75cd4e0ab1dcd4dde",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-cd836914-7b6f-44de-8ca8-a8bff9b3d919.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_design.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: production 2D handpainted game animation source sheet.\nInput images: Image1 is the locked swordsman identity, Image2 is the approved adult proportion/style pair, Image3 is the selected latest body artwork, Image4 is the NEW small-adult-head body sheet; use Image4's head scale, NOT a larger cartoon head.\nDraw EXACTLY 8 complete full-body figures in a strict 4 columns x 2 rows, landscape 2560x1440, actual transparent background. Neutral ruler is first, seven action poses follow row-major. All at ONE identical anatomical pixel scale, never normalize crouched/airborne bounding heights. Reserve 20px equivalent outer margin and clear gutters; all hair/boots/full sword tips inside each cell. Small mature head: visible highest hair tip to bottom jaw ~15.2% of upright standing height, long adult legs; each head same size as neutral. Keep real bottom jaw visible.\nSilver spiky hair and dark-red forelock, sharp adult face, black high collar long coat red lining, TWO horizontal silver chest buckles, black shirt/pants, silver-grey knee/shin armor, black boots, BOTH forearms red bandages. Same proportions, costume, camera and restrained painted cel shading/clear dark outline as references.\nSINGLE standard curved katana, right hand forward grip, black/red hilt; LEFT HAND FREE. No sheath or spare hilt, no left-handed weapon. Design wrist, blade and torso together. Full weapon must fit cell. No magical effects, trails, ground shadows, labels, panels, watermark or extra figures.\nGroup HURT, KNOCKDOWN, GET-UP and DEATH. Normal uninjured appearance, no gore, no blood or wounds. Keep game camera facing screen RIGHT. Right hand retains the same sword; left hand balances.\n1 fully upright neutral ruler.\n2 LIGHT HIT: torso recoils a little backward, front knee bends, free hand opens for balance, face upright and jaw visible, right sword hand low.\n3 HEAVY HIT: torso recoils more, rear knee catches weight, coat swings forward, head still upright for proportion measurement.\n4 AIR HIT / LAUNCH: both legs airborne, torso tilts back, knees bend, right hand holds blade away from body. Head remains upright, face visible.\n5 DOWN: character fallen on side/back with legs extended screen-right, shoulders/head LEFT, face still visible looking up-right, right hand loosely holds sword low and away from face. The head is rotated IN THE IMAGE PLANE with body, not oversized or hidden. This is a complete prone figure.\n6 GETUP KNEEL: pushes off floor with free left hand, right knee tucked and one foot plants, right hand keeps sword low outside body, head upright and visible.\n7 GETUP RISE: one knee still bent, torso halfway standing, weight over planted foot, right sword hand low, head upright.\n8 DEATH REST: different relaxed prone silhouette, shoulders/head left, feet right, head resting on ground and eyes closed, face visible, sword retained in relaxed right hand away from face. No gore, no effects.\nAll figures same physical anatomical scale as neutral. Prone silhouettes are WIDE, allow full body within each cell by using a wider landscape canvas if necessary, NEVER shrink prone people. Preserve all boots, head and weapon tips; clean gaps between cells.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+          "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    },
+    {
+      "output": "body_c1.png",
+      "sha256": "f5296e25744e6a338d71efa9d92c27c12eed7a77b7710a58515718a9182ed527",
+      "actual_size": [
+        1671,
+        941
+      ],
+      "raw_basename": "exec-31ff91f5-0af3-4a27-8d58-87f1c52af69b.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_body.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the hit action design EDIT TARGET. Image2 is the approved recent body style, Image3 is the corrected small-head walk source.\nRemove ALL weapons from every figure, including ALL blades, whole handles, guards, sheath/spare hilt. Repair each RIGHT hand into a natural curled empty single-handed gripping fist at the same wrist position. Left hand stays free; in get-up poses preserve left palm pressing floor.\nKeep exactly8 figures with original action poses and all body/costume details. Reduce all complete heads (hair+face) by 10 percent so adult hair-to-real-bottom-jaw is ~68px per450px straight neutral. Do NOT scale or shorten the body or legs. Keep each head's anatomical size consistent, no cartoon enlargement.\nIn top-row second/third/fourth HIT figures keep the head UPRIGHT facing screen-right, even while torso recoils; expose full true jaw. Preserve prone DOWN and DEATH body/head orientation and long full figure size, including the death face/closed eyes, don't erase or hide faces. Preserve getup kneel and rise.\nNo pose is stretched to standing height, no same-height normalization. All hair/boots/fists inside canvas15px transparent outer margin. Actual transparent RGBA background, no shadows/effects/text/weapons.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/design_c1.png",
+          "sha256": "41402fb86f0974d69ce3adef5f7b88515be5e4cc5c099eb75cd4e0ab1dcd4dde"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    },
+    {
+      "output": "body_c2.png",
+      "sha256": "84b98ba478417480a10c17861825371183ff6fbc432d30a8331b772e4f3295ea",
+      "actual_size": [
+        1670,
+        942
+      ],
+      "raw_basename": "exec-58d316e0-400b-462e-953c-e2151cddd728.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_headfix.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the weaponless HURT/DOWN edit target. Image2 is the upright adult face/body reference.\nChange ONLY the HEADS of TOP ROW THIRD and TOP ROW FOURTH figures (heavy recoil and airborne hit).\nTheir current heads tilt back/look upward and cannot be compared with upright head proportions. Repaint both heads UPRIGHT and looking HORIZONTALLY SCREEN RIGHT. Crown directly above jaw as in Image2; true bottom jaw and neck fully visible. Keep the recoil torso/shoulders and neck attachment natural. Preserve head's actual anatomical scale: complete hair-to-bottom-jaw ~72 source pixels at this sheet's ~474px standing-neutral scale. Do not make an undersized or enlarged head.\nKeep other six figures absolutely unchanged, especially the prone/down and death figures, keep all body/hand/feet positions, costume details and transparent margins. No weapons, no text/effects/shadows.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/body_c1.png",
+          "sha256": "f5296e25744e6a338d71efa9d92c27c12eed7a77b7710a58515718a9182ed527"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/idle/body_c1.png",
+          "sha256": "fe7cd6a2b70698f334e5ecd04d329bf7f1bbbfa5f3b3949d15cf85c3bb736308"
+        }
+      ]
+    },
+    {
+      "output": "body_c3.png",
+      "sha256": "21331f83ab43543abb0a1c383e22f25ebeed56666ddb808e144afda4cbe14670",
+      "actual_size": [
+        1669,
+        942
+      ],
+      "raw_basename": "exec-77c3f68f-6364-4fc2-975a-45376d78d295.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_deathfix.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the edit target eight-pose weaponless HURT/DOWN sheet.\nChange ONLY the HEAD (entire hair+face) of the BOTTOM ROW FOURTH prone DEATH figure. Reduce this complete head by 14 percent, keep its current lying orientation and closed eyes, reconnect the neck naturally to the SAME body. Current head hair-to-true-front-jaw measured along its rotated axis is ~83px; it needs ~72px at this body's ~472px upright standing scale.\nDo NOT reduce the whole prone body or its limbs. Do not alter other seven figures or their heads. Preserve fists, black/red costume, armor, corpse's full silhouette and transparent margins. No weapon/text/effect/shadow.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/body_c2.png",
+          "sha256": "84b98ba478417480a10c17861825371183ff6fbc432d30a8331b772e4f3295ea"
+        }
+      ]
+    },
+    {
+      "output": "body_c4.png",
+      "sha256": "eb687efdcda622a8e0a7e2e15da4481aef72ce7560fb93727fe814ba7b96a0bc",
+      "actual_size": [
+        1670,
+        942
+      ],
+      "raw_basename": "exec-661e51ab-2476-47f1-8cce-a235dc48e072.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_death_rebalance.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the edit target. Its BOTTOM ROW FOURTH prone death figure's head is now TOO SMALL.\nENLARGE ONLY THAT ENTIRE HEAD (hair+face) by 33 percent relative to current Image1, keep exact lying angle and closed-eye face, reconnect neck naturally. Body stays same size and pose. Image2 is a crop of the neutral head from this SAME sheet at its ORIGINAL PIXEL SCALE; the death head must have the SAME anatomical head dimensions as Image2 after rotation, about72px from hair crown to TRUE FRONT bottom jaw. Do not use neck as jaw.\nDo not change any of the other seven heads or any body/arm/feet/hand/costume. Do not shrink the prone body. Keep genuine transparency, no weapon, no text/effects/shadows.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/body_c3.png",
+          "sha256": "21331f83ab43543abb0a1c383e22f25ebeed56666ddb808e144afda4cbe14670"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/neutral_head_reference.png",
+          "sha256": "4677c68e33e0899e90f9244b0f01f35da65d12b7d7a40ddde3a653381a9c2ba7"
+        }
+      ]
+    }
+  ]
+}

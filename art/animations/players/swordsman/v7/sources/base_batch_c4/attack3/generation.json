@@ -1,0 +1,86 @@
+{
+  "mode": "builtin",
+  "tool": "image_gen.imagegen",
+  "model": "not_exposed",
+  "seed": null,
+  "generations": [
+    {
+      "output": "design_c1.png",
+      "sha256": "90e17b262cba4f2513c7fde88c82f66c24cb04101e6651e4482d536cd4c99710",
+      "actual_size": [
+        1672,
+        940
+      ],
+      "raw_basename": "exec-a0346538-9704-494f-bb93-720617838d4c.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_design.txt",
+      "prompt": "Use case: stylized-concept\nAsset type: production 2D handpainted game animation source sheet.\nInput images: Image1 is the locked swordsman identity, Image2 is the approved adult proportion/style pair, Image3 is the selected latest body artwork, Image4 is the NEW small-adult-head body sheet; use Image4's head scale, NOT a larger cartoon head.\nDraw EXACTLY 8 complete full-body figures in a strict 4 columns x 2 rows, landscape 2560x1440, actual transparent background. Neutral ruler is first, seven action poses follow row-major. All at ONE identical anatomical pixel scale, never normalize crouched/airborne bounding heights. Reserve 20px equivalent outer margin and clear gutters; all hair/boots/full sword tips inside each cell. Small mature head: visible highest hair tip to bottom jaw ~15.2% of upright standing height, long adult legs; each head same size as neutral. Keep real bottom jaw visible.\nSilver spiky hair and dark-red forelock, sharp adult face, black high collar long coat red lining, TWO horizontal silver chest buckles, black shirt/pants, silver-grey knee/shin armor, black boots, BOTH forearms red bandages. Same proportions, costume, camera and restrained painted cel shading/clear dark outline as references.\nSINGLE standard curved katana, right hand forward grip, black/red hilt; LEFT HAND FREE. No sheath or spare hilt, no left-handed weapon. Design wrist, blade and torso together. Full weapon must fit cell. No magical effects, trails, ground shadows, labels, panels, watermark or extra figures.\nGroup ATTACK3: normal combo finishing OVERHEAD DOWNWARD CHOP, not a skill. Screen RIGHT throughout.\nRow-major 1 upright neutral ruler.\n2 low ready stance, blade down-right, rear foot loaded.\n3 OVERHEAD WINDUP: right shoulder/elbow lifts sword above head, right hand above rear shoulder, blade diagonally up-left. Left hand extends for balance but NEVER grips sword.\n4 RELEASE: right wrist starts driving forward from above head, hips and shoulder contract, blade steeply up-right.\n5 CONTACT: grounded forward weight, right arm extended diagonally down-forward, blade down-right around45degrees, sharp edge faces down/forward into strike.\n6 FOLLOW-THROUGH: deep front knee bend, right hand low in front, blade steeper down-right with tip near ground (fully drawn), coattails swing behind.\n7 RECOIL/RECOVERY: lift wrist from low finish, torso rises slightly, weight returns between feet.\n8 RETURN low ready same small-head adult body.\nStrong effort through legs/hips/shoulder, single right hand only. Do not use double-handed overhead pose. Keep actual BOTTOM JAW unobstructed in all poses; tilt torso but keep head close to upright for proportion comparison. Avoid cropping any head, hand or boot. Do not shrink body just to fit weapon; consistent anatomical scale first.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+          "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    },
+    {
+      "output": "body_c1.png",
+      "sha256": "090ded1c37a49e93b595e3433668c96b0fa532657e28407ad2d8d2f26bbb2c26",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-6e7af76b-7bb4-42c3-bd18-97161b173154.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_body.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the edit target attack3 normal attack design. Image2 is approved recent body style/proportions, Image3 is corrected small-head walk body.\nREMOVE every complete katana from every figure: all blade, guard AND entire handle; no sheath or spare weapon. Naturally repair the right hand into a closed sword-holding fist with empty gripping channel. Preserve every wrist/arm position unless it blocks the face.\nMandatory: expose the TRUE BOTTOM JAW in ALL eight figures. In any raised-arm pose where chin is hidden, move that forearm slightly above/outside the face, while retaining the attack's coherent single-hand windup/release. Never invent a head landmark behind the arm.\nKeep all 8 poses in 4x2, upright neutral first, same6-phase-plus-ready attack flow, same small adult head and anatomical scale as references. Specifically highest hair-to-lowest jaw should stay around68 source pixels for neutral standing445px at actual delivered size; do not enlarge heads in crouched poses. Keep every boot/hair/fist complete and within15px outer margin. No background shadow/effects/text/weapon remains. True transparent RGBA.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack3/design_c1.png",
+          "sha256": "90e17b262cba4f2513c7fde88c82f66c24cb04101e6651e4482d536cd4c99710"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/body_c3.png",
+          "sha256": "557b9d42a06862697ea89a4ae2f3b3985ad186756cd5ab3589b9d8bc12ba4f59"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    },
+    {
+      "output": "body_c2.png",
+      "sha256": "65aa6cf9752df098b51a5f3687019379308f50bcea676a4340930157b7952214",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "raw_basename": "exec-9475fd0e-284c-4ccf-bbc6-63f49a959374.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_finalfix.txt",
+      "prompt": "Use case: precise-object-edit\nImage1 is the EDIT TARGET attack3 weaponless source sheet. Image2 is the corrected small-head walk reference.\nPrecise corrections:\nA. Reduce ALL eight complete heads (hair+face) by 10 percent relative to current Image1, naturally reconnect neck. Keep the body, legs, costume and overall figure scale unchanged. Same small adult head at every pose. Source neutral standing roughly450px requires visible hair-to-jaw about68px.\nB. EXPOSE THE FULL REAL BOTTOM JAW of every figure. Where a raised right forearm hides the lower face (especially top-row fourth figure), move that forearm/hand ABOVE the head by at least30 source pixels, or below jaw far enough to show jaw cleanly. Do not leave the arm across face. Preserve a believable normal single-hand sword-grip motion, empty fist, left hand free.\nMaintain exactly8 figures4x2, the original action phases, mature face, silver/red hair, black/red coat, both red bandaged forearms, leg armor, complete boots and transparent outer margins. Do not add any weapon/effect/text/shadow. Actual transparent RGBA.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack3/body_c1.png",
+          "sha256": "090ded1c37a49e93b595e3433668c96b0fa532657e28407ad2d8d2f26bbb2c26"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        }
+      ]
+    }
+  ]
+}

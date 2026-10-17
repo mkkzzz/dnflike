@@ -1,0 +1,9 @@
+Use case: precise-object-edit
+Asset type: layered game animation body source.
+Image 1 is the EDIT TARGET walk sheet. Image 2 is the approved SMALL ADULT HEAD and body proportion reference. Image 3 is the selected approved recent body artwork.
+Edit Image 1, keep exactly the same 8 figures in 4 columns x 2 rows, same six walk phases, same costume and style.
+REQUIRED CHANGES ONLY:
+1. REMOVE every entire weapon from EVERY figure: blade, guard and ALL handle. No katana, sheath or spare hilt remains. Repair the now-empty right fist into a convincing curled single-hand sword grip with a small empty gripping channel. Preserve exact wrist/arm placement. Left hand stays free.
+2. Correct head scale to the approved adult proportions. On each figure REDUCE the whole visible hair+face head by about 15 percent, retain face identity and spiky silhouette, reconnect neck naturally. Body, shoulders and legs retain their size. The first neutral's hair-to-bottom-jaw should be about 68-70 source pixels for its ~450 pixel standing body height in this delivered-size sheet. Other heads are exactly same anatomical size; no cartoon heads.
+3. Ensure ALL figures have at least 15 pixels of transparent margin at canvas edges, especially the top-left hair and lower-row boots. Reposition figures slightly inside their cells when needed; do not clip anything or resize individual poses to equal bounding heights.
+Face bottom jaw must remain visible. Preserve genuine near/far leg swaps, the six ordered phases and small walking posture bob. Straight-alpha transparent background, no ground shadow, no text, no effect, no weapons, no extra figures.

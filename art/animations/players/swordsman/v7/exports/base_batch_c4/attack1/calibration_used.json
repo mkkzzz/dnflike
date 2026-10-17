@@ -1,0 +1,501 @@
+{
+  "revision": "v7_base_batch_c4_attack1",
+  "output_dir": "../../../exports/base_batch_c4/attack1",
+  "body_manifest": "../../../exports/base_batch_c4_body/attack1/manifest.json",
+  "body_config": "body_config.json",
+  "body_audit": "proportions.json",
+  "katana_blade_length_px": 256,
+  "weapons": {
+    "katana": {
+      "file": "../../../../../../../concepts/characters/players/swordsman/standard_v1/weapon/katana_drawn.png",
+      "sha256": "56a9b000da574895d2a7b0b22b946af01cdb676ceba50c84a3998050e75318ed",
+      "crop_bbox": [
+        0,
+        0,
+        1282,
+        153
+      ],
+      "component_seed": [
+        800,
+        75
+      ],
+      "grip": [
+        274.2,
+        71.4
+      ],
+      "guard": [
+        353.5,
+        75.5
+      ],
+      "tip": [
+        1275,
+        14
+      ],
+      "blade_length_multiplier": 1.0,
+      "cutting_edge": [
+        800,
+        96
+      ],
+      "spine": [
+        800,
+        62
+      ],
+      "edge_type": "single"
+    },
+    "greatsword": {
+      "file": "../../layer_trial_c3/attack1/weapons_c1.png",
+      "sha256": "438f8fffa3ac7ebc7d39556e15e5849ed0127caa81e9767905070456d8b44d24",
+      "crop_bbox": [
+        5,
+        150,
+        1765,
+        505
+      ],
+      "component_seed": [
+        900,
+        330
+      ],
+      "grip": [
+        367,
+        333
+      ],
+      "guard": [
+        451,
+        333
+      ],
+      "tip": [
+        1748,
+        333
+      ],
+      "blade_length_multiplier": 1.25,
+      "cutting_edge": [
+        1000,
+        375
+      ],
+      "spine": [
+        1000,
+        290
+      ],
+      "edge_type": "double_reference_lower_edge"
+    },
+    "shortsword": {
+      "file": "../../layer_trial_c3/attack1/weapons_c1.png",
+      "sha256": "438f8fffa3ac7ebc7d39556e15e5849ed0127caa81e9767905070456d8b44d24",
+      "crop_bbox": [
+        180,
+        520,
+        1250,
+        770
+      ],
+      "component_seed": [
+        850,
+        645
+      ],
+      "grip": [
+        500,
+        647
+      ],
+      "guard": [
+        557,
+        647
+      ],
+      "tip": [
+        1228,
+        647
+      ],
+      "blade_length_multiplier": 0.55,
+      "cutting_edge": [
+        850,
+        672
+      ],
+      "spine": [
+        850,
+        624
+      ],
+      "edge_type": "double_reference_lower_edge"
+    }
+  },
+  "poses": {
+    "attack1_01": {
+      "body_sha256": "7475a3b4489649f9911e9c9f1cee3a0db70e108ec91939855e133961990fac9c",
+      "grip": [
+        514,
+        259
+      ],
+      "guard": [
+        535,
+        270
+      ],
+      "tip": [
+        789,
+        374
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          500,
+          239
+        ],
+        [
+          528,
+          244
+        ],
+        [
+          535,
+          254
+        ],
+        [
+          526,
+          271
+        ],
+        [
+          510,
+          272
+        ],
+        [
+          497,
+          260
+        ]
+      ],
+      "guide_pose_index": 0,
+      "tip_basis": "design_reference_or_release_recalibration",
+      "cutting_direction": [
+        -0.37891656395342926,
+        0.9254308388862599
+      ],
+      "edge_intent": "clockwise leading edge during active swing; same grip during ready/recovery"
+    },
+    "attack1_02": {
+      "body_sha256": "44327aa73535cf87b595eea9a25b063ccbe67289963ad081aabe56d0db694d73",
+      "grip": [
+        1006,
+        166
+      ],
+      "guard": [
+        1009,
+        157
+      ],
+      "tip": [
+        834,
+        147
+      ],
+      "weapon_layer": "back",
+      "finger_polygon": [
+        [
+          989,
+          153
+        ],
+        [
+          1010,
+          156
+        ],
+        [
+          1027,
+          164
+        ],
+        [
+          1023,
+          175
+        ],
+        [
+          1008,
+          181
+        ],
+        [
+          993,
+          177
+        ],
+        [
+          984,
+          165
+        ]
+      ],
+      "guide_pose_index": 1,
+      "tip_basis": "design_reference_or_release_recalibration",
+      "cutting_direction": [
+        0.05704979053851295,
+        -0.9983713344239766
+      ],
+      "edge_intent": "clockwise leading edge during active swing; same grip during ready/recovery"
+    },
+    "attack1_03": {
+      "body_sha256": "1f434f28eb62f7f9b2870cdc99b085a6cfe68a1d867b9f6933ed67b4dcb6e588",
+      "grip": [
+        276,
+        589
+      ],
+      "guard": [
+        291,
+        577
+      ],
+      "tip": [
+        390,
+        470
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          263,
+          572
+        ],
+        [
+          282,
+          568
+        ],
+        [
+          292,
+          578
+        ],
+        [
+          290,
+          590
+        ],
+        [
+          281,
+          601
+        ],
+        [
+          269,
+          603
+        ],
+        [
+          260,
+          594
+        ]
+      ],
+      "guide_pose_index": 2,
+      "tip_basis": "design_reference_or_release_recalibration",
+      "cutting_direction": [
+        0.7340139444099378,
+        0.679134397164335
+      ],
+      "edge_intent": "clockwise leading edge during active swing; same grip during ready/recovery"
+    },
+    "attack1_04": {
+      "body_sha256": "ccbf2d4e8c887b81c780a1f18e7a475822c3d72709fc9f4971a4f9dbc1dbebca",
+      "grip": [
+        693,
+        638
+      ],
+      "guard": [
+        705,
+        636
+      ],
+      "tip": [
+        877,
+        634
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          677,
+          622
+        ],
+        [
+          698,
+          623
+        ],
+        [
+          710,
+          632
+        ],
+        [
+          712,
+          643
+        ],
+        [
+          700,
+          653
+        ],
+        [
+          684,
+          653
+        ],
+        [
+          672,
+          644
+        ]
+      ],
+      "guide_pose_index": 3,
+      "tip_basis": "design_reference_or_release_recalibration",
+      "cutting_direction": [
+        0.011627120962143852,
+        0.9999324027443713
+      ],
+      "edge_intent": "clockwise leading edge during active swing; same grip during ready/recovery"
+    },
+    "attack1_05": {
+      "body_sha256": "b3112d2f491a6c24607e4abc74e501fc91b5188babe1b9ac06bc49b63ae8b226",
+      "grip": [
+        1182,
+        698
+      ],
+      "guard": [
+        1195,
+        700
+      ],
+      "tip": [
+        1460,
+        772
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          1165,
+          681
+        ],
+        [
+          1187,
+          682
+        ],
+        [
+          1202,
+          694
+        ],
+        [
+          1202,
+          706
+        ],
+        [
+          1189,
+          714
+        ],
+        [
+          1172,
+          711
+        ],
+        [
+          1158,
+          697
+        ]
+      ],
+      "guide_pose_index": 4,
+      "tip_basis": "extrapolated_direction_after_source_edge",
+      "cutting_direction": [
+        -0.262192887012849,
+        0.9650154869222914
+      ],
+      "edge_intent": "clockwise leading edge during active swing; same grip during ready/recovery"
+    },
+    "attack1_06": {
+      "body_sha256": "2cffe59e3c6c264db7c4143c5399890b1cb35f37c2b78c88e8297d6a589bc4fd",
+      "grip": [
+        126,
+        1037
+      ],
+      "guard": [
+        153,
+        1047
+      ],
+      "tip": [
+        421,
+        1117
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          108,
+          1020
+        ],
+        [
+          134,
+          1020
+        ],
+        [
+          146,
+          1030
+        ],
+        [
+          145,
+          1044
+        ],
+        [
+          132,
+          1050
+        ],
+        [
+          114,
+          1046
+        ],
+        [
+          106,
+          1035
+        ]
+      ],
+      "guide_pose_index": 6,
+      "tip_basis": "design_reference_or_release_recalibration",
+      "cutting_direction": [
+        -0.2527158154000623,
+        0.9675405503888101
+      ],
+      "edge_intent": "clockwise leading edge during active swing; same grip during ready/recovery"
+    },
+    "attack1_07": {
+      "body_sha256": "ebe777d53c6032b58fe91dbe03dee330ec1443a982ecfbd799938f1a8b0a16a3",
+      "grip": [
+        638,
+        1079
+      ],
+      "guard": [
+        658,
+        1083
+      ],
+      "tip": [
+        880,
+        1138
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          622,
+          1063
+        ],
+        [
+          644,
+          1063
+        ],
+        [
+          657,
+          1069
+        ],
+        [
+          657,
+          1082
+        ],
+        [
+          643,
+          1088
+        ],
+        [
+          626,
+          1086
+        ],
+        [
+          617,
+          1075
+        ]
+      ],
+      "guide_pose_index": 7,
+      "tip_basis": "design_reference_or_release_recalibration",
+      "cutting_direction": [
+        -0.24047751790349498,
+        0.9706547086286524
+      ],
+      "edge_intent": "clockwise leading edge during active swing; same grip during ready/recovery"
+    }
+  },
+  "limitations": [
+    "User accepted representative motion/art direction on 2026-10-17, reported inverted katana edge and authorized remaining non-skill batch. This corrected c4 has not received final art/runtime approval.",
+    "One shared weaponless body and one shared hand occlusion per pose; orthographically projected weapon planes and per-pose front/back flags are a limited trial, not a full body depth solver.",
+    "Original design follow-through blade reached the source edge: its full tip is extrapolated from the authored direction and a standard-length reference, not falsely marked observed.",
+    "Release forearm was lowered by a real image edit to expose the chin; its grip is recalibrated and original weapon restoration is not an exact pixel reconstruction.",
+    "Weapon lengths are render parameters for this trial; no damage/reach/gameplay or equipment UI changes.",
+    "New source body is 1254x1254, measured neutral 434px and downsampled to 380px. Windup drops alpha<=96 fringe to retain a clear edge; original source PNG is preserved.",
+    "Authored 3D blade/edge axes are orthographically projected using the original guide camera, then rotated in screen space to the measured hand-painted blade direction. This is an authored projection proxy, not 3D reconstruction of the painted actor; body occlusion is per-pose front/back plus hand masks, not a full depth buffer. No edge-on frame is silently exempted."
+  ],
+  "projection_guide": {
+    "file": "../../guides/attack1_guide.json",
+    "sha256": "29640958c09328d1c68098497f20a3ec8546167b2aea063809ec22c9418002e3"
+  },
+  "edge_contract": "explicit_texture_edge_to_authored_cut_direction/1"
+}

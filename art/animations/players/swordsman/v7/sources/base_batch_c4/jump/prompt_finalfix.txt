@@ -1,0 +1,6 @@
+Use case: precise-object-edit
+Image1 is the EDIT TARGET jump weaponless source sheet. Image2 is the corrected small-head walk reference.
+Precise corrections:
+A. Reduce ALL eight complete heads (hair+face) by 12 percent relative to current Image1, naturally reconnect neck. Keep the body, legs, costume and overall figure scale unchanged. Same small adult head at every pose. Source neutral standing roughly450px requires visible hair-to-jaw about68px.
+B. EXPOSE THE FULL REAL BOTTOM JAW of every figure. Where a raised right forearm hides the lower face (especially crouched preparation/landing), move that forearm/hand ABOVE the head by at least30 source pixels, or below jaw far enough to show jaw cleanly. Do not leave the arm across face. Preserve a believable normal single-hand sword-grip motion, empty fist, left hand free.
+Maintain exactly8 figures4x2, the original action phases, mature face, silver/red hair, black/red coat, both red bandaged forearms, leg armor, complete boots and transparent outer margins. Do not add any weapon/effect/text/shadow. Actual transparent RGBA.

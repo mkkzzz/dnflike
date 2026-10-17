@@ -1,0 +1,6 @@
+Use case: precise-object-edit
+Image1 is the hit action design EDIT TARGET. Image2 is the approved recent body style, Image3 is the corrected small-head walk source.
+Remove ALL weapons from every figure, including ALL blades, whole handles, guards, sheath/spare hilt. Repair each RIGHT hand into a natural curled empty single-handed gripping fist at the same wrist position. Left hand stays free; in get-up poses preserve left palm pressing floor.
+Keep exactly8 figures with original action poses and all body/costume details. Reduce all complete heads (hair+face) by 10 percent so adult hair-to-real-bottom-jaw is ~68px per450px straight neutral. Do NOT scale or shorten the body or legs. Keep each head's anatomical size consistent, no cartoon enlargement.
+In top-row second/third/fourth HIT figures keep the head UPRIGHT facing screen-right, even while torso recoils; expose full true jaw. Preserve prone DOWN and DEATH body/head orientation and long full figure size, including the death face/closed eyes, don't erase or hide faces. Preserve getup kneel and rise.
+No pose is stretched to standing height, no same-height normalization. All hair/boots/fists inside canvas15px transparent outer margin. Actual transparent RGBA background, no shadows/effects/text/weapons.

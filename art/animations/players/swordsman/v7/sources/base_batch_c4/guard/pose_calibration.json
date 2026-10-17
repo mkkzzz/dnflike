@@ -1,0 +1,426 @@
+[
+  {
+    "box": [
+      85,
+      8,
+      330,
+      503
+    ],
+    "root": [
+      213,
+      490
+    ],
+    "seed": [
+      210,
+      225
+    ],
+    "hair": [
+      226,
+      22
+    ],
+    "chin": [
+      242,
+      98
+    ],
+    "grip": [
+      132,
+      285
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        118,
+        272
+      ],
+      [
+        145,
+        272
+      ],
+      [
+        148,
+        285
+      ],
+      [
+        140,
+        295
+      ],
+      [
+        120,
+        293
+      ]
+    ]
+  },
+  {
+    "box": [
+      470,
+      70,
+      810,
+      503
+    ],
+    "root": [
+      645,
+      490
+    ],
+    "seed": [
+      650,
+      275
+    ],
+    "hair": [
+      671,
+      86
+    ],
+    "chin": [
+      682,
+      153
+    ],
+    "grip": [
+      652,
+      213
+    ],
+    "blade_angle_degrees": -48,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        638,
+        200
+      ],
+      [
+        665,
+        200
+      ],
+      [
+        668,
+        213
+      ],
+      [
+        660,
+        223
+      ],
+      [
+        640,
+        221
+      ]
+    ]
+  },
+  {
+    "box": [
+      865,
+      70,
+      1255,
+      503
+    ],
+    "root": [
+      1055,
+      490
+    ],
+    "seed": [
+      1050,
+      270
+    ],
+    "hair": [
+      1058,
+      87
+    ],
+    "chin": [
+      1073,
+      154
+    ],
+    "grip": [
+      1089,
+      191
+    ],
+    "blade_angle_degrees": -82,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        1075,
+        178
+      ],
+      [
+        1102,
+        178
+      ],
+      [
+        1105,
+        191
+      ],
+      [
+        1097,
+        201
+      ],
+      [
+        1077,
+        199
+      ]
+    ]
+  },
+  {
+    "box": [
+      1295,
+      100,
+      1665,
+      503
+    ],
+    "root": [
+      1460,
+      487
+    ],
+    "seed": [
+      1460,
+      285
+    ],
+    "hair": [
+      1414,
+      115
+    ],
+    "chin": [
+      1430,
+      182
+    ],
+    "grip": [
+      1483,
+      225
+    ],
+    "blade_angle_degrees": -73,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        1469,
+        212
+      ],
+      [
+        1496,
+        212
+      ],
+      [
+        1499,
+        225
+      ],
+      [
+        1491,
+        235
+      ],
+      [
+        1471,
+        233
+      ]
+    ]
+  },
+  {
+    "box": [
+      15,
+      530,
+      430,
+      930
+    ],
+    "root": [
+      235,
+      915
+    ],
+    "seed": [
+      260,
+      730
+    ],
+    "hair": [
+      263,
+      541
+    ],
+    "chin": [
+      278,
+      608
+    ],
+    "grip": [
+      390,
+      585
+    ],
+    "blade_angle_degrees": -25,
+    "cutting_side": -1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        376,
+        572
+      ],
+      [
+        403,
+        572
+      ],
+      [
+        406,
+        585
+      ],
+      [
+        398,
+        595
+      ],
+      [
+        378,
+        593
+      ]
+    ]
+  },
+  {
+    "box": [
+      470,
+      510,
+      835,
+      930
+    ],
+    "root": [
+      650,
+      914
+    ],
+    "seed": [
+      650,
+      720
+    ],
+    "hair": [
+      670,
+      525
+    ],
+    "chin": [
+      687,
+      594
+    ],
+    "grip": [
+      595,
+      713
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        581,
+        700
+      ],
+      [
+        608,
+        700
+      ],
+      [
+        611,
+        713
+      ],
+      [
+        603,
+        723
+      ],
+      [
+        583,
+        721
+      ]
+    ]
+  },
+  {
+    "box": [
+      865,
+      535,
+      1265,
+      930
+    ],
+    "root": [
+      1060,
+      914
+    ],
+    "seed": [
+      1080,
+      750
+    ],
+    "hair": [
+      1094,
+      554
+    ],
+    "chin": [
+      1108,
+      623
+    ],
+    "grip": [
+      990,
+      735
+    ],
+    "blade_angle_degrees": 20,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        976,
+        722
+      ],
+      [
+        1003,
+        722
+      ],
+      [
+        1006,
+        735
+      ],
+      [
+        998,
+        745
+      ],
+      [
+        978,
+        743
+      ]
+    ]
+  },
+  {
+    "box": [
+      1290,
+      480,
+      1665,
+      930
+    ],
+    "root": [
+      1490,
+      915
+    ],
+    "seed": [
+      1505,
+      715
+    ],
+    "hair": [
+      1540,
+      499
+    ],
+    "chin": [
+      1556,
+      568
+    ],
+    "grip": [
+      1506,
+      713
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        1492,
+        700
+      ],
+      [
+        1519,
+        700
+      ],
+      [
+        1522,
+        713
+      ],
+      [
+        1514,
+        723
+      ],
+      [
+        1494,
+        721
+      ]
+    ]
+  }
+]

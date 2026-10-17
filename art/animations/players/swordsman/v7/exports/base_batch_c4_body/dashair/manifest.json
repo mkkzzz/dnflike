@@ -1,0 +1,1291 @@
+{
+  "schema": "standard_actions_pilot/1",
+  "revision": "v7_base_batch_c4_dashair_body",
+  "status": "review_candidate",
+  "fps": 60,
+  "hitstop_baked": false,
+  "actor_includes_weapon": false,
+  "declarations": {
+    "weapon_layering": "not_attempted",
+    "G3": "layered_pending_final_review",
+    "actor_includes_weapon": false,
+    "G1": "source_bound_manual_landmarks",
+    "G2": "batch_candidate_user_direction_accepted",
+    "G4": "pending_final_batch_review"
+  },
+  "coordinate_system": "right-facing pixels, y-down; anchor is ground root except separate_height body proxy",
+  "target_standing_height": 380.0,
+  "sources": {
+    "body": {
+      "file": "body_c1.png",
+      "sha256": "68d934158706830d09478bcd3ef46efd32e3a664c5cc58888f42d7cfe6996c5d",
+      "size": [
+        1672,
+        941
+      ],
+      "standing_height": 455.0
+    }
+  },
+  "config_sha256": "68cfd320b0f3a1358f1d6ea61a3d1728b9d534c35a57cd86e5c33309a8925b9f",
+  "clips": {
+    "dash_attack": {
+      "asset_id": "actor.player.base.dash_attack",
+      "size": [
+        1024,
+        1080
+      ],
+      "anchor": [
+        448.0,
+        840.0
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "root_mode": "ground",
+      "loop": false,
+      "include_in_overview": true,
+      "duration_ticks": 32,
+      "frames": [
+        {
+          "source_pose": "dashair_1",
+          "source": "body",
+          "crop_bbox": [
+            440,
+            119,
+            896,
+            483
+          ],
+          "source_root": [
+            650.0,
+            474.0
+          ],
+          "source_foot": [
+            650.0,
+            474.0
+          ],
+          "scale": 0.8351648351648352,
+          "trim_offset_source": [
+            450,
+            129
+          ],
+          "paste_offset": [
+            281,
+            552
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            281,
+            552,
+            645,
+            839
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              690,
+              255
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/dashair_1_c35b7d54b69e028d.png",
+            "mask_sha256_raw_l8": "c35b7d54b69e028d8248cfa13d334e2424a1f2a014ae7456310ab9df8a3f57b1",
+            "mask_size": [
+              456,
+              364
+            ],
+            "mask_source_origin": [
+              440,
+              119
+            ],
+            "mask_bbox_source": [
+              450,
+              129,
+              886,
+              473
+            ],
+            "core_bbox_source": [
+              450,
+              129,
+              886,
+              473
+            ],
+            "retained_alpha_bbox_source": [
+              450,
+              129,
+              886,
+              473
+            ],
+            "selected_core_pixels": 63527,
+            "discarded_other_core_pixels": 2854,
+            "discarded_alpha_pixels": 11979,
+            "discarded_alpha_sum": 711576,
+            "retained_alpha_pixels": 63527,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  784,
+                  130
+                ],
+                "radius": 2,
+                "source_alpha_max": 252,
+                "retained_alpha_max": 252,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  797,
+                  202
+                ],
+                "radius": 2,
+                "source_alpha_max": 255,
+                "retained_alpha_max": 255,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/dash_attack/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 6
+        },
+        {
+          "source_pose": "dashair_2",
+          "source": "body",
+          "crop_bbox": [
+            844,
+            109,
+            1282,
+            482
+          ],
+          "source_root": [
+            1060.0,
+            474.0
+          ],
+          "source_foot": [
+            1060.0,
+            474.0
+          ],
+          "scale": 0.8351648351648352,
+          "trim_offset_source": [
+            854,
+            119
+          ],
+          "paste_offset": [
+            276,
+            544
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            276,
+            544,
+            625,
+            839
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1100,
+              280
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/dashair_2_a35a77f335dcf0da.png",
+            "mask_sha256_raw_l8": "a35a77f335dcf0da6d5302ded32184c80d7f362a386bed9fb0fd542984178552",
+            "mask_size": [
+              438,
+              373
+            ],
+            "mask_source_origin": [
+              844,
+              109
+            ],
+            "mask_bbox_source": [
+              854,
+              119,
+              1272,
+              472
+            ],
+            "core_bbox_source": [
+              854,
+              119,
+              1272,
+              472
+            ],
+            "retained_alpha_bbox_source": [
+              854,
+              119,
+              1272,
+              472
+            ],
+            "selected_core_pixels": 59748,
+            "discarded_other_core_pixels": 1234,
+            "discarded_alpha_pixels": 8958,
+            "discarded_alpha_sum": 306883,
+            "retained_alpha_pixels": 59748,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1155,
+                  121
+                ],
+                "radius": 2,
+                "source_alpha_max": 250,
+                "retained_alpha_max": 250,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1163,
+                  194
+                ],
+                "radius": 2,
+                "source_alpha_max": 255,
+                "retained_alpha_max": 255,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/dash_attack/f001.png",
+          "start_tick": 6,
+          "duration_ticks": 7
+        },
+        {
+          "source_pose": "dashair_3",
+          "source": "body",
+          "crop_bbox": [
+            1313,
+            108,
+            1657,
+            483
+          ],
+          "source_root": [
+            1470.0,
+            474.0
+          ],
+          "source_foot": [
+            1470.0,
+            474.0
+          ],
+          "scale": 0.8351648351648352,
+          "trim_offset_source": [
+            1323,
+            118
+          ],
+          "paste_offset": [
+            325,
+            543
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            325,
+            543,
+            596,
+            839
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1480,
+              285
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/dashair_3_f091b1dfc7af625f.png",
+            "mask_sha256_raw_l8": "f091b1dfc7af625f7cc24a13528d64c0eaf451f7a1b24024a523fc486957a233",
+            "mask_size": [
+              344,
+              375
+            ],
+            "mask_source_origin": [
+              1313,
+              108
+            ],
+            "mask_bbox_source": [
+              1323,
+              118,
+              1647,
+              473
+            ],
+            "core_bbox_source": [
+              1323,
+              118,
+              1647,
+              473
+            ],
+            "retained_alpha_bbox_source": [
+              1323,
+              118,
+              1647,
+              473
+            ],
+            "selected_core_pixels": 51459,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 6171,
+            "discarded_alpha_sum": 20009,
+            "retained_alpha_pixels": 51459,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1518,
+                  120
+                ],
+                "radius": 2,
+                "source_alpha_max": 248,
+                "retained_alpha_max": 248,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1533,
+                  191
+                ],
+                "radius": 2,
+                "source_alpha_max": 255,
+                "retained_alpha_max": 255,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/dash_attack/f002.png",
+          "start_tick": 13,
+          "duration_ticks": 11
+        },
+        {
+          "source_pose": "dashair_0",
+          "source": "body",
+          "crop_bbox": [
+            74,
+            7,
+            311,
+            487
+          ],
+          "source_root": [
+            195.0,
+            474.0
+          ],
+          "source_foot": [
+            195.0,
+            474.0
+          ],
+          "scale": 0.8351648351648352,
+          "trim_offset_source": [
+            84,
+            17
+          ],
+          "paste_offset": [
+            355,
+            458
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            355,
+            458,
+            536,
+            842
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              195,
+              220
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/dashair_0_fb69dc8a4d298139.png",
+            "mask_sha256_raw_l8": "fb69dc8a4d2981392ed933a2f3773a6a799ce3cc52f3351e93871b833c878866",
+            "mask_size": [
+              237,
+              480
+            ],
+            "mask_source_origin": [
+              74,
+              7
+            ],
+            "mask_bbox_source": [
+              84,
+              17,
+              301,
+              477
+            ],
+            "core_bbox_source": [
+              84,
+              17,
+              301,
+              477
+            ],
+            "retained_alpha_bbox_source": [
+              84,
+              17,
+              301,
+              477
+            ],
+            "selected_core_pixels": 59549,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 5927,
+            "discarded_alpha_sum": 20181,
+            "retained_alpha_pixels": 59549,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  209,
+                  19
+                ],
+                "radius": 2,
+                "source_alpha_max": 250,
+                "retained_alpha_max": 250,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  223,
+                  89
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/dash_attack/f003.png",
+          "start_tick": 24,
+          "duration_ticks": 8
+        }
+      ]
+    },
+    "air_attack": {
+      "asset_id": "actor.player.base.air_attack",
+      "size": [
+        1024,
+        1080
+      ],
+      "anchor": [
+        448.0,
+        840.0
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "root_mode": "separate_height",
+      "loop": false,
+      "include_in_overview": true,
+      "duration_ticks": 24,
+      "frames": [
+        {
+          "source_pose": "dashair_4",
+          "source": "body",
+          "crop_bbox": [
+            13,
+            486,
+            417,
+            923
+          ],
+          "source_root": [
+            220.0,
+            980.0
+          ],
+          "source_foot": [
+            220.0,
+            980.0
+          ],
+          "scale": 0.8351648351648352,
+          "trim_offset_source": [
+            23,
+            496
+          ],
+          "paste_offset": [
+            283,
+            436
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 120.0,
+          "visible_alpha_bbox": [
+            283,
+            436,
+            604,
+            784
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              270,
+              690
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/dashair_4_c5ec95eb693494cb.png",
+            "mask_sha256_raw_l8": "c5ec95eb693494cb76f1a3d6b44c125f2c963c7a3d957b1add42984e0a74a2c0",
+            "mask_size": [
+              404,
+              437
+            ],
+            "mask_source_origin": [
+              13,
+              486
+            ],
+            "mask_bbox_source": [
+              23,
+              496,
+              407,
+              913
+            ],
+            "core_bbox_source": [
+              23,
+              496,
+              407,
+              913
+            ],
+            "retained_alpha_bbox_source": [
+              23,
+              496,
+              407,
+              913
+            ],
+            "selected_core_pixels": 62311,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 7974,
+            "discarded_alpha_sum": 24814,
+            "retained_alpha_pixels": 62311,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  288,
+                  524
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  300,
+                  595
+                ],
+                "radius": 2,
+                "source_alpha_max": 255,
+                "retained_alpha_max": 255,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/air_attack/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 6
+        },
+        {
+          "source_pose": "dashair_5",
+          "source": "body",
+          "crop_bbox": [
+            422,
+            524,
+            847,
+            905
+          ],
+          "source_root": [
+            660.0,
+            990.0
+          ],
+          "source_foot": [
+            660.0,
+            990.0
+          ],
+          "scale": 0.8351648351648352,
+          "trim_offset_source": [
+            432,
+            534
+          ],
+          "paste_offset": [
+            258,
+            459
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 120.0,
+          "visible_alpha_bbox": [
+            258,
+            459,
+            596,
+            760
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              670,
+              730
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/dashair_5_0d27151bbc7f4b2c.png",
+            "mask_sha256_raw_l8": "0d27151bbc7f4b2c96a23def09bb7699e8ea215fe47fa2bde3ccc8b5d8fd51c9",
+            "mask_size": [
+              425,
+              381
+            ],
+            "mask_source_origin": [
+              422,
+              524
+            ],
+            "mask_bbox_source": [
+              432,
+              534,
+              837,
+              895
+            ],
+            "core_bbox_source": [
+              432,
+              534,
+              837,
+              895
+            ],
+            "retained_alpha_bbox_source": [
+              432,
+              534,
+              837,
+              895
+            ],
+            "selected_core_pixels": 56377,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 6261,
+            "discarded_alpha_sum": 21201,
+            "retained_alpha_pixels": 56377,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  682,
+                  539
+                ],
+                "radius": 2,
+                "source_alpha_max": 255,
+                "retained_alpha_max": 255,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  697,
+                  610
+                ],
+                "radius": 2,
+                "source_alpha_max": 252,
+                "retained_alpha_max": 252,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/air_attack/f001.png",
+          "start_tick": 6,
+          "duration_ticks": 7
+        },
+        {
+          "source_pose": "dashair_6",
+          "source": "body",
+          "crop_bbox": [
+            843,
+            523,
+            1189,
+            923
+          ],
+          "source_root": [
+            1095.0,
+            997.0
+          ],
+          "source_foot": [
+            1095.0,
+            997.0
+          ],
+          "scale": 0.8351648351648352,
+          "trim_offset_source": [
+            853,
+            533
+          ],
+          "paste_offset": [
+            246,
+            452
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 120.0,
+          "visible_alpha_bbox": [
+            246,
+            452,
+            518,
+            769
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1100,
+              745
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/dashair_6_be5d4095ead7489d.png",
+            "mask_sha256_raw_l8": "be5d4095ead7489d9955850bd62b974e1870af66fb2c3c604778e27141d11922",
+            "mask_size": [
+              346,
+              400
+            ],
+            "mask_source_origin": [
+              843,
+              523
+            ],
+            "mask_bbox_source": [
+              853,
+              533,
+              1179,
+              913
+            ],
+            "core_bbox_source": [
+              853,
+              533,
+              1179,
+              913
+            ],
+            "retained_alpha_bbox_source": [
+              853,
+              533,
+              1179,
+              913
+            ],
+            "selected_core_pixels": 52193,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 6220,
+            "discarded_alpha_sum": 19911,
+            "retained_alpha_pixels": 52193,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1096,
+                  537
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1111,
+                  608
+                ],
+                "radius": 2,
+                "source_alpha_max": 252,
+                "retained_alpha_max": 252,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/air_attack/f002.png",
+          "start_tick": 13,
+          "duration_ticks": 5
+        },
+        {
+          "source_pose": "dashair_7",
+          "source": "body",
+          "crop_bbox": [
+            1257,
+            530,
+            1637,
+            837
+          ],
+          "source_root": [
+            1480.0,
+            983.0
+          ],
+          "source_foot": [
+            1480.0,
+            983.0
+          ],
+          "scale": 0.8351648351648352,
+          "trim_offset_source": [
+            1267,
+            540
+          ],
+          "paste_offset": [
+            270,
+            470
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 120.0,
+          "visible_alpha_bbox": [
+            270,
+            470,
+            571,
+            710
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1480,
+              710
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/dashair_7_90002bd0293fcbe3.png",
+            "mask_sha256_raw_l8": "90002bd0293fcbe3ae5e140cf5cd279a7db1bd2333252fe3924309a961a408e5",
+            "mask_size": [
+              380,
+              307
+            ],
+            "mask_source_origin": [
+              1257,
+              530
+            ],
+            "mask_bbox_source": [
+              1267,
+              540,
+              1627,
+              827
+            ],
+            "core_bbox_source": [
+              1267,
+              540,
+              1627,
+              827
+            ],
+            "retained_alpha_bbox_source": [
+              1267,
+              540,
+              1627,
+              827
+            ],
+            "selected_core_pixels": 50280,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 5681,
+            "discarded_alpha_sum": 17941,
+            "retained_alpha_pixels": 50280,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1515,
+                  544
+                ],
+                "radius": 2,
+                "source_alpha_max": 255,
+                "retained_alpha_max": 255,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1529,
+                  614
+                ],
+                "radius": 2,
+                "source_alpha_max": 252,
+                "retained_alpha_max": 252,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/air_attack/f003.png",
+          "start_tick": 18,
+          "duration_ticks": 6
+        }
+      ]
+    },
+    "neutral": {
+      "asset_id": "actor.player.proportion.neutral",
+      "size": [
+        1024,
+        1080
+      ],
+      "anchor": [
+        448.0,
+        840.0
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "root_mode": "ground",
+      "loop": false,
+      "include_in_overview": false,
+      "duration_ticks": 1,
+      "frames": [
+        {
+          "source_pose": "dashair_0",
+          "source": "body",
+          "crop_bbox": [
+            74,
+            7,
+            311,
+            487
+          ],
+          "source_root": [
+            195.0,
+            474.0
+          ],
+          "source_foot": [
+            138.0,
+            474.0
+          ],
+          "scale": 0.8351648351648352,
+          "trim_offset_source": [
+            84,
+            17
+          ],
+          "paste_offset": [
+            355,
+            458
+          ],
+          "foot_from_anchor": [
+            -47.604395604395606,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            355,
+            458,
+            536,
+            842
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              195,
+              220
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/dashair_0_fb69dc8a4d298139.png",
+            "mask_sha256_raw_l8": "fb69dc8a4d2981392ed933a2f3773a6a799ce3cc52f3351e93871b833c878866",
+            "mask_size": [
+              237,
+              480
+            ],
+            "mask_source_origin": [
+              74,
+              7
+            ],
+            "mask_bbox_source": [
+              84,
+              17,
+              301,
+              477
+            ],
+            "core_bbox_source": [
+              84,
+              17,
+              301,
+              477
+            ],
+            "retained_alpha_bbox_source": [
+              84,
+              17,
+              301,
+              477
+            ],
+            "selected_core_pixels": 59549,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 5927,
+            "discarded_alpha_sum": 20181,
+            "retained_alpha_pixels": 59549,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  209,
+                  19
+                ],
+                "radius": 2,
+                "source_alpha_max": 250,
+                "retained_alpha_max": 250,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  223,
+                  89
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/neutral/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1
+        }
+      ]
+    }
+  },
+  "proportion_gate": {
+    "schema": "actor_proportions/1",
+    "passed": true,
+    "config": "art/animations/players/swordsman/v7/sources/base_batch_c4/dashair/body_config.json",
+    "audit": "art/animations/players/swordsman/v7/sources/base_batch_c4/dashair/proportions.json",
+    "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+    "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+    "reference_visible_head_ratio": 0.15216004589375082,
+    "tolerance_fraction": 0.08,
+    "target_standing_height": 380,
+    "measured_unique_poses": 8,
+    "required_unique_poses": 8,
+    "missing_pose_annotations": [],
+    "unknown_pose_annotations": [],
+    "neutral_checks": [
+      {
+        "source": "body",
+        "neutral_height": 455,
+        "head_ratio_error": 0.011081147764508525,
+        "configured_height_error": 0.0
+      }
+    ],
+    "measurements": [
+      {
+        "source": "body",
+        "pose_id": "dashair_0",
+        "head_source_px": 70,
+        "head_landmarks": {
+          "hair_top": [
+            209,
+            19
+          ],
+          "chin": [
+            223,
+            89
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 455,
+        "scale_basis_verified": true,
+        "head_output_px": 58.46153846153846,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.011081147764508525,
+        "landmark_only_error_interval": [
+          -0.0322509014253991,
+          0.05441319695441593
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "dashair_1",
+        "head_source_px": 72,
+        "head_landmarks": {
+          "hair_top": [
+            784,
+            130
+          ],
+          "chin": [
+            797,
+            202
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 455,
+        "scale_basis_verified": true,
+        "head_output_px": 60.13186813186813,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.03996918055777998,
+        "landmark_only_error_interval": [
+          -0.003362868632127536,
+          0.08330122974768761
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "dashair_2",
+        "head_source_px": 73,
+        "head_landmarks": {
+          "hair_top": [
+            1155,
+            121
+          ],
+          "chin": [
+            1163,
+            194
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 455,
+        "scale_basis_verified": true,
+        "head_output_px": 60.967032967032964,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.05441319695441593,
+        "landmark_only_error_interval": [
+          0.011081147764508525,
+          0.09774524614432334
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "dashair_3",
+        "head_source_px": 71,
+        "head_landmarks": {
+          "hair_top": [
+            1518,
+            120
+          ],
+          "chin": [
+            1533,
+            191
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 455,
+        "scale_basis_verified": true,
+        "head_output_px": 59.2967032967033,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.025525164161144254,
+        "landmark_only_error_interval": [
+          -0.017806885028763264,
+          0.06885721335105166
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "dashair_4",
+        "head_source_px": 71,
+        "head_landmarks": {
+          "hair_top": [
+            288,
+            524
+          ],
+          "chin": [
+            300,
+            595
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 455,
+        "scale_basis_verified": true,
+        "head_output_px": 59.2967032967033,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.025525164161144254,
+        "landmark_only_error_interval": [
+          -0.017806885028763264,
+          0.06885721335105166
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "dashair_5",
+        "head_source_px": 71,
+        "head_landmarks": {
+          "hair_top": [
+            682,
+            539
+          ],
+          "chin": [
+            697,
+            610
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 455,
+        "scale_basis_verified": true,
+        "head_output_px": 59.2967032967033,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.025525164161144254,
+        "landmark_only_error_interval": [
+          -0.017806885028763264,
+          0.06885721335105166
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "dashair_6",
+        "head_source_px": 71,
+        "head_landmarks": {
+          "hair_top": [
+            1096,
+            537
+          ],
+          "chin": [
+            1111,
+            608
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 455,
+        "scale_basis_verified": true,
+        "head_output_px": 59.2967032967033,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.025525164161144254,
+        "landmark_only_error_interval": [
+          -0.017806885028763264,
+          0.06885721335105166
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "dashair_7",
+        "head_source_px": 70,
+        "head_landmarks": {
+          "hair_top": [
+            1515,
+            544
+          ],
+          "chin": [
+            1529,
+            614
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 455,
+        "scale_basis_verified": true,
+        "head_output_px": 58.46153846153846,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.011081147764508525,
+        "landmark_only_error_interval": [
+          -0.0322509014253991,
+          0.05441319695441593
+        ],
+        "caveat": null
+      }
+    ],
+    "failures": [],
+    "artwork_approved": false,
+    "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+  }
+}

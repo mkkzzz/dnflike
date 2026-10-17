@@ -1,0 +1,257 @@
+{
+  "schema": "swordsman_base_batch/1",
+  "revision": "v7_base_batch_c4",
+  "status": "source_review",
+  "checkpoint_only": true,
+  "complete": false,
+  "date": "2026-10-17",
+  "fps": 60,
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "actor_includes_weapon": false,
+  "hitstop_baked": false,
+  "clips": {
+    "attack1": {
+      "manifest": "attack1/manifest.json",
+      "manifest_sha256": "5b027debb62633b28b88dc21042fafaa683d320ed34ef0f622df77907312b782",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 30,
+      "source_group": "attack1",
+      "frame_count": 7
+    },
+    "walk": {
+      "manifest": "walk/manifest.json",
+      "manifest_sha256": "dc7a4bfd678b228f57824067d4f3ddeaf3768c074b393fa6ab4e050de3840e88",
+      "loop": true,
+      "root_mode": "ground",
+      "duration_ticks": 36,
+      "source_group": "walk",
+      "frame_count": 6
+    },
+    "walk_start": {
+      "manifest": "walk_start/manifest.json",
+      "manifest_sha256": "76d64827bd7c52b9de2a3a04c9232fdc9091a349353d30376f1c1edc0dfa2db3",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 10,
+      "source_group": "walk",
+      "frame_count": 3
+    },
+    "walk_stop": {
+      "manifest": "walk_stop/manifest.json",
+      "manifest_sha256": "b33f25d2ca5b5e81034c6fc37e1390d514055409a5fbeb21358133e16cbdb529",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 10,
+      "source_group": "walk",
+      "frame_count": 2
+    },
+    "run": {
+      "manifest": "run/manifest.json",
+      "manifest_sha256": "a882e22862739ad1e893c1c71c5ac9813177ff0d2e083b064e724e8acfd5c9d2",
+      "loop": true,
+      "root_mode": "separate_height",
+      "duration_ticks": 24,
+      "source_group": "run",
+      "frame_count": 6
+    },
+    "run_start": {
+      "manifest": "run_start/manifest.json",
+      "manifest_sha256": "26bea162d446f3bb484f1f1568421d9913bb07432a6596290368772efdf47697",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 9,
+      "source_group": "run",
+      "frame_count": 3
+    },
+    "run_stop": {
+      "manifest": "run_stop/manifest.json",
+      "manifest_sha256": "e18f89937b42e7cde3d7c4509e56b4dca0adffecc1a6d96c8f5fec8246f13234",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 10,
+      "source_group": "run",
+      "frame_count": 2
+    },
+    "idle": {
+      "manifest": "idle/manifest.json",
+      "manifest_sha256": "76654cfbd28d1b049db02e86d84380631985ef3fd5cc9d64acc7f3aef9ba057d",
+      "loop": true,
+      "root_mode": "ground",
+      "duration_ticks": 72,
+      "source_group": "idle",
+      "frame_count": 4
+    },
+    "attack2": {
+      "manifest": "attack2/manifest.json",
+      "manifest_sha256": "ae6d9f9cd9ffc558790f773aa3fb769d717c9cd9084e5fb9b9fd4747296cd6d1",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 32,
+      "source_group": "attack2",
+      "frame_count": 7
+    },
+    "attack3": {
+      "manifest": "attack3/manifest.json",
+      "manifest_sha256": "f54049c54051854ed65c78c6d6ef9a9fb5eaafe0b72d974cc958d3c88f73410e",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 41,
+      "source_group": "attack3",
+      "frame_count": 7
+    },
+    "dash_attack": {
+      "manifest": "dash_attack/manifest.json",
+      "manifest_sha256": "eff18965db12ad56c0ce35f014d2059447b9d83e214976fe7260902a02f7c098",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 32,
+      "source_group": "dashair",
+      "frame_count": 4
+    },
+    "air_attack": {
+      "manifest": "air_attack/manifest.json",
+      "manifest_sha256": "327fa475674287c56b53f918225be36ef6454ae7ea005605df6556c9bb63d29b",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 24,
+      "source_group": "dashair",
+      "frame_count": 4
+    },
+    "guard_start": {
+      "manifest": "guard_start/manifest.json",
+      "manifest_sha256": "e0a36a8fb9347a377fbf704448121ddd8bbcc65ad41c24025f3d38e1d347b83a",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 6,
+      "source_group": "guard",
+      "frame_count": 2
+    },
+    "guard": {
+      "manifest": "guard/manifest.json",
+      "manifest_sha256": "e290f8512394571b9ec3b8552e52cf300ae31ada978f15c375c2771d89153c6f",
+      "loop": true,
+      "root_mode": "ground",
+      "duration_ticks": 12,
+      "source_group": "guard",
+      "frame_count": 1
+    },
+    "guard_recoil": {
+      "manifest": "guard_recoil/manifest.json",
+      "manifest_sha256": "f2502890706c7ce583862b79810a41952770edd509e0a1ee798a69f3f2965835",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 10,
+      "source_group": "guard",
+      "frame_count": 2
+    },
+    "parry": {
+      "manifest": "parry/manifest.json",
+      "manifest_sha256": "49ba2d3e7e91b8697d245486fb563b4cbb4b2ff04dd8824fbbca3c7b18f4c1d9",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 9,
+      "source_group": "guard",
+      "frame_count": 2
+    },
+    "guard_end": {
+      "manifest": "guard_end/manifest.json",
+      "manifest_sha256": "ab2de2dab880552d0cc5c52c743c23aacf94e0b05897b258fb0d60a59040c933",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 9,
+      "source_group": "guard",
+      "frame_count": 2
+    },
+    "turn": {
+      "manifest": "turn/manifest.json",
+      "manifest_sha256": "c7eb4b4a0197b9e4c605c78906021450f7e0f5f9e79e20078f5f99abcb66269f",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 9,
+      "source_group": "guard",
+      "frame_count": 3
+    },
+    "jump_start": {
+      "manifest": "jump_start/manifest.json",
+      "manifest_sha256": "daf4247dacf7b2ebdd606da0fb11bcf8057fd9ff38a0186545d4b3e04f96fd24",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 8,
+      "source_group": "jump",
+      "frame_count": 1
+    },
+    "jump_rise": {
+      "manifest": "jump_rise/manifest.json",
+      "manifest_sha256": "96158b4b942c73654004d8250ab10e06eb234dcc09c1fd96b70988abd1f0e86a",
+      "loop": true,
+      "root_mode": "separate_height",
+      "duration_ticks": 8,
+      "source_group": "jump",
+      "frame_count": 1
+    },
+    "jump_apex": {
+      "manifest": "jump_apex/manifest.json",
+      "manifest_sha256": "226cde1a2cdeb8f60da4013aaf59d999d9cd135628ccb0c2e82827db93b2e04c",
+      "loop": true,
+      "root_mode": "separate_height",
+      "duration_ticks": 6,
+      "source_group": "jump",
+      "frame_count": 1
+    },
+    "jump_fall": {
+      "manifest": "jump_fall/manifest.json",
+      "manifest_sha256": "2533c76dbfd292b5aa046a128ab3cf854c9c25d29d1a77b6a83fb343f520fbec",
+      "loop": true,
+      "root_mode": "separate_height",
+      "duration_ticks": 9,
+      "source_group": "jump",
+      "frame_count": 1
+    },
+    "jump_land": {
+      "manifest": "jump_land/manifest.json",
+      "manifest_sha256": "c8e44a68b9400fcb94fffe0826d5ca96598fc9c4d5373b77d0d3bb5a5ae83bf1",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 13,
+      "source_group": "jump",
+      "frame_count": 3
+    },
+    "jump": {
+      "manifest": "jump/manifest.json",
+      "manifest_sha256": "e8a44cd340463d110a64a930bc7d2f3c6f071ad078071260c1901ea70bdad956",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 38,
+      "source_group": "jump",
+      "frame_count": 5
+    },
+    "back_dash": {
+      "manifest": "back_dash/manifest.json",
+      "manifest_sha256": "9f4aac5e82bf053af0bb5f35983d1e5cd359506dc38db9cd74355e1c2901a49d",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 24,
+      "source_group": "jump",
+      "frame_count": 4
+    }
+  },
+  "pending_groups": [
+    "hit",
+    "death"
+  ],
+  "scope": "Partial non-skill art checkpoint. Clip count includes transitions and air-state segments. Not runtime coverage.",
+  "final_batch_validation_passed": false,
+  "artwork_approved": false,
+  "integration_allowed": false,
+  "coverage": "coverage.json",
+  "checkpoint": "../../sources/base_batch_c4/checkpoint.json"
+}

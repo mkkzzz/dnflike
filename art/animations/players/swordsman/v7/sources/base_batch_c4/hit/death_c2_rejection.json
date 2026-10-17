@@ -1,0 +1,7 @@
+{
+  "status": "rejected_pose_only",
+  "source": "body_c2.png",
+  "pose_id": "hit_7",
+  "reason": "Head actually oversized after correctly rotating inspection view and locating FRONT bottom jaw rather than neck. Hair[1195,849], jaw[1264,796], axis[0.9396926,-0.3420201] => approx83px vs expected72px. Original provisional jaw[1267,810] was neck, not valid. Other selected source poses stay separately audited.",
+  "next": "real head-only image edit body_c3, no scripted head rescaling"
+}

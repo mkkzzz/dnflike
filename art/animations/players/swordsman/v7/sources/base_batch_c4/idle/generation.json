@@ -1,0 +1,30 @@
+{
+  "mode": "builtin",
+  "tool": "image_gen.imagegen",
+  "model": "not_exposed",
+  "seed": null,
+  "generations": [
+    {
+      "output": "body_c1.png",
+      "sha256": "fe7cd6a2b70698f334e5ecd04d329bf7f1bbbfa5f3b3949d15cf85c3bb736308",
+      "actual_size": [
+        1254,
+        1254
+      ],
+      "raw_basename": "exec-8bd01df5-7c2f-4822-bbf3-f059b4c71333.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_body.txt",
+      "prompt": "Use case: identity-preserve\nAsset type: exactly FOUR source figures for a small adult swordsman IDLE BREATHING loop.\nImage1 is the existing weaponless body sheet; use its TOP ROW SECOND ready figure as exact pose/identity design. Image2 is the approved adult body proportions. Derive new body poses from this already designed weapon-holding stance; keep the same empty right fist/grip and no weapons.\nMake a transparent 2x2 sheet (2048x2048 requested), generous margins, exactly4 full-body figures at SAME anatomical scale, not8.\nTop-left: fully upright neutral ruler with same adult anatomy.\nTop-right: READY resting middle breath. Low relaxed stance, knees soft, right fist at hip, left hand free, matching reference1's top-row second figure.\nBottom-left: same READY stance with subtle INHALE. Chest rises a little, coat shoulder lifts a little; wrist/fist, head size, feet and leg shapes stay consistent.\nBottom-right: same READY stance with subtle EXHALE. Chest relaxes, shoulders lower slightly; same hands/feet/anatomy. Only small natural breathing change, not an arm swing or leg transition.\nVisible hair-to-true-bottom-jaw EXACTLY15.2% of the neutral standing height. Slim adult long legs and SMALL mature head matching references, no chibi enlargement. Silver spiky hair red forelock, black high collar long red-lined coat, two silver horizontal chest buckles, both red bandaged forearms, black legs with silver grey knee/shin armor. All jaws unobscured. No weapon/sheath/spare hilt, no effect, shadow, labels or watermark.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+          "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        }
+      ]
+    }
+  ]
+}

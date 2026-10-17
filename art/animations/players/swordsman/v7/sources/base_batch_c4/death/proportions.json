@@ -1,0 +1,113 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c4/death/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Manually selected true hair tips and bottom jaw; source crop/point overlay inspected. No lip/neck substitutions, +/-3 source pixels.",
+  "sources": {
+    "body": {
+      "sha256": "76bcb9f411c6f37bb791db281f2380ec512191430db44d129270129f52f9fa56",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 18,
+        "standing_bottom_y": 924,
+        "sole": [
+          214,
+          924
+        ],
+        "crop_bbox": [
+          90,
+          5,
+          555,
+          945
+        ],
+        "head": {
+          "hair_top": [
+            354,
+            18
+          ],
+          "chin": [
+            371,
+            158
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "death_0",
+      "head": {
+        "hair_top": [
+          354,
+          18
+        ],
+        "chin": [
+          371,
+          158
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "death_1",
+      "head": {
+        "hair_top": [
+          1053,
+          340
+        ],
+        "chin": [
+          1075,
+          480
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "death_2",
+      "head": {
+        "hair_top": [
+          133,
+          1107
+        ],
+        "chin": [
+          255,
+          1039
+        ],
+        "projection": "reviewed_in_plane_roll"
+      },
+      "uncertainty_px": 3,
+      "projection_profile": {
+        "file": "death_2_projection.json",
+        "sha256": "e8e166c1434fdd616502fcc65bc96d47aacd97e29af29538f79711701d82646c"
+      }
+    }
+  ],
+  "landmark_semantics_reviewed": false,
+  "checkpoint_review": {
+    "date": "2026-10-17",
+    "pending": true,
+    "reason": "death_2 provisional crown/jaw overlay and actual head scale need reinspection. No body/layer export accepted."
+  },
+  "provisional_visual_review": {
+    "reviewer": "Codex source-pixel visual landmark review; not user art/runtime approval",
+    "annotation_signature": "d0b0c6f0251e81b83a34205eb69d3fad175ff8fcbeba506c076090a4910351e6",
+    "files": [
+      {
+        "file": "marks_body.png",
+        "sha256": "ec08b23308181fb1fb88d469b0e13d10636ec1c46531b2dd254f0c9cdfdfd3b2"
+      },
+      {
+        "file": "heads_review.png",
+        "sha256": "60f31da6f9c054314244f48acc51a03e4c121e71868a57cd2317386ba8064a03"
+      }
+    ]
+  }
+}

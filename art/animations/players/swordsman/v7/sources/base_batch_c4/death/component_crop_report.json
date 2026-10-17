@@ -1,0 +1,56 @@
+{
+  "method": "Explicit authored seeds, connected alpha core, preserve entire existing component plus transparent crop margin; no pose-grid inference or art repair.",
+  "poses": [
+    {
+      "source": "body",
+      "pose": "death_2",
+      "component_bbox": [
+        123,
+        969,
+        1175,
+        1228
+      ],
+      "crop_bbox": [
+        113,
+        959,
+        1185,
+        1238
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "death_1",
+      "component_bbox": [
+        629,
+        336,
+        1223,
+        915
+      ],
+      "crop_bbox": [
+        619,
+        326,
+        1233,
+        925
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "death_0",
+      "component_bbox": [
+        105,
+        16,
+        529,
+        926
+      ],
+      "crop_bbox": [
+        95,
+        6,
+        539,
+        936
+      ],
+      "source_edge_clipped": false
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "body": "body_c2.png excluding run_3/run_7",
+  "patch": "body_c3.png only repaired run_3 with independent neutral calibration",
+  "brake": "guard/body_c1.png guard_7 pivot plant reused as run_7 braking/start transition; no new drawing counted",
+  "reason": "Original run brake front boot clipped at source edge; do not silently trim toe or relax gate."
+}

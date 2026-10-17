@@ -1,0 +1,232 @@
+{
+  "schema": "swordsman_base_batch_checkpoint/1",
+  "date": "2026-10-17",
+  "status": "source_review",
+  "stop_reason": "User offline; save progress and continue next session.",
+  "complete": false,
+  "artwork_approved": false,
+  "integration_allowed": false,
+  "generation_mode": "builtin",
+  "generation_tool": "image_gen.imagegen",
+  "exported_clip_candidates": 25,
+  "exported_body_groups": 9,
+  "groups": {
+    "attack1": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "attack1"
+      ],
+      "landmark_review_pending": false
+    },
+    "walk": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "walk",
+        "walk_start",
+        "walk_stop"
+      ],
+      "landmark_review_pending": false
+    },
+    "run": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "run",
+        "run_start",
+        "run_stop"
+      ],
+      "landmark_review_pending": false
+    },
+    "idle": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "idle"
+      ],
+      "landmark_review_pending": false
+    },
+    "attack2": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "attack2"
+      ],
+      "landmark_review_pending": false
+    },
+    "attack3": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "attack3"
+      ],
+      "landmark_review_pending": false
+    },
+    "dashair": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "dash_attack",
+        "air_attack"
+      ],
+      "landmark_review_pending": false
+    },
+    "guard": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "guard_start",
+        "guard",
+        "guard_recoil",
+        "parry",
+        "guard_end",
+        "turn"
+      ],
+      "landmark_review_pending": false
+    },
+    "jump": {
+      "body_manifest_exists": true,
+      "exported_clips": [
+        "jump_start",
+        "jump_rise",
+        "jump_apex",
+        "jump_fall",
+        "jump_land",
+        "jump",
+        "back_dash"
+      ],
+      "landmark_review_pending": false
+    },
+    "hit": {
+      "body_manifest_exists": false,
+      "exported_clips": [],
+      "landmark_review_pending": true
+    },
+    "death": {
+      "body_manifest_exists": false,
+      "exported_clips": [],
+      "landmark_review_pending": true
+    }
+  },
+  "source_inventory": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/body_c1.png",
+      "sha256": "f4a949d9fdc6c4f8bc462b995066184556bd66f50264899d28a68f9420ed7c91"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/walk/design_c1.png",
+      "sha256": "cc1bb8c6a1c2584005958d540e29d9bd117477a1013cfff9b07ba86ff5f336a2"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/run/body_c1.png",
+      "sha256": "983a85d27dffbd955aadfacd20e5d47c4adcbdd59a2d9c590b9be4d500b7353d"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/run/body_c2.png",
+      "sha256": "3ca8062a48f80accf8c848752504710b596bb861c5ed15dad13f0b3fe9f3cc36"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/run/body_c3.png",
+      "sha256": "c5b04e76ead9ca91103784a48dd0a12fd042f269b92133db6c613a8df2270153"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/run/design_c1.png",
+      "sha256": "cca3663bafc1a23de7a2cb0c8c11c793b7c2a14581dd266d6f52bd3b4509a9b0"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/idle/body_c1.png",
+      "sha256": "fe7cd6a2b70698f334e5ecd04d329bf7f1bbbfa5f3b3949d15cf85c3bb736308"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack2/body_c1.png",
+      "sha256": "32ac011b8b81444facbf860bc93c4e50808f8ca46e0b94b2372d427d8ad5f029"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack2/body_c2.png",
+      "sha256": "13879bb5e60fcdbef5da9cac32e10b7db10893e4ff79b0ed21625fc6313316ec"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack2/body_c3.png",
+      "sha256": "b3f227d675f818ae404f43072e4a97fa3f03b471bcd518f6b2ec00ccb2f74aad"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack2/design_c1.png",
+      "sha256": "ddc3199be1930787c829350b49259029078a179a46f07c01454d22ab216c82b9"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack3/body_c1.png",
+      "sha256": "090ded1c37a49e93b595e3433668c96b0fa532657e28407ad2d8d2f26bbb2c26"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack3/body_c2.png",
+      "sha256": "65aa6cf9752df098b51a5f3687019379308f50bcea676a4340930157b7952214"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack3/design_c1.png",
+      "sha256": "90e17b262cba4f2513c7fde88c82f66c24cb04101e6651e4482d536cd4c99710"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/dashair/body_c1.png",
+      "sha256": "68d934158706830d09478bcd3ef46efd32e3a664c5cc58888f42d7cfe6996c5d"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/dashair/body_c2.png",
+      "sha256": "4a5f0f39f9240ed056fcfa721c8904dbf61112358bbc10fabf3c119092f2af3e"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/dashair/design_c1.png",
+      "sha256": "171c6d531c0e34ae41735880a786372b4d5f2d3a12760d0f8acca1cde2876ed9"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/guard/body_c1.png",
+      "sha256": "3b7c875969b167d72b25c23fc04baac099eed4cd57a37a0a567e9eb63ef45cdb"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/guard/design_c1.png",
+      "sha256": "a46327a32f4308e872a32159abebe4863bc1f04a1a3f0b44402f9f14b5eac523"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/jump/body_c1.png",
+      "sha256": "849353e29ad2ad39a39565ea861cae6d18c49957f7b48fa14971f62211bd9353"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/jump/body_c2.png",
+      "sha256": "b04f757d49b6c4d4f6256360a12342b3dbfe29c728e572cbca7b1a0936143e9f"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/jump/design_c1.png",
+      "sha256": "e36de1597f785f3d74ed86b495e2349f083f4b8c95b98f3b68f37840ebc63831"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/body_c1.png",
+      "sha256": "f5296e25744e6a338d71efa9d92c27c12eed7a77b7710a58515718a9182ed527"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/body_c2.png",
+      "sha256": "84b98ba478417480a10c17861825371183ff6fbc432d30a8331b772e4f3295ea"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/body_c3.png",
+      "sha256": "21331f83ab43543abb0a1c383e22f25ebeed56666ddb808e144afda4cbe14670"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/body_c4.png",
+      "sha256": "eb687efdcda622a8e0a7e2e15da4481aef72ce7560fb93727fe814ba7b96a0bc"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/design_c1.png",
+      "sha256": "41402fb86f0974d69ce3adef5f7b88515be5e4cc5c099eb75cd4e0ab1dcd4dde"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/death/body_c1.png",
+      "sha256": "887e7d0dc8616439c03547693c341b16e96910fa1a34c5095dc7a282b3d83713"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/death/body_c2.png",
+      "sha256": "76bcb9f411c6f37bb791db281f2380ec512191430db44d129270129f52f9fa56"
+    }
+  ],
+  "last_export_result": "exit 1: head_landmark_not_visible:hit_4; no active generation/export process",
+  "resume_order": [
+    "read report and checkpoint",
+    "fix hit_4 and death_2 genuine source-pixel landmark review",
+    "rebind reviewed source/profile/evidence hashes",
+    "rebuild hit and death",
+    "complete runtime coverage mapping and full batch validation",
+    "present slow3x same-package review; integrate only after required gates"
+  ],
+  "report": "docs/reports/ws2/2026-10/2026-10-17_V7基础动作c4阶段保存与续做.md"
+}

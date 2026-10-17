@@ -1,0 +1,4 @@
+Use case: precise-object-edit
+Image1 is the THREE-figure edit target. Single required change: the BOTTOM prone DEAD figure's complete hair+face HEAD is oversized relative to the upright neutral.
+Reduce ONLY that entire bottom head by 10 percent, preserve its EXACT closed-eye face, spiky hairstyle, lying angle, silhouette shape and pose, and reconnect neck naturally. Current true hair-crown to FRONT chin measured after rotating upright is160px; target144px, close to the other two heads around140px. Keep eyes CLOSED.
+Do not alter neutral/kneeling heads, any body/hand/leg/coat/armor, canvas size or transparent margins. Do not shrink whole prone figure. No weapons/text/effects/shadows.

@@ -1,0 +1,141 @@
+{
+  "method": "Explicit authored seeds, connected alpha core, preserve entire existing component plus transparent crop margin; no pose-grid inference or art repair.",
+  "poses": [
+    {
+      "source": "body",
+      "pose": "attack3_1",
+      "component_bbox": [
+        380,
+        125,
+        785,
+        499
+      ],
+      "crop_bbox": [
+        370,
+        115,
+        795,
+        509
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "attack3_2",
+      "component_bbox": [
+        821,
+        44,
+        1193,
+        500
+      ],
+      "crop_bbox": [
+        811,
+        34,
+        1203,
+        510
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "attack3_3",
+      "component_bbox": [
+        1252,
+        109,
+        1658,
+        501
+      ],
+      "crop_bbox": [
+        1242,
+        99,
+        1668,
+        511
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "attack3_4",
+      "component_bbox": [
+        20,
+        550,
+        405,
+        902
+      ],
+      "crop_bbox": [
+        10,
+        540,
+        415,
+        912
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "attack3_5",
+      "component_bbox": [
+        427,
+        601,
+        834,
+        899
+      ],
+      "crop_bbox": [
+        417,
+        591,
+        844,
+        909
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "attack3_6",
+      "component_bbox": [
+        866,
+        530,
+        1216,
+        902
+      ],
+      "crop_bbox": [
+        856,
+        520,
+        1226,
+        912
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "attack3_7",
+      "component_bbox": [
+        1242,
+        551,
+        1647,
+        903
+      ],
+      "crop_bbox": [
+        1232,
+        541,
+        1657,
+        913
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "attack3_0",
+      "component_bbox": [
+        55,
+        47,
+        275,
+        498
+      ],
+      "crop_bbox": [
+        45,
+        37,
+        285,
+        508
+      ],
+      "source_edge_clipped": false
+    }
+  ]
+}

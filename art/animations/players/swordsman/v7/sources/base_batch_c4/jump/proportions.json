@@ -1,0 +1,184 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c4/jump/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Manually selected true hair tips and bottom jaw; source crop/point overlay inspected. No lip/neck substitutions, +/-3 source pixels.",
+  "sources": {
+    "body": {
+      "sha256": "b04f757d49b6c4d4f6256360a12342b3dbfe29c728e572cbca7b1a0936143e9f",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 30,
+        "standing_bottom_y": 483,
+        "sole": [
+          139,
+          483
+        ],
+        "crop_bbox": [
+          65,
+          15,
+          315,
+          493
+        ],
+        "head": {
+          "hair_top": [
+            210,
+            30
+          ],
+          "chin": [
+            225,
+            96
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "jump_0",
+      "head": {
+        "hair_top": [
+          210,
+          30
+        ],
+        "chin": [
+          225,
+          96
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "jump_1",
+      "head": {
+        "hair_top": [
+          697,
+          159
+        ],
+        "chin": [
+          709,
+          224
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "jump_2",
+      "head": {
+        "hair_top": [
+          1067,
+          31
+        ],
+        "chin": [
+          1085,
+          96
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "jump_3",
+      "head": {
+        "hair_top": [
+          1508,
+          39
+        ],
+        "chin": [
+          1520,
+          104
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "jump_4",
+      "head": {
+        "hair_top": [
+          237,
+          501
+        ],
+        "chin": [
+          252,
+          566
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "jump_5",
+      "head": {
+        "hair_top": [
+          680,
+          606
+        ],
+        "chin": [
+          693,
+          671
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "jump_6",
+      "head": {
+        "hair_top": [
+          1031,
+          507
+        ],
+        "chin": [
+          1048,
+          573
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "jump_7",
+      "head": {
+        "hair_top": [
+          1544,
+          544
+        ],
+        "chin": [
+          1548,
+          610
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ],
+  "landmark_semantics_reviewed": true,
+  "visual_review": {
+    "reviewer": "Codex source-pixel visual landmark review; not user art/runtime approval",
+    "annotation_signature": "13b08f5f8f7343b0a8c8da0e2deeaa7c8cb1a8d0ab174e7b9577dcd5c61137a6",
+    "files": [
+      {
+        "file": "marks_body.png",
+        "sha256": "9315d3a6446dc1927c0cb833c20ebf71ee6c7a4f9aef4aa007e33299dd0db6c9"
+      },
+      {
+        "file": "heads_review.png",
+        "sha256": "d0fd9348f472435b1b55f089641c5f7583cfda66ad5de5ed5341b393c0985f91"
+      }
+    ]
+  }
+}

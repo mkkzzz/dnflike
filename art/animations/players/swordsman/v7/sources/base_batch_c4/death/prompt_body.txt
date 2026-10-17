@@ -1,0 +1,9 @@
+Use case: identity-preserve
+Asset type: NEW TWO-STATE DEATH/REVIVE source sheet derived from existing swordsman design, with neutral ruler. Actual transparent background, requested2048x2048.
+Image1 is the approved adult proportions/style pair. Image2 is the existing body and right-hand grip design, especially fallen and getting-up body shapes.
+Make EXACTLY THREE full-body figures at ONE IDENTICAL anatomical pixel scale:
+TOP LEFT: upright neutral ruler, fully standing adult height about700px at delivered1254px canvas scale, arms relaxed, empty curled right-hand grip.
+TOP RIGHT: GET-UP KNEEL, same anatomical pixel scale, one knee on floor, one foot planted, free left palm pushes floor, right curled fist keeps its empty sword-grip, torso rising, face upright and fully visible.
+BOTTOM ACROSS FULL WIDTH: FULLY DEAD resting on back/side, head LEFT feet RIGHT, arms/legs relaxed, closed eyes and calm lifeless face, NO wounds/gore. Whole prone length must be consistent with the700px standing person, not shrunken. Right hand keeps an empty relaxed forward sword-grip away from head. Draw full head/boots without crop.
+CRITICAL HEAD SCALE: All THREE heads must be the SAME ANATOMICAL SIZE as each other and approved reference: highest hair-crown to TRUE FRONT bottom jaw ~15.2% of the upright standing height, about106px for700px standing ruler. For the lying head compare after rotating upright: SAME head dimension, neither tiny nor oversized. Neck is NOT the front chin. Preserve head shape when rotated. Dead eyes MUST be CLOSED. No exaggeration of baby-like round head.
+Same silver spiky hair red forelock, sharp adult face, long adult legs, black high collar red-lined long coat, TWO horizontal silver chest buckles, both red bandaged forearms, black pants, silver-grey knee/shin armor. No weapon/guard/handle/sheath, no text/labels/shadows/effects. All figures at least25px away from canvas edges.

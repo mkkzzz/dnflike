@@ -56,6 +56,41 @@ def span(mark, image_size=None):
     return height
 
 
+def pose_span(entry, source_sha, audit, audit_path, repo, image_size):
+    """A separately reviewed, source-bound roll profile; never foreshortening.
+
+    Falling bodies can rotate the head in the image plane. Their hair-to-jaw
+    envelope must be measured on that reviewed axis, not vertical screen y.
+    The profile cannot supply a scale correction or relax the existing limit.
+    """
+    mark=entry['head']
+    if mark.get('projection')=='upright_head':return span(mark,image_size)
+    if mark.get('projection')!='reviewed_in_plane_roll':
+        return span(mark,image_size)  # preserve fail-closed historical behavior
+    binding=entry.get('projection_profile',{})
+    path=resolve(Path(audit_path).parent,binding.get('file',''))
+    if not path.is_file() or not path.is_relative_to(Path(repo).resolve()) or digest(path)!=binding.get('sha256'):
+        raise ValueError('Missing/stale reviewed head-roll profile')
+    review=read_json(path)
+    if (review.get('schema')!='actor_head_roll_review/1' or not review.get('landmark_semantics_reviewed')
+        or review.get('source_sha256')!=source_sha or review.get('pose_id')!=entry['pose_id']
+        or review.get('profile_sha256')!=audit['profile_sha256'] or review.get('head')!=mark
+        or review.get('perspective_scale')!=1):
+        raise ValueError('Head-roll profile binding/semantics invalid; perspective scaling is forbidden')
+    axis=review['axis_down'];length=math.hypot(*axis)
+    if len(axis)!=2 or not math.isfinite(length) or abs(length-1)>.001:
+        raise ValueError('Reviewed head axis must be a finite unit vector')
+    evidence=resolve(Path(audit_path).parent,review['evidence_file'])
+    if not evidence.is_file() or digest(evidence)!=review['evidence_sha256']:
+        raise ValueError('Missing/stale visual head-roll comparison evidence')
+    for point in [mark['hair_top'],mark['chin']]:
+        if len(point)!=2 or any(not math.isfinite(n) for n in point) or not(0<=point[0]<image_size[0] and 0<=point[1]<image_size[1]):
+            raise ValueError('Head-roll landmark outside source')
+    value=sum((b-a)*n for a,b,n in zip(mark['hair_top'],mark['chin'],axis))
+    if value<=0:raise ValueError('Reviewed roll axis points away from jaw')
+    return value
+
+
 def assess(config_path, audit_path, repo=REPO):
     repo, config_path, audit_path = Path(repo).resolve(), Path(config_path).resolve(), Path(audit_path).resolve()
     config, audit = read_json(config_path), read_json(audit_path)
@@ -164,7 +199,7 @@ def assess(config_path, audit_path, repo=REPO):
         if name not in sources:
             continue
         equivalent, trusted, size, alpha = sources[name]
-        head = span(entry['head'], size)
+        head = pose_span(entry, audit['sources'][name]['sha256'], audit, audit_path, repo, size)
         if not visible_points(alpha, entry['head']):
             failures.append('head_landmark_not_visible:' + pose_id)
         if key in pose_boxes:

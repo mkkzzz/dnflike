@@ -1,0 +1,404 @@
+{
+  "revision": "v7_base_batch_c4_guard_body",
+  "output_dir": "../../../exports/base_batch_c4_body/guard",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "body_c1.png",
+      "standing_height": 468
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "source_bound_manual_landmarks",
+    "G2": "batch_candidate_user_direction_accepted",
+    "G3": "layered_pending_final_review",
+    "G4": "pending_final_batch_review"
+  },
+  "clips": {
+    "guard_start": {
+      "asset_id": "actor.player.base.guard.start",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "guard_1",
+          "source": "body",
+          "crop_bbox": [
+            474,
+            77,
+            805,
+            501
+          ],
+          "root": [
+            645,
+            490
+          ],
+          "foot": [
+            645,
+            490
+          ],
+          "component_seed": [
+            650,
+            275
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 3
+        },
+        {
+          "id": "guard_2",
+          "source": "body",
+          "crop_bbox": [
+            876,
+            74,
+            1250,
+            501
+          ],
+          "root": [
+            1055,
+            490
+          ],
+          "foot": [
+            1055,
+            490
+          ],
+          "component_seed": [
+            1050,
+            270
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 3
+        }
+      ]
+    },
+    "guard": {
+      "asset_id": "actor.player.base.guard",
+      "loop": true,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "guard_2",
+          "source": "body",
+          "crop_bbox": [
+            876,
+            74,
+            1250,
+            501
+          ],
+          "root": [
+            1055,
+            490
+          ],
+          "foot": [
+            1055,
+            490
+          ],
+          "component_seed": [
+            1050,
+            270
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 12
+        }
+      ]
+    },
+    "guard_recoil": {
+      "asset_id": "actor.player.base.guard.recoil",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "guard_3",
+          "source": "body",
+          "crop_bbox": [
+            1303,
+            103,
+            1654,
+            501
+          ],
+          "root": [
+            1460,
+            487
+          ],
+          "foot": [
+            1460,
+            487
+          ],
+          "component_seed": [
+            1460,
+            285
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 5
+        },
+        {
+          "id": "guard_2",
+          "source": "body",
+          "crop_bbox": [
+            876,
+            74,
+            1250,
+            501
+          ],
+          "root": [
+            1055,
+            490
+          ],
+          "foot": [
+            1055,
+            490
+          ],
+          "component_seed": [
+            1050,
+            270
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 5
+        }
+      ]
+    },
+    "parry": {
+      "asset_id": "actor.player.base.guard.parry",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "guard_4",
+          "source": "body",
+          "crop_bbox": [
+            18,
+            528,
+            426,
+            926
+          ],
+          "root": [
+            235,
+            915
+          ],
+          "foot": [
+            235,
+            915
+          ],
+          "component_seed": [
+            260,
+            730
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 4
+        },
+        {
+          "id": "guard_2",
+          "source": "body",
+          "crop_bbox": [
+            876,
+            74,
+            1250,
+            501
+          ],
+          "root": [
+            1055,
+            490
+          ],
+          "foot": [
+            1055,
+            490
+          ],
+          "component_seed": [
+            1050,
+            270
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 5
+        }
+      ]
+    },
+    "guard_end": {
+      "asset_id": "actor.player.base.guard.end",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "guard_5",
+          "source": "body",
+          "crop_bbox": [
+            474,
+            511,
+            828,
+            925
+          ],
+          "root": [
+            650,
+            914
+          ],
+          "foot": [
+            650,
+            914
+          ],
+          "component_seed": [
+            650,
+            720
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 4
+        },
+        {
+          "id": "guard_6",
+          "source": "body",
+          "crop_bbox": [
+            874,
+            540,
+            1261,
+            923
+          ],
+          "root": [
+            1060,
+            914
+          ],
+          "foot": [
+            1060,
+            914
+          ],
+          "component_seed": [
+            1080,
+            750
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 5
+        }
+      ]
+    },
+    "turn": {
+      "asset_id": "actor.player.base.turn",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "guard_6",
+          "source": "body",
+          "crop_bbox": [
+            874,
+            540,
+            1261,
+            923
+          ],
+          "root": [
+            1060,
+            914
+          ],
+          "foot": [
+            1060,
+            914
+          ],
+          "component_seed": [
+            1080,
+            750
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 3
+        },
+        {
+          "id": "guard_7",
+          "source": "body",
+          "crop_bbox": [
+            1299,
+            485,
+            1649,
+            928
+          ],
+          "root": [
+            1490,
+            915
+          ],
+          "foot": [
+            1490,
+            915
+          ],
+          "component_seed": [
+            1505,
+            715
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 3
+        },
+        {
+          "id": "guard_6",
+          "source": "body",
+          "crop_bbox": [
+            874,
+            540,
+            1261,
+            923
+          ],
+          "root": [
+            1060,
+            914
+          ],
+          "foot": [
+            1060,
+            914
+          ],
+          "component_seed": [
+            1080,
+            750
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 3
+        }
+      ]
+    },
+    "neutral": {
+      "asset_id": "actor.player.proportion.neutral",
+      "loop": false,
+      "include_in_overview": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "guard_0",
+          "source": "body",
+          "crop_bbox": [
+            86,
+            14,
+            328,
+            502
+          ],
+          "root": [
+            213,
+            490
+          ],
+          "foot": [
+            142,
+            490
+          ],
+          "component_seed": [
+            210,
+            225
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 3,
+          "duration_ticks": 1
+        }
+      ]
+    }
+  }
+}

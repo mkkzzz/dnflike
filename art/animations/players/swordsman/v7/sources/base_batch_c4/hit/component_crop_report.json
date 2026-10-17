@@ -1,0 +1,124 @@
+{
+  "method": "Explicit authored seeds, connected alpha core, preserve entire existing component plus transparent crop margin; no pose-grid inference or art repair.",
+  "poses": [
+    {
+      "source": "body",
+      "pose": "hit_1",
+      "component_bbox": [
+        478,
+        95,
+        793,
+        535
+      ],
+      "crop_bbox": [
+        468,
+        85,
+        803,
+        545
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "hit_0",
+      "component_bbox": [
+        84,
+        59,
+        300,
+        535
+      ],
+      "crop_bbox": [
+        74,
+        49,
+        310,
+        545
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "hit_2",
+      "component_bbox": [
+        887,
+        114,
+        1247,
+        522
+      ],
+      "crop_bbox": [
+        877,
+        104,
+        1257,
+        532
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "hit_3",
+      "component_bbox": [
+        1289,
+        72,
+        1598,
+        434
+      ],
+      "crop_bbox": [
+        1279,
+        62,
+        1608,
+        444
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "hit_4",
+      "component_bbox": [
+        21,
+        693,
+        503,
+        890
+      ],
+      "crop_bbox": [
+        11,
+        683,
+        513,
+        900
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "hit_5",
+      "component_bbox": [
+        513,
+        617,
+        878,
+        891
+      ],
+      "crop_bbox": [
+        503,
+        607,
+        888,
+        901
+      ],
+      "source_edge_clipped": false
+    },
+    {
+      "source": "body",
+      "pose": "hit_6",
+      "component_bbox": [
+        878,
+        574,
+        1172,
+        895
+      ],
+      "crop_bbox": [
+        868,
+        564,
+        1182,
+        905
+      ],
+      "source_edge_clipped": false
+    }
+  ]
+}

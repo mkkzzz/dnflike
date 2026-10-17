@@ -1,0 +1,409 @@
+{
+  "revision": "v7_base_batch_c4_walk",
+  "clip_name": "walk",
+  "duration_ticks": 36,
+  "output_dir": "../../../exports/base_batch_c4/walk",
+  "body_manifest": "../../../exports/base_batch_c4_body/walk/manifest.json",
+  "body_config": "body_config.json",
+  "body_audit": "proportions.json",
+  "katana_blade_length_px": 256,
+  "edge_contract": "explicit_texture_edge_to_authored_cut_direction/1",
+  "projection_guide": {
+    "file": "weapon_guide.json",
+    "sha256": "89cceeb1d61eae0db1fcb8a93d822b630980843ec9418f7877465ffe799e939f"
+  },
+  "weapons": {
+    "katana": {
+      "file": "../../../../../../../concepts/characters/players/swordsman/standard_v1/weapon/katana_drawn.png",
+      "sha256": "56a9b000da574895d2a7b0b22b946af01cdb676ceba50c84a3998050e75318ed",
+      "crop_bbox": [
+        0,
+        0,
+        1282,
+        153
+      ],
+      "component_seed": [
+        800,
+        75
+      ],
+      "grip": [
+        274.2,
+        71.4
+      ],
+      "guard": [
+        353.5,
+        75.5
+      ],
+      "tip": [
+        1275,
+        14
+      ],
+      "blade_length_multiplier": 1.0,
+      "cutting_edge": [
+        800,
+        96
+      ],
+      "spine": [
+        800,
+        62
+      ],
+      "edge_type": "single"
+    },
+    "greatsword": {
+      "file": "../../layer_trial_c3/attack1/weapons_c1.png",
+      "sha256": "438f8fffa3ac7ebc7d39556e15e5849ed0127caa81e9767905070456d8b44d24",
+      "crop_bbox": [
+        5,
+        150,
+        1765,
+        505
+      ],
+      "component_seed": [
+        900,
+        330
+      ],
+      "grip": [
+        367,
+        333
+      ],
+      "guard": [
+        451,
+        333
+      ],
+      "tip": [
+        1748,
+        333
+      ],
+      "blade_length_multiplier": 1.25,
+      "cutting_edge": [
+        1000,
+        375
+      ],
+      "spine": [
+        1000,
+        290
+      ],
+      "edge_type": "double_reference_lower_edge"
+    },
+    "shortsword": {
+      "file": "../../layer_trial_c3/attack1/weapons_c1.png",
+      "sha256": "438f8fffa3ac7ebc7d39556e15e5849ed0127caa81e9767905070456d8b44d24",
+      "crop_bbox": [
+        180,
+        520,
+        1250,
+        770
+      ],
+      "component_seed": [
+        850,
+        645
+      ],
+      "grip": [
+        500,
+        647
+      ],
+      "guard": [
+        557,
+        647
+      ],
+      "tip": [
+        1228,
+        647
+      ],
+      "blade_length_multiplier": 0.55,
+      "cutting_edge": [
+        850,
+        672
+      ],
+      "spine": [
+        850,
+        624
+      ],
+      "edge_type": "double_reference_lower_edge"
+    }
+  },
+  "poses": {
+    "walk_2": {
+      "body_sha256": "35ebbbcd905432cb75b4cfae5d94558eb89fb2359a47b46458c096019420591c",
+      "grip": [
+        988,
+        265
+      ],
+      "guard": [
+        1010.0736898214732,
+        276.7367890696473
+      ],
+      "tip": [
+        1239.640063964794,
+        398.7993953939789
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          974,
+          251
+        ],
+        [
+          1001,
+          251
+        ],
+        [
+          1004,
+          265
+        ],
+        [
+          996,
+          275
+        ],
+        [
+          976,
+          273
+        ]
+      ],
+      "guide_pose_index": 2,
+      "cutting_direction": [
+        -0.4694715627858908,
+        0.882947592858927
+      ],
+      "edge_intent": "relaxed ready edge down; no axial blade flip",
+      "allow_edge_roll_from_previous": false,
+      "tip_basis": "authored_axis_after_removal_not_falsely_observed_tip"
+    },
+    "walk_3": {
+      "body_sha256": "9d06ed8cb857530979ffb5858b59061e2012cacb8eab38c6f163496577a3845b",
+      "grip": [
+        1416,
+        270
+      ],
+      "guard": [
+        1438.0736898214732,
+        281.7367890696473
+      ],
+      "tip": [
+        1667.640063964794,
+        403.7993953939789
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          1402,
+          256
+        ],
+        [
+          1429,
+          256
+        ],
+        [
+          1432,
+          270
+        ],
+        [
+          1424,
+          280
+        ],
+        [
+          1404,
+          278
+        ]
+      ],
+      "guide_pose_index": 3,
+      "cutting_direction": [
+        -0.4694715627858908,
+        0.882947592858927
+      ],
+      "edge_intent": "relaxed ready edge down; no axial blade flip",
+      "allow_edge_roll_from_previous": false,
+      "tip_basis": "authored_axis_after_removal_not_falsely_observed_tip"
+    },
+    "walk_4": {
+      "body_sha256": "78c192114be8e5ff0b08c18baad3d87ec5fbb6dab566f1aa7f55be5a9468fe6f",
+      "grip": [
+        165,
+        710
+      ],
+      "guard": [
+        187.07368982147318,
+        721.7367890696472
+      ],
+      "tip": [
+        416.6400639647942,
+        843.7993953939789
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          151,
+          696
+        ],
+        [
+          178,
+          696
+        ],
+        [
+          181,
+          710
+        ],
+        [
+          173,
+          720
+        ],
+        [
+          153,
+          718
+        ]
+      ],
+      "guide_pose_index": 4,
+      "cutting_direction": [
+        -0.4694715627858908,
+        0.882947592858927
+      ],
+      "edge_intent": "relaxed ready edge down; no axial blade flip",
+      "allow_edge_roll_from_previous": false,
+      "tip_basis": "authored_axis_after_removal_not_falsely_observed_tip"
+    },
+    "walk_5": {
+      "body_sha256": "8a163b53fd0a959d258467927a01864b5bc430f9d2732faa9ab0d65d79c8eb40",
+      "grip": [
+        612,
+        715
+      ],
+      "guard": [
+        634.0736898214732,
+        726.7367890696472
+      ],
+      "tip": [
+        863.6400639647942,
+        848.7993953939789
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          598,
+          701
+        ],
+        [
+          625,
+          701
+        ],
+        [
+          628,
+          715
+        ],
+        [
+          620,
+          725
+        ],
+        [
+          600,
+          723
+        ]
+      ],
+      "guide_pose_index": 5,
+      "cutting_direction": [
+        -0.4694715627858908,
+        0.882947592858927
+      ],
+      "edge_intent": "relaxed ready edge down; no axial blade flip",
+      "allow_edge_roll_from_previous": false,
+      "tip_basis": "authored_axis_after_removal_not_falsely_observed_tip"
+    },
+    "walk_6": {
+      "body_sha256": "1dc0e6368a98282c1ded9d1c71ee32dca9f8ebef07a925b1895377f234ddb219",
+      "grip": [
+        1015,
+        713
+      ],
+      "guard": [
+        1037.0736898214732,
+        724.7367890696472
+      ],
+      "tip": [
+        1266.640063964794,
+        846.7993953939789
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          1001,
+          699
+        ],
+        [
+          1028,
+          699
+        ],
+        [
+          1031,
+          713
+        ],
+        [
+          1023,
+          723
+        ],
+        [
+          1003,
+          721
+        ]
+      ],
+      "guide_pose_index": 6,
+      "cutting_direction": [
+        -0.4694715627858908,
+        0.882947592858927
+      ],
+      "edge_intent": "relaxed ready edge down; no axial blade flip",
+      "allow_edge_roll_from_previous": false,
+      "tip_basis": "authored_axis_after_removal_not_falsely_observed_tip"
+    },
+    "walk_7": {
+      "body_sha256": "6d6a83ba017fe7082b71254ad80b9451fc48b51806de9fde0ea4829ef2259569",
+      "grip": [
+        1436,
+        719
+      ],
+      "guard": [
+        1458.0736898214732,
+        730.7367890696472
+      ],
+      "tip": [
+        1687.640063964794,
+        852.7993953939789
+      ],
+      "weapon_layer": "front",
+      "finger_polygon": [
+        [
+          1422,
+          705
+        ],
+        [
+          1449,
+          705
+        ],
+        [
+          1452,
+          719
+        ],
+        [
+          1444,
+          729
+        ],
+        [
+          1424,
+          727
+        ]
+      ],
+      "guide_pose_index": 7,
+      "cutting_direction": [
+        -0.4694715627858908,
+        0.882947592858927
+      ],
+      "edge_intent": "relaxed ready edge down; no axial blade flip",
+      "allow_edge_roll_from_previous": false,
+      "tip_basis": "authored_axis_after_removal_not_falsely_observed_tip"
+    }
+  },
+  "limitations": [
+    "Batch art candidate under user-authorized direction; not final art or runtime approval.",
+    "Shared body/finger pixels and clocks across katana/greatsword/shortsword; right-hand forward grip.",
+    "Explicit source-calibrated weapon planes, not full 3D reconstruction or automatic depth solving.",
+    "No skills, FX, equipment UI, damage/reach or gameplay timing changes. Runtime adapter pending."
+  ]
+}

@@ -1,0 +1,9 @@
+Use case: identity-preserve
+Asset type: exactly FOUR source figures for a small adult swordsman IDLE BREATHING loop.
+Image1 is the existing weaponless body sheet; use its TOP ROW SECOND ready figure as exact pose/identity design. Image2 is the approved adult body proportions. Derive new body poses from this already designed weapon-holding stance; keep the same empty right fist/grip and no weapons.
+Make a transparent 2x2 sheet (2048x2048 requested), generous margins, exactly4 full-body figures at SAME anatomical scale, not8.
+Top-left: fully upright neutral ruler with same adult anatomy.
+Top-right: READY resting middle breath. Low relaxed stance, knees soft, right fist at hip, left hand free, matching reference1's top-row second figure.
+Bottom-left: same READY stance with subtle INHALE. Chest rises a little, coat shoulder lifts a little; wrist/fist, head size, feet and leg shapes stay consistent.
+Bottom-right: same READY stance with subtle EXHALE. Chest relaxes, shoulders lower slightly; same hands/feet/anatomy. Only small natural breathing change, not an arm swing or leg transition.
+Visible hair-to-true-bottom-jaw EXACTLY15.2% of the neutral standing height. Slim adult long legs and SMALL mature head matching references, no chibi enlargement. Silver spiky hair red forelock, black high collar long red-lined coat, two silver horizontal chest buckles, both red bandaged forearms, black legs with silver grey knee/shin armor. All jaws unobscured. No weapon/sheath/spare hilt, no effect, shadow, labels or watermark.
