@@ -394,6 +394,7 @@ func _run_checks() -> void:
 ## 副本 10001-A 竖切：房间推进、清怪开门、BOSS 结算与 GM 面板命令。
 func _run_dungeon_checks() -> void:
 	var p: Player = main_ref.player
+	print("[DEMO_TEST] frame budget at dungeon checks start = %d / 6000" % Engine.get_physics_frames())
 	main_ref.gm_panel.close()
 	main_ref._enter_dungeon("10001")
 	await _frames(3)
@@ -461,68 +462,74 @@ func _run_dungeon_checks() -> void:
 	var stump_depth: float = stump.position.y - main_ref.GROUND_Y
 	# 1) 同一景深从左侧撞过去 -> 被挡住
 	p.depth_y = stump_depth
-	p.position = Vector2(stump.position.x - 240.0, main_ref.GROUND_Y)
+	p.position = Vector2(stump.position.x - 180.0, main_ref.GROUND_Y)
 	Input.action_press("move_right")
 	var push_frames := 0
-	while push_frames < 100:
+	while push_frames < 80:
 		p.invincible = 999999
 		await _frames(1)
 		push_frames += 1
 	Input.action_release("move_right")
 	await _frames(2)
 	p.invincible = 999999
-	_check(p.position.x < stump.position.x - 40.0, "the stump blocks the player standing in the same depth lane")
+	_check(p.position.x < stump.position.x - 30.0, "the stump blocks the player standing in the same depth lane")
 	if "--capture" in OS.get_cmdline_user_args():
 		await _capture("15_dungeon_entity_block")
-	# 2) 站在实体前面（脚更靠前）-> 放行，且画在实体前面
+	# 2) 站在实体前面：不受约束（不被弹开），且画在实体前面
 	p.depth_y = stump_depth + 90.0
-	p.position = Vector2(stump.position.x - 240.0, main_ref.GROUND_Y)
+	p.position = Vector2(stump.position.x, main_ref.GROUND_Y)
+	await _frames(20)
+	p.invincible = 999999
+	_check(absf(p.position.x - stump.position.x) < 6.0, "standing in front of the prop imposes no block")
+	_check(p.z_index > stump.z_index, "feet further front means drawn on top of the prop")
+	# 2b) 从实体后面真实走过去（之前报的 bug：后面被挡死）
+	p.depth_y = stump_depth - 90.0
+	p.position = Vector2(stump.position.x - 180.0, main_ref.GROUND_Y)
 	Input.action_press("move_right")
-	var cross_frames := 0
-	while cross_frames < 110:
+	var back_pass := 0
+	while back_pass < 90:
 		p.invincible = 999999
 		await _frames(1)
-		cross_frames += 1
+		back_pass += 1
 	Input.action_release("move_right")
 	await _frames(3)
 	p.invincible = 999999
-	_check(p.position.x > stump.position.x + 60.0, "the player walks past the stump when standing in front of it")
-	_check(p.z_index > stump.z_index, "feet further front means drawn on top of the prop")
-	# 3) 沿景深方向撞进去 -> 停在实体的景深线边缘，不会被挤歪也不会抖动穿过去
-	p.depth_y = stump_depth + 120.0
+	_check(p.position.x > stump.position.x + 20.0, "the player walks past the stump from behind it")
+	_check(p.z_index < stump.z_index, "feet further back means drawn behind the prop")
+	# 3) 沿景深撞进去 -> 对称地停在前/后两条边界上，不会被挤歪
+	p.depth_y = stump_depth + 100.0
 	p.position = Vector2(stump.position.x - 10.0, main_ref.GROUND_Y)
 	await _frames(2)
 	var stop_x: float = p.position.x
 	Input.action_press("move_up")
 	var axis_frames := 0
-	while axis_frames < 90:
+	while axis_frames < 50:
 		p.invincible = 999999
 		await _frames(1)
 		axis_frames += 1
 	Input.action_release("move_up")
 	await _frames(3)
 	p.invincible = 999999
-	_check(absf(p.depth_y - (stump_depth + 24.0)) < 4.0, "walking into the prop along depth stops at its lane edge")
+	_check(absf(p.depth_y - (stump_depth + 24.0)) < 4.0, "walking into the prop along depth stops at its front lane edge")
 	_check(absf(p.position.x - stop_x) < 6.0, "stopping on the depth axis does not shove the player sideways")
-	# 4) 脚在实体后面时画在实体之后
-	p.depth_y = stump_depth - 120.0
-	p.position = Vector2(stump.position.x + 200.0, main_ref.GROUND_Y)
-	await _frames(4)
-	p.invincible = 999999
-	_check(p.z_index < stump.z_index, "feet further back means drawn behind the prop")
-	# 区分有无碰撞：灌木是装饰，站在它的景深上也应该直接穿过去
-	p.depth_y = bush.position.y - main_ref.GROUND_Y
-	p.position = Vector2(bush.position.x - 200.0, main_ref.GROUND_Y)
-	Input.action_press("move_right")
-	var pass_frames := 0
-	while pass_frames < 90:
+	p.depth_y = stump_depth - 100.0
+	p.position = Vector2(stump.position.x - 10.0, main_ref.GROUND_Y)
+	Input.action_press("move_down")
+	var axis_back := 0
+	while axis_back < 50:
 		p.invincible = 999999
 		await _frames(1)
-		pass_frames += 1
-	Input.action_release("move_right")
-	await _frames(2)
+		axis_back += 1
+	Input.action_release("move_down")
+	await _frames(3)
 	p.invincible = 999999
-	_check(p.position.x > bush.position.x + 90.0, "the player walks straight through a decorative bush")
+	_check(absf(p.depth_y - (stump_depth - 24.0)) < 4.0, "walking into the prop from behind stops at its back lane edge")
+	# 装饰件：站在它的景深与 x 范围内也不被弹开
+	p.depth_y = bush.position.y - main_ref.GROUND_Y
+	p.position = Vector2(bush.position.x, main_ref.GROUND_Y)
+	await _frames(20)
+	p.invincible = 999999
+	_check(absf(p.position.x - bush.position.x) < 6.0, "a decorative bush never blocks the player")
 	# 怪物同样会被实体挡住
 	p.depth_y = stump_depth
 	p.position = Vector2(stump.position.x - 260.0, main_ref.GROUND_Y)
@@ -531,7 +538,7 @@ func _run_dungeon_checks() -> void:
 	await _frames(2)
 	var chaser = main_ref.monsters[main_ref.monsters.size() - 1]
 	var chase_frames := 0
-	while chase_frames < 110:
+	while chase_frames < 90:
 		p.invincible = 999999
 		await _frames(1)
 		chase_frames += 1

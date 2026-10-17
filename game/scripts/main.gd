@@ -1071,7 +1071,8 @@ func _try_room_door() -> bool:
 
 ## 代码级阻挡。本引擎碰撞只有一个平面（演员 depth_y 只改绘制偏移，碰撞体固定在
 ## GROUND_Y），用开关静态碰撞体会抖动也能被绕过，所以这里按“景深线 + 实心核心矩形”
-## 逐帧解算：站在实体前面（depth 更大）时放行；否则按最小推出量沿 x 或深度推开。
+## 逐帧解算：**只有处在实体的同一条景深带内才挡**；明显在前或明显在后都放行，
+## 那样角色是从物体前面/后面经过，视觉上成立。
 func _resolve_solids(actor: Node2D, half_width: float) -> void:
 	if _room_solids.is_empty() or actor == null:
 		return
@@ -1079,7 +1080,8 @@ func _resolve_solids(actor: Node2D, half_width: float) -> void:
 	for solid in _room_solids:
 		var rect: Rect2 = solid["rect"]
 		var line: float = solid["depth"]
-		if depth > line + LANE_HALF_DEPTH:
+		# 景深带外（前或后）一律放行；等于边界也放行，避免停在边界上反复解算
+		if absf(depth - line) >= LANE_HALF_DEPTH:
 			continue
 		var left := actor.position.x - half_width
 		var right := actor.position.x + half_width
@@ -1088,14 +1090,17 @@ func _resolve_solids(actor: Node2D, half_width: float) -> void:
 		var push_left := right - rect.position.x
 		var push_right := (rect.position.x + rect.size.x) - left
 		var push_x := minf(push_left, push_right)
-		var push_depth := (line + LANE_HALF_DEPTH) - depth
+		# 沿景深退到最近的一侧边界（前或后）
+		var push_depth := minf((line + LANE_HALF_DEPTH) - depth, depth - (line - LANE_HALF_DEPTH))
 		if push_x <= push_depth:
 			if push_left < push_right:
 				actor.position.x = rect.position.x - half_width
 			else:
 				actor.position.x = rect.position.x + rect.size.x + half_width
-		else:
+		elif (line + LANE_HALF_DEPTH) - depth <= depth - (line - LANE_HALF_DEPTH):
 			actor.set("depth_y", line + LANE_HALF_DEPTH)
+		else:
+			actor.set("depth_y", line - LANE_HALF_DEPTH)
 
 
 ## 前后遮挡按“脚部景深”排序：脚更靠前（depth 更大）的画在上层。
