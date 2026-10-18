@@ -8,18 +8,148 @@ var room_index := 0
 var cleared := false
 ## 已清空的房间（按 0 基房间序号）：回退时保持已清状态，不重新刷怪
 var cleared_rooms: Dictionary = {}
+var room_states: Dictionary = {}
+var _connections: Array = []
 
 
 func load_from(config: Dictionary, dungeon_id: String) -> bool:
-	var all: Dictionary = config.get("dungeons", {})
-	if not all.has(dungeon_id):
-		dungeon = {}
-		return false
-	dungeon = all[dungeon_id]
+	dungeon = {}
 	room_index = 0
 	cleared = false
 	cleared_rooms.clear()
+	room_states.clear()
+	_connections.clear()
+	var all = config.get("dungeons", {})
+	if not all is Dictionary or not all.has(dungeon_id):
+		return false
+	var candidate = all[dungeon_id]
+	if not candidate is Dictionary or not candidate.get("rooms", []) is Array:
+		push_error("[DUNGEON] invalid dungeon rooms: " + dungeon_id)
+		return false
+	dungeon = candidate.duplicate(true)
+	if not _load_connections():
+		dungeon = {}
+		_connections.clear()
+		return false
 	return true
+
+
+func _load_connections() -> bool:
+	if not dungeon.has("connections"):
+		for index in range(room_count() - 1):
+			_connections.append({
+				"id": "adjacent_%d_%d" % [index, index + 1],
+				"from": index, "from_side": "right",
+				"to": index + 1, "to_side": "left",
+			})
+		return true
+	var configured = dungeon["connections"]
+	if not configured is Array:
+		push_error("[DUNGEON] connections must be an array: " + id())
+		return false
+	var ids: Dictionary = {}
+	var occupied_sides: Dictionary = {}
+	var opposite := {"right": "left", "left": "right", "up": "down", "down": "up"}
+	for value in configured:
+		if not value is Dictionary:
+			push_error("[DUNGEON] connection must be a dictionary: " + id())
+			return false
+		var connection: Dictionary = value
+		var connection_id = connection.get("id", null)
+		if not connection_id is String or connection_id.is_empty() or ids.has(connection_id):
+			push_error("[DUNGEON] invalid or duplicate connection id: " + str(connection_id))
+			return false
+		var from_value = connection.get("from", null)
+		var to_value = connection.get("to", null)
+		if not _valid_room_index(from_value) or not _valid_room_index(to_value):
+			push_error("[DUNGEON] invalid connection room index: " + connection_id)
+			return false
+		var from_index := int(from_value)
+		var to_index := int(to_value)
+		if from_index == to_index:
+			push_error("[DUNGEON] connection cannot join a room to itself: " + connection_id)
+			return false
+		var from_side = connection.get("from_side", null)
+		var to_side = connection.get("to_side", null)
+		if not from_side is String or not to_side is String or not opposite.has(from_side):
+			push_error("[DUNGEON] invalid connection side: " + connection_id)
+			return false
+		if to_side != opposite[from_side]:
+			push_error("[DUNGEON] connection sides must be opposite: " + connection_id)
+			return false
+		var from_key := "%d:%s" % [from_index, from_side]
+		var to_key := "%d:%s" % [to_index, to_side]
+		if occupied_sides.has(from_key) or occupied_sides.has(to_key):
+			push_error("[DUNGEON] duplicate room side in connection: " + connection_id)
+			return false
+		ids[connection_id] = true
+		occupied_sides[from_key] = true
+		occupied_sides[to_key] = true
+		_connections.append({
+			"id": connection_id,
+			"from": from_index, "from_side": from_side,
+			"to": to_index, "to_side": to_side,
+		})
+	return true
+
+
+func _valid_room_index(value: Variant) -> bool:
+	if not (value is int or value is float):
+		return false
+	var number := float(value)
+	return is_finite(number) and number >= 0.0 and number < room_count() and number == floor(number)
+
+
+func connections() -> Array:
+	return _connections.duplicate(true)
+
+
+func room_connections() -> Array:
+	var result: Array = []
+	for connection in _connections:
+		var target_index: int
+		var side: String
+		var target_side: String
+		if int(connection["from"]) == room_index:
+			target_index = int(connection["to"])
+			side = str(connection["from_side"])
+			target_side = str(connection["to_side"])
+		elif int(connection["to"]) == room_index:
+			target_index = int(connection["from"])
+			side = str(connection["to_side"])
+			target_side = str(connection["from_side"])
+		else:
+			continue
+		result.append({
+			"id": str(connection["id"]), "side": side,
+			"target_index": target_index, "target_side": target_side,
+			"forward": target_index > room_index,
+		})
+	return result
+
+
+func travel(connection_id: String) -> Dictionary:
+	for connection in room_connections():
+		if str(connection["id"]) != connection_id:
+			continue
+		room_index = int(connection["target_index"])
+		cleared = is_room_cleared(room_index)
+		return {
+			"room_index": room_index, "side": str(connection["target_side"]),
+			"source_side": str(connection["side"]),
+			"target_side": str(connection["target_side"]), "id": connection_id,
+		}
+	push_error("[DUNGEON] connection does not belong to current room: " + connection_id)
+	return {}
+
+
+func save_room_state(index: int, state: Dictionary) -> void:
+	room_states[index] = state.duplicate(true)
+
+
+func room_state(index: int) -> Dictionary:
+	var state: Dictionary = room_states.get(index, {})
+	return state.duplicate(true)
 
 
 func is_loaded() -> bool:
@@ -147,6 +277,7 @@ func monster_plan(base_config: Dictionary, presets: Dictionary) -> Array:
 		for key in spawn.get("overrides", {}):
 			cfg[key] = spawn["overrides"][key]
 		plan.append({
+			"id": str(spawn.get("id", plan.size())),
 			"cfg": cfg,
 			"x": float(spawn.get("x", 900)),
 			"depth": float(spawn.get("depth", 0)),
@@ -167,7 +298,11 @@ func entity_plan() -> Array:
 
 
 func door_plan() -> Dictionary:
-	var door = room().get("door", null)
-	if door == null:
-		return {}
-	return door as Dictionary
+	for connection in room_connections():
+		if not bool(connection["forward"]):
+			continue
+		var legacy = room().get("door", {})
+		var plan: Dictionary = legacy.duplicate(true) if legacy is Dictionary else {}
+		plan.merge(connection, true)
+		return plan
+	return {}

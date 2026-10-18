@@ -1,5 +1,6 @@
 extends Node
 const AnimLib := preload("res://scripts/anim_lib.gd")
+const DungeonRegressionScript := preload("res://scripts/dungeon_regression.gd")
 ## --test: assertions and a complete encounter using gameplay actions.
 ## --capture: rendered title / arena / hit / result screenshots in temp/demo.
 var main_ref
@@ -143,6 +144,17 @@ func _canvas_z(item: CanvasItem) -> int:
 	if item.z_as_relative and item.get_parent() is CanvasItem:
 		value += _canvas_z(item.get_parent())
 	return value
+
+
+func _nearest_entity_slice(entity: DungeonEntity, world_x: float) -> Sprite2D:
+	var nearest: Sprite2D = null
+	var distance := INF
+	for slice in entity.render_slices:
+		var gap := absf(float(slice.get_meta("ground_x")) - world_x)
+		if gap < distance:
+			nearest = slice
+			distance = gap
+	return nearest
 
 
 func _start_v6_move(actor: Player, move: String) -> bool:
@@ -384,6 +396,7 @@ func _run_checks() -> void:
 	await _run_v6_checks()
 	await _run_movement_feedback_checks()
 	await _run_dungeon_checks()
+	await DungeonRegressionScript.new().run(main_ref, _check, _frames)
 	main_ref._show_ready()
 	_check(main_ref.battle_state == main_ref.BattleState.READY and not p.control_enabled, "result returns to class selection")
 	print("[DEMO_TEST] COMPLETE checks=%d failures=%d" % [checks, failures])
@@ -394,7 +407,7 @@ func _run_checks() -> void:
 ## 副本 10001-A 竖切：房间推进、清怪开门、BOSS 结算与 GM 面板命令。
 func _run_dungeon_checks() -> void:
 	var p: Player = main_ref.player
-	print("[DEMO_TEST] frame budget at dungeon checks start = %d / 6000" % Engine.get_physics_frames())
+	print("[DEMO_TEST] frame budget at dungeon checks start = %d / %d" % [Engine.get_physics_frames(), int(GameConfig.runtime["tests"]["frame_budget"])])
 	main_ref.gm_panel.close()
 	main_ref._enter_dungeon("10001")
 	await _frames(3)
@@ -456,10 +469,20 @@ func _run_dungeon_checks() -> void:
 		if child is DungeonEntity and child.entity_id == "bush":
 			bush = child
 	_check(stump != null and bush != null, "entrance room places both a stump and a bush")
-	# 碰撞框＝实测“实心核心”（木桩贴图 140x122 -> 106x109），不是整张贴图
-	_check(absf(stump.collision_rect.size.x - 106.0) <= 2.0 and absf(stump.collision_rect.size.y - 109.0) <= 2.0, "the stump collider uses the measured solid core, not the whole sprite")
+	var footprint_bounds := Rect2()
+	var first_point := true
+	for polygon in stump.footprints:
+		for point in polygon:
+			if first_point:
+				footprint_bounds = Rect2(point, Vector2.ZERO)
+				first_point = false
+			else:
+				footprint_bounds = footprint_bounds.expand(point)
+	_check(not stump.geometry.is_empty() and not first_point and stump.collision_rect.position.distance_to(footprint_bounds.position) < 0.1 and stump.collision_rect.size.distance_to(footprint_bounds.size) < 0.1 and absf(footprint_bounds.size.x - 136.0) < 2.0 and absf(footprint_bounds.size.y - 28.0) < 2.0, "the stump collider uses its own calibrated thick root footprint, not the vertical sprite")
 	_check(bush != null and not bush.collision_enabled and bush.collision_rect == Rect2(), "decorative entities carry no collision at all")
 	var stump_depth: float = stump.position.y - main_ref.GROUND_Y
+	var stump_bounds: Rect2 = stump.world_solid_rect()
+	var player_half_depth := float(p.cfg["collision_half_depth"])
 	# 1) 同一景深从左侧撞过去 -> 被挡住
 	p.depth_y = stump_depth
 	p.position = Vector2(stump.position.x - 180.0, main_ref.GROUND_Y)
@@ -482,6 +505,8 @@ func _run_dungeon_checks() -> void:
 	p.invincible = 999999
 	_check(absf(p.position.x - stump.position.x) < 6.0, "standing in front of the prop imposes no block")
 	_check(p.z_index > stump.z_index, "feet further front means drawn on top of the prop")
+	var front_slice := _nearest_entity_slice(stump, p.position.x)
+	_check(front_slice != null and front_slice.visible and not front_slice.z_as_relative and p.z_index > front_slice.z_index and not stump._body.visible, "the stump's actual image slice near player x draws behind front feet without duplicate body")
 	# 2b) 从实体后面真实走过去（之前报的 bug：后面被挡死）
 	p.depth_y = stump_depth - 90.0
 	p.position = Vector2(stump.position.x - 180.0, main_ref.GROUND_Y)
@@ -496,6 +521,8 @@ func _run_dungeon_checks() -> void:
 	p.invincible = 999999
 	_check(p.position.x > stump.position.x + 20.0, "the player walks past the stump from behind it")
 	_check(p.z_index < stump.z_index, "feet further back means drawn behind the prop")
+	var back_slice := _nearest_entity_slice(stump, p.position.x)
+	_check(back_slice != null and back_slice.visible and not back_slice.z_as_relative and p.z_index < back_slice.z_index, "the stump's actual image slice near player x draws above back feet")
 	# 3) 沿景深撞进去 -> 对称地停在前/后两条边界上，不会被挤歪
 	p.depth_y = stump_depth + 100.0
 	p.position = Vector2(stump.position.x - 10.0, main_ref.GROUND_Y)
@@ -510,7 +537,7 @@ func _run_dungeon_checks() -> void:
 	Input.action_release("move_up")
 	await _frames(3)
 	p.invincible = 999999
-	_check(absf(p.depth_y - (stump_depth + 24.0)) < 4.0, "walking into the prop along depth stops at its front lane edge")
+	_check(absf(p.depth_y - (stump_bounds.end.y + player_half_depth)) < 1.0, "walking into the prop along depth stops at its calibrated root front plus player half-depth")
 	_check(absf(p.position.x - stop_x) < 6.0, "stopping on the depth axis does not shove the player sideways")
 	p.depth_y = stump_depth - 100.0
 	p.position = Vector2(stump.position.x - 10.0, main_ref.GROUND_Y)
@@ -523,13 +550,22 @@ func _run_dungeon_checks() -> void:
 	Input.action_release("move_down")
 	await _frames(3)
 	p.invincible = 999999
-	_check(absf(p.depth_y - (stump_depth - 24.0)) < 4.0, "walking into the prop from behind stops at its back lane edge")
+	_check(absf(p.depth_y - (stump_bounds.position.y - player_half_depth)) < 1.0, "walking into the prop from behind stops at its calibrated root back minus player half-depth")
 	# 装饰件：站在它的景深与 x 范围内也不被弹开
 	p.depth_y = bush.position.y - main_ref.GROUND_Y
 	p.position = Vector2(bush.position.x, main_ref.GROUND_Y)
 	await _frames(20)
 	p.invincible = 999999
 	_check(absf(p.position.x - bush.position.x) < 6.0, "a decorative bush never blocks the player")
+	var bush_slice := _nearest_entity_slice(bush, p.position.x)
+	_check(bush_slice != null and bush_slice.visible and not bush_slice.z_as_relative and not bush._body.visible, "decorative bush uses actual image slices without duplicating its body")
+	for offset in [-10.0, 10.0]:
+		p.depth_y = bush.front_depth_at(p.position.x) + offset
+		p.velocity = Vector2.ZERO
+		await _frames(3)
+		var slice_is_behind: bool = bush_slice != null and p.z_index > bush_slice.z_index
+		_check(slice_is_behind if offset > 0.0 else bush_slice != null and p.z_index < bush_slice.z_index, "decorative bush nearest-x slice sorts across its own root front at depth " + str(offset))
+		_check(absf(p.position.x - bush.position.x) < 6.0 and absf(p.depth_y - bush.front_depth_at(p.position.x) - offset) < 0.1, "decorative bush never blocks nearby root depth " + str(offset))
 	# 怪物同样会被实体挡住
 	p.depth_y = stump_depth
 	p.position = Vector2(stump.position.x - 260.0, main_ref.GROUND_Y)
@@ -563,7 +599,8 @@ func _run_dungeon_checks() -> void:
 	_check(main_ref.current_door.opened and main_ref.battle_state == main_ref.BattleState.ROOM_CLEAR, "cleared room opens its door")
 	# 真实输入走到门口。整房 2000+ px 走完会吃掉 --quit-after 预算，
 	# 所以先确认夹取上界能到门，再用真实输入走最后一程并触发切房。
-	_check(main_ref.current_door.reach_rect().has_point(Vector2(p.arena_right, main_ref.GROUND_Y)), "the player's rightmost position reaches the door trigger")
+	p.depth_y = main_ref.current_door.position.y - main_ref.GROUND_Y
+	_check(main_ref.current_door.contains_actor(Vector2(p.arena_right, main_ref.GROUND_Y + p.depth_y)), "the player's rightmost foot point reaches the door at its real depth")
 	p.position = Vector2(main_ref.current_door.position.x - 220.0, main_ref.GROUND_Y)
 	await _frames(3)
 	if "--capture" in OS.get_cmdline_user_args():
@@ -642,7 +679,7 @@ func _run_dungeon_checks() -> void:
 	await _frames(3)
 	p.invincible = 999999
 	_check(main_ref.retreat_door != null, "room 2 has a door back to room 1")
-	p.depth_y = 0.0
+	p.depth_y = main_ref.retreat_door.position.y - main_ref.GROUND_Y
 	p.position = Vector2(main_ref.retreat_door.position.x + 70.0, main_ref.GROUND_Y)
 	Input.action_press("move_left")
 	var back_frames := 0

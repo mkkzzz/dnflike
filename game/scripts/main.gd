@@ -3,9 +3,9 @@ extends Node2D
 ## 旧的职业选择三波遭遇战保留为可测模式（GM 面板 "选择模式" 或 _show_ready）。
 ## ROOM_CLEAR 追加在末尾，避免改动既有枚举值。
 enum BattleState { READY, FIGHT, WAVE_BREAK, VICTORY, DEFEAT, PAUSED, ROOM_CLEAR }
-const VIEW_W := 1280.0
-const VIEW_H := 720.0
-const GROUND_Y := 576.0
+var VIEW_W := 0.0
+var VIEW_H := 0.0
+var GROUND_Y := 0.0
 const JOB_NAMES := ["鬼剑士", "狂战士", "剑魂"]
 const JOB_DESCRIPTIONS := ["三段剑击与上挑，掌握距离和浮空追击。", "血怒强化攻速，怒斩以霸体压制敌人。", "蓄力拔刀与三连突刺，快速衔接连击。"]
 const SLOT_INDEX := {"A": 0, "S": 1, "1": 6, "2": 7}
@@ -62,7 +62,7 @@ var _pause_jump_held := false
 
 # --- 副本 10001（布局 10001-A）---
 const DUNGEON_CONFIG := "res://data/dungeons.json"
-const DOOR_INSET := 30.0
+var DOOR_INSET := 0.0
 var dungeon_config: Dictionary = {}
 var dungeon: DungeonRun
 var dungeon_mode := false
@@ -77,22 +77,19 @@ var room_road_left := 0.0
 var room_road_right := VIEW_W
 var room_depth_min := -40.0
 var room_depth_max := 24.0
-const ROAD_INSET := 44.0
-## 路面地平线的目标屏幕高度（画面比例）
-const ROAD_LINE_RATIO := 0.45
-## 景深判定半宽：演员脚部落在实体景深线 ±该值以内、且不在其前面时视为同一层，会被阻挡。
-## 站在实体前面（depth 更大）时放行——那时角色本来就该画在实体前面。
-const LANE_HALF_DEPTH := 24.0
-## 门的层级：压在房间背景之上、所有演员之下
-const DOOR_Z := -900
-## 底部 HUD 让位区间：脚底进入这个 y 区间后底栏逐渐淡出。
-## 世界 y 与屏幕 y 一致（镜头只做横向平移），所以可以直接比较。
-const HUD_FADE_START_Y := 606.0
-const HUD_FADE_FULL_Y := 690.0
+var ROAD_INSET := 0.0
+var ROAD_LINE_RATIO := 0.0
+var DOOR_Z := 0
+var HUD_FADE_START_Y := 0.0
+var HUD_FADE_FULL_Y := 0.0
 var current_door: DungeonDoor
 var retreat_door: DungeonDoor
-## 当前房的阻挡矩形 [{rect: Rect2（世界）, depth: float}]，由实体台账的实心核心算出
-var _room_solids: Array = []
+var room_doors: Array[DungeonDoor] = []
+var ground_space := GroundSpace.new()
+var _depth_pass: Node
+var _room_monster_states: Dictionary = {}
+var _settings_previous_view: Dictionary = {}
+var _geometry_visible := false
 ## 刚进场时的开门保护帧：避免角色出生点落在门口触发区里被立刻送走
 var _door_guard := 0
 var gm_panel: GmPanel
@@ -108,6 +105,17 @@ var _control_suppressed_by_gm := false
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	GameConfig.load_all()
+	var world: Dictionary = GameConfig.runtime["world"]
+	VIEW_W = float(world["viewport"][0])
+	VIEW_H = float(world["viewport"][1])
+	GROUND_Y = float(world["ground_y"])
+	ROAD_INSET = float(world["road_inset"])
+	ROAD_LINE_RATIO = float(world["road_line_ratio"])
+	DOOR_INSET = float(GameConfig.runtime["doors"]["inset"])
+	DOOR_Z = int(GameConfig.runtime["layering"]["door_z"])
+	HUD_FADE_START_Y = float(GameConfig.runtime["hud"]["fade_start_y"])
+	HUD_FADE_FULL_Y = float(GameConfig.runtime["hud"]["fade_full_y"])
+	selected_job = int(world["default_job"])
 	demo_config = GameConfig._load_json("res://data/demo.json")
 	_automated_run = "--test" in OS.get_cmdline_user_args() or "--capture" in OS.get_cmdline_user_args() or "--showcase" in OS.get_cmdline_user_args()
 	_load_display_settings()
@@ -122,7 +130,12 @@ func _ready() -> void:
 	_build_hud()
 	_build_overlay()
 	_build_gm_panel()
-	_enter_dungeon("10001")
+	_depth_pass = Node.new()
+	_depth_pass.set_script(load("res://scripts/depth_pass.gd"))
+	_depth_pass.process_physics_priority = int(GameConfig.runtime["layering"]["late_physics_priority"])
+	add_child(_depth_pass)
+	_depth_pass.set("main", self)
+	_enter_dungeon(str(GameConfig.runtime["world"]["default_dungeon"]))
 	print("[DEMO] window=%s viewport=%s stretch=%s" % [DisplayServer.window_get_size(),
 		get_viewport().get_visible_rect().size,
 		str(ProjectSettings.get_setting("display/window/stretch/mode", "disabled"))])
@@ -164,14 +177,14 @@ func _build_world() -> void:
 	room_bg_sprite = Sprite2D.new()
 	room_bg_sprite.name = "RoomBackground"
 	room_bg_sprite.centered = false
-	room_bg_sprite.z_index = -1000
+	room_bg_sprite.z_index = int(GameConfig.runtime["layering"]["background_z"])
 	room_bg_sprite.visible = false
 	add_child(room_bg_sprite)
 	bm = BattleFX.new()
 	bm.name = "BattleFX"
 	bm.process_mode = Node.PROCESS_MODE_PAUSABLE
 	bm.number_font = font
-	bm.z_index = 200
+	bm.z_index = int(GameConfig.runtime["layering"]["effects_z"])
 	add_child(bm)
 	camera = Camera2D.new()
 	camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
@@ -335,11 +348,12 @@ func _toggle_display_settings() -> void:
 		_settings_card.hide()
 		if _settings_resume_fight:
 			_toggle_pause()
-		else:
-			_card.show()
+		_shade.visible = bool(_settings_previous_view.get("shade", false))
+		_card.visible = bool(_settings_previous_view.get("card", false))
 		_settings_resume_fight = false
 		return
-	_settings_resume_fight = battle_state in [BattleState.FIGHT, BattleState.WAVE_BREAK]
+	_settings_previous_view = {"shade": _shade.visible, "card": _card.visible}
+	_settings_resume_fight = _can_pause_state()
 	if _settings_resume_fight:
 		_toggle_pause()
 	_shade.show()
@@ -456,6 +470,8 @@ func _start_demo(job_id := -1) -> void:
 	# 退出副本模式，恢复旧的单屏三波场景
 	dungeon_mode = false
 	dungeon_finished = false
+	player.external_depth_order = false
+	player.ground_motion_resolver = Callable()
 	room_bg_tex = null
 	if room_bg_sprite != null:
 		room_bg_sprite.visible = false
@@ -582,6 +598,8 @@ func alive_count() -> int:
 
 func _on_monster_died(_monster) -> void:
 	kills += 1
+	if dungeon_mode and is_instance_valid(_monster):
+		_room_monster_states[str(_monster.get_meta("room_instance_id", ""))] = _monster.capture_room_state()
 
 func _on_landed_hit(_monster, _damage: float) -> void:
 	hit_count += 1
@@ -619,7 +637,7 @@ func _finish(victory: bool) -> void:
 	_clear_card()
 	_content.add_child(_label("ENCOUNTER COMPLETE" if victory else "ENCOUNTER FAILED", 13, Color(0.67, 0.55, 0.37)))
 	_content.add_child(_label("回廊已肃清" if victory else "挑战失败", 38))
-	var rank := "S" if damage_taken < 100 and elapsed < 100 else ("A" if damage_taken < 250 else "B")
+	var rank := _evaluation_rank()
 	_content.add_child(_label("战斗评价  %s" % rank if victory else "观察挥棒前摇，以格挡或后跳争取反击机会。", 22))
 	_content.add_child(_label("用时 %s    击败 %d    最长连击 %d\n有效命中 %d    承受伤害 %.0f" % [_time_text(elapsed), kills, best_chain, hit_count, damage_taken], 18))
 	_content.add_child(_button("再次挑战    R / ↵", _reset_battle, true))
@@ -635,9 +653,9 @@ func _toggle_pause() -> void:
 		if _pause_jump_held and not Input.is_action_pressed("jump") and player.velocity.y < 0:
 			player._jump_cut_pending = true
 		_pause_jump_held = false
-		_set_actor_control(battle_state in [BattleState.FIGHT, BattleState.WAVE_BREAK])
+		_restore_actor_control()
 		return
-	if battle_state not in [BattleState.FIGHT, BattleState.WAVE_BREAK]:
+	if not _can_pause_state():
 		return
 	resume_state = battle_state
 	_pause_jump_held = Input.is_action_pressed("jump")
@@ -651,8 +669,21 @@ func _toggle_pause() -> void:
 	_content.add_child(_button("重置训练" if training_mode else "重新挑战", _reset_battle))
 	_content.add_child(_button("选择战斗风格", _show_ready))
 
+func _can_pause_state() -> bool:
+	return battle_state in [BattleState.FIGHT, BattleState.WAVE_BREAK, BattleState.ROOM_CLEAR] or (dungeon_mode and battle_state == BattleState.VICTORY)
+
+
+func _restore_actor_control() -> void:
+	player.control_enabled = _can_pause_state() and not player.dead and not (gm_panel != null and gm_panel.is_typing())
+	for monster in monsters:
+		if is_instance_valid(monster):
+			monster.control_enabled = battle_state == BattleState.FIGHT and not monster.dead
+
+
 func _reset_battle() -> void:
-	if training_mode:
+	if dungeon_mode:
+		_on_retry_dungeon()
+	elif training_mode:
 		_start_training(selected_job)
 	else:
 		_start_demo(selected_job)
@@ -681,7 +712,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		hud.set_feedback("职业技能无限补给" if training_free_skills else "实战蓝耗与冷却")
 	elif event.is_action_pressed("start_demo"):
 		if battle_state in [BattleState.READY, BattleState.VICTORY, BattleState.DEFEAT]:
-			_start_demo()
+			_reset_battle()
 	elif event.is_action_pressed("debug_job") and battle_state == BattleState.FIGHT:
 		selected_job = (player.job + 1) % 3
 		player.set_job(selected_job)
@@ -699,7 +730,7 @@ func _physics_process(delta: float) -> void:
 		_control_suppressed_by_gm = true
 	elif _control_suppressed_by_gm:
 		_control_suppressed_by_gm = false
-		_set_actor_control(battle_state in [BattleState.FIGHT, BattleState.WAVE_BREAK, BattleState.ROOM_CLEAR] and not player.dead)
+		_restore_actor_control()
 	if bm.freeze > 0:
 		bm.freeze -= 1
 	if _door_guard > 0:
@@ -752,13 +783,6 @@ func _physics_process(delta: float) -> void:
 		if transition_left <= 0.0:
 			wave_index += 1
 			_spawn_wave()
-	# 实体阻挡与前后遮挡每帧结算（旧遭遇战没有实体，两个函数都会直接返回）
-	if dungeon_mode:
-		_resolve_solids(player, 20.0)
-		for monster in monsters:
-			if is_instance_valid(monster) and not monster.dead:
-				_resolve_solids(monster, 19.0)
-		_update_depth_order()
 
 # ============================ 副本 10001 ============================
 
@@ -801,13 +825,21 @@ func _build_settlement() -> void:
 	_settlement.hide()
 
 
+func _evaluation_rank() -> String:
+	var evaluation: Dictionary = GameConfig.runtime["evaluation"]
+	for entry in evaluation["ranks"]:
+		if damage_taken < float(entry["max_damage"]) and (float(entry["max_seconds"]) < 0.0 or elapsed < float(entry["max_seconds"])):
+			return str(entry["rank"])
+	return str(evaluation["fallback_rank"])
+
+
 func _show_settlement(victory: bool) -> void:
 	if _settlement == null:
 		return
 	_settlement_title.text = "副本完成" if victory else "挑战失败"
 	_settlement_title.add_theme_color_override("font_color",
 		Color(1.0, 0.88, 0.55) if victory else Color(0.95, 0.62, 0.58))
-	var rank := "S" if damage_taken < 100 and elapsed < 100 else ("A" if damage_taken < 250 else "B")
+	var rank := _evaluation_rank()
 	var tail := "" if victory else "\n点“再打一次”可重新挑战"
 	_settlement_stats.text = "%s · %s\n用时 %s    击败 %d\n最长连击 %d    有效命中 %d\n承受伤害 %.0f\n战斗评价 %s%s" % [
 		dungeon.display_name(), dungeon.layout(), _time_text(elapsed), kills,
@@ -824,7 +856,7 @@ func _toast_show(text: String) -> void:
 	if _toast == null:
 		return
 	_toast.text = text
-	_toast_left = 2.6
+	_toast_left = float(GameConfig.runtime["hud"]["toast_seconds"])
 	_toast.show()
 
 
@@ -841,7 +873,8 @@ func _enter_dungeon(dungeon_id := "10001") -> void:
 	training_mode = false
 	_clear_settlement()
 	_reset_run_stats()
-	_load_room()
+	_room_monster_states.clear()
+	_load_room({}, true)
 	print("[DEMO] dungeon=%s layout=%s rooms=%d" % [dungeon.id(), dungeon.layout(), dungeon.room_count()])
 
 
@@ -859,7 +892,7 @@ func _reset_run_stats() -> void:
 	hud.set_combo(0)
 
 
-func _load_room() -> void:
+func _load_room(arrival: Dictionary = {}, new_run := false) -> void:
 	_clear_monsters()
 	_clear_room_nodes()
 	bm.clear_fx()
@@ -877,7 +910,7 @@ func _load_room() -> void:
 	# 可行走范围贴合画面里的路面（实测比例），而不是整幅图减去固定边距
 	room_road_left = room_bg_rect.position.x + dungeon.road_left_ratio() * room_bg_rect.size.x
 	room_road_right = room_bg_rect.position.x + dungeon.road_right_ratio() * room_bg_rect.size.x
-	if room_road_right - room_road_left < 240.0:
+	if room_road_right - room_road_left < float(GameConfig.runtime["world"]["minimum_road_width"]):
 		room_road_left = 0.0
 		room_road_right = room_world_width
 	# 景深（上下）可动范围＝该图路面自身的纵向范围。
@@ -887,9 +920,9 @@ func _load_room() -> void:
 	var road_front_y := room_bg_rect.position.y + dungeon.road_front_ratio() * room_bg_rect.size.y
 	room_depth_min = road_top_y - GROUND_Y
 	room_depth_max = minf(VIEW_H, road_front_y) - GROUND_Y
-	if room_depth_max - room_depth_min < 64.0:
-		room_depth_min = -40.0
-		room_depth_max = 24.0
+	if room_depth_max - room_depth_min < float(GameConfig.runtime["world"]["minimum_depth_band"]):
+		room_depth_min = float(GameConfig.runtime["world"]["fallback_depth"][0])
+		room_depth_max = float(GameConfig.runtime["world"]["fallback_depth"][1])
 	if room_bg_sprite != null:
 		room_bg_sprite.texture = room_bg_tex
 		room_bg_sprite.visible = room_bg_tex != null
@@ -897,24 +930,29 @@ func _load_room() -> void:
 			room_bg_sprite.position = room_bg_rect.position
 			room_bg_sprite.scale = Vector2.ONE * (room_bg_rect.size.x / float(room_bg_tex.get_size().x))
 	if _ground_shape != null:
-		(_ground_shape.shape as RectangleShape2D).size.x = room_world_width + 256.0
+		(_ground_shape.shape as RectangleShape2D).size.x = room_world_width + float(GameConfig.runtime["world"]["ground_padding"])
 		_ground_shape.position.x = room_world_width * 0.5
-	player.reset_combat(Vector2(200, GROUND_Y))
+	player.ground_motion_resolver = Callable()
+	var origin := Vector2(room_road_left + ROAD_INSET, GROUND_Y)
+	if new_run:
+		player.reset_combat(origin)
+		player.set_job(selected_job)
+	else:
+		player.relocate_combat(origin, player.depth_y)
 	player.set_arena(room_road_left + ROAD_INSET, room_road_right - ROAD_INSET)
 	player.set_lane_limits(room_depth_min, room_depth_max)
-	# 出生点离开左侧回门：左界就是回门位置，站在那儿会被立刻吸回上一房
-	player.position.x = clampf(player.arena_left + 130.0, player.arena_left, player.arena_right)
-	_door_guard = 12
-	player.set_job(selected_job)
-	player.invincible = 0
-	player.control_enabled = true
+	player.external_depth_order = true
+	player.ground_motion_resolver = _resolve_ground_motion
+	ground_space.configure(Rect2(Vector2(player.arena_left, room_depth_min), Vector2(player.arena_right - player.arena_left, room_depth_max - room_depth_min)), GameConfig.runtime["collision"])
+	_door_guard = int(GameConfig.runtime["doors"]["guard_frames"])
+	player.control_enabled = not player.dead
 	_last_hp = player.hp
 	var props := Node2D.new()
 	props.name = "RoomProps"
 	add_child(props)
 	room_root = props
 	var catalog: Dictionary = dungeon_config.get("entity_catalog", {})
-	_room_solids.clear()
+	_room_monster_states = dungeon.room_state(dungeon.room_index).get("monsters", {}).duplicate(true)
 	for item in dungeon.entity_plan():
 		var entry: Dictionary = catalog.get(item["id"], {})
 		if entry.is_empty():
@@ -923,45 +961,51 @@ func _load_room() -> void:
 		entity.entity_id = item["id"]
 		props.add_child(entity)
 		entity.setup(entry, dungeon.asset_root(), Vector2(item["x"], GROUND_Y), item["depth_y"])
-		if entity.collision_enabled:
-			_room_solids.append({"rect": entity.world_solid_rect(), "depth": entity.actor_depth})
+		entity.debug_geometry = _geometry_visible
+		ground_space.add_entity(entity)
 	var already_cleared := dungeon.is_room_cleared(dungeon.room_index)
 	var plan := dungeon.monster_plan(GameConfig.monsters["goblin"], dungeon_config.get("monster_presets", {}))
 	if not already_cleared:
-		for spawn in plan:
-			_spawn_room_monster(spawn)
-	# 门是双向的：右侧是前进门，左侧（非首间）是回退门，位置与相邻房同一相对位置
-	var door_plan := dungeon.door_plan()
-	if not door_plan.is_empty():
+		for index in plan.size():
+			var spawn: Dictionary = plan[index].duplicate(true)
+			spawn["instance_id"] = str(spawn.get("id", index))
+			var saved: Dictionary = _room_monster_states.get(spawn["instance_id"], {})
+			if not bool(saved.get("dead", false)):
+				var monster := _spawn_room_monster(spawn)
+				if not saved.is_empty():
+					monster.restore_room_state(saved)
+	for link in dungeon.room_connections():
 		var door := DungeonDoor.new()
 		door.font = font
 		door.z_index = DOOR_Z
 		props.add_child(door)
-		door.setup(str(door_plan.get("side", "right")), Vector2(room_road_right - DOOR_INSET, GROUND_Y))
-		current_door = door
-	if dungeon.has_previous_room():
-		var back := DungeonDoor.new()
-		back.font = font
-		back.z_index = DOOR_Z
-		props.add_child(back)
-		back.setup("left", Vector2(room_road_left + ROAD_INSET, GROUND_Y))
-		back.set_opened(true)
-		retreat_door = back
+		door.setup(str(link["side"]), _door_position(str(link["side"])), GameConfig.runtime["doors"])
+		door.connection_id = str(link["id"])
+		door.target_index = int(link["target_index"])
+		door.target_side = str(link["target_side"])
+		room_doors.append(door)
+		if bool(link["forward"]):
+			current_door = door
+		else:
+			retreat_door = door
+			door.set_opened(true)
+	_place_at_arrival(arrival)
 	hud.visible = true
 	hud.set_dungeon_room(dungeon.display_name(), dungeon.room_index, dungeon.room_count(), _role_label(), alive_count())
 	hud.set_feedback("")
-	print("[DEMO] room=%d module=%s props=%d monsters=%d door=%s back=%s cleared=%s" % [dungeon.room_number(),
-		dungeon.module_id(), props.get_child_count(), monsters.size(), str(not door_plan.is_empty()),
-		str(retreat_door != null), str(already_cleared)])
+	print("[DUNGEON] room=%d module=%s solids=%d monsters=%d doors=%d restored=%s hp=%.0f mp=%.0f" % [dungeon.room_number(),
+		dungeon.module_id(), ground_space.solids.size(), monsters.size(), room_doors.size(),
+		str(not _room_monster_states.is_empty()), player.hp, player.mp])
 	_shade.hide()
 	_card.hide()
 	_hint.hide()
 	_update_camera()
-	if already_cleared or plan.is_empty():
+	if already_cleared or alive_count() == 0:
 		_on_room_cleared(true)
 	else:
 		battle_state = BattleState.FIGHT
 		_set_actor_control(true)
+	_restore_actor_control()
 	_show_room_notice()
 
 
@@ -969,7 +1013,7 @@ func _show_room_notice() -> void:
 	_wave_notice.text = "第 %d / %d 房 · %s\n%s" % [dungeon.room_number(), dungeon.room_count(),
 		dungeon.room_name(), dungeon.module_id()]
 	_wave_notice.show()
-	transition_left = 1.8
+	transition_left = float(GameConfig.runtime["hud"]["notice_seconds"])
 
 
 ## 等比放大到覆盖 1280×720，再把“路面地平线”尽量放到画面 45% 高。
@@ -996,7 +1040,8 @@ func _clear_room_nodes() -> void:
 	if room_root != null and is_instance_valid(room_root):
 		room_root.queue_free()
 	room_root = null
-	_room_solids.clear()
+	room_doors.clear()
+	ground_space.solids.clear()
 
 
 func _spawn_room_monster(spawn: Dictionary) -> Monster:
@@ -1008,6 +1053,13 @@ func _spawn_room_monster(spawn: Dictionary) -> Monster:
 	monster.depth_y = float(spawn.get("depth", 0.0))
 	add_child(monster)
 	monster.setup(spawn["cfg"], player, bm)
+	monster.arena_left = player.arena_left
+	monster.arena_right = player.arena_right
+	monster.position.x = clampf(monster.position.x, monster.arena_left, monster.arena_right)
+	monster.external_depth_order = true
+	monster.ground_motion_resolver = _resolve_ground_motion
+	monster.set_meta("room_instance_id", str(spawn.get("instance_id", "gm_%d" % monsters.size())))
+	monster.set_meta("room_spawn", spawn.duplicate(true))
 	monster.died.connect(_on_monster_died)
 	monster.damaged.connect(_on_damage_dealt)
 	monsters.append(monster)
@@ -1021,16 +1073,16 @@ func _on_room_cleared(silent := false) -> void:
 	dungeon.mark_room_cleared(dungeon.room_index)
 	battle_state = BattleState.ROOM_CLEAR
 	_set_actor_control(true)
-	if current_door != null:
-		current_door.set_opened(true)
+	for door in room_doors:
+		door.set_opened(true)
 	if dungeon.is_boss_room():
 		_finish_dungeon(true)
 		return
 	if not silent:
 		hud.set_feedback("房间已清空 · 门已开启")
-		_wave_notice.text = "房间已清空\n走向右侧的门继续前进"
+		_wave_notice.text = "房间已清空\n走向开启的门继续前进"
 		_wave_notice.show()
-		transition_left = 1.8
+		transition_left = float(GameConfig.runtime["hud"]["notice_seconds"])
 		bm.play_sound("ui")
 
 
@@ -1046,68 +1098,90 @@ func _clamp_player_to_room() -> void:
 
 
 func _advance_room() -> bool:
-	if not dungeon.advance():
-		return false
-	_load_room()
-	print("[DEMO] room=%d module=%s" % [dungeon.room_number(), dungeon.module_id()])
-	return true
+	return _travel_door(current_door)
 
 
 func _retreat_room() -> bool:
-	if not dungeon.retreat():
-		return false
-	_load_room()
-	print("[DEMO] back to room=%d module=%s" % [dungeon.room_number(), dungeon.module_id()])
-	return true
+	return _travel_door(retreat_door)
 
 
-## 门是双向的：走进右侧前进门去下一间，走进左侧回退门回上一间。
 func _try_room_door() -> bool:
-	if _door_guard > 0:
+	if _door_guard > 0 or player.dead:
 		return false
-	if retreat_door != null and retreat_door.contains_actor(player.position):
-		return _retreat_room()
-	if room_cleared and current_door != null and current_door.contains_actor(player.position):
-		return _advance_room()
+	var feet := Vector2(player.position.x, GROUND_Y + player.depth_y)
+	for door in room_doors:
+		if door.opened and door.contains_actor(feet):
+			return _travel_door(door)
 	return false
 
 
-## 代码级阻挡。本引擎碰撞只有一个平面（演员 depth_y 只改绘制偏移，碰撞体固定在
-## GROUND_Y），用开关静态碰撞体会抖动也能被绕过，所以这里按“景深线 + 实心核心矩形”
-## 逐帧解算：**只有处在实体的同一条景深带内才挡**；明显在前或明显在后都放行，
-## 那样角色是从物体前面/后面经过，视觉上成立。
-func _resolve_solids(actor: Node2D, half_width: float) -> void:
-	if _room_solids.is_empty() or actor == null:
+func _travel_door(door: DungeonDoor) -> bool:
+	if door == null:
+		return false
+	var source := dungeon.room_index
+	var id := door.connection_id
+	var source_side := door.side
+	_save_room_state()
+	var arrival := dungeon.travel(id)
+	if arrival.is_empty():
+		return false
+	_load_room(arrival)
+	print("[DUNGEON] travel=%s from=%d:%s to=%d:%s spawn=(%.1f,%.1f)" % [id, source + 1, source_side,
+		dungeon.room_number(), str(arrival["side"]), player.position.x, player.depth_y])
+	return true
+
+
+func _save_room_state() -> void:
+	if dungeon == null or not dungeon.is_loaded():
 		return
-	var depth := float(actor.get("depth_y"))
-	for solid in _room_solids:
-		var rect: Rect2 = solid["rect"]
-		var line: float = solid["depth"]
-		# 景深带外（前或后）一律放行；等于边界也放行，避免停在边界上反复解算
-		if absf(depth - line) >= LANE_HALF_DEPTH:
-			continue
-		var left := actor.position.x - half_width
-		var right := actor.position.x + half_width
-		if right <= rect.position.x or left >= rect.position.x + rect.size.x:
-			continue
-		var push_left := right - rect.position.x
-		var push_right := (rect.position.x + rect.size.x) - left
-		var push_x := minf(push_left, push_right)
-		# 沿景深退到最近的一侧边界（前或后）
-		var push_depth := minf((line + LANE_HALF_DEPTH) - depth, depth - (line - LANE_HALF_DEPTH))
-		if push_x <= push_depth:
-			if push_left < push_right:
-				actor.position.x = rect.position.x - half_width
-			else:
-				actor.position.x = rect.position.x + rect.size.x + half_width
-		elif (line + LANE_HALF_DEPTH) - depth <= depth - (line - LANE_HALF_DEPTH):
-			actor.set("depth_y", line + LANE_HALF_DEPTH)
-		else:
-			actor.set("depth_y", line - LANE_HALF_DEPTH)
+	for monster in monsters:
+		if is_instance_valid(monster):
+			_room_monster_states[str(monster.get_meta("room_instance_id", ""))] = monster.capture_room_state()
+	dungeon.save_room_state(dungeon.room_index, {"monsters": _room_monster_states})
 
 
-## 前后遮挡按“脚部景深”排序：脚更靠前（depth 更大）的画在上层。
-## 之前用 depth_y > 0 的固定符号判断，实体在 -70、角色在 -200 时角色仍被画在后面，那是错的。
+func _door_position(side: String) -> Vector2:
+	var ratio := float(GameConfig.runtime["doors"]["depth_ratio"])
+	var depth := lerpf(room_depth_min, room_depth_max, ratio)
+	match side:
+		"left":
+			return Vector2(player.arena_left, GROUND_Y + depth)
+		"right":
+			return Vector2(player.arena_right, GROUND_Y + depth)
+		"up":
+			return Vector2((player.arena_left + player.arena_right) * 0.5, GROUND_Y + room_depth_min)
+		"down":
+			return Vector2((player.arena_left + player.arena_right) * 0.5, GROUND_Y + room_depth_max)
+	return Vector2.ZERO
+
+
+func _place_at_arrival(arrival: Dictionary) -> void:
+	var side := str(arrival.get("side", "left"))
+	var at := _door_position(side)
+	var clearance := float(GameConfig.runtime["doors"]["spawn_clearance"])
+	match side:
+		"left":
+			at.x += clearance
+			player.facing = 1
+		"right":
+			at.x -= clearance
+			player.facing = -1
+		"up":
+			at.y += clearance
+		"down":
+			at.y -= clearance
+	player.position = Vector2(clampf(at.x, player.arena_left, player.arena_right), GROUND_Y)
+	player.depth_y = clampf(at.y - GROUND_Y, room_depth_min, room_depth_max)
+	var safe := _resolve_ground_motion(player, Vector2(player.position.x, player.depth_y), Vector2(player.position.x, player.depth_y))
+	player.position.x = safe.x
+	player.depth_y = safe.y
+	player.reset_physics_interpolation()
+
+
+func _resolve_ground_motion(actor: Node2D, start: Vector2, requested: Vector2) -> Vector2:
+	return ground_space.resolve(actor, start, requested) if dungeon_mode else requested
+
+
 func _update_depth_order() -> void:
 	if room_root == null:
 		return
@@ -1119,10 +1193,14 @@ func _update_depth_order() -> void:
 			stack.append({"node": monster, "depth": monster.depth_y})
 	for child in room_root.get_children():
 		if child is DungeonEntity:
-			stack.append({"node": child, "depth": child.actor_depth})
+			stack.append({"node": child, "depth": child.front_depth_at(player.position.x)})
+			for slice in child.render_slices:
+				stack.append({"node": slice, "depth": child.front_depth_at(float(slice.get_meta("ground_x")))})
 	stack.sort_custom(func(a, b): return float(a["depth"]) < float(b["depth"]))
+	var layers: Dictionary = GameConfig.runtime["layering"]
 	for index in stack.size():
-		(stack[index]["node"] as Node2D).z_index = index
+		(stack[index]["node"] as Node2D).z_index = int(layers["actor_base_z"]) + index * int(layers["actor_stride"])
+	seq_fx.refresh_depth_layers()
 
 
 ## 角色越靠前（脚底越靠下），底部栏越淡。景深可动范围本身仍严格按该图路面取值，
@@ -1210,8 +1288,16 @@ func _on_gm_command(command: String, args: PackedStringArray) -> void:
 			_gm_clear()
 		"spawn":
 			_gm_spawn(args)
+		"geometry":
+			_geometry_visible = not _geometry_visible
+			if room_root != null:
+				for entity in room_root.get_children():
+					if entity is DungeonEntity:
+						entity.debug_geometry = _geometry_visible
+						entity.queue_redraw()
+			gm_log("根部占地与遮挡前缘：%s" % ("显示" if _geometry_visible else "隐藏"))
 		"god":
-			player.invincible = 0 if player.invincible > 0 else 99999999
+			player.invincible = 0 if player.invincible > 0 else int(GameConfig.runtime["gm"]["god_frames"])
 			gm_log("无敌：%s" % ("开" if player.invincible > 0 else "关"))
 		"heal":
 			player.hp = float(player.cfg.get("max_hp", player.hp))
@@ -1289,6 +1375,7 @@ func _gm_room(args: PackedStringArray) -> void:
 	if target_index < 0 or target_index >= dungeon.room_count():
 		gm_log("房间序号超出范围（1 ~ %d）" % dungeon.room_count())
 		return
+	_save_room_state()
 	dungeon.room_index = target_index
 	dungeon_finished = false
 	_clear_settlement()
@@ -1314,7 +1401,7 @@ func _gm_spawn(args: PackedStringArray) -> void:
 		preset = args[0].to_lower()
 	var count := 1
 	if args.size() > 1 and args[1].is_valid_int():
-		count = clampi(int(args[1]), 1, 8)
+		count = clampi(int(args[1]), 1, int(GameConfig.runtime["gm"]["max_spawn"]))
 	var presets: Dictionary = dungeon_config.get("monster_presets", {})
 	if not presets.has(preset):
 		gm_log("未知怪物预设：%s（可用 goblin / elite / chief）" % preset)
@@ -1326,9 +1413,9 @@ func _gm_spawn(args: PackedStringArray) -> void:
 		var overrides: Dictionary = presets[preset]
 		for key in overrides:
 			cfg[key] = overrides[key]
-		var spawn_x := clampf(player.position.x + 220.0 + float(index) * 130.0, 120.0,
-			maxf(160.0, room_world_width - 90.0))
-		_spawn_room_monster({"cfg": cfg, "x": spawn_x, "depth": 0.0, "preset": preset})
+		var gm: Dictionary = GameConfig.runtime["gm"]
+		var spawn_x := clampf(player.position.x + float(gm["spawn_distance"]) + float(index) * float(gm["spawn_spacing"]), player.arena_left, player.arena_right)
+		_spawn_room_monster({"cfg": cfg, "x": spawn_x, "depth": player.depth_y, "preset": preset})
 	room_cleared = false
 	dungeon_finished = false
 	_clear_settlement()
@@ -1417,6 +1504,7 @@ func _process(delta: float) -> void:
 		hud.set_job(player.job)
 		hud.set_attack_speed(float(player.cfg.get("attack_speed", 1.0)) * (float(player.buff_data.get("atk_speed", 1.0)) if player.buff_t > 0 else 1.0))
 		hud.set_target(_pick_target())
+		hud.set_elapsed(elapsed)
 		if dungeon_mode and dungeon != null and dungeon.is_loaded():
 			hud.set_dungeon_room(dungeon.display_name(), dungeon.room_index, dungeon.room_count(), _role_label(), alive_count())
 		else:

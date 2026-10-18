@@ -8,6 +8,8 @@
   "move_speed": 1.0,
   "defense": 1.0,
   "hurtbox_height": 190,
+  "collision_half_width": 20,
+  "collision_half_depth": 7,
   "lane_min": -40,
   "lane_max": 24,
   "lane_speed": 140,

@@ -2,7 +2,7 @@ class_name DungeonDoor
 extends Node2D
 ## 关卡门占位：木栅栏 + 藤蔓门框 + 门框灯，未开启 / 开启两态。
 ## 设计单第五节的门资源尚未产出，这里是程序化占位，不冒充正式美术；
-## 四方位接口保留（上/下用旋转复用侧向画法），布局 10001-A 当前只用右侧门。
+## 上/下旋转复用侧向画法，触发区使用独立的地面坐标。
 
 const FRAME := Color(0.38, 0.26, 0.16)
 const FRAME_DARK := Color(0.20, 0.14, 0.09)
@@ -15,23 +15,37 @@ const GATE_H := 214.0
 const GATE_W := 62.0
 
 var side := "right"
+var connection_id := ""
+var target_index := -1
+var target_side := "left"
 var opened := false
 var font: Font
 var _pulse := 0.0
+var _settings: Dictionary = {}
+var _gate_height := GATE_H
+var _gate_width := GATE_W
+var _trigger_width := 92.0
+var _trigger_depth := 96.0
 
 
-func setup(door_side: String, at: Vector2) -> void:
+func setup(door_side: String, at: Vector2, settings: Dictionary = {}) -> void:
+	_settings = (GameConfig.runtime.get("doors", {}) as Dictionary).duplicate(true)
+	_settings.merge(settings, true)
 	side = door_side
+	connection_id = str(_settings.get("connection_id", _settings.get("id", "")))
+	target_index = int(_settings.get("target_index", -1))
+	target_side = str(_settings.get("target_side", "left"))
+	_gate_height = maxf(1.0, float(_settings.get("height", GATE_H)))
+	_gate_width = maxf(1.0, float(_settings.get("width", GATE_W)))
+	_trigger_width = maxf(1.0, float(_settings.get("trigger_width", 92.0)))
+	_trigger_depth = maxf(1.0, float(_settings.get("trigger_depth", 96.0)))
 	position = at
+	rotation = 0.0
 	match side:
-		"left":
-			pass
 		"up":
 			rotation = -PI * 0.5
 		"down":
 			rotation = PI * 0.5
-		_:
-			pass
 	queue_redraw()
 
 
@@ -42,23 +56,45 @@ func set_opened(value: bool) -> void:
 	queue_redraw()
 
 
-## 玩家进入该矩形即视为推门（世界坐标）。
-## 下沿特意越过地面线：角色脚底正落在 GROUND_Y 上，而 Rect2.has_point 的上界是开区间。
-## 纵向要盖住整条景深带，否则玩家走到带子后段就触发不到门。
+## trigger_width 朝房间内侧延伸，trigger_depth 沿门口切向展开；均为世界地面坐标。
 func reach_rect() -> Rect2:
-	var h := GATE_H
-	var w := 92.0
-	# 纵向一律盖住整条景深带；横向朝“房间内侧”延伸（右侧门往左、左侧门往右）
-	# 左侧门的触发区特意收窄：它就在可行走左界附近，太宽会把刚出生的角色立刻吸回去
-	if side == "left":
-		return Rect2(position + Vector2(-6, -(h + 72.0)), Vector2(52, h + 120.0))
-	if side == "up" or side == "down":
-		return Rect2(position + Vector2(-w * 0.5, -120.0), Vector2(w + 8, 240.0))
-	return Rect2(position + Vector2(-w, -(h + 72.0)), Vector2(w + 8, h + 120.0))
+	var at := global_position
+	var half_depth := _trigger_depth * 0.5
+	var edge_pad := 0.001
+	match side:
+		"left":
+			return Rect2(at + Vector2(-edge_pad, -half_depth), Vector2(_trigger_width + edge_pad, _trigger_depth))
+		"up":
+			return Rect2(at + Vector2(-half_depth, -edge_pad), Vector2(_trigger_depth, _trigger_width + edge_pad))
+		"down":
+			return Rect2(at + Vector2(-half_depth, -_trigger_width), Vector2(_trigger_depth, _trigger_width + edge_pad))
+		_:
+			return Rect2(at + Vector2(-_trigger_width, -half_depth), Vector2(_trigger_width + edge_pad, _trigger_depth))
 
 
-func contains_actor(actor_pos: Vector2) -> bool:
-	return reach_rect().has_point(actor_pos)
+## actor_ground_pos 是脚点的世界地面坐标，包含景深，不包含跳跃高度。
+func contains_actor(actor_ground_pos: Vector2) -> bool:
+	return reach_rect().has_point(actor_ground_pos)
+
+
+func spawn_point(clearance: float) -> Vector2:
+	var offset := _trigger_width + maxf(1.0, clearance)
+	match side:
+		"left":
+			return global_position + Vector2(offset, 0.0)
+		"up":
+			return global_position + Vector2(0.0, offset)
+		"down":
+			return global_position + Vector2(0.0, -offset)
+		_:
+			return global_position + Vector2(-offset, 0.0)
+
+
+func _configured_color(key: String, fallback: Color) -> Color:
+	var value = _settings.get(key, fallback)
+	if value is Color:
+		return value
+	return Color.from_string(str(value), fallback)
 
 
 func _process(delta: float) -> void:
@@ -68,39 +104,45 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
-	var half_w := GATE_W * 0.5
+	var half_w := _gate_width * 0.5
 	var dir := -1.0 if side == "left" else 1.0
+	var frame := _configured_color("frame", FRAME)
+	var frame_dark := _configured_color("frame_dark", FRAME_DARK)
+	var vine := _configured_color("vine", VINE)
+	var lamp_off := _configured_color("lamp_off", LAMP_OFF)
+	var lamp_on := _configured_color("lamp_on", LAMP_ON)
+	var bar := _configured_color("bar", BAR)
 
 	# 门框：两根立柱 + 上梁
-	draw_rect(Rect2(-half_w - 7, -GATE_H - 12, 14, GATE_H + 12), FRAME)
-	draw_rect(Rect2(half_w - 7, -GATE_H - 12, 14, GATE_H + 12), FRAME)
-	draw_rect(Rect2(-half_w - 7, -GATE_H - 20, GATE_W + 14, 14), FRAME_DARK)
+	draw_rect(Rect2(-half_w - 7, -_gate_height - 12, 14, _gate_height + 12), frame)
+	draw_rect(Rect2(half_w - 7, -_gate_height - 12, 14, _gate_height + 12), frame)
+	draw_rect(Rect2(-half_w - 7, -_gate_height - 20, _gate_width + 14, 14), frame_dark)
 
 	# 藤蔓：门框上的缠绕
 	for index in 5:
-		var y := -GATE_H * 0.86 + float(index) * GATE_H * 0.19
+		var y := -_gate_height * 0.86 + float(index) * _gate_height * 0.19
 		var wave := sin(float(index) * 1.7) * 5.0
-		draw_line(Vector2(-half_w - 10, y), Vector2(half_w + 10, y + wave), VINE, 3.0)
+		draw_line(Vector2(-half_w - 10, y), Vector2(half_w + 10, y + wave), vine, 3.0)
 
 	# 未开启：横向木栅
 	if not opened:
 		for index in 4:
-			var y := -GATE_H * 0.78 + float(index) * GATE_H * 0.22
-			draw_rect(Rect2(-half_w + 2, y, GATE_W - 4, 11), BAR)
-		draw_rect(Rect2(-half_w, -GATE_H, GATE_W, GATE_H), Color(0.05, 0.04, 0.03, 0.30))
+			var y := -_gate_height * 0.78 + float(index) * _gate_height * 0.22
+			draw_rect(Rect2(-half_w + 2, y, _gate_width - 4, 11), bar)
+		draw_rect(Rect2(-half_w, -_gate_height, _gate_width, _gate_height), Color(0.05, 0.04, 0.03, 0.30))
 	else:
 		# 开启：门内透光 + 指示箭头
 		var glow := 0.22 + 0.16 * sin(_pulse * TAU)
-		draw_rect(Rect2(-half_w, -GATE_H, GATE_W, GATE_H), Color(1.0, 0.86, 0.52, glow))
+		draw_rect(Rect2(-half_w, -_gate_height, _gate_width, _gate_height), Color(1.0, 0.86, 0.52, glow))
 		for index in 3:
 			var cx := -6.0 + float(index) * 15.0
 			var spread := 13.0
-			draw_line(Vector2(cx * dir, -GATE_H * 0.52), Vector2((cx + spread) * dir, -GATE_H * 0.44), LAMP_ON, 4.0)
-			draw_line(Vector2((cx + spread) * dir, -GATE_H * 0.44), Vector2(cx * dir, -GATE_H * 0.36), LAMP_ON, 4.0)
+			draw_line(Vector2(cx * dir, -_gate_height * 0.52), Vector2((cx + spread) * dir, -_gate_height * 0.44), lamp_on, 4.0)
+			draw_line(Vector2((cx + spread) * dir, -_gate_height * 0.44), Vector2(cx * dir, -_gate_height * 0.36), lamp_on, 4.0)
 
 	# 门框灯
-	var lamp_pos := Vector2(0, -GATE_H - 30)
-	var lamp_color := LAMP_ON if opened else LAMP_OFF
+	var lamp_pos := Vector2(0, -_gate_height - 30)
+	var lamp_color := lamp_on if opened else lamp_off
 	if opened:
 		var halo := 26.0 + 6.0 * sin(_pulse * TAU)
 		draw_circle(lamp_pos, halo, Color(1.0, 0.82, 0.40, 0.13))
@@ -110,4 +152,4 @@ func _draw() -> void:
 	if font != null:
 		var text := "门已开启" if opened else "门未开启"
 		var color := Color(1.0, 0.88, 0.58) if opened else Color(0.78, 0.74, 0.68)
-		draw_string(font, Vector2(-42, -GATE_H - 46), text, HORIZONTAL_ALIGNMENT_CENTER, 84, 15, color)
+		draw_string(font, Vector2(-42, -_gate_height - 46), text, HORIZONTAL_ALIGNMENT_CENTER, 84, 15, color)

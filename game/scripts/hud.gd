@@ -174,6 +174,11 @@ func set_dungeon_room(title: String, idx: int, total: int, role_label: String, r
 	_refresh()
 
 
+func set_elapsed(seconds: float) -> void:
+	elapsed = maxf(0.0, seconds)
+	_refresh()
+
+
 func clear_dungeon_room() -> void:
 	dungeon_mode = false
 	room_title = ""
@@ -274,7 +279,7 @@ func _draw_bottom_bar() -> void:
 func set_front_occlusion(amount: float) -> void:
 	front_occlusion = clampf(amount, 0.0, 1.0)
 	if _bottom_layer != null:
-		_bottom_layer.modulate.a = 1.0 - 0.85 * front_occlusion
+		_bottom_layer.modulate.a = lerpf(1.0, float(GameConfig.runtime["hud"]["minimum_opacity"]), front_occlusion)
 
 
 func _draw_encounter() -> void:

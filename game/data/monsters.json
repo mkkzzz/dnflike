@@ -23,6 +23,8 @@
     "depth_y": -8,
     "attack_cooldown": 42,
     "hurtbox_height": 168,
+    "collision_half_width": 19,
+    "collision_half_depth": 6,
     "model_scale": 1.35,
     "lane_speed": 65,
     "attack_lane": 20,

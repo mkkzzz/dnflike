@@ -6,8 +6,12 @@ static var moves: Dictionary = {}
 static var skills: Dictionary = {}
 static var monsters: Dictionary = {}
 static var player: Dictionary = {}
+static var runtime: Dictionary = {}
+static var entity_geometry: Dictionary = {}
 
 static func load_all() -> void:
+	runtime = _load_json("res://data/runtime.json")
+	entity_geometry = _load_json("res://data/entity_geometry.json").get("entities", {})
 	moves = _load_json("res://data/moves.json")
 	skills = _load_json("res://data/skills.json")
 	monsters = _load_json("res://data/monsters.json")

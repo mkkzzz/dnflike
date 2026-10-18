@@ -1,0 +1,14 @@
+{
+  "schema": "dnflike/entity-ground-geometry/v1",
+  "coordinate_system": "source pixels relative to sprite anchor; x horizontal, y projected ground depth; polygons convex clockwise in screen coordinates",
+  "calibration": "根部占地依当前PNG人工逐项标定，不以整张立面alpha或投影阴影代替体积；可在GM geometry中核对并调整",
+  "entities": {
+    "stump": {"size": [140,122], "anchor": [70,121], "footprints": [[[-49,-28],[38,-28],[65,-14],[68,-4],[40,0],[-40,0],[-68,-5],[-63,-15]]], "occlusion_front": [[-68,-5],[-40,0],[40,0],[68,-4]], "collision_height": 122, "source": "木桩外扩根部与接地弧，根部约29px厚，不含竖直柱身"},
+    "rock": {"size": [138,120], "anchor": [69,119], "footprints": [[[-45,-38],[35,-38],[64,-25],[68,-10],[42,0],[-34,0],[-65,-12],[-67,-24]]], "occlusion_front": [[-67,-24],[-65,-12],[-34,0],[42,0],[68,-10]], "collision_height": 120, "source": "石块底部椭圆落地范围，约38px厚"},
+    "bone_pile": {"size": [140,87], "anchor": [70,86], "footprints": [[[-50,-25],[24,-25],[62,-15],[62,-4],[25,0],[-43,-4],[-62,-13]]], "occlusion_front": [[-62,-13],[-43,-4],[25,0],[62,-4]], "collision_height": 87, "source": "骨堆横卧根部，不取头骨立面最密alpha块"},
+    "fence": {"size": [183,160], "anchor": [91,159], "footprints": [[[-78,-28],[65,-108],[88,-89],[-55,0]]], "occlusion_front": [[-55,0],[88,-89]], "collision_height": 160, "source": "斜向栅栏各栏柱接地点形成有厚度的斜带，前缘随x变化"},
+    "torch": {"size": [48,170], "anchor": [24,169], "footprints": [[[-10,-10],[10,-10],[10,0],[-10,0]]], "occlusion_front": [[-10,0],[10,0]], "collision_height": 170, "source": "火把细底座，阻挡开关仍由实体catalog控制"},
+    "bush": {"size": [178,135], "anchor": [89,134], "footprints": [[[-67,-25],[67,-25],[82,-12],[54,0],[-54,0],[-82,-12]]], "occlusion_front": [[-82,-12],[-54,0],[54,0],[82,-12]], "collision_height": 135, "source": "灌木底部宽叶丛，装饰不阻挡但使用同一根部前缘遮挡"},
+    "fruit_pickup": {"size": [38,48], "anchor": [19,47], "footprints": [[[-16,-6],[16,-6],[16,0],[-16,0]]], "occlusion_front": [[-16,0],[16,0]], "collision_height": 43, "source": "果实落地占位"}
+  }
+}

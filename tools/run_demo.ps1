@@ -24,16 +24,29 @@ if ($importExit -ne 0 -or ($importOutput -match 'SCRIPT ERROR|ERROR:')) {
     throw "Godot import failed."
 }
 if ($Test) {
-    $testArgs = @("--headless", "--fixed-fps", "60", "--path", $gamePath, "--quit-after", "6000", "--", "--test")
+    $runtimePath = Join-Path $gamePath "data/runtime.json"
+    $testSettings = (Get-Content -LiteralPath $runtimePath -Raw | ConvertFrom-Json).tests
+    $frameBudget = [int]$testSettings.frame_budget
+    $fixedFps = [int]$testSettings.fixed_fps
+    if ($frameBudget -le 0 -or $fixedFps -le 0) {
+        throw "runtime.json tests.frame_budget and tests.fixed_fps must be positive integers."
+    }
+    $testArgs = @("--fixed-fps", "$fixedFps", "--path", $gamePath, "--quit-after", "$frameBudget")
+    if (-not $Capture) {
+        $testArgs += "--headless"
+    } else {
+        $testArgs += @("--position", "-32000,-32000")
+    }
+    $testArgs += @("--", "--test")
     if ($Capture) {
-        $testArgs = @("--fixed-fps", "60", "--path", $gamePath, "--quit-after", "6000", "--", "--test", "--capture")
+        $testArgs += "--capture"
     }
     $ErrorActionPreference = "Continue"
     $testOutput = & $GodotPath @testArgs 2>&1
     $engineExit = $LASTEXITCODE
     $ErrorActionPreference = "Stop"
     $testOutput | Write-Output
-    if ($engineExit -ne 0 -or ($testOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($testOutput -match '\[DEMO_TEST\] COMPLETE checks=\d+ failures=0')) {
+    if ($engineExit -ne 0 -or ($testOutput -match 'SCRIPT ERROR|ERROR:|\[DEMO_TEST\] FAIL|\[DEMO_TEST\] COMPLETE checks=\d+ failures=[1-9]') -or -not ($testOutput -match '\[DEMO_TEST\] COMPLETE checks=\d+ failures=0')) {
         throw "Combat demo regression checks failed or did not complete."
     }
 } elseif ($Capture) {

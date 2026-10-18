@@ -27,6 +27,7 @@ const BUTTONS := [
 	{"label": "直接胜利", "cmd": "win"},
 	{"label": "直接失败", "cmd": "lose"},
 	{"label": "显示设置", "cmd": "settings"},
+	{"label": "实体根部几何", "cmd": "geometry"},
 ]
 
 var font: Font

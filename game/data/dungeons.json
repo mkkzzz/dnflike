@@ -1,6 +1,6 @@
 {
   "schema": "dnflike/dungeons/v1",
-  "note": "副本→布局→房间模块。布局是配置层；本文件不含美术产出。ground_line_ratio / road_*_ratio 由已批准五房设计源图实测（见 game/assets/dungeon/10001/manifest.json），用于把物理地面、可行动范围与景深范围对齐到画面里的路面。实体 collision 逐类开关：collision=false 的只做装饰不挡人；collision=true 的碰撞框＝贴图自身矩形（这批 PNG 已紧贴裁切）。footprint 保留为 lowres 台账的“建议地面投影”，仅供摆放参考，不再用于碰撞。",
+  "note": "副本→布局→房间模块。connections成对登记房间端点与相反门向。road_*比例对齐设计图路面；entity_catalog仅登记资源与阻挡开关，根部占地和遮挡前缘以entity_geometry.json逐图标定为准。旧footprint/collision_rect仅留来源记录，不再参与运行时碰撞。",
   "entity_catalog": {
     "stump": {
       "file": "entities/stump/intact.png",
@@ -261,6 +261,7 @@
       "name": "哥布林精英",
       "hp": 620,
       "attack": 38,
+      "attack_move": {"windup": 20, "active": 4, "recovery": 20, "range": 96, "damage": 38, "extension": 14, "height": 150, "hardstun": 14, "knockback": 150},
       "model_scale": 1.62,
       "attack_cooldown": 34,
       "detect_range": 820,
@@ -307,6 +308,12 @@
       "name": "森林 · 首副本",
       "layout": "10001-A",
       "asset_root": "res://assets/dungeon/10001/",
+      "connections": [
+        {"id": "A01-A02", "from": 0, "from_side": "right", "to": 1, "to_side": "left"},
+        {"id": "A02-A03", "from": 1, "from_side": "right", "to": 2, "to_side": "left"},
+        {"id": "A03-A04", "from": 2, "from_side": "right", "to": 3, "to_side": "left"},
+        {"id": "A04-A05", "from": 3, "from_side": "right", "to": 4, "to_side": "left"}
+      ],
       "rooms": [
         {
           "index": 1,

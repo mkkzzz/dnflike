@@ -29,6 +29,8 @@ var hp := 1000.0
 var mp := 300.0
 var ground_y := 576.0
 var depth_y := 0.0
+var ground_motion_resolver := Callable()
+var external_depth_order := false
 var arena_left := 64.0
 var arena_right := 1216.0
 var control_enabled := true
@@ -86,6 +88,7 @@ var _last_move_input := 0.0
 var _guard_frames := 0
 var _landing_visual_left := 0
 var _seq_ground_done := false
+var _seq_ground_roots: Dictionary = {}
 var _input_clock_ms := 0.0
 var _left_was_down := false
 var _right_was_down := false
@@ -240,6 +243,18 @@ func _seq_root_step(previous: float) -> float:
 	return now - before
 
 
+func _record_seq_ground_motion(previous: float, from: Vector2, to: Vector2) -> void:
+	var begin := int(floor(previous))
+	var end := int(floor(phase_t))
+	if not _seq_ground_roots.has(begin):
+		_seq_ground_roots[begin] = from
+	var before := seq_root_offset(previous)
+	for tick in range(begin + 1, end + 1):
+		var x := from.x + float(facing) * (seq_root_offset(float(tick)) - before)
+		_seq_ground_roots[tick] = Vector2(clampf(x, minf(from.x, to.x), maxf(from.x, to.x)), to.y)
+	_seq_ground_roots[end] = to
+
+
 ## 整招的参考位移总量（收招判定与验收用）
 func seq_root_total() -> float:
 	var offsets: Array = anims.get(anim_name, {}).get("seq_root_dx", [])
@@ -264,7 +279,10 @@ func seq_blade_world(tick := -1.0) -> Array:
 	# today's root would shift quick-draw history forward by up to 35.75 px.
 	var requested_dx := float(facing) * seq_root_offset(at)
 	var current_dx := float(facing) * seq_root_offset()
-	if is_instance_valid(seq_fx):
+	if ground_motion_resolver.is_valid():
+		var root: Vector2 = _seq_ground_roots.get(int(floor(at)), Vector2(position.x, depth_y))
+		origin += root - Vector2(position.x, depth_y)
+	elif is_instance_valid(seq_fx):
 		var start_root: Vector2 = seq_fx.get("slash_origin")
 		# Past and current roots must each respect the arena clamp; subtracting
 		# an unclamped reference delta invents travel after the node hit a wall.
@@ -291,6 +309,7 @@ func report_contact(point: Vector2, move: String, tick: float, segment: int, tar
 
 func _clear_seq_action() -> void:
 	last_hitstop = 0
+	_seq_ground_roots.clear()
 	if is_instance_valid(seq_fx):
 		# Independent contact effects are allowed to finish across a cancel.
 		seq_fx.call("clear_action")
@@ -307,16 +326,40 @@ func setup(data: Dictionary, battle_fx: BattleFX, monster_list: Array) -> void:
 func set_arena(left: float, right: float) -> void:
 	arena_left = left
 	arena_right = maxf(left + 8.0, right)
-	position.x = clampf(position.x, arena_left, arena_right)
+	var from := Vector2(position.x, depth_y)
+	apply_ground_motion(from, from)
 
 
 func reset_combat(origin: Vector2) -> void:
-	position = origin
-	_reset_grounded = absf(origin.y - ground_y) < 1.0
-	velocity = Vector2.ZERO
 	hp = float(cfg.get("max_hp", 1000))
 	mp = float(cfg.get("max_mp", 300))
-	depth_y = float(cfg.get("depth_y", 0.0))
+	cds.clear()
+	buff_data.clear()
+	buff_t = 0.0
+	invincible = 0
+	potion_cd = 0
+	_reset_combat_motion(origin, float(cfg.get("depth_y", 0.0)))
+
+
+func relocate_combat(origin: Vector2, depth: float) -> void:
+	var was_dead := dead
+	var was_enabled := control_enabled
+	var previous_facing := facing
+	_reset_combat_motion(origin, depth)
+	dead = was_dead
+	control_enabled = was_enabled
+	facing = previous_facing
+	if dead:
+		state = St.DOWN
+		_anim_step()
+
+
+func _reset_combat_motion(origin: Vector2, depth: float) -> void:
+	position.y = origin.y
+	var target := Vector2(origin.x, depth)
+	apply_ground_motion(target, target)
+	_reset_grounded = absf(origin.y - ground_y) < 1.0
+	velocity = Vector2.ZERO
 	state = St.IDLE
 	facing = 1
 	dead = false
@@ -331,11 +374,6 @@ func reset_combat(origin: Vector2) -> void:
 	total_t = 0
 	combo = 0
 	combo_window = 0
-	cds.clear()
-	buff_data.clear()
-	buff_t = 0.0
-	invincible = 0
-	potion_cd = 0
 	st_hit_left = 0
 	bounce_used = false
 	upper_connected = false
@@ -346,6 +384,8 @@ func reset_combat(origin: Vector2) -> void:
 	input_buffer.clear()
 	contact_log.clear()
 	_event_segments.clear()
+	_seq_ground_done = false
+	last_contact = Vector2.ZERO
 	coyote_left = int(cfg.get("coyote_frames", 6))
 	air_attack_count = 0
 	_jump_running = false
@@ -379,6 +419,22 @@ func reset_combat(origin: Vector2) -> void:
 	reset_physics_interpolation()
 	hp_changed.emit(hp, float(cfg.get("max_hp", 1000)))
 	queue_redraw()
+
+func apply_ground_motion(from: Vector2, to: Vector2) -> Vector2:
+	var resolved := Vector2(clampf(to.x, arena_left, arena_right), to.y)
+	if ground_motion_resolver.is_valid():
+		resolved = ground_motion_resolver.call(self, from, resolved)
+	position.x = resolved.x
+	depth_y = resolved.y
+	return resolved
+
+
+func ground_footprint(at := Vector2.INF) -> Rect2:
+	var center := Vector2(position.x, depth_y) if at == Vector2.INF else at
+	var half := Vector2(maxf(0.0, float(cfg.get("collision_half_width", 0.0))),
+		maxf(0.0, float(cfg.get("collision_half_depth", 0.0))))
+	return Rect2(center - half, half * 2.0)
+
 
 func visual_position() -> Vector2:
 	return global_position + Vector2(0, depth_y)
@@ -457,9 +513,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y = 0.0
 	var falling_speed := velocity.y
+	var slide_from := Vector2(position.x, depth_y)
 	move_and_slide()
+	apply_ground_motion(slide_from, Vector2(position.x, depth_y))
 	_reset_grounded = false
-	position.x = clampf(position.x, arena_left, arena_right)
 	if is_on_floor() and falling_speed >= 0.0:
 		if not was_grounded:
 			_on_landed(falling_speed)
@@ -477,7 +534,8 @@ func _physics_process(delta: float) -> void:
 		state = St.JUMP
 	# Same-lane target body is 101+depth. Leave a slot between it and the
 	# player for the authored back slash, then one above for the front slash.
-	z_index = 103 + int(round(depth_y))
+	if not external_depth_order:
+		z_index = 103 + int(round(depth_y))
 	_anim_step()
 	if fx != null and buff_t > 0.0 and not buff_data.is_empty():
 		fx.rage_aura(visual_position(), facing)
@@ -610,7 +668,8 @@ var lane_max_override = null
 func set_lane_limits(minimum: float, maximum: float) -> void:
 	lane_min_override = minimum
 	lane_max_override = maxf(minimum + 24.0, maximum)
-	depth_y = clampf(depth_y, lane_min_override, lane_max_override)
+	var from := Vector2(position.x, depth_y)
+	apply_ground_motion(from, Vector2(from.x, clampf(from.y, lane_min_override, lane_max_override)))
 
 
 func clear_lane_limits() -> void:
@@ -634,10 +693,11 @@ func _move_lane(delta: float, airborne := false) -> void:
 	var lane := Input.get_axis("move_up", "move_down") if InputMap.has_action("move_up") else 0.0
 	var speed := float(cfg.get("lane_speed", 140)) * (float(cfg.get("air_lane_scale", 0.65)) if airborne else 1.0)
 	_lane_velocity = move_toward(_lane_velocity, lane * speed, float(cfg.get("lane_acceleration", 2200)) * delta)
-	var previous_depth := depth_y
-	depth_y = clampf(depth_y + _lane_velocity * delta, lane_min(), lane_max())
+	var from := Vector2(position.x, depth_y)
+	apply_ground_motion(from, Vector2(from.x,
+		clampf(from.y + _lane_velocity * delta, lane_min(), lane_max())))
 	# Use travelled depth, including the arena clamp, for gait and footsteps.
-	_lane_velocity = (depth_y - previous_depth) / maxf(delta, 0.0001)
+	_lane_velocity = (depth_y - from.y) / maxf(delta, 0.0001)
 
 func _free_state(delta: float) -> void:
 	var direction := _dir_input()
@@ -902,6 +962,9 @@ func _start_frame_move() -> void:
 	anim_frame = 0
 	anim_tick = 0
 	_anim_fraction = 0.0
+	_seq_ground_roots.clear()
+	if ground_motion_resolver.is_valid():
+		_seq_ground_roots[0] = Vector2(position.x, depth_y)
 	# V6 表现层必须在 phase_t 前进前拿到出招起点 root（刀光锚点固定在这里）
 	action_started.emit(move_name)
 	_emit_attack_event("windup", -1, move_data)
@@ -942,8 +1005,11 @@ func _tick_frame_move(delta := 1.0 / 60.0) -> void:
 		_move_inertia = 0.0
 		velocity.x = 0.0
 		# 先按参考曲线前冲，再判定命中，保证接触点用的是本 tick 的真实位置
-		position.x = clampf(position.x + float(facing) * _seq_root_step(previous),
-			arena_left, arena_right)
+		var from := Vector2(position.x, depth_y)
+		var resolved := apply_ground_motion(from,
+			from + Vector2(float(facing) * _seq_root_step(previous), 0.0))
+		if ground_motion_resolver.is_valid():
+			_record_seq_ground_motion(previous, from, resolved)
 		_seq_tick(previous)
 		# 命中即停帧，但贴图必须停在真正的接触姿势上，所以先同步一次帧号再冻结
 		_anim_step()
@@ -1454,8 +1520,9 @@ func _tick_dead(delta: float) -> void:
 		velocity.y += float(cfg.get("gravity", 2100)) * delta
 	else:
 		velocity.y = 0.0
+	var slide_from := Vector2(position.x, depth_y)
 	move_and_slide()
-	position.x = clampf(position.x, arena_left, arena_right)
+	apply_ground_motion(slide_from, Vector2(position.x, depth_y))
 	anim_name = AnimLib.pick(anims, ["down", "hit", "idle"], "idle")
 	anim_frame = maxi(0, int(anims.get(anim_name, {}).get("frames", 1)) - 1)
 	queue_redraw()

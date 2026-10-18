@@ -152,7 +152,7 @@ func _configure_root() -> void:
 	_dim_layer.name = "IaiDim"
 	_dim_layer.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	_dim_layer.z_as_relative = false
-	_dim_layer.z_index = 1
+	_dim_layer.z_index = int(GameConfig.runtime.get("layering", {}).get("dim_z", -950))
 	add_child(_dim_layer)
 	_dim = ColorRect.new()
 	_dim.name = "Dim"
@@ -272,6 +272,15 @@ func _refresh_action() -> void:
 		_slash_front.global_position = origin
 		_slash_front.z_index = actor.z_index + 1
 		_seq_apply(_slash_front, clips["slash_front/%s" % action_move], tick, true, action_facing)
+
+
+func refresh_depth_layers() -> void:
+	if not is_instance_valid(actor):
+		return
+	if is_instance_valid(_slash_back):
+		_slash_back.z_index = actor.z_index - 1
+	if is_instance_valid(_slash_front):
+		_slash_front.z_index = actor.z_index + 1
 
 
 func _seq_apply(node: Sprite2D, clip: Dictionary, tick: float, mirror: bool, facing_value := 0) -> void:

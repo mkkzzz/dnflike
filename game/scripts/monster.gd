@@ -22,6 +22,8 @@ var atk_hit_done := false
 var dead := false
 var control_enabled := true
 var depth_y := 0.0
+var ground_motion_resolver := Callable()
+var external_depth_order := false
 var ground_y := 576.0
 var arena_left := 64.0
 var arena_right := 1216.0
@@ -90,6 +92,60 @@ func setup(data: Dictionary, player: Node2D, battle_fx: BattleFX) -> void:
 		self_modulate = Color(float(tint[0]), float(tint[1]), float(tint[2]))
 	else:
 		self_modulate = Color.WHITE
+
+const ROOM_STATE_FIELDS := [
+	"hp", "state", "st_t", "facing", "patrol_dir", "flash", "bounce_used",
+	"bleed_dps", "bleed_left", "bleed_tick", "atk_hit_done", "control_enabled",
+	"attack_facing", "attack_cooldown", "invincible", "hit_chain", "air_frames",
+	"velocity", "anim_name", "anim_frame", "anim_tick", "training_rest",
+	"_impact_age", "_impact_life", "_impact_strength", "_impact_direction", "_impact_tint",
+]
+
+
+func capture_room_state() -> Dictionary:
+	var snapshot := {"dead": dead, "position": position, "depth_y": depth_y}
+	for field in ROOM_STATE_FIELDS:
+		snapshot[field] = get(field)
+	return snapshot
+
+
+func restore_room_state(snapshot: Dictionary) -> void:
+	if dead or snapshot.is_empty():
+		return
+	if bool(snapshot.get("dead", false)) or float(snapshot.get("hp", hp)) <= 0.0:
+		hp = 0.0
+		_die()
+		return
+	for field in ROOM_STATE_FIELDS:
+		if snapshot.has(field):
+			set(field, snapshot[field])
+	var restored_position: Vector2 = snapshot.get("position", position)
+	position.y = restored_position.y
+	var target := Vector2(restored_position.x, float(snapshot.get("depth_y", depth_y)))
+	apply_ground_motion(target, target)
+	if not external_depth_order:
+		z_index = 100 + int(round(depth_y))
+	modulate = Color.WHITE
+	_sync_body_visual()
+	reset_physics_interpolation()
+	queue_redraw()
+
+
+func apply_ground_motion(from: Vector2, to: Vector2) -> Vector2:
+	var resolved := Vector2(clampf(to.x, arena_left, arena_right), to.y)
+	if ground_motion_resolver.is_valid():
+		resolved = ground_motion_resolver.call(self, from, resolved)
+	position.x = resolved.x
+	depth_y = resolved.y
+	return resolved
+
+
+func ground_footprint(at := Vector2.INF) -> Rect2:
+	var center := Vector2(position.x, depth_y) if at == Vector2.INF else at
+	var half := Vector2(maxf(0.0, float(cfg.get("collision_half_width", 0.0))),
+		maxf(0.0, float(cfg.get("collision_half_depth", 0.0))))
+	return Rect2(center - half, half * 2.0)
+
 
 func visual_position() -> Vector2:
 	return position + Vector2(0, depth_y)
@@ -190,8 +246,9 @@ func _physics_process(delta: float) -> void:
 	if training_mode:
 		training_rest += delta
 		if training_rest > 4.0 and state in [St.IDLE, St.PATROL, St.CHASE]:
-			position.x = move_toward(position.x, training_origin.x, delta * 210)
-			depth_y = move_toward(depth_y, training_depth, delta * 65)
+			var from := Vector2(position.x, depth_y)
+			apply_ground_motion(from, Vector2(move_toward(from.x, training_origin.x, delta * 210),
+				move_toward(from.y, training_depth, delta * 65)))
 			hp = float(cfg.get("hp", 4000))
 	invincible = maxi(0, invincible - 1)
 	attack_cooldown = maxi(0, attack_cooldown - 1)
@@ -235,8 +292,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y = 0.0
 	var falling_speed := velocity.y
+	var slide_from := Vector2(position.x, depth_y)
 	move_and_slide()
-	position.x = clampf(position.x, arena_left, arena_right)
+	apply_ground_motion(slide_from, Vector2(position.x, depth_y))
 	if state == St.AIR and is_on_floor() and falling_speed >= 0.0:
 		if not bounce_used and falling_speed > float(cfg.get("bounce_threshold", 400)):
 			bounce_used = true
@@ -250,7 +308,8 @@ func _physics_process(delta: float) -> void:
 			_set_state(St.DOWN)
 			st_t = int(cfg.get("knockdown_time", 36))
 			print("[M1] monster state: AIR -> DOWN")
-	z_index = 100 + int(round(depth_y))
+	if not external_depth_order:
+		z_index = 100 + int(round(depth_y))
 	_anim_step()
 	_sync_body_visual()
 	queue_redraw()
@@ -360,7 +419,10 @@ func _chase(delta: float) -> void:
 	var player := player_ref as Player
 	var distance := player.position.x - position.x
 	facing = 1 if distance >= 0 else -1
-	depth_y = move_toward(depth_y, player.depth_y, float(cfg.get("lane_speed", 65)) * delta)
+	var from := Vector2(position.x, depth_y)
+	apply_ground_motion(from, Vector2(from.x,
+		move_toward(from.y, player.depth_y, float(cfg.get("lane_speed", 65)) * delta)))
+	distance = player.position.x - position.x
 	var reach := float(cfg.get("attack_move", {}).get("range", 100))
 	if absf(distance) <= reach and absf(depth_y - player.depth_y) <= float(cfg.get("attack_lane", 20)):
 		velocity.x = 0.0
