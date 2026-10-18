@@ -5,6 +5,7 @@
     python tools/sync_status.py              日常开工：拉取远程并汇总，记住本次看到的位置
     python tools/sync_status.py --peek       只看不记（下次仍从上次位置开始列）
     python tools/sync_status.py --no-fetch   不联网，只用本地已有的远程引用
+    python tools/sync_status.py --no-proxy   忽略系统代理，强制直连（默认自动沿用系统代理）
 
 本地标识存在仓库根目录 .workspace（不入库），内容为 id=ws<N> 与 last_seen=<远程 SHA>。
 """
@@ -13,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import os
 import re
 import shutil
 import subprocess
@@ -46,12 +48,61 @@ def find_git() -> str:
 
 
 GIT = find_git()
+PROXY_ENV_KEYS = ("HTTPS_PROXY", "HTTP_PROXY", "ALL_PROXY")
+NO_PROXY = False
+_SYSTEM_PROXY: str | None = None
+
+
+def system_proxy() -> str:
+    """读 Windows 系统代理（Internet 选项）。返回 '' 表示没有可用代理。
+
+    浏览器、GitHub Desktop 等走 WinINET 代理，而 git 只认环境变量 /
+    http.proxy，直连 GitHub 常常只有几十 KiB/s。这里自动沿用系统代理，
+    不改任何 git 配置；macOS / Linux 或读不到设置时按直连处理。
+    """
+    global _SYSTEM_PROXY
+    if _SYSTEM_PROXY is not None:
+        return _SYSTEM_PROXY
+    _SYSTEM_PROXY = ""
+    if not NO_PROXY and os.name == "nt":
+        try:
+            import winreg
+
+            with winreg.OpenKey(
+                winreg.HKEY_CURRENT_USER,
+                r"Software\Microsoft\Windows\CurrentVersion\Internet Settings",
+            ) as key:
+                enabled, _ = winreg.QueryValueEx(key, "ProxyEnable")
+                server, _ = winreg.QueryValueEx(key, "ProxyServer")
+            if enabled and server:
+                for part in str(server).split(";"):
+                    scheme, _, addr = part.partition("=")
+                    if scheme.strip().lower() in ("http", "https"):
+                        _SYSTEM_PROXY = f"http://{addr.strip()}"
+                        break
+                    if not _:
+                        _SYSTEM_PROXY = f"http://{part.strip()}"
+                        break
+        except (ImportError, OSError, ValueError):
+            pass
+    return _SYSTEM_PROXY
+
+
+def git_env() -> dict[str, str]:
+    env = dict(os.environ)
+    if any(env.get(k) for k in PROXY_ENV_KEYS):
+        return env
+    proxy = system_proxy()
+    if proxy:
+        env["HTTPS_PROXY"] = env["HTTP_PROXY"] = proxy
+    return env
 
 
 def git(*args: str, check: bool = True) -> str:
     result = subprocess.run(
         [GIT, "-c", "core.quotepath=false", *args],
         cwd=REPO, capture_output=True, text=True, encoding="utf-8", errors="replace",
+        env=git_env(),
     )
     if check and result.returncode != 0:
         raise RuntimeError(result.stderr.strip() or f"git {' '.join(args)} 失败")
@@ -210,7 +261,11 @@ def main() -> int:
     parser.add_argument("--init", metavar="WS_ID", help="登记本 clone 的工作区 ID，例如 ws1")
     parser.add_argument("--peek", action="store_true", help="只看不记录本次同步位置")
     parser.add_argument("--no-fetch", action="store_true", help="不执行 git fetch")
+    parser.add_argument("--no-proxy", action="store_true", help="忽略系统代理，强制直连")
     args = parser.parse_args()
+
+    global NO_PROXY
+    NO_PROXY = args.no_proxy
 
     ws = load_ws()
     if args.init:
@@ -230,6 +285,9 @@ def main() -> int:
     person = person_of(my_id)
 
     print(f"== 同步状态（{my_id}{' · ' + person if person else ''}）==")
+    proxy = git_env().get("HTTPS_PROXY", "")
+    if not args.no_fetch:
+        print(f"网络：{'经系统代理 ' + proxy if proxy else '直连（如拉取很慢，检查系统代理或加 --no-proxy 对照）'}")
     for line in remote_state(not args.no_fetch) + worktree_state():
         print(line)
     if not GODOT.exists():
