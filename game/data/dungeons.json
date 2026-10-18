@@ -180,7 +180,22 @@
         138,
         95
       ],
-      "collision_rect_source": "把贴图 alpha 逐列/逐行取覆盖率>=0.5 的最长连续段作实心核心"
+      "collision_rect_source": "把贴图 alpha 逐列/逐行取覆盖率>=0.5 的最长连续段作实心核心",
+      "destructible": {
+        "hits": 1,
+        "debris": {
+          "columns": 4,
+          "rows": 3,
+          "scatter": 130,
+          "rise": 95,
+          "gravity": 620,
+          "spin": 240,
+          "life": 0.55
+        },
+        "dust": 10,
+        "sound": "foliage_break",
+        "shake": 1.1
+      }
     },
     "rock": {
       "file": "entities/rock/intact.png",

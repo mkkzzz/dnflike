@@ -5,17 +5,33 @@ var solids: Array = []
 var bounds := Rect2()
 var skin := 0.01
 var slide_iterations := 4
+## 实体实例 id -> 它的 footprint 多边形，用于破坏后精确摘除
+var _entity_polygons: Dictionary = {}
 
 func configure(area: Rect2, settings: Dictionary) -> void:
 	bounds = area
 	skin = float(settings["skin"])
 	slide_iterations = int(settings["slide_iterations"])
 	solids.clear()
+	_entity_polygons.clear()
 
 func add_entity(entity: DungeonEntity) -> void:
 	if entity.collision_enabled:
+		var polygons: Array = []
 		for polygon in entity.world_footprints():
 			solids.append(polygon)
+			polygons.append(polygon)
+		_entity_polygons[entity.get_instance_id()] = polygons
+
+
+## 实体被破坏时摘掉它的挡路多边形；不属于阻挡实体则什么都不做。
+func remove_entity(entity: DungeonEntity) -> void:
+	var id := entity.get_instance_id()
+	if not _entity_polygons.has(id):
+		return
+	for polygon in _entity_polygons[id]:
+		solids.erase(polygon)
+	_entity_polygons.erase(id)
 
 func resolve(actor: Node2D, start: Vector2, requested: Vector2) -> Vector2:
 	var cfg: Dictionary = actor.get("cfg")

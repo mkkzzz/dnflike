@@ -103,6 +103,17 @@ func run(main, check: Callable, frames: Callable) -> void:
 	await frames.call(3)
 	check.call(p.z_index > nearest.z_index, "nearby front feet draw above the actual calibrated entity image slice")
 	check.call(main.seq_fx._dim_layer.z_index < p.z_index, "quick-draw background dim stays below rear actors")
+
+	# 可破坏场景物（草丛）：配置驱动 -> 受击一次破碎 -> 从玩家命中列表与地面阻挡里摘除
+	check.call(bush.destructible and not bush.destroyed, "bush is configured destructible and starts intact")
+	check.call(main.destructibles.has(bush) and p.destructibles.size() == main.destructibles.size(), "destructible props share the player's hit list")
+	check.call(bush.world_hit_rect().has_area(), "destructible prop exposes a world hit rect for melee")
+	var bush_destroyed: bool = bush.take_hit(1.0, 1)
+	check.call(bush_destroyed and bush.destroyed and not bush.collision_enabled, "one hit destroys the bush and clears its collision")
+	check.call(bush.render_slices.is_empty(), "destroyed prop stops rendering its intact slices")
+	main._on_prop_destroyed(bush)
+	check.call(not main.destructibles.has(bush), "destroyed prop is removed from the shared hit list")
+
 	main._finish_dungeon(true)
 	var result: Dictionary = main._last_result.duplicate(true)
 	main._finish_dungeon(false)

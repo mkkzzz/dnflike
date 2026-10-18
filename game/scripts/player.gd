@@ -11,6 +11,8 @@ signal action_feedback(message: String)
 signal action_started(move_id: String)
 signal seq_hitstop(tick: float, frame: int, blade: Vector2, point: Vector2, hitstop: int)
 signal landed(impact_speed: float)
+## 可破坏场景物被打碎（main 用它把该物从地面阻挡里摘掉、并可做额外反馈）
+signal destroyed_prop(entity: Node)
 
 # Append states so existing scene/debug enum values remain stable.
 enum St { IDLE, RUN, JUMP, BACK_DASH, GUARD, ATK, UPPER, SKILL, HIT, AIR, DOWN, GETUP, WALK, AIR_ATK, DASH_ATK }
@@ -23,6 +25,8 @@ var cfg: Dictionary = {}
 var fx: BattleFX
 var weapon_attachment: Node2D
 var monsters: Array = []
+## 可破坏场景物（草丛等）。由 main 注入，与 monsters 同为一个共享数组。
+var destructibles: Array = []
 var state := St.IDLE
 var facing := 1
 var hp := 1000.0
@@ -1321,6 +1325,18 @@ func _emit_melee(hit: Dictionary, segment: float = 0.0) -> void:
 			hit_emitted = true
 			upper_connected = upper_connected or move_name == "upper"
 			landed_hit.emit(monster, float(hit.get("damage", 0)))
+	# 可破坏物：与怪物共用同一个命中矩形和景深容差；每挥只打一次（hit_targets 复用）。
+	for entity in destructibles.duplicate():
+		if not is_instance_valid(entity) or not entity.destructible or entity.destroyed:
+			continue
+		if absf(depth_y - entity.actor_depth) > float(hb.get("lane", cfg.get("lane_hit_tolerance", 24))):
+			continue
+		var entity_key := "%d:e%d" % [int(segment), entity.get_instance_id()]
+		if hit_targets.has(entity_key) or not box.intersects(entity.world_hit_rect()):
+			continue
+		if entity.take_hit(float(hit.get("damage", 0)), facing):
+			destroyed_prop.emit(entity)
+		hit_targets[entity_key] = true
 
 func _on_landed(impact_speed: float) -> void:
 	if state == St.JUMP and impact_speed > float(cfg.get("landing_fx_speed", 140)):

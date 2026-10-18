@@ -18,6 +18,8 @@ var weapon_rig: WeaponRig
 var seq_fx: SeqFX
 var seq_config: Dictionary = {}
 var monsters: Array = []
+## 可破坏场景物（当前房间）。每房重建，与 player.destructibles 共享同一个数组。
+var destructibles: Array = []
 var camera: Camera2D
 var hud: Hud
 var font: Font
@@ -200,6 +202,9 @@ func _build_world() -> void:
 	player.ground_y = GROUND_Y
 	add_child(player)
 	player.setup(GameConfig.player, bm, monsters)
+	# 可破坏场景物与 monsters 一样用共享数组：玩家在 _emit_melee 里直接命中它们
+	player.destructibles = destructibles
+	player.destroyed_prop.connect(_on_prop_destroyed)
 	weapon_rig = WeaponRig.new()
 	weapon_rig.name = "WeaponRig"
 	weapon_rig.process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -537,6 +542,14 @@ func _start_training(job_id := -1) -> void:
 	_wave_notice.show()
 	transition_left = 2.2
 	print("[DEMO] training started")
+
+## 可破坏物被打碎：把它从地面阻挡里摘掉（bush 本身 collision=false，但机制要通用），
+## 并清理引用，避免玩家继续对已消失的物体做命中判定。
+func _on_prop_destroyed(entity: Node) -> void:
+	destructibles.erase(entity)
+	if ground_space != null and entity is DungeonEntity:
+		ground_space.remove_entity(entity)
+
 
 func _clear_monsters() -> void:
 	for monster in monsters:
@@ -957,6 +970,7 @@ func _load_room(arrival: Dictionary = {}, new_run := false) -> void:
 	room_root = props
 	var catalog: Dictionary = dungeon_config.get("entity_catalog", {})
 	_room_monster_states = dungeon.room_state(dungeon.room_index).get("monsters", {}).duplicate(true)
+	destructibles.clear()
 	for item in dungeon.entity_plan():
 		var entry: Dictionary = catalog.get(item["id"], {})
 		if entry.is_empty():
@@ -966,6 +980,9 @@ func _load_room(arrival: Dictionary = {}, new_run := false) -> void:
 		props.add_child(entity)
 		entity.setup(entry, dungeon.asset_root(), Vector2(item["x"], GROUND_Y), item["depth_y"])
 		entity.debug_geometry = _geometry_visible
+		entity.bind_fx(bm)
+		if entity.destructible:
+			destructibles.append(entity)
 		ground_space.add_entity(entity)
 	var already_cleared := dungeon.is_room_cleared(dungeon.room_index)
 	var plan := dungeon.monster_plan(GameConfig.monsters["goblin"], dungeon_config.get("monster_presets", {}))

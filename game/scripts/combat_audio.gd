@@ -25,12 +25,15 @@ const SOUND_SPECS := {
 	# 怪物受击的生物叫声（哥布林）。与撞击拟音 light/heavy 分层并存，不是替换。
 	# 节流 320ms：叫声长达 0.34~0.43s，更短的节流会让连击糊成一片。
 	"goblin_hurt": [-12.0, 2, 320],
+	# 可破坏场景物（草丛等）被打碎：环境音，比打击音轻一档。
+	# 声音长 0.48~0.60s，节流取 140ms 避免连击时碎响叠成一团。
+	"foliage_break": [-9.0, 1, 140],
 	"wave": [-13.0, 4, 500], "victory": [-11.5, 4, 1000],
 	"ui": [-18.0, 1, 50],
 }
 const ALIASES := {
 	"swing": "swing_light", "skill": "charge", "monster_death": "death",
-	"monster_hurt": "goblin_hurt",
+	"monster_hurt": "goblin_hurt", "bush_break": "foliage_break",
 	"footstep": "step", "run": "run_step", "stop": "run_stop", "turn": "run_stop",
 	"attack1": "swing_light", "attack2": "swing_back", "attack3": "swing_heavy",
 	"air_attack": "swing_air", "dash_attack": "dash_strike", "upper": "swing_upper",
