@@ -25,7 +25,12 @@ if ($importExit -ne 0 -or ($importOutput -match 'SCRIPT ERROR|ERROR:')) {
 }
 if ($Test) {
     $runtimePath = Join-Path $gamePath "data/runtime.json"
-    $testSettings = (Get-Content -LiteralPath $runtimePath -Raw | ConvertFrom-Json).tests
+    # 显式按 UTF-8 读取：Windows PowerShell 5.1 的 Get-Content -Raw 按 ANSI 解码，
+    # 而 runtime.json 含中文（player_name「鬼剑士」、门的注释等），
+    # 会被解成乱码并让 JSON 字符串断裂，ConvertFrom-Json 直接失败。
+    # PowerShell 7 默认 UTF-8 不受影响；这里显式指定以兼容两者。
+    $runtimeText = [System.IO.File]::ReadAllText($runtimePath, [System.Text.Encoding]::UTF8)
+    $testSettings = ($runtimeText | ConvertFrom-Json).tests
     $frameBudget = [int]$testSettings.frame_budget
     $fixedFps = [int]$testSettings.fixed_fps
     if ($frameBudget -le 0 -or $fixedFps -le 0) {
