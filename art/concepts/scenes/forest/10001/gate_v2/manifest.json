@@ -48,7 +48,8 @@
     "Gate frames appear similar but no per-pixel state alignment or anchor validation has been performed.",
     "Only a front view was generated; left/right/back directions and lamp animation are absent."
   ],
-  "approval": {"source_approved": false, "runtime_approved": false},
+  "approval": {"source_approved": true, "runtime_approved": false, "date": "2026-10-18", "quote": "这倒是没问题，还需要左右方向的门", "scope": "Front-facing c1 design direction only; not alpha, state alignment, native production exports or runtime acceptance."},
+  "directional_candidates": "side_generation.json",
   "exports": [],
-  "integration": {"game_modified": false, "next": "User reviews shape and painting; only then produce directional states, transparent exports, anchors and lamp animation."}
+  "integration": {"game_modified": false, "next": "Review side_c2 left/right direction preview, then validate transparent exports, anchors and lamp animation before integration."}
 }

@@ -1,0 +1,63 @@
+{
+  "schema": "dnflike/gate-direction-pilot/v1",
+  "asset_id": "gate.forest.room_connection",
+  "date": "2026-10-18",
+  "status": "source_review",
+  "authorization": "用户认可前版造型方向后要求左右方向门，并回复go，开搞；本批仅源图候选，不自动实装。",
+  "scope": ["left.closed", "left.open", "right.closed", "right.open"],
+  "references_consulted_only": ["manifest.json", "../v1/production.json", "../../../../../../docs/design/22_资产画面规格.md"],
+  "reference_images_submitted": [],
+  "generator": "image_gen",
+  "generator_reference_input_supported": false,
+  "seed": null,
+  "quality": "high",
+  "style": "natural",
+  "requested_size": [1280, 768],
+  "attempts": [
+    {
+      "revision": "side_c1",
+      "source": "candidates/side_c1/原创高清二维手绘横版清版动作RPG森林关卡的侧向连接门原画__2026-10-18T08-07-53.png",
+      "actual_size": [1376, 768],
+      "mode": "RGB",
+      "sha256": "dadf20bedc53523d4f75945230b6a27eb0d905a4718d6440bf0f4045db664e1f",
+      "status": "rejected",
+      "reason": "视角仍近于正面，远近柱根高差不足，不能作为左右方向门候选。",
+      "prompt": "原创高清二维手绘横版清版动作RPG森林关卡的侧向连接门原画。不是正面门！这是安装在房间屏幕右边缘的出口，人物沿屏幕水平方向向右穿门；门的平面沿前后景深方向延伸，朝向左侧室内。相机是略微俯视的侧向三分之四游戏视角，门框正面相对于镜头转动约65至70度，从室内左前方看到门的侧向厚度。门框明显透视收窄，门框上梁和门槛在画面斜向延伸：远处柱根更高、近处柱根更低，两柱水平间距小于竖向高度，近柱厚大、远柱稍细。不可以画成两个直面镜头对称等宽柱子的正面大拱门，不是俯视地图，不是水平旋转的正面门贴图。全图两栏，一栏右侧门关闭态，一栏完全相同的右侧门开启态，严格同尺寸同视角同门框同灯座位置，同款两状态不换设计，不添加文字或标签。保持已经确定的森林木门设计：中棕色风化原木双柱及厚实微弯横梁，青绿苔藓藤蔓沿木框盘绕，粗麻绳结，左右柱各一个小琥珀灯笼，朴素成熟的森林边界门，不是魔法传送门、石神庙、豪华城堡。关闭态为自然密排竖向木板双扇门，用横梁加固，灯熄灭；开启态双扇木门沿真实透视向旁边打开，通行空洞清楚，门框和门柱完全不变，两只灯发克制温暖琥珀色光，不添加魔法圆环、金色幕布或发光通道。每扇门独立完整，柱根、灯笼和打开的门扇均不得裁切；门占各栏高度约70%，顶部底部和两侧宽留白。所有非物体区域纯白背景，包括门洞和空隙，无地板无森林背景无道路无阴影投影，无角色无其他物体，无分隔线、无标尺、无数字、无文字、无水印。成熟半写实二维手绘游戏厚涂，原木有可读纹理和大的主明暗面，苔藓青绿，中棕木材，灰青阴影，柔和日光从左上，高清位图而不是3D渲染、照片、矢量卡通、Q版、像素格。请务必画侧向门的真实三分之四透视，门扇和门框有一致的侧向角度。"
+    },
+    {
+      "revision": "side_c2",
+      "source": "candidates/side_c2/2D_hand_painted_belt_scroller__2026-10-18T08-10-59.png",
+      "actual_size": [1376, 768],
+      "mode": "RGB",
+      "sha256": "b1525ddf78a3c03ba6e360e0e59f960096f555742171a32eca0d4d03a5f308c7",
+      "status": "source_review",
+      "reason": "可见柱根高差、上梁斜向和侧面厚度，较c1改进；实际收窄未完全达到提示词要求，仍需用户评审透视和前版一致性。",
+      "prompt": "2D hand-painted belt-scroller game asset concept sheet, two isolated narrow SIDE-ON forest wooden gate states, closed left and open right, pure white background. CRITICAL CAMERA RULE: this is a gate across the DEPTH axis on the RIGHT EDGE of a scrolling room, seen almost EDGE ON from the room interior on its LEFT. The gate is NOT facing the viewer. Its visible opening is extremely narrow in the screen horizontal direction, about one quarter of its vertical height. The tall close wooden jamb sits low and LEFT, the far wooden jamb sits high and RIGHT. In each panel, the near jamb base is at approximately x=260,y=660 and the far jamb base at x=370,y=530, near jamb top x=260,y=150 and far jamb top x=370,y=100. The lintel extends diagonally UP-RIGHT between those two tops, visibly foreshortened; the ground edge also extends diagonally UP-RIGHT. The entire gate has a strong 75-degree yaw, tall narrow silhouette, strong oblique perspective. Two posts must overlap much more horizontally than a front-facing gate. NO wide arch opening, NO symmetrical full frontal gate, NO two posts at equal base height, NO broad horizontal lintel. Emphasize the depth of the timber sides, not a broad front surface. Closed state on left: the thick rustic wooden double door boards lie in this narrow diagonal depth plane, only a sliver of their face visible, shut and unlit. Open state on right: identical narrow oblique gate frame, the two door leaves swing naturally to its sides so a character can travel left-to-right through the empty white gap, amber lamps softly lit. Preserve matching frame geometry and sizes across both states. Weathered warm medium-brown massive timber jambs and slightly curved heavy lintel, visible cut-log circular ends, tied hemp rope, winding deep moss-green vines and moss patches, two small amber lanterns attached to jambs. Natural believable carpentry, not a magical portal, not a temple. Mature Korean 2D side-scrolling action game painted bitmap art, detailed textured wood but strong simple silhouette, broad painterly shadows, soft daylight, muted olive green and brown, NO photorealism, NO 3D render, NO vector cartoon, NO chibi, NO pixel grid. Each complete gate centered in its own half of a wide sheet with generous whitespace, whole lanterns roots and opening leaves visible. No floor, no ground patch, no cast shadow, no scenery, no characters, no arrows, no text, no labels, no separator line, no watermark. All negative spaces and doorway holes are solid clean WHITE. Draw two true strongly foreshortened SIDE gates rather than another pair of front doors."
+    }
+  ],
+  "preview": {
+    "file": "previews/side_c2_left_right.png",
+    "size": [1376, 1616],
+    "top_row": "left.closed / left.open; horizontal mirror of side_c2 source halves, not independent generation",
+    "bottom_row": "right.closed / right.open; unmodified original-pixel crops",
+    "crop_rects": {"closed": [0, 0, 688, 768], "open": [688, 0, 688, 768]},
+    "resize_applied": false,
+    "upscale_applied": false
+  },
+  "production_contract": {
+    "native_viewport": [2560, 1440],
+    "canvas_per_direction": [640, 768],
+    "upscale_allowed": false,
+    "formal_exports": [],
+    "counts_as_native_production_delivery": false
+  },
+  "limitations": [
+    "文字生图未传入已认可参考图片，造型一致性只受文字约束。",
+    "实际为白底RGB双态图，尚未透明化、精确锚点对齐或门灯分层。",
+    "左门是镜像评审候选，镜像改变受光方向，需场景组合和灯位评审后才可批准复用。",
+    "side_c2木门加固梁与前版略有变化，开关态框架也未做逐像素对齐。",
+    "下方向背面、动画和游戏接入不在本轮生成范围。"
+  ],
+  "approval": {"source_approved": false, "runtime_approved": false},
+  "game_modified": false
+}
