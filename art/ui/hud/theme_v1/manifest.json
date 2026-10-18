@@ -1,0 +1,64 @@
+{
+  "id": "ui.hud.theme_v1",
+  "generated": "2026-10-18",
+  "generator": "image-gen plugin · chatgpt-sub / gpt-image-2.5-flare",
+  "background": "纯黑底生成，按边框连通域泛洪去底（非色键），内部珐琅保留不透",
+  "layout_doc": "docs/design/24_主HUD设计.md",
+  "assets": [
+    {
+      "id": "ui.hud.panel_bottom",
+      "file": "panel_bottom.png",
+      "source": "image-b66b297c.png",
+      "size_px": [
+        1254,
+        222
+      ],
+      "target_2k": "2560×248（9-slice，端头 260@2K）",
+      "note": "底部主栏底板（两端卷草纹，中间可横向拉伸）"
+    },
+    {
+      "id": "ui.hud.orb_hp",
+      "file": "orb_hp.png",
+      "source": "image-5992a2cb.png",
+      "size_px": [
+        1247,
+        1254
+      ],
+      "target_2k": "Ø200@2K",
+      "note": "HP 球（齿轮环 + 玻璃胶囊 + 红色液面）"
+    },
+    {
+      "id": "ui.hud.orb_mp",
+      "file": "orb_mp.png",
+      "source": "image-2cadce84.png",
+      "size_px": [
+        1254,
+        1254
+      ],
+      "target_2k": "Ø200@2K",
+      "note": "MP 球（同结构，蓝色液面）"
+    },
+    {
+      "id": "ui.hud.slot_frame",
+      "file": "slot_frame.png",
+      "source": "image-4fe0d256.png",
+      "size_px": [
+        1242,
+        1195
+      ],
+      "target_2k": "84×84@2K",
+      "note": "技能 / 道具槽框（藏蓝珐琅 + 古金边）"
+    },
+    {
+      "id": "ui.hud.wheel",
+      "file": "wheel.png",
+      "source": "image-4515d97c.png",
+      "size_px": [
+        1250,
+        1237
+      ],
+      "target_2k": "280×280@2K",
+      "note": "中央圆形轮盘（4 个圆钮 + 中央八边形钮，功能占位）"
+    }
+  ]
+}
