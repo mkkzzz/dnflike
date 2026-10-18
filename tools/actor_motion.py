@@ -84,6 +84,23 @@ def surface_map(dst,src,size,origin=(0,0)):
 def remap(image,mapping):
     return cv2.remap(image,*mapping,cv2.INTER_LINEAR,borderMode=cv2.BORDER_CONSTANT)
 
+def protect_head_map(mapping,destination,source,size,origin=(0,0)):
+    """Constrain the head interior, not only four unconstrained mesh vertices.
+
+    Delaunay edges can cross a head quad when a nearby wrist changes sides.
+    The whole head must follow its own affine transform in that region.
+    """
+    yy,xx=np.mgrid[:size[1],:size[0]].astype(np.float32)
+    dx=xx+origin[0]-destination['head_center'][0];dy=yy+origin[1]-destination['head_center'][1]
+    a=destination['head_angle'];right=np.array([math.cos(a),-math.sin(a)]);down=np.array([math.sin(a),math.cos(a)])
+    lx=dx*right[0]+dy*right[1];ly=dx*down[0]+dy*down[1];h=destination['head_size']
+    distance=np.maximum(np.abs(lx)/(h*.65),np.abs(ly)/(h*.52))
+    edge=np.clip((distance-.92)/.08,0,1);weight=1-edge*edge*(3-2*edge)
+    a=source['head_angle'];right=np.array([math.cos(a),-math.sin(a)]);down=np.array([math.sin(a),math.cos(a)]);scale=source['head_size']/h
+    sx=source['head_center'][0]+scale*(lx*right[0]+ly*down[0])-origin[0]
+    sy=source['head_center'][1]+scale*(lx*right[1]+ly*down[1])-origin[1]
+    return ((mapping[0]*(1-weight)+sx*weight).astype(np.float32),(mapping[1]*(1-weight)+sy*weight).astype(np.float32))
+
 def premultiply(image):
     pm=np.asarray(image).astype(np.float32)/255
     pm[:,:,:3]*=pm[:,:,3:4]
@@ -99,8 +116,10 @@ def guide(pm):
     return np.clip((gray*.7+pm[:,:,3]*.28)*255,0,255).astype(np.uint8)
 
 class Tween:
-    def __init__(self,a,b,marks_a,marks_b,fingers_a=None,fingers_b=None,arms=False):
+    def __init__(self,a,b,marks_a,marks_b,fingers_a=None,fingers_b=None,arms=False,protect_head=False,opaque_silhouette=False):
         self.arms=arms
+        self.protect_head=protect_head
+        self.opaque_silhouette=opaque_silhouette
         self.original_a=np.asarray(a);self.original_b=np.asarray(b);self.ma=marks_a;self.mb=marks_b
         self.original_fa=np.zeros_like(self.original_a) if fingers_a is None else np.asarray(fingers_a)
         self.original_fb=np.zeros_like(self.original_b) if fingers_b is None else np.asarray(fingers_b)
@@ -115,8 +134,12 @@ class Tween:
         # knee identities through that crossing folds the texture triangles.
         # Align only rigid head, actual hands and ground; learned correspondence
         # handles limb occlusion, rather than treating a pose draft as a rig.
-        self.middle=geometry(marks_a,marks_b,.5);cm=controls(self.middle,False,arms)
+        self.middle=geometry(marks_a,marks_b,.5)
+        cm=controls(self.middle,False,arms)
         map_a=surface_map(cm,controls(marks_a,False,arms),self.size,self.origin);map_b=surface_map(cm,controls(marks_b,False,arms),self.size,self.origin)
+        if self.protect_head:
+            map_a=protect_head_map(map_a,self.middle,marks_a,self.size,self.origin)
+            map_b=protect_head_map(map_b,self.middle,marks_b,self.size,self.origin)
         self.na=remap(premultiply(self.a),map_a);self.nb=remap(premultiply(self.b),map_b)
         self.nfa=remap(premultiply(self.fa),map_a);self.nfb=remap(premultiply(self.fb),map_b)
         self.neural=bool(os.environ.get('SWORDSMAN_RIFE_MODEL'))
@@ -151,6 +174,16 @@ class Tween:
         if self.neural:
             from motion_neural import engine
             flow,weight=engine().fields(self.na,self.nb,t)
+            if self.protect_head:
+                # The head is already registered to the same rigid native
+                # rectangle. Residual neural flow may mistake a passing arm
+                # for occlusion and erase it. Keep that residual at zero in
+                # the head core; the final geometric map still translates
+                # and rotates the whole head along the authored body path.
+                center=np.asarray(self.middle['head_center'])-self.origin;h=self.middle['head_size']
+                protect=np.exp(-(((self.x-center[0])/(h*.72))**8+((self.y-center[1])/(h*.70))**8)).astype(np.float32)
+                flow=flow*(1-protect[None,:,:])
+                weight=weight*(1-protect)+(1-t)*protect
             ma=(self.x+flow[0],self.y+flow[1]);mb=(self.x+flow[2],self.y+flow[3])
         def blend(a,b,solid=False):
             if self.neural:
@@ -159,7 +192,7 @@ class Tween:
                 aw=remap(a,(self.x-self.ab[:,:,0]*t,self.y-self.ab[:,:,1]*t))
                 bw=remap(b,(self.x-self.ba[:,:,0]*(1-t),self.y-self.ba[:,:,1]*(1-t)))
                 mixed=aw*(1-t)+bw*t
-            if solid and (not self.neural or self.arms):
+            if solid and (not self.neural or self.arms or self.opaque_silhouette):
                 def distance(alpha):
                     mask=(alpha>.5).astype(np.uint8)
                     return cv2.distanceTransform(mask,cv2.DIST_L2,5)-cv2.distanceTransform(1-mask,cv2.DIST_L2,5)
@@ -167,6 +200,7 @@ class Tween:
                 mixed[:,:,:3]*=alpha/np.maximum(1e-7,mixed[:,:,3:4]);mixed[:,:,3:4]=alpha
             return mixed
         mapping=surface_map(controls(marks,False,self.arms),controls(self.middle,False,self.arms),self.size,self.origin)
+        if self.protect_head:mapping=protect_head_map(mapping,marks,self.middle,self.size,self.origin)
         body=np.zeros_like(self.original_a);fingers=np.zeros_like(body);x0,y0,x1,y1=self.box
         body[y0:y1,x0:x1]=straight(remap(blend(self.na,self.nb,True),mapping));fingers[y0:y1,x0:x1]=straight(remap(blend(self.nfa,self.nfb),mapping))
         return body,fingers,marks

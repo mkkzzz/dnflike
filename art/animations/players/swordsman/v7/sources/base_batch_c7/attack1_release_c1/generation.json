@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-19",
+  "tool": "builtin image_gen",
+  "prompt": "prompt.txt",
+  "prompt_sha256": "7bd4020c730381bc45f7ba6b34c1b5faf0f8b6a2cfb14c5332f5629a36b97445",
+  "references": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+      "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+      "actually_submitted": true
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_c1/source.png",
+      "sha256": "a341bc86ee419b4c0a9a4719da498370cd3715eb878f0a92029f9137867e5fe7",
+      "actually_submitted": true
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_c1/body_c3.png",
+      "sha256": "a73d9ca4c00e0af06a012aecb9564d82dfcd7230f862a797fa0eef65fd13dc7c",
+      "actually_submitted": true
+    }
+  ],
+  "actual_size": [
+    1672,
+    941
+  ],
+  "source_file": "source.png",
+  "source_sha256": "dae8c4b3f8c3402f0820dad1e319112f5d8d04dbf46cfd2575f8f60f93f768aa",
+  "returned_original_file": "exec-dc52afbe-4970-444e-bd07-7ec43a72d134.png",
+  "alpha_preserved": true,
+  "seed": "not returned",
+  "requested_size": [
+    2560,
+    1440
+  ],
+  "upscale_applied": false,
+  "status": "source_review",
+  "artwork_approved": false,
+  "installed": false
+}

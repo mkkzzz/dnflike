@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-19",
+  "status": "rejected",
+  "package_sha256": "059494c3c03a88ac53926f1ce2d7c04aad5b1b9e5ce75c23ddc6b88f6fa7c220",
+  "review_method": "Native 2K full-clip exported-package contact-sheet inspection, no FX; source approval is limited to three-pose direction",
+  "observed_failures": [
+    {
+      "clip": "attack1",
+      "ticks": [
+        21,
+        22,
+        23
+      ],
+      "finding": "Two-hand release into one-hand idle produces forearm/hand stripe deformation in the inbetween; not suitable for runtime or batch approval."
+    }
+  ],
+  "improved_but_not_approved": [
+    "Genuine release pose at tick7 removes missing-arm failure of earlier tween",
+    "Rigid head interior prevents mesh erasure while head still moves with torso",
+    "Late recovery source now matches actual accepted idle rather than a deep lunge"
+  ],
+  "next": "Draw an actual intermediate hand-release key at waist level, keeping head/chest on their recovery path; review limb ownership before any batch expansion. Opposite-leg walk/run and remaining two attacks still unfinished.",
+  "artwork_approved": false,
+  "runtime_installed": false
+}

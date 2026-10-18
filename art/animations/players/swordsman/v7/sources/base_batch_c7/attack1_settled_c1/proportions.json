@@ -1,0 +1,79 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-19",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_settled_c1/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Manual native-pixel hair-tip and true lower-jaw review. Hair tip is the highest alpha>=180 component connected to the actor, matching component isolation. Standing companion gives common anatomical scale.",
+  "sources": {
+    "body": {
+      "sha256": "7a060263458c868dbd36313cb2e558bd8d1a9b38d302a5d453d0af95eeed1fb1",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 15,
+        "standing_bottom_y": 921,
+        "sole": [
+          280,
+          921
+        ],
+        "crop_bbox": [
+          105,
+          5,
+          600,
+          935
+        ],
+        "head": {
+          "hair_top": [
+            417,
+            15
+          ],
+          "chin": [
+            436,
+            161
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c7_attack1_settled",
+      "head": {
+        "hair_top": [
+          1223,
+          85
+        ],
+        "chin": [
+          1255,
+          228
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_settled_c1_gauge",
+      "head": {
+        "hair_top": [
+          417,
+          15
+        ],
+        "chin": [
+          436,
+          161
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "landmark_overlay.png",
+    "sha256": "452bb491ab1681f4f9bfa51f7af1022fc1fa8a87e96cfa773e9f21891f082522",
+    "reviewed": true
+  }
+}

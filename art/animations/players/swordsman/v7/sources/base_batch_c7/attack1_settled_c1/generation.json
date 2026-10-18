@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-19",
+  "tool": "builtin image_gen",
+  "prompt": "body_c2_prompt.txt",
+  "prompt_sha256": "d5090dd3dcc2fc2453ab450a079ebd48e4e456de238c218bb74c178ec3a78b59",
+  "references": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_settled_c1/source.png",
+      "sha256": "dc5397f5a82934170bc34f184f258e778c05169c7958f388a2231ee288ad22f3",
+      "actually_submitted": true
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/idle/body_c1.png",
+      "sha256": "fe7cd6a2b70698f334e5ecd04d329bf7f1bbbfa5f3b3949d15cf85c3bb736308",
+      "actually_submitted": true
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+      "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+      "actually_submitted": true
+    }
+  ],
+  "actual_size": [
+    1672,
+    941
+  ],
+  "source_file": "body_c2.png",
+  "source_sha256": "7a060263458c868dbd36313cb2e558bd8d1a9b38d302a5d453d0af95eeed1fb1",
+  "returned_original_file": "exec-e1457c3b-15f0-4a43-8bf8-0f1936adf1d4.png",
+  "alpha_preserved": true,
+  "seed": "not returned",
+  "requested_size": [
+    2560,
+    1440
+  ],
+  "upscale_applied": false,
+  "status": "source_review",
+  "artwork_approved": false,
+  "installed": false
+}

@@ -45,7 +45,7 @@ def main():
    board.paste(panel.convert('RGB'),(i%3*768,i//3*620+42));ImageDraw.Draw(board).text((i%3*768+12,i//3*620+5),f'{name} t{t}',font=small,fill='white')
   board.save(OUT/(name+'_keyframes.png'))
   for t in chosen:
-   if t in [8,12,len(frames)//2]:screen(frames[t],name,t).save(OUT/(name+f'_t{t}_native_2k.png'))
+   if t in ([7,8,12,15,22,25] if manifest['revision'].startswith('v7_c7_first_cut_pilot') else [8,12,len(frames)//2]):screen(frames[t],name,t).save(OUT/(name+f'_t{t}_native_2k.png'))
   if args.movies:
    file=OUT/(name+'_60fps.mp4');log=open(ROOT/'temp'/('c6_'+name+'_ffmpeg.log'),'wb')
    process=subprocess.Popen([imageio_ffmpeg.get_ffmpeg_exe(),'-y','-f','rawvideo','-pixel_format','rgb24','-video_size','2560x1440','-framerate','60','-i','pipe:0','-an','-c:v','libx264','-preset','veryfast','-crf','18','-pix_fmt','yuv420p',str(file)],stdin=subprocess.PIPE,stderr=log)
@@ -65,6 +65,9 @@ const game=document.createElement('option');game.value='gameplay_1080p.mp4';game
   html=html.replace('鬼剑士 c6 历史候选 / 部分退回','鬼剑士 c7 第一刀分层样片').replace('用户已认可 idle 与采样流畅度；行走、奔跑和三连的动作设计已退回。离线片段为原生 2K；旧引擎连续录像实际 1080p，已纠正原命名。默认半速；力量感请同时看 1×。不含技能。','用户已认可新三姿势的发力方向。此片段使用同一身体/手指层切换太刀、巨剑、短剑，保留原30tick时长，未接入游戏。原生2K、无刀光，默认半速；请同时看实速。G1通过不代表完整动作或G3获认可。')
   html=html.replace("clip.append(game);function load()","function load()")
   html=html.replace('游戏视频含真实操作与恢复过渡，离线视频只显示各片段自身。','仅为第一刀完整离线样片；尚未制作其余两刀和新步态，不是整套已经修好。')
+  if (PACKAGE/'visual_review.json').is_file():
+   review=json.loads((PACKAGE/'visual_review.json').read_text(encoding='utf-8'))
+   if review['status']=='rejected':html=html.replace('鬼剑士 c7 第一刀分层样片','鬼剑士 c7 内部失败样片 / 未接入').replace('<select id="clip">','<p style="color:#ffb1a6">内部检查退回：收刀时双手分开段仍有条带变形，不能作为修复成品或铺量模板。</p><select id="clip">')
   (OUT/'index.html').write_text(html,encoding='utf-8',newline='\n')
  evidence={'package_sha256':hashlib.sha256((PACKAGE/'manifest.json').read_bytes()).hexdigest(),'clips':names,'review_files':{p.name:hashlib.sha256(p.read_bytes()).hexdigest()for p in OUT.iterdir()if p.suffix in ['.png','.mp4','.html']},'artwork_approved':False,'runtime_user_approved':False}
  (OUT/'review_manifest.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')

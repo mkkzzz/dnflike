@@ -1,0 +1,80 @@
+{
+  "schema": "actor_proportions/1",
+  "passed": true,
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_settled_c1/body_config.json",
+  "audit": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_settled_c1/proportions.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "reference_visible_head_ratio": 0.15216004589375082,
+  "tolerance_fraction": 0.08,
+  "target_standing_height": 380,
+  "measured_unique_poses": 2,
+  "required_unique_poses": 2,
+  "missing_pose_annotations": [],
+  "unknown_pose_annotations": [],
+  "neutral_checks": [
+    {
+      "source": "body",
+      "neutral_height": 906,
+      "head_ratio_error": 0.059068442857084236,
+      "configured_height_error": 0.0
+    }
+  ],
+  "measurements": [
+    {
+      "source": "body",
+      "pose_id": "c7_attack1_settled",
+      "head_source_px": 143,
+      "head_landmarks": {
+        "hair_top": [
+          1223,
+          85
+        ],
+        "chin": [
+          1255,
+          228
+        ],
+        "projection": "upright_head"
+      },
+      "source_standing_height": 906,
+      "scale_basis_verified": true,
+      "head_output_px": 59.977924944812365,
+      "reference_head_output_px": 57.82081743962531,
+      "relative_error": 0.03730676252440457,
+      "landmark_only_error_interval": [
+        0.022798975635951235,
+        0.0518145494128579
+      ],
+      "caveat": null
+    },
+    {
+      "source": "body",
+      "pose_id": "attack1_settled_c1_gauge",
+      "head_source_px": 146,
+      "head_landmarks": {
+        "hair_top": [
+          417,
+          15
+        ],
+        "chin": [
+          436,
+          161
+        ],
+        "projection": "upright_head"
+      },
+      "source_standing_height": 906,
+      "scale_basis_verified": true,
+      "head_output_px": 61.23620309050773,
+      "reference_head_output_px": 57.82081743962531,
+      "relative_error": 0.059068442857084236,
+      "landmark_only_error_interval": [
+        0.044560655968631124,
+        0.07357622974553757
+      ],
+      "caveat": null
+    }
+  ],
+  "failures": [],
+  "artwork_approved": false,
+  "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+}

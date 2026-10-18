@@ -1,0 +1,43 @@
+[
+  {
+    "date": "2026-10-19",
+    "tool": "builtin image_gen",
+    "source": "source.png",
+    "sha256": "dae8c4b3f8c3402f0820dad1e319112f5d8d04dbf46cfd2575f8f60f93f768aa",
+    "actual_size": [
+      1672,
+      941
+    ],
+    "requested_size": [
+      2560,
+      1440
+    ],
+    "alpha_preserved": true,
+    "upscale_applied": false,
+    "returned_original_file": "exec-dc52afbe-4970-444e-bd07-7ec43a72d134.png",
+    "prompt_file": "prompt.txt",
+    "prompt_file_sha256": "7bd4020c730381bc45f7ba6b34c1b5faf0f8b6a2cfb14c5332f5629a36b97445",
+    "submitted_prompt": "Use case: stylized-concept. Asset type: original 2D side-scrolling action-game character key drawing, body-only for interchangeable weapon animation. Input image 1 is the approved adult proportion and identity reference. Input image 2 is the approved first horizontal slash load/contact/follow-through direction. Input image 3 is the cleaned body pose sheet for exact costume and line finish. Create ONE new intermediate RELEASE pose, plus its same-scale upright proportion gauge. Transparent RGBA background, requested canvas 2560x1440 landscape, no labels, no floor, no effects, no weapon or handle anywhere. Composition: exactly two full characters, upright gauge in the left third, release pose across the right two thirds. Wide transparent margin around hair, boots and coat, no clipping. Adult silver-haired male swordsman, one small red forelock, black fitted long coat with dark red lining/lapels, red wrapped forearms/fingerless gloves, black trousers and steel knee/shin armor; match the references' clean detailed anime game art and adult small head ratio exactly, approximately 7 heads tall upright. Gauge and action share identical camera distance and anatomical scale. The action is the single genuine drawing just AFTER loaded upper-left hands and just BEFORE arms fully extend to screen-right: facing RIGHT, a broad lunge, right/front knee bent and boot planted to screen-right, rear boot planted far screen-left. Back hip and shoulder uncoil, torso leans forward, head moves forward with chest and tilts toward target, face remains visible. Both elbows have a readable bent shape, upper arms connected to shoulders. BOTH fists grip the same imaginary sword hilt in front of the upper chest but below/just right of the face; upper/right fist ahead, lower/left fist behind along a hilt axis sloping up-right about 60 degrees from horizontal. Leave a small visible gap between fists for the later separate hilt. Hands must NOT overlap the eyes or neck. It must visibly sit BETWEEN the reference top-right load and bottom-left contact, NOT repeat either endpoint and NOT raise hands above the head. Express leg push, pelvis turn, chest turn, then arms following. Preserve full solid arms/boots, no motion blur or translucent afterimages. No sword, no scabbard, no rod, no hilt, no text. Draw the hand pose but omit every weapon pixel.",
+    "submitted_prompt_sha256": "a34607da56ff657daf107c531d84f0bba6ab25f6aca2d78c11739f91fd40a48c",
+    "references": [
+      {
+        "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+        "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+        "actually_submitted": true
+      },
+      {
+        "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_c1/source.png",
+        "sha256": "a341bc86ee419b4c0a9a4719da498370cd3715eb878f0a92029f9137867e5fe7",
+        "actually_submitted": true
+      },
+      {
+        "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_c1/body_c3.png",
+        "sha256": "a73d9ca4c00e0af06a012aecb9564d82dfcd7230f862a797fa0eef65fd13dc7c",
+        "actually_submitted": true
+      }
+    ],
+    "selection": "selected; G1 passed, full motion under review",
+    "seed": "not returned",
+    "runtime_installed": false
+  }
+]

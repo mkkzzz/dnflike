@@ -70,5 +70,10 @@
       },
       "uncertainty_px": 2
     }
-  ]
+  ],
+  "visual_review": {
+    "overlay": "landmark_overlay_final.png",
+    "sha256": "e3e8420d2c09d25a31d61146707e81099263b253679fb0b92111c07484d9f8bb",
+    "reviewed": true
+  }
 }

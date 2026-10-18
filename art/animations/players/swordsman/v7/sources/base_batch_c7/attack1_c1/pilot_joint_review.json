@@ -1,10 +1,6 @@
 {
   "reviewed": true,
-  "method": "Explicit agent source-pixel shoulder/elbow/hip/knee/foot review; no pose-model confidence used as approval",
-  "source_sha256": {
-    "attack1": "a73d9ca4c00e0af06a012aecb9564d82dfcd7230f862a797fa0eef65fd13dc7c",
-    "recovery": "d57ea7ab0b25f5c49abaeb24a01511aef2b807a9c77efe3a64e8758d4b3f7611"
-  },
+  "method": "Manual source-pixel shoulder/elbow/hip/knee/boot review; not a pose-model confidence approval",
   "joint_order": [
     5,
     6,
@@ -23,12 +19,6 @@
     24,
     25
   ],
-  "point_sources": {
-    "load": "attack1",
-    "contact": "attack1",
-    "follow": "attack1",
-    "recover": "recovery"
-  },
   "source_points": {
     "load": [
       [
@@ -228,6 +218,138 @@
         881
       ]
     ],
+    "release": [
+      [
+        1260,
+        340
+      ],
+      [
+        1105,
+        350
+      ],
+      [
+        1320,
+        439
+      ],
+      [
+        1068,
+        391
+      ],
+      [
+        1227,
+        406
+      ],
+      [
+        1195,
+        361
+      ],
+      [
+        1240,
+        540
+      ],
+      [
+        1170,
+        542
+      ],
+      [
+        1485,
+        628
+      ],
+      [
+        1019,
+        700
+      ],
+      [
+        1542,
+        857
+      ],
+      [
+        779,
+        857
+      ],
+      [
+        1625,
+        893
+      ],
+      [
+        733,
+        901
+      ],
+      [
+        1510,
+        887
+      ],
+      [
+        772,
+        884
+      ]
+    ],
+    "settled": [
+      [
+        1262,
+        260
+      ],
+      [
+        1110,
+        253
+      ],
+      [
+        1310,
+        440
+      ],
+      [
+        1038,
+        416
+      ],
+      [
+        1355,
+        518
+      ],
+      [
+        1045,
+        518
+      ],
+      [
+        1240,
+        492
+      ],
+      [
+        1162,
+        493
+      ],
+      [
+        1302,
+        649
+      ],
+      [
+        1115,
+        645
+      ],
+      [
+        1370,
+        846
+      ],
+      [
+        1038,
+        860
+      ],
+      [
+        1432,
+        885
+      ],
+      [
+        1021,
+        898
+      ],
+      [
+        1324,
+        883
+      ],
+      [
+        1026,
+        882
+      ]
+    ],
     "recover": [
       [
         1002,
@@ -295,5 +417,23 @@
       ]
     ]
   },
+  "sources": [
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_c1/body_config.json",
+      "sha256": "fd4cf7d06b5742518a132b939b0c09ef524dadf1bea5687df8907c773cede0b3"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_recover_c1/body_config.json",
+      "sha256": "6ce24f538afcdddb8a10c8a0a92a2bbbe4cddafc2ea3c9f7c9fa0847f14db348"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_release_c1/body_config.json",
+      "sha256": "d03391e3ab09942170eac832777e4040acf8161aa2312ed122e32cabc5f2a8b3"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_settled_c1/body_config.json",
+      "sha256": "3fbd7d03393d9637112be152a2e1fe6e2809efc86cf527899a643316c8002ac7"
+    }
+  ],
   "runtime_installed": false
 }

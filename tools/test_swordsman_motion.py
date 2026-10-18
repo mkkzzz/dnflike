@@ -6,7 +6,7 @@ from pathlib import Path
 import hashlib,json,math,unittest
 import numpy as np
 from PIL import Image
-from actor_motion import controls,surface_map
+from actor_motion import controls,surface_map,protect_head_map
 from check_actor_proportions import assess
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'art/animations/players/swordsman/v7/exports/base_runtime_c6'
@@ -107,5 +107,15 @@ class NativeMotionTests(unittest.TestCase):
  def test_backend_is_audited_correspondence_and_not_rejected_dis(self):
   self.assertIn('RIFE 4.6',self.m['motion_backend']['name']);self.assertEqual(self.m['motion_backend']['license'],'MIT')
   self.assertEqual(self.m['motion_backend']['model_sha256']['flownet.bin'],'f334ed2260149ce0188a6dcf049844e8b0cdd912e01cbcfb63553157d2508958')
+ def test_optional_head_guard_covers_the_interior_during_wrist_crossing(self):
+  # A wrist-induced mesh fold must not erase the already registered head.
+  yy,xx=np.mgrid[:128,:128].astype(np.float32);zero=np.zeros_like(xx)
+  destination={'head_center':[64,64],'head_angle':0,'head_size':54}
+  source={'head_center':[84,54],'head_angle':0,'head_size':54}
+  mx,my=protect_head_map((zero,zero),destination,source,(128,128))
+  core=(abs(xx-64)<20)&(abs(yy-64)<20)
+  self.assertLess(float(np.max(abs(mx[core]-(xx[core]+20)))),1e-4)
+  self.assertLess(float(np.max(abs(my[core]-(yy[core]-10)))),1e-4)
+  self.assertEqual(float(mx[0,0]),0)
 
 if __name__=='__main__':unittest.main()

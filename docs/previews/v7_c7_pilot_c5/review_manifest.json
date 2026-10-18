@@ -1,0 +1,18 @@
+{
+  "package_sha256": "059494c3c03a88ac53926f1ce2d7c04aad5b1b9e5ce75c23ddc6b88f6fa7c220",
+  "clips": [
+    "attack1"
+  ],
+  "review_files": {
+    "attack1_60fps.mp4": "14509bcefd31bf6ea79d529552c94af6e372da957a80cee959595680c1dcef36",
+    "attack1_keyframes.png": "afb2ff06b644304d4be4b409e6d6f19e61cfc876bbb683c23599a134d30d672e",
+    "attack1_t12_native_2k.png": "3062229d3fda4ed31f2836c35409cd7b1d8ba9f256efbabab79572260f51b52c",
+    "attack1_t15_native_2k.png": "d2bc136993ddab4961881b4c09803125d05d4655d6e8fab2eb70f68f06408019",
+    "attack1_t22_native_2k.png": "973ad5d0cc2146c0041809cbccfadb1f26ab8eb8e17f3c31c29d90fbde3de8f2",
+    "attack1_t7_native_2k.png": "d2868ec881a3b52e26ed2117000fc23edf7570bd7b7cea0bf109d12b66f45121",
+    "attack1_t8_native_2k.png": "fd4315948365012fdfce5ddc48600c13c639dcca12839bdd183dcaa04aa0f7b5",
+    "index.html": "8ff26e30f63088e487f008c69932b06f5296f131c98e6f33c768e71bc3507ba7"
+  },
+  "artwork_approved": false,
+  "runtime_user_approved": false
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "date": "2026-10-19",
+    "tool": "builtin image_gen",
+    "source": "source.png",
+    "sha256": "d2dc5d45b7cb573153f971edb4e10db44fb13c23459977a316c758bd3b6c7215",
+    "actual_size": [
+      1672,
+      941
+    ],
+    "requested_size": [
+      2560,
+      1440
+    ],
+    "alpha_preserved": true,
+    "upscale_applied": false,
+    "returned_original_file": "exec-023b96ed-b27f-41bb-b8c0-9ffeb13034ed.png",
+    "prompt_file": "prompt.txt",
+    "prompt_file_sha256": "1f11c7187a805811e1443c98ec72ebeef63cca432a07424c753624ee9f7d7c46",
+    "submitted_prompt": "Use case: identity-preserve. Asset type: original body-only action game animation breakdown key. Input 1 is approved adult proportion/identity, input 2 the first slash load/contact/follow-through design, input 3 the existing later recovery drawing. Create the earlier recovery drawing BETWEEN input 2's bottom-right low follow-through and input 3's center recovering pose. Requested canvas 2560x1440 landscape with real transparent RGBA background. Exactly TWO full characters: same-scale straight standing anatomical gauge on left third, earlier recovery on right two thirds, same adult small head and clothing in both, entire hair/boots/coat safely inside with clear margins. Use the same silver hair/red forelock, black red-lined coat, red forearm wraps, black trousers, dark steel greaves. No weapons, hilts, swords, scabbards, props, labels or effects. Earlier recovery: RIGHT-facing broad lunge still LOW, front/right boot remains firmly planted far right with deep bent front knee; pelvis begins rising only slightly from follow-through; rear/left boot is lifting and drawing inward a SHORT distance, bent rear knee, rear boot fully visible just above floor with toe still pointing screen-left. Do not close into a narrow standing stance yet. Hips unwind, torso raises slightly, head follows chest and still leans forward toward right target. BOTH HANDS remain at LOW LEFT waist in front of coat, elbows bent; hands are in shared imaginary two-handed sword grip on a nearly HORIZONTAL hilt, leading fist farther screen-left, second fist immediately screen-right of it, gap small, both hands distinctly drawn. No material object in fists. They are starting to bring low hands up, not already at upper chest. Coat lags toward left. Front planted boot must not slide. No duplicate feet, ghost limbs or motion blur. Full connected opaque anatomy. Keep adult 7-head standing proportions and exact costume style, no chibi or big head. This is ONE real breakdown drawing; do not repeat final recovery or stand upright.",
+    "submitted_prompt_sha256": "d1e3d79ff28ae090fe4ea12d329592def88beb60c86c28d8507224036492c1f4",
+    "references": [
+      {
+        "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+        "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+        "actually_submitted": true
+      },
+      {
+        "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_c1/source.png",
+        "sha256": "a341bc86ee419b4c0a9a4719da498370cd3715eb878f0a92029f9137867e5fe7",
+        "actually_submitted": true
+      },
+      {
+        "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_recover_c1/source.png",
+        "sha256": "d57ea7ab0b25f5c49abaeb24a01511aef2b807a9c77efe3a64e8758d4b3f7611",
+        "actually_submitted": true
+      }
+    ],
+    "selection": "not selected; head scale discrepancy",
+    "seed": "not returned",
+    "runtime_installed": false
+  },
+  {
+    "date": "2026-10-19",
+    "tool": "builtin image_gen",
+    "source": "body_c2.png",
+    "sha256": "338438d5a65fe9c7c7104df64631344db8e09b24dfdeba7660c05ee471d2b2c3",
+    "actual_size": [
+      1671,
+      941
+    ],
+    "requested_size": [
+      2560,
+      1440
+    ],
+    "alpha_preserved": true,
+    "upscale_applied": false,
+    "returned_original_file": "exec-e8cbdc01-5068-485d-ad6a-9bfdf9c6f3f0.png",
+    "prompt_file": "body_c2_prompt.txt",
+    "prompt_file_sha256": "a5c523dbde23126c20e1bf7c5d79eaa8996f04fef89c340fa503781b90091621",
+    "submitted_prompt": "Use case: precise-object-edit. Edit image 1 only: preserve both existing body poses, costume, framing, transparency, hands, feet and all body pixels as closely as possible. Reduce the entire visible HEAD (hair, face, ears and jaw together) of BOTH characters by exactly about 6 percent around the base of each jaw, filling the small gap above collar naturally. Do not reduce hair alone, do not change head position, do not change shoulder width, do not change body/leg length. This is an adult proportion correction, not a new pose or redesign. Reference image 2 supplies the approved adult head ratio. Image 1 left gauge and right early-recovery action stay same anatomical scale. Keep the rear boot lifted and both fists low at left waist exactly as before. Transparent RGBA background. No weapon, no hilt, no added objects, no labels, no cropping, full original canvas and margins. One small head-scale correction only.",
+    "submitted_prompt_sha256": "dcef31ae6ccd0715a8377c3bc12f4e1b6c613f55efad7c7aa0ee4dcf2fa7d41c",
+    "references": [
+      {
+        "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_early_recover_c1/source.png",
+        "sha256": "d2dc5d45b7cb573153f971edb4e10db44fb13c23459977a316c758bd3b6c7215",
+        "actually_submitted": true
+      },
+      {
+        "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+        "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+        "actually_submitted": true
+      }
+    ],
+    "selection": "rejected; head edit changed neutral scale more than requested",
+    "seed": "not returned",
+    "runtime_installed": false
+  },
+  {
+    "date": "2026-10-19",
+    "tool": "builtin image_gen",
+    "source": "body_c3.png",
+    "sha256": "e3b61d63fba21a92ea1d29b64eaa0d2aa16a41609773e595b052024247a1c990",
+    "actual_size": [
+      1672,
+      941
+    ],
+    "requested_size": [
+      2560,
+      1440
+    ],
+    "alpha_preserved": true,
+    "upscale_applied": false,
+    "returned_original_file": "exec-ebeec97e-3b36-4b1a-8cb7-7761687a5acb.png",
+    "prompt_file": "body_c3_prompt.txt",
+    "prompt_file_sha256": "3396b15c78394e8d3416116c7cfb46648450d8b081b98cacf4ff5b9ff5bf30cc",
+    "submitted_prompt": "Use case: precise-object-edit. Input image 1 is the sole edit target. Do NOT change its left standing figure at all: keep that left figure's head, hair, body, boots and every pixel unchanged. Change ONLY the RIGHT lunging recovery figure's entire head (all hair, face, ears and jaw together): make that head about 8 percent smaller around its jaw/collar junction. Keep the right figure's neck attachment, body, hands low at left waist, rear boot lifted, front boot planted, coat, anatomy, camera distance, canvas and position unchanged. This must be one localized head-size correction to the right figure only, not a global redraw, no pose change, no head movement. Preserve the original adult face, silver/red hair, clean detailed illustration, transparent RGBA background and all transparent margins. No weapon, no hilt, no text, no shadows or effects. Do not scale the left gauge's head; do not shorten the torso or change limbs.",
+    "submitted_prompt_sha256": "18abe38b74a917283e7938e49bde50d8b269c5c9dd6711ed6a348fbe4897f376",
+    "references": [
+      {
+        "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_early_recover_c1/source.png",
+        "sha256": "d2dc5d45b7cb573153f971edb4e10db44fb13c23459977a316c758bd3b6c7215",
+        "actually_submitted": true
+      }
+    ],
+    "selection": "rejected; head edit overcorrected action head; no G1 approval",
+    "seed": "not returned",
+    "runtime_installed": false
+  }
+]

@@ -1,0 +1,84 @@
+[
+  {
+    "date": "2026-10-19",
+    "tool": "builtin image_gen",
+    "source": "source.png",
+    "sha256": "dc5397f5a82934170bc34f184f258e778c05169c7958f388a2231ee288ad22f3",
+    "actual_size": [
+      1672,
+      941
+    ],
+    "requested_size": [
+      2560,
+      1440
+    ],
+    "alpha_preserved": true,
+    "upscale_applied": false,
+    "returned_original_file": "exec-ce562102-c512-4278-aba4-023ff6d4c3ef.png",
+    "prompt_file": "prompt.txt",
+    "prompt_file_sha256": "2cb01a8a2ccfa75da0c09b9952b08a512d2707a58ae4e1daacdc138ad26a2b40",
+    "submitted_prompt": "Use case: stylized-concept. Asset type: original 2D action-game animation late-recovery BODY drawing with no weapon. Reference image 1 is the approved adult proportion pair; its RIGHT crouched ready stance is the destination, not upright standing. Reference image 2 is the original first slash direction. Reference image 3 is the later two-handed recovery source. Draw ONE new late-recovery breakdown just BEFORE settling into reference 1's right ready stance, plus a same-scale neutral standing gauge. Requested 2560x1440 landscape, true transparent RGBA background, exactly two full figures with clear margins, upright gauge on left third and new late recovery on right two thirds. Same adult male swordsman, small adult head, silver hair/red forelock, black high collar long coat/red lining, red forearm wraps/fingerless gloves, dark trousers and dark steel knee/shin armor; clean detailed anime game art exactly matching references. Anatomical scale/camera distance identical between gauge and action; no chibi. Late recovery: faces screen RIGHT, knees still softly bent, feet about twice shoulder-width, left/rear boot at screen-left has completed drawing inward and now points screen-right, front/right boot remains planted right. Head/shoulders lean forward and stand LOWER than neutral by about one whole head height. Do NOT straighten upright. He has released his left/off hand from the two-handed grip: RIGHT hand is a closed fist LOW beside his rear/left hip, as reference 1's right ready pose, approximately level with crotch/upper thigh; LEFT hand is relaxed/open in front to screen-right at waist height. No hand at chest. Elbows and arms connected naturally; pelvis and torso are recovering rotation while coat tails lag gently left, less widely flared than the initial slash. Keep all anatomy and both boots completely visible and opaque. No blade, handle, hilt, scabbard, stick, shadow, motion blur, afterimages, text, effects, ground, extra figure. Fist can grip imaginary separate weapon but there must be NO actual weapon pixels. This is a crouched ready recovery, not an idle upright pose and not a repeat of the mid-recovery.",
+    "submitted_prompt_sha256": "c4c2cd698854a3a612051ca756c109ccd091287fe02e4d794c97eefedfd7441a",
+    "references": [
+      {
+        "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+        "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+        "actually_submitted": true
+      },
+      {
+        "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_c1/source.png",
+        "sha256": "a341bc86ee419b4c0a9a4719da498370cd3715eb878f0a92029f9137867e5fe7",
+        "actually_submitted": true
+      },
+      {
+        "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_recover_c1/source.png",
+        "sha256": "d57ea7ab0b25f5c49abaeb24a01511aef2b807a9c77efe3a64e8758d4b3f7611",
+        "actually_submitted": true
+      }
+    ],
+    "selection": "rejected; deep lunge creates downward dip before accepted idle",
+    "seed": "not returned",
+    "runtime_installed": false
+  },
+  {
+    "date": "2026-10-19",
+    "tool": "builtin image_gen",
+    "source": "body_c2.png",
+    "sha256": "7a060263458c868dbd36313cb2e558bd8d1a9b38d302a5d453d0af95eeed1fb1",
+    "actual_size": [
+      1672,
+      941
+    ],
+    "requested_size": [
+      2560,
+      1440
+    ],
+    "alpha_preserved": true,
+    "upscale_applied": false,
+    "returned_original_file": "exec-e1457c3b-15f0-4a43-8bf8-0f1936adf1d4.png",
+    "prompt_file": "body_c2_prompt.txt",
+    "prompt_file_sha256": "d5090dd3dcc2fc2453ab450a079ebd48e4e456de238c218bb74c178ec3a78b59",
+    "submitted_prompt": "Use case: precise-object-edit. Image 1 is the edit target: keep its LEFT upright neutral gauge exactly as it is. Replace ONLY the RIGHT action figure's pose. Image 2 is the ACTUAL approved idle BODY sheet: copy its TOP-RIGHT figure's nearly upright ready stance and head/body/leg relation as the target. This is late recovery into that specific idle, NOT the deep lunge shown in image 1. Keep image 1's exact character identity, outfit, rendering style, anatomical pixel scale and transparent canvas. The new RIGHT figure must stand ALMOST UPRIGHT with very softly bent knees and feet modestly apart, only about 1.6 shoulder widths, approximately the TOP-RIGHT pose of image 2. Narrow the huge lunge substantially by drawing the rear/left foot inward under the rear hip. Raise pelvis, chest and head so the crown is only about HALF a head lower than the left gauge's crown, not two heads lower. Torso only slightly leans toward screen-right. Both boots planted and fully visible; rear boot points somewhat toward viewer/right, not far left. Right fist stays low at rear/left hip, level with crotch/upper thigh. Left hand relaxed/free in front to screen-right near waist; no chest-level hands. Coat is falling down and back with mild residual sway, no long horizontal flare. This exact pose must interpolate into image 2 TOP-RIGHT without a deep downward head dip or large foot slide. Character proportions, small adult head, red forelock, black/red coat, wraps and greaves unchanged; no weapon, hilt, sword, scabbard or text, no FX, no floor, transparent RGBA. Two figures total. Preserve all margins and full-body framing. Input 3 is adult proportion support only.",
+    "submitted_prompt_sha256": "211276fad0fa7ce5856afda1da7e5a976818ac185115c1c4e434b09bb875e964",
+    "references": [
+      {
+        "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_settled_c1/source.png",
+        "sha256": "dc5397f5a82934170bc34f184f258e778c05169c7958f388a2231ee288ad22f3",
+        "actually_submitted": true
+      },
+      {
+        "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/idle/body_c1.png",
+        "sha256": "fe7cd6a2b70698f334e5ecd04d329bf7f1bbbfa5f3b3949d15cf85c3bb736308",
+        "actually_submitted": true
+      },
+      {
+        "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+        "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+        "actually_submitted": true
+      }
+    ],
+    "selection": "selected; actual c4 idle source supplied, G1 passed",
+    "seed": "not returned",
+    "runtime_installed": false
+  }
+]

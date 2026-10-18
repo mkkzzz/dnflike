@@ -10,13 +10,28 @@
     "run_near_c1",
     "run_far_c1",
     "run_alternation_c2",
-    "attack1_c1/body_c2.png"
+    "attack1_c1/body_c2.png",
+    "attack1_early_recover_c1/source.png",
+    "attack1_early_recover_c1/body_c2.png",
+    "attack1_early_recover_c1/body_c3.png",
+    "attack1_settled_c1/source.png"
   ],
   "code_fixes": [
     "instant full-width facing reflection",
-    "readable real HIT onset and peak hold without changing gameplay duration"
+    "readable real HIT onset and peak hold without changing gameplay duration",
+    "Opaque V7 hurt invulnerability tint, replacing two-tick alpha flash; real damage capture verified"
   ],
   "evidence": "docs/previews/v7_c7_feedback/index.html",
-  "next": "Build representative continuous attack1 with body/fingers/three replaceable weapons; redesign true alternating gait keys.",
-  "accepted_direction": "attack1_c1/direction_approval.json"
+  "next": "Draw an actual intermediate hand-release key at waist level, keeping head/chest on their recovery path; review limb ownership before any batch expansion. Opposite-leg walk/run and remaining two attacks still unfinished.",
+  "accepted_direction": "attack1_c1/direction_approval.json",
+  "source_G1_additions": [
+    "attack1_release_c1",
+    "attack1_settled_c1"
+  ],
+  "continuous_pilot": {
+    "package": "art/animations/players/swordsman/v7/exports/base_runtime_c7_pilot_c5",
+    "visual_status": "rejected",
+    "review": "art/animations/players/swordsman/v7/exports/base_runtime_c7_pilot_c5/visual_review.json",
+    "runtime_installed": false
+  }
 }

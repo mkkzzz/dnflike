@@ -1,0 +1,12 @@
+{
+  "tool": "builtin image_gen",
+  "prompt_file": "body_c3_prompt.txt",
+  "references": [
+    "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_early_recover_c1/source.png"
+  ],
+  "transparent_background": true,
+  "requested_size": [
+    2560,
+    1440
+  ]
+}
