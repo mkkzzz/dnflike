@@ -212,19 +212,22 @@ def bake(config_path):
         row['edge_intent']=author.get('edge_intent','legacy unspecified')
         row['allow_edge_roll_from_previous']=author.get('allow_edge_roll_from_previous',False)
         for name,(weapon,marks,spec) in weapons.items():
-            weapon_basis=basis;edge_review=None
+            offset=math.radians(author.get('profile_angle_offsets_degrees',{}).get(name,0))
+            def rotated(axis):
+                return [math.cos(offset)*axis[0]-math.sin(offset)*axis[1],math.sin(offset)*axis[0]+math.cos(offset)*axis[1]]
+            weapon_basis=tuple(rotated(axis) for axis in basis);edge_review=None
             if config.get('edge_contract'):
                 if 'cutting_direction' not in author:
                     raise ValueError('Every pose needs an authored cutting direction')
-                weapon_basis,edge_review=cutting_edge_basis(basis,marks,author['cutting_direction'])
-            rendered,sampling=weapon_image(weapon,marks,size,hand,angle,length*spec['blade_length_multiplier'],weapon_basis)
+                weapon_basis,edge_review=cutting_edge_basis(weapon_basis,marks,rotated(author['cutting_direction']))
+            rendered,sampling=weapon_image(weapon,marks,size,hand,angle+offset,length*spec['blade_length_multiplier'],weapon_basis)
             back=rendered if author['weapon_layer']=='back' else Image.new('RGBA',size)
             front=rendered if author['weapon_layer']=='front' else Image.new('RGBA',size)
             combined=Image.alpha_composite(Image.alpha_composite(Image.alpha_composite(back,body),front),fingers)
             if not edge_clear(combined):raise ValueError('Composite reaches canvas edge')
             prefix=f'{name}/f{index:03d}'
             images[prefix+'_back.png']=back;images[prefix+'_front.png']=front;images[prefix+'_composite.png']=combined
-            matrix,_=placement_matrix(marks,angle,length*spec['blade_length_multiplier'],weapon_basis)
+            matrix,_=placement_matrix(marks,angle+offset,length*spec['blade_length_multiplier'],weapon_basis)
             ma,mb,mc,md=matrix
             def placed(mark):
                 u,v=mark[0]-marks['grip'][0],mark[1]-marks['grip'][1]
@@ -234,6 +237,7 @@ def bake(config_path):
                                    'blade_length_px':length*spec['blade_length_multiplier']*math.hypot(*basis[0]),
                                    'physical_blade_length_px':length*spec['blade_length_multiplier'],
                                    'source_to_canvas_matrix':list(matrix)}
+            row['profiles'][name]['authored_angle_offset_degrees']=math.degrees(offset)
             if edge_review:
                 row['profiles'][name]['cutting_edge']=placed(marks['cutting_edge'])
                 row['profiles'][name]['spine']=placed(marks['spine'])

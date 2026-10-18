@@ -1,0 +1,14 @@
+Use case: stylized-concept.
+Asset type: native hand-painted 2D game animation key drawings, THIRD strike of the same TWO-HANDED basic sword combo.
+References: Image1 locked adult model sheet. Image2 previous reverse-cut sheet. Keep its exact small adult head, long legs, clothing, scale and paint style.
+Draw six separate complete full-body poses, 3 columns x 2 rows, actual transparent RGBA, native 1536x1024 or greater. Top-left standing ruler >=450 original pixels. Clear generous gaps, each full body and blade wholly inside its cell.
+This action is a powerful LOWER-TO-UPPER RISING CUT. It must never be an overhead downward chop.
+Pose1: upright neutral ruler without weapon, arms relaxed, same adult proportions.
+Pose2: loaded low stance after second cut, hips sunk, joined two-hand hilt near RIGHT thigh, blade extends down-right while tip stays above floor.
+Pose3: begin rising cut, legs start extending and hips drive upward; BOTH HANDS/HILT travel upward past low abdomen, blade still diagonally DOWN-RIGHT behind hands. This is the beginning, not an overhead preparation.
+Pose4: rising contact, torso and knees extend, BOTH HANDS/HILT at front chest, blade passes UPWARD diagonally toward upper-right. Strong continuous upward cut, NOT downward.
+Pose5: rising follow-through, BOTH HANDS ABOVE HEAD holding SAME shared hilt, sword blade pointing high toward upper-right, arms naturally flexed and shoulders lifted by action, feet planted, body tall with slight backward counterbalance.
+Pose6: controlled recovery after rising cut, TWO hands lower hilt toward front chest and blade remains diagonally up-right in a compact guard. No downward follow-through or ground impact.
+Right hand close to guard, left hand immediately below toward pommel, both always gripping ONE black handle. No free fist, no crossed detached handles, no duplicate swords. Correct consistent katana edge/curvature following upward cutting direction.
+Identity/style: silver spiked hair red forelock; small adult head, slim athletic torso long legs; black high collar long coat with dark red lining; both forearms wrapped red; dark trousers/boots; small silver buckles; dark clean outlines, cel-shaded leather with subtle painted highlights. Uniform fixed three-quarter side camera facing right, same scale and lighting all figures.
+No text, labels, speed lines, motion blur, slash light, effects, sheath, glow, backdrop or ground shadow. Transparent RGBA.

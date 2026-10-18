@@ -1,0 +1,13 @@
+Use case: stylized-concept.
+Asset type: native-resolution hand-painted 2D side-scroller character animation key drawings, first strike of a three-hit TWO-HANDED sword combo.
+Input images: Image 1 is the locked character model sheet (identity, clothing). Image 2 is the approved adult-proportion animation sheet; keep the SAME small adult head, long legs, same rendering. The old one-handed arm poses are NOT an action reference.
+Primary request: Draw ONE coherent sequence with SIX fully separated full-body poses, in a clean 3 columns x 2 rows sprite layout, transparent background, generous space around every figure. At least 450 original pixels standing height on the neutral drawing; request high native resolution, no upscaling. Read left-to-right then next row.
+Every attack pose has BOTH HANDS gripping the SAME SINGLE long black sword handle, right hand directly below guard and left hand at pommel, natural wrists, hands touching and aligned on one hilt. No free trailing fist. A slim steel katana blade is included for action design and correct cutting-edge direction. Same exact weapon length and handle length across poses. Do not detach hands from the handle.
+Pose 1: relaxed upright neutral ruler, empty hands down, height/proportion reference only.
+Pose 2: ready/loaded, knees soft, hips and shoulders coiled, joined two-hand grip close to right rear hip, sword drawn back.
+Pose 3: first third of powerful LEFTWARD ACROSS-BODY horizontal sweep, lower body initiates, hands lead blade, elbows naturally flexed.
+Pose 4: mid-cut crossing torso, BOTH hands in front around lower chest, blade sweeping in a wide lateral arc, shoulders rotate through, weight transfers to lead foot. This is a sword cut, not a punch or one-handed lunge.
+Pose 5: end of leftward cut, hands and hilt carried across left hip, leftward blade extension, torso follows, knees flex slightly to absorb. Keep character facing toward screen right in three-quarter side view while torso rotates.
+Pose 6: controlled follow-through ready to reverse into second rightward cut, two hands remain on same hilt close to left hip. No return to neutral in this drawing.
+Style: match references exactly: silver spiked hair with red forelock, small adult head, slim athletic adult, black high collar coat open with dark red lining, subtle seams and small silver buckles, red wraps on BOTH forearms, dark trousers/boots. Dark clean outlines, cel shaded leather and subtle painted highlights, no realistic photo, no 3D, no chibi.
+Camera fixed, ground/character scale identical for all figures. No motion blur, no slash light, no particles, no labels or text, no extra swords, no sheathed weapons. Full silhouette and entire blade visible in every panel. Transparent RGBA.

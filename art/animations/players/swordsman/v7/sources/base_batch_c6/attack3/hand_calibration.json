@@ -1,0 +1,24 @@
+{
+  "c6_rise_low": {
+    "primary": [
+      786,
+      304
+    ],
+    "secondary": [
+      769,
+      289
+    ],
+    "hilt_channel_radius_source_px": 4
+  },
+  "c6_rise_contact": {
+    "primary": [
+      325,
+      623
+    ],
+    "secondary": [
+      306,
+      634
+    ],
+    "hilt_channel_radius_source_px": 4
+  }
+}

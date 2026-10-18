@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-18",
+  "tool": "builtin image_gen",
+  "intent": "original motion-design redraw using identity/proportion reference",
+  "status": "rejected",
+  "prompt_file": "submitted_prompt.txt",
+  "prompt_sha256": "5c6bc6bb671c5e5d5dd2272d83b48fe0ca18352549d69d52090b030c744fcc2d",
+  "references": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+      "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+      "actually_submitted": true
+    },
+    {
+      "file": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+      "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9",
+      "actually_submitted": true
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/run_near_c1/source.png",
+      "sha256": "5984d0bcfb99e4c12924bacc3b16c01b7d1fe16414ee6a1935378224c218e880",
+      "actually_submitted": true
+    }
+  ],
+  "native_requested": [
+    2560,
+    1440
+  ],
+  "native_actual": [
+    1672,
+    941
+  ],
+  "mode": "RGBA",
+  "alpha_preserved": true,
+  "original_output": "exec-da6c72b5-a8d5-4fe8-ac9e-b6f127c57f94.png",
+  "source_file": "source.png",
+  "source_sha256": "4c2e2771a03691aab1dc7916c88336fad58864f08894f7fd32e33d850ab86cf7",
+  "seed": "not exposed by builtin tool",
+  "issues": [
+    "Opposite leg identity/overlap still ambiguous; does not prove a genuine alternating cycle"
+  ],
+  "artwork_approved": false,
+  "installed": false,
+  "resolution_note": "Actual sheet is smaller than requested 2K. Never enlarge it. Only individual sufficiently large native actor crops could later qualify after same-sheet scale checks."
+}

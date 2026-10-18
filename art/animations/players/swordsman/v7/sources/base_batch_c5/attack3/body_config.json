@@ -1,0 +1,244 @@
+{
+  "revision": "v7_base_batch_c5_attack3_body",
+  "output_dir": "../../../exports/base_batch_c5_body/attack3",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "../../base_batch_c4/attack3/body_c2.png",
+      "standing_height": 449
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "source_bound_manual_landmarks",
+    "G2": "batch_candidate_user_direction_accepted",
+    "G3": "layered_pending_final_review",
+    "G4": "pending_final_batch_review"
+  },
+  "clips": {
+    "attack3": {
+      "asset_id": "actor.player.base.combo.3",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "attack3_1",
+          "source": "body",
+          "crop_bbox": [
+            370,
+            115,
+            795,
+            509
+          ],
+          "root": [
+            585,
+            498
+          ],
+          "foot": [
+            585,
+            498
+          ],
+          "component_seed": [
+            600,
+            300
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 4
+        },
+        {
+          "id": "attack3_2",
+          "source": "body",
+          "crop_bbox": [
+            811,
+            34,
+            1203,
+            510
+          ],
+          "root": [
+            1005,
+            498
+          ],
+          "foot": [
+            1005,
+            498
+          ],
+          "component_seed": [
+            1000,
+            270
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 8
+        },
+        {
+          "id": "attack3_3",
+          "source": "body",
+          "crop_bbox": [
+            1242,
+            99,
+            1668,
+            511
+          ],
+          "root": [
+            1455,
+            498
+          ],
+          "foot": [
+            1455,
+            498
+          ],
+          "component_seed": [
+            1465,
+            305
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1
+        },
+        {
+          "id": "attack3_4",
+          "source": "body",
+          "crop_bbox": [
+            10,
+            540,
+            415,
+            912
+          ],
+          "root": [
+            215,
+            898
+          ],
+          "foot": [
+            215,
+            898
+          ],
+          "component_seed": [
+            230,
+            755
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 2
+        },
+        {
+          "id": "attack3_5",
+          "source": "body",
+          "crop_bbox": [
+            417,
+            591,
+            844,
+            909
+          ],
+          "root": [
+            640,
+            898
+          ],
+          "foot": [
+            640,
+            898
+          ],
+          "component_seed": [
+            645,
+            760
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 2
+        },
+        {
+          "id": "attack3_6",
+          "source": "body",
+          "crop_bbox": [
+            856,
+            520,
+            1226,
+            912
+          ],
+          "root": [
+            1065,
+            898
+          ],
+          "foot": [
+            1065,
+            898
+          ],
+          "component_seed": [
+            1070,
+            740
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 14
+        },
+        {
+          "id": "attack3_7",
+          "source": "body",
+          "crop_bbox": [
+            1232,
+            541,
+            1657,
+            913
+          ],
+          "root": [
+            1460,
+            898
+          ],
+          "foot": [
+            1460,
+            898
+          ],
+          "component_seed": [
+            1465,
+            750
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 10
+        }
+      ]
+    },
+    "neutral": {
+      "asset_id": "actor.player.proportion.neutral",
+      "loop": false,
+      "include_in_overview": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "attack3_0",
+          "source": "body",
+          "crop_bbox": [
+            45,
+            37,
+            285,
+            508
+          ],
+          "root": [
+            175,
+            498
+          ],
+          "foot": [
+            99,
+            498
+          ],
+          "component_seed": [
+            175,
+            230
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1
+        }
+      ]
+    }
+  }
+}

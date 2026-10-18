@@ -1,0 +1,32 @@
+{
+  "status": "generated_candidate_rejected",
+  "tool": "builtin image_gen",
+  "native_requested": [
+    2560,
+    1440
+  ],
+  "purpose": "motion-design sample only; not installed or approved",
+  "references": [
+    {
+      "path": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+      "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+    },
+    {
+      "path": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+      "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9"
+    }
+  ],
+  "actual_size": [
+    1672,
+    941
+  ],
+  "has_alpha": true,
+  "sha256": "5984d0bcfb99e4c12924bacc3b16c01b7d1fe16414ee6a1935378224c218e880",
+  "issues": [
+    "Standing gauge hair touches/crosses upper canvas edge; cannot use as calibrated master",
+    "Only first half-stride, opposite foot not yet demonstrated",
+    "Head scale and grip require source-bound G1/G3 review"
+  ],
+  "artwork_approved": false,
+  "installed": false
+}

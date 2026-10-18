@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-18",
+  "status": "source_review",
+  "scope": "gait and two-hand combo redesign, non-skills only",
+  "approved_reuse": "idle_approval.json",
+  "new_source_approval": false,
+  "runtime_installed": false,
+  "source_design_review": "attack1_c1/source.png; pose direction only, G1/G3 and continuous playback still pending",
+  "rejected": [
+    "run_near_c1",
+    "run_far_c1",
+    "run_alternation_c2",
+    "attack1_c1/body_c2.png"
+  ],
+  "code_fixes": [
+    "instant full-width facing reflection",
+    "readable real HIT onset and peak hold without changing gameplay duration"
+  ],
+  "evidence": "docs/previews/v7_c7_feedback/index.html",
+  "next": "Get representative attack pose direction and full clip approved, resolve alternating-leg source poses before any batch bake."
+}

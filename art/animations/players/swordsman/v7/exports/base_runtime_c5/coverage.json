@@ -1,0 +1,39 @@
+{
+  "complete": true,
+  "scope": "non-skill base actions only",
+  "source_clip_count": 32,
+  "aliases": {
+    "hit": "hit_light",
+    "air": "air_hit"
+  },
+  "state_mapping": {
+    "IDLE": "idle",
+    "WALK": "walk_start / walk / walk_stop",
+    "RUN": "run_start / run / run_stop",
+    "JUMP": "jump_start / rise / apex / fall / land driven by actual physics",
+    "BACK_DASH": "back_dash",
+    "ATK": "attack1 / attack2 / attack3",
+    "DASH_ATK": "dash_attack",
+    "AIR_ATK": "air_attack",
+    "GUARD": "guard_start / guard / parry or recoil / guard_end",
+    "HIT": "hit_light or hit_heavy",
+    "AIR": "air_hit",
+    "DOWN": "down",
+    "GETUP": "getup",
+    "DEAD": "death: heavy reaction -> down -> closed-eye rest",
+    "REVIVE": "revive"
+  },
+  "turn": "visual turn only; facing/gameplay state stays authoritative; interrupted immediately by attacks",
+  "skills": "existing V3/V4/V6, intentionally excluded",
+  "reuse": {
+    "death": [
+      "hit_heavy frame0:6 ticks",
+      "down frame0:8 ticks",
+      "closed-eye death rest:28 ticks"
+    ],
+    "idle": "A-B-A-C; three unique breathing drawings",
+    "run_stop": "source guard pivot pose explicitly reused"
+  },
+  "height_policy": "CharacterBody physics height only; source height_px is review reference and never added in game",
+  "root_policy": "Existing gameplay root motion only; trimmed layer offsets never move the actor"
+}

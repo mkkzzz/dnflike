@@ -1,0 +1,2027 @@
+{
+  "source": "actual Godot frame_post_draw framebuffer PNGs",
+  "native_size": [
+    2560,
+    1440
+  ],
+  "fps": 60,
+  "frames": 134,
+  "scaled": false,
+  "stream_probe": "Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, unknown/bt709/iec61966-2-1, progressive), 2560x1440, 4799 kb/s, 60 fps, 60 tbr, 15360 tbn (default)",
+  "frame_hashes": {
+    "f00000.png": "f7eb0db97241321221dbf13a66363c58ae70436ec32e038eee97361935371af3",
+    "f00001.png": "b394bcc61478ee0971ec24d5d6e26e2f0b5060379152b2234b6e8fbee30d02db",
+    "f00002.png": "88de99c761a59cae52346e3819982a0320365c5764ca070c3ec3e731c130a941",
+    "f00003.png": "bb62d909914ce56281de7c0099f0641491503fe5c337f0b2c2280c2ee809bba2",
+    "f00004.png": "dd5d73dbf9a4d78962774a59733d13d19fe6ccf6a67e1a6360126ea015ab5c9b",
+    "f00005.png": "6a1483d0345aa73d7231e0307348094cb7448ca8db1f5fa28b178fb900bc9b9c",
+    "f00006.png": "683c89bcc8985aac54704ec157e5aa03077a71b3f48983b8b04a637dfbe6952a",
+    "f00007.png": "32a5060e8cdfdc422976f39ebaf770eb64427c2d44e9e34d56b431ea9354bab1",
+    "f00008.png": "3d1fc00443374c3defe7d64dc9202b5547e89d8a65628900888ea366c067f586",
+    "f00009.png": "290ed0d986bc5c437d348ed02f3dbaf03177cf90c1c031e1a4ad47578ef56363",
+    "f00010.png": "88aa4fb027338ef8ae98815b986cbafa4b8036dbd05c576d6726402b59cbed6d",
+    "f00011.png": "f40e2e6f1ed380614460dbb2a70c1c9ce02f01181ba13d6ae3d5739fb50b93c9",
+    "f00012.png": "61d2307f0f18d5777962c7ffc65809d3841f2194175646416182def3650c258a",
+    "f00013.png": "1b5a38dfcc6bd70c6121bfbcd6bd0efcad38a57932262c9cd0f460b5a56324a6",
+    "f00014.png": "fb076bb7d314fb9b65b982f463395355463624f41b3331974ef13091920dfb4a",
+    "f00015.png": "9fe396f92205a7ceb5aaba6107f62a44aa24117cc7fdf792351abd5a96cc670f",
+    "f00016.png": "691e3a6a53b8b6791cef9a07f915734a3ee275c84e6bb6a07eec45cc7f525912",
+    "f00017.png": "4a07782714f1a52746b746c57e4614f97c04e8972ab33cf1dc90e0e584eb4f0c",
+    "f00018.png": "a271ac58592bcf9cb6fbfb939920bce0ea0e7a288862e2aa4de0237eb118b2ab",
+    "f00019.png": "a1d226f6453794a479f74e0f2cccf8bef733f3f00ecd3faace75cff86b09e318",
+    "f00020.png": "4c977454aa9747c4df7f22bd0e71252bb9016bb6810b39c9f2d930e53a10b44b",
+    "f00021.png": "cbe15d84ebe5d07aa6d18ce8113071a55fd22115727b9038968e4883d3c05966",
+    "f00022.png": "c9320642c123be039c58d457c891720b9fb58a04d32ea50cc8e145e2bc4eb293",
+    "f00023.png": "eac1443493a6b50ae74f891c23ba2c74521ae39345f42651c5c1ccbac1e1e3fc",
+    "f00024.png": "da3b57604bc3cf386a6f2fa1da16b84ad1826d186bf76f1e1c4ae0ed497caadb",
+    "f00025.png": "cdc3421bb189112a8b0a8556f32626d53f4250129c3660aff34bf7a9a260d9d3",
+    "f00026.png": "b6918ae56c7877d272fbf5572474d283ce3bcf4ba9f09b62a6772dc98fab2cec",
+    "f00027.png": "3fad8cdb6503bb3bb64ae5ce359001fe5ae02206cbe6e61528716f18be68a07d",
+    "f00028.png": "6ffc55c2c5b8c30dfa32fcc7bb52b930278d00d3ed1434de78d0dfac7f9219be",
+    "f00029.png": "d83801dc4b3e4766615f3bef84efbabf134d6ff55670e099f206853d386dd885",
+    "f00030.png": "b0a960a0149f641f1419c0b32cdd0d712d9bb8f58bd47008d327f3feb85d10ae",
+    "f00031.png": "d44d85bd0697f64b3f0a98b02171163916671a94afc71b8f204e193e1e1bb90c",
+    "f00032.png": "580184753255648b0d3b53ac957f7b62dedeffa142524913e913e21e3e840e18",
+    "f00033.png": "21ec9a182ec8c360773545b90a2334639c1ef7aff9d6cdb200e018500a28b842",
+    "f00034.png": "9983ba2972a12c7266b939db1db6f533d93fac21615128ce7217ba92c9d8f780",
+    "f00035.png": "991cc5d501c6f3223006baf98542f1f7ee5ccdd42aa22c25d2a90842f1b608d4",
+    "f00036.png": "f9d0af6dfd51e8d4f2e9c7cb13e7210e710d30399e07a4a33b37f39d58e96c3c",
+    "f00037.png": "3ff2d69bd21ecb8147cf5e056571428389b551a05188afa3f7287f5e319d6e01",
+    "f00038.png": "401a44816c616da0c637eb8049db3bf88c0fd2b71122df2aee22b3564826365c",
+    "f00039.png": "4a3d52d2963997deec8ae2d34c6d1c39a617bc3ee50bb39f8f7cc6597f83d1c4",
+    "f00040.png": "4e78ac600e8898f48f447db87438d2bbcd1d43a66f69958fb6afc55bf93cb9e5",
+    "f00041.png": "b7347f6f5a77745dbf1e91d9a6b413b9680e68cbaecd84e55864778f26d8719b",
+    "f00042.png": "3ae31524c4757673115a37a6994427b2082143d34cf495548b4630a3ec45ef4f",
+    "f00043.png": "714092a5a2c76e5148486c1c9704badc993b9da8bfb552379009ad8b2d48eda1",
+    "f00044.png": "b8b4504ef7fc8d7fb8d56d721d033d24c16040b99db6a7b08938e6278c8d67e1",
+    "f00045.png": "456c259307fbc89461725b8c5f38dea6a659f9920eb138b8fe45ad971e2ea8f3",
+    "f00046.png": "70bc39d5c5a961f9e053f5f47e369d79ecca5a0135c1c0204f9250857a52ae11",
+    "f00047.png": "56b67b266877b0475cf3653a03648ad87f394c12d50e300989f48c89c8b0b196",
+    "f00048.png": "d0ed1cbe82d5954a0bfadf194be652f86d4e7df39a2767c852880e32678128a2",
+    "f00049.png": "8de040ad308fed84e70274dfa849f3c28fabfd39ab57b603acdf68a96d6e2374",
+    "f00050.png": "cb27cb3a4a9db374f6d74bf4159e3e5e9ff6e434c40311d069316d88e1a8b317",
+    "f00051.png": "1611e57639030a0a5dfb9e92e276b5dd3382e7b92f11ff829db60c19d5f10ded",
+    "f00052.png": "4c1ccf1da3c772d52bea34f4be873f7b1be1aea8266cb0bf819a0ff1eb3bb482",
+    "f00053.png": "0f255dca9391ac791f57410fc0b1c1a08d70972c9a2488d7f09dcbcff2f34c32",
+    "f00054.png": "570bb1ce5f563807af08948751639523ce41a7c1d35104e8f6aff7179f63f3fe",
+    "f00055.png": "3ae1bb9b8b6b629907cd665ff3f8a2995ee083d754f6a181aa825ee13dfb77ab",
+    "f00056.png": "ebef26343a3df0b77bec53dda55fb593e1995975a7d862647d044ed58c96248e",
+    "f00057.png": "0dab9d331b156609f98ebeaee1f98083bb85b093b47063c8e6322d949bf1c56a",
+    "f00058.png": "d0915824291039ebf8d67b51a5c123b78bdc29fdf5fa34fe733488e16b5a6490",
+    "f00059.png": "927d585370d29187527fc84d43b16c699e2a05a00ae257b2e83db0424f1f6e8c",
+    "f00060.png": "2acfab3447a4171d3f74c3d4b2e05d21ac24ff2c6d81edbcf98832c3dbd19324",
+    "f00061.png": "3a0123403a047c1e777b4d920b9dc7789c57352d96eabb53be5f0fc5527b4bdf",
+    "f00062.png": "90fc7f5c0373f24bd3ba39f7fd9c8b11c55eb07fbc8366e8744530caaf6a000e",
+    "f00063.png": "8182e02e05b7c41db40cf0c86b224718a9e10db6c8605417d1986a94ba160a38",
+    "f00064.png": "f4885f28300600473e3b03ca37c3411809bc706fa7cf034d96fe5c3f12c95849",
+    "f00065.png": "7008601721084aba5efe10f91e747c32356b9fa0344cba4c52216878c819c035",
+    "f00066.png": "866de025feacb7385a5b4438c65dca37700f8f8f27663ba9bf7b6da6f5776723",
+    "f00067.png": "737b9d5de4ce5a192fb1467bf5f681c7f3658f04413daa8df5a7a06eb75ea94f",
+    "f00068.png": "3a99ab221d3a03ee3dccacfeb285c021d6bd93038907999a7007e3c51a433ed6",
+    "f00069.png": "8f4bfccf99d17c61a13602f2626e09a97492e939a6c6e15ea3ea02194ee7a478",
+    "f00070.png": "3d70b10448adffba0765d02c24c94ebad0861c1fa88b147dbb3909095fb99415",
+    "f00071.png": "7c75abdb72ffdc4ac4784df422d76d4585000f8420cae0bd1d8342fcba307ce0",
+    "f00072.png": "6913a59a981daebab82bcb95c3a51a0333ecf436714c97b57ecb5c56b243f03b",
+    "f00073.png": "88dadfb91ec9568a724b1e9421a1ea758f2f510c6994e9410807c0f0300a654f",
+    "f00074.png": "3e4d536731ed52be0cf3f43068c6d4d6ccde345f3cc1d0b0e946ac8adf89ce84",
+    "f00075.png": "8f949e570521356499c75abea4afc0c1ab4926edaa6e19f697abb5e863cae0e4",
+    "f00076.png": "411f6b56e6a53d5f902b8d9ed4e2a9371ce20b7f6df4945ad98933910c9217d5",
+    "f00077.png": "2a3020d64c718e4c730645da3306ada39ae11d3e21d4ae74981c741aa2b04289",
+    "f00078.png": "87b7e5c8a483279adca5ad0979450e45c33018ab85d792a5044eaa1a46aeb4bc",
+    "f00079.png": "7675d855764737c0d640037230cfd0a84a28f1ca6d2421c6ff3c6eb631579947",
+    "f00080.png": "762aceb20bc7a92407fd9a8480afcd262e647b07afa8e2e674589fcc307418de",
+    "f00081.png": "520114637c21ab50ba3aa96af66d7eb90ab1d662750d0de44b2d561eab7e2a8d",
+    "f00082.png": "2e7ac0df239864a141ba552863952be32aaf5f2192a54eb33743ee281ae22a58",
+    "f00083.png": "e85944c08216bc794d141615061c53871ea26cf6dbc58d9e4cbbf834a0d1d69a",
+    "f00084.png": "853e09710e5bfac1ea81dd24bbcccc9d8b4d3cfdb2735a0b0f7c84b70053a0d9",
+    "f00085.png": "5762dfccf2f3d838ba9830071d25227df90d9e99fc97701c08cc5ccffd8adaa0",
+    "f00086.png": "da39f62e5cc4f222423f2fd5e9c221d5a562c6db4aef32165f7471fd2391c677",
+    "f00087.png": "62ba0f7d80e3f6cec35d1f87f1c95d5682c9c0f50d85065eeed1bfb82f35f8ef",
+    "f00088.png": "0828d3191e436566527eed8ae463296a6659ce5c19242f9f16fd205dac2f69c8",
+    "f00089.png": "beed11d799e343c29947f71b664008cf7ae18e810377ddd7bd247c2aba622173",
+    "f00090.png": "15dfabb8888de7a443cb3317ce4180d01cbe627a6d75205bc309b20a5138e0cb",
+    "f00091.png": "cc497b0f0962bedbc664259772003ecbd1979f6a154d4556aebfc810d8175ccc",
+    "f00092.png": "f5c13beebda6a5b1266a4803fe0f9a35acd5e6adadf2a422439d4f279afe7725",
+    "f00093.png": "fcbb4053cbd14ad335071a2d5c0170cb27f39c37abefba2ab22e3eb9892af988",
+    "f00094.png": "886adab36924ec492738a71b99bb9ec3f76d23c0ff8082586fb74fbba9d32252",
+    "f00095.png": "b2236ae243c32bf43a1e7a95d413b8f131c36b8eeac4fb928d2fdeded3853781",
+    "f00096.png": "e290e40bfcecf760fd8aee45a990217cb846d3cf77d36e9dc080c3ff5f1069ba",
+    "f00097.png": "174e2242e27565ac23c5551ce7957d4b872bc492635b23f83d3204d81355cd26",
+    "f00098.png": "4136d0de7daad3272984d330a9b9cb2871232b946f2fed4b2dd9bc4c9b17cee7",
+    "f00099.png": "10a03cfa57e98931e96b9efbbaf9682a306702ecf721a49c49e79e4c84e335bf",
+    "f00100.png": "ae6fd97e038529a9c4b0acba1b7fd7342d85bd4663c9d4cb714df4823ae0bab9",
+    "f00101.png": "5765e0886447920307544b6338db9245dce538560f084d209904e6d49bf4bd94",
+    "f00102.png": "946fdb88ae277f50d7e29456652a9d80a80ff3433da3314f774134b973b42041",
+    "f00103.png": "3fe9282cd7233b8d565e0f6a9ce2af45c3cf09848931dbad174cadb401cee401",
+    "f00104.png": "fd6c5fcec25250aeab17e30acd3d44c03da42afae0e0926a4c556e5432ac7ef4",
+    "f00105.png": "d96a0cb0ecfd6c68501ad692b3d173c1f2021b4c4b273299a866dfb11c41b2e9",
+    "f00106.png": "3e26ccbda2859006e8427258f79bff2dcd269cd5da8b5cd4f6f993b077004548",
+    "f00107.png": "c9c784b2e653926ab5133185f5f45f4b0999235a0bf7b010015383f382668e40",
+    "f00108.png": "ba42b669340296165d9959c2abb59304b62c252722d3c072be41f4d4adfa4f71",
+    "f00109.png": "ef96b634e0c3ce48c64e1d90da59981869b665dbd3c2a3f921196300a4ef77ff",
+    "f00110.png": "b82221c64cac689e9b3c164671484f36768c07e235eb076f467c935dc725f55d",
+    "f00111.png": "c9d95c94051a16e6407ca813487bffcb47df53ca4b23c4d68aa5f87d319f0ac1",
+    "f00112.png": "693c7260ace7b07ce517e58239b7056683760a1ef4a9c32d67315e6cd968d4b8",
+    "f00113.png": "929b1127032cdb566f984785689ea5bf59975d01e1fb610e1805509cb66fc721",
+    "f00114.png": "ced55f212fddea902688e21acde410710d2f2457e2b0c9557e2fb19ca90e5eae",
+    "f00115.png": "7cc9010799ff31bbf2208913d99454274a5f1b4da0e5da0431b5b721715bcac9",
+    "f00116.png": "492f8a29c4829c44b7876d47895203506798741a7d9cacb499e5d5e14e159405",
+    "f00117.png": "ffe913ce21ab66795f80899b9b4c5fc887aff3923693fdf5f22b4a28adaaaafa",
+    "f00118.png": "03851fcf55655947bbbd0f0d3a50efe29e82c4830bde75b42b22b99026cf7bf4",
+    "f00119.png": "266a51cc53d81ed08c4df9d8f1bccfa524886eeacd707f29fe35e87216108cc1",
+    "f00120.png": "e6b23c8c6ccc7feb7a670ae9c72a24b887b9670e77e4944f5561a18fd6bfe716",
+    "f00121.png": "408a1e87d559112e024095cab23188dea5c51a9ef9475f208e47010df57131ea",
+    "f00122.png": "ae25d410268852009073064c4c561a11e3bcdf394c3a8fd7690976f132442996",
+    "f00123.png": "eada3ae3db6b0911043ec929b42de4a53cb9664cdb9ce3a1c89a7566e3d926ac",
+    "f00124.png": "d223da70d0b32bb4e3d846be2777a457238c6c181eefdcb1e532c0e231d911a3",
+    "f00125.png": "182fab23055e2ea5c5b3318b872355399aec43eddf422393b1cfa56775ce8331",
+    "f00126.png": "105c34a879d0d606a889beba5f029378db66634d12820b8c9abb635decb24a49",
+    "f00127.png": "e4ba94202c75d3c5e3b3c01c3e763d2dc886d181a26f8b6f8eeabfe487eb953b",
+    "f00128.png": "2f2bc1599f12b1b25f10183f0c82b77abd01df522f06a71f4dce711758b475a2",
+    "f00129.png": "d9ca27549823289298b44fa1c8d75dcb3a05dd34ffd4b9f6d5bec0ec341a65d0",
+    "f00130.png": "69357b975d5b91a05462f191f731473434c18fd07e7810fa9c27f50f04792602",
+    "f00131.png": "ebba1ad232c8fe38d54414e9dfd0cb372a2ad5bad3ee469e06a94b7f62ea246c",
+    "f00132.png": "a86a36215a82e714c412803c5a18c22f85d0222072a675829d61be948a37b87c",
+    "f00133.png": "8b79fe33d7989dc21c851e1863e66e7de5f051505665b7132c1d6fe0d07cef60"
+  },
+  "movie_sha256": "e49f8ceae3733c07e701177ecba982ad8b6f75e32c348b2a23294862ed263a11",
+  "timeline": [
+    {
+      "clip": "idle",
+      "clock": 122.0,
+      "facing": 1,
+      "frame": 0,
+      "physics_frame": 128,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 127,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 123.0,
+      "facing": 1,
+      "frame": 1,
+      "physics_frame": 129,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 128,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 124.0,
+      "facing": 1,
+      "frame": 2,
+      "physics_frame": 130,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 129,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 125.0,
+      "facing": 1,
+      "frame": 3,
+      "physics_frame": 131,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 130,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 126.0,
+      "facing": 1,
+      "frame": 4,
+      "physics_frame": 132,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 131,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 127.0,
+      "facing": 1,
+      "frame": 5,
+      "physics_frame": 133,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 132,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 128.0,
+      "facing": 1,
+      "frame": 6,
+      "physics_frame": 134,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 133,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 129.0,
+      "facing": 1,
+      "frame": 7,
+      "physics_frame": 135,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 134,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 130.0,
+      "facing": 1,
+      "frame": 8,
+      "physics_frame": 136,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 135,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 131.0,
+      "facing": 1,
+      "frame": 9,
+      "physics_frame": 137,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 136,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 132.0,
+      "facing": 1,
+      "frame": 10,
+      "physics_frame": 138,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 137,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 133.0,
+      "facing": 1,
+      "frame": 11,
+      "physics_frame": 139,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 138,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 134.0,
+      "facing": 1,
+      "frame": 12,
+      "physics_frame": 140,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 139,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 135.0,
+      "facing": 1,
+      "frame": 13,
+      "physics_frame": 141,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 140,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 136.0,
+      "facing": 1,
+      "frame": 14,
+      "physics_frame": 142,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 141,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 137.0,
+      "facing": 1,
+      "frame": 15,
+      "physics_frame": 143,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 142,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 138.0,
+      "facing": 1,
+      "frame": 16,
+      "physics_frame": 144,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 143,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 139.0,
+      "facing": 1,
+      "frame": 17,
+      "physics_frame": 145,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 144,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 140.0,
+      "facing": 1,
+      "frame": 18,
+      "physics_frame": 146,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 145,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 141.0,
+      "facing": 1,
+      "frame": 19,
+      "physics_frame": 147,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 146,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 142.0,
+      "facing": 1,
+      "frame": 20,
+      "physics_frame": 148,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 147,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 143.0,
+      "facing": 1,
+      "frame": 21,
+      "physics_frame": 149,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 148,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 144.0,
+      "facing": 1,
+      "frame": 22,
+      "physics_frame": 150,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 149,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 145.0,
+      "facing": 1,
+      "frame": 23,
+      "physics_frame": 151,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 150,
+      "tag": "accepted_idle"
+    },
+    {
+      "clip": "idle",
+      "clock": 146.0,
+      "facing": -1,
+      "frame": 24,
+      "physics_frame": 152,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 151,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 147.0,
+      "facing": -1,
+      "frame": 25,
+      "physics_frame": 153,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 152,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 148.0,
+      "facing": -1,
+      "frame": 26,
+      "physics_frame": 154,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 153,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 149.0,
+      "facing": -1,
+      "frame": 27,
+      "physics_frame": 155,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 154,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 150.0,
+      "facing": -1,
+      "frame": 28,
+      "physics_frame": 156,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 155,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 151.0,
+      "facing": -1,
+      "frame": 29,
+      "physics_frame": 157,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 156,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 152.0,
+      "facing": -1,
+      "frame": 30,
+      "physics_frame": 158,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 157,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 153.0,
+      "facing": -1,
+      "frame": 31,
+      "physics_frame": 159,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 158,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 154.0,
+      "facing": 1,
+      "frame": 32,
+      "physics_frame": 160,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 159,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 155.0,
+      "facing": 1,
+      "frame": 33,
+      "physics_frame": 161,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 160,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 156.0,
+      "facing": 1,
+      "frame": 34,
+      "physics_frame": 162,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 161,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 157.0,
+      "facing": 1,
+      "frame": 35,
+      "physics_frame": 163,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 162,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 158.0,
+      "facing": 1,
+      "frame": 36,
+      "physics_frame": 164,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 163,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 159.0,
+      "facing": 1,
+      "frame": 37,
+      "physics_frame": 165,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 164,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 160.0,
+      "facing": 1,
+      "frame": 38,
+      "physics_frame": 166,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 165,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 161.0,
+      "facing": 1,
+      "frame": 39,
+      "physics_frame": 167,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 166,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 162.0,
+      "facing": -1,
+      "frame": 40,
+      "physics_frame": 168,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 167,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 163.0,
+      "facing": -1,
+      "frame": 41,
+      "physics_frame": 169,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 168,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 164.0,
+      "facing": -1,
+      "frame": 42,
+      "physics_frame": 170,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 169,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 165.0,
+      "facing": -1,
+      "frame": 43,
+      "physics_frame": 171,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 170,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 166.0,
+      "facing": -1,
+      "frame": 44,
+      "physics_frame": 172,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 171,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 167.0,
+      "facing": -1,
+      "frame": 45,
+      "physics_frame": 173,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 172,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 168.0,
+      "facing": -1,
+      "frame": 46,
+      "physics_frame": 174,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 173,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 169.0,
+      "facing": -1,
+      "frame": 47,
+      "physics_frame": 175,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 174,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 170.0,
+      "facing": 1,
+      "frame": 48,
+      "physics_frame": 176,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 175,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 171.0,
+      "facing": 1,
+      "frame": 49,
+      "physics_frame": 177,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 176,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 172.0,
+      "facing": 1,
+      "frame": 50,
+      "physics_frame": 178,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 177,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 173.0,
+      "facing": 1,
+      "frame": 51,
+      "physics_frame": 179,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 178,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 174.0,
+      "facing": 1,
+      "frame": 52,
+      "physics_frame": 180,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 179,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 175.0,
+      "facing": 1,
+      "frame": 53,
+      "physics_frame": 181,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 180,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 176.0,
+      "facing": 1,
+      "frame": 54,
+      "physics_frame": 182,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 181,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "idle",
+      "clock": 177.0,
+      "facing": 1,
+      "frame": 55,
+      "physics_frame": 183,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 182,
+      "tag": "instant_facing"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 0.0,
+      "facing": 1,
+      "frame": 56,
+      "physics_frame": 184,
+      "position": [
+        572.322204589844,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 183,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 0.0,
+      "facing": 1,
+      "frame": 57,
+      "physics_frame": 185,
+      "position": [
+        574.466674804688,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 184,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 0.0,
+      "facing": 1,
+      "frame": 58,
+      "physics_frame": 186,
+      "position": [
+        576.433349609375,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 185,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 1.0,
+      "facing": 1,
+      "frame": 59,
+      "physics_frame": 187,
+      "position": [
+        578.222229003906,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 186,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 2.0,
+      "facing": 1,
+      "frame": 60,
+      "physics_frame": 188,
+      "position": [
+        579.833312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 187,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 3.0,
+      "facing": 1,
+      "frame": 61,
+      "physics_frame": 189,
+      "position": [
+        581.266662597656,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 188,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 4.0,
+      "facing": 1,
+      "frame": 62,
+      "physics_frame": 190,
+      "position": [
+        582.522216796875,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 189,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 5.0,
+      "facing": 1,
+      "frame": 63,
+      "physics_frame": 191,
+      "position": [
+        583.599975585938,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 190,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 6.0,
+      "facing": 1,
+      "frame": 64,
+      "physics_frame": 192,
+      "position": [
+        584.5,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 191,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 7.0,
+      "facing": 1,
+      "frame": 65,
+      "physics_frame": 193,
+      "position": [
+        585.222229003906,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 192,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 8.0,
+      "facing": 1,
+      "frame": 66,
+      "physics_frame": 194,
+      "position": [
+        585.766662597656,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 193,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 9.0,
+      "facing": 1,
+      "frame": 67,
+      "physics_frame": 195,
+      "position": [
+        586.13330078125,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 194,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_light",
+      "clock": 10.0,
+      "facing": 1,
+      "frame": 68,
+      "physics_frame": 196,
+      "position": [
+        586.322204589844,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 195,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 1.0,
+      "facing": 1,
+      "frame": 69,
+      "physics_frame": 197,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 196,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 2.0,
+      "facing": 1,
+      "frame": 70,
+      "physics_frame": 198,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 197,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 3.0,
+      "facing": 1,
+      "frame": 71,
+      "physics_frame": 199,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 198,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 4.0,
+      "facing": 1,
+      "frame": 72,
+      "physics_frame": 200,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 199,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 5.0,
+      "facing": 1,
+      "frame": 73,
+      "physics_frame": 201,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 200,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 6.0,
+      "facing": 1,
+      "frame": 74,
+      "physics_frame": 202,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 201,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 7.0,
+      "facing": 1,
+      "frame": 75,
+      "physics_frame": 203,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 202,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 8.0,
+      "facing": 1,
+      "frame": 76,
+      "physics_frame": 204,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 203,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 9.0,
+      "facing": 1,
+      "frame": 77,
+      "physics_frame": 205,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 204,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 10.0,
+      "facing": 1,
+      "frame": 78,
+      "physics_frame": 206,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 205,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 11.0,
+      "facing": 1,
+      "frame": 79,
+      "physics_frame": 207,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 206,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 12.0,
+      "facing": 1,
+      "frame": 80,
+      "physics_frame": 208,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 207,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 13.0,
+      "facing": 1,
+      "frame": 81,
+      "physics_frame": 209,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 208,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 14.0,
+      "facing": 1,
+      "frame": 82,
+      "physics_frame": 210,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 209,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 15.0,
+      "facing": 1,
+      "frame": 83,
+      "physics_frame": 211,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 210,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 16.0,
+      "facing": 1,
+      "frame": 84,
+      "physics_frame": 212,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 211,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 17.0,
+      "facing": 1,
+      "frame": 85,
+      "physics_frame": 213,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 212,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 18.0,
+      "facing": 1,
+      "frame": 86,
+      "physics_frame": 214,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 213,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 19.0,
+      "facing": 1,
+      "frame": 87,
+      "physics_frame": 215,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 214,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 20.0,
+      "facing": 1,
+      "frame": 88,
+      "physics_frame": 216,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 215,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 21.0,
+      "facing": 1,
+      "frame": 89,
+      "physics_frame": 217,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 216,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 22.0,
+      "facing": 1,
+      "frame": 90,
+      "physics_frame": 218,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 217,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 23.0,
+      "facing": 1,
+      "frame": 91,
+      "physics_frame": 219,
+      "position": [
+        586.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 218,
+      "tag": "real_monster_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 0.0,
+      "facing": 1,
+      "frame": 92,
+      "physics_frame": 220,
+      "position": [
+        583.844421386719,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 219,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 0.0,
+      "facing": 1,
+      "frame": 93,
+      "physics_frame": 221,
+      "position": [
+        581.533325195313,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 220,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 0.0,
+      "facing": 1,
+      "frame": 94,
+      "physics_frame": 222,
+      "position": [
+        579.399963378906,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 221,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 1.0,
+      "facing": 1,
+      "frame": 95,
+      "physics_frame": 223,
+      "position": [
+        577.444396972656,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 222,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 2.0,
+      "facing": 1,
+      "frame": 96,
+      "physics_frame": 224,
+      "position": [
+        575.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 223,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 3.0,
+      "facing": 1,
+      "frame": 97,
+      "physics_frame": 225,
+      "position": [
+        574.066650390625,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 224,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 4.0,
+      "facing": 1,
+      "frame": 98,
+      "physics_frame": 226,
+      "position": [
+        572.644409179688,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 225,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 5.0,
+      "facing": 1,
+      "frame": 99,
+      "physics_frame": 227,
+      "position": [
+        571.399963378906,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 226,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 6.0,
+      "facing": 1,
+      "frame": 100,
+      "physics_frame": 228,
+      "position": [
+        570.333312988281,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 227,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 7.0,
+      "facing": 1,
+      "frame": 101,
+      "physics_frame": 229,
+      "position": [
+        569.444396972656,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 228,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 8.0,
+      "facing": 1,
+      "frame": 102,
+      "physics_frame": 230,
+      "position": [
+        568.733276367188,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 229,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 9.0,
+      "facing": 1,
+      "frame": 103,
+      "physics_frame": 231,
+      "position": [
+        568.199951171875,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 230,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 10.0,
+      "facing": 1,
+      "frame": 104,
+      "physics_frame": 232,
+      "position": [
+        567.844421386719,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 231,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 11.0,
+      "facing": 1,
+      "frame": 105,
+      "physics_frame": 233,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 232,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 12.0,
+      "facing": 1,
+      "frame": 106,
+      "physics_frame": 234,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 233,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 13.0,
+      "facing": 1,
+      "frame": 107,
+      "physics_frame": 235,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 234,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 14.0,
+      "facing": 1,
+      "frame": 108,
+      "physics_frame": 236,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 235,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 15.0,
+      "facing": 1,
+      "frame": 109,
+      "physics_frame": 237,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 236,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 16.0,
+      "facing": 1,
+      "frame": 110,
+      "physics_frame": 238,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 237,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 17.0,
+      "facing": 1,
+      "frame": 111,
+      "physics_frame": 239,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 238,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "hit_heavy",
+      "clock": 18.0,
+      "facing": 1,
+      "frame": 112,
+      "physics_frame": 240,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 239,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 1.0,
+      "facing": 1,
+      "frame": 113,
+      "physics_frame": 241,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 240,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 2.0,
+      "facing": 1,
+      "frame": 114,
+      "physics_frame": 242,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 241,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 3.0,
+      "facing": 1,
+      "frame": 115,
+      "physics_frame": 243,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 242,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 4.0,
+      "facing": 1,
+      "frame": 116,
+      "physics_frame": 244,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 243,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 5.0,
+      "facing": 1,
+      "frame": 117,
+      "physics_frame": 245,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 244,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 6.0,
+      "facing": 1,
+      "frame": 118,
+      "physics_frame": 246,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 245,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 7.0,
+      "facing": 1,
+      "frame": 119,
+      "physics_frame": 247,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 246,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 8.0,
+      "facing": 1,
+      "frame": 120,
+      "physics_frame": 248,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 247,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 9.0,
+      "facing": 1,
+      "frame": 121,
+      "physics_frame": 249,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 248,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 10.0,
+      "facing": 1,
+      "frame": 122,
+      "physics_frame": 250,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 249,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 11.0,
+      "facing": 1,
+      "frame": 123,
+      "physics_frame": 251,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 250,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 12.0,
+      "facing": 1,
+      "frame": 124,
+      "physics_frame": 252,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 251,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 13.0,
+      "facing": 1,
+      "frame": 125,
+      "physics_frame": 253,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 252,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 14.0,
+      "facing": 1,
+      "frame": 126,
+      "physics_frame": 254,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 253,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 15.0,
+      "facing": 1,
+      "frame": 127,
+      "physics_frame": 255,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 254,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 16.0,
+      "facing": 1,
+      "frame": 128,
+      "physics_frame": 256,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 255,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 17.0,
+      "facing": 1,
+      "frame": 129,
+      "physics_frame": 257,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 256,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 18.0,
+      "facing": 1,
+      "frame": 130,
+      "physics_frame": 258,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 257,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 19.0,
+      "facing": 1,
+      "frame": 131,
+      "physics_frame": 259,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 258,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 20.0,
+      "facing": 1,
+      "frame": 132,
+      "physics_frame": 260,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 259,
+      "tag": "heavy_hit_recover"
+    },
+    {
+      "clip": "idle",
+      "clock": 21.0,
+      "facing": 1,
+      "frame": 133,
+      "physics_frame": 261,
+      "position": [
+        567.666625976563,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 260,
+      "tag": "heavy_hit_recover"
+    }
+  ],
+  "proves": "instant facing, actual monster hit and scripted heavy hit presentation only; not rewritten gait/combo approval"
+}

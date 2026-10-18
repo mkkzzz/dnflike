@@ -1,0 +1,539 @@
+{
+  "schema": "standard_actions_pilot/1",
+  "revision": "v7_c6_attack3_selected_body",
+  "status": "review_candidate",
+  "fps": 60,
+  "hitstop_baked": false,
+  "actor_includes_weapon": false,
+  "declarations": {
+    "weapon_layering": "not_attempted",
+    "G3": "two_hand_layering_pending",
+    "actor_includes_weapon": false,
+    "G1": "reviewed_true_head_landmarks",
+    "G2": "pending_continuous_motion_review",
+    "G4": "pending_user_review"
+  },
+  "coordinate_system": "right-facing pixels, y-down; anchor is ground root except separate_height body proxy",
+  "target_standing_height": 380.0,
+  "sources": {
+    "body": {
+      "file": "body_c3.png",
+      "sha256": "f99f7ab6eb389687a04bd88be06257e03e070035b67cc4167423156fbbbcdbba",
+      "size": [
+        1536,
+        1024
+      ],
+      "standing_height": 481.0
+    }
+  },
+  "config_sha256": "228972788e627e7b84f4ca815538862cfe3a71c7ae001373a8bbfbcd5280bcad",
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.combo.3",
+      "size": [
+        1024,
+        1080
+      ],
+      "anchor": [
+        448.0,
+        840.0
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "root_mode": "ground",
+      "loop": false,
+      "include_in_overview": true,
+      "duration_ticks": 16,
+      "frames": [
+        {
+          "source_pose": "c6_rise_low",
+          "source": "body",
+          "crop_bbox": [
+            520,
+            65,
+            1030,
+            510
+          ],
+          "source_root": [
+            790.0,
+            494.0
+          ],
+          "source_foot": [
+            596.0,
+            494.0
+          ],
+          "scale": 0.7900207900207901,
+          "trim_offset_source": [
+            566,
+            82
+          ],
+          "paste_offset": [
+            271,
+            515
+          ],
+          "foot_from_anchor": [
+            -153.26403326403326,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            271,
+            515,
+            617,
+            841
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              790,
+              300
+            ],
+            "alpha_core_threshold": 180,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/c6_rise_low_b4841d2deb62b046.png",
+            "mask_sha256_raw_l8": "b4841d2deb62b0466479a9152e6fff485bc4c05f11009363bfdf847122f2262f",
+            "mask_size": [
+              510,
+              445
+            ],
+            "mask_source_origin": [
+              520,
+              65
+            ],
+            "mask_bbox_source": [
+              566,
+              82,
+              1004,
+              495
+            ],
+            "core_bbox_source": [
+              566,
+              82,
+              1004,
+              495
+            ],
+            "retained_alpha_bbox_source": [
+              566,
+              82,
+              1004,
+              495
+            ],
+            "selected_core_pixels": 69942,
+            "discarded_other_core_pixels": 1100,
+            "discarded_alpha_pixels": 11373,
+            "discarded_alpha_sum": 481542,
+            "retained_alpha_pixels": 69942,
+            "landmark_checks": {
+              "grip": {
+                "source_point": [
+                  786,
+                  304
+                ],
+                "radius": 2,
+                "source_alpha_max": 254,
+                "retained_alpha_max": 254,
+                "retained": true
+              },
+              "offhand": {
+                "source_point": [
+                  769,
+                  289
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              },
+              "proportion_hair_top": {
+                "source_point": [
+                  849,
+                  82
+                ],
+                "radius": 2,
+                "source_alpha_max": 251,
+                "retained_alpha_max": 251,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  846,
+                  150
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/keys/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 8
+        },
+        {
+          "source_pose": "c6_rise_contact",
+          "source": "body",
+          "crop_bbox": [
+            40,
+            510,
+            535,
+            1008
+          ],
+          "source_root": [
+            280.0,
+            995.0
+          ],
+          "source_foot": [
+            97.0,
+            995.0
+          ],
+          "scale": 0.7900207900207901,
+          "trim_offset_source": [
+            58,
+            518
+          ],
+          "paste_offset": [
+            273,
+            463
+          ],
+          "foot_from_anchor": [
+            -144.57380457380458,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            273,
+            463,
+            630,
+            841
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              280,
+              750
+            ],
+            "alpha_core_threshold": 180,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/c6_rise_contact_18bffa022e7b1cc0.png",
+            "mask_sha256_raw_l8": "18bffa022e7b1cc0d22b7f96ad25d8c5b00cea4b02d094a1dddbadcfc02b1f6d",
+            "mask_size": [
+              495,
+              498
+            ],
+            "mask_source_origin": [
+              40,
+              510
+            ],
+            "mask_bbox_source": [
+              58,
+              518,
+              510,
+              996
+            ],
+            "core_bbox_source": [
+              58,
+              518,
+              510,
+              996
+            ],
+            "retained_alpha_bbox_source": [
+              58,
+              518,
+              510,
+              996
+            ],
+            "selected_core_pixels": 81515,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 10580,
+            "discarded_alpha_sum": 213940,
+            "retained_alpha_pixels": 81515,
+            "landmark_checks": {
+              "grip": {
+                "source_point": [
+                  325,
+                  623
+                ],
+                "radius": 2,
+                "source_alpha_max": 254,
+                "retained_alpha_max": 254,
+                "retained": true
+              },
+              "offhand": {
+                "source_point": [
+                  306,
+                  634
+                ],
+                "radius": 2,
+                "source_alpha_max": 254,
+                "retained_alpha_max": 254,
+                "retained": true
+              },
+              "proportion_hair_top": {
+                "source_point": [
+                  306,
+                  518
+                ],
+                "radius": 2,
+                "source_alpha_max": 233,
+                "retained_alpha_max": 233,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  318,
+                  595
+                ],
+                "radius": 2,
+                "source_alpha_max": 254,
+                "retained_alpha_max": 254,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/keys/f001.png",
+          "start_tick": 8,
+          "duration_ticks": 8
+        }
+      ]
+    },
+    "neutral": {
+      "asset_id": "actor.player.proportion.neutral",
+      "size": [
+        1024,
+        1080
+      ],
+      "anchor": [
+        448.0,
+        840.0
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "root_mode": "ground",
+      "loop": false,
+      "include_in_overview": false,
+      "duration_ticks": 8,
+      "frames": [
+        {
+          "source_pose": "c6_attack3_neutral",
+          "source": "body",
+          "crop_bbox": [
+            120,
+            2,
+            390,
+            510
+          ],
+          "source_root": [
+            260.0,
+            495.0
+          ],
+          "source_foot": [
+            186.0,
+            495.0
+          ],
+          "scale": 0.7900207900207901,
+          "trim_offset_source": [
+            133,
+            14
+          ],
+          "paste_offset": [
+            348,
+            460
+          ],
+          "foot_from_anchor": [
+            -58.46153846153847,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            348,
+            460,
+            535,
+            841
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              260,
+              260
+            ],
+            "alpha_core_threshold": 180,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/c6_attack3_neutral_df096c8ba3b33e28.png",
+            "mask_sha256_raw_l8": "df096c8ba3b33e287b0926c390b0d0997811b109fdb8c74119be8c38b4522aeb",
+            "mask_size": [
+              270,
+              508
+            ],
+            "mask_source_origin": [
+              120,
+              2
+            ],
+            "mask_bbox_source": [
+              133,
+              14,
+              370,
+              496
+            ],
+            "core_bbox_source": [
+              133,
+              14,
+              370,
+              496
+            ],
+            "retained_alpha_bbox_source": [
+              133,
+              14,
+              370,
+              496
+            ],
+            "selected_core_pixels": 64741,
+            "discarded_other_core_pixels": 2,
+            "discarded_alpha_pixels": 9717,
+            "discarded_alpha_sum": 209787,
+            "retained_alpha_pixels": 64741,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  278,
+                  14
+                ],
+                "radius": 2,
+                "source_alpha_max": 252,
+                "retained_alpha_max": 252,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  284,
+                  87
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/neutral/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 8
+        }
+      ]
+    }
+  },
+  "proportion_gate": {
+    "schema": "actor_proportions/1",
+    "passed": true,
+    "config": "art/animations/players/swordsman/v7/sources/base_batch_c6/attack3/body_config.json",
+    "audit": "art/animations/players/swordsman/v7/sources/base_batch_c6/attack3/proportions.json",
+    "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+    "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+    "reference_visible_head_ratio": 0.15216004589375082,
+    "tolerance_fraction": 0.08,
+    "target_standing_height": 380,
+    "measured_unique_poses": 3,
+    "required_unique_poses": 3,
+    "missing_pose_annotations": [],
+    "unknown_pose_annotations": [],
+    "neutral_checks": [
+      {
+        "source": "body",
+        "neutral_height": 481,
+        "head_ratio_error": -0.002582110989066022,
+        "configured_height_error": 0.0
+      }
+    ],
+    "measurements": [
+      {
+        "source": "body",
+        "pose_id": "c6_attack3_neutral",
+        "head_source_px": 73,
+        "head_landmarks": {
+          "hair_top": [
+            278,
+            14
+          ],
+          "chin": [
+            284,
+            87
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 481,
+        "scale_basis_verified": true,
+        "head_output_px": 57.67151767151767,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.002582110989066022,
+        "landmark_only_error_interval": [
+          -0.029908628496214895,
+          0.02474440651808285
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "c6_rise_low",
+        "head_source_px": 68,
+        "head_landmarks": {
+          "hair_top": [
+            849,
+            82
+          ],
+          "chin": [
+            846,
+            150
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 481,
+        "scale_basis_verified": true,
+        "head_output_px": 53.72141372141372,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.0708984047569382,
+        "landmark_only_error_interval": [
+          -0.09822492226408708,
+          -0.04357188724978933
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "c6_rise_contact",
+        "head_source_px": 77,
+        "head_landmarks": {
+          "hair_top": [
+            306,
+            518
+          ],
+          "chin": [
+            318,
+            595
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 481,
+        "scale_basis_verified": true,
+        "head_output_px": 60.83160083160083,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.052070924025231724,
+        "landmark_only_error_interval": [
+          0.02474440651808285,
+          0.0793974415323806
+        ],
+        "caveat": null
+      }
+    ],
+    "failures": [],
+    "artwork_approved": false,
+    "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+  }
+}

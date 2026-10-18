@@ -69,6 +69,7 @@ var anim_frame := 0
 var anim_tick := 0
 var seq_clips: Dictionary = {}
 var seq_fx: Node = null
+var v7_renderer: Node2D = null
 var last_hitstop := 0
 var last_contact: Vector2 = Vector2.ZERO
 var contact_log: Array = []
@@ -266,6 +267,8 @@ func seq_root_total() -> float:
 
 
 func _seq_blade_local(tick: float) -> Array:
+	if is_v7_active():
+		return v7_renderer.call("blade_local", tick)
 	var clip: Dictionary = anims.get(anim_name, {})
 	var blade: Array = clip.get("seq_blade", [])
 	if blade.is_empty():
@@ -444,6 +447,8 @@ func visual_position() -> Vector2:
 	return global_position + Vector2(0, depth_y)
 
 func body_transform() -> Transform2D:
+	if is_v7_active():
+		return v7_renderer.call("body_matrix")
 	if seq_active():
 		# Authored body and slash PNGs share rigid pixel geometry. Applying the
 		# legacy squash/lean only to the body would detach its blade from the FX.
@@ -459,6 +464,9 @@ func body_transform() -> Transform2D:
 	if state in FRAME_STATES or dead:
 		lean *= 0.35
 	return Transform2D(lean, Vector2(float(facing) * sx, sy), 0.0, Vector2(0, depth_y))
+
+func is_v7_active() -> bool:
+	return is_instance_valid(v7_renderer) and bool(v7_renderer.call("active"))
 
 func hurtbox() -> Rect2:
 	var height := float(cfg.get("hurtbox_height", 190))
@@ -510,6 +518,12 @@ func _physics_process(delta: float) -> void:
 			st_hit_left -= 1
 			if st_hit_left <= 0:
 				state = St.IDLE
+	if is_v7_active() and fx != null and fx.freeze > 0:
+		# A contact that starts hitstop must freeze before this frame's gravity/
+		# slide too, especially for airborne cuts. The drawn blade stays at contact.
+		_anim_step()
+		queue_redraw()
+		return
 	_apply_jump_cut()
 	if not is_on_floor() or velocity.y < 0.0:
 		var gravity_scale := float(move_data.get("gravity_scale", 1.0)) if state in FRAME_STATES else 1.0
@@ -1151,6 +1165,8 @@ func _seq_move_data() -> Dictionary:
 
 ## 重劈地裂：只在可见刀尖真正落到地面线时触发一次，锚点取落地坐标
 func _seq_ground_reached() -> bool:
+	if is_v7_active() and move_name == "attack3" and bool(v7_renderer.call("is_rising_combo")):
+		return false
 	var ground_tick: Variant = _seq_move_data().get("ground_tick")
 	if ground_tick == null or phase_t < float(ground_tick):
 		return false
@@ -1194,7 +1210,7 @@ func _seq_hit(start: float, end: float) -> void:
 		var payload := move_data.duplicate(true)
 		payload["move_id"] = move_name
 		payload["job"] = job
-		payload["airborne"] = false
+		payload["airborne"] = state == St.AIR_ATK
 		payload["seq6"] = true
 		payload["fx_kind"] = _seq_fx_kind()
 		payload["contact_point"] = contact
@@ -1322,6 +1338,10 @@ func _window_overlaps(begin: float, end: float, start: float, length: float) -> 
 	return length > 0.0 and end > start and begin < start + length
 
 func _emit_melee(hit: Dictionary, segment: float = 0.0) -> void:
+	if is_v7_active() and state in [St.AIR_ATK, St.DASH_ATK]:
+		var start := float(move_data.get("windup", 0))
+		_seq_hit(start, start + float(move_data.get("active", 0)))
+		return
 	var hb: Dictionary = hit.get("hitbox", {})
 	if hb.is_empty():
 		return
@@ -1524,6 +1544,8 @@ func take_hit(damage: float, from_dir: int = 0, hit: Dictionary = {}) -> bool:
 		queue_redraw()
 		return true
 	if guarding:
+		if is_instance_valid(v7_renderer):
+			v7_renderer.call("guard_impact", perfect_guard)
 		velocity.x = float(from_dir if from_dir != 0 else -facing) * float(cfg.get("guard_pushback", 35))
 		if perfect_guard:
 			action_feedback.emit("精确格挡")
@@ -1637,7 +1659,9 @@ func _draw() -> void:
 		draw_circle(Vector2.ZERO, width * 0.5, Color(0.0, 0.0, 0.0, 0.4))
 	draw_set_transform_matrix(body_transform())
 	var clip: Dictionary = anims.get(anim_name, {})
-	if clip.is_empty():
+	if is_v7_active():
+		pass # The child renderer draws the shared native body/weapon/finger layers.
+	elif clip.is_empty():
 		_draw_placeholder()
 	elif clip.get("seq6", false):
 		_draw_seq_body(clip)

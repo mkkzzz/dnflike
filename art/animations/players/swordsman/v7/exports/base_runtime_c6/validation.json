@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "native_standing_height": 380,
+  "native_head_span_cap": 54.0,
+  "head_span_range": [
+    53.721413721413725,
+    54.0
+  ],
+  "head_upscale_allowed": false,
+  "dense_frames": 660,
+  "source_proportion_gates_passed": true,
+  "source_head_normalization": "shrink only, rigid head corners pivot at jaw; already-smaller valid heads preserved, never enlarged",
+  "artwork_approved": false,
+  "runtime_user_approved": false
+}

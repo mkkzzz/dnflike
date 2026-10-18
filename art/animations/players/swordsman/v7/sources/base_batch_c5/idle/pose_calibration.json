@@ -1,0 +1,223 @@
+[
+  {
+    "box": [
+      190,
+      5,
+      520,
+      630
+    ],
+    "root": [
+      357,
+      613
+    ],
+    "seed": [
+      350,
+      280
+    ],
+    "hair": [
+      382,
+      17
+    ],
+    "chin": [
+      396,
+      109
+    ],
+    "grip": [
+      279,
+      340
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        265,
+        327
+      ],
+      [
+        292,
+        327
+      ],
+      [
+        295,
+        340
+      ],
+      [
+        287,
+        350
+      ],
+      [
+        267,
+        348
+      ]
+    ]
+  },
+  {
+    "box": [
+      720,
+      45,
+      1120,
+      630
+    ],
+    "root": [
+      921,
+      613
+    ],
+    "seed": [
+      930,
+      300
+    ],
+    "hair": [
+      953,
+      63
+    ],
+    "chin": [
+      968,
+      157
+    ],
+    "grip": [
+      812,
+      371
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        798,
+        358
+      ],
+      [
+        825,
+        358
+      ],
+      [
+        828,
+        371
+      ],
+      [
+        820,
+        381
+      ],
+      [
+        800,
+        379
+      ]
+    ],
+    "profile_angle_offsets_degrees": {
+      "greatsword": -2.19976
+    }
+  },
+  {
+    "box": [
+      175,
+      640,
+      575,
+      1240
+    ],
+    "root": [
+      365,
+      1224
+    ],
+    "seed": [
+      370,
+      910
+    ],
+    "hair": [
+      387,
+      656
+    ],
+    "chin": [
+      401,
+      748
+    ],
+    "grip": [
+      263,
+      968
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        249,
+        955
+      ],
+      [
+        276,
+        955
+      ],
+      [
+        279,
+        968
+      ],
+      [
+        271,
+        978
+      ],
+      [
+        251,
+        976
+      ]
+    ],
+    "profile_angle_offsets_degrees": {
+      "greatsword": -0.52042
+    }
+  },
+  {
+    "box": [
+      720,
+      645,
+      1130,
+      1240
+    ],
+    "root": [
+      925,
+      1224
+    ],
+    "seed": [
+      940,
+      930
+    ],
+    "hair": [
+      954,
+      673
+    ],
+    "chin": [
+      969,
+      766
+    ],
+    "grip": [
+      817,
+      975
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        803,
+        962
+      ],
+      [
+        830,
+        962
+      ],
+      [
+        833,
+        975
+      ],
+      [
+        825,
+        985
+      ],
+      [
+        805,
+        983
+      ]
+    ],
+    "profile_angle_offsets_degrees": {
+      "greatsword": -1.36317
+    }
+  }
+]

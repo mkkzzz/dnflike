@@ -259,6 +259,10 @@ func _refresh_action() -> void:
 		slash_origin = actor.visual_position()
 		_attach_slash()
 	action_tick = tick
+	# V7 uses the same combat clock/window, but its own visible blade geometry.
+	# Keep hit/ground/flash pools; the old body-specific slash PNGs cannot match it.
+	_slash_back.visible = not actor.is_v7_active() and clips.has("slash_back/%s" % action_move)
+	_slash_front.visible = not actor.is_v7_active() and clips.has("slash_front/%s" % action_move)
 	# 刀光已经烘入 root_dx；减去它得到本帧真实的出招坐标。
 	# 正常前冲时等于 slash_origin；撞到舞台边界时与被截停的角色一起校正。
 	var reference: Array = _body_clip.get("root_dx", [])

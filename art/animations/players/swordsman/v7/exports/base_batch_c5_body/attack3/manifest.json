@@ -1,0 +1,1164 @@
+{
+  "schema": "standard_actions_pilot/1",
+  "revision": "v7_base_batch_c5_attack3_body",
+  "status": "review_candidate",
+  "fps": 60,
+  "hitstop_baked": false,
+  "actor_includes_weapon": false,
+  "declarations": {
+    "weapon_layering": "not_attempted",
+    "G3": "layered_pending_final_review",
+    "actor_includes_weapon": false,
+    "G1": "source_bound_manual_landmarks",
+    "G2": "batch_candidate_user_direction_accepted",
+    "G4": "pending_final_batch_review"
+  },
+  "coordinate_system": "right-facing pixels, y-down; anchor is ground root except separate_height body proxy",
+  "target_standing_height": 380.0,
+  "sources": {
+    "body": {
+      "file": "../../base_batch_c4/attack3/body_c2.png",
+      "sha256": "65aa6cf9752df098b51a5f3687019379308f50bcea676a4340930157b7952214",
+      "size": [
+        1672,
+        941
+      ],
+      "standing_height": 449.0
+    }
+  },
+  "config_sha256": "6d5b236db0905cfc4b8b01cfbc6a31b05f45be6f37cf33c04cbd980493b908a9",
+  "clips": {
+    "attack3": {
+      "asset_id": "actor.player.base.combo.3",
+      "size": [
+        1024,
+        1080
+      ],
+      "anchor": [
+        448.0,
+        840.0
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "root_mode": "ground",
+      "loop": false,
+      "include_in_overview": true,
+      "duration_ticks": 41,
+      "frames": [
+        {
+          "source_pose": "attack3_1",
+          "source": "body",
+          "crop_bbox": [
+            370,
+            115,
+            795,
+            509
+          ],
+          "source_root": [
+            585.0,
+            498.0
+          ],
+          "source_foot": [
+            585.0,
+            498.0
+          ],
+          "scale": 0.8463251670378619,
+          "trim_offset_source": [
+            380,
+            125
+          ],
+          "paste_offset": [
+            275,
+            524
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            275,
+            524,
+            618,
+            841
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              600,
+              300
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/attack3_1_afe76879cf9f6f5f.png",
+            "mask_sha256_raw_l8": "afe76879cf9f6f5f85351889c34ea380148dbfc9ee17f45dd42818d3e4f11c32",
+            "mask_size": [
+              425,
+              394
+            ],
+            "mask_source_origin": [
+              370,
+              115
+            ],
+            "mask_bbox_source": [
+              380,
+              125,
+              785,
+              499
+            ],
+            "core_bbox_source": [
+              380,
+              125,
+              785,
+              499
+            ],
+            "retained_alpha_bbox_source": [
+              380,
+              125,
+              785,
+              499
+            ],
+            "selected_core_pixels": 58813,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 7287,
+            "discarded_alpha_sum": 22073,
+            "retained_alpha_pixels": 58813,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  609,
+                  127
+                ],
+                "radius": 2,
+                "source_alpha_max": 255,
+                "retained_alpha_max": 255,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  621,
+                  191
+                ],
+                "radius": 2,
+                "source_alpha_max": 254,
+                "retained_alpha_max": 254,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/attack3/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 4
+        },
+        {
+          "source_pose": "attack3_2",
+          "source": "body",
+          "crop_bbox": [
+            811,
+            34,
+            1203,
+            510
+          ],
+          "source_root": [
+            1005.0,
+            498.0
+          ],
+          "source_foot": [
+            1005.0,
+            498.0
+          ],
+          "scale": 0.8463251670378619,
+          "trim_offset_source": [
+            821,
+            44
+          ],
+          "paste_offset": [
+            292,
+            456
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            292,
+            456,
+            607,
+            842
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1000,
+              270
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/attack3_2_438234099ccbd5e2.png",
+            "mask_sha256_raw_l8": "438234099ccbd5e2ef765893aad41005a1d14d39c835a1bf77833f17f6176f43",
+            "mask_size": [
+              392,
+              476
+            ],
+            "mask_source_origin": [
+              811,
+              34
+            ],
+            "mask_bbox_source": [
+              821,
+              44,
+              1193,
+              500
+            ],
+            "core_bbox_source": [
+              821,
+              44,
+              1193,
+              500
+            ],
+            "retained_alpha_bbox_source": [
+              821,
+              44,
+              1193,
+              500
+            ],
+            "selected_core_pixels": 65271,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 8877,
+            "discarded_alpha_sum": 26785,
+            "retained_alpha_pixels": 65271,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1000,
+                  127
+                ],
+                "radius": 2,
+                "source_alpha_max": 252,
+                "retained_alpha_max": 252,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1011,
+                  191
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/attack3/f001.png",
+          "start_tick": 4,
+          "duration_ticks": 8
+        },
+        {
+          "source_pose": "attack3_3",
+          "source": "body",
+          "crop_bbox": [
+            1242,
+            99,
+            1668,
+            511
+          ],
+          "source_root": [
+            1455.0,
+            498.0
+          ],
+          "source_foot": [
+            1455.0,
+            498.0
+          ],
+          "scale": 0.8463251670378619,
+          "trim_offset_source": [
+            1252,
+            109
+          ],
+          "paste_offset": [
+            276,
+            511
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            276,
+            511,
+            620,
+            843
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1465,
+              305
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/attack3_3_245a1afd4fa9a855.png",
+            "mask_sha256_raw_l8": "245a1afd4fa9a855edf4e2a9de43006edabdb975a995f7387cb20d357f60b992",
+            "mask_size": [
+              426,
+              412
+            ],
+            "mask_source_origin": [
+              1242,
+              99
+            ],
+            "mask_bbox_source": [
+              1252,
+              109,
+              1658,
+              501
+            ],
+            "core_bbox_source": [
+              1252,
+              109,
+              1658,
+              501
+            ],
+            "retained_alpha_bbox_source": [
+              1252,
+              109,
+              1658,
+              501
+            ],
+            "selected_core_pixels": 63191,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 7958,
+            "discarded_alpha_sum": 24327,
+            "retained_alpha_pixels": 63191,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1486,
+                  125
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1493,
+                  188
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/attack3/f002.png",
+          "start_tick": 12,
+          "duration_ticks": 1
+        },
+        {
+          "source_pose": "attack3_4",
+          "source": "body",
+          "crop_bbox": [
+            10,
+            540,
+            415,
+            912
+          ],
+          "source_root": [
+            215.0,
+            898.0
+          ],
+          "source_foot": [
+            215.0,
+            898.0
+          ],
+          "scale": 0.8463251670378619,
+          "trim_offset_source": [
+            20,
+            550
+          ],
+          "paste_offset": [
+            283,
+            545
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            283,
+            545,
+            609,
+            843
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              230,
+              755
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/attack3_4_70289e6738923df4.png",
+            "mask_sha256_raw_l8": "70289e6738923df496a93d9fec080eb70788eda124f16b48010165285c009476",
+            "mask_size": [
+              405,
+              372
+            ],
+            "mask_source_origin": [
+              10,
+              540
+            ],
+            "mask_bbox_source": [
+              20,
+              550,
+              405,
+              902
+            ],
+            "core_bbox_source": [
+              20,
+              550,
+              405,
+              902
+            ],
+            "retained_alpha_bbox_source": [
+              20,
+              550,
+              405,
+              902
+            ],
+            "selected_core_pixels": 57618,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 6845,
+            "discarded_alpha_sum": 21276,
+            "retained_alpha_pixels": 57618,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  258,
+                  553
+                ],
+                "radius": 2,
+                "source_alpha_max": 255,
+                "retained_alpha_max": 255,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  271,
+                  617
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/attack3/f003.png",
+          "start_tick": 13,
+          "duration_ticks": 2
+        },
+        {
+          "source_pose": "attack3_5",
+          "source": "body",
+          "crop_bbox": [
+            417,
+            591,
+            844,
+            909
+          ],
+          "source_root": [
+            640.0,
+            898.0
+          ],
+          "source_foot": [
+            640.0,
+            898.0
+          ],
+          "scale": 0.8463251670378619,
+          "trim_offset_source": [
+            427,
+            601
+          ],
+          "paste_offset": [
+            268,
+            589
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            268,
+            589,
+            612,
+            841
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              645,
+              760
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/attack3_5_8cf8b4fa40c5cb8c.png",
+            "mask_sha256_raw_l8": "8cf8b4fa40c5cb8c7f0ba3f486561da96339574cd913a1e533d128925bd647a6",
+            "mask_size": [
+              427,
+              318
+            ],
+            "mask_source_origin": [
+              417,
+              591
+            ],
+            "mask_bbox_source": [
+              427,
+              601,
+              834,
+              899
+            ],
+            "core_bbox_source": [
+              427,
+              601,
+              834,
+              899
+            ],
+            "retained_alpha_bbox_source": [
+              427,
+              601,
+              834,
+              899
+            ],
+            "selected_core_pixels": 56216,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 5525,
+            "discarded_alpha_sum": 17738,
+            "retained_alpha_pixels": 56216,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  672,
+                  606
+                ],
+                "radius": 2,
+                "source_alpha_max": 255,
+                "retained_alpha_max": 255,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  685,
+                  671
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/attack3/f004.png",
+          "start_tick": 15,
+          "duration_ticks": 2
+        },
+        {
+          "source_pose": "attack3_6",
+          "source": "body",
+          "crop_bbox": [
+            856,
+            520,
+            1226,
+            912
+          ],
+          "source_root": [
+            1065.0,
+            898.0
+          ],
+          "source_foot": [
+            1065.0,
+            898.0
+          ],
+          "scale": 0.8463251670378619,
+          "trim_offset_source": [
+            866,
+            530
+          ],
+          "paste_offset": [
+            280,
+            529
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            280,
+            529,
+            576,
+            844
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1070,
+              740
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/attack3_6_2acd38e4d2893c35.png",
+            "mask_sha256_raw_l8": "2acd38e4d2893c35b4e0b419b04f5c4a386e7a3d6580b847bd485006ec3d5d96",
+            "mask_size": [
+              370,
+              392
+            ],
+            "mask_source_origin": [
+              856,
+              520
+            ],
+            "mask_bbox_source": [
+              866,
+              530,
+              1216,
+              902
+            ],
+            "core_bbox_source": [
+              866,
+              530,
+              1216,
+              902
+            ],
+            "retained_alpha_bbox_source": [
+              866,
+              530,
+              1216,
+              902
+            ],
+            "selected_core_pixels": 59609,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 7211,
+            "discarded_alpha_sum": 21180,
+            "retained_alpha_pixels": 59609,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1075,
+                  535
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1087,
+                  599
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/attack3/f005.png",
+          "start_tick": 17,
+          "duration_ticks": 14
+        },
+        {
+          "source_pose": "attack3_7",
+          "source": "body",
+          "crop_bbox": [
+            1232,
+            541,
+            1657,
+            913
+          ],
+          "source_root": [
+            1460.0,
+            898.0
+          ],
+          "source_foot": [
+            1460.0,
+            898.0
+          ],
+          "scale": 0.8463251670378619,
+          "trim_offset_source": [
+            1242,
+            551
+          ],
+          "paste_offset": [
+            264,
+            546
+          ],
+          "foot_from_anchor": [
+            0.0,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            264,
+            546,
+            607,
+            844
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1465,
+              750
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/attack3_7_0ed3aa49962dc663.png",
+            "mask_sha256_raw_l8": "0ed3aa49962dc663ecfab647ba158f36db209a09cb755eaf0cc807e9732c490e",
+            "mask_size": [
+              425,
+              372
+            ],
+            "mask_source_origin": [
+              1232,
+              541
+            ],
+            "mask_bbox_source": [
+              1242,
+              551,
+              1647,
+              903
+            ],
+            "core_bbox_source": [
+              1242,
+              551,
+              1647,
+              903
+            ],
+            "retained_alpha_bbox_source": [
+              1242,
+              551,
+              1647,
+              903
+            ],
+            "selected_core_pixels": 57951,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 7350,
+            "discarded_alpha_sum": 22721,
+            "retained_alpha_pixels": 57951,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1462,
+                  556
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1476,
+                  620
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/attack3/f006.png",
+          "start_tick": 31,
+          "duration_ticks": 10
+        }
+      ]
+    },
+    "neutral": {
+      "asset_id": "actor.player.proportion.neutral",
+      "size": [
+        1024,
+        1080
+      ],
+      "anchor": [
+        448.0,
+        840.0
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "root_mode": "ground",
+      "loop": false,
+      "include_in_overview": false,
+      "duration_ticks": 1,
+      "frames": [
+        {
+          "source_pose": "attack3_0",
+          "source": "body",
+          "crop_bbox": [
+            45,
+            37,
+            285,
+            508
+          ],
+          "source_root": [
+            175.0,
+            498.0
+          ],
+          "source_foot": [
+            99.0,
+            498.0
+          ],
+          "scale": 0.8463251670378619,
+          "trim_offset_source": [
+            55,
+            47
+          ],
+          "paste_offset": [
+            346,
+            458
+          ],
+          "foot_from_anchor": [
+            -64.3207126948775,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            346,
+            458,
+            532,
+            840
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              175,
+              230
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/attack3_0_b777a5c8cbe8e97b.png",
+            "mask_sha256_raw_l8": "b777a5c8cbe8e97b650ae745e3e3adfaf65af83987a0d474fbcc1615eae3db05",
+            "mask_size": [
+              240,
+              471
+            ],
+            "mask_source_origin": [
+              45,
+              37
+            ],
+            "mask_bbox_source": [
+              55,
+              47,
+              275,
+              498
+            ],
+            "core_bbox_source": [
+              55,
+              47,
+              275,
+              498
+            ],
+            "retained_alpha_bbox_source": [
+              55,
+              47,
+              275,
+              498
+            ],
+            "selected_core_pixels": 58765,
+            "discarded_other_core_pixels": 1,
+            "discarded_alpha_pixels": 6387,
+            "discarded_alpha_sum": 21575,
+            "retained_alpha_pixels": 58765,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  185,
+                  49
+                ],
+                "radius": 2,
+                "source_alpha_max": 255,
+                "retained_alpha_max": 255,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  198,
+                  113
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/neutral/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1
+        }
+      ]
+    }
+  },
+  "proportion_gate": {
+    "schema": "actor_proportions/1",
+    "passed": true,
+    "config": "art/animations/players/swordsman/v7/sources/base_batch_c5/attack3/body_config.json",
+    "audit": "art/animations/players/swordsman/v7/sources/base_batch_c5/attack3/proportions.json",
+    "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+    "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+    "reference_visible_head_ratio": 0.15216004589375082,
+    "tolerance_fraction": 0.08,
+    "target_standing_height": 380,
+    "measured_unique_poses": 8,
+    "required_unique_poses": 8,
+    "missing_pose_annotations": [],
+    "unknown_pose_annotations": [],
+    "neutral_checks": [
+      {
+        "source": "body",
+        "neutral_height": 449,
+        "head_ratio_error": -0.0632299388195201,
+        "configured_height_error": 0.0
+      }
+    ],
+    "measurements": [
+      {
+        "source": "body",
+        "pose_id": "attack3_0",
+        "head_source_px": 64,
+        "head_landmarks": {
+          "hair_top": [
+            185,
+            49
+          ],
+          "chin": [
+            198,
+            113
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 449,
+        "scale_basis_verified": true,
+        "head_output_px": 54.16481069042316,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.0632299388195201,
+        "landmark_only_error_interval": [
+          -0.10714103543735509,
+          -0.019318842201685005
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "attack3_1",
+        "head_source_px": 64,
+        "head_landmarks": {
+          "hair_top": [
+            609,
+            127
+          ],
+          "chin": [
+            621,
+            191
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 449,
+        "scale_basis_verified": true,
+        "head_output_px": 54.16481069042316,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.0632299388195201,
+        "landmark_only_error_interval": [
+          -0.10714103543735509,
+          -0.019318842201685005
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "attack3_2",
+        "head_source_px": 64,
+        "head_landmarks": {
+          "hair_top": [
+            1000,
+            127
+          ],
+          "chin": [
+            1011,
+            191
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 449,
+        "scale_basis_verified": true,
+        "head_output_px": 54.16481069042316,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.0632299388195201,
+        "landmark_only_error_interval": [
+          -0.10714103543735509,
+          -0.019318842201685005
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "attack3_3",
+        "head_source_px": 63,
+        "head_landmarks": {
+          "hair_top": [
+            1486,
+            125
+          ],
+          "chin": [
+            1493,
+            188
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 449,
+        "scale_basis_verified": true,
+        "head_output_px": 53.3184855233853,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.07786697102546503,
+        "landmark_only_error_interval": [
+          -0.12177806764330001,
+          -0.03395587440763015
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "attack3_4",
+        "head_source_px": 64,
+        "head_landmarks": {
+          "hair_top": [
+            258,
+            553
+          ],
+          "chin": [
+            271,
+            617
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 449,
+        "scale_basis_verified": true,
+        "head_output_px": 54.16481069042316,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.0632299388195201,
+        "landmark_only_error_interval": [
+          -0.10714103543735509,
+          -0.019318842201685005
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "attack3_5",
+        "head_source_px": 65,
+        "head_landmarks": {
+          "hair_top": [
+            672,
+            606
+          ],
+          "chin": [
+            685,
+            671
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 449,
+        "scale_basis_verified": true,
+        "head_output_px": 55.01113585746103,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.04859290661357496,
+        "landmark_only_error_interval": [
+          -0.09250400323141017,
+          -0.004681809995740083
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "attack3_6",
+        "head_source_px": 64,
+        "head_landmarks": {
+          "hair_top": [
+            1075,
+            535
+          ],
+          "chin": [
+            1087,
+            599
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 449,
+        "scale_basis_verified": true,
+        "head_output_px": 54.16481069042316,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.0632299388195201,
+        "landmark_only_error_interval": [
+          -0.10714103543735509,
+          -0.019318842201685005
+        ],
+        "caveat": null
+      },
+      {
+        "source": "body",
+        "pose_id": "attack3_7",
+        "head_source_px": 64,
+        "head_landmarks": {
+          "hair_top": [
+            1462,
+            556
+          ],
+          "chin": [
+            1476,
+            620
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 449,
+        "scale_basis_verified": true,
+        "head_output_px": 54.16481069042316,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.0632299388195201,
+        "landmark_only_error_interval": [
+          -0.10714103543735509,
+          -0.019318842201685005
+        ],
+        "caveat": null
+      }
+    ],
+    "failures": [],
+    "artwork_approved": false,
+    "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+  }
+}

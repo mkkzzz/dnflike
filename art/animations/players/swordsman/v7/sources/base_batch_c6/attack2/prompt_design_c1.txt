@@ -1,0 +1,12 @@
+Use case: stylized-concept.
+Asset type: native hand-painted 2D game animation key drawings. SECOND strike of same two-handed basic combo.
+References: Image 1 model/identity. Image 2 first-strike sheet, use the exact same adult small-head proportions, character scale, rendering and two-handed sword. Continue its final low LEFT-side two-hand follow-through into a powerful RIGHTWARD reverse sweep.
+Draw exactly six separated full-body figures in 3 columns x 2 rows on transparent RGBA, all full bodies/blades inside the image with margins. Native 1536x1024 or larger, neutral ruler at least450px tall. No enlarging of source images.
+Pose1: upright neutral ruler with hands down and no sword, identical adult proportions to reference.
+Pose2: start of reverse cut, BOTH HANDS close together on ONE shared handle at LEFT hip. Sword points to screen left, weight loaded on bent rear leg. Right hand near guard, left hand near pommel.
+Pose3: hips lead rotation toward right, both hands move together through center chest, sword arcs toward viewer in a foreshortened diagonal. Two arms naturally support the same hilt.
+Pose4: reverse cut contact, BOTH HANDS/hilt extended toward screen right, long blade now pointing RIGHT, chest and eyes still generally facing right. Strong planted front leg, spring through hips.
+Pose5: complete rightward sweep, both hands at right/front side and sword extending diagonally RIGHT, coat lags behind.
+Pose6: controlled low right follow-through, BOTH HANDS still on shared hilt by right thigh, blade angled down-right but kept above floor, preparing for a low-to-high third cut. No overhead wind-up, no downward chop.
+Both red-wrapped hands remain on ONE HANDLE in every attack pose. No free fist, no duplicate grip, no two swords. The hilt long enough for two hands, hands adjacent, not interpenetrating. Leading sharpened edge points along the reverse swing; do not randomly invert the katana curvature.
+Style exactly from references: silver spiky hair with red forelock, adult slim athletic long-legged body and small adult head, black high collar coat dark red lining, BOTH forearms wrapped red, dark trousers/boots, tiny silver buckles, clear dark outlines and cel-shaded leather with subtle painted highlights. Fixed three-quarter side camera, uniform light and scale. No slash light, blur, glow, particles, text or labels; no 3D, no chibi, no sheath. Full transparency.

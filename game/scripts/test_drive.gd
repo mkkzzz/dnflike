@@ -397,6 +397,7 @@ func _run_checks() -> void:
 	await _run_movement_feedback_checks()
 	await _run_dungeon_checks()
 	await DungeonRegressionScript.new().run(main_ref, _check, _frames)
+	await preload("res://scripts/swordsman_v7_regression.gd").new().run(main_ref, _check, _frames, _capture)
 	main_ref._show_ready()
 	_check(main_ref.battle_state == main_ref.BattleState.READY and not p.control_enabled, "result returns to class selection")
 	print("[DEMO_TEST] COMPLETE checks=%d failures=%d" % [checks, failures])

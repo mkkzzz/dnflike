@@ -157,6 +157,9 @@
     "forest_10001_background_redesign_candidate": "art/concepts/scenes/forest/10001/reference_redesign_v2/manifest.json",
     "swordsman_proportion_reset_c3_candidate": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/generation.json",
     "swordsman_layer_trial_c3_candidate": "art/animations/players/swordsman/v7/sources/layer_trial_c3/attack1/generation.json",
-    "swordsman_base_batch_c4_checkpoint": "art/animations/players/swordsman/v7/sources/base_batch_c4/checkpoint.json"
+    "swordsman_base_batch_c4_checkpoint": "art/animations/players/swordsman/v7/sources/base_batch_c4/checkpoint.json",
+    "swordsman_base_batch_c5_rejected": "art/animations/players/swordsman/v7/sources/base_batch_c5/checkpoint.json",
+    "swordsman_base_batch_c6_revision": "art/animations/players/swordsman/v7/sources/base_batch_c6/checkpoint.json",
+    "swordsman_base_batch_c7_rework": "art/animations/players/swordsman/v7/sources/base_batch_c7/checkpoint.json"
   }
 }

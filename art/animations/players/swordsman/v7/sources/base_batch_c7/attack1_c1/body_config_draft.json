@@ -1,0 +1,76 @@
+{
+  "revision": "c7_attack1_design_preflight",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "proportion_check": "proportions_draft.json",
+  "sources": {
+    "body": {
+      "file": "body_c1.png",
+      "standing_height": 508
+    }
+  },
+  "clips": {
+    "keys": {
+      "poses": [
+        {
+          "id": "c7_attack1_gauge",
+          "source": "body",
+          "crop_bbox": [
+            310,
+            5,
+            580,
+            528
+          ],
+          "duration_ticks": 1
+        },
+        {
+          "id": "c7_attack1_load",
+          "source": "body",
+          "crop_bbox": [
+            1060,
+            95,
+            1575,
+            523
+          ],
+          "duration_ticks": 1
+        },
+        {
+          "id": "c7_attack1_contact",
+          "source": "body",
+          "crop_bbox": [
+            150,
+            529,
+            725,
+            928
+          ],
+          "duration_ticks": 1
+        },
+        {
+          "id": "c7_attack1_follow",
+          "source": "body",
+          "crop_bbox": [
+            1080,
+            528,
+            1600,
+            925
+          ],
+          "duration_ticks": 1
+        }
+      ]
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G2": "pending",
+    "G3": "pending",
+    "G4": "pending",
+    "export_allowed": false
+  }
+}

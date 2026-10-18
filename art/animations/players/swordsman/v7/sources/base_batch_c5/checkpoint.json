@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-18",
+  "revision": "v7_base_runtime_c5",
+  "authorization": "User requested completing the remaining non-skill base actions and then integration.",
+  "source_clips_exported": 32,
+  "first_runtime_regression_checks": 395,
+  "first_runtime_regression_failures": 0,
+  "runtime_default": "V7 native layer renderer; P panel art v6 / art v7 and weapon katana / greatsword / shortsword",
+  "source_selected": "c4 references reused; new hit/down_pair_c1.png supplies only hit_4. down_edit_c1/c2 are rejected.",
+  "work_in_progress": "User rejected c5 in gameplay: hidden GM ancestor, incorrect one-hand basic combo, stepped motion in every clip, snapping state transitions. c6 revision underway.",
+  "pending": [
+    "repair GM real input and visibility",
+    "two-handed left/right/rising basic combo redesign",
+    "continuous in-clip movement including idle",
+    "continuous transitions for all states",
+    "visual gameplay evidence and regression",
+    "docs and commit/push"
+  ],
+  "artwork_approved": false,
+  "runtime_user_approved": false,
+  "user_review": "rejected_2026-10-18"
+}

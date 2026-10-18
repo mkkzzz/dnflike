@@ -1,0 +1,280 @@
+{
+  "revision": "v7_base_batch_c5_dashair_body",
+  "output_dir": "../../../exports/base_batch_c5_body/dashair",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "../../base_batch_c4/dashair/body_c1.png",
+      "standing_height": 455
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "source_bound_manual_landmarks",
+    "G2": "batch_candidate_user_direction_accepted",
+    "G3": "layered_pending_final_review",
+    "G4": "pending_final_batch_review"
+  },
+  "clips": {
+    "dash_attack": {
+      "asset_id": "actor.player.base.dash_attack",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "dashair_1",
+          "source": "body",
+          "crop_bbox": [
+            440,
+            119,
+            896,
+            483
+          ],
+          "root": [
+            650,
+            474
+          ],
+          "foot": [
+            650,
+            474
+          ],
+          "component_seed": [
+            690,
+            255
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 6
+        },
+        {
+          "id": "dashair_2",
+          "source": "body",
+          "crop_bbox": [
+            844,
+            109,
+            1282,
+            482
+          ],
+          "root": [
+            1060,
+            474
+          ],
+          "foot": [
+            1060,
+            474
+          ],
+          "component_seed": [
+            1100,
+            280
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 7
+        },
+        {
+          "id": "dashair_3",
+          "source": "body",
+          "crop_bbox": [
+            1313,
+            108,
+            1657,
+            483
+          ],
+          "root": [
+            1470,
+            474
+          ],
+          "foot": [
+            1470,
+            474
+          ],
+          "component_seed": [
+            1480,
+            285
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 11
+        },
+        {
+          "id": "dashair_0",
+          "source": "body",
+          "crop_bbox": [
+            74,
+            7,
+            311,
+            487
+          ],
+          "root": [
+            195,
+            474
+          ],
+          "foot": [
+            195,
+            474
+          ],
+          "component_seed": [
+            195,
+            220
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 8
+        }
+      ]
+    },
+    "air_attack": {
+      "asset_id": "actor.player.base.air_attack",
+      "loop": false,
+      "root_mode": "separate_height",
+      "poses": [
+        {
+          "id": "dashair_4",
+          "source": "body",
+          "crop_bbox": [
+            13,
+            486,
+            417,
+            923
+          ],
+          "root": [
+            220,
+            980
+          ],
+          "foot": [
+            220,
+            980
+          ],
+          "component_seed": [
+            270,
+            690
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 6,
+          "height_px": 120
+        },
+        {
+          "id": "dashair_5",
+          "source": "body",
+          "crop_bbox": [
+            422,
+            524,
+            847,
+            905
+          ],
+          "root": [
+            660,
+            990
+          ],
+          "foot": [
+            660,
+            990
+          ],
+          "component_seed": [
+            670,
+            730
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 7,
+          "height_px": 120
+        },
+        {
+          "id": "dashair_6",
+          "source": "body",
+          "crop_bbox": [
+            843,
+            523,
+            1189,
+            923
+          ],
+          "root": [
+            1095,
+            997
+          ],
+          "foot": [
+            1095,
+            997
+          ],
+          "component_seed": [
+            1100,
+            745
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 5,
+          "height_px": 120
+        },
+        {
+          "id": "dashair_7",
+          "source": "body",
+          "crop_bbox": [
+            1257,
+            530,
+            1637,
+            837
+          ],
+          "root": [
+            1480,
+            983
+          ],
+          "foot": [
+            1480,
+            983
+          ],
+          "component_seed": [
+            1480,
+            710
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 6,
+          "height_px": 120
+        }
+      ]
+    },
+    "neutral": {
+      "asset_id": "actor.player.proportion.neutral",
+      "loop": false,
+      "include_in_overview": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "dashair_0",
+          "source": "body",
+          "crop_bbox": [
+            74,
+            7,
+            311,
+            487
+          ],
+          "root": [
+            195,
+            474
+          ],
+          "foot": [
+            138,
+            474
+          ],
+          "component_seed": [
+            195,
+            220
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1
+        }
+      ]
+    }
+  }
+}

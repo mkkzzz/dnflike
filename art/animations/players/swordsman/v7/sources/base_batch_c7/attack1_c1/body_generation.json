@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-18",
+  "tool": "builtin image_gen",
+  "intent": "remove fixed swords from design study",
+  "references": [
+    {
+      "file": "source.png",
+      "sha256": "a341bc86ee419b4c0a9a4719da498370cd3715eb878f0a92029f9137867e5fe7",
+      "actually_submitted": true
+    }
+  ],
+  "prompt": "body_prompt.txt",
+  "prompt_sha256": "be4c420e7c5fa020e915ec235e94f7a07b40c14b912098881207bef5e87da45f",
+  "actual_size": [
+    1671,
+    941
+  ],
+  "alpha_preserved": true,
+  "source_sha256": "d6a03c3d9073a6857723b5c1bd18e38a6c7965803f4e5a9c5a5308de8000d257",
+  "artwork_approved": false,
+  "installed": false,
+  "limitation": "Hand reconstruction changed knuckle shapes; G3 grip separation and two-hand hilt must be checked before runtime use."
+}

@@ -74,7 +74,7 @@ func update_attachment() -> void:
 		_frame = AnimLib.frame_for_move(_clip, actor.phase_t, actor.move_data)
 	# Legacy sprites contain a sword, so never render a second weapon on them.
 	# V6 三段普攻与拔刀用的是角色与剑同图的一体帧，同样禁止再挂第二把剑。
-	visible = bool(_clip.get("weapon_separated", false)) and not _clip.is_empty() and not bool(_clip.get("seq6", false))
+	visible = bool(_clip.get("weapon_separated", false)) and not _clip.is_empty() and not bool(_clip.get("seq6", false)) and not actor.is_v7_active()
 	if not visible:
 		return
 	var pose := socket_pose(_clip, _frame)

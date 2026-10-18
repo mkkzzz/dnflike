@@ -1,0 +1,176 @@
+{
+  "revision": "v7_base_batch_c5_death_body",
+  "output_dir": "../../../exports/base_batch_c5_body/death",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "../../base_batch_c4/death/body_c2.png",
+      "standing_height": 906
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "source_bound_manual_landmarks",
+    "G2": "batch_candidate_user_direction_accepted",
+    "G3": "layered_pending_final_review",
+    "G4": "pending_final_batch_review"
+  },
+  "clips": {
+    "death": {
+      "asset_id": "actor.player.base.death",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "death_2",
+          "source": "body",
+          "crop_bbox": [
+            113,
+            959,
+            1185,
+            1238
+          ],
+          "root": [
+            650,
+            1227
+          ],
+          "foot": [
+            650,
+            1227
+          ],
+          "component_seed": [
+            700,
+            1100
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 42
+        }
+      ]
+    },
+    "revive": {
+      "asset_id": "actor.player.base.revive",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "death_2",
+          "source": "body",
+          "crop_bbox": [
+            113,
+            959,
+            1185,
+            1238
+          ],
+          "root": [
+            650,
+            1227
+          ],
+          "foot": [
+            650,
+            1227
+          ],
+          "component_seed": [
+            700,
+            1100
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 8
+        },
+        {
+          "id": "death_1",
+          "source": "body",
+          "crop_bbox": [
+            619,
+            326,
+            1233,
+            925
+          ],
+          "root": [
+            921,
+            915
+          ],
+          "foot": [
+            921,
+            915
+          ],
+          "component_seed": [
+            970,
+            600
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 10
+        },
+        {
+          "id": "death_0",
+          "source": "body",
+          "crop_bbox": [
+            95,
+            6,
+            539,
+            936
+          ],
+          "root": [
+            334,
+            924
+          ],
+          "foot": [
+            334,
+            924
+          ],
+          "component_seed": [
+            340,
+            410
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 10
+        }
+      ]
+    },
+    "neutral": {
+      "asset_id": "actor.player.proportion.neutral",
+      "loop": false,
+      "include_in_overview": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "death_0",
+          "source": "body",
+          "crop_bbox": [
+            95,
+            6,
+            539,
+            936
+          ],
+          "root": [
+            334,
+            924
+          ],
+          "foot": [
+            214,
+            924
+          ],
+          "component_seed": [
+            340,
+            410
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1
+        }
+      ]
+    }
+  }
+}

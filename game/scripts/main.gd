@@ -220,6 +220,11 @@ func _build_world() -> void:
 	add_child(seq_fx)
 	seq_fx.setup(player, bm, seq_config)
 	player.seq_fx = seq_fx
+	var v7 := preload("res://scripts/swordsman_v7.gd").new()
+	v7.name = "SwordsmanV7"
+	player.add_child(v7)
+	v7.setup(player)
+	player.v7_renderer = v7
 	player.seq_hitstop.connect(_on_seq_hitstop)
 	player.died.connect(_on_player_died)
 	player.hp_changed.connect(_on_hp_changed)
@@ -1342,6 +1347,15 @@ func _on_gm_command(command: String, args: PackedStringArray) -> void:
 			gm_log("已打开显示设置（等同 F3）")
 		"fps":
 			_gm_fps(args)
+		"art":
+			var revision := args[0].to_lower() if not args.is_empty() else "v7"
+			player.v7_renderer.call("set_enabled", revision != "v6")
+			player.queue_redraw()
+			weapon_rig.update_attachment()
+			gm_log("基础动作：%s" % ("V7" if revision != "v6" else "V6 / 旧版"))
+		"weapon":
+			var identifier := args[0].to_lower() if not args.is_empty() else "katana"
+			gm_log("武器：%s" % identifier if weapon_rig.set_profile(identifier) else "可选：katana / greatsword / shortsword")
 		_:
 			gm_log("未知命令：%s（输入 help 查看全部命令）" % command)
 

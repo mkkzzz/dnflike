@@ -1,0 +1,13 @@
+{
+  "c6_right_contact": {
+    "primary": [
+      427,
+      678
+    ],
+    "secondary": [
+      392,
+      680
+    ],
+    "hilt_channel_radius_source_px": 4
+  }
+}

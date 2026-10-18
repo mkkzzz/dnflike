@@ -1,0 +1,139 @@
+{
+  "revision": "v7_c6_attack1_selected_body",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/base_batch_c6_body/attack1",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "body_c3.png",
+      "standing_height": 494
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "reviewed_true_head_landmarks",
+    "G2": "pending_continuous_motion_review",
+    "G3": "two_hand_layering_pending",
+    "G4": "pending_user_review"
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.combo.1",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c6_left_contact",
+          "source": "body",
+          "crop_bbox": [
+            65,
+            535,
+            605,
+            995
+          ],
+          "component_seed": [
+            340,
+            760
+          ],
+          "root": [
+            340,
+            981
+          ],
+          "foot": [
+            135,
+            981
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 8,
+          "landmarks": {
+            "grip": [
+              380,
+              666
+            ],
+            "offhand": [
+              415,
+              667
+            ]
+          }
+        },
+        {
+          "id": "c6_left_follow",
+          "source": "body",
+          "crop_bbox": [
+            580,
+            530,
+            1105,
+            1010
+          ],
+          "component_seed": [
+            910,
+            760
+          ],
+          "root": [
+            910,
+            979
+          ],
+          "foot": [
+            666,
+            979
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 8,
+          "landmarks": {
+            "grip": [
+              814,
+              738
+            ],
+            "offhand": [
+              842,
+              739
+            ]
+          }
+        }
+      ]
+    },
+    "neutral": {
+      "asset_id": "actor.player.proportion.neutral",
+      "loop": false,
+      "root_mode": "ground",
+      "include_in_overview": false,
+      "poses": [
+        {
+          "id": "c6_attack1_neutral",
+          "source": "body",
+          "crop_bbox": [
+            90,
+            15,
+            355,
+            535
+          ],
+          "component_seed": [
+            240,
+            260
+          ],
+          "root": [
+            240,
+            522
+          ],
+          "foot": [
+            161,
+            522
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 8
+        }
+      ]
+    }
+  }
+}

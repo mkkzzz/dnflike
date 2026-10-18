@@ -1,0 +1,27 @@
+{
+  "schema": "actor_head_roll_review/1",
+  "source_sha256": "76bcb9f411c6f37bb791db281f2380ec512191430db44d129270129f52f9fa56",
+  "pose_id": "death_2",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "head": {
+    "hair_top": [
+      129,
+      1086
+    ],
+    "chin": [
+      255,
+      1039
+    ],
+    "projection": "reviewed_in_plane_roll"
+  },
+  "axis_down": [
+    0.9396926207859084,
+    -0.3420201433256687
+  ],
+  "perspective_scale": 1,
+  "landmark_semantics_reviewed": true,
+  "review_method": "2026-10-18 Codex inspected actual source pixels, true crown/front jaw and equal-pixel rotated comparison; semantic review only, not user artwork/runtime approval.",
+  "evidence_file": "death_2_roll_review_c5.png",
+  "evidence_sha256": "af15efb1fdb20fea36f9ad09737cb0a4bf64ac812d1177cf5e83e64de6ce2594",
+  "checkpoint_review_pending": false
+}

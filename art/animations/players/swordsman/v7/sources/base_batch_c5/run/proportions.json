@@ -1,0 +1,250 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c5/run/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Manually selected true hair tips and bottom jaw; source crop/point overlay inspected. No lip/neck substitutions, +/-3 source pixels.",
+  "sources": {
+    "body": {
+      "sha256": "3ca8062a48f80accf8c848752504710b596bb861c5ed15dad13f0b3fe9f3cc36",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 34,
+        "standing_bottom_y": 475,
+        "sole": [
+          144,
+          475
+        ],
+        "crop_bbox": [
+          75,
+          20,
+          315,
+          490
+        ],
+        "head": {
+          "hair_top": [
+            210,
+            34
+          ],
+          "chin": [
+            225,
+            99
+          ],
+          "projection": "upright_head"
+        }
+      }
+    },
+    "patch": {
+      "sha256": "c5b04e76ead9ca91103784a48dd0a12fd042f269b92133db6c613a8df2270153",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 32,
+        "standing_bottom_y": 475,
+        "sole": [
+          144,
+          475
+        ],
+        "crop_bbox": [
+          75,
+          15,
+          315,
+          490
+        ],
+        "head": {
+          "hair_top": [
+            209,
+            32
+          ],
+          "chin": [
+            227,
+            100
+          ],
+          "projection": "upright_head"
+        }
+      }
+    },
+    "brake": {
+      "sha256": "3b7c875969b167d72b25c23fc04baac099eed4cd57a37a0a567e9eb63ef45cdb",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 22,
+        "standing_bottom_y": 490,
+        "sole": [
+          142,
+          490
+        ],
+        "crop_bbox": [
+          85,
+          8,
+          330,
+          503
+        ],
+        "head": {
+          "hair_top": [
+            226,
+            22
+          ],
+          "chin": [
+            242,
+            98
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "run_0",
+      "head": {
+        "hair_top": [
+          210,
+          34
+        ],
+        "chin": [
+          225,
+          99
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "run_1",
+      "head": {
+        "hair_top": [
+          684,
+          70
+        ],
+        "chin": [
+          695,
+          137
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "run_2",
+      "head": {
+        "hair_top": [
+          1114,
+          82
+        ],
+        "chin": [
+          1125,
+          149
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "patch",
+      "pose_id": "run_3",
+      "head": {
+        "hair_top": [
+          1478,
+          82
+        ],
+        "chin": [
+          1494,
+          148
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "run_4",
+      "head": {
+        "hair_top": [
+          318,
+          517
+        ],
+        "chin": [
+          331,
+          583
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "run_5",
+      "head": {
+        "hair_top": [
+          744,
+          518
+        ],
+        "chin": [
+          756,
+          584
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "run_6",
+      "head": {
+        "hair_top": [
+          1157,
+          520
+        ],
+        "chin": [
+          1153,
+          585
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "brake",
+      "pose_id": "run_7",
+      "head": {
+        "hair_top": [
+          1540,
+          499
+        ],
+        "chin": [
+          1556,
+          568
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ],
+  "landmark_semantics_reviewed": true,
+  "visual_review": {
+    "reviewer": "Codex source-pixel visual landmark review; not user art/runtime approval",
+    "annotation_signature": "f8aa1dcd7955acdd90e5d7b10c55ab2bddc04bcda4f7a782cf57211fd81e7e91",
+    "files": [
+      {
+        "file": "../../base_batch_c4/run/marks_body.png",
+        "sha256": "911f9e79c76218fd8008788bea048c8b4a91a6b3386f7b76c1afdf7308e438f7"
+      },
+      {
+        "file": "../../base_batch_c4/run/marks_brake.png",
+        "sha256": "7f64af80191e4c976723b07a78624f9770ca3bfdd91cac3059fbc1fb74166367"
+      },
+      {
+        "file": "../../base_batch_c4/run/marks_patch.png",
+        "sha256": "49cdc25fe15fce270e1e74e3278ffbfd46926e0245440c0eb01475c4192701fe"
+      },
+      {
+        "file": "../../base_batch_c4/run/heads_review.png",
+        "sha256": "8ee50c3bef661910f8c70593be782834ef0ccdfe5bcfd93c56c3bd3766735ec1"
+      }
+    ]
+  }
+}

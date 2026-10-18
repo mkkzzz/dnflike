@@ -1,0 +1,95 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-18",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c6/attack3/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Agent selected true jaw in magnified pixel-grid review; crown within the reviewed hair-only ROI. Not a source approval.",
+  "sources": {
+    "body": {
+      "sha256": "f99f7ab6eb389687a04bd88be06257e03e070035b67cc4167423156fbbbcdbba",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 14,
+        "standing_bottom_y": 495,
+        "sole": [
+          186,
+          495
+        ],
+        "crop_bbox": [
+          120,
+          2,
+          390,
+          510
+        ],
+        "head": {
+          "hair_top": [
+            278,
+            14
+          ],
+          "chin": [
+            284,
+            87
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c6_attack3_neutral",
+      "head": {
+        "hair_top": [
+          278,
+          14
+        ],
+        "chin": [
+          284,
+          87
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c6_rise_low",
+      "head": {
+        "hair_top": [
+          849,
+          82
+        ],
+        "chin": [
+          846,
+          150
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c6_rise_contact",
+      "head": {
+        "hair_top": [
+          306,
+          518
+        ],
+        "chin": [
+          318,
+          595
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "file": "landmark_overlay.png",
+    "sha256": "156b08cba2a943b9fc9d1cd2d6e6f1f2fefedde15836b260ff3dfb099f5764cf",
+    "meaning": "Agent true hair/jaw/sole landmark review only, not user source artwork approval."
+  }
+}

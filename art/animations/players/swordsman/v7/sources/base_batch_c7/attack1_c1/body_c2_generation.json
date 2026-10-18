@@ -1,0 +1,19 @@
+{
+  "tool": "builtin image_gen",
+  "date": "2026-10-18",
+  "prompt": "body_c2_prompt.txt",
+  "prompt_sha256": "632c6b42567297a3bcda101d5bfd6cb4600798462a80d2679c5f0f22eb549f25",
+  "references": [
+    {
+      "file": "body_c1.png",
+      "sha256": "d6a03c3d9073a6857723b5c1bd18e38a6c7965803f4e5a9c5a5308de8000d257",
+      "actually_submitted": true
+    }
+  ],
+  "output": "body_c2.png",
+  "output_sha256": "2bad19d46ba7e8ed114646db3cf516d55b7a637d9d7df665fa83878822b8ba3b",
+  "status": "rejected",
+  "reason": "Requested uniform head reduction did not preserve apparent head scale across all four poses; contact/follow-through head looks too small against same-sheet standing gauge. Do not install or interpret prompt percentage as actual measured result.",
+  "installed": false,
+  "artwork_approved": false
+}

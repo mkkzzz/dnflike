@@ -1,0 +1,33 @@
+{
+  "revision": "v7_base_batch_c5",
+  "groups": [
+    "attack1",
+    "walk",
+    "run",
+    "idle",
+    "attack2",
+    "attack3",
+    "dashair",
+    "guard",
+    "jump",
+    "hit",
+    "death"
+  ],
+  "native_canvas": [
+    1024,
+    1080
+  ],
+  "root_anchor": [
+    448,
+    840
+  ],
+  "standing_height": 380,
+  "viewport": [
+    2560,
+    1440
+  ],
+  "1080p_scale": 0.75,
+  "scope": "All non-skill base action art candidates. Same body/fingers across three weapons. No game integration.",
+  "authorization": "2026-10-18 user authorized finishing non-skill base actions then game integration.",
+  "artifact_review_default_playback": "slow3x available; same export layers/clock."
+}

@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-18",
+  "tool": "builtin image_gen",
+  "intent": "original motion-design redraw using identity/proportion reference",
+  "status": "source_review",
+  "prompt_file": "submitted_prompt.txt",
+  "prompt_sha256": "595c2c4abd78815f27cadcae85de54649ae44d1c96798269310ccd73604b09f1",
+  "references": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+      "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+      "actually_submitted": true
+    },
+    {
+      "file": "art/concepts/characters/players/swordsman/standard_v1/sheet_main_c1.png",
+      "sha256": "6b79b41375ea678d8b653cb483caaae96533933327c21559d0033919b5da09d9",
+      "actually_submitted": true
+    }
+  ],
+  "native_requested": [
+    2560,
+    1440
+  ],
+  "native_actual": [
+    1672,
+    941
+  ],
+  "mode": "RGBA",
+  "alpha_preserved": true,
+  "original_output": "exec-4958cb7d-d134-4132-a79f-b6aaf0da6522.png",
+  "source_file": "source.png",
+  "source_sha256": "a341bc86ee419b4c0a9a4719da498370cd3715eb878f0a92029f9137867e5fe7",
+  "seed": "not exposed by builtin tool",
+  "issues": [
+    "Only three action design keys; not a complete animation",
+    "G1 actual hair/jaw calibration, separated fingers/body/weapon and G2 motion review pending",
+    "No user approval; not installed"
+  ],
+  "artwork_approved": false,
+  "installed": false,
+  "resolution_note": "Actual sheet is smaller than requested 2K. Never enlarge it. Only individual sufficiently large native actor crops could later qualify after same-sheet scale checks."
+}

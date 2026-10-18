@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-18",
+  "revision": "v7_base_runtime_c6",
+  "status": "source_review",
+  "user_feedback": [
+    "P GM visibility",
+    "two-hand left/right/rising basic combo",
+    "continuous movement including idle",
+    "natural state recovery"
+  ],
+  "GM": "fixed and pushed b173d20; real visibility/key/focus regression and screenshot",
+  "sources": "Selected 5 new combo keys from reference-bound builtin image edits, plus 3 same-sheet neutral gauges; all selected source G1 gates passed. Original prompts, rejected edits and native dimensions retained.",
+  "motion": "Native head/grip/root registration plus RIFE 4.6 correspondence and occlusion. Shoulder/elbow controls and opaque silhouette interpolation for attack/reaction clips; no drafted leg rig in crossing gait. Runtime short state bridges temporarily align limbs. Premultiplied RGBA/fingers share one correspondence field.",
+  "package": "art/animations/players/swordsman/v7/exports/base_runtime_c6/manifest.json",
+  "installed": "game/assets/swordsman_v7_c6/manifest.json",
+  "preview": "docs/previews/v7_c6/index.html",
+  "source_keys_used": 55,
+  "dense_frames": 660,
+  "clips": 32,
+  "artwork_approved": false,
+  "runtime_user_approved": false,
+  "pending": [
+    "Redraw walk/run with readable alternating support legs",
+    "Redesign attack1/2/3 whole-body force chain; representative source and playback approval first",
+    "User review instant facing and clearer real-hit reaction"
+  ],
+  "c5_status": "user rejected; archived and excluded from automatic fallback",
+  "accepted_scope": [
+    "idle pixels and timing",
+    "current frame density/fluidity"
+  ],
+  "latest_feedback": "2026-10-18: gait repeats same step, run stiff, instant facing required, combo head/body/blade unconvincing, hit unreadable",
+  "next_revision": "base_batch_c7"
+}

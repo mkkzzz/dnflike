@@ -1,0 +1,6 @@
+Use case: precise-object-edit.
+Asset type: corrected adult-proportion animation source sheet.
+The supplied 1536x1024 transparent weaponless body sheet has six figures. Its HEADS ARE TOO LARGE and it fails our locked adult proportion gate.
+Edit ONLY the six complete heads, including hair, face, ears and chin. Uniformly make each WHOLE HEAD 15 percent SMALLER in width and height, pivot about its neck attachment so the neck still joins naturally. Keep the entire hairstyle and face intact at the reduced size. Target each visible hair-tip-to-bottom-jaw head envelope about 74-76 SOURCE PIXELS, not 84-93 pixels. Top-left neutral ruler head currently86px, bottom-middle93px: reduce the large ones enough to match the same absolute74-76px adult head scale. Do not hide the jaw or crop hair to meet this.
+Preserve every torso, both arms, hands, shoulder width, coat, legs, foot positions, character root positions, color and native1536x1024 canvas exactly. Only small neck-edge repairs are allowed to join the reduced head. Do not enlarge any body. Keep adult long-leg proportions, small face, silver hair/red streak, dark clean outlines. Output genuine transparent RGBA. No swords or handles, no backdrop or labels.
+This is specifically the head-size regression correction: no new large heads, no chibi.

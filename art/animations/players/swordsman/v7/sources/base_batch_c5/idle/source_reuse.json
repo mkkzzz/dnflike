@@ -1,0 +1,8 @@
+{
+  "mode": "reuse",
+  "no_new_generation": true,
+  "source_group": "art/animations/players/swordsman/v7/sources/base_batch_c4/idle",
+  "source_generation_record": "../../base_batch_c4/idle/generation.json",
+  "source_generation_sha256": "6f0b72b1ec889fe71aff8235e23a94f07d6542b6c54074b77123003a4d769b23",
+  "reason": "Complete source-bound c4 candidates under 2026-10-18 authorization; preserve all old binaries."
+}

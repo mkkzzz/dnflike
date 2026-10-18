@@ -1,0 +1,312 @@
+{
+  "schema": "swordsman_base_batch/1",
+  "revision": "v7_base_batch_c5",
+  "fps": 60,
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "actor_includes_weapon": false,
+  "hitstop_baked": false,
+  "clips": {
+    "attack1": {
+      "manifest": "attack1/manifest.json",
+      "manifest_sha256": "b8c49c10fd253f7dd7171305d747e28a2c23945f344152344a59712769945503",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 30,
+      "source_group": "attack1",
+      "frame_count": 7
+    },
+    "walk": {
+      "manifest": "walk/manifest.json",
+      "manifest_sha256": "a157f4ee48e1c4a360b1015060962227d4899688d8520fc1d9bedec13e141e06",
+      "loop": true,
+      "root_mode": "ground",
+      "duration_ticks": 36,
+      "source_group": "walk",
+      "frame_count": 6
+    },
+    "walk_start": {
+      "manifest": "walk_start/manifest.json",
+      "manifest_sha256": "069ed1a8f01237c2e5eae28dc2479460d6b57d8ae173e89fed47fdfd8d33ed58",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 10,
+      "source_group": "walk",
+      "frame_count": 3
+    },
+    "walk_stop": {
+      "manifest": "walk_stop/manifest.json",
+      "manifest_sha256": "a22cb99d337d5a39bef27fe5c6543a4ab8a6fd31259a0242b354e3e48469ec48",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 10,
+      "source_group": "walk",
+      "frame_count": 2
+    },
+    "run": {
+      "manifest": "run/manifest.json",
+      "manifest_sha256": "d4f1f090ff9111330c4d70e395241cd3388cfeafcbdfe929227a4a140fe20e77",
+      "loop": true,
+      "root_mode": "separate_height",
+      "duration_ticks": 24,
+      "source_group": "run",
+      "frame_count": 6
+    },
+    "run_start": {
+      "manifest": "run_start/manifest.json",
+      "manifest_sha256": "3ac212f783d0c997c114c0321b20f27e7cd6ac2a4ffac7a811c52e04d337d192",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 9,
+      "source_group": "run",
+      "frame_count": 3
+    },
+    "run_stop": {
+      "manifest": "run_stop/manifest.json",
+      "manifest_sha256": "f16c18d88e7fea2c1572ca6724ce8680600def7d38131d73634a856d2076932c",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 10,
+      "source_group": "run",
+      "frame_count": 2
+    },
+    "idle": {
+      "manifest": "idle/manifest.json",
+      "manifest_sha256": "05eed9555e598268797dd3c2d931edb1b8639dd7f8b10965f1dddf6d619e626e",
+      "loop": true,
+      "root_mode": "ground",
+      "duration_ticks": 72,
+      "source_group": "idle",
+      "frame_count": 4
+    },
+    "attack2": {
+      "manifest": "attack2/manifest.json",
+      "manifest_sha256": "901ff6faeb817c8a10bb713dad441f02ff3d21bd7fb3551a7bdb5133295b7033",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 32,
+      "source_group": "attack2",
+      "frame_count": 7
+    },
+    "attack3": {
+      "manifest": "attack3/manifest.json",
+      "manifest_sha256": "5dd552c5330f27ab7916b878e85de11b6f16e4deb51cc00c298d5d7278d6d75c",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 41,
+      "source_group": "attack3",
+      "frame_count": 7
+    },
+    "dash_attack": {
+      "manifest": "dash_attack/manifest.json",
+      "manifest_sha256": "7e190ffd6c47d9c8794da75d107a870995de88bf6c72b2370d7ee053636a4026",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 32,
+      "source_group": "dashair",
+      "frame_count": 4
+    },
+    "air_attack": {
+      "manifest": "air_attack/manifest.json",
+      "manifest_sha256": "b1ad513e6e0e81a9d997b92512bdd45edfb58730173b9a88216ff25cbdad47a1",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 24,
+      "source_group": "dashair",
+      "frame_count": 4
+    },
+    "guard_start": {
+      "manifest": "guard_start/manifest.json",
+      "manifest_sha256": "07e23ea69139caaeedeb956dcd4cd9aaf8bd7c39d994478f91feceddfaec7169",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 6,
+      "source_group": "guard",
+      "frame_count": 2
+    },
+    "guard": {
+      "manifest": "guard/manifest.json",
+      "manifest_sha256": "f85f6edeae556fe58fb6988741b6d9ef7f185dbe686555fe0e550ea26f9d3040",
+      "loop": true,
+      "root_mode": "ground",
+      "duration_ticks": 12,
+      "source_group": "guard",
+      "frame_count": 1
+    },
+    "guard_recoil": {
+      "manifest": "guard_recoil/manifest.json",
+      "manifest_sha256": "612d2772dcd1b1d9b00ac9808870f90ff63b46b80eaf3961ee1d84110885526f",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 10,
+      "source_group": "guard",
+      "frame_count": 2
+    },
+    "parry": {
+      "manifest": "parry/manifest.json",
+      "manifest_sha256": "038684d23adb4d5a48cbc38fdec9026917b46d11e9799775fdc383e5d0652d4c",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 9,
+      "source_group": "guard",
+      "frame_count": 2
+    },
+    "guard_end": {
+      "manifest": "guard_end/manifest.json",
+      "manifest_sha256": "c94fca9f81306460ee774f847a931e24c557a8e8f51e4f7dad12a635c1776160",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 9,
+      "source_group": "guard",
+      "frame_count": 2
+    },
+    "turn": {
+      "manifest": "turn/manifest.json",
+      "manifest_sha256": "c145381a5a61708bb16f7b2b8089d99c92765959e09db92bff7f30fc5a764f4e",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 9,
+      "source_group": "guard",
+      "frame_count": 3
+    },
+    "jump_start": {
+      "manifest": "jump_start/manifest.json",
+      "manifest_sha256": "40e7dd93b69efb955692616f78c0556e78b5069ccc0cb97258ebb2a8262bab5b",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 8,
+      "source_group": "jump",
+      "frame_count": 1
+    },
+    "jump_rise": {
+      "manifest": "jump_rise/manifest.json",
+      "manifest_sha256": "39c3ce7fa5b6e77072424d0c3e6d55f0ff25bbd4604b0cb819808d669c8caff9",
+      "loop": true,
+      "root_mode": "separate_height",
+      "duration_ticks": 8,
+      "source_group": "jump",
+      "frame_count": 1
+    },
+    "jump_apex": {
+      "manifest": "jump_apex/manifest.json",
+      "manifest_sha256": "050f2c91bcb4b6cc52e1a64b6eb382f910e5e7971ecdf88f2ca9b58c49dab834",
+      "loop": true,
+      "root_mode": "separate_height",
+      "duration_ticks": 6,
+      "source_group": "jump",
+      "frame_count": 1
+    },
+    "jump_fall": {
+      "manifest": "jump_fall/manifest.json",
+      "manifest_sha256": "fce3bbcc9752b653711265fc49816606aca8da94cdb6e7d44fed3fe8fe91b951",
+      "loop": true,
+      "root_mode": "separate_height",
+      "duration_ticks": 9,
+      "source_group": "jump",
+      "frame_count": 1
+    },
+    "jump_land": {
+      "manifest": "jump_land/manifest.json",
+      "manifest_sha256": "abc9c699dd01912565fdafc5ff0fcbbe83fc5764e8265b2da67267a9df57c3d8",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 13,
+      "source_group": "jump",
+      "frame_count": 3
+    },
+    "jump": {
+      "manifest": "jump/manifest.json",
+      "manifest_sha256": "3a68a6af295f46141d7a984d2386c25bd41645988f1783fcbfbdd15d67dbb986",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 38,
+      "source_group": "jump",
+      "frame_count": 5
+    },
+    "back_dash": {
+      "manifest": "back_dash/manifest.json",
+      "manifest_sha256": "faa389bf3bbd9a4ea12c30a652e0cc4802e6be841c0de775003c561ede3aa1f0",
+      "loop": false,
+      "root_mode": "separate_height",
+      "duration_ticks": 24,
+      "source_group": "jump",
+      "frame_count": 4
+    },
+    "hit_light": {
+      "manifest": "hit_light/manifest.json",
+      "manifest_sha256": "50e51511611b634e7f2c7884630e41384243b097dc3e9465520a3d7a31674b76",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 14,
+      "source_group": "hit",
+      "frame_count": 2
+    },
+    "hit_heavy": {
+      "manifest": "hit_heavy/manifest.json",
+      "manifest_sha256": "a78d5af3a7c971028e449215bd8a4926fa41168378912ff80b3030e92c8a3714",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 20,
+      "source_group": "hit",
+      "frame_count": 3
+    },
+    "air_hit": {
+      "manifest": "air_hit/manifest.json",
+      "manifest_sha256": "971e40199b9f48fe4e71595d7b1afc7678de32720d5fd1d80d825e5a8d271dfb",
+      "loop": true,
+      "root_mode": "separate_height",
+      "duration_ticks": 12,
+      "source_group": "hit",
+      "frame_count": 1
+    },
+    "down": {
+      "manifest": "down/manifest.json",
+      "manifest_sha256": "30d379b998f029034c5baaea4af104fbc83f70f4606bf0c6191f6f006228d75f",
+      "loop": true,
+      "root_mode": "ground",
+      "duration_ticks": 24,
+      "source_group": "hit",
+      "frame_count": 1
+    },
+    "getup": {
+      "manifest": "getup/manifest.json",
+      "manifest_sha256": "8268cf231841bc85e60ae5f004c5fb88cec8f2621d6fd12407ab40ca6a2181a1",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 24,
+      "source_group": "hit",
+      "frame_count": 4
+    },
+    "death": {
+      "manifest": "death/manifest.json",
+      "manifest_sha256": "9ba0e4671deeaea63faae20e7e9e23cf29226218ad29609a97b64e133d7afa4f",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 42,
+      "source_group": "death",
+      "frame_count": 1
+    },
+    "revive": {
+      "manifest": "revive/manifest.json",
+      "manifest_sha256": "64908b7fb4ace7b4197e1ee891dea5b81fb5ccb642628646d601a5e7304168b6",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 28,
+      "source_group": "death",
+      "frame_count": 3
+    }
+  },
+  "complete": true,
+  "checkpoint_only": false,
+  "missing_clips": [],
+  "artwork_approved": false,
+  "integration_allowed": false,
+  "scope": "non-skill base actions; source recipe coverage only; runtime mapping/validation required"
+}

@@ -75,16 +75,19 @@ def pose_span(entry, source_sha, audit, audit_path, repo, image_size):
     if (review.get('schema')!='actor_head_roll_review/1' or not review.get('landmark_semantics_reviewed')
         or review.get('source_sha256')!=source_sha or review.get('pose_id')!=entry['pose_id']
         or review.get('profile_sha256')!=audit['profile_sha256'] or review.get('head')!=mark
-        or review.get('perspective_scale')!=1):
+        or isinstance(review.get('perspective_scale'),bool) or review.get('perspective_scale')!=1):
         raise ValueError('Head-roll profile binding/semantics invalid; perspective scaling is forbidden')
-    axis=review['axis_down'];length=math.hypot(*axis)
-    if len(axis)!=2 or not math.isfinite(length) or abs(length-1)>.001:
+    axis=review['axis_down']
+    if len(axis)!=2 or any(isinstance(n,bool) or not isinstance(n,(int,float)) or not math.isfinite(n) for n in axis):
+        raise ValueError('Reviewed head axis must be a finite unit vector')
+    length=math.hypot(*axis)
+    if abs(length-1)>.001:
         raise ValueError('Reviewed head axis must be a finite unit vector')
     evidence=resolve(Path(audit_path).parent,review['evidence_file'])
     if not evidence.is_file() or digest(evidence)!=review['evidence_sha256']:
         raise ValueError('Missing/stale visual head-roll comparison evidence')
     for point in [mark['hair_top'],mark['chin']]:
-        if len(point)!=2 or any(not math.isfinite(n) for n in point) or not(0<=point[0]<image_size[0] and 0<=point[1]<image_size[1]):
+        if len(point)!=2 or any(isinstance(n,bool) or not isinstance(n,(int,float)) or not math.isfinite(n) for n in point) or not(0<=point[0]<image_size[0] and 0<=point[1]<image_size[1]):
             raise ValueError('Head-roll landmark outside source')
     value=sum((b-a)*n for a,b,n in zip(mark['hair_top'],mark['chin'],axis))
     if value<=0:raise ValueError('Reviewed roll axis points away from jaw')

@@ -1,0 +1,130 @@
+{
+  "schema": "authored_weapon_plane/1",
+  "camera": {
+    "yaw": 0,
+    "pitch": 0
+  },
+  "method": "Source-calibrated screen blade angle, explicit cutting side and authored depth proxy. Not a recovered 3D body rig.",
+  "frames": [
+    {
+      "pose_cm": {
+        "blade_dir": [
+          -0.9396926207859083,
+          -0.3420201433256689,
+          0.0
+        ],
+        "blade_edge": [
+          0.3420201433256689,
+          -0.9396926207859083,
+          0
+        ]
+      },
+      "intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          -0.9510565162951535,
+          -0.3090169943749475,
+          0.0
+        ],
+        "blade_edge": [
+          0.3090169943749475,
+          -0.9510565162951535,
+          0
+        ]
+      },
+      "intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          -0.9455185755993168,
+          -0.3255681544571566,
+          0.0
+        ],
+        "blade_edge": [
+          0.3255681544571566,
+          -0.9455185755993168,
+          0
+        ]
+      },
+      "intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          -0.9396926207859083,
+          -0.3420201433256689,
+          0.0
+        ],
+        "blade_edge": [
+          0.3420201433256689,
+          -0.9396926207859083,
+          0
+        ]
+      },
+      "intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          -0.9455185755993168,
+          -0.3255681544571566,
+          0.0
+        ],
+        "blade_edge": [
+          0.3255681544571566,
+          -0.9455185755993168,
+          0
+        ]
+      },
+      "intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          -0.9396926207859083,
+          -0.3420201433256689,
+          0.0
+        ],
+        "blade_edge": [
+          0.3420201433256689,
+          -0.9396926207859083,
+          0
+        ]
+      },
+      "intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          -0.9396926207859083,
+          -0.3420201433256689,
+          0.0
+        ],
+        "blade_edge": [
+          0.3420201433256689,
+          -0.9396926207859083,
+          0
+        ]
+      },
+      "intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          -0.9396926207859083,
+          -0.3420201433256689,
+          0.0
+        ],
+        "blade_edge": [
+          0.3420201433256689,
+          -0.9396926207859083,
+          0
+        ]
+      },
+      "intent": "reuse guard pivot foot plant as braking/start transition; retain downward cutting side with rear-pointing sword"
+    }
+  ]
+}

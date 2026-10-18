@@ -1,0 +1,24 @@
+{
+  "c6_left_contact": {
+    "primary": [
+      380,
+      666
+    ],
+    "secondary": [
+      415,
+      667
+    ],
+    "hilt_channel_radius_source_px": 4
+  },
+  "c6_left_follow": {
+    "primary": [
+      814,
+      738
+    ],
+    "secondary": [
+      842,
+      739
+    ],
+    "hilt_channel_radius_source_px": 4
+  }
+}

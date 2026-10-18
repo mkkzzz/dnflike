@@ -45,6 +45,15 @@ def prepare_group(group):
   subprocess.run([sys.executable,str(ROOT/'tools/explore/swordsman_layer_trial.py'),str(path),'--overwrite'],check=True)
   return {'attack1':{'manifest':'attack1/manifest.json','loop':False,'root_mode':'ground','duration_ticks':30,'source_group':'attack1','frame_count':7}}
  calibration=read(folder/'pose_calibration.json')
+ lookup={p.get('pose_id',f'{group}_{i}'):i for i,p in enumerate(calibration)}
+ revision=read(SOURCE/'batch_spec.json')['revision']
+ for clip in config['clips'].values():
+  previous=None
+  for frame in clip['poses']:
+   current=calibration[lookup[frame['id']]]
+   if previous is not None and current['cutting_side']!=previous['cutting_side'] and not current.get('allow_edge_roll_from_previous'):
+    raise ValueError('Unreviewed wrist roll changes cutting side: '+frame['id'])
+   previous=current
  template=read(SOURCE/'attack1/layer_config.json')
  guide={'schema':'authored_weapon_plane/1','camera':{'yaw':0,'pitch':0},
         'method':'Source-calibrated screen blade angle, explicit cutting side and authored depth proxy. Not a recovered 3D body rig.',
@@ -60,7 +69,7 @@ def prepare_group(group):
  for name,clip in body['clips'].items():
   if name=='neutral':continue
   path=folder/('layer_'+name+'.json')
-  c={'revision':'v7_base_batch_c4_'+name,'clip_name':name,'duration_ticks':clip['duration_ticks'],
+  c={'revision':revision+'_'+name,'clip_name':name,'duration_ticks':clip['duration_ticks'],
      'output_dir':relative(OUTPUT/name,folder),'body_manifest':relative(body_manifest,folder),
      'body_config':'body_config.json','body_audit':'proportions.json',
      'katana_blade_length_px':256,'edge_contract':template['edge_contract'],
@@ -73,7 +82,7 @@ def prepare_group(group):
   for key,w in template['weapons'].items():
    w=dict(w);w['file']=relative((SOURCE/'attack1'/w['file']).resolve(),folder);c['weapons'][key]=w
   for frame in clip['frames']:
-   pid=frame['source_pose'];i=int(pid.rsplit('_',1)[1]);p=calibration[i]
+   pid=frame['source_pose'];i=lookup[pid];p=calibration[i]
    angle=math.radians(p['blade_angle_degrees']);gx,gy=p['grip']
    c['poses'][pid]={'body_sha256':sha(body_manifest.parent/frame['file']),
        'grip':p['grip'],'guard':[gx+25*math.cos(angle),gy+25*math.sin(angle)],
@@ -81,6 +90,7 @@ def prepare_group(group):
        'weapon_layer':p.get('weapon_layer','front'),'finger_polygon':p['finger_polygon'],
        'guide_pose_index':i,'cutting_direction':[-p['cutting_side']*math.sin(angle),p['cutting_side']*math.cos(angle)],
        'edge_intent':p['edge_intent'],'allow_edge_roll_from_previous':p.get('allow_edge_roll_from_previous',False),
+       'profile_angle_offsets_degrees':p.get('profile_angle_offsets_degrees',{}),
        'tip_basis':'authored_axis_after_removal_not_falsely_observed_tip'}
   write(path,c)
   subprocess.run([sys.executable,str(ROOT/'tools/explore/swordsman_layer_trial.py'),str(path),'--overwrite'],check=True)
@@ -89,20 +99,38 @@ def prepare_group(group):
                 'source_group':group,'frame_count':len(clip['frames'])}
  return result
 
+def update_index():
+ spec=read(SOURCE/'batch_spec.json');expected={}
+ for group in spec['groups']:
+  config=read(SOURCE/group/'body_config.json')
+  for name,clip in config['clips'].items():
+   if name!='neutral':expected[name]=(group,clip)
+ clips={}
+ for name,(group,clip) in expected.items():
+  path=OUTPUT/name/'manifest.json'
+  if not path.exists():continue
+  manifest=read(path)
+  clips[name]={'manifest':name+'/manifest.json','manifest_sha256':sha(path),'loop':clip['loop'],
+               'root_mode':manifest['root_mode'],'duration_ticks':manifest['duration_ticks'],
+               'source_group':group,'frame_count':len(manifest['frames'])}
+ missing=sorted(set(expected)-set(clips))
+ write(OUTPUT/'manifest.json',{'schema':'swordsman_base_batch/1','revision':spec['revision'],'fps':60,
+       'canvas':spec['native_canvas'],'anchor':spec['root_anchor'],'target_standing_height':380,
+       'actor_includes_weapon':False,'hitstop_baked':False,'clips':clips,'complete':not missing,
+       'checkpoint_only':bool(missing),'missing_clips':missing,'artwork_approved':False,'integration_allowed':False,
+       'scope':'non-skill base actions; source recipe coverage only; runtime mapping/validation required'})
+ return clips
+
 def main():
+ global SOURCE,OUTPUT
  parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('groups',nargs='*')
- args=parser.parse_args();groups=args.groups or read(SOURCE/'batch_spec.json')['groups']
- result={}
- for group in groups:result.update(prepare_group(group))
- path=OUTPUT/'manifest.json';old=read(path) if path.exists() else {}
- clips={**old.get('clips',{}),**result}
- a=OUTPUT/'attack1/manifest.json'
- if a.exists():clips['attack1']={'manifest':'attack1/manifest.json','loop':False,'root_mode':'ground','duration_ticks':30,'source_group':'attack1','frame_count':7}
- write(path,{'schema':'swordsman_base_batch/1','revision':'v7_base_batch_c4','fps':60,
-             'canvas':[1024,1080],'anchor':[448,840],'target_standing_height':380,
-             'actor_includes_weapon':False,'hitstop_baked':False,'clips':clips,
-             'scope':'non-skill base actions; explicit reuse and state mappings in coverage.json',
-             'artwork_approved':False,'integration_allowed':False})
+ parser.add_argument('--source-dir',type=Path,default=SOURCE)
+ parser.add_argument('--output-dir',type=Path,default=OUTPUT)
+ args=parser.parse_args();SOURCE=args.source_dir.resolve();OUTPUT=args.output_dir.resolve()
+ groups=args.groups or read(SOURCE/'batch_spec.json')['groups']
+ for group in groups:
+  try:prepare_group(group)
+  finally:clips=update_index()
  print(json.dumps({'clips':len(clips),'groups_rebuilt':groups},ensure_ascii=False))
 
 if __name__=='__main__':main()

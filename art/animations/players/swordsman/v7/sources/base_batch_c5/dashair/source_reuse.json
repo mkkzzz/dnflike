@@ -1,0 +1,8 @@
+{
+  "mode": "reuse",
+  "no_new_generation": true,
+  "source_group": "art/animations/players/swordsman/v7/sources/base_batch_c4/dashair",
+  "source_generation_record": "../../base_batch_c4/dashair/generation.json",
+  "source_generation_sha256": "b214f9e44fb9ed066ba4a687cc02fdb2513b8293e5cfe0dbea5e0105f2de9d3e",
+  "reason": "Complete source-bound c4 candidates under 2026-10-18 authorization; preserve all old binaries."
+}

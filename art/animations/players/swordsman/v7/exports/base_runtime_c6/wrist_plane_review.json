@@ -1,0 +1,164 @@
+[
+  {
+    "pose": "walk_3",
+    "profile": "greatsword",
+    "angle_offset_degrees": -7.767620615273192e-07,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "walk_7",
+    "profile": "greatsword",
+    "angle_offset_degrees": -2.5649631827538065e-06,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "idle_3",
+    "profile": "greatsword",
+    "angle_offset_degrees": -3.6528905114321793e-06,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "jump_1",
+    "profile": "katana",
+    "angle_offset_degrees": -4.861258867069907,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "jump_1",
+    "profile": "greatsword",
+    "angle_offset_degrees": -9.7426901158813,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "jump_5",
+    "profile": "katana",
+    "angle_offset_degrees": -7.134333177384494,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "jump_5",
+    "profile": "greatsword",
+    "angle_offset_degrees": -11.311072792298281,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "jump_0",
+    "profile": "greatsword",
+    "angle_offset_degrees": -0.3975330769988792,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "hit_0",
+    "profile": "greatsword",
+    "angle_offset_degrees": -3.929347072344233e-06,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "hit_4",
+    "profile": "katana",
+    "angle_offset_degrees": -1.2535142316156e-06,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "hit_4",
+    "profile": "greatsword",
+    "angle_offset_degrees": -1.4600494020770474e-07,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "hit_5",
+    "profile": "katana",
+    "angle_offset_degrees": -3.1092700289431226e-06,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "hit_5",
+    "profile": "greatsword",
+    "angle_offset_degrees": -3.36479810749571e-07,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "hit_6",
+    "profile": "katana",
+    "angle_offset_degrees": -2.5978081857272187e-06,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "hit_6",
+    "profile": "greatsword",
+    "angle_offset_degrees": -4.848760802556372e-06,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "pose": "death_2",
+    "profile": "shortsword",
+    "angle_offset_degrees": -3.428656699168073e-06,
+    "reason": "Explicit offline low-pose wrist-plane correction; physical blade length and grip preserved, target tipY834. No runtime floor clamp."
+  },
+  {
+    "clip": "attack1",
+    "source": "c6_left_follow",
+    "target": "idle_1",
+    "profile": "katana",
+    "angle_path_degrees": [
+      -177.9545915111129,
+      27.99999999999999
+    ],
+    "reason": "Offline reviewed recovery arc above the floor, with full physical blade length; no runtime clamp."
+  },
+  {
+    "clip": "attack1",
+    "source": "c6_left_follow",
+    "target": "idle_1",
+    "profile": "greatsword",
+    "angle_path_degrees": [
+      -177.9545915111129,
+      25.800240000000056
+    ],
+    "reason": "Offline reviewed recovery arc above the floor, with full physical blade length; no runtime clamp."
+  },
+  {
+    "clip": "run_stop",
+    "source": "run_7",
+    "target": "idle_1",
+    "profile": "katana",
+    "angle_path_degrees": [
+      160.00000000000003,
+      388.00000000000006
+    ],
+    "reason": "Offline reviewed recovery arc above the floor, with full physical blade length; no runtime clamp."
+  },
+  {
+    "clip": "run_stop",
+    "source": "run_7",
+    "target": "idle_1",
+    "profile": "greatsword",
+    "angle_path_degrees": [
+      160.00000000000003,
+      385.80024000000003
+    ],
+    "reason": "Offline reviewed recovery arc above the floor, with full physical blade length; no runtime clamp."
+  },
+  {
+    "clip": "dash_attack",
+    "source": "dashair_1",
+    "target": "dashair_2",
+    "profile": "katana",
+    "angle_path_degrees": [
+      165.00000000000003,
+      380.0
+    ],
+    "reason": "Offline reviewed recovery arc above the floor, with full physical blade length; no runtime clamp."
+  },
+  {
+    "clip": "dash_attack",
+    "source": "dashair_1",
+    "target": "dashair_2",
+    "profile": "greatsword",
+    "angle_path_degrees": [
+      165.00000000000003,
+      380.0
+    ],
+    "reason": "Offline reviewed recovery arc above the floor, with full physical blade length; no runtime clamp."
+  }
+]

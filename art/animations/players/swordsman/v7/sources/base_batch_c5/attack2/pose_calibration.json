@@ -1,0 +1,434 @@
+[
+  {
+    "box": [
+      50,
+      8,
+      310,
+      478
+    ],
+    "root": [
+      185,
+      463
+    ],
+    "seed": [
+      185,
+      210
+    ],
+    "hair": [
+      200,
+      23
+    ],
+    "chin": [
+      214,
+      89
+    ],
+    "grip": [
+      117,
+      266
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        103,
+        253
+      ],
+      [
+        130,
+        253
+      ],
+      [
+        133,
+        266
+      ],
+      [
+        125,
+        276
+      ],
+      [
+        105,
+        274
+      ]
+    ]
+  },
+  {
+    "box": [
+      430,
+      65,
+      845,
+      478
+    ],
+    "root": [
+      635,
+      462
+    ],
+    "seed": [
+      650,
+      255
+    ],
+    "hair": [
+      687,
+      86
+    ],
+    "chin": [
+      700,
+      152
+    ],
+    "grip": [
+      527,
+      261
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        513,
+        248
+      ],
+      [
+        540,
+        248
+      ],
+      [
+        543,
+        261
+      ],
+      [
+        535,
+        271
+      ],
+      [
+        515,
+        269
+      ]
+    ]
+  },
+  {
+    "box": [
+      850,
+      100,
+      1265,
+      480
+    ],
+    "root": [
+      1090,
+      463
+    ],
+    "seed": [
+      1100,
+      270
+    ],
+    "hair": [
+      1110,
+      120
+    ],
+    "chin": [
+      1123,
+      187
+    ],
+    "grip": [
+      1030,
+      324
+    ],
+    "blade_angle_degrees": 20,
+    "cutting_side": -1,
+    "edge_intent": "Reviewed wrist roll into reverse-edge rising cut before active phase",
+    "finger_polygon": [
+      [
+        1016,
+        311
+      ],
+      [
+        1043,
+        311
+      ],
+      [
+        1046,
+        324
+      ],
+      [
+        1038,
+        334
+      ],
+      [
+        1018,
+        332
+      ]
+    ],
+    "allow_edge_roll_from_previous": true,
+    "profile_angle_offsets_degrees": {
+      "greatsword": -0.44483
+    }
+  },
+  {
+    "box": [
+      1270,
+      60,
+      1672,
+      480
+    ],
+    "root": [
+      1465,
+      463
+    ],
+    "seed": [
+      1475,
+      260
+    ],
+    "hair": [
+      1483,
+      78
+    ],
+    "chin": [
+      1495,
+      146
+    ],
+    "grip": [
+      1500,
+      199
+    ],
+    "blade_angle_degrees": -36,
+    "cutting_side": -1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        1486,
+        186
+      ],
+      [
+        1513,
+        186
+      ],
+      [
+        1516,
+        199
+      ],
+      [
+        1508,
+        209
+      ],
+      [
+        1488,
+        207
+      ]
+    ]
+  },
+  {
+    "box": [
+      10,
+      515,
+      445,
+      930
+    ],
+    "root": [
+      226,
+      907
+    ],
+    "seed": [
+      240,
+      730
+    ],
+    "hair": [
+      241,
+      533
+    ],
+    "chin": [
+      253,
+      600
+    ],
+    "grip": [
+      333,
+      644
+    ],
+    "blade_angle_degrees": -15,
+    "cutting_side": -1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        319,
+        631
+      ],
+      [
+        346,
+        631
+      ],
+      [
+        349,
+        644
+      ],
+      [
+        341,
+        654
+      ],
+      [
+        321,
+        652
+      ]
+    ]
+  },
+  {
+    "box": [
+      440,
+      515,
+      865,
+      930
+    ],
+    "root": [
+      642,
+      907
+    ],
+    "seed": [
+      645,
+      720
+    ],
+    "hair": [
+      642,
+      535
+    ],
+    "chin": [
+      654,
+      601
+    ],
+    "grip": [
+      769,
+      580
+    ],
+    "blade_angle_degrees": -48,
+    "cutting_side": -1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        755,
+        567
+      ],
+      [
+        782,
+        567
+      ],
+      [
+        785,
+        580
+      ],
+      [
+        777,
+        590
+      ],
+      [
+        757,
+        588
+      ]
+    ]
+  },
+  {
+    "box": [
+      850,
+      510,
+      1265,
+      930
+    ],
+    "root": [
+      1065,
+      907
+    ],
+    "seed": [
+      1075,
+      720
+    ],
+    "hair": [
+      1069,
+      530
+    ],
+    "chin": [
+      1082,
+      596
+    ],
+    "grip": [
+      1053,
+      651
+    ],
+    "blade_angle_degrees": -47,
+    "cutting_side": -1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        1039,
+        638
+      ],
+      [
+        1066,
+        638
+      ],
+      [
+        1069,
+        651
+      ],
+      [
+        1061,
+        661
+      ],
+      [
+        1041,
+        659
+      ]
+    ]
+  },
+  {
+    "box": [
+      1270,
+      510,
+      1672,
+      930
+    ],
+    "root": [
+      1480,
+      907
+    ],
+    "seed": [
+      1488,
+      740
+    ],
+    "hair": [
+      1489,
+      534
+    ],
+    "chin": [
+      1501,
+      600
+    ],
+    "grip": [
+      1362,
+      723
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "Reviewed recovery wrist roll back into neutral forward grip",
+    "finger_polygon": [
+      [
+        1348,
+        710
+      ],
+      [
+        1375,
+        710
+      ],
+      [
+        1378,
+        723
+      ],
+      [
+        1370,
+        733
+      ],
+      [
+        1350,
+        731
+      ]
+    ],
+    "allow_edge_roll_from_previous": true,
+    "profile_angle_offsets_degrees": {
+      "greatsword": -1.33482
+    }
+  }
+]

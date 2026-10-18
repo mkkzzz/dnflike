@@ -1,0 +1,315 @@
+{
+  "native_floor_y": 840,
+  "target_tip_clearance": 6,
+  "basis": "All three physical blade lengths retained; recorded equipment-specific wrist angles on low-held ground poses. Actual rebaked RGBA and edge orientation must be reviewed.",
+  "changes": [
+    {
+      "group": "attack2",
+      "pose": "attack2_2",
+      "profile": "greatsword",
+      "angle_offset_degrees": -0.44483,
+      "old_tip_y": 836.4892730863725,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "attack2",
+      "pose": "attack2_7",
+      "profile": "greatsword",
+      "angle_offset_degrees": -1.33482,
+      "old_tip_y": 841.0514896817657,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "attack3",
+      "pose": "attack3_1",
+      "profile": "greatsword",
+      "angle_offset_degrees": -3.9749,
+      "old_tip_y": 855.2389770273821,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "attack3",
+      "pose": "attack3_4",
+      "profile": "katana",
+      "angle_offset_degrees": -15.58076,
+      "old_tip_y": 895.139377120371,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "attack3",
+      "pose": "attack3_4",
+      "profile": "greatsword",
+      "angle_offset_degrees": -20.52391,
+      "old_tip_y": 936.1153684452383,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "attack3",
+      "pose": "attack3_5",
+      "profile": "katana",
+      "angle_offset_degrees": -35.72815,
+      "old_tip_y": 977.5048451006504,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "attack3",
+      "pose": "attack3_5",
+      "profile": "greatsword",
+      "angle_offset_degrees": -37.96992,
+      "old_tip_y": 1023.9947107271865,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "attack3",
+      "pose": "attack3_5",
+      "profile": "shortsword",
+      "angle_offset_degrees": -22.29745,
+      "old_tip_y": 880.0058612546346,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "attack3",
+      "pose": "attack3_6",
+      "profile": "greatsword",
+      "angle_offset_degrees": -5.03654,
+      "old_tip_y": 860.5628201451697,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "attack3",
+      "pose": "attack3_7",
+      "profile": "greatsword",
+      "angle_offset_degrees": -4.90646,
+      "old_tip_y": 860.3169280296095,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "dashair",
+      "pose": "dashair_3",
+      "profile": "katana",
+      "angle_offset_degrees": -15.38713,
+      "old_tip_y": 895.061757327043,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "dashair",
+      "pose": "dashair_3",
+      "profile": "greatsword",
+      "angle_offset_degrees": -20.15345,
+      "old_tip_y": 935.1981493908318,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "death",
+      "pose": "death_2",
+      "profile": "katana",
+      "angle_offset_degrees": -3.04314,
+      "old_tip_y": 848.7475339301499,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "death",
+      "pose": "death_2",
+      "profile": "greatsword",
+      "angle_offset_degrees": -2.59835,
+      "old_tip_y": 849.4436346053219,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "death",
+      "pose": "death_2",
+      "profile": "shortsword",
+      "angle_offset_degrees": -2.1041,
+      "old_tip_y": 839.6063540230296,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "hit",
+      "pose": "hit_4",
+      "profile": "katana",
+      "angle_offset_degrees": -7.17817,
+      "old_tip_y": 868.6598438462976,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "hit",
+      "pose": "hit_4",
+      "profile": "greatsword",
+      "angle_offset_degrees": -6.89298,
+      "old_tip_y": 874.8369384939111,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "hit",
+      "pose": "hit_4",
+      "profile": "shortsword",
+      "angle_offset_degrees": -5.53024,
+      "old_tip_y": 848.6773927067557,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "hit",
+      "pose": "hit_5",
+      "profile": "katana",
+      "angle_offset_degrees": -3.28318,
+      "old_tip_y": 848.8734665728459,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "hit",
+      "pose": "hit_5",
+      "profile": "greatsword",
+      "angle_offset_degrees": -6.40097,
+      "old_tip_y": 870.0156569939638,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "hit",
+      "pose": "hit_6",
+      "profile": "katana",
+      "angle_offset_degrees": -0.18238,
+      "old_tip_y": 834.7777274306954,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "hit",
+      "pose": "hit_6",
+      "profile": "greatsword",
+      "angle_offset_degrees": -5.21356,
+      "old_tip_y": 861.9987971513663,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "hit",
+      "pose": "hit_0",
+      "profile": "greatsword",
+      "angle_offset_degrees": -3.18308,
+      "old_tip_y": 850.3230628720545,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "guard",
+      "pose": "guard_5",
+      "profile": "greatsword",
+      "angle_offset_degrees": -0.52352,
+      "old_tip_y": 836.7554523857284,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "idle",
+      "pose": "idle_1",
+      "profile": "greatsword",
+      "angle_offset_degrees": -2.19976,
+      "old_tip_y": 845.6652785774338,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "idle",
+      "pose": "idle_2",
+      "profile": "greatsword",
+      "angle_offset_degrees": -0.52042,
+      "old_tip_y": 836.7391040807893,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "idle",
+      "pose": "idle_3",
+      "profile": "greatsword",
+      "angle_offset_degrees": -1.36317,
+      "old_tip_y": 841.2021913291114,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "death",
+      "pose": "death_1",
+      "profile": "katana",
+      "angle_offset_degrees": -3.46779,
+      "old_tip_y": 849.008826543475,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "death",
+      "pose": "death_1",
+      "profile": "greatsword",
+      "angle_offset_degrees": -7.78584,
+      "old_tip_y": 876.2298962641457,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "guard",
+      "pose": "guard_7",
+      "profile": "greatsword",
+      "angle_offset_degrees": -0.36951,
+      "old_tip_y": 835.9434865737626,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "walk",
+      "pose": "walk_3",
+      "profile": "greatsword",
+      "angle_offset_degrees": -0.47359,
+      "old_tip_y": 836.492112122388,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "walk",
+      "pose": "walk_5",
+      "profile": "greatsword",
+      "angle_offset_degrees": -0.31118,
+      "old_tip_y": 835.6362562665322,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    },
+    {
+      "group": "walk",
+      "pose": "walk_7",
+      "profile": "greatsword",
+      "angle_offset_degrees": -0.63576,
+      "old_tip_y": 837.3479679782442,
+      "target_tip_y": 834,
+      "reason": "Discrete authored wrist angle at fixed grip; no source/body scale, no runtime floor clamp, no independent animation interpolation."
+    }
+  ],
+  "groups": [
+    "attack2",
+    "attack3",
+    "dashair",
+    "death",
+    "guard",
+    "hit",
+    "idle",
+    "walk"
+  ],
+  "user_artwork_approved": false
+}

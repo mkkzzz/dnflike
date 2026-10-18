@@ -32,6 +32,7 @@ def render(group):
  return outputs
 
 if __name__=='__main__':
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('groups',nargs='+');args=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('groups',nargs='+')
+ p.add_argument('--source-dir',type=Path,default=SOURCE);args=p.parse_args();SOURCE=args.source_dir.resolve()
  for group in args.groups:
   for path in render(group):print(path)

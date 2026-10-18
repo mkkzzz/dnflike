@@ -1,0 +1,443 @@
+[
+  {
+    "box": [
+      70,
+      45,
+      315,
+      548
+    ],
+    "root": [
+      194,
+      534
+    ],
+    "seed": [
+      195,
+      260
+    ],
+    "hair": [
+      211,
+      63
+    ],
+    "chin": [
+      225,
+      134
+    ],
+    "grip": [
+      122,
+      323
+    ],
+    "blade_angle_degrees": 32,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        108,
+        310
+      ],
+      [
+        135,
+        310
+      ],
+      [
+        138,
+        323
+      ],
+      [
+        130,
+        333
+      ],
+      [
+        110,
+        331
+      ]
+    ],
+    "profile_angle_offsets_degrees": {
+      "greatsword": -3.18308
+    }
+  },
+  {
+    "box": [
+      460,
+      85,
+      805,
+      548
+    ],
+    "root": [
+      635,
+      534
+    ],
+    "seed": [
+      620,
+      300
+    ],
+    "hair": [
+      571,
+      100
+    ],
+    "chin": [
+      590,
+      168
+    ],
+    "grip": [
+      519,
+      334
+    ],
+    "blade_angle_degrees": 18,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        505,
+        321
+      ],
+      [
+        532,
+        321
+      ],
+      [
+        535,
+        334
+      ],
+      [
+        527,
+        344
+      ],
+      [
+        507,
+        342
+      ]
+    ]
+  },
+  {
+    "box": [
+      870,
+      98,
+      1260,
+      548
+    ],
+    "root": [
+      1045,
+      520
+    ],
+    "seed": [
+      1035,
+      300
+    ],
+    "hair": [
+      974,
+      116
+    ],
+    "chin": [
+      987,
+      187
+    ],
+    "grip": [
+      925,
+      348
+    ],
+    "blade_angle_degrees": 22,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        911,
+        335
+      ],
+      [
+        938,
+        335
+      ],
+      [
+        941,
+        348
+      ],
+      [
+        933,
+        358
+      ],
+      [
+        913,
+        356
+      ]
+    ]
+  },
+  {
+    "box": [
+      1270,
+      55,
+      1575,
+      450
+    ],
+    "root": [
+      1435,
+      552
+    ],
+    "seed": [
+      1435,
+      245
+    ],
+    "hair": [
+      1368,
+      76
+    ],
+    "chin": [
+      1383,
+      147
+    ],
+    "grip": [
+      1368,
+      272
+    ],
+    "height_px": 100,
+    "blade_angle_degrees": 3,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        1354,
+        259
+      ],
+      [
+        1381,
+        259
+      ],
+      [
+        1384,
+        272
+      ],
+      [
+        1376,
+        282
+      ],
+      [
+        1356,
+        280
+      ]
+    ]
+  },
+  {
+    "box": [
+      135,
+      900,
+      1200,
+      1248
+    ],
+    "root": [
+      660,
+      1237
+    ],
+    "seed": [
+      680,
+      1130
+    ],
+    "hair": [
+      295,
+      917
+    ],
+    "chin": [
+      369,
+      1028
+    ],
+    "grip": [
+      403,
+      1207
+    ],
+    "blade_angle_degrees": 8,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        388,
+        1190
+      ],
+      [
+        416,
+        1190
+      ],
+      [
+        422,
+        1205
+      ],
+      [
+        408,
+        1220
+      ],
+      [
+        389,
+        1216
+      ]
+    ],
+    "profile_angle_offsets_degrees": {
+      "katana": -7.17817,
+      "greatsword": -6.89298,
+      "shortsword": -5.53024
+    }
+  },
+  {
+    "box": [
+      505,
+      600,
+      890,
+      912
+    ],
+    "root": [
+      700,
+      891
+    ],
+    "seed": [
+      700,
+      750
+    ],
+    "hair": [
+      727,
+      620
+    ],
+    "chin": [
+      740,
+      691
+    ],
+    "grip": [
+      590,
+      770
+    ],
+    "blade_angle_degrees": 22,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        576,
+        757
+      ],
+      [
+        603,
+        757
+      ],
+      [
+        606,
+        770
+      ],
+      [
+        598,
+        780
+      ],
+      [
+        578,
+        778
+      ]
+    ],
+    "profile_angle_offsets_degrees": {
+      "katana": -3.28318,
+      "greatsword": -6.40097
+    }
+  },
+  {
+    "box": [
+      870,
+      560,
+      1185,
+      912
+    ],
+    "root": [
+      1040,
+      895
+    ],
+    "seed": [
+      1070,
+      730
+    ],
+    "hair": [
+      1102,
+      577
+    ],
+    "chin": [
+      1113,
+      647
+    ],
+    "grip": [
+      943,
+      724
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        929,
+        711
+      ],
+      [
+        956,
+        711
+      ],
+      [
+        959,
+        724
+      ],
+      [
+        951,
+        734
+      ],
+      [
+        931,
+        732
+      ]
+    ],
+    "profile_angle_offsets_degrees": {
+      "katana": -0.18238,
+      "greatsword": -5.21356
+    }
+  },
+  {
+    "box": [
+      1185,
+      775,
+      1665,
+      912
+    ],
+    "root": [
+      1430,
+      896
+    ],
+    "seed": [
+      1415,
+      825
+    ],
+    "hair": [
+      1206,
+      838
+    ],
+    "chin": [
+      1262,
+      797
+    ],
+    "grip": [
+      1408,
+      880
+    ],
+    "blade_angle_degrees": 3,
+    "cutting_side": 1,
+    "edge_intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous",
+    "finger_polygon": [
+      [
+        1394,
+        867
+      ],
+      [
+        1421,
+        867
+      ],
+      [
+        1424,
+        880
+      ],
+      [
+        1416,
+        890
+      ],
+      [
+        1396,
+        888
+      ]
+    ]
+  }
+]

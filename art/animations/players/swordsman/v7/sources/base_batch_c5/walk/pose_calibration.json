@@ -1,0 +1,435 @@
+[
+  {
+    "box": [
+      85,
+      5,
+      310,
+      470
+    ],
+    "root": [
+      194,
+      461
+    ],
+    "seed": [
+      195,
+      200
+    ],
+    "hair": [
+      205,
+      17
+    ],
+    "chin": [
+      219,
+      85
+    ],
+    "grip": [
+      129,
+      263
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "relaxed ready edge down; no axial blade flip",
+    "finger_polygon": [
+      [
+        115,
+        249
+      ],
+      [
+        142,
+        249
+      ],
+      [
+        145,
+        263
+      ],
+      [
+        137,
+        273
+      ],
+      [
+        117,
+        271
+      ]
+    ]
+  },
+  {
+    "box": [
+      475,
+      15,
+      746,
+      470
+    ],
+    "root": [
+      608,
+      462
+    ],
+    "seed": [
+      604,
+      210
+    ],
+    "hair": [
+      618,
+      32
+    ],
+    "chin": [
+      636,
+      100
+    ],
+    "grip": [
+      534,
+      267
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "relaxed ready edge down; no axial blade flip",
+    "finger_polygon": [
+      [
+        520,
+        253
+      ],
+      [
+        547,
+        253
+      ],
+      [
+        550,
+        267
+      ],
+      [
+        542,
+        277
+      ],
+      [
+        522,
+        275
+      ]
+    ]
+  },
+  {
+    "box": [
+      875,
+      10,
+      1220,
+      470
+    ],
+    "root": [
+      1045,
+      460
+    ],
+    "seed": [
+      1050,
+      210
+    ],
+    "hair": [
+      1067,
+      31
+    ],
+    "chin": [
+      1084,
+      101
+    ],
+    "grip": [
+      988,
+      265
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "relaxed ready edge down; no axial blade flip",
+    "finger_polygon": [
+      [
+        974,
+        251
+      ],
+      [
+        1001,
+        251
+      ],
+      [
+        1004,
+        265
+      ],
+      [
+        996,
+        275
+      ],
+      [
+        976,
+        273
+      ]
+    ]
+  },
+  {
+    "box": [
+      1330,
+      15,
+      1635,
+      470
+    ],
+    "root": [
+      1480,
+      461
+    ],
+    "seed": [
+      1480,
+      210
+    ],
+    "hair": [
+      1493,
+      39
+    ],
+    "chin": [
+      1505,
+      108
+    ],
+    "grip": [
+      1416,
+      270
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "relaxed ready edge down; no axial blade flip",
+    "finger_polygon": [
+      [
+        1402,
+        256
+      ],
+      [
+        1429,
+        256
+      ],
+      [
+        1432,
+        270
+      ],
+      [
+        1424,
+        280
+      ],
+      [
+        1404,
+        278
+      ]
+    ],
+    "profile_angle_offsets_degrees": {
+      "greatsword": -0.47359
+    }
+  },
+  {
+    "box": [
+      60,
+      475,
+      415,
+      930
+    ],
+    "root": [
+      241,
+      906
+    ],
+    "seed": [
+      240,
+      660
+    ],
+    "hair": [
+      257,
+      485
+    ],
+    "chin": [
+      274,
+      554
+    ],
+    "grip": [
+      165,
+      710
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "relaxed ready edge down; no axial blade flip",
+    "finger_polygon": [
+      [
+        151,
+        696
+      ],
+      [
+        178,
+        696
+      ],
+      [
+        181,
+        710
+      ],
+      [
+        173,
+        720
+      ],
+      [
+        153,
+        718
+      ]
+    ]
+  },
+  {
+    "box": [
+      500,
+      475,
+      865,
+      930
+    ],
+    "root": [
+      690,
+      907
+    ],
+    "seed": [
+      695,
+      660
+    ],
+    "hair": [
+      704,
+      490
+    ],
+    "chin": [
+      719,
+      559
+    ],
+    "grip": [
+      612,
+      715
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "relaxed ready edge down; no axial blade flip",
+    "finger_polygon": [
+      [
+        598,
+        701
+      ],
+      [
+        625,
+        701
+      ],
+      [
+        628,
+        715
+      ],
+      [
+        620,
+        725
+      ],
+      [
+        600,
+        723
+      ]
+    ],
+    "profile_angle_offsets_degrees": {
+      "greatsword": -0.31118
+    }
+  },
+  {
+    "box": [
+      900,
+      475,
+      1200,
+      930
+    ],
+    "root": [
+      1070,
+      909
+    ],
+    "seed": [
+      1070,
+      660
+    ],
+    "hair": [
+      1089,
+      491
+    ],
+    "chin": [
+      1106,
+      562
+    ],
+    "grip": [
+      1015,
+      713
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "relaxed ready edge down; no axial blade flip",
+    "finger_polygon": [
+      [
+        1001,
+        699
+      ],
+      [
+        1028,
+        699
+      ],
+      [
+        1031,
+        713
+      ],
+      [
+        1023,
+        723
+      ],
+      [
+        1003,
+        721
+      ]
+    ]
+  },
+  {
+    "box": [
+      1315,
+      480,
+      1665,
+      930
+    ],
+    "root": [
+      1500,
+      909
+    ],
+    "seed": [
+      1502,
+      660
+    ],
+    "hair": [
+      1525,
+      499
+    ],
+    "chin": [
+      1540,
+      568
+    ],
+    "grip": [
+      1436,
+      719
+    ],
+    "blade_angle_degrees": 28,
+    "cutting_side": 1,
+    "edge_intent": "relaxed ready edge down; no axial blade flip",
+    "finger_polygon": [
+      [
+        1422,
+        705
+      ],
+      [
+        1449,
+        705
+      ],
+      [
+        1452,
+        719
+      ],
+      [
+        1444,
+        729
+      ],
+      [
+        1424,
+        727
+      ]
+    ],
+    "profile_angle_offsets_degrees": {
+      "greatsword": -0.63576
+    }
+  }
+]

@@ -1,0 +1,66 @@
+{
+  "schema": "standard_actions_pilot/1",
+  "source_of_preview": "exported manifest.json and RGBA PNGs only",
+  "nonloop_combination": "hold last frame after end, preview only",
+  "weapon_layering": {
+    "weapon_layering": "not_attempted",
+    "G3": "layered_pending_final_review",
+    "actor_includes_weapon": false,
+    "G1": "source_bound_manual_landmarks",
+    "G2": "batch_candidate_user_direction_accepted",
+    "G4": "pending_final_batch_review"
+  },
+  "previews": [
+    {
+      "file": "death_naked.gif",
+      "intended_duration_ticks": 42,
+      "intended_duration_ms": 700.0,
+      "gif_duration_ms": 700,
+      "total_error_ms": 0.0,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": false
+    },
+    {
+      "file": "revive_naked.gif",
+      "intended_duration_ticks": 28,
+      "intended_duration_ms": 466.6666666666667,
+      "gif_duration_ms": 470,
+      "total_error_ms": 3.3333333333333144,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": false
+    },
+    {
+      "file": "neutral_naked.gif",
+      "intended_duration_ticks": 1,
+      "intended_duration_ms": 16.666666666666668,
+      "gif_duration_ms": 20,
+      "total_error_ms": 3.333333333333332,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": false
+    },
+    {
+      "file": "actions_naked.gif",
+      "intended_duration_ticks": 42,
+      "intended_duration_ms": 700.0,
+      "gif_duration_ms": 700,
+      "total_error_ms": 0.0,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": true
+    }
+  ],
+  "overview_included": [
+    "death",
+    "revive"
+  ],
+  "overview_excluded": [
+    "neutral"
+  ],
+  "component_isolation": {
+    "pose_count": 5,
+    "mask_directory": "masks/",
+    "visual_review": "pending"
+  },
+  "exported_pose_count": 5,
+  "unique_source_pose_count": 3,
+  "automated_check": "passed: explicit crops, alpha bounds, canvas bounds, positive integer ticks; visual review pending"
+}

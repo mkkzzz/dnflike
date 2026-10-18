@@ -1,0 +1,184 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-17",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c5/attack2/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "annotation_method": "Manually selected true hair tips and bottom jaw; source crop/point overlay inspected. No lip/neck substitutions, +/-3 source pixels.",
+  "sources": {
+    "body": {
+      "sha256": "b3f227d675f818ae404f43072e4a97fa3f03b471bcd518f6b2ec00ccb2f74aad",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 23,
+        "standing_bottom_y": 463,
+        "sole": [
+          123,
+          463
+        ],
+        "crop_bbox": [
+          50,
+          8,
+          310,
+          478
+        ],
+        "head": {
+          "hair_top": [
+            200,
+            23
+          ],
+          "chin": [
+            214,
+            89
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "attack2_0",
+      "head": {
+        "hair_top": [
+          200,
+          23
+        ],
+        "chin": [
+          214,
+          89
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_1",
+      "head": {
+        "hair_top": [
+          687,
+          86
+        ],
+        "chin": [
+          700,
+          152
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_2",
+      "head": {
+        "hair_top": [
+          1110,
+          120
+        ],
+        "chin": [
+          1123,
+          187
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_3",
+      "head": {
+        "hair_top": [
+          1483,
+          78
+        ],
+        "chin": [
+          1495,
+          146
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_4",
+      "head": {
+        "hair_top": [
+          241,
+          533
+        ],
+        "chin": [
+          253,
+          600
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_5",
+      "head": {
+        "hair_top": [
+          642,
+          535
+        ],
+        "chin": [
+          654,
+          601
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_6",
+      "head": {
+        "hair_top": [
+          1069,
+          530
+        ],
+        "chin": [
+          1082,
+          596
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    },
+    {
+      "source": "body",
+      "pose_id": "attack2_7",
+      "head": {
+        "hair_top": [
+          1489,
+          534
+        ],
+        "chin": [
+          1501,
+          600
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 3
+    }
+  ],
+  "landmark_semantics_reviewed": true,
+  "visual_review": {
+    "reviewer": "Codex source-pixel visual landmark review; not user art/runtime approval",
+    "annotation_signature": "0137b285d8d02073469dff2fde91b26926d918a391aa246dd851c78ae27f5f1b",
+    "files": [
+      {
+        "file": "../../base_batch_c4/attack2/marks_body.png",
+        "sha256": "128b4468b35df9df04a2db6a034d9dac9b2e92d17df294188a993ad1da046ce6"
+      },
+      {
+        "file": "../../base_batch_c4/attack2/heads_review.png",
+        "sha256": "d328f5c52ee45622e580aefc4b673f6e39f523214adbf4fec1ae374fa756e7d1"
+      }
+    ]
+  }
+}

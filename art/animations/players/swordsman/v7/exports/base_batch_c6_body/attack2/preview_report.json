@@ -1,0 +1,56 @@
+{
+  "schema": "standard_actions_pilot/1",
+  "source_of_preview": "exported manifest.json and RGBA PNGs only",
+  "nonloop_combination": "hold last frame after end, preview only",
+  "weapon_layering": {
+    "weapon_layering": "not_attempted",
+    "G3": "two_hand_layering_pending",
+    "actor_includes_weapon": false,
+    "G1": "reviewed_true_head_landmarks",
+    "G2": "pending_continuous_motion_review",
+    "G4": "pending_user_review"
+  },
+  "previews": [
+    {
+      "file": "keys_naked.gif",
+      "intended_duration_ticks": 8,
+      "intended_duration_ms": 133.33333333333334,
+      "gif_duration_ms": 130,
+      "total_error_ms": -3.333333333333343,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": false
+    },
+    {
+      "file": "neutral_naked.gif",
+      "intended_duration_ticks": 8,
+      "intended_duration_ms": 133.33333333333334,
+      "gif_duration_ms": 130,
+      "total_error_ms": -3.333333333333343,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": false
+    },
+    {
+      "file": "actions_naked.gif",
+      "intended_duration_ticks": 8,
+      "intended_duration_ms": 133.33333333333334,
+      "gif_duration_ms": 130,
+      "total_error_ms": -3.333333333333343,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": true
+    }
+  ],
+  "overview_included": [
+    "keys"
+  ],
+  "overview_excluded": [
+    "neutral"
+  ],
+  "component_isolation": {
+    "pose_count": 2,
+    "mask_directory": "masks/",
+    "visual_review": "pending"
+  },
+  "exported_pose_count": 2,
+  "unique_source_pose_count": 2,
+  "automated_check": "passed: explicit crops, alpha bounds, canvas bounds, positive integer ticks; visual review pending"
+}

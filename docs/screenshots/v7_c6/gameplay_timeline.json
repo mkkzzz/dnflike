@@ -1,0 +1,7380 @@
+[
+	{
+		"clip": "idle",
+		"clock": 122.0,
+		"facing": 1,
+		"frame": 0,
+		"physics_frame": 128,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 127,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 123.0,
+		"facing": 1,
+		"frame": 1,
+		"physics_frame": 129,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 128,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 124.0,
+		"facing": 1,
+		"frame": 2,
+		"physics_frame": 130,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 129,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 125.0,
+		"facing": 1,
+		"frame": 3,
+		"physics_frame": 131,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 130,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 126.0,
+		"facing": 1,
+		"frame": 4,
+		"physics_frame": 132,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 131,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 127.0,
+		"facing": 1,
+		"frame": 5,
+		"physics_frame": 133,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 132,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 128.0,
+		"facing": 1,
+		"frame": 6,
+		"physics_frame": 134,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 133,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 129.0,
+		"facing": 1,
+		"frame": 7,
+		"physics_frame": 135,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 134,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 130.0,
+		"facing": 1,
+		"frame": 8,
+		"physics_frame": 136,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 135,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 131.0,
+		"facing": 1,
+		"frame": 9,
+		"physics_frame": 137,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 136,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 132.0,
+		"facing": 1,
+		"frame": 10,
+		"physics_frame": 138,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 137,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 133.0,
+		"facing": 1,
+		"frame": 11,
+		"physics_frame": 139,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 138,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 134.0,
+		"facing": 1,
+		"frame": 12,
+		"physics_frame": 140,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 139,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 135.0,
+		"facing": 1,
+		"frame": 13,
+		"physics_frame": 141,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 140,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 136.0,
+		"facing": 1,
+		"frame": 14,
+		"physics_frame": 142,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 141,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 137.0,
+		"facing": 1,
+		"frame": 15,
+		"physics_frame": 143,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 142,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 138.0,
+		"facing": 1,
+		"frame": 16,
+		"physics_frame": 144,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 143,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 139.0,
+		"facing": 1,
+		"frame": 17,
+		"physics_frame": 145,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 144,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 140.0,
+		"facing": 1,
+		"frame": 18,
+		"physics_frame": 146,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 145,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 141.0,
+		"facing": 1,
+		"frame": 19,
+		"physics_frame": 147,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 146,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 142.0,
+		"facing": 1,
+		"frame": 20,
+		"physics_frame": 148,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 147,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 143.0,
+		"facing": 1,
+		"frame": 21,
+		"physics_frame": 149,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 148,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 144.0,
+		"facing": 1,
+		"frame": 22,
+		"physics_frame": 150,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 149,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 145.0,
+		"facing": 1,
+		"frame": 23,
+		"physics_frame": 151,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 150,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 146.0,
+		"facing": 1,
+		"frame": 24,
+		"physics_frame": 152,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 151,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 147.0,
+		"facing": 1,
+		"frame": 25,
+		"physics_frame": 153,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 152,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 148.0,
+		"facing": 1,
+		"frame": 26,
+		"physics_frame": 154,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 153,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 149.0,
+		"facing": 1,
+		"frame": 27,
+		"physics_frame": 155,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 154,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 150.0,
+		"facing": 1,
+		"frame": 28,
+		"physics_frame": 156,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 155,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 151.0,
+		"facing": 1,
+		"frame": 29,
+		"physics_frame": 157,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 156,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 152.0,
+		"facing": 1,
+		"frame": 30,
+		"physics_frame": 158,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 157,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 153.0,
+		"facing": 1,
+		"frame": 31,
+		"physics_frame": 159,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 158,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 154.0,
+		"facing": 1,
+		"frame": 32,
+		"physics_frame": 160,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 159,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 155.0,
+		"facing": 1,
+		"frame": 33,
+		"physics_frame": 161,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 160,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 156.0,
+		"facing": 1,
+		"frame": 34,
+		"physics_frame": 162,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 161,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 157.0,
+		"facing": 1,
+		"frame": 35,
+		"physics_frame": 163,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 162,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 158.0,
+		"facing": 1,
+		"frame": 36,
+		"physics_frame": 164,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 163,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 159.0,
+		"facing": 1,
+		"frame": 37,
+		"physics_frame": 165,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 164,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 160.0,
+		"facing": 1,
+		"frame": 38,
+		"physics_frame": 166,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 165,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 161.0,
+		"facing": 1,
+		"frame": 39,
+		"physics_frame": 167,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 166,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 162.0,
+		"facing": 1,
+		"frame": 40,
+		"physics_frame": 168,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 167,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 163.0,
+		"facing": 1,
+		"frame": 41,
+		"physics_frame": 169,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 168,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 164.0,
+		"facing": 1,
+		"frame": 42,
+		"physics_frame": 170,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 169,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 165.0,
+		"facing": 1,
+		"frame": 43,
+		"physics_frame": 171,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 170,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 166.0,
+		"facing": 1,
+		"frame": 44,
+		"physics_frame": 172,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 171,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 167.0,
+		"facing": 1,
+		"frame": 45,
+		"physics_frame": 173,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 172,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 168.0,
+		"facing": 1,
+		"frame": 46,
+		"physics_frame": 174,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 173,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 169.0,
+		"facing": 1,
+		"frame": 47,
+		"physics_frame": 175,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 174,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 170.0,
+		"facing": 1,
+		"frame": 48,
+		"physics_frame": 176,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 175,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 171.0,
+		"facing": 1,
+		"frame": 49,
+		"physics_frame": 177,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 176,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 172.0,
+		"facing": 1,
+		"frame": 50,
+		"physics_frame": 178,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 177,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 173.0,
+		"facing": 1,
+		"frame": 51,
+		"physics_frame": 179,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 178,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 174.0,
+		"facing": 1,
+		"frame": 52,
+		"physics_frame": 180,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 179,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 175.0,
+		"facing": 1,
+		"frame": 53,
+		"physics_frame": 181,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 180,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 176.0,
+		"facing": 1,
+		"frame": 54,
+		"physics_frame": 182,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 181,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 177.0,
+		"facing": 1,
+		"frame": 55,
+		"physics_frame": 183,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 182,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 178.0,
+		"facing": 1,
+		"frame": 56,
+		"physics_frame": 184,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 183,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 179.0,
+		"facing": 1,
+		"frame": 57,
+		"physics_frame": 185,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 184,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 180.0,
+		"facing": 1,
+		"frame": 58,
+		"physics_frame": 186,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 185,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 181.0,
+		"facing": 1,
+		"frame": 59,
+		"physics_frame": 187,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 186,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 182.0,
+		"facing": 1,
+		"frame": 60,
+		"physics_frame": 188,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 187,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 183.0,
+		"facing": 1,
+		"frame": 61,
+		"physics_frame": 189,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 188,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 184.0,
+		"facing": 1,
+		"frame": 62,
+		"physics_frame": 190,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 189,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 185.0,
+		"facing": 1,
+		"frame": 63,
+		"physics_frame": 191,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 190,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 186.0,
+		"facing": 1,
+		"frame": 64,
+		"physics_frame": 192,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 191,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 187.0,
+		"facing": 1,
+		"frame": 65,
+		"physics_frame": 193,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 192,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 188.0,
+		"facing": 1,
+		"frame": 66,
+		"physics_frame": 194,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 193,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 189.0,
+		"facing": 1,
+		"frame": 67,
+		"physics_frame": 195,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 194,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 190.0,
+		"facing": 1,
+		"frame": 68,
+		"physics_frame": 196,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 195,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 191.0,
+		"facing": 1,
+		"frame": 69,
+		"physics_frame": 197,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 196,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 192.0,
+		"facing": 1,
+		"frame": 70,
+		"physics_frame": 198,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 197,
+		"tag": "idle"
+	},
+	{
+		"clip": "idle",
+		"clock": 193.0,
+		"facing": 1,
+		"frame": 71,
+		"physics_frame": 199,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 198,
+		"tag": "idle"
+	},
+	{
+		"clip": "attack1",
+		"clock": 0.0,
+		"facing": 1,
+		"frame": 72,
+		"physics_frame": 200,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 199,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 73,
+		"physics_frame": 201,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 200,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 74,
+		"physics_frame": 202,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 201,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 75,
+		"physics_frame": 203,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 202,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 76,
+		"physics_frame": 204,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 203,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 77,
+		"physics_frame": 205,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 204,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 78,
+		"physics_frame": 206,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 205,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 79,
+		"physics_frame": 207,
+		"position": [
+			570.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 206,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 80,
+		"physics_frame": 208,
+		"position": [
+			571.875,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 207,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 81,
+		"physics_frame": 209,
+		"position": [
+			576.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 208,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 82,
+		"physics_frame": 210,
+		"position": [
+			580.125,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 209,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 83,
+		"physics_frame": 211,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 210,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 84,
+		"physics_frame": 212,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 211,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 85,
+		"physics_frame": 213,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 212,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 86,
+		"physics_frame": 214,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 213,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 87,
+		"physics_frame": 215,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 214,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 88,
+		"physics_frame": 216,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 215,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 89,
+		"physics_frame": 217,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 216,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 90,
+		"physics_frame": 218,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 217,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 19.0,
+		"facing": 1,
+		"frame": 91,
+		"physics_frame": 219,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 218,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 0.0,
+		"facing": 1,
+		"frame": 92,
+		"physics_frame": 220,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 219,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 93,
+		"physics_frame": 221,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 220,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 94,
+		"physics_frame": 222,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 221,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 95,
+		"physics_frame": 223,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 222,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 96,
+		"physics_frame": 224,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 223,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 97,
+		"physics_frame": 225,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 224,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 98,
+		"physics_frame": 226,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 225,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 99,
+		"physics_frame": 227,
+		"position": [
+			582.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 226,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 100,
+		"physics_frame": 228,
+		"position": [
+			583.5625,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 227,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 101,
+		"physics_frame": 229,
+		"position": [
+			587.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 228,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 102,
+		"physics_frame": 230,
+		"position": [
+			590.4375,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 229,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 103,
+		"physics_frame": 231,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 230,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 104,
+		"physics_frame": 232,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 231,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 105,
+		"physics_frame": 233,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 232,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 106,
+		"physics_frame": 234,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 233,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 107,
+		"physics_frame": 235,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 234,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 108,
+		"physics_frame": 236,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 235,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 109,
+		"physics_frame": 237,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 236,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 110,
+		"physics_frame": 238,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 237,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 19.0,
+		"facing": 1,
+		"frame": 111,
+		"physics_frame": 239,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 238,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 20.0,
+		"facing": 1,
+		"frame": 112,
+		"physics_frame": 240,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 239,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 0.0,
+		"facing": 1,
+		"frame": 113,
+		"physics_frame": 241,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 240,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 114,
+		"physics_frame": 242,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 241,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 115,
+		"physics_frame": 243,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 242,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 116,
+		"physics_frame": 244,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 243,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 117,
+		"physics_frame": 245,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 244,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 118,
+		"physics_frame": 246,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 245,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 119,
+		"physics_frame": 247,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 246,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 120,
+		"physics_frame": 248,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 247,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 121,
+		"physics_frame": 249,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 248,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 122,
+		"physics_frame": 250,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 249,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 123,
+		"physics_frame": 251,
+		"position": [
+			592.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 250,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 124,
+		"physics_frame": 252,
+		"position": [
+			594.8125,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 251,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 125,
+		"physics_frame": 253,
+		"position": [
+			601.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 252,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 126,
+		"physics_frame": 254,
+		"position": [
+			607.1875,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 253,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 127,
+		"physics_frame": 255,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 254,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 128,
+		"physics_frame": 256,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 255,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 129,
+		"physics_frame": 257,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 256,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 130,
+		"physics_frame": 258,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 257,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 131,
+		"physics_frame": 259,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 258,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 19.0,
+		"facing": 1,
+		"frame": 132,
+		"physics_frame": 260,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 259,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 20.0,
+		"facing": 1,
+		"frame": 133,
+		"physics_frame": 261,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 260,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 21.0,
+		"facing": 1,
+		"frame": 134,
+		"physics_frame": 262,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 261,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 22.0,
+		"facing": 1,
+		"frame": 135,
+		"physics_frame": 263,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 262,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 23.0,
+		"facing": 1,
+		"frame": 136,
+		"physics_frame": 264,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 263,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 24.0,
+		"facing": 1,
+		"frame": 137,
+		"physics_frame": 265,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 264,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 25.0,
+		"facing": 1,
+		"frame": 138,
+		"physics_frame": 266,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 265,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 26.0,
+		"facing": 1,
+		"frame": 139,
+		"physics_frame": 267,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 266,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 27.0,
+		"facing": 1,
+		"frame": 140,
+		"physics_frame": 268,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 267,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 28.0,
+		"facing": 1,
+		"frame": 141,
+		"physics_frame": 269,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 268,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 29.0,
+		"facing": 1,
+		"frame": 142,
+		"physics_frame": 270,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 269,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 30.0,
+		"facing": 1,
+		"frame": 143,
+		"physics_frame": 271,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 270,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 31.0,
+		"facing": 1,
+		"frame": 144,
+		"physics_frame": 272,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 271,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 32.0,
+		"facing": 1,
+		"frame": 145,
+		"physics_frame": 273,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 272,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 33.0,
+		"facing": 1,
+		"frame": 146,
+		"physics_frame": 274,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 273,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 34.0,
+		"facing": 1,
+		"frame": 147,
+		"physics_frame": 275,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 274,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 35.0,
+		"facing": 1,
+		"frame": 148,
+		"physics_frame": 276,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 275,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 36.0,
+		"facing": 1,
+		"frame": 149,
+		"physics_frame": 277,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 276,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 37.0,
+		"facing": 1,
+		"frame": 150,
+		"physics_frame": 278,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 277,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 38.0,
+		"facing": 1,
+		"frame": 151,
+		"physics_frame": 279,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 278,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 39.0,
+		"facing": 1,
+		"frame": 152,
+		"physics_frame": 280,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 279,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 40.0,
+		"facing": 1,
+		"frame": 153,
+		"physics_frame": 281,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 280,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 154,
+		"physics_frame": 282,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 281,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 155,
+		"physics_frame": 283,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 282,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 156,
+		"physics_frame": 284,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 283,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 157,
+		"physics_frame": 285,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 284,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 158,
+		"physics_frame": 286,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 285,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 159,
+		"physics_frame": 287,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 286,
+		"tag": "katana_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 160,
+		"physics_frame": 288,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 287,
+		"tag": "katana_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 161,
+		"physics_frame": 289,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 288,
+		"tag": "katana_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 162,
+		"physics_frame": 290,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 289,
+		"tag": "katana_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 163,
+		"physics_frame": 291,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 290,
+		"tag": "katana_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 164,
+		"physics_frame": 292,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 291,
+		"tag": "katana_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 165,
+		"physics_frame": 293,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 292,
+		"tag": "katana_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 166,
+		"physics_frame": 294,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 293,
+		"tag": "katana_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 167,
+		"physics_frame": 295,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 294,
+		"tag": "katana_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 168,
+		"physics_frame": 296,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 295,
+		"tag": "katana_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 169,
+		"physics_frame": 297,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 296,
+		"tag": "katana_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 170,
+		"physics_frame": 298,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 297,
+		"tag": "katana_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 171,
+		"physics_frame": 299,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "katana",
+		"render_frame": 298,
+		"tag": "katana_recover"
+	},
+	{
+		"clip": "attack1",
+		"clock": 0.0,
+		"facing": 1,
+		"frame": 172,
+		"physics_frame": 300,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 299,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 173,
+		"physics_frame": 301,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 300,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 174,
+		"physics_frame": 302,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 301,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 175,
+		"physics_frame": 303,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 302,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 176,
+		"physics_frame": 304,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 303,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 177,
+		"physics_frame": 305,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 304,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 178,
+		"physics_frame": 306,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 305,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 179,
+		"physics_frame": 307,
+		"position": [
+			610.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 306,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 180,
+		"physics_frame": 308,
+		"position": [
+			611.875,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 307,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 181,
+		"physics_frame": 309,
+		"position": [
+			616.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 308,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 182,
+		"physics_frame": 310,
+		"position": [
+			620.125,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 309,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 183,
+		"physics_frame": 311,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 310,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 184,
+		"physics_frame": 312,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 311,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 185,
+		"physics_frame": 313,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 312,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 186,
+		"physics_frame": 314,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 313,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 187,
+		"physics_frame": 315,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 314,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 188,
+		"physics_frame": 316,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 315,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 189,
+		"physics_frame": 317,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 316,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 190,
+		"physics_frame": 318,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 317,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 19.0,
+		"facing": 1,
+		"frame": 191,
+		"physics_frame": 319,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 318,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 0.0,
+		"facing": 1,
+		"frame": 192,
+		"physics_frame": 320,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 319,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 193,
+		"physics_frame": 321,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 320,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 194,
+		"physics_frame": 322,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 321,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 195,
+		"physics_frame": 323,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 322,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 196,
+		"physics_frame": 324,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 323,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 197,
+		"physics_frame": 325,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 324,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 198,
+		"physics_frame": 326,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 325,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 199,
+		"physics_frame": 327,
+		"position": [
+			622.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 326,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 200,
+		"physics_frame": 328,
+		"position": [
+			623.5625,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 327,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 201,
+		"physics_frame": 329,
+		"position": [
+			627.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 328,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 202,
+		"physics_frame": 330,
+		"position": [
+			630.4375,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 329,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 203,
+		"physics_frame": 331,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 330,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 204,
+		"physics_frame": 332,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 331,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 205,
+		"physics_frame": 333,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 332,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 206,
+		"physics_frame": 334,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 333,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 207,
+		"physics_frame": 335,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 334,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 208,
+		"physics_frame": 336,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 335,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 209,
+		"physics_frame": 337,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 336,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 210,
+		"physics_frame": 338,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 337,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 19.0,
+		"facing": 1,
+		"frame": 211,
+		"physics_frame": 339,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 338,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 20.0,
+		"facing": 1,
+		"frame": 212,
+		"physics_frame": 340,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 339,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 0.0,
+		"facing": 1,
+		"frame": 213,
+		"physics_frame": 341,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 340,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 214,
+		"physics_frame": 342,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 341,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 215,
+		"physics_frame": 343,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 342,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 216,
+		"physics_frame": 344,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 343,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 217,
+		"physics_frame": 345,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 344,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 218,
+		"physics_frame": 346,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 345,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 219,
+		"physics_frame": 347,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 346,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 220,
+		"physics_frame": 348,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 347,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 221,
+		"physics_frame": 349,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 348,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 222,
+		"physics_frame": 350,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 349,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 223,
+		"physics_frame": 351,
+		"position": [
+			632.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 350,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 224,
+		"physics_frame": 352,
+		"position": [
+			634.8125,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 351,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 225,
+		"physics_frame": 353,
+		"position": [
+			641.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 352,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 226,
+		"physics_frame": 354,
+		"position": [
+			647.1875,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 353,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 227,
+		"physics_frame": 355,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 354,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 228,
+		"physics_frame": 356,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 355,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 229,
+		"physics_frame": 357,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 356,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 230,
+		"physics_frame": 358,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 357,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 231,
+		"physics_frame": 359,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 358,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 19.0,
+		"facing": 1,
+		"frame": 232,
+		"physics_frame": 360,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 359,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 20.0,
+		"facing": 1,
+		"frame": 233,
+		"physics_frame": 361,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 360,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 21.0,
+		"facing": 1,
+		"frame": 234,
+		"physics_frame": 362,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 361,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 22.0,
+		"facing": 1,
+		"frame": 235,
+		"physics_frame": 363,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 362,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 23.0,
+		"facing": 1,
+		"frame": 236,
+		"physics_frame": 364,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 363,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 24.0,
+		"facing": 1,
+		"frame": 237,
+		"physics_frame": 365,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 364,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 25.0,
+		"facing": 1,
+		"frame": 238,
+		"physics_frame": 366,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 365,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 26.0,
+		"facing": 1,
+		"frame": 239,
+		"physics_frame": 367,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 366,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 27.0,
+		"facing": 1,
+		"frame": 240,
+		"physics_frame": 368,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 367,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 28.0,
+		"facing": 1,
+		"frame": 241,
+		"physics_frame": 369,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 368,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 29.0,
+		"facing": 1,
+		"frame": 242,
+		"physics_frame": 370,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 369,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 30.0,
+		"facing": 1,
+		"frame": 243,
+		"physics_frame": 371,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 370,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 31.0,
+		"facing": 1,
+		"frame": 244,
+		"physics_frame": 372,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 371,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 32.0,
+		"facing": 1,
+		"frame": 245,
+		"physics_frame": 373,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 372,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 33.0,
+		"facing": 1,
+		"frame": 246,
+		"physics_frame": 374,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 373,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 34.0,
+		"facing": 1,
+		"frame": 247,
+		"physics_frame": 375,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 374,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 35.0,
+		"facing": 1,
+		"frame": 248,
+		"physics_frame": 376,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 375,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 36.0,
+		"facing": 1,
+		"frame": 249,
+		"physics_frame": 377,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 376,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 37.0,
+		"facing": 1,
+		"frame": 250,
+		"physics_frame": 378,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 377,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 38.0,
+		"facing": 1,
+		"frame": 251,
+		"physics_frame": 379,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 378,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 39.0,
+		"facing": 1,
+		"frame": 252,
+		"physics_frame": 380,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 379,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 40.0,
+		"facing": 1,
+		"frame": 253,
+		"physics_frame": 381,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 380,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 254,
+		"physics_frame": 382,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 381,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 255,
+		"physics_frame": 383,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 382,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 256,
+		"physics_frame": 384,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 383,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 257,
+		"physics_frame": 385,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 384,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 258,
+		"physics_frame": 386,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 385,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 259,
+		"physics_frame": 387,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 386,
+		"tag": "greatsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 260,
+		"physics_frame": 388,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 387,
+		"tag": "greatsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 261,
+		"physics_frame": 389,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 388,
+		"tag": "greatsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 262,
+		"physics_frame": 390,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 389,
+		"tag": "greatsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 263,
+		"physics_frame": 391,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 390,
+		"tag": "greatsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 264,
+		"physics_frame": 392,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 391,
+		"tag": "greatsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 265,
+		"physics_frame": 393,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 392,
+		"tag": "greatsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 266,
+		"physics_frame": 394,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 393,
+		"tag": "greatsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 267,
+		"physics_frame": 395,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 394,
+		"tag": "greatsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 268,
+		"physics_frame": 396,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 395,
+		"tag": "greatsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 269,
+		"physics_frame": 397,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 396,
+		"tag": "greatsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 270,
+		"physics_frame": 398,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 397,
+		"tag": "greatsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 271,
+		"physics_frame": 399,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "greatsword",
+		"render_frame": 398,
+		"tag": "greatsword_recover"
+	},
+	{
+		"clip": "attack1",
+		"clock": 0.0,
+		"facing": 1,
+		"frame": 272,
+		"physics_frame": 400,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 399,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 273,
+		"physics_frame": 401,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 400,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 274,
+		"physics_frame": 402,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 401,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 275,
+		"physics_frame": 403,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 402,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 276,
+		"physics_frame": 404,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 403,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 277,
+		"physics_frame": 405,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 404,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 278,
+		"physics_frame": 406,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 405,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 279,
+		"physics_frame": 407,
+		"position": [
+			650.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 406,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 280,
+		"physics_frame": 408,
+		"position": [
+			651.875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 407,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 281,
+		"physics_frame": 409,
+		"position": [
+			656.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 408,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 282,
+		"physics_frame": 410,
+		"position": [
+			660.125,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 409,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 283,
+		"physics_frame": 411,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 410,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 284,
+		"physics_frame": 412,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 411,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 285,
+		"physics_frame": 413,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 412,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 286,
+		"physics_frame": 414,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 413,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 287,
+		"physics_frame": 415,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 414,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 288,
+		"physics_frame": 416,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 415,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 289,
+		"physics_frame": 417,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 416,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 290,
+		"physics_frame": 418,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 417,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack1",
+		"clock": 19.0,
+		"facing": 1,
+		"frame": 291,
+		"physics_frame": 419,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 418,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 0.0,
+		"facing": 1,
+		"frame": 292,
+		"physics_frame": 420,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 419,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 293,
+		"physics_frame": 421,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 420,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 294,
+		"physics_frame": 422,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 421,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 295,
+		"physics_frame": 423,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 422,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 296,
+		"physics_frame": 424,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 423,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 297,
+		"physics_frame": 425,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 424,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 298,
+		"physics_frame": 426,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 425,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 299,
+		"physics_frame": 427,
+		"position": [
+			662.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 426,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 300,
+		"physics_frame": 428,
+		"position": [
+			663.5625,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 427,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 301,
+		"physics_frame": 429,
+		"position": [
+			667.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 428,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 302,
+		"physics_frame": 430,
+		"position": [
+			670.4375,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 429,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 303,
+		"physics_frame": 431,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 430,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 304,
+		"physics_frame": 432,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 431,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 305,
+		"physics_frame": 433,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 432,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 306,
+		"physics_frame": 434,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 433,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 307,
+		"physics_frame": 435,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 434,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 308,
+		"physics_frame": 436,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 435,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 309,
+		"physics_frame": 437,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 436,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 310,
+		"physics_frame": 438,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 437,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 19.0,
+		"facing": 1,
+		"frame": 311,
+		"physics_frame": 439,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 438,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack2",
+		"clock": 20.0,
+		"facing": 1,
+		"frame": 312,
+		"physics_frame": 440,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 439,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 0.0,
+		"facing": 1,
+		"frame": 313,
+		"physics_frame": 441,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 440,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 314,
+		"physics_frame": 442,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 441,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 315,
+		"physics_frame": 443,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 442,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 316,
+		"physics_frame": 444,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 443,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 317,
+		"physics_frame": 445,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 444,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 318,
+		"physics_frame": 446,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 445,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 319,
+		"physics_frame": 447,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 446,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 320,
+		"physics_frame": 448,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 447,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 321,
+		"physics_frame": 449,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 448,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 322,
+		"physics_frame": 450,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 449,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 323,
+		"physics_frame": 451,
+		"position": [
+			672.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 450,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 324,
+		"physics_frame": 452,
+		"position": [
+			674.8125,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 451,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 325,
+		"physics_frame": 453,
+		"position": [
+			681.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 452,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 326,
+		"physics_frame": 454,
+		"position": [
+			687.1875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 453,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 327,
+		"physics_frame": 455,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 454,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 328,
+		"physics_frame": 456,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 455,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 329,
+		"physics_frame": 457,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 456,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 330,
+		"physics_frame": 458,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 457,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 331,
+		"physics_frame": 459,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 458,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 19.0,
+		"facing": 1,
+		"frame": 332,
+		"physics_frame": 460,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 459,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 20.0,
+		"facing": 1,
+		"frame": 333,
+		"physics_frame": 461,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 460,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 21.0,
+		"facing": 1,
+		"frame": 334,
+		"physics_frame": 462,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 461,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 22.0,
+		"facing": 1,
+		"frame": 335,
+		"physics_frame": 463,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 462,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 23.0,
+		"facing": 1,
+		"frame": 336,
+		"physics_frame": 464,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 463,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 24.0,
+		"facing": 1,
+		"frame": 337,
+		"physics_frame": 465,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 464,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 25.0,
+		"facing": 1,
+		"frame": 338,
+		"physics_frame": 466,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 465,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 26.0,
+		"facing": 1,
+		"frame": 339,
+		"physics_frame": 467,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 466,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 27.0,
+		"facing": 1,
+		"frame": 340,
+		"physics_frame": 468,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 467,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 28.0,
+		"facing": 1,
+		"frame": 341,
+		"physics_frame": 469,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 468,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 29.0,
+		"facing": 1,
+		"frame": 342,
+		"physics_frame": 470,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 469,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 30.0,
+		"facing": 1,
+		"frame": 343,
+		"physics_frame": 471,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 470,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 31.0,
+		"facing": 1,
+		"frame": 344,
+		"physics_frame": 472,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 471,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 32.0,
+		"facing": 1,
+		"frame": 345,
+		"physics_frame": 473,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 472,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 33.0,
+		"facing": 1,
+		"frame": 346,
+		"physics_frame": 474,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 473,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 34.0,
+		"facing": 1,
+		"frame": 347,
+		"physics_frame": 475,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 474,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 35.0,
+		"facing": 1,
+		"frame": 348,
+		"physics_frame": 476,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 475,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 36.0,
+		"facing": 1,
+		"frame": 349,
+		"physics_frame": 477,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 476,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 37.0,
+		"facing": 1,
+		"frame": 350,
+		"physics_frame": 478,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 477,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 38.0,
+		"facing": 1,
+		"frame": 351,
+		"physics_frame": 479,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 478,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 39.0,
+		"facing": 1,
+		"frame": 352,
+		"physics_frame": 480,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 479,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "attack3",
+		"clock": 40.0,
+		"facing": 1,
+		"frame": 353,
+		"physics_frame": 481,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 480,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 354,
+		"physics_frame": 482,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 481,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 355,
+		"physics_frame": 483,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 482,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 356,
+		"physics_frame": 484,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 483,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 357,
+		"physics_frame": 485,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 484,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 358,
+		"physics_frame": 486,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 485,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 359,
+		"physics_frame": 487,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 486,
+		"tag": "shortsword_combo"
+	},
+	{
+		"clip": "idle",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 360,
+		"physics_frame": 488,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 487,
+		"tag": "shortsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 361,
+		"physics_frame": 489,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 488,
+		"tag": "shortsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 362,
+		"physics_frame": 490,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 489,
+		"tag": "shortsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 363,
+		"physics_frame": 491,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 490,
+		"tag": "shortsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 364,
+		"physics_frame": 492,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 491,
+		"tag": "shortsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 365,
+		"physics_frame": 493,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 492,
+		"tag": "shortsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 366,
+		"physics_frame": 494,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 493,
+		"tag": "shortsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 367,
+		"physics_frame": 495,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 494,
+		"tag": "shortsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 368,
+		"physics_frame": 496,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 495,
+		"tag": "shortsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 369,
+		"physics_frame": 497,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 496,
+		"tag": "shortsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 370,
+		"physics_frame": 498,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 497,
+		"tag": "shortsword_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 371,
+		"physics_frame": 499,
+		"position": [
+			690.0,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 498,
+		"tag": "shortsword_recover"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 372,
+		"physics_frame": 500,
+		"position": [
+			691.444458007813,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 499,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 373,
+		"physics_frame": 501,
+		"position": [
+			694.333374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 500,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 374,
+		"physics_frame": 502,
+		"position": [
+			698.083374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 501,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 375,
+		"physics_frame": 503,
+		"position": [
+			701.833374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 502,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 376,
+		"physics_frame": 504,
+		"position": [
+			705.583374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 503,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 377,
+		"physics_frame": 505,
+		"position": [
+			709.333374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 504,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 378,
+		"physics_frame": 506,
+		"position": [
+			713.083374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 505,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 379,
+		"physics_frame": 507,
+		"position": [
+			716.833374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 506,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 380,
+		"physics_frame": 508,
+		"position": [
+			720.583374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 507,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 381,
+		"physics_frame": 509,
+		"position": [
+			724.333374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 508,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 382,
+		"physics_frame": 510,
+		"position": [
+			728.083374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 509,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 383,
+		"physics_frame": 511,
+		"position": [
+			731.833374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 510,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 384,
+		"physics_frame": 512,
+		"position": [
+			735.583374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 511,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 385,
+		"physics_frame": 513,
+		"position": [
+			739.333374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 512,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 386,
+		"physics_frame": 514,
+		"position": [
+			743.083374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 513,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 387,
+		"physics_frame": 515,
+		"position": [
+			746.833374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 514,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 388,
+		"physics_frame": 516,
+		"position": [
+			750.583374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 515,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 389,
+		"physics_frame": 517,
+		"position": [
+			754.333374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 516,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 390,
+		"physics_frame": 518,
+		"position": [
+			758.083374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 517,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 391,
+		"physics_frame": 519,
+		"position": [
+			761.833374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 518,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 392,
+		"physics_frame": 520,
+		"position": [
+			765.583374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 519,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 393,
+		"physics_frame": 521,
+		"position": [
+			769.333374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 520,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 19.0,
+		"facing": 1,
+		"frame": 394,
+		"physics_frame": 522,
+		"position": [
+			773.083374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 521,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 20.0,
+		"facing": 1,
+		"frame": 395,
+		"physics_frame": 523,
+		"position": [
+			776.833374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 522,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 21.0,
+		"facing": 1,
+		"frame": 396,
+		"physics_frame": 524,
+		"position": [
+			780.583374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 523,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 22.0,
+		"facing": 1,
+		"frame": 397,
+		"physics_frame": 525,
+		"position": [
+			784.333374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 524,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 23.0,
+		"facing": 1,
+		"frame": 398,
+		"physics_frame": 526,
+		"position": [
+			788.083374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 525,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 24.0,
+		"facing": 1,
+		"frame": 399,
+		"physics_frame": 527,
+		"position": [
+			791.833374023438,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 526,
+		"tag": "walk_start"
+	},
+	{
+		"clip": "walk",
+		"clock": 24.55,
+		"facing": 1,
+		"frame": 400,
+		"physics_frame": 528,
+		"position": [
+			793.77783203125,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 527,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "walk",
+		"clock": 25.1,
+		"facing": 1,
+		"frame": 401,
+		"physics_frame": 529,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 528,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 402,
+		"physics_frame": 530,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 529,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 403,
+		"physics_frame": 531,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 530,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 404,
+		"physics_frame": 532,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 531,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 405,
+		"physics_frame": 533,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 532,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 406,
+		"physics_frame": 534,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 533,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 407,
+		"physics_frame": 535,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 534,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 408,
+		"physics_frame": 536,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 535,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 409,
+		"physics_frame": 537,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 536,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 410,
+		"physics_frame": 538,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 537,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "idle",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 411,
+		"physics_frame": 539,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 538,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "idle",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 412,
+		"physics_frame": 540,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 539,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "idle",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 413,
+		"physics_frame": 541,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 540,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "idle",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 414,
+		"physics_frame": 542,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 541,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "idle",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 415,
+		"physics_frame": 543,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 542,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "idle",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 416,
+		"physics_frame": 544,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 543,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "idle",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 417,
+		"physics_frame": 545,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 544,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "idle",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 418,
+		"physics_frame": 546,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 545,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "idle",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 419,
+		"physics_frame": 547,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 546,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "idle",
+		"clock": 19.0,
+		"facing": 1,
+		"frame": 420,
+		"physics_frame": 548,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 547,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "idle",
+		"clock": 20.0,
+		"facing": 1,
+		"frame": 421,
+		"physics_frame": 549,
+		"position": [
+			793.916748046875,
+			576.0
+		],
+		"profile": "shortsword",
+		"render_frame": 548,
+		"tag": "walk_stop"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 422,
+		"physics_frame": 550,
+		"position": [
+			793.916748046875,
+			562.008544921875
+		],
+		"profile": "shortsword",
+		"render_frame": 549,
+		"tag": "jump_rise"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 423,
+		"physics_frame": 551,
+		"position": [
+			793.916748046875,
+			548.675231933594
+		],
+		"profile": "shortsword",
+		"render_frame": 550,
+		"tag": "jump_rise"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 424,
+		"physics_frame": 552,
+		"position": [
+			793.916748046875,
+			535.925231933594
+		],
+		"profile": "shortsword",
+		"render_frame": 551,
+		"tag": "jump_rise"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 425,
+		"physics_frame": 553,
+		"position": [
+			793.916748046875,
+			523.758544921875
+		],
+		"profile": "shortsword",
+		"render_frame": 552,
+		"tag": "jump_rise"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 426,
+		"physics_frame": 554,
+		"position": [
+			793.916748046875,
+			512.175231933594
+		],
+		"profile": "shortsword",
+		"render_frame": 553,
+		"tag": "jump_rise"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 427,
+		"physics_frame": 555,
+		"position": [
+			793.916748046875,
+			501.175231933594
+		],
+		"profile": "shortsword",
+		"render_frame": 554,
+		"tag": "jump_rise"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 428,
+		"physics_frame": 556,
+		"position": [
+			793.916748046875,
+			490.758575439453
+		],
+		"profile": "shortsword",
+		"render_frame": 555,
+		"tag": "jump_rise"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 429,
+		"physics_frame": 557,
+		"position": [
+			793.916748046875,
+			480.925231933594
+		],
+		"profile": "shortsword",
+		"render_frame": 556,
+		"tag": "jump_rise"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 430,
+		"physics_frame": 558,
+		"position": [
+			793.916748046875,
+			471.675231933594
+		],
+		"profile": "shortsword",
+		"render_frame": 557,
+		"tag": "jump_rise"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 431,
+		"physics_frame": 559,
+		"position": [
+			793.916748046875,
+			463.008575439453
+		],
+		"profile": "shortsword",
+		"render_frame": 558,
+		"tag": "jump_rise"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 432,
+		"physics_frame": 560,
+		"position": [
+			793.916748046875,
+			458.218566894531
+		],
+		"profile": "shortsword",
+		"render_frame": 559,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 433,
+		"physics_frame": 561,
+		"position": [
+			793.916748046875,
+			454.011901855469
+		],
+		"profile": "shortsword",
+		"render_frame": 560,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 434,
+		"physics_frame": 562,
+		"position": [
+			793.916748046875,
+			450.388580322266
+		],
+		"profile": "shortsword",
+		"render_frame": 561,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 435,
+		"physics_frame": 563,
+		"position": [
+			793.916748046875,
+			447.348571777344
+		],
+		"profile": "shortsword",
+		"render_frame": 562,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_rise",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 436,
+		"physics_frame": 564,
+		"position": [
+			793.916748046875,
+			444.891906738281
+		],
+		"profile": "shortsword",
+		"render_frame": 563,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_apex",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 437,
+		"physics_frame": 565,
+		"position": [
+			793.916748046875,
+			443.018585205078
+		],
+		"profile": "shortsword",
+		"render_frame": 564,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_apex",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 438,
+		"physics_frame": 566,
+		"position": [
+			793.916748046875,
+			441.728576660156
+		],
+		"profile": "shortsword",
+		"render_frame": 565,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_apex",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 439,
+		"physics_frame": 567,
+		"position": [
+			793.916748046875,
+			441.021911621094
+		],
+		"profile": "shortsword",
+		"render_frame": 566,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_apex",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 440,
+		"physics_frame": 568,
+		"position": [
+			793.916748046875,
+			440.898590087891
+		],
+		"profile": "shortsword",
+		"render_frame": 567,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_apex",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 441,
+		"physics_frame": 569,
+		"position": [
+			793.916748046875,
+			441.358581542969
+		],
+		"profile": "shortsword",
+		"render_frame": 568,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_apex",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 442,
+		"physics_frame": 570,
+		"position": [
+			793.916748046875,
+			442.401916503906
+		],
+		"profile": "shortsword",
+		"render_frame": 569,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_apex",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 443,
+		"physics_frame": 571,
+		"position": [
+			793.916748046875,
+			444.028594970703
+		],
+		"profile": "shortsword",
+		"render_frame": 570,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_apex",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 444,
+		"physics_frame": 572,
+		"position": [
+			793.916748046875,
+			446.238586425781
+		],
+		"profile": "shortsword",
+		"render_frame": 571,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 445,
+		"physics_frame": 573,
+		"position": [
+			793.916748046875,
+			449.031921386719
+		],
+		"profile": "shortsword",
+		"render_frame": 572,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 446,
+		"physics_frame": 574,
+		"position": [
+			793.916748046875,
+			452.408599853516
+		],
+		"profile": "shortsword",
+		"render_frame": 573,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 447,
+		"physics_frame": 575,
+		"position": [
+			793.916748046875,
+			456.368591308594
+		],
+		"profile": "shortsword",
+		"render_frame": 574,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 448,
+		"physics_frame": 576,
+		"position": [
+			793.916748046875,
+			460.911926269531
+		],
+		"profile": "shortsword",
+		"render_frame": 575,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 449,
+		"physics_frame": 577,
+		"position": [
+			793.916748046875,
+			466.038604736328
+		],
+		"profile": "shortsword",
+		"render_frame": 576,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 450,
+		"physics_frame": 578,
+		"position": [
+			793.916748046875,
+			471.748596191406
+		],
+		"profile": "shortsword",
+		"render_frame": 577,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 451,
+		"physics_frame": 579,
+		"position": [
+			793.916748046875,
+			478.041931152344
+		],
+		"profile": "shortsword",
+		"render_frame": 578,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 452,
+		"physics_frame": 580,
+		"position": [
+			793.916748046875,
+			484.918609619141
+		],
+		"profile": "shortsword",
+		"render_frame": 579,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 453,
+		"physics_frame": 581,
+		"position": [
+			793.916748046875,
+			492.378601074219
+		],
+		"profile": "shortsword",
+		"render_frame": 580,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 454,
+		"physics_frame": 582,
+		"position": [
+			793.916748046875,
+			500.421936035156
+		],
+		"profile": "shortsword",
+		"render_frame": 581,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 455,
+		"physics_frame": 583,
+		"position": [
+			793.916748046875,
+			509.048614501953
+		],
+		"profile": "shortsword",
+		"render_frame": 582,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 456,
+		"physics_frame": 584,
+		"position": [
+			793.916748046875,
+			518.258605957031
+		],
+		"profile": "shortsword",
+		"render_frame": 583,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 457,
+		"physics_frame": 585,
+		"position": [
+			793.916748046875,
+			528.051940917969
+		],
+		"profile": "shortsword",
+		"render_frame": 584,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 458,
+		"physics_frame": 586,
+		"position": [
+			793.916748046875,
+			538.428588867188
+		],
+		"profile": "shortsword",
+		"render_frame": 585,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 459,
+		"physics_frame": 587,
+		"position": [
+			793.916748046875,
+			549.388610839844
+		],
+		"profile": "shortsword",
+		"render_frame": 586,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 460,
+		"physics_frame": 588,
+		"position": [
+			793.916748046875,
+			560.931945800781
+		],
+		"profile": "shortsword",
+		"render_frame": 587,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_fall",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 461,
+		"physics_frame": 589,
+		"position": [
+			793.916748046875,
+			573.05859375
+		],
+		"profile": "shortsword",
+		"render_frame": 588,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 1.0,
+		"facing": 1,
+		"frame": 462,
+		"physics_frame": 590,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 589,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 2.0,
+		"facing": 1,
+		"frame": 463,
+		"physics_frame": 591,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 590,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 3.0,
+		"facing": 1,
+		"frame": 464,
+		"physics_frame": 592,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 591,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 4.0,
+		"facing": 1,
+		"frame": 465,
+		"physics_frame": 593,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 592,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 5.0,
+		"facing": 1,
+		"frame": 466,
+		"physics_frame": 594,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 593,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 6.0,
+		"facing": 1,
+		"frame": 467,
+		"physics_frame": 595,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 594,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 7.0,
+		"facing": 1,
+		"frame": 468,
+		"physics_frame": 596,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 595,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 8.0,
+		"facing": 1,
+		"frame": 469,
+		"physics_frame": 597,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 596,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 9.0,
+		"facing": 1,
+		"frame": 470,
+		"physics_frame": 598,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 597,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 10.0,
+		"facing": 1,
+		"frame": 471,
+		"physics_frame": 599,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 598,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 11.0,
+		"facing": 1,
+		"frame": 472,
+		"physics_frame": 600,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 599,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 12.0,
+		"facing": 1,
+		"frame": 473,
+		"physics_frame": 601,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 600,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 13.0,
+		"facing": 1,
+		"frame": 474,
+		"physics_frame": 602,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 601,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 14.0,
+		"facing": 1,
+		"frame": 475,
+		"physics_frame": 603,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 602,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 15.0,
+		"facing": 1,
+		"frame": 476,
+		"physics_frame": 604,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 603,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 16.0,
+		"facing": 1,
+		"frame": 477,
+		"physics_frame": 605,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 604,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "jump_land",
+		"clock": 17.0,
+		"facing": 1,
+		"frame": 478,
+		"physics_frame": 606,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 605,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 18.0,
+		"facing": 1,
+		"frame": 479,
+		"physics_frame": 607,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 606,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 19.0,
+		"facing": 1,
+		"frame": 480,
+		"physics_frame": 608,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 607,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 20.0,
+		"facing": 1,
+		"frame": 481,
+		"physics_frame": 609,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 608,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 21.0,
+		"facing": 1,
+		"frame": 482,
+		"physics_frame": 610,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 609,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 22.0,
+		"facing": 1,
+		"frame": 483,
+		"physics_frame": 611,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 610,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 23.0,
+		"facing": 1,
+		"frame": 484,
+		"physics_frame": 612,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 611,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 24.0,
+		"facing": 1,
+		"frame": 485,
+		"physics_frame": 613,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 612,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "idle",
+		"clock": 25.0,
+		"facing": 1,
+		"frame": 486,
+		"physics_frame": 614,
+		"position": [
+			793.916748046875,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 613,
+		"tag": "jump_land_recover"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 1.0,
+		"facing": -1,
+		"frame": 487,
+		"physics_frame": 615,
+		"position": [
+			792.472290039063,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 614,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 2.0,
+		"facing": -1,
+		"frame": 488,
+		"physics_frame": 616,
+		"position": [
+			789.583374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 615,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 3.0,
+		"facing": -1,
+		"frame": 489,
+		"physics_frame": 617,
+		"position": [
+			785.833374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 616,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 4.0,
+		"facing": -1,
+		"frame": 490,
+		"physics_frame": 618,
+		"position": [
+			782.083374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 617,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 5.0,
+		"facing": -1,
+		"frame": 491,
+		"physics_frame": 619,
+		"position": [
+			778.333374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 618,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 6.0,
+		"facing": -1,
+		"frame": 492,
+		"physics_frame": 620,
+		"position": [
+			774.583374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 619,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 7.0,
+		"facing": -1,
+		"frame": 493,
+		"physics_frame": 621,
+		"position": [
+			770.833374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 620,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 8.0,
+		"facing": -1,
+		"frame": 494,
+		"physics_frame": 622,
+		"position": [
+			767.083374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 621,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk_start",
+		"clock": 9.0,
+		"facing": -1,
+		"frame": 495,
+		"physics_frame": 623,
+		"position": [
+			763.333374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 622,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 6.0,
+		"facing": -1,
+		"frame": 496,
+		"physics_frame": 624,
+		"position": [
+			759.583374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 623,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 7.0,
+		"facing": -1,
+		"frame": 497,
+		"physics_frame": 625,
+		"position": [
+			755.833374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 624,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 8.0,
+		"facing": -1,
+		"frame": 498,
+		"physics_frame": 626,
+		"position": [
+			752.083374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 625,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 9.0,
+		"facing": -1,
+		"frame": 499,
+		"physics_frame": 627,
+		"position": [
+			748.333374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 626,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 10.0,
+		"facing": -1,
+		"frame": 500,
+		"physics_frame": 628,
+		"position": [
+			744.583374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 627,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 11.0,
+		"facing": -1,
+		"frame": 501,
+		"physics_frame": 629,
+		"position": [
+			740.833374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 628,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 12.0,
+		"facing": -1,
+		"frame": 502,
+		"physics_frame": 630,
+		"position": [
+			737.083374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 629,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 13.0,
+		"facing": -1,
+		"frame": 503,
+		"physics_frame": 631,
+		"position": [
+			733.333374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 630,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 14.0,
+		"facing": -1,
+		"frame": 504,
+		"physics_frame": 632,
+		"position": [
+			729.583374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 631,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 15.0,
+		"facing": -1,
+		"frame": 505,
+		"physics_frame": 633,
+		"position": [
+			725.833374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 632,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 16.0,
+		"facing": -1,
+		"frame": 506,
+		"physics_frame": 634,
+		"position": [
+			722.083374023438,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 633,
+		"tag": "turn_walk_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 16.55,
+		"facing": -1,
+		"frame": 507,
+		"physics_frame": 635,
+		"position": [
+			720.138916015625,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 634,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "walk",
+		"clock": 17.1,
+		"facing": -1,
+		"frame": 508,
+		"physics_frame": 636,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 635,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 1.0,
+		"facing": -1,
+		"frame": 509,
+		"physics_frame": 637,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 636,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 2.0,
+		"facing": -1,
+		"frame": 510,
+		"physics_frame": 638,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 637,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 3.0,
+		"facing": -1,
+		"frame": 511,
+		"physics_frame": 639,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 638,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 4.0,
+		"facing": -1,
+		"frame": 512,
+		"physics_frame": 640,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 639,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 5.0,
+		"facing": -1,
+		"frame": 513,
+		"physics_frame": 641,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 640,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 6.0,
+		"facing": -1,
+		"frame": 514,
+		"physics_frame": 642,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 641,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 7.0,
+		"facing": -1,
+		"frame": 515,
+		"physics_frame": 643,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 642,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 8.0,
+		"facing": -1,
+		"frame": 516,
+		"physics_frame": 644,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 643,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "walk_stop",
+		"clock": 9.0,
+		"facing": -1,
+		"frame": 517,
+		"physics_frame": 645,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 644,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "idle",
+		"clock": 10.0,
+		"facing": -1,
+		"frame": 518,
+		"physics_frame": 646,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 645,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "idle",
+		"clock": 11.0,
+		"facing": -1,
+		"frame": 519,
+		"physics_frame": 647,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 646,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "idle",
+		"clock": 12.0,
+		"facing": -1,
+		"frame": 520,
+		"physics_frame": 648,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 647,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "idle",
+		"clock": 13.0,
+		"facing": -1,
+		"frame": 521,
+		"physics_frame": 649,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 648,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "idle",
+		"clock": 14.0,
+		"facing": -1,
+		"frame": 522,
+		"physics_frame": 650,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 649,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "idle",
+		"clock": 15.0,
+		"facing": -1,
+		"frame": 523,
+		"physics_frame": 651,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 650,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "idle",
+		"clock": 16.0,
+		"facing": -1,
+		"frame": 524,
+		"physics_frame": 652,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 651,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "idle",
+		"clock": 17.0,
+		"facing": -1,
+		"frame": 525,
+		"physics_frame": 653,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 652,
+		"tag": "stop_left"
+	},
+	{
+		"clip": "idle",
+		"clock": 18.0,
+		"facing": -1,
+		"frame": 526,
+		"physics_frame": 654,
+		"position": [
+			720.0,
+			575.938232421875
+		],
+		"profile": "shortsword",
+		"render_frame": 653,
+		"tag": "stop_left"
+	}
+]

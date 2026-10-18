@@ -1,0 +1,8 @@
+{
+  "mode": "reuse",
+  "no_new_generation": true,
+  "source_group": "art/animations/players/swordsman/v7/sources/base_batch_c4/guard",
+  "source_generation_record": "../../base_batch_c4/guard/generation.json",
+  "source_generation_sha256": "4396f0fa7ff74bc8d519d3218a650a0b4cb0d0438c96f60505c39f2168aab478",
+  "reason": "Complete source-bound c4 candidates under 2026-10-18 authorization; preserve all old binaries."
+}

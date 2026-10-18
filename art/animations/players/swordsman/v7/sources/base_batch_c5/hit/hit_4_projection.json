@@ -1,0 +1,27 @@
+{
+  "schema": "actor_head_roll_review/1",
+  "source_sha256": "70b5bd3e3c3461c762288d7441751c5f84d176618c20a4013c2b905cb903a039",
+  "pose_id": "hit_4",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "head": {
+    "hair_top": [
+      295,
+      917
+    ],
+    "chin": [
+      369,
+      1028
+    ],
+    "projection": "reviewed_in_plane_roll"
+  },
+  "axis_down": [
+    0.3420201433256687,
+    0.9396926207859084
+  ],
+  "perspective_scale": 1,
+  "landmark_semantics_reviewed": true,
+  "review_method": "2026-10-18 Codex inspected actual source pixels, true crown/front jaw and equal-pixel rotated comparison; semantic review only, not user artwork/runtime approval.",
+  "evidence_file": "hit_4_roll_review_c5.png",
+  "evidence_sha256": "1f091ada201146c23cfd1af6c350963a438f42862000bd89a67f3aff695ae8d5",
+  "checkpoint_review_pending": false
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "authored_weapon_plane/1",
+  "camera": {
+    "yaw": 0,
+    "pitch": 0
+  },
+  "method": "Source-calibrated screen blade angle, explicit cutting side and authored depth proxy. Not a recovered 3D body rig.",
+  "frames": [
+    {
+      "pose_cm": {
+        "blade_dir": [
+          0.882947592858927,
+          -0.4694715627858908,
+          0.0
+        ],
+        "blade_edge": [
+          -0.4694715627858908,
+          -0.882947592858927,
+          0
+        ]
+      },
+      "intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          0.882947592858927,
+          -0.4694715627858908,
+          0.0
+        ],
+        "blade_edge": [
+          -0.4694715627858908,
+          -0.882947592858927,
+          0
+        ]
+      },
+      "intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous"
+    },
+    {
+      "pose_cm": {
+        "blade_dir": [
+          0.9986295347545738,
+          -0.052335956242943835,
+          0.0
+        ],
+        "blade_edge": [
+          -0.052335956242943835,
+          -0.9986295347545738,
+          0
+        ]
+      },
+      "intent": "explicit blade edge aligned to movement/guard direction; keep grip continuous"
+    }
+  ]
+}

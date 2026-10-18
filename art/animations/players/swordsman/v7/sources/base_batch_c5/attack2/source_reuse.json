@@ -1,0 +1,8 @@
+{
+  "mode": "reuse",
+  "no_new_generation": true,
+  "source_group": "art/animations/players/swordsman/v7/sources/base_batch_c4/attack2",
+  "source_generation_record": "../../base_batch_c4/attack2/generation.json",
+  "source_generation_sha256": "606b1f57a80bb37b6e52b3f0f068e40dbe8c826d5eac599013bf9228f0ee43d9",
+  "reason": "Complete source-bound c4 candidates under 2026-10-18 authorization; preserve all old binaries."
+}

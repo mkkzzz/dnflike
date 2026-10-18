@@ -1,0 +1,84 @@
+{
+  "mode": "builtin",
+  "tool": "image_gen.imagegen",
+  "model": "not exposed",
+  "seed": null,
+  "generations": [
+    {
+      "output": "down_edit_c1.png",
+      "sha256": "32a23216f73be684af6ec2b0f20d4097beb58e8b98fb2f1f8fd93fdaff0b0e64",
+      "actual_size": [
+        1669,
+        942
+      ],
+      "raw_basename": "exec-1308a63b-1228-4a21-8c28-a2e2f7ab69c4.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_down_edit_c1.txt",
+      "prompt": "Use case: precise-object-edit / identity-preserve. Asset: transparent hand-painted dark fantasy game animation source sheet. Image 1 is the EDIT TARGET, an eight-pose unarmed swordsman sheet. Image 2 is the approved adult body/head proportion REFERENCE only.\nMake ONE precise correction only to the bottom-left reclining/downed figure in Image 1: enlarge its complete silver/red hair plus face head by about 8 percent at the same neck pivot, preserving its exact identity, reclined head tilt, gaze, hair shape and visible true front chin. Reconnect the neck naturally. Its head should have the same anatomical scale as the standing upper-left ruler figure, not a smaller doll head. The source standing figure is about 471px tall and its hair-tip to true front chin about 71px; the downed head is currently slightly too small. Preserve the reclining figure's torso, coat, both arms/fists, bent legs and boots, spacing, root and entire pose exactly. Preserve ALL other seven figures, their positions and sizes unchanged. Do not change the bottom-right closed-eye resting pose. Do not equalize pose bounding-box heights.\nKeep full 8-pose landscape sheet at the original native dimensions when possible, generous intact transparent borders. Genuine RGBA transparent background, straight alpha, no ground shadows, no weapons, no sheaths, no effects, no text, no panel borders, no added figures. Preserve the original dark painterly linework, silver hair with a dark red streak, black long coat with red lining, red forearm wraps, black trousers and steel grey greaves. No chibi proportions, no change to neutral ruler head or stature.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/body_c3.png",
+          "sha256": "21331f83ab43543abb0a1c383e22f25ebeed56666ddb808e144afda4cbe14670"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        }
+      ],
+      "selection": "rejected",
+      "reason": "Down head enlargement exceeded instruction; not selected."
+    },
+    {
+      "output": "down_edit_c2.png",
+      "sha256": "ffd935dba8ec4cc7ee44d60d3f3f7e82b4602311dd4cc113f52cbffa7abd6fe2",
+      "actual_size": [
+        1670,
+        942
+      ],
+      "raw_basename": "exec-5c54f6bd-916b-4247-9f6e-c890dbfb6414.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_down_edit_c2.txt",
+      "prompt": "Use case: precise-object-edit. Image 1 EDIT TARGET is the eight-figure transparent source sheet. Image 2 is the adult-proportion approved reference. Correct ONLY the complete head (hair and face) on the bottom-left reclining/downed figure. It is now too large: SHRINK this one head by approximately 22-25 percent around its neck attachment, reconnect the neck, preserve its likeness and exact backward tilt/gaze. Keep all body pixels and pose, fist, coat, legs, and every other figure unchanged. The downed head must have the SAME anatomical size as the upper-left neutral head. This is a 1672x941 sheet: neutral standing height about 471px, visible hair-to-front-chin about 71px. The downed head along its tilted local head axis must also be about 71-73px, NOT 90px. Leave the upper-left neutral figure completely unchanged. Keep ALL eight figures in their current positions and scale, full landscape canvas, transparent RGBA, straight alpha, no weapon, no text or shadows. Do not grow the downed head, do not change its body height. No chibi head. Keep the corrected downed head about the same dimensions as upper-row light-hit head.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c5/hit/down_edit_c1.png",
+          "sha256": "32a23216f73be684af6ec2b0f20d4097beb58e8b98fb2f1f8fd93fdaff0b0e64"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        }
+      ],
+      "selection": "rejected",
+      "reason": "Other figure/head geometry drift; not selected."
+    },
+    {
+      "output": "down_pair_c1.png",
+      "sha256": "70b5bd3e3c3461c762288d7441751c5f84d176618c20a4013c2b905cb903a039",
+      "actual_size": [
+        1254,
+        1254
+      ],
+      "raw_basename": "exec-e748bf10-68b4-48fa-b80b-ff1ad117cf55.png",
+      "transparent_background": true,
+      "prompt_file": "prompt_down_pair_c1.txt",
+      "prompt": "Use case: stylized-concept / identity-preserve. Create a production game actor pose pair, with exactly TWO fully drawn figures of the SAME adult swordsman at the SAME anatomical scale, on genuine transparent RGBA. The approved adult identity/proportion is Image 1. Image 2 supplies the desired reclining knocked-down pose (bottom-left figure); Image 3 is a large high-quality adult neutral-and-kneeling reference. Do not copy any weapon or sheath.\nSQUARE 1254x1254 or larger native canvas. TOP LEFT: one whole neutral standing adult figure, relaxed arms and feet, silver spiky hair with dark red fringe streak, stern right-facing 3/4 profile, black leather long coat with red lining, black high-neck buckled shirt, red wraps on BOTH forearms, black trousers, steel grey knee/greave armor. Standing hair top near y30, soles near y800: about 770 source pixels tall. The whole hair-tip-to-bottom-chin is only about 116 source pixels, adult body ratio head/standing=0.15, matching Image 1. Long adult legs and lean narrow torso. No large head.\nBOTTOM: one complete knocked-down but conscious figure in the exact reclining pose from Image 2 bottom-left, supported on his rear elbow, looking right, torso leaning back, both legs folded forward toward right, long coat pooled underneath. Near/right red-wrapped fist at lower-left remains curled for a sword grip; other fist rests at waist. Both boots intact. At identical standing-equivalent scale as the top ruler, the tilted reclining head must be the SAME physical size as the standing head: about 116 pixels measured along its local hair-to-true-front-chin axis. Do not shrink the head because he is downed. Do not make the pose as tall as the standing figure. Put this reclining figure across the bottom from x80 to x1160, roughly y900-1220 with transparent margins. Full head and jaw unobstructed, no hair/boots cut off. No weapons, sheath, effects, shadows, text, labels, grid or extra figures. Keep the painterly shaded steel/leather texture and clean silhouette of the approved reference. Exactly two figures, head and body scale consistent.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+          "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/hit/body_c3.png",
+          "sha256": "21331f83ab43543abb0a1c383e22f25ebeed56666ddb808e144afda4cbe14670"
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c4/death/body_c2.png",
+          "sha256": "76bcb9f411c6f37bb791db281f2380ec512191430db44d129270129f52f9fa56"
+        }
+      ],
+      "selection": "selected_for_down_only",
+      "reason": "Two-pose native ruler with genuine tilted head; only reclining pose exported, old hit/getup poses preserved."
+    }
+  ]
+}

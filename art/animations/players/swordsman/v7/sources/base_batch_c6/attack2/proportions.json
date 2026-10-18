@@ -1,0 +1,79 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-18",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c6/attack2/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Agent selected true jaw in magnified pixel-grid review; crown within the reviewed hair-only ROI. Not a source approval.",
+  "sources": {
+    "body": {
+      "sha256": "e1e72a0229873fed8bc171791079f09d9b411aa2fb402050ac8c31cb38e7ae18",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 26,
+        "standing_bottom_y": 533,
+        "sole": [
+          160,
+          533
+        ],
+        "crop_bbox": [
+          95,
+          10,
+          365,
+          538
+        ],
+        "head": {
+          "hair_top": [
+            248,
+            26
+          ],
+          "chin": [
+            248,
+            106
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c6_attack2_neutral",
+      "head": {
+        "hair_top": [
+          248,
+          26
+        ],
+        "chin": [
+          248,
+          106
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c6_right_contact",
+      "head": {
+        "hair_top": [
+          319,
+          556
+        ],
+        "chin": [
+          319,
+          630
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "file": "landmark_overlay.png",
+    "sha256": "362212cef59aef970b32e9b4154841658f245504672874f017390a9b23213729",
+    "meaning": "Agent true hair/jaw/sole landmark review only, not user source artwork approval."
+  }
+}

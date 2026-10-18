@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "checks": [
+    "source hashes",
+    "all source proportion gates",
+    "body/finger shared across profiles",
+    "real cutting-side binding",
+    "exact trim/layer pixel reconstruction",
+    "complete integer clocks"
+  ],
+  "verified_profile_frames": 294,
+  "unique_body_rasters": 70,
+  "unique_trimmed_textures": 353,
+  "artwork_approved": false,
+  "runtime_user_approved": false
+}

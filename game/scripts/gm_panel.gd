@@ -28,6 +28,11 @@ const BUTTONS := [
 	{"label": "直接失败", "cmd": "lose"},
 	{"label": "显示设置", "cmd": "settings"},
 	{"label": "实体根部几何", "cmd": "geometry"},
+	{"label": "V7 基础动作", "cmd": "art v7"},
+	{"label": "旧版基础动作", "cmd": "art v6"},
+	{"label": "装备太刀", "cmd": "weapon katana"},
+	{"label": "装备巨剑", "cmd": "weapon greatsword"},
+	{"label": "装备短剑", "cmd": "weapon shortsword"},
 ]
 
 var font: Font
@@ -55,7 +60,7 @@ func build(ui_font: Font, view: Vector2) -> void:
 	column.add_theme_constant_override("separation", 10)
 	_root.add_child(column)
 
-	column.add_child(_label("GM 测试面板    P 开关    Esc 关闭", 16, Color(1.0, 0.86, 0.55)))
+	column.add_child(_label("GM 测试面板    P 打开/切换    输入中用 Esc 关闭", 16, Color(1.0, 0.86, 0.55)))
 
 	_grid = GridContainer.new()
 	_grid.columns = COLUMNS
