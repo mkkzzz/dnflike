@@ -58,6 +58,15 @@
     "side_c2木门加固梁与前版略有变化，开关态框架也未做逐像素对齐。",
     "下方向背面、动画和游戏接入不在本轮生成范围。"
   ],
-  "approval": {"source_approved": false, "runtime_approved": false},
-  "game_modified": false
+  "approval": {"source_approved": true, "approved_revision": "side_c2", "date": "2026-10-18", "quote": "c2吧，尝试实装到游戏里", "scope": "side_c2 左右方向双态造型；不含上下方向、透明加工细节与实机视觉验收"},
+  "integration_record": {
+    "game_assets": "game/assets/dungeon/10001/doors/closed.png, open.png",
+    "bake_tool": "tools/bake_door_art.py",
+    "bake_report": "game/assets/dungeon/10001/doors/bake_report.json",
+    "config": "game/data/runtime.json -> doors.art",
+    "left_direction": "运行时 flip_h 镜像",
+    "up_down": "仍为程序化占位",
+    "runtime_visual_accepted": false
+  },
+  "game_modified": true
 }

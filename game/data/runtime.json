@@ -15,7 +15,15 @@
   },
   "collision": {"skin": 0.01, "slide_iterations": 6},
   "layering": {"background_z": -1000, "dim_z": -950, "door_z": -900, "ground_shadow_z": -850, "actor_base_z": 100, "actor_stride": 8, "effects_z": 3000, "late_physics_priority": 100, "entity_slice_width": 4},
-  "doors": {"inset": 30, "spawn_clearance": 130, "guard_frames": 12, "height": 214, "width": 62, "trigger_width": 92, "trigger_depth": 64, "depth_ratio": 0.5},
+  "doors": {
+    "inset": 30, "spawn_clearance": 130, "guard_frames": 12,
+    "height": 214, "width": 62, "trigger_width": 92, "trigger_depth": 64, "depth_ratio": 0.5,
+    "art": {
+      "closed": "res://assets/dungeon/10001/doors/closed.png",
+      "open": "res://assets/dungeon/10001/doors/open.png",
+      "note": "左右方向专用；上下方向仍走程序化占位。左向由运行时 flip_h 镜像，未做独立受光校正。"
+    }
+  },
   "hud": {"fade_start_y": 606, "fade_full_y": 690, "minimum_opacity": 0.15, "notice_seconds": 1.8, "toast_seconds": 2.6},
   "evaluation": {"ranks": [{"rank": "S", "max_damage": 100, "max_seconds": 100}, {"rank": "A", "max_damage": 250, "max_seconds": -1}], "fallback_rank": "B"},
   "gm": {"max_spawn": 8, "spawn_distance": 220, "spawn_spacing": 130, "god_frames": 99999999},

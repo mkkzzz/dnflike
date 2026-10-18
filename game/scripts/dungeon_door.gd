@@ -1,8 +1,7 @@
 class_name DungeonDoor
 extends Node2D
-## 关卡门占位：木栅栏 + 藤蔓门框 + 门框灯，未开启 / 开启两态。
-## 设计单第五节的门资源尚未产出，这里是程序化占位，不冒充正式美术；
-## 上/下旋转复用侧向画法，触发区使用独立的地面坐标。
+## 关卡门：左右方向使用双态贴图（关闭 / 开启），其余方向仍用程序化占位。
+## 贴图按脚底中心对齐；左门镜像右门图。触发区使用独立地面坐标，与绘制无关。
 
 const FRAME := Color(0.38, 0.26, 0.16)
 const FRAME_DARK := Color(0.20, 0.14, 0.09)
@@ -26,6 +25,11 @@ var _gate_height := GATE_H
 var _gate_width := GATE_W
 var _trigger_width := 92.0
 var _trigger_depth := 96.0
+var _art := {}
+var _art_sprites: Array[Sprite2D] = []
+
+## 贴图与缓存都只在门的左右方向生效；缺少贴图或上下方向时退回程序化绘制。
+static var _art_cache := {}
 
 
 func setup(door_side: String, at: Vector2, settings: Dictionary = {}) -> void:
@@ -41,18 +45,71 @@ func setup(door_side: String, at: Vector2, settings: Dictionary = {}) -> void:
 	_trigger_depth = maxf(1.0, float(_settings.get("trigger_depth", 96.0)))
 	position = at
 	rotation = 0.0
-	match side:
-		"up":
-			rotation = -PI * 0.5
-		"down":
-			rotation = PI * 0.5
+	_art = {}
+	if side == "up" or side == "down":
+		rotation = -PI * 0.5 if side == "up" else PI * 0.5
+	else:
+		_art = _resolve_art()
+	_build_art()
 	queue_redraw()
+
+
+func _resolve_art() -> Dictionary:
+	var art: Dictionary = _settings.get("art", {})
+	if art.is_empty():
+		return {}
+	var closed := str(art.get("closed", ""))
+	var open := str(art.get("open", ""))
+	if closed.is_empty() or open.is_empty():
+		return {}
+	var key := closed + "|" + open
+	if not _art_cache.has(key):
+		if not ResourceLoader.exists(closed) or not ResourceLoader.exists(open):
+			return {}
+		_art_cache[key] = {"closed": load(closed), "open": load(open)}
+	var pair: Dictionary = _art_cache[key]
+	var texture: Texture2D = pair["closed"]
+	if texture == null or texture.get_height() <= 0:
+		return {}
+	return pair
+
+
+func _build_art() -> void:
+	for sprite in _art_sprites:
+		if is_instance_valid(sprite):
+			sprite.queue_free()
+	_art_sprites.clear()
+	if _art.is_empty():
+		return
+	var texture: Texture2D = _art["closed"]
+	var scale_factor := _gate_height / float(texture.get_height())
+	var flip := side == "left"
+	for state in ["closed", "open"]:
+		var sprite := Sprite2D.new()
+		sprite.name = "Door" + state.capitalize()
+		sprite.texture = _art[state]
+		sprite.centered = false
+		sprite.offset = Vector2(-float(texture.get_width()) * 0.5, -float(texture.get_height()))
+		sprite.scale = Vector2.ONE * scale_factor
+		sprite.flip_h = flip
+		sprite.visible = false
+		add_child(sprite)
+		_art_sprites.append(sprite)
+	_refresh_art()
+
+
+func _refresh_art() -> void:
+	if _art_sprites.size() < 2:
+		return
+	_art_sprites[0].visible = not opened
+	_art_sprites[1].visible = opened
 
 
 func set_opened(value: bool) -> void:
 	if opened == value:
 		return
 	opened = value
+	_refresh_art()
 	queue_redraw()
 
 
@@ -98,12 +155,20 @@ func _configured_color(key: String, fallback: Color) -> Color:
 
 
 func _process(delta: float) -> void:
-	if opened:
-		_pulse = fmod(_pulse + delta, 1.0)
+	if not opened:
+		return
+	_pulse = fmod(_pulse + delta, 1.0)
+	if _art_sprites.size() < 2:
 		queue_redraw()
+		return
+	# 正式贴图没有灯动画层，用极轻的亮度脉动提示“已开启”，不改变几何。
+	var lit := 0.94 + 0.06 * sin(_pulse * TAU)
+	_art_sprites[1].modulate = Color(lit, lit, lit, 1.0)
 
 
 func _draw() -> void:
+	if not _art_sprites.is_empty():
+		return
 	var half_w := _gate_width * 0.5
 	var dir := -1.0 if side == "left" else 1.0
 	var frame := _configured_color("frame", FRAME)

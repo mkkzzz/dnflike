@@ -208,5 +208,44 @@
         }
       }
     }
+  },
+  "doors": {
+    "approval": "source_c2_direction_approved_by_user_2026-10-18; runtime visual not yet accepted",
+    "source": "art/concepts/scenes/forest/10001/gate_v2/candidates/side_c2/2D_hand_painted_belt_scroller__2026-10-18T08-10-59.png",
+    "source_sha256": "b1525ddf78a3c03ba6e360e0e59f960096f555742171a32eca0d4d03a5f308c7",
+    "bake_tool": "tools/bake_door_art.py",
+    "bake_report": "doors/bake_report.json",
+    "crop": {
+      "left": 40,
+      "top": 40,
+      "right": 621,
+      "bottom": 743
+    },
+    "anchor": [
+      0.5,
+      1.0
+    ],
+    "resize_applied": false,
+    "upscale_applied": false,
+    "directions": {
+      "left": "runtime flip_h of right textures; light direction not re-authored",
+      "right": "authored source",
+      "up": "procedural placeholder; no art produced",
+      "down": "procedural placeholder; no art produced"
+    },
+    "states": [
+      "closed",
+      "open"
+    ],
+    "files": {
+      "closed": {
+        "file": "doors/closed.png",
+        "sha256": "b9e96ac75187bd342cd4558357c9e1ed5289a82e6a0708ea8eb583cad31bf326"
+      },
+      "open": {
+        "file": "doors/open.png",
+        "sha256": "e23ac8fb2202dbb24cea8551124e7bd07bbdfe03789cd9953f45cc9f61d6e2fd"
+      }
+    }
   }
 }
