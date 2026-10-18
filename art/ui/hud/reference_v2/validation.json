@@ -24,7 +24,7 @@
   ],
   "production_exports": [],
   "runtime_integrated": false,
-  "visual_approval": "pending",
+  "visual_approval": "approved",
   "checks": {
     "source_decodes": true,
     "source_matches_recorded_dimensions": true,

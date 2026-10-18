@@ -11,10 +11,12 @@
 | scope | 整屏方向样张；批准后再出独立可接入资源 |
 | gameplay_purpose | 战斗血蓝、道具、技能、目标、小地图、连击及评价的信息分层 |
 | owner / integration_owner | ws2 / ws2（后续接入任务） |
-| lifecycle | source_review；无实装、无美术批准 |
+| lifecycle | c1 source_approved；首批独立资源 baked_validated，待本批美术评审、未实装 |
 
 用户要求：此前其他 agent 的 UI 效果差，基本还原本轮截图；资源重新生成，不使用简单色块。
 本轮按 [美术流程](../../design/14_美术资源全流程.md)先提供具体样张待人工看图；沿用双排 12 技能格、默认两个技能、队伍暂不显示、轮盘功能预留的既有需求。
+
+2026-10-18 用户确认“风格我很认可，好非常多”，并授权“出一版资源”“拼起来看看”。[首批交付入口](../../../art/ui/hud/reference_v2/batch_01/README.md)已生成独立源图、透明导出与同包拼装；本批尺寸以 batch_01 的 manifest/layout 为准。
 
 ## 2. 依赖与影响
 
@@ -27,7 +29,7 @@
 
 - 参考：用户本轮附件，1112×832；SHA256 `fcf439290346af4afefd83be6d3c7f71b5af943818d73e2a0872cd668a9bf5b6`。仅用于参考，不裁源图像素作游戏资源。
 - 工具：内置 `image_gen.imagegen`，通过 referenced_image_paths 实际传入附件；非仅在 prompt 写路径。
-- 调用 transparent_background=false；本轮输出 RGB 整屏样张，没有验证透明部件能力。
+- c1 调用 transparent_background=false，输出 RGB 整屏样张。首批资源逐件调用 true（平铺底板和清理场景除外），已验证实际 RGBA/真实透明边缘。
 - 实际模型版本和随机种子：工具未返回，未知；不沿用旧 agent 的模型名。
 - [完整提示词](../../../art/ui/hud/reference_v2/candidates/c1/prompt.txt)及[原始输出](../../../art/ui/hud/reference_v2/candidates/c1/source.png)保留在包内。提示词总结：紧凑贴边、铜灰磨旧材质、粗实红蓝胶囊、内凹格子、绿色弧线半轮盘、双排技能、小地图；避免金饰、试管及平面色块。
 
@@ -37,15 +39,16 @@
 
 | 独立语义 ID | 正式 2K 显示尺寸/范围 | 制作要求 |
 |---|---|---|
-| ui.hud.orb_hp / orb_mp | 外壳各 222×260；位于左右底角 | 保留既有 ID，外观改粗胶囊；壳体/液面/玻璃高光分开 |
-| ui.hud.panel_bottom | 2560×160，贴底 | 分段制作，中央可等比平铺；不放大低清长条 |
-| ui.hud.slot_frame | 112×100；统一槽框与内凹底 | 源图每格不小于目标像素；不得把动态内容烘入 |
-| ui.hud.wheel | 370×340；下缘按屏幕自然裁切 | c1 五个外围小钮加中央钮，按新参考近似；与旧文档四钮有差别，待本轮确认 |
-| ui.hud.exp_track | 680×34 | 框与进度分开；真实经验系统未实现时 0% |
+| ui.hud.orb_hp / orb_mp | 外壳各 248×384；位于左右底角 | 保留既有 ID，外观改粗胶囊；壳体/液面/玻璃高光分开 |
+| ui.hud.panel_bottom | 2560×270，贴底；512×270 平铺纹理 | 等比 mirrored_repeat 平铺，不放大低清长条 |
+| ui.hud.slot_frame | 116×116；运行时键位另加底牌 | 源图每格不小于目标像素；不得把动态内容烘入 |
+| ui.hud.wheel | 480×410；下缘按屏幕自然裁切 | 五个外围小钮加中央钮，沿用已认可 c1 视觉，功能仍留空 |
+| ui.hud.exp_track | 790×70 | 框与进度分开；真实经验系统未实现时 0%；预览另给示意填充 |
 | ui.hud.buff_frame | 64×64 | 以实际状态填内容，样张图标不是已实现增益 |
-| ui.hud.target_frame | 780×84 | 头像/目标文字/血条独立；保留旧设计的动态条长及层数需求 |
-| ui.hud.minimap_frame | 240×250，右上 | 边框独立；真实地图数据接入另行实现 |
-| ui.hud.skill_icon / item_icon | 各至少 112×100 | 只制作真实技能/物品语义；c1 的图标为风格示意 |
+| ui.hud.target_frame | 820×116 | 头像/目标文字/血条独立；保留旧设计的动态条长及层数需求 |
+| ui.hud.minimap_frame | 260×285，右上 | 边框独立；真实地图数据接入另行实现 |
+| ui.hud.dungeon_title | 620×64，右上 | 酒红珐琅空牌与运行时文字分开 |
+| ui.hud.skill_icon / item_icon | 内嵌图标 96×96 | 两个技能对应 quick_draw/thrust；六件道具按 c1 做资源示意 |
 
 技能区保持 2×6；道具 6 格；轮盘/两端壳体与底板连接，消除旧稿大空档。正式字体运行时渲染；动画/事件/朝向在静态样张不适用。后续 PNG 用 straight alpha 普通混合；本轮 RGB 不冒充透明切图。
 
@@ -53,29 +56,33 @@
 
 | 候选 | 实际交付 | 状态 |
 |---|---|---|
-| c1 | 一张新生成完整画面，带场景/人物/静态示意数值 | 待用户评审；不作为生产图集 |
+| c1 | 一张新生成完整画面，带场景/人物/静态示意数值 | 用户已认可整体风格；不作为生产图集 |
+| batch_01 | 20 件新 UI 源图、1 张清理场景；22 张独立导出（含 2 张派生高光） | 技术校验通过；拼装待本批美术评审 |
 
-正式图标数量、按钮功能、地图状态、经验和评价均未完成；图上的数值/标签仅用于评审。特别需要确认整体还原程度和轮盘按钮数量，未继承旧候选的批准。
+轮盘功能、真实地图/经验/评价的数据接入未完成；图上的数值/标签仅用于评审。源风格批准未扩展为游戏实装验收。
 
 ## 6. 加工与复现
 
 - 包入口：`art/ui/hud/reference_v2/manifest.json`；校验：`art/ui/hud/reference_v2/validation.json`。
 - `python art/ui/hud/reference_v2/build_review.py` 从原始输出生成 0.75 缩样与原像素底栏裁图，保存尺寸/哈希/是否放大等事实。
 - 原始输出未改；不声称可复现随机生图。原参考为用户附件，后续重新生图需要附件图像输入或明确的新参考。
+- 首批加工：`python art/ui/hud/reference_v2/batch_01/build_pack.py`，需要 Pillow。逐件 alpha 主体裁切、预乘降采样、液面遮罩、玻璃亮部提取与同包拼装；未放大、未用色键抠暗金属。可消费 ZIP 入口见首批 README。
 
 ## 7. 校验和预览
 
 - 原始整屏：[source.png](../../../art/ui/hud/reference_v2/candidates/c1/source.png)。
 - [原像素底栏细节](../../previews/hud_reference_v2/c1_bottom_detail.png)；[实际源图的 0.75 缩样](../../previews/hud_reference_v2/c1_actual_075.png)。该缩样不是 1920×1080 成品。
 - 检查源图解码、实际尺寸、SHA256、缩样不放大及文档链接。未运行 Godot，不把离线示意图记成实机截图。
+- [首批整屏拼装](../../previews/hud_reference_v2/batch_01/assembled_scene.png)、[半血/冷却](../../previews/hud_reference_v2/batch_01/assembled_states.png)、[原生 2K 底栏](../../previews/hud_reference_v2/batch_01/bottom_native_2560.png)、[1080p 比例底栏](../../previews/hud_reference_v2/batch_01/bottom_1080_scale.png)。整屏场景保持原生 1672×941，叠加从 2K 缩小的 UI；不宣称场景本身已成为 2K 正式资产。
 
 ## 8. 发布、后续接入与验收
 
 按协作规则独立提交和推送本轮产物，保留同工作区并行 v7 改动。发布结果由本轮回复说明。
 
-- [ ] 用户批准 c1 整体方向与轮盘数量。
-- [ ] 按上表生成独立静态资源并检查真实尺寸/透明边缘。
-- [ ] 正式导出与预览共用包；绘制液面/冷却/真数据/文本。
+- [x] 用户批准 c1 整体风格并授权首批资源与拼装。
+- [x] 按上表生成独立静态资源并检查真实尺寸/透明边缘。
+- [x] 导出与预览共用包，演示液面/玻璃/冷却/运行时文字分层。
+- [ ] 用户评审本批资源实际组合；真实数据按游戏接入任务绑定。
 - [ ] 接入既有 HUD 数据入口、让位行为、双排技能键及真实小地图。
 - [ ] 2560×1440 与 1920×1080 实机截图、相关回归与用户实机验收。
 

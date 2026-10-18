@@ -1,0 +1,1079 @@
+{
+  "asset_id": "ui.hud.theme",
+  "revision": "reference_v2.batch_01",
+  "path_base": "repository_root",
+  "lifecycle": "baked_validated",
+  "canvas": [
+    2560,
+    1440
+  ],
+  "scale_1080": 0.75,
+  "upscale_allowed": false,
+  "runtime_integrated": false,
+  "textures": {
+    "hp_shell": {
+      "asset_id": "ui.hud.orb_hp.frame",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/hp_shell.png",
+      "source_sha256": "dba6197b958c6048b91e739a445d7a7898b0a0fda06f1d1f77d3ea8e7e5af05f",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        45,
+        73,
+        980,
+        1452
+      ],
+      "source_alpha": [
+        0,
+        254
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/hp_shell.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.26524064171122996,
+      "trimmed_size": [
+        935,
+        1379
+      ],
+      "offset": [
+        0,
+        18
+      ],
+      "file": "exports/hp_shell.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/hp_shell.png",
+      "export_size": [
+        248,
+        384
+      ],
+      "export_sha256": "84c701d1f7f34696d31518d91c13bf2e4fdcd7cece9eeca3274d56c755da918d",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "mp_shell": {
+      "asset_id": "ui.hud.orb_mp.frame",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/mp_shell.png",
+      "source_sha256": "1b59457e442ce7a585e5a39c6d11a5c9b477a9892cfc7d62818bc3b6a6430a6c",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        20,
+        23,
+        995,
+        1433
+      ],
+      "source_alpha": [
+        0,
+        254
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/mp_shell.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/batch_01/sources/hp_shell.png",
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.25435897435897437,
+      "trimmed_size": [
+        975,
+        1410
+      ],
+      "offset": [
+        0,
+        25
+      ],
+      "file": "exports/mp_shell.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/mp_shell.png",
+      "export_size": [
+        248,
+        384
+      ],
+      "export_sha256": "dae48a8ae819eab620c03f62a4a562e45e4f33b90cdf19ab7ccf61e019676b90",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "wheel": {
+      "asset_id": "ui.hud.wheel",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/wheel.png",
+      "source_sha256": "f1899c40d5d29f073eda3ec380e4daa69dd2c395ad7d5deed3cd9bd6686438ad",
+      "source_size": [
+        1358,
+        1159
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        81,
+        31,
+        1274,
+        1145
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/wheel.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.36804308797127466,
+      "trimmed_size": [
+        1193,
+        1114
+      ],
+      "offset": [
+        20,
+        0
+      ],
+      "file": "exports/wheel.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/wheel.png",
+      "export_size": [
+        480,
+        410
+      ],
+      "export_sha256": "87e9720e3ffe508c3f59a215a77e4e98f20026906ff801b2496f105c7d29f51e",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "slot_frame": {
+      "asset_id": "ui.hud.slot_frame",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/slot_frame.png",
+      "source_sha256": "31e48a010b4ad8a0b23d589058fd8f4fd65d9eced959162ae1efbf0e39ba6941",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        136,
+        162,
+        1119,
+        1091
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/slot_frame.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.11800610376398779,
+      "trimmed_size": [
+        983,
+        929
+      ],
+      "offset": [
+        0,
+        6
+      ],
+      "file": "exports/slot_frame.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/slot_frame.png",
+      "export_size": [
+        116,
+        116
+      ],
+      "export_sha256": "59becae7fb94641aaedbdbe714213f98b1854ee8234d509eb55d09f0e41d8a4e",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "fascia_tile": {
+      "asset_id": "ui.hud.panel_bottom.tile",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/fascia_tile.png",
+      "source_sha256": "d6ad89b1af3412118505aa0c43b5daab8007f936a3495122a7b0ed4418e3808e",
+      "source_size": [
+        1726,
+        911
+      ],
+      "source_mode": "RGB",
+      "crop_bbox": [
+        0,
+        0,
+        1726,
+        911
+      ],
+      "source_alpha": [
+        255,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/fascia_tile.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": false,
+      "uniform_scale": 0.29637760702524696,
+      "trimmed_size": [
+        1726,
+        911
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "file": "exports/fascia_tile.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/fascia_tile.png",
+      "export_size": [
+        512,
+        270
+      ],
+      "export_sha256": "7835fa70a86cbc1595617286d8caa5cfa78afe6c3ebf1dfa4e87c63b2c5e32d9",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "exp_frame": {
+      "asset_id": "ui.hud.exp_track",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/exp_frame.png",
+      "source_sha256": "6cb41f60ad2216b2ebb9b2b7e58a55f426946e9e17499805e8188314927b1f69",
+      "source_size": [
+        1881,
+        836
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        62,
+        358,
+        1820,
+        493
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/exp_frame.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.44937428896473264,
+      "trimmed_size": [
+        1758,
+        135
+      ],
+      "offset": [
+        0,
+        9
+      ],
+      "file": "exports/exp_frame.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/exp_frame.png",
+      "export_size": [
+        790,
+        70
+      ],
+      "export_sha256": "c7ef329282fdb05c71dbb3ba9d37a434f46c2b43a4abaa23c3c0ab8d974faddd",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "target_frame": {
+      "asset_id": "ui.hud.target_frame",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/target_frame.png",
+      "source_sha256": "4c7cf613812c16ea9f7341accc23ad1ad2f3e59c001e1e56228973212ae8beeb",
+      "source_size": [
+        1994,
+        789
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        47,
+        277,
+        1948,
+        528
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/target_frame.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.4313519200420831,
+      "trimmed_size": [
+        1901,
+        251
+      ],
+      "offset": [
+        0,
+        8
+      ],
+      "file": "exports/target_frame.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/target_frame.png",
+      "export_size": [
+        820,
+        116
+      ],
+      "export_sha256": "97bc9fba5d32d523bfbe085351f6dd6f05c074d862cd8d48a6a0e2302947a98c",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "minimap_frame": {
+      "asset_id": "ui.hud.minimap_frame",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/minimap_frame.png",
+      "source_sha256": "ab09deaee42937fb0db33db4935f2f38f367611a3330c41f86ede83be067d1f8",
+      "source_size": [
+        1218,
+        1292
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        45,
+        90,
+        1174,
+        1249
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/minimap_frame.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.23029229406554472,
+      "trimmed_size": [
+        1129,
+        1159
+      ],
+      "offset": [
+        0,
+        18
+      ],
+      "file": "exports/minimap_frame.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/minimap_frame.png",
+      "export_size": [
+        260,
+        285
+      ],
+      "export_sha256": "a7c0ee32cda4626a45f7e9a858f1691fd3c6ddb72ea4b8fe754b3147427b0fa6",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "target_portrait": {
+      "asset_id": "ui.hud.target_portrait",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/target_portrait.png",
+      "source_sha256": "5e99e55e59492f73af4e7299e19e3362dbe96b689926be510a077a4e3eb6d555",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        23,
+        75,
+        1243,
+        1194
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/target_portrait.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.06557377049180328,
+      "trimmed_size": [
+        1220,
+        1119
+      ],
+      "offset": [
+        0,
+        7
+      ],
+      "file": "exports/target_portrait.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/target_portrait.png",
+      "export_size": [
+        80,
+        80
+      ],
+      "export_sha256": "1aca02f99914b3a43ebeb070ce8cd4e232a8a9e5f256910041ff6b43d981b6e7",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "title_plate": {
+      "asset_id": "ui.hud.dungeon_title",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/title_plate.png",
+      "source_sha256": "6a5bc2889509f7de0b8ae92fb36040de83659f6a77335a2519bdc185377b99c1",
+      "source_size": [
+        2098,
+        749
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        33,
+        273,
+        2066,
+        474
+      ],
+      "source_alpha": [
+        0,
+        254
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/title_plate.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.3049680275454993,
+      "trimmed_size": [
+        2033,
+        201
+      ],
+      "offset": [
+        0,
+        3
+      ],
+      "file": "exports/title_plate.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/title_plate.png",
+      "export_size": [
+        620,
+        64
+      ],
+      "export_sha256": "dbbdade31189f32dfd1e2cfa3e6fac30dfd8b89fcfafb8659c589e94275ebcc6",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "item_fruit": {
+      "asset_id": "ui.item.fruit.icon",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/item_fruit.png",
+      "source_sha256": "73c47a31c35e3ee38bfcdddcfaa573c25d4ace52dcf32c9db4c451655f9dabc7",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        99,
+        171,
+        1203,
+        1135
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/item_fruit.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.08695652173913043,
+      "trimmed_size": [
+        1104,
+        964
+      ],
+      "offset": [
+        0,
+        12
+      ],
+      "file": "exports/item_fruit.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/item_fruit.png",
+      "export_size": [
+        96,
+        96
+      ],
+      "export_sha256": "d869ef1839f05fac9d090fa42ad4e1b56b281f7290e842e37278cba09c03d129",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "item_herb": {
+      "asset_id": "ui.item.herb.icon",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/item_herb.png",
+      "source_sha256": "bb04c8a532861b2de04c300ac1b454e2053c3ceb76162a44e0c304fe4e3aa531",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        83,
+        84,
+        1220,
+        1169
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/item_herb.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.08443271767810026,
+      "trimmed_size": [
+        1137,
+        1085
+      ],
+      "offset": [
+        0,
+        4
+      ],
+      "file": "exports/item_herb.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/item_herb.png",
+      "export_size": [
+        96,
+        96
+      ],
+      "export_sha256": "3087dbe6e3abe396ad26601bed6beb4b704c2ff3b19884c9a62d486bc16477f7",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "item_potion_red": {
+      "asset_id": "ui.item.potion_red.icon",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/item_potion_red.png",
+      "source_sha256": "1524345033b2097c83675481b85fb6fef2ee399ea2d3f08abfce11ad2012e84e",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        279,
+        136,
+        977,
+        1133
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/item_potion_red.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.09628886659979939,
+      "trimmed_size": [
+        698,
+        997
+      ],
+      "offset": [
+        14,
+        0
+      ],
+      "file": "exports/item_potion_red.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/item_potion_red.png",
+      "export_size": [
+        96,
+        96
+      ],
+      "export_sha256": "b553a76ef112758302f76fbf5e4cb2d0b7396d5393133bc7b65902d1313c4771",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "item_potion_blue": {
+      "asset_id": "ui.item.potion_blue.icon",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/item_potion_blue.png",
+      "source_sha256": "0e45512da10d9d981793d2275ee38bf0150b6bd8b887c5a7e9f27e4031f95bed",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        255,
+        109,
+        997,
+        1164
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/item_potion_blue.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.0909952606635071,
+      "trimmed_size": [
+        742,
+        1055
+      ],
+      "offset": [
+        14,
+        0
+      ],
+      "file": "exports/item_potion_blue.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/item_potion_blue.png",
+      "export_size": [
+        96,
+        96
+      ],
+      "export_sha256": "2158481bd0f25112ebd78013c5a4a92e1a96268359e4d2f879807ceabb3bce88",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "item_bread": {
+      "asset_id": "ui.item.bread.icon",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/item_bread.png",
+      "source_sha256": "db8e88fa7fd95be6d68f5b51235544119316ca4beaf51178787d043115e0d046",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        55,
+        201,
+        1215,
+        1095
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/item_bread.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.08275862068965517,
+      "trimmed_size": [
+        1160,
+        894
+      ],
+      "offset": [
+        0,
+        22
+      ],
+      "file": "exports/item_bread.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/item_bread.png",
+      "export_size": [
+        96,
+        96
+      ],
+      "export_sha256": "931bef7eae0a5091afc30c4611f1a6d2734badfc9641876ed0b55b326bb4c57f",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "item_scroll": {
+      "asset_id": "ui.item.scroll.icon",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/item_scroll.png",
+      "source_sha256": "229d0f9410d7644932f949b76724741a5acb71a7e488461841aab30fba1d6988",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        51,
+        101,
+        1213,
+        1154
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/item_scroll.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.08261617900172118,
+      "trimmed_size": [
+        1162,
+        1053
+      ],
+      "offset": [
+        0,
+        9
+      ],
+      "file": "exports/item_scroll.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/item_scroll.png",
+      "export_size": [
+        96,
+        96
+      ],
+      "export_sha256": "82005ae4b2decae21634946242c92fd9f07faef5c5be32b58d2787390f987722",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "skill_quick_draw": {
+      "asset_id": "ui.skill.quick_draw.icon",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/skill_quick_draw.png",
+      "source_sha256": "5c8caa9f252643cccc846b63809c62db508961740c8ed0440c21813e4287fbb7",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        23,
+        49,
+        1242,
+        1222
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/skill_quick_draw.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.07875307629204266,
+      "trimmed_size": [
+        1219,
+        1173
+      ],
+      "offset": [
+        0,
+        4
+      ],
+      "file": "exports/skill_quick_draw.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/skill_quick_draw.png",
+      "export_size": [
+        96,
+        96
+      ],
+      "export_sha256": "7ccb1875354bc83a4966cd104ee1709d2a9b69905c2b335d585e1690398642ca",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "skill_thrust": {
+      "asset_id": "ui.skill.thrust.icon",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/skill_thrust.png",
+      "source_sha256": "55eec5f2bbc08b743a0a44798a82bdc3f19eeb94aa079a239ab26f697879ce5d",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        33,
+        48,
+        1246,
+        1181
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/skill_thrust.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.07914262159934048,
+      "trimmed_size": [
+        1213,
+        1133
+      ],
+      "offset": [
+        0,
+        6
+      ],
+      "file": "exports/skill_thrust.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/skill_thrust.png",
+      "export_size": [
+        96,
+        96
+      ],
+      "export_sha256": "dcf766022568334cb65742d60dcf45f5571d251837ec2b6276addfb146a12de8",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "hp_liquid": {
+      "asset_id": "ui.hud.orb_hp.fill",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/hp_liquid.png",
+      "source_sha256": "6f18861578c440631444387bccaf50bf8eeb30cb4f61aa2abadfdb9af30ba4ab",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        271,
+        68,
+        752,
+        1465
+      ],
+      "source_alpha": [
+        0,
+        254
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/hp_liquid.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.2702702702702703,
+      "cover_crop": [
+        0,
+        0,
+        130,
+        306
+      ],
+      "well_xywh": [
+        18,
+        56,
+        130,
+        306
+      ],
+      "mask": "vertical_capsule",
+      "mask_radius": 65.0,
+      "file": "exports/hp_liquid.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/hp_liquid.png",
+      "export_size": [
+        248,
+        384
+      ],
+      "export_sha256": "77f74d0f8cf99ceca5215d7a04930e830bb7f6aeaab89cc3575de52daa0ebff4",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "hp_glass": {
+      "asset_id": "ui.hud.orb_hp.glass",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/hp_liquid.png",
+      "source_sha256": "6f18861578c440631444387bccaf50bf8eeb30cb4f61aa2abadfdb9af30ba4ab",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        271,
+        68,
+        752,
+        1465
+      ],
+      "source_alpha": [
+        0,
+        254
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/hp_liquid.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.2702702702702703,
+      "cover_crop": [
+        0,
+        0,
+        130,
+        306
+      ],
+      "well_xywh": [
+        18,
+        56,
+        130,
+        306
+      ],
+      "mask": "vertical_capsule",
+      "mask_radius": 65.0,
+      "file": "exports/hp_glass.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/hp_glass.png",
+      "export_size": [
+        248,
+        384
+      ],
+      "export_sha256": "f33b04950c5f38351bf4c2c93ef5dc63e546b767f5e7a1f8c500d7877355afe3",
+      "blend": "normal_straight_alpha",
+      "upscaled": false,
+      "derived_from": "hp_liquid",
+      "derivation": "painted_near_white_glints_min_rgb_above_140",
+      "new_original_artwork": false
+    },
+    "mp_liquid": {
+      "asset_id": "ui.hud.orb_mp.fill",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/mp_liquid.png",
+      "source_sha256": "ccdcc2cf04d1c0f16243b7169be88bcfdf250eafde483154f88e859162c28d54",
+      "source_size": [
+        856,
+        1836
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        104,
+        77,
+        749,
+        1763
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/mp_liquid.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.20155038759689922,
+      "cover_crop": [
+        0,
+        0,
+        130,
+        294
+      ],
+      "well_xywh": [
+        100,
+        63,
+        130,
+        294
+      ],
+      "mask": "vertical_capsule",
+      "mask_radius": 65.0,
+      "file": "exports/mp_liquid.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/mp_liquid.png",
+      "export_size": [
+        248,
+        384
+      ],
+      "export_sha256": "20afa54776f8f0f1e7d0d6e5b3174e6824718512211705e583176fdd06974749",
+      "blend": "normal_straight_alpha",
+      "upscaled": false
+    },
+    "mp_glass": {
+      "asset_id": "ui.hud.orb_mp.glass",
+      "source": "art/ui/hud/reference_v2/batch_01/sources/mp_liquid.png",
+      "source_sha256": "ccdcc2cf04d1c0f16243b7169be88bcfdf250eafde483154f88e859162c28d54",
+      "source_size": [
+        856,
+        1836
+      ],
+      "source_mode": "RGBA",
+      "crop_bbox": [
+        104,
+        77,
+        749,
+        1763
+      ],
+      "source_alpha": [
+        0,
+        255
+      ],
+      "prompt": "art/ui/hud/reference_v2/batch_01/prompts/mp_liquid.txt",
+      "generator": "built_in image_gen.imagegen",
+      "model": "not_returned",
+      "seed": "not_returned",
+      "actual_reference_inputs": [
+        "art/ui/hud/reference_v2/candidates/c1/source.png"
+      ],
+      "transparent_background_requested": true,
+      "uniform_scale": 0.20155038759689922,
+      "cover_crop": [
+        0,
+        0,
+        130,
+        294
+      ],
+      "well_xywh": [
+        100,
+        63,
+        130,
+        294
+      ],
+      "mask": "vertical_capsule",
+      "mask_radius": 65.0,
+      "file": "exports/mp_glass.png",
+      "export": "art/ui/hud/reference_v2/batch_01/exports/mp_glass.png",
+      "export_size": [
+        248,
+        384
+      ],
+      "export_sha256": "906f673b3ac1d76a72cb5c6c3ceed254d5582fbca1f047356bf964a5c9609a26",
+      "blend": "normal_straight_alpha",
+      "upscaled": false,
+      "derived_from": "mp_liquid",
+      "derivation": "painted_near_white_glints_min_rgb_above_140",
+      "new_original_artwork": false
+    }
+  },
+  "export_path_base": "package_root",
+  "missing": [],
+  "preview_numbers_are_demonstration": true,
+  "supporting_scene": {
+    "source": "art/ui/hud/reference_v2/batch_01/sources/scene_clean.png",
+    "source_sha256": "d177e34293ba0f620c57b93c8ad2b0f13cfdc88b63e6d74c3f96e099b219a1db",
+    "native_size": [
+      1672,
+      941
+    ],
+    "prompt": "art/ui/hud/reference_v2/batch_01/prompts/scene_clean.txt",
+    "actual_reference_inputs": [
+      "art/ui/hud/reference_v2/candidates/c1/source.png"
+    ],
+    "transparent_background_requested": false,
+    "production_asset": false
+  },
+  "font": "System fonts used for review only; no font file redistributed",
+  "derived_art": "Trim/equal downsample/alpha clipping only; frame and icon pixels come from generated sources",
+  "panel_tiling": "mirrored_repeat",
+  "map_cells_and_keycaps": "small runtime geometry"
+}

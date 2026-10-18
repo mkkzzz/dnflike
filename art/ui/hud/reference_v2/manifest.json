@@ -2,7 +2,7 @@
   "asset_id": "ui.hud.reference_sample",
   "revision": "reference_v2.c1",
   "owner": "ws2",
-  "lifecycle": "source_review",
+  "lifecycle": "source_approved",
   "task": "docs/tasks/art_tasks/hud_reference_v2.md",
   "path_base": "repository_root",
   "replaces_candidate": "art/ui/hud/theme_v1/manifest.json",
@@ -45,12 +45,17 @@
   "validation": "art/ui/hud/reference_v2/validation.json",
   "known_differences": [
     "Full screen sample contains illustrative characters, scene, text, icons and values; none constitute game integration.",
-    "Reference-like five outer wheel buttons plus center differs from older document four-button proposal; pending user review.",
+    "Five outer wheel buttons plus center follow the approved sample; functional bindings remain unassigned.",
     "Generator output is smaller than requested 2K; not a production export."
   ],
   "production_exports": [],
   "runtime_integrated": false,
-  "approval": null,
+  "approval": {
+    "date": "2026-10-18",
+    "scope": "c1 整体风格；授权制作首批独立资源与拼装预览",
+    "user_words": "风格我很认可，好非常多，试一下出一版资源吧，并且尝试拼起来看看效果如何"
+  },
+  "resource_batch": "art/ui/hud/reference_v2/batch_01/manifest.json",
   "affected_dependencies": [
     "ui.hud.panel_bottom",
     "ui.hud.orb_hp",

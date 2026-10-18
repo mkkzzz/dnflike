@@ -1,0 +1,26 @@
+{
+  "checks": {
+    "all_sources_exist": true,
+    "all_exports_rgba": true,
+    "all_downsample_scales_le_one": true,
+    "all_source_and_export_hashes_match": true,
+    "cutout_frames_have_real_alpha": true,
+    "liquid_layers_align_with_shell_canvas": true,
+    "skill_grid_fits_before_mp": true,
+    "item_row_fits_before_wheel": true,
+    "twelve_skill_slots": true,
+    "six_item_slots": true,
+    "source_image_is_not_used_as_hud": true,
+    "scene_uses_native_pixels_without_enlargement": true,
+    "native_and_1080_overlay_sizes": true
+  },
+  "texture_count": 22,
+  "missing": [],
+  "runtime_tested": false,
+  "user_batch_approval": "pending",
+  "scene_clean_size": [
+    1672,
+    941
+  ],
+  "tool": "Pillow"
+}

@@ -1,0 +1,94 @@
+{
+  "revision": "reference_v2.batch_01",
+  "lifecycle": "source_approved",
+  "approval": {
+    "date": "2026-10-18",
+    "scope": "c1整体风格认可，并授权首批独立资源与拼装试验",
+    "user_words": "风格我很认可，好非常多，试一下出一版资源吧，并且尝试拼起来看看效果如何",
+    "source_sha256": "8000185395437d94f77b99fe659f9a1873547c1cc3a697a4cd9e856d034d7695"
+  },
+  "canvas": [
+    2560,
+    1440
+  ],
+  "downsample": 0.75,
+  "upscale_allowed": false,
+  "source_reference": "art/ui/hud/reference_v2/candidates/c1/source.png",
+  "assets": [
+    {
+      "name": "hp_shell",
+      "target": [
+        248,
+        384
+      ]
+    },
+    {
+      "name": "slot_frame",
+      "target": [
+        116,
+        116
+      ]
+    },
+    {
+      "name": "mp_shell",
+      "size": [
+        248,
+        384
+      ]
+    },
+    {
+      "name": "hp_liquid",
+      "size": [
+        146,
+        320
+      ]
+    },
+    {
+      "name": "mp_liquid",
+      "size": [
+        146,
+        320
+      ]
+    },
+    {
+      "name": "wheel",
+      "size": [
+        480,
+        480
+      ]
+    },
+    {
+      "name": "fascia_tile",
+      "size": [
+        512,
+        270
+      ]
+    },
+    {
+      "name": "exp_frame",
+      "size": [
+        790,
+        70
+      ]
+    },
+    {
+      "name": "target_frame",
+      "size": [
+        780,
+        108
+      ]
+    },
+    {
+      "name": "minimap_frame",
+      "size": [
+        260,
+        285
+      ]
+    }
+  ],
+  "notes": [
+    "All generation uses actual approved image reference.",
+    "Offline exports and assembled previews share the same texture files.",
+    "Scene clean plate remains illustrative; no replacement of formal forest or actors."
+  ]
+}

@@ -32,7 +32,7 @@ def main():
             "bottom_crop_xyxy": [0, 690, width, height],
             "production_exports": [],
             "runtime_integrated": False,
-            "visual_approval": "pending",
+            "visual_approval": "approved" if json.loads((PACKAGE / "manifest.json").read_text(encoding="utf-8")).get("approval") else "pending",
             "checks": {
                 "source_decodes": True,
                 "source_matches_recorded_dimensions": image.size == (1672, 941),
