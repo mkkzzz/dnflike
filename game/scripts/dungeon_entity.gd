@@ -249,13 +249,19 @@ func _shatter(from_dir: int) -> void:
 				# 以贴图中心为界：左半向左飞、右半向右飞，同时向上抛，形成"两侧上方炸开"。
 				# 不叠加攻击方向偏移，保证形状对称（2026-10-18 按用户要求调整）。
 				var outward := signf(center.x) if absf(center.x) > 0.001 else _rng.randf_range(-1.0, 1.0)
+				# z_out 表示朝镜头（+Z，纵深正方向）飞出的强度：越大越靠前，
+				# 表现为向下漂、放大、并画到角色之前。
+				var z_out := _rng.randf_range(0.7, 1.5)
+				fragment.z_index = int(GameConfig.runtime["layering"]["actor_base_z"]) + 2
 				_fragments.append({
 					"node": fragment,
+					"base_offset": fragment.offset,
 					"velocity": Vector2(
 						outward * scatter * _rng.randf_range(0.55, 1.0),
 						-rise * _rng.randf_range(0.55, 1.0)),
 					"spin": _rng.randf_range(-spin, spin) * 0.06,
 					"gravity": gravity,
+					"z_out": z_out,
 				})
 	for slice in render_slices:
 		if is_instance_valid(slice):
@@ -322,6 +328,16 @@ func _process(delta: float) -> void:
 			continue
 		var velocity: Vector2 = item["velocity"]
 		velocity.y += float(item["gravity"]) * delta
+		var z_out := float(item.get("z_out", 0.0))
+		if z_out > 0.0:
+			# 朝镜头（+Z）飞出：额外向下漂（前景方向），并按时间放大。
+			# 缩放会让 offset 一起被放大，这里反向补偿，使碎片绕自身中心放大而不是滑走。
+			velocity.y += z_out * 120.0 * delta
+			var grow := 1.0 + z_out * 0.55 * _destroy_t
+			var base_offset: Vector2 = item.get("base_offset", node.offset)
+			var half := node.region_rect.size * 0.5
+			node.offset = (base_offset + half) / grow - half
+			node.scale = Vector2(grow, grow)
 		node.position += velocity * delta
 		node.rotation += float(item["spin"]) * delta
 		node.modulate.a = alpha
