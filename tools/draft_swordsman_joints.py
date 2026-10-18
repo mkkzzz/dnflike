@@ -44,5 +44,5 @@ def main():
   board=Image.new('RGB',(520*2,510*((len(entries)+1)//2)),'#303741')
   for i,im in enumerate(entries):board.paste(im,(i%2*520,i//2*510))
   target=ROOT/'temp/v7_joint_drafts';target.mkdir(exist_ok=True);board.save(target/(('c6_' if cfg.parent.parent==OUT else '')+cfg.parent.name+'.png'))
-  cache.write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');print(cfg.parent.name,len(entries),flush=True)
+  cache.write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n');print(cfg.parent.name,len(entries),flush=True)
 if __name__=='__main__':main()

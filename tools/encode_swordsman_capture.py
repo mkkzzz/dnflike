@@ -24,7 +24,7 @@ def main():
  stream=next(line.strip()for line in probe.stderr.splitlines()if 'Video:'in line)
  assert '2560x1440'in stream and '60 fps'in stream,stream
  evidence={'source':'actual Godot frame_post_draw framebuffer PNGs','native_size':[2560,1440],'fps':60,'frames':len(timeline),'scaled':False,'stream_probe':stream,'frame_hashes':sources,'movie_sha256':hashlib.sha256(args.output.read_bytes()).hexdigest(),'timeline':timeline,'proves':'instant facing, actual monster hit and scripted heavy hit presentation only; not rewritten gait/combo approval'}
- args.output.with_suffix('.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+ args.output.with_suffix('.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
  print(stream);print('Encoded',len(timeline),'native frames without scaling')
 
 if __name__=='__main__':main()

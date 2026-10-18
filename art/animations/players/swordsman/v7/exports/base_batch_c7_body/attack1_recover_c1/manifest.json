@@ -26,7 +26,7 @@
       "standing_height": 848.0
     }
   },
-  "config_sha256": "02598f61417b095cd8177e71d43089ae590e9c87ca71db62da2b0527b4eea77e",
+  "config_sha256": "6ce24f538afcdddb8a10c8a0a92a2bbbe4cddafc2ea3c9f7c9fa0847f14db348",
   "clips": {
     "keys": {
       "asset_id": "actor.player.base.combo.1.recovery",

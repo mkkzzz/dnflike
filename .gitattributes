@@ -14,5 +14,15 @@ art/animations/players/swordsman/v7/exports/**/*.json text eol=lf
 art/animations/players/swordsman/v7/reviews/**/*.json text eol=lf
 art/concepts/characters/players/swordsman/standard_v1/measurements/*.json text eol=lf
 
+# 动作源图/消费副本和评审记录共用哈希；检出时不能转成 CRLF。
+game/assets/swordsman_v7_*/**/*.json text eol=lf
+art/animations/players/swordsman/v7/sources/**/*prompt*.txt text eol=lf
+docs/previews/v7_c*/**/*.html text eol=lf
+docs/previews/v7_c*/**/*.json text eol=lf
+tools/**/*swordsman*.py text eol=lf
+tools/actor_motion.py text eol=lf
+tools/motion_neural.py text eol=lf
+tools/setup_motion_model.py text eol=lf
+
 # 交接日志只在末尾追加：按行合并，两个工作区同时追加不会冲突（改旧行会产生重复行，故禁止改旧行）
 docs/project/04_交接日志.md merge=union

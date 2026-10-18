@@ -33,8 +33,15 @@ class NativeMotionTests(unittest.TestCase):
  def test_full_source_gates_precede_motion(self):
   for entry in self.m['source_inputs']:
    path=ROOT/entry['config'];self.assertEqual(sha(path),entry['sha256'])
+   audit=path.parent/'proportions.json';self.assertEqual(sha(audit),entry['audit_sha256'])
+   manifest=ROOT/entry['manifest'];self.assertEqual(sha(manifest),entry['manifest_sha256'])
+   self.assertEqual(read(manifest)['config_sha256'],entry['sha256'])
+   for text in [path,audit,manifest]:self.assertNotIn(b'\r\n',text.read_bytes(),str(text))
    self.assertTrue(assess(path,path.parent/'proportions.json')['passed'])
    self.assertTrue(read(path.parent/'proportions.json')['landmark_semantics_reviewed'])
+  joints=ROOT/'art/animations/players/swordsman/v7/sources/base_batch_c6/motion_joints.json'
+  self.assertEqual(sha(joints),self.m['joints_sha256'])
+  receipt=self.m['text_binding_migration'];self.assertEqual(sha(ROOT/receipt['receipt']),receipt['receipt_sha256'])
  def test_dense_clock_includes_loops_and_all_32_non_skill_actions(self):
   self.assertEqual(len(self.m['clips']),32)
   total=0

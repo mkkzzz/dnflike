@@ -24,7 +24,7 @@ PROFILES=['katana','greatsword','shortsword']
 read=lambda p:json.loads(p.read_text(encoding='utf-8'))
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def write(p,d):
- p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+ p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
 
 def full_layer(ref,folder=OLD):
  im=Image.new('RGBA',(1024,1080))
@@ -246,6 +246,11 @@ def main():
  manifest['motion_backend']=backend;manifest['recipe_sha256']=recipe
  manifest['weapon_inputs']=weapon_inputs
  manifest['coverage'].update(complete=complete,scope='non-skill base actions; user-requested two-hand horizontal/horizontal/rising combo')
+ if args.install:
+  approval=read(SOURCES/'base_batch_c7/idle_approval.json')
+  if clips.get('idle')!=approval['clip']:raise ValueError('Accepted idle is frozen: reuse its exact clip and rasters before installing a new bake')
+  for file,digest in approval['textures'].items():
+   if sha(OUT/file)!=digest:raise ValueError('Accepted idle raster changed: '+file)
  write(OUT/'manifest.json',manifest);write(OUT/'validation.json',validation);write(OUT/'wrist_plane_review.json',wrist_reviews)
  if args.install:
   if not validation['passed']:raise ValueError('Refuse installing an incomplete or rejected bake')

@@ -55,6 +55,6 @@ function draw(t){const c=data.clips[el('clip').value];if(playing&&last)clock=(cl
 const f=c.frames.find(x=>clock<x.start_tick+x.duration_ticks)||c.frames.at(-1),w=f.profiles[el('weapon').value];el('tick').max=c.duration_ticks;el('tick').value=clock;el('info').textContent='tick '+clock.toFixed(1)+' / '+c.duration_ticks;
 ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,1280,1080);const facing=el('left').checked?-1:1;ctx.setTransform(facing,0,0,1,640-facing*data.anchor[0],0);
 if(!el('bare').checked)layer(w.back);layer(f.body);if(!el('bare').checked)layer(w.front);layer(f.fingers);requestAnimationFrame(draw)}requestAnimationFrame(draw);</script>'''
- (OUTPUT/'index.html').write_text(html.replace('__DATA__',json.dumps(m,ensure_ascii=False)),encoding='utf-8')
+ (OUTPUT/'index.html').write_text(html.replace('__DATA__',json.dumps(m,ensure_ascii=False)),encoding='utf-8',newline='\n')
  print(OUTPUT)
 if __name__=='__main__':main()

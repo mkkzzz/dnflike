@@ -1,5 +1,5 @@
 {
-  "package_sha256": "b27c7d6b8e07a83a67cd823a4b6bf9c36a79bde6c6efc7ed2a3de2353b30f206",
+  "package_sha256": "b6615d37ffb602f44c305c5d58def38c84a68976b36da3045b5f599fe7126839",
   "clips": [
     "attack1",
     "walk",
@@ -95,7 +95,7 @@
     "idle_60fps.mp4": "51e42b84e390dcd9f7df25e8462bb00e6aa40027575c337c16e996974b77ef9d",
     "idle_keyframes.png": "e52de4c107b171fb901bda5fbbba924f0890e6e51a52ff7556088855d5ad884b",
     "idle_t36_native_2k.png": "c8de9e14e96742a3d96189626d8002f62a249645d41c1ba15a63c8e7bd517f7c",
-    "index.html": "336d2a6205f318fe7bf0857cc09d5ca45aae5ad20b762cdc10c04c179a1eefbc",
+    "index.html": "40914824622fc0d2818ead480a3119f14093483f8181fd2b63af537c4ae9b19f",
     "jump_60fps.mp4": "301e6078aa27f54f1bd40e6421011dd0813c341c014347b73e45ef79e6054784",
     "jump_apex_60fps.mp4": "f46d9ee77fd1b18feee4af4dabf05396e418e037c8b7154f6ceb77a5460a2ba3",
     "jump_apex_keyframes.png": "743866b1787d88e38c8b32c6a4a1d67e58270e6477132299b28e8c7ccc340708",
@@ -149,5 +149,9 @@
     "walk_t18_native_2k.png": "32094dfc98601524473948de5b022d19112b9835e6011b4d79ea9f8c4267bf22"
   },
   "artwork_approved": false,
-  "runtime_user_approved": false
+  "runtime_user_approved": false,
+  "text_binding_migration": "art/animations/players/swordsman/v7/sources/base_batch_c6/lf_binding_migration.json",
+  "historical_media": [
+    "gameplay_1080p.mp4"
+  ]
 }

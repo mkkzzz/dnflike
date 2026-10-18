@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-19",
+  "reason": "Git text normalization exposed Windows default write_text CRLF hashes. Producers now write LF explicitly and task text paths are pinned in .gitattributes.",
+  "changes": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c6/attack1/body_config.json",
+      "previous_sha256": "738035d8bef7e8aebe68351b277f04ba8f75f37c3592744ed8e9f0cdaf2286f6",
+      "canonical_sha256": "649f89cc3a9d0ab67d6cd3d5e80cca3a0b265e1c29169662064fea22221ae96f",
+      "transformation": "CRLF to LF only; original bytes reconstructable"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c6/attack1/proportions.json",
+      "previous_sha256": "fea31667aea0ebe0bd1aa21aae512ca9e313ef79bac06d10d687e07b37a76dd9",
+      "canonical_sha256": "1776e09a8e37650be06d1d423eac61a3f4b76f915ecefb6251e7566221716741",
+      "transformation": "CRLF to LF only; original bytes reconstructable"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/exports/base_batch_c6_body/attack1/manifest.json",
+      "previous_sha256": "48bb20716e4274dbc2b764a10aa5e9f7bb85731eb749580ad555b9eec705089b",
+      "canonical_sha256": "62f1e0c39901e5ac6a8e9bea6585e861934cacab5f4052f4e5ea6f38257716ef",
+      "transformation": "Only config_sha256 rebound to equivalent LF config; all source/raster/pose/clock data unchanged"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c6/attack2/body_config.json",
+      "previous_sha256": "5ee14ce6864d5eb218ddd5350840e334f97faa5e665a65797607f7fb3324d125",
+      "canonical_sha256": "77a99d3eca20194ed48f05cec6d2e3e566e25545ef4ed200702adf9224b82e98",
+      "transformation": "CRLF to LF only; original bytes reconstructable"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c6/attack2/proportions.json",
+      "previous_sha256": "b87448c27e4711842315960d4ccb2c69d45fb28a65e75684e0f8792822c949c6",
+      "canonical_sha256": "344241020021f6425cb28846a585d5511e8740e00bbae24ae769d6113839acd7",
+      "transformation": "CRLF to LF only; original bytes reconstructable"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/exports/base_batch_c6_body/attack2/manifest.json",
+      "previous_sha256": "dd1657dc0119672fa4331c8ed9e34dd80b74abe33ba12cd75dff88d67512f3f8",
+      "canonical_sha256": "a617090634d52511944f343b8e7e5cbd8fd3ae9ade17438753d89fd4b09baa7c",
+      "transformation": "Only config_sha256 rebound to equivalent LF config; all source/raster/pose/clock data unchanged"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c6/attack3/body_config.json",
+      "previous_sha256": "228972788e627e7b84f4ca815538862cfe3a71c7ae001373a8bbfbcd5280bcad",
+      "canonical_sha256": "5218b624f7d88c88b0f30b58cf41c7630e8b8243fbd9b9bd745d3f7efea427c1",
+      "transformation": "CRLF to LF only; original bytes reconstructable"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c6/attack3/proportions.json",
+      "previous_sha256": "6c60a668da7002caeda0dee2821432ffccd44246e04486db4a4786ef99c16265",
+      "canonical_sha256": "f99c59059132b9e50cd3a40ac2266eeb2bfeee7ac9bd28e1559915f20a4c5ec0",
+      "transformation": "CRLF to LF only; original bytes reconstructable"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/exports/base_batch_c6_body/attack3/manifest.json",
+      "previous_sha256": "4c3c3cf7cef506ea1714a3d574a36dac523b54d89f21477232fb38a435d848d9",
+      "canonical_sha256": "5d0501c553300eb01452a7a70f1149a8e71dea88cceeea673fe9ec68235fba44",
+      "transformation": "Only config_sha256 rebound to equivalent LF config; all source/raster/pose/clock data unchanged"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c6/motion_joints.json",
+      "previous_sha256": "54019d347e161e0c48de43ec2d66ee80d557f9eefa5c1089765de564b1802413",
+      "canonical_sha256": "c931a286ad0b46a850c077b568776b3aa7c42e9ec8a392db3f503897d56d124d",
+      "transformation": "CRLF to LF only; original bytes reconstructable"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_c1/body_config.json",
+      "previous_sha256": "b13aa28320fdedfd828a515dfce0a0342b48fda99d525e5fcf9b79cdc2f29514",
+      "canonical_sha256": "fd4cf7d06b5742518a132b939b0c09ef524dadf1bea5687df8907c773cede0b3",
+      "transformation": "CRLF to LF only; original bytes reconstructable"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/exports/base_batch_c7_body/attack1_c1/manifest.json",
+      "previous_sha256": "8d89c123947419eb2d2bc4da9d7e824a34432960a524ed09cac609f5610ea062",
+      "canonical_sha256": "76054c33fd8daa9b57dc71ce17497e3fe38907ad1e37163c860aa7ecb882fc38",
+      "transformation": "Only config_sha256 rebound to equivalent LF config; no raster change"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_recover_c1/body_config.json",
+      "previous_sha256": "02598f61417b095cd8177e71d43089ae590e9c87ca71db62da2b0527b4eea77e",
+      "canonical_sha256": "6ce24f538afcdddb8a10c8a0a92a2bbbe4cddafc2ea3c9f7c9fa0847f14db348",
+      "transformation": "CRLF to LF only; original bytes reconstructable"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/exports/base_batch_c7_body/attack1_recover_c1/manifest.json",
+      "previous_sha256": "8d4743b1b59a5496a7cae60bf01a5a931964653eefa4e9fd15514dea8505870a",
+      "canonical_sha256": "9ae868432e601f1ba773b0dfe72b0af4f0351b0083cc2149a0020b349bb32ea8",
+      "transformation": "Only config_sha256 rebound to equivalent LF config; no raster change"
+    }
+  ],
+  "preserved_bake_recipe_sha256": "e3be3d3be203422500172097f5f450a7a8fdb472c69751d179535cc5ec21c800",
+  "no_raster_rebake": true,
+  "approved_idle_unchanged": true,
+  "historical_recipe_note": "The original recipe was computed on the reconstructable CRLF input texts. This is an explicit format/binding migration, not a new bake or a claim that a new recipe generated these rasters."
+}

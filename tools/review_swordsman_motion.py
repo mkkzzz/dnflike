@@ -9,7 +9,9 @@ PACKAGE=ROOT/'art/animations/players/swordsman/v7/exports/base_runtime_c6'
 OUT=ROOT/'docs/previews/v7_c6'
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--only',nargs='*');p.add_argument('--movies',action='store_true');p.add_argument('--checkpoints',action='store_true');args=p.parse_args()
+ global PACKAGE,OUT
+ p=argparse.ArgumentParser();p.add_argument('--only',nargs='*');p.add_argument('--movies',action='store_true');p.add_argument('--checkpoints',action='store_true');p.add_argument('--package',type=Path,default=PACKAGE);p.add_argument('--output',type=Path,default=OUT);args=p.parse_args()
+ PACKAGE=args.package.resolve();OUT=args.output.resolve();assert PACKAGE.is_relative_to(ROOT)and OUT.is_relative_to(ROOT)
  manifest=json.loads((PACKAGE/'manifest.json').read_text(encoding='utf-8'));OUT.mkdir(parents=True,exist_ok=True);cache={}
  if args.checkpoints:
   for name in args.only or []:manifest['clips'][name]=json.loads((PACKAGE/(name+'.checkpoint.json')).read_text(encoding='utf-8'))
@@ -29,7 +31,7 @@ def main():
   draw.line((0,1120,2560,1120),fill='#66727f',width=2)
   for x,profile,title in [(500,'katana','太刀'),(1280,'greatsword','巨剑'),(2060,'shortsword','短剑')]:
    canvas.alpha_composite(actor(frame,profile),(x-448,1120-840));draw.text((x-70,250),title,font=font,fill='white')
-  draw.text((60,50),'V7 c6 返修候选 / 原生 2K / 60 fps / 无刀光',font=font,fill='white')
+  draw.text((60,50),manifest['revision']+' / 原生 2K / 60 fps / 无刀光',font=font,fill='white')
   draw.text((60,105),f'{name}    tick {tick}    同一身体与手指层，三种独立武器',font=small,fill='#c7d6e8')
   draw.text((60,1320),'仅为同包离线回放；状态之间的实机过渡另验。',font=small,fill='#d9c6a7')
   return canvas.convert('RGB')
@@ -58,7 +60,12 @@ def main():
 <select id="clip"></select><select id="speed"><option value="0.25">0.25×</option><option value="0.5" selected>0.5×</option><option value="1">1×</option></select><button id="previous">上一帧</button><button id="next">下一帧</button><video id="video" controls loop playsinline></video><p>上一帧/下一帧按源文件 60Hz 逐帧查看。游戏视频含真实操作与恢复过渡，离线视频只显示各片段自身。</p></main>
 <script>const names=__NAMES__;const clip=document.querySelector('#clip'),video=document.querySelector('#video'),speed=document.querySelector('#speed');for(const name of names){const option=document.createElement('option');option.value=name+'_60fps.mp4';option.textContent=name;clip.append(option)}
 const game=document.createElement('option');game.value='gameplay_1080p.mp4';game.textContent='旧游戏连续操作（实机1080p，动作已退回）';clip.append(game);function load(){video.src=clip.value;video.playbackRate=Number(speed.value);video.play().catch(()=>{})}clip.onchange=load;speed.onchange=()=>video.playbackRate=Number(speed.value);for(const [id,d]of[['previous',-1],['next',1]])document.querySelector('#'+id).onclick=()=>{video.pause();video.currentTime=Math.max(0,video.currentTime+d/60)};load();</script></html>'''.replace('__NAMES__',json.dumps(names))
- (OUT/'index.html').write_text(html,encoding='utf-8')
+ (OUT/'index.html').write_text(html,encoding='utf-8',newline='\n')
+ if manifest['revision'].startswith('v7_c7_first_cut_pilot'):
+  html=html.replace('鬼剑士 c6 历史候选 / 部分退回','鬼剑士 c7 第一刀分层样片').replace('用户已认可 idle 与采样流畅度；行走、奔跑和三连的动作设计已退回。离线片段为原生 2K；旧引擎连续录像实际 1080p，已纠正原命名。默认半速；力量感请同时看 1×。不含技能。','用户已认可新三姿势的发力方向。此片段使用同一身体/手指层切换太刀、巨剑、短剑，保留原30tick时长，未接入游戏。原生2K、无刀光，默认半速；请同时看实速。G1通过不代表完整动作或G3获认可。')
+  html=html.replace("clip.append(game);function load()","function load()")
+  html=html.replace('游戏视频含真实操作与恢复过渡，离线视频只显示各片段自身。','仅为第一刀完整离线样片；尚未制作其余两刀和新步态，不是整套已经修好。')
+  (OUT/'index.html').write_text(html,encoding='utf-8',newline='\n')
  evidence={'package_sha256':hashlib.sha256((PACKAGE/'manifest.json').read_bytes()).hexdigest(),'clips':names,'review_files':{p.name:hashlib.sha256(p.read_bytes()).hexdigest()for p in OUT.iterdir()if p.suffix in ['.png','.mp4','.html']},'artwork_approved':False,'runtime_user_approved':False}
- (OUT/'review_manifest.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+ (OUT/'review_manifest.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
 if __name__=='__main__':main()

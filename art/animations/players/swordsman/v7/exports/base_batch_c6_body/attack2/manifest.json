@@ -26,7 +26,7 @@
       "standing_height": 507.0
     }
   },
-  "config_sha256": "5ee14ce6864d5eb218ddd5350840e334f97faa5e665a65797607f7fb3324d125",
+  "config_sha256": "77a99d3eca20194ed48f05cec6d2e3e566e25545ef4ed200702adf9224b82e98",
   "clips": {
     "keys": {
       "asset_id": "actor.player.base.combo.2",
