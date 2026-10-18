@@ -188,8 +188,8 @@
           "columns": 4,
           "rows": 3,
           "scatter": 150,
-          "rise": 110,
-          "gravity": 620,
+          "rise": 380,
+          "gravity": 520,
           "spin": 260,
           "life": 0.9
         },

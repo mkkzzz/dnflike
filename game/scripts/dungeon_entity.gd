@@ -330,9 +330,8 @@ func _process(delta: float) -> void:
 		velocity.y += float(item["gravity"]) * delta
 		var z_out := float(item.get("z_out", 0.0))
 		if z_out > 0.0:
-			# 朝镜头（+Z）飞出：额外向下漂（前景方向），并按时间放大。
-			# 缩放会让 offset 一起被放大，这里反向补偿，使碎片绕自身中心放大而不是滑走。
-			velocity.y += z_out * 120.0 * delta
+			# 朝镜头（+Z）只保留放大与前后层级；不再加向下速度，
+			# 否则会抵消用户要求的"向上飞"（2026-10-18 按反馈修正）。
 			var grow := 1.0 + z_out * 0.55 * _destroy_t
 			var base_offset: Vector2 = item.get("base_offset", node.offset)
 			var half := node.region_rect.size * 0.5
