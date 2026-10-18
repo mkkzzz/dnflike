@@ -187,15 +187,15 @@
         "debris": {
           "columns": 4,
           "rows": 3,
-          "scatter": 130,
-          "rise": 95,
+          "scatter": 150,
+          "rise": 110,
           "gravity": 620,
-          "spin": 240,
-          "life": 0.55
+          "spin": 260,
+          "life": 0.9
         },
-        "dust": 10,
+        "dust": 16,
         "sound": "foliage_break",
-        "shake": 1.1
+        "shake": 1.6
       }
     },
     "rock": {

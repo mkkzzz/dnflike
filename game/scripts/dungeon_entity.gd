@@ -266,6 +266,8 @@ func _shatter(from_dir: int) -> void:
 		fade.tween_property(_shadow, "modulate:a", 0.0, 0.28)
 	_leave_debris()
 	_emit_feedback(from_dir)
+	# 碎片要靠 _process 推进；这里显式打开，避免之前空闲时被关掉后不再恢复。
+	set_process(true)
 
 
 ## 可选残骸：entity_catalog.<id>.debris_file 指向一张 PNG 时留在原地（如 bone 堆）。
@@ -302,7 +304,10 @@ func _emit_feedback(from_dir: int) -> void:
 
 func _process(delta: float) -> void:
 	if _fragments.is_empty():
-		set_process(false)
+		# 空闲时不关掉 _process 之外别无他事；注意不能在未破碎时 set_process(false)，
+		# 否则破碎时碎片**永远不会动**（会有 12 块碎片原地拼回原图，看起来像没砍碎）。
+		if destroyed:
+			set_process(false)
 		return
 	_destroy_t += delta
 	var fade_start := _destroy_life * 0.45
