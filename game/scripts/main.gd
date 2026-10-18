@@ -145,9 +145,9 @@ func _register_actions() -> void:
 	var actions := {
 		"move_left": [KEY_LEFT], "move_right": [KEY_RIGHT], "move_up": [KEY_UP], "move_down": [KEY_DOWN],
 		"jump": [KEY_C, KEY_SPACE], "attack": [KEY_X], "generic_skill": [KEY_Z], "guard": [KEY_V],
-		"skill_a": [KEY_A], "skill_s": [KEY_S], "skill_d": [KEY_D], "skill_f": [KEY_F],
-		"debug_job": [KEY_T], "debug_reset": [KEY_R], "potion_hp": [KEY_1], "potion_mp": [KEY_2],
-		"pause_demo": [KEY_ESCAPE], "start_demo": [KEY_ENTER], "toggle_help": [KEY_F1],
+		"skill_a": [], "skill_s": [], "skill_d": [KEY_D], "skill_f": [KEY_F],
+		"debug_job": [], "debug_reset": [], "potion_hp": [KEY_1], "potion_mp": [KEY_2],
+		"pause_demo": [KEY_ESCAPE], "start_demo": [KEY_ENTER], "toggle_help": [],
 		"reset_training": [KEY_TAB], "toggle_training_supply": [KEY_F2],
 		"display_settings": [KEY_F3],
 		"gm_panel": [KEY_P],
@@ -157,6 +157,8 @@ func _register_actions() -> void:
 	for action in actions:
 		if not InputMap.has_action(action):
 			InputMap.add_action(action)
+		if action in ["skill_a", "skill_s", "debug_job", "debug_reset", "toggle_help"]:
+			InputMap.action_erase_events(action)
 		for key in actions[action]:
 			var event := InputEventKey.new()
 			event.physical_keycode = key
@@ -224,6 +226,8 @@ func _build_hud() -> void:
 	hud = Hud.new()
 	add_child(hud)
 	hud.set_font(font)
+	hud.action_requested.connect(_on_hud_action_requested)
+	hud.settings_requested.connect(_toggle_display_settings)
 	player.action_feedback.connect(hud.set_feedback)
 	hud.set_player_info("幽影剑士", 30, selected_job)
 	hud.clear_room()
@@ -297,18 +301,7 @@ func _set_vsync_choice(enabled: bool) -> void:
 	_apply_display_settings()
 
 func _build_display_settings() -> void:
-	var settings_button := _button("显示设置 · F3", _toggle_display_settings)
-	settings_button.position = Vector2(1084, 92)
-	settings_button.size = Vector2(171, 34)
-	settings_button.custom_minimum_size = Vector2(171, 34)
-	settings_button.add_theme_font_size_override("font_size", 14)
-	_overlay.add_child(settings_button)
-	_fps_readout = _label("", 12, Color(0.7, 0.73, 0.77))
-	_fps_readout.position = Vector2(1084, 70)
-	_fps_readout.size = Vector2(171, 20)
-	_fps_readout.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_fps_readout.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_overlay.add_child(_fps_readout)
+	# The HUD draws small FPS text. Its wheel gear opens this settings card.
 	_settings_card = PanelContainer.new()
 	_settings_card.position = Vector2(380, 150)
 	_settings_card.size = Vector2(520, 420)
@@ -709,6 +702,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if gm_panel != null and gm_panel.is_open():
 		return
+	if player != null and player.control_enabled and not get_tree().paused and hud.handle_hud_input(event):
+		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("pause_demo"):
 		_toggle_pause()
 	elif event.is_action_pressed("debug_reset"):
@@ -829,7 +825,7 @@ func _build_settlement() -> void:
 	_settlement_stats.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(_settlement_stats)
 	column.add_child(_button("再打一次", _on_retry_dungeon, true))
-	column.add_child(_button("离开地下城", _on_leave_dungeon))
+	# Return-to-town UI is added when the town exists.
 	_settlement.hide()
 
 
@@ -849,8 +845,8 @@ func _show_settlement(victory: bool) -> void:
 		Color(1.0, 0.88, 0.55) if victory else Color(0.95, 0.62, 0.58))
 	var rank := _evaluation_rank()
 	var tail := "" if victory else "\n点“再打一次”可重新挑战"
-	_settlement_stats.text = "%s · %s\n用时 %s    击败 %d\n最长连击 %d    有效命中 %d\n承受伤害 %.0f\n战斗评价 %s%s" % [
-		dungeon.display_name(), dungeon.layout(), _time_text(elapsed), kills,
+	_settlement_stats.text = "%s\n用时 %s    击败 %d\n最长连击 %d    有效命中 %d\n承受伤害 %.0f\n战斗评价 %s%s" % [
+		dungeon.display_name(), _time_text(elapsed), kills,
 		best_chain, hit_count, damage_taken, rank if victory else "—", tail]
 	_settlement.show()
 
@@ -1018,8 +1014,7 @@ func _load_room(arrival: Dictionary = {}, new_run := false) -> void:
 
 
 func _show_room_notice() -> void:
-	_wave_notice.text = "第 %d / %d 房 · %s\n%s" % [dungeon.room_number(), dungeon.room_count(),
-		dungeon.room_name(), dungeon.module_id()]
+	_wave_notice.text = dungeon.room_name()
 	_wave_notice.show()
 	transition_left = float(GameConfig.runtime["hud"]["notice_seconds"])
 
@@ -1216,7 +1211,7 @@ func _update_depth_order() -> void:
 func _front_occlusion() -> float:
 	if player == null:
 		return 0.0
-	return clampf(inverse_lerp(HUD_FADE_START_Y, HUD_FADE_FULL_Y, GROUND_Y + player.depth_y), 0.0, 1.0)
+	return clampf(inverse_lerp(minf(HUD_FADE_START_Y, 557.0), minf(HUD_FADE_FULL_Y, 655.0), GROUND_Y + player.depth_y), 0.0, 1.0)
 
 
 func _role_label() -> String:
@@ -1476,6 +1471,14 @@ func _pick_target():
 			best = monster
 	return best
 
+func _on_hud_action_requested(action: String) -> void:
+	if player == null or not player.control_enabled or get_tree().paused:
+		return
+	if (gm_panel != null and gm_panel.is_open()) or _settings_card.visible:
+		return
+	player.buffer_action(action)
+
+
 func _hud_cooldowns() -> void:
 	var left := {}
 	var total := {}
@@ -1515,6 +1518,7 @@ func _process(delta: float) -> void:
 		hud.set_elapsed(elapsed)
 		if dungeon_mode and dungeon != null and dungeon.is_loaded():
 			hud.set_dungeon_room(dungeon.display_name(), dungeon.room_index, dungeon.room_count(), _role_label(), alive_count())
+			hud.set_map_layout(dungeon.dungeon.get("connections", []), dungeon.room_count(), dungeon.cleared_rooms)
 		else:
 			hud.set_encounter(wave_index + 1, demo_config["waves"].size(), alive_count(), elapsed)
 		hud.set_front_occlusion(_front_occlusion())

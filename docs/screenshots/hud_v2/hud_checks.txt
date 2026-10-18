@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[M1] config loaded: moves=9 skills=4 monsters=1
+[SEQ6] manifest v6.0 loaded: 21 clips, 687 ticks
+[SEQ6] integrated 4 authored moves: attack1, attack2, attack3, quick_draw
+[DUNGEON] room=1 module=10001-R01 solids=2 monsters=0 doors=1 restored=false hp=1000 mp=300
+[DEMO] dungeon=10001 layout=10001-A rooms=5
+[DEMO] window=(0, 0) viewport=(1280.0, 720.0) stretch=canvas_items
+[DEMO] scene ready
+[HUD_TEST] PASS native 2K canvas uses display-resolution rendering
+[HUD_TEST] PASS all generated runtime artwork loads
+[HUD_TEST] PASS old FPS panel and debug help do not render
+[HUD_TEST] PASS room announcement contains no internal module ID
+[HUD_TEST] PASS T and R are no longer debug shortcuts
+[HUD_TEST] PASS two real skills populate A/S in twelve slots
+[HUD_TEST] PASS minimap uses actual five-room dungeon graph
+[DUNGEON] room=2 module=10001-R02 solids=2 monsters=3 doors=2 restored=false hp=1000 mp=300
+[HUD_TEST] PASS room travel updates map and actual target
+[HUD_TEST] PASS damage and mana changes reach reservoirs
+[HUD_TEST] PASS skill can move from A to Q without changing its identity
+[HUD_TEST] PASS rebound Q actually casts skill with real MP and cooldown
+[HUD_TEST] PASS cooldown follows skill after slot move
+[HUD_TEST] PASS insufficient MP cannot cast through the new HUD
+[HUD_TEST] PASS potion slot uses existing healing and shared cooldown
+[HUD_TEST] PASS entire new bottom HUD yields at foreground
+[HUD_TEST] PASS bottom HUD returns behind road foreground
+[HUD_TEST] PASS painted wheel gear opens real settings and pauses
+[HUD_TEST] PASS settings close restores game control
+[M1] goblin hit player
+[HUD_TEST] COMPLETE checks=18 failures=0

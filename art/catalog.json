@@ -150,6 +150,7 @@
   "assets": {
     "hud_reference_v2_candidate": "art/ui/hud/reference_v2/manifest.json",
     "hud_reference_v2_batch_01": "art/ui/hud/reference_v2/batch_01/manifest.json",
+    "hud_reference_v2_runtime_01": "game/assets/ui/hud_v2/manifest.json",
     "ordinary_goblin": "art/concepts/characters/monsters/goblin/standard_v1/manifest.json",
     "swordsman_standard": "art/concepts/characters/players/swordsman/standard_v1/manifest.json",
     "goblin_chief_candidate": "art/concepts/characters/monsters/goblin_chief/v1/generation.json",

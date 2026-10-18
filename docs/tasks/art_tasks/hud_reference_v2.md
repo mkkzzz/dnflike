@@ -8,10 +8,10 @@
 | revision / replaces | reference_v2.c1；旧 theme_v1 退回，保留历史 |
 | asset_type / workflow | UI / 14 文档 H 路线 |
 | style_profile / theme_pack | handpainted_action_v1 / dark_fantasy_v1；金属材质以本轮截图为准 |
-| scope | 整屏方向样张；批准后再出独立可接入资源 |
+| scope | 已认可样张 → 独立资源 → 运行时 HUD；本轮完成接入 |
 | gameplay_purpose | 战斗血蓝、道具、技能、目标、小地图、连击及评价的信息分层 |
-| owner / integration_owner | ws2 / ws2（后续接入任务） |
-| lifecycle | c1 source_approved；首批独立资源 baked_validated，待本批美术评审、未实装 |
+| owner / integration_owner | ws2 / ws2 |
+| lifecycle | c1 source_approved；运行时接入已发布，待用户实机试玩验收 |
 
 用户要求：此前其他 agent 的 UI 效果差，基本还原本轮截图；资源重新生成，不使用简单色块。
 本轮按 [美术流程](../../design/14_美术资源全流程.md)先提供具体样张待人工看图；沿用双排 12 技能格、默认两个技能、队伍暂不显示、轮盘功能预留的既有需求。
@@ -21,7 +21,7 @@
 ## 2. 依赖与影响
 
 - [旧设计](../../design/24_主HUD设计.md)提供功能需求；新图纠正其装饰过重、试管血蓝槽与松散底栏。
-- 旧源资源 `art/ui/hud/theme_v1/` 保留；现行 `game/scripts/hud.gd` 为后续消费者，本轮未改。
+- 旧源资源 `art/ui/hud/theme_v1/` 保留；现行 `game/scripts/hud.gd` 已消费 `game/assets/ui/hud_v2/` 的正式导出。
 - 参考场景和人物由本轮生图绘制，仅辅助 HUD 的观感/尺度；不替换已批准的森林与角色资源。
 - 下游须分别制作静态框体、透明液面/高光、图标、状态层，并运行时排字；现行 set_*、底栏让位、动作/特效时钟保留。
 
@@ -59,7 +59,7 @@
 | c1 | 一张新生成完整画面，带场景/人物/静态示意数值 | 用户已认可整体风格；不作为生产图集 |
 | batch_01 | 20 件新 UI 源图、1 张清理场景；22 张独立导出（含 2 张派生高光） | 技术校验通过；拼装待本批美术评审 |
 
-轮盘功能、真实地图/经验/评价的数据接入未完成；图上的数值/标签仅用于评审。源风格批准未扩展为游戏实装验收。
+上述源图/离线拼装是历史评审阶段。用户随后明确要求“把 UI 实装一下”，本轮已接真实血蓝、冷却、地图与连击；轮盘仅齿轮接显示设置，经验尚无系统而保持空轨，评价占位与假道具不显示。源风格批准未扩展为用户实机验收。
 
 ## 6. 加工与复现
 
@@ -74,6 +74,8 @@
 - [原像素底栏细节](../../previews/hud_reference_v2/c1_bottom_detail.png)；[实际源图的 0.75 缩样](../../previews/hud_reference_v2/c1_actual_075.png)。该缩样不是 1920×1080 成品。
 - 检查源图解码、实际尺寸、SHA256、缩样不放大及文档链接。未运行 Godot，不把离线示意图记成实机截图。
 - [首批整屏拼装](../../previews/hud_reference_v2/batch_01/assembled_scene.png)、[半血/冷却](../../previews/hud_reference_v2/batch_01/assembled_states.png)、[原生 2K 底栏](../../previews/hud_reference_v2/batch_01/bottom_native_2560.png)、[1080p 比例底栏](../../previews/hud_reference_v2/batch_01/bottom_1080_scale.png)。整屏场景保持原生 1672×941，叠加从 2K 缩小的 UI；不宣称场景本身已成为 2K 正式资产。
+- 2026-10-18 按用户追加要求，Godot 4.7.2 实际运行当前工作区的 10001-R01/R02，隐藏旧 HUD/设置覆盖层并截取 1920×1080 原图：[入口房叠图](../../previews/hud_reference_v2/current_game/entrance_new_hud_1920.png)、[有怪房间叠图](../../previews/hud_reference_v2/current_game/encounter_new_hud_1920.png)。独立资源按 0.75 叠加；无 UI 的[实拍源图与状态](../../screenshots/hud_environment)完整保留，HUD 外场景像素校验未变。目标/血蓝/房间号来自本次状态，经验保持 0%；道具栏和小地图仍为样式预览，未实装新 HUD。
+- 复现脚本：`art/ui/hud/reference_v2/batch_01/capture_current_scene.gd`（Godot 指定 --path game --script 绝对路径，建议 --resolution 1920x1080 --position -32000,-32000），将 temp 输出复制到上述实拍目录后运行 `python art/ui/hud/reference_v2/batch_01/compose_current_scene.py`。不修改游戏代码、场景或资源配置。
 
 ## 8. 发布、后续接入与验收
 
@@ -82,10 +84,19 @@
 - [x] 用户批准 c1 整体风格并授权首批资源与拼装。
 - [x] 按上表生成独立静态资源并检查真实尺寸/透明边缘。
 - [x] 导出与预览共用包，演示液面/玻璃/冷却/运行时文字分层。
-- [ ] 用户评审本批资源实际组合；真实数据按游戏接入任务绑定。
-- [ ] 接入既有 HUD 数据入口、让位行为、双排技能键及真实小地图。
-- [ ] 2560×1440 与 1920×1080 实机截图、相关回归与用户实机验收。
+- [x] 用户授权从当前场景叠图继续正式实装。
+- [x] 接入既有 HUD 数据入口、让位行为、双排技能键及真实小地图。
+- [x] 完成双分辨率实机截图与相关回归，见[实装记录](../../reports/ws2/2026-10/2026-10-18_主HUD实装与验证.md)。
+- [ ] 用户实机试玩与最终视觉验收。
 
 ## 9. 修改复盘
 
 旧版把参考的克制金属/粗胶囊/紧密嵌槽解释成亮金繁饰/试管/大空白；先逐区比较实际画面与参考，再拆组件。正式出图仍须实测返回像素，prompt 的目标尺寸不是原生 2K 的证据。
+
+## 10. 运行时接入
+
+- [运行时资源清单](../../../game/assets/ui/hud_v2/manifest.json)记录源文件、尺寸、哈希与实际使用情况；首批贴图逐字节复用，追加狂战士血怒/怒斩两图的[生图记录](../../../art/ui/hud/reference_v2/runtime_additions/generation.json)保留真实参考、完整提示词和原始输出。两图原生 1254×1254，仅缩小为 96×96。
+- HUD 使用 2560×1440 原生画布，缩到逻辑坐标，canvas_items 在实际窗口分辨率重绘。1080p 纹理 0.75，2K 纹理 1.0；底板镜像平铺，目标长条重复中段，装饰不拉大。
+- 技能 QWERTY/ASDFGH 可点击、拖换并按职业保存；默认 A/S 放现有职业技能，冷却及缺蓝状态跟技能身份走。道具只显示可实际使用的红/蓝药，其他槽空着；数字 1/2 保持原有用药行为。
+- 移除旧常驻提示/显示设置按钮/大 FPS、假评价与调试数值、房间内部模块 ID 和未实现回城按钮。左上只留小 FPS，轮盘齿轮或 F3 打开实际显示设置。隐藏的 P 开发面板保留供项目调试，不常驻显示。
+- [1080p 实机](../../screenshots/hud_v2/live_1920.png)、[血蓝/冷却状态](../../screenshots/hud_v2/states_1920.png)、[2K 实机](../../screenshots/hud_v2/live_2560.png)均由引擎帧缓冲直接保存；前述 current_game 目录仍是历史离线叠图，不能混用。

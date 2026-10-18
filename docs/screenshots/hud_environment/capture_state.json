@@ -1,0 +1,56 @@
+[
+	{
+		"background": "res://assets/dungeon/10001/rooms/r01.png",
+		"dungeon_name": "森林 · 首副本",
+		"label": "entrance",
+		"module": "10001-R01",
+		"monster_count": 0,
+		"old_hud_hidden_for_clean_capture": true,
+		"player_hp": 1000.0,
+		"player_hp_max": 1000.0,
+		"player_job": 2,
+		"player_mp": 300.0,
+		"player_mp_max": 300.0,
+		"player_xy": [
+			292.184661865234,
+			576.0
+		],
+		"room_count": 5,
+		"room_index": 0,
+		"room_number": 1,
+		"target": {},
+		"viewport": [
+			1920,
+			1080
+		]
+	},
+	{
+		"background": "res://assets/dungeon/10001/rooms/r02.png",
+		"dungeon_name": "森林 · 首副本",
+		"label": "encounter",
+		"module": "10001-R02",
+		"monster_count": 3,
+		"old_hud_hidden_for_clean_capture": true,
+		"player_hp": 1000.0,
+		"player_hp_max": 1000.0,
+		"player_job": 2,
+		"player_mp": 300.0,
+		"player_mp_max": 300.0,
+		"player_xy": [
+			407.144012451172,
+			576.0
+		],
+		"room_count": 5,
+		"room_index": 1,
+		"room_number": 2,
+		"target": {
+			"hp": 200.0,
+			"max_hp": 200.0,
+			"name": "哥布林"
+		},
+		"viewport": [
+			1920,
+			1080
+		]
+	}
+]

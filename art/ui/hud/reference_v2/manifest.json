@@ -49,7 +49,7 @@
     "Generator output is smaller than requested 2K; not a production export."
   ],
   "production_exports": [],
-  "runtime_integrated": false,
+  "runtime_integrated": true,
   "approval": {
     "date": "2026-10-18",
     "scope": "c1 整体风格；授权制作首批独立资源与拼装预览",
@@ -68,5 +68,8 @@
     "ui.hud.minimap_frame",
     "ui.hud.skill_icon",
     "ui.hud.item_icon"
-  ]
+  ],
+  "runtime_manifest": "game/assets/ui/hud_v2/manifest.json",
+  "runtime_evidence": "docs/screenshots/hud_v2/verification.json",
+  "user_playtest_accepted": false
 }

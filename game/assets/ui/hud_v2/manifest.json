@@ -1,0 +1,313 @@
+{
+  "revision": "reference_v2.runtime_01",
+  "path_base": "repository_root",
+  "consumer": "game/scripts/hud.gd",
+  "layout": "game/assets/ui/hud_v2/layout.json",
+  "native_canvas": [
+    2560,
+    1440
+  ],
+  "logical_canvas": [
+    1280,
+    720
+  ],
+  "canvas_items": true,
+  "scale_1080p": 0.75,
+  "scale_1440p": 1,
+  "upscaled": false,
+  "blend": "straight_alpha",
+  "runtime_text": true,
+  "user_authorized_integration": true,
+  "user_playtest_accepted": false,
+  "icon_generation": "art/ui/hud/reference_v2/runtime_additions/generation.json",
+  "assets": [
+    {
+      "id": "ui.hud.exp_frame",
+      "file": "exp_frame.png",
+      "size": [
+        790,
+        70
+      ],
+      "sha256": "c7ef329282fdb05c71dbb3ba9d37a434f46c2b43a4abaa23c3c0ab8d974faddd",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/exp_frame.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.fascia_tile",
+      "file": "fascia_tile.png",
+      "size": [
+        512,
+        270
+      ],
+      "sha256": "7835fa70a86cbc1595617286d8caa5cfa78afe6c3ebf1dfa4e87c63b2c5e32d9",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/fascia_tile.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.hp_glass",
+      "file": "hp_glass.png",
+      "size": [
+        248,
+        384
+      ],
+      "sha256": "f33b04950c5f38351bf4c2c93ef5dc63e546b767f5e7a1f8c500d7877355afe3",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/hp_glass.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.hp_liquid",
+      "file": "hp_liquid.png",
+      "size": [
+        248,
+        384
+      ],
+      "sha256": "77f74d0f8cf99ceca5215d7a04930e830bb7f6aeaab89cc3575de52daa0ebff4",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/hp_liquid.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.hp_shell",
+      "file": "hp_shell.png",
+      "size": [
+        248,
+        384
+      ],
+      "sha256": "84c701d1f7f34696d31518d91c13bf2e4fdcd7cece9eeca3274d56c755da918d",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/hp_shell.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.item_bread",
+      "file": "item_bread.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "931bef7eae0a5091afc30c4611f1a6d2734badfc9641876ed0b55b326bb4c57f",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/item_bread.png",
+      "identical_to_batch_export": true,
+      "used": false
+    },
+    {
+      "id": "ui.hud.item_fruit",
+      "file": "item_fruit.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "d869ef1839f05fac9d090fa42ad4e1b56b281f7290e842e37278cba09c03d129",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/item_fruit.png",
+      "identical_to_batch_export": true,
+      "used": false
+    },
+    {
+      "id": "ui.hud.item_herb",
+      "file": "item_herb.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "3087dbe6e3abe396ad26601bed6beb4b704c2ff3b19884c9a62d486bc16477f7",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/item_herb.png",
+      "identical_to_batch_export": true,
+      "used": false
+    },
+    {
+      "id": "ui.hud.item_potion_blue",
+      "file": "item_potion_blue.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "2158481bd0f25112ebd78013c5a4a92e1a96268359e4d2f879807ceabb3bce88",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/item_potion_blue.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.item_potion_red",
+      "file": "item_potion_red.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "b553a76ef112758302f76fbf5e4cb2d0b7396d5393133bc7b65902d1313c4771",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/item_potion_red.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.item_scroll",
+      "file": "item_scroll.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "82005ae4b2decae21634946242c92fd9f07faef5c5be32b58d2787390f987722",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/item_scroll.png",
+      "identical_to_batch_export": true,
+      "used": false
+    },
+    {
+      "id": "ui.hud.minimap_frame",
+      "file": "minimap_frame.png",
+      "size": [
+        260,
+        285
+      ],
+      "sha256": "a7c0ee32cda4626a45f7e9a858f1691fd3c6ddb72ea4b8fe754b3147427b0fa6",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/minimap_frame.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.mp_glass",
+      "file": "mp_glass.png",
+      "size": [
+        248,
+        384
+      ],
+      "sha256": "906f673b3ac1d76a72cb5c6c3ceed254d5582fbca1f047356bf964a5c9609a26",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/mp_glass.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.mp_liquid",
+      "file": "mp_liquid.png",
+      "size": [
+        248,
+        384
+      ],
+      "sha256": "20afa54776f8f0f1e7d0d6e5b3174e6824718512211705e583176fdd06974749",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/mp_liquid.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.mp_shell",
+      "file": "mp_shell.png",
+      "size": [
+        248,
+        384
+      ],
+      "sha256": "dae48a8ae819eab620c03f62a4a562e45e4f33b90cdf19ab7ccf61e019676b90",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/mp_shell.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.skill_blood_rage",
+      "file": "skill_blood_rage.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "b409a64f0881d167e84fa0e118551c31aa960c74cfc7cf4da8d1cdc8c38bdc97",
+      "source": "art/ui/hud/reference_v2/runtime_additions/sources/skill_blood_rage.png",
+      "identical_to_batch_export": false,
+      "used": true
+    },
+    {
+      "id": "ui.hud.skill_quick_draw",
+      "file": "skill_quick_draw.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "7ccb1875354bc83a4966cd104ee1709d2a9b69905c2b335d585e1690398642ca",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/skill_quick_draw.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.skill_rage_slash",
+      "file": "skill_rage_slash.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "e682c8584f3681dff2b40bf2704b9f7b4fcbc21f050ac323f24c4dba825673e8",
+      "source": "art/ui/hud/reference_v2/runtime_additions/sources/skill_rage_slash.png",
+      "identical_to_batch_export": false,
+      "used": true
+    },
+    {
+      "id": "ui.hud.skill_thrust",
+      "file": "skill_thrust.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "dcf766022568334cb65742d60dcf45f5571d251837ec2b6276addfb146a12de8",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/skill_thrust.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.slot_frame",
+      "file": "slot_frame.png",
+      "size": [
+        116,
+        116
+      ],
+      "sha256": "59becae7fb94641aaedbdbe714213f98b1854ee8234d509eb55d09f0e41d8a4e",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/slot_frame.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.target_frame",
+      "file": "target_frame.png",
+      "size": [
+        820,
+        116
+      ],
+      "sha256": "97bc9fba5d32d523bfbe085351f6dd6f05c074d862cd8d48a6a0e2302947a98c",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/target_frame.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.target_portrait",
+      "file": "target_portrait.png",
+      "size": [
+        80,
+        80
+      ],
+      "sha256": "1aca02f99914b3a43ebeb070ce8cd4e232a8a9e5f256910041ff6b43d981b6e7",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/target_portrait.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.title_plate",
+      "file": "title_plate.png",
+      "size": [
+        620,
+        64
+      ],
+      "sha256": "dbbdade31189f32dfd1e2cfa3e6fac30dfd8b89fcfafb8659c589e94275ebcc6",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/title_plate.png",
+      "identical_to_batch_export": true,
+      "used": true
+    },
+    {
+      "id": "ui.hud.wheel",
+      "file": "wheel.png",
+      "size": [
+        480,
+        410
+      ],
+      "sha256": "87e9720e3ffe508c3f59a215a77e4e98f20026906ff801b2496f105c7d29f51e",
+      "source": "art/ui/hud/reference_v2/batch_01/exports/wheel.png",
+      "identical_to_batch_export": true,
+      "used": true
+    }
+  ]
+}

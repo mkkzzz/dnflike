@@ -1,0 +1,36 @@
+[
+  {
+    "room": "10001-R01",
+    "source": "docs/screenshots/hud_environment/entrance_clean.png",
+    "source_sha256": "89eb39656a767b17ed9504c212f47011bb962814d757665f672c987e10357a81",
+    "output": "docs/previews/hud_reference_v2/current_game/entrance_new_hud_1920.png",
+    "output_sha256": "8cbc6eacfe5dfd7ed9bba0995aec0e446f155eb45ae9e0daa47502ab7e2b8184",
+    "size": [
+      1920,
+      1080
+    ],
+    "hud_scale": 0.75,
+    "screenshot_upscaled": false,
+    "scene_pixels_outside_hud_unchanged": true,
+    "game_hud_integrated": false,
+    "overlay_textures": 22,
+    "notes": "Real Godot capture + existing HUD texture overlay; item keys and minimap are visual preview."
+  },
+  {
+    "room": "10001-R02",
+    "source": "docs/screenshots/hud_environment/encounter_clean.png",
+    "source_sha256": "4bf6c2065b8ff30c3635c2c7cb3ebac3099bf46bfb9619f6f25e3c7ad6531512",
+    "output": "docs/previews/hud_reference_v2/current_game/encounter_new_hud_1920.png",
+    "output_sha256": "270e3f3597be2544332c3d2528646a6ca050e6031198ebf4295054ecf9169fcd",
+    "size": [
+      1920,
+      1080
+    ],
+    "hud_scale": 0.75,
+    "screenshot_upscaled": false,
+    "scene_pixels_outside_hud_unchanged": true,
+    "game_hud_integrated": false,
+    "overlay_textures": 22,
+    "notes": "Real Godot capture + existing HUD texture overlay; item keys and minimap are visual preview."
+  }
+]

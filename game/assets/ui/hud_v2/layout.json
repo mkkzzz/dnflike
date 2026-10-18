@@ -1,0 +1,107 @@
+{
+  "canvas": [
+    2560,
+    1440
+  ],
+  "bottom_fascia": [
+    0,
+    1170,
+    2560,
+    270
+  ],
+  "hp": [
+    0,
+    1056,
+    248,
+    384
+  ],
+  "mp": [
+    2312,
+    1056,
+    248,
+    384
+  ],
+  "wheel": [
+    1060,
+    1098,
+    480,
+    410
+  ],
+  "exp": [
+    260,
+    1202,
+    790,
+    70
+  ],
+  "items": {
+    "start": [
+      274,
+      1302
+    ],
+    "pitch": 128,
+    "count": 6
+  },
+  "skills": {
+    "start": [
+      1540,
+      1178
+    ],
+    "pitch": [
+      126,
+      130
+    ],
+    "rows": 2,
+    "cols": 6,
+    "keys": [
+      "QWERTY",
+      "ASDFGH"
+    ]
+  },
+  "target": [
+    16,
+    100,
+    820,
+    116
+  ],
+  "target_hp_fill": [
+    150,
+    164,
+    672,
+    32
+  ],
+  "minimap": [
+    2288,
+    66,
+    260,
+    285
+  ],
+  "dungeon_title": [
+    1940,
+    0,
+    620,
+    64
+  ],
+  "preview_scene_native_size": [
+    1672,
+    941
+  ],
+  "preview_scene_upscaled": false,
+  "preview_data": {
+    "default": {
+      "hp": 1,
+      "mp": 1,
+      "exp": 0
+    },
+    "showcase": {
+      "hp": 1,
+      "mp": 1,
+      "exp": 0.62
+    },
+    "states": {
+      "hp": 0.64,
+      "mp": 0.82,
+      "exp": 0.62,
+      "cooldown": 0.6
+    }
+  }
+}

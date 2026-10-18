@@ -1,0 +1,38 @@
+[
+  {
+    "id": "skill_blood_rage",
+    "source": "art/ui/hud/reference_v2/runtime_additions/sources/skill_blood_rage.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "source_sha256": "c38932e668452f08c0d9ddfd9588bfb3b0e42c0b00fbdd9ad3e7f5386e5e6db5",
+    "output": "game/assets/ui/hud_v2/skill_blood_rage.png",
+    "output_size": [
+      96,
+      96
+    ],
+    "tool": "built_in image_gen.imagegen",
+    "actual_reference_input": "art/ui/hud/reference_v2/candidates/c1/source.png",
+    "prompt": "art/ui/hud/reference_v2/runtime_additions/prompts/skill_blood_rage.txt",
+    "upscaled": false
+  },
+  {
+    "id": "skill_rage_slash",
+    "source": "art/ui/hud/reference_v2/runtime_additions/sources/skill_rage_slash.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "source_sha256": "ba071dfefff4cb90a28ccb6817e07b564116571df4869958ddfec347729c49fa",
+    "output": "game/assets/ui/hud_v2/skill_rage_slash.png",
+    "output_size": [
+      96,
+      96
+    ],
+    "tool": "built_in image_gen.imagegen",
+    "actual_reference_input": "art/ui/hud/reference_v2/candidates/c1/source.png",
+    "prompt": "art/ui/hud/reference_v2/runtime_additions/prompts/skill_rage_slash.txt",
+    "upscaled": false
+  }
+]

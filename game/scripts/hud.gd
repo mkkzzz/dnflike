@@ -1,9 +1,14 @@
 class_name Hud
 extends CanvasLayer
-## Screen-space combat HUD. Only implemented actions appear in the hotbar.
+## Native 2K generated HUD with live data and no debug readouts.
+signal action_requested(action: String)
+signal settings_requested
+const ASSET_ROOT := "res://assets/ui/hud_v2/"
+const SLOT_KEYS := ["Q", "W", "E", "R", "T", "Y", "A", "S", "D", "F", "G", "H"]
+const SLOT_CODES := [KEY_Q, KEY_W, KEY_E, KEY_R, KEY_T, KEY_Y, KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H]
 
-const DESIGN_W := 1280.0
-const DESIGN_H := 720.0
+const DESIGN_W := 2560.0
+const DESIGN_H := 1440.0
 const INK := Color(0.035, 0.028, 0.034, 0.90)
 const GOLD := Color(0.69, 0.54, 0.33)
 const GOLD_DIM := Color(0.32, 0.25, 0.17)
@@ -56,6 +61,15 @@ var _target_chip := 0.0
 var _target_id := 0
 var _vitals_initialized := false
 var displayed_attack_speed := 1.0
+var _textures: Dictionary = {}
+var skill_slots: Array = []
+var _map_positions: Array = []
+var _map_links: Array = []
+var _map_cleared: Dictionary = {}
+var _keycap: StyleBoxFlat
+var _drag_slot := -1
+var _dragging := false
+var _drag_origin := Vector2.ZERO
 
 func set_attack_speed(speed: float) -> void:
 	displayed_attack_speed = speed
@@ -70,6 +84,9 @@ func _init() -> void:
 func _ready() -> void:
 	_root = Control.new()
 	_root.name = "HudRoot"
+	# 2K artwork at half logical scale; canvas_items redraws at display resolution.
+	_root.scale = Vector2(0.5, 0.5)
+	_root.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	_root.size = Vector2(DESIGN_W, DESIGN_H)
 	_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_root.draw.connect(_draw_hud)
@@ -84,8 +101,17 @@ func _ready() -> void:
 	_root.add_child(_bottom_layer)
 	if font == null:
 		font = ThemeDB.fallback_font
-	if ResourceLoader.exists("res://assets/demo/portrait.png"):
-		_portrait = load("res://assets/demo/portrait.png") as Texture2D
+	for id in ["hp_shell", "mp_shell", "hp_liquid", "mp_liquid", "hp_glass", "mp_glass", "wheel",
+			"slot_frame", "fascia_tile", "exp_frame", "target_frame", "target_portrait", "minimap_frame",
+			"title_plate", "item_potion_red", "item_potion_blue", "skill_quick_draw", "skill_thrust",
+			"skill_blood_rage", "skill_rage_slash"]:
+		_textures[id] = load(ASSET_ROOT + id + ".png") as Texture2D
+	_keycap = StyleBoxFlat.new()
+	_keycap.bg_color = Color("#a28f69")
+	_keycap.border_color = Color("#3d3529")
+	_keycap.set_border_width_all(2)
+	_keycap.set_corner_radius_all(3)
+	_load_slots()
 	_refresh()
 
 
@@ -114,6 +140,8 @@ func set_job(job_id: int) -> void:
 	var next_job := clampi(job_id, 0, JOB_NAMES.size() - 1)
 	if next_job != job:
 		job = next_job
+		_drag_slot = -1
+		_load_slots()
 	_refresh()
 
 
@@ -260,226 +288,316 @@ func _draw_hud() -> void:
 	_draw_encounter()
 	_draw_target()
 	_draw_combo()
-	if training_mode:
-		_draw_training()
+	_text(Vector2(16, 27), "%d FPS" % roundi(Engine.get_frames_per_second()), 19, Color(0.82, 0.84, 0.82, 0.85), "left", true)
 	if _feedback_left > 0.0:
 		var color := IVORY
 		color.a = minf(1.0, _feedback_left * 3.0)
-		_text(Vector2(640, 599), _feedback, 17, color, "center")
+		_text(Vector2(1280, 1020), _feedback, 28, color, "center")
+	var hover := _slot_at(_mouse_position())
+	if hover >= 0 and not String(skill_slots[hover]).is_empty():
+		var skill: Dictionary = GameConfig.skills.get(skill_slots[hover], {})
+		_text(Vector2(1910, 1120), "%s   MP %d" % [str(skill.get("name", "")), int(skill.get("mp", 0))], 24, IVORY, "center")
+	if _drag_slot >= 0 and _dragging:
+		_tex("skill_" + str(skill_slots[_drag_slot]), _mouse_position() - Vector2(48, 48))
 
 
-## 底部栏在自己的节点里绘制（y≈616 以下），便于整体让位给走到前景的角色
 func _draw_bottom_bar() -> void:
 	_target = _bottom_layer
 	_draw_bottom()
 
 
-## 角色越靠近该图路面前沿，底栏越淡（0 = 完整显示，1 = 几乎全透明）。
-## 注意：这是显示层让位，景深可动范围本身仍严格按该图路面取值。
 func set_front_occlusion(amount: float) -> void:
 	front_occlusion = clampf(amount, 0.0, 1.0)
 	if _bottom_layer != null:
 		_bottom_layer.modulate.a = lerpf(1.0, float(GameConfig.runtime["hud"]["minimum_opacity"]), front_occlusion)
 
 
-func _draw_encounter() -> void:
-	_target.draw_line(Vector2(26, 27), Vector2(26, 83), GOLD, 2.0)
-	_text(Vector2(40, 43), "回廊训练场" if training_mode else ("幽暗回廊" if not (dungeon_mode and has_room) else room_title), 24, IVORY)
-	var subtitle := "战斗试炼"
-	if training_mode:
-		subtitle = "连段练习  /  " + ("无限补给" if training_stats.get("free", true) else "实战消耗")
-	elif dungeon_mode and has_room:
-		subtitle = "第 %d · %d 间" % [room_idx + 1, room_total]
-		if not room_difficulty.is_empty():
-			subtitle += "  ·  " + room_difficulty
-	elif wave_total > 0:
-		subtitle += "  /  第 %d · %d 波" % [maxi(1, wave), wave_total]
-	elif has_room:
-		subtitle += "  /  第 %d · %d 间" % [room_idx + 1, room_total]
-		if not room_difficulty.is_empty():
-			subtitle += "  " + room_difficulty
-	_text(Vector2(40, 65), subtitle, 13, GOLD)
-	if training_mode:
-		_text(Vector2(40, 87), "Tab 重置  ·  F2 补给模式", 13, MUTED)
-	elif dungeon_mode and has_room:
-		var room_objective := "清除本房间敌人  ·  剩余 %d" % enemies_remaining
-		if enemies_remaining == 0:
-			room_objective = "房间已清空  ·  门已开启"
-		_text(Vector2(40, 87), room_objective, 14, MUTED)
-	elif wave_total > 0:
-		var objective := "清除本波敌人  ·  剩余 %d" % enemies_remaining
-		if enemies_remaining == 0:
-			objective = "本波已肃清"
-		_text(Vector2(40, 87), objective, 14, MUTED)
-	var seconds := floori(elapsed)
-	_text(Vector2(1246, 37), "%02d:%02d" % [int(seconds / 60.0), seconds % 60], 19, IVORY, "right", true)
-	_text(Vector2(1246, 60), "ESC  暂停", 12, MUTED, "right")
+func _tex(id: String, pos: Vector2, modulate := Color.WHITE) -> void:
+	var texture: Texture2D = _textures.get(id)
+	if texture != null:
+		_target.draw_texture(texture, pos, modulate)
 
-func _draw_training() -> void:
-	_target.draw_rect(Rect2(26, 111, 222, 153), Color(0.025, 0.027, 0.04, 0.78))
-	_target.draw_line(Vector2(26, 111), Vector2(248, 111), GOLD_DIM, 1)
-	_text(Vector2(40, 135), "DPS  /  最近 5 秒", 12, MUTED)
-	_text(Vector2(40, 169), "%.1f" % float(training_stats.get("dps", 0)), 30, IVORY, "left", true)
-	_text(Vector2(40, 196), "本段伤害   %.0f" % float(training_stats.get("chain_damage", 0)), 14, GOLD)
-	_text(Vector2(40, 219), "累计伤害   %.0f" % float(training_stats.get("damage", 0)), 13, MUTED)
-	_text(Vector2(40, 246), "命中 %d     最长连击 %d" % [int(training_stats.get("hits", 0)), int(training_stats.get("best", 0))], 13, IVORY)
-	var buff := float(training_stats.get("buff", 0))
+
+func _draw_bottom() -> void:
+	var tile: Texture2D = _textures.get("fascia_tile")
+	if tile != null:
+		for i in 5:
+			if i % 2:
+				_target.draw_set_transform(Vector2((i + 1) * 512, 1170), 0, Vector2(-1, 1))
+				_target.draw_texture(tile, Vector2.ZERO)
+				_target.draw_set_transform(Vector2.ZERO)
+			else:
+				_target.draw_texture(tile, Vector2(i * 512, 1170))
+	_tex("exp_frame", Vector2(260, 1202))
+	_text(Vector2(325, 1248), "Lv.%d" % player_level, 27, IVORY, "center")
+	# There is no experience system yet: keep the track empty.
+	for i in 6:
+		var icon: String = ["item_potion_red", "item_potion_blue"][i] if i < 2 else ""
+		_draw_slot(Vector2(274 + i * 128, 1302), str(i + 1), icon, 6 + i if i < 2 else -1)
+	for i in 12:
+		var id := str(skill_slots[i])
+		var skills: Array = JOB_SKILLS.get(job, [])
+		var index: int = skills.find(id)
+		var pos := Vector2(1540 + (i % 6) * 126, 1178 + floori(float(i) / 6.0) * 130)
+		_draw_slot(pos, SLOT_KEYS[i], "skill_" + id if not id.is_empty() else "", index, id)
+	_tex("wheel", Vector2(1060, 1098))
+	_draw_reservoir("hp", Vector2(0, 1056), _ratio(vitals_hp, vitals_hp_max), Rect2(18, 56, 130, 306))
+	_draw_reservoir("mp", Vector2(2312, 1056), _ratio(vitals_mp, vitals_mp_max), Rect2(100, 63, 130, 294))
+	var buff := float(training_stats.get("buff", 0.0))
 	if buff > 0:
-		_text(Vector2(40, 291), "血怒  %.1fs" % buff, 15, Color(0.96, 0.34, 0.37))
+		_target.draw_texture_rect(_textures["slot_frame"], Rect2(266, 1124, 64, 64), false)
+		_target.draw_texture_rect(_textures["skill_blood_rage"], Rect2(272, 1130, 52, 52), false)
+		_text(Vector2(299, 1187), "%.0f" % ceilf(buff), 20, IVORY, "center", true)
+
+
+func _draw_reservoir(prefix: String, pos: Vector2, ratio: float, well: Rect2) -> void:
+	_tex(prefix + "_shell", pos)
+	var texture: Texture2D = _textures.get(prefix + "_liquid")
+	var cutoff := well.position.y + floorf(well.size.y * (1.0 - ratio))
+	if texture != null and ratio > 0:
+		var source := Rect2(0, cutoff, 248, 384 - cutoff)
+		_target.draw_texture_rect_region(texture, Rect2(pos + source.position, source.size), source)
+	_tex(prefix + "_glass", pos)
+	_text(pos + Vector2(well.get_center().x, well.end.y - 14), "%d%%" % roundi(ratio * 100), 22, IVORY, "center", true)
+
+
+func _draw_slot(pos: Vector2, key: String, icon: String, cooldown_index: int, skill_id := "") -> void:
+	_tex("slot_frame", pos)
+	var icon_mod := Color.WHITE
+	if not skill_id.is_empty() and vitals_mp < float(GameConfig.skills.get(skill_id, {}).get("mp", 0)):
+		icon_mod = Color(0.38, 0.46, 0.62)
+	if not icon.is_empty():
+		_tex(icon, pos + Vector2(10, 10), icon_mod)
+	var left := maxf(0, float(_cooldowns.get(cooldown_index, 0)))
+	var total := maxf(left, float(_cooldown_max.get(cooldown_index, 0)))
+	if left > 0 and total > 0 and not icon.is_empty():
+		var center := pos + Vector2(58, 58)
+		var points := PackedVector2Array([center])
+		var end_angle := -PI / 2 + TAU * left / total
+		for i in 33:
+			var angle := lerpf(-PI / 2, end_angle, float(i) / 32)
+			var ray := Vector2(cos(angle), sin(angle))
+			points.append(center + ray * (50.0 / maxf(absf(ray.x), absf(ray.y))))
+		_target.draw_colored_polygon(points, Color(0, 0, 0, 0.72))
+		_text(center + Vector2(0, 10), "%.1f" % left, 27, IVORY, "center", true)
+	_target.draw_style_box(_keycap, Rect2(pos + Vector2(39, 96), Vector2(38, 28)))
+	_text(pos + Vector2(58, 120), key, 22, IVORY, "center")
+
+
+func _draw_encounter() -> void:
+	_tex("title_plate", Vector2(1940, 0))
+	var title := room_title if dungeon_mode else ("训练场" if training_mode else "战斗试炼")
+	if has_room:
+		title += " · %d/%d" % [room_idx + 1, room_total]
+	_text(Vector2(2534, 43), title, 30, IVORY, "right")
+	if not dungeon_mode or room_total <= 0:
+		return
+	_tex("minimap_frame", Vector2(2288, 66))
+	_text(Vector2(2438, 115), "地图", 27, IVORY, "center")
+	if _map_positions.is_empty():
+		return
+	var bounds := Rect2(_map_positions[0], Vector2.ZERO)
+	for p in _map_positions:
+		bounds = bounds.expand(p)
+	var step := minf(42.0, minf(160 / maxf(1, bounds.size.x + 1), 148 / maxf(1, bounds.size.y + 1)))
+	var origin := Vector2(2436, 226) - (bounds.position + bounds.size * 0.5) * step
+	var side := step * 0.78
+	for link in _map_links:
+		var a := int(link.get("from", -1))
+		var b := int(link.get("to", -1))
+		if a >= 0 and b >= 0 and a < _map_positions.size() and b < _map_positions.size():
+			_target.draw_line(origin + _map_positions[a] * step, origin + _map_positions[b] * step, Color(0.40, 0.39, 0.23), 3)
+	for i in _map_positions.size():
+		var center: Vector2 = origin + _map_positions[i] * step
+		var color := Color(0.22, 0.23, 0.12)
+		if _map_cleared.has(i):
+			color = Color(0.40, 0.42, 0.22)
+		_target.draw_rect(Rect2(center - Vector2.ONE * side / 2, Vector2.ONE * side), color)
+		_target.draw_rect(Rect2(center - Vector2.ONE * side / 2, Vector2.ONE * side), GOLD_DIM, false, 1)
+		if i == room_idx:
+			_target.draw_colored_polygon(PackedVector2Array([center + Vector2(0, -9), center + Vector2(6, 0), center + Vector2(0, 9), center + Vector2(-6, 0)]), Color(0.24, 0.80, 0.95))
+		elif i == _map_positions.size() - 1:
+			_target.draw_circle(center, 4, Color(0.88, 0.30, 0.12))
+
+
+func set_map_layout(links: Array, count: int, cleared: Dictionary) -> void:
+	_map_cleared = cleared
+	if count == _map_positions.size() and links == _map_links:
+		return
+	_map_links = links.duplicate(true)
+	_map_positions = [Vector2.ZERO]
+	_map_positions.resize(count)
+	var known := {0: Vector2.ZERO}
+	for pass_index in count:
+		for link in links:
+			var a := int(link.get("from", -1))
+			var b := int(link.get("to", -1))
+			var direction: Vector2 = {"left": Vector2.LEFT, "right": Vector2.RIGHT, "top": Vector2.UP, "bottom": Vector2.DOWN}.get(str(link.get("from_side", "right")), Vector2.RIGHT)
+			if known.has(a) and not known.has(b):
+				known[b] = known[a] + direction
+			elif known.has(b) and not known.has(a):
+				known[a] = known[b] - direction
+	for i in count:
+		_map_positions[i] = known.get(i, Vector2(i, 0))
 
 
 func _draw_target() -> void:
 	if target == null or not is_instance_valid(target) or bool(target.get("dead")):
 		return
 	var cfg: Dictionary = target.get("cfg")
-	var hp := maxf(0.0, float(target.get("hp")))
-	var hp_max := maxf(1.0, float(cfg.get("hp", 200.0)))
-	var bar := Rect2(467, 50, 386, 9)
-	_text(Vector2(660, 37), str(cfg.get("name", "哥布林")), 16, IVORY, "center")
-	_target.draw_rect(Rect2(463, 46, 394, 17), INK)
-	_target.draw_line(Vector2(463, 46), Vector2(857, 46), GOLD_DIM, 1.0)
-	_bar(bar, hp / hp_max, RED, _target_chip / hp_max)
-	_text(Vector2(660, 78), "%d / %d" % [ceili(hp), ceili(hp_max)], 12, MUTED, "center", true)
+	var hp := maxf(0, float(target.get("hp")))
+	var maximum := maxf(1, float(cfg.get("hp", 200)))
+	var raw_width := 240 + maximum * 0.23
+	var width := clampf(raw_width, 672, 1440)
+	var layers := maxi(1, ceili(raw_width / 1440))
+	var per_layer := maximum / layers
+	var remaining_layers := maxi(1, ceili(hp / per_layer))
+	var fraction := (hp - (remaining_layers - 1) * per_layer) / per_layer
+	var texture: Texture2D = _textures.get("target_frame")
+	if texture == null:
+		return
+	_target.draw_texture_rect_region(texture, Rect2(16, 100, 124, 116), Rect2(0, 0, 124, 116))
+	_target.draw_texture_rect_region(texture, Rect2(140, 100, 696, 56), Rect2(124, 0, 696, 56))
+	# Repeat the painted health-track middle; never enlarge decorative ends.
+	var source := Rect2(124, 56, 696, 60)
+	_target.draw_texture_rect_region(texture, Rect2(140, 156, 18, 60), Rect2(source.position, Vector2(18, 60)))
+	var x := 158.0
+	while x < 140 + width - 18:
+		var piece := minf(660, 140 + width - 18 - x)
+		_target.draw_texture_rect_region(texture, Rect2(x, 156, piece, 60), Rect2(142, 56, piece, 60))
+		x += piece
+	_target.draw_texture_rect_region(texture, Rect2(140 + width - 18, 156, 18, 60), Rect2(802, 56, 18, 60))
+	_tex("target_portrait", Vector2(30, 118))
+	_text(Vector2(155, 143), str(cfg.get("name", "哥布林")), 27, IVORY)
+	var bar := Rect2(150, 164, width - 20, 32)
+	_fill_bar(bar, fraction, Color(0.80, 0.06, 0.08))
+	if layers > 1:
+		_text(Vector2(160 + width, 193), "×%d" % remaining_layers, 27, IVORY, "left", true)
 
 
-func _draw_bottom() -> void:
-	# The translucent strip begins below the playable ground line (576px).
-	for row in range(104):
-		var alpha := 0.30 + 0.65 * float(row) / 103.0
-		_target.draw_line(Vector2(0, 616 + row), Vector2(DESIGN_W, 616 + row),
-			Color(INK.r, INK.g, INK.b, alpha), 1.0)
-	_target.draw_line(Vector2(24, 616), Vector2(1256, 616), GOLD_DIM, 1.0)
-	_draw_portrait()
-	_text(Vector2(100, 641), player_name, 17, IVORY)
-	_text(Vector2(331, 641), "%s  Lv.%d" % [JOB_NAMES[job], player_level], 12, GOLD, "right")
-	_bar(Rect2(100, 651, 231, 10), _ratio(vitals_hp, vitals_hp_max), RED,
-		_ratio(_hp_chip, vitals_hp_max))
-	_bar(Rect2(100, 673, 231, 7), _ratio(vitals_mp, vitals_mp_max), BLUE)
-	_text(Vector2(216, 660), "%d / %d" % [ceili(vitals_hp), ceili(vitals_hp_max)], 11,
-		IVORY, "center", true)
-	_text(Vector2(216, 680), "%d / %d" % [ceili(vitals_mp), ceili(vitals_mp_max)], 10,
-		IVORY, "center", true)
-	_text(Vector2(100, 695), "攻速 %.0f%%" % (displayed_attack_speed * 100), 11, MUTED)
-	var backjump_left := float(_cooldowns.get(9, 0.0))
-	_text(Vector2(331, 695), "后跳 %.1fs" % backjump_left if backjump_left > 0 else "后跳就绪", 11, GOLD if backjump_left <= 0 else MUTED, "right")
-	var attack_name := "三连斩"
-	if str(training_stats.get("action", "")) == "air_attack":
-		attack_name = "空中斩"
-	elif str(training_stats.get("action", "")) == "dash_attack":
-		attack_name = "奔跑冲斩"
-	_draw_action(0, "X", attack_name, -1, "basic", true)
-	_draw_action(1, "Z", "上挑", 8, "upper", true)
-	var skill_names: Array = ["转职解锁", "转职解锁"]
-	if JOB_SKILLS.has(job):
-		var ids: Array = JOB_SKILLS[job]
-		for index in range(2):
-			var skill: Dictionary = GameConfig.skills.get(ids[index], {})
-			skill_names[index] = str(skill.get("name", ids[index]))
-	_draw_action(2, "A", skill_names[0], 0, "A", job > 0)
-	_draw_action(3, "S", skill_names[1], 1, "S", job > 0)
-	_draw_action(4, "V", "格挡", -1, "guard", true)
-	_draw_action(5, "1", "生命药水", 6, "hp", true)
-	_draw_action(6, "2", "魔力药水", 7, "mp", true)
-	_text(Vector2(25, 715), "← → 移动  ·  双击奔跑  ·  ↑ ↓ 景深", 11, MUTED)
-	_text(Vector2(639, 715), "C / 空格 跳跃  ·  ↓ + C 后跳", 11, MUTED, "center")
-	_text(Vector2(1255, 715), "T 切换职业  ·  R 重玩  ·  F3 显示设置", 11, MUTED, "right")
-
-
-func _draw_portrait() -> void:
-	var rect := Rect2(25, 631, 60, 55)
-	_target.draw_rect(rect.grow(2.0), INK)
-	if _portrait != null:
-		var source_size := _portrait.get_size()
-		var side := minf(source_size.x, source_size.y)
-		var source := Rect2(Vector2((source_size.x - side) * 0.5, 0), Vector2(side, side))
-		_target.draw_texture_rect_region(_portrait, rect, source)
-	_target.draw_rect(rect.grow(2.0), GOLD_DIM, false, 1.0)
-	_target.draw_line(Vector2(25, 630), Vector2(85, 630), GOLD, 1.0)
-
-
-func _draw_action(index: int, key: String, title: String, cooldown_index: int,
-		icon: String, enabled: bool) -> void:
-	var rect := Rect2(383 + index * 124, 629, 113, 58)
-	var accent := RED if job == 1 and key in ["A", "S"] else GOLD
-	if key == "2":
-		accent = BLUE
-	elif key == "1":
-		accent = RED
-	if not enabled:
-		accent = MUTED * Color(0.6, 0.6, 0.6, 1.0)
-	_target.draw_rect(rect, INK)
-	_target.draw_rect(rect, GOLD_DIM if enabled else Color(0.17, 0.16, 0.16), false, 1.0)
-	_target.draw_line(rect.position, rect.position + Vector2(rect.size.x, 0), accent, 1.0)
-	var left := maxf(0.0, float(_cooldowns.get(cooldown_index, 0.0)))
-	var total := maxf(left, float(_cooldown_max.get(cooldown_index, 0.0)))
-	var icon_pos := rect.position + Vector2(8, 8)
-	_draw_symbol(icon_pos + Vector2(16, 15), icon, accent)
-	_text(rect.position + Vector2(96, 22), key, 18, IVORY if enabled else MUTED, "right", true)
-	_text(rect.position + Vector2(56, 49), title, 12, IVORY if enabled else MUTED, "center")
-	if left > 0.0:
-		_target.draw_rect(Rect2(rect.position + Vector2(1, 1), Vector2(111, 56)), Color(0, 0, 0, 0.57))
-		_text(rect.position + Vector2(29, 34), "%.1f" % left, 18, IVORY, "center", true)
-		_text(rect.position + Vector2(96, 22), key, 18, IVORY, "right", true)
-		if total > 0.0:
-			_target.draw_line(rect.position + Vector2(1, 57),
-				rect.position + Vector2(1 + 111 * (1.0 - left / total), 57), GOLD, 2.0)
-
-
-func _draw_symbol(center: Vector2, kind: String, color: Color) -> void:
-	if kind in ["hp", "mp"]:
-		_target.draw_rect(Rect2(center + Vector2(-3, -13), Vector2(6, 6)), GOLD_DIM)
-		var flask := PackedVector2Array([center + Vector2(-4, -7), center + Vector2(4, -7),
-			center + Vector2(9, 1), center + Vector2(9, 11), center + Vector2(-9, 11),
-			center + Vector2(-9, 1)])
-		_target.draw_colored_polygon(flask, Color(color.r, color.g, color.b, 0.55))
-		var outline := flask.duplicate()
-		outline.append(flask[0])
-		_target.draw_polyline(outline, color.lightened(0.2), 1.5, true)
-		_target.draw_line(center + Vector2(-6, 3), center + Vector2(6, 3), IVORY, 1.0)
-	elif kind == "guard":
-		var points := PackedVector2Array([center + Vector2(-10, -12), center + Vector2(10, -12),
-			center + Vector2(8, 6), center + Vector2(0, 13), center + Vector2(-8, 6),
-			center + Vector2(-10, -12)])
-		_target.draw_polyline(points, color, 1.5, true)
-		_target.draw_line(center + Vector2(0, -9), center + Vector2(0, 8), color, 1.0, true)
-	elif kind == "A" and job == 1:
-		_target.draw_arc(center, 12, 0, TAU, 24, color, 1.5, true)
-		_target.draw_arc(center, 7, 0, TAU, 18, color.lightened(0.15), 1.0, true)
-		_target.draw_line(center + Vector2(0, -15), center + Vector2(0, 15), IVORY, 1.5)
-	else:
-		_target.draw_line(center + Vector2(-10, 11), center + Vector2(10, -11), color, 3.0, true)
-		_target.draw_line(center + Vector2(-11, 2), center + Vector2(-2, 10), IVORY, 2.0, true)
-		if kind == "upper":
-			_target.draw_arc(center + Vector2(-4, 3), 14, -1.6, 0.3, 14, color, 1.0, true)
-		elif kind == "S" and job == 2:
-			for offset in [-7, 0, 7]:
-				_target.draw_line(center + Vector2(-15, offset), center + Vector2(13, offset), color, 1.0)
-		elif kind in ["A", "S"]:
-			_target.draw_arc(center + Vector2(-5, 0), 16, -1.5, 1.1, 16, color, 1.5, true)
+func _fill_bar(rect: Rect2, fraction: float, color: Color) -> void:
+	var width := rect.size.x * clampf(fraction, 0, 1)
+	if width <= 0:
+		return
+	for y in int(rect.size.y):
+		var t := float(y) / maxf(1, rect.size.y - 1)
+		var shade := color.lightened((0.5 - t) * 0.5) if t < 0.5 else color.darkened((t - 0.5) * 0.65)
+		_target.draw_line(rect.position + Vector2(0, y), rect.position + Vector2(width, y), shade, 1)
 
 
 func _draw_combo() -> void:
 	if combo < 2 or combo_age > 2.5:
 		return
-	var alpha := clampf((2.5 - combo_age) * 3.0, 0.0, 1.0)
-	var color := GOLD
-	color.a = alpha
-	_text(Vector2(1219, 268), str(combo), 43 + roundi(combo_flash * 5), color, "right", true)
-	color = IVORY
-	color.a = alpha * 0.8
-	_text(Vector2(1219, 290), "连击", 14, color, "right")
+	var color := Color(0.10, 0.78, 0.94, clampf((2.5 - combo_age) * 3, 0, 1))
+	_text(Vector2(2520, 600), "%d Hit Combo!" % combo, 52, color, "right", true)
 
 
-func _bar(rect: Rect2, fraction: float, color: Color, chip: float = 0.0) -> void:
-	_target.draw_rect(rect, Color(0.08, 0.065, 0.07))
-	if chip > fraction:
-		_target.draw_rect(Rect2(rect.position, Vector2(rect.size.x * clampf(chip, 0.0, 1.0), rect.size.y)),
-			Color(0.65, 0.51, 0.37, 0.55))
-	var width := rect.size.x * clampf(fraction, 0.0, 1.0)
-	if width > 0.0:
-		_target.draw_rect(Rect2(rect.position, Vector2(width, rect.size.y)), color)
-		_target.draw_line(rect.position + Vector2(0, 1), rect.position + Vector2(width, 1),
-			color.lightened(0.22), 1.0)
+func _default_slots() -> Array:
+	var slots: Array = []
+	slots.resize(12)
+	slots.fill("")
+	var ids: Array = JOB_SKILLS.get(job, [])
+	for i in ids.size():
+		slots[6 + i] = ids[i]
+	return slots
+
+
+func _load_slots() -> void:
+	skill_slots = _default_slots()
+	var saved := ConfigFile.new()
+	if saved.load("user://hud_slots.cfg") != OK:
+		return
+	var candidate = saved.get_value("skills", str(job), [])
+	if not candidate is Array or candidate.size() != 12:
+		return
+	var actual: Array = []
+	for id in candidate:
+		if str(id).is_empty():
+			continue
+		if not id in JOB_SKILLS.get(job, []) or id in actual:
+			return
+		actual.append(id)
+	if actual.size() == JOB_SKILLS.get(job, []).size():
+		skill_slots = candidate.duplicate()
+
+
+func move_skill_slot(from: int, to: int, persist := true) -> void:
+	if from < 0 or to < 0 or from >= 12 or to >= 12 or str(skill_slots[from]).is_empty():
+		return
+	var temp = skill_slots[to]
+	skill_slots[to] = skill_slots[from]
+	skill_slots[from] = temp
+	if persist:
+		var saved := ConfigFile.new()
+		saved.load("user://hud_slots.cfg")
+		saved.set_value("skills", str(job), skill_slots)
+		saved.save("user://hud_slots.cfg")
+	_refresh()
+
+
+func _mouse_position() -> Vector2:
+	return _root.get_local_mouse_position()
+
+
+func _slot_at(point: Vector2) -> int:
+	for i in 12:
+		if Rect2(1540 + (i % 6) * 126, 1178 + floori(float(i) / 6.0) * 130, 116, 124).has_point(point):
+			return i
+	return -1
+
+
+func _activate_slot(index: int) -> void:
+	var ids: Array = JOB_SKILLS.get(job, [])
+	var skill_index: int = ids.find(skill_slots[index])
+	if skill_index >= 0:
+		action_requested.emit("skill_a" if skill_index == 0 else "skill_s")
+
+
+func handle_hud_input(event: InputEvent) -> bool:
+	if not visible:
+		return false
+	if event is InputEventKey and event.pressed and not event.echo:
+		var key: int = event.physical_keycode if event.physical_keycode else event.keycode
+		var index := SLOT_CODES.find(key)
+		if index >= 0:
+			_activate_slot(index)
+			return true
+	if event is InputEventMouseMotion:
+		var point: Vector2 = _root.get_global_transform_with_canvas().affine_inverse() * event.position
+		if _drag_slot >= 0 and point.distance_to(_drag_origin) > 12:
+			_dragging = true
+			return true
+	if not event is InputEventMouseButton or event.button_index != MOUSE_BUTTON_LEFT:
+		return false
+	var point: Vector2 = _root.get_global_transform_with_canvas().affine_inverse() * event.position
+	if _bottom_layer.modulate.a < 0.35:
+		_drag_slot = -1
+		_dragging = false
+		return false
+	if event.pressed:
+		var index := _slot_at(point)
+		if index >= 0:
+			_drag_slot = index
+			_drag_origin = point
+			_dragging = false
+			return true
+		if point.distance_to(Vector2(1430, 1370)) <= 40:
+			settings_requested.emit()
+			return true
+		for i in 2:
+			if Rect2(274 + i * 128, 1302, 116, 124).has_point(point):
+				action_requested.emit("potion_hp" if i == 0 else "potion_mp")
+				return true
+	elif _drag_slot >= 0:
+		var to := _slot_at(point)
+		if _dragging and to >= 0:
+			move_skill_slot(_drag_slot, to)
+		elif not _dragging:
+			_activate_slot(_drag_slot)
+		_drag_slot = -1
+		_dragging = false
+		return true
+	return false
 
 
 func _ratio(value: float, maximum: float) -> float:

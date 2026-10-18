@@ -1,0 +1,76 @@
+{
+  "engine": "Godot 4.7.2 stable",
+  "baseline_commit": "b173d20bfb9cbd8c2e2f122b5e3697a472b2d1cf",
+  "validation_scope": "tracked main baseline plus HUD-only changes, excludes concurrent V7 work",
+  "runtime_hud_sha256": "ebfb1474071c083aceda64f07d428da888245bf1cf3a93707c3d82960be0baf7",
+  "runtime_main_sha256": "dbe16b8d7bb032a89ae0844303e7aff64c5e6100071fed59274c8182ac70a790",
+  "tests": [
+    {
+      "run": "hud_tests.log",
+      "summary": "COMPLETE checks=18 failures=0",
+      "engine_errors": 0,
+      "exit_code": 0,
+      "log_sha256": "f74ef05136fb4ac8cb21cd31adac04d6f2cd57bab458e902777e52754f948c50"
+    },
+    {
+      "run": "regression.log",
+      "summary": "COMPLETE checks=373 failures=0",
+      "engine_errors": 0,
+      "exit_code": 0,
+      "log_sha256": "976173855daa8207f13d674e598ca0e83dfd14568875a7720d90b18bfeaabdb6"
+    },
+    {
+      "run": "capture_1080.log",
+      "summary": "COMPLETE checks=20 failures=0",
+      "engine_errors": 0,
+      "exit_code": 0,
+      "log_sha256": "1e35e58310cefb094f5a8f3dd1806b3794563843b270b530e8e5f4ae61b2ed7a"
+    },
+    {
+      "run": "capture_1440.log",
+      "summary": "COMPLETE checks=20 failures=0",
+      "engine_errors": 0,
+      "exit_code": 0,
+      "log_sha256": "de330aadb6ded3689810973e1be4df0f758fe09edd0229476bc0ac3323b6634d"
+    }
+  ],
+  "captures": [
+    {
+      "file": "live_1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "0846a847987bac4a21d306a5bf5b41e8328b55dc65ae6ad5b383b33d4d68160c",
+      "method": "RenderingServer.frame_post_draw / Viewport.get_texture().get_image(), no postcomposite"
+    },
+    {
+      "file": "live_2560.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "744b03f653182bf2a6b05d4985c50c0b55c18c2601a1ceec247d015d68cdb4bc",
+      "method": "RenderingServer.frame_post_draw / Viewport.get_texture().get_image(), no postcomposite"
+    },
+    {
+      "file": "states_1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "2d80a5ed0c25616211d48864f3a7cbb5251bd4dc7d2c0abce63c8ba258847454",
+      "method": "RenderingServer.frame_post_draw / Viewport.get_texture().get_image(), no postcomposite"
+    },
+    {
+      "file": "states_2560.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "e65d632d296b27633c89c5b8c714e6411ebff226749d46c429761224961673a1",
+      "method": "RenderingServer.frame_post_draw / Viewport.get_texture().get_image(), no postcomposite"
+    }
+  ],
+  "user_playtest_accepted": false
+}
