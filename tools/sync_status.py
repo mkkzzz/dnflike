@@ -97,13 +97,54 @@ def git_env() -> dict[str, str]:
         env["HTTPS_PROXY"] = env["HTTP_PROXY"] = proxy
     return env
 
+# Windows 上 git fetch 会派生子进程 git-remote-https。只 kill 父进程时，
+# 子进程仍握着 stdout/stderr 管道，communicate() 会继续死等——超时形同虚设。
+# 必须按进程树杀，故联网调用用 Popen + CREATE_NEW_PROCESS_GROUP + taskkill /T。
+_CREATE_NEW_PROCESS_GROUP = 0x00000200 if os.name == "nt" else 0
 
-def git(*args: str, check: bool = True) -> str:
-    result = subprocess.run(
-        [GIT, "-c", "core.quotepath=false", *args],
-        cwd=REPO, capture_output=True, text=True, encoding="utf-8", errors="replace",
-        env=git_env(),
+def _run_git(cmd: list[str], timeout: float | None,
+             env: dict[str, str] | None = None) -> subprocess.CompletedProcess:
+    """执行 git 命令。
+
+    env 用于带入系统代理（见 git_env）；timeout 供联网调用使用，
+    超时时按进程树杀（见上方 _CREATE_NEW_PROCESS_GROUP 的说明）。
+    """
+    if timeout is None:
+        return subprocess.run(
+            cmd, cwd=REPO, capture_output=True, text=True,
+            encoding="utf-8", errors="replace", env=env,
+        )
+    proc = subprocess.Popen(
+        cmd, cwd=REPO, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        text=True, encoding="utf-8", errors="replace", env=env,
+        creationflags=_CREATE_NEW_PROCESS_GROUP,
     )
+    try:
+        out, err = proc.communicate(timeout=timeout)
+        return subprocess.CompletedProcess(cmd, proc.returncode, out, err)
+    except subprocess.TimeoutExpired:
+        if os.name == "nt":
+            subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)],
+                           capture_output=True, timeout=10)
+        else:
+            proc.kill()
+        try:
+            proc.communicate(timeout=5)
+        except subprocess.TimeoutExpired:
+            pass
+        raise RuntimeError(
+            f"git {' '.join(cmd[1:])} 超时（{timeout:.0f}s 未返回，已强制结束进程树）"
+        ) from None
+
+
+def git(*args: str, check: bool = True, timeout: float | None = None) -> str:
+    """调用 git。
+
+    timeout 为 None 时无限等待（只适合本地操作）。**任何联网操作都必须给超时**：
+    fetch 在代理/加速器异常时会永久挂起，导致本脚本设计的"降级用本地引用"
+    路径永远走不到，表现为开工命令卡死（2026-10-15 实际踩到）。
+    """
+    result = _run_git([GIT, "-c", "core.quotepath=false", *args], timeout, git_env())
     if check and result.returncode != 0:
         raise RuntimeError(result.stderr.strip() or f"git {' '.join(args)} 失败")
     return result.stdout.rstrip()
@@ -163,13 +204,22 @@ def person_of(ws_id: str) -> str:
     return ""
 
 
+FETCH_TIMEOUT = 45.0
+
+
 def remote_state(fetch: bool) -> list[str]:
     notes = []
     if fetch:
         try:
-            git("fetch", "origin")
+            # 只取 main，比 fetch 全部 refs 轻；并强制超时，避免代理异常时无限挂起。
+            # http.lowSpeed* 让 git 自己在传输停滞时放弃（比外部 kill 更干净）。
+            git("-c", "http.lowSpeedLimit=1000", "-c", "http.lowSpeedTime=20",
+                "fetch", "origin", "main", timeout=FETCH_TIMEOUT)
         except RuntimeError as err:
-            notes.append(f"[!] fetch 失败，以下基于本地已有的远程引用：{err.splitlines()[0]}")
+            first = str(err).splitlines()[0] if str(err) else "未知原因"
+            notes.append(f"[!] fetch 失败，以下基于本地已有的远程引用：{first}")
+            notes.append("    （若反复超时：检查 SteamTools 等加速器/代理是否正常；"
+                         f"可加 --no-fetch 直接看本地状态）")
     try:
         behind, ahead = git("rev-list", "--left-right", "--count", f"{REMOTE}...HEAD").split()
     except RuntimeError:
