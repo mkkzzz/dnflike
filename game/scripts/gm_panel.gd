@@ -102,7 +102,8 @@ func build(ui_font: Font, view: Vector2) -> void:
 	_log.custom_minimum_size = Vector2(736, 0)
 	column.add_child(_log)
 
-	hide()
+	# CanvasLayer must stay visible; open/close only change the panel.
+	close()
 
 
 func is_open() -> bool:

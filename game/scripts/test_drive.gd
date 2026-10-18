@@ -714,6 +714,12 @@ func _run_dungeon_checks() -> void:
 	Input.parse_input_event(p_key)
 	await _frames(3)
 	_check(panel.is_open(), "P key opens the gm panel")
+	_check(panel.visible and panel._root.is_visible_in_tree(), "P key opens a panel whose ancestor CanvasLayer is visible")
+	p_key.echo = true
+	Input.parse_input_event(p_key)
+	await _frames(2)
+	_check(panel.is_open(), "holding P does not repeatedly toggle the panel")
+	p_key.echo = false
 	Input.parse_input_event(p_key)
 	await _frames(3)
 	_check(not panel.is_open(), "P key closes the gm panel again")
@@ -723,7 +729,16 @@ func _run_dungeon_checks() -> void:
 	panel._input.grab_focus()
 	await _frames(3)
 	_check(panel.is_typing() and not p.control_enabled, "focusing the command box takes gameplay control away")
-	panel.close()
+	panel._input.text = ""
+	p_key.unicode = 112
+	Input.parse_input_event(p_key)
+	await _frames(2)
+	_check(panel.is_open() and panel._input.text == "p", "GM command editor accepts P in commands without closing")
+	var close_key := InputEventKey.new()
+	close_key.physical_keycode = KEY_ESCAPE
+	close_key.keycode = KEY_ESCAPE
+	close_key.pressed = true
+	Input.parse_input_event(close_key)
 	await _frames(4)
 	p.invincible = 999999
 	_check(not panel.is_typing() and p.control_enabled, "closing the panel gives gameplay control back")
@@ -732,6 +747,14 @@ func _run_dungeon_checks() -> void:
 	first_button.emit_signal("pressed")
 	await _frames(3)
 	_check(not main_ref.dungeon_mode and main_ref.battle_state == main_ref.BattleState.READY, "a panel button dispatches its command")
+	panel.close()
+	main_ref._job_buttons[0].grab_focus()
+	Input.parse_input_event(p_key)
+	await _frames(2)
+	_check(panel.is_open() and panel._root.is_visible_in_tree(), "P opens GM while another GUI control has keyboard focus")
+	if "--capture" in OS.get_cmdline_user_args():
+		await _capture("gm_p_visible")
+	panel.close()
 
 
 func _capture(name_text: String) -> void:

@@ -688,16 +688,24 @@ func _reset_battle() -> void:
 	else:
 		_start_demo(selected_job)
 
+func _input(event: InputEvent) -> void:
+	# Global GM shortcut runs before focused GUI controls consume keyboard input.
+	# Inside the command editor P remains text (spawn/help); Escape closes it.
+	if gm_panel == null:
+		return
+	if event.is_action_pressed("pause_demo") and gm_panel.is_open():
+		gm_panel.close()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("gm_panel") and not gm_panel.is_typing():
+		gm_panel.toggle()
+		get_viewport().set_input_as_handled()
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("display_settings") or (_settings_card.visible and event.is_action_pressed("pause_demo")):
 		_toggle_display_settings()
 		get_viewport().set_input_as_handled()
 		return
 	if _settings_card.visible:
-		return
-	if gm_panel != null and event.is_action_pressed("gm_panel"):
-		gm_panel.toggle()
-		get_viewport().set_input_as_handled()
 		return
 	if gm_panel != null and gm_panel.is_open():
 		return
