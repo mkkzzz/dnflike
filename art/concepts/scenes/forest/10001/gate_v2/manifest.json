@@ -1,0 +1,54 @@
+{
+  "schema": "dnflike/gate-artwork-pilot/v1",
+  "asset_id": "gate.forest.room_connection",
+  "revision": "gate_v2_c1",
+  "created_date": "2026-10-18",
+  "status": "source_review",
+  "scope": "Single front-facing forest gate closed/open design sample; not the four-direction production set.",
+  "style_profile": "handpainted_action_v1",
+  "theme": "forest_daylight",
+  "generator": {
+    "tool": "image_gen",
+    "requested_size": [1280, 768],
+    "n": 1,
+    "quality": "high",
+    "style": "natural",
+    "reference_images_submitted": [],
+    "reference_input_supported": false,
+    "seed": null,
+    "prompt": "原创横版动作RPG游戏的森林房间连接门，绘制一张严格左右两栏的同一扇门双状态原画样张，左栏关闭，右栏开启。全画布1280x768，两栏各640x768，每栏仅一扇完整独立门，无文字、无标注、无水印。两扇门必须完全相同的门框、尺寸、取景、角度、脚底高度、木纹、藤蔓位置和两侧灯座，只改变中间门扇和灯的开启状态。角色视角是经典韩式横版清版动作游戏的略微俯视三分之四正面，画上边缘房间连接门的正面，不是等距俯视、不是真实照片。造型是朴素的森林木栅门：两根厚实风化中棕色原木门柱，顶部一根不规则弯曲但稳固的原木横梁，顶部和门柱有少量青绿藤蔓、苔藓，绳结固定，门框两侧各一个小巧琥珀色灯座。门框轮廓方正微拱，不能变成巨大魔法传送门或石头神殿。左门中央是闭合的竖向棕木栅条，有两道横向加固木梁，灯熄灭。右门保留完全相同框架，门扇向门框两侧自然打开，门内空空能通行，不画森林风景、道路、背景，双灯有克制暖琥珀火光，不能有大面积金光或魔法光幕。门整体每栏居中、柱根对齐，约占栏高70%，周围宽留白，顶梁、藤蔓、灯、打开的门扇均不可裁切。所有非物体区域纯白色平坦背景，包括开门内部和栅条间隙；不画地板、草地、地形、场景、人物、其他物品、阴影投影，不做棋盘背景。高品质二维半写实手绘游戏位图质感，成熟厚涂，清晰木材纹理，大的主明暗面，柔和暖日光来自左上，青绿苔藓、中棕原木、灰青阴影；保留森林材质厚重感，不做卡通Q版、不做矢量扁平、不做3D渲染、不做像素格。细节服从清晰易读的门框轮廓。"
+  },
+  "references_consulted_only": [
+    {"file": "../v1/source/style_reference.png", "scope": "Previously approved gate style direction, not supplied to generator."},
+    {"file": "../v1/production.json", "scope": "gate_specs and native display contract"},
+    {"file": "../../../../../../docs/design/22_资产画面规格.md", "scope": "Native 2K display target; only downsample, no upscale."}
+  ],
+  "production_target": {
+    "viewport_native": [2560, 1440],
+    "canvas_per_direction": [640, 768],
+    "directions": ["up", "down", "left", "right"],
+    "states": ["closed", "open"],
+    "alpha": "straight RGBA",
+    "upscale_allowed": false,
+    "counts_as_production_delivery": false
+  },
+  "source": {
+    "file": "candidates/c1/原创横版动作RPG游戏的森林房间连接门_绘制一张严格左右两栏_2026-10-18T07-58-31.png",
+    "native_size": [1376, 768],
+    "mode": "RGB",
+    "sha256": "c6b6c9463f18c11bacebf0ed0cb4d0030b5fc3a8a9ef7a025476f5b64819d7b0",
+    "modified": false,
+    "left_state": "closed",
+    "right_state": "open"
+  },
+  "review_notes": [
+    "Generator returned 1376x768 rather than requested 1280x768; original pixels retained, no resizing or upscale.",
+    "White RGB background is not transparent; sheet has a vertical separator and is not directly usable as a sprite.",
+    "Closed doors are densely packed wooden planks rather than a visibly spaced grille; user should review this style difference.",
+    "Gate frames appear similar but no per-pixel state alignment or anchor validation has been performed.",
+    "Only a front view was generated; left/right/back directions and lamp animation are absent."
+  ],
+  "approval": {"source_approved": false, "runtime_approved": false},
+  "exports": [],
+  "integration": {"game_modified": false, "next": "User reviews shape and painting; only then produce directional states, transparent exports, anchors and lamp animation."}
+}
