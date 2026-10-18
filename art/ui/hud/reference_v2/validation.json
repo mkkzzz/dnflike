@@ -1,0 +1,34 @@
+{
+  "source": "art/ui/hud/reference_v2/candidates/c1/source.png",
+  "source_size": [
+    1672,
+    941
+  ],
+  "source_mode": "RGB",
+  "source_sha256": "8000185395437d94f77b99fe659f9a1873547c1cc3a697a4cd9e856d034d7695",
+  "requested_size": [
+    2560,
+    1440
+  ],
+  "native_2k": false,
+  "upscaled": false,
+  "actual_075_size": [
+    1254,
+    706
+  ],
+  "bottom_crop_xyxy": [
+    0,
+    690,
+    1672,
+    941
+  ],
+  "production_exports": [],
+  "runtime_integrated": false,
+  "visual_approval": "pending",
+  "checks": {
+    "source_decodes": true,
+    "source_matches_recorded_dimensions": true,
+    "source_matches_recorded_hash": true,
+    "preview_only_downscales": true
+  }
+}

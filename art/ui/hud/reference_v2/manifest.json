@@ -1,0 +1,67 @@
+{
+  "asset_id": "ui.hud.reference_sample",
+  "revision": "reference_v2.c1",
+  "owner": "ws2",
+  "lifecycle": "source_review",
+  "task": "docs/tasks/art_tasks/hud_reference_v2.md",
+  "path_base": "repository_root",
+  "replaces_candidate": "art/ui/hud/theme_v1/manifest.json",
+  "tool": {
+    "name": "image_gen.imagegen",
+    "mode": "built_in",
+    "model": "not_returned",
+    "seed": "not_returned",
+    "transparent_background": false,
+    "reference_input_method": "referenced_image_paths",
+    "reference_actually_supplied": true
+  },
+  "reference": {
+    "kind": "user_attachment",
+    "filename": "codex-clipboard-a7144a72-d0c8-4466-97b5-5ff90f677618.png",
+    "size": [
+      1112,
+      832
+    ],
+    "sha256": "fcf439290346af4afefd83be6d3c7f71b5af943818d73e2a0872cd668a9bf5b6",
+    "stored_in_repository": false
+  },
+  "source": "art/ui/hud/reference_v2/candidates/c1/source.png",
+  "prompt": "art/ui/hud/reference_v2/candidates/c1/prompt.txt",
+  "source_sha256": "8000185395437d94f77b99fe659f9a1873547c1cc3a697a4cd9e856d034d7695",
+  "requested_size": [
+    2560,
+    1440
+  ],
+  "actual_size": [
+    1672,
+    941
+  ],
+  "native_2k": false,
+  "upscaled": false,
+  "previews": [
+    "docs/previews/hud_reference_v2/c1_bottom_detail.png",
+    "docs/previews/hud_reference_v2/c1_actual_075.png"
+  ],
+  "validation": "art/ui/hud/reference_v2/validation.json",
+  "known_differences": [
+    "Full screen sample contains illustrative characters, scene, text, icons and values; none constitute game integration.",
+    "Reference-like five outer wheel buttons plus center differs from older document four-button proposal; pending user review.",
+    "Generator output is smaller than requested 2K; not a production export."
+  ],
+  "production_exports": [],
+  "runtime_integrated": false,
+  "approval": null,
+  "affected_dependencies": [
+    "ui.hud.panel_bottom",
+    "ui.hud.orb_hp",
+    "ui.hud.orb_mp",
+    "ui.hud.slot_frame",
+    "ui.hud.wheel",
+    "ui.hud.exp_track",
+    "ui.hud.buff_frame",
+    "ui.hud.target_frame",
+    "ui.hud.minimap_frame",
+    "ui.hud.skill_icon",
+    "ui.hud.item_icon"
+  ]
+}
