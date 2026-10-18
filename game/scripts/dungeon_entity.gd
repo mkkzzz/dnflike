@@ -246,12 +246,14 @@ func _shatter(from_dir: int) -> void:
 				fragment.z_index = int(GameConfig.runtime["layering"]["actor_base_z"])
 				add_child(fragment)
 				var center := Vector2(column * cell.x, row * cell.y) + cell * 0.5 - anchor_v
+				# 以贴图中心为界：左半向左飞、右半向右飞，同时向上抛，形成"两侧上方炸开"。
+				# 不叠加攻击方向偏移，保证形状对称（2026-10-18 按用户要求调整）。
 				var outward := signf(center.x) if absf(center.x) > 0.001 else _rng.randf_range(-1.0, 1.0)
 				_fragments.append({
 					"node": fragment,
 					"velocity": Vector2(
-						outward * scatter * _rng.randf_range(0.45, 1.0) + float(from_dir) * scatter * 0.35,
-						-rise * _rng.randf_range(0.35, 1.0)),
+						outward * scatter * _rng.randf_range(0.55, 1.0),
+						-rise * _rng.randf_range(0.55, 1.0)),
 					"spin": _rng.randf_range(-spin, spin) * 0.06,
 					"gravity": gravity,
 				})
