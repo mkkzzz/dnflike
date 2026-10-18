@@ -1211,6 +1211,23 @@ func _seq_hit(start: float, end: float) -> void:
 			# 停帧第一帧的现场：动作时钟、actor 贴图与刀身采样线必须是同一 tick
 			seq_hitstop.emit(phase_t, _seq_frame_at(phase_t), tip, contact, last_hitstop)
 			landed_hit.emit(monster, float(move_data.get("damage", 0)))
+	# 可破坏场景物：V6 招式（三段普攻/拔刀斩）走的是这条循环，必须同样处理，
+	# 否则只有旧动作能打碎草丛。这里用同一套 reach 盒与景深容差，
+	# 但不做刃线精确接触判定——场景物按"够得着就打中"处理更符合手感。
+	for entity in destructibles.duplicate():
+		if not is_instance_valid(entity) or not entity.destructible or entity.destroyed:
+			continue
+		if absf(depth_y - entity.actor_depth) > float(hb.get("lane", cfg.get("lane_hit_tolerance", 24))):
+			continue
+		if not _rect_within_reach(entity.world_hit_rect(), hb):
+			continue
+		var prop_key := "seq:e%d" % entity.get_instance_id()
+		if hit_targets.has(prop_key):
+			continue
+		hit_targets[prop_key] = true
+		if entity.take_hit(float(move_data.get("damage", 0)), facing):
+			hit_emitted = true
+			destroyed_prop.emit(entity)
 
 
 ## 刃线采样与目标可见身体轮廓的首个交点；返回 Vector2.INF 表示未接触。
@@ -1260,6 +1277,11 @@ func _rect_distance(box: Rect2, point: Vector2) -> float:
 ## V6 的可见刃线比收纳 hurtbox 的窄矩形更靠前，所以横向范围按实际触及区域放宽；
 ## 只保留挥击方向那一侧，匕首朝后的余势不会打到身后的敌人。
 func _within_reach(monster: Node, hb: Dictionary) -> bool:
+	return _rect_within_reach(monster.hurtbox(), hb)
+
+
+## 与 _within_reach 同一套 reach 盒，供可破坏场景物（给的是世界矩形而非 hurtbox）复用。
+func _rect_within_reach(rect: Rect2, hb: Dictionary) -> bool:
 	var reach := float(hb.get("x", 110)) * 1.55
 	var height := float(hb.get("h", 190))
 	var near := global_position.x - height * 0.14
@@ -1268,7 +1290,7 @@ func _within_reach(monster: Node, hb: Dictionary) -> bool:
 		near = global_position.x - reach
 		far = global_position.x + height * 0.14
 	var box := Rect2(Vector2(near, global_position.y + depth_y - height), Vector2(far - near, height))
-	return box.intersects(monster.hurtbox())
+	return box.intersects(rect)
 
 
 func _back_dash_offset(clock: float) -> float:

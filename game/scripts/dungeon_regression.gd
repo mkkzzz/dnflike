@@ -108,8 +108,16 @@ func run(main, check: Callable, frames: Callable) -> void:
 	check.call(bush.destructible and not bush.destroyed, "bush is configured destructible and starts intact")
 	check.call(main.destructibles.has(bush) and p.destructibles.size() == main.destructibles.size(), "destructible props share the player's hit list")
 	check.call(bush.world_hit_rect().has_area(), "destructible prop exposes a world hit rect for melee")
-	var bush_destroyed: bool = bush.take_hit(1.0, 1)
-	check.call(bush_destroyed and bush.destroyed and not bush.collision_enabled, "one hit destroys the bush and clears its collision")
+	# 关键：必须走**真实 V6 命中路径**（三段普攻/拔刀斩用的是 _seq_hit，不是 _emit_melee）。
+	# 第一版只改了 _emit_melee，导致游戏里普攻砍不碎草丛，这条断言就是防它复发。
+	p.relocate_combat(Vector2(bush.position.x - 90.0, main.GROUND_Y), bush.actor_depth)
+	p.facing = 1
+	p.move_name = "attack1"
+	p.move_data = GameConfig.moves["attack1"].duplicate(true)
+	p.hit_targets.clear()
+	p._seq_hit(0.0, 10.0)
+	check.call(bush.destroyed and not bush.collision_enabled, "v6 authored moves break destructible props")
+	var bush_destroyed := bush.destroyed
 	check.call(bush.render_slices.is_empty(), "destroyed prop stops rendering its intact slices")
 	main._on_prop_destroyed(bush)
 	check.call(not main.destructibles.has(bush), "destroyed prop is removed from the shared hit list")
