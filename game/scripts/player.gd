@@ -1217,7 +1217,11 @@ func _seq_hit(start: float, end: float) -> void:
 	for entity in destructibles.duplicate():
 		if not is_instance_valid(entity) or not entity.destructible or entity.destroyed:
 			continue
-		if absf(depth_y - entity.actor_depth) > float(hb.get("lane", cfg.get("lane_hit_tolerance", 24))):
+		# 场景物用**专用**的宽松景深容差（destructible.lane，默认 60），
+		# 不能套打怪的 24：草丛在 depth=-50，玩家沿路多在 0 附近，
+		# 用 24 会让它永远砍不碎（2026-10-18 实机踩到）。
+		var prop_lane: float = entity.prop_lane_tolerance()
+		if absf(depth_y - entity.actor_depth) > prop_lane:
 			continue
 		if not _rect_within_reach(entity.world_hit_rect(), hb):
 			continue
@@ -1351,7 +1355,7 @@ func _emit_melee(hit: Dictionary, segment: float = 0.0) -> void:
 	for entity in destructibles.duplicate():
 		if not is_instance_valid(entity) or not entity.destructible or entity.destroyed:
 			continue
-		if absf(depth_y - entity.actor_depth) > float(hb.get("lane", cfg.get("lane_hit_tolerance", 24))):
+		if absf(depth_y - entity.actor_depth) > entity.prop_lane_tolerance():
 			continue
 		var entity_key := "%d:e%d" % [int(segment), entity.get_instance_id()]
 		if hit_targets.has(entity_key) or not box.intersects(entity.world_hit_rect()):

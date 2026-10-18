@@ -185,6 +185,14 @@ func world_hit_rect() -> Rect2:
 	return Rect2(Vector2(position.x - float(anchor[0]), position.y - float(anchor[1])), size)
 
 
+## 可破坏物的景深容差：比打怪宽松得多。
+## 打怪要求玩家与目标近乎同一条景深线（moves.json 的 hitbox.lane，约 24~28），
+## 但场景物是"够得着就该打中"——草丛摆在 depth=-50，玩家沿路多在 0 附近，
+## 用 24 的容差会导致永远砍不到。默认 60，可在 destructible.lane 覆盖。
+func prop_lane_tolerance() -> float:
+	return float(_destruct_cfg.get("lane", 60.0))
+
+
 ## 受击：返回 true 表示这一下把它打碎了。
 func take_hit(damage: float, from_dir: int) -> bool:
 	if not destructible or destroyed:

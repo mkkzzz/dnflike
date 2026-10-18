@@ -110,13 +110,13 @@ func run(main, check: Callable, frames: Callable) -> void:
 	check.call(bush.world_hit_rect().has_area(), "destructible prop exposes a world hit rect for melee")
 	# 关键：必须走**真实 V6 命中路径**（三段普攻/拔刀斩用的是 _seq_hit，不是 _emit_melee）。
 	# 第一版只改了 _emit_melee，导致游戏里普攻砍不碎草丛，这条断言就是防它复发。
-	p.relocate_combat(Vector2(bush.position.x - 90.0, main.GROUND_Y), bush.actor_depth)
+	# 玩家停在路面默认深度（0），草丛在 -50：这正是实机砍不碎的情形。
+	# 可破坏物用专用的宽松容差（destructible.lane，默认 60），不套打怪的 24。
+	p.relocate_combat(Vector2(bush.position.x - 90.0, main.GROUND_Y), 0.0)
 	p.facing = 1
-	p.move_name = "attack1"
-	p.move_data = GameConfig.moves["attack1"].duplicate(true)
-	p.hit_targets.clear()
-	p._seq_hit(0.0, 10.0)
-	check.call(bush.destroyed and not bush.collision_enabled, "v6 authored moves break destructible props")
+	p.buffer_action("attack")
+	await frames.call(50)
+	check.call(bush.destroyed and not bush.collision_enabled, "a real attack input breaks destructible props at default depth")
 	var bush_destroyed := bush.destroyed
 	check.call(bush.render_slices.is_empty(), "destroyed prop stops rendering its intact slices")
 	main._on_prop_destroyed(bush)

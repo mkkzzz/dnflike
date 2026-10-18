@@ -183,6 +183,7 @@
       "collision_rect_source": "把贴图 alpha 逐列/逐行取覆盖率>=0.5 的最长连续段作实心核心",
       "destructible": {
         "hits": 1,
+        "lane": 60,
         "debris": {
           "columns": 4,
           "rows": 3,
