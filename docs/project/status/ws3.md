@@ -7,10 +7,13 @@
 | 使用者 | 负责人（kirisawa） |
 | 状态 | 空闲 |
 | 正在做 | — |
-| 产出位置 | `docs/design/19_音效生产工作流.md`、`20_音效任务模板.md`、`tools/bake_audio_source*.{py,mjs}`、`audio/goblin_hurt/`、`docs/reports/ws3/2026-10/` |
+| 产出位置 | `docs/design/19_音效生产工作流.md`、`20_音效任务模板.md`、`25_可破坏物工作流.md`、`tools/bake_audio_source*.{py,mjs}`、`tools/bake_foliage_audio.py`、`audio/goblin_hurt/`、`docs/reports/ws3/2026-10/` |
 
 ## 最近完成
 
+- 2026-10-18 **物品破坏机制落地并标准化**：草丛改为可破坏（房间 1/2/4 共 3 处），新增通用 `destructible` 配置、碎片破坏动画、原创合成破坏音效 `foliage_break`；流程与**标准参数预设**固化为 [25 可破坏物工作流](../../design/25_可破坏物工作流.md)，以后物品破坏一律先套该预设。回归 373 → **379 项 failures=0**
+- 2026-10-18 修复草丛"砍不碎"三个连环问题：①V6 招式走 `_seq_hit` 而非 `_emit_melee`，首版只改了一条路径 ②可破坏物错用打怪的景深容差 24，草丛在 depth=-50 永远打不到（改用专用 `lane`=60）③`_process` 空闲时自关，碎片生成后永不移动（12 块静止拼回原图，看起来像没碎）
+- 2026-10-18 破坏动画方向定稿：碎片以贴图中心为界向两侧上方飞，`rise` 380 / `gravity` 520（110/620 时最高点仅 63px，看不出向上）
 - 2026-10-15 建立**音效生产工作流**：新增 19 工作流文档 + 20 任务模板，并把外部素材解码技术固化为工具 `tools/bake_audio_source.py` / `bake_audio_source_decode.mjs`（已用真实素材实测通过）
 - 2026-10-15 普通攻击命中音由 `metal_hit` 金属撞击改为人物挥剑声（`_impact_sound()`，交叉映射绕开 50ms 节流）
 - 2026-10-15 怪物受击加入哥布林叫声层 `goblin_hurt`（公有领域素材加工，D032；工程首个外部素材音频）
