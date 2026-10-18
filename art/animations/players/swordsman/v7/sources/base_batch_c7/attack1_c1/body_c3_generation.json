@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-18",
+  "tool": "builtin image_gen",
+  "prompt": "body_c3_prompt.txt",
+  "prompt_sha256": "93ef0fb7d50672ae74462a7b5430056213bc8a75514b7ea49a5f7006967de67d",
+  "references": [
+    {
+      "file": "body_c1.png",
+      "sha256": "d6a03c3d9073a6857723b5c1bd18e38a6c7965803f4e5a9c5a5308de8000d257",
+      "actually_submitted": true
+    }
+  ],
+  "output": "body_c3.png",
+  "actual_size": [
+    1670,
+    941
+  ],
+  "output_sha256": "a73d9ca4c00e0af06a012aecb9564d82dfcd7230f862a797fa0eef65fd13dc7c",
+  "status": "source_review",
+  "G1": "pending exact head landmark review",
+  "artwork_approved": false,
+  "installed": false
+}

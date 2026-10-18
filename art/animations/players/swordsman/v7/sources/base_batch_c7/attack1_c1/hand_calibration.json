@@ -1,0 +1,42 @@
+{
+  "c7_attack1_load": {
+    "primary": [
+      1252,
+      157
+    ],
+    "secondary": [
+      1274,
+      178
+    ]
+  },
+  "c7_attack1_contact": {
+    "primary": [
+      650,
+      636
+    ],
+    "secondary": [
+      628,
+      639
+    ]
+  },
+  "c7_attack1_follow": {
+    "primary": [
+      1325,
+      733
+    ],
+    "secondary": [
+      1352,
+      733
+    ]
+  },
+  "c7_attack1_gauge": {
+    "primary": [
+      375,
+      300
+    ],
+    "secondary": [
+      380,
+      300
+    ]
+  }
+}

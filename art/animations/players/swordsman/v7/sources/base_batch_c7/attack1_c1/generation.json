@@ -38,5 +38,7 @@
   ],
   "artwork_approved": false,
   "installed": false,
-  "resolution_note": "Actual sheet is smaller than requested 2K. Never enlarge it. Only individual sufficiently large native actor crops could later qualify after same-sheet scale checks."
+  "resolution_note": "Actual sheet is smaller than requested 2K. Never enlarge it. Only individual sufficiently large native actor crops could later qualify after same-sheet scale checks.",
+  "direction_approved": true,
+  "approval_record": "direction_approval.json"
 }

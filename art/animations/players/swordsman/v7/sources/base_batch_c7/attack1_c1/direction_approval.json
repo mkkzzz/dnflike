@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-18",
+  "user_reply": "感觉还不错，可以继续完善，受击时角色闪烁了一下，是我的错觉吗",
+  "approved_scope": "New attack1 three-key load/contact/follow-through motion direction only",
+  "file": "source.png",
+  "sha256": "a341bc86ee419b4c0a9a4719da498370cd3715eb878f0a92029f9137867e5fe7",
+  "not_approved": [
+    "G1 body scale",
+    "G3 replaceable weapon layering",
+    "full continuous clip",
+    "full three-cut combo",
+    "new gait"
+  ]
+}

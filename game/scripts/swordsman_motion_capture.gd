@@ -19,11 +19,14 @@ func _frames(count: int, tag := "") -> void:
 				root.get_texture().get_image().save_png(path)
 			var snap: Dictionary = main.player.v7_renderer.call("snapshot")
 			evidence.append({"frame":number,"render_frame":Engine.get_frames_drawn(),"physics_frame":Engine.get_physics_frames(),"tag":tag,"clip":snap.get("clip",""),"clock":snap.get("clock",0),"position":[main.player.position.x,main.player.position.y],"facing":main.player.facing,"profile":snap.get("profile","")})
+			evidence[-1]["invincible"] = main.player.invincible
+			evidence[-1]["visible_tint"] = [main.player.modulate.r,main.player.modulate.g,main.player.modulate.b,main.player.modulate.a]
 			number += 1
 
 func _run() -> void:
 	if OS.has_feature("movie"):folder="res://../temp/v7_c6_movie_opaque"
 	if "--feedback" in OS.get_cmdline_user_args():folder="res://../temp/v7_c7_feedback_capture"
+	if "--hurt-no-flash" in OS.get_cmdline_user_args():folder="res://../temp/v7_c7_hurt_no_flash"
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(folder))
 	main = load("res://scenes/Main.tscn").instantiate()
 	root.add_child(main)
@@ -43,7 +46,7 @@ func _run() -> void:
 	main.bm.visible = false
 	main.hud.hide()
 	await _frames(120)
-	if "--feedback" in OS.get_cmdline_user_args():
+	if "--feedback" in OS.get_cmdline_user_args() or "--hurt-no-flash" in OS.get_cmdline_user_args():
 		await _feedback_capture(p)
 		return
 	await _frames(12 if "--smoke" in OS.get_cmdline_user_args() else 72,"idle")
@@ -89,8 +92,9 @@ func _run() -> void:
 	quit()
 
 func _feedback_capture(p: Player) -> void:
-	await _frames(24,"accepted_idle")
-	for direction in [-1,1,-1,1]:
+	var hurt_only := "--hurt-no-flash" in OS.get_cmdline_user_args()
+	await _frames(12 if hurt_only else 24,"accepted_idle")
+	for direction in ([] if hurt_only else [-1,1,-1,1]):
 		p.facing = direction
 		await _frames(8,"instant_facing")
 	var attacker: Monster = main.monsters[0]
@@ -101,11 +105,12 @@ func _feedback_capture(p: Player) -> void:
 	attacker.st_t = int(attacker.cfg["attack_move"]["windup"])
 	p.invincible = 0
 	attacker.call("_attack")
-	await _frames(36,"real_monster_hit_recover")
+	await _frames(30 if hurt_only else 36,"real_monster_hit_recover")
 	attacker.position.x = 1190
-	p.invincible = 0
-	p.take_hit(25,-1,{"hardstun":22,"knockback":160})
-	await _frames(42,"heavy_hit_recover")
+	if not hurt_only:
+		p.invincible = 0
+		p.take_hit(25,-1,{"hardstun":22,"knockback":160})
+		await _frames(42,"heavy_hit_recover")
 	FileAccess.open(folder+"/timeline.json",FileAccess.WRITE).store_string(JSON.stringify(evidence,"\t"))
 	print("[V7_CAPTURE] FEEDBACK COMPLETE frames=",number," folder=",folder)
 	quit()

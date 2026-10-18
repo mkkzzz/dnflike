@@ -473,6 +473,7 @@ func hurtbox() -> Rect2:
 	return Rect2(global_position + Vector2(-22, depth_y - height), Vector2(44, height))
 
 func _physics_process(delta: float) -> void:
+	_update_visual_tint()
 	if dead:
 		_tick_dead(delta)
 		return
@@ -1669,8 +1670,15 @@ func _draw() -> void:
 		var dst := Rect2(-clip["ax"], -clip["ay"], clip["frame_w"], clip["frame_h"])
 		draw_texture_rect_region(clip["tex"], dst, AnimLib.src_rect(clip, anim_frame))
 	draw_set_transform(Vector2.ZERO)
+
+func _update_visual_tint() -> void:
 	if invincible > 0 and state == St.SKILL:
 		modulate = Color(1.15, 1.15, 1.22)
+	elif invincible > 0 and is_v7_active():
+		# Preserve the short hurt pose's silhouette instead of toggling alpha
+		# every two ticks. Invulnerability itself keeps its original duration.
+		var strength := clampf(float(invincible) / maxf(1.0,float(cfg.get("hit_invincible",10))+1.0),0.0,1.0)
+		modulate = Color(1.0+0.09*strength,1.0+0.09*strength,1.0+0.12*strength,1.0)
 	elif invincible > 0 and invincible % 4 < 2:
 		modulate = Color(1, 1, 1, 0.72)
 	else:

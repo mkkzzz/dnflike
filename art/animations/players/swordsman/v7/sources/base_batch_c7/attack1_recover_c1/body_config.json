@@ -1,0 +1,104 @@
+{
+  "revision": "v7_c7_attack1_recovery_body",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/base_batch_c7_body/attack1_recover_c1",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "source.png",
+      "standing_height": 848
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "pending",
+    "G2": "pending_continuous_motion",
+    "G3": "pending",
+    "G4": "pending"
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.combo.1.recovery",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c7_attack1_recover",
+          "source": "body",
+          "crop_bbox": [
+            530,
+            100,
+            1168,
+            900
+          ],
+          "root": [
+            940,
+            883
+          ],
+          "foot": [
+            1120,
+            883
+          ],
+          "component_seed": [
+            940,
+            450
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              834,
+              342
+            ],
+            "offhand": [
+              842,
+              376
+            ]
+          }
+        }
+      ]
+    },
+    "neutral": {
+      "asset_id": "actor.player.proportion.neutral",
+      "loop": false,
+      "root_mode": "ground",
+      "include_in_overview": false,
+      "poses": [
+        {
+          "id": "c7_recover_gauge",
+          "source": "body",
+          "crop_bbox": [
+            45,
+            20,
+            470,
+            900
+          ],
+          "root": [
+            280,
+            883
+          ],
+          "foot": [
+            172,
+            883
+          ],
+          "component_seed": [
+            300,
+            300
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1
+        }
+      ]
+    }
+  }
+}

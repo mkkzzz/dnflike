@@ -231,7 +231,10 @@ func _actual_hit_checks(main,p: Player,renderer: Node2D,check: Callable,frames: 
 	var response = renderer.get("motion")
 	check.call(recoil["clip"]=="hit_light" and recoil["clock"]<=1 and head_shift>40 and response.body.visible and p.position.x>500,"v7 real damage visibly reaches and holds recoil peak with knockback")
 	var visible_recoil_ticks := 0
+	var opaque_feedback := true
 	for tick in 15:
 		if p.state == Player.St.HIT and renderer.call("current_clip")=="hit_light":visible_recoil_ticks+=1
+		opaque_feedback = opaque_feedback and is_equal_approx(p.modulate.a,1.0)
 		await frames.call(1)
 	check.call(visible_recoil_ticks>=9 and p.state==Player.St.IDLE,"v7 recoil remains readable through original stun then recovers without extending gameplay stun")
+	check.call(opaque_feedback,"v7 hurt invulnerability feedback keeps the complete silhouette opaque instead of flashing alpha")

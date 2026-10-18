@@ -5,7 +5,7 @@
   "approved_reuse": "idle_approval.json",
   "new_source_approval": false,
   "runtime_installed": false,
-  "source_design_review": "attack1_c1/source.png; pose direction only, G1/G3 and continuous playback still pending",
+  "source_design_review": "User accepted attack1 load/contact/follow-through direction; body_c3 G1 passed. Complete separated weapon clip still pending.",
   "rejected": [
     "run_near_c1",
     "run_far_c1",
@@ -17,5 +17,6 @@
     "readable real HIT onset and peak hold without changing gameplay duration"
   ],
   "evidence": "docs/previews/v7_c7_feedback/index.html",
-  "next": "Get representative attack pose direction and full clip approved, resolve alternating-leg source poses before any batch bake."
+  "next": "Build representative continuous attack1 with body/fingers/three replaceable weapons; redesign true alternating gait keys.",
+  "accepted_direction": "attack1_c1/direction_approval.json"
 }

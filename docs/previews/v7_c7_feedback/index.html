@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="zh-CN"><meta charset="utf-8"><title>鬼剑士第二轮返修</title>
 <style>body{margin:24px;background:#171c24;color:#e5e9ef;font:16px system-ui}main{max-width:1440px;margin:auto}video,img{display:block;width:100%;background:#303844;border-radius:8px;margin:18px 0}button,select{font:inherit;padding:8px;margin-right:8px}p{color:#c1ccda;line-height:1.7}a{color:#9dd2ff}</style>
-<main><h2>转身与受击：实际引擎画面</h2><p>保留已认可的 idle。朝向立即翻面；随后是哥布林实际攻击引发的轻受击，以及独立重受击。134 张原生 2560×1440 帧缓冲直接编码，60fps，无放大。默认半速，力量感同时看实速。</p>
+<main><h2>转身与受击：实际引擎画面</h2><p>保留已认可的 idle。用户发现旧无敌提示闪烁后，已将 V7 受击提示改为保持不透明的柔和亮色，伤害、硬直和无敌时间不变。以下是42张原生2560×1440真实哥布林命中帧缓冲直接编码，60fps，无放大。默认半速。<a href="instant_turn_hit_native_2k.mp4">前次转身/轻重受击录像（包含旧透明闪烁）</a></p>
 <select id="speed"><option value="0.25">0.25×</option><option value="0.5" selected>0.5×</option><option value="1">1×</option></select><button id="back">上一帧</button><button id="next">下一帧</button>
-<video id="video" src="instant_turn_hit_native_2k.mp4" controls loop playsinline></video>
-<h2>第一刀：新的动作设计草案</h2><p>右上蓄势，左下切过目标，右下余势。只评审重心、转体、头部随动和双手带刀的方向；这是带刀设计原图，未完成比例复核和身体/手指/可换武器分层，未接入游戏。它不是新版三连已经完成的证明。</p>
+<video id="video" src="hurt_no_flash_native_2k.mp4" controls loop playsinline></video>
+<h2>第一刀：新的动作设计草案</h2><p>右上蓄势，左下切过目标，右下余势。用户已认可重心、转体、头部随动和双手带刀方向；这是获认可的带刀设计原图。后续去刀身体 c3 已通过源图比例检查；身体/手指/可换武器分层和连续样片仍在完善，未接入游戏。它不是新版三连已经完成的证明。</p>
 <img src="../../../art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_c1/source.png" alt="第一刀蓄势、切过目标及余势源图草案">
 <p>行走、奔跑与完整三连仍在重做。跑步几次试图仍存在腿部语义或裁边问题，已拒收入库为候选档案，没有替换当前游戏资源。</p>
 </main><script>const v=document.querySelector('#video'),s=document.querySelector('#speed');v.playbackRate=.5;s.onchange=()=>v.playbackRate=Number(s.value);for(const [id,step]of[['back',-1],['next',1]])document.querySelector('#'+id).onclick=()=>{v.pause();v.currentTime=Math.max(0,v.currentTime+step/60)};</script></html>

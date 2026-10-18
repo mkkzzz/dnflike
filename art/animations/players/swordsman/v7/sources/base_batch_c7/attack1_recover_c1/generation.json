@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-19",
+  "tool": "builtin image_gen",
+  "prompt": "prompt.txt",
+  "prompt_sha256": "b68f863fc4ab381a0f5128c5d1d589fca848e3ac1739fce0057754519451a147",
+  "references": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/source.png",
+      "sha256": "7435e43d627b436e36760ef595a0c9f7cfb8d13a5b5b980e28724ca2c8907b4a",
+      "actually_submitted": true
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_c1/source.png",
+      "sha256": "a341bc86ee419b4c0a9a4719da498370cd3715eb878f0a92029f9137867e5fe7",
+      "actually_submitted": true
+    }
+  ],
+  "actual_size": [
+    1672,
+    941
+  ],
+  "source_sha256": "d57ea7ab0b25f5c49abaeb24a01511aef2b807a9c77efe3a64e8758d4b3f7611",
+  "status": "source_review",
+  "alpha_preserved": true,
+  "artwork_approved": false,
+  "installed": false,
+  "selection": "Center recovery and left same-sheet neutral. Right fully-standing pose not used because approved idle is slightly crouched, so that pose would overshoot recovery height."
+}
