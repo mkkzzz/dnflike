@@ -326,9 +326,9 @@
       "asset_root": "res://assets/dungeon/10001/",
       "connections": [
         {"id": "A01-A02", "from": 0, "from_side": "right", "to": 1, "to_side": "left"},
-        {"id": "A02-A03", "from": 1, "from_side": "right", "to": 2, "to_side": "left"},
+        {"id": "A02-A03", "from": 1, "from_side": "up", "to": 2, "to_side": "down"},
         {"id": "A03-A04", "from": 2, "from_side": "right", "to": 3, "to_side": "left"},
-        {"id": "A04-A05", "from": 3, "from_side": "right", "to": 4, "to_side": "left"}
+        {"id": "A04-A05", "from": 3, "from_side": "up", "to": 4, "to_side": "down"}
       ],
       "rooms": [
         {
@@ -341,9 +341,6 @@
           "road_left_ratio": 0.0513,
           "road_right_ratio": 0.9532,
           "monsters": [],
-          "door": {
-            "side": "right"
-          },
           "entities": [
             {
               "id": "stump",
@@ -394,9 +391,6 @@
               "depth": -140
             }
           ],
-          "door": {
-            "side": "right"
-          },
           "entities": [
             {
               "id": "bush",
@@ -405,7 +399,7 @@
             },
             {
               "id": "bone_pile",
-              "x": 1180,
+              "x": 760,
               "depth_y": -110
             },
             {
@@ -432,9 +426,6 @@
               "depth": -90
             }
           ],
-          "door": {
-            "side": "right"
-          },
           "entities": [
             {
               "id": "fence",
@@ -475,9 +466,6 @@
               "depth": -50
             }
           ],
-          "door": {
-            "side": "right"
-          },
           "entities": [
             {
               "id": "bush",

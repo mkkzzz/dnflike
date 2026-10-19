@@ -51,7 +51,7 @@ func run(main, check: Callable, frames: Callable) -> void:
 	main._on_gm_command("room", PackedStringArray(["3"]))
 	check.call(float(main.monsters[0].cfg["attack_move"]["damage"]) == 38.0, "elite attack move uses its configured damage")
 	main._retreat_room()
-	check.call(main.dungeon.room_number() == 2 and p.position.x > p.arena_right - 160.0, "returning to a non-entrance room uses its connecting right door")
+	check.call(main.dungeon.room_number() == 2 and p.depth_y < main.room_depth_min + 160.0, "returning from the down door arrives at the previous room up door")
 
 	var config: Dictionary = main.dungeon_config.duplicate(true)
 	config["dungeons"]["10001"]["connections"][0]["from_side"] = "up"

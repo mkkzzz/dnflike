@@ -599,21 +599,46 @@ func _run_dungeon_checks() -> void:
 	_check(main_ref.alive_count() == 0 and main_ref.room_cleared, "gm clear wipes the room")
 	_check(main_ref.current_door.opened and main_ref.battle_state == main_ref.BattleState.ROOM_CLEAR, "cleared room opens its door")
 	# 真实输入走到门口。整房 2000+ px 走完会吃掉 --quit-after 预算，
-	# 所以先确认夹取上界能到门，再用真实输入走最后一程并触发切房。
-	p.depth_y = main_ref.current_door.position.y - main_ref.GROUND_Y
-	_check(main_ref.current_door.contains_actor(Vector2(p.arena_right, main_ref.GROUND_Y + p.depth_y)), "the player's rightmost foot point reaches the door at its real depth")
-	p.position = Vector2(main_ref.current_door.position.x - 220.0, main_ref.GROUND_Y)
+	# 所以先确认夹取边界能到门，再用真实输入走最后一程并触发切房。
+	# 门可能是四向中的任一方向，探针与走向都按门方向取。
+	var door_side := str(main_ref.current_door.side)
+	var door_pos: Vector2 = main_ref.current_door.position
+	var approach := 220.0
+	var probe: Vector2
+	var walk_action := "move_right"
+	match door_side:
+		"left":
+			p.depth_y = door_pos.y - main_ref.GROUND_Y
+			p.position = Vector2(door_pos.x + approach, main_ref.GROUND_Y)
+			probe = Vector2(p.arena_left, main_ref.GROUND_Y + p.depth_y)
+			walk_action = "move_left"
+		"up":
+			p.depth_y = clampf(door_pos.y - main_ref.GROUND_Y + approach, main_ref.room_depth_min, main_ref.room_depth_max)
+			p.position = Vector2(door_pos.x, main_ref.GROUND_Y)
+			probe = Vector2(door_pos.x, main_ref.GROUND_Y + main_ref.room_depth_min)
+			walk_action = "move_up"
+		"down":
+			p.depth_y = clampf(door_pos.y - main_ref.GROUND_Y - approach, main_ref.room_depth_min, main_ref.room_depth_max)
+			p.position = Vector2(door_pos.x, main_ref.GROUND_Y)
+			probe = Vector2(door_pos.x, main_ref.GROUND_Y + main_ref.room_depth_max)
+			walk_action = "move_down"
+		_:
+			p.depth_y = door_pos.y - main_ref.GROUND_Y
+			p.position = Vector2(door_pos.x - approach, main_ref.GROUND_Y)
+			probe = Vector2(p.arena_right, main_ref.GROUND_Y + p.depth_y)
+			walk_action = "move_right"
+	_check(main_ref.current_door.contains_actor(probe), "the player's approach point reaches the %s door at its real depth" % door_side)
 	await _frames(3)
 	if "--capture" in OS.get_cmdline_user_args():
 		await _capture("14_dungeon_door_open")
 	_release_inputs()
-	Input.action_press("move_right")
+	Input.action_press(walk_action)
 	var walk_frames := 0
 	while main_ref.dungeon.room_number() == 2 and walk_frames < 240:
 		p.invincible = 999999
 		await _frames(1)
 		walk_frames += 1
-	Input.action_release("move_right")
+	Input.action_release(walk_action)
 	await _frames(2)
 	p.invincible = 999999
 	print("[DEMO_TEST] walk frames=%d player_x=%.0f door_x=%.0f state=%d room=%d control=%s" % [
