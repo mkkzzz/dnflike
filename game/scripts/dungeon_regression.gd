@@ -160,6 +160,18 @@ func run(main, check: Callable, frames: Callable) -> void:
 	main._on_prop_destroyed(bush)
 	check.call(not main.destructibles.has(bush), "destroyed prop is removed from the shared hit list")
 
+	# 血蓝自然回复：每秒回上限的 1%（player.json 的 hp/mp_regen_percent_per_second）
+	p.hp = 500.0
+	p.mp = 100.0
+	p._tick_regen(1.0)
+	check.call(is_equal_approx(p.hp, 510.0) and is_equal_approx(p.mp, 103.0), "hp and mp regenerate one percent of maximum per second")
+	p.hp = float(p.cfg["max_hp"]) - 1.0
+	p.mp = float(p.cfg["max_mp"]) - 1.0
+	p._tick_regen(1.0)
+	check.call(p.hp == float(p.cfg["max_hp"]) and p.mp == float(p.cfg["max_mp"]), "regeneration never overflows the maximum")
+	p.hp = float(p.cfg["max_hp"])
+	p.mp = float(p.cfg["max_mp"])
+
 	main._finish_dungeon(true)
 	var result: Dictionary = main._last_result.duplicate(true)
 	main._finish_dungeon(false)

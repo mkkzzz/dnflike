@@ -480,6 +480,7 @@ func _physics_process(delta: float) -> void:
 	if not control_enabled:
 		input_buffer.clear()
 		return
+	_tick_regen(delta)
 	# Hitstop pauses simulation, but never loses an input edge.
 	_sample_input(delta)
 	_tick_cooldowns()
@@ -677,6 +678,23 @@ func _tick_cooldowns() -> void:
 	# One real physical tick, independently of attack speed and hitstop.
 	for key in cds:
 		cds[key] = maxi(0, int(cds[key]) - 1)
+
+
+## 血蓝自然回复：每秒按上限的百分数回，默认各 1%（player.json 可调）。
+## 只在活着且可操作时生效——死亡、暂停、结算中都不回，避免结算面板里血条自己涨。
+## 用连续 delta 而不是整秒一跳，血条看起来才是平滑涨，而不是每秒顿一下。
+func _tick_regen(delta: float) -> void:
+	if dead or delta <= 0.0:
+		return
+	var max_hp := float(cfg.get("max_hp", 1000))
+	var max_mp := float(cfg.get("max_mp", 300))
+	var hp_rate := float(cfg.get("hp_regen_percent_per_second", 0.0)) * 0.01
+	var mp_rate := float(cfg.get("mp_regen_percent_per_second", 0.0)) * 0.01
+	if hp_rate > 0.0 and hp > 0.0 and hp < max_hp:
+		hp = minf(max_hp, hp + max_hp * hp_rate * delta)
+		hp_changed.emit(hp, max_hp)
+	if mp_rate > 0.0 and mp < max_mp:
+		mp = minf(max_mp, mp + max_mp * mp_rate * delta)
 
 ## 景深（上下）可动范围。旧单屏遭遇战用 cfg 里的固定 lane_min/lane_max；
 ## 副本房间由 Main 按画面路面实测范围覆盖，所以这里留一组可覆盖值。

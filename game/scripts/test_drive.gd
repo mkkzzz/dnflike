@@ -259,8 +259,11 @@ func _run_checks() -> void:
 	await _frames(65)
 	_check(observed_moves.count("thrust") == 3, "all three thrust segments connect")
 	_check(is_equal_approx(m.hp, 1920), "thrust deals 25+25+30")
-	_check(p.mp == 270 and int(p.cds.get("thrust", 0)) > 0, "skill consumes MP and starts cooldown")
-	_check(not p._try_skill_action("skill_s") and p.mp == 270, "cooldown rejection does not spend MP")
+	# 自然回复（默认 1%/s）会让 MP 在 65 帧里回涨约 3 点，所以这里按区间判断
+	# "消耗了 30 点"，不再比对绝对值。
+	_check(p.mp > 270.0 and p.mp < 276.0 and int(p.cds.get("thrust", 0)) > 0, "skill consumes MP and starts cooldown")
+	var mp_before_reject := p.mp
+	_check(not p._try_skill_action("skill_s") and p.mp == mp_before_reject, "cooldown rejection does not spend MP")
 	p.cds.clear()
 	p.mp = 0
 	_check(not p._try_skill_action("skill_a"), "insufficient MP blocks skill")
@@ -1028,7 +1031,8 @@ func _run_v3_checks() -> void:
 	p.mp = 90
 	p.cds["quick_draw"] = 50
 	await _frames(3)
-	_check(p.mp == 90 and int(p.cds["quick_draw"]) > 0, "training can preserve real mana and cooldowns")
+	# 关了免费技能后蓝量应保持低位（自然回复只让它每天一点点回涨，不会灌满）
+	_check(p.mp >= 90.0 and p.mp < 100.0 and int(p.cds["quick_draw"]) > 0, "training can preserve real mana and cooldowns")
 	main_ref._reset_battle()
 	await _frames(3)
 	_check(main_ref.training_mode and main_ref.training_damage == 0 and main_ref.hit_count == 0 and not p.dead, "training reset clears drill metrics and action state")

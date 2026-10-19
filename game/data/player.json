@@ -1,6 +1,8 @@
 {
   "max_hp": 1000,
   "max_mp": 300,
+  "hp_regen_percent_per_second": 1.0,
+  "mp_regen_percent_per_second": 1.0,
   "walk_speed": 225,
   "run_speed": 450,
   "gravity": 2100,
