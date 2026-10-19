@@ -155,7 +155,7 @@
     "motion_end": 13,
     "fx_style": "rising_cut",
     "cd": 2.0,
-    "mp_percent": 2.0,
+    "mp": 6,
     "run_cancel_after": 20,
     "whiff_run_cancel_after": 25
   },

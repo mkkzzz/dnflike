@@ -183,8 +183,8 @@ func run(main, check: Callable, frames: Callable) -> void:
 	main._on_retry_dungeon()
 	check.call(not p.dead and not main.dungeon_finished and p.hp == p.cfg["max_hp"], "retry after dungeon death resets only the new run")
 
-	# 上挑（Z）蓝耗 = 上限的 2%（moves.json 的 mp_percent）；蓝不够时不放出来
-	check.call(is_equal_approx(p.upper_mp_cost(), float(p.cfg["max_mp"]) * 0.02), "upper costs two percent of maximum mana")
+	# 上挑（Z）蓝耗：与技能同一条扣蓝路径，配置也同样是固定点数（moves.json 的 upper.mp = 6）
+	check.call(is_equal_approx(p.upper_mp_cost(), 6.0), "upper costs six mana points like a skill")
 	p.mp = float(p.cfg["max_mp"])
 	p.cds.erase("upper")
 	check.call(p._start_move("upper") and is_equal_approx(p.mp, float(p.cfg["max_mp"]) - p.upper_mp_cost()), "casting upper spends its mana cost")
@@ -192,4 +192,6 @@ func run(main, check: Callable, frames: Callable) -> void:
 	p.mp = 0.0
 	check.call(not p._start_move("upper"), "upper is blocked when mana is insufficient")
 	p.mp = float(p.cfg["max_mp"])
+	# 技能与上挑共用同一条扣蓝路径：同一份 cost 口径
+	check.call(is_equal_approx(p.mana_cost_of({"mp": 30.0}), 30.0) and is_equal_approx(p.mana_cost_of({}), 0.0), "skills and upper share one mana-cost rule")
 	main._show_ready()

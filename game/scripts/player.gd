@@ -947,11 +947,30 @@ func basic_cooldown_fraction(identifier: String) -> float:
 	var data: Dictionary = GameConfig.moves.get(identifier, {})
 	return clampf(float(cds.get(identifier, 0)) / maxf(1.0, float(data.get("cd", 0)) * 60.0), 0.0, 1.0)
 
-## 上挑（Z）的蓝耗：按 max_mp 的百分比（moves.json 的 mp_percent，默认 2%）。
-## 上挑是基础动作、不走 skills.json，所以蓝耗单独在这里算。
+## 统一的蓝耗结算：技能（skills.json）与上挑（moves.json）共用同一条路径，
+## 配置字段也一样用 "mp"（固定点数）。另外兼容 "mp_percent"（按 max_mp 百分比），
+## 两者同时写时取较大值。返回 false 表示蓝不够、动作不该起手。
+func mana_cost_of(data: Dictionary) -> float:
+	var flat := float(data.get("mp", 0.0))
+	var percent := float(data.get("mp_percent", 0.0))
+	var by_percent := float(cfg.get("max_mp", 300)) * percent * 0.01
+	return maxf(flat, by_percent)
+
+
+func _spend_mana(data: Dictionary) -> bool:
+	var cost := mana_cost_of(data)
+	if cost <= 0.0:
+		return true
+	if mp < cost:
+		_notify("魔力不足", Color(0.65, 0.78, 1.0))
+		return false
+	mp = maxf(0.0, mp - cost)
+	return true
+
+
+## 上挑的蓝耗：与技能同源，取自 moves.json 的 upper.mp
 func upper_mp_cost() -> float:
-	var percent := float(GameConfig.moves.get("upper", {}).get("mp_percent", 0.0))
-	return float(cfg.get("max_mp", 300)) * percent * 0.01
+	return mana_cost_of(GameConfig.moves.get("upper", {}))
 
 
 func _start_move(action: String) -> bool:
@@ -960,13 +979,8 @@ func _start_move(action: String) -> bool:
 		return true
 	if action in ["upper", "back_dash"] and not _basic_move_ready(action):
 		return false
-	if action == "upper":
-		var cost := upper_mp_cost()
-		if cost > 0.0:
-			if mp < cost:
-				_notify("魔力不足", Color(0.65, 0.78, 1.0))
-				return false
-			mp = maxf(0.0, mp - cost)
+	if action == "upper" and not _spend_mana(GameConfig.moves["upper"]):
+		return false
 	move_name = action
 	move_data = GameConfig.moves[action]
 	if action != "upper":
@@ -1484,11 +1498,8 @@ func _try_skill_action(action: String) -> bool:
 	if int(cds.get(sid, 0)) > 0:
 		_notify("冷却中", Color(0.65, 0.78, 1.0))
 		return false
-	var cost := float(skill.get("mp", 0))
-	if mp < cost:
-		_notify("魔力不足", Color(0.65, 0.78, 1.0))
+	if not _spend_mana(skill):
 		return false
-	mp -= cost
 	cds[sid] = int(float(skill.get("cd", 0)) * 60)
 	_cast_skill(sid, skill)
 	return true
