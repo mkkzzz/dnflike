@@ -947,14 +947,11 @@ func basic_cooldown_fraction(identifier: String) -> float:
 	var data: Dictionary = GameConfig.moves.get(identifier, {})
 	return clampf(float(cds.get(identifier, 0)) / maxf(1.0, float(data.get("cd", 0)) * 60.0), 0.0, 1.0)
 
-## 统一的蓝耗结算：技能（skills.json）与上挑（moves.json）共用同一条路径，
-## 配置字段也一样用 "mp"（固定点数）。另外兼容 "mp_percent"（按 max_mp 百分比），
-## 两者同时写时取较大值。返回 false 表示蓝不够、动作不该起手。
+## 统一的蓝耗结算：技能（skills.json 的 "mp"）与上挑（moves.json 的 "mp"）
+## 共用同一条路径，**一律固定点数、不做任何百分比换算**——改数值只改配置里的整数。
+## 没有 "mp" 字段就当作不耗蓝。返回 false 表示蓝不够、动作不该起手。
 func mana_cost_of(data: Dictionary) -> float:
-	var flat := float(data.get("mp", 0.0))
-	var percent := float(data.get("mp_percent", 0.0))
-	var by_percent := float(cfg.get("max_mp", 300)) * percent * 0.01
-	return maxf(flat, by_percent)
+	return maxf(0.0, float(data.get("mp", 0.0)))
 
 
 func _spend_mana(data: Dictionary) -> bool:

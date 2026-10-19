@@ -192,6 +192,7 @@ func run(main, check: Callable, frames: Callable) -> void:
 	p.mp = 0.0
 	check.call(not p._start_move("upper"), "upper is blocked when mana is insufficient")
 	p.mp = float(p.cfg["max_mp"])
-	# 技能与上挑共用同一条扣蓝路径：同一份 cost 口径
-	check.call(is_equal_approx(p.mana_cost_of({"mp": 30.0}), 30.0) and is_equal_approx(p.mana_cost_of({}), 0.0), "skills and upper share one mana-cost rule")
+	# 技能与上挑共用同一条扣蓝规则，且一律固定点数（不按百分比换算）
+	check.call(is_equal_approx(p.mana_cost_of({"mp": 30.0}), 30.0) and is_equal_approx(p.mana_cost_of({}), 0.0), "skills and upper share one flat mana-cost rule")
+	check.call(is_equal_approx(p.mana_cost_of({"mp": 6.0, "mp_percent": 50.0}), 6.0), "mana cost never scales with a percentage field")
 	main._show_ready()
