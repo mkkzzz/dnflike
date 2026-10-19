@@ -797,6 +797,10 @@ func _physics_process(delta: float) -> void:
 			transition_left -= delta
 			if transition_left <= 0.0:
 				_wave_notice.hide()
+	elif battle_state == BattleState.VICTORY:
+		# 胜利结算后仍允许从已开的门离开（BOSS 房回程）。
+		_clamp_player_to_room()
+		_try_room_door()
 	elif battle_state == BattleState.WAVE_BREAK:
 		elapsed += delta
 		transition_left -= delta
@@ -1014,7 +1018,6 @@ func _load_room(arrival: Dictionary = {}, new_run := false) -> void:
 			current_door = door
 		else:
 			retreat_door = door
-			door.set_opened(true)
 	_place_at_arrival(arrival)
 	hud.visible = true
 	hud.set_dungeon_room(dungeon.display_name(), dungeon.room_index, dungeon.room_count(), _role_label(), alive_count())

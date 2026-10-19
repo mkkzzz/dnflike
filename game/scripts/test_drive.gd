@@ -692,6 +692,22 @@ func _run_dungeon_checks() -> void:
 	if "--capture" in OS.get_cmdline_user_args():
 		await _capture("13_dungeon_settlement")
 
+	# 胜利后不应把玩家锁死在 BOSS 房：退路门已开，可以走回上一间
+	var boss_door = main_ref.retreat_door
+	_check(boss_door != null and boss_door.opened, "boss room return door opens after victory")
+	p.depth_y = clampf(boss_door.position.y - main_ref.GROUND_Y - 200.0, main_ref.room_depth_min, main_ref.room_depth_max)
+	p.position = Vector2(boss_door.position.x, main_ref.GROUND_Y)
+	Input.action_press("move_down")
+	var leave_frames := 0
+	while main_ref.dungeon.room_number() == 5 and leave_frames < 120:
+		p.invincible = 999999
+		await _frames(1)
+		leave_frames += 1
+	Input.action_release("move_down")
+	await _frames(3)
+	p.invincible = 999999
+	_check(main_ref.dungeon.room_number() == 4 and not main_ref.dungeon_finished, "walking out of the boss room returns to room 4")
+
 	# 结算按钮：再打一次 / 离开地下城（只给提示）
 	main_ref._on_retry_dungeon()
 	await _frames(3)
@@ -700,24 +716,30 @@ func _run_dungeon_checks() -> void:
 	main_ref._on_leave_dungeon()
 	_check(main_ref._toast.visible and main_ref._toast.text.contains("尚未开放"), "leave-dungeon button only shows a toast")
 
-	# 门是双向的：第 2 房左侧应有回门，走进去回到第 1 房且第 1 房保持已清空
-	main_ref._on_gm_command("room", PackedStringArray(["2"]))
+	# 门是双向的，但未清房间的返程门必须保持关闭；清空后才开
+	main_ref._on_gm_command("room", PackedStringArray(["3"]))
 	await _frames(3)
 	p.invincible = 999999
-	_check(main_ref.retreat_door != null, "room 2 has a door back to room 1")
-	p.depth_y = main_ref.retreat_door.position.y - main_ref.GROUND_Y
-	p.position = Vector2(main_ref.retreat_door.position.x + 70.0, main_ref.GROUND_Y)
-	Input.action_press("move_left")
+	_check(main_ref.retreat_door != null and not main_ref.retreat_door.opened, "return door stays locked while enemies live")
+	main_ref._on_gm_command("clear", PackedStringArray())
+	await _frames(4)
+	p.invincible = 999999
+	_check(main_ref.retreat_door.opened, "clearing the room opens the return door")
+	var back_door = main_ref.retreat_door
+	p.depth_y = clampf(back_door.position.y - main_ref.GROUND_Y - 200.0, main_ref.room_depth_min, main_ref.room_depth_max)
+	p.position = Vector2(back_door.position.x, main_ref.GROUND_Y)
+	Input.action_press("move_down")
 	var back_frames := 0
-	while back_frames < 100:
+	while main_ref.dungeon.room_number() == 3 and back_frames < 120:
 		p.invincible = 999999
 		await _frames(1)
 		back_frames += 1
-	Input.action_release("move_left")
+	Input.action_release("move_down")
 	await _frames(3)
 	p.invincible = 999999
-	_check(main_ref.dungeon.room_number() == 1, "walking into the left door returns to room 1")
-	_check(main_ref.room_cleared and main_ref.alive_count() == 0, "the room you return to keeps its cleared state")
+	_check(main_ref.dungeon.room_number() == 2, "walking into the return door goes back to the previous room")
+	_check(main_ref.alive_count() == 3 and not main_ref.room_cleared, "the room you return to keeps its uncleared monsters")
+	_check(not main_ref.retreat_door.opened, "the returned room's doors stay locked until it is cleared")
 
 	# GM 模式命令在两个模式之间切换；未知命令不改状态
 	main_ref._on_gm_command("mode", PackedStringArray(["demo"]))
