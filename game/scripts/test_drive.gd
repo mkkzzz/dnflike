@@ -194,6 +194,18 @@ func _run_checks() -> void:
 		for stream in variants:
 			audio_valid = audio_valid and stream is AudioStreamWAV and stream.data.size() > 2000 and stream.format == AudioStreamWAV.FORMAT_16_BITS
 	_check(audio_valid, "offline foley variants contain valid sixteen-bit PCM")
+	# 哥布林死亡声由受击声派生：3 变体齐全，且时长是受击的 2 倍（tools/bake_goblin_death.py）
+	var death_takes: Array = audio._streams.get("goblin_death", [])
+	var hurt_takes: Array = audio._streams.get("goblin_hurt", [])
+	_check(death_takes.size() == 3 and hurt_takes.size() == 3, "goblin death sound ships three baked variants")
+	var ratio_ok := death_takes.size() == 3 and hurt_takes.size() == 3
+	if ratio_ok:
+		for index in 3:
+			var death_stream: AudioStreamWAV = death_takes[index]
+			var hurt_stream: AudioStreamWAV = hurt_takes[index]
+			var span := death_stream.get_length() / maxf(0.001, hurt_stream.get_length())
+			ratio_ok = ratio_ok and absf(span - 2.0) < 0.06
+	_check(ratio_ok, "goblin death sound lasts twice as long as its hurt take")
 	# Accelerated assertions are silent; --capture alone exercises real playback.
 	audio.enabled = false
 	var m: Monster = await _fresh()

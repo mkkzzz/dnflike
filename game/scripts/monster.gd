@@ -571,7 +571,8 @@ func _die() -> void:
 	_sync_body_visual()
 	queue_redraw()
 	if fx != null:
-		fx.play_sound("death")
+		# 哥布林专属死亡声（由受击声派生：音高 +24 半音、时长 x2）
+		fx.play_sound("goblin_death")
 	print("[M1] goblin died")
 	died.emit(self)
 	var tween := create_tween()
