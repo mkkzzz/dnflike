@@ -182,4 +182,14 @@ func run(main, check: Callable, frames: Callable) -> void:
 	check.call(main.dungeon_finished and main.battle_state == main.BattleState.DEFEAT, "real dungeon death reaches defeat settlement")
 	main._on_retry_dungeon()
 	check.call(not p.dead and not main.dungeon_finished and p.hp == p.cfg["max_hp"], "retry after dungeon death resets only the new run")
+
+	# 上挑（Z）蓝耗 = 上限的 2%（moves.json 的 mp_percent）；蓝不够时不放出来
+	check.call(is_equal_approx(p.upper_mp_cost(), float(p.cfg["max_mp"]) * 0.02), "upper costs two percent of maximum mana")
+	p.mp = float(p.cfg["max_mp"])
+	p.cds.erase("upper")
+	check.call(p._start_move("upper") and is_equal_approx(p.mp, float(p.cfg["max_mp"]) - p.upper_mp_cost()), "casting upper spends its mana cost")
+	p.cds.erase("upper")
+	p.mp = 0.0
+	check.call(not p._start_move("upper"), "upper is blocked when mana is insufficient")
+	p.mp = float(p.cfg["max_mp"])
 	main._show_ready()

@@ -947,12 +947,26 @@ func basic_cooldown_fraction(identifier: String) -> float:
 	var data: Dictionary = GameConfig.moves.get(identifier, {})
 	return clampf(float(cds.get(identifier, 0)) / maxf(1.0, float(data.get("cd", 0)) * 60.0), 0.0, 1.0)
 
+## 上挑（Z）的蓝耗：按 max_mp 的百分比（moves.json 的 mp_percent，默认 2%）。
+## 上挑是基础动作、不走 skills.json，所以蓝耗单独在这里算。
+func upper_mp_cost() -> float:
+	var percent := float(GameConfig.moves.get("upper", {}).get("mp_percent", 0.0))
+	return float(cfg.get("max_mp", 300)) * percent * 0.01
+
+
 func _start_move(action: String) -> bool:
 	if action == "jump":
 		_start_jump()
 		return true
 	if action in ["upper", "back_dash"] and not _basic_move_ready(action):
 		return false
+	if action == "upper":
+		var cost := upper_mp_cost()
+		if cost > 0.0:
+			if mp < cost:
+				_notify("魔力不足", Color(0.65, 0.78, 1.0))
+				return false
+			mp = maxf(0.0, mp - cost)
 	move_name = action
 	move_data = GameConfig.moves[action]
 	if action != "upper":
