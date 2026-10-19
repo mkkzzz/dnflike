@@ -797,10 +797,6 @@ func _physics_process(delta: float) -> void:
 			transition_left -= delta
 			if transition_left <= 0.0:
 				_wave_notice.hide()
-	elif battle_state == BattleState.VICTORY:
-		# 胜利结算后仍允许从已开的门离开（BOSS 房回程）。
-		_clamp_player_to_room()
-		_try_room_door()
 	elif battle_state == BattleState.WAVE_BREAK:
 		elapsed += delta
 		transition_left -= delta
@@ -1101,11 +1097,12 @@ func _on_room_cleared(silent := false) -> void:
 	dungeon.mark_room_cleared(dungeon.room_index)
 	battle_state = BattleState.ROOM_CLEAR
 	_set_actor_control(true)
-	for door in room_doors:
-		door.set_opened(true)
 	if dungeon.is_boss_room():
+		# BOSS 房没有出口：清完直接结算，门保持关闭，不能原路离开。
 		_finish_dungeon(true)
 		return
+	for door in room_doors:
+		door.set_opened(true)
 	if not silent:
 		hud.set_feedback("房间已清空 · 门已开启")
 		_wave_notice.text = "房间已清空\n走向开启的门继续前进"

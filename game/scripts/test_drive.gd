@@ -692,21 +692,17 @@ func _run_dungeon_checks() -> void:
 	if "--capture" in OS.get_cmdline_user_args():
 		await _capture("13_dungeon_settlement")
 
-	# 胜利后不应把玩家锁死在 BOSS 房：退路门已开，可以走回上一间
+	# BOSS 房没有出口：胜利后门保持关闭，走到门口也不能离开
 	var boss_door = main_ref.retreat_door
-	_check(boss_door != null and boss_door.opened, "boss room return door opens after victory")
+	_check(boss_door != null and not boss_door.opened, "boss room doors stay locked after victory")
 	p.depth_y = clampf(boss_door.position.y - main_ref.GROUND_Y - 200.0, main_ref.room_depth_min, main_ref.room_depth_max)
 	p.position = Vector2(boss_door.position.x, main_ref.GROUND_Y)
 	Input.action_press("move_down")
-	var leave_frames := 0
-	while main_ref.dungeon.room_number() == 5 and leave_frames < 120:
-		p.invincible = 999999
-		await _frames(1)
-		leave_frames += 1
+	await _frames(60)
 	Input.action_release("move_down")
 	await _frames(3)
 	p.invincible = 999999
-	_check(main_ref.dungeon.room_number() == 4 and not main_ref.dungeon_finished, "walking out of the boss room returns to room 4")
+	_check(main_ref.dungeon.room_number() == 5 and main_ref.dungeon_finished, "walking into the boss room door does not leave the dungeon")
 
 	# 结算按钮：再打一次 / 离开地下城（只给提示）
 	main_ref._on_retry_dungeon()
