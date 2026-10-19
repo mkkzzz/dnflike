@@ -66,6 +66,11 @@ var skill_slots: Array = []
 var _map_positions: Array = []
 var _map_links: Array = []
 var _map_cleared: Dictionary = {}
+## 已访问房间（没去过的不画）；当前房间的直连可去房间（闪烁）
+var _map_visited: Dictionary = {}
+var _map_available: Array = []
+var _map_current := -1
+var _map_time := 0.0
 var _keycap: StyleBoxFlat
 var _drag_slot := -1
 var _dragging := false
@@ -269,6 +274,8 @@ func _refresh() -> void:
 func _process(delta: float) -> void:
 	combo_flash = maxf(0.0, combo_flash - delta * 6.0)
 	combo_age += delta
+	# 小地图可去房间的呼吸闪烁时钟
+	_map_time += delta
 	_feedback_left = maxf(0.0, _feedback_left - delta)
 	_hp_chip = move_toward(_hp_chip, vitals_hp, vitals_hp_max * delta * 0.6)
 	if target != null and is_instance_valid(target) and not bool(target.get("dead")):
@@ -402,26 +409,48 @@ func _draw_encounter() -> void:
 	var step := minf(42.0, minf(160 / maxf(1, bounds.size.x + 1), 148 / maxf(1, bounds.size.y + 1)))
 	var origin := Vector2(2436, 226) - (bounds.position + bounds.size * 0.5) * step
 	var side := step * 0.78
+	# 只显示「去过的地方」+「当前房间直连的可去房间」，其余一律不画（不提前剧透布局）
+	var shown := {}
+	for i in _map_positions.size():
+		if _map_visited.has(i) or _map_available.has(i):
+			shown[i] = true
 	for link in _map_links:
 		var a := int(link.get("from", -1))
 		var b := int(link.get("to", -1))
-		if a >= 0 and b >= 0 and a < _map_positions.size() and b < _map_positions.size():
-			_target.draw_line(origin + _map_positions[a] * step, origin + _map_positions[b] * step, Color(0.40, 0.39, 0.23), 3)
+		if a < 0 or b < 0 or a >= _map_positions.size() or b >= _map_positions.size():
+			continue
+		if not shown.has(a) or not shown.has(b):
+			continue
+		_target.draw_line(origin + _map_positions[a] * step, origin + _map_positions[b] * step, Color(0.40, 0.39, 0.23), 3)
+	# 可去房间的格子做呼吸闪烁：清房开门后提示"现在能往哪走"
+	var pulse := 0.5 + 0.5 * sin(_map_time * 7.0)
 	for i in _map_positions.size():
+		if not shown.has(i):
+			continue
 		var center: Vector2 = origin + _map_positions[i] * step
 		var color := Color(0.22, 0.23, 0.12)
-		if _map_cleared.has(i):
+		if _map_available.has(i):
+			color = Color(0.45, 0.36, 0.08).lerp(Color(1.0, 0.92, 0.45), pulse)
+		elif _map_cleared.has(i):
 			color = Color(0.40, 0.42, 0.22)
 		_target.draw_rect(Rect2(center - Vector2.ONE * side / 2, Vector2.ONE * side), color)
 		_target.draw_rect(Rect2(center - Vector2.ONE * side / 2, Vector2.ONE * side), GOLD_DIM, false, 1)
+		if _map_available.has(i):
+			var halo := side * (0.62 + 0.10 * pulse)
+			_target.draw_rect(Rect2(center - Vector2.ONE * halo, Vector2.ONE * halo * 2.0), Color(1.0, 0.92, 0.45, 0.18 + 0.62 * pulse), false, 2)
 		if i == room_idx:
 			_target.draw_colored_polygon(PackedVector2Array([center + Vector2(0, -9), center + Vector2(6, 0), center + Vector2(0, 9), center + Vector2(-6, 0)]), Color(0.24, 0.80, 0.95))
 		elif i == _map_positions.size() - 1:
 			_target.draw_circle(center, 4, Color(0.88, 0.30, 0.12))
 
 
-func set_map_layout(links: Array, count: int, cleared: Dictionary) -> void:
+func set_map_layout(links: Array, count: int, cleared: Dictionary, visited: Dictionary = {}, current: int = -1, available: Array = []) -> void:
+	# 这些只影响绘制、不影响排布，所以放在缓存判定之前直接赋值：
+	# 绘制每帧都会跑，闪烁也靠每帧重绘。
 	_map_cleared = cleared
+	_map_visited = visited
+	_map_current = current
+	_map_available = available.duplicate()
 	if count == _map_positions.size() and links == _map_links:
 		return
 	_map_links = links.duplicate(true)

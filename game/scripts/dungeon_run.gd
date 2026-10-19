@@ -8,6 +8,8 @@ var room_index := 0
 var cleared := false
 ## 已清空的房间（按 0 基房间序号）：回退时保持已清状态，不重新刷怪
 var cleared_rooms: Dictionary = {}
+## 已进入过的房间：小地图只显示这些（加上当前房间的直连邻居）
+var visited_rooms: Dictionary = {}
 var room_states: Dictionary = {}
 var _connections: Array = []
 
@@ -18,6 +20,7 @@ func load_from(config: Dictionary, dungeon_id: String) -> bool:
 	cleared = false
 	cleared_rooms.clear()
 	room_states.clear()
+	visited_rooms.clear()
 	_connections.clear()
 	var all = config.get("dungeons", {})
 	if not all is Dictionary or not all.has(dungeon_id):
@@ -134,6 +137,7 @@ func travel(connection_id: String) -> Dictionary:
 			continue
 		room_index = int(connection["target_index"])
 		cleared = is_room_cleared(room_index)
+		mark_visited(room_index)
 		return {
 			"room_index": room_index, "side": str(connection["target_side"]),
 			"source_side": str(connection["side"]),
@@ -141,6 +145,27 @@ func travel(connection_id: String) -> Dictionary:
 		}
 	push_error("[DUNGEON] connection does not belong to current room: " + connection_id)
 	return {}
+
+
+## 进入某房间时登记；小地图据此只显示走过的地方。
+func mark_visited(index: int) -> void:
+	if index >= 0 and index < room_count():
+		visited_rooms[index] = true
+
+
+func is_room_visited(index: int) -> bool:
+	return bool(visited_rooms.get(index, false))
+
+
+## 当前房间清空后才开门：此时与它直连的房间（含回程门）才是"可去"的。
+## 未清房返回空数组——门是锁的，地图不该提示能走。
+func available_rooms() -> Array:
+	var out: Array = []
+	if not is_room_cleared(room_index):
+		return out
+	for connection in room_connections():
+		out.append(int(connection["target_index"]))
+	return out
 
 
 func save_room_state(index: int, state: Dictionary) -> void:

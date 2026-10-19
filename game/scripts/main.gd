@@ -919,6 +919,8 @@ func _load_room(arrival: Dictionary = {}, new_run := false) -> void:
 	seq_fx.reset()
 	weapon_rig.reset_pose()
 	room_cleared = false
+	# 小地图只显示走过的地方：一进入本房间就登记为已访问
+	dungeon.mark_visited(dungeon.room_index)
 	dungeon_finished = false
 	_clear_settlement()
 	room_bg_tex = null
@@ -1549,7 +1551,7 @@ func _process(delta: float) -> void:
 		hud.set_elapsed(elapsed)
 		if dungeon_mode and dungeon != null and dungeon.is_loaded():
 			hud.set_dungeon_room(dungeon.display_name(), dungeon.room_index, dungeon.room_count(), _role_label(), alive_count())
-			hud.set_map_layout(dungeon.dungeon.get("connections", []), dungeon.room_count(), dungeon.cleared_rooms)
+			hud.set_map_layout(dungeon.dungeon.get("connections", []), dungeon.room_count(), dungeon.cleared_rooms, dungeon.visited_rooms, dungeon.room_index, dungeon.available_rooms())
 		else:
 			hud.set_encounter(wave_index + 1, demo_config["waves"].size(), alive_count(), elapsed)
 		hud.set_front_occlusion(_front_occlusion())

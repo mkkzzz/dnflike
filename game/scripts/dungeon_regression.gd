@@ -100,6 +100,16 @@ func run(main, check: Callable, frames: Callable) -> void:
 		check.call(map_pos[2] == map_pos[1] + Vector2(0, -1), "minimap stacks the room after an up door directly above")
 		check.call(map_pos[3] == map_pos[2] + Vector2(1, 0), "minimap keeps a right door horizontal after an up door")
 		check.call(map_pos[4] == map_pos[3] + Vector2(0, -1), "minimap stacks the final boss room above the fourth room")
+	# 只显示走过的房间；未清房不提示可去；清房后只闪烁直连房间（含回程）
+	check.call(main.hud._map_visited.has(0) and not main.hud._map_visited.has(4), "unvisited rooms stay hidden on the minimap")
+	check.call(main.hud._map_available.has(1) and not main.hud._map_available.has(2), "cleared entrance blinks only its directly connected room")
+	var map_run := DungeonRun.new()
+	map_run.load_from(main.dungeon_config, "10001")
+	map_run.room_index = 1
+	map_run.mark_room_cleared(1)
+	check.call(map_run.available_rooms().has(0) and map_run.available_rooms().has(2), "cleared middle room reaches its back door and the next room")
+	map_run.room_index = 2
+	check.call(map_run.available_rooms().is_empty(), "an uncleared room offers no travel target")
 	var stump: DungeonEntity
 	var bush: DungeonEntity
 	for entity in main.room_root.get_children():
