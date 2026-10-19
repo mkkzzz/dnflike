@@ -427,12 +427,19 @@ func set_map_layout(links: Array, count: int, cleared: Dictionary) -> void:
 	_map_links = links.duplicate(true)
 	_map_positions = [Vector2.ZERO]
 	_map_positions.resize(count)
+	# 副本数据用 up/down 表示上下门，早期地图代码只认 top/bottom，
+	# 查不到就退化成 RIGHT，导致"钻上门、地图却往右长"。两种写法都接受。
+	var side_vectors := {
+		"left": Vector2.LEFT, "right": Vector2.RIGHT,
+		"up": Vector2.UP, "down": Vector2.DOWN,
+		"top": Vector2.UP, "bottom": Vector2.DOWN,
+	}
 	var known := {0: Vector2.ZERO}
 	for pass_index in count:
 		for link in links:
 			var a := int(link.get("from", -1))
 			var b := int(link.get("to", -1))
-			var direction: Vector2 = {"left": Vector2.LEFT, "right": Vector2.RIGHT, "top": Vector2.UP, "bottom": Vector2.DOWN}.get(str(link.get("from_side", "right")), Vector2.RIGHT)
+			var direction: Vector2 = side_vectors.get(str(link.get("from_side", "right")), Vector2.RIGHT)
 			if known.has(a) and not known.has(b):
 				known[b] = known[a] + direction
 			elif known.has(b) and not known.has(a):

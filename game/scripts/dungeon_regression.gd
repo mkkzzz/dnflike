@@ -91,6 +91,15 @@ func run(main, check: Callable, frames: Callable) -> void:
 	door.queue_free()
 
 	main._enter_dungeon("10001")
+	# 小地图必须按门方向排版：10001-A 是 右→上→右→上，
+	# 曾被"只认 top/bottom、把 up 退化成 RIGHT"搞成整条横线。
+	main._process(0.0)
+	var map_pos: Array = main.hud._map_positions
+	check.call(map_pos.size() == 5, "minimap has one node per dungeon room")
+	if map_pos.size() == 5:
+		check.call(map_pos[2] == map_pos[1] + Vector2(0, -1), "minimap stacks the room after an up door directly above")
+		check.call(map_pos[3] == map_pos[2] + Vector2(1, 0), "minimap keeps a right door horizontal after an up door")
+		check.call(map_pos[4] == map_pos[3] + Vector2(0, -1), "minimap stacks the final boss room above the fourth room")
 	var stump: DungeonEntity
 	var bush: DungeonEntity
 	for entity in main.room_root.get_children():
