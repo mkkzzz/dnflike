@@ -69,11 +69,12 @@ func _resolve_art() -> Dictionary:
 	var open := str(entry.get("open", ""))
 	if closed.is_empty() or open.is_empty():
 		return {}
-	var key := closed + "|" + open
+	var keep_ratio := clampf(float(entry.get("keep_ratio", 1.0)), 0.1, 1.0)
+	var key := "%s|%s|%d" % [closed, open, roundi(keep_ratio * 1000.0)]
 	if not _art_cache.has(key):
 		if not ResourceLoader.exists(closed) or not ResourceLoader.exists(open):
 			return {}
-		_art_cache[key] = {"closed": load(closed), "open": load(open)}
+		_art_cache[key] = {"closed": load(closed), "open": load(open), "keep_ratio": keep_ratio}
 	var pair: Dictionary = _art_cache[key]
 	var texture: Texture2D = pair["closed"]
 	if texture == null or texture.get_height() <= 0:
@@ -89,7 +90,8 @@ func _build_art() -> void:
 	if _art.is_empty():
 		return
 	var texture: Texture2D = _art["closed"]
-	var scale_factor := _gate_height / float(texture.get_height())
+	# keep_ratio 用于背面半截门：贴图只占整门的一部分高度，仍按整门高度等比缩放。
+	var scale_factor := _gate_height * float(_art.get("keep_ratio", 1.0)) / float(texture.get_height())
 	var flip := side == "left"
 	for state in ["closed", "open"]:
 		var sprite := Sprite2D.new()

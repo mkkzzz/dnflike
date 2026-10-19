@@ -6,6 +6,7 @@
 用法：
     python tools/bake_door_art.py
     python tools/bake_door_art.py --source art/.../side_c2.png --out game/assets/dungeon/10001/doors
+    python tools/bake_door_art.py --source art/.../up_c1.png --suffix up
 """
 
 from __future__ import annotations
@@ -68,8 +69,13 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    parser.add_argument("--suffix", default="", help="输出前缀，如 up / down；留空为左右共用")
+    parser.add_argument("--keep-top-ratio", type=float, default=1.0,
+                        help="只保留内容框顶部比例（下门背面半截用 0.55），两态底边按同一水平线截平")
     args = parser.parse_args()
 
+    args.source = args.source.resolve()
+    args.out = args.out.resolve()
     if not args.source.exists():
         raise SystemExit(f"找不到门样张：{args.source}")
 
@@ -83,13 +89,19 @@ def main() -> int:
     box = union_box(content_box(closed), content_box(opened))
     closed = closed.crop(box)
     opened = opened.crop(box)
+    if args.keep_top_ratio < 1.0:
+        keep_h = max(1, int(round(closed.height * args.keep_top_ratio)))
+        closed = closed.crop((0, 0, closed.width, keep_h))
+        opened = opened.crop((0, 0, opened.width, keep_h))
 
     args.out.mkdir(parents=True, exist_ok=True)
-    closed_meta = save(closed, args.out / "closed.png")
-    open_meta = save(opened, args.out / "open.png")
+    prefix = f"{args.suffix}_" if args.suffix else ""
+    closed_meta = save(closed, args.out / f"{prefix}closed.png")
+    open_meta = save(opened, args.out / f"{prefix}open.png")
 
     report = {
         "schema": "dnflike/baked-door-art/v1",
+        "direction": args.suffix if args.suffix else "left_right",
         "source": str(args.source.relative_to(REPO)).replace("\\", "/"),
         "source_sha256": hashlib.sha256(args.source.read_bytes()).hexdigest(),
         "source_size": [width, height],
@@ -101,7 +113,8 @@ def main() -> int:
         "upscale_applied": False,
         "states": {"closed": closed_meta, "open": open_meta},
     }
-    (args.out / "bake_report.json").write_text(
+    report_path = args.out / (f"bake_report_{args.suffix}.json" if args.suffix else "bake_report.json")
+    report_path.write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     print(json.dumps({"crop": report["crop"], "closed": closed_meta["size"],

@@ -1,0 +1,78 @@
+{
+  "schema": "dnflike/gate-direction-pilot/v1",
+  "asset_id": "gate.forest.room_connection",
+  "date": "2026-10-19",
+  "status": "source_review",
+  "authorization": "用户 2026-10-19 定四方位门为正式设计并要求本区生成上下方向贴图（已有 side_c2 参考，判定为简单生图）。",
+  "scope": ["up.closed", "up.open", "down.closed", "down.open"],
+  "references_consulted_only": [
+    "candidates/c1/原创横版动作RPG游戏的森林房间连接门_绘制一张严格左右两栏_2026-10-18T07-58-31.png",
+    "candidates/side_c2/2D_hand_painted_belt_scroller__2026-10-18T08-10-59.png",
+    "previews/side_c2_left_right.png",
+    "../../../../../../docs/design/22_资产画面规格.md",
+    "../../../../../../docs/design/23_副本设计工作流.md"
+  ],
+  "reference_images_submitted": [],
+  "generator": "image_gen",
+  "generator_reference_input_supported": false,
+  "quality": "high",
+  "style": "natural",
+  "requested_size": [1280, 768],
+  "attempts": [
+    {
+      "revision": "up_c1",
+      "source": "candidates/up_c1/原创横版动作RPG游戏的森林房间连接门_绘制一张严格左右两栏_2026-10-19T03-16-35.png",
+      "actual_size": [1376, 768],
+      "mode": "RGB",
+      "sha256": "b73870ce9549e150da0c6c63044d85b78baed723f39a019fd6b7542b19b087f9",
+      "result": "两栏正面门双态；原木柱、弯梁、苔藓藤蔓、麻绳与双灯笼与 c1/side_c2 同族；关闭态灯灭、开启态双扇打开灯亮。",
+      "prompt": "原创横版动作RPG游戏的森林房间连接门，绘制一张严格左右两栏的同一扇门双状态原画样张，左栏关闭，右栏开启。这是房间上边缘的门：角色从画面下方朝门走来，相机略俯视，看到门的正面，两根门柱正面朝镜头、等宽对称。全画布1280x768，两栏各640x768，每栏仅一扇完整独立门，无文字、无标注、无分隔线、无水印。两扇门必须完全相同的门框、尺寸、取景、角度、脚底高度、木纹、藤蔓位置和两侧灯座，只改变中间门扇和灯的开启状态。造型是朴素成熟的森林木门：两根厚实风化中棕色原木门柱，顶部一根不规则弯曲但稳固的原木横梁，原木端头可见年轮切面；顶部和门柱有青绿苔藓藤蔓盘绕，粗麻绳结固定；门框左右柱各挂一个小巧琥珀色玻璃灯笼。门框轮廓方正微拱，不能变成巨大魔法传送门或石头神殿。左门中央是闭合的竖向棕木木板双扇门，门扇带斜向木撑，灯熄灭。右门保留完全相同框架，双扇门向门框两侧自然打开，门内空空能通行，双灯有克制暖琥珀火光，不能有大面积金光或魔法光幕。门整体每栏居中，柱根对齐，约占栏高70%，周围宽留白，顶梁、藤蔓、灯、打开的门扇均不可裁切。所有非物体区域纯白色平坦背景，包括开门内部和木板间隙；不画地板、草地、地形、场景、人物、其他物品、阴影投影，不做棋盘背景。高品质二维半写实手绘游戏位图质感，成熟厚涂，清晰木材纹理，大的主明暗面，柔和暖日光来自左上，青绿苔藓、中棕原木、灰青阴影；不做卡通Q版、不做矢量扁平、不做3D渲染、不做像素格。"
+    },
+    {
+      "revision": "down_c1",
+      "source": "candidates/down_c1/原创横版动作RPG游戏的森林房间连接门_从门的背面观看_绘制_2026-10-19T03-18-04.png",
+      "actual_size": [1376, 768],
+      "mode": "RGB",
+      "sha256": "6f883ac8a75612c4cf64e16057cd792200b65a7aa94843443272fda2463d0796",
+      "result": "两栏背面门双态；生成时未按提示词自动裁掉下半截，改由加工脚本按内容框顶部 55% 统一截平，两态底边同高。",
+      "prompt": "原创横版动作RPG游戏的森林房间连接门，从门的背面观看，绘制一张严格左右两栏的同一扇门双状态原画样张，左栏关闭，右栏开启。这是房间下边缘（画面底边近处）的门：相机从室内看向画面下沿，看到门的背面；门的下半截被画面底边直接裁掉，只露出门的上半截，底边是平直截断，看不到柱根。全画布1280x768，两栏各640x768，每栏仅一扇完整独立门的上半截，无文字、无标注、无分隔线、无水印。两扇门必须完全相同的门框、尺寸、取景、角度、裁切高度、木纹、藤蔓位置和两侧灯座，只改变中间门扇和灯的开启状态。造型是朴素成熟的森林木门背面：两根厚实风化中棕色原木门柱，顶部一根不规则弯曲但稳固的原木横梁，原木端头可见年轮切面；横梁和门柱背面有青绿苔藓藤蔓盘绕，粗麻绳结固定；左右柱各挂一个小巧琥珀色玻璃灯笼（从背面看到灯罩和挂架）。左门中央是闭合的竖向棕木木板双扇门的背面，可见横向加固木梁和斜撑，灯熄灭。右门保留完全相同框架，双扇门向两侧自然打开，门内空空，双灯有克制暖琥珀火光。门的上半截每栏居中，横梁顶部对齐，约占栏高55%，周围宽留白，顶梁、藤蔓、灯均不可裁切。所有非物体区域纯白色平坦背景，包括开门内部和木板间隙；不画地板、草地、地形、场景、人物、其他物品、阴影投影，不做棋盘背景。高品质二维半写实手绘游戏位图质感，成熟厚涂，清晰木材纹理，大的主明暗面，柔和暖日光来自左上，青绿苔藓、中棕原木、灰青阴影；不做卡通Q版、不做矢量扁平、不做3D渲染、不做像素格。"
+    }
+  ],
+  "preview": {
+    "file": "previews/up_down_c1.png",
+    "content": "按运行时门高 214px 等比缩放的四格评审板；下门按 keep_ratio 0.55 还原半截比例。",
+    "resize_applied": "仅预览板缩放，源图与实装贴图未缩放"
+  },
+  "production_contract": {
+    "native_viewport": [2560, 1440],
+    "canvas_per_direction": [640, 768],
+    "upscale_allowed": false,
+    "bake_tool": "tools/bake_door_art.py --suffix up|down [--keep-top-ratio 0.55]",
+    "keep_ratio": {"up": 1.0, "down": 0.55},
+    "runtime_paths": {
+      "up": ["res://assets/dungeon/10001/doors/up_closed.png", "res://assets/dungeon/10001/doors/up_open.png"],
+      "down": ["res://assets/dungeon/10001/doors/down_closed.png", "res://assets/dungeon/10001/doors/down_open.png"]
+    },
+    "counts_as_native_production_delivery": false
+  },
+  "limitations": [
+    "文字生图未传入已认可参考图片，造型一致性只受文字约束。",
+    "下门背面与正面的可读差异有限（主要靠灯罩背面与门板横撑），实机还需确认是否够“背面”。",
+    "下门贴图底边平截，实机摆位后下半截靠画面底边与底部 HUD 遮挡形成“半截”观感，未在布局中验证。",
+    "10001-A 仍为横向布局，上下门尚无实机场景；需要含上下连接的布局才能做视觉验收。"
+  ],
+  "integration_record": {
+    "game_assets": [
+      "game/assets/dungeon/10001/doors/up_closed.png",
+      "game/assets/dungeon/10001/doors/up_open.png",
+      "game/assets/dungeon/10001/doors/down_closed.png",
+      "game/assets/dungeon/10001/doors/down_open.png"
+    ],
+    "bake_reports": ["game/assets/dungeon/10001/doors/bake_report_up.json", "game/assets/dungeon/10001/doors/bake_report_down.json"],
+    "config": "game/data/runtime.json -> doors.art.by_side（down.keep_ratio=0.55）",
+    "code": "game/scripts/dungeon_door.gd（方向独立贴图、不旋转、keep_ratio、上下门层级）",
+    "regression": "checks=445 failures=0",
+    "runtime_visual_accepted": false
+  },
+  "approval": {"source_approved": false, "runtime_approved": false}
+}

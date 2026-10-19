@@ -1,0 +1,46 @@
+{
+  "schema": "dnflike/baked-door-art/v1",
+  "direction": "up",
+  "source": "art/concepts/scenes/forest/10001/gate_v2/candidates/up_c1/原创横版动作RPG游戏的森林房间连接门_绘制一张严格左右两栏_2026-10-19T03-16-35.png",
+  "source_sha256": "b73870ce9549e150da0c6c63044d85b78baed723f39a019fd6b7542b19b087f9",
+  "source_size": [
+    1376,
+    768
+  ],
+  "crop": {
+    "left": 0,
+    "top": 0,
+    "right": 688,
+    "bottom": 768
+  },
+  "key": {
+    "mode": "min_channel_soft_white",
+    "white_floor": 246.0,
+    "white_span": 26.0,
+    "alpha_cutoff": 8
+  },
+  "anchor": [
+    0.5,
+    1.0
+  ],
+  "resize_applied": false,
+  "upscale_applied": false,
+  "states": {
+    "closed": {
+      "file": "up_closed.png",
+      "size": [
+        688,
+        768
+      ],
+      "sha256": "0647f78d0dadde8883c8416019f502f0178a5cc22d77da2c2f377c0e923d620c"
+    },
+    "open": {
+      "file": "up_open.png",
+      "size": [
+        688,
+        768
+      ],
+      "sha256": "8f3fff4da0b3a7ed953cbd613a8f133d4d368f7d2ddc938e97ed8a45b69d42b6"
+    }
+  }
+}

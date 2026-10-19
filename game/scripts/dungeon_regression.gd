@@ -73,17 +73,21 @@ func run(main, check: Callable, frames: Callable) -> void:
 	door.setup("right", Vector2(500, 500), GameConfig.runtime["doors"])
 	check.call(door.uses_texture(), "side door uses the shared closed/open art")
 	door.setup("up", Vector2(500, 500), GameConfig.runtime["doors"])
-	check.call(not door.uses_texture(), "up door falls back to procedural without its own art")
-	var door_cfg: Dictionary = GameConfig.runtime["doors"].duplicate(true)
-	var door_art: Dictionary = (door_cfg["art"] as Dictionary).duplicate(true)
-	door_art["by_side"] = {"up": {"closed": door_art["closed"], "open": door_art["open"]}}
-	door_cfg["art"] = door_art
-	door.setup("up", Vector2(500, 500), door_cfg)
-	check.call(door.uses_texture() and is_zero_approx(door.rotation), "up door resolves its own art entry")
+	check.call(door.uses_texture() and is_zero_approx(door.rotation), "up door loads its directional art without rotation")
 	check.call(door.z_for_layers(GameConfig.runtime["layering"]) == int(GameConfig.runtime["layering"]["door_z"]), "up door stays behind actors")
-	door.setup("down", Vector2(500, 500), door_cfg)
-	check.call(not door.uses_texture() and is_zero_approx(door.rotation), "down door without art stays procedural and unrotated")
+	door.setup("down", Vector2(500, 500), GameConfig.runtime["doors"])
+	check.call(door.uses_texture() and is_zero_approx(door.rotation), "down door loads its half-height art without rotation")
 	check.call(door.z_for_layers(GameConfig.runtime["layering"]) == int(GameConfig.runtime["layering"]["effects_z"]) - 1, "down door renders in the foreground")
+	var bare_cfg: Dictionary = GameConfig.runtime["doors"].duplicate(true)
+	bare_cfg["art"] = {}
+	door.setup("up", Vector2(500, 500), bare_cfg)
+	check.call(not door.uses_texture(), "up door falls back to procedural when art is missing")
+	var side_only_cfg: Dictionary = GameConfig.runtime["doors"].duplicate(true)
+	var side_only_art: Dictionary = (side_only_cfg["art"] as Dictionary).duplicate(true)
+	side_only_art.erase("by_side")
+	side_only_cfg["art"] = side_only_art
+	door.setup("down", Vector2(500, 500), side_only_cfg)
+	check.call(not door.uses_texture(), "down door never borrows the side-view art")
 	door.queue_free()
 
 	main._enter_dungeon("10001")

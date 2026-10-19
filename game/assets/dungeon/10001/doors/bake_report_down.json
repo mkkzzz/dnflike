@@ -1,0 +1,46 @@
+{
+  "schema": "dnflike/baked-door-art/v1",
+  "direction": "down",
+  "source": "art/concepts/scenes/forest/10001/gate_v2/candidates/down_c1/原创横版动作RPG游戏的森林房间连接门_从门的背面观看_绘制_2026-10-19T03-18-04.png",
+  "source_sha256": "6f883ac8a75612c4cf64e16057cd792200b65a7aa94843443272fda2463d0796",
+  "source_size": [
+    1376,
+    768
+  ],
+  "crop": {
+    "left": 41,
+    "top": 64,
+    "right": 648,
+    "bottom": 701
+  },
+  "key": {
+    "mode": "min_channel_soft_white",
+    "white_floor": 246.0,
+    "white_span": 26.0,
+    "alpha_cutoff": 8
+  },
+  "anchor": [
+    0.5,
+    1.0
+  ],
+  "resize_applied": false,
+  "upscale_applied": false,
+  "states": {
+    "closed": {
+      "file": "down_closed.png",
+      "size": [
+        607,
+        350
+      ],
+      "sha256": "a25752d0f77dcd2420b15bb0ca18c85cec61564b00cc89ebf92cf158626684be"
+    },
+    "open": {
+      "file": "down_open.png",
+      "size": [
+        607,
+        350
+      ],
+      "sha256": "d49587d9dfefc973d316f231ce118af4d36cce1dce43c0e7c99afc4bdc9f6afc"
+    }
+  }
+}
