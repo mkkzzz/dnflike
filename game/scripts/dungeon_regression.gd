@@ -69,6 +69,21 @@ func run(main, check: Callable, frames: Callable) -> void:
 		door.setup(side, Vector2(500, 500), GameConfig.runtime["doors"])
 		var rect := door.reach_rect()
 		check.call(door.contains_actor(rect.get_center()) and not door.contains_actor(door.spawn_point(30.0)), "door trigger and safe spawn support " + side)
+		check.call(is_zero_approx(door.rotation), "door art is never rotated: " + side)
+	door.setup("right", Vector2(500, 500), GameConfig.runtime["doors"])
+	check.call(door.uses_texture(), "side door uses the shared closed/open art")
+	door.setup("up", Vector2(500, 500), GameConfig.runtime["doors"])
+	check.call(not door.uses_texture(), "up door falls back to procedural without its own art")
+	var door_cfg: Dictionary = GameConfig.runtime["doors"].duplicate(true)
+	var door_art: Dictionary = (door_cfg["art"] as Dictionary).duplicate(true)
+	door_art["by_side"] = {"up": {"closed": door_art["closed"], "open": door_art["open"]}}
+	door_cfg["art"] = door_art
+	door.setup("up", Vector2(500, 500), door_cfg)
+	check.call(door.uses_texture() and is_zero_approx(door.rotation), "up door resolves its own art entry")
+	check.call(door.z_for_layers(GameConfig.runtime["layering"]) == int(GameConfig.runtime["layering"]["door_z"]), "up door stays behind actors")
+	door.setup("down", Vector2(500, 500), door_cfg)
+	check.call(not door.uses_texture() and is_zero_approx(door.rotation), "down door without art stays procedural and unrotated")
+	check.call(door.z_for_layers(GameConfig.runtime["layering"]) == int(GameConfig.runtime["layering"]["effects_z"]) - 1, "down door renders in the foreground")
 	door.queue_free()
 
 	main._enter_dungeon("10001")

@@ -21,7 +21,11 @@
     "art": {
       "closed": "res://assets/dungeon/10001/doors/closed.png",
       "open": "res://assets/dungeon/10001/doors/open.png",
-      "note": "左右方向专用；上下方向仍走程序化占位。左向由运行时 flip_h 镜像，未做独立受光校正。"
+      "note": "closed/open 为左右方向共用；左向由运行时 flip_h 镜像。by_side 给某方向单独配图；缺配置或文件不存在时该方向退回程序化占位。上下门不旋转，按各自贴图原样摆放。",
+      "by_side": {
+        "up": {"closed": "res://assets/dungeon/10001/doors/up_closed.png", "open": "res://assets/dungeon/10001/doors/up_open.png"},
+        "down": {"closed": "res://assets/dungeon/10001/doors/down_closed.png", "open": "res://assets/dungeon/10001/doors/down_open.png"}
+      }
     }
   },
   "hud": {"fade_start_y": 606, "fade_full_y": 690, "minimum_opacity": 0.15, "notice_seconds": 1.8, "toast_seconds": 2.6},

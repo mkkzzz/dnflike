@@ -81,7 +81,6 @@ var room_depth_min := -40.0
 var room_depth_max := 24.0
 var ROAD_INSET := 0.0
 var ROAD_LINE_RATIO := 0.0
-var DOOR_Z := 0
 var HUD_FADE_START_Y := 0.0
 var HUD_FADE_FULL_Y := 0.0
 var current_door: DungeonDoor
@@ -114,7 +113,6 @@ func _ready() -> void:
 	ROAD_INSET = float(world["road_inset"])
 	ROAD_LINE_RATIO = float(world["road_line_ratio"])
 	DOOR_INSET = float(GameConfig.runtime["doors"]["inset"])
-	DOOR_Z = int(GameConfig.runtime["layering"]["door_z"])
 	HUD_FADE_START_Y = float(GameConfig.runtime["hud"]["fade_start_y"])
 	HUD_FADE_FULL_Y = float(GameConfig.runtime["hud"]["fade_full_y"])
 	selected_job = int(world["default_job"])
@@ -1003,13 +1001,15 @@ func _load_room(arrival: Dictionary = {}, new_run := false) -> void:
 	for link in dungeon.room_connections():
 		var door := DungeonDoor.new()
 		door.font = font
-		door.z_index = DOOR_Z
 		props.add_child(door)
 		door.setup(str(link["side"]), _door_position(str(link["side"])), GameConfig.runtime["doors"])
+		door.z_index = door.z_for_layers(GameConfig.runtime["layering"])
 		door.connection_id = str(link["id"])
 		door.target_index = int(link["target_index"])
 		door.target_side = str(link["target_side"])
 		room_doors.append(door)
+		print("[DUNGEON] door id=%s side=%s at=(%.1f,%.1f) art=%s z=%d" % [door.connection_id, door.side,
+			door.position.x, door.position.y, "texture" if door.uses_texture() else "procedural", door.z_index])
 		if bool(link["forward"]):
 			current_door = door
 		else:
