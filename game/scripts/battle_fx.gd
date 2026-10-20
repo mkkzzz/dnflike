@@ -38,15 +38,6 @@ const SKILL_IMPACT := {
 	"rage_slash": "impact_rage_slash",
 	"upper": "impact_upper",
 }
-## 出招人声：招式起手时先出一声短促的"用力"，随后才是招式音。
-## 由 player 在 windup 那一刻调用（V6 招式在 phase 分支之前就 return，
-## 所以不能挂在 battle_fx 的 phase 里）。音效见 tools/bake_voice_efforts.py。
-const VOICE_EFFORT := {
-	"attack1": "voice_light", "attack2": "voice_mid", "attack3": "voice_heavy",
-	"upper": "voice_mid", "air_attack": "voice_light", "dash_attack": "voice_mid",
-	"quick_draw": "voice_mid", "thrust": "voice_light", "rage_slash": "voice_heavy",
-	"blood_rage": "voice_rage", "back_dash": "voice_light",
-}
 
 var freeze := 0
 var shake := 0.0
@@ -91,14 +82,6 @@ func _ready() -> void:
 func play_sound(kind: String, world_x: float = NAN, intensity: float = 1.0) -> void:
 	if _audio != null:
 		_audio.play_sound(kind, world_x, intensity)
-
-
-## 出招人声：玩家在 windup 那一刻调用一次，先于招式音。
-func move_voice(move_id: String, world_x: float) -> void:
-	var cue := str(VOICE_EFFORT.get(move_id, ""))
-	if cue.is_empty():
-		return
-	play_sound(cue, world_x, 1.0)
 
 
 func set_listener_position(world_x: float) -> void:

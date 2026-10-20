@@ -1,0 +1,45 @@
+{
+  "schema": "dnflike/audio-source/v1",
+  "kind": "sword_swing",
+  "note": "招式音：真实录音加工（路线 B）。原始素材不入库，派生结果见 game/assets/audio_v3/<kind>_<n>.wav",
+  "sources": [
+    {
+      "name": "Swishes Sound Pack",
+      "author": "artisticdude",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "https://opengameart.org/content/swishes-sound-pack",
+      "file": "swishes.zip",
+      "format": "wav",
+      "sample_rate": 44100,
+      "channels": 2,
+      "clips": 13,
+      "used_for": ["swing_light", "swing_back", "swing_air"]
+    },
+    {
+      "name": "20 Sword Sound Effects (Attacks and Clashes)",
+      "author": "StarNinjas",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "credit_note": "作者希望署名（非强制）；本工程在 README 中已记录",
+      "url": "https://opengameart.org/content/20-sword-sound-effects-attacks-and-clashes",
+      "file": "sword_-_starninjas_1.zip",
+      "format": "ogg-vorbis",
+      "sample_rate": 44100,
+      "channels": 2,
+      "clips": 10,
+      "decoded_with": "tools/bake_audio_source_decode.mjs (stb-vorbis)",
+      "used_for": ["swing_heavy", "swing_upper", "thrust", "dash_strike", "draw_strike", "rage_strike"]
+    }
+  ],
+  "processing": {
+    "tool": "tools/bake_sword_swings.py",
+    "target_sample_rate": 48000,
+    "target_channels": 1,
+    "target_bits": 16,
+    "peak": 0.72,
+    "variants_per_kind": 3,
+    "variant_rule": "同一 kind 的三个变体必须来自同一个包，保证音色一致"
+  },
+  "local_source_dir": "D:\\dnflike_local\\audio_src\\sword_swing"
+}

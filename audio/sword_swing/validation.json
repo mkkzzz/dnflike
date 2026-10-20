@@ -1,0 +1,351 @@
+{
+  "schema": "dnflike/audio-validation/v1",
+  "kind": "sword_swing",
+  "sample_rate": 48000,
+  "variants_per_kind": 3,
+  "source_pack": "Swishes Sound Pack",
+  "entries": {
+    "swing_light": [
+      {
+        "seconds": 0.0721,
+        "peak": 0.72,
+        "rms": 0.1425,
+        "centroid": 1648.5,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "ed6e901aa3a7eeb4",
+        "source": "swish-12.wav",
+        "rate_ratio": 1.0
+      },
+      {
+        "seconds": 0.0806,
+        "peak": 0.72,
+        "rms": 0.1742,
+        "centroid": 1731.7,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "48c0d5dd055f6399",
+        "source": "swish-11.wav",
+        "rate_ratio": 1.0
+      },
+      {
+        "seconds": 0.0676,
+        "peak": 0.72,
+        "rms": 0.1631,
+        "centroid": 2145.6,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "e8ce3d157eabaaf5",
+        "source": "swish-13.wav",
+        "rate_ratio": 1.0
+      }
+    ],
+    "swing_back": [
+      {
+        "seconds": 0.0828,
+        "peak": 0.72,
+        "rms": 0.1549,
+        "centroid": 1408.0,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "06a611778b5d9c4d",
+        "source": "swish-2.wav",
+        "rate_ratio": 1.0
+      },
+      {
+        "seconds": 0.0889,
+        "peak": 0.72,
+        "rms": 0.1385,
+        "centroid": 1861.6,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "ace1980ea77774c3",
+        "source": "swish-10.wav",
+        "rate_ratio": 1.0
+      },
+      {
+        "seconds": 0.0985,
+        "peak": 0.72,
+        "rms": 0.1677,
+        "centroid": 1514.1,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "6429339525f3fbb6",
+        "source": "swish-5.wav",
+        "rate_ratio": 1.0
+      }
+    ],
+    "swing_air": [
+      {
+        "seconds": 0.0604,
+        "peak": 0.72,
+        "rms": 0.1637,
+        "centroid": 2298.9,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "da9c429dd6fbb58b",
+        "source": "swish-13.wav",
+        "rate_ratio": 1.12
+      },
+      {
+        "seconds": 0.0644,
+        "peak": 0.72,
+        "rms": 0.1427,
+        "centroid": 1786.6,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "678b5422c1e96b4c",
+        "source": "swish-12.wav",
+        "rate_ratio": 1.12
+      },
+      {
+        "seconds": 0.0719,
+        "peak": 0.72,
+        "rms": 0.1743,
+        "centroid": 1853.5,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "e710882876943711",
+        "source": "swish-11.wav",
+        "rate_ratio": 1.12
+      }
+    ],
+    "swing_heavy": [
+      {
+        "seconds": 0.2666,
+        "peak": 0.72,
+        "rms": 0.0476,
+        "centroid": 9905.9,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "51fc2ffdc16db947",
+        "source": "sword.8.wav",
+        "rate_ratio": 0.92
+      },
+      {
+        "seconds": 0.2728,
+        "peak": 0.72,
+        "rms": 0.0645,
+        "centroid": 11636.9,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "fc9baab76b2fb0b0",
+        "source": "sword.7.wav",
+        "rate_ratio": 0.92
+      },
+      {
+        "seconds": 0.2564,
+        "peak": 0.72,
+        "rms": 0.0861,
+        "centroid": 7593.5,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "3b5eb93c324beddc",
+        "source": "sword.5.wav",
+        "rate_ratio": 0.92
+      }
+    ],
+    "swing_upper": [
+      {
+        "seconds": 0.22,
+        "peak": 0.72,
+        "rms": 0.0832,
+        "centroid": 10440.8,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "6ee5616dc60371a9",
+        "source": "sword.1.wav",
+        "rate_ratio": 1.05
+      },
+      {
+        "seconds": 0.22,
+        "peak": 0.72,
+        "rms": 0.0824,
+        "centroid": 10882.1,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "66e9f02077a6f508",
+        "source": "sword.4.wav",
+        "rate_ratio": 1.05
+      },
+      {
+        "seconds": 0.1962,
+        "peak": 0.72,
+        "rms": 0.059,
+        "centroid": 12142.1,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "9daee0325baea5b8",
+        "source": "sword.6.wav",
+        "rate_ratio": 1.05
+      }
+    ],
+    "thrust": [
+      {
+        "seconds": 0.15,
+        "peak": 0.72,
+        "rms": 0.075,
+        "centroid": 13259.4,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "a149bf2c7079063a",
+        "source": "sword.3.wav",
+        "rate_ratio": 1.18
+      },
+      {
+        "seconds": 0.15,
+        "peak": 0.72,
+        "rms": 0.0547,
+        "centroid": 12836.4,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "e20feb97af287271",
+        "source": "sword.6.wav",
+        "rate_ratio": 1.18
+      },
+      {
+        "seconds": 0.15,
+        "peak": 0.72,
+        "rms": 0.0969,
+        "centroid": 11565.6,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "891b2b84aa35bb9b",
+        "source": "sword.4.wav",
+        "rate_ratio": 1.18
+      }
+    ],
+    "dash_strike": [
+      {
+        "seconds": 0.22,
+        "peak": 0.72,
+        "rms": 0.0951,
+        "centroid": 8815.9,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "f1118b4767cd35aa",
+        "source": "sword.5.wav",
+        "rate_ratio": 1.0
+      },
+      {
+        "seconds": 0.22,
+        "peak": 0.72,
+        "rms": 0.0886,
+        "centroid": 11057.3,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "ad5f1257732e8dca",
+        "source": "sword.1.wav",
+        "rate_ratio": 1.0
+      },
+      {
+        "seconds": 0.22,
+        "peak": 0.72,
+        "rms": 0.0822,
+        "centroid": 13114.6,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "236ab861fe7f9491",
+        "source": "sword.2.wav",
+        "rate_ratio": 1.0
+      }
+    ],
+    "draw_strike": [
+      {
+        "seconds": 0.28,
+        "peak": 0.72,
+        "rms": 0.1134,
+        "centroid": 10630.3,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "3cf7d58b3d08149f",
+        "source": "sword.9.wav",
+        "rate_ratio": 1.05
+      },
+      {
+        "seconds": 0.28,
+        "peak": 0.72,
+        "rms": 0.1022,
+        "centroid": 11148.1,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "aa22b49d5c12a288",
+        "source": "sword.10.wav",
+        "rate_ratio": 1.05
+      },
+      {
+        "seconds": 0.2336,
+        "peak": 0.72,
+        "rms": 0.0428,
+        "centroid": 10833.7,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "8fe7bdd520fb8495",
+        "source": "sword.8.wav",
+        "rate_ratio": 1.05
+      }
+    ],
+    "rage_strike": [
+      {
+        "seconds": 0.2788,
+        "peak": 0.72,
+        "rms": 0.0644,
+        "centroid": 11560.4,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "ba5030dd38998de0",
+        "source": "sword.7.wav",
+        "rate_ratio": 0.9
+      },
+      {
+        "seconds": 0.2726,
+        "peak": 0.72,
+        "rms": 0.0429,
+        "centroid": 9783.0,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "24a5b56acb373976",
+        "source": "sword.8.wav",
+        "rate_ratio": 0.9
+      },
+      {
+        "seconds": 0.28,
+        "peak": 0.72,
+        "rms": 0.0854,
+        "centroid": 9916.9,
+        "first": 0,
+        "last": 0,
+        "clipped": 0,
+        "sha256": "232dab160753339e",
+        "source": "sword.10.wav",
+        "rate_ratio": 0.9
+      }
+    ]
+  }
+}

@@ -23,13 +23,6 @@ const SOUND_SPECS := {
 	"charge": [-12.5, 1, 100], "draw_strike": [-5.0, 3, 75],
 	"rage": [-11.5, 2, 120], "rage_strike": [-5.5, 2, 60],
 	"thrust": [-7.5, 2, 45], "death": [-10.5, 2, 70],
-	# 出招人声（tools/bake_voice_efforts.py，原创合成）。
-	# 招式起手先出一声短促的"用力"，随后才是招式音；比招式音轻 3~5 dB，
-	# 只负责给出"人在发力"的起手，不抢招式声。
-	"voice_light": [-13.0, 1, 90],
-	"voice_mid": [-12.0, 1, 110],
-	"voice_heavy": [-11.0, 2, 160],
-	"voice_rage": [-10.5, 2, 260],
 	# 技能命中声（tools/bake_skill_impacts.py，原创合成）。
 	# 之前技能命中共用 light/heavy/launch，四个技能打同一只怪听感一样；
 	# 现在每个技能一记自己的命中声，质心按气质排开（怒斩最沉、拔刀斩最锐）。
@@ -111,6 +104,10 @@ func set_listener_position(world_x: float) -> void:
 
 func play_sound(requested_kind: String, world_x: float = NAN, intensity: float = 1.0) -> void:
 	var kind := str(ALIASES.get(requested_kind, requested_kind))
+	# 临时诊断：确认人声请求是否真的到达这里（排查"没有声音"用，定位后删除）
+	if kind.begins_with("voice"):
+		print("[AUDIO] voice request %s enabled=%s takes=%d voices=%d" %
+			[kind, str(enabled), (Array(_streams.get(kind, []))).size(), _voices.size()])
 	if not enabled or not _streams.has(kind) or _voices.is_empty():
 		return
 	var takes: Array = _streams[kind]
