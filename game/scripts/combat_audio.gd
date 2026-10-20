@@ -22,6 +22,14 @@ const SOUND_SPECS := {
 	"charge": [-12.5, 1, 100], "draw_strike": [-6.0, 3, 75],
 	"rage": [-11.5, 2, 120], "rage_strike": [-6.5, 2, 60],
 	"thrust": [-9.0, 2, 45], "death": [-10.5, 2, 70],
+	# 技能命中声（tools/bake_skill_impacts.py，原创合成）。
+	# 之前技能命中共用 light/heavy/launch，四个技能打同一只怪听感一样；
+	# 现在每个技能一记自己的命中声，质心按气质排开（怒斩最沉、拔刀斩最锐）。
+	# 节流取各自时长附近：连突刺三段连击需要短节流，怒斩/拔刀斩给足余响。
+	"impact_thrust": [-7.5, 3, 55],
+	"impact_quick_draw": [-6.5, 3, 110],
+	"impact_rage_slash": [-5.5, 3, 130],
+	"impact_upper": [-7.0, 2, 80],
 	# 怪物受击的生物叫声（哥布林）。与撞击拟音 light/heavy 分层并存，不是替换。
 	# 节流 320ms：叫声长达 0.34~0.43s，更短的节流会让连击糊成一片。
 	"goblin_hurt": [-12.0, 2, 320],

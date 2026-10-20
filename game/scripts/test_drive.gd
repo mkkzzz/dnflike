@@ -206,6 +206,19 @@ func _run_checks() -> void:
 			var span := death_stream.get_length() / maxf(0.001, hurt_stream.get_length())
 			ratio_ok = ratio_ok and absf(span - 2.0) < 0.06
 	_check(ratio_ok, "goblin death sound lasts twice as long as its hurt take")
+	# 技能命中声：四个技能各一记自己的声音，且不与普攻命中声共用
+	var impact_cues := {}
+	var impact_ready := true
+	for move in BattleFX.SKILL_IMPACT:
+		var cue := str(BattleFX.SKILL_IMPACT[move])
+		impact_cues[cue] = true
+		var takes: Array = audio._streams.get(cue, [])
+		impact_ready = impact_ready and takes.size() == 3
+	_check(impact_ready and impact_cues.size() == 4, "each skill ships its own three-variant impact sound")
+	var clash := false
+	for cue in impact_cues:
+		clash = clash or BattleFX.NORMAL_ATTACK_HIT_SWING.values().has(cue)
+	_check(not clash, "skill impacts never reuse the normal-attack hit cues")
 	# Accelerated assertions are silent; --capture alone exercises real playback.
 	audio.enabled = false
 	var m: Monster = await _fresh()

@@ -24,11 +24,19 @@ const RISING_EDGE := Color(1.0, 0.83, 0.55)
 ## （attack1→swing_back 等），避开 combat_audio 的 50 ms 同类节流，
 ## 同时让"剑砍出去"这层多一次音色变化。
 ## 注：出招音与命中几乎同帧，故这一层听起来是一次更厚的挥剑声，不是回声。
-## 技能不在此列——按需求留待逐技能配声，暂仍用撞击音。
 const NORMAL_ATTACK_HIT_SWING := {
 	"attack1": "swing_back",
 	"attack2": "swing_light",
 	"attack3": "swing_heavy",
+}
+## 技能命中声：每个技能打中时是自己的声音，不再共用 light/heavy/launch。
+## 音效由 tools/bake_skill_impacts.py 原创合成；质心按气质排开：
+## 怒斩 1780 Hz（最沉）< 连突刺 2864 < 上挑 4247 < 拔刀斩 5350（最锐）。
+const SKILL_IMPACT := {
+	"thrust": "impact_thrust",
+	"quick_draw": "impact_quick_draw",
+	"rage_slash": "impact_rage_slash",
+	"upper": "impact_upper",
 }
 
 var freeze := 0
@@ -607,6 +615,14 @@ func _impact_sound(move_id: String, hit: Dictionary, launch: bool, heavy: bool, 
 	if NORMAL_ATTACK_HIT_SWING.has(move_id):
 		# 普通攻击：金属撞击音 metal_hit 被移除，换成挥剑声（交叉映射见常量注释）。
 		play_sound(str(NORMAL_ATTACK_HIT_SWING[move_id]), world_x)
+		return
+	var skill_cue := str(SKILL_IMPACT.get(move_id, ""))
+	if not skill_cue.is_empty():
+		# 技能命中用自己的声音（每个技能一记，见 SKILL_IMPACT）。
+		# 打金属目标时再叠一记金属声，保留材质信息；血肉目标不叠，免得糊掉技能身份。
+		play_sound(skill_cue, world_x, 1.12 if heavy else 1.0)
+		if str(hit.get("material", "flesh")) == "metal":
+			play_sound("metal_hit", world_x, 0.8)
 		return
 	play_sound("metal_hit" if str(hit.get("material", "flesh")) == "metal" else ("launch" if launch else ("heavy" if heavy else "light")), world_x)
 
