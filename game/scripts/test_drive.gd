@@ -226,6 +226,20 @@ func _run_checks() -> void:
 		var takes: Array = audio._streams.get(swing_kind, [])
 		swing_ready = swing_ready and takes.size() == 3
 	_check(swing_ready, "every move swing ships three recorded variants")
+	# 出招人声（真实录音）：四档各 3 变体，且每个进攻动作都映射到一档
+	var voice_ok := true
+	for move in BattleFX.VOICE_EFFORT:
+		var voice_takes: Array = audio._streams.get(str(BattleFX.VOICE_EFFORT[move]), [])
+		voice_ok = voice_ok and voice_takes.size() == 3
+	_check(voice_ok, "every windup vocal ships three recorded variants")
+	var unvoiced: Array = []
+	for move in GameConfig.moves:
+		var move_id := str(move)
+		if move_id == "jump" or move_id.begins_with("_"):
+			continue
+		if not BattleFX.VOICE_EFFORT.has(move_id):
+			unvoiced.append(move_id)
+	_check(unvoiced.is_empty(), "windup vocal covers every attack move")
 	# Accelerated assertions are silent; --capture alone exercises real playback.
 	audio.enabled = false
 	var m: Monster = await _fresh()

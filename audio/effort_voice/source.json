@@ -1,0 +1,36 @@
+{
+  "schema": "dnflike/audio-source/v1",
+  "kind": "effort_voice",
+  "note": "出招人声：真实录音加工（路线 B）。原始素材不入库，派生结果见 game/assets/audio_v3/voice_<tier>_<n>.wav",
+  "sources": [
+    {
+      "name": "Male Grunt/Yelling sounds",
+      "author": "HaelDB",
+      "license": "CC0-1.0",
+      "license_note": "原作者同时提供 OGA-BY 3.0，本工程取 CC0 分支",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+      "file": "yelling sounds.zip",
+      "format": "wav",
+      "clips": 62,
+      "vocalists": 4,
+      "used_for": ["voice_light", "voice_mid", "voice_heavy", "voice_rage"]
+    }
+  ],
+  "processing": {
+    "tool": "tools/bake_effort_voices.py",
+    "target_sample_rate": 48000,
+    "target_channels": 1,
+    "target_bits": 16,
+    "peak": 0.72,
+    "variants_per_kind": 3,
+    "tier_rule": "按有声段长度分段取样：最短=light、最长=rage；每档有硬时长上限",
+    "tier_max_seconds": {
+      "voice_light": 0.26,
+      "voice_mid": 0.34,
+      "voice_heavy": 0.44,
+      "voice_rage": 0.60
+    }
+  },
+  "local_source_dir": "D:\\dnflike_local\\audio_src\\effort_voice"
+}

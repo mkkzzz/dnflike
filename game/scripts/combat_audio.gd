@@ -23,6 +23,15 @@ const SOUND_SPECS := {
 	"charge": [-12.5, 1, 100], "draw_strike": [-5.0, 3, 75],
 	"rage": [-11.5, 2, 120], "rage_strike": [-5.5, 2, 60],
 	"thrust": [-7.5, 2, 45], "death": [-10.5, 2, 70],
+	# 出招人声（tools/bake_effort_voices.py，真实录音 CC0）。
+	# 起手先出一声"用力"，随后才是招式音。合成人声试过被否（不像人），
+	# 最终用 OpenGameArt《Male Grunt/Yelling sounds》的四位男声切片。
+	# 音量与招式音相当（-9~-6.5），否则实机听不见；节流按各自时长给，
+	# 既要让每次攻击都有人声，又不能在连击时叠成一团。
+	"voice_light": [-9.0, 2, 120],
+	"voice_mid": [-8.0, 2, 170],
+	"voice_heavy": [-7.0, 3, 240],
+	"voice_rage": [-6.5, 3, 320],
 	# 技能命中声（tools/bake_skill_impacts.py，原创合成）。
 	# 之前技能命中共用 light/heavy/launch，四个技能打同一只怪听感一样；
 	# 现在每个技能一记自己的命中声，质心按气质排开（怒斩最沉、拔刀斩最锐）。

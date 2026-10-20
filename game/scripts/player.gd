@@ -1030,6 +1030,9 @@ func _start_frame_move() -> void:
 	# V6 表现层必须在 phase_t 前进前拿到出招起点 root（刀光锚点固定在这里）
 	action_started.emit(move_name)
 	_emit_attack_event("windup", -1, move_data)
+	if fx != null:
+		# 起手人声：先"用力"，随后 active 时才是招式音
+		fx.call("move_voice", move_name, visual_position().x)
 
 func _emit_attack_event(event_phase: String, segment: int, data: Dictionary) -> void:
 	if fx == null:
@@ -1512,6 +1515,8 @@ func _cast_skill(sid: String, skill: Dictionary) -> void:
 		action_started.emit(sid)
 		move_name = sid
 		_emit_attack_event("windup", -1, skill)
+		if fx != null:
+			fx.call("move_voice", sid, visual_position().x)
 		move_name = ""
 		_notify("血怒", Color(1.0, 0.3, 0.25))
 		return

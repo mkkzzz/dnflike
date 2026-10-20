@@ -45,12 +45,14 @@ MAP: dict[str, list[tuple[str, float, float]]] = {
     "swing_back": [("swish-2.wav", 1.00, 0.20), ("swish-10.wav", 1.00, 0.20), ("swish-5.wav", 1.00, 0.20)],
     "swing_air": [("swish-13.wav", 1.12, 0.18), ("swish-12.wav", 1.12, 0.18), ("swish-11.wav", 1.12, 0.18)],
     # 技能/重击：StarNinjas 剑击（金属锐响），同为真实录音但更"整刀"
-    "swing_heavy": [("sword.8.wav", 0.92, 0.28), ("sword.7.wav", 0.92, 0.28), ("sword.5.wav", 0.92, 0.28)],
-    "swing_upper": [("sword.1.wav", 1.05, 0.22), ("sword.4.wav", 1.05, 0.22), ("sword.6.wav", 1.05, 0.22)],
-    "thrust": [("sword.3.wav", 1.18, 0.15), ("sword.6.wav", 1.18, 0.15), ("sword.4.wav", 1.18, 0.15)],
-    "dash_strike": [("sword.5.wav", 1.00, 0.22), ("sword.1.wav", 1.00, 0.22), ("sword.2.wav", 1.00, 0.22)],
-    "draw_strike": [("sword.9.wav", 1.05, 0.28), ("sword.10.wav", 1.05, 0.28), ("sword.8.wav", 1.05, 0.28)],
-    "rage_strike": [("sword.7.wav", 0.90, 0.28), ("sword.8.wav", 0.90, 0.28), ("sword.10.wav", 0.90, 0.28)],
+    # 负责人反馈初版"太刺太短"：低通从 11 kHz 收到 7 kHz，变速比下调（更长更沉），
+    # 时长上限同步放宽，避免截断。
+    "swing_heavy": [("sword.8.wav", 0.84, 0.34), ("sword.7.wav", 0.84, 0.34), ("sword.5.wav", 0.84, 0.34)],
+    "swing_upper": [("sword.1.wav", 0.95, 0.28), ("sword.4.wav", 0.95, 0.28), ("sword.6.wav", 0.95, 0.28)],
+    "thrust": [("sword.3.wav", 1.08, 0.18), ("sword.6.wav", 1.08, 0.18), ("sword.4.wav", 1.08, 0.18)],
+    "dash_strike": [("sword.5.wav", 0.92, 0.28), ("sword.1.wav", 0.92, 0.28), ("sword.2.wav", 0.92, 0.28)],
+    "draw_strike": [("sword.9.wav", 0.95, 0.34), ("sword.10.wav", 0.95, 0.34), ("sword.8.wav", 0.95, 0.34)],
+    "rage_strike": [("sword.7.wav", 0.82, 0.34), ("sword.8.wav", 0.82, 0.34), ("sword.10.wav", 0.82, 0.34)],
 }
 
 
@@ -174,7 +176,9 @@ def convert_decoded(src: Path, out: Path) -> int:
             data = data[:(data.size // ch) * ch].reshape(-1, ch).mean(axis=1)
         x = trim(data, sr)
         x = resample(x, sr, SR, ratio=1.0)
-        x = _lowpass(x, 11000.0)
+        # 负责人反馈初版"太刺"：源质心 12~14 kHz，一阶低通斜率不够（只有 6 dB/oct），
+        # 这里级联四级 5 kHz 才真能把金属嘶声压下去。
+        x = _lowpass(x, 5000.0, passes=4)
         x = finish(x, 0.40)
         write_wav(out / (meta_path.stem + ".wav"), x)
         count += 1
