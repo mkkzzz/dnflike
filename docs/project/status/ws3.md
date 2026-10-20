@@ -7,15 +7,15 @@
 | 使用者 | 负责人（kirisawa） |
 | 状态 | 空闲 |
 | 正在做 | — |
-| 产出位置 | `docs/design/19_音效生产工作流.md`、`20_音效任务模板.md`、`25_可破坏物工作流.md`、`tools/bake_audio_source*.{py,mjs}`、`tools/bake_foliage_audio.py`、`tools/bake_goblin_death*.py`、`audio/goblin_hurt/`、`docs/reports/ws3/2026-10/` |
+| 产出位置 | `docs/design/19_音效生产工作流.md`、`20_音效任务模板.md`、`25_可破坏物工作流.md`、`tools/bake_audio_source*.{py,mjs}`、`tools/bake_foliage_audio.py`、`tools/bake_goblin_death*.py`、`tools/bake_skill_impacts.py`、`tools/bake_sword_swings.py`、`tools/bake_effort_voices.py`、`audio/{goblin_hurt,sword_swing,effort_voice}/`、`docs/reports/ws3/2026-10/` |
 
 ## 最近完成
 
-- 2026-10-19 小地图按门方向排版（`up/down` 曾被漏映射成 `RIGHT`，整条横线）；只显示走过的房间、清房后直连房间呼吸闪烁；血蓝每秒回上限 1%；上挑（Z）蓝耗 6 点且与技能共用一条固定点数结算；哥布林死亡声改为**原创合成的「啊~~」嘶吼**（共振峰+抖动+过载，质心 1073→2134 Hz）。回归 449 → **466 项 failures=0**
-- 2026-10-19 同步到 `6536a6d`（16 个提交）并补齐稀疏检出：上游新增 `game/shaders/` 与 `game/assets/swordsman_v7_c6/` 不在本区目录清单内，导入报 `Preload file "res://shaders/swordsman_motion.gdshader" does not exist`。补入后本区回归 **449 项 failures=0**（与 ws1 报告一致）
-- 2026-10-18 **物品破坏机制落地并标准化**：草丛改为可破坏（房间 1/2/4 共 3 处），新增通用 `destructible` 配置、碎片破坏动画、原创合成破坏音效 `foliage_break`；流程与**标准参数预设**固化为 [25 可破坏物工作流](../../design/25_可破坏物工作流.md)，以后物品破坏一律先套该预设。回归 373 → **379 项 failures=0**
-- 2026-10-18 修复草丛"砍不碎"三个连环问题：①V6 招式走 `_seq_hit` 而非 `_emit_melee`，首版只改了一条路径 ②可破坏物错用打怪的景深容差 24，草丛在 depth=-50 永远打不到（改用专用 `lane`=60）③`_process` 空闲时自关，碎片生成后永不移动（12 块静止拼回原图，看起来像没碎）
-- 2026-10-18 破坏动画方向定稿：碎片以贴图中心为界向两侧上方飞，`rise` 380 / `gravity` 520（110/620 时最高点仅 63px，看不出向上）
+- 2026-10-20 **招式音与出招人声改用真实 CC0 录音**：九个招式音（Swishes 暖气流 + StarNinjas 金属剑击）、四档起手人声（HaelDB 男声）。金属类被反馈"太刺太短"后，用**四级低通 5 kHz** + 降调加长修到质心 5~7.8 kHz。**人声仍未通过验收**（负责人要求重做，已记入待办）。来源与许可登记在 `audio/sword_swing/`、`audio/effort_voice/`
+- 2026-10-20 **技能命中声逐技能**：`impact_thrust/quick_draw/rage_slash/upper` 各 3 变体，映射在 `battle_fx.SKILL_IMPACT`，质心按气质排开（怒斩最沉 1780 Hz → 拔刀斩最锐 5350 Hz）
+- 2026-10-20 小地图按门方向排版、未访问隐藏、清房后直连房间闪烁；血蓝每秒回 1%；上挑蓝耗 6 点且与技能共用固定点数结算
+- 2026-10-19 同步到 `6536a6d`（16 个提交）并补齐稀疏检出：上游新增 `game/shaders/` 与 `game/assets/swordsman_v7_c6/` 不在本区目录清单内，补入后本区回归 **449 项 failures=0**
+- 2026-10-18 **物品破坏机制落地并标准化**：草丛可破坏（房间 1/2/4 共 3 处）、通用 `destructible` 配置、碎片动画、`foliage_break` 音效；流程与**标准参数预设**固化为 [25 可破坏物工作流](../../design/25_可破坏物工作流.md)
 - 2026-10-15 建立**音效生产工作流**：新增 19 工作流文档 + 20 任务模板，并把外部素材解码技术固化为工具 `tools/bake_audio_source.py` / `bake_audio_source_decode.mjs`（已用真实素材实测通过）
 - 2026-10-15 普通攻击命中音由 `metal_hit` 金属撞击改为人物挥剑声（`_impact_sound()`，交叉映射绕开 50ms 节流）
 - 2026-10-15 怪物受击加入哥布林叫声层 `goblin_hurt`（公有领域素材加工，D032；工程首个外部素材音频）
