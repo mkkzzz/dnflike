@@ -10,18 +10,26 @@ const VARIANTS := 3
 const ASSET_PATH := "res://assets/audio_v3/%s_%d.wav"
 # Base dB, steal priority, retrigger interval in milliseconds.
 const SOUND_SPECS := {
-	"swing_light": [-8.5, 1, 50], "swing_back": [-8.0, 1, 50],
-	"swing_heavy": [-6.0, 2, 60], "swing_air": [-8.0, 1, 50],
-	"swing_upper": [-7.0, 2, 50], "dash": [-13.0, 0, 75],
-	"dash_strike": [-6.5, 2, 70], "light": [-6.0, 2, 40],
+	# 玩家招式音整体上调 1 dB（负责人反馈"招式声不明显"），thrust 原 -9 偏轻，提到 -7.5。
+	"swing_light": [-7.5, 1, 50], "swing_back": [-7.0, 1, 50],
+	"swing_heavy": [-5.0, 2, 60], "swing_air": [-7.0, 1, 50],
+	"swing_upper": [-6.0, 2, 50], "dash": [-13.0, 0, 75],
+	"dash_strike": [-5.5, 2, 70], "light": [-6.0, 2, 40],
 	"heavy": [-4.5, 3, 55], "launch": [-5.5, 3, 45],
 	"metal_hit": [-8.0, 3, 45], "guard": [-9.0, 3, 50],
 	"hurt": [-8.0, 2, 65], "step": [-16.5, 0, 100],
 	"run_step": [-14.5, 0, 85], "run_stop": [-15.0, 0, 100],
 	"jump": [-13.0, 0, 100], "land": [-11.0, 1, 100],
-	"charge": [-12.5, 1, 100], "draw_strike": [-6.0, 3, 75],
-	"rage": [-11.5, 2, 120], "rage_strike": [-6.5, 2, 60],
-	"thrust": [-9.0, 2, 45], "death": [-10.5, 2, 70],
+	"charge": [-12.5, 1, 100], "draw_strike": [-5.0, 3, 75],
+	"rage": [-11.5, 2, 120], "rage_strike": [-5.5, 2, 60],
+	"thrust": [-7.5, 2, 45], "death": [-10.5, 2, 70],
+	# 出招人声（tools/bake_voice_efforts.py，原创合成）。
+	# 招式起手先出一声短促的"用力"，随后才是招式音；比招式音轻 3~5 dB，
+	# 只负责给出"人在发力"的起手，不抢招式声。
+	"voice_light": [-13.0, 1, 90],
+	"voice_mid": [-12.0, 1, 110],
+	"voice_heavy": [-11.0, 2, 160],
+	"voice_rage": [-10.5, 2, 260],
 	# 技能命中声（tools/bake_skill_impacts.py，原创合成）。
 	# 之前技能命中共用 light/heavy/launch，四个技能打同一只怪听感一样；
 	# 现在每个技能一记自己的命中声，质心按气质排开（怒斩最沉、拔刀斩最锐）。

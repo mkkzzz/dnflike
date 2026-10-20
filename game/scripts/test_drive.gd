@@ -219,6 +219,20 @@ func _run_checks() -> void:
 	for cue in impact_cues:
 		clash = clash or BattleFX.NORMAL_ATTACK_HIT_SWING.values().has(cue)
 	_check(not clash, "skill impacts never reuse the normal-attack hit cues")
+	# 出招人声：每个进攻动作起手都有，且三种强度各 3 变体
+	var voice_ok := true
+	for move in BattleFX.VOICE_EFFORT:
+		var voice_takes: Array = audio._streams.get(str(BattleFX.VOICE_EFFORT[move]), [])
+		voice_ok = voice_ok and voice_takes.size() == 3
+	_check(voice_ok, "every windup vocal ships three baked variants")
+	var unvoiced: Array = []
+	for move in GameConfig.moves:
+		var move_id := str(move)
+		if move_id == "jump" or move_id.begins_with("_"):
+			continue
+		if not BattleFX.VOICE_EFFORT.has(move_id):
+			unvoiced.append(move_id)
+	_check(unvoiced.is_empty(), "windup vocal covers every attack move")
 	# Accelerated assertions are silent; --capture alone exercises real playback.
 	audio.enabled = false
 	var m: Monster = await _fresh()
