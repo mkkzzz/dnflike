@@ -1,0 +1,7 @@
+{
+  "prompt": "Use case: precise-object-edit. Provided image is the two-figure edit target. Preserve LEFT neutral gauge exactly, and RIGHT head, face, torso, pelvis height, arms/hands, costume identity, lighting, adult proportions, silhouette scale, transparent full canvas. Change ONLY the RIGHT figure's upper-thigh routing and occlusion to the opposite, FAR LEFT leg leading contact. FAR LEFT thigh starts SCREEN-RIGHT pelvis and goes forward to the screen-RIGHT front kneecap/heel, BEHIND the NEAR RIGHT thigh. NEAR RIGHT thigh starts SCREEN-LEFT pelvis and goes rearward to SCREEN-LEFT rear kneecap/toe; its inner contour is IN FRONT at crotch. Thus the thighs open from same-side hips, do NOT draw the near thigh crossing diagonally in front toward forward knee. Move the single buckled near-thigh strap onto the rear screen-left thigh; forward far thigh has no strap. Preserve actual boot locations, knee centers, torso and hands. This is the opposite anatomical leg, not a whole-character mirror or a repeated near-leading pose. Keep exactly two complete separated figures. No weapon, hilt, blade, scabbard, blur, text, effects, ground or shadows. True RGBA. Do not shorten torso or enlarge head.",
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/base_batch_c8/walk_contact_near_c2/body_c2.png"
+  ],
+  "transparent_background": true
+}

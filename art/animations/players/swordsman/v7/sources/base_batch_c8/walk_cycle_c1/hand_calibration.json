@@ -1,0 +1,68 @@
+{
+  "c8_walk_contact_far": {
+    "primary": [
+      566,
+      258
+    ],
+    "secondary": [
+      750,
+      239
+    ],
+    "weapon_hands": 1
+  },
+  "c8_walk_down_far": {
+    "primary": [
+      944,
+      255
+    ],
+    "secondary": [
+      1144,
+      240
+    ],
+    "weapon_hands": 1
+  },
+  "c8_walk_pass_near": {
+    "primary": [
+      1013,
+      693
+    ],
+    "secondary": [
+      1204,
+      691
+    ],
+    "weapon_hands": 1
+  },
+  "c8_walk_contact_near": {
+    "primary": [
+      168,
+      705
+    ],
+    "secondary": [
+      377,
+      695
+    ],
+    "weapon_hands": 1
+  },
+  "c8_walk_down_near": {
+    "primary": [
+      591,
+      699
+    ],
+    "secondary": [
+      785,
+      698
+    ],
+    "weapon_hands": 1
+  },
+  "c8_walk_pass_far": {
+    "primary": [
+      1383,
+      247
+    ],
+    "secondary": [
+      1576,
+      248
+    ],
+    "weapon_hands": 1
+  }
+}

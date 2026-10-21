@@ -161,6 +161,7 @@
     "swordsman_base_batch_c5_rejected": "art/animations/players/swordsman/v7/sources/base_batch_c5/checkpoint.json",
     "swordsman_base_batch_c6_revision": "art/animations/players/swordsman/v7/sources/base_batch_c6/checkpoint.json",
     "swordsman_base_batch_c7_rework": "art/animations/players/swordsman/v7/sources/base_batch_c7/checkpoint.json",
-    "swordsman_base_batch_c8_gm_trial": "art/animations/players/swordsman/v7/sources/base_batch_c8/checkpoint.json"
+    "swordsman_base_batch_c8_gm_trial": "art/animations/players/swordsman/v7/sources/base_batch_c8/checkpoint.json",
+    "swordsman_c8_gait_candidate": "art/animations/players/swordsman/v7/exports/gait_rig_c8_pilot/manifest.json"
   }
 }

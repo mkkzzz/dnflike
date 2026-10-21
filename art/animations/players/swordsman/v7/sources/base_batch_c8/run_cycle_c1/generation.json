@@ -62,8 +62,11 @@
       "returned_original_file": "exec-0c831847-d895-458c-9ea0-b7add8092bd6.png"
     }
   ],
-  "G1_passed": false,
+  "G1_passed": true,
   "artwork_approved": false,
   "runtime_scope": "not installed; opposite-leg and G1 review pending",
-  "limitations": "Generator returned 1672x941 sheet; export uses common standing gauge and shrink-only actor pixels, not an upscaled 2K source sheet."
+  "limitations": "Generator returned 1672x941 sheet; export uses common standing gauge and shrink-only actor pixels, not an upscaled 2K source sheet.",
+  "runtime_installed": false,
+  "visual_status": "rejected_as_production_gait",
+  "reason": "G1 passed is only head scale. First sheet walk has asymmetric compressed torso/stance; run still needs load-bearing foot and opposite-leg anatomy review. Not installed."
 }

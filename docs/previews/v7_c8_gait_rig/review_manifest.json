@@ -1,0 +1,144 @@
+{
+  "package_sha256": "17a1b37cd77bde37af0dbb35aef7d038f7ebb9b70cda299f7a6db416a96e665b",
+  "crop_movies": {
+    "walk_body_native.mp4": {
+      "source_movie": "walk_60fps.mp4",
+      "source_sha256": "4cb44bf973aaea144ca174da03f979316d4075b191923edaab4038289ef29619",
+      "crop": [
+        20,
+        650,
+        700,
+        650
+      ],
+      "resized": false,
+      "sha256": "e9c4716c3f91b5607b7bef4d3da4f039d3f58ec2cf38bdd8ab0efbb593869076"
+    },
+    "walk_katana_native.mp4": {
+      "source_movie": "walk_60fps.mp4",
+      "source_sha256": "4cb44bf973aaea144ca174da03f979316d4075b191923edaab4038289ef29619",
+      "crop": [
+        620,
+        650,
+        700,
+        650
+      ],
+      "resized": false,
+      "sha256": "83d73b15c6d4326a349beb2d67fe6d5b7fd851b960b9a8be57a03ce941cae0f0"
+    },
+    "walk_greatsword_native.mp4": {
+      "source_movie": "walk_60fps.mp4",
+      "source_sha256": "4cb44bf973aaea144ca174da03f979316d4075b191923edaab4038289ef29619",
+      "crop": [
+        1220,
+        650,
+        700,
+        650
+      ],
+      "resized": false,
+      "sha256": "8965261883b126277a23f0f5ee3ddc19c085150d58e7f6eefcd63fae9ef09bbe"
+    },
+    "walk_shortsword_native.mp4": {
+      "source_movie": "walk_60fps.mp4",
+      "source_sha256": "4cb44bf973aaea144ca174da03f979316d4075b191923edaab4038289ef29619",
+      "crop": [
+        1820,
+        650,
+        700,
+        650
+      ],
+      "resized": false,
+      "sha256": "5c40ec8d62421ae895f311934c062bc870cfe090636630847cf958675e8fb367"
+    },
+    "run_body_native.mp4": {
+      "source_movie": "run_60fps.mp4",
+      "source_sha256": "e07e05aafba32941ee4ccfcb896e38e2421dfecdec45b524e669bd77c4f346a9",
+      "crop": [
+        20,
+        650,
+        700,
+        650
+      ],
+      "resized": false,
+      "sha256": "686dd37c504809d5d8ad8ddbe422f113c16274255a90c58364ec84c9adcf6ed4"
+    },
+    "run_katana_native.mp4": {
+      "source_movie": "run_60fps.mp4",
+      "source_sha256": "e07e05aafba32941ee4ccfcb896e38e2421dfecdec45b524e669bd77c4f346a9",
+      "crop": [
+        620,
+        650,
+        700,
+        650
+      ],
+      "resized": false,
+      "sha256": "e0ad984ce7b09d402d2df0024c941b84340752d674af74e31651352f9473eac5"
+    },
+    "run_greatsword_native.mp4": {
+      "source_movie": "run_60fps.mp4",
+      "source_sha256": "e07e05aafba32941ee4ccfcb896e38e2421dfecdec45b524e669bd77c4f346a9",
+      "crop": [
+        1220,
+        650,
+        700,
+        650
+      ],
+      "resized": false,
+      "sha256": "bb569076ba3084bd2d5e2074cd03eed57be93b9ea5cd9abe9205f49356564b39"
+    },
+    "run_shortsword_native.mp4": {
+      "source_movie": "run_60fps.mp4",
+      "source_sha256": "e07e05aafba32941ee4ccfcb896e38e2421dfecdec45b524e669bd77c4f346a9",
+      "crop": [
+        1820,
+        650,
+        700,
+        650
+      ],
+      "resized": false,
+      "sha256": "2954a04d3ab228f10173f36360e4cd0059860633493b39b989fe5170e0a0a517"
+    }
+  },
+  "review_files": {
+    "browser_review.png": "c0e866cbca60589cac0af61cdc7d215349c64c00ae86bc74809a5910ea6dfd65",
+    "index.html": "08e4dcfb9e696b3c8bacbcf353689ce4c68c8bf3775a0197ecbb332ade6b97d3",
+    "run_60fps.mp4": "e07e05aafba32941ee4ccfcb896e38e2421dfecdec45b524e669bd77c4f346a9",
+    "run_body_native.mp4": "686dd37c504809d5d8ad8ddbe422f113c16274255a90c58364ec84c9adcf6ed4",
+    "run_greatsword_native.mp4": "bb569076ba3084bd2d5e2074cd03eed57be93b9ea5cd9abe9205f49356564b39",
+    "run_katana_native.mp4": "e0ad984ce7b09d402d2df0024c941b84340752d674af74e31651352f9473eac5",
+    "run_keyframes.png": "3689bbce5c18cd46a8b5aaa791de1243f3cd74f25b3e554789163e5c50d8534e",
+    "run_native_parts.png": "a62192cd0487942152af1111dbbfc379d3103faf97a088bdf295a9383d494f5e",
+    "run_shortsword_native.mp4": "2954a04d3ab228f10173f36360e4cd0059860633493b39b989fe5170e0a0a517",
+    "run_t16_native_2k.png": "3c8308c929856784cc283b61087f955ffa3cd04b983774cdb4d2418b0d877b87",
+    "run_t8_native_2k.png": "9fbcf1cdfc54b2ff8879b02bf79c66053e966b084feb44d0a6092e90a95dda07",
+    "walk_60fps.mp4": "4cb44bf973aaea144ca174da03f979316d4075b191923edaab4038289ef29619",
+    "walk_body_native.mp4": "e9c4716c3f91b5607b7bef4d3da4f039d3f58ec2cf38bdd8ab0efbb593869076",
+    "walk_greatsword_native.mp4": "8965261883b126277a23f0f5ee3ddc19c085150d58e7f6eefcd63fae9ef09bbe",
+    "walk_katana_native.mp4": "83d73b15c6d4326a349beb2d67fe6d5b7fd851b960b9a8be57a03ce941cae0f0",
+    "walk_keyframes.png": "b68d839772a738035ab6746e6ac577a7deb4a502fc034a7bbf59b20b0bda7154",
+    "walk_native_parts.png": "d0695e27369d354900f7a4279b391b1ef68cf8e005fe190207f4a2efdcdc31ec",
+    "walk_shortsword_native.mp4": "5c40ec8d62421ae895f311934c062bc870cfe090636630847cf958675e8fb367",
+    "walk_t21_native_2k.png": "ab884ccd4dc4b73b4120f2633a914283a332c0f970f929c04461598203176cf4",
+    "walk_t8_native_2k.png": "e98d5841d498e76c53f35f6262e0ed69e26e9f104bfaef6a8ab907ab03e2bda2"
+  },
+  "artwork_approved": false,
+  "runtime_user_approved": false,
+  "browser_check": {
+    "video": "run_body_native.mp4",
+    "size": [
+      700,
+      650
+    ],
+    "rate": 0.5,
+    "paused_time_after_eight_next_clicks": 0.133328,
+    "seekable": [
+      0,
+      0.533333
+    ],
+    "range_http_verified": true,
+    "range_response": 206,
+    "native_scene_size": [
+      2560,
+      1440
+    ]
+  }
+}

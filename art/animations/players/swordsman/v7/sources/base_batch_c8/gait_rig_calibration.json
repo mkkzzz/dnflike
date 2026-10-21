@@ -1,0 +1,261 @@
+{
+  "schema": "swordsman_gait_cutout_calibration/1",
+  "date": "2026-10-21",
+  "artwork_approved": false,
+  "upper": {
+    "config": "gait_upper_parts_c1/body_config.json",
+    "root": [
+      1120,
+      894
+    ],
+    "hip_near": [
+      1084,
+      431
+    ],
+    "hip_far": [
+      1165,
+      434
+    ],
+    "shoulder_far": [
+      1165,
+      188
+    ],
+    "grip": [
+      966,
+      486
+    ],
+    "head_polygon": [
+      [
+        1050,
+        50
+      ],
+      [
+        1100,
+        20
+      ],
+      [
+        1180,
+        10
+      ],
+      [
+        1245,
+        45
+      ],
+      [
+        1240,
+        115
+      ],
+      [
+        1201,
+        146
+      ],
+      [
+        1180,
+        167
+      ],
+      [
+        1150,
+        177
+      ],
+      [
+        1115,
+        166
+      ],
+      [
+        1084,
+        143
+      ],
+      [
+        1040,
+        140
+      ],
+      [
+        1040,
+        90
+      ]
+    ],
+    "back_coat_seed": [
+      1120,
+      550
+    ],
+    "shoulder_near": [
+      1035,
+      205
+    ],
+    "elbow_near": [
+      966,
+      351
+    ],
+    "elbow_far_reference": [
+      1235,
+      330
+    ]
+  },
+  "arm": {
+    "file": "gait_upper_parts_c1/source.png",
+    "crop": [
+      1330,
+      190,
+      1590,
+      535
+    ],
+    "pivot": [
+      1381,
+      246
+    ],
+    "wrist": [
+      1535,
+      488
+    ],
+    "scale": 0.4323094425483504,
+    "elbow": [
+      1437,
+      369
+    ],
+    "native_upper_length": 56,
+    "native_forearm_length": 66
+  },
+  "leg_source": {
+    "file": "gait_leg_parts_c1/source.png",
+    "sha256": "b28d0a4540c756211858918439b742f671be0a64223907c68132d30220a8d78b",
+    "same_scale_as_companion": false,
+    "scale_policy": "Independently calibrated attachment lengths and widths, all singular values <= 1. No claim of common generated part scale."
+  },
+  "parts": {
+    "near_thigh": {
+      "crop": [
+        955,
+        10,
+        1125,
+        345
+      ],
+      "a": [
+        1053,
+        50
+      ],
+      "b": [
+        1016,
+        316
+      ],
+      "width_scale": 0.28
+    },
+    "far_thigh": {
+      "crop": [
+        1215,
+        10,
+        1385,
+        345
+      ],
+      "a": [
+        1279,
+        50
+      ],
+      "b": [
+        1317,
+        316
+      ],
+      "width_scale": 0.28
+    },
+    "near_shin": {
+      "crop": [
+        925,
+        345,
+        1080,
+        710
+      ],
+      "a": [
+        1018,
+        411
+      ],
+      "b": [
+        988,
+        676
+      ],
+      "width_scale": 0.25
+    },
+    "far_shin": {
+      "crop": [
+        1255,
+        345,
+        1410,
+        710
+      ],
+      "a": [
+        1324,
+        410
+      ],
+      "b": [
+        1351,
+        676
+      ],
+      "width_scale": 0.25
+    },
+    "near_boot": {
+      "crop": [
+        895,
+        705,
+        1145,
+        905
+      ],
+      "a": [
+        978,
+        744
+      ],
+      "scale": 0.28
+    },
+    "far_boot": {
+      "crop": [
+        1235,
+        705,
+        1490,
+        905
+      ],
+      "a": [
+        1315,
+        744
+      ],
+      "scale": 0.28
+    }
+  },
+  "motions": {
+    "walk": {
+      "duration_ticks": 42,
+      "native_speed": 450,
+      "stance_fraction": 0.6,
+      "lift": 28,
+      "lean_degrees": 0,
+      "head_counter_degrees": 0,
+      "thigh_length": 93,
+      "shin_length": 97,
+      "projected_length_amplitude": 4,
+      "arm_swing_degrees": 16,
+      "elbow_bend_degrees": 25
+    },
+    "run": {
+      "duration_ticks": 32,
+      "native_speed": 900,
+      "stance_fraction": 0.38,
+      "lift": 65,
+      "lean_degrees": 18,
+      "head_counter_degrees": -12,
+      "thigh_length": 98,
+      "shin_length": 100,
+      "projected_length_amplitude": 0,
+      "arm_swing_degrees": 30,
+      "elbow_bend_degrees": 95
+    }
+  },
+  "review_scope": "kinematic offline prototype; head/idle preservation and weapon switch remain separate from visual gait approval",
+  "attachment_reviews": [
+    {
+      "file": "gait_leg_parts_c1/attachment_overlay.png",
+      "sha256": "265a3ec5a599c72afd407a2c18aa27eec33a703496437c511137d54d9f9cdc9e",
+      "reviewed": true
+    },
+    {
+      "file": "gait_upper_parts_c1/attachment_overlay.png",
+      "sha256": "9338d08881c9f2134e12a4007ff3cdf4659fa0f4ae99e96dafb967e21288d818",
+      "reviewed": true
+    }
+  ]
+}

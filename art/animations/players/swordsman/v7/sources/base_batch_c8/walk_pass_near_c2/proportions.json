@@ -1,0 +1,63 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-21",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_pass_near_c2/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Manual source-pixel crown and actual front jaw vertex; paired standing gauge defines shared scale. Not crouched pose bbox. Thigh strap and occlusion distinguish near/right from far/left leg. G1 does not approve gait.",
+  "sources": {
+    "body": {
+      "sha256": "f62c6a26c0178ec312469f796fe69cff023b5a89741949ca45c2e995de7501bf",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 16,
+        "standing_bottom_y": 885,
+        "sole": [
+          386,
+          885
+        ],
+        "crop_bbox": [
+          230,
+          5,
+          720,
+          905
+        ],
+        "head": {
+          "hair_top": [
+            543,
+            16
+          ],
+          "chin": [
+            555,
+            145
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c8_walk_pass_near",
+      "head": {
+        "hair_top": [
+          1178,
+          19
+        ],
+        "chin": [
+          1185,
+          150
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "landmark_overlay.png",
+    "sha256": "a95338718ea3b0e8bdebe31c2a4b51036f9a1d319f93f261210060dc1f16d1f1",
+    "reviewed": true
+  }
+}

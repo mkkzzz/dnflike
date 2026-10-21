@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-21",
+  "revision": "v7_c8_attack2_c1",
+  "semantic_id": "actor.player.base.combo.2",
+  "scope": "reverse two-handed slash representative source poses; not a completed clip",
+  "requested_source_size": [
+    2560,
+    1440
+  ],
+  "export_canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "native_standing_height": 380,
+  "upscale_allowed": false,
+  "clock_contract": {
+    "duration_ticks": 32,
+    "game_active_window": "existing attack2 contact events, unchanged",
+    "generation_changes_gameplay": false
+  },
+  "two_hand": true,
+  "direction": "leftward carry -> rightward active cut; reverse of attack1",
+  "motion_plan": [
+    "load reuses previous first-cut follow direction, hands left of pelvis and sword pointing screen-left",
+    "hip/waist drive the reverse cut; head and chest travel with the weight shift",
+    "follow-through hands cross toward screen-right, body rotates and rebalances without fixed-head slashing"
+  ],
+  "layer_policy": "katana is included in concept only to lock grip/body/blade; must remove body-fixed blade/hilt and export shared body/fingers with independent weapon before any runtime candidate",
+  "references": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_c1/source.png",
+      "sha256": "a341bc86ee419b4c0a9a4719da498370cd3715eb878f0a92029f9137867e5fe7"
+    },
+    {
+      "file": "game/assets/swordsman_v7_c6/weapons/katana.png",
+      "sha256": "889c0612e8af597ceb60f796b9a81a25e09ff89d090f251a669ee93a9725ed2d"
+    }
+  ],
+  "G1": "pending",
+  "G2": "pending",
+  "G3": "pending",
+  "G4": "pending",
+  "runtime_install_allowed": false
+}

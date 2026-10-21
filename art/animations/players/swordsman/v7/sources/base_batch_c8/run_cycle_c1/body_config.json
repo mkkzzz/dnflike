@@ -1,0 +1,247 @@
+{
+  "revision": "v7_c8_run_source_keys",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/base_batch_c8_body/run_cycle_c1",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "body_c2.png",
+      "standing_height": 473
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "reviewed_true_hair_jaw",
+    "G2": "pending_loop_review",
+    "G3": "pending",
+    "G4": "pending",
+    "runtime_install_allowed": false
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.run",
+      "loop": true,
+      "root_mode": "virtual_ground",
+      "poses": [
+        {
+          "id": "c8_run_contact_far",
+          "source": "body",
+          "crop_bbox": [
+            400,
+            0,
+            860,
+            490
+          ],
+          "root": [
+            650,
+            470
+          ],
+          "foot": [
+            766,
+            470
+          ],
+          "component_seed": [
+            660,
+            230
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              542,
+              230
+            ],
+            "offhand": [
+              780,
+              183
+            ]
+          }
+        },
+        {
+          "id": "c8_run_down_far",
+          "source": "body",
+          "crop_bbox": [
+            825,
+            0,
+            1235,
+            490
+          ],
+          "root": [
+            1060,
+            472
+          ],
+          "foot": [
+            955,
+            472
+          ],
+          "component_seed": [
+            1080,
+            230
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              965,
+              225
+            ],
+            "offhand": [
+              1205,
+              190
+            ]
+          }
+        },
+        {
+          "id": "c8_run_flight_near",
+          "source": "body",
+          "crop_bbox": [
+            910,
+            485,
+            1320,
+            941
+          ],
+          "root": [
+            1135,
+            940
+          ],
+          "foot": [
+            995,
+            910
+          ],
+          "component_seed": [
+            1140,
+            700
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1058,
+              672
+            ],
+            "offhand": [
+              1292,
+              619
+            ]
+          }
+        },
+        {
+          "id": "c8_run_contact_near",
+          "source": "body",
+          "crop_bbox": [
+            0,
+            485,
+            505,
+            941
+          ],
+          "root": [
+            290,
+            910
+          ],
+          "foot": [
+            105,
+            910
+          ],
+          "component_seed": [
+            320,
+            680
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              183,
+              670
+            ],
+            "offhand": [
+              421,
+              626
+            ]
+          }
+        },
+        {
+          "id": "c8_run_down_near",
+          "source": "body",
+          "crop_bbox": [
+            490,
+            485,
+            920,
+            941
+          ],
+          "root": [
+            700,
+            910
+          ],
+          "foot": [
+            586,
+            910
+          ],
+          "component_seed": [
+            730,
+            700
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              620,
+              677
+            ],
+            "offhand": [
+              873,
+              637
+            ]
+          }
+        },
+        {
+          "id": "c8_run_flight_far",
+          "source": "body",
+          "crop_bbox": [
+            1235,
+            0,
+            1672,
+            490
+          ],
+          "root": [
+            1475,
+            490
+          ],
+          "foot": [
+            1308,
+            461
+          ],
+          "component_seed": [
+            1490,
+            220
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1368,
+              211
+            ],
+            "offhand": [
+              1611,
+              178
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

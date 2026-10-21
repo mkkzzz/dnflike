@@ -22,14 +22,15 @@ def main():
   if file not in cache:cache[file]=Image.open(PACKAGE/file).convert('RGBA')
   return cache[file]
  def actor(frame,profile):
-  im=Image.new('RGBA',(1024,1080));w=frame['profiles'][profile]
-  for r in [w['back'],frame['body'],w['front'],frame['fingers']]:
+  im=Image.new('RGBA',(1024,1080));w=frame['profiles'][profile]if profile else None
+  for r in ([w['back'],frame['body'],w['front'],frame['fingers']]if w else [frame['body'],frame['fingers']]):
    if r:im.alpha_composite(image(r),tuple(r['rect'][:2]))
   return im
  def screen(frame,name,tick):
   canvas=Image.new('RGBA',(2560,1440),'#252c35');draw=ImageDraw.Draw(canvas)
   draw.line((0,1120,2560,1120),fill='#66727f',width=2)
-  for x,profile,title in [(500,'katana','太刀'),(1280,'greatsword','巨剑'),(2060,'shortsword','短剑')]:
+  columns=[(370,None,'裸动作'),(970,'katana','太刀'),(1570,'greatsword','巨剑'),(2170,'shortsword','短剑')]if manifest['revision'].startswith('v7_c8_walk')else[(500,'katana','太刀'),(1280,'greatsword','巨剑'),(2060,'shortsword','短剑')]
+  for x,profile,title in columns:
    canvas.alpha_composite(actor(frame,profile),(x-448,1120-840));draw.text((x-70,250),title,font=font,fill='white')
   draw.text((60,50),manifest['revision']+' / 原生 2K / 60 fps / 无刀光',font=font,fill='white')
   draw.text((60,105),f'{name}    tick {tick}    同一身体与手指层，三种独立武器',font=small,fill='#c7d6e8')
@@ -37,10 +38,10 @@ def main():
   return canvas.convert('RGB')
  for name,c in manifest['clips'].items():
   if args.only and name not in args.only:continue
-  frames=c['frames'];chosen=sorted(set([0,len(frames)//4,len(frames)//2,len(frames)*3//4,len(frames)-1]+([7,8,12,15,22,25] if name=='attack1' and len(frames)>25 else [8,12] if name.startswith('attack')else[])))
+  frames=c['frames'];chosen=sorted(set([0,len(frames)//4,len(frames)//2,len(frames)*3//4,len(frames)-1]+([7,8,12,15,22,25] if name=='attack1' and len(frames)>25 else [8,12] if name.startswith('attack')else list(range(0,len(frames),8))if name=='walk'and manifest['revision'].startswith('v7_c8_walk')else[])))
   board=Image.new('RGB',(768*3,620*((len(chosen)+2)//3)),'#252c35')
   for i,t in enumerate(chosen):
-   panel=Image.new('RGBA',(1024,1080),'#252c35');panel.alpha_composite(actor(frames[t],'katana'))
+   panel=Image.new('RGBA',(1024,1080),'#252c35');panel.alpha_composite(actor(frames[t],None if manifest['revision'].startswith('v7_c8_walk')else'katana'))
    panel=panel.crop((64,260,960,900));panel.thumbnail((748,570),Image.Resampling.LANCZOS)
    board.paste(panel.convert('RGB'),(i%3*768,i//3*620+42));ImageDraw.Draw(board).text((i%3*768+12,i//3*620+5),f'{name} t{t}',font=small,fill='white')
   board.save(OUT/(name+'_keyframes.png'))
@@ -75,6 +76,15 @@ const game=document.createElement('option');game.value='gameplay_1080p.mp4';game
   if (OUT/'first_cut_native_2k.mp4').exists():
    html=html.replace("function load(){video.src=clip.value;", "const live=document.createElement('option');live.value='first_cut_native_2k.mp4';live.textContent='实机：三武器 × 左右朝向（原生2K）';clip.prepend(live);clip.value=live.value;function load(){video.src=clip.value;")
    html=html.replace('仅为第一刀完整离线样片；尚未制作其余两刀和新步态，不是整套已经修好。','实机视频由真实 GM 命令与攻击输入录制。离线 attack1 直接消费同一试用包。其余两刀和新步态仍在制作；仅第一刀已接入试用，完整动作质量尚待验收。')
+  (OUT/'index.html').write_text(html,encoding='utf-8',newline='\n')
+ if manifest['revision'].startswith('v7_c8_walk'):
+  html=html.replace('鬼剑士 c6 动作返修预览','鬼剑士 c8 两步行走样片').replace('鬼剑士 c6 历史候选 / 部分退回','鬼剑士 c8 两步行走样片')
+  html=html.replace('用户已认可 idle 与采样流畅度；行走、奔跑和三连的动作设计已退回。离线片段为原生 2K；旧引擎连续录像实际 1080p，已纠正原命名。默认半速；力量感请同时看 1×。不含技能。','六张真实关键姿势区分近侧右腿与远侧左腿，完整循环为48个60Hz采样；不是同一步重复两次。先看左侧裸动作，再比较同身体三武器。此为离线设计候选，尚未接入游戏，也未获用户动作质量认可。默认半速，请同时看实速。')
+  html=html.replace('clip.append(game);function load()','function load()').replace('游戏视频含真实操作与恢复过渡，离线视频只显示各片段自身。','walk_start/stop 使用原版 idle 作真实端点；本页未证明实际位移时脚底不滑或实机状态过渡已经通过。')
+  if 'articulated' in manifest.get('motion_backend',''):
+   html=html.replace('鬼剑士 c8 两步行走样片','鬼剑士 c8 步行 / 奔跑分层样片')
+   html=html.replace('六张真实关键姿势区分近侧右腿与远侧左腿，完整循环为48个60Hz采样；不是同一步重复两次。','使用一张躯干原画、一条独立摆臂和六个绘制的腿部件，按步态轨迹烘焙；不是逐帧新画。步行为42个60Hz采样，奔跑为32个，左右腿错开半周期；交叉的小腿不参与光流补间。')
+   html=html.replace('walk_start/stop 使用原版 idle 作真实端点；本页未证明实际位移时脚底不滑或实机状态过渡已经通过。','本页仅为同包循环样片；起停、实际移动和游戏状态过渡尚未接入。idle 保留原像素，刀保持独立层。')
   (OUT/'index.html').write_text(html,encoding='utf-8',newline='\n')
  evidence={'package_sha256':hashlib.sha256((PACKAGE/'manifest.json').read_bytes()).hexdigest(),'clips':names,'review_files':{p.name:hashlib.sha256(p.read_bytes()).hexdigest()for p in OUT.iterdir()if p.suffix in ['.png','.mp4','.html']},'artwork_approved':False,'runtime_user_approved':False}
  (OUT/'review_manifest.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')

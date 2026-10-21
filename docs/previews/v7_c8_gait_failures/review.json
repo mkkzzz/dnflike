@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-21",
+  "status": "rejected",
+  "failures": [
+    {
+      "candidate": "walk_c8_pilot",
+      "manifest_sha256": "b1426cad83901a90b787f9a888107d6ddec701c0a3b29b00a6f4111e209099bb",
+      "failure": "Unconstrained leg optical flow produces detached/missing boots and opaque silhouette collapse at crossing.",
+      "evidence": "walk_c8_pilot.png",
+      "evidence_sha256": "ed07542dede82ec43dfb4e88ad412f3cef6f0852427b95b19bcd376a4f72fd4c",
+      "installed": false
+    },
+    {
+      "candidate": "walk_c8_pilot_c3",
+      "manifest_sha256": "065d0314d6d382bac7a755284dde04a0617521e3269cac5c4a9a8864169094de",
+      "failure": "Adding reviewed hip/knee/ankle controls prevents complete foot loss but folds cross-leg triangles and gives metallic ghost legs.",
+      "evidence": "walk_c8_pilot_c3.png",
+      "evidence_sha256": "b9acd712e1ea1d0e3bbf903325aac2ea92070b58ba0ca3e5d9c2e94c93976460",
+      "installed": false
+    }
+  ],
+  "replacement": "articulated gait pilot; no leg optical flow, not user artwork approval"
+}

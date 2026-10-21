@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-21",
+  "tool": "builtin image_gen",
+  "seed": "not returned",
+  "selected_raster": "source.png",
+  "history": [
+    {
+      "file": "source.png",
+      "sha256": "5e2a52ebba48d3cf531c13ebcc0fb7d1e91941c1e7265da670a1a9acf4f0e03b",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "alpha_preserved": true,
+      "requested_size": [
+        2560,
+        1440
+      ],
+      "upscale_applied": false,
+      "request": "request.json",
+      "prompt": "prompt.txt",
+      "prompt_file_sha256": "cbd35b437fb0b1b5e067a2fb3948bfc8dd687289673f2f6be053aed85cc6d2fa",
+      "submitted_prompt_sha256": "6d429cb07fac82c8e0efac22e255c35c45778eb092350d543f34d412717bac03",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_contact_near_c2/body_c2.png",
+          "sha256": "6cd85120c0699b0ec9e3624cdfedfeeb9345b1580f2f6a09a9d324d8ace1bb93",
+          "actually_submitted": true
+        }
+      ],
+      "returned_original_file": "exec-b47f489b-6fe2-41d9-acea-cabaf34c7fe6.png"
+    }
+  ],
+  "G1_passed": true,
+  "artwork_approved": false,
+  "runtime_installed": false,
+  "limitations": "Actual sheet 1672x941; not the requested native 2K sheet. Actor scale will only shrink via same-sheet standing companion.",
+  "visual_status": "offline_loop_review_pending"
+}

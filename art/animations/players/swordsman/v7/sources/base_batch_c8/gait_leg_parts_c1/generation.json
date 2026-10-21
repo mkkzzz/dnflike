@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-21",
+  "tool": "builtin image_gen",
+  "seed": "not returned",
+  "source": "source.png",
+  "source_sha256": "b28d0a4540c756211858918439b742f671be0a64223907c68132d30220a8d78b",
+  "actual_size": [
+    1672,
+    941
+  ],
+  "requested_size": [
+    2560,
+    1440
+  ],
+  "alpha_preserved": true,
+  "upscale_applied": false,
+  "prompt_file_sha256": "586bffcde4f5dc92f0124b07d9e0738e9a1c34fb8b83430d7507855bdd746850",
+  "submitted_prompt_sha256": "31a913e45fb660ccb5dfc8a4c6c1e71b2e358f2b33ba9f9c646a3196d162d554",
+  "references": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_contact_near_c2/body_c2.png",
+      "sha256": "6cd85120c0699b0ec9e3624cdfedfeeb9345b1580f2f6a09a9d324d8ace1bb93",
+      "actually_submitted": true
+    }
+  ],
+  "returned_original_file": "exec-075d5c9b-36e5-4af9-a561-9303c106f061.png",
+  "artwork_approved": false,
+  "runtime_installed": false,
+  "limitation": "Actual sheet is 1672x941, not requested 2K. Isolated leg parts are NOT the same physical scale as their companion despite prompt; each attachment length must be independently calibrated and shrink only."
+}

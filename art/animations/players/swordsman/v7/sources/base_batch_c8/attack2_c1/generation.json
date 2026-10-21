@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-21",
+  "tool": "builtin image_gen",
+  "seed": "not returned",
+  "source": "source.png",
+  "source_sha256": "b889c47365c08fc60dee7df8f5e388fd6fd40c43db31c3e042260c91cbb0ae65",
+  "actual_size": [
+    1672,
+    941
+  ],
+  "requested_size": [
+    2560,
+    1440
+  ],
+  "upscale_applied": false,
+  "prompt_file_sha256": "c58c2d66804d0a396371979ae2eb5cff2c8b709ff98e9a09d26aed9098da04bc",
+  "submitted_prompt_sha256": "138d71c3eb176aca3b1b82b4bcdd272c08970ccc0a86c4bc8f41dc244fa2f44e",
+  "references": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_c1/source.png",
+      "sha256": "a341bc86ee419b4c0a9a4719da498370cd3715eb878f0a92029f9137867e5fe7",
+      "actually_submitted": true
+    },
+    {
+      "file": "game/assets/swordsman_v7_c6/weapons/katana.png",
+      "sha256": "889c0612e8af597ceb60f796b9a81a25e09ff89d090f251a669ee93a9725ed2d",
+      "actually_submitted": true
+    }
+  ],
+  "returned_original_file": "exec-af992177-2da8-4be6-ab85-20d03a715351.png",
+  "G1_passed": false,
+  "artwork_approved": false,
+  "runtime_installed": false,
+  "scope": "concept only; fixed sword must be removed and shared body/fingers calibrated before export",
+  "limitation": "Generator returns 1672x941 sheet; source scale and all heads still pending manual G1."
+}

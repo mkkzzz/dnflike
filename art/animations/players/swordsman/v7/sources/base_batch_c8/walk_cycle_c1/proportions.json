@@ -1,0 +1,143 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-21",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_cycle_c1/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Manual source-pixel real hair tip, front lower-jaw vertex and same-sheet upright companion. No crouched bbox standing-height estimate. Leg ownership and looping quality remain a separate pending review.",
+  "sources": {
+    "body": {
+      "sha256": "5fb9c69c045a111e2581a32131e677b93ff5679089751b8fbe7f3a7dab699a8b",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 17,
+        "standing_bottom_y": 487,
+        "sole": [
+          165,
+          487
+        ],
+        "crop_bbox": [
+          95,
+          8,
+          345,
+          495
+        ],
+        "head": {
+          "hair_top": [
+            243,
+            17
+          ],
+          "chin": [
+            259,
+            84
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c8_walk_contact_far",
+      "head": {
+        "hair_top": [
+          675,
+          23
+        ],
+        "chin": [
+          677,
+          95
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c8_walk_down_far",
+      "head": {
+        "hair_top": [
+          1076,
+          32
+        ],
+        "chin": [
+          1076,
+          103
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c8_walk_pass_near",
+      "head": {
+        "hair_top": [
+          1137,
+          493
+        ],
+        "chin": [
+          1139,
+          563
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c8_walk_contact_near",
+      "head": {
+        "hair_top": [
+          300,
+          499
+        ],
+        "chin": [
+          309,
+          568
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c8_walk_down_near",
+      "head": {
+        "hair_top": [
+          708,
+          492
+        ],
+        "chin": [
+          721,
+          562
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c8_walk_pass_far",
+      "head": {
+        "hair_top": [
+          1490,
+          28
+        ],
+        "chin": [
+          1503,
+          98
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "landmark_overlay.png",
+    "sha256": "a705ea29336d02f4dabb1b6037bf51494d3232366d29c535c8c08cd6a0e868e6",
+    "reviewed": true
+  }
+}

@@ -9,18 +9,25 @@
   "review": "docs/previews/v7_c8_trial/index.html",
   "source_g1_passed": [
     "attack1_hand_release_c1",
-    "attack1_breakdowns_c1"
+    "attack1_breakdowns_c1",
+    "gait_upper_parts_c1",
+    "walk_contact_far_c2",
+    "walk_down_far_c2",
+    "walk_pass_near_c2",
+    "walk_contact_near_c2",
+    "walk_down_near_c2",
+    "walk_pass_far_c2"
   ],
   "source_review_pending": [
-    "walk_cycle_c1",
-    "run_cycle_c1"
+    "gait pilot visual quality/start-stop/runtime",
+    "attack2_c1 concept proportions/body layering/continuous clip"
   ],
   "remaining": [
-    "walk and run opposite-leg verification and native loops",
-    "new reverse attack2",
-    "new rising attack3",
-    "start/stop and interrupted action transitions",
-    "complete suite user runtime acceptance"
+    "gait direction feedback and joint/cloth finish",
+    "walk/run start-stop transitions and actual movement replay",
+    "reverse attack2 source gate, independent weapon layers and continuous clip",
+    "rising attack3 source and continuous clip",
+    "full combo interruptions/guard/jump/hit/three weapons/both facings user runtime acceptance"
   ],
   "user_artwork_approved": false,
   "failed_ablations": [
@@ -31,7 +38,27 @@
     {
       "version": "c8_c2",
       "reason": "removing arm constraints without new breakdowns worsens rear-leg ghosting"
+    },
+    {
+      "version": "walk_sheet_c1",
+      "reason": "same leading leg and inconsistent torso/stance height despite numerical head gate"
+    },
+    {
+      "version": "walk_optical_flow_c2",
+      "reason": "boot/silhouette loss at crossings"
+    },
+    {
+      "version": "walk_joint_flow_c3",
+      "reason": "cross-leg triangle folds and metallic ghosting; not installed"
     }
   ],
-  "selected": "base_runtime_c8_c3: real extra breakdown keys + real offhand-release key, GM preview only; minor intermediate cuff/hand deformation still needs visual review"
+  "selected": "base_runtime_c8_c3: real extra breakdown keys + real offhand-release key, GM preview only; minor intermediate cuff/hand deformation still needs visual review",
+  "gait_pilot": {
+    "manifest": "art/animations/players/swordsman/v7/exports/gait_rig_c8_pilot/manifest.json",
+    "sha256": "17a1b37cd77bde37af0dbb35aef7d038f7ebb9b70cda299f7a6db416a96e665b",
+    "review": "docs/previews/v7_c8_gait_rig/index.html",
+    "runtime_installed": false,
+    "user_feedback_pending": true,
+    "method": "painted cutout parts baked offline to normal layered PNG frames; no leg optical flow"
+  }
 }

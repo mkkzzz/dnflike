@@ -1,0 +1,72 @@
+{
+  "revision": "v7_c8_walk_down_near_c2",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/base_batch_c8_body/walk_down_near_c2",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "source.png",
+      "standing_height": 868
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "reviewed_true_hair_jaw",
+    "G2": "pending_loop_review",
+    "G3": "pending",
+    "G4": "pending",
+    "runtime_install_allowed": false
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.walk",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c8_walk_down_near",
+          "source": "body",
+          "crop_bbox": [
+            750,
+            5,
+            1650,
+            930
+          ],
+          "root": [
+            1182,
+            878
+          ],
+          "foot": [
+            1302,
+            878
+          ],
+          "component_seed": [
+            1150,
+            300
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1022,
+              470
+            ],
+            "offhand": [
+              1286,
+              467
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

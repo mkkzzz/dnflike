@@ -1,0 +1,247 @@
+{
+  "revision": "v7_c8_walk_source_keys",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/base_batch_c8_body/walk_cycle_c1",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "body_c2.png",
+      "standing_height": 470
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "reviewed_true_hair_jaw",
+    "G2": "pending_loop_review",
+    "G3": "pending",
+    "G4": "pending",
+    "runtime_install_allowed": false
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.walk",
+      "loop": true,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c8_walk_contact_far",
+          "source": "body",
+          "crop_bbox": [
+            400,
+            0,
+            860,
+            490
+          ],
+          "root": [
+            650,
+            477
+          ],
+          "foot": [
+            753,
+            477
+          ],
+          "component_seed": [
+            650,
+            245
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              566,
+              258
+            ],
+            "offhand": [
+              750,
+              239
+            ]
+          }
+        },
+        {
+          "id": "c8_walk_down_far",
+          "source": "body",
+          "crop_bbox": [
+            825,
+            0,
+            1235,
+            490
+          ],
+          "root": [
+            1055,
+            479
+          ],
+          "foot": [
+            1130,
+            479
+          ],
+          "component_seed": [
+            1060,
+            230
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              944,
+              255
+            ],
+            "offhand": [
+              1144,
+              240
+            ]
+          }
+        },
+        {
+          "id": "c8_walk_pass_near",
+          "source": "body",
+          "crop_bbox": [
+            910,
+            485,
+            1320,
+            941
+          ],
+          "root": [
+            1100,
+            922
+          ],
+          "foot": [
+            1083,
+            922
+          ],
+          "component_seed": [
+            1120,
+            700
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1013,
+              693
+            ],
+            "offhand": [
+              1204,
+              691
+            ]
+          }
+        },
+        {
+          "id": "c8_walk_contact_near",
+          "source": "body",
+          "crop_bbox": [
+            0,
+            485,
+            505,
+            941
+          ],
+          "root": [
+            285,
+            914
+          ],
+          "foot": [
+            372,
+            914
+          ],
+          "component_seed": [
+            295,
+            700
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              168,
+              705
+            ],
+            "offhand": [
+              377,
+              695
+            ]
+          }
+        },
+        {
+          "id": "c8_walk_down_near",
+          "source": "body",
+          "crop_bbox": [
+            490,
+            485,
+            920,
+            941
+          ],
+          "root": [
+            680,
+            921
+          ],
+          "foot": [
+            760,
+            921
+          ],
+          "component_seed": [
+            690,
+            700
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              591,
+              699
+            ],
+            "offhand": [
+              785,
+              698
+            ]
+          }
+        },
+        {
+          "id": "c8_walk_pass_far",
+          "source": "body",
+          "crop_bbox": [
+            1235,
+            0,
+            1672,
+            490
+          ],
+          "root": [
+            1474,
+            479
+          ],
+          "foot": [
+            1477,
+            479
+          ],
+          "component_seed": [
+            1480,
+            230
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1383,
+              247
+            ],
+            "offhand": [
+              1576,
+              248
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-21",
+  "tool": "builtin image_gen",
+  "seed": "not returned",
+  "selected_raster": "body_c2.png",
+  "history": [
+    {
+      "file": "source.png",
+      "sha256": "a81e1551c4e1f6fb8dda05cb855a6070588c374ab8f64265ae348cb917b77067",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "alpha_preserved": true,
+      "requested_size": [
+        2560,
+        1440
+      ],
+      "upscale_applied": false,
+      "request": "request.json",
+      "prompt": "prompt.txt",
+      "prompt_file_sha256": "81b0c82198731dcb676c1e6eaf3be944026c9ba76c8fd47fc4f2ee635d40d4cb",
+      "submitted_prompt_sha256": "b1cedfc3506b8a6cbc429c7cb19ccf8604593592142b73cddd67936e2c1c31d5",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_cycle_c1/body_c2.png",
+          "sha256": "5fb9c69c045a111e2581a32131e677b93ff5679089751b8fbe7f3a7dab699a8b",
+          "actually_submitted": true
+        }
+      ],
+      "returned_original_file": "exec-b6ce0ec7-945c-4f38-ada1-9bed114e558a.png"
+    },
+    {
+      "file": "body_c2.png",
+      "sha256": "6cd85120c0699b0ec9e3624cdfedfeeb9345b1580f2f6a09a9d324d8ace1bb93",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "alpha_preserved": true,
+      "requested_size": [
+        2560,
+        1440
+      ],
+      "upscale_applied": false,
+      "request": "body_c2_request.json",
+      "prompt": "body_c2_prompt.txt",
+      "prompt_file_sha256": "e64328db2e46a6d00567f4bd3a952f5ecfb16656de4704477d2408c66d2e6e6b",
+      "submitted_prompt_sha256": "dcb71ae0c401bec9680c2704a894f6c836d421352014c72e136c60bc829dc1e5",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_contact_near_c2/source.png",
+          "sha256": "a81e1551c4e1f6fb8dda05cb855a6070588c374ab8f64265ae348cb917b77067",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_contact_near_c2/leg_routing_guide.png",
+          "sha256": "a8faeda74801b5f60f12196f90ebdceda13ce7fb3fb9d6747329180784302a12",
+          "actually_submitted": true
+        }
+      ],
+      "returned_original_file": "exec-c5d9b233-33d6-4e80-bae3-92b4f6b99056.png"
+    }
+  ],
+  "G1_passed": true,
+  "artwork_approved": false,
+  "runtime_installed": false,
+  "limitations": "Actual sheet 1672x941; not the requested native 2K sheet. Actor scale will only shrink via same-sheet standing companion.",
+  "visual_status": "offline_loop_review_pending"
+}

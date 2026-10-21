@@ -1,0 +1,2455 @@
+{
+  "scope": "analytic joint/sole evidence, not actual runtime pixel slipping approval",
+  "native_speed": {
+    "walk": 450,
+    "run": 900
+  },
+  "clips": {
+    "walk": [
+      {
+        "tick": 0,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.0,
+            "support": true,
+            "ankle": [
+              560.0085324232082,
+              801.4422772031388
+            ],
+            "thigh_length": 97.0,
+            "shin_length": 101.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.5,
+            "support": true,
+            "ankle": [
+              367.49146757679176,
+              798.2441347677558
+            ],
+            "thigh_length": 97.0,
+            "shin_length": 101.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 367.49146757679176
+          }
+        ]
+      },
+      {
+        "tick": 1,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.023809523809523808,
+            "support": true,
+            "ankle": [
+              552.5085324232082,
+              801.5684416524118
+            ],
+            "thigh_length": 96.82229122314456,
+            "shin_length": 100.82229122314456,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.5238095238095238,
+            "support": true,
+            "ankle": [
+              359.9914675767917,
+              797.2617203375131
+            ],
+            "thigh_length": 96.82229122314456,
+            "shin_length": 100.82229122314456,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 367.4914675767917
+          }
+        ]
+      },
+      {
+        "tick": 2,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.047619047619047616,
+            "support": true,
+            "ankle": [
+              545.0085324232082,
+              800.6890520048455
+            ],
+            "thigh_length": 96.30495509726398,
+            "shin_length": 100.30495509726398,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.5476190476190477,
+            "support": true,
+            "ankle": [
+              352.4914675767917,
+              796.2357774486043
+            ],
+            "thigh_length": 96.30495509726398,
+            "shin_length": 100.30495509726398,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 367.4914675767917
+          }
+        ]
+      },
+      {
+        "tick": 3,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.07142857142857142,
+            "support": true,
+            "ankle": [
+              537.5085324232082,
+              799.908726844841
+            ],
+            "thigh_length": 95.49395920743494,
+            "shin_length": 99.49395920743494,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.5714285714285714,
+            "support": true,
+            "ankle": [
+              344.99146757679176,
+              795.3186426526984
+            ],
+            "thigh_length": 95.49395920743494,
+            "shin_length": 99.49395920743494,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 367.49146757679176
+          }
+        ]
+      },
+      {
+        "tick": 4,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.09523809523809523,
+            "support": true,
+            "ankle": [
+              530.0085324232082,
+              799.68
+            ],
+            "thigh_length": 94.46136409746558,
+            "shin_length": 98.46136409746558,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.5952380952380952,
+            "support": true,
+            "ankle": [
+              337.49146757679176,
+              794.8602458034798
+            ],
+            "thigh_length": 94.46136409746558,
+            "shin_length": 98.46136409746558,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 367.49146757679176
+          }
+        ]
+      },
+      {
+        "tick": 5,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.11904761904761904,
+            "support": true,
+            "ankle": [
+              522.5085324232082,
+              799.68
+            ],
+            "thigh_length": 93.2989203743457,
+            "shin_length": 97.2989203743457,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.6190476190476191,
+            "support": false,
+            "ankle": [
+              332.06629750876453,
+              794.2785030012216
+            ],
+            "thigh_length": 93.2989203743457,
+            "shin_length": 97.2989203743457,
+            "lowest_sole_y": 839.378019281006,
+            "expected_floor": 840,
+            "world_ankle_x": 369.56629750876453
+          }
+        ]
+      },
+      {
+        "tick": 6,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.14285714285714285,
+            "support": true,
+            "ankle": [
+              515.0085324232082,
+              799.68
+            ],
+            "thigh_length": 92.10991626417474,
+            "shin_length": 96.10991626417474,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.6428571428571428,
+            "support": false,
+            "ankle": [
+              332.56480941352646,
+              792.0605975145637
+            ],
+            "thigh_length": 92.10991626417474,
+            "shin_length": 96.10991626417474,
+            "lowest_sole_y": 836.9456407545524,
+            "expected_floor": 840,
+            "world_ankle_x": 377.56480941352646
+          }
+        ]
+      },
+      {
+        "tick": 7,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.16666666666666666,
+            "support": true,
+            "ankle": [
+              507.5085324232082,
+              799.68
+            ],
+            "thigh_length": 91.0,
+            "shin_length": 95.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.6666666666666666,
+            "support": false,
+            "ankle": [
+              338.3248009101251,
+              788.4585517629484
+            ],
+            "thigh_length": 91.0,
+            "shin_length": 95.0,
+            "lowest_sole_y": 833.0,
+            "expected_floor": 840,
+            "world_ankle_x": 390.8248009101251
+          }
+        ]
+      },
+      {
+        "tick": 8,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.19047619047619047,
+            "support": true,
+            "ankle": [
+              500.0085324232082,
+              799.68
+            ],
+            "thigh_length": 90.0677925126807,
+            "shin_length": 94.0677925126807,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.6904761904761905,
+            "support": false,
+            "ankle": [
+              348.5490781210094,
+              784.0156857166271
+            ],
+            "thigh_length": 90.0677925126807,
+            "shin_length": 94.0677925126807,
+            "lowest_sole_y": 828.0865917264664,
+            "expected_floor": 840,
+            "world_ankle_x": 408.5490781210094
+          }
+        ]
+      },
+      {
+        "tick": 9,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.21428571428571427,
+            "support": true,
+            "ankle": [
+              492.5085324232082,
+              799.68
+            ],
+            "thigh_length": 89.39612452839032,
+            "shin_length": 93.39612452839032,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.7142857142857143,
+            "support": false,
+            "ankle": [
+              362.44044716862857,
+              779.3598575847197
+            ],
+            "thigh_length": 89.39612452839033,
+            "shin_length": 93.39612452839033,
+            "lowest_sole_y": 822.8847069246116,
+            "expected_floor": 840,
+            "world_ankle_x": 429.94044716862857
+          }
+        ]
+      },
+      {
+        "tick": 10,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.23809523809523808,
+            "support": true,
+            "ankle": [
+              485.0085324232082,
+              799.68
+            ],
+            "thigh_length": 89.04467669509948,
+            "shin_length": 93.04467669509948,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.7380952380952381,
+            "support": false,
+            "ankle": [
+              379.2017141754313,
+              775.1385739891465
+            ],
+            "thigh_length": 89.04467669509948,
+            "shin_length": 93.04467669509948,
+            "lowest_sole_y": 818.1135191871093,
+            "expected_floor": 840,
+            "world_ankle_x": 454.2017141754313
+          }
+        ]
+      },
+      {
+        "tick": 11,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.2619047619047619,
+            "support": true,
+            "ankle": [
+              477.5085324232082,
+              799.68
+            ],
+            "thigh_length": 89.04467669509948,
+            "shin_length": 93.04467669509948,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.7619047619047619,
+            "support": false,
+            "ankle": [
+              398.0356852638666,
+              772.0897368238111
+            ],
+            "thigh_length": 89.04467669509948,
+            "shin_length": 93.04467669509948,
+            "lowest_sole_y": 814.432657159576,
+            "expected_floor": 840,
+            "world_ankle_x": 480.5356852638666
+          }
+        ]
+      },
+      {
+        "tick": 12,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.2857142857142857,
+            "support": true,
+            "ankle": [
+              470.0085324232082,
+              799.68
+            ],
+            "thigh_length": 89.39612452839032,
+            "shin_length": 93.39612452839032,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.7857142857142857,
+            "support": false,
+            "ankle": [
+              418.1451665563836,
+              770.6097612800176
+            ],
+            "thigh_length": 89.39612452839032,
+            "shin_length": 93.39612452839032,
+            "lowest_sole_y": 812.3510092294545,
+            "expected_floor": 840,
+            "world_ankle_x": 508.1451665563836
+          }
+        ]
+      },
+      {
+        "tick": 13,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.30952380952380953,
+            "support": true,
+            "ankle": [
+              462.5085324232082,
+              799.68
+            ],
+            "thigh_length": 90.0677925126807,
+            "shin_length": 94.0677925126807,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.8095238095238095,
+            "support": false,
+            "ankle": [
+              438.7329641754312,
+              771.0637750177995
+            ],
+            "thigh_length": 90.0677925126807,
+            "shin_length": 94.0677925126807,
+            "lowest_sole_y": 812.1563684328482,
+            "expected_floor": 840,
+            "world_ankle_x": 536.2329641754312
+          }
+        ]
+      },
+      {
+        "tick": 14,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.3333333333333333,
+            "support": true,
+            "ankle": [
+              455.0085324232082,
+              799.68
+            ],
+            "thigh_length": 91.0,
+            "shin_length": 95.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.8333333333333333,
+            "support": false,
+            "ankle": [
+              459.00188424345833,
+              773.3935659867135
+            ],
+            "thigh_length": 91.0,
+            "shin_length": 95.0,
+            "lowest_sole_y": 813.8756443470179,
+            "expected_floor": 840,
+            "world_ankle_x": 564.0018842434583
+          }
+        ]
+      },
+      {
+        "tick": 15,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.35714285714285715,
+            "support": true,
+            "ankle": [
+              447.5085324232082,
+              799.68
+            ],
+            "thigh_length": 92.10991626417474,
+            "shin_length": 96.10991626417474,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.8571428571428572,
+            "support": false,
+            "ankle": [
+              478.15473288291423,
+              777.2301172270479
+            ],
+            "thigh_length": 92.10991626417474,
+            "shin_length": 96.10991626417474,
+            "lowest_sole_y": 817.2711427739778,
+            "expected_floor": 840,
+            "world_ankle_x": 590.6547328829142
+          }
+        ]
+      },
+      {
+        "tick": 16,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.38095238095238093,
+            "support": true,
+            "ankle": [
+              440.0085324232082,
+              799.68
+            ],
+            "thigh_length": 93.2989203743457,
+            "shin_length": 97.2989203743457,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.8809523809523809,
+            "support": false,
+            "ankle": [
+              495.3943162162475,
+              782.2730583901185
+            ],
+            "thigh_length": 93.2989203743457,
+            "shin_length": 97.2989203743457,
+            "lowest_sole_y": 821.8734275582474,
+            "expected_floor": 840,
+            "world_ankle_x": 615.3943162162475
+          }
+        ]
+      },
+      {
+        "tick": 17,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.40476190476190477,
+            "support": true,
+            "ankle": [
+              432.5085324232082,
+              799.68
+            ],
+            "thigh_length": 94.46136409746558,
+            "shin_length": 98.46136409746558,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.9047619047619048,
+            "support": false,
+            "ankle": [
+              509.9234403659074,
+              787.8632899325023
+            ],
+            "thigh_length": 94.46136409746558,
+            "shin_length": 98.46136409746558,
+            "lowest_sole_y": 827.04622131021,
+            "expected_floor": 840,
+            "world_ankle_x": 637.4234403659075
+          }
+        ]
+      },
+      {
+        "tick": 18,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.42857142857142855,
+            "support": true,
+            "ankle": [
+              425.0085324232082,
+              799.68
+            ],
+            "thigh_length": 95.49395920743493,
+            "shin_length": 99.49395920743493,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.9285714285714286,
+            "support": false,
+            "ankle": [
+              520.9449114543428,
+              793.2604896723001
+            ],
+            "thigh_length": 95.49395920743493,
+            "shin_length": 99.49395920743493,
+            "lowest_sole_y": 832.0743723476459,
+            "expected_floor": 840,
+            "world_ankle_x": 655.9449114543428
+          }
+        ]
+      },
+      {
+        "tick": 19,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.4523809523809524,
+            "support": true,
+            "ankle": [
+              417.5085324232082,
+              799.6762288127362
+            ],
+            "thigh_length": 96.30495509726398,
+            "shin_length": 100.30495509726398,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.9523809523809523,
+            "support": false,
+            "ankle": [
+              527.6615356040026,
+              797.7044096443506
+            ],
+            "thigh_length": 96.30495509726397,
+            "shin_length": 100.30495509726397,
+            "lowest_sole_y": 836.2627262056176,
+            "expected_floor": 840,
+            "world_ankle_x": 670.1615356040026
+          }
+        ]
+      },
+      {
+        "tick": 20,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.47619047619047616,
+            "support": true,
+            "ankle": [
+              410.0085324232082,
+              799.2782310298918
+            ],
+            "thigh_length": 96.82229122314456,
+            "shin_length": 100.82229122314456,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.9761904761904762,
+            "support": false,
+            "ankle": [
+              529.2761189373359,
+              800.6420745205693
+            ],
+            "thigh_length": 96.82229122314456,
+            "shin_length": 100.82229122314456,
+            "lowest_sole_y": 839.0322324810188,
+            "expected_floor": 840,
+            "world_ankle_x": 679.2761189373359
+          }
+        ]
+      },
+      {
+        "tick": 21,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.5,
+            "support": true,
+            "ankle": [
+              402.5085324232082,
+              798.4325443716046
+            ],
+            "thigh_length": 97.0,
+            "shin_length": 101.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.0,
+            "support": true,
+            "ankle": [
+              524.9914675767918,
+              801.6700986673615
+            ],
+            "thigh_length": 97.0,
+            "shin_length": 101.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 22,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.5238095238095238,
+            "support": true,
+            "ankle": [
+              395.0085324232082,
+              797.397390418608
+            ],
+            "thigh_length": 96.82229122314456,
+            "shin_length": 100.82229122314456,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.023809523809523725,
+            "support": true,
+            "ankle": [
+              517.4914675767918,
+              801.271324644364
+            ],
+            "thigh_length": 96.82229122314456,
+            "shin_length": 100.82229122314456,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 23,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.5476190476190477,
+            "support": true,
+            "ankle": [
+              387.5085324232082,
+              796.3024834130206
+            ],
+            "thigh_length": 96.30495509726398,
+            "shin_length": 100.30495509726398,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.04761904761904767,
+            "support": true,
+            "ankle": [
+              509.99146757679176,
+              800.3739583469451
+            ],
+            "thigh_length": 96.30495509726398,
+            "shin_length": 100.30495509726398,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 24,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.5714285714285714,
+            "support": true,
+            "ankle": [
+              380.0085324232082,
+              795.3713961387613
+            ],
+            "thigh_length": 95.49395920743494,
+            "shin_length": 99.49395920743494,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.0714285714285714,
+            "support": true,
+            "ankle": [
+              502.49146757679176,
+              799.6201462468426
+            ],
+            "thigh_length": 95.49395920743494,
+            "shin_length": 99.49395920743494,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 25,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.5952380952380952,
+            "support": true,
+            "ankle": [
+              372.5085324232082,
+              794.927406329032
+            ],
+            "thigh_length": 94.46136409746558,
+            "shin_length": 98.46136409746558,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 560.0085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.09523809523809534,
+            "support": true,
+            "ankle": [
+              494.9914675767917,
+              799.4
+            ],
+            "thigh_length": 94.46136409746558,
+            "shin_length": 98.46136409746558,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767917
+          }
+        ]
+      },
+      {
+        "tick": 26,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.6190476190476191,
+            "support": false,
+            "ankle": [
+              367.08336235518095,
+              794.3500009983676
+            ],
+            "thigh_length": 93.2989203743457,
+            "shin_length": 97.2989203743457,
+            "lowest_sole_y": 839.378019281006,
+            "expected_floor": 840,
+            "world_ankle_x": 562.083362355181
+          },
+          {
+            "side": "near",
+            "phase": 0.11904761904761907,
+            "support": true,
+            "ankle": [
+              487.49146757679176,
+              799.4
+            ],
+            "thigh_length": 93.2989203743457,
+            "shin_length": 97.2989203743457,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 27,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.6428571428571429,
+            "support": false,
+            "ankle": [
+              367.5818742599429,
+              792.1170101035325
+            ],
+            "thigh_length": 92.10991626417474,
+            "shin_length": 96.10991626417474,
+            "lowest_sole_y": 836.9456407545524,
+            "expected_floor": 840,
+            "world_ankle_x": 570.0818742599429
+          },
+          {
+            "side": "near",
+            "phase": 0.1428571428571428,
+            "support": true,
+            "ankle": [
+              479.99146757679176,
+              799.4
+            ],
+            "thigh_length": 92.10991626417474,
+            "shin_length": 96.10991626417474,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 28,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.6666666666666666,
+            "support": false,
+            "ankle": [
+              373.34186575654155,
+              788.5096666905666
+            ],
+            "thigh_length": 91.0,
+            "shin_length": 95.0,
+            "lowest_sole_y": 833.0,
+            "expected_floor": 840,
+            "world_ankle_x": 583.3418657565416
+          },
+          {
+            "side": "near",
+            "phase": 0.16666666666666652,
+            "support": true,
+            "ankle": [
+              472.4914675767918,
+              799.4
+            ],
+            "thigh_length": 91.0,
+            "shin_length": 95.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 29,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.6904761904761905,
+            "support": false,
+            "ankle": [
+              383.5661429674259,
+              784.0634397334313
+            ],
+            "thigh_length": 90.0677925126807,
+            "shin_length": 94.0677925126807,
+            "lowest_sole_y": 828.0865917264664,
+            "expected_floor": 840,
+            "world_ankle_x": 601.0661429674259
+          },
+          {
+            "side": "near",
+            "phase": 0.19047619047619047,
+            "support": true,
+            "ankle": [
+              464.99146757679176,
+              799.4
+            ],
+            "thigh_length": 90.0677925126807,
+            "shin_length": 94.0677925126807,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 30,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.7142857142857143,
+            "support": false,
+            "ankle": [
+              397.4575120150449,
+              779.4414199569894
+            ],
+            "thigh_length": 89.39612452839033,
+            "shin_length": 93.39612452839033,
+            "lowest_sole_y": 822.8847069246116,
+            "expected_floor": 840,
+            "world_ankle_x": 622.4575120150449
+          },
+          {
+            "side": "near",
+            "phase": 0.2142857142857144,
+            "support": true,
+            "ankle": [
+              457.4914675767917,
+              799.4
+            ],
+            "thigh_length": 89.39612452839032,
+            "shin_length": 93.39612452839032,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767917
+          }
+        ]
+      },
+      {
+        "tick": 31,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.7380952380952381,
+            "support": false,
+            "ankle": [
+              414.2187790218477,
+              775.2584240049555
+            ],
+            "thigh_length": 89.04467669509948,
+            "shin_length": 93.04467669509948,
+            "lowest_sole_y": 818.1135191871093,
+            "expected_floor": 840,
+            "world_ankle_x": 646.7187790218477
+          },
+          {
+            "side": "near",
+            "phase": 0.23809523809523814,
+            "support": true,
+            "ankle": [
+              449.99146757679176,
+              799.4
+            ],
+            "thigh_length": 89.04467669509948,
+            "shin_length": 93.04467669509948,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 32,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.7619047619047619,
+            "support": false,
+            "ankle": [
+              433.052750110283,
+              772.2309756211263
+            ],
+            "thigh_length": 89.04467669509948,
+            "shin_length": 93.04467669509948,
+            "lowest_sole_y": 814.432657159576,
+            "expected_floor": 840,
+            "world_ankle_x": 673.052750110283
+          },
+          {
+            "side": "near",
+            "phase": 0.26190476190476186,
+            "support": true,
+            "ankle": [
+              442.49146757679176,
+              799.4
+            ],
+            "thigh_length": 89.04467669509948,
+            "shin_length": 93.04467669509948,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 33,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.7857142857142857,
+            "support": false,
+            "ankle": [
+              453.1622314028,
+              770.7993970300697
+            ],
+            "thigh_length": 89.39612452839032,
+            "shin_length": 93.39612452839032,
+            "lowest_sole_y": 812.3510092294545,
+            "expected_floor": 840,
+            "world_ankle_x": 700.6622314028
+          },
+          {
+            "side": "near",
+            "phase": 0.2857142857142856,
+            "support": true,
+            "ankle": [
+              434.9914675767918,
+              799.4
+            ],
+            "thigh_length": 89.39612452839032,
+            "shin_length": 93.39612452839032,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 34,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.8095238095238095,
+            "support": false,
+            "ankle": [
+              473.75002902184764,
+              771.3059926896889
+            ],
+            "thigh_length": 90.0677925126807,
+            "shin_length": 94.0677925126807,
+            "lowest_sole_y": 812.1563684328482,
+            "expected_floor": 840,
+            "world_ankle_x": 728.7500290218477
+          },
+          {
+            "side": "near",
+            "phase": 0.30952380952380953,
+            "support": true,
+            "ankle": [
+              427.49146757679176,
+              799.4
+            ],
+            "thigh_length": 90.0677925126807,
+            "shin_length": 94.0677925126807,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 35,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.8333333333333334,
+            "support": false,
+            "ankle": [
+              494.0189490898749,
+              773.6782169112109
+            ],
+            "thigh_length": 91.0,
+            "shin_length": 95.0,
+            "lowest_sole_y": 813.8756443470179,
+            "expected_floor": 840,
+            "world_ankle_x": 756.5189490898749
+          },
+          {
+            "side": "near",
+            "phase": 0.3333333333333335,
+            "support": true,
+            "ankle": [
+              419.9914675767917,
+              799.4
+            ],
+            "thigh_length": 91.0,
+            "shin_length": 95.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767917
+          }
+        ]
+      },
+      {
+        "tick": 36,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.8571428571428571,
+            "support": false,
+            "ankle": [
+              513.1717977293306,
+              777.531111944234
+            ],
+            "thigh_length": 92.10991626417474,
+            "shin_length": 96.10991626417474,
+            "lowest_sole_y": 817.2711427739778,
+            "expected_floor": 840,
+            "world_ankle_x": 783.1717977293306
+          },
+          {
+            "side": "near",
+            "phase": 0.3571428571428572,
+            "support": true,
+            "ankle": [
+              412.49146757679176,
+              799.4
+            ],
+            "thigh_length": 92.10991626417474,
+            "shin_length": 96.10991626417474,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 37,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.8809523809523809,
+            "support": false,
+            "ankle": [
+              530.411381062664,
+              782.5889890145413
+            ],
+            "thigh_length": 93.2989203743457,
+            "shin_length": 97.2989203743457,
+            "lowest_sole_y": 821.8734275582474,
+            "expected_floor": 840,
+            "world_ankle_x": 807.911381062664
+          },
+          {
+            "side": "near",
+            "phase": 0.38095238095238093,
+            "support": true,
+            "ankle": [
+              404.99146757679176,
+              799.4
+            ],
+            "thigh_length": 93.2989203743457,
+            "shin_length": 97.2989203743457,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 38,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.9047619047619048,
+            "support": false,
+            "ankle": [
+              544.9405052123238,
+              788.1923205938133
+            ],
+            "thigh_length": 94.46136409746558,
+            "shin_length": 98.46136409746558,
+            "lowest_sole_y": 827.04622131021,
+            "expected_floor": 840,
+            "world_ankle_x": 829.9405052123238
+          },
+          {
+            "side": "near",
+            "phase": 0.40476190476190466,
+            "support": true,
+            "ankle": [
+              397.4914675767918,
+              799.4
+            ],
+            "thigh_length": 94.46136409746558,
+            "shin_length": 98.46136409746558,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 39,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.9285714285714286,
+            "support": false,
+            "ankle": [
+              555.9619763007591,
+              793.6003830723538
+            ],
+            "thigh_length": 95.49395920743493,
+            "shin_length": 99.49395920743493,
+            "lowest_sole_y": 832.074372347646,
+            "expected_floor": 840,
+            "world_ankle_x": 848.4619763007591
+          },
+          {
+            "side": "near",
+            "phase": 0.4285714285714286,
+            "support": true,
+            "ankle": [
+              389.9914675767917,
+              799.4
+            ],
+            "thigh_length": 95.49395920743493,
+            "shin_length": 99.49395920743493,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767917
+          }
+        ]
+      },
+      {
+        "tick": 40,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.9523809523809523,
+            "support": false,
+            "ankle": [
+              562.678600450419,
+              797.7736397803188
+            ],
+            "thigh_length": 96.30495509726397,
+            "shin_length": 100.30495509726397,
+            "lowest_sole_y": 836.2627262056176,
+            "expected_floor": 840,
+            "world_ankle_x": 862.678600450419
+          },
+          {
+            "side": "near",
+            "phase": 0.45238095238095233,
+            "support": true,
+            "ankle": [
+              382.49146757679176,
+              799.3964919567654
+            ],
+            "thigh_length": 96.30495509726398,
+            "shin_length": 100.30495509726398,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767918
+          }
+        ]
+      },
+      {
+        "tick": 41,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.9761904761904762,
+            "support": false,
+            "ankle": [
+              564.2931837837523,
+              800.4917150903578
+            ],
+            "thigh_length": 96.82229122314456,
+            "shin_length": 100.82229122314456,
+            "lowest_sole_y": 839.0322324810188,
+            "expected_floor": 840,
+            "world_ankle_x": 871.7931837837523
+          },
+          {
+            "side": "near",
+            "phase": 0.4761904761904763,
+            "support": true,
+            "ankle": [
+              374.9914675767917,
+              799.0267044401998
+            ],
+            "thigh_length": 96.82229122314456,
+            "shin_length": 100.82229122314456,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 682.4914675767917
+          }
+        ]
+      }
+    ],
+    "run": [
+      {
+        "tick": 0,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.0,
+            "support": true,
+            "ankle": [
+              556.7085324232082,
+              801.4422772031388
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.5,
+            "support": false,
+            "ankle": [
+              328.67478468598586,
+              774.443850771497
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 818.7874207174566,
+            "expected_floor": 840,
+            "world_ankle_x": 328.67478468598586
+          }
+        ]
+      },
+      {
+        "tick": 1,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.03125,
+            "support": true,
+            "ankle": [
+              541.7085324232082,
+              800.6212239557096
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.53125,
+            "support": false,
+            "ankle": [
+              338.4518907121346,
+              764.8173183083665
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 808.7348046750241,
+            "expected_floor": 840,
+            "world_ankle_x": 353.4518907121346
+          }
+        ]
+      },
+      {
+        "tick": 2,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.0625,
+            "support": true,
+            "ankle": [
+              526.7085324232082,
+              799.68
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.5625,
+            "support": false,
+            "ankle": [
+              351.97580261086244,
+              755.1088746688586
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 798.5593763354794,
+            "expected_floor": 840,
+            "world_ankle_x": 381.97580261086244
+          }
+        ]
+      },
+      {
+        "tick": 3,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.09375,
+            "support": true,
+            "ankle": [
+              511.70853242320817,
+              799.68
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.59375,
+            "support": false,
+            "ankle": [
+              368.5089601710316,
+              746.2934496595607
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 789.2731724636278,
+            "expected_floor": 840,
+            "world_ankle_x": 413.5089601710316
+          }
+        ]
+      },
+      {
+        "tick": 4,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.125,
+            "support": true,
+            "ankle": [
+              496.70853242320817,
+              799.68
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.625,
+            "support": false,
+            "ankle": [
+              387.3138031815046,
+              739.3498542532287
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 781.7997885495247,
+            "expected_floor": 840,
+            "world_ankle_x": 447.3138031815046
+          }
+        ]
+      },
+      {
+        "tick": 5,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.15625,
+            "support": true,
+            "ankle": [
+              481.70853242320817,
+              799.68
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.65625,
+            "support": false,
+            "ankle": [
+              407.6527714311438,
+              734.9469311562716
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 776.8825190301407,
+            "expected_floor": 840,
+            "world_ankle_x": 482.6527714311438
+          }
+        ]
+      },
+      {
+        "tick": 6,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.1875,
+            "support": true,
+            "ankle": [
+              466.70853242320817,
+              799.68
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.6875,
+            "support": false,
+            "ankle": [
+              428.78830470881155,
+              733.6092344518033
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 775.010430052866,
+            "expected_floor": 840,
+            "world_ankle_x": 518.7883047088116
+          }
+        ]
+      },
+      {
+        "tick": 7,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.21875,
+            "support": true,
+            "ankle": [
+              451.70853242320817,
+              799.68
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.71875,
+            "support": false,
+            "ankle": [
+              449.9828428033702,
+              735.5324449688029
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 776.3697175014286,
+            "expected_floor": 840,
+            "world_ankle_x": 554.9828428033702
+          }
+        ]
+      },
+      {
+        "tick": 8,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.25,
+            "support": true,
+            "ankle": [
+              436.70853242320817,
+              799.68
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.75,
+            "support": false,
+            "ankle": [
+              470.4988255036825,
+              740.4416694734679
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 780.8251881607634,
+            "expected_floor": 840,
+            "world_ankle_x": 590.4988255036825
+          }
+        ]
+      },
+      {
+        "tick": 9,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.28125,
+            "support": true,
+            "ankle": [
+              421.70853242320817,
+              799.68
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.78125,
+            "support": false,
+            "ankle": [
+              489.59869259861046,
+              747.9249341695555
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 787.9337058835472,
+            "expected_floor": 840,
+            "world_ankle_x": 624.5986925986105
+          }
+        ]
+      },
+      {
+        "tick": 10,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.3125,
+            "support": true,
+            "ankle": [
+              406.70853242320817,
+              798.6935525137276
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.8125,
+            "support": false,
+            "ankle": [
+              506.5448838770167,
+              757.3528974218606
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 796.9882654176498,
+            "expected_floor": 840,
+            "world_ankle_x": 656.5448838770167
+          }
+        ]
+      },
+      {
+        "tick": 11,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.34375,
+            "support": true,
+            "ankle": [
+              391.70853242320817,
+              796.5356453168736
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.84375,
+            "support": false,
+            "ankle": [
+              520.5998391277635,
+              767.8111320968729
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 807.0883103607417,
+            "expected_floor": 840,
+            "world_ankle_x": 685.5998391277635
+          }
+        ]
+      },
+      {
+        "tick": 12,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.375,
+            "support": true,
+            "ankle": [
+              376.70853242320817,
+              794.9567370111931
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 556.7085324232082
+          },
+          {
+            "side": "near",
+            "phase": 0.875,
+            "support": false,
+            "ankle": [
+              531.0259981397135,
+              778.2799692214627
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 817.2293014966341,
+            "expected_floor": 840,
+            "world_ankle_x": 711.0259981397135
+          }
+        ]
+      },
+      {
+        "tick": 13,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.40625,
+            "support": false,
+            "ankle": [
+              364.21696880080543,
+              793.8175390137419
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 838.856790937414,
+            "expected_floor": 840,
+            "world_ankle_x": 559.2169688008055
+          },
+          {
+            "side": "near",
+            "phase": 0.90625,
+            "support": false,
+            "ankle": [
+              537.0858007017289,
+              787.7160661635969
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 826.4026271464262,
+            "expected_floor": 840,
+            "world_ankle_x": 732.0858007017289
+          }
+        ]
+      },
+      {
+        "tick": 14,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.4375,
+            "support": false,
+            "ankle": [
+              358.32829594239183,
+              789.7465577674284
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 834.6365839040533,
+            "expected_floor": 840,
+            "world_ankle_x": 568.3282959423918
+          },
+          {
+            "side": "near",
+            "phase": 0.9375,
+            "support": false,
+            "ankle": [
+              538.041686602672,
+              795.1993606961834
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 833.6959185622552,
+            "expected_floor": 840,
+            "world_ankle_x": 748.041686602672
+          }
+        ]
+      },
+      {
+        "tick": 15,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.46875,
+            "support": false,
+            "ankle": [
+              358.39910958996995,
+              783.0774587044572
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 827.7174024722012,
+            "expected_floor": 840,
+            "world_ankle_x": 583.39910958997
+          },
+          {
+            "side": "near",
+            "phase": 0.96875,
+            "support": false,
+            "ankle": [
+              533.1560956314056,
+              800.0103636832837
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 838.3837931063632,
+            "expected_floor": 840,
+            "world_ankle_x": 758.1560956314056
+          }
+        ]
+      },
+      {
+        "tick": 16,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.5,
+            "support": false,
+            "ankle": [
+              363.6918495324022,
+              774.4926761216013
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 818.7874207174566,
+            "expected_floor": 840,
+            "world_ankle_x": 603.6918495324022
+          },
+          {
+            "side": "near",
+            "phase": 0.0,
+            "support": true,
+            "ankle": [
+              521.6914675767918,
+              801.6700986673615
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 17,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.53125,
+            "support": false,
+            "ankle": [
+              373.46895555855104,
+              764.8746142481574
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 808.7348046750241,
+            "expected_floor": 840,
+            "world_ankle_x": 628.468955558551
+          },
+          {
+            "side": "near",
+            "phase": 0.03125,
+            "support": true,
+            "ankle": [
+              506.69146757679175,
+              800.3082889484746
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 18,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.5625,
+            "support": false,
+            "ankle": [
+              386.99286745727886,
+              755.1957478608402
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 798.5593763354794,
+            "expected_floor": 840,
+            "world_ankle_x": 656.9928674572789
+          },
+          {
+            "side": "near",
+            "phase": 0.0625,
+            "support": true,
+            "ankle": [
+              491.69146757679175,
+              799.4
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 19,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.59375,
+            "support": false,
+            "ankle": [
+              403.52602501744803,
+              746.412976453955
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 789.2731724636278,
+            "expected_floor": 840,
+            "world_ankle_x": 688.5260250174481
+          },
+          {
+            "side": "near",
+            "phase": 0.09375,
+            "support": true,
+            "ankle": [
+              476.69146757679175,
+              799.4
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 20,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.625,
+            "support": false,
+            "ankle": [
+              422.33086802792104,
+              739.4991694918875
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 781.7997885495248,
+            "expected_floor": 840,
+            "world_ankle_x": 722.330868027921
+          },
+          {
+            "side": "near",
+            "phase": 0.125,
+            "support": true,
+            "ankle": [
+              461.69146757679175,
+              799.4
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 21,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.65625,
+            "support": false,
+            "ankle": [
+              442.6698362775602,
+              735.1201036078529
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 776.8825190301407,
+            "expected_floor": 840,
+            "world_ankle_x": 757.6698362775602
+          },
+          {
+            "side": "near",
+            "phase": 0.15625,
+            "support": true,
+            "ankle": [
+              446.69146757679175,
+              799.4
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 22,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.6875,
+            "support": false,
+            "ankle": [
+              463.8053695552279,
+              733.8268668859555
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 775.010430052866,
+            "expected_floor": 840,
+            "world_ankle_x": 793.8053695552279
+          },
+          {
+            "side": "near",
+            "phase": 0.1875,
+            "support": true,
+            "ankle": [
+              431.69146757679175,
+              799.4
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 23,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.71875,
+            "support": false,
+            "ankle": [
+              484.9999076497867,
+              735.7944593186119
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 776.3697175014286,
+            "expected_floor": 840,
+            "world_ankle_x": 829.9999076497867
+          },
+          {
+            "side": "near",
+            "phase": 0.21875,
+            "support": true,
+            "ankle": [
+              416.69146757679175,
+              799.4
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 24,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.75,
+            "support": false,
+            "ankle": [
+              505.5158903500989,
+              740.730110756947
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 780.8251881607636,
+            "expected_floor": 840,
+            "world_ankle_x": 865.515890350099
+          },
+          {
+            "side": "near",
+            "phase": 0.25,
+            "support": true,
+            "ankle": [
+              401.69146757679175,
+              799.4
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 25,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.78125,
+            "support": false,
+            "ankle": [
+              524.6157574450269,
+              748.2270656549751
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 787.9337058835471,
+            "expected_floor": 840,
+            "world_ankle_x": 899.6157574450269
+          },
+          {
+            "side": "near",
+            "phase": 0.28125,
+            "support": true,
+            "ankle": [
+              386.69146757679175,
+              799.4
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 26,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.8125,
+            "support": false,
+            "ankle": [
+              541.5619487234331,
+              757.6676860689611
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 796.9882654176498,
+            "expected_floor": 840,
+            "world_ankle_x": 931.5619487234331
+          },
+          {
+            "side": "near",
+            "phase": 0.3125,
+            "support": true,
+            "ankle": [
+              371.69146757679175,
+              798.4851660101888
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 27,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.84375,
+            "support": false,
+            "ankle": [
+              555.61690397418,
+              768.1372850447628
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 807.0883103607417,
+            "expected_floor": 840,
+            "world_ankle_x": 960.61690397418
+          },
+          {
+            "side": "near",
+            "phase": 0.34375,
+            "support": true,
+            "ankle": [
+              356.69146757679175,
+              796.4554944802555
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 28,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.875,
+            "support": false,
+            "ankle": [
+              566.0430629861299,
+              778.6159478430621
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 817.2293014966341,
+            "expected_floor": 840,
+            "world_ankle_x": 986.0430629861299
+          },
+          {
+            "side": "near",
+            "phase": 0.375,
+            "support": true,
+            "ankle": [
+              341.69146757679175,
+              794.8856188516876
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 840.0,
+            "expected_floor": 840,
+            "world_ankle_x": 761.6914675767918
+          }
+        ]
+      },
+      {
+        "tick": 29,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.90625,
+            "support": false,
+            "ankle": [
+              572.1028655481452,
+              787.9563173235045
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 826.4026271464262,
+            "expected_floor": 840,
+            "world_ankle_x": 1007.1028655481452
+          },
+          {
+            "side": "near",
+            "phase": 0.40625,
+            "support": false,
+            "ankle": [
+              329.199903954389,
+              793.7458801710775
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 838.856790937414,
+            "expected_floor": 840,
+            "world_ankle_x": 764.199903954389
+          }
+        ]
+      },
+      {
+        "tick": 30,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.9375,
+            "support": false,
+            "ankle": [
+              573.0587514490884,
+              795.187345518719
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 833.6959185622552,
+            "expected_floor": 840,
+            "world_ankle_x": 1023.0587514490884
+          },
+          {
+            "side": "near",
+            "phase": 0.4375,
+            "support": false,
+            "ankle": [
+              323.3112310959754,
+              789.6855279006879
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 834.6365839040533,
+            "expected_floor": 840,
+            "world_ankle_x": 773.3112310959755
+          }
+        ]
+      },
+      {
+        "tick": 31,
+        "feet": [
+          {
+            "side": "far",
+            "phase": 0.96875,
+            "support": false,
+            "ankle": [
+              568.173160477822,
+              799.8384359933716
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 838.3837931063632,
+            "expected_floor": 840,
+            "world_ankle_x": 1033.173160477822
+          },
+          {
+            "side": "near",
+            "phase": 0.46875,
+            "support": false,
+            "ankle": [
+              323.38204474355354,
+              783.0245700819679
+            ],
+            "thigh_length": 98.0,
+            "shin_length": 100.0,
+            "lowest_sole_y": 827.7174024722011,
+            "expected_floor": 840,
+            "world_ankle_x": 788.3820447435535
+          }
+        ]
+      }
+    ]
+  }
+}

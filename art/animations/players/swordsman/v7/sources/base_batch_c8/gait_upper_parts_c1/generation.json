@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-21",
+  "tool": "builtin image_gen",
+  "seed": "not returned",
+  "source": "source.png",
+  "source_sha256": "ec27c288a54b80045725aa0024d2c7027f6fb14945b37d2386e9741d4c2460b3",
+  "actual_size": [
+    1672,
+    941
+  ],
+  "requested_size": [
+    2560,
+    1440
+  ],
+  "alpha_preserved": true,
+  "upscale_applied": false,
+  "prompt_file_sha256": "05bf8233e30da984b59d09cdc68032cc7caf80f75ab4a5ff8404e37370d123dd",
+  "submitted_prompt_sha256": "c0fcfa87c147b4a5fe76dcffa0ac5a105f9d1bdea70319a3684a308e7848466d",
+  "references": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_contact_near_c2/body_c2.png",
+      "sha256": "6cd85120c0699b0ec9e3624cdfedfeeb9345b1580f2f6a09a9d324d8ace1bb93",
+      "actually_submitted": true
+    }
+  ],
+  "returned_original_file": "exec-97f71ed1-d6b1-4cfc-990f-64b44f93c88d.png",
+  "artwork_approved": false,
+  "runtime_installed": false,
+  "limitation": "G1 source companion/head and cutout layer checks required before exporting.",
+  "G1_passed": true,
+  "limitations": "Actual sheet is 1672x941. Upper-body cutout uses same-sheet standing gauge, head G1 passed, shrink only. Isolated arm has explicit source-pixel attachment calibration."
+}
