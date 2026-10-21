@@ -100,7 +100,7 @@
   },
   "review_files": {
     "browser_review.png": "c0e866cbca60589cac0af61cdc7d215349c64c00ae86bc74809a5910ea6dfd65",
-    "index.html": "6a0050ff58db944f9e6d2213f8f1c4af35278a93db0311400f8586092b22cded",
+    "index.html": "ed3b809d74da0c33b79226961dee1ca1c9bc11d22e430d06e35a2bb4e69d5ad8",
     "run_60fps.mp4": "e07e05aafba32941ee4ccfcb896e38e2421dfecdec45b524e669bd77c4f346a9",
     "run_body_native.mp4": "686dd37c504809d5d8ad8ddbe422f113c16274255a90c58364ec84c9adcf6ed4",
     "run_greatsword_native.mp4": "bb569076ba3084bd2d5e2074cd03eed57be93b9ea5cd9abe9205f49356564b39",
@@ -138,6 +138,13 @@
       0,
       0.533333
     ],
-    "screenshot": "browser_review.png"
+    "screenshot": "browser_review.png",
+    "historical_capture_before_rejection": true
+  },
+  "review_decision": {
+    "status": "rejected",
+    "decision_file": "art/animations/players/swordsman/v7/sources/base_batch_c8/gait_rig_rejection.json",
+    "sha256": "1e3ef9732656e53100a7449a84a4771ea646cf4f7e8e7e44718f469b5ea3cd18",
+    "production_use_allowed": false
   }
 }

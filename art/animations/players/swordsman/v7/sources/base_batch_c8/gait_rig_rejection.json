@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-21",
+  "status": "rejected",
+  "authority": "explicit user visual review in this conversation",
+  "user_feedback": "跑姿和走姿不像人；不能把腿和人分开画，人和腿必须是一体的，运动必须保持一致性；方案要重做",
+  "package": "art/animations/players/swordsman/v7/exports/gait_rig_c8_pilot/manifest.json",
+  "package_sha256": "ba6927c2631a66785b5e8371ad1bc6c6a2d979222b90a527f735c542b3a59622",
+  "scope": ["walk", "run", "derived movement start and stop poses"],
+  "reason": "Separately painted torso/arm/leg cutouts driven by independent trajectories failed coherent whole-body human gait. Frame density and foot-contact checks did not establish natural movement.",
+  "runtime_installed": false,
+  "production_use_allowed": false,
+  "archive_only": true,
+  "new_direction": "Draw each key pose as one complete character: head, torso, pelvis, both legs, arms and coat coordinated together. Only weapon and necessary grip occlusion are separated after the full-body action is designed.",
+  "replacement_spec": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/spec.json",
+  "replacement_images_created": false
+}

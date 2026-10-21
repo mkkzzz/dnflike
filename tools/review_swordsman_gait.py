@@ -8,6 +8,16 @@ OUT=ROOT/'docs/previews/v7_c8_gait_rig'
 PACKAGE=ROOT/'art/animations/players/swordsman/v7/exports/gait_rig_c8_pilot'
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 
+def apply_review_decision(html):
+ decision_path=ROOT/'art/animations/players/swordsman/v7/sources/base_batch_c8/gait_rig_rejection.json'
+ decision=json.loads(decision_path.read_text(encoding='utf-8'))
+ assert decision['status']=='rejected' and not decision['production_use_allowed']
+ banner='<aside role="alert" style="padding:16px;border:2px solid #e99175;background:#442a2a;color:#fff"><strong>已退回 · 仅保留失败方案回放</strong><p>2026-10-21 用户否决拆分躯干和腿部的步态方案：整体人体运动不协调。本包未实装，停止沿用；将按完整人物关键姿势重新制作走路、跑步与起停。</p></aside>'
+ html=html.replace('<main><h2>','<main>'+banner+'<h2>')
+ html=html.replace('<title>C8 步行与奔跑样片</title>','<title>已退回：C8 拆件步态历史样片</title>')
+ html=html.replace('此为离线设计候选，尚未接入游戏；起停和实机过渡仍需完成。','此为已退回的离线历史样片，尚未接入游戏；不得继续用于制作起停或实装。')
+ return html,{'status':'rejected','decision_file':decision_path.relative_to(ROOT).as_posix(),'sha256':sha(decision_path),'production_use_allowed':False}
+
 def main():
  views={'body':20,'katana':620,'greatsword':1220,'shortsword':1820};movies={}
  for clip in ['walk','run']:
@@ -30,8 +40,10 @@ def main():
 <video id="video" controls loop playsinline></video><p>一张躯干原画、独立摆臂和六个腿部件按轨迹烘焙；并非每个采样帧都重新绘画。步行42帧、奔跑32帧，均为60Hz；腿部不使用光流补间。头部沿用比例门禁，换刀不更换身体。</p><p><a href="../v7_c8_trial/index.html">第一刀：GM 试用与实机回放</a></p></main>
 <script>const clip=document.querySelector('#clip'),view=document.querySelector('#view'),speed=document.querySelector('#speed'),video=document.querySelector('#video');function load(){video.src=clip.value+(view.value==='full'?'_60fps.mp4':'_'+view.value+'_native.mp4');video.style.width=view.value==='full'?'100%':'700px';video.playbackRate=Number(speed.value)}clip.onchange=load;view.onchange=load;speed.onchange=()=>video.playbackRate=Number(speed.value);document.querySelector('#play').onclick=()=>video.paused?video.play():video.pause();for(const[id,d]of[['previous',-1],['next',1]])document.querySelector('#'+id).onclick=()=>{video.pause();video.currentTime=Math.max(0,video.currentTime+d/60)};load();</script></html>'''
  html=html.replace("video.style.width=", "video.src+='?package="+sha(PACKAGE/'manifest.json')+"&range=1';video.style.width=")
+ html,decision=apply_review_decision(html)
  (OUT/'index.html').write_text(html,encoding='utf-8',newline='\n')
  evidence={'package_sha256':sha(PACKAGE/'manifest.json'),'crop_movies':movies,'review_files':{p.name:sha(p)for p in OUT.iterdir()if p.suffix in ['.png','.mp4','.html']},'artwork_approved':False,'runtime_user_approved':False}
+ evidence['review_decision']=decision
  (OUT/'review_manifest.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n');print('Eight native crops and one same-package review page saved')
 
 if __name__=='__main__':main()

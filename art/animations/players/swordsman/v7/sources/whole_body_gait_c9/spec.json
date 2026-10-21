@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-21",
+  "revision": "v7_c9_whole_body_gait",
+  "state": "spec_ready",
+  "scope": ["actor.player.base.walk", "actor.player.base.run", "movement start and stop transitions"],
+  "replaces_rejected_candidate": "v7_c8_walk_run_rig_c1",
+  "user_constraint": "Body and legs must be painted and designed as one whole moving person; no independently generated legs assembled onto a torso.",
+  "native_scene": [2560, 1440],
+  "native_actor_standing_height": 380,
+  "actor_export_canvas": [1024, 1080],
+  "anchor": [448, 840],
+  "upscale_allowed": false,
+  "source_canvas_requested": [2560, 1440],
+  "actual_source_dimensions": null,
+  "source_images_created": false,
+  "body_production": {
+    "unit": "one complete character pose",
+    "coordinated_parts": ["head", "shoulders", "spine", "pelvis", "both complete legs and feet", "arms and grip", "coat"],
+    "forbidden": ["separately generated leg parts", "independent leg cutout/IK assembly", "static torso with cycling legs", "mirroring the same leading leg to fake a full stride", "increasing interpolation count to hide incorrect poses"],
+    "walking_phases": ["first-side contact", "weight acceptance", "passing", "push-off", "opposite-side contact", "opposite weight acceptance", "opposite passing", "opposite push-off"],
+    "running_phases": ["contact", "compression and weight acceptance", "push-off", "flight", "opposite contact", "opposite compression", "opposite push-off", "opposite flight"],
+    "extra_drawings": "Add actual whole-body breakdowns at crossings, weight changes and silhouette changes when needed; do not fabricate independent limb motion.",
+    "weapon_policy": "Design blade/grip/body together; derive independent weapon and grip-occlusion layers only after the intact pose is established, preserving free weapon switching."
+  },
+  "review_order": [
+    "Whole-body key poses at the accepted head/body scale; inspect hips, knees, feet, shoulders and weight support together",
+    "Complete left/right stride at real speed with coherent mass transfer, arm and coat response; inspect bare body before effects",
+    "Slow playback checks for silhouette continuity, crossing legs and source-frame gaps; add drawn breakdowns where needed",
+    "Match actual movement speed and foot support; tune duration instead of stretching limbs",
+    "Start/stop, instant facing, three weapons and transitions in game using the identical preview export"
+  ],
+  "preserve": ["accepted idle pixels and timing", "instant facing change", "existing semantic action IDs", "gameplay event contract", "independent weapon switching"],
+  "authorization": {"user_requested_rework": true, "artwork_approved": false, "runtime_install_allowed": false}
+}

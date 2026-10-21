@@ -21,12 +21,12 @@
     "attack3_load_c1"
   ],
   "source_review_pending": [
-    "gait pilot direction/finish/start-stop/runtime",
+    "whole-body walk/run redesign; articulated cutout pilot explicitly rejected",
     "attack2 continuous motion and G2/G3",
     "attack3 extension/recovery source poses and continuous clip"
   ],
   "remaining": [
-    "gait direction feedback and joint/cloth finish",
+    "redraw complete whole-body walk/run cycles with coordinated mass transfer; do not reuse independent leg cutouts",
     "walk/run start-stop transitions and actual movement replay",
     "reverse attack2 breakdowns/continuous clip and G2/G3; three source keys now G1 passed",
     "rising attack3 extension/recovery sources and continuous clip; low-load source G1 and static edge checks passed",
@@ -53,6 +53,11 @@
     {
       "version": "walk_joint_flow_c3",
       "reason": "cross-leg triangle folds and metallic ghosting; not installed"
+    },
+    {
+      "version": "v7_c8_walk_run_rig_c1",
+      "reason": "Separately painted torso/arm/leg cutouts driven by independent trajectories failed coherent whole-body human gait. Frame density and foot-contact checks did not establish natural movement.",
+      "authority": "user review 2026-10-21"
     }
   ],
   "selected": "base_runtime_c8_c3: real extra breakdown keys + real offhand-release key, GM preview only; minor intermediate cuff/hand deformation still needs visual review",
@@ -61,9 +66,13 @@
     "sha256": "ba6927c2631a66785b5e8371ad1bc6c6a2d979222b90a527f735c542b3a59622",
     "review": "docs/previews/v7_c8_gait_rig/index.html",
     "runtime_installed": false,
-    "user_feedback_pending": true,
+    "user_feedback_pending": false,
     "method": "painted cutout parts baked offline to normal layered PNG frames; no leg optical flow",
-    "joint_contract": "Halpe26 left/far-first, primary right wrist index5; original near-first diagnostics archived"
+    "joint_contract": "Halpe26 left/far-first, primary right wrist index5; original near-first diagnostics archived",
+    "status": "rejected",
+    "production_use_allowed": false,
+    "review_decision": "art/animations/players/swordsman/v7/sources/base_batch_c8/gait_rig_rejection.json",
+    "review_decision_sha256": "1e3ef9732656e53100a7449a84a4771ea646cf4f7e8e7e44718f469b5ea3cd18"
   },
   "attack2": {
     "body_source": "attack2_c1/body_c3.png",
@@ -94,5 +103,11 @@
     "G2_approved": false,
     "G3_approved": false,
     "sha256": "953ace9e2eb26a4a61d6611a7221223ca9f4cefaa580db4e31bf3890197ccb29"
+  },
+  "whole_body_gait_rework": {
+    "spec": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/spec.json",
+    "state": "spec_ready",
+    "source_images_created": false,
+    "runtime_installed": false
   }
 }
