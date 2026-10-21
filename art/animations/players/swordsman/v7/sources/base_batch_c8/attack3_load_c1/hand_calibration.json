@@ -1,0 +1,19 @@
+{
+  "c8_attack3_load": {
+    "primary": [
+      1009,
+      578
+    ],
+    "secondary": [
+      955,
+      578
+    ],
+    "weapon_hands": 2,
+    "cutting_direction": [
+      0,
+      -1
+    ],
+    "edge_contract": "upward sharp edge, source-concept wrong edge discarded",
+    "G3_approved": false
+  }
+}

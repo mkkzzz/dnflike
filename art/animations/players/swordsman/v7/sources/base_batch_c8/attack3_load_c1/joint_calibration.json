@@ -1,0 +1,91 @@
+{
+  "reviewed": true,
+  "joint_order": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    20,
+    21,
+    24,
+    25
+  ],
+  "joint_order_semantics": "Halpe26 left/far-first, primary right wrist index5; source torso is twisted",
+  "points": {
+    "c8_attack3_load": [
+      [
+        932,
+        367
+      ],
+      [
+        1070,
+        420
+      ],
+      [
+        943,
+        490
+      ],
+      [
+        1041,
+        511
+      ],
+      [
+        955,
+        578
+      ],
+      [
+        1009,
+        578
+      ],
+      [
+        963,
+        623
+      ],
+      [
+        1083,
+        627
+      ],
+      [
+        830,
+        713
+      ],
+      [
+        1252,
+        652
+      ],
+      [
+        659,
+        836
+      ],
+      [
+        1352,
+        809
+      ],
+      [
+        627,
+        893
+      ],
+      [
+        1437,
+        873
+      ],
+      [
+        690,
+        883
+      ],
+      [
+        1351,
+        876
+      ]
+    ]
+  },
+  "method": "Manual source-pixel joints and empty hilt centers; G3 pending static check"
+}

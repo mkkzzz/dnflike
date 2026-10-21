@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image,ImageDraw,ImageFont
 from check_actor_proportions import assess
 from bake_swordsman_motion import retarget
-from explore.swordsman_layer_trial import weapon_image,placement_matrix
+from explore.swordsman_layer_trial import weapon_image,placement_matrix,cutting_edge_basis
 
 ROOT=Path(__file__).resolve().parents[1]
 BASE=ROOT/'game/assets/swordsman_v7_c6'
@@ -36,11 +36,13 @@ def main():
    target=copy.deepcopy(g);target['head_center'][1]+=(g['head_size']-54)*.5;target['head_size']=54;body,fingers,g=retarget(body,fingers,g,target)
   frame={'source_pose':pid,'start_tick':tick,'duration_ticks':1,'height_px':0,'root_dx':0,'body':layer(body),'fingers':layer(fingers),'motion_geometry':g,'grip_span':span,'profiles':{}}
   for profile,(raw,marks,length)in weapons.items():
-   angle=math.atan2(u[1],u[0]);blade,sampling=weapon_image(raw,marks,(1024,1080),g['grip'],angle,length,(u,v));matrix,_=placement_matrix(marks,angle,length,(u,v));a,b,c,d=matrix
+   basis=([float(x)for x in u],[float(x)for x in v]);edge_contract={}
+   if 'cutting_direction'in hands[pid]:basis,edge_contract=cutting_edge_basis(basis,marks,hands[pid]['cutting_direction'])
+   angle=math.atan2(u[1],u[0]);blade,sampling=weapon_image(raw,marks,(1024,1080),g['grip'],angle,length,basis);matrix,_=placement_matrix(marks,angle,length,basis);a,b,c,d=matrix
    def placed(mark):
     dx,dy=np.asarray(mark)-marks['grip'];return [float(g['grip'][0]+a*dx+b*dy),float(g['grip'][1]+c*dx+d*dy)]
    tip=placed(marks['tip']);assert tip[1]<=844,(name,profile,'blade below floor',tip)
-   frame['profiles'][profile]={'front':layer(blade),'back':{},'grip':g['grip'],'guard':placed(marks['guard']),'tip':tip,'cutting_edge':placed(marks['cutting_edge']),'spine':placed(marks['spine']),'basis_u':u.tolist(),'basis_v':v.tolist(),'matrix':list(matrix),'physical_blade_length':length,'source_sampling_scale':sampling}
+   frame['profiles'][profile]={'front':layer(blade),'back':{},'grip':g['grip'],'guard':placed(marks['guard']),'tip':tip,'cutting_edge':placed(marks['cutting_edge']),'spine':placed(marks['spine']),'basis_u':list(basis[0]),'basis_v':list(basis[1]),'matrix':list(matrix),'physical_blade_length':length,'source_sampling_scale':sampling,'edge_contract':edge_contract}
   frames.append(frame)
  manifest={'schema':'swordsman_runtime_layers/2','revision':cfg['revision']+'_layer_keys','fps':60,'native_canvas':[1024,1080],'anchor':[448,840],'clips':{'keys':{'semantic_id':cfg['clips']['keys']['asset_id'],'loop':False,'root_mode':'ground','duration_ticks':len(frames),'frames':frames}},'textures':textures,'weapon_sources':weapon_sources,'weapon_library':{'manifest':library_path.relative_to(ROOT).as_posix(),'sha256':sha(library_path)},'joint_order':joints['joint_order'],'base_manifest_sha256':sha(BASE/'manifest.json'),'source_inputs':{'config':cfg_path.relative_to(ROOT).as_posix(),'sha256':sha(cfg_path),'audit_sha256':sha(folder/'proportions.json'),'body_manifest':bm.relative_to(ROOT).as_posix(),'body_manifest_sha256':sha(bm),'hands_sha256':sha(folder/'hand_calibration.json'),'joints_sha256':sha(folder/'joint_calibration.json')},'coverage':{'complete':False,'reason':'static source pose rehang only; no inbetweens or action clock'},'authorization':{'runtime_trial_allowed':False,'gm_preview_allowed':False},'validation':{'source_G1_passed':True,'head_upscale':False,'source_keys':len(frames),'G2_approved':False,'G3_approved':False,'runtime_user_approved':False},'recipe':{f:sha(ROOT/'tools'/f)for f in ['bake_swordsman_combo_keys_c8.py','bake_swordsman_motion.py','actor_motion.py','explore/swordsman_layer_trial.py']}}
  write(out/'manifest.json',manifest)
@@ -58,7 +60,7 @@ def main():
    # can otherwise leak into this native-pixel inspection viewport.
    isolated=Image.new('RGBA',painted.size,'#252c35');isolated.alpha_composite(painted);ImageDraw.Draw(isolated).line((0,840,1024,840),fill='#66727f',width=2);isolated.crop((98,370,798,1020)).convert('RGB').save(review/(name+'_'+(profile or'body')+'_native.png'))
   scene.convert('RGB').save(review/(name+'_full_2k.png'))
- html='''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>第二刀源姿势分层核对</title><style>body{margin:24px;background:#171c24;color:#e5e9ef;font:16px system-ui}p{line-height:1.6;color:#b8c5d7}select{font:inherit;padding:8px;margin-right:12px}img{display:block;max-width:100%;max-height:75vh;margin-top:16px}</style><h2>第二刀：静态源姿势分层核对</h2><p>仅为蓄势、接触、余势三张真实源姿势；未制作完整连续动作，未接入游戏。G1通过；握持、刃口和身体发力尚待评审。各武器使用完全相同的身体/手指和时钟。局部图只裁切，没有放大。</p><select id="pose">__POSES__</select><select id="view"><option value="body_native">裸动作</option><option value="katana_native">太刀</option><option value="greatsword_native">巨剑</option><option value="shortsword_native">短剑</option><option value="full_2k">完整2K</option></select><img id="frame"><script>const p=document.querySelector('#pose'),v=document.querySelector('#view'),f=document.querySelector('#frame');function load(){f.src=p.value+'_'+v.value+'.png'}p.onchange=load;v.onchange=load;load()</script></html>'''.replace('__POSES__',''.join('<option value="'+n+'">'+n+'</option>'for n in names));(review/'index.html').write_text(html,encoding='utf-8',newline='\n')
+ html='''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>第二刀源姿势分层核对</title><style>body{margin:24px;background:#171c24;color:#e5e9ef;font:16px system-ui}p{line-height:1.6;color:#b8c5d7}select{font:inherit;padding:8px;margin-right:12px}img{display:block;max-width:100%;max-height:75vh;margin-top:16px}</style><h2>第二刀：静态源姿势分层核对</h2><p>仅为蓄势、接触、余势三张真实源姿势；未制作完整连续动作，未接入游戏。G1通过；握持、刃口和身体发力尚待评审。各武器使用完全相同的身体/手指和时钟。局部图只裁切，没有放大。</p><select id="pose">__POSES__</select><select id="view"><option value="body_native">裸动作</option><option value="katana_native">太刀</option><option value="greatsword_native">巨剑</option><option value="shortsword_native">短剑</option><option value="full_2k">完整2K</option></select><img id="frame"><script>const p=document.querySelector('#pose'),v=document.querySelector('#view'),f=document.querySelector('#frame');function load(){f.src=p.value+'_'+v.value+'.png'}p.onchange=load;v.onchange=load;load()</script></html>'''.replace('__POSES__',''.join('<option value="'+n+'">'+n+'</option>'for n in names));html=html.replace('第二刀','第三刀低位蓄势') .replace('蓄势、接触、余势三张真实源姿势','低位蓄势单张真实源姿势；刃口向上') if cfg['clips']['keys']['asset_id'].endswith('.3') else html;(review/'index.html').write_text(html,encoding='utf-8',newline='\n')
  write(review/'review_manifest.json',{'package_sha256':sha(out/'manifest.json'),'source_keys':len(frames),'continuous_action':False,'runtime_installed':False,'review_files':{p.name:sha(p)for p in review.iterdir()if p.suffix in ['.png','.html']}});print('Static key rehang saved',review)
 
 if __name__=='__main__':main()

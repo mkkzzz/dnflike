@@ -1,0 +1,7 @@
+{
+  "transparent_background": true,
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/base_batch_c8/attack3_load_c1/source.png"
+  ],
+  "prompt": "Targeted production layer edit of the provided two-figure swordsman sheet. REMOVE the entire weapon from the crouching figure: blade, collar, guard, red/black handle, pommel and every stray metallic pixel. Reconstruct the small occluded skin areas of BOTH hands as natural EMPTY two-handed grip: two separated hollow clenched fists around the same invisible narrow horizontal cylindrical handle, palms remain facing each other around that common axis, leave a clean narrow opening through both grips. Restore any sleeve/pants pixels hidden by the removed handle; do not fill empty space with metal or colored sticks. Keep EXACTLY the same two figure positions, identical neutral companion, body/head sizes, facial design, crouched leg placement, arms, shoulder/hip weight shift and clothes. Preserve the original canvas dimensions. Transparent alpha. No sword, scabbard, hilt, magic, shadows or text anywhere. This clean body will be combined with a separately calibrated UPWARD-facing cutting-edge katana; the concept's incorrectly downward cutting edge is explicitly discarded."
+}

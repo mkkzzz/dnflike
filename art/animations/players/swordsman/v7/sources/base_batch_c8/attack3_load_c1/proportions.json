@@ -1,0 +1,63 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-21",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack3_load_c1/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Manual native-pixel highest connected hair tip, actual front lower-jaw vertex and same-sheet upright companion sole. G1 does not approve body force, grip layering or motion.",
+  "sources": {
+    "body": {
+      "sha256": "79ac40bbaeb51b6a18a4c985e82ded4e4e7a30af71f7dc53e5613b988845dd9d",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 14,
+        "standing_bottom_y": 904,
+        "sole": [
+          250,
+          904
+        ],
+        "crop_bbox": [
+          100,
+          5,
+          495,
+          915
+        ],
+        "head": {
+          "hair_top": [
+            321,
+            14
+          ],
+          "chin": [
+            344,
+            153
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c8_attack3_load",
+      "head": {
+        "hair_top": [
+          1082,
+          248
+        ],
+        "chin": [
+          1109,
+          387
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "landmark_overlay.png",
+    "sha256": "ecdf2b211241dc33ed0fdb49696733d216f60cebf9c16410d914deb0891752ee",
+    "reviewed": true
+  }
+}

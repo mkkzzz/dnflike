@@ -17,18 +17,19 @@
     "walk_contact_near_c2",
     "walk_down_near_c2",
     "walk_pass_far_c2",
-    "attack2_c1"
+    "attack2_c1",
+    "attack3_load_c1"
   ],
   "source_review_pending": [
     "gait pilot direction/finish/start-stop/runtime",
     "attack2 continuous motion and G2/G3",
-    "attack3 source and continuous clip"
+    "attack3 extension/recovery source poses and continuous clip"
   ],
   "remaining": [
     "gait direction feedback and joint/cloth finish",
     "walk/run start-stop transitions and actual movement replay",
     "reverse attack2 breakdowns/continuous clip and G2/G3; three source keys now G1 passed",
-    "rising attack3 source and continuous clip",
+    "rising attack3 extension/recovery sources and continuous clip; low-load source G1 and static edge checks passed",
     "full combo interruptions/guard/jump/hit/three weapons/both facings user runtime acceptance"
   ],
   "user_artwork_approved": false,
@@ -69,7 +70,7 @@
     "source_G1_passed": true,
     "source_keys": 3,
     "manifest": "art/animations/players/swordsman/v7/exports/combo_keys_c8/attack2_c1/manifest.json",
-    "sha256": "d7d12a5d292b7c3461f9bd5369f070b022260249840e1dbad2d03876a426f594",
+    "sha256": "3d8a477aa6364729738a308dd9dc0b26e0385838043f1d4d6cf00d2739e59391",
     "review": "docs/previews/v7_c8_attack2_c1_keys/index.html",
     "runtime_installed": false,
     "continuous_action": false,
@@ -82,5 +83,16 @@
     "runtime_installed": false,
     "old_c6_and_firstcut_gm_unchanged": true,
     "reason": "shorter independent hilts fix second-cut forearm overlap; exact guard/tip reach retained; full animation review pending"
+  },
+  "attack3_load": {
+    "manifest": "art/animations/players/swordsman/v7/exports/combo_keys_c8/attack3_load_c1/manifest.json",
+    "review": "docs/previews/v7_c8_attack3_load_c1_keys/index.html",
+    "source_keys": 1,
+    "source_G1_passed": true,
+    "continuous_action": false,
+    "runtime_installed": false,
+    "G2_approved": false,
+    "G3_approved": false,
+    "sha256": "953ace9e2eb26a4a61d6611a7221223ca9f4cefaa580db4e31bf3890197ccb29"
   }
 }

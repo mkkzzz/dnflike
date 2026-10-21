@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "7d7fb0a7fb83378f828e0ef52e73cf73834ba85554214831edfc4fabbb57573c",
+      "prompt": "Create ONE high-quality hand-drawn 2D action-game pose development sheet of this SAME adult white-haired swordsman. Reference 1 defines identity and adult body proportions, reference 2 defines current approved-direction mature anatomy/rendering/clothing, reference 3 defines the independent katana design. Native requested production canvas 2560x1440 transparent. Exactly TWO full figures side by side, no overlap, both facing screen-right, SAME physical body scale, same adult head size and same limb lengths. LEFT FIGURE: neutral straight standing upright calibration companion, feet on a shared ground line. RIGHT FIGURE: third normal attack initial LOW CROUCHED LOAD before a forceful rising slash. Broad staggered planted feet, front right knee bent deeply, back left leg braced; pelvis low, body weight coiled low and slightly back. Chest leans slightly forward from hips, head follows chest naturally (not fixed in space), eyes looking forward. BOTH HANDS visibly wrap the SAME sword handle close together in front of the pelvis, right primary nearest guard and left secondary behind, anatomically natural wrists, no crossed wrists. Katana blade extends screen-right almost horizontally with a slight downward tilt, its tip CLEARLY ABOVE GROUND. Crucially turn the blade so the sharp white cutting edge faces UPWARD, spine below, preparing to cut from low to high. No sword on hip/back, no scabbard. The black coat with crimson lining trails behind, not hiding thigh/knee anatomy. Keep restrained body detail and adult long legs, compact head, realistic action silhouette, same black clothes/red forearm wraps/steel kneecaps and dark boots. No chibi, no oversized head, no blur, no effects or trails, no lettering, no floor/shadow, no extra figures. Leave generous clear space around each silhouette, whole boots and blade visible. These are source key poses, not an animation strip.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/views/A1_side_right.png",
+          "sha256": "8fc88aa5544504e0de25ab5804b7f6d3b31cf58f5a6c2b9a7eb15b06cc0ad682",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack2_c1/body_c3.png",
+          "sha256": "0f13cff4b1713191b269f90135af7ab4b2f469b12933835ab4cc22ac6f021ea0",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/exports/katana.png",
+          "sha256": "c0d4330188fada27f744a183be336ffa89d46a7572ddc7e6de54c507c58c2609",
+          "actually_submitted": true
+        }
+      ],
+      "result": "source.png",
+      "result_sha256": "6e2a80449bfa09649baefa9ff8a121e44d3f2e8a9e07d0a4b765dfcfa396124b",
+      "returned_original_file": "exec-8926fec5-5c06-46d5-8faa-1576f23f8b8f.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "requested_scene_native": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "role": "body pose concept only; blade edge wrong and discarded"
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "body_request.json",
+      "request_sha256": "ed8d9c1028fe8a4facd88190da17856cdcb22c94c8cb727b42c0a3cd7789da63",
+      "prompt": "Targeted production layer edit of the provided two-figure swordsman sheet. REMOVE the entire weapon from the crouching figure: blade, collar, guard, red/black handle, pommel and every stray metallic pixel. Reconstruct the small occluded skin areas of BOTH hands as natural EMPTY two-handed grip: two separated hollow clenched fists around the same invisible narrow horizontal cylindrical handle, palms remain facing each other around that common axis, leave a clean narrow opening through both grips. Restore any sleeve/pants pixels hidden by the removed handle; do not fill empty space with metal or colored sticks. Keep EXACTLY the same two figure positions, identical neutral companion, body/head sizes, facial design, crouched leg placement, arms, shoulder/hip weight shift and clothes. Preserve the original canvas dimensions. Transparent alpha. No sword, scabbard, hilt, magic, shadows or text anywhere. This clean body will be combined with a separately calibrated UPWARD-facing cutting-edge katana; the concept's incorrectly downward cutting edge is explicitly discarded.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack3_load_c1/source.png",
+          "sha256": "6e2a80449bfa09649baefa9ff8a121e44d3f2e8a9e07d0a4b765dfcfa396124b",
+          "actually_submitted": true
+        }
+      ],
+      "result": "body_c1.png",
+      "result_sha256": "79ac40bbaeb51b6a18a4c985e82ded4e4e7a30af71f7dc53e5613b988845dd9d",
+      "returned_original_file": "exec-0f352b6b-fc39-410a-8f75-d56d4fcdb2f9.png",
+      "actual_size": [
+        1671,
+        941
+      ],
+      "requested_scene_native": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "role": "selected clean body, G1 passed; no body-fixed weapon"
+    }
+  ],
+  "G1_passed": true,
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false,
+  "proportion_report_sha256": "acbbcbd77813149292f8d27010e58cb8a620bb0a536ae279ca9f7651c26295fc",
+  "concept_cutting_edge_approved": false,
+  "final_static_cutting_edge": "independent weapon source marks reflected upward; tested on katana/greatsword/shortsword",
+  "isolation_note": "alpha core threshold24 retains actual connected hair tip; threshold180 would discard it and export was rejected, no landmark moved to pass"
+}

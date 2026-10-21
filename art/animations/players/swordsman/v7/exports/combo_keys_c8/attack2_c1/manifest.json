@@ -175,7 +175,8 @@
                 -0.16667970867402088
               ],
               "physical_blade_length": 256.0,
-              "source_sampling_scale": 0.1684708997999496
+              "source_sampling_scale": 0.1684708997999496,
+              "edge_contract": {}
             },
             "greatsword": {
               "front": {
@@ -223,7 +224,8 @@
                 -0.1956792830006887
               ],
               "physical_blade_length": 320.0,
-              "source_sampling_scale": 0.19643953345610804
+              "source_sampling_scale": 0.19643953345610804,
+              "edge_contract": {}
             },
             "shortsword": {
               "front": {
@@ -271,7 +273,8 @@
                 -0.10682032207431352
               ],
               "physical_blade_length": 140.8,
-              "source_sampling_scale": 0.10723533891850724
+              "source_sampling_scale": 0.10723533891850724,
+              "edge_contract": {}
             }
           }
         },
@@ -433,7 +436,8 @@
                 0.16661413207663103
               ],
               "physical_blade_length": 256.0,
-              "source_sampling_scale": 0.1684708997999496
+              "source_sampling_scale": 0.1684708997999496,
+              "edge_contract": {}
             },
             "greatsword": {
               "front": {
@@ -481,7 +485,8 @@
                 0.19563279685062315
               ],
               "physical_blade_length": 320.0,
-              "source_sampling_scale": 0.19643953345610804
+              "source_sampling_scale": 0.19643953345610804,
+              "edge_contract": {}
             },
             "shortsword": {
               "front": {
@@ -529,7 +534,8 @@
                 0.10679494552220309
               ],
               "physical_blade_length": 140.8,
-              "source_sampling_scale": 0.10723533891850724
+              "source_sampling_scale": 0.10723533891850724,
+              "edge_contract": {}
             }
           }
         },
@@ -691,7 +697,8 @@
                 0.16553276751664373
               ],
               "physical_blade_length": 256.0,
-              "source_sampling_scale": 0.1684708997999496
+              "source_sampling_scale": 0.1684708997999496,
+              "edge_contract": {}
             },
             "greatsword": {
               "front": {
@@ -739,7 +746,8 @@
                 0.19057434011449123
               ],
               "physical_blade_length": 320.0,
-              "source_sampling_scale": 0.19643953345610804
+              "source_sampling_scale": 0.19643953345610804,
+              "edge_contract": {}
             },
             "shortsword": {
               "front": {
@@ -787,7 +795,8 @@
                 0.10403355980233264
               ],
               "physical_blade_length": 140.8,
-              "source_sampling_scale": 0.10723533891850724
+              "source_sampling_scale": 0.10723533891850724,
+              "edge_contract": {}
             }
           }
         }
@@ -1087,7 +1096,7 @@
     "runtime_user_approved": false
   },
   "recipe": {
-    "bake_swordsman_combo_keys_c8.py": "5c6e5c9e4be72999ef4f07442603538db436053d412eb06a466a99b5f1cc8bd6",
+    "bake_swordsman_combo_keys_c8.py": "14b02034702f59b9db368a61d689da14cbdb64db1afc43d2f293d2e6c993f025",
     "bake_swordsman_motion.py": "d13a7710c37777486e944b5418c36f65238b001ac5f1ed46fe3c2c24221f4330",
     "actor_motion.py": "99974750db7a15eb776695c85acb01a86b2a92e52fe5a3bff826c94cf0449d35",
     "explore/swordsman_layer_trial.py": "6c07267e1fea05d4299f88c67db7058f4db5f2f17d560a4591c97749f35d3a64"

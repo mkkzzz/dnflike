@@ -164,6 +164,7 @@
     "swordsman_base_batch_c8_gm_trial": "art/animations/players/swordsman/v7/sources/base_batch_c8/checkpoint.json",
     "swordsman_c8_gait_candidate": "art/animations/players/swordsman/v7/exports/gait_rig_c8_pilot/manifest.json",
     "swordsman_c8_attack2_static_keys": "art/animations/players/swordsman/v7/exports/combo_keys_c8/attack2_c1/manifest.json",
-    "swordsman_c8_grip_weapon_candidate": "art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/exports/manifest.json"
+    "swordsman_c8_grip_weapon_candidate": "art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/exports/manifest.json",
+    "swordsman_c8_attack3_load_static_key": "art/animations/players/swordsman/v7/exports/combo_keys_c8/attack3_load_c1/manifest.json"
   }
 }

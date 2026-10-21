@@ -1,0 +1,72 @@
+{
+  "revision": "v7_c8_attack3_load_body_c1",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/base_batch_c8_body/attack3_load_c1",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "body_c1.png",
+      "standing_height": 890
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "reviewed_true_hair_jaw",
+    "G2": "pending",
+    "G3": "pending",
+    "G4": "pending",
+    "runtime_install_allowed": false
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.combo.3",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c8_attack3_load",
+          "source": "body",
+          "crop_bbox": [
+            540,
+            230,
+            1460,
+            915
+          ],
+          "root": [
+            1022,
+            894
+          ],
+          "foot": [
+            633,
+            894
+          ],
+          "component_seed": [
+            1000,
+            700
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1009,
+              578
+            ],
+            "offhand": [
+              955,
+              578
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

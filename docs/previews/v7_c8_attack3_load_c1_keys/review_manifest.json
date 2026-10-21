@@ -1,0 +1,24 @@
+{
+  "package_sha256": "953ace9e2eb26a4a61d6611a7221223ca9f4cefaa580db4e31bf3890197ccb29",
+  "source_keys": 1,
+  "continuous_action": false,
+  "runtime_installed": false,
+  "review_files": {
+    "index.html": "02946748e9140301c7c13f91ef6b71fe44537314906b9575db5eab15010655c3",
+    "load_body_native.png": "ee83ca061d751a55b44e65374b8b25dc328babdcf8b92a5b00d718607cd82d6a",
+    "load_full_2k.png": "a762624a3ac34dab0b3e1e9e3f7fd32f0a29fabd637a76ce0bb9a0b76a20c59d",
+    "load_greatsword_native.png": "c6980d7c89cb6dd3ab509f4a78b56e8372d34e11ff4e257eca4429c0670a2afc",
+    "load_katana_native.png": "fb1782986e5289bf219ff41a99a13729701fad984447d339f5cd4edca9e6c20b",
+    "load_shortsword_native.png": "177474b4fc738f1f87a0e90d45c4351643c0357201a34ab74120edfdb8cecde4",
+    "browser_review.png": "5984abb1fe50baea7e7005ab6e180b7b828eac4b7babb0a5c469976076b428ed"
+  },
+  "browser_check": {
+    "image_complete": true,
+    "native_size": [
+      700,
+      650
+    ],
+    "selected_view": "katana_native",
+    "continuous_animation": false
+  }
+}

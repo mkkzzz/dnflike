@@ -35,4 +35,16 @@ class ComboKeyTests(unittest.TestCase):
     u=np.array(frame['profiles'][name]['basis_u']);p=np.array(frame['motion_geometry']['grip']);q=np.array(frame['motion_geometry']['secondary_grip']);np.testing.assert_allclose(p-q,u*frame['grip_span'],atol=1e-6)
   for file,entry in m['textures'].items():self.assertEqual(sha(PACKAGE/file),entry['sha256'])
   for file,h in m['recipe'].items():self.assertEqual(sha(ROOT/'tools'/file),h)
+ def test_rising_load_uses_real_clean_body_and_upward_cutting_edge(self):
+  from check_actor_proportions import assess
+  folder=ROOT/'art/animations/players/swordsman/v7/sources/base_batch_c8/attack3_load_c1';package=PACKAGE.parent/'attack3_load_c1';m=read(package/'manifest.json')
+  self.assertTrue(assess(folder/'body_config.json',folder/'proportions.json')['passed']);self.assertEqual(m['clips']['keys']['duration_ticks'],1);self.assertFalse(m['authorization']['runtime_trial_allowed'])
+  self.assertEqual(sha(folder/'body_config.json'),m['source_inputs']['sha256']);self.assertEqual(sha(folder/'proportions.json'),m['source_inputs']['audit_sha256']);self.assertEqual(sha(folder/'hand_calibration.json'),m['source_inputs']['hands_sha256'])
+  frame=m['clips']['keys']['frames'][0];self.assertLessEqual(frame['motion_geometry']['head_size'],54.00001)
+  for name,pose in frame['profiles'].items():
+   edge=np.array(pose['cutting_edge'])-pose['spine'];self.assertLess(edge[1],0,(name,'blade must lead upward, source concept had wrong edge'));self.assertTrue(pose['edge_contract']['transverse_axis_reflected']);self.assertLessEqual(pose['source_sampling_scale'],1)
+   self.assertLess(pose['tip'][1],840);source=m['weapon_sources'][name];matrix=np.array(pose['matrix']).reshape(2,2)
+   for point in ['guard','tip','cutting_edge','spine']:np.testing.assert_allclose(np.array(pose['grip'])+matrix@(np.array(source['marks'][point])-source['marks']['grip']),pose[point],atol=1e-8)
+  for file,entry in m['textures'].items():self.assertEqual(sha(package/file),entry['sha256'])
+  for file,h in m['recipe'].items():self.assertEqual(sha(ROOT/'tools'/file),h)
 if __name__=='__main__':unittest.main()

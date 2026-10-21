@@ -1,0 +1,526 @@
+{
+  "schema": "swordsman_runtime_layers/2",
+  "revision": "v7_c8_attack3_load_body_c1_layer_keys",
+  "fps": 60,
+  "native_canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "clips": {
+    "keys": {
+      "semantic_id": "actor.player.base.combo.3",
+      "loop": false,
+      "root_mode": "ground",
+      "duration_ticks": 1,
+      "frames": [
+        {
+          "source_pose": "c8_attack3_load",
+          "start_tick": 0,
+          "duration_ticks": 1,
+          "height_px": 0,
+          "root_dx": 0,
+          "body": {
+            "file": "layers/e3401fe66d83ce73e7ffa95f6ba3bf5ff155449a32eca9cf180f1c8958ba70fb.png",
+            "rect": [
+              248,
+              569,
+              381,
+              272
+            ]
+          },
+          "fingers": {
+            "file": "layers/756578128bd35319b9e4f73e5c31aaca3ab77866ebd0a575f7c58cfe89efc30d.png",
+            "rect": [
+              409,
+              705,
+              42,
+              10
+            ]
+          },
+          "motion_geometry": {
+            "head_center": [
+              479.3820224719101,
+              596.5280898876404
+            ],
+            "head_size": 54,
+            "head_angle": 0.0,
+            "grip": [
+              442.44943820224717,
+              705.0786516853932
+            ],
+            "secondary_grip": [
+              419.39325842696627,
+              705.0786516853932
+            ],
+            "root": [
+              448,
+              840
+            ],
+            "joints": [
+              [
+                409.5730337078652,
+                614.9887640449438
+              ],
+              [
+                468.4943820224719,
+                637.6179775280899
+              ],
+              [
+                414.2696629213483,
+                667.5056179775281
+              ],
+              [
+                456.1123595505618,
+                676.4719101123595
+              ],
+              [
+                419.39325842696627,
+                705.0786516853932
+              ],
+              [
+                442.44943820224717,
+                705.0786516853932
+              ],
+              [
+                422.80898876404495,
+                724.2921348314607
+              ],
+              [
+                474.0449438202247,
+                726.0
+              ],
+              [
+                366.02247191011236,
+                762.7191011235955
+              ],
+              [
+                546.2022471910112,
+                736.6741573033707
+              ],
+              [
+                293.0112359550562,
+                815.2359550561798
+              ],
+              [
+                588.8988764044943,
+                803.7078651685393
+              ],
+              [
+                279.3483146067416,
+                839.5730337078652
+              ],
+              [
+                625.1910112359551,
+                831.0337078651686
+              ],
+              [
+                306.24719101123594,
+                835.3033707865169
+              ],
+              [
+                588.4719101123595,
+                832.314606741573
+              ]
+            ]
+          },
+          "grip_span": 23.056179775280896,
+          "profiles": {
+            "katana": {
+              "front": {
+                "file": "layers/837cad27e694f2c69d777e99821ff8b21b38e252e3e2d3cef359e2c534507785.png",
+                "rect": [
+                  404,
+                  682,
+                  320,
+                  40
+                ]
+              },
+              "back": {},
+              "grip": [
+                442.44943820224717,
+                705.0786516853932
+              ],
+              "guard": [
+                464.30623756023584,
+                702.4809380006224
+              ],
+              "tip": [
+                720.3062375602358,
+                702.4809380006224
+              ],
+              "cutting_edge": [
+                586.9419001947673,
+                687.0979859163516
+              ],
+              "spine": [
+                587.6638786160371,
+                699.5439093830149
+              ],
+              "basis_u": [
+                1.0,
+                0.0
+              ],
+              "basis_v": [
+                0.0,
+                -1.0
+              ],
+              "matrix": [
+                0.16818815495490966,
+                -0.009756465152295352,
+                -0.009756465152295352,
+                -0.16818815495490966
+              ],
+              "physical_blade_length": 256.0,
+              "source_sampling_scale": 0.1684708997999496,
+              "edge_contract": {
+                "texture_cutting_side": 1,
+                "transverse_axis_reflected": true,
+                "authored_cutting_direction": [
+                  0,
+                  -1
+                ],
+                "cutting_alignment": 1.0
+              }
+            },
+            "greatsword": {
+              "front": {
+                "file": "layers/cd643dd2f413616b4b1b2a170171e9ebf8c4f1e9c79a74eb9a8830864e9e8937.png",
+                "rect": [
+                  408,
+                  667,
+                  378,
+                  77
+                ]
+              },
+              "back": {},
+              "grip": [
+                442.44943820224717,
+                705.0786516853932
+              ],
+              "guard": [
+                463.17418762398967,
+                705.0786516853932
+              ],
+              "tip": [
+                783.1741876239896,
+                705.0786516853932
+              ],
+              "cutting_edge": [
+                615.2183865190173,
+                694.0780378118511
+              ],
+              "spine": [
+                615.2183865190173,
+                717.0614632262158
+              ],
+              "basis_u": [
+                1.0,
+                0.0
+              ],
+              "basis_v": [
+                0.0,
+                -1.0
+              ],
+              "matrix": [
+                0.19643953345610804,
+                0.0,
+                0.0,
+                -0.19643953345610804
+              ],
+              "physical_blade_length": 320.0,
+              "source_sampling_scale": 0.19643953345610804,
+              "edge_contract": {
+                "texture_cutting_side": 1,
+                "transverse_axis_reflected": true,
+                "authored_cutting_direction": [
+                  0,
+                  -1
+                ],
+                "cutting_alignment": 1.0
+              }
+            },
+            "shortsword": {
+              "front": {
+                "file": "layers/7749995c23dd9c7adcf7a8ca5bdc0c6983520b0e30df8e59b939821a3e05505f.png",
+                "rect": [
+                  400,
+                  681,
+                  198,
+                  49
+                ]
+              },
+              "back": {},
+              "grip": [
+                442.44943820224717,
+                705.0786516853932
+              ],
+              "guard": [
+                454.4100939399521,
+                705.0786516853932
+              ],
+              "tip": [
+                595.2100939399521,
+                705.0786516853932
+              ],
+              "cutting_edge": [
+                517.8934145797084,
+                699.0734727059568
+              ],
+              "spine": [
+                517.8934145797084,
+                711.1910660037481
+              ],
+              "basis_u": [
+                1.0,
+                0.0
+              ],
+              "basis_v": [
+                0.0,
+                -1.0
+              ],
+              "matrix": [
+                0.10723533891850724,
+                0.0,
+                0.0,
+                -0.10723533891850724
+              ],
+              "physical_blade_length": 140.8,
+              "source_sampling_scale": 0.10723533891850724,
+              "edge_contract": {
+                "texture_cutting_side": 1,
+                "transverse_axis_reflected": true,
+                "authored_cutting_direction": [
+                  0,
+                  -1
+                ],
+                "cutting_alignment": 1.0
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "textures": {
+    "weapons/katana.png": {
+      "file": "weapons/katana.png",
+      "size": [
+        1867,
+        213
+      ],
+      "sha256": "c0d4330188fada27f744a183be336ffa89d46a7572ddc7e6de54c507c58c2609"
+    },
+    "weapons/greatsword.png": {
+      "file": "weapons/greatsword.png",
+      "size": [
+        1903,
+        369
+      ],
+      "sha256": "ea071be0bdc1c8d1d045b00737b5651fd48fcbe1d0543f1824260d6bb87393d7"
+    },
+    "weapons/shortsword.png": {
+      "file": "weapons/shortsword.png",
+      "size": [
+        1807,
+        419
+      ],
+      "sha256": "7d7bc8859fd60aa259ef347fa677ab7168e46aa8e7dede833d07b64acb22f790"
+    },
+    "layers/e3401fe66d83ce73e7ffa95f6ba3bf5ff155449a32eca9cf180f1c8958ba70fb.png": {
+      "file": "layers/e3401fe66d83ce73e7ffa95f6ba3bf5ff155449a32eca9cf180f1c8958ba70fb.png",
+      "size": [
+        381,
+        272
+      ],
+      "sha256": "e838da57f31b38b2a0210bb3a18e5e2fe28cd2317e252de360a40984d61b914c"
+    },
+    "layers/756578128bd35319b9e4f73e5c31aaca3ab77866ebd0a575f7c58cfe89efc30d.png": {
+      "file": "layers/756578128bd35319b9e4f73e5c31aaca3ab77866ebd0a575f7c58cfe89efc30d.png",
+      "size": [
+        42,
+        10
+      ],
+      "sha256": "c772127abd376bdf6bf97ee37d8e1ed07898527be38aea6028043684052838d2"
+    },
+    "layers/837cad27e694f2c69d777e99821ff8b21b38e252e3e2d3cef359e2c534507785.png": {
+      "file": "layers/837cad27e694f2c69d777e99821ff8b21b38e252e3e2d3cef359e2c534507785.png",
+      "size": [
+        320,
+        40
+      ],
+      "sha256": "9b1b08e43356f6c08ffa5d149a65cd7908333f507e6fa8e2ce582e1998fca860"
+    },
+    "layers/cd643dd2f413616b4b1b2a170171e9ebf8c4f1e9c79a74eb9a8830864e9e8937.png": {
+      "file": "layers/cd643dd2f413616b4b1b2a170171e9ebf8c4f1e9c79a74eb9a8830864e9e8937.png",
+      "size": [
+        378,
+        77
+      ],
+      "sha256": "fc1ae56a8987e030ea3ee62542c642c6de40bbd8178b148c447a3423f667df74"
+    },
+    "layers/7749995c23dd9c7adcf7a8ca5bdc0c6983520b0e30df8e59b939821a3e05505f.png": {
+      "file": "layers/7749995c23dd9c7adcf7a8ca5bdc0c6983520b0e30df8e59b939821a3e05505f.png",
+      "size": [
+        198,
+        49
+      ],
+      "sha256": "3c5a2164af0cb4603342703a8f0de5cf817b4fb40c69c4f13513ac158bdeff7f"
+    }
+  },
+  "weapon_sources": {
+    "katana": {
+      "file": "weapons/katana.png",
+      "marks": {
+        "guard": [
+          344.0,
+          103.0
+        ],
+        "tip": [
+          1861.0,
+          15.0
+        ],
+        "cutting_edge": [
+          1076.0,
+          152.0
+        ],
+        "spine": [
+          1076.0,
+          78.0
+        ],
+        "grip": [
+          213.58842410027853,
+          95.11979173322533
+        ]
+      },
+      "physical_blade_length": 256.0,
+      "sha256": "c0d4330188fada27f744a183be336ffa89d46a7572ddc7e6de54c507c58c2609",
+      "actual_native_guard_to_pommel": 57.03762570738486,
+      "old_guard_offset_in_blade_basis": [
+        21.856799357988706,
+        2.5977136847708127
+      ]
+    },
+    "greatsword": {
+      "file": "weapons/greatsword.png",
+      "marks": {
+        "guard": [
+          268.0,
+          185.0
+        ],
+        "tip": [
+          1897.0,
+          185.0
+        ],
+        "cutting_edge": [
+          1042.0,
+          241.0
+        ],
+        "spine": [
+          1042.0,
+          124.0
+        ],
+        "grip": [
+          162.49807247494215,
+          185.0
+        ]
+      },
+      "physical_blade_length": 320.0,
+      "sha256": "ea071be0bdc1c8d1d045b00737b5651fd48fcbe1d0543f1824260d6bb87393d7",
+      "actual_native_guard_to_pommel": 52.25291589932474,
+      "old_guard_offset_in_blade_basis": [
+        20.724749421742484,
+        0.0
+      ]
+    },
+    "shortsword": {
+      "file": "weapons/shortsword.png",
+      "marks": {
+        "guard": [
+          487.0,
+          213.0
+        ],
+        "tip": [
+          1800.0,
+          213.0
+        ],
+        "cutting_edge": [
+          1079.0,
+          269.0
+        ],
+        "spine": [
+          1079.0,
+          156.0
+        ],
+        "grip": [
+          375.4634873323398,
+          213.0
+        ]
+      },
+      "physical_blade_length": 140.8,
+      "sha256": "7d7bc8859fd60aa259ef347fa677ab7168e46aa8e7dede833d07b64acb22f790",
+      "actual_native_guard_to_pommel": 51.901904036557504,
+      "old_guard_offset_in_blade_basis": [
+        11.96065573770492,
+        0.0
+      ]
+    }
+  },
+  "weapon_library": {
+    "manifest": "art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/exports/manifest.json",
+    "sha256": "fa3f24d14536d2aee3617ac91737c46e74a35c0f5a7af2e6e4896bc646d665ef"
+  },
+  "joint_order": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    20,
+    21,
+    24,
+    25
+  ],
+  "base_manifest_sha256": "b6615d37ffb602f44c305c5d58def38c84a68976b36da3045b5f599fe7126839",
+  "source_inputs": {
+    "config": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack3_load_c1/body_config.json",
+    "sha256": "0ee6a4e0ee2be3454f19cd971dfe818c8fdbdbd4c2eea55b4a15fceb6d187982",
+    "audit_sha256": "1152ab7886a7400f01444457e16c8b47ae235bc9c167d9125c7364185a420432",
+    "body_manifest": "art/animations/players/swordsman/v7/exports/base_batch_c8_body/attack3_load_c1/manifest.json",
+    "body_manifest_sha256": "2bc3fc05a25d178890305d35a69ac0024b74fb02c2d652838398a3a1b7277473",
+    "hands_sha256": "a3739c6ba70d59dd6295eefa7e775e7be4fc06f60cf39df7321ffaaec1633756",
+    "joints_sha256": "811241792a772d4de8f7c97fabacac97328f3468085c79659f3fa32366054f3f"
+  },
+  "coverage": {
+    "complete": false,
+    "reason": "static source pose rehang only; no inbetweens or action clock"
+  },
+  "authorization": {
+    "runtime_trial_allowed": false,
+    "gm_preview_allowed": false
+  },
+  "validation": {
+    "source_G1_passed": true,
+    "head_upscale": false,
+    "source_keys": 1,
+    "G2_approved": false,
+    "G3_approved": false,
+    "runtime_user_approved": false
+  },
+  "recipe": {
+    "bake_swordsman_combo_keys_c8.py": "14b02034702f59b9db368a61d689da14cbdb64db1afc43d2f293d2e6c993f025",
+    "bake_swordsman_motion.py": "d13a7710c37777486e944b5418c36f65238b001ac5f1ed46fe3c2c24221f4330",
+    "actor_motion.py": "99974750db7a15eb776695c85acb01a86b2a92e52fe5a3bff826c94cf0449d35",
+    "explore/swordsman_layer_trial.py": "6c07267e1fea05d4299f88c67db7058f4db5f2f17d560a4591c97749f35d3a64"
+  }
+}
