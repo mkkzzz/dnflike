@@ -2,16 +2,16 @@
   "revision": "v7_c9_whole_body_gait",
   "status": "source_production",
   "walk_status": "dense_rejected_and_keys_need_revision",
-  "run_status": "C4 gait rejected; C3 single grip retained; C5 support/passing source study only",
+  "run_status": "C3 grip and C5 continuous running direction approved; production refinement pending",
   "runtime_installed": false,
-  "source_spec_sha256": "1b01c5967bf35382879567a4c2c5a25b859faf7606691140341785e28a0262f5",
+  "source_spec_sha256": "1b957cc9c3391fff4d35db216e9447423c075a503653ce351df0a552362b6bcf",
   "walk_export_sha256": "0d6b6639152365b1b35fe2d223ca9da67b74bb446b6186b549d25705b5fe4ce3",
   "run_layer_export_sha256": "dc434ba60b1827f55454ccbbfd76053c95fa8b2e48f81fc5bc2edccfe871e5b8",
   "run_direction_approval_sha256": "4e62efdd3f4866a7ab10995deac288cba480aac2b21230b8477ab60eb055346b",
   "files": {
     "browser_run_c3.png": "1dbd7cbbd1b9c7772ad3d6bab14bb9804208b0ca6c9bfa04f4c0c25989229b12",
     "browser_run_cycle_c4.png": "dcd9369346b5edd52e1f87b3b7de0971fcd014f0179c4c13a74c8e7583d63acc",
-    "index.html": "7f2a04021aed0a583e3defb841f3fecb05c84d3b804219e76d16a317569d52bb",
+    "index.html": "455a6894589208cb616553c2be3698ec8eae096a49fb2d46bd9edd5c71ba82a3",
     "rejected_midframes.png": "663fa6013e74e3d7116e6266999d3379f9f0ba8b3a85cdc9ccaf14982f60ed71",
     "run_body.png": "3570151b304e037d65bcaee100beadf303c28cb0759a9921cfa23c4889ee9d97",
     "run_c3_body.png": "8cdd0c4830ae6b834048e248d6717e61aa0d1c44544d33731aa06f3ad0b7aa42",
@@ -57,5 +57,6 @@
   "raster_upscaled": false,
   "run_cycle_key_review_sha256": "0976209b30aa10eb6d7355f2957203945fe2d09d1f1ca7f398344374d98de610",
   "run_cycle_motion_review_sha256": "669547e9405749bd9165def193f0078cf288f02237efc6a2f01936a9e195eb70",
-  "run_motion_c5_review_sha256": "75e08059c5a2bb629d088e5beb984ace88a165bc1e3d9f825000e32a460a37e2"
+  "run_motion_c5_review_sha256": "4d9493035d6fdee4e01ea4c78e22a5ff93994c4487d043133ab91d58fca50f8f",
+  "run_motion_c5_direction_approval_sha256": "7a9104485c3ae22f13a2c63d4ecd27a447035f1cb7573ecf098f7bc00c138026"
 }

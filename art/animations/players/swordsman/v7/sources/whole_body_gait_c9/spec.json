@@ -204,6 +204,7 @@
   "run_grip_approval": "run_drag_grip_c3/direction_approval.json",
   "painted_run_phase_keys": 8,
   "run_key_diagnostic": "run_cycle_c4/key_review.json",
-  "run_current_work": "C4 continuous gait rejected; C5 whole-person support/passing/recovery source study, still needs correction",
-  "run_motion_study": "run_motion_c5/motion_review.json"
+  "run_current_work": "C5 running motion direction approved; refine whole-person source consistency, native resolution and G1/G3 before continuous production and runtime",
+  "run_motion_study": "run_motion_c5/motion_review.json",
+  "run_motion_direction_approval": "run_motion_c5/direction_approval.json"
 }

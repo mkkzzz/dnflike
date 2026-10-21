@@ -1,7 +1,7 @@
 {
   "asset_id": "actor.player.base.run",
   "revision": "v7_c9_c5_motion_study",
-  "status": "source_review",
+  "status": "source_approved",
   "scope": "one coherent whole-person motion study; not production actor export",
   "source_canvas_requested": [
     2560,
@@ -36,5 +36,7 @@
   "actual_scale": 1,
   "production_G1_passed": false,
   "selected_source": "source_c2.png",
-  "blueprint_kind": "complete-person technical pose guide, not game artwork; analytic joint calculations never deform generated actor pixels"
+  "blueprint_kind": "complete-person technical pose guide, not game artwork; analytic joint calculations never deform generated actor pixels",
+  "approval_scope": "continuous running motion direction only",
+  "approval": "direction_approval.json"
 }

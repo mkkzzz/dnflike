@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-22",
+  "status": "motion_direction_approved",
+  "user_answer": "我觉得可以",
+  "scope": "C5 continuous running stepping/recovery direction, as shown in the 12-drawing source study.",
+  "review_context": "User reviewed C5 after previous request to try whole-body support, folded recovery and passing; latest assistant asked to assess improvement in continuous stepping.",
+  "asset_id": "actor.player.base.run",
+  "source": "source_c2.png",
+  "source_sha256": "ec6d070707f3dfedab5c11588e2a605d8845ab6da13d8a63181dd0fdd81f89b9",
+  "preview_manifest": "docs/previews/v7_c9_whole_body/run_motion_c5/manifest.json",
+  "preview_manifest_sha256": "649136fc564628f3966665a6cf19ebe9d90590fbb92bc8cded4b4e0cfd415adf",
+  "video": "docs/previews/v7_c9_whole_body/run_motion_c5/cycle.mp4",
+  "video_sha256": "db5fda03034bc6f211ab790f456e1763180a00e7010983eeb7c3bd131890d5a6",
+  "whole_body_refinement_allowed": true,
+  "production_G1_passed": false,
+  "production_G3_passed": false,
+  "walk_direction_approved_by_this_answer": false,
+  "complete_base_action_suite_approved": false,
+  "runtime_accepted": false,
+  "known_remaining_work": [
+    "Formal native-resolution whole-body poses with same-scale ruler and stable head proportions.",
+    "Foot contact, near/far leg occlusion and costume/face consistency refinement while preserving the approved motion.",
+    "Same-body interchangeable weapons and foreground grip layers, continuous sampling, start/stop, in-game validation."
+  ]
+}
