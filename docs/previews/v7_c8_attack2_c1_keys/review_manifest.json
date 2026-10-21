@@ -1,0 +1,24 @@
+{
+  "package_sha256": "d7d12a5d292b7c3461f9bd5369f070b022260249840e1dbad2d03876a426f594",
+  "source_keys": 3,
+  "continuous_action": false,
+  "runtime_installed": false,
+  "review_files": {
+    "contact_body_native.png": "7285bb285cf176f862b4eabe7a6253778160ad064fc1919bcbfc0f4a71c4e196",
+    "contact_full_2k.png": "fa1a8abab8d29fc004d5acd122ae9848faee2d8460b27f3cb5b84bb3becb4900",
+    "contact_greatsword_native.png": "db8701ff69a8f5cc10836e976b12c902a7c8f612a8aeb2a3984a8f74d3a35c8c",
+    "contact_katana_native.png": "c5af97be9b4193180dbc9c1c6211422e44865da6ab84a69e09bbf8d77038a4e1",
+    "contact_shortsword_native.png": "c7cf41262a9f180c1a80955f66f3ead7684663cca75ffd440a3ab2a44d31351f",
+    "follow_body_native.png": "ccf9300124d8aafc70cb7e033b068a735ce2e53c8bffbb8d1bd2706d71033a18",
+    "follow_full_2k.png": "b92b6f52d4992450cf15c7792e98840befc742e024eee4a9537380c2fb5ab6be",
+    "follow_greatsword_native.png": "3f7dc782bf6df4caf8ca2a9ceebebb06eb65bbcfa9039c1c83cbc8cabaa450d0",
+    "follow_katana_native.png": "6d74067819d0ae9a5c5b0726a5f9af3d284d327a2c3eb5d681861070172d0e47",
+    "follow_shortsword_native.png": "8be28f771d8c8b558d491aa7e8751a2cb5ea79c0697a18c3611a750b6e7f0ed1",
+    "index.html": "df7a25b293eb3305ba19e0c21f6b19f66dac1a27d70ae60c97d27ae58291a3d6",
+    "load_body_native.png": "0e85e04e0dc183bca63dca4c25b2edf8ae3d69c98ab60139bfb6ed0440cd4622",
+    "load_full_2k.png": "bdc66e94dc5ecac5c4e3aa5c92aa41dfc0f73f79227c6e03bcdab00477198bda",
+    "load_greatsword_native.png": "9784a24da243058ad5b4cf9940f0901a9338bc62848c6f9ff40461792165b7be",
+    "load_katana_native.png": "a6ad168c60b8ccd549b6deedbb5c8812cf2db6c9627d4a1a522a9fe998fab0d5",
+    "load_shortsword_native.png": "80deac7075bdac609d7d0b3cc41ba2dcb42c9aeb555f5512c340ff559d1d04d1"
+  }
+}

@@ -34,6 +34,9 @@ class GaitRigTests(unittest.TestCase):
   evidence=read(OUT/'foot_contact_review.json');cal=read(ROOT/self.m['part_inputs']['calibration'])
   for name,rows in evidence['clips'].items():
    for row in rows:
+    g=self.m['clips'][name]['frames'][row['tick']]['motion_geometry'];by_side={v['side']:v for v in row['feet']}
+    self.assertEqual(g['joints'][10],by_side['far']['ankle']);self.assertEqual(g['joints'][11],by_side['near']['ankle'])
+    self.assertEqual(g['joints'][4],g['secondary_grip']);self.assertEqual(g['joints'][5],g['grip'])
     for foot in row['feet']:
      if foot['support']:self.assertAlmostEqual(foot['lowest_sole_y'],840,places=6)
      else:self.assertLessEqual(foot['lowest_sole_y'],840.00001)

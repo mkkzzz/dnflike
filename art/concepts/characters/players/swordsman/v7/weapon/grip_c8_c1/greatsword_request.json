@@ -1,0 +1,7 @@
+{
+  "transparent_background": true,
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/game/assets/swordsman_v7_c6/weapons/greatsword.png"
+  ],
+  "prompt": "Edit the supplied transparent greatsword sprite for the same hand-drawn dark fantasy action game. Keep its exact broad double-edged straight silver steel blade, dark central fuller, triangular point, black rectangular crossguard with small gold end caps and collar, black pommel and red/black crisscross wrap. ONE targeted change: SHORTEN the red-wrapped handle and pommel distance from guard to pommel to about 22% of the guard-to-tip blade length (old handle too long). Preserve blade and guard silhouette, proportions, materials and orientation; do not make blade thinner, do not add ornaments. Pommel left, point right, horizontal. Independent weapon only, no hands, no text/shadow/glow. Transparent background. Requested native production canvas 2560x1440; fill width with margin, keep the original weapon's blade aspect ratio; do not enlarge old raster, redraw cleanly."
+}

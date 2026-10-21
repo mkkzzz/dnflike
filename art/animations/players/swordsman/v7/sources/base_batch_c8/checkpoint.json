@@ -16,16 +16,18 @@
     "walk_pass_near_c2",
     "walk_contact_near_c2",
     "walk_down_near_c2",
-    "walk_pass_far_c2"
+    "walk_pass_far_c2",
+    "attack2_c1"
   ],
   "source_review_pending": [
-    "gait pilot visual quality/start-stop/runtime",
-    "attack2_c1 concept proportions/body layering/continuous clip"
+    "gait pilot direction/finish/start-stop/runtime",
+    "attack2 continuous motion and G2/G3",
+    "attack3 source and continuous clip"
   ],
   "remaining": [
     "gait direction feedback and joint/cloth finish",
     "walk/run start-stop transitions and actual movement replay",
-    "reverse attack2 source gate, independent weapon layers and continuous clip",
+    "reverse attack2 breakdowns/continuous clip and G2/G3; three source keys now G1 passed",
     "rising attack3 source and continuous clip",
     "full combo interruptions/guard/jump/hit/three weapons/both facings user runtime acceptance"
   ],
@@ -55,10 +57,30 @@
   "selected": "base_runtime_c8_c3: real extra breakdown keys + real offhand-release key, GM preview only; minor intermediate cuff/hand deformation still needs visual review",
   "gait_pilot": {
     "manifest": "art/animations/players/swordsman/v7/exports/gait_rig_c8_pilot/manifest.json",
-    "sha256": "17a1b37cd77bde37af0dbb35aef7d038f7ebb9b70cda299f7a6db416a96e665b",
+    "sha256": "ba6927c2631a66785b5e8371ad1bc6c6a2d979222b90a527f735c542b3a59622",
     "review": "docs/previews/v7_c8_gait_rig/index.html",
     "runtime_installed": false,
     "user_feedback_pending": true,
-    "method": "painted cutout parts baked offline to normal layered PNG frames; no leg optical flow"
+    "method": "painted cutout parts baked offline to normal layered PNG frames; no leg optical flow",
+    "joint_contract": "Halpe26 left/far-first, primary right wrist index5; original near-first diagnostics archived"
+  },
+  "attack2": {
+    "body_source": "attack2_c1/body_c3.png",
+    "source_G1_passed": true,
+    "source_keys": 3,
+    "manifest": "art/animations/players/swordsman/v7/exports/combo_keys_c8/attack2_c1/manifest.json",
+    "sha256": "d7d12a5d292b7c3461f9bd5369f070b022260249840e1dbad2d03876a426f594",
+    "review": "docs/previews/v7_c8_attack2_c1_keys/index.html",
+    "runtime_installed": false,
+    "continuous_action": false,
+    "G2_approved": false,
+    "G3_approved": false
+  },
+  "weapon_handle_candidate": {
+    "manifest": "art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/exports/manifest.json",
+    "sha256": "fa3f24d14536d2aee3617ac91737c46e74a35c0f5a7af2e6e4896bc646d665ef",
+    "runtime_installed": false,
+    "old_c6_and_firstcut_gm_unchanged": true,
+    "reason": "shorter independent hilts fix second-cut forearm overlap; exact guard/tip reach retained; full animation review pending"
   }
 }

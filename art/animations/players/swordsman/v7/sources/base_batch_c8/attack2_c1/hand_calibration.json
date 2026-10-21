@@ -1,0 +1,38 @@
+{
+  "c8_attack2_load": {
+    "primary": [
+      1200,
+      281
+    ],
+    "secondary": [
+      1234,
+      284
+    ],
+    "weapon_hands": 2,
+    "G3_approved": false
+  },
+  "c8_attack2_contact": {
+    "primary": [
+      637,
+      677
+    ],
+    "secondary": [
+      604,
+      674
+    ],
+    "weapon_hands": 2,
+    "G3_approved": false
+  },
+  "c8_attack2_follow": {
+    "primary": [
+      1366,
+      616
+    ],
+    "secondary": [
+      1334,
+      624
+    ],
+    "weapon_hands": 2,
+    "G3_approved": false
+  }
+}

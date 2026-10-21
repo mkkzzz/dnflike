@@ -1,0 +1,23 @@
+{
+  "semantic_id": "item.weapon.katana.swordsman_c8_grip",
+  "state": "candidate_not_approved",
+  "scene_native": [
+    2560,
+    1440
+  ],
+  "actor_native_height": 380,
+  "target_physical_blade_length": 256,
+  "target_guard_to_pommel": 65,
+  "preserve_guard_offset_from_primary": [
+    21.981269254283234,
+    1.136484286791439
+  ],
+  "invariants": [
+    "independent body/weapon/finger layers",
+    "same blade reach/guard-tip trajectory",
+    "same steel/red wrap/black-gold guard design",
+    "new source edit, old c6 untouched",
+    "raw source must shrink only, no raster upscale"
+  ],
+  "reference": "game/assets/swordsman_v7_c6/weapons/katana.png"
+}

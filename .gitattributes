@@ -13,6 +13,7 @@ art/animations/players/swordsman/v7/sources/base_batch_c4/**/prompt_*.txt text e
 art/animations/players/swordsman/v7/exports/**/*.json text eol=lf
 art/animations/players/swordsman/v7/reviews/**/*.json text eol=lf
 art/concepts/characters/players/swordsman/standard_v1/measurements/*.json text eol=lf
+art/concepts/characters/players/swordsman/v7/weapon/**/*.json text eol=lf
 
 # 动作源图/消费副本和评审记录共用哈希；检出时不能转成 CRLF。
 game/assets/swordsman_v7_*/**/*.json text eol=lf

@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-21",
+  "tool": "builtin image_gen",
+  "target": "body_c1.png",
+  "target_sha256": "ea578e9b5224378bcd24e67f3142c8525c549f9123a25e1a5fa29956519951df",
+  "result": "body_c2.png",
+  "result_sha256": "3143a649fc45711fa41271bb49ca4bf915c87fd73ddf8b2995cae1e0162370bf",
+  "actual_size": [
+    1672,
+    941
+  ],
+  "upscale_applied": false,
+  "prompt": "body_c2_prompt.txt",
+  "prompt_file_sha256": "dec68e5b456d7bc2bf585ae2bdbceee0eb1a5305da1f7f3ab652028a7f78be1b",
+  "submitted_prompt_sha256": "d7fe7b381d56ed835fb12ae38fbe6d3e0fa5fd557db1602bec3553bfe4ed59bf",
+  "references": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack2_c1/body_c1.png",
+      "sha256": "ea578e9b5224378bcd24e67f3142c8525c549f9123a25e1a5fa29956519951df",
+      "actually_submitted": true
+    }
+  ],
+  "returned_original_file": "exec-36993d3b-68e9-4739-a4fa-18e1ca6eb412.png",
+  "G1_passed": false,
+  "artwork_approved": false,
+  "runtime_installed": false,
+  "rejection_reason": "contact head was over-shrunk by image generator to 48.64px native equivalent; never exported",
+  "selected_for_body_config": false
+}

@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-21",
+  "scope": "unapproved gait diagnostic annotations and offline rig motion_geometry; preserve old source-point files byte-exact for failed-flow provenance",
+  "runtime_joint_order": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    20,
+    21,
+    24,
+    25
+  ],
+  "files": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_cycle_c1/joint_calibration.json",
+      "previous_sha256": "168bbac9892fa28d52ec2f13657a0ac751004e4af782d7a796bcb7282b8bf24c",
+      "previous_file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_cycle_c1/joint_calibration_near_first_archive.json",
+      "corrected_sha256": "0a39e964c76a5ba6979d510f125fccc8905d8bd6e9d3ef513c84abd1a521ad2e",
+      "correction": "Pair order corrected, source pixel locations unchanged; no production image modified."
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/run_cycle_c1/joint_calibration.json",
+      "previous_sha256": "f5d5aeb657202383bf199f758a4c29cab4676831abad9f2e9bf850f5d9e1a585",
+      "previous_file": "art/animations/players/swordsman/v7/sources/base_batch_c8/run_cycle_c1/joint_calibration_near_first_archive.json",
+      "corrected_sha256": "38c3e66ba0f5a8bb1181783aafd3e21c0be4cd99876c8026f58c7982a9cf1647",
+      "correction": "Pair order corrected, source pixel locations unchanged; no production image modified."
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_contact_far_c2/joint_calibration.json",
+      "previous_sha256": "b98165ca160aefcdd4bb6d828b0765af562874dc661614554cbf6d2eb64ceccc",
+      "previous_file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_contact_far_c2/joint_calibration_near_first_archive.json",
+      "corrected_sha256": "6637e701f873cbc0011853f81e7697495f4697f270b1667d9470cf5e3dede446",
+      "correction": "Pair order corrected, source pixel locations unchanged; no production image modified."
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_contact_near_c2/joint_calibration.json",
+      "previous_sha256": "89b835c7dd3eee1cc598585979299265f45ce120a45495a2ae7f90e001e32ecf",
+      "previous_file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_contact_near_c2/joint_calibration_near_first_archive.json",
+      "corrected_sha256": "f698ca16fe288dc3c4f945d183360e9617583e4a66b74cf5220e75851f4d8259",
+      "correction": "Pair order corrected, source pixel locations unchanged; no production image modified."
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_down_far_c2/joint_calibration.json",
+      "previous_sha256": "451e3cfdfefefc91866993a6922ebf0d9e504cb37a2c59b788a2c2eccd72bd9b",
+      "previous_file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_down_far_c2/joint_calibration_near_first_archive.json",
+      "corrected_sha256": "d42ece8e8075d3437eddabeb1db4ae5b25933d6ad93bbf55e35b828f8d3e8d67",
+      "correction": "Pair order corrected, source pixel locations unchanged; no production image modified."
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_down_near_c2/joint_calibration.json",
+      "previous_sha256": "f438ee1048e1e69c4f6bcc686c4e388878c9297e4fccd639d29a79e790079607",
+      "previous_file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_down_near_c2/joint_calibration_near_first_archive.json",
+      "corrected_sha256": "768ee55f2c2dc20e04aeb95755c3e4a843c55d0ba948e8acc4d06459c56d8d1c",
+      "correction": "Pair order corrected, source pixel locations unchanged; no production image modified."
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_pass_far_c2/joint_calibration.json",
+      "previous_sha256": "6da93a47ac8b452bd5b7daa181bb6df4c72ec26073d91c1578c628c7ddb33704",
+      "previous_file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_pass_far_c2/joint_calibration_near_first_archive.json",
+      "corrected_sha256": "b22c6aa55afb26639526f279a6a51864cc861b975e9af8d9745bed54d0d95b17",
+      "correction": "Pair order corrected, source pixel locations unchanged; no production image modified."
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_pass_near_c2/joint_calibration.json",
+      "previous_sha256": "9e8174bda9eb476b7a0d3028c1b7f237c5f7fbf1d6ab98ea65ded6690631f0cf",
+      "previous_file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_pass_near_c2/joint_calibration_near_first_archive.json",
+      "corrected_sha256": "a0ec4ee5b840e160500f996af77255e8f21db27b415e50bf4db254f1ddaa0ae0",
+      "correction": "Pair order corrected, source pixel locations unchanged; no production image modified."
+    }
+  ],
+  "accepted_idle_changed": false,
+  "first_cut_gm_package_changed": false
+}

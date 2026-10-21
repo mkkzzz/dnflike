@@ -1,0 +1,134 @@
+{
+  "date": "2026-10-21",
+  "scope": "handle compatibility candidate sources; not installed",
+  "records": [
+    {
+      "name": "katana",
+      "tool": "builtin image_gen",
+      "file": "katana_source.png",
+      "sha256": "17dc25b89830673da4082d9e400012eb479894883a45bd1af57b037608b44f3f",
+      "returned_original_file": "exec-9940591a-c386-42af-bc45-2f32fa3ae78a.png",
+      "actual_size": [
+        1983,
+        793
+      ],
+      "actual_transparency": "RGBA",
+      "request": "katana_request.json",
+      "request_sha256": "57c4d06fedaa426ea674f9641812759f78db94fc420d9be1fd5f9efe35119233",
+      "prompt": "Edit the supplied transparent katana sprite, an independent weapon for a hand-drawn dark fantasy side-scrolling action game. Preserve the exact visual identity: slim gently curved silver katana blade, white sharp cutting edge on lower side, dark grey upper spine, red criss-cross black handle wrap, black oval guard with narrow gold rim and gold collar. ONE CHANGE: shorten the handle/pommel only, reducing guard-to-pommel length to exactly about 25.4% of guard-to-tip blade length; old handle is too long. Preserve the blade silhouette, curve, thickness, guard, blade cutting-edge direction and materials as closely as possible. Draw the red wrap naturally for the shorter handle, no squeezing artifacts. Single entire weapon, horizontal, pommel left, tip right, cutting edge below, no hands, no character, no text, no shadows, no glow. Truly transparent background. Requested native production canvas 2560x1440: center weapon, fill almost entire width with comfortable margin, keep original thin blade aspect ratio. This is a new compatible handle candidate, not a redesign of the blade.",
+      "references": [
+        {
+          "file": "game/assets/swordsman_v7_c6/weapons/katana.png",
+          "sha256": "889c0612e8af597ceb60f796b9a81a25e09ff89d090f251a669ee93a9725ed2d",
+          "actually_submitted": true,
+          "role": "edit target"
+        }
+      ],
+      "requested_scene_size": [
+        2560,
+        1440
+      ],
+      "source_canvas_target_met": false,
+      "raster_upscaled": false,
+      "selected_for_offline_candidate": true,
+      "artwork_approved": false,
+      "reason": "selected for measured static rehang; G3 pending"
+    },
+    {
+      "name": "greatsword_c1",
+      "tool": "builtin image_gen",
+      "file": "greatsword_source_c1.png",
+      "sha256": "6686aecd529e296286e56757f6509289ff5c7301fb6fa70be84e79f699a87c28",
+      "returned_original_file": "exec-bf2a0693-2e12-4361-b656-8b113960c44a.png",
+      "actual_size": [
+        1983,
+        793
+      ],
+      "actual_transparency": "RGBA",
+      "request": "greatsword_request.json",
+      "request_sha256": "3dc5464d892b61baafc9bd07ea46fe495906782a68d9989e72a33883347ab6a6",
+      "prompt": "Edit the supplied transparent greatsword sprite for the same hand-drawn dark fantasy action game. Keep its exact broad double-edged straight silver steel blade, dark central fuller, triangular point, black rectangular crossguard with small gold end caps and collar, black pommel and red/black crisscross wrap. ONE targeted change: SHORTEN the red-wrapped handle and pommel distance from guard to pommel to about 22% of the guard-to-tip blade length (old handle too long). Preserve blade and guard silhouette, proportions, materials and orientation; do not make blade thinner, do not add ornaments. Pommel left, point right, horizontal. Independent weapon only, no hands, no text/shadow/glow. Transparent background. Requested native production canvas 2560x1440; fill width with margin, keep the original weapon's blade aspect ratio; do not enlarge old raster, redraw cleanly.",
+      "references": [
+        {
+          "file": "game/assets/swordsman_v7_c6/weapons/greatsword.png",
+          "sha256": "dd3ca3bab7f70504606d7036d33faba8aad676e97f117c3e75ee2bf013cc1f07",
+          "actually_submitted": true,
+          "role": "edit target"
+        }
+      ],
+      "requested_scene_size": [
+        2560,
+        1440
+      ],
+      "source_canvas_target_met": false,
+      "raster_upscaled": false,
+      "selected_for_offline_candidate": true,
+      "artwork_approved": false,
+      "reason": "selected for measured static rehang; G3 pending"
+    },
+    {
+      "name": "shortsword",
+      "tool": "builtin image_gen",
+      "file": "shortsword_source.png",
+      "sha256": "c8dc2fdb2eba0b6c84f4591994f3b091813610b42ee4e6412c2d96d9c41068ed",
+      "returned_original_file": "exec-82161589-03ec-49a0-bc92-14cd0d3f2b7d.png",
+      "actual_size": [
+        1983,
+        793
+      ],
+      "actual_transparency": "RGBA",
+      "request": "shortsword_request.json",
+      "request_sha256": "152c3e443075e3e5ab27a9b5f28d1e259cd648cbd34552c9e1183d89bcb9b54d",
+      "prompt": "Targeted edit of the supplied independent transparent shortsword sprite. Keep the same straight silver double-edged blade, dark steel fuller, triangular point, black squared crossguard with gold ends/collar and red/black handle wrap. Shorten only the handle: guard to pommel should be about 50 percent of guard to blade-tip distance. Do not exaggerate the shortening: this must still accommodate two compact adult hands. Preserve blade thickness, guard, steel design and materials. Horizontal pommel left blade tip right, one whole weapon, no hands or character, no labels/text, no shadows/glow. True transparent alpha background. Requested production canvas 2560x1440, fill width with margin, preserve blade aspect ratio.",
+      "references": [
+        {
+          "file": "game/assets/swordsman_v7_c6/weapons/shortsword.png",
+          "sha256": "fbab467d3a962b9df07172e90f110b65cb48decd70e7d7edbd56d3b9cb080558",
+          "actually_submitted": true,
+          "role": "edit target"
+        }
+      ],
+      "requested_scene_size": [
+        2560,
+        1440
+      ],
+      "source_canvas_target_met": false,
+      "raster_upscaled": false,
+      "selected_for_offline_candidate": true,
+      "artwork_approved": false,
+      "reason": "selected for measured static rehang; G3 pending"
+    },
+    {
+      "name": "greatsword_c2",
+      "tool": "builtin image_gen",
+      "file": "greatsword_source_c2_rejected.png",
+      "sha256": "86d3811e35509e4cef667c58cb6fc4126d7efb5113659d96d2d78d0e499701d3",
+      "returned_original_file": "exec-9f06936b-5e4f-4d58-8ac4-040a5319bb03.png",
+      "actual_size": [
+        1983,
+        793
+      ],
+      "actual_transparency": "RGBA",
+      "request": "greatsword_c2_request.json",
+      "request_sha256": "a136d4fa90858251fd67ca1203ec4b03f4b18722d481a9035e770dc8b6e9ceae",
+      "prompt": "Precise localized edit of this greatsword sprite. The red wrapped grip is now TOO SHORT to fit two hands. INCREASE the horizontal length of the handle (pommel through wrapped grip) by 50 percent, extending it leftward; keep guard, collar and the entire blade in exactly their existing position, size, design and orientation. Existing handle around 240 pixels long should become around 360 pixels long; move the whole weapon slightly right only if the left margin needs more room, never resize the blade or guard. Repaint the extra red/black wrapping naturally, same thickness. Horizontal weapon left-to-right on transparent alpha. No hands, no lettering, no shadow or glow. Preserve source canvas resolution; do not enlarge raster. This is handle length compatibility for two adult hands, no other design change.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/greatsword_source_c1.png",
+          "sha256": "6686aecd529e296286e56757f6509289ff5c7301fb6fa70be84e79f699a87c28",
+          "actually_submitted": true,
+          "role": "edit target"
+        }
+      ],
+      "requested_scene_size": [
+        2560,
+        1440
+      ],
+      "source_canvas_target_met": false,
+      "raster_upscaled": false,
+      "selected_for_offline_candidate": false,
+      "artwork_approved": false,
+      "reason": "handle over-extended; keep original c1, not used"
+    }
+  ]
+}

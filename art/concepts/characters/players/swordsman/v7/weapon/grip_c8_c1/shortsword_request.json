@@ -1,0 +1,7 @@
+{
+  "transparent_background": true,
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/game/assets/swordsman_v7_c6/weapons/shortsword.png"
+  ],
+  "prompt": "Targeted edit of the supplied independent transparent shortsword sprite. Keep the same straight silver double-edged blade, dark steel fuller, triangular point, black squared crossguard with gold ends/collar and red/black handle wrap. Shorten only the handle: guard to pommel should be about 50 percent of guard to blade-tip distance. Do not exaggerate the shortening: this must still accommodate two compact adult hands. Preserve blade thickness, guard, steel design and materials. Horizontal pommel left blade tip right, one whole weapon, no hands or character, no labels/text, no shadows/glow. True transparent alpha background. Requested production canvas 2560x1440, fill width with margin, preserve blade aspect ratio."
+}

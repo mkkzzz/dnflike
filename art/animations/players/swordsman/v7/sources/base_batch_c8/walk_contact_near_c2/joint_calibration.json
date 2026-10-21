@@ -21,20 +21,20 @@
   "points": {
     "c8_walk_contact_near": [
       [
-        1068,
-        189
-      ],
-      [
         1190,
         198
       ],
       [
-        996,
-        320
+        1068,
+        189
       ],
       [
         1252,
         367
+      ],
+      [
+        996,
+        320
       ],
       [
         1320,
@@ -45,56 +45,58 @@
         460
       ],
       [
-        1090,
-        416
-      ],
-      [
         1185,
         420
       ],
       [
-        1255,
-        595
+        1090,
+        416
       ],
       [
         1080,
         614
       ],
       [
-        1358,
-        778
+        1255,
+        595
       ],
       [
         952,
         763
       ],
       [
-        1439,
-        837
+        1358,
+        778
       ],
       [
         992,
         852
       ],
       [
-        1312,
-        862
+        1439,
+        837
       ],
       [
         907,
         807
+      ],
+      [
+        1312,
+        862
       ]
     ]
   },
   "near_leg_indices": [
-    6,
-    8,
-    10
-  ],
-  "far_leg_indices": [
     7,
     9,
     11
   ],
-  "method": "Manual source-pixel review, not pose model confidence or art approval"
+  "far_leg_indices": [
+    6,
+    8,
+    10
+  ],
+  "method": "Manual source-pixel review, not pose model confidence or art approval",
+  "joint_order_semantics": "Halpe26: left/far then right/near; wrist slots remain left secondary then right primary.",
+  "previous_annotation_sha256": "89b835c7dd3eee1cc598585979299265f45ce120a45495a2ae7f90e001e32ecf"
 }

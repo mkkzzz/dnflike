@@ -1,0 +1,177 @@
+{
+  "revision": "swordsman_c8_grip_c1",
+  "weapons": {
+    "katana": {
+      "file": "art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/exports/katana.png",
+      "marks": {
+        "guard": [
+          344.0,
+          103.0
+        ],
+        "tip": [
+          1861.0,
+          15.0
+        ],
+        "cutting_edge": [
+          1076.0,
+          152.0
+        ],
+        "spine": [
+          1076.0,
+          78.0
+        ],
+        "grip": [
+          213.58842410027853,
+          95.11979173322533
+        ]
+      },
+      "physical_blade_length": 256.0,
+      "sha256": "c0d4330188fada27f744a183be336ffa89d46a7572ddc7e6de54c507c58c2609",
+      "actual_native_guard_to_pommel": 57.03762570738486,
+      "old_guard_offset_in_blade_basis": [
+        21.856799357988706,
+        2.5977136847708127
+      ]
+    },
+    "greatsword": {
+      "file": "art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/exports/greatsword.png",
+      "marks": {
+        "guard": [
+          268.0,
+          185.0
+        ],
+        "tip": [
+          1897.0,
+          185.0
+        ],
+        "cutting_edge": [
+          1042.0,
+          241.0
+        ],
+        "spine": [
+          1042.0,
+          124.0
+        ],
+        "grip": [
+          162.49807247494215,
+          185.0
+        ]
+      },
+      "physical_blade_length": 320.0,
+      "sha256": "ea071be0bdc1c8d1d045b00737b5651fd48fcbe1d0543f1824260d6bb87393d7",
+      "actual_native_guard_to_pommel": 52.25291589932474,
+      "old_guard_offset_in_blade_basis": [
+        20.724749421742484,
+        0.0
+      ]
+    },
+    "shortsword": {
+      "file": "art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/exports/shortsword.png",
+      "marks": {
+        "guard": [
+          487.0,
+          213.0
+        ],
+        "tip": [
+          1800.0,
+          213.0
+        ],
+        "cutting_edge": [
+          1079.0,
+          269.0
+        ],
+        "spine": [
+          1079.0,
+          156.0
+        ],
+        "grip": [
+          375.4634873323398,
+          213.0
+        ]
+      },
+      "physical_blade_length": 140.8,
+      "sha256": "7d7bc8859fd60aa259ef347fa677ab7168e46aa8e7dede833d07b64acb22f790",
+      "actual_native_guard_to_pommel": 51.901904036557504,
+      "old_guard_offset_in_blade_basis": [
+        11.96065573770492,
+        0.0
+      ]
+    }
+  },
+  "sources": {
+    "katana": {
+      "file": "art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/katana_source.png",
+      "sha256": "17dc25b89830673da4082d9e400012eb479894883a45bd1af57b037608b44f3f",
+      "actual_size": [
+        1983,
+        793
+      ],
+      "requested_scene_native": [
+        2560,
+        1440
+      ],
+      "raster_upscaled": false,
+      "cleanup": "mask disconnected low-alpha fringe then crop; no paint deformation",
+      "crop": [
+        74,
+        297,
+        1941,
+        510
+      ],
+      "source_sampling_scale": 0.1684708997999496
+    },
+    "greatsword": {
+      "file": "art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/greatsword_source_c1.png",
+      "sha256": "6686aecd529e296286e56757f6509289ff5c7301fb6fa70be84e79f699a87c28",
+      "actual_size": [
+        1983,
+        793
+      ],
+      "requested_scene_native": [
+        2560,
+        1440
+      ],
+      "raster_upscaled": false,
+      "cleanup": "mask disconnected low-alpha fringe then crop; no paint deformation",
+      "crop": [
+        58,
+        210,
+        1961,
+        579
+      ],
+      "source_sampling_scale": 0.19643953345610804
+    },
+    "shortsword": {
+      "file": "art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/shortsword_source.png",
+      "sha256": "c8dc2fdb2eba0b6c84f4591994f3b091813610b42ee4e6412c2d96d9c41068ed",
+      "actual_size": [
+        1983,
+        793
+      ],
+      "requested_scene_native": [
+        2560,
+        1440
+      ],
+      "raster_upscaled": false,
+      "cleanup": "mask disconnected low-alpha fringe then crop; no paint deformation",
+      "crop": [
+        121,
+        156,
+        1928,
+        575
+      ],
+      "source_sampling_scale": 0.10723533891850724
+    }
+  },
+  "base_manifest_sha256": "b6615d37ffb602f44c305c5d58def38c84a68976b36da3045b5f599fe7126839",
+  "calibration_sha256": "e8ebb98882937aeaa9bb17522fe1622215dcc2372bedf6710e8267f1eb06256e",
+  "recipe_sha256": "599ca472c81007a5e384d3b180ca1e1e2adabd5f14d9b9c59a765801e878f352",
+  "authorization": {
+    "runtime_trial_allowed": false,
+    "artwork_approved": false
+  },
+  "validation": {
+    "G3_approved": false,
+    "guard_tip_reach_preserved_by_construction": true
+  }
+}

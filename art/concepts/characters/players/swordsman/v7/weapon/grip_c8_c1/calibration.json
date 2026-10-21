@@ -1,0 +1,79 @@
+{
+  "weapons": {
+    "katana": {
+      "file": "katana_source.png",
+      "marks": {
+        "guard": [
+          418,
+          400
+        ],
+        "tip": [
+          1935,
+          312
+        ],
+        "cutting_edge": [
+          1150,
+          449
+        ],
+        "spine": [
+          1150,
+          375
+        ]
+      },
+      "pommel": [
+        78,
+        385
+      ]
+    },
+    "greatsword": {
+      "file": "greatsword_source_c1.png",
+      "marks": {
+        "guard": [
+          326,
+          395
+        ],
+        "tip": [
+          1955,
+          395
+        ],
+        "cutting_edge": [
+          1100,
+          451
+        ],
+        "spine": [
+          1100,
+          334
+        ]
+      },
+      "pommel": [
+        60,
+        395
+      ]
+    },
+    "shortsword": {
+      "file": "shortsword_source.png",
+      "marks": {
+        "guard": [
+          608,
+          369
+        ],
+        "tip": [
+          1921,
+          369
+        ],
+        "cutting_edge": [
+          1200,
+          425
+        ],
+        "spine": [
+          1200,
+          312
+        ]
+      },
+      "pommel": [
+        124,
+        369
+      ]
+    }
+  }
+}

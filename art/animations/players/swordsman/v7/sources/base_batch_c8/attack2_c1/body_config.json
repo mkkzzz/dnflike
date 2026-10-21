@@ -1,0 +1,142 @@
+{
+  "revision": "v7_c8_attack2_body_c3",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/base_batch_c8_body/attack2_c1",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "body_c3.png",
+      "standing_height": 503
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "reviewed_true_hair_jaw",
+    "G2": "pending",
+    "G3": "pending",
+    "G4": "pending",
+    "runtime_install_allowed": false
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.combo.2",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c8_attack2_load",
+          "source": "body",
+          "crop_bbox": [
+            990,
+            95,
+            1550,
+            535
+          ],
+          "root": [
+            1282,
+            519
+          ],
+          "foot": [
+            1031,
+            519
+          ],
+          "component_seed": [
+            1280,
+            250
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1200,
+              281
+            ],
+            "offhand": [
+              1234,
+              284
+            ]
+          }
+        },
+        {
+          "id": "c8_attack2_contact",
+          "source": "body",
+          "crop_bbox": [
+            195,
+            515,
+            750,
+            925
+          ],
+          "root": [
+            483,
+            913
+          ],
+          "foot": [
+            232,
+            913
+          ],
+          "component_seed": [
+            500,
+            710
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              637,
+              677
+            ],
+            "offhand": [
+              604,
+              674
+            ]
+          }
+        },
+        {
+          "id": "c8_attack2_follow",
+          "source": "body",
+          "crop_bbox": [
+            1000,
+            520,
+            1550,
+            930
+          ],
+          "root": [
+            1275,
+            917
+          ],
+          "foot": [
+            1064,
+            917
+          ],
+          "component_seed": [
+            1250,
+            700
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1366,
+              616
+            ],
+            "offhand": [
+              1334,
+              624
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

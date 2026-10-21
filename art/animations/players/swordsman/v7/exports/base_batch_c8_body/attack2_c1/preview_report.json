@@ -1,0 +1,46 @@
+{
+  "schema": "standard_actions_pilot/1",
+  "source_of_preview": "exported manifest.json and RGBA PNGs only",
+  "nonloop_combination": "hold last frame after end, preview only",
+  "weapon_layering": {
+    "weapon_layering": "not_attempted",
+    "G3": "pending",
+    "actor_includes_weapon": false,
+    "G1": "reviewed_true_hair_jaw",
+    "G2": "pending",
+    "G4": "pending",
+    "runtime_install_allowed": false
+  },
+  "previews": [
+    {
+      "file": "keys_naked.gif",
+      "intended_duration_ticks": 3,
+      "intended_duration_ms": 50.0,
+      "gif_duration_ms": 50,
+      "total_error_ms": 0.0,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": false
+    },
+    {
+      "file": "actions_naked.gif",
+      "intended_duration_ticks": 3,
+      "intended_duration_ms": 50.0,
+      "gif_duration_ms": 50,
+      "total_error_ms": 0.0,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": true
+    }
+  ],
+  "overview_included": [
+    "keys"
+  ],
+  "overview_excluded": [],
+  "component_isolation": {
+    "pose_count": 3,
+    "mask_directory": "masks/",
+    "visual_review": "pending"
+  },
+  "exported_pose_count": 3,
+  "unique_source_pose_count": 3,
+  "automated_check": "passed: explicit crops, alpha bounds, canvas bounds, positive integer ticks; visual review pending"
+}

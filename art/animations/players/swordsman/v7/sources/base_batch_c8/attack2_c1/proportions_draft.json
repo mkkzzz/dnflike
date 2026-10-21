@@ -1,0 +1,111 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-21",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack2_c1/body_config_draft.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Manual native-pixel crown, true front jaw vertex, standing sole; head-size result must pass before any body export. Head/torso winding direction reviewed separately.",
+  "sources": {
+    "body": {
+      "sha256": "ea578e9b5224378bcd24e67f3142c8525c549f9123a25e1a5fa29956519951df",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 15,
+        "standing_bottom_y": 523,
+        "sole": [
+          373,
+          523
+        ],
+        "crop_bbox": [
+          300,
+          5,
+          575,
+          535
+        ],
+        "head": {
+          "hair_top": [
+            449,
+            15
+          ],
+          "chin": [
+            471,
+            98
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c8_attack2_gauge",
+      "head": {
+        "hair_top": [
+          449,
+          15
+        ],
+        "chin": [
+          471,
+          98
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c8_attack2_load",
+      "head": {
+        "hair_top": [
+          1346,
+          133
+        ],
+        "chin": [
+          1354,
+          216
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c8_attack2_contact",
+      "head": {
+        "hair_top": [
+          539,
+          528
+        ],
+        "chin": [
+          543,
+          612
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c8_attack2_follow",
+      "head": {
+        "hair_top": [
+          1280,
+          533
+        ],
+        "chin": [
+          1286,
+          606
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "landmark_overlay_draft.png",
+    "sha256": "a31c35aac72b182c04cf9683facd89a9176637081a8969092ba763446775004c",
+    "reviewed": true
+  }
+}

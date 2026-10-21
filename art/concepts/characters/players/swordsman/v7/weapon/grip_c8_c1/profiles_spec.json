@@ -1,0 +1,30 @@
+{
+  "scope": "independent handle compatibility candidates",
+  "requested_native_scene": [
+    2560,
+    1440
+  ],
+  "physical_blade_lengths": {
+    "katana": 256,
+    "greatsword": 320,
+    "shortsword": 140.8
+  },
+  "target_guard_to_pommel": 65,
+  "tolerance_note": "measure actual generation; source ratios are requests, G3 decides grip fit",
+  "native_guard_offsets_from_primary": {
+    "katana": [
+      21.9812692543,
+      1.1364842868
+    ],
+    "greatsword": [
+      20.7247494217,
+      0
+    ],
+    "shortsword": [
+      11.9606557377,
+      0
+    ]
+  },
+  "old_sources_unchanged": true,
+  "artwork_approved": false
+}

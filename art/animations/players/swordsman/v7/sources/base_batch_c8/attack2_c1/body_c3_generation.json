@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-21",
+  "tool": "builtin image_gen",
+  "target": "body_c2.png",
+  "target_sha256": "3143a649fc45711fa41271bb49ca4bf915c87fd73ddf8b2995cae1e0162370bf",
+  "result": "body_c3.png",
+  "result_sha256": "0f13cff4b1713191b269f90135af7ab4b2f469b12933835ab4cc22ac6f021ea0",
+  "actual_size": [
+    1672,
+    941
+  ],
+  "task_target_scene_size": [
+    2560,
+    1440
+  ],
+  "edit_canvas_policy": "preserve source canvas; do not upscale raster",
+  "raster_upscale_applied": false,
+  "head_redrawn_by_generator": true,
+  "prompt": "body_c3_prompt.txt",
+  "prompt_file_sha256": "9b7b2fb58312ff07049508bc41407093376c36c1048d73ab23db35f6bc7cd6fc",
+  "submitted_prompt_sha256": "ed3b565a9355c51293c14d8104d61ea443209cf898481605a4654e8183223b82",
+  "references": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack2_c1/body_c2.png",
+      "sha256": "3143a649fc45711fa41271bb49ca4bf915c87fd73ddf8b2995cae1e0162370bf",
+      "actually_submitted": true,
+      "role": "edit target"
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack2_c1/contact_head_guide.png",
+      "sha256": "a4f0914d6587451e5d57f31187da6e3f4aabadcd2475bfaf66826c9ff2136ce8",
+      "actually_submitted": true,
+      "role": "technical head-size guide"
+    }
+  ],
+  "returned_original_file": "exec-c96eb4ba-106c-408a-9863-130c797eb1a6.png",
+  "G1_passed": true,
+  "artwork_approved": false,
+  "runtime_installed": false,
+  "selected_for_body_config": true,
+  "proportion_report_sha256": "84328e8bc86b243c73d9e1fc37b3078f0edd960dccc50c16ef76687eb17c3508"
+}

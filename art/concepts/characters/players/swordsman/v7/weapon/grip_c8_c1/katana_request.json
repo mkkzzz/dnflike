@@ -1,0 +1,7 @@
+{
+  "transparent_background": true,
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/game/assets/swordsman_v7_c6/weapons/katana.png"
+  ],
+  "prompt": "Edit the supplied transparent katana sprite, an independent weapon for a hand-drawn dark fantasy side-scrolling action game. Preserve the exact visual identity: slim gently curved silver katana blade, white sharp cutting edge on lower side, dark grey upper spine, red criss-cross black handle wrap, black oval guard with narrow gold rim and gold collar. ONE CHANGE: shorten the handle/pommel only, reducing guard-to-pommel length to exactly about 25.4% of guard-to-tip blade length; old handle is too long. Preserve the blade silhouette, curve, thickness, guard, blade cutting-edge direction and materials as closely as possible. Draw the red wrap naturally for the shorter handle, no squeezing artifacts. Single entire weapon, horizontal, pommel left, tip right, cutting edge below, no hands, no character, no text, no shadows, no glow. Truly transparent background. Requested native production canvas 2560x1440: center weapon, fill almost entire width with comfortable margin, keep original thin blade aspect ratio. This is a new compatible handle candidate, not a redesign of the blade."
+}

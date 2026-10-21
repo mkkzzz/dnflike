@@ -1,0 +1,7 @@
+{
+  "transparent_background": true,
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/concepts/characters/players/swordsman/v7/weapon/grip_c8_c1/greatsword_source_c1.png"
+  ],
+  "prompt": "Precise localized edit of this greatsword sprite. The red wrapped grip is now TOO SHORT to fit two hands. INCREASE the horizontal length of the handle (pommel through wrapped grip) by 50 percent, extending it leftward; keep guard, collar and the entire blade in exactly their existing position, size, design and orientation. Existing handle around 240 pixels long should become around 360 pixels long; move the whole weapon slightly right only if the left margin needs more room, never resize the blade or guard. Repaint the extra red/black wrapping naturally, same thickness. Horizontal weapon left-to-right on transparent alpha. No hands, no lettering, no shadow or glow. Preserve source canvas resolution; do not enlarge raster. This is handle length compatibility for two adult hands, no other design change."
+}

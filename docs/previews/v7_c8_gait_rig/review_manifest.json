@@ -1,5 +1,5 @@
 {
-  "package_sha256": "17a1b37cd77bde37af0dbb35aef7d038f7ebb9b70cda299f7a6db416a96e665b",
+  "package_sha256": "ba6927c2631a66785b5e8371ad1bc6c6a2d979222b90a527f735c542b3a59622",
   "crop_movies": {
     "walk_body_native.mp4": {
       "source_movie": "walk_60fps.mp4",
@@ -100,7 +100,7 @@
   },
   "review_files": {
     "browser_review.png": "c0e866cbca60589cac0af61cdc7d215349c64c00ae86bc74809a5910ea6dfd65",
-    "index.html": "08e4dcfb9e696b3c8bacbcf353689ce4c68c8bf3775a0197ecbb332ade6b97d3",
+    "index.html": "6a0050ff58db944f9e6d2213f8f1c4af35278a93db0311400f8586092b22cded",
     "run_60fps.mp4": "e07e05aafba32941ee4ccfcb896e38e2421dfecdec45b524e669bd77c4f346a9",
     "run_body_native.mp4": "686dd37c504809d5d8ad8ddbe422f113c16274255a90c58364ec84c9adcf6ed4",
     "run_greatsword_native.mp4": "bb569076ba3084bd2d5e2074cd03eed57be93b9ea5cd9abe9205f49356564b39",
@@ -123,22 +123,21 @@
   "artwork_approved": false,
   "runtime_user_approved": false,
   "browser_check": {
-    "video": "run_body_native.mp4",
-    "size": [
+    "date": "2026-10-21",
+    "clip": "run",
+    "view": "body",
+    "package_sha256": "ba6927c2631a66785b5e8371ad1bc6c6a2d979222b90a527f735c542b3a59622",
+    "playback_rate": 0.5,
+    "paused": true,
+    "after_eight_next_clicks_seconds": 0.133328,
+    "native_movie_size": [
       700,
       650
     ],
-    "rate": 0.5,
-    "paused_time_after_eight_next_clicks": 0.133328,
-    "seekable": [
+    "seekable_range": [
       0,
       0.533333
     ],
-    "range_http_verified": true,
-    "range_response": 206,
-    "native_scene_size": [
-      2560,
-      1440
-    ]
+    "screenshot": "browser_review.png"
   }
 }
