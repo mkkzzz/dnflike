@@ -1,0 +1,40 @@
+{
+  "source_sha256": "43632f5447679c980f8b70de3291f59889643b69042999303c0ca9b2d9425de9",
+  "pose": "c9_run_carry",
+  "primary": [
+    1078,
+    425
+  ],
+  "blade_axis": [
+    -0.993,
+    0.118
+  ],
+  "cutting_direction": [
+    0,
+    1
+  ],
+  "finger_region": [
+    [
+      1050,
+      412
+    ],
+    [
+      1101,
+      414
+    ],
+    [
+      1108,
+      435
+    ],
+    [
+      1087,
+      449
+    ],
+    [
+      1051,
+      442
+    ]
+  ],
+  "reviewed": true,
+  "note": "Static same-body carry only. No runtime weapon/motion approval."
+}

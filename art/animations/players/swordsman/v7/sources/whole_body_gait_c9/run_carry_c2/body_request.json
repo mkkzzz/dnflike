@@ -1,0 +1,7 @@
+{
+  "prompt": "Use case: precise-object-edit. Make a clean WHOLE BODY layer from this transparent reference sheet. Remove ONLY the entire katana (blade, guard, collar, handle, pommel) from the right running figure. Preserve the exact right hand's anatomical grip and bent arm pose. Reconstruct only the few pixels of palm and cloth hidden by weapon; keep fingers naturally curled with an empty narrow handle channel. Preserve the entire person's now-correct compact head size, head position, neck, shoulders, chest, hip, legs, boots, coat silhouette, free fist, both poses' placement and source canvas dimensions. Left neutral companion completely unchanged. Do not redraw or move whole figure. No weapon pixels remain, no scabbard, no background, no effects. Transparent background preserved. This is a clean complete person to receive a separate swappable weapon, NOT a detached limb sheet.",
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_carry_c2/proportion_c2.png"
+  ],
+  "transparent_background": true
+}

@@ -1,26 +1,88 @@
 {
   "date": "2026-10-21",
   "revision": "v7_c9_whole_body_gait",
-  "state": "spec_ready",
-  "scope": ["actor.player.base.walk", "actor.player.base.run", "movement start and stop transitions"],
+  "state": "whole_body_drawings_and_diagnostics_in_progress",
+  "scope": [
+    "actor.player.base.walk",
+    "actor.player.base.run",
+    "movement start and stop transitions"
+  ],
   "replaces_rejected_candidate": "v7_c8_walk_run_rig_c1",
   "user_constraint": "Body and legs must be painted and designed as one whole moving person; no independently generated legs assembled onto a torso.",
-  "native_scene": [2560, 1440],
+  "native_scene": [
+    2560,
+    1440
+  ],
   "native_actor_standing_height": 380,
-  "actor_export_canvas": [1024, 1080],
-  "anchor": [448, 840],
+  "actor_export_canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
   "upscale_allowed": false,
-  "source_canvas_requested": [2560, 1440],
-  "actual_source_dimensions": null,
-  "source_images_created": false,
+  "source_canvas_requested": [
+    2560,
+    1440
+  ],
+  "actual_source_dimensions": [
+    [
+      1670,
+      941
+    ],
+    [
+      1671,
+      941
+    ],
+    [
+      1672,
+      941
+    ]
+  ],
+  "source_images_created": true,
   "body_production": {
     "unit": "one complete character pose",
-    "coordinated_parts": ["head", "shoulders", "spine", "pelvis", "both complete legs and feet", "arms and grip", "coat"],
-    "forbidden": ["separately generated leg parts", "independent leg cutout/IK assembly", "static torso with cycling legs", "mirroring the same leading leg to fake a full stride", "increasing interpolation count to hide incorrect poses"],
-    "walking_phases": ["first-side contact", "weight acceptance", "passing", "push-off", "opposite-side contact", "opposite weight acceptance", "opposite passing", "opposite push-off"],
-    "running_phases": ["contact", "compression and weight acceptance", "push-off", "flight", "opposite contact", "opposite compression", "opposite push-off", "opposite flight"],
+    "coordinated_parts": [
+      "head",
+      "shoulders",
+      "spine",
+      "pelvis",
+      "both complete legs and feet",
+      "arms and grip",
+      "coat"
+    ],
+    "forbidden": [
+      "separately generated leg parts",
+      "independent leg cutout/IK assembly",
+      "static torso with cycling legs",
+      "mirroring the same leading leg to fake a full stride",
+      "increasing interpolation count to hide incorrect poses"
+    ],
+    "walking_phases": [
+      "first-side contact",
+      "weight acceptance",
+      "passing",
+      "push-off",
+      "opposite-side contact",
+      "opposite weight acceptance",
+      "opposite passing",
+      "opposite push-off"
+    ],
+    "running_phases": [
+      "contact",
+      "compression and weight acceptance",
+      "push-off",
+      "flight",
+      "opposite contact",
+      "opposite compression",
+      "opposite push-off",
+      "opposite flight"
+    ],
     "extra_drawings": "Add actual whole-body breakdowns at crossings, weight changes and silhouette changes when needed; do not fabricate independent limb motion.",
-    "weapon_policy": "Design blade/grip/body together; derive independent weapon and grip-occlusion layers only after the intact pose is established, preserving free weapon switching."
+    "weapon_policy": "Design blade/grip/body together; derive independent weapon and grip-occlusion layers only after the intact pose is established, preserving free weapon switching.",
+    "diagnostic_interpolation": "RIFE over entire RGBA drawings only, no per-limb rig or joint retargeting. Dense candidate rejected for ghosts; add actual whole-body crossing drawings."
   },
   "review_order": [
     "Whole-body key poses at the accepted head/body scale; inspect hips, knees, feet, shoulders and weight support together",
@@ -29,6 +91,114 @@
     "Match actual movement speed and foot support; tune duration instead of stretching limbs",
     "Start/stop, instant facing, three weapons and transitions in game using the identical preview export"
   ],
-  "preserve": ["accepted idle pixels and timing", "instant facing change", "existing semantic action IDs", "gameplay event contract", "independent weapon switching"],
-  "authorization": {"user_requested_rework": true, "artwork_approved": false, "runtime_install_allowed": false}
+  "preserve": [
+    "accepted idle pixels and timing",
+    "instant facing change",
+    "existing semantic action IDs",
+    "gameplay event contract",
+    "independent weapon switching"
+  ],
+  "authorization": {
+    "user_requested_rework": true,
+    "artwork_approved": false,
+    "runtime_install_allowed": false
+  },
+  "whole_source_canvas_2k_met": false,
+  "painted_walk_keys": 8,
+  "painted_run_direction_keys": 3,
+  "continuous_walk_approved": false,
+  "continuous_run_created": false,
+  "source_ledger": [
+    {
+      "directory": "run_carry_c2",
+      "generation_sha256": "a54eb2d82c36e5ba3198ac04b17353979c2fe78403738f3d86fd0ff322a7b02c"
+    },
+    {
+      "directory": "run_compression_near_c1",
+      "generation_sha256": "82355b2680e9e8a1c1bb114ce20261122331c40f627a22dc2e9766a32e3187e7"
+    },
+    {
+      "directory": "run_contact_far_c4",
+      "generation_sha256": "b137920b88f2bfe7497cc2d99c543b2d181a553c62ad190648308e9ccd36f136"
+    },
+    {
+      "directory": "run_down_far_c4",
+      "generation_sha256": "a33e489ed682142eec8b40535cd8a2bd157925e75fd667d81e1316740874685b"
+    },
+    {
+      "directory": "run_down_near_c4",
+      "generation_sha256": "f0e099d222d72d0a6b95052648efae6e192a71e44d0a232afda9ca4d1fbc3491"
+    },
+    {
+      "directory": "run_drag_grip_c3",
+      "generation_sha256": "1d36ea6679237e35bdde29a5add73d44a87c80086b264a62bad81d1b826bdd1b"
+    },
+    {
+      "directory": "run_flight_far_c4",
+      "generation_sha256": "def1ca47c6a9e415367a6bcacf2f8d5aade86291292037663304622f9d98cebb"
+    },
+    {
+      "directory": "run_flight_near_c4",
+      "generation_sha256": "852910b02811f4f63678f881a4658186a8335042d9274a69ed58f9699d9125a6"
+    },
+    {
+      "directory": "run_push_far_c4",
+      "generation_sha256": "d41613b99012f9f4b4db442573ffd478324e4023a54b26dd92d83a33c8e8067e"
+    },
+    {
+      "directory": "run_push_near_c4",
+      "generation_sha256": "4877ae15a3341d7bfa894784b1f97674bc81daf8756f61fbff028f0ebffa3b3a"
+    },
+    {
+      "directory": "walk_contact_far_c1",
+      "generation_sha256": "73b78f0a3f006d14dc287aab36e8a21fe0b250fa0502528a6ac974445491b517"
+    },
+    {
+      "directory": "walk_contact_far_c2",
+      "generation_sha256": "55e0408fec428e19797198c09517477d71bda8c7f7a02a84953878d4f6781bc8"
+    },
+    {
+      "directory": "walk_contact_near_c1",
+      "generation_sha256": "b3e9fe04c385dc8429be8502d9438eec3fcbe3d81c08b662ce8c7103d001a554"
+    },
+    {
+      "directory": "walk_contacts_c1",
+      "generation_sha256": "a10cc214009415a414aaaf1c3f7f915e4e9179cd18575c92cacf97dbbda0acf2"
+    },
+    {
+      "directory": "walk_down_far_c1",
+      "generation_sha256": "5c890dd4390892e91d0e492ef70bc9a4954967d44b7a3818fb06cdd53c374701"
+    },
+    {
+      "directory": "walk_down_near_c1",
+      "generation_sha256": "69db55b21e7c6ca75287e001487ba3c177a7b780bc5eeb31d4ca0de5aba7558f"
+    },
+    {
+      "directory": "walk_pass_far_c1",
+      "generation_sha256": "e3d12300d8041bc0a01f7238c65500c0adeb047e1c16b3a179955789e92327a6"
+    },
+    {
+      "directory": "walk_pass_near_c1",
+      "generation_sha256": "1e538f42bad6e02fd4878af73006a2d83ba7612384c59dde70c50f0a918e3d1e"
+    },
+    {
+      "directory": "walk_up_far_c1",
+      "generation_sha256": "2ad2ec7c8df09716efabe973889fc8e6a481a5765061e52819f874795e32cf48"
+    },
+    {
+      "directory": "walk_up_near_c1",
+      "generation_sha256": "96c8cba7376750a4dda62b34b6b70de57fbe6732473e5d6a190f3b75ddaaf3d0"
+    }
+  ],
+  "source_quality_limitations": [
+    "Some neutral companion hair tips touch the canvas boundary; scale numbers do not certify uncropped production art.",
+    "Actual generator canvas below requested native 2K; no upscaling or claimed 2K source delivery."
+  ],
+  "run_c1_review": "grip_rejected_drag_direction_retained",
+  "run_current_candidate": "run_drag_grip_c3",
+  "run_grip_direction_approved": true,
+  "run_grip_approval": "run_drag_grip_c3/direction_approval.json",
+  "painted_run_phase_keys": 8,
+  "run_key_diagnostic": "run_cycle_c4/key_review.json",
+  "run_current_work": "whole-body phase correction before clean-body layers and continuous export"
 }

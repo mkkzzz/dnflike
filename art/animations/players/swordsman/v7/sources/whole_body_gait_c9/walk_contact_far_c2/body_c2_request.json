@@ -1,0 +1,7 @@
+{
+  "transparent_background": true,
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_far_c2/source.png"
+  ],
+  "prompt": "Refine this WHOLE-BODY walking character sheet into a STRICT SIDE-SCROLLER CAMERA pose. Keep the left neutral calibration figure unchanged, same canvas/scale. Right walking figure: KEEP EXACTLY this correct leg assignment, near buckled RIGHT thigh goes screen-left/back and overlaps far unbuckled LEFT thigh going screen-right/front; preserve foot positions, all limb lengths, head size, near right arm swinging forward. The current right figure rotates his torso FAR TOO MUCH away from the camera. Redraw the WHOLE right person into nearly strict RIGHT-FACING SIDE PROFILE, same camera azimuth as left neutral figure, with only very mild 5-degree back twist at shoulders; considerably narrow the visible broad back panel to a side torso silhouette, show the narrow crimson FRONT LAPEL at the screen-right chest edge again. Do not flip/mirror the character or swap the legs. Natural small pelvic counterrotation connected to chest and head. Coat hangs closer to body with slight backward drift, reveals the two thighs at the hip crossing instead of covering them. Maintain grounded heel/toe contact, moderate stride and natural relaxed arm swing, empty right-hand hilt grip. Repaint intact figure coherently, no pasted torso/limbs. No weapon, labels, effects or shadow, transparent alpha."
+}

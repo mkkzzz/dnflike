@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "642c8fc20cee880e2546bdbfd8f1f143b96d09affd98bf98d28e8c0437c0668c",
+      "prompt": "Use case: stylized-concept. Draw a FULL BODY running FLIGHT phase after this near-rear-leg push-off. Left neutral figure unchanged; right runner at same physical scale. Two complete figures, transparent requested2560x1440. Both boots now airborne: near right leg, still foreground rear leg to screen-left, releases toe and folds knee behind, lifting boot away from ground. Far left leg, behind near thigh and swinging forward screen-right, starts extending its shin forward, heel still CLEARLY ABOVE imaginary ground (about50px in a1672x941 sheet). Pelvis/chest/head rise modestly together; whole person floats through flight, no planted foot. Maintain near-rear versus far-forward anatomical identity and crossing depth, no mirrored or pasted legs. Compact adult head same size as input. Whole body inclines forward, shoulders turn with pelvis, coat rises and trails left. Keep rearward katana grip unchanged in design: visible thumb over curled fingers, bladeLEFT-down, edgeDOWN, tipaboveground. Far free left arm connected clearly from shoulder to bent elbow to fist at waist; REMOVE ambiguous extra sleeve loop behind back, exactly two arms. Same costume, bone lengths, armor, scale. This is a new whole person flight drawing, not a duplicate planted pose. No text/effects.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_push_near_c4/source_c2.png",
+          "sha256": "8f8865a5f1dcdba1a4889c462d3c5a9db8466bf44978d08f6a971db5423ddc8a",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source.png",
+      "result_sha256": "051c37172f934820f49431fd33928880d6abba622964b37fc60c1a6856f3c5a4",
+      "returned_original_file": "exec-57eccaea-dd97-4b8a-ae5e-12de9f432f9e.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate_needs_revision",
+      "review_note": "Both feet airborne, rear-near/front-far topology; far free-arm silhouette needs clarification.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "batch_authorization": "../run_drag_grip_c3/direction_approval.json",
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

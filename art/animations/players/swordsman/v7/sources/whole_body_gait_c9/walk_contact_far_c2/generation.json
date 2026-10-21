@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "4512215e7cbcf60fd7989dc2e3ea04d189f778c96d761307d7610d505d2d94e8",
+      "prompt": "Use case: stylized-concept. Full-body 2D hand-painted action-game character animation source, requested 2560x1440 transparent. TWO complete figures of same white-haired adult swordsman at same large physical scale. Left: upright neutral RIGHT-FACING side calibration figure. Right: a WALKING CONTACT pose facing and traveling screen RIGHT, body viewed SLIGHTLY FROM BEHIND: show the black BACK PANEL of the coat, far less red chest opening. His NEAR RIGHT HIP AND THIGH slope BACKWARD toward SCREEN LEFT, the near thigh crosses visibly IN FRONT OF the other thigh and connects to the LEFTMOST raised heel/rear toe boot. Put the silver thigh buckle on that LEFTMOST REARWARD thigh only. His FAR LEFT LEG goes FORWARD to the RIGHTMOST heel-striking boot; hide the top of this forward thigh BEHIND the nearer rearward thigh. This is a human walking, opposing arm swing: nearest RIGHT arm reaches screen-right with relaxed closed empty hilt grip, far LEFT arm reaches screen-left behind. Rotate shoulders gently away, pelvis oppositely, eyes and face still look screen-right. Keep entire anatomy, coat, pelvis, two legs and hands coherently redrawn as one whole person. Near knee pad shown more from rear side, far forward knee has a smaller partially occluded plate. Right rear boot toe planted with heel lifted, left forward boot heel planted with toe lifted. Moderate stride, upright weighted body, long adult legs, small head about 1/6.7 of standing height. Preserve precise identity, costume, black coat red lining, red forearm wraps and metal knee armor. Open coat around both hips to show thigh connections. NO weapon, scabbard, colored guides, text, shadows, extra limbs. Generous margins for all hair and toes. This image's crucial purpose is the OPPOSITE anatomical leading leg, not a repeated near-leg-forward step.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/views/A1_side_right.png",
+          "sha256": "8fc88aa5544504e0de25ab5804b7f6d3b31cf58f5a6c2b9a7eb15b06cc0ad682",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source.png",
+      "result_sha256": "4c0baec1e66e5ff2e15566eda1c09bb47d40f244c24711af6166f1446dc9c9ab",
+      "returned_original_file": "exec-1b66e884-15e8-4172-9b33-0a2744c335b6.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "superseded",
+      "review_note": "Correct opposite leg but excessively rotated back-facing torso.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "body_c2_request.json",
+      "request_sha256": "695411673e5fe2d9d5b79054681e806ba1fafcaeaf74431ad0e99cde34894328",
+      "prompt": "Refine this WHOLE-BODY walking character sheet into a STRICT SIDE-SCROLLER CAMERA pose. Keep the left neutral calibration figure unchanged, same canvas/scale. Right walking figure: KEEP EXACTLY this correct leg assignment, near buckled RIGHT thigh goes screen-left/back and overlaps far unbuckled LEFT thigh going screen-right/front; preserve foot positions, all limb lengths, head size, near right arm swinging forward. The current right figure rotates his torso FAR TOO MUCH away from the camera. Redraw the WHOLE right person into nearly strict RIGHT-FACING SIDE PROFILE, same camera azimuth as left neutral figure, with only very mild 5-degree back twist at shoulders; considerably narrow the visible broad back panel to a side torso silhouette, show the narrow crimson FRONT LAPEL at the screen-right chest edge again. Do not flip/mirror the character or swap the legs. Natural small pelvic counterrotation connected to chest and head. Coat hangs closer to body with slight backward drift, reveals the two thighs at the hip crossing instead of covering them. Maintain grounded heel/toe contact, moderate stride and natural relaxed arm swing, empty right-hand hilt grip. Repaint intact figure coherently, no pasted torso/limbs. No weapon, labels, effects or shadow, transparent alpha.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_far_c2/source.png",
+          "sha256": "4c0baec1e66e5ff2e15566eda1c09bb47d40f244c24711af6166f1446dc9c9ab",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "body_c2.png",
+      "result_sha256": "53480b64c12f5b3f7da8f65e0da5b2dd7d4e0f47dcff025bef77914dc083492f",
+      "returned_original_file": "exec-8616239c-c3be-47eb-b75a-03bed10827eb.png",
+      "actual_size": [
+        1671,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate",
+      "review_note": "Reduced torso twist, near rear thigh visibly in front of far forward thigh.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "cf9e2b819ea834586d1ca1090c14ae8410ad1adcaf42ff65e45bbb5733c7599a",
+      "prompt": "Use case: stylized-concept. Paint the NEAR RIGHT LEG PUSH-OFF key of this exact backward-dragging-sword run. Reference fixes costume, compact adult head/body scale, sword trailing LEFT with edge DOWN, natural thumb locked over curled fingers. Two figures on transparent sheet: LEFT neutral calibration companion unchanged, RIGHT whole runner redrawn in the following NEW phase at exactly same physical scale. Requested2560x1440.\nRunner faces and runs RIGHT. Pelvis/chest move UP out of compression, forward lean continues. NEAR RIGHT LEG (the camera-near thigh with buckle and near knee plate) extends DIAGONALLY BACKWARD toward screen LEFT; its knee opens nearly straight, heel raised, only TOE contacts imaginary ground BEHIND the pelvis to push off. FAR LEFT LEG is now swinging FORWARD toward screen RIGHT: thigh lifts forward, knee bent about90degrees, lower leg folded back underneath thigh with boot fully airborne. This is opposite to the reference's near-leg-forward landing. Do not repeat near/right thigh forward. Shoulder and pelvis twist subtly with the new leg support. Near RIGHT arm still carries katana trailing left behind hip, same natural grip, stable wrist; hand/shoulder rise with torso. FAR LEFT free arm counter-swings BACK beside ribs because far left leg is now forward; bend its elbow naturally, fist near rear waist, not frozen punching forward. Coat trails left and lifts slightly responding to push-off. Head moves with chest, compact same size, no fixed pasted torso or separately drawn legs. Draw one anatomically coherent complete runner with two connected legs, exactly two arms, unambiguous right-rear toe support and far-left bent forward swing. No text or effects, clear margins.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_drag_grip_c3/proportion_c2.png",
+          "sha256": "b048dc0f6647f58fe5e3d327adadb78bea6d27e4571eaafc3bd29a03a07ed89b",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source_rejected.png",
+      "result_sha256": "d7cab66fb2623829a14154e96087f42053df3526536954ae91c98f9879316fd2",
+      "returned_original_file": "exec-c84a9ec0-c594-48af-8960-decdb5df2a19.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Near/far leg identity reversed for requested near push; used only as reference for a new far-push drawing with corrected free arm.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "c2_request.json",
+      "request_sha256": "db02c40f8968965b72918ffaa8949bf786af2d60f3eaccb848a1720ba2e76cfc",
+      "prompt": "Use case: stylized-concept. Paint one coordinated FULL PERSON right-facing RUN PUSH-OFF pose. Image1 gives the REQUIRED NEAR/FAR LEG OCCLUSION: the camera-near right thigh is the REARWARD thigh traveling screen-left, drawn visibly IN FRONT OF the other thigh at the hip crossing. The FAR LEFT thigh travels FORWARD screen-right BEHIND it. Do not swap this depth order. Image2 gives the exact approved costume/color, compact head scale, backward-dragging sword grip and running energy. Keep image2's neutral companion unchanged at left. On right paint the new running push-off at same bone lengths and scale.\nNear RIGHT thigh goes back-left in foreground, knee almost straight, shin extends to raised-heel toe touching the ground behind pelvis. Far LEFT thigh swings front-right BEHIND the near thigh, its knee lifted modestly with lower leg bent back and foot airborne. The near rear leg must visibly cover the far forward leg at their crossing just like image1; no near foreground knee pointing right. This leg identity and occlusion is the primary requirement. Slight torso twist follows pelvis, chest leans forward, head goes with it, whole weight carried through near rear toe pushing off. Near right arm holds katana behind hip with approved natural thumb/finger grip, blade trails LEFT-down edgeDOWN. Far free left arm bends back beside ribs opposite its forward leg. Coat trails with body, frame remains transparent. Same adult scale as neutral, no giant head, no independent legs or pasted fixed torso, no labels/effects. Requested2560x1440 with clear margins.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_far_c2/body_c2.png",
+          "sha256": "53480b64c12f5b3f7da8f65e0da5b2dd7d4e0f47dcff025bef77914dc083492f",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_drag_grip_c3/proportion_c2.png",
+          "sha256": "b048dc0f6647f58fe5e3d327adadb78bea6d27e4571eaafc3bd29a03a07ed89b",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source_c2.png",
+      "result_sha256": "8f8865a5f1dcdba1a4889c462d3c5a9db8466bf44978d08f6a971db5423ddc8a",
+      "returned_original_file": "exec-62230ee4-83ac-43a6-a637-a01b9d734892.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate_needs_revision",
+      "review_note": "Near-rear foreground thigh corrected with whole-body leg occlusion reference; far free-arm silhouette remains ambiguous.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "batch_authorization": "../run_drag_grip_c3/direction_approval.json",
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

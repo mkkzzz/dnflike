@@ -1,0 +1,7 @@
+{
+  "prompt": "Use case: precise-object-edit. Produce a clean complete body layer from this exact transparent two-pose swordsman sheet. Remove ONLY both swords, including all blade/guard/handle/pommel pixels. Preserve EXACTLY the right runner's NEW CLOSED GRIP: rounded wrapped thumb, curled fingertips, same wrist rotation, same fist silhouette and hand position, narrow empty handle channel inside palm. Do not revert to flat straight fingertips. Reconstruct only small cloth/hand pixels hidden by removed weapons. Preserve precisely runner's compact head size, head position, whole torso, arms, full legs, boots, coat and anatomy. Left neutral figure's body/scale stays identical. No pose changes, no part resizing. Transparent alpha background. No sword pixels or sheath remaining. The complete body will receive independently swappable weapon layers in the same grip.",
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_drag_grip_c3/proportion_c2.png"
+  ],
+  "transparent_background": true
+}

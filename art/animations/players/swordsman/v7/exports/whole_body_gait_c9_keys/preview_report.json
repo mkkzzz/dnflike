@@ -1,0 +1,53 @@
+{
+  "schema": "standard_actions_pilot/1",
+  "source_of_preview": "exported manifest.json and RGBA PNGs only",
+  "nonloop_combination": "hold last frame after end, preview only",
+  "weapon_layering": {
+    "weapon_layering": "not_attempted",
+    "G3": "not_passed",
+    "actor_includes_weapon": false,
+    "G1": "scale_check_only",
+    "G2": "not_approved",
+    "G4": "not_passed",
+    "runtime_install_allowed": false,
+    "whole_body_painted": true,
+    "independent_limb_rescale": false,
+    "review_notes": [
+      "unequal weight-acceptance amplitude",
+      "far passing pose extends too early",
+      "carry weapon design still pending"
+    ]
+  },
+  "previews": [
+    {
+      "file": "walk_naked.gif",
+      "intended_duration_ticks": 64,
+      "intended_duration_ms": 1066.6666666666667,
+      "gif_duration_ms": 1070,
+      "total_error_ms": 3.3333333333332575,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": true
+    },
+    {
+      "file": "actions_naked.gif",
+      "intended_duration_ticks": 64,
+      "intended_duration_ms": 1066.6666666666667,
+      "gif_duration_ms": 1070,
+      "total_error_ms": 3.3333333333332575,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": true
+    }
+  ],
+  "overview_included": [
+    "walk"
+  ],
+  "overview_excluded": [],
+  "component_isolation": {
+    "pose_count": 8,
+    "mask_directory": "masks/",
+    "visual_review": "pending"
+  },
+  "exported_pose_count": 8,
+  "unique_source_pose_count": 8,
+  "automated_check": "passed: explicit crops, alpha bounds, canvas bounds, positive integer ticks; visual review pending"
+}

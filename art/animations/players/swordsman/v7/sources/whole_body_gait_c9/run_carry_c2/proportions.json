@@ -1,0 +1,63 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-21",
+  "config": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_carry_c2/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Same-sheet upright neutral and actual visible crown/lower jaw; whole-body uniform scale, no head or limb resizing.",
+  "sources": {
+    "body": {
+      "sha256": "eee87196c8a5b7421d2a328cbda8ec2fef82d893ec55e1d5101a09d39153f0f6",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 17,
+        "standing_bottom_y": 922,
+        "sole": [
+          324,
+          922
+        ],
+        "crop_bbox": [
+          100,
+          0,
+          470,
+          940
+        ],
+        "head": {
+          "hair_top": [
+            318,
+            17
+          ],
+          "chin": [
+            354,
+            150
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c9_run_carry_c2",
+      "head": {
+        "hair_top": [
+          1292,
+          148
+        ],
+        "chin": [
+          1318,
+          286
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "landmark_overlay.png",
+    "sha256": "209b27497c6f2a7802b53db906e3035cfef4fe7a807dd4d4ddb3304ebf3e8fca",
+    "reviewed": true
+  }
+}

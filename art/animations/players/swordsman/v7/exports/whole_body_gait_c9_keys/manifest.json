@@ -1,0 +1,1257 @@
+{
+  "schema": "standard_actions_pilot/1",
+  "revision": "v7_c9_whole_body_walk_c1",
+  "status": "review_candidate",
+  "fps": 60,
+  "hitstop_baked": false,
+  "actor_includes_weapon": false,
+  "declarations": {
+    "weapon_layering": "not_attempted",
+    "G3": "not_passed",
+    "actor_includes_weapon": false,
+    "G1": "scale_check_only",
+    "G2": "not_approved",
+    "G4": "not_passed",
+    "runtime_install_allowed": false,
+    "whole_body_painted": true,
+    "independent_limb_rescale": false,
+    "review_notes": [
+      "unequal weight-acceptance amplitude",
+      "far passing pose extends too early",
+      "carry weapon design still pending"
+    ]
+  },
+  "coordinate_system": "right-facing pixels, y-down; anchor is ground root except separate_height body proxy",
+  "target_standing_height": 380.0,
+  "sources": {
+    "walk_contact_near_c1": {
+      "file": "walk_contact_near_c1/body_c2.png",
+      "sha256": "354bd94e12cf5292005a7b05f08be0c7bcb5b2c1c663e3c468d18d89da327188",
+      "size": [
+        1672,
+        941
+      ],
+      "standing_height": 914.0
+    },
+    "walk_down_near_c1": {
+      "file": "walk_down_near_c1/source.png",
+      "sha256": "5fa43d1e25c9a68ed20890908e72fd84dba0422eee5dcc44fc052d176b35b023",
+      "size": [
+        1672,
+        941
+      ],
+      "standing_height": 917.0
+    },
+    "walk_pass_near_c1": {
+      "file": "walk_pass_near_c1/source.png",
+      "sha256": "1773346b5cfd80c5e1255f15c7c27692f1fd24685910d823b4429fd105f5f41f",
+      "size": [
+        1672,
+        941
+      ],
+      "standing_height": 916.0
+    },
+    "walk_up_near_c1": {
+      "file": "walk_up_near_c1/source.png",
+      "sha256": "b6812e0e3c185728a2698ca83e2ab74caff23d3aa8ffb90a3ab8c61e41f046b0",
+      "size": [
+        1672,
+        941
+      ],
+      "standing_height": 913.0
+    },
+    "walk_contact_far_c2": {
+      "file": "walk_contact_far_c2/body_c2.png",
+      "sha256": "53480b64c12f5b3f7da8f65e0da5b2dd7d4e0f47dcff025bef77914dc083492f",
+      "size": [
+        1671,
+        941
+      ],
+      "standing_height": 910.0
+    },
+    "walk_down_far_c1": {
+      "file": "walk_down_far_c1/body_c2.png",
+      "sha256": "c9574eaeb226330b30d07edddb736d8709425abad2c280ac094231e0c374eb45",
+      "size": [
+        1671,
+        941
+      ],
+      "standing_height": 911.0
+    },
+    "walk_pass_far_c1": {
+      "file": "walk_pass_far_c1/body_c2.png",
+      "sha256": "6c10a5cef2c17068ee0b6e8889f8ae195bc99383965a670075f3600a566cc7e7",
+      "size": [
+        1671,
+        941
+      ],
+      "standing_height": 915.0
+    },
+    "walk_up_far_c1": {
+      "file": "walk_up_far_c1/body_c2.png",
+      "sha256": "2643be4a0bc93d8379acbe1201ae9c301e0cd6cee0ae36870624210076ef5868",
+      "size": [
+        1672,
+        941
+      ],
+      "standing_height": 915.0
+    }
+  },
+  "config_sha256": "73c8a2afe70e7021cce6244ad1b060ae45d449b2eea0ef527ade96eed550dc3c",
+  "clips": {
+    "walk": {
+      "asset_id": "actor.player.base.walk",
+      "size": [
+        1024,
+        1080
+      ],
+      "anchor": [
+        448.0,
+        840.0
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "root_mode": "ground",
+      "loop": true,
+      "include_in_overview": true,
+      "duration_ticks": 64,
+      "frames": [
+        {
+          "source_pose": "walk_contact_near_c1",
+          "source": "walk_contact_near_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "source_root": [
+            1174.0,
+            904.0
+          ],
+          "source_foot": [
+            1013.0,
+            904.0
+          ],
+          "scale": 0.41575492341356673,
+          "trim_offset_source": [
+            836,
+            8
+          ],
+          "paste_offset": [
+            307,
+            467
+          ],
+          "foot_from_anchor": [
+            -66.93654266958424,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            307,
+            467,
+            576,
+            840
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1174,
+              350
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 1,
+            "core_connectivity": 4,
+            "mask_file": "masks/walk_contact_near_c1_2d289e131d8d4441.png",
+            "mask_sha256_raw_l8": "2d289e131d8d444178c322e20f0912e8c6829a1a3aeede7a0262dcac28381ab7",
+            "mask_size": [
+              900,
+              935
+            ],
+            "mask_source_origin": [
+              750,
+              0
+            ],
+            "mask_bbox_source": [
+              836,
+              8,
+              1482,
+              907
+            ],
+            "core_bbox_source": [
+              837,
+              9,
+              1481,
+              906
+            ],
+            "retained_alpha_bbox_source": [
+              836,
+              8,
+              1482,
+              906
+            ],
+            "selected_core_pixels": 201786,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 7555,
+            "discarded_alpha_sum": 16057,
+            "retained_alpha_pixels": 205439,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1183,
+                  10
+                ],
+                "radius": 2,
+                "source_alpha_max": 239,
+                "retained_alpha_max": 239,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1206,
+                  145
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/walk/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 8
+        },
+        {
+          "source_pose": "walk_down_near_c1",
+          "source": "walk_down_near_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "source_root": [
+            1193.0,
+            892.0
+          ],
+          "source_foot": [
+            1359.0,
+            892.0
+          ],
+          "scale": 0.4143947655398037,
+          "trim_offset_source": [
+            888,
+            33
+          ],
+          "paste_offset": [
+            322,
+            484
+          ],
+          "foot_from_anchor": [
+            68.78953107960741,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            322,
+            484,
+            545,
+            841
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1193,
+              350
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 1,
+            "core_connectivity": 4,
+            "mask_file": "masks/walk_down_near_c1_6cc5433d74d2e5c9.png",
+            "mask_sha256_raw_l8": "6cc5433d74d2e5c98ff3025399ef47ab580478f315ada41342a1dcbc1164b805",
+            "mask_size": [
+              900,
+              935
+            ],
+            "mask_source_origin": [
+              750,
+              0
+            ],
+            "mask_bbox_source": [
+              888,
+              33,
+              1426,
+              895
+            ],
+            "core_bbox_source": [
+              889,
+              34,
+              1425,
+              894
+            ],
+            "retained_alpha_bbox_source": [
+              888,
+              33,
+              1426,
+              894
+            ],
+            "selected_core_pixels": 184805,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 7820,
+            "discarded_alpha_sum": 15424,
+            "retained_alpha_pixels": 187825,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1217,
+                  35
+                ],
+                "radius": 2,
+                "source_alpha_max": 223,
+                "retained_alpha_max": 223,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1233,
+                  175
+                ],
+                "radius": 2,
+                "source_alpha_max": 255,
+                "retained_alpha_max": 255,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/walk/f001.png",
+          "start_tick": 8,
+          "duration_ticks": 8
+        },
+        {
+          "source_pose": "walk_pass_near_c1",
+          "source": "walk_pass_near_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "source_root": [
+            1186.0,
+            905.0
+          ],
+          "source_foot": [
+            1285.0,
+            905.0
+          ],
+          "scale": 0.4148471615720524,
+          "trim_offset_source": [
+            945,
+            8
+          ],
+          "paste_offset": [
+            348,
+            468
+          ],
+          "foot_from_anchor": [
+            41.06986899563319,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            348,
+            468,
+            522,
+            841
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1186,
+              350
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 1,
+            "core_connectivity": 4,
+            "mask_file": "masks/walk_pass_near_c1_a0aae76104e6bd6c.png",
+            "mask_sha256_raw_l8": "a0aae76104e6bd6cb750988c7cefd13553189d811b9e70c82abb6a81a8177b2b",
+            "mask_size": [
+              900,
+              935
+            ],
+            "mask_source_origin": [
+              750,
+              0
+            ],
+            "mask_bbox_source": [
+              945,
+              8,
+              1364,
+              908
+            ],
+            "core_bbox_source": [
+              946,
+              9,
+              1363,
+              907
+            ],
+            "retained_alpha_bbox_source": [
+              945,
+              8,
+              1364,
+              907
+            ],
+            "selected_core_pixels": 156797,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 6399,
+            "discarded_alpha_sum": 12497,
+            "retained_alpha_pixels": 159632,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1185,
+                  10
+                ],
+                "radius": 2,
+                "source_alpha_max": 240,
+                "retained_alpha_max": 240,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1210,
+                  145
+                ],
+                "radius": 2,
+                "source_alpha_max": 252,
+                "retained_alpha_max": 252,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/walk/f002.png",
+          "start_tick": 16,
+          "duration_ticks": 8
+        },
+        {
+          "source_pose": "walk_up_near_c1",
+          "source": "walk_up_near_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "source_root": [
+            1197.0,
+            901.0
+          ],
+          "source_foot": [
+            992.0,
+            901.0
+          ],
+          "scale": 0.41621029572836804,
+          "trim_offset_source": [
+            863,
+            5
+          ],
+          "paste_offset": [
+            309,
+            467
+          ],
+          "foot_from_anchor": [
+            -85.32311062431545,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            309,
+            467,
+            575,
+            841
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1197,
+              350
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 1,
+            "core_connectivity": 4,
+            "mask_file": "masks/walk_up_near_c1_ac2e5fb74ceb98ac.png",
+            "mask_sha256_raw_l8": "ac2e5fb74ceb98ac1898f39d3bf33f4eb8ab067a24e6fbf5598975d160dfb28a",
+            "mask_size": [
+              900,
+              935
+            ],
+            "mask_source_origin": [
+              750,
+              0
+            ],
+            "mask_bbox_source": [
+              863,
+              5,
+              1503,
+              903
+            ],
+            "core_bbox_source": [
+              864,
+              6,
+              1502,
+              902
+            ],
+            "retained_alpha_bbox_source": [
+              863,
+              5,
+              1503,
+              903
+            ],
+            "selected_core_pixels": 194251,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 9052,
+            "discarded_alpha_sum": 17647,
+            "retained_alpha_pixels": 197680,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1201,
+                  7
+                ],
+                "radius": 2,
+                "source_alpha_max": 219,
+                "retained_alpha_max": 219,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1223,
+                  143
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/walk/f003.png",
+          "start_tick": 24,
+          "duration_ticks": 8
+        },
+        {
+          "source_pose": "walk_contact_far_c2",
+          "source": "walk_contact_far_c2",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "source_root": [
+            1175.0,
+            907.0
+          ],
+          "source_foot": [
+            1031.0,
+            907.0
+          ],
+          "scale": 0.4175824175824176,
+          "trim_offset_source": [
+            872,
+            9
+          ],
+          "paste_offset": [
+            321,
+            465
+          ],
+          "foot_from_anchor": [
+            -60.13186813186813,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            321,
+            465,
+            557,
+            841
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1175,
+              350
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 1,
+            "core_connectivity": 4,
+            "mask_file": "masks/walk_contact_far_c2_1e1b85ead1ca51c4.png",
+            "mask_sha256_raw_l8": "1e1b85ead1ca51c490bede30f10e0a9c48172efe75ccb77ee91d4a796c9001e3",
+            "mask_size": [
+              900,
+              935
+            ],
+            "mask_source_origin": [
+              750,
+              0
+            ],
+            "mask_bbox_source": [
+              872,
+              9,
+              1436,
+              910
+            ],
+            "core_bbox_source": [
+              873,
+              10,
+              1435,
+              909
+            ],
+            "retained_alpha_bbox_source": [
+              872,
+              9,
+              1436,
+              909
+            ],
+            "selected_core_pixels": 181269,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 7747,
+            "discarded_alpha_sum": 15370,
+            "retained_alpha_pixels": 184281,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1179,
+                  11
+                ],
+                "radius": 2,
+                "source_alpha_max": 240,
+                "retained_alpha_max": 240,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1203,
+                  146
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/walk/f004.png",
+          "start_tick": 32,
+          "duration_ticks": 8
+        },
+        {
+          "source_pose": "walk_down_far_c1",
+          "source": "walk_down_far_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "source_root": [
+            1247.0,
+            899.0
+          ],
+          "source_foot": [
+            1077.0,
+            899.0
+          ],
+          "scale": 0.41712403951701427,
+          "trim_offset_source": [
+            934,
+            12
+          ],
+          "paste_offset": [
+            317,
+            470
+          ],
+          "foot_from_anchor": [
+            -70.91108671789243,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            317,
+            470,
+            555,
+            841
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1247,
+              350
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/walk_down_far_c1_aa2e326a8b4989de.png",
+            "mask_sha256_raw_l8": "aa2e326a8b4989de04243627402bf573b107630aa5a20d393257c37a577ea858",
+            "mask_size": [
+              900,
+              935
+            ],
+            "mask_source_origin": [
+              750,
+              0
+            ],
+            "mask_bbox_source": [
+              934,
+              12,
+              1505,
+              901
+            ],
+            "core_bbox_source": [
+              934,
+              12,
+              1505,
+              901
+            ],
+            "retained_alpha_bbox_source": [
+              934,
+              12,
+              1505,
+              901
+            ],
+            "selected_core_pixels": 193360,
+            "discarded_other_core_pixels": 2,
+            "discarded_alpha_pixels": 9370,
+            "discarded_alpha_sum": 33886,
+            "retained_alpha_pixels": 193360,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1257,
+                  13
+                ],
+                "radius": 2,
+                "source_alpha_max": 224,
+                "retained_alpha_max": 224,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1283,
+                  151
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/walk/f005.png",
+          "start_tick": 40,
+          "duration_ticks": 8
+        },
+        {
+          "source_pose": "walk_pass_far_c1",
+          "source": "walk_pass_far_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "source_root": [
+            1187.0,
+            906.0
+          ],
+          "source_foot": [
+            1172.0,
+            906.0
+          ],
+          "scale": 0.41530054644808745,
+          "trim_offset_source": [
+            944,
+            9
+          ],
+          "paste_offset": [
+            347,
+            467
+          ],
+          "foot_from_anchor": [
+            -6.229508196721312,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            347,
+            467,
+            546,
+            840
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1187,
+              350
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 1,
+            "core_connectivity": 4,
+            "mask_file": "masks/walk_pass_far_c1_100e44043a74752d.png",
+            "mask_sha256_raw_l8": "100e44043a74752dae2aa168ebde38358c0b8c7ceff2f31d20127a978614058c",
+            "mask_size": [
+              900,
+              935
+            ],
+            "mask_source_origin": [
+              750,
+              0
+            ],
+            "mask_bbox_source": [
+              944,
+              9,
+              1424,
+              909
+            ],
+            "core_bbox_source": [
+              945,
+              10,
+              1423,
+              908
+            ],
+            "retained_alpha_bbox_source": [
+              944,
+              9,
+              1424,
+              908
+            ],
+            "selected_core_pixels": 161617,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 5908,
+            "discarded_alpha_sum": 12443,
+            "retained_alpha_pixels": 163931,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1193,
+                  11
+                ],
+                "radius": 2,
+                "source_alpha_max": 245,
+                "retained_alpha_max": 245,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1223,
+                  146
+                ],
+                "radius": 2,
+                "source_alpha_max": 253,
+                "retained_alpha_max": 253,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/walk/f006.png",
+          "start_tick": 48,
+          "duration_ticks": 8
+        },
+        {
+          "source_pose": "walk_up_far_c1",
+          "source": "walk_up_far_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "source_root": [
+            1203.0,
+            895.0
+          ],
+          "source_foot": [
+            978.0,
+            895.0
+          ],
+          "scale": 0.41530054644808745,
+          "trim_offset_source": [
+            860,
+            3
+          ],
+          "paste_offset": [
+            306,
+            470
+          ],
+          "foot_from_anchor": [
+            -93.44262295081968,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            306,
+            470,
+            585,
+            842
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1203,
+              350
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 1,
+            "core_connectivity": 4,
+            "mask_file": "masks/walk_up_far_c1_e8368f8ac4a70a7e.png",
+            "mask_sha256_raw_l8": "e8368f8ac4a70a7ee3d320d7b5fafeac7e9b610e45ff6496491c29b67ae0595a",
+            "mask_size": [
+              900,
+              935
+            ],
+            "mask_source_origin": [
+              750,
+              0
+            ],
+            "mask_bbox_source": [
+              860,
+              3,
+              1532,
+              898
+            ],
+            "core_bbox_source": [
+              861,
+              4,
+              1531,
+              897
+            ],
+            "retained_alpha_bbox_source": [
+              860,
+              3,
+              1531,
+              898
+            ],
+            "selected_core_pixels": 208743,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 8430,
+            "discarded_alpha_sum": 16652,
+            "retained_alpha_pixels": 212282,
+            "landmark_checks": {
+              "proportion_hair_top": {
+                "source_point": [
+                  1216,
+                  5
+                ],
+                "radius": 2,
+                "source_alpha_max": 224,
+                "retained_alpha_max": 224,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1245,
+                  144
+                ],
+                "radius": 2,
+                "source_alpha_max": 252,
+                "retained_alpha_max": 252,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/walk/f007.png",
+          "start_tick": 56,
+          "duration_ticks": 8
+        }
+      ]
+    }
+  },
+  "proportion_gate": {
+    "schema": "actor_proportions/1",
+    "passed": true,
+    "config": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/body_config.json",
+    "audit": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/proportions.json",
+    "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+    "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+    "reference_visible_head_ratio": 0.15216004589375082,
+    "tolerance_fraction": 0.08,
+    "target_standing_height": 380,
+    "measured_unique_poses": 8,
+    "required_unique_poses": 8,
+    "missing_pose_annotations": [],
+    "unknown_pose_annotations": [],
+    "neutral_checks": [
+      {
+        "source": "walk_contact_near_c1",
+        "neutral_height": 914,
+        "head_ratio_error": -0.04367652927525445,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_down_near_c1",
+        "neutral_height": 917,
+        "head_ratio_error": -0.039638299124441834,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_pass_near_c1",
+        "neutral_height": 916,
+        "head_ratio_error": -0.04576457178775384,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_up_near_c1",
+        "neutral_height": 913,
+        "head_ratio_error": -0.04262907750009037,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_contact_far_c2",
+        "neutral_height": 910,
+        "head_ratio_error": -0.05391692602035292,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_down_far_c1",
+        "neutral_height": 911,
+        "head_ratio_error": -0.02609911398094833,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_pass_far_c1",
+        "neutral_height": 915,
+        "head_ratio_error": -0.04472169153834149,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_up_far_c1",
+        "neutral_height": 915,
+        "head_ratio_error": -0.05190423521098553,
+        "configured_height_error": 0.0
+      }
+    ],
+    "measurements": [
+      {
+        "source": "walk_contact_near_c1",
+        "pose_id": "walk_contact_near_c1",
+        "head_source_px": 135,
+        "head_landmarks": {
+          "hair_top": [
+            1183,
+            10
+          ],
+          "chin": [
+            1206,
+            145
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 914,
+        "scale_basis_verified": true,
+        "head_output_px": 56.12691466083151,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.029295725204205647,
+        "landmark_only_error_interval": [
+          -0.04367652927525445,
+          -0.014914921133156733
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_down_near_c1",
+        "pose_id": "walk_down_near_c1",
+        "head_source_px": 140,
+        "head_landmarks": {
+          "hair_top": [
+            1217,
+            35
+          ],
+          "chin": [
+            1233,
+            175
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 917,
+        "scale_basis_verified": true,
+        "head_output_px": 58.01526717557252,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.0033629710640159516,
+        "landmark_only_error_interval": [
+          -0.01097078566546994,
+          0.017696727793501843
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_pass_near_c1",
+        "pose_id": "walk_pass_near_c1",
+        "head_source_px": 135,
+        "head_landmarks": {
+          "hair_top": [
+            1185,
+            10
+          ],
+          "chin": [
+            1210,
+            145
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 916,
+        "scale_basis_verified": true,
+        "head_output_px": 56.004366812227076,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.031415166852231224,
+        "landmark_only_error_interval": [
+          -0.04576457178775384,
+          -0.017065761916708944
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_up_near_c1",
+        "pose_id": "walk_up_near_c1",
+        "head_source_px": 136,
+        "head_landmarks": {
+          "hair_top": [
+            1201,
+            7
+          ],
+          "chin": [
+            1223,
+            143
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 913,
+        "scale_basis_verified": true,
+        "head_output_px": 56.60460021905805,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.021034244661746637,
+        "landmark_only_error_interval": [
+          -0.03543079988730902,
+          -0.0066376894361839245
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_contact_far_c2",
+        "pose_id": "walk_contact_far_c2",
+        "head_source_px": 135,
+        "head_landmarks": {
+          "hair_top": [
+            1179,
+            11
+          ],
+          "chin": [
+            1203,
+            146
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 910,
+        "scale_basis_verified": true,
+        "head_output_px": 56.37362637362637,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.02502889322708124,
+        "landmark_only_error_interval": [
+          -0.03947290962371697,
+          -0.0105848768304454
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_down_far_c1",
+        "pose_id": "walk_down_far_c1",
+        "head_source_px": 138,
+        "head_landmarks": {
+          "hair_top": [
+            1257,
+            13
+          ],
+          "chin": [
+            1283,
+            151
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 911,
+        "scale_basis_verified": true,
+        "head_output_px": 57.56311745334797,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.004456872069413809,
+        "landmark_only_error_interval": [
+          -0.01888503334377023,
+          0.009971289204942613
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_pass_far_c1",
+        "pose_id": "walk_pass_far_c1",
+        "head_source_px": 135,
+        "head_landmarks": {
+          "hair_top": [
+            1193,
+            11
+          ],
+          "chin": [
+            1223,
+            146
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 915,
+        "scale_basis_verified": true,
+        "head_output_px": 56.0655737704918,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.030356604193053416,
+        "landmark_only_error_interval": [
+          -0.04472169153834149,
+          -0.015991516847765452
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_up_far_c1",
+        "pose_id": "walk_up_far_c1",
+        "head_source_px": 139,
+        "head_landmarks": {
+          "hair_top": [
+            1216,
+            5
+          ],
+          "chin": [
+            1245,
+            144
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 915,
+        "scale_basis_verified": true,
+        "head_output_px": 57.72677595628415,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.0016264295024771558,
+        "landmark_only_error_interval": [
+          -0.015991516847765452,
+          0.012738657842810808
+        ],
+        "caveat": null
+      }
+    ],
+    "failures": [],
+    "artwork_approved": false,
+    "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+  }
+}

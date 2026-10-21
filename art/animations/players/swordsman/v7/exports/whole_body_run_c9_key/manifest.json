@@ -1,0 +1,225 @@
+{
+  "schema": "standard_actions_pilot/1",
+  "revision": "v7_c9_run_carry_pose_c1",
+  "status": "review_candidate",
+  "fps": 60,
+  "hitstop_baked": false,
+  "actor_includes_weapon": false,
+  "declarations": {
+    "weapon_layering": "not_attempted",
+    "G3": "not_passed",
+    "actor_includes_weapon": false,
+    "G1": "scale_only",
+    "G2": "not_approved",
+    "runtime_install_allowed": false,
+    "whole_body_painted": true,
+    "per_part_scaling": false
+  },
+  "coordinate_system": "right-facing pixels, y-down; anchor is ground root except separate_height body proxy",
+  "target_standing_height": 380.0,
+  "sources": {
+    "body": {
+      "file": "body_c1.png",
+      "sha256": "43632f5447679c980f8b70de3291f59889643b69042999303c0ca9b2d9425de9",
+      "size": [
+        1672,
+        941
+      ],
+      "standing_height": 911.0
+    }
+  },
+  "config_sha256": "ecafb6d34b7ccb1d3b8a3edfeea966202712e24d10f990f8e0fb1a477fa23ae9",
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.run",
+      "size": [
+        1024,
+        1080
+      ],
+      "anchor": [
+        448.0,
+        840.0
+      ],
+      "blend": "normal",
+      "alpha_mode": "straight",
+      "clock": "action",
+      "root_mode": "ground",
+      "loop": false,
+      "include_in_overview": true,
+      "duration_ticks": 1,
+      "frames": [
+        {
+          "source_pose": "c9_run_carry",
+          "source": "body",
+          "crop_bbox": [
+            700,
+            100,
+            1650,
+            920
+          ],
+          "source_root": [
+            1260.0,
+            883.0
+          ],
+          "source_foot": [
+            1443.0,
+            883.0
+          ],
+          "scale": 0.41712403951701427,
+          "trim_offset_source": [
+            774,
+            125
+          ],
+          "paste_offset": [
+            245,
+            524
+          ],
+          "foot_from_anchor": [
+            76.33369923161361,
+            0.0
+          ],
+          "height_px": 0.0,
+          "visible_alpha_bbox": [
+            245,
+            524,
+            587,
+            841
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1290,
+              380
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/c9_run_carry_2c582d739af22bef.png",
+            "mask_sha256_raw_l8": "2c582d739af22befe25f3cc5227024bbec4995fed9e10d49872e230ea4abfef0",
+            "mask_size": [
+              950,
+              820
+            ],
+            "mask_source_origin": [
+              700,
+              100
+            ],
+            "mask_bbox_source": [
+              774,
+              125,
+              1593,
+              884
+            ],
+            "core_bbox_source": [
+              774,
+              125,
+              1593,
+              884
+            ],
+            "retained_alpha_bbox_source": [
+              774,
+              125,
+              1593,
+              884
+            ],
+            "selected_core_pixels": 214929,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 13515,
+            "discarded_alpha_sum": 44876,
+            "retained_alpha_pixels": 214929,
+            "landmark_checks": {
+              "grip": {
+                "source_point": [
+                  1078,
+                  425
+                ],
+                "radius": 2,
+                "source_alpha_max": 254,
+                "retained_alpha_max": 254,
+                "retained": true
+              },
+              "proportion_hair_top": {
+                "source_point": [
+                  1399,
+                  126
+                ],
+                "radius": 2,
+                "source_alpha_max": 247,
+                "retained_alpha_max": 247,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1444,
+                  267
+                ],
+                "radius": 2,
+                "source_alpha_max": 195,
+                "retained_alpha_max": 195,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/keys/f000.png",
+          "start_tick": 0,
+          "duration_ticks": 1
+        }
+      ]
+    }
+  },
+  "proportion_gate": {
+    "schema": "actor_proportions/1",
+    "passed": true,
+    "config": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_compression_near_c1/body_config.json",
+    "audit": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_compression_near_c1/proportions.json",
+    "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+    "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+    "reference_visible_head_ratio": 0.15216004589375082,
+    "tolerance_fraction": 0.08,
+    "target_standing_height": 380,
+    "measured_unique_poses": 1,
+    "required_unique_poses": 1,
+    "missing_pose_annotations": [],
+    "unknown_pose_annotations": [],
+    "neutral_checks": [
+      {
+        "source": "body",
+        "neutral_height": 911,
+        "head_ratio_error": -0.04774135589248285,
+        "configured_height_error": 0.0
+      }
+    ],
+    "measurements": [
+      {
+        "source": "body",
+        "pose_id": "c9_run_carry",
+        "head_source_px": 141,
+        "head_landmarks": {
+          "hair_top": [
+            1399,
+            126
+          ],
+          "chin": [
+            1444,
+            267
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 911,
+        "scale_basis_verified": true,
+        "head_output_px": 58.81448957189901,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.017185369842120712,
+        "landmark_only_error_interval": [
+          0.002757208567764291,
+          0.03161353111647691
+        ],
+        "caveat": null
+      }
+    ],
+    "failures": [],
+    "artwork_approved": false,
+    "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+  }
+}

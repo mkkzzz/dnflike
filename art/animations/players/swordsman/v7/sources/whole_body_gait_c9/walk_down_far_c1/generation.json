@@ -1,0 +1,137 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "16f2f84adc46f6c5d9de3ed334e87be4cfd7ac8c60375a574571ac575be490b2",
+      "prompt": "Whole-body painted animation key for exactly the SAME adult swordsman and costume. Reference is identity, body scale, neutral calibration and neighboring pose. Keep LEFT neutral calibration figure unchanged. Redraw ENTIRE RIGHT figure in a different gait phase, with head, shoulders, torso, hips, both legs, both arms and coat moving coherently as ONE PERSON. Requested native2560x1440 transparent; preserve generous border and same physical scale, compact adult head and same bone lengths. PHASE: Weight acceptance 1/8 stride AFTER this reference. FAR LEFT leg is supporting in FRONT screen-right with its sole FLAT on ground and knee gently BENDING; pelvis and head descend about 18 native pixels as torso advances over it. NEAR buckled RIGHT leg remains BEHIND screen-left, bent knee and heel lifted, only rear toe grounded before lifting. Near rear thigh visibly IN FRONT OF/occluding far forward thigh near hips, keep buckle on rear leg. Stride narrows about one third. Near right arm still forward but returning toward hip, left arm behind. Whole connected body absorbs weight, not a reused straight-legged contact. Coat hangs mostly down, trailing gently behind and revealing the knees; cloth responds to this pose. Clear natural anatomical hip-knee-ankle continuity and physically supported center of mass. Empty closed right-hand weapon grip, no sword, scabbard, effects, floor, text or detached parts. No proportional resizing of individual body parts. This must be a new whole figure drawing, not a deformation of the reference contact.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_far_c2/body_c2.png",
+          "sha256": "53480b64c12f5b3f7da8f65e0da5b2dd7d4e0f47dcff025bef77914dc083492f",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source_rejected.png",
+      "result_sha256": "3263f4f4d99b4080494190aa25abc2ca8f059a09bdf2fb49cded5f24ddc78455",
+      "returned_original_file": "exec-e73a100d-32d8-412d-8a05-ad5c98774690.png",
+      "actual_size": [
+        1671,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Leading thigh identity reverted to near forward.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "body_c2_request.json",
+      "request_sha256": "ad949a4def8a543fa5df77eba8bb88c8f4a9dbe5b0df6b9dcee0d8266ce40936",
+      "prompt": "Paint a whole-body weight-acceptance pose of this exact walking character, left neutral unchanged. Right figure must keep EXACTLY the same near/far leg assignment as reference: the near buckled right THIGH angles BACKWARD screen-left and visibly OVERLAPS the top of the far forward thigh; far left thigh angles forward screen-right. The nearer rear leg's buckle MUST stay on screen-left rear upper thigh around x1135 y510. Whole body shifts about40 native pixels FORWARD screen-right and sinks18px; FAR FORWARD LEFT KNEE gently bends with foot flat, rear near right heel lifts but toe still touching ground. Do not swap which thigh is in front. Keep near right arm forward, far left arm back, relaxed closed empty right-hand grip. Repaint the whole connected person, moving head/neck/chest/hips/cloth together with the supporting leg. Same adult proportions and physical scale, side view only mild twist. No weapon, no guide/text, transparent. Leave space around entire hair and boots.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_far_c2/body_c2.png",
+          "sha256": "53480b64c12f5b3f7da8f65e0da5b2dd7d4e0f47dcff025bef77914dc083492f",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "body_c2.png",
+      "result_sha256": "c9574eaeb226330b30d07edddb736d8709425abad2c280ac094231e0c374eb45",
+      "returned_original_file": "exec-d860ad08-a7fd-47c2-9358-475fe03ecd08.png",
+      "actual_size": [
+        1671,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate_needs_revision",
+      "review_note": "Opposite legs correct; compression shallower than near side.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "body_c3_request.json",
+      "request_sha256": "cd495d36e13a89e9d988c46159a0365ce45c0c781e591c7a70d5beb3e9e408bd",
+      "prompt": "Correct weight absorption in the RIGHT walking figure as one complete body. Left neutral companion unchanged. Keep exact current anatomical side assignment: near RIGHT buckled thigh extends backward screen-left, far LEFT thigh extends forward screen-right. Keep BOTH feet in their current ground positions and near right arm forward. The far forward LEFT knee must BEND MORE, pelvis lowers about30 native pixels and moves slightly forward over that supporting foot; head/chest/shoulders lower TOGETHER with pelvis while keeping spine and head proportions intact, don't just bend the neck. Rear near right knee also bends more as heel rises. At the lower position, near rear thigh STILL visibly overlaps far front thigh at the hip; silver buckle stays on rear screen-left thigh. Preserve identical limb lengths, relaxed upright walking torso with slight forward shift, compact head and same scale. Coat responds and gathers slightly to lower pelvis. Full connected anatomical figure newly painted, no detached parts, no weapon, no blur, no guide. Requested2560x1440 transparent, same margins.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_down_far_c1/body_c2.png",
+          "sha256": "c9574eaeb226330b30d07edddb736d8709425abad2c280ac094231e0c374eb45",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "body_c3.png",
+      "result_sha256": "1e07711a136dc320cb4a9aed0db17b427d71bce2c0657a2d09ff5b2870cd304c",
+      "returned_original_file": "exec-e4b8bad4-41de-4205-8802-e5a1f3d1c0f0.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Excessively deep compression, inconsistent with near side.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "body_c4_request.json",
+      "request_sha256": "da699aab27c937af91a039c99df35e4c3a5ac46fa9ce5ba8b29c37968b2fb5a3",
+      "prompt": "Create an EXACT MIDWAY WHOLE-BODY POSE between the two supplied right-figure poses. Same identical character, size, camera and left neutral calibration. Image1 right body's compression too shallow. Image2 right body's compression too deep. Draw one whole right person HALFWAY BETWEEN those poses: crown at about y45, chin y180, hip abouty440 on the supplied1672x941 scale; these are illustrative location targets not text. Head/neck/chest/pelvis descend together, knees bend halfway between the two references, feet remain in the SAME ground positions. Maintain near buckled RIGHT LEG BEHIND screen-left and far LEFT support leg FORWARD screen-right, preserve near thigh overlapping in front of far thigh. Near right arm gentlyforward, far leftarmback. No swapping legs, no new leg configuration. Keep same anatomy, adult compact head and all limb lengths; naturally repaint complete figure as a single coherent drawing with fabric folds reacting. Leftneutral remains unchanged, transparent samecanvas, no labels/weapons/extra figures. A moderate walking weight-acceptance pose, not crouching.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_down_far_c1/body_c2.png",
+          "sha256": "c9574eaeb226330b30d07edddb736d8709425abad2c280ac094231e0c374eb45",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_down_far_c1/body_c3.png",
+          "sha256": "1e07711a136dc320cb4a9aed0db17b427d71bce2c0657a2d09ff5b2870cd304c",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "body_c4_rejected.png",
+      "result_sha256": "022534665448be5c72aeb690fbbb4445e6c169fa8c0d4efd23c5a2673719041d",
+      "returned_original_file": "exec-0d776a1e-604c-452b-ac54-198ebe96855f.png",
+      "actual_size": [
+        1670,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Requested midpoint was not achieved; deep pose repeated with horizontal drift.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

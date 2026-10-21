@@ -1,0 +1,40 @@
+{
+  "source_sha256": "eee87196c8a5b7421d2a328cbda8ec2fef82d893ec55e1d5101a09d39153f0f6",
+  "pose": "c9_run_carry_c2",
+  "primary": [
+    1100,
+    464
+  ],
+  "blade_axis": [
+    0.96,
+    0.28
+  ],
+  "cutting_direction": [
+    0,
+    1
+  ],
+  "finger_region": [
+    [
+      1067,
+      446
+    ],
+    [
+      1126,
+      453
+    ],
+    [
+      1125,
+      482
+    ],
+    [
+      1097,
+      490
+    ],
+    [
+      1069,
+      477
+    ]
+  ],
+  "reviewed": true,
+  "note": "Static bent-elbow forward grip; same whole body for every weapon. Not a run cycle or motion approval."
+}

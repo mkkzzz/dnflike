@@ -1,0 +1,7 @@
+{
+  "transparent_background": true,
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_compression_near_c1/source.png"
+  ],
+  "prompt": "Production clean-body layer edit of this whole-person running concept. Remove ONLY the ENTIRE katana from the running figure, including blade, guard, collar, handle, pommel and stray weapon pixels. Reconstruct the small hidden palm/finger area as a natural hollow CLOSED RIGHT-HAND grip aligned along the original handle, with a narrow empty channel for a separate weapon. Restore tiny coat pixels if formerly hidden. Preserve precisely the entire right running figure's head size, head/chest forward lean, shoulders/hips, two complete legs, free left arm, right carrying arm, all foot and body positions, cloth silhouette, physical scale and original canvas. Preserve left neutral companion identically. NO new pose, NO detached parts, NO independently moved limbs. Transparent alpha, no sword/scabbard/painted handle remains. This clean complete body will receive the independently swappable weapon at the same hand position."
+}

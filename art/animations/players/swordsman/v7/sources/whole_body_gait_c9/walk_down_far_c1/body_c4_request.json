@@ -1,0 +1,8 @@
+{
+  "transparent_background": true,
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_down_far_c1/body_c2.png",
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_down_far_c1/body_c3.png"
+  ],
+  "prompt": "Create an EXACT MIDWAY WHOLE-BODY POSE between the two supplied right-figure poses. Same identical character, size, camera and left neutral calibration. Image1 right body's compression too shallow. Image2 right body's compression too deep. Draw one whole right person HALFWAY BETWEEN those poses: crown at about y45, chin y180, hip abouty440 on the supplied1672x941 scale; these are illustrative location targets not text. Head/neck/chest/pelvis descend together, knees bend halfway between the two references, feet remain in the SAME ground positions. Maintain near buckled RIGHT LEG BEHIND screen-left and far LEFT support leg FORWARD screen-right, preserve near thigh overlapping in front of far thigh. Near right arm gentlyforward, far leftarmback. No swapping legs, no new leg configuration. Keep same anatomy, adult compact head and all limb lengths; naturally repaint complete figure as a single coherent drawing with fabric folds reacting. Leftneutral remains unchanged, transparent samecanvas, no labels/weapons/extra figures. A moderate walking weight-acceptance pose, not crouching."
+}

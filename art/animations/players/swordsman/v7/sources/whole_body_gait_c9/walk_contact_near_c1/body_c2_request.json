@@ -1,0 +1,7 @@
+{
+  "transparent_background": true,
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_near_c1/source_rejected.png"
+  ],
+  "prompt": "Whole-person animation pose correction on RIGHT FIGURE ONLY, preserve left neutral companion unchanged and same transparent canvas. The right figure is currently WRONG because the near arm and near leg both point forward. Redraw his coordinated walking upper-body action so the NEAREST RIGHT ARM is clearly DOWN AND BACK, toward SCREEN LEFT, with its wrapped red wrist at approximately x1020 y460 (on this 1672x941 input); the visible near shoulder must slope back accordingly. The FAR LEFT ARM swings FORWARD, with its wrist at approximately x1295 y470. The NEAR ARM must NOT cross in front of the chest. Show slight shoulder counterrotation toward camera, a little more red chest lining. Keep NEAR buckled RIGHT LEG going forward screen-right, FAR LEFT LEG behind screen-left, foot contacts, pelvis and adult head size unchanged. Both arms connect naturally to shoulders, whole body balanced, coat reacts to shoulder/hip counterrotation. Right hand is a relaxed closed empty sword grip, no weapon. Do not leave the old forward near arm as an extra limb. Exactly two arms and two legs, no text, detached pieces or diagram. Preserve full body anatomical continuity; repaint the figure as a coherent whole, no cutout assembly."
+}

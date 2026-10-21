@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "41271922ed2b3fc6c538037412b1cebc8ab410677f4a47ae5b2d4b37b325e0f9",
+      "prompt": "Use case: stylized-concept. Draw the FAR LEFT LEG PUSH-OFF phase of this right-facing run, using this input for limb positions: near RIGHT thigh is FORWARD screen-right IN FRONT OF far thigh, near knee bent and near boot AIRBORNE. Far LEFT leg extends diagonally BACKWARD screen-left BEHIND near thigh, knee nearly straight, heel lifted and toe touches imaginary ground. Keep those exact near/far leg identities. Right near hand carries katana backward left-down with same thumb-over-curled-fingers natural grip, bladeedgeDOWN.\nCorrect free arm opposition: FAR LEFT ARM must swing FORWARD toward screenRIGHT, elbow bent90degrees and fist at lower chest height IN FRONT OF torso, because far left leg is behind. Remove the old rearward far fist entirely, do not add a third arm. Exactly TWO coherent arms: near/right carrying arm back and far/left free arm forward. Shoulder/pelvis twist and head follow whole-body push, torso rises from compression, coat trails and lifts naturally. Preserve compact adult head scale (same physical head size as left neutral companion), bone lengths, outfit, armor, and natural grip. Left neutral companion unchanged, same anatomical scale as runner. Whole person newly painted, no separate limbs or fixed torso. Transparent requested2560x1440 with full hair/boots/blade margins, no labels/effects.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_push_near_c4/source_rejected.png",
+          "sha256": "d7cab66fb2623829a14154e96087f42053df3526536954ae91c98f9879316fd2",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source.png",
+      "result_sha256": "4d6d23d6b409936864cb47601a46252e6c48026757e472558b8b189d959545c2",
+      "returned_original_file": "exec-f9e53644-c531-4d5c-92c0-391a45312451.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate",
+      "review_note": "Far rear push, near front swing; free far arm corrected to forward swing.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "batch_authorization": "../run_drag_grip_c3/direction_approval.json",
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

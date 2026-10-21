@@ -1,0 +1,69 @@
+{
+  "revision": "v7_c9_run_drag_grip_c3",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/whole_body_run_c9_key_c3",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "body_c1.png",
+      "standing_height": 914
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "scale_only",
+    "G2": "not_approved",
+    "G3": "not_passed",
+    "runtime_install_allowed": false,
+    "whole_body_painted": true,
+    "per_part_scaling": false
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.run",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c9_run_drag_c3",
+          "source": "body",
+          "crop_bbox": [
+            560,
+            85,
+            1660,
+            930
+          ],
+          "root": [
+            1230,
+            898
+          ],
+          "foot": [
+            1520,
+            898
+          ],
+          "component_seed": [
+            1260,
+            380
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1004,
+              453
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

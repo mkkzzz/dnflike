@@ -1,0 +1,7 @@
+{
+  "transparent_background": true,
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_far_c2/body_c2.png"
+  ],
+  "prompt": "Paint a whole-body weight-acceptance pose of this exact walking character, left neutral unchanged. Right figure must keep EXACTLY the same near/far leg assignment as reference: the near buckled right THIGH angles BACKWARD screen-left and visibly OVERLAPS the top of the far forward thigh; far left thigh angles forward screen-right. The nearer rear leg's buckle MUST stay on screen-left rear upper thigh around x1135 y510. Whole body shifts about40 native pixels FORWARD screen-right and sinks18px; FAR FORWARD LEFT KNEE gently bends with foot flat, rear near right heel lifts but toe still touching ground. Do not swap which thigh is in front. Keep near right arm forward, far left arm back, relaxed closed empty right-hand grip. Repaint the whole connected person, moving head/neck/chest/hips/cloth together with the supporting leg. Same adult proportions and physical scale, side view only mild twist. No weapon, no guide/text, transparent. Leave space around entire hair and boots."
+}

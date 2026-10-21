@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "2135b53ef31b0a306a6a765af101c4ac9edcda35641738af7230c39e73f65471",
+      "prompt": "Whole-body painted animation key for exactly the SAME adult swordsman and costume. Reference is identity, body scale, neutral calibration and neighboring pose. Keep LEFT neutral calibration figure unchanged. Redraw ENTIRE RIGHT figure in a different gait phase, with head, shoulders, torso, hips, both legs, both arms and coat moving coherently as ONE PERSON. Requested native2560x1440 transparent; preserve generous border and same physical scale, compact adult head and same bone lengths. PHASE: Weight acceptance 1/8 of a stride AFTER this pose. Near buckled RIGHT leg is supporting on its flat sole in FRONT screen-right, with knee BENDING gently to absorb weight, pelvis and head descend about 18 native pixels. Body advances over this support foot. Far LEFT rear heel lifts further, only toe touches behind before leaving ground, rear knee bends. Stride narrows by about one third. Near right arm is still back but begins returning toward hip, left arm gently forward. Do not keep the straight-legged contact silhouette. Coat hangs mostly down, trailing gently behind and revealing the knees; cloth responds to this pose. Clear natural anatomical hip-knee-ankle continuity and physically supported center of mass. Empty closed right-hand weapon grip, no sword, scabbard, effects, floor, text or detached parts. No proportional resizing of individual body parts. This must be a new whole figure drawing, not a deformation of the reference contact.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_near_c1/body_c2.png",
+          "sha256": "354bd94e12cf5292005a7b05f08be0c7bcb5b2c1c663e3c468d18d89da327188",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source.png",
+      "result_sha256": "5fa43d1e25c9a68ed20890908e72fd84dba0422eee5dcc44fc052d176b35b023",
+      "returned_original_file": "exec-9832e1ab-fb21-478d-bcda-bcbbef046fbd.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate_needs_revision",
+      "review_note": "Weight-acceptance depth larger than opposite side; neutral hair at top boundary.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

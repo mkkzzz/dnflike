@@ -1,0 +1,823 @@
+{
+  "schema": "whole_body_gait_review/1",
+  "revision": "v7_c9_whole_body_walk_c1",
+  "status": "diagnostic_not_approved",
+  "runtime_installed": false,
+  "runtime_install_allowed": false,
+  "fps": 60,
+  "duration_ticks": 64,
+  "painted_keys": 8,
+  "independent_limb_assembly": false,
+  "per_part_scaling": false,
+  "head_locking": false,
+  "key_manifest": "art/animations/players/swordsman/v7/exports/whole_body_gait_c9_keys/manifest.json",
+  "key_manifest_sha256": "5c354d2d54ecaab925a946c03995ecfb2537d9ce4ae254866296a17e07d64b32",
+  "recipe_sha256": "fdd6aa387196d4e290ac7bd3f884cdfd6824ee6cf54761d3a028dd7d599608f4",
+  "proportion_gate": {
+    "schema": "actor_proportions/1",
+    "passed": true,
+    "config": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/body_config.json",
+    "audit": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/proportions.json",
+    "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+    "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+    "reference_visible_head_ratio": 0.15216004589375082,
+    "tolerance_fraction": 0.08,
+    "target_standing_height": 380,
+    "measured_unique_poses": 8,
+    "required_unique_poses": 8,
+    "missing_pose_annotations": [],
+    "unknown_pose_annotations": [],
+    "neutral_checks": [
+      {
+        "source": "walk_contact_near_c1",
+        "neutral_height": 914,
+        "head_ratio_error": -0.04367652927525445,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_down_near_c1",
+        "neutral_height": 917,
+        "head_ratio_error": -0.039638299124441834,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_pass_near_c1",
+        "neutral_height": 916,
+        "head_ratio_error": -0.04576457178775384,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_up_near_c1",
+        "neutral_height": 913,
+        "head_ratio_error": -0.04262907750009037,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_contact_far_c2",
+        "neutral_height": 910,
+        "head_ratio_error": -0.05391692602035292,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_down_far_c1",
+        "neutral_height": 911,
+        "head_ratio_error": -0.02609911398094833,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_pass_far_c1",
+        "neutral_height": 915,
+        "head_ratio_error": -0.04472169153834149,
+        "configured_height_error": 0.0
+      },
+      {
+        "source": "walk_up_far_c1",
+        "neutral_height": 915,
+        "head_ratio_error": -0.05190423521098553,
+        "configured_height_error": 0.0
+      }
+    ],
+    "measurements": [
+      {
+        "source": "walk_contact_near_c1",
+        "pose_id": "walk_contact_near_c1",
+        "head_source_px": 135,
+        "head_landmarks": {
+          "hair_top": [
+            1183,
+            10
+          ],
+          "chin": [
+            1206,
+            145
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 914,
+        "scale_basis_verified": true,
+        "head_output_px": 56.12691466083151,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.029295725204205647,
+        "landmark_only_error_interval": [
+          -0.04367652927525445,
+          -0.014914921133156733
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_down_near_c1",
+        "pose_id": "walk_down_near_c1",
+        "head_source_px": 140,
+        "head_landmarks": {
+          "hair_top": [
+            1217,
+            35
+          ],
+          "chin": [
+            1233,
+            175
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 917,
+        "scale_basis_verified": true,
+        "head_output_px": 58.01526717557252,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.0033629710640159516,
+        "landmark_only_error_interval": [
+          -0.01097078566546994,
+          0.017696727793501843
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_pass_near_c1",
+        "pose_id": "walk_pass_near_c1",
+        "head_source_px": 135,
+        "head_landmarks": {
+          "hair_top": [
+            1185,
+            10
+          ],
+          "chin": [
+            1210,
+            145
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 916,
+        "scale_basis_verified": true,
+        "head_output_px": 56.004366812227076,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.031415166852231224,
+        "landmark_only_error_interval": [
+          -0.04576457178775384,
+          -0.017065761916708944
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_up_near_c1",
+        "pose_id": "walk_up_near_c1",
+        "head_source_px": 136,
+        "head_landmarks": {
+          "hair_top": [
+            1201,
+            7
+          ],
+          "chin": [
+            1223,
+            143
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 913,
+        "scale_basis_verified": true,
+        "head_output_px": 56.60460021905805,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.021034244661746637,
+        "landmark_only_error_interval": [
+          -0.03543079988730902,
+          -0.0066376894361839245
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_contact_far_c2",
+        "pose_id": "walk_contact_far_c2",
+        "head_source_px": 135,
+        "head_landmarks": {
+          "hair_top": [
+            1179,
+            11
+          ],
+          "chin": [
+            1203,
+            146
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 910,
+        "scale_basis_verified": true,
+        "head_output_px": 56.37362637362637,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.02502889322708124,
+        "landmark_only_error_interval": [
+          -0.03947290962371697,
+          -0.0105848768304454
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_down_far_c1",
+        "pose_id": "walk_down_far_c1",
+        "head_source_px": 138,
+        "head_landmarks": {
+          "hair_top": [
+            1257,
+            13
+          ],
+          "chin": [
+            1283,
+            151
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 911,
+        "scale_basis_verified": true,
+        "head_output_px": 57.56311745334797,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.004456872069413809,
+        "landmark_only_error_interval": [
+          -0.01888503334377023,
+          0.009971289204942613
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_pass_far_c1",
+        "pose_id": "walk_pass_far_c1",
+        "head_source_px": 135,
+        "head_landmarks": {
+          "hair_top": [
+            1193,
+            11
+          ],
+          "chin": [
+            1223,
+            146
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 915,
+        "scale_basis_verified": true,
+        "head_output_px": 56.0655737704918,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.030356604193053416,
+        "landmark_only_error_interval": [
+          -0.04472169153834149,
+          -0.015991516847765452
+        ],
+        "caveat": null
+      },
+      {
+        "source": "walk_up_far_c1",
+        "pose_id": "walk_up_far_c1",
+        "head_source_px": 139,
+        "head_landmarks": {
+          "hair_top": [
+            1216,
+            5
+          ],
+          "chin": [
+            1245,
+            144
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 915,
+        "scale_basis_verified": true,
+        "head_output_px": 57.72677595628415,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": -0.0016264295024771558,
+        "landmark_only_error_interval": [
+          -0.015991516847765452,
+          0.012738657842810808
+        ],
+        "caveat": null
+      }
+    ],
+    "failures": [],
+    "artwork_approved": false,
+    "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+  },
+  "model_files": {
+    "flownet.bin": "f334ed2260149ce0188a6dcf049844e8b0cdd912e01cbcfb63553157d2508958",
+    "flownet.param": "28df14d57a225725ee5386f52eba422488450d37c9f40800ed4f62e8ba846692"
+  },
+  "frames": [
+    {
+      "file": "actor/f000.png",
+      "sha256": "e41f2e70dca583b3aa25c56dc8098f71c1f6d98477d076b76b29530493b0c380",
+      "source_key": 0,
+      "next_key": 1,
+      "fraction": 0.0,
+      "is_painted_key": true
+    },
+    {
+      "file": "actor/f001.png",
+      "sha256": "f04cec8b6377aea56d6053ab399813fb63f4b5784e52915765855cad755fb370",
+      "source_key": 0,
+      "next_key": 1,
+      "fraction": 0.125,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f002.png",
+      "sha256": "dcc9f62edf2609fe09568881b3d2029b8d881c2faa76737d1dd37b11f54701d0",
+      "source_key": 0,
+      "next_key": 1,
+      "fraction": 0.25,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f003.png",
+      "sha256": "5399adca6bfd62a1e9ec8a2b6072eacc9befe0d56771514a5a79ab5d5cd35a0d",
+      "source_key": 0,
+      "next_key": 1,
+      "fraction": 0.375,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f004.png",
+      "sha256": "ce4678df5dafed9738d7af02b48e499974f3e00085580b891a43f5ed914f3855",
+      "source_key": 0,
+      "next_key": 1,
+      "fraction": 0.5,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f005.png",
+      "sha256": "21f9d23c8a26f87f7d093aaa5a0b8e1eb58ea01ae334b285bb291cae4e28d56c",
+      "source_key": 0,
+      "next_key": 1,
+      "fraction": 0.625,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f006.png",
+      "sha256": "00a1914fa45c3e35a156a2e3af5739b847265cca031b444e9dfab6cfab7b4ed7",
+      "source_key": 0,
+      "next_key": 1,
+      "fraction": 0.75,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f007.png",
+      "sha256": "36932b9e87c77ea80b793a31e2ef9e285d6bd4e66ad49e85a3d71391d4382704",
+      "source_key": 0,
+      "next_key": 1,
+      "fraction": 0.875,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f008.png",
+      "sha256": "e8b2db0aea657bdc2ba081385a184767366a7ca0e39716a391af0697058cad55",
+      "source_key": 1,
+      "next_key": 2,
+      "fraction": 0.0,
+      "is_painted_key": true
+    },
+    {
+      "file": "actor/f009.png",
+      "sha256": "06f29b997be286172581b1cce682c8d5d66754eb04357bcfde6bc34d88107a2c",
+      "source_key": 1,
+      "next_key": 2,
+      "fraction": 0.125,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f010.png",
+      "sha256": "ba9a9d5529c9470354598dc9609a25823b3d50bf27b3fa78ee09290e7f4d96b1",
+      "source_key": 1,
+      "next_key": 2,
+      "fraction": 0.25,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f011.png",
+      "sha256": "d89b068b1261605a8f427460ca69d09191b76e365cd135c7383b8205a585a3e5",
+      "source_key": 1,
+      "next_key": 2,
+      "fraction": 0.375,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f012.png",
+      "sha256": "be0e6d6baebce8a36fc94023c6ffa9ad5a237f0a8080e8735a4b36bb088c4202",
+      "source_key": 1,
+      "next_key": 2,
+      "fraction": 0.5,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f013.png",
+      "sha256": "848fe1bead4338d613d1aee9a630de6c47779b49169c5abbf1132d5258048aa1",
+      "source_key": 1,
+      "next_key": 2,
+      "fraction": 0.625,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f014.png",
+      "sha256": "6a1c6a0b5058fe3b922af7bb3276009599f1015c44759321c7ad61ea300b5f8b",
+      "source_key": 1,
+      "next_key": 2,
+      "fraction": 0.75,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f015.png",
+      "sha256": "9c606d0ccbbdc0447cb479d1662387b873a7190382a081fd1afe8f430c7cf4f3",
+      "source_key": 1,
+      "next_key": 2,
+      "fraction": 0.875,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f016.png",
+      "sha256": "6a0d751e614bbba2897884dbbe4fc9b726e1c6b237c154a648c14d993f15b7c6",
+      "source_key": 2,
+      "next_key": 3,
+      "fraction": 0.0,
+      "is_painted_key": true
+    },
+    {
+      "file": "actor/f017.png",
+      "sha256": "5a3e9e1712850814496d07ac75f66a0aa9259226d812725a11cf85e50f3cbd15",
+      "source_key": 2,
+      "next_key": 3,
+      "fraction": 0.125,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f018.png",
+      "sha256": "292a4677164cac6911bd1f970e379895ce7837fab657fbe1f184d57b09752f41",
+      "source_key": 2,
+      "next_key": 3,
+      "fraction": 0.25,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f019.png",
+      "sha256": "c93176349aa4adf61d449b880d5749fe1c3944b833ca1bbf95f978756bea5223",
+      "source_key": 2,
+      "next_key": 3,
+      "fraction": 0.375,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f020.png",
+      "sha256": "6bb885a4fc05c025392a14f7bad98e568c75d970774ba260e6cb269a863a2d06",
+      "source_key": 2,
+      "next_key": 3,
+      "fraction": 0.5,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f021.png",
+      "sha256": "b383362f917a5b900fdda220468cd75daad589fba347e3e0ce0cab75b58f238a",
+      "source_key": 2,
+      "next_key": 3,
+      "fraction": 0.625,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f022.png",
+      "sha256": "edaed12140ba24aa7304e6a338171ab091e082e176f08c2c15feb6267fa12221",
+      "source_key": 2,
+      "next_key": 3,
+      "fraction": 0.75,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f023.png",
+      "sha256": "61f46c5a5d80ec0bc439193116bac8cc90eaf3ad92edf8f76d59acf3fafa8736",
+      "source_key": 2,
+      "next_key": 3,
+      "fraction": 0.875,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f024.png",
+      "sha256": "e3eea6c3992b0c74485f3ec2cfae1b32b2b25c9f5126ddae97525ae561ae4661",
+      "source_key": 3,
+      "next_key": 4,
+      "fraction": 0.0,
+      "is_painted_key": true
+    },
+    {
+      "file": "actor/f025.png",
+      "sha256": "81f4f9f452cb3f6b4bc96570651c0d28005d6dd04a754d7b64d4fab3fb76817d",
+      "source_key": 3,
+      "next_key": 4,
+      "fraction": 0.125,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f026.png",
+      "sha256": "62d1f3dfe7651b4ba4f9c92ac7470225acad534c513f5c92fbbc5b698a52b37c",
+      "source_key": 3,
+      "next_key": 4,
+      "fraction": 0.25,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f027.png",
+      "sha256": "22504c734a8116f26814c0f9f92c86b08c6a498b394440cfe56cdfe229efc8f0",
+      "source_key": 3,
+      "next_key": 4,
+      "fraction": 0.375,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f028.png",
+      "sha256": "f1d8eb4e08c6d01b10fc63925ad3266760c8cc43ce694e8dd3985a1913da9f46",
+      "source_key": 3,
+      "next_key": 4,
+      "fraction": 0.5,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f029.png",
+      "sha256": "c5c86219d64b42438322a508369f6f25432a6b0a5f62ba3431e5266d7fc7c92a",
+      "source_key": 3,
+      "next_key": 4,
+      "fraction": 0.625,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f030.png",
+      "sha256": "60d570c1844861d0d12e7eefe2af05ab0a13a25f49fcd1af5eab5d06f8cc179e",
+      "source_key": 3,
+      "next_key": 4,
+      "fraction": 0.75,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f031.png",
+      "sha256": "e461a76dd9870692db9bfc1f280fa05da024ed0b71bac9dcbe016ab1d36d1ad5",
+      "source_key": 3,
+      "next_key": 4,
+      "fraction": 0.875,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f032.png",
+      "sha256": "7d21849525c664ac184ec389c97c2bd8582d8b922d850b6b94dc9c15518f54c3",
+      "source_key": 4,
+      "next_key": 5,
+      "fraction": 0.0,
+      "is_painted_key": true
+    },
+    {
+      "file": "actor/f033.png",
+      "sha256": "b7513ba8c3e6f9e2e3bbe3c3c551d98ffc4d081a2d85b3c031158c552de33a59",
+      "source_key": 4,
+      "next_key": 5,
+      "fraction": 0.125,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f034.png",
+      "sha256": "14e3f5cc5747902fa94272e22691f51a90f3741893c1de72d48b6c78898c1fc3",
+      "source_key": 4,
+      "next_key": 5,
+      "fraction": 0.25,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f035.png",
+      "sha256": "e39d97b7d54b485209b06f3ab22abeb02334f9958e4f691a608b86a50afae4c0",
+      "source_key": 4,
+      "next_key": 5,
+      "fraction": 0.375,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f036.png",
+      "sha256": "b5553c50866e12990f82fa642db8d2c626198c0115ce4a085ee0aa24a549c3ce",
+      "source_key": 4,
+      "next_key": 5,
+      "fraction": 0.5,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f037.png",
+      "sha256": "113f1a7b7c4645dc05b02f03ef7b42bbc62d2c7748afe523081773e8d8fff9d1",
+      "source_key": 4,
+      "next_key": 5,
+      "fraction": 0.625,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f038.png",
+      "sha256": "10ea0f3237eb45be2303fb2259b4939a8842f557c8c28c0044a0f99fd4ec8a63",
+      "source_key": 4,
+      "next_key": 5,
+      "fraction": 0.75,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f039.png",
+      "sha256": "4024a3101fee1c2383bb6e3dc998810b3f9797f2f85697fa4aac053b5fc7adfc",
+      "source_key": 4,
+      "next_key": 5,
+      "fraction": 0.875,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f040.png",
+      "sha256": "76d600d99cac33b427b2059f1290ac23aa224188406bfff4afa37ff720ae4236",
+      "source_key": 5,
+      "next_key": 6,
+      "fraction": 0.0,
+      "is_painted_key": true
+    },
+    {
+      "file": "actor/f041.png",
+      "sha256": "e750385e270e1cc089538e599106bc56a9e8ff5ac299e31c2b1639c2c98b3ace",
+      "source_key": 5,
+      "next_key": 6,
+      "fraction": 0.125,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f042.png",
+      "sha256": "6df1b39d6ad42bcd1eb5eb405eae844ef2a6ed9dee75800fab4f44543d404335",
+      "source_key": 5,
+      "next_key": 6,
+      "fraction": 0.25,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f043.png",
+      "sha256": "90de8f2af39f992a70edddaf70d4280b3ce04ffc98b333a4c35c883de4ef1e13",
+      "source_key": 5,
+      "next_key": 6,
+      "fraction": 0.375,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f044.png",
+      "sha256": "65040140a6d2152fec18e6fe7fef694429b262769dd13b8f0bb3592ca3eb8358",
+      "source_key": 5,
+      "next_key": 6,
+      "fraction": 0.5,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f045.png",
+      "sha256": "177eb3d02198068e473fd22107a3396011c9cce62dfa8f6ae8161fe4ddbda9bb",
+      "source_key": 5,
+      "next_key": 6,
+      "fraction": 0.625,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f046.png",
+      "sha256": "add10dad71b4eb0d9369f4013223d96e9a7e48286a46e431108832df2265a2d8",
+      "source_key": 5,
+      "next_key": 6,
+      "fraction": 0.75,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f047.png",
+      "sha256": "94e349fa6c5a2ebe20782325e9418bc75c231d1ce2a2f2f5482eb9462dd8b74c",
+      "source_key": 5,
+      "next_key": 6,
+      "fraction": 0.875,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f048.png",
+      "sha256": "548f898cb7e7d8ffa15dd19366842c8408ce5ca7d719ba3f6d62263b05c75006",
+      "source_key": 6,
+      "next_key": 7,
+      "fraction": 0.0,
+      "is_painted_key": true
+    },
+    {
+      "file": "actor/f049.png",
+      "sha256": "8f638e81860f729bcdbc37c290b78123528cef3d27425eefe3146cb55859c016",
+      "source_key": 6,
+      "next_key": 7,
+      "fraction": 0.125,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f050.png",
+      "sha256": "a103332d5ee049f07e94ef610880ff0440f60557ca45474a357de0fa1d4375a5",
+      "source_key": 6,
+      "next_key": 7,
+      "fraction": 0.25,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f051.png",
+      "sha256": "ce8a64c18f62f5a7a3c737cd3642708f8bbc07d24dcdd5725682dec03f0fbee8",
+      "source_key": 6,
+      "next_key": 7,
+      "fraction": 0.375,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f052.png",
+      "sha256": "08a9e172fac88c344629dc2853d2fa72ebce6a2043643147daca9dbadfff804c",
+      "source_key": 6,
+      "next_key": 7,
+      "fraction": 0.5,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f053.png",
+      "sha256": "c6b7b5dc944812f4c9aacb620a1b20ab3785c755364de256fc781c742bda8d8c",
+      "source_key": 6,
+      "next_key": 7,
+      "fraction": 0.625,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f054.png",
+      "sha256": "0ca2ad558a09662549d2e82c832d64156a36f4a460f2ca44ababc7ea210d7427",
+      "source_key": 6,
+      "next_key": 7,
+      "fraction": 0.75,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f055.png",
+      "sha256": "9a7d0327f5d4a1df0533b2c973cf0b20db390744a04f033a93cd0d5b2c14868b",
+      "source_key": 6,
+      "next_key": 7,
+      "fraction": 0.875,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f056.png",
+      "sha256": "0c441d03f647f950841b4319bd399bc931f2a03f527c6aba35e8bdfa20dcf6ab",
+      "source_key": 7,
+      "next_key": 0,
+      "fraction": 0.0,
+      "is_painted_key": true
+    },
+    {
+      "file": "actor/f057.png",
+      "sha256": "a27522ec58616bb0f4d06ba8a5214de09e5a544051cac9a742c24faee24b1a80",
+      "source_key": 7,
+      "next_key": 0,
+      "fraction": 0.125,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f058.png",
+      "sha256": "c53a0cd461c062af96bca5f8d1f746434e4906dca4150a23191d2c300f4247c3",
+      "source_key": 7,
+      "next_key": 0,
+      "fraction": 0.25,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f059.png",
+      "sha256": "eceb03f463c53a3fbf93fabed601db44b3573aa9241e5ca2c46d5c409b81712c",
+      "source_key": 7,
+      "next_key": 0,
+      "fraction": 0.375,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f060.png",
+      "sha256": "fde375afd0df84c4e2dbfd201878a8d6e83e6b45e89659fc5b19cac79caf630f",
+      "source_key": 7,
+      "next_key": 0,
+      "fraction": 0.5,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f061.png",
+      "sha256": "dd496af2d4c7087f5118bfd4f6ade8f6fde09392b59f3d24e48bb80775763589",
+      "source_key": 7,
+      "next_key": 0,
+      "fraction": 0.625,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f062.png",
+      "sha256": "d882e6e0986f45206caecd6b351c8d4ca8293fc953bd5961619d14a6aa872e3e",
+      "source_key": 7,
+      "next_key": 0,
+      "fraction": 0.75,
+      "is_painted_key": false
+    },
+    {
+      "file": "actor/f063.png",
+      "sha256": "1c3fc3edd184458f58863a720e49d40db3ea96c3ebcffa92217870f23b0c8585",
+      "source_key": 7,
+      "next_key": 0,
+      "fraction": 0.875,
+      "is_painted_key": false
+    }
+  ],
+  "known_issues": [
+    "weight acceptance asymmetric",
+    "far passing extends too early",
+    "weapon grip/carry design not yet validated",
+    "dense interpolation remains subject to silhouette review"
+  ],
+  "media": {
+    "walk_dense.mp4": "f5e73b0db11bd356ee99a3418d99dffa4d39d911c105e7ed2f69124b858d4c67",
+    "walk_keys.mp4": "9e40af29d626f81f812e1473435d5af5a8c5e942f86cef27a209f3e21f05ef88",
+    "walk_keys.png": "1826357e0eae9085c853147ec160eb371fc7d3566fefc3bc574bf0fa4e97fc9f"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "565a2b9296a7fb191ad0c241f40feaf5c2b12a50326a2f07211b447d201f9b8e",
+      "prompt": "Create a NEW WHOLE-BODY CHARACTER drawing, using reference 1 as the exact limb-attachment/occlusion pose guide, reference2 ONLY for character identity and costume. Requested2560x1440 transparent. TWO figures, left neutral upright calibration companion and right whole character in the reference1 pose, identical physical scale, all toes and hair visible. Camera-near RIGHT LEG is PURPLE in guide and reaches BACKWARD SCREEN LEFT: its upper thigh crosses in front of the BLUE far leg near the pelvis. The RIGHT thigh's buckle strap must appear on this BACKWARD screen-left thigh. FAR LEFT LEG (blue guide) extends FORWARD SCREEN RIGHT and is partially occluded by the rear-moving near thigh at the hip. RIGHT ARM reaches forward screen-right while LEFT ARM swings back. DO NOT draw the nearer buckled thigh pointing forward; that is the wrong step. Keep the pose guide's exact anatomical side assignment. Paint all skin, anatomy and clothes freshly as one coherent full figure, no isolated body parts and no cutout compositing. Upright natural walk, moderate stride, grounded rear toe and front heel, shoulders and hips counter-rotate. White spiky hair/red accent, adult small head, black coat/crimson lining, red forearm wraps, dark trousers/silver knee armor/black boots as reference2. Let coat swing BACKWARD screen-left while opening at hips so the crossing thighs remain legible; no coat draped over all legs. Right hand closes naturally around an invisible short sword hilt (no object drawn), left relaxed. No purple or blue paint, no skeleton, no guides/text, no sword or scabbard, no motion blur.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contacts_c1/opposite_pose_guide.png",
+          "sha256": "55dec1dbc4f98454da8253cface26c21efe39f79813c3fae33a74296ad6679ad",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/views/A1_side_right.png",
+          "sha256": "8fc88aa5544504e0de25ab5804b7f6d3b31cf58f5a6c2b9a7eb15b06cc0ad682",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source_rejected.png",
+      "result_sha256": "7fc9eb40500f331570cb2a9a0c37c468c9dc10c57764c31f888d4d4342576e8e",
+      "returned_original_file": "exec-1dee2ea1-a58b-489e-bb69-c263bcb42c70.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Fresh pose guide attempt still put near buckled leg forward.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

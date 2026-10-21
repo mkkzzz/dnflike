@@ -1,0 +1,272 @@
+{
+  "revision": "v7_c9_whole_body_walk_c1",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../exports/whole_body_gait_c9_keys",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "walk_contact_near_c1": {
+      "file": "walk_contact_near_c1/body_c2.png",
+      "standing_height": 914
+    },
+    "walk_down_near_c1": {
+      "file": "walk_down_near_c1/source.png",
+      "standing_height": 917
+    },
+    "walk_pass_near_c1": {
+      "file": "walk_pass_near_c1/source.png",
+      "standing_height": 916
+    },
+    "walk_up_near_c1": {
+      "file": "walk_up_near_c1/source.png",
+      "standing_height": 913
+    },
+    "walk_contact_far_c2": {
+      "file": "walk_contact_far_c2/body_c2.png",
+      "standing_height": 910
+    },
+    "walk_down_far_c1": {
+      "file": "walk_down_far_c1/body_c2.png",
+      "standing_height": 911
+    },
+    "walk_pass_far_c1": {
+      "file": "walk_pass_far_c1/body_c2.png",
+      "standing_height": 915
+    },
+    "walk_up_far_c1": {
+      "file": "walk_up_far_c1/body_c2.png",
+      "standing_height": 915
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "scale_check_only",
+    "G2": "not_approved",
+    "G3": "not_passed",
+    "G4": "not_passed",
+    "runtime_install_allowed": false,
+    "whole_body_painted": true,
+    "independent_limb_rescale": false,
+    "review_notes": [
+      "unequal weight-acceptance amplitude",
+      "far passing pose extends too early",
+      "carry weapon design still pending"
+    ]
+  },
+  "clips": {
+    "walk": {
+      "asset_id": "actor.player.base.walk",
+      "loop": true,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "walk_contact_near_c1",
+          "source": "walk_contact_near_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "root": [
+            1174,
+            904
+          ],
+          "foot": [
+            1013,
+            904
+          ],
+          "duration_ticks": 8,
+          "component_seed": [
+            1174,
+            350
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 1
+        },
+        {
+          "id": "walk_down_near_c1",
+          "source": "walk_down_near_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "root": [
+            1193,
+            892
+          ],
+          "foot": [
+            1359,
+            892
+          ],
+          "duration_ticks": 8,
+          "component_seed": [
+            1193,
+            350
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 1
+        },
+        {
+          "id": "walk_pass_near_c1",
+          "source": "walk_pass_near_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "root": [
+            1186,
+            905
+          ],
+          "foot": [
+            1285,
+            905
+          ],
+          "duration_ticks": 8,
+          "component_seed": [
+            1186,
+            350
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 1
+        },
+        {
+          "id": "walk_up_near_c1",
+          "source": "walk_up_near_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "root": [
+            1197,
+            901
+          ],
+          "foot": [
+            992,
+            901
+          ],
+          "duration_ticks": 8,
+          "component_seed": [
+            1197,
+            350
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 1
+        },
+        {
+          "id": "walk_contact_far_c2",
+          "source": "walk_contact_far_c2",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "root": [
+            1175,
+            907
+          ],
+          "foot": [
+            1031,
+            907
+          ],
+          "duration_ticks": 8,
+          "component_seed": [
+            1175,
+            350
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 1
+        },
+        {
+          "id": "walk_down_far_c1",
+          "source": "walk_down_far_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "root": [
+            1247,
+            899
+          ],
+          "foot": [
+            1077,
+            899
+          ],
+          "duration_ticks": 8,
+          "component_seed": [
+            1247,
+            350
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0
+        },
+        {
+          "id": "walk_pass_far_c1",
+          "source": "walk_pass_far_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "root": [
+            1187,
+            906
+          ],
+          "foot": [
+            1172,
+            906
+          ],
+          "duration_ticks": 8,
+          "component_seed": [
+            1187,
+            350
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 1
+        },
+        {
+          "id": "walk_up_far_c1",
+          "source": "walk_up_far_c1",
+          "crop_bbox": [
+            750,
+            0,
+            1650,
+            935
+          ],
+          "root": [
+            1203,
+            895
+          ],
+          "foot": [
+            978,
+            895
+          ],
+          "duration_ticks": 8,
+          "component_seed": [
+            1203,
+            350
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 1
+        }
+      ]
+    }
+  }
+}

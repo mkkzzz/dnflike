@@ -1,0 +1,8 @@
+{
+  "transparent_background": true,
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contacts_c1/source.png",
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contacts_c1/opposite_whole_body_guide.png"
+  ],
+  "prompt": "Correct this walking anatomy sheet. Image1 is the edit target. Image2 is a TECHNICAL WHOLE-BODY POSE GUIDE, NOT art style: purple means camera-near anatomical RIGHT limbs, blue means far anatomical LEFT limbs. Keep LEFT neutral and MIDDLE whole figure unchanged. REDRAW THE ENTIRE RIGHTMOST CHARACTER into the whole-body pose in image2, preserving identity, adult compact head, scale, costume and painting style from image1. The rightmost pose currently duplicates the middle's leading leg and is WRONG. Near RIGHT thigh (with strap/buckle) must descend BACK toward screen-left knee and rear toe; this near/right leg is IN FRONT of and occludes the farther forward leg at upper-thigh crossing. Far LEFT leg extends FORWARD screen-right, heel down, toe up. Near RIGHT arm swings forward screen-right with relaxed fist; far LEFT arm swings rearward screen-left. Pelvis and shoulders counter-rotate naturally, body poised between the planted front heel and rear toe, torso/head travel coherently. Draw the whole person naturally including hips, both thighs, knees, ankles, torso, arms, and cloth; DO NOT paste or rotate detached legs. All three silhouettes remain separate and on same baseline. Maintain the original source canvas dimensions, transparent alpha. Do not copy purple/blue colors, labels, skeleton or grey shapes from guide. No weapon, scabbard or effects."
+}

@@ -1,0 +1,7 @@
+{
+  "prompt": "Use case: identity-preserve. Correct proportions in this exact transparent two-pose drawing, keeping the NEW NATURAL TRAILING-SWORD GRIP completely unchanged. Crucial invariant: the right runner's gripping hand near(1000,450), its visible curled thumb, curled fingers, wrist rotation, whole arm and backward-down katana must remain exactly as in the input. Do not alter that successfully corrected grip. Keep whole body, coat, armor and legs unchanged. ONLY redraw the runner's head slightly smaller, compact adult anatomy, approximately130px visible hair-crown-to-chin if canvas1672x941. Reference compactness is the neutral companion on left. Maintain believable joined neck/shoulder anatomy and same silver-hair/red-streak face. Do not resize entire runner, change legs or move hand. Left neutral companion stays at original physical scale, but ensure its upper hair tips fit inside the canvas with small margin; no other changes. No effects, no text. Preserve transparent background, requested2560x1440, no detached body pieces.",
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_drag_grip_c3/source_c4.png"
+  ],
+  "transparent_background": true
+}

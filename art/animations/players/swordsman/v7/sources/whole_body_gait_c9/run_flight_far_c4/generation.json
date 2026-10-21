@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "5777890e5e3442263416becab8058e60fc3f844149b89bacf1ab282bfb499df3",
+      "prompt": "Use case: stylized-concept. Next WHOLE-BODY running key after this far-leg push-off: FLIGHT BEFORE NEAR RIGHT FOOT LANDING. Left neutral companion unchanged. Right runner same scale and proportions, entire anatomy redrawn together. FAR LEFT rear leg toe now leaves ground, knee folds behind, heel lifts and boot airborne. NEAR RIGHT thigh remains forward screen-right IN FRONT OF far thigh, lower leg begins to unfold forward/down in preparation to land, heel still about60px ABOVE ground on a1672x941 sheet, toes slightly lifted. Both feet clearly OFF ground. Hip/chest/head rise modestly as connected mass, forward lean persists. Exactly two coherent arms, far left free fist bent forward chest-height, near right weapon arm trails behind with same rounded thumb-over-curled-fingers grip. Sword points backwardLEFT-down, cuttingedgeDOWN, clear of ground. Preserve compact adult head same physical size as neutral, costume and armor details, length of limbs, coat follows airborne body. No pasted torso or independent legs, no motion blur/effects/text. Transparent requested2560x1440, full figures including sword tip with margins.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_push_far_c4/source.png",
+          "sha256": "4d6d23d6b409936864cb47601a46252e6c48026757e472558b8b189d959545c2",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source.png",
+      "result_sha256": "a86d512d9a947cb06f3662f79253fe7947b0cbac6361ebdd53d02df31038e498",
+      "returned_original_file": "exec-63d12467-5cec-4fe1-b3b5-7be644d96e4e.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate_needs_revision",
+      "review_note": "Front leg extends too early compared with opposite flight; may be a later breakdown but not phase-symmetric flight key.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "batch_authorization": "../run_drag_grip_c3/direction_approval.json",
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

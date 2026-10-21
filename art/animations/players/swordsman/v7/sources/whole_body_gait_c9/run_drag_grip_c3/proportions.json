@@ -1,0 +1,64 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-21",
+  "config": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_drag_grip_c3/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Same-sheet upright neutral and actual visible crown/lower jaw; whole-body uniform scale, no head or limb resizing.",
+  "sources": {
+    "body": {
+      "sha256": "5de5b08fb3c3fd4fd0e12a8d9d00cfe90fe201254c0c39c83e285323a9585b7f",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 6,
+        "standing_bottom_y": 920,
+        "sole": [
+          280,
+          920
+        ],
+        "crop_bbox": [
+          120,
+          0,
+          560,
+          935
+        ],
+        "head": {
+          "hair_top": [
+            404,
+            6
+          ],
+          "chin": [
+            408,
+            145
+          ],
+          "projection": "upright_head"
+        },
+        "caveat": "Visible neutral crown is at y=6; source canvas is below requested 2K."
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c9_run_drag_c3",
+      "head": {
+        "hair_top": [
+          1389,
+          111
+        ],
+        "chin": [
+          1409,
+          244
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "landmark_overlay.png",
+    "sha256": "3e0cd6fbcc6d10f77aca1f702d71f78271c2c83979a03a82bec095853f545cb4",
+    "reviewed": true
+  }
+}

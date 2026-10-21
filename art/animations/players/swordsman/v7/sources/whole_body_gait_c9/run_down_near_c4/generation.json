@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "61d3972e9f46bc4539adee58c59b5078213b0dde4b6df0c742aaee73eff2de1d",
+      "prompt": "Use case: stylized-concept. Create the NEXT WHOLE-BODY key drawing in this same swordsman's running cycle. Input is the approved backward-dragging grip and character proportion reference. Keep the LEFT neutral companion unchanged as calibration, same physical drawing scale for RIGHT runner. Requested2560x1440 transparent sheet, no cropping. Native ratio, compact head, costume, red wraps, silver knee armor, coat stay consistent.\nRIGHT RUNNER phase = NEAR RIGHT LEG WEIGHT ACCEPTANCE / COMPRESSION just after the reference extended landing. Running direction screen-right. Draw the ENTIRE person coherently. Plant the camera-near RIGHT boot flat on an imaginary ground line, below the projected chest/center of mass rather than far ahead. Flex the right knee meaningfully to absorb weight; hip drops moderately (not a squat) and moves forward over the supporting foot; head and chest descend with pelvis. Far LEFT knee folds deeply behind, heel lifts toward buttock and far boot stays clear of ground. Forward lean remains athletic. Near right hand continues BACKWARD DRAGGING katana with SAME natural thumb-over-curled-fingers grip and wrist relationship from reference, blade extends screen-left downward, EDGE DOWN and tip clear of ground. As torso compresses, shoulder/elbow/carry hand move with it, not frozen in place. Far left arm remains bent forward, elbow responds to compression. Coat follows shoulder/pelvis, begins to settle slightly rather than remaining a pasted fixed silhouette. Preserve bone lengths and adult compact head size. This must visibly be a DIFFERENT weight-acceptance drawing, not duplicated reference contact. No separate legs, no cutout, no detached body parts, no extra frames/labels/effects. Two complete figures at same scale, original neutral on left and this one compression phase on right.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_drag_grip_c3/proportion_c2.png",
+          "sha256": "b048dc0f6647f58fe5e3d327adadb78bea6d27e4571eaafc3bd29a03a07ed89b",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source.png",
+      "result_sha256": "1f9991230011bcfcbffce5577d6a5b80f585848328bbc8ff2dc6803d36845118",
+      "returned_original_file": "exec-cedbd88d-5c20-4f79-a979-1fbbf0a91edd.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate",
+      "review_note": "Near support compression; complete motion remains unapproved.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "batch_authorization": "../run_drag_grip_c3/direction_approval.json",
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

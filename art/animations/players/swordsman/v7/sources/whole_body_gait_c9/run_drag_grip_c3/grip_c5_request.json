@@ -1,0 +1,8 @@
+{
+  "prompt": "Use case: precise-object-edit. Image1 is the EDIT TARGET. Image2 is a grip anatomy reference ONLY. Repair image1 runner's holding right hand to use the rounded bent fingers, visible curled thumb, and natural wrist rotation of the RUNNING FIGURE on right in image2. Image2's hand near (1000,450) is the required structural model: red-wrapped thumb curls across top of the handle and visible fingertips tuck underneath it, clearly closing around a cylindrical handle. Repaint this hand/wrist anatomy into image1 at its existing holding hand position around (1078,425). Do NOT copy image1's flat row of straight fingertips. Preserve image1 entire runner's head size, torso pose, whole leg poses, armor design, neutral companion, scale and composition. Preserve BACKWARD trailing katana, cutting edge down; slightly lower the blade angle to match the natural wrist and hand structure from image2, but sword tip stays off ground. Do not paste a detached hand; render the joined forearm-wrist-hand as one continuous anatomy. Keep blade, guard, grip and pommel collinear. Everything outside this hand/wrist/sword adjustment stays like image1. No detached parts, no annotation, no effect. True transparent background, requested2560x1440. Keep all hair/boots inside frame.",
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_compression_near_c1/source.png",
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_drag_grip_c3/source_c4.png"
+  ],
+  "transparent_background": true
+}

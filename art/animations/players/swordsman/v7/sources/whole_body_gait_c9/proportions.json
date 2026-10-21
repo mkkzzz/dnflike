@@ -1,0 +1,386 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-21",
+  "config": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Manual visible lower jaw; alpha extrema assist locating crown/sole then checked on native-pixel overlays. No head resize. Boundary hair on a neutral companion is flagged separately, not proof of full-canvas delivery.",
+  "sources": {
+    "walk_contact_near_c1": {
+      "sha256": "354bd94e12cf5292005a7b05f08be0c7bcb5b2c1c663e3c468d18d89da327188",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 2,
+        "standing_bottom_y": 916,
+        "sole": [
+          492,
+          916
+        ],
+        "crop_bbox": [
+          300,
+          0,
+          650,
+          930
+        ],
+        "head": {
+          "hair_top": [
+            501,
+            2
+          ],
+          "chin": [
+            529,
+            135
+          ],
+          "projection": "upright_head"
+        }
+      },
+      "neutral_top_boundary_risk": true
+    },
+    "walk_down_near_c1": {
+      "sha256": "5fa43d1e25c9a68ed20890908e72fd84dba0422eee5dcc44fc052d176b35b023",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 0,
+        "standing_bottom_y": 917,
+        "sole": [
+          492,
+          917
+        ],
+        "crop_bbox": [
+          300,
+          0,
+          650,
+          930
+        ],
+        "head": {
+          "hair_top": [
+            493,
+            0
+          ],
+          "chin": [
+            529,
+            134
+          ],
+          "projection": "upright_head"
+        }
+      },
+      "neutral_top_boundary_risk": true
+    },
+    "walk_pass_near_c1": {
+      "sha256": "1773346b5cfd80c5e1255f15c7c27692f1fd24685910d823b4429fd105f5f41f",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 1,
+        "standing_bottom_y": 917,
+        "sole": [
+          489,
+          917
+        ],
+        "crop_bbox": [
+          300,
+          0,
+          650,
+          930
+        ],
+        "head": {
+          "hair_top": [
+            495,
+            1
+          ],
+          "chin": [
+            529,
+            134
+          ],
+          "projection": "upright_head"
+        }
+      },
+      "neutral_top_boundary_risk": true
+    },
+    "walk_up_near_c1": {
+      "sha256": "b6812e0e3c185728a2698ca83e2ab74caff23d3aa8ffb90a3ab8c61e41f046b0",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 2,
+        "standing_bottom_y": 915,
+        "sole": [
+          492,
+          915
+        ],
+        "crop_bbox": [
+          300,
+          0,
+          650,
+          930
+        ],
+        "head": {
+          "hair_top": [
+            498,
+            2
+          ],
+          "chin": [
+            529,
+            135
+          ],
+          "projection": "upright_head"
+        }
+      },
+      "neutral_top_boundary_risk": true
+    },
+    "walk_contact_far_c2": {
+      "sha256": "53480b64c12f5b3f7da8f65e0da5b2dd7d4e0f47dcff025bef77914dc083492f",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 4,
+        "standing_bottom_y": 914,
+        "sole": [
+          492,
+          914
+        ],
+        "crop_bbox": [
+          300,
+          0,
+          650,
+          930
+        ],
+        "head": {
+          "hair_top": [
+            500,
+            4
+          ],
+          "chin": [
+            529,
+            135
+          ],
+          "projection": "upright_head"
+        }
+      },
+      "neutral_top_boundary_risk": false
+    },
+    "walk_down_far_c1": {
+      "sha256": "c9574eaeb226330b30d07edddb736d8709425abad2c280ac094231e0c374eb45",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 4,
+        "standing_bottom_y": 915,
+        "sole": [
+          503,
+          915
+        ],
+        "crop_bbox": [
+          300,
+          0,
+          650,
+          930
+        ],
+        "head": {
+          "hair_top": [
+            519,
+            4
+          ],
+          "chin": [
+            548,
+            139
+          ],
+          "projection": "upright_head"
+        }
+      },
+      "neutral_top_boundary_risk": false
+    },
+    "walk_pass_far_c1": {
+      "sha256": "6c10a5cef2c17068ee0b6e8889f8ae195bc99383965a670075f3600a566cc7e7",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 1,
+        "standing_bottom_y": 916,
+        "sole": [
+          491,
+          916
+        ],
+        "crop_bbox": [
+          300,
+          0,
+          650,
+          930
+        ],
+        "head": {
+          "hair_top": [
+            495,
+            1
+          ],
+          "chin": [
+            529,
+            134
+          ],
+          "projection": "upright_head"
+        }
+      },
+      "neutral_top_boundary_risk": true
+    },
+    "walk_up_far_c1": {
+      "sha256": "2643be4a0bc93d8379acbe1201ae9c301e0cd6cee0ae36870624210076ef5868",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 2,
+        "standing_bottom_y": 917,
+        "sole": [
+          492,
+          917
+        ],
+        "crop_bbox": [
+          300,
+          0,
+          650,
+          930
+        ],
+        "head": {
+          "hair_top": [
+            497,
+            2
+          ],
+          "chin": [
+            529,
+            134
+          ],
+          "projection": "upright_head"
+        }
+      },
+      "neutral_top_boundary_risk": true
+    }
+  },
+  "poses": [
+    {
+      "source": "walk_contact_near_c1",
+      "pose_id": "walk_contact_near_c1",
+      "head": {
+        "hair_top": [
+          1183,
+          10
+        ],
+        "chin": [
+          1206,
+          145
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "walk_down_near_c1",
+      "pose_id": "walk_down_near_c1",
+      "head": {
+        "hair_top": [
+          1217,
+          35
+        ],
+        "chin": [
+          1233,
+          175
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "walk_pass_near_c1",
+      "pose_id": "walk_pass_near_c1",
+      "head": {
+        "hair_top": [
+          1185,
+          10
+        ],
+        "chin": [
+          1210,
+          145
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "walk_up_near_c1",
+      "pose_id": "walk_up_near_c1",
+      "head": {
+        "hair_top": [
+          1201,
+          7
+        ],
+        "chin": [
+          1223,
+          143
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "walk_contact_far_c2",
+      "pose_id": "walk_contact_far_c2",
+      "head": {
+        "hair_top": [
+          1179,
+          11
+        ],
+        "chin": [
+          1203,
+          146
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "walk_down_far_c1",
+      "pose_id": "walk_down_far_c1",
+      "head": {
+        "hair_top": [
+          1257,
+          13
+        ],
+        "chin": [
+          1283,
+          151
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "walk_pass_far_c1",
+      "pose_id": "walk_pass_far_c1",
+      "head": {
+        "hair_top": [
+          1193,
+          11
+        ],
+        "chin": [
+          1223,
+          146
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "walk_up_far_c1",
+      "pose_id": "walk_up_far_c1",
+      "head": {
+        "hair_top": [
+          1216,
+          5
+        ],
+        "chin": [
+          1245,
+          144
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "head_landmark_review.png",
+    "sha256": "97582b64bf80080aec480d9ace33f9d3aaccfaad726c42b62e52c15df3e6b841",
+    "reviewed": true
+  }
+}

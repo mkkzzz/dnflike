@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "3420bf48c56ddbeee1f2777058a42186a71c9f60462480f0e855d33bde6252f1",
+      "prompt": "Whole-body painted animation key for exactly the SAME adult swordsman and costume. Reference is identity, body scale, neutral calibration and neighboring pose. Keep LEFT neutral calibration figure unchanged. Redraw ENTIRE RIGHT figure in a different gait phase, with head, shoulders, torso, hips, both legs, both arms and coat moving coherently as ONE PERSON. Requested native2560x1440 transparent; preserve generous border and same physical scale, compact adult head and same bone lengths. PHASE: Midstance / PASSING 1/4 stride AFTER this pose. Near buckled RIGHT leg is the SOLE SUPPORT, almost vertical UNDER THE HIP with boot completely flat on ground. Far LEFT leg is the SWING leg crossing BEHIND the near thigh, its knee travels forward screen-right and bends about 70 degrees, its ankle and boot are lifted roughly 100 native pixels OFF THE GROUND, heel beneath pelvis and toe pointing down, clearly a narrow passing silhouette. Pelvis over the grounded right foot, body more upright slightly higher than contact, arms near vertical crossing mid-swing with opposite subtle chest/hip rotation. No long split stride, no two planted feet, no third leg. Coat hangs mostly down, trailing gently behind and revealing the knees; cloth responds to this pose. Clear natural anatomical hip-knee-ankle continuity and physically supported center of mass. Empty closed right-hand weapon grip, no sword, scabbard, effects, floor, text or detached parts. No proportional resizing of individual body parts. This must be a new whole figure drawing, not a deformation of the reference contact.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_near_c1/body_c2.png",
+          "sha256": "354bd94e12cf5292005a7b05f08be0c7bcb5b2c1c663e3c468d18d89da327188",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source.png",
+      "result_sha256": "1773346b5cfd80c5e1255f15c7c27692f1fd24685910d823b4429fd105f5f41f",
+      "returned_original_file": "exec-5d30c2c9-908d-4753-9382-d19be58ff72d.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate",
+      "review_note": "Near leg supports; far boot lifted behind; additional crossing breakdown needed.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

@@ -1,0 +1,275 @@
+{
+  "revision": "v7_c9_run_cycle_c4_armed_keys",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/whole_body_run_c9_cycle_c4_keys",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "contact_near": {
+      "file": "../run_drag_grip_c3/proportion_c2.png",
+      "standing_height": 912
+    },
+    "down_near": {
+      "file": "../run_down_near_c4/source.png",
+      "standing_height": 915
+    },
+    "push_near": {
+      "file": "../run_push_near_c4/source_c2.png",
+      "standing_height": 915
+    },
+    "flight_near": {
+      "file": "../run_flight_near_c4/source.png",
+      "standing_height": 917
+    },
+    "contact_far": {
+      "file": "../run_contact_far_c4/source.png",
+      "standing_height": 917
+    },
+    "down_far": {
+      "file": "../run_down_far_c4/source.png",
+      "standing_height": 919
+    },
+    "push_far": {
+      "file": "../run_push_far_c4/source.png",
+      "standing_height": 916
+    },
+    "flight_far": {
+      "file": "../run_flight_far_c4/source.png",
+      "standing_height": 920
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": true,
+    "purpose": "painted whole-body timing diagnostic only; not interchangeable-weapon delivery",
+    "G1": "scale_only",
+    "G2": "not_approved",
+    "G3": "not_passed",
+    "runtime_install_allowed": false,
+    "whole_body_painted": true,
+    "per_part_scaling": false
+  },
+  "clips": {
+    "run": {
+      "asset_id": "actor.player.base.run",
+      "loop": true,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "contact_near",
+          "source": "contact_near",
+          "crop_bbox": [
+            560,
+            80,
+            1668,
+            935
+          ],
+          "root": [
+            1230,
+            898
+          ],
+          "foot": [
+            1510,
+            896
+          ],
+          "component_seed": [
+            1350,
+            380
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 6,
+          "landmarks": {}
+        },
+        {
+          "id": "down_near",
+          "source": "down_near",
+          "crop_bbox": [
+            560,
+            80,
+            1668,
+            935
+          ],
+          "root": [
+            1280,
+            895
+          ],
+          "foot": [
+            1500,
+            892
+          ],
+          "component_seed": [
+            1350,
+            380
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 6,
+          "landmarks": {}
+        },
+        {
+          "id": "push_near",
+          "source": "push_near",
+          "crop_bbox": [
+            560,
+            80,
+            1668,
+            935
+          ],
+          "root": [
+            1280,
+            900
+          ],
+          "foot": [
+            990,
+            898
+          ],
+          "component_seed": [
+            1350,
+            380
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 6,
+          "landmarks": {}
+        },
+        {
+          "id": "flight_near",
+          "source": "flight_near",
+          "crop_bbox": [
+            560,
+            80,
+            1668,
+            935
+          ],
+          "root": [
+            1300,
+            900
+          ],
+          "foot": [
+            1335,
+            789
+          ],
+          "component_seed": [
+            1350,
+            380
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 6,
+          "landmarks": {}
+        },
+        {
+          "id": "contact_far",
+          "source": "contact_far",
+          "crop_bbox": [
+            560,
+            80,
+            1668,
+            935
+          ],
+          "root": [
+            1340,
+            895
+          ],
+          "foot": [
+            1540,
+            890
+          ],
+          "component_seed": [
+            1350,
+            380
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 6,
+          "landmarks": {}
+        },
+        {
+          "id": "down_far",
+          "source": "down_far",
+          "crop_bbox": [
+            560,
+            80,
+            1668,
+            935
+          ],
+          "root": [
+            1340,
+            900
+          ],
+          "foot": [
+            1530,
+            895
+          ],
+          "component_seed": [
+            1380,
+            450
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 6,
+          "landmarks": {}
+        },
+        {
+          "id": "push_far",
+          "source": "push_far",
+          "crop_bbox": [
+            560,
+            80,
+            1668,
+            935
+          ],
+          "root": [
+            1310,
+            895
+          ],
+          "foot": [
+            934,
+            889
+          ],
+          "component_seed": [
+            1350,
+            380
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 6,
+          "landmarks": {}
+        },
+        {
+          "id": "flight_far",
+          "source": "flight_far",
+          "crop_bbox": [
+            560,
+            80,
+            1668,
+            935
+          ],
+          "root": [
+            1330,
+            900
+          ],
+          "foot": [
+            1510,
+            877
+          ],
+          "component_seed": [
+            1350,
+            380
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 6,
+          "landmarks": {}
+        }
+      ]
+    }
+  }
+}

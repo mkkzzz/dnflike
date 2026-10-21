@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-21",
+  "status": "single_grip_direction_approved",
+  "user_answer": "握持方向可以继续",
+  "question_scope": "Only single-pose hand/finger/thumb/wrist relationship, not a complete run cycle.",
+  "preview": "docs/previews/v7_c9_whole_body/run_c3_katana.png",
+  "preview_sha256": "da6a99f03955321ab782ade9a1e4bcb08cb3faf2938fe606bc1bbb021b849544",
+  "layer_manifest_sha256": "dc434ba60b1827f55454ccbbfd76053c95fa8b2e48f81fc5bc2edccfe871e5b8",
+  "body_sha256": "5de5b08fb3c3fd4fd0e12a8d9d00cfe90fe201254c0c39c83e285323a9585b7f",
+  "source_painted_with_weapon_sha256": "b048dc0f6647f58fe5e3d327adadb78bea6d27e4571eaafc3bd29a03a07ed89b",
+  "whole_body_source_batch_allowed": true,
+  "complete_action_approved": false,
+  "runtime_install_allowed": false,
+  "whole_source_canvas_2k_met": false
+}

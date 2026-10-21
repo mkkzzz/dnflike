@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "a1bccb8bcf9c31ecb23575570eb6c98273b41fea73cadcdc3e6ea67988c117e6",
+      "prompt": "Whole-body painted animation key for exactly the SAME adult swordsman and costume. Reference is identity, body scale, neutral calibration and neighboring pose. Keep LEFT neutral calibration figure unchanged. Redraw ENTIRE RIGHT figure in a different gait phase, with head, shoulders, torso, hips, both legs, both arms and coat moving coherently as ONE PERSON. Requested native2560x1440 transparent; preserve generous border and same physical scale, compact adult head and same bone lengths. PHASE: Late push-off just BEFORE the reference near-right-forward contact. FAR LEFT leg extends BACK screen-left pushing from ball/toes with heel high, knee nearly extended. NEAR buckled RIGHT leg swings FORWARD screen-right in front of far leg, knee modestly bent about 30degrees, toe raised, forward boot sole hovering 40 native pixels above ground ready for heel contact. Whole pelvis/head reach highest walking point about14 native pixels higher than contact; rear toe grounded, no running flight. Near right arm swings BACK screen-left with relaxed empty hilt grip, far left arm forward. Same side camera, full body coordinated, moderate stride. Coat hangs mostly down, trailing gently behind and revealing the knees; cloth responds to this pose. Clear natural anatomical hip-knee-ankle continuity and physically supported center of mass. Empty closed right-hand weapon grip, no sword, scabbard, effects, floor, text or detached parts. No proportional resizing of individual body parts. This must be a new whole figure drawing, not a deformation of the reference contact.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_near_c1/body_c2.png",
+          "sha256": "354bd94e12cf5292005a7b05f08be0c7bcb5b2c1c663e3c468d18d89da327188",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source_rejected.png",
+      "result_sha256": "a254c12ffa7e2b4ed8faa0d106b773033cfe3cda7db39757b9b21061cd93454e",
+      "returned_original_file": "exec-85d1ac6d-6ce6-4748-aa86-7cc591d24dcc.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Near arm incorrectly forward with near forward leg.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "body_c2_request.json",
+      "request_sha256": "217a08236a1ef398f34a4788fec15db3490c8c26fd8ad9e84c0fd8a7041a981c",
+      "prompt": "Correct the coordinated whole-body walk pose of the RIGHT figure: its near arm is incorrectly forward with near forward leg. Keep left neutral figure unchanged. Redraw right whole person with near RIGHT SHOULDER rolling BACK and near red-wrapped RIGHT ARM extending DOWN AND BACK SCREEN LEFT, near wrist approximately x1030 y440. Near arm connects to the visible nearest shoulder and does NOT cross the front of chest. Far LEFT arm reaches forward SCREEN RIGHT, far wrist approximately x1350 y420. Exactly2arms; remove the old forward near arm. Torso counterrotates gently toward viewer showing slightly wider red lapel, still side-on. Keep the two legs exactly in current arrangement: buckled NEAR RIGHT LEG FORWARD with boot in air, farleftleg behind pushing fromtoe. Keep body scale, compact head, hips and coat continuous and grounded posture coherent; no detached parts or pasted arm. Both hands relaxed closed grips, no weapon, scabbard, labels or extra objects. Transparent original dimensions.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_up_far_c1/source_rejected.png",
+          "sha256": "a254c12ffa7e2b4ed8faa0d106b773033cfe3cda7db39757b9b21061cd93454e",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "body_c2.png",
+      "result_sha256": "2643be4a0bc93d8379acbe1201ae9c301e0cd6cee0ae36870624210076ef5868",
+      "returned_original_file": "exec-987c0ff1-d7f9-4aaa-a2f1-716d575dc5fc.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate",
+      "review_note": "Arm opposition corrected; full cycle still unapproved.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

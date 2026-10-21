@@ -1,0 +1,7 @@
+{
+  "prompt": "Use case: identity-preserve. Revise the attached transparent whole-character running concept. Keep the approved costume, SAME bent-elbow forward-grip katana carrying direction, fingers wrapped naturally around the handle near guard, both whole poses, leg placement, body scale, sword angle and composition. Correct one anatomical problem: the running figure's head has grown larger than the neutral companion's head. Redraw the running figure with the SAME compact adult head dimensions and consistent head-to-neck/shoulder anatomy as the neutral companion. Head must be about 130 pixels crown to chin when rendered at a 1672x941 sheet, or proportionally 8% of sheet width. DO NOT enlarge any body part. Keep the left neutral companion unchanged, and complete hair and soles inside the canvas. Draw coherent neck/shoulder joins and preserve all costume details. Whole person painted coherently, no cutout mesh, no pasted head appearance, no labels. Requested native canvas 2560x1440. True transparent background.",
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_carry_c2/source.png"
+  ],
+  "transparent_background": true
+}

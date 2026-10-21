@@ -1,0 +1,8 @@
+{
+  "transparent_background": true,
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_pass_far_c1/source_rejected.png",
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_pass_near_c1/source.png"
+  ],
+  "prompt": "Correct the WHOLE RIGHT WALKING FIGURE in image1: the raised near knee is TOO HIGH like marching. Use image2 only to match the moderate ordinary walking amplitude, same head/body/cloth style. Keep image1 left neutral companion unchanged, same canvas. In right figure, redraw entire pose with far LEFT foot still flat supporting below hip. LOWER the raised near RIGHT thigh until it points mostly DOWN with just a small forward angle: its buckled knee should be around x1240 y610, not at x1360 y500. Fold near shin BACK toward x1150 y770; near boot suspended around y820, only ~80px above ground, toes down. The near swing thigh remains visibly IN FRONT OF the far support thigh. It is an ordinary low passing step, never a high knee drill. Arms now pass close to body near vertical, nearest right wrist around x1200 y470; connect shoulder/chest/hip motion naturally, slight controlled hip rotation, spine upright and relaxed. Keep original long adult limbs and compact head, don't shorten a leg to reach coordinate, reposition the whole anatomy coherently. Coat follows lowered ordinary step. No weapons, effects, guides or text. Full complete person painted together, transparent background."
+}

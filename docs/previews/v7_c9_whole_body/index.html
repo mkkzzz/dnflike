@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><title>C9 整身步态重做 · 制作中</title>
+<style>body{margin:24px;background:#171d25;color:#e8edf4;font:16px system-ui;max-width:1100px}p{line-height:1.65;color:#bac8da}button,select,input{font:inherit;margin:4px;padding:8px;background:#2a3543;color:white;border:1px solid #617084;border-radius:5px}video{display:block;width:700px;max-width:100%;height:auto;background:#222a31}img{display:block;max-width:100%;height:auto}#run{width:700px}summary{cursor:pointer;padding:12px}.status{color:#ffd291}label{display:inline-block}h2{margin-top:34px}</style>
+<style>video{width:auto;height:auto;max-height:62vh;max-width:100%}h1{font-size:26px}h2{margin-top:16px}p{margin:10px 0}</style>
+<h1>C9：完整人物步态重做</h1>
+<p class="status">制作中，尚未实装。旧拆件步态已退回。本页身体均来自完整人物原画，没有腿件拼装、IK 或固定上身套腿。</p>
+<h2 id="run-review">奔跑 · 保留拖刀，重画握持 C3</h2>
+<p>已按最新反馈保留向后拖刀。新稿改为可见的拇指扣握和弯曲手指包柄，腕部随握柄方向转动。用户已认可这张的握持方向；完整跑步动作尚未完成，下方为继续制作的关键原画诊断。</p>
+<label>武器 <select id="weapon"><option value="katana">太刀</option><option value="greatsword">巨剑</option><option value="shortsword">短剑</option><option value="body">裸动作</option></select></label>
+<img id="run" src="run_c3_katana.png" alt="C3 保留向后拖刀并重画握持的单张跑姿">
+<p>三种武器共用完全相同的整身身体。红色缠布拇指与手指覆盖在独立刀柄上，刀口朝下；单张握持方向获认可，不等于完整动作和换武器实机验收。</p>
+<details><summary>原画手部裁窗（原生像素，不放大）</summary><img src="run_c3_grip_source.png" alt="新稿手指包柄与拇指扣握细节"></details>
+<details><summary>旧稿：握持退回，拖刀方向保留</summary><img src="run_katana.png" alt="用户退回握持的旧拖刀单张"></details>
+<p>C3 预览为 700×410 原生像素裁窗，角色以站高 380 像素标定，没有放大。源图实际约 1672×941，未达到整张源画布原生 2560×1440。</p>
+<h2>奔跑 · 八张整身关键原画 C4</h2>
+<p>已补两侧着地、压缩、蹬伸与腾空。当前只回放真实原画，没有补间。已知问题：两侧下沉深度、腾空时伸腿时机不一致，反侧自由手臂轮廓仍需澄清。本段保留原画中的刀，仅用于姿势诊断，尚未完成全循环去刀分层、连续过渡与实装。</p>
+<label>奔跑速度 <select id="run-speed"><option value="0.25">0.25 倍</option><option value="0.5" selected>0.5 倍</option><option value="1">1 倍</option></select></label>
+<button id="run-play">奔跑播放／暂停</button><button id="run-prev">上一张原画</button><button id="run-next">下一张原画</button>
+<video id="run-video" src="run_cycle_c4_keys.mp4" controls muted loop playsinline preload="auto"></video>
+<details><summary>展开奔跑八张关键原画</summary><img src="run_cycle_c4_keys.png" alt="八张完整人物奔跑阶段诊断，仍需返修"></details>
+<h2>步行 · 裸动作诊断</h2>
+<p>八张整身关键原画，默认半速。两侧承重下沉不一致、反侧过步伸腿偏早，仍需返修。64 帧补间在交叉腿和衣摆处出现透明重影，已内部退回，仅保留失败诊断。尚未完成持刀步行与起停。</p>
+<label>版本 <select id="mode"><option value="walk_keys.mp4">只看真实关键原画</option><option value="walk_dense.mp4">已退回：补间重影诊断</option></select></label>
+<label>速度 <select id="speed"><option value="0.25">0.25 倍</option><option value="0.5" selected>0.5 倍</option><option value="1">1 倍</option></select></label>
+<button id="play">播放／暂停</button><button id="prev">上一帧</button><button id="next">下一帧</button><button id="flip">立即翻面</button>
+<video id="video" src="walk_keys.mp4" controls muted loop playsinline preload="auto"></video>
+<label>周期内帧 <input id="frame" type="range" min="0" max="63" step="1" value="0"><output id="number">0 / 63</output></label>
+<details><summary>展开八张完整人物关键原画</summary><img src="walk_keys.png" alt="完整人物步行关键姿势，含待修正的承重和过步问题"></details>
+<script>
+const video=document.querySelector('#video'),mode=document.querySelector('#mode'),speed=document.querySelector('#speed'),slider=document.querySelector('#frame'),number=document.querySelector('#number');
+video.playbackRate=0.5;
+video.addEventListener('loadedmetadata',()=>{video.playbackRate=Number(speed.value);});
+document.querySelector('#play').onclick=()=>video.paused?video.play():video.pause();
+speed.onchange=()=>video.playbackRate=Number(speed.value);
+mode.onchange=()=>{video.pause();video.src=mode.value;video.load();slider.value=0;number.value='0 / 63';};
+function seek(frame){video.pause();const f=(frame+64)%64;video.currentTime=(f+0.02)/60;slider.value=f;number.value=f+' / 63';}
+document.querySelector('#prev').onclick=()=>seek(Math.floor(video.currentTime*60+0.01)-1);
+document.querySelector('#next').onclick=()=>seek(Math.floor(video.currentTime*60+0.01)+1);
+slider.oninput=()=>seek(Number(slider.value));
+video.ontimeupdate=()=>{const f=Math.floor(video.currentTime*60)%64;slider.value=f;number.value=f+' / 63';};
+document.querySelector('#flip').onclick=()=>{video.style.transform=video.style.transform?'':'scaleX(-1)';};
+document.querySelector('#weapon').onchange=e=>{document.querySelector('#run').src='run_c3_'+e.target.value+'.png';};
+const runVideo=document.querySelector('#run-video'),runSpeed=document.querySelector('#run-speed');
+runVideo.playbackRate=0.5;runVideo.onloadedmetadata=()=>runVideo.playbackRate=Number(runSpeed.value);
+runSpeed.onchange=()=>runVideo.playbackRate=Number(runSpeed.value);
+document.querySelector('#run-play').onclick=()=>runVideo.paused?runVideo.play():runVideo.pause();
+function runSeek(delta){runVideo.pause();const key=(Math.floor(runVideo.currentTime*10+0.001)+delta+8)%8;runVideo.currentTime=key/10+0.0003;}
+document.querySelector('#run-prev').onclick=()=>runSeek(-1);
+document.querySelector('#run-next').onclick=()=>runSeek(1);
+</script></html>

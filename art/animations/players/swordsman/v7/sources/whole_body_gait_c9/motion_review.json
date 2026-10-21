@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-21",
+  "status": "rejected_dense_candidate",
+  "reviewer": "agent_visual_review",
+  "export": "art/animations/players/swordsman/v7/exports/whole_body_gait_c9_review/manifest.json",
+  "export_sha256": "0d6b6639152365b1b35fe2d223ca9da67b74bb446b6186b549d25705b5fe4ce3",
+  "video_sha256": "f5e73b0db11bd356ee99a3418d99dffa4d39d911c105e7ed2f69124b858d4c67",
+  "evidence": "docs/previews/v7_c9_whole_body/rejected_midframes.png",
+  "evidence_sha256": "663fa6013e74e3d7116e6266999d3379f9f0ba8b3a85cdc9ccaf14982f60ed71",
+  "observed_ticks": [
+    20,
+    44,
+    52
+  ],
+  "failures": [
+    "translucent crossing legs/coat",
+    "unequal weight acceptance depth",
+    "far swing extends before a true passing drawing"
+  ],
+  "next_work": [
+    "redraw moderate matching weight acceptance",
+    "draw true far-support passing and both crossing breakdowns",
+    "replay intact source drawings before another dense bake"
+  ],
+  "production_use_allowed": false,
+  "runtime_installed": false,
+  "user_approval_requested_for_failed_dense_motion": false
+}

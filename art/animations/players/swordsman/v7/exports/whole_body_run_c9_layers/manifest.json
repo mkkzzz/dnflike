@@ -1,0 +1,190 @@
+{
+  "schema": "whole_body_carry_review/1",
+  "body": {
+    "file": "body.png",
+    "sha256": "104ab97625d8d0b6232d9a10c68470fd95061d573be32310b426d200715e4d5e",
+    "unchanged_from_key_export": true
+  },
+  "fingers": {
+    "file": "fingers.png",
+    "sha256": "3ee7cadc76222a5f4fe11bbe2348114d760f789e9cf75dd582a9fae158884095"
+  },
+  "source_key_manifest_sha256": "8d7b1aeb1208b33c123c691650e8e40418e0c00d7ad87142b13b7c8eae4ba67d",
+  "hand_calibration_sha256": "f8905256e1217346ae616eb96b06d573e38c838073497352ff00f6c028bb5837",
+  "weapon_library_sha256": "fa3f24d14536d2aee3617ac91737c46e74a35c0f5a7af2e6e4896bc646d665ef",
+  "profiles": {
+    "katana": {
+      "layer": "katana.png",
+      "sha256": "dd6eef0b375400915ecbc9a0b522edc9097a684e33778a244332fac9bb773a5e",
+      "source_sha256": "c0d4330188fada27f744a183be336ffa89d46a7572ddc7e6de54c507c58c2609",
+      "grip": [
+        372.0834248079034,
+        648.9571899012075
+      ],
+      "guard": [
+        350.68586439120804,
+        654.11589155737
+      ],
+      "tip": [
+        96.47443251371244,
+        684.3242993736284
+      ],
+      "cutting_edge": [
+        230.72222022093416,
+        683.8625727508323
+      ],
+      "spine": [
+        228.53664717411164,
+        671.5887985050747
+      ],
+      "cutting_edge_contract": {
+        "texture_cutting_side": 1,
+        "transverse_axis_reflected": true,
+        "authored_cutting_direction": [
+          0,
+          1
+        ],
+        "cutting_alignment": 0.9930134057714675
+      },
+      "physical_blade_length": 256.0,
+      "sampling_scale": 0.1684708997999496
+    },
+    "greatsword": {
+      "layer": "greatsword.png",
+      "sha256": "ea7418a9aa9b1a6169b628d114e03f2ce5f26d15f0b1e9bf8b38a9e05140f600",
+      "source_sha256": "ea071be0bdc1c8d1d045b00737b5651fd48fcbe1d0543f1824260d6bb87393d7",
+      "grip": [
+        372.0834248079034,
+        648.9571899012075
+      ],
+      "guard": [
+        351.5034708008586,
+        651.4027433481675
+      ],
+      "tip": [
+        33.739180953989035,
+        689.1632531184904
+      ],
+      "cutting_edge": [
+        201.8196329897236,
+        680.2679580772373
+      ],
+      "spine": [
+        199.10755217749045,
+        657.4451085302245
+      ],
+      "cutting_edge_contract": {
+        "texture_cutting_side": 1,
+        "transverse_axis_reflected": true,
+        "authored_cutting_direction": [
+          0,
+          1
+        ],
+        "cutting_alignment": 0.9930134057714675
+      },
+      "physical_blade_length": 320.0,
+      "sampling_scale": 0.19643953345610804
+    },
+    "shortsword": {
+      "layer": "shortsword.png",
+      "sha256": "5edd606dd5cfa10251233d1c8021394e79575ad80d8cb885249189251c6613bd",
+      "source_sha256": "7d7bc8859fd60aa259ef347fa677ab7168e46aa8e7dede833d07b64acb22f790",
+      "grip": [
+        372.0834248079034,
+        648.9571899012075
+      ],
+      "guard": [
+        360.206333318545,
+        650.368566331967
+      ],
+      "tip": [
+        220.39004578592235,
+        666.9831906309091
+      ],
+      "cutting_edge": [
+        297.8751655663959,
+        663.8229225290734
+      ],
+      "spine": [
+        296.44527025353943,
+        651.7899899386802
+      ],
+      "cutting_edge_contract": {
+        "texture_cutting_side": 1,
+        "transverse_axis_reflected": true,
+        "authored_cutting_direction": [
+          0,
+          1
+        ],
+        "cutting_alignment": 0.9930134057714675
+      },
+      "physical_blade_length": 140.8,
+      "sampling_scale": 0.10723533891850724
+    }
+  },
+  "layer_order": [
+    "body",
+    "weapon",
+    "fingers"
+  ],
+  "source_G1": {
+    "schema": "actor_proportions/1",
+    "passed": true,
+    "config": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_compression_near_c1/body_config.json",
+    "audit": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_compression_near_c1/proportions.json",
+    "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+    "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+    "reference_visible_head_ratio": 0.15216004589375082,
+    "tolerance_fraction": 0.08,
+    "target_standing_height": 380,
+    "measured_unique_poses": 1,
+    "required_unique_poses": 1,
+    "missing_pose_annotations": [],
+    "unknown_pose_annotations": [],
+    "neutral_checks": [
+      {
+        "source": "body",
+        "neutral_height": 911,
+        "head_ratio_error": -0.04774135589248285,
+        "configured_height_error": 0.0
+      }
+    ],
+    "measurements": [
+      {
+        "source": "body",
+        "pose_id": "c9_run_carry",
+        "head_source_px": 141,
+        "head_landmarks": {
+          "hair_top": [
+            1399,
+            126
+          ],
+          "chin": [
+            1444,
+            267
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 911,
+        "scale_basis_verified": true,
+        "head_output_px": 58.81448957189901,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.017185369842120712,
+        "landmark_only_error_interval": [
+          0.002757208567764291,
+          0.03161353111647691
+        ],
+        "caveat": null
+      }
+    ],
+    "failures": [],
+    "artwork_approved": false,
+    "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+  },
+  "recipe_sha256": "a91d9fa22b089dfe52dae27e3afa4233f3c1c4caf8e01c4e3d6826f3ceaa2ad6",
+  "continuous_action": false,
+  "runtime_installed": false,
+  "G2_approved": false,
+  "G3_approved": false,
+  "source_pose_note": "Forward leaning carry/contact direction study; not a validated running compression phase."
+}

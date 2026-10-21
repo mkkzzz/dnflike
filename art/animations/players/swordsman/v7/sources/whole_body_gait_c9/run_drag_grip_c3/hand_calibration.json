@@ -1,0 +1,61 @@
+{
+  "source_sha256": "5de5b08fb3c3fd4fd0e12a8d9d00cfe90fe201254c0c39c83e285323a9585b7f",
+  "pose": "c9_run_drag_c3",
+  "primary": [
+    1004,
+    453
+  ],
+  "blade_axis": [
+    -0.94,
+    0.342
+  ],
+  "cutting_direction": [
+    0,
+    1
+  ],
+  "finger_region": [
+    [
+      976,
+      427
+    ],
+    [
+      1002,
+      438
+    ],
+    [
+      1003,
+      447
+    ],
+    [
+      1015,
+      446
+    ],
+    [
+      1028,
+      442
+    ],
+    [
+      1031,
+      451
+    ],
+    [
+      1023,
+      468
+    ],
+    [
+      998,
+      477
+    ],
+    [
+      977,
+      468
+    ],
+    [
+      974,
+      452
+    ]
+  ],
+  "occlusion_mode": "painted_thumb_and_fingers",
+  "reviewed": true,
+  "note": "Preserve red wrapped thumb above the independent handle, not just skin-color fingertips. Whole-body scale only; static review, not approved run motion."
+}

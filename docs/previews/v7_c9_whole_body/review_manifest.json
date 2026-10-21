@@ -1,0 +1,42 @@
+{
+  "revision": "v7_c9_whole_body_gait",
+  "status": "source_production",
+  "walk_status": "dense_rejected_and_keys_need_revision",
+  "run_status": "single_grip_direction_approved_eight_keys_need_revision",
+  "runtime_installed": false,
+  "source_spec_sha256": "1e384b061390b89bc1913a4db681ceb791989b310f6929b71c3e89c7dd3c4bc4",
+  "walk_export_sha256": "0d6b6639152365b1b35fe2d223ca9da67b74bb446b6186b549d25705b5fe4ce3",
+  "run_layer_export_sha256": "dc434ba60b1827f55454ccbbfd76053c95fa8b2e48f81fc5bc2edccfe871e5b8",
+  "run_direction_approval_sha256": "4e62efdd3f4866a7ab10995deac288cba480aac2b21230b8477ab60eb055346b",
+  "files": {
+    "browser_run_c3.png": "1dbd7cbbd1b9c7772ad3d6bab14bb9804208b0ca6c9bfa04f4c0c25989229b12",
+    "browser_run_cycle_c4.png": "dcd9369346b5edd52e1f87b3b7de0971fcd014f0179c4c13a74c8e7583d63acc",
+    "index.html": "bfa71efca9b2c9695ef843e7e35feab6af4a2a23bbbcc97c38299a783644285f",
+    "rejected_midframes.png": "663fa6013e74e3d7116e6266999d3379f9f0ba8b3a85cdc9ccaf14982f60ed71",
+    "run_body.png": "3570151b304e037d65bcaee100beadf303c28cb0759a9921cfa23c4889ee9d97",
+    "run_c3_body.png": "8cdd0c4830ae6b834048e248d6717e61aa0d1c44544d33731aa06f3ad0b7aa42",
+    "run_c3_greatsword.png": "da41fa3b188a3c4d6b5a4354818f78457d67e084f8650a39e01954de19dd2ee1",
+    "run_c3_grip_source.png": "af9fbeb4db5fcddd1b3f99148afb0575d5ff5745c72795fd3a938835c317bc72",
+    "run_c3_katana.png": "da6a99f03955321ab782ade9a1e4bcb08cb3faf2938fe606bc1bbb021b849544",
+    "run_c3_shortsword.png": "b1368bb2bd2e9505baddfbc6e541080639f078107e6781a40deb02d2b66e0e6f",
+    "run_cycle_c4_keys.mp4": "c9d4cefd0f1fb29c18738a14bb69f593690dd54e3a0bbd72ccecb90d28ca102a",
+    "run_cycle_c4_keys.png": "71c4965704dd5112d1515170457894c64417084508a1585193f38b7f7b665692",
+    "run_greatsword.png": "20166aa84dd85df9394bbd92fa53af84d604dd0241bcc536b26d05c4a0d3ca34",
+    "run_katana.png": "20907e9430b3f37ce52f06bb60b7c0d60bb043a3376bd33e6c8be52d213aabac",
+    "run_shortsword.png": "e3be2bc27a5a8c7e9ff618373c332ec5c0f72a07cfb81b21c4a1e76c6daacba6",
+    "walk_dense.mp4": "f5e73b0db11bd356ee99a3418d99dffa4d39d911c105e7ed2f69124b858d4c67",
+    "walk_keys.mp4": "9e40af29d626f81f812e1473435d5af5a8c5e942f86cef27a209f3e21f05ef88",
+    "walk_keys.png": "1826357e0eae9085c853147ec160eb371fc7d3566fefc3bc574bf0fa4e97fc9f"
+  },
+  "browser_checks": [
+    "C3 katana default visible with full body",
+    "shortsword selector rendered",
+    "walk half-speed playback and frame stepping verified before run revision",
+    "C4 playing at 0.5x, 700x410, 3.2-second repeated video",
+    "C4 next drawing paused exactly at 0.1003 seconds",
+    "Malformed auto-linked URL corrected to exact index.html"
+  ],
+  "raster_upscaled": false,
+  "run_cycle_key_review_sha256": "0976209b30aa10eb6d7355f2957203945fe2d09d1f1ca7f398344374d98de610",
+  "run_cycle_motion_review_sha256": "5bc63d9b37c31a3f2f1bfce91d353c2ffc05f46cacb6a3e3126de653ea3f1c0c"
+}

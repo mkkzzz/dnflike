@@ -1,0 +1,378 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-21",
+  "config": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_cycle_c4/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Actual source crown/lower jaw and same-sheet neutral, reviewed at native crop scale. Entire person uniformly reduced; no limb or head retargeting.",
+  "sources": {
+    "contact_near": {
+      "sha256": "b048dc0f6647f58fe5e3d327adadb78bea6d27e4571eaafc3bd29a03a07ed89b",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 7,
+        "standing_bottom_y": 919,
+        "sole": [
+          280,
+          919
+        ],
+        "crop_bbox": [
+          120,
+          0,
+          560,
+          935
+        ],
+        "head": {
+          "hair_top": [
+            375,
+            7
+          ],
+          "chin": [
+            408,
+            145
+          ],
+          "projection": "upright_head"
+        }
+      }
+    },
+    "down_near": {
+      "sha256": "1f9991230011bcfcbffce5577d6a5b80f585848328bbc8ff2dc6803d36845118",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 5,
+        "standing_bottom_y": 920,
+        "sole": [
+          280,
+          920
+        ],
+        "crop_bbox": [
+          120,
+          0,
+          560,
+          935
+        ],
+        "head": {
+          "hair_top": [
+            369,
+            5
+          ],
+          "chin": [
+            408,
+            145
+          ],
+          "projection": "upright_head"
+        }
+      }
+    },
+    "push_near": {
+      "sha256": "8f8865a5f1dcdba1a4889c462d3c5a9db8466bf44978d08f6a971db5423ddc8a",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 5,
+        "standing_bottom_y": 920,
+        "sole": [
+          281,
+          920
+        ],
+        "crop_bbox": [
+          120,
+          0,
+          560,
+          935
+        ],
+        "head": {
+          "hair_top": [
+            405,
+            5
+          ],
+          "chin": [
+            408,
+            145
+          ],
+          "projection": "upright_head"
+        }
+      }
+    },
+    "flight_near": {
+      "sha256": "051c37172f934820f49431fd33928880d6abba622964b37fc60c1a6856f3c5a4",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 4,
+        "standing_bottom_y": 921,
+        "sole": [
+          278,
+          921
+        ],
+        "crop_bbox": [
+          120,
+          0,
+          560,
+          935
+        ],
+        "head": {
+          "hair_top": [
+            369,
+            4
+          ],
+          "chin": [
+            408,
+            145
+          ],
+          "projection": "upright_head"
+        }
+      }
+    },
+    "contact_far": {
+      "sha256": "93a1328456281d362906740e6e7912ef7deba081edc48bbbcf47dd6fc65371f0",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 4,
+        "standing_bottom_y": 921,
+        "sole": [
+          278,
+          921
+        ],
+        "crop_bbox": [
+          120,
+          0,
+          560,
+          935
+        ],
+        "head": {
+          "hair_top": [
+            367,
+            4
+          ],
+          "chin": [
+            408,
+            145
+          ],
+          "projection": "upright_head"
+        }
+      }
+    },
+    "down_far": {
+      "sha256": "612bd3e2c569b6b7e1b368039e995b66b6a9fd504e500a09051f45d7e46b06cf",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 3,
+        "standing_bottom_y": 922,
+        "sole": [
+          277,
+          922
+        ],
+        "crop_bbox": [
+          120,
+          0,
+          560,
+          935
+        ],
+        "head": {
+          "hair_top": [
+            399,
+            3
+          ],
+          "chin": [
+            408,
+            145
+          ],
+          "projection": "upright_head"
+        }
+      }
+    },
+    "push_far": {
+      "sha256": "4d6d23d6b409936864cb47601a46252e6c48026757e472558b8b189d959545c2",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 6,
+        "standing_bottom_y": 922,
+        "sole": [
+          278,
+          922
+        ],
+        "crop_bbox": [
+          120,
+          0,
+          560,
+          935
+        ],
+        "head": {
+          "hair_top": [
+            401,
+            6
+          ],
+          "chin": [
+            408,
+            145
+          ],
+          "projection": "upright_head"
+        }
+      }
+    },
+    "flight_far": {
+      "sha256": "a86d512d9a947cb06f3662f79253fe7947b0cbac6361ebdd53d02df31038e498",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 1,
+        "standing_bottom_y": 921,
+        "sole": [
+          277,
+          921
+        ],
+        "crop_bbox": [
+          120,
+          0,
+          560,
+          935
+        ],
+        "head": {
+          "hair_top": [
+            386,
+            1
+          ],
+          "chin": [
+            408,
+            145
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "contact_near",
+      "pose_id": "contact_near",
+      "head": {
+        "hair_top": [
+          1387,
+          112
+        ],
+        "chin": [
+          1409,
+          244
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "down_near",
+      "pose_id": "down_near",
+      "head": {
+        "hair_top": [
+          1420,
+          151
+        ],
+        "chin": [
+          1441,
+          289
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "push_near",
+      "pose_id": "push_near",
+      "head": {
+        "hair_top": [
+          1454,
+          130
+        ],
+        "chin": [
+          1480,
+          270
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "flight_near",
+      "pose_id": "flight_near",
+      "head": {
+        "hair_top": [
+          1482,
+          124
+        ],
+        "chin": [
+          1501,
+          267
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "contact_far",
+      "pose_id": "contact_far",
+      "head": {
+        "hair_top": [
+          1461,
+          139
+        ],
+        "chin": [
+          1524,
+          284
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "down_far",
+      "pose_id": "down_far",
+      "head": {
+        "hair_top": [
+          1460,
+          221
+        ],
+        "chin": [
+          1514,
+          369
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "push_far",
+      "pose_id": "push_far",
+      "head": {
+        "hair_top": [
+          1452,
+          110
+        ],
+        "chin": [
+          1493,
+          245
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "flight_far",
+      "pose_id": "flight_far",
+      "head": {
+        "hair_top": [
+          1478,
+          112
+        ],
+        "chin": [
+          1528,
+          250
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "head_review_draft.png",
+    "sha256": "98e2b21600c0722f30aac03407d01d8f59a6e64f2a4da18f70c627a9f718c09f",
+    "reviewed": true
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "prompt": "Use case: stylized-concept. Draw the FAR LEFT LEG PUSH-OFF phase of this right-facing run, using this input for limb positions: near RIGHT thigh is FORWARD screen-right IN FRONT OF far thigh, near knee bent and near boot AIRBORNE. Far LEFT leg extends diagonally BACKWARD screen-left BEHIND near thigh, knee nearly straight, heel lifted and toe touches imaginary ground. Keep those exact near/far leg identities. Right near hand carries katana backward left-down with same thumb-over-curled-fingers natural grip, bladeedgeDOWN.\nCorrect free arm opposition: FAR LEFT ARM must swing FORWARD toward screenRIGHT, elbow bent90degrees and fist at lower chest height IN FRONT OF torso, because far left leg is behind. Remove the old rearward far fist entirely, do not add a third arm. Exactly TWO coherent arms: near/right carrying arm back and far/left free arm forward. Shoulder/pelvis twist and head follow whole-body push, torso rises from compression, coat trails and lifts naturally. Preserve compact adult head scale (same physical head size as left neutral companion), bone lengths, outfit, armor, and natural grip. Left neutral companion unchanged, same anatomical scale as runner. Whole person newly painted, no separate limbs or fixed torso. Transparent requested2560x1440 with full hair/boots/blade margins, no labels/effects.",
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_push_near_c4/source_rejected.png"
+  ],
+  "transparent_background": true
+}

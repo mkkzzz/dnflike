@@ -1,0 +1,106 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "24b0e4e0611752f1df72a9a9835a0893917d5e88eda24dc9aa5382a0feefac24",
+      "prompt": "Use case: stylized-concept.\nCreate a revised whole-body running key pose for this exact adult silver-haired swordsman, facing screen right. Transparent background. Requested native canvas 2560x1440.\nImage 1 is the approved character and NORMAL FORWARD sword grip anatomy reference. Follow its fingers, thumb, guard and handle relationship, costume and adult proportions. Image 2 is reference for the neutral standing scale and costume ONLY; its trailing-arm sword grip was rejected and must NOT be copied.\nComposition: two complete figures at the SAME anatomical scale, neutral standing profile on the left third, one full running figure on the right two thirds. Leave generous clear margins around hair, boots and blade, no cropping. Neutral height about 85% canvas height. Maintain compact adult head, approximately 7 heads tall. Detailed clean painted anime game art with consistent silver hair, black long coat red lining, black trousers, armored boots, red fingerless hand wraps.\nRunning figure: redraw as ONE coordinated human from head through shoulders, spine, pelvis to both complete legs. Run toward right, torso leaning forward about 25 degrees, eyes ahead, one leg supporting under center of mass and opposite leg folding behind. Coat trails to left. Natural athletic posture.\nCritical correction: the CAMERA-NEAR RIGHT upper arm runs down and slightly back alongside the ribs, elbow clearly bent about 90 degrees; forearm returns forward, right fist rests near the front of the hip at waist height. Wrist straight and continuous with forearm. Hold the katana in a conventional forward grip, NOT reverse grip. Pinky toward pommel (rear/left), index and thumb close to guard (front/right), all four fingers convincingly wrap around the narrow handle. Blade emerges from guard on thumb/index side and extends forward/right at a slight downward angle, outside the legs, clearly above ground. Katana cutting edge faces down. Show the hilt, fingers and guard clearly so the grip reads instantly. Relaxed shoulder, controlled bent elbow; no stiff straight trailing arm, no twisted wrist, no handle passing through knuckles. Free far arm counter-swings naturally without touching weapon.\nThis is a static full-character anatomy proposal, no animation sheet, no detached body parts, no labels, no effects, no motion blur, no duplicate swords or scabbards. Draw the entire pose together; do not paste legs or arms onto a fixed torso.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/views/A2_ready_right.png",
+          "sha256": "d1593da418bde967aeb61dc06927b549595efd0a5358a3316b0a064c233415c6",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_compression_near_c1/source.png",
+          "sha256": "28a67eb089a6ef8ada65820d1be7a56b5be2ae0d6829b1731d9a50563e658b10",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source.png",
+      "result_sha256": "c4cf13af8048e3253a3dc3ecff3d44dcf5becb0421af91b8db7f6ff5670a60f6",
+      "returned_original_file": "exec-2d708f1d-3561-4b80-bd5f-31ed7ff6ae6d.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "abandoned_direction",
+      "review_note": "Forward carry was an incorrect interpretation of grip feedback; head also too large.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "proportion_request.json",
+      "request_sha256": "bf70b7e98d25c01962515bf5af8292b22da7fce82af2f751f8ce4d710209ccef",
+      "prompt": "Use case: identity-preserve. Revise the attached transparent whole-character running concept. Keep the approved costume, SAME bent-elbow forward-grip katana carrying direction, fingers wrapped naturally around the handle near guard, both whole poses, leg placement, body scale, sword angle and composition. Correct one anatomical problem: the running figure's head has grown larger than the neutral companion's head. Redraw the running figure with the SAME compact adult head dimensions and consistent head-to-neck/shoulder anatomy as the neutral companion. Head must be about 130 pixels crown to chin when rendered at a 1672x941 sheet, or proportionally 8% of sheet width. DO NOT enlarge any body part. Keep the left neutral companion unchanged, and complete hair and soles inside the canvas. Draw coherent neck/shoulder joins and preserve all costume details. Whole person painted coherently, no cutout mesh, no pasted head appearance, no labels. Requested native canvas 2560x1440. True transparent background.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_carry_c2/source.png",
+          "sha256": "c4cf13af8048e3253a3dc3ecff3d44dcf5becb0421af91b8db7f6ff5670a60f6",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "proportion_c2.png",
+      "result_sha256": "ba1cc99f7a2a0abe5f03617d51deca5c2c1aad3af48c3472ae986dabc90858d9",
+      "returned_original_file": "exec-dc6c2c3c-739b-4f1b-9fa8-5ca9a3bc4865.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "abandoned_direction",
+      "review_note": "User clarified backward dragging direction is correct; do not continue forward carry.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "body_request.json",
+      "request_sha256": "bdb14832979b480da2eec7be02e03587ed99321c75c8706e2e0f985b2d01dbdc",
+      "prompt": "Use case: precise-object-edit. Make a clean WHOLE BODY layer from this transparent reference sheet. Remove ONLY the entire katana (blade, guard, collar, handle, pommel) from the right running figure. Preserve the exact right hand's anatomical grip and bent arm pose. Reconstruct only the few pixels of palm and cloth hidden by weapon; keep fingers naturally curled with an empty narrow handle channel. Preserve the entire person's now-correct compact head size, head position, neck, shoulders, chest, hip, legs, boots, coat silhouette, free fist, both poses' placement and source canvas dimensions. Left neutral companion completely unchanged. Do not redraw or move whole figure. No weapon pixels remain, no scabbard, no background, no effects. Transparent background preserved. This is a clean complete person to receive a separate swappable weapon, NOT a detached limb sheet.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_carry_c2/proportion_c2.png",
+          "sha256": "ba1cc99f7a2a0abe5f03617d51deca5c2c1aad3af48c3472ae986dabc90858d9",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "body_c1.png",
+      "result_sha256": "eee87196c8a5b7421d2a328cbda8ec2fef82d893ec55e1d5101a09d39153f0f6",
+      "returned_original_file": "exec-9d1144f9-76c4-4166-aac6-03de91d42ec7.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "abandoned_direction",
+      "review_note": "Not exported; landmark visibility check failed, direction abandoned before repair.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

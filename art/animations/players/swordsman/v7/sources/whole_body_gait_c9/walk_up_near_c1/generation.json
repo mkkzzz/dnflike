@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "07dbc42b769038c1af2cffe130c9c1270af9a3be1082119d1e4be2e5274a2854",
+      "prompt": "Whole-body painted animation key for exactly the SAME adult swordsman and costume. Reference is identity, body scale, neutral calibration and neighboring pose. Keep LEFT neutral calibration figure unchanged. Redraw ENTIRE RIGHT figure in a different gait phase, with head, shoulders, torso, hips, both legs, both arms and coat moving coherently as ONE PERSON. Requested native2560x1440 transparent; preserve generous border and same physical scale, compact adult head and same bone lengths. PHASE: Late push-off just BEFORE the reference far-left-forward contact. Near buckled RIGHT leg now extends BACK screen-left, pushing from the BALL/TOES of its boot with heel high; knee nearly extended. FAR LEFT leg swings FORWARD screen-right, knee modestly bent about 30 degrees, forward boot toe raised and sole hovering 40 native pixels above ground ready to land. Whole pelvis/head at their highest walking point, about 14 native pixels higher than contact; no running flight, rear toe still grounded. Near right arm swings FORWARD screen-right, far left arm behind. Same gentle right-facing side view, near rear thigh visibly overlaps far forward thigh. Coat hangs mostly down, trailing gently behind and revealing the knees; cloth responds to this pose. Clear natural anatomical hip-knee-ankle continuity and physically supported center of mass. Empty closed right-hand weapon grip, no sword, scabbard, effects, floor, text or detached parts. No proportional resizing of individual body parts. This must be a new whole figure drawing, not a deformation of the reference contact.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_far_c2/body_c2.png",
+          "sha256": "53480b64c12f5b3f7da8f65e0da5b2dd7d4e0f47dcff025bef77914dc083492f",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source.png",
+      "result_sha256": "b6812e0e3c185728a2698ca83e2ab74caff23d3aa8ffb90a3ab8c61e41f046b0",
+      "returned_original_file": "exec-2988c890-673c-432c-aa87-d2ec329b1200.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate",
+      "review_note": "Near rear toe support, far leg forward; crossing transition needs drawings.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

@@ -1,0 +1,235 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "85b4030c6ecc5460a57c3390fa826b26b5732daa02c5a479468235bb49d7ae22",
+      "prompt": "Use case: precise-object-edit. Correct the weapon-holding HAND anatomy in the attached transparent whole-body swordsman running concept. Preserve the BACKWARD TRAILING / DRAGGING katana direction: blade extends LEFT behind the right-facing runner, slightly downward, cutting edge DOWN. This trailing run direction is required. Preserve both complete figures, head/body proportions, forward body lean, whole legs, arm placement, coat and all silhouettes apart from the small holding hand/wrist area. Do NOT change to a forward-pointing sword.\nSpecific hand repair: the runner's camera-near right hand must firmly close around the katana handle, with an anatomically clear thumb locking over the curled index finger nearest the guard on screen LEFT. Arrange the four curled fingers along the handle from index on LEFT next to guard, middle, ring, then little finger on RIGHT toward pommel. Handle cylinder passes THROUGH THE CLOSED PALM, behind fingers, not drawn on top of exposed finger tips. Show a convincing curved thumb on the upper/front side of the fist; no missing thumb, no five parallel fingertips, no open fist. The forearm and wrist stay naturally aligned without a kink; subtly adjust wrist rotation as needed to show a firm trailing grip. The guard stays outside the fist on LEFT, separated slightly from index knuckle; handle/pommel emerge to RIGHT. Keep blade and hilt as one straight continuous axis. Keep original blade angle, grip location, full-body running pose, adult compact head, costume and character scale unchanged. Repaint this small anatomy region as part of the complete original illustration. No detached hand/limb collage, no labels/effects. Preserve transparent background and original framing. Requested native canvas 2560x1440.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_compression_near_c1/source.png",
+          "sha256": "28a67eb089a6ef8ada65820d1be7a56b5be2ae0d6829b1731d9a50563e658b10",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source_c1.png",
+      "result_sha256": "8adf77629fb38fdf608adcfc72e2fbce5dde136d95dbefe77c2dfc1a54de9763",
+      "returned_original_file": "exec-8dd409b2-ab21-4656-bd9e-0bb9f2e21591.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Hand redesign was insufficient; old flat fingertip row retained.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "grip_c2_request.json",
+      "request_sha256": "80df3c9cd16da0266f73de25782bf170051cf3b8f7f88907b76079bc7b86a818",
+      "prompt": "Use case: precise-object-edit. The running swordsman's holding hand must be REPAINTED into a visibly different anatomically convincing closed sword grip. The previous edit barely changed the defective hand: four exposed fingers look straight and parallel below a flat glove, thumb missing. Fix that. Input is whole-body edit target, not merely a style reference. Maintain original backward trailing katana (blade LEFT), original whole running pose, original head proportions and all legs and costume. Only right wrist and fist need a strong redesign.\nPaint a rounded three-dimensional clenched fist around the handle. Clearly bend each finger at the knuckle and middle joint so fingertips curl INTO the palm behind the handle, not four long straight fingertips hanging below it. Make visible length of exposed fingers shorter and curved. Paint the THUMB prominently across the front/upper side of the curled index finger, locking it down, with its own bent joint and visible fingertip. Thumb/index side nearest guard at screen-left; pinky side toward pommel at screen-right. Allow wrist and fist to rotate naturally to show this overhand firm grip, with slightly lifted wrist and knuckles angled toward viewer, rather than preserving flat old hand. The handle passes inside the fist behind fingers. Keep guard LEFT and pommel RIGHT, rearward trailing blade cutting-edge DOWN. Blade angle and full character remain unchanged. The hand correction must be visible, not cosmetic. One complete integrated character illustration, no detached pasted limbs or extra hand diagrams, no text, no effects, transparency preserved. Requested 2560x1440.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_compression_near_c1/source.png",
+          "sha256": "28a67eb089a6ef8ada65820d1be7a56b5be2ae0d6829b1731d9a50563e658b10",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source_c2.png",
+      "result_sha256": "44e2a82e7eb8178cde0bc73cba72bb0504578f19eaa5efe9924fc4d469262f13",
+      "returned_original_file": "exec-0f3b4d0e-ccb4-456d-9ba3-7a74d48edd70.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Minor finger curvature did not make thumb locking clear.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "grip_c3_request.json",
+      "request_sha256": "18b2d44d827ae42fe183aad96160cf9f04c68ce656e4aac8f5451aadd357aafa",
+      "prompt": "Use case: stylized-concept. Paint a new corrected full-character BACKWARD-TRAILING-SWORD RUN pose of this exact adult swordsman. Use image1 (approved ready stance) for a naturally CLOSED HAND with visible wrapped THUMB and real knuckle structure. Use image2 only for the desired whole-body running gesture, character scale, neutral companion and backward trailing katana, NOT its defective hand.\nKeep image2 composition: left upright neutral, right runner leaning forward, near leg forward and far leg behind, long black/crimson coat trailing left. Same compact adult head and same height. Entire person drawn together.\nCHANGE the holding hand and wrist substantially: right arm trails behind body, but ROTATE THE FOREARM so the SIDE OF THE PALM and a PROMINENT DIAGONAL THUMB are visible to camera. The thumb crosses over curled index/middle finger; it must not be hidden behind hand or shown as a fifth parallel finger. The four fingers bend firmly around the handle; show rounded knuckles and fingertips tucked into palm, like a real firm fist around a rod. Slight natural elbow flex is allowed. Wrist remains aligned with forearm. Place the grip behind the hip, and blade trails backward LEFT slightly downward. Never move blade forward. Guard LEFT of hand, handle end RIGHT of hand. This grip must appear anatomically convincing in a close-up. Do not copy the original straight row of exposed fingertips. Knife-edge DOWN, no wrist kink, no handle through fingertips. All other body proportions and coordinated running pose stay consistent. True transparent background, no effects, no captions, no extra hand panel, native requested2560x1440.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/views/A2_ready_right.png",
+          "sha256": "d1593da418bde967aeb61dc06927b549595efd0a5358a3316b0a064c233415c6",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_compression_near_c1/source.png",
+          "sha256": "28a67eb089a6ef8ada65820d1be7a56b5be2ae0d6829b1731d9a50563e658b10",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source_c3.png",
+      "result_sha256": "d015abf27e072504f523b17c0dcd85c9274a5be7bc7d3a50a3afe34d6cb96622",
+      "returned_original_file": "exec-af54ef46-3898-4532-b040-274052d7f0fd.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Insufficient grip correction and whole-body scale drift/cropped margins.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "grip_c4_request.json",
+      "request_sha256": "6700a4acd91a81fad8505b691f3bf17a855800475e882b9e0109acb2ab1df845",
+      "prompt": "Create a fresh professional character animation key drawing of the SAME silver-haired adult swordsman from the reference. Transparent background, landscape2560x1440. Two full bodies: a neutral standing right-facing figure on left for scale, an athletic right-facing RUNNING figure on right at identical anatomical scale. Black long coat with crimson inner lining, red hand wraps, black trousers, armored boots, compact adult head, approximately seven heads tall. Run: torso inclined forward, right leg stretched forward and bent accepting weight, left leg tucked back, left fist pumping forward, coat trailing left. RIGHT ARM CARRIES A KATANA BACKWARD BEHIND THE HIP. Do not point blade forward. Keep the whole person anatomically united, shoulder/pelvis/legs counterbalanced.\nThe central goal is a natural DRAGGING KATANA GRIP: right elbow relaxed, right forearm reaches diagonally back and down. Right fist is viewed from the thumb side, rotated so the visible thumb lies diagonally over curled fingers. Hilt sits obliquely ACROSS THE PALM, not perpendicular to a stiff wrist. Four fingers curl fully, index bent in a C around the grip, pinky closes tightly. Thumb visibly presses the index finger; glove shows one bent thumb wrapping across the fist, not a row of five vertical digits. Back of hand and forearm align in a smooth line. Guard is just behind the fist at the thumb/index end. Blade follows a natural diagonal BACKWARD-LEFT and DOWN approximately25 degrees, clear of ground and legs, with cutting edge down. The sword is carried securely as part of the arm, not dangling from fingertips. Blade at least two forearm lengths, no sword resting on coat. No forward sword, no reverse/wrist twist, no missing thumb. Compose whole characters with margins around all hair/boot/sword tips. Mature detailed painted anime game style from reference. No text, no blur, no effects.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/views/A2_ready_right.png",
+          "sha256": "d1593da418bde967aeb61dc06927b549595efd0a5358a3316b0a064c233415c6",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source_c4.png",
+      "result_sha256": "9bbc7483ba66bf0b0538cf4c749c51ccec6dcd89f2cbdc1daf4a122b6de54558",
+      "returned_original_file": "exec-0cb46153-5e6b-4433-8afd-4c3c32e9bcd8.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "superseded",
+      "review_note": "Fresh A2-referenced full character has clearer curled grip; head proportions required revision.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "grip_c5_request.json",
+      "request_sha256": "caf01dd08ad5c76083c2025849933feae0e28c97fc5817031f2e39ae18efd39b",
+      "prompt": "Use case: precise-object-edit. Image1 is the EDIT TARGET. Image2 is a grip anatomy reference ONLY. Repair image1 runner's holding right hand to use the rounded bent fingers, visible curled thumb, and natural wrist rotation of the RUNNING FIGURE on right in image2. Image2's hand near (1000,450) is the required structural model: red-wrapped thumb curls across top of the handle and visible fingertips tuck underneath it, clearly closing around a cylindrical handle. Repaint this hand/wrist anatomy into image1 at its existing holding hand position around (1078,425). Do NOT copy image1's flat row of straight fingertips. Preserve image1 entire runner's head size, torso pose, whole leg poses, armor design, neutral companion, scale and composition. Preserve BACKWARD trailing katana, cutting edge down; slightly lower the blade angle to match the natural wrist and hand structure from image2, but sword tip stays off ground. Do not paste a detached hand; render the joined forearm-wrist-hand as one continuous anatomy. Keep blade, guard, grip and pommel collinear. Everything outside this hand/wrist/sword adjustment stays like image1. No detached parts, no annotation, no effect. True transparent background, requested2560x1440. Keep all hair/boots inside frame.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_compression_near_c1/source.png",
+          "sha256": "28a67eb089a6ef8ada65820d1be7a56b5be2ae0d6829b1731d9a50563e658b10",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_drag_grip_c3/source_c4.png",
+          "sha256": "9bbc7483ba66bf0b0538cf4c749c51ccec6dcd89f2cbdc1daf4a122b6de54558",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source_c5.png",
+      "result_sha256": "f8be6b9e0f31d252a82e049a733eb3a1317125c747aafada3f949c12b797259f",
+      "returned_original_file": "exec-0ee98bd6-d680-410a-aee6-06e2fba97844.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Attempt to carry grip structure back to old pose repeated old hand.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "proportion_request.json",
+      "request_sha256": "dc816e2f47cf4fc6e7c1079b131fedb891ff6f121ed37a51352aa8edf65d1468",
+      "prompt": "Use case: identity-preserve. Correct proportions in this exact transparent two-pose drawing, keeping the NEW NATURAL TRAILING-SWORD GRIP completely unchanged. Crucial invariant: the right runner's gripping hand near(1000,450), its visible curled thumb, curled fingers, wrist rotation, whole arm and backward-down katana must remain exactly as in the input. Do not alter that successfully corrected grip. Keep whole body, coat, armor and legs unchanged. ONLY redraw the runner's head slightly smaller, compact adult anatomy, approximately130px visible hair-crown-to-chin if canvas1672x941. Reference compactness is the neutral companion on left. Maintain believable joined neck/shoulder anatomy and same silver-hair/red-streak face. Do not resize entire runner, change legs or move hand. Left neutral companion stays at original physical scale, but ensure its upper hair tips fit inside the canvas with small margin; no other changes. No effects, no text. Preserve transparent background, requested2560x1440, no detached body pieces.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_drag_grip_c3/source_c4.png",
+          "sha256": "9bbc7483ba66bf0b0538cf4c749c51ccec6dcd89f2cbdc1daf4a122b6de54558",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "proportion_c2.png",
+      "result_sha256": "b048dc0f6647f58fe5e3d327adadb78bea6d27e4571eaafc3bd29a03a07ed89b",
+      "returned_original_file": "exec-0c69861e-ca32-4c27-afa8-5c59f7bfcdf0.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "selected_direction_source",
+      "review_note": "Compact head redrawn; backward grip and whole body retained; no raster part scaling.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "body_request.json",
+      "request_sha256": "462856b31ac686075313c8599b9daf392b202dd77032f702265ee548f7c450a7",
+      "prompt": "Use case: precise-object-edit. Produce a clean complete body layer from this exact transparent two-pose swordsman sheet. Remove ONLY both swords, including all blade/guard/handle/pommel pixels. Preserve EXACTLY the right runner's NEW CLOSED GRIP: rounded wrapped thumb, curled fingertips, same wrist rotation, same fist silhouette and hand position, narrow empty handle channel inside palm. Do not revert to flat straight fingertips. Reconstruct only small cloth/hand pixels hidden by removed weapons. Preserve precisely runner's compact head size, head position, whole torso, arms, full legs, boots, coat and anatomy. Left neutral figure's body/scale stays identical. No pose changes, no part resizing. Transparent alpha background. No sword pixels or sheath remaining. The complete body will receive independently swappable weapon layers in the same grip.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_drag_grip_c3/proportion_c2.png",
+          "sha256": "b048dc0f6647f58fe5e3d327adadb78bea6d27e4571eaafc3bd29a03a07ed89b",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "body_c1.png",
+      "result_sha256": "5de5b08fb3c3fd4fd0e12a8d9d00cfe90fe201254c0c39c83e285323a9585b7f",
+      "returned_original_file": "exec-8810eb5d-134f-4f8f-8778-73c7233acd98.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "selected_static_body",
+      "review_note": "Painted swords removed; full body preserved for same-body weapon switching. Single grip direction approved, continuous motion not approved.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "0f49949870ec402b93bd797d51b90b63c3daa008af057288d3c6a7f48504473b",
+      "prompt": "Whole-body painted animation key for exactly the SAME adult swordsman and costume. Reference is identity, body scale, neutral calibration and neighboring pose. Keep LEFT neutral calibration figure unchanged. Redraw ENTIRE RIGHT figure in a different gait phase, with head, shoulders, torso, hips, both legs, both arms and coat moving coherently as ONE PERSON. Requested native2560x1440 transparent; preserve generous border and same physical scale, compact adult head and same bone lengths. PHASE: Midstance / PASSING 1/4 stride AFTER this reference. FAR LEFT leg is the SOLE SUPPORT almost vertical UNDER HIP, boot flat on ground. NEAR buckled RIGHT leg is the SWING leg: knee drives forward screen-right with thigh visibly IN FRONT OF far supporting leg, knee bends about 70 degrees, heel is tucked below pelvis and boot lifted about 100 native pixels OFF GROUND. Pelvis directly over supporting LEFT foot, head and torso slightly rise, arms close to vertical crossing mid-swing. Narrow passing silhouette, not long split stride; only one grounded boot, two total legs. Maintain near-leg buckle and correct occlusion, whole body balanced with gentle pelvic/shoulder opposition. Coat hangs mostly down, trailing gently behind and revealing the knees; cloth responds to this pose. Clear natural anatomical hip-knee-ankle continuity and physically supported center of mass. Empty closed right-hand weapon grip, no sword, scabbard, effects, floor, text or detached parts. No proportional resizing of individual body parts. This must be a new whole figure drawing, not a deformation of the reference contact. Crucial: the thigh with silver buckle belongs to the LIFTED NEAR SWING LEG, not the grounded supporting leg. The near knee must be prominently IN FRONT of the other thigh at screen right, thigh angled forward, shin folds back. SHOW the near upper thigh running diagonally from hip DOWN-RIGHT to raised knee. A different drawing from the near-support passing pose is essential.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_far_c2/body_c2.png",
+          "sha256": "53480b64c12f5b3f7da8f65e0da5b2dd7d4e0f47dcff025bef77914dc083492f",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source_rejected.png",
+      "result_sha256": "15324974dcd99861a8c37278858edd81129da44eab05442476e6711f26155141",
+      "returned_original_file": "exec-3afc1c99-a934-4392-ab71-14098df39110.png",
+      "actual_size": [
+        1671,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Raised near knee too high like marching.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "body_c2_request.json",
+      "request_sha256": "a0212bbc2407cc9753ac1cb7dabb1754725ae5c813f109a0fddeede5d6d3daa1",
+      "prompt": "Correct the WHOLE RIGHT WALKING FIGURE in image1: the raised near knee is TOO HIGH like marching. Use image2 only to match the moderate ordinary walking amplitude, same head/body/cloth style. Keep image1 left neutral companion unchanged, same canvas. In right figure, redraw entire pose with far LEFT foot still flat supporting below hip. LOWER the raised near RIGHT thigh until it points mostly DOWN with just a small forward angle: its buckled knee should be around x1240 y610, not at x1360 y500. Fold near shin BACK toward x1150 y770; near boot suspended around y820, only ~80px above ground, toes down. The near swing thigh remains visibly IN FRONT OF the far support thigh. It is an ordinary low passing step, never a high knee drill. Arms now pass close to body near vertical, nearest right wrist around x1200 y470; connect shoulder/chest/hip motion naturally, slight controlled hip rotation, spine upright and relaxed. Keep original long adult limbs and compact head, don't shorten a leg to reach coordinate, reposition the whole anatomy coherently. Coat follows lowered ordinary step. No weapons, effects, guides or text. Full complete person painted together, transparent background.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_pass_far_c1/source_rejected.png",
+          "sha256": "15324974dcd99861a8c37278858edd81129da44eab05442476e6711f26155141",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_pass_near_c1/source.png",
+          "sha256": "1773346b5cfd80c5e1255f15c7c27692f1fd24685910d823b4429fd105f5f41f",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "body_c2.png",
+      "result_sha256": "6c10a5cef2c17068ee0b6e8889f8ae195bc99383965a670075f3600a566cc7e7",
+      "returned_original_file": "exec-05e6ed08-e31d-4ff6-bc4e-dee88767c39e.png",
+      "actual_size": [
+        1671,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate_needs_revision",
+      "review_note": "Lower swing leg but extension occurs early; true early passing pose still missing.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

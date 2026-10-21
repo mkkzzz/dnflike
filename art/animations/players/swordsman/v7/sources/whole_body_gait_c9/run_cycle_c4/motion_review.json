@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-21",
+  "status": "needs_source_revision",
+  "reviewer": "agent_visual_review",
+  "key_review_sha256": "0976209b30aa10eb6d7355f2957203945fe2d09d1f1ca7f398344374d98de610",
+  "accepted_scope": "single drag grip direction only",
+  "complete_motion_approved": false,
+  "runtime_install_allowed": false,
+  "observations": [
+    "far compression drop larger than near compression",
+    "far flight front shin extends earlier than opposite flight",
+    "near-push / near-flight / far-contact free-arm silhouette has ambiguous sleeve loop",
+    "painted sword length varies; these frames are timing studies, not weapon-switching delivery"
+  ],
+  "next_work": [
+    "redraw far compression and phase-matched far flight as whole people",
+    "clarify free-arm connections without changing approved dragging grip",
+    "add whole-body passing/crossing breakdowns before dense interpolation",
+    "remove painted weapons on selected whole-body keys, calibrate wrapped-thumb/finger occlusion, replay identical exported body with three weapons",
+    "complete continuous gait, start-stop and in-game matching without altering accepted idle"
+  ]
+}

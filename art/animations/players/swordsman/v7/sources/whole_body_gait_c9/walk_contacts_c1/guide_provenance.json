@@ -1,0 +1,92 @@
+{
+  "type": "technical_pose_reference_only",
+  "final_character_art": false,
+  "tool": "Pillow technical line/shape diagram",
+  "files": {
+    "opposite_whole_body_guide.png": "b41e73868d949c322fcb49c19714df69765ab0b0cd46caec09971c888d05e33e",
+    "opposite_pose_guide.png": "55dec1dbc4f98454da8253cface26c21efe39f79813c3fae33a74296ad6679ad"
+  },
+  "canvas": [
+    1672,
+    941
+  ],
+  "near_right_arm": [
+    [
+      1370,
+      215
+    ],
+    [
+      1440,
+      350
+    ],
+    [
+      1530,
+      475
+    ]
+  ],
+  "near_right_leg": [
+    [
+      1380,
+      460
+    ],
+    [
+      1320,
+      640
+    ],
+    [
+      1240,
+      810
+    ],
+    [
+      1230,
+      835
+    ],
+    [
+      1280,
+      877
+    ]
+  ],
+  "far_left_arm": [
+    [
+      1400,
+      205
+    ],
+    [
+      1320,
+      330
+    ],
+    [
+      1250,
+      470
+    ]
+  ],
+  "far_left_leg": [
+    [
+      1420,
+      460
+    ],
+    [
+      1500,
+      650
+    ],
+    [
+      1560,
+      835
+    ],
+    [
+      1555,
+      877
+    ],
+    [
+      1640,
+      858
+    ]
+  ],
+  "cropped_guide_bbox": [
+    1080,
+    0,
+    1672,
+    941
+  ],
+  "use": "Submitted to image_gen as whole-body pose guide; not exported as character artwork."
+}

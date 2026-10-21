@@ -1,0 +1,48 @@
+{
+  "schema": "standard_actions_pilot/1",
+  "source_of_preview": "exported manifest.json and RGBA PNGs only",
+  "nonloop_combination": "hold last frame after end, preview only",
+  "weapon_layering": {
+    "weapon_layering": "not_attempted",
+    "G3": "not_passed",
+    "actor_includes_weapon": true,
+    "purpose": "painted whole-body timing diagnostic only; not interchangeable-weapon delivery",
+    "G1": "scale_only",
+    "G2": "not_approved",
+    "runtime_install_allowed": false,
+    "whole_body_painted": true,
+    "per_part_scaling": false
+  },
+  "previews": [
+    {
+      "file": "run_naked.gif",
+      "intended_duration_ticks": 48,
+      "intended_duration_ms": 800.0,
+      "gif_duration_ms": 800,
+      "total_error_ms": 0.0,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": true
+    },
+    {
+      "file": "actions_naked.gif",
+      "intended_duration_ticks": 48,
+      "intended_duration_ms": 800.0,
+      "gif_duration_ms": 800,
+      "total_error_ms": 0.0,
+      "timing": "cumulative 10 ms quantization; manifest integer ticks are authoritative",
+      "loop": true
+    }
+  ],
+  "overview_included": [
+    "run"
+  ],
+  "overview_excluded": [],
+  "component_isolation": {
+    "pose_count": 8,
+    "mask_directory": "masks/",
+    "visual_review": "pending"
+  },
+  "exported_pose_count": 8,
+  "unique_source_pose_count": 8,
+  "automated_check": "passed: explicit crops, alpha bounds, canvas bounds, positive integer ticks; visual review pending"
+}

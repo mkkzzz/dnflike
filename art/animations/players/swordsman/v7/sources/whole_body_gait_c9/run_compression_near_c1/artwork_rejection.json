@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-21",
+  "status": "rejected_by_user",
+  "user_feedback": "不符合，握刀不自然",
+  "scope": "holding hand only; backward dragging direction explicitly retained by user",
+  "preview": "docs/previews/v7_c9_whole_body/run_katana.png",
+  "preview_sha256": "20907e9430b3f37ce52f06bb60b7c0d60bb043a3376bd33e6c8be52d213aabac",
+  "layer_manifest_sha256": "8172b5e0e197707f3ff44da80ed17fe2c11fb50dad19730a391bbf3a5432e58d",
+  "next_work": "Keep backward dragging. Repair grip anatomy and wrapped-thumb occlusion, then build whole-body cycle.",
+  "runtime_install_allowed": false,
+  "artwork_approved": false,
+  "user_clarification": "拖刀的动作其实是对的，但是刚刚你的手握刀不自然"
+}

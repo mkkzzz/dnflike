@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-21",
+  "generation_records_verified": 38,
+  "source_reference_request_and_result_hashes_valid": true,
+  "proportion_gates": {
+    "body_config.json": true,
+    "run_drag_grip_c3/body_config.json": true,
+    "run_cycle_c4/body_config.json": true
+  },
+  "same_body_pixels_for_all_three_weapons": true,
+  "wrapped_thumb_foreground_pixels": 170,
+  "blade_edge_and_tip_checks": true,
+  "direction_approval_hashes_valid": true,
+  "painted_run_key_media_hashes_valid": true,
+  "python_regression_tests": 27,
+  "python_regression_failures": 0,
+  "game_runtime_changed": false,
+  "new_game_regression_run": false,
+  "visual_quality_approved": false,
+  "doc_check_known_existing_failure": "docs/design/19_音效生产工作流.md:365 lines exceeds 300; unrelated and unchanged"
+}

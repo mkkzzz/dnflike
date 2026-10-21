@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "d567f185d9ba61bb0c24ec4c16849732b59a36e3f133ef0f81bcc48c3e0f2b10",
+      "prompt": "Use case: stylized-concept. Draw NEXT phase of this SAME right-facing whole-body run at identical scale: FAR LEFT FOOT LANDING / opposite contact. Keep left neutral companion unchanged. RIGHT runner changes coherently: far LEFT thigh, which is currently bent forward on screen-right BEHIND near thigh, extends its lower leg forward/down to land on the ground with a slightly bent knee, heel just approaching ground and toe mildly raised. Camera-near RIGHT thigh stays REARWARD screen-left IN FRONT OF the far forward thigh at hip crossing; near knee now folds deeply, heel recovers high behind buttock and boot is airborne. Preserve that leg occlusion identity from input; do not swap front/back thighs or mirror figure. Torso remains forward inclined, shoulders/pelvis rotate together; head/chest descend slightly from push-off. Far left free hand close beside waist, naturally moving back as left leg forward. Right near hand maintains approved rounded thumb-over-fingers grip and trailing katana LEFT-down, edgeDOWN, tip clear of ground. Arm changes follow torso, no frozen torso. Coat trails and overlaps legs naturally while both knees/feet remain legible. Same compact adult head, black/crimson costume, exact armor, consistent bone lengths. Full person, no detached legs or collage, no labels/effects. Transparent requested2560x1440 sheet, two full figures with margins.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_push_near_c4/source_c2.png",
+          "sha256": "8f8865a5f1dcdba1a4889c462d3c5a9db8466bf44978d08f6a971db5423ddc8a",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source.png",
+      "result_sha256": "93a1328456281d362906740e6e7912ef7deba081edc48bbbcf47dd6fc65371f0",
+      "returned_original_file": "exec-e11e089d-6357-4389-ab88-47e34120cf85.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "key_candidate_needs_revision",
+      "review_note": "Opposite contact; free-arm sleeve silhouette needs clarification.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "batch_authorization": "../run_drag_grip_c3/direction_approval.json",
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}

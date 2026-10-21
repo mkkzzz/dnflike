@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "eaaa4ed36f37ab4d16ba4b3f4778aa8d88fe9ad11a2856e534ec8628c73ab920",
+      "prompt": "Draw an animation director's whole-character WALK pose sheet for THIS SAME white-haired adult swordsman, consistent black long coat/red lining, red wrapped forearms, dark fitted pants, silver knee guards and black boots. Reference1 identity, reference2 current painted rendering/anatomy. Requested canvas 2560x1440, transparent. Exactly THREE complete separate full-body figures in one horizontal row, all facing SCREEN RIGHT, identical scale, identical adult proportions and compact heads (about seven full hair-to-chin head heights per standing body). Shared ground baseline and generous gaps, no overlapping silhouettes, nothing cropped. LEFT: neutral standing straight companion for scale calibration, relaxed empty hands. MIDDLE: WALK contact with near anatomical RIGHT leg extended forward SCREEN RIGHT, heel touching ground and toe slightly lifted; far LEFT leg behind SCREEN LEFT with heel raised and toe supporting. RIGHT: the OPPOSITE WALK contact, far LEFT leg extended forward SCREEN RIGHT and heel contacting; near anatomical RIGHT leg behind SCREEN LEFT on toe with heel raised. IMPORTANT middle and right MUST have opposite anatomical legs in front, not duplicated same-leg pose. Use the original near right thigh strap detail and correct leg occlusion so swap is readable. Draw each entire figure as one anatomically connected body: pelvis rotated over advancing leg, shoulders counter-rotate gently, slight torso/head height change with weight transfer, knees aligned with hips/ankles. Natural moderate grounded stride, no lunging, no crouch, no floating. Arms counter-swing softly: primary right hand stays low beside rear/side hip in a relaxed empty cylindrical sword grip, left arm counter-swings with advancing opposite leg. Coat moves with pelvis, hem opens just enough to reveal both leg paths; coat never replaces a thigh. No weapons, no scabbards, no labels/numbers, no guide skeleton, no detached parts, no effects or motion blur. This is fully painted intact anatomy in each pose, NOT a cutout puppet and NOT a parts sheet. Match body/face/style across all three.",
+      "references": [
+        {
+          "file": "art/concepts/characters/players/swordsman/standard_v1/views/A1_side_right.png",
+          "sha256": "8fc88aa5544504e0de25ab5804b7f6d3b31cf58f5a6c2b9a7eb15b06cc0ad682",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack3_load_c1/body_c1.png",
+          "sha256": "79ac40bbaeb51b6a18a4c985e82ded4e4e7a30af71f7dc53e5613b988845dd9d",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "source.png",
+      "result_sha256": "4c896573efdaaadba5f24623262fc74038e83273107454585a9d50e0f94050e8",
+      "returned_original_file": "exec-c9d31ad1-cff5-4d16-8866-567ed5308e94.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Both contact figures repeat near leg forward; hands not prepared for carry.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "body_c2_request.json",
+      "request_sha256": "166c1d030d4fe05d6511f924497b3715777145d4bffc0f1de40e420d542c9c2a",
+      "prompt": "Correct this walking anatomy sheet. Image1 is the edit target. Image2 is a TECHNICAL WHOLE-BODY POSE GUIDE, NOT art style: purple means camera-near anatomical RIGHT limbs, blue means far anatomical LEFT limbs. Keep LEFT neutral and MIDDLE whole figure unchanged. REDRAW THE ENTIRE RIGHTMOST CHARACTER into the whole-body pose in image2, preserving identity, adult compact head, scale, costume and painting style from image1. The rightmost pose currently duplicates the middle's leading leg and is WRONG. Near RIGHT thigh (with strap/buckle) must descend BACK toward screen-left knee and rear toe; this near/right leg is IN FRONT of and occludes the farther forward leg at upper-thigh crossing. Far LEFT leg extends FORWARD screen-right, heel down, toe up. Near RIGHT arm swings forward screen-right with relaxed fist; far LEFT arm swings rearward screen-left. Pelvis and shoulders counter-rotate naturally, body poised between the planted front heel and rear toe, torso/head travel coherently. Draw the whole person naturally including hips, both thighs, knees, ankles, torso, arms, and cloth; DO NOT paste or rotate detached legs. All three silhouettes remain separate and on same baseline. Maintain the original source canvas dimensions, transparent alpha. Do not copy purple/blue colors, labels, skeleton or grey shapes from guide. No weapon, scabbard or effects.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contacts_c1/source.png",
+          "sha256": "4c896573efdaaadba5f24623262fc74038e83273107454585a9d50e0f94050e8",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contacts_c1/opposite_whole_body_guide.png",
+          "sha256": "b41e73868d949c322fcb49c19714df69765ab0b0cd46caec09971c888d05e33e",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "result": "body_c2_rejected.png",
+      "result_sha256": "f7c5e43b70d77acbffa4cee7fb32bf94814ea5b529e9f96990e3c16c95dad09c",
+      "returned_original_file": "exec-378f1789-19e8-453e-99d4-eaa5ce0b19aa.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Changed arms but failed to exchange the leading anatomical leg.",
+      "artwork_approved": false,
+      "runtime_installed": false
+    }
+  ],
+  "G2_approved": false,
+  "G3_approved": false,
+  "runtime_installed": false
+}
