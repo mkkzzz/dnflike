@@ -2,16 +2,16 @@
   "revision": "v7_c9_whole_body_gait",
   "status": "source_production",
   "walk_status": "dense_rejected_and_keys_need_revision",
-  "run_status": "single_grip_direction_approved_eight_keys_need_revision",
+  "run_status": "C4 gait rejected; C3 single grip retained; C5 support/passing source study only",
   "runtime_installed": false,
-  "source_spec_sha256": "1e384b061390b89bc1913a4db681ceb791989b310f6929b71c3e89c7dd3c4bc4",
+  "source_spec_sha256": "1b01c5967bf35382879567a4c2c5a25b859faf7606691140341785e28a0262f5",
   "walk_export_sha256": "0d6b6639152365b1b35fe2d223ca9da67b74bb446b6186b549d25705b5fe4ce3",
   "run_layer_export_sha256": "dc434ba60b1827f55454ccbbfd76053c95fa8b2e48f81fc5bc2edccfe871e5b8",
   "run_direction_approval_sha256": "4e62efdd3f4866a7ab10995deac288cba480aac2b21230b8477ab60eb055346b",
   "files": {
     "browser_run_c3.png": "1dbd7cbbd1b9c7772ad3d6bab14bb9804208b0ca6c9bfa04f4c0c25989229b12",
     "browser_run_cycle_c4.png": "dcd9369346b5edd52e1f87b3b7de0971fcd014f0179c4c13a74c8e7583d63acc",
-    "index.html": "bfa71efca9b2c9695ef843e7e35feab6af4a2a23bbbcc97c38299a783644285f",
+    "index.html": "7f2a04021aed0a583e3defb841f3fecb05c84d3b804219e76d16a317569d52bb",
     "rejected_midframes.png": "663fa6013e74e3d7116e6266999d3379f9f0ba8b3a85cdc9ccaf14982f60ed71",
     "run_body.png": "3570151b304e037d65bcaee100beadf303c28cb0759a9921cfa23c4889ee9d97",
     "run_c3_body.png": "8cdd0c4830ae6b834048e248d6717e61aa0d1c44544d33731aa06f3ad0b7aa42",
@@ -26,7 +26,23 @@
     "run_shortsword.png": "e3be2bc27a5a8c7e9ff618373c332ec5c0f72a07cfb81b21c4a1e76c6daacba6",
     "walk_dense.mp4": "f5e73b0db11bd356ee99a3418d99dffa4d39d911c105e7ed2f69124b858d4c67",
     "walk_keys.mp4": "9e40af29d626f81f812e1473435d5af5a8c5e942f86cef27a209f3e21f05ef88",
-    "walk_keys.png": "1826357e0eae9085c853147ec160eb371fc7d3566fefc3bc574bf0fa4e97fc9f"
+    "walk_keys.png": "1826357e0eae9085c853147ec160eb371fc7d3566fefc3bc574bf0fa4e97fc9f",
+    "run_motion_c5/contact_sheet.png": "3632f8617846c4803f80ebdadcfe529a0409b0f647b314c800ae6013e0330fc1",
+    "run_motion_c5/cycle.mp4": "db5fda03034bc6f211ab790f456e1763180a00e7010983eeb7c3bd131890d5a6",
+    "run_motion_c5/frame_00.png": "b168e79f2ee2029127c9769ab8819b8e030180315bf236d3d7856a067b3157cd",
+    "run_motion_c5/frame_01.png": "cd58db2b0cf5598b226607f0402bb6b4fe5683da4364b6fe5619d801f5e12815",
+    "run_motion_c5/frame_02.png": "43847eacb907a63707ca379410f4e2489568e829b76d062cb0ed7ffe6f3e4bc0",
+    "run_motion_c5/frame_03.png": "13a5ff8200b8bd3e1389a672df9c7bc57c292f1c32a36e01cec750114e0a27f9",
+    "run_motion_c5/frame_04.png": "96501135b0c71f387827c0d5532899ce7c222cbcce1b777f28b2017f6d294c85",
+    "run_motion_c5/frame_05.png": "ed0097e7abced5fcd52596970f0fb46ac2886f1e69ea81015563103366a0c399",
+    "run_motion_c5/frame_06.png": "bda6c5b4473eb2bc5d2fd0f2d059e32b18a4dcb3ac1d48830b6cf36a1e7906c9",
+    "run_motion_c5/frame_07.png": "c198035c84086e794b8017f76f20db20cb91706a833a4f2d194489517776f001",
+    "run_motion_c5/frame_08.png": "6f59301e20f1a433ffc38b4e504de636872f3c1cecd15af8d55aca358ab80376",
+    "run_motion_c5/frame_09.png": "8a37e13496b82b6e963604702b3af28030bb153d8552c7309fa3039c826fc56c",
+    "run_motion_c5/frame_10.png": "730fbdd38ba193bfa184b820570e1e0a837903a220ab9c4cff6f97a89a7751e1",
+    "run_motion_c5/frame_11.png": "9811bfd153e573ec4b6cdfa5332ef74fa108b66417764721bbfefe1f24ce0e92",
+    "run_motion_c5/manifest.json": "649136fc564628f3966665a6cf19ebe9d90590fbb92bc8cded4b4e0cfd415adf",
+    "run_motion_c5/browser_preview.png": "0dbed6bb8d354b00db8bb55f4c62ef6d2c128d98944063f18a7b35dfbef26164"
   },
   "browser_checks": [
     "C3 katana default visible with full body",
@@ -34,9 +50,12 @@
     "walk half-speed playback and frame stepping verified before run revision",
     "C4 playing at 0.5x, 700x410, 3.2-second repeated video",
     "C4 next drawing paused exactly at 0.1003 seconds",
-    "Malformed auto-linked URL corrected to exact index.html"
+    "Malformed auto-linked URL corrected to exact index.html",
+    "C5 playback at 0.5x and 1x; decoded 460x340, 3.6 seconds, native controls removed to keep shoes visible.",
+    "C5 next drawing pauses at 0.050333 seconds; durations vary and stepping follows real start ticks."
   ],
   "raster_upscaled": false,
   "run_cycle_key_review_sha256": "0976209b30aa10eb6d7355f2957203945fe2d09d1f1ca7f398344374d98de610",
-  "run_cycle_motion_review_sha256": "5bc63d9b37c31a3f2f1bfce91d353c2ffc05f46cacb6a3e3126de653ea3f1c0c"
+  "run_cycle_motion_review_sha256": "669547e9405749bd9165def193f0078cf288f02237efc6a2f01936a9e195eb70",
+  "run_motion_c5_review_sha256": "75e08059c5a2bb629d088e5beb984ace88a165bc1e3d9f825000e32a460a37e2"
 }

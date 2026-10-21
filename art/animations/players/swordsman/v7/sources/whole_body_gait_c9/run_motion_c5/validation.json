@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-22",
+  "status": "source_diagnostic_verified_not_production",
+  "generation_records_reference_request_result_hashes_verified": 40,
+  "whole_person_pixel_copy_frames": 12,
+  "raster_upscaled": false,
+  "video_decoded_size": [
+    460,
+    340
+  ],
+  "video_fps": 60.0,
+  "video_decoded_frames": 216,
+  "cycle_ticks": 36,
+  "browser_playback_rates_verified": [
+    0.5,
+    1
+  ],
+  "browser_next_draw_time_verified": 0.050333,
+  "C3_approved_media_preserved": true,
+  "preexisting_game_project_modification_preserved": true,
+  "G1_passed": false,
+  "G3_passed": false,
+  "visual_quality_approved": false,
+  "runtime_installed": false,
+  "doc_check": "Only preexisting docs/design/19_音效生产工作流.md 365-line limit failure",
+  "new_game_regression_run": false
+}

@@ -1,0 +1,40 @@
+{
+  "asset_id": "actor.player.base.run",
+  "revision": "v7_c9_c5_motion_study",
+  "status": "source_review",
+  "scope": "one coherent whole-person motion study; not production actor export",
+  "source_canvas_requested": [
+    2560,
+    1440
+  ],
+  "planned_cells": [
+    4,
+    3
+  ],
+  "planned_cell_size": [
+    640,
+    480
+  ],
+  "planned_standing_height": 380,
+  "upscale_allowed": false,
+  "weapon_switching_delivery": false,
+  "runtime_install_allowed": false,
+  "approval_inherited": "C3 single grip direction only",
+  "motivation": "User sees alternating feet instead of stepping in C4. Verify support, body passing over foot, push, folded swing recovery as a continuous whole.",
+  "reference_read": "https://www.animationmentor.com/blog/animating-dynamic-run-cycles/",
+  "reference_scope": "article text only, no video claimed",
+  "gates": "Formal G1 and G3 required before production export. This sheet is a source motion diagnostic; actual resolution/pose count must be measured.",
+  "actual_source_size": [
+    1672,
+    941
+  ],
+  "actual_pose_count": 12,
+  "preview_frame_size": [
+    460,
+    340
+  ],
+  "actual_scale": 1,
+  "production_G1_passed": false,
+  "selected_source": "source_c2.png",
+  "blueprint_kind": "complete-person technical pose guide, not game artwork; analytic joint calculations never deform generated actor pixels"
+}

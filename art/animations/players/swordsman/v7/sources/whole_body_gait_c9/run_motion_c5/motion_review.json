@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-21",
+  "status": "source_review",
+  "user_prompt": "那你试试呢",
+  "previous_feedback": "分帧看很正常，但是连贯视频看起来好奇怪啊，感觉没有迈腿走的感觉，像是两脚在反复交替",
+  "selected_source": "source_c2.png",
+  "rejected_source": "source_c1.png",
+  "review_manifest": "docs/previews/v7_c9_whole_body/run_motion_c5/manifest.json",
+  "review_manifest_sha256": "649136fc564628f3966665a6cf19ebe9d90590fbb92bc8cded4b4e0cfd415adf",
+  "observations": [
+    "C2 follows whole-person blueprint more closely than C1; narrow passing silhouettes and folded heel recovery are present.",
+    "Near/far knee overlap remains ambiguous; opposite halves cannot yet be certified as stable distinct legs.",
+    "Source foot positions deviate from blueprint and virtual ground; support-foot sliding and flight spacing still need correction.",
+    "Head, face, coat and painted weapon drift across drawings; source has no neutral standing ruler.",
+    "Preview is 12 held drawings in 36 ticks, not a smooth finished animation."
+  ],
+  "production_G1_passed": false,
+  "weapon_switching_delivery": false,
+  "runtime_install_allowed": false,
+  "next_work": [
+    "Resolve near/far leg occlusion and inspect support/recovery trajectories on full-person drawings.",
+    "Draw corrected whole-body poses with same-scale neutral ruler, meet native size and G1.",
+    "Retain approved C3 grip anatomy, prepare same-body weapon/finger layers and G3.",
+    "Only then complete continuous sampling, start/stop and runtime integration."
+  ],
+  "references_read": [
+    {
+      "url": "https://www.animationmentor.com/blog/animating-dynamic-run-cycles/",
+      "scope": "text description of low, passing and push-off; video not viewed"
+    }
+  ]
+}

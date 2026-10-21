@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-21",
+  "records": [
+    {
+      "tool": "builtin image_gen",
+      "request": "request.json",
+      "request_sha256": "b44254f26b6f20cecc4d5704966e91b3ec14f91d290ca8116ec846916b1d60a3",
+      "prompt": "Use case: stylized-concept. Create ONE coherent animation planning sheet for the attached swordsman, an actual continuous RUN cycle toward screen RIGHT, twelve successive WHOLE PERSON drawings. This is a motion pencil-test rendered with simple clean cel colors, not twelve unrelated heroic poses. Requested native canvas 2560x1440. Transparent background. EXACTLY four columns and three rows, twelve equal 640x480 cells, chronological row-major. No borders/text/shadows/effects. Keep all body, coat and trailing katana inside each cell with generous padding. Same camera, same anatomical scale in EVERY cell, neutral standing equivalent 380 pixels, adult compact head approximately 58 pixels. Each cell pelvis aligned x=360, virtual ground y=440. Uniform 20 degree forward body inclination, entire torso/pelvis/head responding together. Legs must remain connected to whole body; draw all of each person, never separate limb parts.\nReference image: character identity, adult proportions, and accepted backward dragging grip ONLY. White hair red streak, black coat red lining, silver shin armor, red fingerless wraps. Near RIGHT hand carries katana BEHIND hips, blade trails LEFT slightly down, cutting edge DOWN; closed thumb over curled fingers around grip, natural aligned wrist. Consistent weapon dimensions, grip follows body naturally. Far free LEFT arm makes modest counter swing. Coat follows pelvis with small delayed sway, does not cover knees. Near RIGHT leg has bright visible kneecap, far LEFT leg darker: their identities must NEVER switch between drawings.\nCritical motion: a foot goes in a LOOP, not back-and-forth scissors. Foot first lands slightly ahead of hip, moves backward relative to hip WHILE on ground as body passes OVER it, then pushes off behind; heel folds sharply upward toward buttock, bent knee swings FORWARD underneath pelvis, only then shin unfolds to land. Preserve this curved recovery trajectory. No repeated wide stride poses. TWO narrow passing poses and TWO folded heel recoveries are mandatory. No jumping jacks.\nTwelve chronological drawings:\n1 near RIGHT foot lands slightly in front of hip, far LEFT heel recovered high behind buttock.\n2 near RIGHT support knee compresses, foot now nearly under hip; far LEFT bent thigh moves forward, heel remains tucked.\n3 near RIGHT foot trails behind hip on toe pushing, far LEFT knee PASSES close beneath pelvis toward front; narrow silhouette, heel tucked under buttock. Chest rises slightly.\n4 both feet airborne, near RIGHT rear heel begins folding up, far LEFT knee advances forward with shin still folded BACK. Body highest.\n5 both airborne, near RIGHT heel folds close toward buttock, far LEFT knee forward, shin begins opening, foot descends.\n6 far LEFT foot almost lands ahead of hip, near RIGHT heel tucked high behind, chest descends gently.\n7 far LEFT foot lands ahead of hip, near RIGHT heel recovered high behind buttock. Same height and stride length as frame1, opposite leg.\n8 far LEFT support knee compresses, foot under hip; near RIGHT bent thigh moves forward with heel tucked.\n9 far LEFT toes push behind hip, near RIGHT knee PASSES close beneath pelvis toward front, narrow silhouette and tightly folded shin. Chest rises slightly.\n10 both airborne, far LEFT heel folds behind, near RIGHT knee advances, shin still folded BACK, body highest.\n11 both airborne, far LEFT heel up near buttock, near RIGHT shin begins extending forward and down.\n12 near RIGHT foot nearly lands ahead, far LEFT heel tucked high behind. Continue seamlessly into frame1; do not duplicate frame1.\nWhole-body anatomy and continuous foot trajectories are more important than clothing detail. This must look like one person running through successive instants. No stationary upper body pasted onto cycling legs; shoulders subtly counter-rotate, hip rises/falls about 12px. Never anchor both feet to ground. No horizontal mirroring; all face RIGHT. Keep foot recovery compact.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_drag_grip_c3/proportion_c2.png",
+          "sha256": "b048dc0f6647f58fe5e3d327adadb78bea6d27e4571eaafc3bd29a03a07ed89b",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "result": "source_c1.png",
+      "result_sha256": "0dc2b2875ee59d56b9ab091e6ba56936004e57162746cbeea1abf49d4cc1dc6e",
+      "returned_original_file": "exec-9ebae93f-3d3b-4f2f-a07e-78de197bd861.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "rejected",
+      "review_note": "Rejected: text-only phase instructions repeated broad strides and missed actual passing.",
+      "artwork_approved": false,
+      "runtime_installed": false,
+      "seed": "not supplied"
+    },
+    {
+      "tool": "builtin image_gen",
+      "request": "request_c2.json",
+      "request_sha256": "a9ecf5cf21d20ad635a36689cf7cbdc16b25bf9e7237e307f35a8d315a5f29ac",
+      "prompt": "Use case: sketch-to-render. Image 1 is the AUTHORITATIVE WHOLE-BODY MOTION BLUEPRINT: its exact twelve complete poses and phase order must be preserved. Image 2 is CHARACTER DESIGN AND TRAILING KATANA GRIP reference only. Render image1 as twelve complete drawings of image2's white-haired black/red swordsman. Do not copy image2's running leg pose.\nExact layout four columns three rows, 2560x1440 native transparent PNG. Each 640x480 cell uses blueprint joints/foot coordinates. Retain SAME SCALE and cell placement. No titles, text, lines, colored joint circles or guide visible in finished art. Entire bodies and blades comfortably fit cells. Clean simple colored animation pencil-test, reduced costume detail is okay. Adult compact head and long legs, approximate head height58 and neutral-standing380 in requested native pixels. NOT chibi.\nMost important: TRACE THE TWELVE DISTINCT WHOLE-BODY POSES of image1, including tightly bent knees and heels lifting toward buttocks, AND THE NEAR/FAR LEG OCCLUSION ORDER. The orange leg in blueprint is always the camera-near RIGHT leg (render normal black pants bright metal armor), blue is always far LEFT leg (render darker black pants dark metal armor). Orange and blue are guidance only, not costume colors. They are distinct legs moving on different continuous paths: near foot grounds and moves backward through frames1-5 while far folded leg swings past it; far foot grounds frames7-11 while near leg swings past. In frames3 and9 the legs are CLOSE TOGETHER AT PASSING, NOT wide stride. In frames4 and10 the swinging knee is forward at hip height, heel tightly folded under the thigh. Frames6 and12 BOTH feet are offground before landing. Do not substitute the same lead-leg pose or rearrange pose order. Render a coherent complete person in each cell, integrate shoulders, torso, hips, head and coat response, never separate limb drawings.\nPreserve backwards dragging blade: near right wrapped hand behind hip closes naturally around handle with visible thumb over curled index finger, katana blade extends screenLEFT slightly downward, edgeDOWN. Blade length and hand anatomy identical across sequence. Free arm follows blueprint. Shorten flowing coat silhouette just enough for both knees to remain readable but retain costume identity. Keep weapons and figures isolated without neighboring overlap. No shadow, effects, motion blur, extra figures or source neutral reference figure. This is twelve consecutive instants of ONE connected running person. Geometry from image1 takes precedence over image2's static pose.",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_motion_c5/motion_blueprint.png",
+          "sha256": "64d37c388945b462e52f90bbd854576f658840cff1a1da67e5fd7e46b705668d",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_drag_grip_c3/proportion_c2.png",
+          "sha256": "b048dc0f6647f58fe5e3d327adadb78bea6d27e4571eaafc3bd29a03a07ed89b",
+          "actually_submitted": true
+        }
+      ],
+      "transparent_background_requested": true,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "result": "source_c2.png",
+      "result_sha256": "ec6d070707f3dfedab5c11588e2a605d8845ab6da13d8a63181dd0fdd81f89b9",
+      "returned_original_file": "exec-ed168335-21a1-4a09-b6b9-331c2278769e.png",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "source_canvas_requested": [
+        2560,
+        1440
+      ],
+      "whole_source_canvas_2k_met": false,
+      "raster_upscaled": false,
+      "status": "source_review",
+      "review_note": "Source motion diagnostic only: closer recovery/passing, but foot contact, near/far leg identity, head/costume drift unresolved.",
+      "artwork_approved": false,
+      "runtime_installed": false,
+      "seed": "not supplied"
+    }
+  ]
+}

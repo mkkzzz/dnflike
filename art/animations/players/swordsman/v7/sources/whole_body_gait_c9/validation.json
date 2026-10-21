@@ -17,5 +17,7 @@
   "game_runtime_changed": false,
   "new_game_regression_run": false,
   "visual_quality_approved": false,
-  "doc_check_known_existing_failure": "docs/design/19_音效生产工作流.md:365 lines exceeds 300; unrelated and unchanged"
+  "doc_check_known_existing_failure": "docs/design/19_音效生产工作流.md:365 lines exceeds 300; unrelated and unchanged",
+  "scope": "Historical C9 check before C5 source-motion study; C5 has its own validation and has not passed G1/G3.",
+  "c5_validation": "run_motion_c5/validation.json"
 }

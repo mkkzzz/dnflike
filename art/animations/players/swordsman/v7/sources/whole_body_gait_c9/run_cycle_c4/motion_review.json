@@ -1,6 +1,6 @@
 {
   "date": "2026-10-21",
-  "status": "needs_source_revision",
+  "status": "rejected_continuous_gait",
   "reviewer": "agent_visual_review",
   "key_review_sha256": "0976209b30aa10eb6d7355f2957203945fe2d09d1f1ca7f398344374d98de610",
   "accepted_scope": "single drag grip direction only",
@@ -13,10 +13,12 @@
     "painted sword length varies; these frames are timing studies, not weapon-switching delivery"
   ],
   "next_work": [
+    "Rebuild support, whole-body passing and folded recovery; C5 source study in ../run_motion_c5/motion_review.json",
     "redraw far compression and phase-matched far flight as whole people",
     "clarify free-arm connections without changing approved dragging grip",
     "add whole-body passing/crossing breakdowns before dense interpolation",
     "remove painted weapons on selected whole-body keys, calibrate wrapped-thumb/finger occlusion, replay identical exported body with three weapons",
     "complete continuous gait, start-stop and in-game matching without altering accepted idle"
-  ]
+  ],
+  "user_feedback": "Continuous playback looks like feet swapping, not stepping; individual poses are insufficient."
 }

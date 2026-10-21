@@ -188,6 +188,10 @@
     {
       "directory": "walk_up_near_c1",
       "generation_sha256": "96c8cba7376750a4dda62b34b6b70de57fbe6732473e5d6a190f3b75ddaaf3d0"
+    },
+    {
+      "directory": "run_motion_c5",
+      "generation_sha256": "d61bf7cd2128465710d275c2ecf3fcb9b7419077be7351a3e56b2a147c70c9fc"
     }
   ],
   "source_quality_limitations": [
@@ -200,5 +204,6 @@
   "run_grip_approval": "run_drag_grip_c3/direction_approval.json",
   "painted_run_phase_keys": 8,
   "run_key_diagnostic": "run_cycle_c4/key_review.json",
-  "run_current_work": "whole-body phase correction before clean-body layers and continuous export"
+  "run_current_work": "C4 continuous gait rejected; C5 whole-person support/passing/recovery source study, still needs correction",
+  "run_motion_study": "run_motion_c5/motion_review.json"
 }

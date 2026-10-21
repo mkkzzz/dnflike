@@ -4,6 +4,16 @@
 <style>video{width:auto;height:auto;max-height:62vh;max-width:100%}h1{font-size:26px}h2{margin-top:16px}p{margin:10px 0}</style>
 <h1>C9：完整人物步态重做</h1>
 <p class="status">制作中，尚未实装。旧拆件步态已退回。本页身体均来自完整人物原画，没有腿件拼装、IK 或固定上身套腿。</p>
+<section id="c5-review">
+<h2>C5 · 收腿与过步连续草稿</h2>
+<p>按整身定位图重画，加入支撑脚后移、收起小腿、膝盖经过身体下方的姿势。先看连播是否有迈步感，再看单帧。十二张完整人物原画直接回放，没有补间或肢体变形。</p>
+<label>草稿速度 <select id="c5-speed"><option value="0.25">0.25 倍</option><option value="0.5" selected>0.5 倍</option><option value="1">1 倍</option></select></label>
+<button id="c5-play">草稿播放／暂停</button><button id="c5-prev">草稿上一张</button><button id="c5-next">草稿下一张</button>
+<video id="c5-video" src="run_motion_c5/cycle.mp4" muted loop playsinline preload="auto" aria-label="C5 收腿过步动作草稿"></video>
+<p class="status">动作草稿，尚未实装。脚底接触与左右腿辨识仍需检查，衣摆/头部跨帧仍有漂移。原图实际 1672×941，按原生像素切帧，未放大；尚未通过正式比例门禁，也未完成可换武器分层。</p>
+<details><summary>查看 C5 十二张完整原画</summary><img src="run_motion_c5/contact_sheet.png" alt="C5 整身连续姿势草稿"></details>
+<p><a href="#run-c4">对照上一版 C4</a> · <a href="run_motion_c5/cycle.mp4">直接播放 C5 视频</a></p>
+</section>
 <h2 id="run-review">奔跑 · 保留拖刀，重画握持 C3</h2>
 <p>已按最新反馈保留向后拖刀。新稿改为可见的拇指扣握和弯曲手指包柄，腕部随握柄方向转动。用户已认可这张的握持方向；完整跑步动作尚未完成，下方为继续制作的关键原画诊断。</p>
 <label>武器 <select id="weapon"><option value="katana">太刀</option><option value="greatsword">巨剑</option><option value="shortsword">短剑</option><option value="body">裸动作</option></select></label>
@@ -12,7 +22,7 @@
 <details><summary>原画手部裁窗（原生像素，不放大）</summary><img src="run_c3_grip_source.png" alt="新稿手指包柄与拇指扣握细节"></details>
 <details><summary>旧稿：握持退回，拖刀方向保留</summary><img src="run_katana.png" alt="用户退回握持的旧拖刀单张"></details>
 <p>C3 预览为 700×410 原生像素裁窗，角色以站高 380 像素标定，没有放大。源图实际约 1672×941，未达到整张源画布原生 2560×1440。</p>
-<h2>奔跑 · 八张整身关键原画 C4</h2>
+<h2 id="run-c4">奔跑 · 八张整身关键原画 C4（已退回步态）</h2>
 <p>已补两侧着地、压缩、蹬伸与腾空。当前只回放真实原画，没有补间。已知问题：两侧下沉深度、腾空时伸腿时机不一致，反侧自由手臂轮廓仍需澄清。本段保留原画中的刀，仅用于姿势诊断，尚未完成全循环去刀分层、连续过渡与实装。</p>
 <label>奔跑速度 <select id="run-speed"><option value="0.25">0.25 倍</option><option value="0.5" selected>0.5 倍</option><option value="1">1 倍</option></select></label>
 <button id="run-play">奔跑播放／暂停</button><button id="run-prev">上一张原画</button><button id="run-next">下一张原画</button>
@@ -27,6 +37,14 @@
 <label>周期内帧 <input id="frame" type="range" min="0" max="63" step="1" value="0"><output id="number">0 / 63</output></label>
 <details><summary>展开八张完整人物关键原画</summary><img src="walk_keys.png" alt="完整人物步行关键姿势，含待修正的承重和过步问题"></details>
 <script>
+const c5Video=document.querySelector('#c5-video'),c5Speed=document.querySelector('#c5-speed');
+const c5Starts=[0,3,7,10,12,15,18,21,25,28,30,33];
+c5Video.playbackRate=0.5;c5Video.onloadedmetadata=()=>c5Video.playbackRate=Number(c5Speed.value);
+c5Speed.onchange=()=>c5Video.playbackRate=Number(c5Speed.value);
+document.querySelector('#c5-play').onclick=()=>c5Video.paused?c5Video.play():c5Video.pause();
+function c5Seek(delta){c5Video.pause();const t=Math.floor(c5Video.currentTime*60+0.001)%36;let key=0;for(let i=0;i<c5Starts.length;i++)if(t>=c5Starts[i])key=i;key=(key+delta+12)%12;c5Video.currentTime=(c5Starts[key]+0.02)/60;}
+document.querySelector('#c5-prev').onclick=()=>c5Seek(-1);
+document.querySelector('#c5-next').onclick=()=>c5Seek(1);
 const video=document.querySelector('#video'),mode=document.querySelector('#mode'),speed=document.querySelector('#speed'),slider=document.querySelector('#frame'),number=document.querySelector('#number');
 video.playbackRate=0.5;
 video.addEventListener('loadedmetadata',()=>{video.playbackRate=Number(speed.value);});

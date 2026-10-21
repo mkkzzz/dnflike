@@ -1,0 +1,338 @@
+{
+  "asset_id": "actor.player.base.run",
+  "revision": "v7_c9_c5_motion_study",
+  "status": "source_review",
+  "runtime_install_allowed": false,
+  "production_G1_passed": false,
+  "reason": "Source motion study lacks neutral ruler and requested native 2K size; not a production actor export.",
+  "source": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_motion_c5/source_c2.png",
+  "source_sha256": "ec6d070707f3dfedab5c11588e2a605d8845ab6da13d8a63181dd0fdd81f89b9",
+  "source_size": [
+    1672,
+    941
+  ],
+  "canvas": [
+    460,
+    340
+  ],
+  "anchor": [
+    280,
+    320
+  ],
+  "scale": 1,
+  "raster_upscaled": false,
+  "whole_body_only": true,
+  "limb_transforms": false,
+  "interpolation": false,
+  "includes_painted_weapon": true,
+  "weapon_switching_delivery": false,
+  "fps": 60,
+  "cycle_ticks": 36,
+  "frames": [
+    {
+      "file": "frame_00.png",
+      "sha256": "b168e79f2ee2029127c9769ab8819b8e030180315bf236d3d7856a067b3157cd",
+      "source_rect": [
+        0,
+        0,
+        418,
+        314
+      ],
+      "source_pelvis_x": 267,
+      "source_virtual_ground_y": 306,
+      "translation": [
+        13,
+        14
+      ],
+      "phase_intent": "near_contact",
+      "start_tick": 0,
+      "duration_ticks": 3,
+      "bounds": [
+        13,
+        18,
+        403,
+        328
+      ]
+    },
+    {
+      "file": "frame_01.png",
+      "sha256": "cd58db2b0cf5598b226607f0402bb6b4fe5683da4364b6fe5619d801f5e12815",
+      "source_rect": [
+        418,
+        0,
+        836,
+        314
+      ],
+      "source_pelvis_x": 675,
+      "source_virtual_ground_y": 306,
+      "translation": [
+        23,
+        14
+      ],
+      "phase_intent": "near_load",
+      "start_tick": 3,
+      "duration_ticks": 4,
+      "bounds": [
+        36,
+        42,
+        441,
+        328
+      ]
+    },
+    {
+      "file": "frame_02.png",
+      "sha256": "43847eacb907a63707ca379410f4e2489568e829b76d062cb0ed7ffe6f3e4bc0",
+      "source_rect": [
+        836,
+        0,
+        1254,
+        314
+      ],
+      "source_pelvis_x": 1096,
+      "source_virtual_ground_y": 306,
+      "translation": [
+        20,
+        14
+      ],
+      "phase_intent": "near_passing",
+      "start_tick": 7,
+      "duration_ticks": 3,
+      "bounds": [
+        21,
+        41,
+        428,
+        328
+      ]
+    },
+    {
+      "file": "frame_03.png",
+      "sha256": "13a5ff8200b8bd3e1389a672df9c7bc57c292f1c32a36e01cec750114e0a27f9",
+      "source_rect": [
+        1254,
+        0,
+        1672,
+        314
+      ],
+      "source_pelvis_x": 1500,
+      "source_virtual_ground_y": 306,
+      "translation": [
+        34,
+        14
+      ],
+      "phase_intent": "near_late_support",
+      "start_tick": 10,
+      "duration_ticks": 2,
+      "bounds": [
+        41,
+        29,
+        438,
+        322
+      ]
+    },
+    {
+      "file": "frame_04.png",
+      "sha256": "96501135b0c71f387827c0d5532899ce7c222cbcce1b777f28b2017f6d294c85",
+      "source_rect": [
+        0,
+        314,
+        418,
+        627
+      ],
+      "source_pelvis_x": 259,
+      "source_virtual_ground_y": 614,
+      "translation": [
+        21,
+        20
+      ],
+      "phase_intent": "near_push",
+      "start_tick": 12,
+      "duration_ticks": 3,
+      "bounds": [
+        38,
+        20,
+        439,
+        333
+      ]
+    },
+    {
+      "file": "frame_05.png",
+      "sha256": "ed0097e7abced5fcd52596970f0fb46ac2886f1e69ea81015563103366a0c399",
+      "source_rect": [
+        418,
+        314,
+        836,
+        627
+      ],
+      "source_pelvis_x": 672,
+      "source_virtual_ground_y": 614,
+      "translation": [
+        26,
+        20
+      ],
+      "phase_intent": "far_precontact",
+      "start_tick": 15,
+      "duration_ticks": 3,
+      "bounds": [
+        26,
+        21,
+        444,
+        331
+      ]
+    },
+    {
+      "file": "frame_06.png",
+      "sha256": "bda6c5b4473eb2bc5d2fd0f2d059e32b18a4dcb3ac1d48830b6cf36a1e7906c9",
+      "source_rect": [
+        836,
+        314,
+        1254,
+        627
+      ],
+      "source_pelvis_x": 1095,
+      "source_virtual_ground_y": 614,
+      "translation": [
+        21,
+        20
+      ],
+      "phase_intent": "far_contact",
+      "start_tick": 18,
+      "duration_ticks": 3,
+      "bounds": [
+        22,
+        20,
+        439,
+        333
+      ]
+    },
+    {
+      "file": "frame_07.png",
+      "sha256": "c198035c84086e794b8017f76f20db20cb91706a833a4f2d194489517776f001",
+      "source_rect": [
+        1254,
+        314,
+        1672,
+        627
+      ],
+      "source_pelvis_x": 1520,
+      "source_virtual_ground_y": 614,
+      "translation": [
+        14,
+        20
+      ],
+      "phase_intent": "far_load",
+      "start_tick": 21,
+      "duration_ticks": 4,
+      "bounds": [
+        15,
+        25,
+        400,
+        325
+      ]
+    },
+    {
+      "file": "frame_08.png",
+      "sha256": "6f59301e20f1a433ffc38b4e504de636872f3c1cecd15af8d55aca358ab80376",
+      "source_rect": [
+        0,
+        627,
+        418,
+        941
+      ],
+      "source_pelvis_x": 263,
+      "source_virtual_ground_y": 924,
+      "translation": [
+        17,
+        23
+      ],
+      "phase_intent": "far_passing",
+      "start_tick": 25,
+      "duration_ticks": 3,
+      "bounds": [
+        39,
+        32,
+        433,
+        323
+      ]
+    },
+    {
+      "file": "frame_09.png",
+      "sha256": "8a37e13496b82b6e963604702b3af28030bb153d8552c7309fa3039c826fc56c",
+      "source_rect": [
+        418,
+        627,
+        836,
+        941
+      ],
+      "source_pelvis_x": 675,
+      "source_virtual_ground_y": 924,
+      "translation": [
+        23,
+        23
+      ],
+      "phase_intent": "far_late_support",
+      "start_tick": 28,
+      "duration_ticks": 2,
+      "bounds": [
+        24,
+        28,
+        441,
+        321
+      ]
+    },
+    {
+      "file": "frame_10.png",
+      "sha256": "730fbdd38ba193bfa184b820570e1e0a837903a220ab9c4cff6f97a89a7751e1",
+      "source_rect": [
+        836,
+        627,
+        1254,
+        941
+      ],
+      "source_pelvis_x": 1095,
+      "source_virtual_ground_y": 924,
+      "translation": [
+        21,
+        23
+      ],
+      "phase_intent": "far_push",
+      "start_tick": 30,
+      "duration_ticks": 3,
+      "bounds": [
+        22,
+        23,
+        439,
+        321
+      ]
+    },
+    {
+      "file": "frame_11.png",
+      "sha256": "9811bfd153e573ec4b6cdfa5332ef74fa108b66417764721bbfefe1f24ce0e92",
+      "source_rect": [
+        1254,
+        627,
+        1672,
+        941
+      ],
+      "source_pelvis_x": 1517,
+      "source_virtual_ground_y": 924,
+      "translation": [
+        17,
+        23
+      ],
+      "phase_intent": "near_precontact",
+      "start_tick": 33,
+      "duration_ticks": 3,
+      "bounds": [
+        18,
+        24,
+        421,
+        319
+      ]
+    }
+  ],
+  "recipe_sha256": "43829575af9db5a940d07183ee59d532fb297f7279788d63d3d8bc303dfcec42",
+  "media": {
+    "cycle.mp4": "db5fda03034bc6f211ab790f456e1763180a00e7010983eeb7c3bd131890d5a6",
+    "contact_sheet.png": "3632f8617846c4803f80ebdadcfe529a0409b0f647b314c800ae6013e0330fc1"
+  }
+}
