@@ -1,0 +1,15 @@
+{
+  "tool": "builtin image_gen",
+  "date": "2026-10-21",
+  "prompt": "Use case: precise-object-edit. Image 1 is the EDIT TARGET with exactly two full-body figures on a transparent canvas. Image 2 is a recovery-pose reference ONLY, do not add its figures. Keep image 1's LEFT neutral figure exactly unchanged. Keep the RIGHT figure's head, face, hair, neck, shoulders, coat, pelvis, legs and boots at the same scale and location. Change ONLY the RIGHT figure's arms and hands to make an intermediate hand-release pose between image 2's center two-handed recovery and image 1's right ready stance. The swordsman's RIGHT weapon hand (the fist at the screen-left/rear side of his body) is still a closed gripping fist but is raised slightly from his hip to his lower abdomen, elbow bent naturally; approximate original-canvas fist center x1075 y475. His LEFT off-hand has just released the imaginary hilt, palm relaxed with fingers slightly open, still close to the center/front of the lower abdomen, approximate hand center x1200 y460; this hand must NOT be extended far out to screen-right yet. Both hands are separated by a small clear gap, no overlap, no clenched double grip. Both forearms have normal adult length and connect to their correct shoulders; the left elbow stays bent and near the screen-right ribs. Preserve the original red wrapped forearms, exposed fingertips, dark sleeves and all adult proportions. The action is quiet recovery after a slash, not punching, guarding or a new attack. Draw the actual intermediate hand-release anatomy; no blur or ghost limbs. Do not move or resize either head, do not change the stance or camera distance. True transparent RGBA background; same full canvas with full hair, coat and boots inside original margins. No weapon, handle, hilt, scabbard, props, text, ground, effects, added character or background. Requested production canvas 2560x1440 if supported without changing character scale; never enlarge existing pixels to claim 2K. Preserve body anatomy scale exactly.",
+  "references": [
+    "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_settled_c1/body_c2.png",
+    "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_recover_c1/source.png"
+  ],
+  "transparent_background": true,
+  "requested_size": [
+    2560,
+    1440
+  ],
+  "returned_file": "exec-739eb6da-63bb-4b42-a07c-ad209c467811.png"
+}

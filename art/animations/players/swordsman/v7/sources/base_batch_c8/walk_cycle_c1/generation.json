@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-21",
+  "tool": "builtin image_gen",
+  "seed": "not returned",
+  "selected_raster": "body_c2.png",
+  "history": [
+    {
+      "file": "source.png",
+      "sha256": "f70303dc9e01f020cf3de38bb26c73baffc0aad2d9280a67ac619267dff0def8",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "alpha_preserved": true,
+      "requested_size": [
+        2560,
+        1440
+      ],
+      "upscale_applied": false,
+      "request": "request.json",
+      "prompt": "prompt.txt",
+      "prompt_file_sha256": "d4652eedeb9ee194ed1df98aae8d1ce13e4cc23d5a9562fbdcf913b1afd8182b",
+      "submitted_prompt_sha256": "931ed5cb2386c1256bf64cd9002ff7239dfd5e86f18e6f71c784f21609d92526",
+      "references": [],
+      "returned_original_file": "exec-005d5990-3aac-4fea-9cfd-9b62a61c3f0e.png"
+    },
+    {
+      "file": "body_c2.png",
+      "sha256": "5fb9c69c045a111e2581a32131e677b93ff5679089751b8fbe7f3a7dab699a8b",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "alpha_preserved": true,
+      "requested_size": [
+        2560,
+        1440
+      ],
+      "upscale_applied": false,
+      "request": "body_c2_request.json",
+      "prompt": "body_c2_prompt.txt",
+      "prompt_file_sha256": "0acbcdc01f3eeed36090a13227385a951121ad089158534f7bb9d78b88be4153",
+      "submitted_prompt_sha256": "8c0fd913cb7be4104f456b241fd06b84cd941576ad78360b3e53ad366125173c",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_cycle_c1/source.png",
+          "sha256": "f70303dc9e01f020cf3de38bb26c73baffc0aad2d9280a67ac619267dff0def8",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_cycle_c1/leg_routing_guide.png",
+          "sha256": "457340c44d23da77d0ca9da0ac3e3c7b77831dcd9e3f147f96a9c2c7eda20fab",
+          "actually_submitted": true
+        }
+      ],
+      "returned_original_file": "exec-593decd0-dd21-4e52-b981-115dd3d7fba1.png"
+    }
+  ],
+  "G1_passed": false,
+  "artwork_approved": false,
+  "runtime_scope": "not installed; opposite-leg and G1 review pending",
+  "limitations": "Generator returned 1672x941 sheet; export uses common standing gauge and shrink-only actor pixels, not an upscaled 2K source sheet."
+}

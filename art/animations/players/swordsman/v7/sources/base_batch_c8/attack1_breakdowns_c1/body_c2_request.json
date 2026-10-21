@@ -1,0 +1,6 @@
+{
+  "prompt": "Use case: precise-object-edit. This six-figure sprite sheet is the edit target. Preserve every body pose, limb, hand, torso, coat, boot, camera scale, layout, and transparent background. Correct ONLY head scale and the clipped top-left neutral hair. TOP-LEFT neutral: redraw the entire head (hair/face/ears/jaw) about 15 percent smaller, anchored at the jaw/collar, so the complete highest hair tips now fit safely BELOW the canvas top with at least 12 clear transparent pixels. Do not shorten the body or move the boots. The other FIVE figures: make each entire head about 8 percent smaller around the jaw/collar, maintaining all adult face features and red forelock; do not reduce hair alone. Keep all head positions following the existing body motion, do not align heads to a fixed world height. Do not change any other anatomy. Identical adult small-head ratio across all six same-scale figures. No new figures or new poses. No weapons, handles, scabbards, text, blur, ghosting or effects. True transparent RGBA, full original canvas; do not crop or enlarge the whole raster. Keep each figure separate with safe transparent margins. The top-left head must not touch the image edge.",
+  "refs": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/base_batch_c8/attack1_breakdowns_c1/source.png"
+  ]
+}

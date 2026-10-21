@@ -1,0 +1,16 @@
+{
+  "selected": [
+    "windup",
+    "sweep",
+    "late",
+    "recover_breakdown"
+  ],
+  "unused": [
+    "top-right repeats loaded pose instead of the requested early-cut breakdown"
+  ],
+  "initial_source": "source.png",
+  "initial_rejected": "clipped neutral hair and head scale mismatch",
+  "edited_source": "body_c2.png",
+  "runtime_installed": false,
+  "artwork_approved": false
+}

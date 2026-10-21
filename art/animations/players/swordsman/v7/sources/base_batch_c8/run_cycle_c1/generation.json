@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-21",
+  "tool": "builtin image_gen",
+  "seed": "not returned",
+  "selected_raster": "body_c2.png",
+  "history": [
+    {
+      "file": "source.png",
+      "sha256": "74c2cd1da8e1c57b8ee66621ad2d2a2f856516bd24fc420cf15bb5e77b0650bf",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "alpha_preserved": true,
+      "requested_size": [
+        2560,
+        1440
+      ],
+      "upscale_applied": false,
+      "request": "request.json",
+      "prompt": "prompt.txt",
+      "prompt_file_sha256": "8d0fa0c114169e99cde80fdc8ac3c53fee02aba23156839eded1e1306726243b",
+      "submitted_prompt_sha256": "a659fe0e68bd5aad59c75aa244d5ed0d36ac6ab62b39cdff47a6e10095bb6e80",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/walk_cycle_c1/body_c2.png",
+          "sha256": "5fb9c69c045a111e2581a32131e677b93ff5679089751b8fbe7f3a7dab699a8b",
+          "actually_submitted": true
+        }
+      ],
+      "returned_original_file": "exec-aab343a1-bcfe-4b70-bd5f-60090303442d.png"
+    },
+    {
+      "file": "body_c2.png",
+      "sha256": "4b0a6fb73fee37fe13254098e8a4def15527582e2844e2c3623a3249fd419f7b",
+      "actual_size": [
+        1672,
+        941
+      ],
+      "alpha_preserved": true,
+      "requested_size": [
+        2560,
+        1440
+      ],
+      "upscale_applied": false,
+      "request": "body_c2_request.json",
+      "prompt": "body_c2_prompt.txt",
+      "prompt_file_sha256": "79e94f401ad934f16d03c2a8cca5f143eee48947370ad0b8d4ae5744638ae1ba",
+      "submitted_prompt_sha256": "2ea436be880d499a36fb09c6c6af8220028426709dd132b9f88290aa42b46fca",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/run_cycle_c1/source.png",
+          "sha256": "74c2cd1da8e1c57b8ee66621ad2d2a2f856516bd24fc420cf15bb5e77b0650bf",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/run_cycle_c1/leg_routing_guide.png",
+          "sha256": "a770ceb5e808ebfbf09437d540a7f2307a173cfff6a2938603ce994d3af0be75",
+          "actually_submitted": true
+        }
+      ],
+      "returned_original_file": "exec-0c831847-d895-458c-9ea0-b7add8092bd6.png"
+    }
+  ],
+  "G1_passed": false,
+  "artwork_approved": false,
+  "runtime_scope": "not installed; opposite-leg and G1 review pending",
+  "limitations": "Generator returned 1672x941 sheet; export uses common standing gauge and shrink-only actor pixels, not an upscaled 2K source sheet."
+}

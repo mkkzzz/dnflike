@@ -1,0 +1,50 @@
+{
+  "c8_attack1_windup": {
+    "primary": [
+      762,
+      165
+    ],
+    "secondary": [
+      776,
+      182
+    ],
+    "motion_tick": 3,
+    "two_hand": true
+  },
+  "c8_attack1_sweep": {
+    "primary": [
+      379,
+      664
+    ],
+    "secondary": [
+      369,
+      656
+    ],
+    "motion_tick": 10,
+    "two_hand": true
+  },
+  "c8_attack1_late": {
+    "primary": [
+      835,
+      705
+    ],
+    "secondary": [
+      844,
+      698
+    ],
+    "motion_tick": 11,
+    "two_hand": true
+  },
+  "c8_attack1_recover_breakdown": {
+    "primary": [
+      1361,
+      646
+    ],
+    "secondary": [
+      1376,
+      667
+    ],
+    "motion_tick": 17,
+    "two_hand": true
+  }
+}

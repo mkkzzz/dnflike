@@ -1,0 +1,20 @@
+{
+  "package_sha256": "29324185554e56cfb2244108ef9f37ef9aa3ab75b6abcd8be78084f3ca5c0f7e",
+  "clips": [
+    "attack1"
+  ],
+  "review_files": {
+    "attack1_60fps.mp4": "2af8f29f99ba6ee042e08293d5836787412c89f8cf5d292548f13af8a791a8bd",
+    "attack1_keyframes.png": "cda6a6a6e4642ef7621cc47b83ac23992d5473119cc18bce4feae2c232f7d21d",
+    "attack1_t12_native_2k.png": "0cc5621e83447c3e8c270076a9e90a27e7375679724ba9b8727c57953a099e49",
+    "attack1_t15_native_2k.png": "ad9d9aeba3d15f1d3f7be42d25dd0a3fe712ac2fbed2f28b90f73d9c7b25a445",
+    "attack1_t22_native_2k.png": "64f33f8d3028e43d54bff6ba56612dc4e65b43ac2c7fe17405c74e4537601653",
+    "attack1_t25_native_2k.png": "2b07f79559f865a640d071ff285a8b2b069307204431b02b664e1e6bcceb5100",
+    "attack1_t7_native_2k.png": "04416ac88cdf02a4ff094006ab1291b984f2ee01247e2ca422fdf0128a223ae8",
+    "attack1_t8_native_2k.png": "10f086d19ebcd0b94425c3ce8b5221b13e6ba5991b3dd391b4a69377f27d1990",
+    "first_cut_native_2k.mp4": "787c14286192f2529247b7e32c3ccb7eab3d20afee1c9296e549acc4985c8d16",
+    "index.html": "7a3bc6def7ccd858b9dd379ecf81dc6794d3a7ed12b01d26213fb44f420f2c38"
+  },
+  "artwork_approved": false,
+  "runtime_user_approved": false
+}

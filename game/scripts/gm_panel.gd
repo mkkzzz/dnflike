@@ -29,6 +29,7 @@ const BUTTONS := [
 	{"label": "显示设置", "cmd": "settings"},
 	{"label": "实体根部几何", "cmd": "geometry"},
 	{"label": "V7 基础动作", "cmd": "art v7"},
+	{"label": "新第一刀试用", "cmd": "art v7c8"},
 	{"label": "旧版基础动作", "cmd": "art v6"},
 	{"label": "装备太刀", "cmd": "weapon katana"},
 	{"label": "装备巨剑", "cmd": "weapon greatsword"},

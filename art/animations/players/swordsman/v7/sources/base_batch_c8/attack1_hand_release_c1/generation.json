@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-21",
+  "tool": "builtin image_gen",
+  "source": "source.png",
+  "source_sha256": "91a5b2911f70ced407de630a1f09148f3d7df94040582fc799b51d73a31047e4",
+  "actual_size": [
+    1672,
+    941
+  ],
+  "requested_size": [
+    2560,
+    1440
+  ],
+  "alpha_preserved": true,
+  "upscale_applied": false,
+  "seed": "not returned",
+  "prompt": "prompt.txt",
+  "prompt_file_sha256": "bee2a2dff8685a8c3111f7337ac23729f10c1e06083dd4a7416e6f2d718ea175",
+  "submitted_prompt_sha256": "569034ffcf3d2d46f2571c3689ee1504f776de92efc54c5a4a5de41992f7c978",
+  "references": [
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_settled_c1/body_c2.png",
+      "sha256": "7a060263458c868dbd36313cb2e558bd8d1a9b38d302a5d453d0af95eeed1fb1",
+      "actually_submitted": true
+    },
+    {
+      "file": "art/animations/players/swordsman/v7/sources/base_batch_c7/attack1_recover_c1/source.png",
+      "sha256": "d57ea7ab0b25f5c49abaeb24a01511aef2b807a9c77efe3a64e8758d4b3f7611",
+      "actually_submitted": true
+    }
+  ],
+  "returned_original_file": "exec-739eb6da-63bb-4b42-a07c-ad209c467811.png",
+  "G1_passed": true,
+  "artwork_approved": false,
+  "runtime_installed": true,
+  "runtime_scope": "GM opt-in attack1 only; default c6 unchanged"
+}

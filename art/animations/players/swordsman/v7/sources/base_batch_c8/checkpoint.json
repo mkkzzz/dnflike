@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-21",
+  "revision": "v7_c8",
+  "state": "source_review",
+  "scope": "non-skill base actions; idle frozen; only new attack1 is installed as opt-in GM trial",
+  "runtime_default": "game/assets/swordsman_v7_c6/manifest.json",
+  "gm_trial": "game/assets/swordsman_v7_c8/manifest.json",
+  "gm_trial_sha256": "29324185554e56cfb2244108ef9f37ef9aa3ab75b6abcd8be78084f3ca5c0f7e",
+  "review": "docs/previews/v7_c8_trial/index.html",
+  "source_g1_passed": [
+    "attack1_hand_release_c1",
+    "attack1_breakdowns_c1"
+  ],
+  "source_review_pending": [
+    "walk_cycle_c1",
+    "run_cycle_c1"
+  ],
+  "remaining": [
+    "walk and run opposite-leg verification and native loops",
+    "new reverse attack2",
+    "new rising attack3",
+    "start/stop and interrupted action transitions",
+    "complete suite user runtime acceptance"
+  ],
+  "user_artwork_approved": false,
+  "failed_ablations": [
+    {
+      "version": "c8_c1",
+      "reason": "hand-release key alone leaves excessive adjacent pose gap and arm smear"
+    },
+    {
+      "version": "c8_c2",
+      "reason": "removing arm constraints without new breakdowns worsens rear-leg ghosting"
+    }
+  ],
+  "selected": "base_runtime_c8_c3: real extra breakdown keys + real offhand-release key, GM preview only; minor intermediate cuff/hand deformation still needs visual review"
+}

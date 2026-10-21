@@ -27,6 +27,7 @@ func _run() -> void:
 	if OS.has_feature("movie"):folder="res://../temp/v7_c6_movie_opaque"
 	if "--feedback" in OS.get_cmdline_user_args():folder="res://../temp/v7_c7_feedback_capture"
 	if "--hurt-no-flash" in OS.get_cmdline_user_args():folder="res://../temp/v7_c7_hurt_no_flash"
+	if "--first-cut-c8" in OS.get_cmdline_user_args():folder="res://../temp/v7_c8_first_cut"
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(folder))
 	main = load("res://scenes/Main.tscn").instantiate()
 	root.add_child(main)
@@ -45,7 +46,12 @@ func _run() -> void:
 	p.v7_renderer.call("set_enabled",true)
 	main.bm.visible = false
 	main.hud.hide()
+	if "--first-cut-c8" in OS.get_cmdline_user_args():
+		main._on_gm_command("art",PackedStringArray(["v7c8"]))
 	await _frames(120)
+	if "--first-cut-c8" in OS.get_cmdline_user_args():
+		await _first_cut_capture(p)
+		return
 	if "--feedback" in OS.get_cmdline_user_args() or "--hurt-no-flash" in OS.get_cmdline_user_args():
 		await _feedback_capture(p)
 		return
@@ -89,6 +95,29 @@ func _run() -> void:
 	root.get_texture().get_image().save_png(folder+"/gm_native_2k.png")
 	FileAccess.open(folder+"/timeline.json",FileAccess.WRITE).store_string(JSON.stringify(evidence,"\t"))
 	print("[V7_CAPTURE] COMPLETE frames=",number," folder=",folder)
+	quit()
+
+func _first_cut_capture(p: Player) -> void:
+	AudioServer.set_bus_mute(0,true)
+	for profile in ["katana","greatsword","shortsword"]:
+		for direction in [1,-1]:
+			p._clear_move()
+			p.state = Player.St.IDLE
+			p.combo = 0
+			p.position = Vector2(570,p.ground_y)
+			p.velocity = Vector2.ZERO
+			p.facing = direction
+			main.bm.freeze = 0
+			main.weapon_rig.set_profile(profile)
+			await _frames(12,profile+"_idle_face"+str(direction))
+			Input.action_press("attack")
+			await _frames(1,profile+"_first_cut_face"+str(direction))
+			Input.action_release("attack")
+			await _frames(45,profile+"_first_cut_face"+str(direction))
+	FileAccess.open(folder+"/timeline.json",FileAccess.WRITE).store_string(JSON.stringify(evidence,"\t"))
+	var sources := {"base_manifest_sha256":FileAccess.get_sha256("res://assets/swordsman_v7_c6/manifest.json"),"trial_manifest_sha256":FileAccess.get_sha256("res://assets/swordsman_v7_c8/manifest.json"),"trigger":"actual GM art v7c8 and attack input; first cut only, other actions retain existing package"}
+	FileAccess.open(folder+"/packages.json",FileAccess.WRITE).store_string(JSON.stringify(sources,"\t"))
+	print("[V7_CAPTURE] C8 FIRST CUT COMPLETE frames=",number)
 	quit()
 
 func _feedback_capture(p: Player) -> void:

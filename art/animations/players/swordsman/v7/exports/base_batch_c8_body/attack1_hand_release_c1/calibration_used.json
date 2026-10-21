@@ -1,0 +1,105 @@
+{
+  "revision": "v7_c8_attack1_hand_release",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/base_batch_c8_body/attack1_hand_release_c1",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "source.png",
+      "standing_height": 910
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "reviewed_true_hair_jaw",
+    "G2": "approved_slash_direction_new_recovery_breakdown_pending",
+    "G3": "pending",
+    "G4": "pending",
+    "runtime_install_allowed": false
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.combo.1",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c8_attack1_hand_release",
+          "source": "body",
+          "crop_bbox": [
+            895,
+            70,
+            1470,
+            920
+          ],
+          "root": [
+            1210,
+            904
+          ],
+          "foot": [
+            1020,
+            904
+          ],
+          "component_seed": [
+            1200,
+            450
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1186,
+              425
+            ],
+            "offhand": [
+              1262,
+              470
+            ]
+          }
+        }
+      ]
+    },
+    "neutral": {
+      "asset_id": "actor.player.proportion.neutral",
+      "loop": false,
+      "root_mode": "ground",
+      "include_in_overview": false,
+      "poses": [
+        {
+          "id": "c8_hand_release_gauge",
+          "source": "body",
+          "crop_bbox": [
+            105,
+            5,
+            610,
+            935
+          ],
+          "root": [
+            400,
+            923
+          ],
+          "foot": [
+            285,
+            923
+          ],
+          "component_seed": [
+            400,
+            300
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1
+        }
+      ]
+    }
+  }
+}

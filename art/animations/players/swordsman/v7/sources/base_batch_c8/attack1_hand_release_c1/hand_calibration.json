@@ -1,0 +1,17 @@
+{
+  "c8_attack1_hand_release": {
+    "primary": [
+      1186,
+      425
+    ],
+    "secondary": [
+      1262,
+      470
+    ],
+    "two_hand": false,
+    "weapon_u": [
+      0.12,
+      -0.9927738917
+    ]
+  }
+}

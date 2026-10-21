@@ -1,0 +1,7678 @@
+{
+  "source": "actual Godot frame_post_draw framebuffer PNGs",
+  "native_size": [
+    2560,
+    1440
+  ],
+  "fps": 60,
+  "frames": 348,
+  "scaled": false,
+  "stream_probe": "Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, unknown/bt709/iec61966-2-1, progressive), 2560x1440, 3331 kb/s, 60 fps, 60 tbr, 15360 tbn (default)",
+  "frame_hashes": {
+    "f00000.png": "f7eb0db97241321221dbf13a66363c58ae70436ec32e038eee97361935371af3",
+    "f00001.png": "b394bcc61478ee0971ec24d5d6e26e2f0b5060379152b2234b6e8fbee30d02db",
+    "f00002.png": "88de99c761a59cae52346e3819982a0320365c5764ca070c3ec3e731c130a941",
+    "f00003.png": "bb62d909914ce56281de7c0099f0641491503fe5c337f0b2c2280c2ee809bba2",
+    "f00004.png": "dd5d73dbf9a4d78962774a59733d13d19fe6ccf6a67e1a6360126ea015ab5c9b",
+    "f00005.png": "6a1483d0345aa73d7231e0307348094cb7448ca8db1f5fa28b178fb900bc9b9c",
+    "f00006.png": "683c89bcc8985aac54704ec157e5aa03077a71b3f48983b8b04a637dfbe6952a",
+    "f00007.png": "32a5060e8cdfdc422976f39ebaf770eb64427c2d44e9e34d56b431ea9354bab1",
+    "f00008.png": "3d1fc00443374c3defe7d64dc9202b5547e89d8a65628900888ea366c067f586",
+    "f00009.png": "290ed0d986bc5c437d348ed02f3dbaf03177cf90c1c031e1a4ad47578ef56363",
+    "f00010.png": "88aa4fb027338ef8ae98815b986cbafa4b8036dbd05c576d6726402b59cbed6d",
+    "f00011.png": "f40e2e6f1ed380614460dbb2a70c1c9ce02f01181ba13d6ae3d5739fb50b93c9",
+    "f00012.png": "cdbbf964d50573ce9902d2657aefd9de9458c9a2a39db134c623bdac353035de",
+    "f00013.png": "53c2af7758514a78116a1209b952df61a77b4f1980b994994c1ad5ec7375a0e6",
+    "f00014.png": "c9152d0daf9ed56b47ce71f388fcf7b2d2b88521f7d8a37d5ec6dcb5754f12f2",
+    "f00015.png": "12d4e5431efbf36b8851ffad7a4aa49dc64239874483c2cc2e5f806fa9ea0e97",
+    "f00016.png": "120d33088c3acfd9c607341b65a446a7994d46de92b864d756d737dfc347806e",
+    "f00017.png": "af867cd585052c78557f640b6969fcbd6c792ce43703acc02d45bc4fe3b5c9b7",
+    "f00018.png": "54962c9ddd783b1f34f104b33e37ba7afbfaf886a691488eb9f4d32f3b8dbb2d",
+    "f00019.png": "9bcce7214752442e3bb9f60142ded8a694baab4ef7cfae6c98fe50e390766e61",
+    "f00020.png": "a619c67f3e2e951514dfc7f2f2dace0ecf8261ee10dccf0871223399e8ee7547",
+    "f00021.png": "9128fcc2404f8534e7632a44873b22873c248fa8af92882420e6906279217a9a",
+    "f00022.png": "26bc450ff0517378378528345d4734e6707728e81ebc500b5232ae09d3b374bc",
+    "f00023.png": "170a51d726744dd5d1b8e8f582a2330892de0fe4c7a28a8ce80a7fc8bee138e8",
+    "f00024.png": "0442150d03fd62e3b219ccea3fd2cbf58aab1437498c13ee7d6264a1fca056b3",
+    "f00025.png": "a8eb52adbc9a0a1196997b65966075a2fd166a95e38a854e44c1946c1779878d",
+    "f00026.png": "f77453979db5860e9d8d957093df9f899b429eb998acea333c8c25c4b6320329",
+    "f00027.png": "4a080cad47318471022a83a846b0003181363e991f769e92a77335949c5cd7ee",
+    "f00028.png": "57da7528634682926f0cb6f9fc07a2cf06e28b9ba4e6e342f9c3880f03bdd477",
+    "f00029.png": "23737cc5342c915036905cfdff0f40fa61347556c61a198dc1e5159d0cfcbcfa",
+    "f00030.png": "e65ca891d0f8eedb9fe64382de42b05ec9f467fc66022960aec2c4d554a3d1aa",
+    "f00031.png": "c68d46db667d6f0ff05597b24e6b88c3c7d681e360b22ac025ec22a881e9d34d",
+    "f00032.png": "f25771f16780a190ed90614e537f15f15d63efac47985f5782d59292832515b7",
+    "f00033.png": "a417972452f7276abb7a81b291861c4c081291c778725afec1f928c2764349b1",
+    "f00034.png": "133e055c212c5414607f29c6533e1f4af78a73ed858068b239a48db2a4dfef6d",
+    "f00035.png": "bdd640dcfbb190fb9ed8dfa628d5789dd248a9e3658ae0800246cf2194732da7",
+    "f00036.png": "2bcc6b31278830223df40c699f2607777472f36648fb0124a6dda41e733dacee",
+    "f00037.png": "dead4c7de0a1fdcbefedf060c47ceeb7fa3d7adc4c66f6b8bf8965a03957ed09",
+    "f00038.png": "5941b848b540f3aaec45de4ec38406b3199b4b356a3e41ce813bb91095b1eff9",
+    "f00039.png": "0d3ab560dea998daaf6d301b16e565ab2b3927ef5bed3643f01712e51cdff676",
+    "f00040.png": "3983af9268583acf25a729eb873120c398dc6f690fdead72a5f230c05b11adb6",
+    "f00041.png": "30e4e333b15a167c81c7a91bd1c524b1eda0ea6d84dc35a1f8233ba9dcdbad62",
+    "f00042.png": "8868da1e4ffefbecdd4e517e361bbd053f9b14c6e5cad976655fbc660cb11d89",
+    "f00043.png": "2b8ec60ede3cdf1bc9eba2f5aaccc61020df956a4c1c35b2f56547a7fe351d5c",
+    "f00044.png": "7e5f405bea7565598873f91cadd5ab29f12f1c5f63faedfbca890cf027bb70bd",
+    "f00045.png": "bf5488e429ed2d027dbe27533529cf4fd5e1c864c73537808b3e97125de0ce30",
+    "f00046.png": "a4dbdf51a442c359e1a961a4ce4c6e7e2ead061a6f11ea082ea6ec68df3a3889",
+    "f00047.png": "64e64bc45df4a1930827d10b3bef2e61b0d3955102951ed1b11a5377db78f638",
+    "f00048.png": "b5d2f84b2e983cca7cb3652f261b3a4fb5607312ead0d5ab4015e51a996b25e2",
+    "f00049.png": "fb3f3fdc44fb354802e4a384e4f9c051a7a29f5f359d6e7d43ff844a15d21cf8",
+    "f00050.png": "eb144bb686ae5c214f6272182d574d63027a2639ba5657f3c1ea6ef95b78a37b",
+    "f00051.png": "baf05fb34a80b21384b63c9fcbfdf3f49610eb0ffdfffa5e90ef745843b602f0",
+    "f00052.png": "1705ceab146a6a2c4f95cf5c2a886af4f49a937dfb63fbed3810330b281821dc",
+    "f00053.png": "b7d832d2f10303278af338c27d490e7835193c6179607cfeeab90227a29bd5af",
+    "f00054.png": "bf1f4fefeea7e5649c44187bd3e82af6137a899894d66b48f3226053b1a11c26",
+    "f00055.png": "3e3d36696db0dab20ed73490b5d9b334472d1ed3d123450a7817edb2c3b50375",
+    "f00056.png": "03a37b84421e96cb94e6fed0fdaa6ec6f16f118685e58f5e587bf8798bb94eb5",
+    "f00057.png": "e5b4ef9eb360f1fb9e22289bc2dc35037086c92dc2a69539c9c8ce9ea879f1df",
+    "f00058.png": "51c152349b86b08e30e68daa5c59e181a6acbab116964c85f6fe495251ebe605",
+    "f00059.png": "044c608537756a8a09d870c8e26d178c87cbfefa362c5e8500f685ce23aa9bab",
+    "f00060.png": "0afeecad1042d36a25de07cf5128bba9db73335710f05d42a8f0baf6104a85f6",
+    "f00061.png": "355717b47d9072d5753f9fb6e6de491fa4015fd6d7eb2b75e12b009058f122cf",
+    "f00062.png": "d09c1e91768de20f9223502df50790a9d184428e96b02b0984a1224767034853",
+    "f00063.png": "b4f2d50d7562c8be90044c9fbab50707373c3121bfa4b5fc6758357cacac00bd",
+    "f00064.png": "cbfb7b100f51035d5c7b14be72bc3fab67e977c895b467f63e6b5afff3483d52",
+    "f00065.png": "4390002417d114ab08a12f620249b16e5d44e081acf132bcff3b70cc9d29531b",
+    "f00066.png": "9bda49c05e14d372c09d6c985d2f295b736c289ec96ab580f24927fa1d9dc169",
+    "f00067.png": "1b212345afded35c408f600f8ecb9244a20df4afef5103764b3e2ca6ab3530a8",
+    "f00068.png": "85f26dffd4d370b76db44f17ced937262e2f699560f7330e81909615c708443b",
+    "f00069.png": "4c846f7740e8313e14da68541ece67266a650aa499a13e5b9db9aac1abb89b52",
+    "f00070.png": "dd3edfb9a8698ee4eb554e7d0fbc62eb72c82d0a3c832bf28628fe4615c370ea",
+    "f00071.png": "ecb9d1407f39e3d637ec60d658d51803bed5086972d3097798d06c077d9eb1dc",
+    "f00072.png": "73bc179c6322698b2e832b581990001c82bdc8134fbbfb31ec0bec0945061f65",
+    "f00073.png": "c8e5caab24a8b81ef0018a49ab62ce536c463e0d6439e566e7f6ffb60a35e20a",
+    "f00074.png": "14a1a50c0213c22f07483cbed4d4cff6cdfaec17c45701be327233628a180f3a",
+    "f00075.png": "a11fb23573ec3995e66ca68dcaf528619c35a4d963a55d7622659e5b906645c9",
+    "f00076.png": "7420c2a4b7c8be7c9d22eb32bb0efdc01726ed06a6e468b5153f70837d92a389",
+    "f00077.png": "85adcc6449b5f01684f59069c44f715321e91fc300d626ad343b4a95bbe5d0f0",
+    "f00078.png": "0ba651a357df2e2c75e37e619b903f2a50eaa8ebd381297f68daee623349b5ae",
+    "f00079.png": "9fcc3dc5ffcf06a1405374367997f23d339d1d0c5caf433127c8c93d7c6fe85b",
+    "f00080.png": "0ac0974b0f9c18764255c9e7d581d10fc2d961b89fe677fdf230a614d7ca4a08",
+    "f00081.png": "dfff6bdf53dd4642ab911aea01ef5c9389b6c08aa272c44433c72260780a78a5",
+    "f00082.png": "7bd51bd600df4581081bd13f3768e9cc5a063e07a005d52333619dfd0e1cd7c2",
+    "f00083.png": "39cb4e64a40806ac08b6a72a2c89fd48857b8dc2a1159807e17539c4cdab3223",
+    "f00084.png": "74bb5ab46137ab2e56b5300e50b34114296c9d2a0075ba92b0c9ff82ecebb53d",
+    "f00085.png": "9d82a2f53d47715af1c7583177722fcb6218efa1536a6bce7b1e182ed775e3da",
+    "f00086.png": "1a74844d987abf93d170e0e7eb7d7b67b76140175ae8f4bedbb4df4dd00ef81a",
+    "f00087.png": "e334e9c6e111986f561641f3a1ade3c3348fccdcd9a731fdfa7ba57f08a119a9",
+    "f00088.png": "88862dc6f08d6aa053a267bfc92ea86b3a2074f478674a5f4f8456855aee5c12",
+    "f00089.png": "4b52971b3a5b3099e973b1eefd6badbac724053e3314e85e079aec3cb089f619",
+    "f00090.png": "601da2ebcff239d424d5dc9ecd841cf6aa8d3df3f80d5299c965e17717983a0d",
+    "f00091.png": "b6736b904766c3877053b13720379ffa4c8450c2d6b462ff9ad6708d42c949e4",
+    "f00092.png": "08bdf3404545baeeb30beb6d0ee79ff8d4d7952ad0e3580aa85f5e38ce6d8e35",
+    "f00093.png": "08ab061d2d63ce544a7105a9551db6a1cd28274b4a2e0eaeded2003526308aca",
+    "f00094.png": "e3233913d96fef57dd23a53163eadd768ca3be8b36cd6d3e89e205d298687ee4",
+    "f00095.png": "516b3fc9dd8ec75fcf721782597c16c5e8307c0be622226b575f223e77e16242",
+    "f00096.png": "0254ac130ad7ff27a5acaf92c092b0a55aee15cf8ffcbf89e1705f4a7c188740",
+    "f00097.png": "8db9646a61167a9b93d70b1d9c3d636d66f0d3b3594d62887b40a80eca027274",
+    "f00098.png": "4eafac0308c150562621779f4c3183383d759626ef0161ac023ed8ceff30af86",
+    "f00099.png": "bb1caa2b6239a143c49db8a1687a98fdac07efc06a2f3f425c1e6ecb87c71c0b",
+    "f00100.png": "d5bb9204bc6cbc99f9b2d01426889761c3af3812637b710abf10ee5263c0953a",
+    "f00101.png": "70214db54a328b9078e8c19368872ab77edf8d7293033c099dae0fa304476aba",
+    "f00102.png": "6be97f37dd671c200babc8b4eb1d098b1b6f94d8144b9b0873d7a667d73c3591",
+    "f00103.png": "5e3c862710b12e643d6710cd31ff5d52ad5d5c808abd3918993c04f387d95f43",
+    "f00104.png": "9860facedc5d8856f9b1432e5377b64189f0dafaf67c149d72d9f695f069947e",
+    "f00105.png": "7f890a931e5bdf544e2045b75fa59cfe4efe1031e61bbe651ca515ead5567486",
+    "f00106.png": "ce98f298ff582f6ceafb2fcb359223b540457cf0864751871129a4623e55b532",
+    "f00107.png": "6af3bf758eb9476cf81ae7e8ef2eee4e1b9aae98ef15a524c39559d3e8dc117f",
+    "f00108.png": "c54e7b4a0e1ca2ec677b120337b24312c69ad266993ed112fbcee5cd1a69102f",
+    "f00109.png": "92e7931f9f6b290b1a5f4a009f872f70076f7af6a805439eaa588b2bc41661a7",
+    "f00110.png": "c2291993211400c5997ae92b5ba6adf7fc15211f9cce6e2745451ee93df32e86",
+    "f00111.png": "aafe3fb7c8d42531ec74807369ce37bad4937cbc2387755695c439e8d37b62a2",
+    "f00112.png": "c14fe1a49498966188df6096ae809db822fad4b520bdee16e38e41148b50da6b",
+    "f00113.png": "eb182e6d2d38282b977a286ee4879bcefa351c13d7e56b86301740d62d598c72",
+    "f00114.png": "baaf935d6d4eadc93b0d1c2224318d174fba9404c8a83fce43dfaf97b6e45d53",
+    "f00115.png": "122f5e47ac23c7c08fa3888fb5d0a17b89aedd7cbd5b37813cf3771da4b248c1",
+    "f00116.png": "2249c50b6c132b20c280d0438c238e7b8d91e1ffa05d7dcac082ec1faf928629",
+    "f00117.png": "fed8c59aa84d1a317279488e56cfbaeb443209d5a8043109918909fc68abf73f",
+    "f00118.png": "387308f6f187319b82c0a23b8569c13c9e90e0b33fc83758478971936e8df919",
+    "f00119.png": "b5d093fb7d7d07ad377f2662e848dd2b47c73b9270214f084c47a0efcbe2e760",
+    "f00120.png": "e126d9b3a842657dd3a8a544f9e7a582aa65e772ee8b3a458796a2d9670ea4b1",
+    "f00121.png": "c046dfed70a8a80df11f99f5ab239712fc211b40413c2e72920d361deb123360",
+    "f00122.png": "a3e64be0ad437fb0e7aa26a63065a2602073a77bd425ee6defcba13ee8f12bd1",
+    "f00123.png": "c47bf84b30e3260d2de0399dec66e417ea24f106d72028782934c764a5afa213",
+    "f00124.png": "d5fa9a1a2f1bd5d8a76018491187ff78e6b891a5dff29e8d0df48e1bebc779af",
+    "f00125.png": "2347ee9e64a2509208eecb42969b7e9405f44d20dbf229254dfd6d3136a1ef53",
+    "f00126.png": "543b78c1477bf418abaa6178fcbe327e2ca6db4197ba28a74e748e0ee5cb13aa",
+    "f00127.png": "f1d3df5f9d78dcebcbe8842e3b5f28cee16b53146eb5a126e02ff69d71f75c11",
+    "f00128.png": "46303dbd4937dcebe5b531b75cca95327456154e7227e93e29193757ece963ce",
+    "f00129.png": "bb812469bfce09db6fa094ab2d3caeda720407ee485c9826104464c73ab6d9d2",
+    "f00130.png": "e884f1ee63921a0fd824fc28f1a11f76116e33eb1c6cc6d1c21c71ae278475a4",
+    "f00131.png": "197f92021408b2b55b964e392d827d673a727c540fc400a6a670d591f59e7623",
+    "f00132.png": "d0efeb2b21c19914882b8fda4472cf7e66feefebe9f50c227f5eabc373a5962a",
+    "f00133.png": "958f1a44705ebe9980538aac44ee5615265cd7acc0ecc94b849760f762acd12a",
+    "f00134.png": "9feb616ce02c47f2624bb136979daf6e7d3ade013abe6e8f096b967a4d1d802e",
+    "f00135.png": "3304fdee7f2d1d39966a411c7e4380113d1064890d959b1805289bbb0090db60",
+    "f00136.png": "bccd2b72a70c54103840eec313d680f0d8dfa6737b6ea519de6b60f76243472d",
+    "f00137.png": "6bb32939fd221d0ae981656ba4e1a0db56fb5cad77bb49900f81841b7b97d459",
+    "f00138.png": "b9c523a34664ecec6d8009737ddf19759f5a1373491ef2931b2fb17405e8fc64",
+    "f00139.png": "580ab1c867527ad5e453abadd0664c2f9de375a96d16f5165a0146c87b08adb8",
+    "f00140.png": "65c3642913df2bfbaf3b005f72af2ac2bc4910533668f9fa6ab8bbb311d57141",
+    "f00141.png": "cc6c8455aa017570e96d8c14baa8ccc4a28f252fed689e9fc3cb509cc44f4656",
+    "f00142.png": "8848077ab4d60682f72d7207f7b2eb604f347ed2b1653eae7ca8021bea03250b",
+    "f00143.png": "35f2997873e42b62173668d57df912eae3431f25a2df8b84fc9da7cb192fe100",
+    "f00144.png": "8b62555a3a0f2bd23d9c280ef36633413220e85139d77924eda7dd0647d8725f",
+    "f00145.png": "fd142d0ed100c183f868626f7b487bd040e09584092fc865f668c1c617f7de29",
+    "f00146.png": "2d42459ac4b7da34c8c489131c51dc3e6df548561b02eefa66c40ddd8f18e5da",
+    "f00147.png": "f46a93e6b2a6840d853b380f540ef8ecc3d6f91d509b26f493641f4b7ea144a6",
+    "f00148.png": "6f1a1b5371544922d611e60f18f8ef6519aff523ad18929b557f111614168b70",
+    "f00149.png": "0f004a9ef3ee25120812cbd7b1af7a3c8e4a9da0a75b171591fd07dd6d8355c1",
+    "f00150.png": "92fcd28f9ee33cdb1b1849b77567d38cd96969f69b4e75ef192d6d1baa6d917a",
+    "f00151.png": "9b361f80517778ff024443c83a3fcfef9f5ebee16ea6efc384e75a3955c8c973",
+    "f00152.png": "f1e7c934e9ce85480f2fa1f0b73405f56f26aa879a7cfc2f5f1e7720320cc397",
+    "f00153.png": "daf8b7f053d0593a24b4b64cf5efaeb9217852c9c38678ee43a044714aedfdbc",
+    "f00154.png": "d149877bb1c07223afa548a695e6f22e281d5eaeb23bd9667039d02b0c8e9c62",
+    "f00155.png": "8db9539380fab8d00020456812bacaa43a0d91414a4c8ecf2ab45ee9bdeaadf4",
+    "f00156.png": "64ef88cbc560338f7fdafc8185d3ab821728d1c6e61224d679afdd2c4844c6e5",
+    "f00157.png": "89e2a9200d14040bb1d159ac4b74513f7fb611db401b6fa0a618c76625d38c25",
+    "f00158.png": "8ad0651c4b4e9da80446ab9a2f62da4ff4f897d53e7fcb229435724213894327",
+    "f00159.png": "c96d1d5531289e64a3d9cbf521fa6fdfd6a383ad5c849e358085a2d2b2d2757a",
+    "f00160.png": "96ab3fb5d4e0c465d95036abf25f1657fbf046f9e4d55a2a78c6d21f721b0bb0",
+    "f00161.png": "2be37405b871b8bbfc062f020567e5461fa20c5ca4fd2f7fffa988126a575bf4",
+    "f00162.png": "ee4fb8dbbebe17e3e47b5a2e7aecdb04aa0c41ff26b8e40e370c3e25b98ef0e7",
+    "f00163.png": "6baa6463e1c0415c329536e329ed810a12ab4ac47ecccea30bcee9b42a5fa74a",
+    "f00164.png": "b4a6aa02a44638be26d7b1c061e0b5dc25b887f1325bce063ec0c39b5647622f",
+    "f00165.png": "e6dc235e1882113b8ce142841878b905e4e1de016f61fd0d6dc857adfe27ee56",
+    "f00166.png": "545045c29b13d05e7b979eca56f2e09bf9a2c370ed9f352f94a144bd7bef34c8",
+    "f00167.png": "663aa24b95bbcdf1b2a7df8b742c80bb9046fd3e3ec32a9b28ed5d10b1efb9e0",
+    "f00168.png": "3bf44a3db84ea9955c09868f76f15cfb19fd3beed34e7d6fb8eea3ecbb480a64",
+    "f00169.png": "ede4c0ee4c5fc90e69147ecd70ca15a9adf336dc667906fa74aab9b76a1f4178",
+    "f00170.png": "e9242d8ed19e437289b49f0bc0658f42694a720e365eaf7e049869c8074ec7f6",
+    "f00171.png": "0fc018589fb8ac1ef766d6c9bbe11a6ff94ae147d03ff45c505d405441e2c639",
+    "f00172.png": "ecbf6197bb993e435fc5b9473bffa1432d330d4d990e0d9d5b34bb0c2040daac",
+    "f00173.png": "2bc3a4c2297f0268e75e2e6365deb5e8e46faa4b065dda4d916561f7ab59ff92",
+    "f00174.png": "a8e44274bed253b1e24af94714c0a266671afd7afb5e71f40fec0dacf8648a09",
+    "f00175.png": "70e376d101e417ff003523c750a8db25079a09a93f8e480ba72e4fe5b3a7f5dc",
+    "f00176.png": "ae2db3358e5176e62904892b66eaf30e6945c8fe6d36b741798c4fcdb288f19b",
+    "f00177.png": "8b2b8e502584a6667a36e5cb024ac08a417cebba1dd2d54a91417ca66c6f0eb2",
+    "f00178.png": "de55cd83fc622e06ca4e599c7fb7068ee09bc79dbd7b677169ca5d7e9ad52660",
+    "f00179.png": "b4b69b51daffb9e201d114c08e1960b5c6da2e25efad6e2308726cfc3b19285e",
+    "f00180.png": "c8b36e5a566a8c8ad8e1808239a7d5c31709d5c99bc7f6628f182ab268f98b43",
+    "f00181.png": "5799d637c9a2473eb4233bb08349cff3c8fc831b2948f32f702d14920c1cb19b",
+    "f00182.png": "266fa75308b190d117619b4ca2e8e9ec603793813a2b91cf19be48f4b9697fe4",
+    "f00183.png": "68c0780e6b3799203284ea5050619daa19d971bfd4a76b8b5c8cc7a0653af286",
+    "f00184.png": "0c6197417bbe2800b75f8d6b9659fbd4c06763bea22e51b0368fbe21077785ed",
+    "f00185.png": "93c124cb33d3fd6d51be0a53dbd593d46d7ac2ede96cd00cc510f20b16e1c144",
+    "f00186.png": "d1b93fbc2b364ca8f58071c130460fdac4a90cd24dc828a772d51f0b969bde75",
+    "f00187.png": "ea32c5f32b33b640409d2b400b5841cdfdea752025126e9222702070968a6ad1",
+    "f00188.png": "94f8b5f9249732e00f2548908256e7b6c870897c8c0e6da3ca943d8f0f19c82a",
+    "f00189.png": "926a293dae6c0fdf68e8b4760c0d8481b5120c2ded61f22868bf6a3182960b2a",
+    "f00190.png": "90143d123da745fa73bb9b4613931e1521e821a711819f92febce86dffd14663",
+    "f00191.png": "d7e62e0dcedfa8bfcfcf3deae1afbe1b8b1ea78155e814aed0081334d48f72f2",
+    "f00192.png": "714d807e61fcceaa464cccb622d6183e902259f4cc1b56c4985ba58698748247",
+    "f00193.png": "f2555f70af3c725ba28e2fb413facab1db7e807f0653062d23d0f47b2fa7d6ca",
+    "f00194.png": "aae00fd44f9ed4c8c585766967e35ebd26b1f45d0b7e98e7a1d820da437d1343",
+    "f00195.png": "4709d0480916bba83c037bfadff11720c215eb66b2ff189aaf46ee87acf0d10f",
+    "f00196.png": "994b17d69de0e4e67f8ab89e16673767673d9f3c25457821c1e900ddea6744b9",
+    "f00197.png": "dfab5ca60b2071502d813ee413811857caca8af0a880d1853a42baff4a0b9d6d",
+    "f00198.png": "16e1cbaef033e048b0143b52a2de30d1f1abc527213c57334bc3dd84e0e4c2ae",
+    "f00199.png": "0e46d5e7eb2a05b62025303fac49b1472192d7a94a154c112966a8abbc7b5ee3",
+    "f00200.png": "c9a325f8cfdf6b6cef48505a448d7842b58ffbdabadb8bd9298678ee6fe178d4",
+    "f00201.png": "d5d04e2da926cd63f697985a9d256263134bf140c4b44a4933805b949b3783a3",
+    "f00202.png": "8f7edcf436e45951dbdb1f7f0a0622286a79ea769a93196ec5d7757c87d20f42",
+    "f00203.png": "8d3c637360a965da5912c46beb5d8cfccbe9676050ed004870a40156a8a17aba",
+    "f00204.png": "66ed8fc941a54a29cb95676bbe5fcc28ae43241f9014fa6ffb8f865051d7c9c9",
+    "f00205.png": "07c2223ea16d6e48af0fd1856aa13277b9c334471c49e754b3d150883ada15ee",
+    "f00206.png": "3c6530ff7b53a29ebd668256922fbf04d594c73f4a6ad2f096969141af41fa51",
+    "f00207.png": "72525f38e9495bd2f16c6f13a8fa7d919067529a5f27f0a7177e86fa0895fb22",
+    "f00208.png": "881c9c431aedaf65a2c1189b70946664bad22bc06d464c5c392c3bfacb072a4d",
+    "f00209.png": "cc676ab4b1d87db6d947d36cb8d8221bdeaf514170befeda9a13aa07441f8c65",
+    "f00210.png": "65269d6c07d1a573232cf511b1348b5630e783cd4dd4f78e7ef817671e99daf4",
+    "f00211.png": "1d5a8dba6ab28a516d863caf316412a59623cdd244f7a7b751588fab3785e0d3",
+    "f00212.png": "1a48f38eff992e83b48f59d8f41f8835704d30a56240625de1294438a938dd53",
+    "f00213.png": "1cc8b81e94fabbd27e72c2af3b87819f3fcb5745ce4d5af43abe5f04a5eb72b1",
+    "f00214.png": "0839864107628b48e1a0b9f466d441cfb4262b365d1a52eb88bb42fc2c1313a5",
+    "f00215.png": "358f6cb059419ffb133b06b91bdda5411459f3b519c94d6fb06fb5bccf2e1874",
+    "f00216.png": "ceb1d9e30ec3b558fdd34903d8edad1a4a19fdd01ee3b962a3c7c88e9d803516",
+    "f00217.png": "2293477bbaf85f34dd87be97d39ba6803dffb62102a6c0232a5c94ca3703c14f",
+    "f00218.png": "52fd57783c244f428974fc1f5e47b357dc6081c8701e20db80a529a7d4c2cf89",
+    "f00219.png": "443366595793ebb69de4f535fa545b7f2a3dee32cf1f55e02075e173555e775f",
+    "f00220.png": "48734e268910e48e1e560744c0735ac02d5765f46e684025ece43f6750293ba2",
+    "f00221.png": "b596b1d6679444a5d4e76cf192ecfa17608c1a6e0bf8e28430f52fb2fd4abe0d",
+    "f00222.png": "83be14086fb4b17e5522aeb376a143f64d894a04baa4b9d0f1027d7ca3fb2b2f",
+    "f00223.png": "7bc64e9d83b6d172091113845786adbb7ff8197f21341b8e14eff23cdccfc7b1",
+    "f00224.png": "3a8e458b81e7b4de9a9cec5a62077183c59699b4f82a1d5166579a092794fda9",
+    "f00225.png": "2c95b37829afe52745cc2d93a1e897d29b91407cc569f66821ded039197027f2",
+    "f00226.png": "9494c5b2c0239881003f4ee9aa902ef15b4da6bfaf4782edfe196aacd49d1284",
+    "f00227.png": "17f3408a095b0c6fef8e222ba2a48d3f54d9a3533cbcbfc08a30853d4e29f74b",
+    "f00228.png": "92d821ebfa8b1114a7fd4dae3f9b821b02bd8452de6b354bdc216bd1f3dee97b",
+    "f00229.png": "ba67bfb5b26727efccfed345e59f6e6bc81ff53d5edbe91915efb02d67e5a4dc",
+    "f00230.png": "4952de9978d78266658138fd9229e4ee785d2107ca8274ff27420eb2cf2b6c5f",
+    "f00231.png": "bda22dd3b2becb08740c6a65c8ad5b4e246e71731d73e37d2ab0206af292f3ce",
+    "f00232.png": "732a1617ceebd625401dbec7f4fad43956d51d407fa0e4521fa5f10561a2e177",
+    "f00233.png": "19a627d87f07b967e59817c1a325f50dec5f6e9b3f8c17b8e8e5a571a9a03129",
+    "f00234.png": "207da27c9597f5559c16ca724bef07bbe299c95598b74da01c94ba982e8b2d6b",
+    "f00235.png": "acc261102c65904a152d0e7fd00dd566cdf8f6e1c54a19edec9e8441db9b93a0",
+    "f00236.png": "46efc52549f825ba815c01373f783772f662164d8b816d6adf4de9d67c109ecb",
+    "f00237.png": "192091503c1203de556d411f1e6acf213618cef050365ddc67c2840c719961eb",
+    "f00238.png": "fc0459dce9c90f974daf546661548ca6b39ff9abf2f025e6effea1a37b049315",
+    "f00239.png": "1235ca7e6db98d79ca394268846add9b71a571834b36af9b4c716fe3b8452375",
+    "f00240.png": "53564a0cbaa523d15a8d7cbaaa16e4f205184f774b439b55a0a7cde48523f1dc",
+    "f00241.png": "be96f3c4fc8060567f9ecb384ea68d69aa3cbc4fbb4efec7d809d8ce49d1a9e5",
+    "f00242.png": "390a0e5267e9f163461b06ab0b5a6a5d05073d19e922968db8fe1b3578d521b7",
+    "f00243.png": "b2e0d9bc9b560734af9479922023eee15107a8cf8833d1d05ff3a8a2be36b748",
+    "f00244.png": "3b6c9b3026460191eb118f1251aad2ad8349bfed0f68cdccd14327b37be00b11",
+    "f00245.png": "424c1affb86ff096450f5a884ac3091cbe45bf17c23768273eb026f2c148b656",
+    "f00246.png": "d4f53bfed6a59fdb424ba4763ae95bebf2f0dc69d7746be16925340d1dd5bcee",
+    "f00247.png": "075f1eb40b14ff0bce632eca340f45b13759bd4e1ee791ef24da120839254c05",
+    "f00248.png": "e1c9063743f3be55095089e6b6dd2e3c6464f857af36ee167fa8676086bd5607",
+    "f00249.png": "d277e62c747995f18edc9163687c6da5fb59c401d88fe783baee018e69c3718b",
+    "f00250.png": "7c3bb4b945530e1e7f6e494a25b071eaccf2041a40271a27cc5ee884ae089845",
+    "f00251.png": "902c95941b81f0ac6c74b161f278e12638b3edc939c9bd2384b0f95e890b80cf",
+    "f00252.png": "aad19d77da12ba82ff60259b1939c75c741ccb764f63b592a9c7e363e0f6c55d",
+    "f00253.png": "3da9f48862ddd0567b28b4f0eed40ff7c4532402344b4e3484a2f0dddb94ba26",
+    "f00254.png": "ce7131916f4c56789d42f485d905570a055d39c4f1916622b451dc75c9826dbf",
+    "f00255.png": "15d9a6acb39101fb36ce100cbce0a877ae27f52f09417be4b2c3e5bc173c6dbd",
+    "f00256.png": "dd3c5b2605a50b3e352e676113cb8cc4a84ac767abf27bb753cf269ff5ea0101",
+    "f00257.png": "580f85da05f7772b793d6f1da25eb45b1e90ccc920e195eb7cdafaec9d970ce9",
+    "f00258.png": "ff2271e790b9bd882b066247738a86e3d5d8335b2265cc5e07c7c158b9072491",
+    "f00259.png": "ac901d3dc8c7156d0604dbe0f38239db4d574bf9ddb24549c826c4ca217f950c",
+    "f00260.png": "bd7eff59d1efc84fed54a3578c9655b5ca4dfa4c1a894406933e000bb57aff95",
+    "f00261.png": "77eac7038a9190ca28b3ed0739cdab2cea7ff66848747d0a8bd82c06e89fdef3",
+    "f00262.png": "e47cdf0b0e79fa4fbd98f232fc35792dbcb4187191890a659d3868c298290e4e",
+    "f00263.png": "26b4f0d1c0f9998906076a26f08c55b4f1c9deb265db051581b72378f0478a3d",
+    "f00264.png": "8d04d78cb8cdd580b6511ccfe86388095e1686b019fbe86c3d4f257b7065b426",
+    "f00265.png": "3d16ee5a852eacf81daaf95b42a22033dcace9ba8c73db6b403bf453aa95a250",
+    "f00266.png": "cfed2658bcbb170adf8734124edb93a47d84d87458501067bd6b401ed888b93b",
+    "f00267.png": "9d45d670bd6a0e458359be6c408896ab8668a032ff6e33b6bfed17b1aa6f1511",
+    "f00268.png": "ca9eb1c915060cc1e37ddf694cbf46ee211ceb18be84adfda48a2104769d092a",
+    "f00269.png": "34cf8d6402778a0b9511d2898eb2694d20c477c01a832be42b138fa37bbbc176",
+    "f00270.png": "a10929af53b3868af2a16c0f6957f1d41266227998fcea8a21c41890ac8f2cb4",
+    "f00271.png": "90810453e91fd71d435786e007f19285c2cf4d12f90a7c882119f44245f3d03b",
+    "f00272.png": "b377241bded09a817bfe0adec5e2732a730c8c2f7e50bc18a74a9f9b21467f4d",
+    "f00273.png": "cc2fbdb092086e854a7f49d97a6e49fc047842015e84321eeee531707b409dc3",
+    "f00274.png": "e3490c62f28c1440be847535f3e0a6a74462ce681617f04d1a9830edd84651a4",
+    "f00275.png": "25fac9ce5c0d4b7ae0a275f543909ba144b7f2a2aa60d00ba0735a1fe3fbf6b1",
+    "f00276.png": "dcb8a737d9e477fd482b4a1b9eb6aa0f26d71da2dff3f1f2c05ffd03f664396b",
+    "f00277.png": "f2b42667c7e3651dc50cc2936de9bc7513baf538709f9478b64cc4ea5143130a",
+    "f00278.png": "167b495fc3e223938d3245e5a65be76edb536fda0657c594e6afd133bd8d2c20",
+    "f00279.png": "ef3bcdf828595edbdb5829d77d92514f8099414f6ed71c7686997f4887598a6d",
+    "f00280.png": "9da2e206a03a9fef44039ae6ead32184f9345469e7fce45989c8ac597ad1a11e",
+    "f00281.png": "8b8b537193e3654f726e2a1b86685121bf2bf006cb88d240f8c5d819ad44f675",
+    "f00282.png": "89c1ba56e6215fbd1bace9b38db4330088072e666a0652ae24140b1d1e95ad59",
+    "f00283.png": "88a1b946f1b997494f49ee4318ecb2fe00cbae116ef2f6542045a7b4c11a1b5a",
+    "f00284.png": "a6e196ed0e72b4af96c7562a1d9ae78c7c76219379dac6b6bfd75aa352f3b594",
+    "f00285.png": "60db67cc1143d3231ac49cf879fc838340465033b26ac7fc23b876aaed503154",
+    "f00286.png": "66b0c5afd3a7ac05155954cef92b5f3ce86c8316b32e3c4d9fa8ada950f61f13",
+    "f00287.png": "3c8e4108bb8b5abd0a9f5e2ec0bc8d9e65c1c98778e58ecdc4e20b680d2257aa",
+    "f00288.png": "6613d6bac611f03104fab1b2782fff50082ee833e677430aea176d392131d178",
+    "f00289.png": "2bab7830cf55d4f0dda7a88bed08fa886dab1d385d9377009c712bcc6ac4bd44",
+    "f00290.png": "95231303186782796fb408abbf4b340483937aa6c8c8df4462cf4d848735f762",
+    "f00291.png": "10fc801dc11e197075bc11c9ac67fe38d7c6f8f61dc18c37ce001462aa1c8a32",
+    "f00292.png": "a533176ed2a5549896b38b7f7b951d36222987518f53815237c6d4d2d5cf1003",
+    "f00293.png": "0e45cacccdd720059403b0146d143116d57b961b92f68ddfd10b0f60e262b62a",
+    "f00294.png": "2a02dfda12155c3c82e2212c7eb8caebcc40abe506d5e24224f21027159aec91",
+    "f00295.png": "65ecbb25795bfe35a9d4a1711f5267af8f3b710f81426c9d2588c9036aef56e7",
+    "f00296.png": "835d1e41e610c415b5be575b9846f7df5c62d7cf8f7ae091f6ef8d0323d10a25",
+    "f00297.png": "1a2e90a32442d37ef8a93c487ec48bd9a3bdade2a974e4e44cdc3902546d8e8b",
+    "f00298.png": "7171fc003e079e500d299fcf3bdda3fcae91d20da661bfc8dd85c072fbb0cd6f",
+    "f00299.png": "865f9695f2b0f822adf218a2d4f04bfb5b1884e4318a1cb4c9ea2ac06c8f3d0e",
+    "f00300.png": "0346730530b292728425a6c33c622690739e4cdd1278af165258ae44c190b83e",
+    "f00301.png": "075f781e62b6ea6e8ac76099e02c2204b8cd8872cb7fbc97dee77ebd74e71c37",
+    "f00302.png": "9fdcc835961c03176b97cd25d1a2a8dc00711f9319e972ab67440a341ca5da87",
+    "f00303.png": "5101e67ae172ca967b0afff4b2b657f790cb5e6e2f0636a9de356f745851a95f",
+    "f00304.png": "0d8921b1ed2e87216f4d2ccac9806cf2185ccc15a4071bbc6b22d10914908f02",
+    "f00305.png": "3eda6663fa84652d425221f5ab824b476d52a5215008dc82c581c1d3bd3dc324",
+    "f00306.png": "eb710d5a9c46843ac107e885aa4598fe6a7fb84ee0082522a94f1cc58ccce04b",
+    "f00307.png": "0c53df97532dd34cae580a78c3eeaf71ead8149e3c85ede545e9ce6591e60988",
+    "f00308.png": "058ce54a2f0356c009aba1057012f992d15dfa1e9bf9ae9784986c4f023f97d6",
+    "f00309.png": "3077e0ca0ea8062c0561e7e9021d804499cbc9fab2b93b2cef47b2e845297260",
+    "f00310.png": "23b4503c99f33b2f9de1bc2c0b96f461fda3f1f790b831891b082cd373695ee7",
+    "f00311.png": "e7398a7db756a6c16ebf3c54af19843418cce5b0a8782370d087b8f00b4fc0a4",
+    "f00312.png": "a48c6b83dd667308d786235d3650e7e459f25b4cc8b9ea3b54ace138c16e12a2",
+    "f00313.png": "9ed56a2c5dc45b360ce756cbee3e0c3111aee497eead3826268ccacf66227ee5",
+    "f00314.png": "9e78215640a5b326df6cc93eea4ac50046767cee08c1213c1b9a643b5f845357",
+    "f00315.png": "3bc06e28d59a6db45505060b0c381947eed02051fa7eea3ac45f0448505d0351",
+    "f00316.png": "755a3e5f802d337575c027dd3269a09699b75de1e06745a6b7ad82d4dcb5f4c7",
+    "f00317.png": "02554c41ac51863f480bfaa0be40257a811ebc95a7b531076366a28ffa813da8",
+    "f00318.png": "3cd9629a58879c2f33c65ca54a0756d5f1aefbcb62ba8d901f6f3f1aac120748",
+    "f00319.png": "5accf7b879f8e30bdc1a3debe7495a53fdb38c4bbfed0fd16dc987bab364bd94",
+    "f00320.png": "f52cc3e56b0f616ad7cbe41ca58471318e6d741e44626910fad1eb107ec98200",
+    "f00321.png": "ca0a38557a0feb9986a147dd2f91b18d8e1c2cb9e90b38854f01edc47f85188c",
+    "f00322.png": "d1a1e8ae394377063ebaca2f8be47a74c25ff6ea3dd4a9f069335411f01ff1c9",
+    "f00323.png": "1db6fd6bf61ca0d0e6210b335c61056e1bc75262cea68fbe05a338ccc726aed4",
+    "f00324.png": "20553c042be35a065981e475fbc329cb91bc03b9c75838d81c56277ea3a1bb91",
+    "f00325.png": "e284ea3c5989e67be23c48b5541f77087bb62c654ee3e13c9b110dc2d103d6f4",
+    "f00326.png": "9eeb1e857197707ad6b51ad5729ae28e90198310838a90370667db5a43c87d16",
+    "f00327.png": "7e5d5c00d5360fc677d99595a300eb5f82d8f5c971e4f4fa3ed6ea06278a5879",
+    "f00328.png": "9d7472dc38fffe4c8c09a6e53c3d6e5513cf63d638334587e97fed328767473c",
+    "f00329.png": "4d4c0206947d0ff4d44e8250ad7e399af9680383b643663e7cc6b433afbfcd1a",
+    "f00330.png": "4ffd851d29511afcb2b35d1fe288ad3c84973b2c525949c6e26489ace4ab3da6",
+    "f00331.png": "e29c9a3bb9515b8500cdf2fdf2f72ca1c602553f9d10bf1dd925c5ee282522dd",
+    "f00332.png": "00e5a44480e3d809358fbbf0b808736774205fadd3e6f78d6879f79ce498076c",
+    "f00333.png": "b8619a2a8f9990d4a706aa601ad4680ea109259bd0ffa3404c284c9185e02b99",
+    "f00334.png": "5f58cd2ec30a40175f98334cc192f2b5c1d5446c7036403da861d9599f6937ed",
+    "f00335.png": "e6c989bfc0633577e5378cfd001ab3e592f4afb9cd3385d2f12a329032c7867b",
+    "f00336.png": "eab0f1748f8b8f2bbfb636986cc9a5cb0766016c556704b258e07bd1536b1371",
+    "f00337.png": "a43cee90a3fc9854d4f65bff9d370cc4f0b22eb339c2dcb1e1b193e83e10e70e",
+    "f00338.png": "6487b9f2b9c849acaddcf011fbf25edd4fa8f0308fe36ecbad58f16f468d1f09",
+    "f00339.png": "4bbcd0bb62bdd785fee068de7a6ad535a0f3abd72cba6713409eabcde4e60f51",
+    "f00340.png": "938e88740b150e94060377608c67166823f24bef385f79fce9907a4837255e84",
+    "f00341.png": "b57e06e247c5ae9a0089f5c1a2bef56b10f9ed4b182db3e0e31035c51944b07b",
+    "f00342.png": "379ac94d922db5fb6e323e24c7e43cdbadf3c5bf61ac977725ae480ce6561222",
+    "f00343.png": "8534692524b7139809470c6dfe720651c0e311fd6ca06feaae67884f7225f3d2",
+    "f00344.png": "bd58a91573e71dabec3d353cb0d2ab70591f5a7f4a59960fd25e0518a90ffe27",
+    "f00345.png": "7a1dd641f62a49e891a22493b921e13ba24a98858dbf99982c180a95be73fb97",
+    "f00346.png": "6e13c4ec07b1505cb3eb217dbd5020826f89be0852e1d3597fbc37c3215ba583",
+    "f00347.png": "43feb8632a9aab1774caf2c22ce7836a22ae0b19c8bd77ff193c8499c12f1789"
+  },
+  "movie_sha256": "787c14286192f2529247b7e32c3ccb7eab3d20afee1c9296e549acc4985c8d16",
+  "timeline": [
+    {
+      "clip": "idle",
+      "clock": 122.0,
+      "facing": 1,
+      "frame": 0,
+      "invincible": 0,
+      "physics_frame": 128,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 127,
+      "tag": "katana_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 123.0,
+      "facing": 1,
+      "frame": 1,
+      "invincible": 0,
+      "physics_frame": 129,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 128,
+      "tag": "katana_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 124.0,
+      "facing": 1,
+      "frame": 2,
+      "invincible": 0,
+      "physics_frame": 130,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 129,
+      "tag": "katana_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 125.0,
+      "facing": 1,
+      "frame": 3,
+      "invincible": 0,
+      "physics_frame": 131,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 130,
+      "tag": "katana_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 126.0,
+      "facing": 1,
+      "frame": 4,
+      "invincible": 0,
+      "physics_frame": 132,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 131,
+      "tag": "katana_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 127.0,
+      "facing": 1,
+      "frame": 5,
+      "invincible": 0,
+      "physics_frame": 133,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 132,
+      "tag": "katana_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 128.0,
+      "facing": 1,
+      "frame": 6,
+      "invincible": 0,
+      "physics_frame": 134,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 133,
+      "tag": "katana_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 129.0,
+      "facing": 1,
+      "frame": 7,
+      "invincible": 0,
+      "physics_frame": 135,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 134,
+      "tag": "katana_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 130.0,
+      "facing": 1,
+      "frame": 8,
+      "invincible": 0,
+      "physics_frame": 136,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 135,
+      "tag": "katana_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 131.0,
+      "facing": 1,
+      "frame": 9,
+      "invincible": 0,
+      "physics_frame": 137,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 136,
+      "tag": "katana_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 132.0,
+      "facing": 1,
+      "frame": 10,
+      "invincible": 0,
+      "physics_frame": 138,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 137,
+      "tag": "katana_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 133.0,
+      "facing": 1,
+      "frame": 11,
+      "invincible": 0,
+      "physics_frame": 139,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 138,
+      "tag": "katana_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 0.0,
+      "facing": 1,
+      "frame": 12,
+      "invincible": 0,
+      "physics_frame": 140,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 139,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 1.0,
+      "facing": 1,
+      "frame": 13,
+      "invincible": 0,
+      "physics_frame": 141,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 140,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 2.0,
+      "facing": 1,
+      "frame": 14,
+      "invincible": 0,
+      "physics_frame": 142,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 141,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 3.0,
+      "facing": 1,
+      "frame": 15,
+      "invincible": 0,
+      "physics_frame": 143,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 142,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 4.0,
+      "facing": 1,
+      "frame": 16,
+      "invincible": 0,
+      "physics_frame": 144,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 143,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 5.0,
+      "facing": 1,
+      "frame": 17,
+      "invincible": 0,
+      "physics_frame": 145,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 144,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 6.0,
+      "facing": 1,
+      "frame": 18,
+      "invincible": 0,
+      "physics_frame": 146,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 145,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 7.0,
+      "facing": 1,
+      "frame": 19,
+      "invincible": 0,
+      "physics_frame": 147,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 146,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 8.0,
+      "facing": 1,
+      "frame": 20,
+      "invincible": 0,
+      "physics_frame": 148,
+      "position": [
+        571.875,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 147,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 9.0,
+      "facing": 1,
+      "frame": 21,
+      "invincible": 0,
+      "physics_frame": 149,
+      "position": [
+        576.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 148,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 10.0,
+      "facing": 1,
+      "frame": 22,
+      "invincible": 0,
+      "physics_frame": 150,
+      "position": [
+        580.125,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 149,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 11.0,
+      "facing": 1,
+      "frame": 23,
+      "invincible": 0,
+      "physics_frame": 151,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 150,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 12.0,
+      "facing": 1,
+      "frame": 24,
+      "invincible": 0,
+      "physics_frame": 152,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 151,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 13.0,
+      "facing": 1,
+      "frame": 25,
+      "invincible": 0,
+      "physics_frame": 153,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 152,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 14.0,
+      "facing": 1,
+      "frame": 26,
+      "invincible": 0,
+      "physics_frame": 154,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 153,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 15.0,
+      "facing": 1,
+      "frame": 27,
+      "invincible": 0,
+      "physics_frame": 155,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 154,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 16.0,
+      "facing": 1,
+      "frame": 28,
+      "invincible": 0,
+      "physics_frame": 156,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 155,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 17.0,
+      "facing": 1,
+      "frame": 29,
+      "invincible": 0,
+      "physics_frame": 157,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 156,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 18.0,
+      "facing": 1,
+      "frame": 30,
+      "invincible": 0,
+      "physics_frame": 158,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 157,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 19.0,
+      "facing": 1,
+      "frame": 31,
+      "invincible": 0,
+      "physics_frame": 159,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 158,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 20.0,
+      "facing": 1,
+      "frame": 32,
+      "invincible": 0,
+      "physics_frame": 160,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 159,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 21.0,
+      "facing": 1,
+      "frame": 33,
+      "invincible": 0,
+      "physics_frame": 161,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 160,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 22.0,
+      "facing": 1,
+      "frame": 34,
+      "invincible": 0,
+      "physics_frame": 162,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 161,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 23.0,
+      "facing": 1,
+      "frame": 35,
+      "invincible": 0,
+      "physics_frame": 163,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 162,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 24.0,
+      "facing": 1,
+      "frame": 36,
+      "invincible": 0,
+      "physics_frame": 164,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 163,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 25.0,
+      "facing": 1,
+      "frame": 37,
+      "invincible": 0,
+      "physics_frame": 165,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 164,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 26.0,
+      "facing": 1,
+      "frame": 38,
+      "invincible": 0,
+      "physics_frame": 166,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 165,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 27.0,
+      "facing": 1,
+      "frame": 39,
+      "invincible": 0,
+      "physics_frame": 167,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 166,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 28.0,
+      "facing": 1,
+      "frame": 40,
+      "invincible": 0,
+      "physics_frame": 168,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 167,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 29.0,
+      "facing": 1,
+      "frame": 41,
+      "invincible": 0,
+      "physics_frame": 169,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 168,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 1.0,
+      "facing": 1,
+      "frame": 42,
+      "invincible": 0,
+      "physics_frame": 170,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 169,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 2.0,
+      "facing": 1,
+      "frame": 43,
+      "invincible": 0,
+      "physics_frame": 171,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 170,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 3.0,
+      "facing": 1,
+      "frame": 44,
+      "invincible": 0,
+      "physics_frame": 172,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 171,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 4.0,
+      "facing": 1,
+      "frame": 45,
+      "invincible": 0,
+      "physics_frame": 173,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 172,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 5.0,
+      "facing": 1,
+      "frame": 46,
+      "invincible": 0,
+      "physics_frame": 174,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 173,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 6.0,
+      "facing": 1,
+      "frame": 47,
+      "invincible": 0,
+      "physics_frame": 175,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 174,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 7.0,
+      "facing": 1,
+      "frame": 48,
+      "invincible": 0,
+      "physics_frame": 176,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 175,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 8.0,
+      "facing": 1,
+      "frame": 49,
+      "invincible": 0,
+      "physics_frame": 177,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 176,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 9.0,
+      "facing": 1,
+      "frame": 50,
+      "invincible": 0,
+      "physics_frame": 178,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 177,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 10.0,
+      "facing": 1,
+      "frame": 51,
+      "invincible": 0,
+      "physics_frame": 179,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 178,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 11.0,
+      "facing": 1,
+      "frame": 52,
+      "invincible": 0,
+      "physics_frame": 180,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 179,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 12.0,
+      "facing": 1,
+      "frame": 53,
+      "invincible": 0,
+      "physics_frame": 181,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 180,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 13.0,
+      "facing": 1,
+      "frame": 54,
+      "invincible": 0,
+      "physics_frame": 182,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 181,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 14.0,
+      "facing": 1,
+      "frame": 55,
+      "invincible": 0,
+      "physics_frame": 183,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 182,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 15.0,
+      "facing": 1,
+      "frame": 56,
+      "invincible": 0,
+      "physics_frame": 184,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 183,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 16.0,
+      "facing": 1,
+      "frame": 57,
+      "invincible": 0,
+      "physics_frame": 185,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 184,
+      "tag": "katana_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 17.0,
+      "facing": -1,
+      "frame": 58,
+      "invincible": 0,
+      "physics_frame": 186,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 185,
+      "tag": "katana_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 18.0,
+      "facing": -1,
+      "frame": 59,
+      "invincible": 0,
+      "physics_frame": 187,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 186,
+      "tag": "katana_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 19.0,
+      "facing": -1,
+      "frame": 60,
+      "invincible": 0,
+      "physics_frame": 188,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 187,
+      "tag": "katana_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 20.0,
+      "facing": -1,
+      "frame": 61,
+      "invincible": 0,
+      "physics_frame": 189,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 188,
+      "tag": "katana_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 21.0,
+      "facing": -1,
+      "frame": 62,
+      "invincible": 0,
+      "physics_frame": 190,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 189,
+      "tag": "katana_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 22.0,
+      "facing": -1,
+      "frame": 63,
+      "invincible": 0,
+      "physics_frame": 191,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 190,
+      "tag": "katana_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 23.0,
+      "facing": -1,
+      "frame": 64,
+      "invincible": 0,
+      "physics_frame": 192,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 191,
+      "tag": "katana_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 24.0,
+      "facing": -1,
+      "frame": 65,
+      "invincible": 0,
+      "physics_frame": 193,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 192,
+      "tag": "katana_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 25.0,
+      "facing": -1,
+      "frame": 66,
+      "invincible": 0,
+      "physics_frame": 194,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 193,
+      "tag": "katana_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 26.0,
+      "facing": -1,
+      "frame": 67,
+      "invincible": 0,
+      "physics_frame": 195,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 194,
+      "tag": "katana_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 27.0,
+      "facing": -1,
+      "frame": 68,
+      "invincible": 0,
+      "physics_frame": 196,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 195,
+      "tag": "katana_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 28.0,
+      "facing": -1,
+      "frame": 69,
+      "invincible": 0,
+      "physics_frame": 197,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 196,
+      "tag": "katana_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 0.0,
+      "facing": -1,
+      "frame": 70,
+      "invincible": 0,
+      "physics_frame": 198,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 197,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 1.0,
+      "facing": -1,
+      "frame": 71,
+      "invincible": 0,
+      "physics_frame": 199,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 198,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 2.0,
+      "facing": -1,
+      "frame": 72,
+      "invincible": 0,
+      "physics_frame": 200,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 199,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 3.0,
+      "facing": -1,
+      "frame": 73,
+      "invincible": 0,
+      "physics_frame": 201,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 200,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 4.0,
+      "facing": -1,
+      "frame": 74,
+      "invincible": 0,
+      "physics_frame": 202,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 201,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 5.0,
+      "facing": -1,
+      "frame": 75,
+      "invincible": 0,
+      "physics_frame": 203,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 202,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 6.0,
+      "facing": -1,
+      "frame": 76,
+      "invincible": 0,
+      "physics_frame": 204,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 203,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 7.0,
+      "facing": -1,
+      "frame": 77,
+      "invincible": 0,
+      "physics_frame": 205,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 204,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 8.0,
+      "facing": -1,
+      "frame": 78,
+      "invincible": 0,
+      "physics_frame": 206,
+      "position": [
+        568.125,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 205,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 9.0,
+      "facing": -1,
+      "frame": 79,
+      "invincible": 0,
+      "physics_frame": 207,
+      "position": [
+        564.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 206,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 10.0,
+      "facing": -1,
+      "frame": 80,
+      "invincible": 0,
+      "physics_frame": 208,
+      "position": [
+        559.875,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 207,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 11.0,
+      "facing": -1,
+      "frame": 81,
+      "invincible": 0,
+      "physics_frame": 209,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 208,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 12.0,
+      "facing": -1,
+      "frame": 82,
+      "invincible": 0,
+      "physics_frame": 210,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 209,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 13.0,
+      "facing": -1,
+      "frame": 83,
+      "invincible": 0,
+      "physics_frame": 211,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 210,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 14.0,
+      "facing": -1,
+      "frame": 84,
+      "invincible": 0,
+      "physics_frame": 212,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 211,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 15.0,
+      "facing": -1,
+      "frame": 85,
+      "invincible": 0,
+      "physics_frame": 213,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 212,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 16.0,
+      "facing": -1,
+      "frame": 86,
+      "invincible": 0,
+      "physics_frame": 214,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 213,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 17.0,
+      "facing": -1,
+      "frame": 87,
+      "invincible": 0,
+      "physics_frame": 215,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 214,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 18.0,
+      "facing": -1,
+      "frame": 88,
+      "invincible": 0,
+      "physics_frame": 216,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 215,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 19.0,
+      "facing": -1,
+      "frame": 89,
+      "invincible": 0,
+      "physics_frame": 217,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 216,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 20.0,
+      "facing": -1,
+      "frame": 90,
+      "invincible": 0,
+      "physics_frame": 218,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 217,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 21.0,
+      "facing": -1,
+      "frame": 91,
+      "invincible": 0,
+      "physics_frame": 219,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 218,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 22.0,
+      "facing": -1,
+      "frame": 92,
+      "invincible": 0,
+      "physics_frame": 220,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 219,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 23.0,
+      "facing": -1,
+      "frame": 93,
+      "invincible": 0,
+      "physics_frame": 221,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 220,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 24.0,
+      "facing": -1,
+      "frame": 94,
+      "invincible": 0,
+      "physics_frame": 222,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 221,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 25.0,
+      "facing": -1,
+      "frame": 95,
+      "invincible": 0,
+      "physics_frame": 223,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 222,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 26.0,
+      "facing": -1,
+      "frame": 96,
+      "invincible": 0,
+      "physics_frame": 224,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 223,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 27.0,
+      "facing": -1,
+      "frame": 97,
+      "invincible": 0,
+      "physics_frame": 225,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 224,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 28.0,
+      "facing": -1,
+      "frame": 98,
+      "invincible": 0,
+      "physics_frame": 226,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 225,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 29.0,
+      "facing": -1,
+      "frame": 99,
+      "invincible": 0,
+      "physics_frame": 227,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 226,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 1.0,
+      "facing": -1,
+      "frame": 100,
+      "invincible": 0,
+      "physics_frame": 228,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 227,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 2.0,
+      "facing": -1,
+      "frame": 101,
+      "invincible": 0,
+      "physics_frame": 229,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 228,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 3.0,
+      "facing": -1,
+      "frame": 102,
+      "invincible": 0,
+      "physics_frame": 230,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 229,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 4.0,
+      "facing": -1,
+      "frame": 103,
+      "invincible": 0,
+      "physics_frame": 231,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 230,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 5.0,
+      "facing": -1,
+      "frame": 104,
+      "invincible": 0,
+      "physics_frame": 232,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 231,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 6.0,
+      "facing": -1,
+      "frame": 105,
+      "invincible": 0,
+      "physics_frame": 233,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 232,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 7.0,
+      "facing": -1,
+      "frame": 106,
+      "invincible": 0,
+      "physics_frame": 234,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 233,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 8.0,
+      "facing": -1,
+      "frame": 107,
+      "invincible": 0,
+      "physics_frame": 235,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 234,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 9.0,
+      "facing": -1,
+      "frame": 108,
+      "invincible": 0,
+      "physics_frame": 236,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 235,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 10.0,
+      "facing": -1,
+      "frame": 109,
+      "invincible": 0,
+      "physics_frame": 237,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 236,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 11.0,
+      "facing": -1,
+      "frame": 110,
+      "invincible": 0,
+      "physics_frame": 238,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 237,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 12.0,
+      "facing": -1,
+      "frame": 111,
+      "invincible": 0,
+      "physics_frame": 239,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 238,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 13.0,
+      "facing": -1,
+      "frame": 112,
+      "invincible": 0,
+      "physics_frame": 240,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 239,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 14.0,
+      "facing": -1,
+      "frame": 113,
+      "invincible": 0,
+      "physics_frame": 241,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 240,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 15.0,
+      "facing": -1,
+      "frame": 114,
+      "invincible": 0,
+      "physics_frame": 242,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 241,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 16.0,
+      "facing": -1,
+      "frame": 115,
+      "invincible": 0,
+      "physics_frame": 243,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "katana",
+      "render_frame": 242,
+      "tag": "katana_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 17.0,
+      "facing": 1,
+      "frame": 116,
+      "invincible": 0,
+      "physics_frame": 244,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 243,
+      "tag": "greatsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 18.0,
+      "facing": 1,
+      "frame": 117,
+      "invincible": 0,
+      "physics_frame": 245,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 244,
+      "tag": "greatsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 19.0,
+      "facing": 1,
+      "frame": 118,
+      "invincible": 0,
+      "physics_frame": 246,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 245,
+      "tag": "greatsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 20.0,
+      "facing": 1,
+      "frame": 119,
+      "invincible": 0,
+      "physics_frame": 247,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 246,
+      "tag": "greatsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 21.0,
+      "facing": 1,
+      "frame": 120,
+      "invincible": 0,
+      "physics_frame": 248,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 247,
+      "tag": "greatsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 22.0,
+      "facing": 1,
+      "frame": 121,
+      "invincible": 0,
+      "physics_frame": 249,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 248,
+      "tag": "greatsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 23.0,
+      "facing": 1,
+      "frame": 122,
+      "invincible": 0,
+      "physics_frame": 250,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 249,
+      "tag": "greatsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 24.0,
+      "facing": 1,
+      "frame": 123,
+      "invincible": 0,
+      "physics_frame": 251,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 250,
+      "tag": "greatsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 25.0,
+      "facing": 1,
+      "frame": 124,
+      "invincible": 0,
+      "physics_frame": 252,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 251,
+      "tag": "greatsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 26.0,
+      "facing": 1,
+      "frame": 125,
+      "invincible": 0,
+      "physics_frame": 253,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 252,
+      "tag": "greatsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 27.0,
+      "facing": 1,
+      "frame": 126,
+      "invincible": 0,
+      "physics_frame": 254,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 253,
+      "tag": "greatsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 28.0,
+      "facing": 1,
+      "frame": 127,
+      "invincible": 0,
+      "physics_frame": 255,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 254,
+      "tag": "greatsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 0.0,
+      "facing": 1,
+      "frame": 128,
+      "invincible": 0,
+      "physics_frame": 256,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 255,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 1.0,
+      "facing": 1,
+      "frame": 129,
+      "invincible": 0,
+      "physics_frame": 257,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 256,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 2.0,
+      "facing": 1,
+      "frame": 130,
+      "invincible": 0,
+      "physics_frame": 258,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 257,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 3.0,
+      "facing": 1,
+      "frame": 131,
+      "invincible": 0,
+      "physics_frame": 259,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 258,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 4.0,
+      "facing": 1,
+      "frame": 132,
+      "invincible": 0,
+      "physics_frame": 260,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 259,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 5.0,
+      "facing": 1,
+      "frame": 133,
+      "invincible": 0,
+      "physics_frame": 261,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 260,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 6.0,
+      "facing": 1,
+      "frame": 134,
+      "invincible": 0,
+      "physics_frame": 262,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 261,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 7.0,
+      "facing": 1,
+      "frame": 135,
+      "invincible": 0,
+      "physics_frame": 263,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 262,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 8.0,
+      "facing": 1,
+      "frame": 136,
+      "invincible": 0,
+      "physics_frame": 264,
+      "position": [
+        571.875,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 263,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 9.0,
+      "facing": 1,
+      "frame": 137,
+      "invincible": 0,
+      "physics_frame": 265,
+      "position": [
+        576.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 264,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 10.0,
+      "facing": 1,
+      "frame": 138,
+      "invincible": 0,
+      "physics_frame": 266,
+      "position": [
+        580.125,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 265,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 11.0,
+      "facing": 1,
+      "frame": 139,
+      "invincible": 0,
+      "physics_frame": 267,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 266,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 12.0,
+      "facing": 1,
+      "frame": 140,
+      "invincible": 0,
+      "physics_frame": 268,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 267,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 13.0,
+      "facing": 1,
+      "frame": 141,
+      "invincible": 0,
+      "physics_frame": 269,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 268,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 14.0,
+      "facing": 1,
+      "frame": 142,
+      "invincible": 0,
+      "physics_frame": 270,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 269,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 15.0,
+      "facing": 1,
+      "frame": 143,
+      "invincible": 0,
+      "physics_frame": 271,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 270,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 16.0,
+      "facing": 1,
+      "frame": 144,
+      "invincible": 0,
+      "physics_frame": 272,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 271,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 17.0,
+      "facing": 1,
+      "frame": 145,
+      "invincible": 0,
+      "physics_frame": 273,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 272,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 18.0,
+      "facing": 1,
+      "frame": 146,
+      "invincible": 0,
+      "physics_frame": 274,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 273,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 19.0,
+      "facing": 1,
+      "frame": 147,
+      "invincible": 0,
+      "physics_frame": 275,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 274,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 20.0,
+      "facing": 1,
+      "frame": 148,
+      "invincible": 0,
+      "physics_frame": 276,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 275,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 21.0,
+      "facing": 1,
+      "frame": 149,
+      "invincible": 0,
+      "physics_frame": 277,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 276,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 22.0,
+      "facing": 1,
+      "frame": 150,
+      "invincible": 0,
+      "physics_frame": 278,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 277,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 23.0,
+      "facing": 1,
+      "frame": 151,
+      "invincible": 0,
+      "physics_frame": 279,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 278,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 24.0,
+      "facing": 1,
+      "frame": 152,
+      "invincible": 0,
+      "physics_frame": 280,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 279,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 25.0,
+      "facing": 1,
+      "frame": 153,
+      "invincible": 0,
+      "physics_frame": 281,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 280,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 26.0,
+      "facing": 1,
+      "frame": 154,
+      "invincible": 0,
+      "physics_frame": 282,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 281,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 27.0,
+      "facing": 1,
+      "frame": 155,
+      "invincible": 0,
+      "physics_frame": 283,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 282,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 28.0,
+      "facing": 1,
+      "frame": 156,
+      "invincible": 0,
+      "physics_frame": 284,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 283,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 29.0,
+      "facing": 1,
+      "frame": 157,
+      "invincible": 0,
+      "physics_frame": 285,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 284,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 1.0,
+      "facing": 1,
+      "frame": 158,
+      "invincible": 0,
+      "physics_frame": 286,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 285,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 2.0,
+      "facing": 1,
+      "frame": 159,
+      "invincible": 0,
+      "physics_frame": 287,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 286,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 3.0,
+      "facing": 1,
+      "frame": 160,
+      "invincible": 0,
+      "physics_frame": 288,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 287,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 4.0,
+      "facing": 1,
+      "frame": 161,
+      "invincible": 0,
+      "physics_frame": 289,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 288,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 5.0,
+      "facing": 1,
+      "frame": 162,
+      "invincible": 0,
+      "physics_frame": 290,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 289,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 6.0,
+      "facing": 1,
+      "frame": 163,
+      "invincible": 0,
+      "physics_frame": 291,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 290,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 7.0,
+      "facing": 1,
+      "frame": 164,
+      "invincible": 0,
+      "physics_frame": 292,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 291,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 8.0,
+      "facing": 1,
+      "frame": 165,
+      "invincible": 0,
+      "physics_frame": 293,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 292,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 9.0,
+      "facing": 1,
+      "frame": 166,
+      "invincible": 0,
+      "physics_frame": 294,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 293,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 10.0,
+      "facing": 1,
+      "frame": 167,
+      "invincible": 0,
+      "physics_frame": 295,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 294,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 11.0,
+      "facing": 1,
+      "frame": 168,
+      "invincible": 0,
+      "physics_frame": 296,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 295,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 12.0,
+      "facing": 1,
+      "frame": 169,
+      "invincible": 0,
+      "physics_frame": 297,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 296,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 13.0,
+      "facing": 1,
+      "frame": 170,
+      "invincible": 0,
+      "physics_frame": 298,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 297,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 14.0,
+      "facing": 1,
+      "frame": 171,
+      "invincible": 0,
+      "physics_frame": 299,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 298,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 15.0,
+      "facing": 1,
+      "frame": 172,
+      "invincible": 0,
+      "physics_frame": 300,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 299,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 16.0,
+      "facing": 1,
+      "frame": 173,
+      "invincible": 0,
+      "physics_frame": 301,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 300,
+      "tag": "greatsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 17.0,
+      "facing": -1,
+      "frame": 174,
+      "invincible": 0,
+      "physics_frame": 302,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 301,
+      "tag": "greatsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 18.0,
+      "facing": -1,
+      "frame": 175,
+      "invincible": 0,
+      "physics_frame": 303,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 302,
+      "tag": "greatsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 19.0,
+      "facing": -1,
+      "frame": 176,
+      "invincible": 0,
+      "physics_frame": 304,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 303,
+      "tag": "greatsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 20.0,
+      "facing": -1,
+      "frame": 177,
+      "invincible": 0,
+      "physics_frame": 305,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 304,
+      "tag": "greatsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 21.0,
+      "facing": -1,
+      "frame": 178,
+      "invincible": 0,
+      "physics_frame": 306,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 305,
+      "tag": "greatsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 22.0,
+      "facing": -1,
+      "frame": 179,
+      "invincible": 0,
+      "physics_frame": 307,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 306,
+      "tag": "greatsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 23.0,
+      "facing": -1,
+      "frame": 180,
+      "invincible": 0,
+      "physics_frame": 308,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 307,
+      "tag": "greatsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 24.0,
+      "facing": -1,
+      "frame": 181,
+      "invincible": 0,
+      "physics_frame": 309,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 308,
+      "tag": "greatsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 25.0,
+      "facing": -1,
+      "frame": 182,
+      "invincible": 0,
+      "physics_frame": 310,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 309,
+      "tag": "greatsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 26.0,
+      "facing": -1,
+      "frame": 183,
+      "invincible": 0,
+      "physics_frame": 311,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 310,
+      "tag": "greatsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 27.0,
+      "facing": -1,
+      "frame": 184,
+      "invincible": 0,
+      "physics_frame": 312,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 311,
+      "tag": "greatsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 28.0,
+      "facing": -1,
+      "frame": 185,
+      "invincible": 0,
+      "physics_frame": 313,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 312,
+      "tag": "greatsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 0.0,
+      "facing": -1,
+      "frame": 186,
+      "invincible": 0,
+      "physics_frame": 314,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 313,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 1.0,
+      "facing": -1,
+      "frame": 187,
+      "invincible": 0,
+      "physics_frame": 315,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 314,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 2.0,
+      "facing": -1,
+      "frame": 188,
+      "invincible": 0,
+      "physics_frame": 316,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 315,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 3.0,
+      "facing": -1,
+      "frame": 189,
+      "invincible": 0,
+      "physics_frame": 317,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 316,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 4.0,
+      "facing": -1,
+      "frame": 190,
+      "invincible": 0,
+      "physics_frame": 318,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 317,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 5.0,
+      "facing": -1,
+      "frame": 191,
+      "invincible": 0,
+      "physics_frame": 319,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 318,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 6.0,
+      "facing": -1,
+      "frame": 192,
+      "invincible": 0,
+      "physics_frame": 320,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 319,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 7.0,
+      "facing": -1,
+      "frame": 193,
+      "invincible": 0,
+      "physics_frame": 321,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 320,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 8.0,
+      "facing": -1,
+      "frame": 194,
+      "invincible": 0,
+      "physics_frame": 322,
+      "position": [
+        568.125,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 321,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 9.0,
+      "facing": -1,
+      "frame": 195,
+      "invincible": 0,
+      "physics_frame": 323,
+      "position": [
+        564.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 322,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 10.0,
+      "facing": -1,
+      "frame": 196,
+      "invincible": 0,
+      "physics_frame": 324,
+      "position": [
+        559.875,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 323,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 11.0,
+      "facing": -1,
+      "frame": 197,
+      "invincible": 0,
+      "physics_frame": 325,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 324,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 12.0,
+      "facing": -1,
+      "frame": 198,
+      "invincible": 0,
+      "physics_frame": 326,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 325,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 13.0,
+      "facing": -1,
+      "frame": 199,
+      "invincible": 0,
+      "physics_frame": 327,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 326,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 14.0,
+      "facing": -1,
+      "frame": 200,
+      "invincible": 0,
+      "physics_frame": 328,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 327,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 15.0,
+      "facing": -1,
+      "frame": 201,
+      "invincible": 0,
+      "physics_frame": 329,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 328,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 16.0,
+      "facing": -1,
+      "frame": 202,
+      "invincible": 0,
+      "physics_frame": 330,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 329,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 17.0,
+      "facing": -1,
+      "frame": 203,
+      "invincible": 0,
+      "physics_frame": 331,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 330,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 18.0,
+      "facing": -1,
+      "frame": 204,
+      "invincible": 0,
+      "physics_frame": 332,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 331,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 19.0,
+      "facing": -1,
+      "frame": 205,
+      "invincible": 0,
+      "physics_frame": 333,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 332,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 20.0,
+      "facing": -1,
+      "frame": 206,
+      "invincible": 0,
+      "physics_frame": 334,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 333,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 21.0,
+      "facing": -1,
+      "frame": 207,
+      "invincible": 0,
+      "physics_frame": 335,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 334,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 22.0,
+      "facing": -1,
+      "frame": 208,
+      "invincible": 0,
+      "physics_frame": 336,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 335,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 23.0,
+      "facing": -1,
+      "frame": 209,
+      "invincible": 0,
+      "physics_frame": 337,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 336,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 24.0,
+      "facing": -1,
+      "frame": 210,
+      "invincible": 0,
+      "physics_frame": 338,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 337,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 25.0,
+      "facing": -1,
+      "frame": 211,
+      "invincible": 0,
+      "physics_frame": 339,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 338,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 26.0,
+      "facing": -1,
+      "frame": 212,
+      "invincible": 0,
+      "physics_frame": 340,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 339,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 27.0,
+      "facing": -1,
+      "frame": 213,
+      "invincible": 0,
+      "physics_frame": 341,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 340,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 28.0,
+      "facing": -1,
+      "frame": 214,
+      "invincible": 0,
+      "physics_frame": 342,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 341,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 29.0,
+      "facing": -1,
+      "frame": 215,
+      "invincible": 0,
+      "physics_frame": 343,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 342,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 1.0,
+      "facing": -1,
+      "frame": 216,
+      "invincible": 0,
+      "physics_frame": 344,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 343,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 2.0,
+      "facing": -1,
+      "frame": 217,
+      "invincible": 0,
+      "physics_frame": 345,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 344,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 3.0,
+      "facing": -1,
+      "frame": 218,
+      "invincible": 0,
+      "physics_frame": 346,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 345,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 4.0,
+      "facing": -1,
+      "frame": 219,
+      "invincible": 0,
+      "physics_frame": 347,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 346,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 5.0,
+      "facing": -1,
+      "frame": 220,
+      "invincible": 0,
+      "physics_frame": 348,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 347,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 6.0,
+      "facing": -1,
+      "frame": 221,
+      "invincible": 0,
+      "physics_frame": 349,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 348,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 7.0,
+      "facing": -1,
+      "frame": 222,
+      "invincible": 0,
+      "physics_frame": 350,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 349,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 8.0,
+      "facing": -1,
+      "frame": 223,
+      "invincible": 0,
+      "physics_frame": 351,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 350,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 9.0,
+      "facing": -1,
+      "frame": 224,
+      "invincible": 0,
+      "physics_frame": 352,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 351,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 10.0,
+      "facing": -1,
+      "frame": 225,
+      "invincible": 0,
+      "physics_frame": 353,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 352,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 11.0,
+      "facing": -1,
+      "frame": 226,
+      "invincible": 0,
+      "physics_frame": 354,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 353,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 12.0,
+      "facing": -1,
+      "frame": 227,
+      "invincible": 0,
+      "physics_frame": 355,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 354,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 13.0,
+      "facing": -1,
+      "frame": 228,
+      "invincible": 0,
+      "physics_frame": 356,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 355,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 14.0,
+      "facing": -1,
+      "frame": 229,
+      "invincible": 0,
+      "physics_frame": 357,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 356,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 15.0,
+      "facing": -1,
+      "frame": 230,
+      "invincible": 0,
+      "physics_frame": 358,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 357,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 16.0,
+      "facing": -1,
+      "frame": 231,
+      "invincible": 0,
+      "physics_frame": 359,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "greatsword",
+      "render_frame": 358,
+      "tag": "greatsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 17.0,
+      "facing": 1,
+      "frame": 232,
+      "invincible": 0,
+      "physics_frame": 360,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 359,
+      "tag": "shortsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 18.0,
+      "facing": 1,
+      "frame": 233,
+      "invincible": 0,
+      "physics_frame": 361,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 360,
+      "tag": "shortsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 19.0,
+      "facing": 1,
+      "frame": 234,
+      "invincible": 0,
+      "physics_frame": 362,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 361,
+      "tag": "shortsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 20.0,
+      "facing": 1,
+      "frame": 235,
+      "invincible": 0,
+      "physics_frame": 363,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 362,
+      "tag": "shortsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 21.0,
+      "facing": 1,
+      "frame": 236,
+      "invincible": 0,
+      "physics_frame": 364,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 363,
+      "tag": "shortsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 22.0,
+      "facing": 1,
+      "frame": 237,
+      "invincible": 0,
+      "physics_frame": 365,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 364,
+      "tag": "shortsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 23.0,
+      "facing": 1,
+      "frame": 238,
+      "invincible": 0,
+      "physics_frame": 366,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 365,
+      "tag": "shortsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 24.0,
+      "facing": 1,
+      "frame": 239,
+      "invincible": 0,
+      "physics_frame": 367,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 366,
+      "tag": "shortsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 25.0,
+      "facing": 1,
+      "frame": 240,
+      "invincible": 0,
+      "physics_frame": 368,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 367,
+      "tag": "shortsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 26.0,
+      "facing": 1,
+      "frame": 241,
+      "invincible": 0,
+      "physics_frame": 369,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 368,
+      "tag": "shortsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 27.0,
+      "facing": 1,
+      "frame": 242,
+      "invincible": 0,
+      "physics_frame": 370,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 369,
+      "tag": "shortsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 28.0,
+      "facing": 1,
+      "frame": 243,
+      "invincible": 0,
+      "physics_frame": 371,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 370,
+      "tag": "shortsword_idle_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 0.0,
+      "facing": 1,
+      "frame": 244,
+      "invincible": 0,
+      "physics_frame": 372,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 371,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 1.0,
+      "facing": 1,
+      "frame": 245,
+      "invincible": 0,
+      "physics_frame": 373,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 372,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 2.0,
+      "facing": 1,
+      "frame": 246,
+      "invincible": 0,
+      "physics_frame": 374,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 373,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 3.0,
+      "facing": 1,
+      "frame": 247,
+      "invincible": 0,
+      "physics_frame": 375,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 374,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 4.0,
+      "facing": 1,
+      "frame": 248,
+      "invincible": 0,
+      "physics_frame": 376,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 375,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 5.0,
+      "facing": 1,
+      "frame": 249,
+      "invincible": 0,
+      "physics_frame": 377,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 376,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 6.0,
+      "facing": 1,
+      "frame": 250,
+      "invincible": 0,
+      "physics_frame": 378,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 377,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 7.0,
+      "facing": 1,
+      "frame": 251,
+      "invincible": 0,
+      "physics_frame": 379,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 378,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 8.0,
+      "facing": 1,
+      "frame": 252,
+      "invincible": 0,
+      "physics_frame": 380,
+      "position": [
+        571.875,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 379,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 9.0,
+      "facing": 1,
+      "frame": 253,
+      "invincible": 0,
+      "physics_frame": 381,
+      "position": [
+        576.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 380,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 10.0,
+      "facing": 1,
+      "frame": 254,
+      "invincible": 0,
+      "physics_frame": 382,
+      "position": [
+        580.125,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 381,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 11.0,
+      "facing": 1,
+      "frame": 255,
+      "invincible": 0,
+      "physics_frame": 383,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 382,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 12.0,
+      "facing": 1,
+      "frame": 256,
+      "invincible": 0,
+      "physics_frame": 384,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 383,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 13.0,
+      "facing": 1,
+      "frame": 257,
+      "invincible": 0,
+      "physics_frame": 385,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 384,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 14.0,
+      "facing": 1,
+      "frame": 258,
+      "invincible": 0,
+      "physics_frame": 386,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 385,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 15.0,
+      "facing": 1,
+      "frame": 259,
+      "invincible": 0,
+      "physics_frame": 387,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 386,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 16.0,
+      "facing": 1,
+      "frame": 260,
+      "invincible": 0,
+      "physics_frame": 388,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 387,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 17.0,
+      "facing": 1,
+      "frame": 261,
+      "invincible": 0,
+      "physics_frame": 389,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 388,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 18.0,
+      "facing": 1,
+      "frame": 262,
+      "invincible": 0,
+      "physics_frame": 390,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 389,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 19.0,
+      "facing": 1,
+      "frame": 263,
+      "invincible": 0,
+      "physics_frame": 391,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 390,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 20.0,
+      "facing": 1,
+      "frame": 264,
+      "invincible": 0,
+      "physics_frame": 392,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 391,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 21.0,
+      "facing": 1,
+      "frame": 265,
+      "invincible": 0,
+      "physics_frame": 393,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 392,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 22.0,
+      "facing": 1,
+      "frame": 266,
+      "invincible": 0,
+      "physics_frame": 394,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 393,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 23.0,
+      "facing": 1,
+      "frame": 267,
+      "invincible": 0,
+      "physics_frame": 395,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 394,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 24.0,
+      "facing": 1,
+      "frame": 268,
+      "invincible": 0,
+      "physics_frame": 396,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 395,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 25.0,
+      "facing": 1,
+      "frame": 269,
+      "invincible": 0,
+      "physics_frame": 397,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 396,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 26.0,
+      "facing": 1,
+      "frame": 270,
+      "invincible": 0,
+      "physics_frame": 398,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 397,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 27.0,
+      "facing": 1,
+      "frame": 271,
+      "invincible": 0,
+      "physics_frame": 399,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 398,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 28.0,
+      "facing": 1,
+      "frame": 272,
+      "invincible": 0,
+      "physics_frame": 400,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 399,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 29.0,
+      "facing": 1,
+      "frame": 273,
+      "invincible": 0,
+      "physics_frame": 401,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 400,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 1.0,
+      "facing": 1,
+      "frame": 274,
+      "invincible": 0,
+      "physics_frame": 402,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 401,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 2.0,
+      "facing": 1,
+      "frame": 275,
+      "invincible": 0,
+      "physics_frame": 403,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 402,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 3.0,
+      "facing": 1,
+      "frame": 276,
+      "invincible": 0,
+      "physics_frame": 404,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 403,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 4.0,
+      "facing": 1,
+      "frame": 277,
+      "invincible": 0,
+      "physics_frame": 405,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 404,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 5.0,
+      "facing": 1,
+      "frame": 278,
+      "invincible": 0,
+      "physics_frame": 406,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 405,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 6.0,
+      "facing": 1,
+      "frame": 279,
+      "invincible": 0,
+      "physics_frame": 407,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 406,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 7.0,
+      "facing": 1,
+      "frame": 280,
+      "invincible": 0,
+      "physics_frame": 408,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 407,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 8.0,
+      "facing": 1,
+      "frame": 281,
+      "invincible": 0,
+      "physics_frame": 409,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 408,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 9.0,
+      "facing": 1,
+      "frame": 282,
+      "invincible": 0,
+      "physics_frame": 410,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 409,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 10.0,
+      "facing": 1,
+      "frame": 283,
+      "invincible": 0,
+      "physics_frame": 411,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 410,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 11.0,
+      "facing": 1,
+      "frame": 284,
+      "invincible": 0,
+      "physics_frame": 412,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 411,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 12.0,
+      "facing": 1,
+      "frame": 285,
+      "invincible": 0,
+      "physics_frame": 413,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 412,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 13.0,
+      "facing": 1,
+      "frame": 286,
+      "invincible": 0,
+      "physics_frame": 414,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 413,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 14.0,
+      "facing": 1,
+      "frame": 287,
+      "invincible": 0,
+      "physics_frame": 415,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 414,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 15.0,
+      "facing": 1,
+      "frame": 288,
+      "invincible": 0,
+      "physics_frame": 416,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 415,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 16.0,
+      "facing": 1,
+      "frame": 289,
+      "invincible": 0,
+      "physics_frame": 417,
+      "position": [
+        582.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 416,
+      "tag": "shortsword_first_cut_face1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 17.0,
+      "facing": -1,
+      "frame": 290,
+      "invincible": 0,
+      "physics_frame": 418,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 417,
+      "tag": "shortsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 18.0,
+      "facing": -1,
+      "frame": 291,
+      "invincible": 0,
+      "physics_frame": 419,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 418,
+      "tag": "shortsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 19.0,
+      "facing": -1,
+      "frame": 292,
+      "invincible": 0,
+      "physics_frame": 420,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 419,
+      "tag": "shortsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 20.0,
+      "facing": -1,
+      "frame": 293,
+      "invincible": 0,
+      "physics_frame": 421,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 420,
+      "tag": "shortsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 21.0,
+      "facing": -1,
+      "frame": 294,
+      "invincible": 0,
+      "physics_frame": 422,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 421,
+      "tag": "shortsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 22.0,
+      "facing": -1,
+      "frame": 295,
+      "invincible": 0,
+      "physics_frame": 423,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 422,
+      "tag": "shortsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 23.0,
+      "facing": -1,
+      "frame": 296,
+      "invincible": 0,
+      "physics_frame": 424,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 423,
+      "tag": "shortsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 24.0,
+      "facing": -1,
+      "frame": 297,
+      "invincible": 0,
+      "physics_frame": 425,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 424,
+      "tag": "shortsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 25.0,
+      "facing": -1,
+      "frame": 298,
+      "invincible": 0,
+      "physics_frame": 426,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 425,
+      "tag": "shortsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 26.0,
+      "facing": -1,
+      "frame": 299,
+      "invincible": 0,
+      "physics_frame": 427,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 426,
+      "tag": "shortsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 27.0,
+      "facing": -1,
+      "frame": 300,
+      "invincible": 0,
+      "physics_frame": 428,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 427,
+      "tag": "shortsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 28.0,
+      "facing": -1,
+      "frame": 301,
+      "invincible": 0,
+      "physics_frame": 429,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 428,
+      "tag": "shortsword_idle_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 0.0,
+      "facing": -1,
+      "frame": 302,
+      "invincible": 0,
+      "physics_frame": 430,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 429,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 1.0,
+      "facing": -1,
+      "frame": 303,
+      "invincible": 0,
+      "physics_frame": 431,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 430,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 2.0,
+      "facing": -1,
+      "frame": 304,
+      "invincible": 0,
+      "physics_frame": 432,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 431,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 3.0,
+      "facing": -1,
+      "frame": 305,
+      "invincible": 0,
+      "physics_frame": 433,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 432,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 4.0,
+      "facing": -1,
+      "frame": 306,
+      "invincible": 0,
+      "physics_frame": 434,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 433,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 5.0,
+      "facing": -1,
+      "frame": 307,
+      "invincible": 0,
+      "physics_frame": 435,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 434,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 6.0,
+      "facing": -1,
+      "frame": 308,
+      "invincible": 0,
+      "physics_frame": 436,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 435,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 7.0,
+      "facing": -1,
+      "frame": 309,
+      "invincible": 0,
+      "physics_frame": 437,
+      "position": [
+        570.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 436,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 8.0,
+      "facing": -1,
+      "frame": 310,
+      "invincible": 0,
+      "physics_frame": 438,
+      "position": [
+        568.125,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 437,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 9.0,
+      "facing": -1,
+      "frame": 311,
+      "invincible": 0,
+      "physics_frame": 439,
+      "position": [
+        564.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 438,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 10.0,
+      "facing": -1,
+      "frame": 312,
+      "invincible": 0,
+      "physics_frame": 440,
+      "position": [
+        559.875,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 439,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 11.0,
+      "facing": -1,
+      "frame": 313,
+      "invincible": 0,
+      "physics_frame": 441,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 440,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 12.0,
+      "facing": -1,
+      "frame": 314,
+      "invincible": 0,
+      "physics_frame": 442,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 441,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 13.0,
+      "facing": -1,
+      "frame": 315,
+      "invincible": 0,
+      "physics_frame": 443,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 442,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 14.0,
+      "facing": -1,
+      "frame": 316,
+      "invincible": 0,
+      "physics_frame": 444,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 443,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 15.0,
+      "facing": -1,
+      "frame": 317,
+      "invincible": 0,
+      "physics_frame": 445,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 444,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 16.0,
+      "facing": -1,
+      "frame": 318,
+      "invincible": 0,
+      "physics_frame": 446,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 445,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 17.0,
+      "facing": -1,
+      "frame": 319,
+      "invincible": 0,
+      "physics_frame": 447,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 446,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 18.0,
+      "facing": -1,
+      "frame": 320,
+      "invincible": 0,
+      "physics_frame": 448,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 447,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 19.0,
+      "facing": -1,
+      "frame": 321,
+      "invincible": 0,
+      "physics_frame": 449,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 448,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 20.0,
+      "facing": -1,
+      "frame": 322,
+      "invincible": 0,
+      "physics_frame": 450,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 449,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 21.0,
+      "facing": -1,
+      "frame": 323,
+      "invincible": 0,
+      "physics_frame": 451,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 450,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 22.0,
+      "facing": -1,
+      "frame": 324,
+      "invincible": 0,
+      "physics_frame": 452,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 451,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 23.0,
+      "facing": -1,
+      "frame": 325,
+      "invincible": 0,
+      "physics_frame": 453,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 452,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 24.0,
+      "facing": -1,
+      "frame": 326,
+      "invincible": 0,
+      "physics_frame": 454,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 453,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 25.0,
+      "facing": -1,
+      "frame": 327,
+      "invincible": 0,
+      "physics_frame": 455,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 454,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 26.0,
+      "facing": -1,
+      "frame": 328,
+      "invincible": 0,
+      "physics_frame": 456,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 455,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 27.0,
+      "facing": -1,
+      "frame": 329,
+      "invincible": 0,
+      "physics_frame": 457,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 456,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 28.0,
+      "facing": -1,
+      "frame": 330,
+      "invincible": 0,
+      "physics_frame": 458,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 457,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "attack1",
+      "clock": 29.0,
+      "facing": -1,
+      "frame": 331,
+      "invincible": 0,
+      "physics_frame": 459,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 458,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 1.0,
+      "facing": -1,
+      "frame": 332,
+      "invincible": 0,
+      "physics_frame": 460,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 459,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 2.0,
+      "facing": -1,
+      "frame": 333,
+      "invincible": 0,
+      "physics_frame": 461,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 460,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 3.0,
+      "facing": -1,
+      "frame": 334,
+      "invincible": 0,
+      "physics_frame": 462,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 461,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 4.0,
+      "facing": -1,
+      "frame": 335,
+      "invincible": 0,
+      "physics_frame": 463,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 462,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 5.0,
+      "facing": -1,
+      "frame": 336,
+      "invincible": 0,
+      "physics_frame": 464,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 463,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 6.0,
+      "facing": -1,
+      "frame": 337,
+      "invincible": 0,
+      "physics_frame": 465,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 464,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 7.0,
+      "facing": -1,
+      "frame": 338,
+      "invincible": 0,
+      "physics_frame": 466,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 465,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 8.0,
+      "facing": -1,
+      "frame": 339,
+      "invincible": 0,
+      "physics_frame": 467,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 466,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 9.0,
+      "facing": -1,
+      "frame": 340,
+      "invincible": 0,
+      "physics_frame": 468,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 467,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 10.0,
+      "facing": -1,
+      "frame": 341,
+      "invincible": 0,
+      "physics_frame": 469,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 468,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 11.0,
+      "facing": -1,
+      "frame": 342,
+      "invincible": 0,
+      "physics_frame": 470,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 469,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 12.0,
+      "facing": -1,
+      "frame": 343,
+      "invincible": 0,
+      "physics_frame": 471,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 470,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 13.0,
+      "facing": -1,
+      "frame": 344,
+      "invincible": 0,
+      "physics_frame": 472,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 471,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 14.0,
+      "facing": -1,
+      "frame": 345,
+      "invincible": 0,
+      "physics_frame": 473,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 472,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 15.0,
+      "facing": -1,
+      "frame": 346,
+      "invincible": 0,
+      "physics_frame": 474,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 473,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "clip": "idle",
+      "clock": 16.0,
+      "facing": -1,
+      "frame": 347,
+      "invincible": 0,
+      "physics_frame": 475,
+      "position": [
+        558.0,
+        576.0
+      ],
+      "profile": "shortsword",
+      "render_frame": 474,
+      "tag": "shortsword_first_cut_face-1",
+      "visible_tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "proves": "GM opt-in first-cut trial; actual attack input; three weapons and both facings; not complete base-suite artwork approval",
+  "packages": {
+    "base_manifest_sha256": "b6615d37ffb602f44c305c5d58def38c84a68976b36da3045b5f599fe7126839",
+    "trial_manifest_sha256": "29324185554e56cfb2244108ef9f37ef9aa3ab75b6abcd8be78084f3ca5c0f7e",
+    "trigger": "actual GM art v7c8 and attack input; first cut only, other actions retain existing package"
+  }
+}

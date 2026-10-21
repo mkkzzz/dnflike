@@ -136,6 +136,7 @@ func run(main, check: Callable, frames: Callable, capture: Callable) -> void:
 			if p.move_name.begins_with("attack") and p.move_name not in seen:seen.append(p.move_name)
 		check.call(seen==["attack1","attack2","attack3"],"v7 queued gameplay input executes the complete three-cut combo")
 		await _motion_checks(main,p,renderer,check,frames)
+		await _c8_trial_checks(main,p,renderer,check,frames)
 	renderer.call("set_enabled", false)
 	main.weapon_rig.set_profile("blacksteel")
 	await frames.call(2)
@@ -238,3 +239,48 @@ func _actual_hit_checks(main,p: Player,renderer: Node2D,check: Callable,frames: 
 		await frames.call(1)
 	check.call(visible_recoil_ticks>=9 and p.state==Player.St.IDLE,"v7 recoil remains readable through original stun then recovers without extending gameplay stun")
 	check.call(opaque_feedback,"v7 hurt invulnerability feedback keeps the complete silhouette opaque instead of flashing alpha")
+
+func _c8_trial_checks(main,p: Player,renderer: Node2D,check: Callable,frames: Callable) -> void:
+	var original: Dictionary = Library.data().duplicate(true)
+	p._clear_move()
+	p.state = Player.St.IDLE
+	main._on_gm_command("art",PackedStringArray(["v7c8"]))
+	await frames.call(2)
+	check.call(Library.data().get("trial_scope",[])==["attack1"] and Library.record("attack1",3)["source_pose"]=="c8_attack1_windup","c8 GM command selects only the new first cut")
+	var retained := true
+	for name in original["clips"]:
+		if name != "attack1":retained = retained and Library.clip(name)==original["clips"][name]
+	check.call(retained and Library.data()["clips"].size()==32,"c8 preserves the accepted idle and all other 31 clip records")
+	var textures_ok := true
+	for reference in Library.data()["textures"].values():
+		var texture: Texture2D = Library.texture(reference)
+		textures_ok = textures_ok and texture != null and texture.get_width()==int(reference["size"][0]) and texture.get_height()==int(reference["size"][1])
+	check.call(textures_ok,"c8 trial and base textures load at their original cropped dimensions")
+	for profile in ["katana","greatsword","shortsword"]:
+		for facing in [1,-1]:
+			p._clear_move()
+			p.state = Player.St.IDLE
+			p.position = Vector2(500,p.ground_y)
+			p.depth_y = 0
+			p.velocity = Vector2.ZERO
+			p.facing = facing
+			p.invincible = 99999
+			p.control_enabled = true
+			main.bm.freeze = 0
+			main.weapon_rig.set_profile(profile)
+			for monster in main.monsters:
+				monster.control_enabled = false
+				monster.position.x = 1100
+			var target: Monster = main.monsters[0]
+			target.position = Vector2(500+100*facing,p.ground_y)
+			target.depth_y = 0
+			target.hp = 2000
+			target.invincible = 0
+			p._start_move("attack1")
+			await frames.call(50)
+			check.call(target.hp<2000 and not p.contact_log.is_empty(),"c8 first cut hits with actual gameplay blade %s face%d" % [profile,facing])
+	p._clear_move()
+	p.state = Player.St.IDLE
+	main._on_gm_command("art",PackedStringArray(["v7"]))
+	await frames.call(2)
+	check.call(Library.clip("attack1")==original["clips"]["attack1"] and not Library.data().has("trial_scope"),"c8 GM trial returns to the original c6 package without stale surfaces")

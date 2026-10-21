@@ -1,9 +1,29 @@
 extends RefCounted
 ## Native pixels shared by the offline review and runtime. No gameplay clocks here.
 const ROOTS := ["res://assets/swordsman_v7_c6/"]
+const FIRST_CUT_ROOT := "res://assets/swordsman_v7_c8/"
 static var _root := ""
 static var _data: Dictionary = {}
 static var _textures: Dictionary = {}
+static var _variant := "c6"
+static var _overlay_files: Dictionary = {}
+
+static func select_variant(value: String) -> bool:
+	if value not in ["c6", "c8"]:return false
+	if value == "c8" and not _valid_first_cut():return false
+	_variant = value
+	_data.clear()
+	_textures.clear()
+	_overlay_files.clear()
+	return not data().is_empty()
+
+static func _valid_first_cut() -> bool:
+	var path := FIRST_CUT_ROOT + "manifest.json"
+	if not FileAccess.file_exists(path):return false
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	if not parsed is Dictionary:return false
+	var overlay: Dictionary = parsed.get("runtime_overlay", {})
+	return bool(parsed.get("validation", {}).get("passed", false)) and bool(parsed.get("authorization", {}).get("gm_preview_allowed", false)) and bool(overlay.get("explicit_gm_only", false)) and overlay.get("allowed_clips", []) == ["attack1"] and parsed.get("clips", {}).keys() == ["attack1"] and String(overlay.get("base_manifest_sha256", "")) == FileAccess.get_sha256(ROOTS[0] + "manifest.json")
 
 static func data() -> Dictionary:
 	if not _data.is_empty():
@@ -16,6 +36,13 @@ static func data() -> Dictionary:
 			_data = parsed
 			_root = folder
 			break
+	if _variant == "c8" and not _data.is_empty() and _valid_first_cut():
+		var trial: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(FIRST_CUT_ROOT + "manifest.json"))
+		_data["clips"]["attack1"] = trial["clips"]["attack1"]
+		_overlay_files = trial["textures"]
+		for key in _overlay_files:_data["textures"][key] = _overlay_files[key]
+		_data["revision"] = trial["revision"]
+		_data["trial_scope"] = ["attack1"]
 	return _data
 
 static func continuous() -> bool:
@@ -53,7 +80,7 @@ static func texture(reference: Dictionary) -> Texture2D:
 		return null
 	if not _textures.has(path):
 		data()
-		_textures[path] = load(_root + path) as Texture2D
+		_textures[path] = load((FIRST_CUT_ROOT if _overlay_files.has(path) else _root) + path) as Texture2D
 	return _textures[path]
 
 static func anchor() -> Vector2:

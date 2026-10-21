@@ -37,7 +37,7 @@ def main():
   return canvas.convert('RGB')
  for name,c in manifest['clips'].items():
   if args.only and name not in args.only:continue
-  frames=c['frames'];chosen=sorted(set([0,len(frames)//4,len(frames)//2,len(frames)*3//4,len(frames)-1]+([8,12] if name.startswith('attack')else[])))
+  frames=c['frames'];chosen=sorted(set([0,len(frames)//4,len(frames)//2,len(frames)*3//4,len(frames)-1]+([7,8,12,15,22,25] if name=='attack1' and len(frames)>25 else [8,12] if name.startswith('attack')else[])))
   board=Image.new('RGB',(768*3,620*((len(chosen)+2)//3)),'#252c35')
   for i,t in enumerate(chosen):
    panel=Image.new('RGBA',(1024,1080),'#252c35');panel.alpha_composite(actor(frames[t],'katana'))
@@ -45,7 +45,7 @@ def main():
    board.paste(panel.convert('RGB'),(i%3*768,i//3*620+42));ImageDraw.Draw(board).text((i%3*768+12,i//3*620+5),f'{name} t{t}',font=small,fill='white')
   board.save(OUT/(name+'_keyframes.png'))
   for t in chosen:
-   if t in ([7,8,12,15,22,25] if manifest['revision'].startswith('v7_c7_first_cut_pilot') else [8,12,len(frames)//2]):screen(frames[t],name,t).save(OUT/(name+f'_t{t}_native_2k.png'))
+   if t in ([7,8,12,15,22,25] if manifest['revision'].startswith(('v7_c7_first_cut_pilot','v7_c8_first_cut')) else [8,12,len(frames)//2]):screen(frames[t],name,t).save(OUT/(name+f'_t{t}_native_2k.png'))
   if args.movies:
    file=OUT/(name+'_60fps.mp4');log=open(ROOT/'temp'/('c6_'+name+'_ffmpeg.log'),'wb')
    process=subprocess.Popen([imageio_ffmpeg.get_ffmpeg_exe(),'-y','-f','rawvideo','-pixel_format','rgb24','-video_size','2560x1440','-framerate','60','-i','pipe:0','-an','-c:v','libx264','-preset','veryfast','-crf','18','-pix_fmt','yuv420p',str(file)],stdin=subprocess.PIPE,stderr=log)
@@ -61,13 +61,20 @@ def main():
 <script>const names=__NAMES__;const clip=document.querySelector('#clip'),video=document.querySelector('#video'),speed=document.querySelector('#speed');for(const name of names){const option=document.createElement('option');option.value=name+'_60fps.mp4';option.textContent=name;clip.append(option)}
 const game=document.createElement('option');game.value='gameplay_1080p.mp4';game.textContent='旧游戏连续操作（实机1080p，动作已退回）';clip.append(game);function load(){video.src=clip.value;video.playbackRate=Number(speed.value);video.play().catch(()=>{})}clip.onchange=load;speed.onchange=()=>video.playbackRate=Number(speed.value);for(const [id,d]of[['previous',-1],['next',1]])document.querySelector('#'+id).onclick=()=>{video.pause();video.currentTime=Math.max(0,video.currentTime+d/60)};load();</script></html>'''.replace('__NAMES__',json.dumps(names))
  (OUT/'index.html').write_text(html,encoding='utf-8',newline='\n')
- if manifest['revision'].startswith('v7_c7_first_cut_pilot'):
+ if manifest['revision'].startswith(('v7_c7_first_cut_pilot','v7_c8_first_cut')):
   html=html.replace('鬼剑士 c6 历史候选 / 部分退回','鬼剑士 c7 第一刀分层样片').replace('用户已认可 idle 与采样流畅度；行走、奔跑和三连的动作设计已退回。离线片段为原生 2K；旧引擎连续录像实际 1080p，已纠正原命名。默认半速；力量感请同时看 1×。不含技能。','用户已认可新三姿势的发力方向。此片段使用同一身体/手指层切换太刀、巨剑、短剑，保留原30tick时长，未接入游戏。原生2K、无刀光，默认半速；请同时看实速。G1通过不代表完整动作或G3获认可。')
   html=html.replace("clip.append(game);function load()","function load()")
   html=html.replace('游戏视频含真实操作与恢复过渡，离线视频只显示各片段自身。','仅为第一刀完整离线样片；尚未制作其余两刀和新步态，不是整套已经修好。')
   if (PACKAGE/'visual_review.json').is_file():
    review=json.loads((PACKAGE/'visual_review.json').read_text(encoding='utf-8'))
    if review['status']=='rejected':html=html.replace('鬼剑士 c7 第一刀分层样片','鬼剑士 c7 内部失败样片 / 未接入').replace('<select id="clip">','<p style="color:#ffb1a6">内部检查退回：收刀时双手分开段仍有条带变形，不能作为修复成品或铺量模板。</p><select id="clip">')
+  (OUT/'index.html').write_text(html,encoding='utf-8',newline='\n')
+ if manifest['revision'].startswith('v7_c8_first_cut'):
+  html=html.replace('鬼剑士 c6 动作返修预览','鬼剑士 c8 第一刀试用').replace('鬼剑士 c7 第一刀分层样片','鬼剑士 c8 第一刀试用')
+  html=html.replace('保留原30tick时长，未接入游戏。','保留原30tick时长；已接入 P 面板“新第一刀试用”，默认仍用现版。')
+  if (OUT/'first_cut_native_2k.mp4').exists():
+   html=html.replace("function load(){video.src=clip.value;", "const live=document.createElement('option');live.value='first_cut_native_2k.mp4';live.textContent='实机：三武器 × 左右朝向（原生2K）';clip.prepend(live);clip.value=live.value;function load(){video.src=clip.value;")
+   html=html.replace('仅为第一刀完整离线样片；尚未制作其余两刀和新步态，不是整套已经修好。','实机视频由真实 GM 命令与攻击输入录制。离线 attack1 直接消费同一试用包。其余两刀和新步态仍在制作；仅第一刀已接入试用，完整动作质量尚待验收。')
   (OUT/'index.html').write_text(html,encoding='utf-8',newline='\n')
  evidence={'package_sha256':hashlib.sha256((PACKAGE/'manifest.json').read_bytes()).hexdigest(),'clips':names,'review_files':{p.name:hashlib.sha256(p.read_bytes()).hexdigest()for p in OUT.iterdir()if p.suffix in ['.png','.mp4','.html']},'artwork_approved':False,'runtime_user_approved':False}
  (OUT/'review_manifest.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')

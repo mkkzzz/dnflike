@@ -1,0 +1,210 @@
+{
+  "revision": "v7_c8_attack1_breakdowns",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/base_batch_c8_body/attack1_breakdowns_c1",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "body_c2.png",
+      "standing_height": 476
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "G1": "reviewed_true_hair_jaw",
+    "G2": "approved_slash_direction_new_recovery_breakdown_pending",
+    "G3": "pending",
+    "G4": "pending",
+    "runtime_install_allowed": false
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.combo.1",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c8_attack1_windup",
+          "source": "body",
+          "crop_bbox": [
+            610,
+            45,
+            1035,
+            500
+          ],
+          "root": [
+            820,
+            488
+          ],
+          "foot": [
+            670,
+            488
+          ],
+          "component_seed": [
+            820,
+            240
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              762,
+              165
+            ],
+            "offhand": [
+              776,
+              182
+            ]
+          }
+        },
+        {
+          "id": "c8_attack1_sweep",
+          "source": "body",
+          "crop_bbox": [
+            50,
+            505,
+            580,
+            925
+          ],
+          "root": [
+            335,
+            912
+          ],
+          "foot": [
+            531,
+            912
+          ],
+          "component_seed": [
+            390,
+            690
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              379,
+              664
+            ],
+            "offhand": [
+              369,
+              656
+            ]
+          }
+        },
+        {
+          "id": "c8_attack1_late",
+          "source": "body",
+          "crop_bbox": [
+            590,
+            520,
+            1100,
+            925
+          ],
+          "root": [
+            864,
+            913
+          ],
+          "foot": [
+            1050,
+            913
+          ],
+          "component_seed": [
+            910,
+            700
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              835,
+              705
+            ],
+            "offhand": [
+              844,
+              698
+            ]
+          }
+        },
+        {
+          "id": "c8_attack1_recover_breakdown",
+          "source": "body",
+          "crop_bbox": [
+            1155,
+            490,
+            1625,
+            925
+          ],
+          "root": [
+            1400,
+            913
+          ],
+          "foot": [
+            1570,
+            913
+          ],
+          "component_seed": [
+            1410,
+            700
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1361,
+              646
+            ],
+            "offhand": [
+              1376,
+              667
+            ]
+          }
+        }
+      ]
+    },
+    "neutral": {
+      "asset_id": "actor.player.proportion.neutral",
+      "loop": false,
+      "root_mode": "ground",
+      "include_in_overview": false,
+      "poses": [
+        {
+          "id": "c8_breakdowns_gauge",
+          "source": "body",
+          "crop_bbox": [
+            185,
+            5,
+            445,
+            505
+          ],
+          "root": [
+            330,
+            491
+          ],
+          "foot": [
+            248,
+            491
+          ],
+          "component_seed": [
+            330,
+            210
+          ],
+          "alpha_core_threshold": 180,
+          "component_padding": 0,
+          "duration_ticks": 1
+        }
+      ]
+    }
+  }
+}

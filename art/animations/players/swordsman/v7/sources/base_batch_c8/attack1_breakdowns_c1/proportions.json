@@ -1,0 +1,127 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-21",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack1_breakdowns_c1/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Manual native-pixel hair-tip and true lower-jaw review. Hair tip is the highest alpha>=180 component connected to the actor, matching component isolation. Standing companion gives common anatomical scale.",
+  "sources": {
+    "body": {
+      "sha256": "255e93afaf0703c881f6e0e1af0aa7060e3a7a6120377e2c76c3ead03c74fab2",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 15,
+        "standing_bottom_y": 491,
+        "sole": [
+          248,
+          491
+        ],
+        "crop_bbox": [
+          185,
+          5,
+          445,
+          505
+        ],
+        "head": {
+          "hair_top": [
+            334,
+            15
+          ],
+          "chin": [
+            346,
+            83
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c8_attack1_windup",
+      "head": {
+        "hair_top": [
+          846,
+          59
+        ],
+        "chin": [
+          850,
+          132
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c8_attack1_sweep",
+      "head": {
+        "hair_top": [
+          380,
+          520
+        ],
+        "chin": [
+          389,
+          590
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c8_attack1_late",
+      "head": {
+        "hair_top": [
+          958,
+          535
+        ],
+        "chin": [
+          972,
+          606
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c8_attack1_recover_breakdown",
+      "head": {
+        "hair_top": [
+          1458,
+          502
+        ],
+        "chin": [
+          1469,
+          575
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c8_breakdowns_gauge",
+      "head": {
+        "hair_top": [
+          334,
+          15
+        ],
+        "chin": [
+          346,
+          83
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "landmark_overlay.png",
+    "sha256": "c20b18166e73e53edf3f0ed69615f42439bdd4e877ab98c1ae047a60d5fbed82",
+    "reviewed": true
+  }
+}
