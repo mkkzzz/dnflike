@@ -7,6 +7,7 @@ const NativeSkin = preload("res://ui/flow/native_skin.gd")
 const Windows = preload("res://ui/flow/native_windows.gd")
 const CombatSession = preload("res://combat/api/combat_session.gd")
 const Catalog = preload("res://items/catalog.gd")
+const DisplaySettings = preload("res://ui/flow/display_settings.gd")
 var session = Session.new()
 var store = Store.new()
 var town
@@ -29,17 +30,12 @@ var toast_panel: Control
 var test_mode := false
 var save_failed := false
 var skill_views: Dictionary = {}
+var display_settings = DisplaySettings.new()
 
 func _ready() -> void:
 	test_mode = "--loop-test" in OS.get_cmdline_user_args()
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	get_window().content_scale_size = Vector2i(800, 600)
-	# Rasterize dynamic fonts at the physical window resolution. Native textures
-	# still use nearest filtering and integer scaling, without invented pixels.
-	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
-	get_window().content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
-	var usable := DisplayServer.screen_get_usable_rect().size
-	get_window().size = Vector2i(1600, 1200) if test_mode or (usable.x >= 1600 and usable.y >= 1240) else Vector2i(800, 600)
+	display_settings.setup(get_window(), test_mode)
 	get_window().title = "艾尔文防线 · 冒险循环"
 	if test_mode:store.path = "res://../temp/loop_tests/ui_profile.json"
 	else:
@@ -178,6 +174,18 @@ func _process(delta: float) -> void:
 	if is_instance_valid(battle) and overlay == "" and combat.read_view()["paused"]:
 		show_overlay("menu")
 
+func _input(event: InputEvent) -> void:
+	if not event is InputEventKey or not event.is_pressed() or event.is_echo():return
+	var key := int(event.physical_keycode if event.physical_keycode else event.keycode)
+	if key == KEY_F3:
+		display_settings.cycle_window_size()
+	elif key == KEY_F11:
+		display_settings.toggle_fullscreen()
+	else:return
+	get_viewport().set_input_as_handled()
+	if overlay == "menu":show_overlay("menu")
+	notice(display_settings.description())
+
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not event.is_pressed() or event.is_echo():return
 	var key := int(event.physical_keycode if event.physical_keycode else event.keycode)
@@ -299,14 +307,25 @@ func return_town() -> void:
 	notice("回到艾尔文防线 · " + ("保存失败，请重试" if save_failed else "进度已保存"))
 
 func menu_panel() -> void:
-	var panel = title_panel("冒险菜单", Rect2(246, 120, 308, 280))
-	skin.button(panel, "继续游戏", Vector2(103, 63), func(): show_overlay(""))
-	skin.button(panel, "保存进度", Vector2(103, 105), func(): save_profile())
-	if session.state == "battle":skin.button(panel, "撤退回城", Vector2(103, 147), func():
+	var panel = title_panel("冒险菜单", Rect2(218, 88, 364, 360))
+	skin.button(panel, "继续游戏", Vector2(132, 58), func(): show_overlay(""))
+	skin.button(panel, "保存进度", Vector2(132, 96), func(): save_profile())
+	if session.state == "battle":skin.button(panel, "撤退回城", Vector2(132, 134), func():
 		if act("flow.retreat"):show_overlay("result"))
-	skin.button(panel, "原始大小", Vector2(48, 195), func(): get_window().size = Vector2i(800, 600))
-	skin.button(panel, "两倍大小", Vector2(160, 195), func(): get_window().size = Vector2i(1600, 1200))
-	skin.label(panel, "中断的战斗重进后安全回城", Vector2(48, 245), 12)
+	skin.label(panel, "画面大小", Vector2(24, 178), 13, Color("f0d18a"))
+	for entry in [["800×600", Vector2i(800, 600)], ["1200×900", Vector2i(1200, 900)], ["1600×1200", Vector2i(1600, 1200)]]:
+		var size: Vector2i = entry[1]
+		var index: int = DisplaySettings.PRESETS.find(size)
+		skin.button(panel, entry[0], Vector2(24 + index * 107, 205), func():
+			display_settings.set_window_size(size)
+			show_overlay("menu")
+			notice(display_settings.description()))
+	skin.button(panel, "返回窗口" if display_settings.is_fullscreen() else "切换全屏", Vector2(24, 244), func():
+		display_settings.toggle_fullscreen()
+		show_overlay("menu"))
+	skin.label(panel, display_settings.description(), Vector2(24, 278), 11)
+	skin.label(panel, "保持原版比例 · 小屏自动适配", Vector2(24, 300), 11)
+	skin.label(panel, "中断的战斗重进后安全回城", Vector2(24, 324), 11)
 
 func use_potion() -> void:
 	if not is_instance_valid(battle) or session.state != "battle":notice("进入地下城后可使用恢复药剂"); return
