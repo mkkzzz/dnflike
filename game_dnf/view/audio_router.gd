@@ -21,11 +21,21 @@ func setup(audio_assets: Dictionary) -> void:
 	music.volume_db = -28
 	add_child(music)
 
-func start_music() -> void:
-	if not sound_streams.has("music"):return
+func start_music(volume_db := -28.0) -> void:
+	if not sound_streams.has("music") or music.playing:return
+	music.volume_db = volume_db
 	music.stream = sound_streams["music"]
-	music.finished.connect(music.play)
+	if not music.finished.is_connected(music.play):music.finished.connect(music.play)
 	music.play()
+
+## Release streams before the node leaves so no Ogg playback outlives the scene.
+func _exit_tree() -> void:
+	music.stop()
+	music.stream = null
+	for voice: AudioStreamPlayer in voice_pool:
+		voice.stop()
+		voice.stream = null
+	sound_streams.clear()
 
 func on_cue(event: Dictionary) -> void:
 	if String(event.get("kind","")) == "sound":play(String(event["key"]))
