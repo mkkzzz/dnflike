@@ -5,6 +5,7 @@ Godot 4.7.2 单机横版动作 RPG。原生像素新版已接基础战斗、双�
 > 参与开发先读 [AGENTS.md](AGENTS.md)。当前进度见 [进度看板](docs/project/01_进度看板.md)，全部文档见 [文档索引](docs/project/07_文档索引.md)。
 
 **原生像素新版**：[game_dnf](game_dnf/README.md)，运行 `tools/run_dnf.ps1`。资源从独立私有库同步，完整库放工程外；接入见[共享说明](docs/design/23_DNF资源共享与工作区接入.md)。
+**城镇与完整试炼循环**：运行 `tools/run_dnf_loop.ps1`，接任务/购买→五房战斗→结算回城→装备成长/保存。原素材小包自动同步，见[实装记录](docs/reports/ws2/2026-10/2026-10-22_原生素材城镇循环首轮实装.md)，画面待试玩验收。
 
 ## 开始试玩
 

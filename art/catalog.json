@@ -156,6 +156,7 @@
     "binary_file_count": 799
   },
   "assets": {
+    "dnf_loop_native_v1": "game_dnf/flow_store.json",
     "hud_reference_v2_candidate": "art/ui/hud/reference_v2/manifest.json",
     "hud_reference_v2_batch_01": "art/ui/hud/reference_v2/batch_01/manifest.json",
     "hud_reference_v2_runtime_01": "game/assets/ui/hud_v2/manifest.json",

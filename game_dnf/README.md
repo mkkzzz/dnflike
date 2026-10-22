@@ -11,6 +11,10 @@
 ```powershell
 # 仓库根目录：启动游戏
 tools/run_dnf.ps1
+# 城镇→五房战斗→结算回城/背包/任务/存档（独立入口）
+tools/run_dnf_loop.ps1
+# 同入口鼠标/战斗/存档检查，保存实际画面
+tools/run_dnf_loop.ps1 -Test -Capture
 # 打开新版编辑器
 tools/run_dnf.ps1 -Editor
 # 自动化战斗/副本验证；-Capture 额外保存实际渲染帧到 temp/
@@ -38,6 +42,7 @@ Windows 默认缓存根为仓库所在盘的 `dnflike-assets`；可设 `DNFLIKE_
 GitHub 凭据从现有 Git 登录或本机 `GH_TOKEN` 读取，凭据不写入仓库。
 从外部完整库重建需 Pillow；已选源齐全时运行 `python tools/build_dnf_assets.py`。
 来源、权限和完整同步步骤见[共享说明](../docs/design/23_DNF资源共享与工作区接入.md)。
+循环用独立小包自动同步，不需原客户端或完整库；分工/临时战斗桥与未完成项见[循环实装记录](../docs/reports/ws2/2026-10/2026-10-22_原生素材城镇循环首轮实装.md)。
 
 ## 操作
 
