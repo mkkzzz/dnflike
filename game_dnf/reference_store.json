@@ -1,0 +1,17 @@
+{
+  "schema": "dnflike_reference_store/1",
+  "version": "dnf-reference-v1-20261022",
+  "repository": "mkkzzz/dnflike-assets",
+  "tag": "dnf-reference-v1-20261022",
+  "base_asset_version": "dnf-native-assets-v1-20261022",
+  "packs": [
+    {
+      "name": "references-01.zip",
+      "kind": "references",
+      "bytes": 3316896,
+      "sha256": "45d85f3011f4f8d6a8926e79c2bd579113e474f2e97d7d7216ed4b6d3de1b02c",
+      "files": 5,
+      "unpacked_bytes": 5018747
+    }
+  ]
+}

@@ -3,6 +3,7 @@
 ## 存储与版本
 
 用户 2026-10-22 验收新版实机演示，并将原先“资源暂不上传”改为允许上传全部资源。
+用户进一步指定ws1战斗、ws2完整循环，并要求ws2供应所有相关开发资料；本轮分工/交付责任见[28契约](28_工作区分工与原版资料共享.md)。
 完整资源库放在工程外，所有工作区使用同一份版本清单，不把全库加入 Godot 导入范围。
 本次授权是项目内资源共享决定，不声明第三方资源的著作权归属发生变化。
 
@@ -12,6 +13,8 @@
 | 远程完整包 | [独立资源仓库](https://github.com/mkkzzz/dnflike-assets) 的 Releases | 全部已提取资源、索引、来源、动作配置备份与运行包 |
 | 同机共享缓存 | Windows 仓库所在盘的 `dnflike-assets/<version>/` | `library_v1/` 是完整库；`runtime/` 是精选运行源与成品 |
 | 项目消费副本 | `game_dnf/assets_local/` | 只复制本版运行所需文件，不进入源码 Git |
+| 补充原版参考包 | `game_dnf/reference_store.json`锁定的独立Release | 原物品/装备代码表、新手说明原件与来源定位；独立缓存，不改游戏消费副本 |
+| 全部来源入口 | `game_dnf/source_materials.json` | 已共享PVF/数据库/声音映射与补充资料的路径/哈希、未知取证项 |
 
 远程资源库采用独立私有仓库；公开源码仓库不等于资源库公开。
 Godot 的 `.godot`、`.import` 缓存不进共享包。
@@ -28,6 +31,8 @@ python tools/dnf_asset_store.py sync
 tools/run_dnf.ps1
 # 开发时需要浏览/筛选全库再执行
 python tools/dnf_asset_store.py sync --full
+# 原版补充说明/代码表；与运行资源锁独立
+python tools/sync_dnf_references.py
 # 完整库的分类检索、逐帧查看、ANI/配置查询与单个IMG导出（需Pillow）
 python tools/browse_dnf_assets.py
 ```
@@ -86,3 +91,4 @@ python tools/build_dnf_assets.py
 完成后再同步主仓库的锁文件、文档与交接记录。
 
 本轮发布快照及验收边界见[共享记录](../reports/ws2/2026-10/2026-10-22_DNF资源共享与验收.md)。
+补充资料发布与新分工记录见[本轮交接](../reports/ws2/2026-10/2026-10-22_战斗循环分工与原版资料共享.md)。说明文档和代码表是原整合包参考，可能含定制/后期内容；有效性仍须核实。

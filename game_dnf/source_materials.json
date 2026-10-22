@@ -1,0 +1,99 @@
+{
+  "schema": "dnf_shared_source_materials/1",
+  "version": "dnf-reference-v1-20261022",
+  "base_asset_version": "dnf-native-assets-v1-20261022",
+  "scope": "shared_extracted_client_resources_and_source_notes; effective runtime config remains unconfirmed",
+  "existing_library_materials": [
+    {
+      "original_path": "ImagePacks2/Script.pvf",
+      "library_path": "assets/12_config/Script_375033/471bf50854d764e6dde4_Script.pvf",
+      "bytes": 202396005,
+      "sha256": "3893d5d1506bcc332ca4b6438f6f884d128481641483bee9478cad8d0221fe01",
+      "available_via": "asset_store.json --full"
+    },
+    {
+      "original_path": "Script.pvf",
+      "library_path": "assets/12_config/Script_fa278d/e59021b91422e0fd46ec_Script.pvf",
+      "bytes": 183230422,
+      "sha256": "3c0e8050082ddf922abe0fe9643f3550cf42ab14576caf2ba6b1aeb3881bcea4",
+      "available_via": "asset_store.json --full"
+    },
+    {
+      "original_path": "audio.xml",
+      "library_path": "assets/12_config/audio_dcf063/a491b5577a1f5d4ec2b9_audio.xml",
+      "bytes": 1077740,
+      "sha256": "bedd44527f3806f50a727867d5ba32456635b7aadc7d2537038910c056b822f4",
+      "available_via": "asset_store.json --full"
+    },
+    {
+      "original_path": "adjacent_backup/111Script.pvf",
+      "library_path": "config_source/111Script.pvf",
+      "bytes": 202404709,
+      "sha256": "f48850456b7dc0107278fb3f3a74fd68ee404889b95880f3204ce10fbd179be0",
+      "available_via": "asset_store.json --full"
+    },
+    {
+      "original_path": "catalog.sqlite",
+      "library_path": "catalog.sqlite",
+      "bytes": 55050240,
+      "sha256": "f49b8fa387e8b6c6bb72ca384a8c9aea712ff0b4085bd62eaadeaa38ca4a12ae",
+      "available_via": "asset_store.json --full"
+    },
+    {
+      "original_path": "pvf_config.sqlite",
+      "library_path": "pvf_config.sqlite",
+      "bytes": 671043584,
+      "sha256": "74d5681b9afd0816b50d46e1150afebd10e66fe196de14bf0fa5bf56124a2799",
+      "available_via": "asset_store.json --full"
+    },
+    {
+      "original_path": "config_summary.json",
+      "library_path": "config_summary.json",
+      "bytes": 4797,
+      "sha256": "98f3630c1710445b4dca36144449aae740abf7ebacdf3af95fd902e3b5d6cec3",
+      "available_via": "asset_store.json --full"
+    },
+    {
+      "original_path": "summary.json",
+      "library_path": "summary.json",
+      "bytes": 3545,
+      "sha256": "0b56ae1df931775337ec32a7842507242de4e0b5d4b9add8099836182d13ccfc",
+      "available_via": "asset_store.json --full"
+    }
+  ],
+  "supplemental_materials": [
+    {
+      "id": "item_codes",
+      "path": "references/source_notes/item_codes.txt",
+      "bytes": 491381,
+      "sha256": "6cfd987961a474b6a3b9009a6c6e6edbf1539c79ab3629608db1163874fa860c",
+      "original_name": "物品代码.txt",
+      "status": "source_document_not_verified_runtime",
+      "encoding": "original_bytes"
+    },
+    {
+      "id": "equipment_codes",
+      "path": "references/source_notes/equipment_codes.txt",
+      "bytes": 1645305,
+      "sha256": "23170964f5be84bc09d7cb8236041384e49c5a953422bc77afc60a1b8ca9595e",
+      "original_name": "装备代码.txt",
+      "status": "source_document_not_verified_runtime",
+      "encoding": "original_bytes"
+    },
+    {
+      "id": "new_player_guide",
+      "path": "references/source_notes/new_player_guide.docx",
+      "bytes": 2877853,
+      "sha256": "7276cff0207c29caf6da719910d77312cf85f813ff4ddf614954b0c62f646729",
+      "original_name": "必看.新人攻略.docx",
+      "status": "source_document_not_verified_runtime",
+      "encoding": "original_bytes"
+    }
+  ],
+  "unavailable_evidence": [
+    "effective_runtime_pvf_selection",
+    "original_client_runtime_comparison_recordings",
+    "matching_server_design_and_database_extraction"
+  ],
+  "unrelated_candidate": "DNF1031 client/server remain separate and are not mixed into this reference package"
+}
