@@ -88,7 +88,8 @@ func _draw() -> void:
 		var width := font.get_string_size(message,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x
 		draw_rect(Rect2(320-width/2-16,71,width+32,27),Color(0.03,0.07,0.06,0.7))
 		text(Vector2(320-width/2,90),message,13,Color(1,0.87,0.52))
-	if game.finished:
+	# Settlement UI belongs to the flow side when the scene is externally managed.
+	if game.finished and not game.external_mode:
 		draw_rect(Rect2(0,0,640,291),Color(0.02,0.04,0.04,0.67))
 		text(Vector2(237,135),"地下城通关" if game.victory else "挑战失败",26,Color(1,0.81,0.39))
 		var rank := "S" if game.damage_taken<100 and game.elapsed_ms<100000 else "A" if game.damage_taken<250 else "B"

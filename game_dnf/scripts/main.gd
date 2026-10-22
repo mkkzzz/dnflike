@@ -5,7 +5,17 @@ const Stage = preload("res://scripts/native_stage.gd")
 const Prop = preload("res://scripts/native_prop.gd")
 const Hud = preload("res://scripts/native_hud.gd")
 const TestDrive = preload("res://scripts/test_drive.gd")
+const EventBus = preload("res://core/event_bus.gd")
+const ContentDB = preload("res://content/api/content_db.gd")
+const CombatSession = preload("res://combat/api/combat_session.gd")
 
+## Set before entering the tree when a flow root manages this scene (see CombatSession.mount).
+var external_mode := false
+var bus = EventBus.new()
+var content = ContentDB.new()
+var session
+var run_id := "standalone"
+var room_id := ""
 var assets: Dictionary = {}
 var rules: Dictionary = {}
 var player_clips: Dictionary = {}
@@ -29,6 +39,8 @@ var requests: Array = []
 var last_direction_tap: Dictionary = {}
 var run_direction := 0
 var hitstop_ms := 0.0
+var action_seq := 0
+var _next_entity_id := 1
 var shake_ms := 0.0
 var shake_strength := 0.0
 var toast := ""
@@ -63,16 +75,14 @@ var _muted := false
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	var path := "res://assets_local/manifest.json"
-	if not FileAccess.file_exists(path):
+	if not content.load_files("res://assets_local/manifest.json","res://data/combat.json","res://data/override"):
 		missing_assets = true
 		queue_redraw()
 		return
-	assets = JSON.parse_string(FileAccess.get_file_as_string(path))
-	rules = JSON.parse_string(FileAccess.get_file_as_string("res://data/combat.json"))
-	for key: String in assets["clips"]:
-		var target: Dictionary = player_clips if key.begins_with("player/") else monster_clips
-		target[key.get_slice("/",1)] = assets["clips"][key]
+	assets = content.runtime
+	rules = content.rules()
+	player_clips = content.clips("player")
+	monster_clips = content.clips("goblin")
 	world = Node2D.new()
 	add_child(world)
 	stage = Stage.new()
@@ -99,19 +109,23 @@ func _ready() -> void:
 	music = AudioStreamPlayer.new()
 	music.volume_db = -28
 	audio.add_child(music)
-	if sound_streams.has("music"):
+	# Managed mode leaves dungeon BGM to the flow side; tests never start it.
+	if sound_streams.has("music") and not external_mode and not "--test" in OS.get_cmdline_user_args():
 		music.stream = sound_streams["music"]
-		music.finished.connect(func():music.play())
+		music.finished.connect(music.play)
 		music.play()
-	restart()
+	if not external_mode:
+		session = CombatSession.new()
+		session.attach(self)
+		restart()
 	_capture = "--capture" in OS.get_cmdline_user_args()
 	if "--test" in OS.get_cmdline_user_args():
 		_muted = true
-		music.stop()
-		test_drive = TestDrive.new()
-		test_drive.game = self
-		add_child(test_drive)
-	get_window().title = "格兰之森 · 新版战斗验证"
+		if not external_mode:
+			test_drive = TestDrive.new()
+			test_drive.game = self
+			add_child(test_drive)
+	if not external_mode:get_window().title = "格兰之森 · 新版战斗验证"
 	if "--review" in OS.get_cmdline_user_args():paused = true
 
 func _notification(what: int) -> void:
@@ -121,11 +135,25 @@ func _notification(what: int) -> void:
 		if not finished:paused = true
 
 func restart() -> void:
+	begin_room({"run_id":"standalone","room_index":0,"from":"start"})
+	notice("格兰之森 · 清除怪物，继续深入")
+
+## Spec fields (contract v1): run_id, room_id, room_index (transitional trial route),
+## from (entry side), player {hp, mp, job, weapon}. Long-term profile data stays with flow.
+func begin_room(spec: Dictionary) -> void:
 	player = {"pos":Vector2(125,250),"z":0.0,"vz":0.0,"air_ms":0.0,
 		"hp":float(rules["player"]["hp"]),"mp":float(rules["player"]["mp"]),
 		"facing":1,"state":"idle","action":"","clock":0.0,"motion_clock":0.0,
 		"hurt_ms":0.0,"invuln_ms":0.0,"flash_ms":0.0,"landing_ms":0.0,
 		"buff_ms":0.0,"cooldowns":{},"hits":{},"queued_combo":false,"queued_skill":"","queued_jump":false}
+	var snapshot: Dictionary = spec.get("player",{})
+	if snapshot.has("hp"):player["hp"] = clampf(float(snapshot["hp"]),1,float(rules["player"]["hp"]))
+	if snapshot.has("mp"):player["mp"] = clampf(float(snapshot["mp"]),0,float(rules["player"]["mp"]))
+	if snapshot.get("job","") in ["weaponmaster","berserker"]:job = String(snapshot["job"])
+	if assets["players"].has(String(snapshot.get("weapon",""))):
+		weapon = String(snapshot["weapon"])
+		player_view.setup(assets["players"][weapon],player_clips)
+	run_id = String(spec.get("run_id","standalone"))
 	room_snapshots.clear()
 	finished = false
 	victory = false
@@ -138,8 +166,8 @@ func restart() -> void:
 	held.clear()
 	taps.clear()
 	hitstop_ms = 0
-	load_room(0,"start")
-	notice("格兰之森 · 清除怪物，继续深入")
+	load_room(clampi(int(spec.get("room_index",0)),0,rules["rooms"].size()-1),String(spec.get("from","start")))
+	if spec.has("room_id"):room_id = String(spec["room_id"])
 
 func _input(event: InputEvent) -> void:
 	if not event is InputEventKey:return
@@ -153,7 +181,7 @@ func _input(event: InputEvent) -> void:
 		KEY_F1:help_visible = not help_visible
 		KEY_ESCAPE:paused = not paused
 		KEY_R:
-			if finished:restart()
+			if finished and not external_mode:restart()
 		KEY_F2:
 			show_collision = not show_collision
 			stage.debug_collision = show_collision
@@ -184,10 +212,12 @@ func notice(message: String) -> void:
 
 func _physics_process(delta: float) -> void:
 	_frame += 1
-	if missing_assets:return
+	if missing_assets or player.is_empty():return
 	if test_drive != null:test_drive.before_tick()
 	var ms := delta*1000
 	toast_ms = maxf(0,toast_ms-ms)
+	bus.tick = _frame
+	bus.time_ms = elapsed_ms
 	if not paused and not finished:
 		elapsed_ms += ms
 		if hitstop_ms > 0:
@@ -326,13 +356,16 @@ func step_game(ms: float) -> void:
 	effects = effects.filter(func(fx):return is_instance_valid(fx) and not fx.is_queued_for_deletion())
 	var all_dead := true
 	for enemy: Dictionary in monsters:
+		if float(enemy["hp"])<=0:report_defeat(enemy)
 		if float(enemy["hp"])>0 or float(enemy["death_ms"])<820:all_dead = false
 	if all_dead and not room_cleared:
 		room_cleared = true
 		stage.cleared = true
 		stage.queue_redraw()
 		room_snapshots[room_index] = {"cleared":true,"props":props.duplicate(true)}
-		if bool(rules["rooms"][room_index].get("boss",false)):
+		var boss := bool(rules["rooms"][room_index].get("boss",false))
+		bus.emit("combat.room_combat_finished",flow_payload({"boss":boss}))
+		if boss:
 			finished = true
 			victory = true
 			stage.cleared = false
@@ -347,19 +380,41 @@ func step_game(ms: float) -> void:
 func action_duration(action: String) -> float:
 	return float(player_clips[String(rules["moves"][action]["ani"])]["duration_ms"])
 
+func flow_payload(extra := {}) -> Dictionary:
+	var payload := {"run_id":run_id,"room_id":room_id,"room_index":room_index,
+		"stats":{"elapsed_ms":elapsed_ms,"hit_count":hit_count,"damage_taken":damage_taken},
+		"player":{"hp":float(player["hp"]),"mp":float(player["mp"]),"job":job,"weapon":weapon}}
+	payload.merge(extra,true)
+	return payload
+
+func report_defeat(enemy: Dictionary) -> void:
+	if enemy.get("defeat_reported",false):return
+	enemy["defeat_reported"] = true
+	# Trial appearance keys, not verified original monster IDs (DNF-D013).
+	bus.emit("combat.monster_defeated",{"run_id":run_id,"room_id":room_id,"room_index":room_index,
+		"entity_id":enemy["id"],"monster_id":"trial/goblin_chief" if enemy["chief"] else "trial/goblin",
+		"position":Vector2(enemy["pos"])})
+
+func reject_action(name: String, reason: String) -> bool:
+	bus.emit("combat.action_rejected",{"entity_id":0,"action":name,"reason":reason})
+	return false
+
 func start_action(name: String, cancel := false) -> bool:
 	if name=="buff":
-		if float(player["cooldowns"].get("buff",0))>0 or float(player["mp"])<15:return false
+		if float(player["cooldowns"].get("buff",0))>0:return reject_action(name,"cooldown")
+		if float(player["mp"])<15:return reject_action(name,"mp")
 		player["buff_ms"] = 8000.0
 		player["cooldowns"]["buff"] = 10.0
 		player["mp"] = float(player["mp"])-15
 		notice("血怒 · 攻击与移动加速")
+		bus.emit("combat.action_started",{"entity_id":0,"action":name,"instance":0})
 		return true
-	if not rules["moves"].has(name):return false
-	if (float(player["z"])>0 or float(player["vz"])>0) and name!="air_attack":return false
-	if not cancel and String(player["state"]) in ["hurt","dead","backstep","action"]:return false
+	if not rules["moves"].has(name):return reject_action(name,"unknown")
+	if (float(player["z"])>0 or float(player["vz"])>0) and name!="air_attack":return reject_action(name,"state")
+	if not cancel and String(player["state"]) in ["hurt","dead","backstep","action"]:return reject_action(name,"state")
 	var move: Dictionary = rules["moves"][name]
-	if float(player["cooldowns"].get(name,0))>0 or float(player["mp"])<float(move.get("mp",0)):return false
+	if float(player["cooldowns"].get(name,0))>0:return reject_action(name,"cooldown")
+	if float(player["mp"])<float(move.get("mp",0)):return reject_action(name,"mp")
 	player["mp"] = float(player["mp"])-float(move.get("mp",0))
 	player["cooldowns"][name] = float(move.get("cooldown",0))
 	player["state"] = "action"
@@ -369,6 +424,8 @@ func start_action(name: String, cancel := false) -> bool:
 	player["queued_combo"] = false
 	player["queued_skill"] = ""
 	player["queued_jump"] = false
+	action_seq += 1
+	bus.emit("combat.action_started",{"entity_id":0,"action":name,"instance":action_seq})
 	if move.has("fx"):spawn_effect(String(move["fx"]),player["pos"],int(player["facing"]),float(player["z"]))
 	play_sound("swing3" if name=="attack3" else "swing2" if name=="attack2" else "upper" if name=="upper" else "draw_ready" if name=="draw" else "thrust" if name=="thrust" else "swing1")
 	return true
@@ -388,7 +445,7 @@ func apply_player_hits(old_ms: float,new_ms: float) -> void:
 			if forward < -14 or forward>float(rule["reach"]) or absf(offset.y)>float(rule["depth"]):continue
 			if absf(float(enemy["z"])-float(player["z"]))>105:continue
 			player["hits"][id] = true
-			hit_enemy(enemy,rule)
+			hit_enemy(enemy,rule,i)
 		for p: Dictionary in props:
 			if not p.get("breakable",false) or p.get("broken",false):continue
 			var offset: Vector2 = Vector2(p["pos"])-Vector2(player["pos"])
@@ -398,8 +455,11 @@ func apply_player_hits(old_ms: float,new_ms: float) -> void:
 				stage.queue_redraw()
 				spawn_effect("hit",p["pos"]-Vector2(0,18),int(player["facing"]))
 
-func hit_enemy(enemy: Dictionary,rule: Dictionary) -> void:
+func hit_enemy(enemy: Dictionary,rule: Dictionary,group := 0) -> void:
 	var damage := float(rule["damage"])*(1.2 if float(player["buff_ms"])>0 else 1.0)
+	bus.emit("combat.hit",{"attacker":0,"target":enemy["id"],"instance":action_seq,"group":group,
+		"point":Vector3(Vector2(enemy["pos"]).x,Vector2(enemy["pos"]).y,float(enemy["z"])),"guarded":false})
+	bus.emit("combat.damage",{"target":enemy["id"],"amount":damage,"critical":false,"category":"physical"})
 	enemy["hp"] = maxf(0,float(enemy["hp"])-damage)
 	enemy["state"] = "hurt"
 	enemy["clock"] = 0.0
@@ -424,6 +484,7 @@ func hit_enemy(enemy: Dictionary,rule: Dictionary) -> void:
 		enemy["state"] = "dead"
 		enemy["death_ms"] = 0.0
 		play_sound("goblin_die")
+		report_defeat(enemy)
 
 func spawn_effect(name: String, point: Vector2, direction: int, z := 0.0) -> void:
 	if not assets["effects"].has(name):return
@@ -511,6 +572,7 @@ func damage_player(amount: float, source: Vector2) -> void:
 		player["state"] = "dead"
 		finished = true
 		victory = false
+		bus.emit("combat.player_defeated",flow_payload())
 
 func constrain_pos(value: Vector2) -> Vector2:
 	return Vector2(clampf(value.x,26,614),clampf(value.y,166,302))
@@ -540,6 +602,7 @@ func load_room(index: int, from_side: String) -> void:
 		if is_instance_valid(fx):fx.queue_free()
 	effects.clear()
 	room_index = index
+	room_id = "trial:%d"%index
 	doors.clear()
 	var entry: Dictionary = rules["rooms"][index]
 	var previous_side := ""
@@ -585,9 +648,10 @@ func spawn_enemy(point: Vector2, chief := false) -> Dictionary:
 	view.setup(assets["goblins"]["chief" if chief else "normal"],monster_clips)
 	view.shadow_width = 14
 	var hp := float(rules["goblin"]["chief_hp"] if chief else rules["goblin"]["hp"])
-	var enemy := {"id":Time.get_ticks_usec(),"pos":constrain_pos(point),"z":0.0,"vz":0.0,"state":"idle","clock":0.0,"hp":hp,"max_hp":hp,"chief":chief,
+	var enemy := {"id":_next_entity_id,"pos":constrain_pos(point),"z":0.0,"vz":0.0,"state":"idle","clock":0.0,"hp":hp,"max_hp":hp,"chief":chief,
 		"hurt_ms":0.0,"flash_ms":0.0,"cooldown":0.5,"attack_done":false,"bounced":false,"death_ms":0.0,"bleed_ms":0.0,"visual":view}
 	monsters.append(enemy)
+	_next_entity_id += 1
 	return enemy
 
 func update_presentation() -> void:
