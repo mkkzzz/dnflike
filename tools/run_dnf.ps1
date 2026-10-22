@@ -42,6 +42,12 @@ if ($importExit -ne 0 -or ($importOutput -match 'SCRIPT ERROR|ERROR:')) {
     throw "New project import failed."
 }
 if ($Editor) {& $GodotPath --path $gamePath --editor; exit $LASTEXITCODE}
+# Compiled original content pack (doc 29 F2). Needs the full library; skipped when it is absent.
+$contentPack=Join-Path $gamePath "assets_local/content/combat_content.json"
+if (-not (Test-Path -LiteralPath $contentPack)) {
+    & python (Join-Path $PSScriptRoot "compile_dnf_content.py") *> $null
+    if ($LASTEXITCODE -ne 0) {Write-Output "Content pack not compiled (full library missing?); pack-dependent checks will be skipped."}
+}
 if ($Test) {
     & python (Join-Path $PSScriptRoot "check_dnf_deps.py")
     if ($LASTEXITCODE -ne 0) {throw "Module dependency check failed; see docs/design/29_新版工程框架.md."}
