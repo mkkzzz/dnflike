@@ -4,13 +4,14 @@ const Session = preload("res://flow/session.gd")
 const Store = preload("res://save/store.gd")
 const Town = preload("res://town/native_town.gd")
 const NativeSkin = preload("res://ui/flow/native_skin.gd")
-const Port = preload("res://flow/legacy_combat_port.gd")
 const Windows = preload("res://ui/flow/native_windows.gd")
+const CombatSession = preload("res://combat/api/combat_session.gd")
 const Catalog = preload("res://items/catalog.gd")
 var session = Session.new()
 var store = Store.new()
 var town
 var battle
+var combat
 var skin
 var windows
 var ui: Control
@@ -138,11 +139,11 @@ func _process(delta: float) -> void:
 	var mp_max := mp
 	var cooldowns: Dictionary = {}
 	if is_instance_valid(battle):
-		var snap: Dictionary = battle.snapshot()
+		var snap: Dictionary = combat.read_view()
 		hp = float(snap["hp"])
 		mp = float(snap["mp"])
-		hp_max = float(snap["max_hp"])
-		mp_max = float(snap["max_mp"])
+		hp_max = float(snap["hp_max"])
+		mp_max = float(snap["mp_max"])
 		cooldowns = snap.get("cooldowns", {})
 		status_text.text = skin.chinese("%s  %d / %d  · X 普攻  Z/A/S 技能  C 跳跃" % [snap["room_name"], snap["room"], snap["room_count"]])
 	else:status_text.text = "艾尔文防线  · 方向键移动  E 交谈  · 药剂 ×%d" % int(p["inventory"].get("potion", 0))
@@ -168,7 +169,7 @@ func _process(delta: float) -> void:
 		notification_seconds -= delta
 		toast_text.text = skin.chinese(notification)
 		toast_panel.visible = notification_seconds > 0 and overlay == ""
-	if is_instance_valid(battle) and overlay == "" and battle.snapshot()["paused"]:
+	if is_instance_valid(battle) and overlay == "" and combat.read_view()["paused"]:
 		show_overlay("menu")
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -225,7 +226,7 @@ func show_overlay(which: String) -> void:
 		if child is Control:child.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		child.queue_free()
 	town.enabled = which == "" and session.state == "town"
-	if is_instance_valid(battle):battle.set_paused(which != "" or session.state != "battle")
+	if is_instance_valid(battle):combat.set_paused(which != "" or session.state != "battle")
 	match which:
 		"npc":npc_panel()
 		"quest":quest_panel()
@@ -260,11 +261,16 @@ func depart() -> void:
 	if not act("flow.depart"):return
 	show_overlay("")
 	town.hide()
-	battle = Port.new()
+	combat = CombatSession.new()
+	battle = combat.mount(self)
 	battle.position = Vector2(80, 100)
-	add_child(battle)
-	battle.flow_event.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
-	battle.start_run(session.run.duplicate(true))
+	combat.room_combat_finished.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
+	combat.player_defeated.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
+	var stat: Dictionary = session.run["stats"]
+	var headless_test := test_mode and DisplayServer.get_name() == "headless"
+	combat.start_room({"run_id": String(session.run["id"]), "room_id": "forest_trial:0", "room_index": 0,
+		"player": {"hp_max": stat["hp"], "mp_max": stat["mp"], "damage_multiplier": stat["damage_multiplier"], "weapon": stat["weapon"]},
+		"audio": {"muted": headless_test, "bgm_volume_db": -32}, "show_hud": false})
 	notice("密林试炼 · 清除怪物后前往出口")
 
 func on_combat_event(event: Dictionary) -> void:
@@ -279,9 +285,9 @@ func result_panel() -> void:
 func return_town() -> void:
 	if not act("flow.return"):return
 	if is_instance_valid(battle):
-		battle.stop_audio()
-		battle.queue_free()
+		combat.stop()
 		battle = null
+		combat = null
 	town.show()
 	show_overlay("")
 	notice("回到艾尔文防线 · " + ("保存失败，请重试" if save_failed else "进度已保存"))
@@ -296,11 +302,11 @@ func menu_panel() -> void:
 
 func use_potion() -> void:
 	if not is_instance_valid(battle) or session.state != "battle":notice("进入地下城后可使用恢复药剂"); return
-	var snap: Dictionary = battle.snapshot()
-	if float(snap["hp"]) >= float(snap["max_hp"]):notice("生命值已满"); return
+	var snap: Dictionary = combat.read_view()
+	if float(snap["hp"]) >= float(snap["hp_max"]):notice("生命值已满"); return
 	if bool(snap["paused"]):notice("请关闭菜单后使用药剂"); return
 	if int(session.profile["inventory"].get("potion", 0)) < 1:notice("恢复药剂不足"); return
-	if battle.apply_heal(int(Catalog.ITEMS["potion"]["heal"])):
+	if combat.apply_effect({"kind": "heal", "amount": int(Catalog.ITEMS["potion"]["heal"])}):
 		session.consume_potion()
 		save_profile()
 		notice("使用恢复药剂 · HP +150")

@@ -1,6 +1,7 @@
 extends Node2D
 ## Transitional battle scene: simulation + composition. Presentation lives in view/ and
-## ui/combat/ and only consumes snapshot() and combat events (doc 29, F1).
+## ui/combat/ and only consumes view_snapshot() and combat events (doc 29, F1).
+## Outside code reaches it only through combat/api/combat_session.gd.
 const TestDrive = preload("res://scripts/test_drive.gd")
 const EventBus = preload("res://core/event_bus.gd")
 const ContentDB = preload("res://content/api/content_db.gd")
@@ -19,12 +20,6 @@ var assets: Dictionary = {}
 var rules: Dictionary = {}
 var player_clips: Dictionary = {}
 var monster_clips: Dictionary = {}
-# Aliases into the view kept for the flow-side transition bridge (flow/legacy_combat_port.gd).
-var player_view
-var hud
-var music: AudioStreamPlayer
-var voice_pool: Array = []
-var sound_streams: Dictionary = {}
 var player: Dictionary = {}
 var monsters: Array = []
 var props: Array = []
@@ -38,6 +33,9 @@ var requests: Array = []
 var last_direction_tap: Dictionary = {}
 var run_direction := 0
 var hitstop_ms := 0.0
+var max_hp := 500.0
+var max_mp := 180.0
+var damage_scale := 1.0
 var action_seq := 0
 var _next_entity_id := 1
 var toast := ""
@@ -81,11 +79,6 @@ func _ready() -> void:
 	view = BattleView.new()
 	add_child(view)
 	view.setup(assets,player_clips,monster_clips,bus,weapon)
-	player_view = view.player_actor
-	hud = view.hud
-	music = view.audio.music
-	voice_pool = view.audio.voice_pool
-	sound_streams = view.audio.sound_streams
 	# Managed mode leaves dungeon BGM to the flow side; tests never start it.
 	if not external_mode and not "--test" in OS.get_cmdline_user_args():view.audio.start_music()
 	if not external_mode:
@@ -112,19 +105,27 @@ func restart() -> void:
 	begin_room({"run_id":"standalone","room_index":0,"from":"start"})
 	notice("格兰之森 · 清除怪物，继续深入")
 
-## Spec fields (contract v1): run_id, room_id, room_index (transitional trial route),
-## from (entry side), player {hp, mp, job, weapon}. Long-term profile data stays with flow.
+## Spec fields (contract v1): run_id, room_id, room_index (transitional trial route), from (entry side),
+## player {hp, mp, hp_max, mp_max, damage_multiplier, job, weapon}, audio {muted, bgm_volume_db}, show_hud.
+## Long-term profile data stays with flow; these are the per-run combat stats it hands over.
 func begin_room(spec: Dictionary) -> void:
+	var snapshot: Dictionary = spec.get("player",{})
+	max_hp = float(snapshot.get("hp_max",rules["player"]["hp"]))
+	max_mp = float(snapshot.get("mp_max",rules["player"]["mp"]))
+	damage_scale = float(snapshot.get("damage_multiplier",1.0))
 	player = {"pos":Vector2(125,250),"z":0.0,"vz":0.0,"air_ms":0.0,
-		"hp":float(rules["player"]["hp"]),"mp":float(rules["player"]["mp"]),
+		"hp":max_hp,"mp":max_mp,
 		"facing":1,"state":"idle","action":"","clock":0.0,"motion_clock":0.0,
 		"hurt_ms":0.0,"invuln_ms":0.0,"flash_ms":0.0,"landing_ms":0.0,
 		"buff_ms":0.0,"cooldowns":{},"hits":{},"queued_combo":false,"queued_skill":"","queued_jump":false}
-	var snapshot: Dictionary = spec.get("player",{})
-	if snapshot.has("hp"):player["hp"] = clampf(float(snapshot["hp"]),1,float(rules["player"]["hp"]))
-	if snapshot.has("mp"):player["mp"] = clampf(float(snapshot["mp"]),0,float(rules["player"]["mp"]))
+	if snapshot.has("hp"):player["hp"] = clampf(float(snapshot["hp"]),1,max_hp)
+	if snapshot.has("mp"):player["mp"] = clampf(float(snapshot["mp"]),0,max_mp)
 	if snapshot.get("job","") in ["weaponmaster","berserker"]:job = String(snapshot["job"])
 	if assets["players"].has(String(snapshot.get("weapon",""))):weapon = String(snapshot["weapon"])
+	var audio_spec: Dictionary = spec.get("audio",{})
+	if audio_spec.has("muted"):_muted = bool(audio_spec["muted"])
+	if audio_spec.has("bgm_volume_db") and not _muted:view.audio.start_music(float(audio_spec["bgm_volume_db"]))
+	view.hud.visible = bool(spec.get("show_hud",true))
 	run_id = String(spec.get("run_id","standalone"))
 	room_snapshots.clear()
 	finished = false
@@ -141,10 +142,14 @@ func begin_room(spec: Dictionary) -> void:
 	load_room(clampi(int(spec.get("room_index",0)),0,rules["rooms"].size()-1),String(spec.get("from","start")))
 	if spec.has("room_id"):room_id = String(spec["room_id"])
 
+## Keys owned by the flow side when externally managed: restart, pause/menu, character and debug switches.
+const FLOW_OWNED_KEYS := [KEY_R,KEY_TAB,KEY_1,KEY_2,KEY_3,KEY_ESCAPE,KEY_F2,KEY_F3]
+
 func _input(event: InputEvent) -> void:
 	if not event is InputEventKey:return
 	var key_event := event as InputEventKey
 	var code := int(key_event.physical_keycode if key_event.physical_keycode != 0 else key_event.keycode)
+	if external_mode and code in FLOW_OWNED_KEYS:return
 	held[code] = key_event.pressed
 	if not key_event.pressed or key_event.echo:return
 	taps[code] = true
@@ -161,7 +166,7 @@ func _input(event: InputEvent) -> void:
 			get_window().size = Vector2i(1920,1080) if get_window().size.x < 1920 else Vector2i(1280,720)
 		KEY_M:
 			_muted = not _muted
-			music.volume_db = -80 if _muted else -28
+			view.audio.music.volume_db = -80 if _muted else -28
 		KEY_TAB:
 			if player.get("state","") != "action":
 				job = "berserker" if job == "weaponmaster" else "weaponmaster"
@@ -226,7 +231,7 @@ func step_game(ms: float) -> void:
 	door_lock_ms = maxf(0,door_lock_ms-ms)
 	for name: String in player["cooldowns"]:
 		player["cooldowns"][name] = maxf(0,float(player["cooldowns"][name])-dt)
-	player["mp"] = minf(float(rules["player"]["mp"]),float(player["mp"])+dt*2.2)
+	player["mp"] = minf(max_mp,float(player["mp"])+dt*2.2)
 	combo_ms = maxf(0,combo_ms-ms)
 	if combo_ms <= 0:combo_count = 0
 	player["motion_clock"] = float(player["motion_clock"])+ms
@@ -327,7 +332,7 @@ func step_game(ms: float) -> void:
 		room_cleared = true
 		room_snapshots[room_index] = {"cleared":true,"props":props.duplicate(true)}
 		var boss := bool(rules["rooms"][room_index].get("boss",false))
-		bus.emit("combat.room_combat_finished",flow_payload({"boss":boss}))
+		bus.emit("combat.room_combat_finished",flow_payload({"boss":boss,"final_room":boss}))
 		if boss:
 			finished = true
 			victory = true
@@ -343,10 +348,26 @@ func action_duration(action: String) -> float:
 
 func flow_payload(extra := {}) -> Dictionary:
 	var payload := {"run_id":run_id,"room_id":room_id,"room_index":room_index,
-		"stats":{"elapsed_ms":elapsed_ms,"hit_count":hit_count,"damage_taken":damage_taken},
+		"stats":{"elapsed_ms":elapsed_ms,"time_ms":elapsed_ms,"hit_count":hit_count,"hits":hit_count,"damage_taken":damage_taken},
 		"player":{"hp":float(player["hp"]),"mp":float(player["mp"]),"job":job,"weapon":weapon}}
 	payload.merge(extra,true)
 	return payload
+
+## Effects already validated and paid for by the flow side (e.g. potions). Returns whether it applied.
+func apply_effect(effect: Dictionary) -> bool:
+	if player.is_empty() or finished or paused:return false
+	match String(effect.get("kind","")):
+		"heal":
+			if float(player["hp"]) >= max_hp:return false
+			player["hp"] = minf(max_hp,float(player["hp"])+float(effect.get("amount",0)))
+			notice("恢复药剂 · HP +%d"%int(effect.get("amount",0)))
+			return true
+	return false
+
+func set_input_paused(value: bool) -> void:
+	paused = value
+	held.clear()
+	requests.clear()
 
 func report_defeat(enemy: Dictionary) -> void:
 	if enemy.get("defeat_reported",false):return
@@ -416,7 +437,7 @@ func apply_player_hits(old_ms: float,new_ms: float) -> void:
 				spawn_effect("hit",p["pos"]-Vector2(0,18),int(player["facing"]))
 
 func hit_enemy(enemy: Dictionary,rule: Dictionary,group := 0) -> void:
-	var damage := float(rule["damage"])*(1.2 if float(player["buff_ms"])>0 else 1.0)
+	var damage := float(rule["damage"])*damage_scale*(1.2 if float(player["buff_ms"])>0 else 1.0)
 	bus.emit("combat.hit",{"attacker":0,"target":enemy["id"],"instance":action_seq,"group":group,
 		"point":Vector3(Vector2(enemy["pos"]).x,Vector2(enemy["pos"]).y,float(enemy["z"])),"guarded":false})
 	enemy["hp"] = maxf(0,float(enemy["hp"])-damage)
@@ -637,7 +658,7 @@ func view_snapshot() -> Dictionary:
 		"stage":{"room_index":room_index,"cleared":room_cleared and not boss_room,"doors":doors.duplicate(true)},
 		"hud":{"room_name":String(rules["rooms"][room_index]["name"]),"alive":alive,"room_cleared":room_cleared,
 			"route":route,"combo":combo_count,"toast":toast,"toast_ms":toast_ms,
-			"player":{"hp":float(player["hp"]),"mp":float(player["mp"]),"hp_max":float(rules["player"]["hp"]),"mp_max":float(rules["player"]["mp"]),
+			"player":{"hp":float(player["hp"]),"mp":float(player["mp"]),"hp_max":max_hp,"mp_max":max_mp,
 				"job":job,"weapon":weapon,"buff_ms":float(player["buff_ms"]),"cooldowns":Dictionary(player["cooldowns"]).duplicate()},
 			"overlay":{"finished":finished,"external":external_mode,"victory":victory,"damage_taken":damage_taken,
 				"elapsed_ms":elapsed_ms,"paused":paused,"help":help_visible}}}

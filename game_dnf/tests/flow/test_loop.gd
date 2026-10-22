@@ -192,8 +192,8 @@ func run() -> void:
 	var healed := false
 	# Let an actual enemy connect before testing a real potion; no synthetic HP edits.
 	for i in 1800:
-		var before: Dictionary = game.battle.snapshot()
-		if float(before["hp"]) <= float(before["max_hp"]) - 150:
+		var before: Dictionary = game.combat.read_view()
+		if float(before["hp"]) <= float(before["hp_max"]) - 150:
 			var old := int(game.session.profile["inventory"]["potion"])
 			game.use_potion()
 			healed = int(game.session.profile["inventory"]["potion"]) == old - 1
@@ -203,7 +203,7 @@ func run() -> void:
 	# No god mode, HP edits, enemy removal, forged finish signal or teleportation.
 	for i in 18000:
 		if game.session.state != "battle":break
-		var snap: Dictionary = game.battle.snapshot()
+		var snap: Dictionary = game.combat.read_view()
 		if int(snap["room"]) != previous_room:
 			previous_room = int(snap["room"])
 			print("[LOOP_TEST] ACTUAL ROOM ", previous_room)
@@ -238,7 +238,7 @@ func run() -> void:
 		key(KEY_Z, enemy_near and i % 150 < 2)
 		key(KEY_A, enemy_near and i % 330 < 2)
 		key(KEY_S, enemy_near and i % 220 < 2)
-		if float(snap["hp"]) < float(snap["max_hp"]) - 150 and int(game.session.profile["inventory"].get("potion", 0)) > 0:
+		if float(snap["hp"]) < float(snap["hp_max"]) - 150 and int(game.session.profile["inventory"].get("potion", 0)) > 0:
 			var old := int(game.session.profile["inventory"]["potion"])
 			game.use_potion()
 			healed = healed or int(game.session.profile["inventory"]["potion"]) < old
@@ -280,8 +280,8 @@ func run() -> void:
 		await ticks(3)
 		click_text("进入地下城")
 		await ticks(4)
-		var second: Dictionary = game.battle.snapshot()
-		check(second["max_hp"] == 525 and second["attack_damage"] == 30, "next adventure applies level and equipment to actual combat")
+		var second: Dictionary = game.combat.read_view()
+		check(second["hp_max"] == 525 and second["attack_damage"] == 30, "next adventure applies level and equipment to actual combat")
 		game.show_overlay("menu")
 		await ticks(3)
 		check(click_text("撤退回城"), "retreat menu opens failure result")

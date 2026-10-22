@@ -1,11 +1,12 @@
 extends RefCounted
-## Public combat entry for the flow side (ws2). Contract: docs/design/29_新版工程框架_接口契约.md.
-## F0 wraps the transitional battle scene; the API stays when the World kernel replaces it.
+## Public combat entry for the flow side. Contract: docs/design/29_新版工程框架_接口契约.md.
+## F0/F1 wrap the transitional battle scene; the API stays when the World kernel replaces it.
 ## Usage:
 ##   var session = CombatSession.new()      # const CombatSession = preload("res://combat/api/combat_session.gd")
-##   session.mount(parent)                   # external mode: no auto start, no self-restart
-##   session.monster_defeated.connect(...)
-##   session.start_room({"run_id":"r1","room_id":"lorien:1","room_index":0,"player":{"hp":500,"mp":180}})
+##   var node = session.mount(parent)        # external mode: no auto start, no self-restart
+##   session.room_combat_finished.connect(...)
+##   session.start_room({"run_id":"r1","room_id":"lorien:1","room_index":0,
+##       "player":{"hp_max":500,"mp_max":180,"damage_multiplier":1.0,"weapon":"katana"}})
 
 signal monster_defeated(event: Dictionary)
 signal room_combat_finished(event: Dictionary)
@@ -33,11 +34,20 @@ func start_room(spec: Dictionary) -> bool:
 	game.begin_room(spec)
 	return true
 
+## Pausing also drops held keys and buffered presses so nothing fires on resume.
 func pause() -> void:
-	if _alive():game.paused = true
+	if _alive():game.set_input_paused(true)
 
 func resume() -> void:
-	if _alive() and not game.finished:game.paused = false
+	if _alive() and not game.finished:game.set_input_paused(false)
+
+func set_paused(value: bool) -> void:
+	if value:pause()
+	else:resume()
+
+## Effect already validated and paid for by the flow side, e.g. {"kind":"heal","amount":150}.
+func apply_effect(effect: Dictionary) -> bool:
+	return _alive() and game.apply_effect(effect)
 
 func stop() -> void:
 	if _alive():game.queue_free()
@@ -46,19 +56,24 @@ func stop() -> void:
 func is_running() -> bool:
 	return _alive() and not game.player.is_empty() and not game.finished
 
-## Read-only view for HUD/flow. Never hand out internal dictionaries.
+## Read-only copy for flow HUD, autopilot tests and potions. Never hands out internal dictionaries.
 func read_view() -> Dictionary:
 	if not _alive() or game.player.is_empty():return {}
 	var p: Dictionary = game.player
-	var alive := 0
+	var enemies: Array = []
 	for enemy: Dictionary in game.monsters:
-		if float(enemy["hp"]) > 0:alive += 1
+		if float(enemy["hp"]) > 0:enemies.append({"id":enemy["id"],"pos":Vector2(enemy["pos"]),"hp":float(enemy["hp"]),"chief":enemy["chief"]})
+	var rooms: Array = game.rules["rooms"]
+	var exit_target := Vector2.ZERO
+	if game.room_cleared and not game.finished:exit_target = game.door_point(String(rooms[game.room_index]["next"]))
 	return {"run_id":game.run_id,"room_id":game.room_id,"room_index":game.room_index,
-		"hp":float(p["hp"]),"hp_max":float(game.rules["player"]["hp"]),
-		"mp":float(p["mp"]),"mp_max":float(game.rules["player"]["mp"]),
-		"job":game.job,"weapon":game.weapon,"cooldowns":Dictionary(p["cooldowns"]).duplicate(),
-		"buff_ms":float(p["buff_ms"]),"alive_monsters":alive,"room_cleared":game.room_cleared,
-		"finished":game.finished,"victory":game.victory,"paused":game.paused}
+		"room":game.room_index+1,"room_count":rooms.size(),"room_name":String(rooms[game.room_index]["name"]),
+		"hp":float(p["hp"]),"hp_max":game.max_hp,"mp":float(p["mp"]),"mp_max":game.max_mp,
+		"pos":Vector2(p["pos"]),"facing":int(p["facing"]),"job":game.job,"weapon":game.weapon,
+		"attack_damage":float(game.rules["moves"]["attack1"]["damage"])*game.damage_scale,
+		"cooldowns":Dictionary(p["cooldowns"]).duplicate(),"buff_ms":float(p["buff_ms"]),
+		"enemies":enemies,"alive_monsters":enemies.size(),"exit_target":exit_target,
+		"room_cleared":game.room_cleared,"finished":game.finished,"victory":game.victory,"paused":game.paused}
 
 func events():
 	return game.bus if _alive() else null

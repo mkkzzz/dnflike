@@ -35,8 +35,8 @@ func damage_player(amount: float, source: Vector2) -> void:game.damage_player(am
 func job() -> String:return game.job
 func set_job(value: String) -> void:game.job = value
 func weapon() -> String:return game.weapon
-func view_texture() -> String:return String(game.player_view.bank["texture"])
-func view_pose() -> String:return game.player_view.pose
+func view_texture() -> String:return String(game.view.player_actor.bank["texture"])
+func view_pose() -> String:return game.view.player_actor.pose
 func run_direction() -> int:return game.run_direction
 func clear_direction_taps() -> void:game.last_direction_tap.clear()
 func set_hitstop(ms: float) -> void:game.hitstop_ms = ms
