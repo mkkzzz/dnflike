@@ -1,0 +1,77 @@
+{
+  "c10_run_00": {
+    "primary": [
+      764,
+      263
+    ],
+    "secondary": null,
+    "blade_axis": [
+      -0.95,
+      0.312
+    ],
+    "cutting_direction": [
+      0,
+      1
+    ]
+  },
+  "c10_run_01": {
+    "primary": [
+      1325,
+      270
+    ],
+    "secondary": null,
+    "blade_axis": [
+      -0.95,
+      0.312
+    ],
+    "cutting_direction": [
+      0,
+      1
+    ]
+  },
+  "c10_run_02": {
+    "primary": [
+      222,
+      697
+    ],
+    "secondary": null,
+    "blade_axis": [
+      -0.95,
+      0.312
+    ],
+    "cutting_direction": [
+      0,
+      1
+    ]
+  },
+  "c10_run_03": {
+    "primary": [
+      766,
+      697
+    ],
+    "secondary": null,
+    "blade_axis": [
+      -0.95,
+      0.312
+    ],
+    "cutting_direction": [
+      0,
+      1
+    ]
+  },
+  "c10_run_04": {
+    "primary": [
+      1317,
+      706
+    ],
+    "secondary": null,
+    "blade_axis": [
+      -0.95,
+      0.312
+    ],
+    "cutting_direction": [
+      0,
+      1
+    ]
+  }
+}

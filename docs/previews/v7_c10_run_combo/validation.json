@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-22",
+  "package_sha256": "3763654801e46c775e176028df8becb5c6ab9d098a0b45a3f7832b96c31328b0",
+  "game_regression": {
+    "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_demo.ps1 -Test",
+    "checks": 527,
+    "failures": 0,
+    "exit_code": 0,
+    "log_sha256": "cedda302dcba0b13f3405c7441f304e86191fa518c00d71611b7e38bcd5152f6"
+  },
+  "python_regression": {
+    "existing": 42,
+    "c10": 6,
+    "failures": 0
+  },
+  "actual_framebuffer": {
+    "native_size": [
+      2560,
+      1440
+    ],
+    "frames": 984,
+    "fps": 60,
+    "all_native_rgb_hashes_verified": true,
+    "proof_sha256": "6f6ee26b0535c3376e6aa3a0383cf6ef3e62b176889babe0802e046fd47a4214"
+  },
+  "detail_crops_sha256": "8ec6054166f00c752e3e865d080bef8beb7245b6ac9d83554fe85f52e8b9aec0",
+  "capture_recipe": {
+    "file": "game/scripts/swordsman_motion_capture.gd",
+    "sha256": "f23d3bd3912de12991523145bc4eabcb08de8934d621b72a22a0b9a5b838de25"
+  },
+  "docs_check": {
+    "passed": false,
+    "known_preexisting_failure": "docs/design/19_音效生产工作流.md:365 >300",
+    "new_failures": []
+  },
+  "runtime_user_approved": false
+}

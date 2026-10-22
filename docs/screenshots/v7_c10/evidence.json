@@ -1,0 +1,115 @@
+{
+  "gameplay_movie_sha256": "8124a38137137e141e58ad0065e1efdec3d40a2d7ca7346781274b0bd390c6f6",
+  "c10_manifest_sha256": "3763654801e46c775e176028df8becb5c6ab9d098a0b45a3f7832b96c31328b0",
+  "stills": [
+    {
+      "file": "run_native_2k.png",
+      "sha256": "88b8f8e95c1526f2552f0c042ba5f4fc2ee964e2d0f1d44a9975a640c80dabae",
+      "source_frame": "f00016.webp",
+      "source_frame_sha256": "9ec3b98cc38fa26bd40056d38d6236d7ca68eacf6e9ce95bede9d6dbd33594d4",
+      "frame_record": {
+        "body_layers": [
+          {
+            "file": "layers/95c0012355633f9313170253ab7c3bd0c98452158c303e61ec99234cd71515de.png",
+            "weight": 0.95703125
+          },
+          {
+            "file": "layers/70428374a0cfcd5b39d16ce3fd0cc772b875514b4f100d4ea2cc521c9713fd7c.png",
+            "weight": 0.04296875
+          }
+        ],
+        "clip": "run",
+        "clock": 7.5,
+        "facing": 1,
+        "frame": 16,
+        "framebuffer_rgb_sha256": "132c1ab98b173d6b201cf20953e55fa95ef0abcc89d1117468e278e813f20a91",
+        "invincible": 0,
+        "physics_frame": 144,
+        "position": [
+          622.5,
+          576.0
+        ],
+        "profile": "katana",
+        "render_frame": 143,
+        "source_pose": "c10_run_pass_near",
+        "tag": "katana_face1_run",
+        "visible_tint": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "file": "attack2_native_2k.png",
+      "sha256": "a757b6186914760f61796e7a09f41f9ea05a08274d1b5a9cb973c0110a0f83e6",
+      "source_frame": "f00090.webp",
+      "source_frame_sha256": "431a8f2dff5abcd01e450cbc187a4fad44c19bf0ae187bb7d50f40e462416f6b",
+      "frame_record": {
+        "body_layers": [
+          {
+            "file": "layers/9817e74630ed7949496aaa9a52813d01e2fdc0b7941a1f24c0476939d386e22f.png",
+            "weight": 1.0
+          }
+        ],
+        "clip": "attack2",
+        "clock": 10.0,
+        "facing": 1,
+        "frame": 90,
+        "framebuffer_rgb_sha256": "720ca8fdd39cde15e9faee54e67873ac699a5767adf578d56e2de412fc9d6f38",
+        "invincible": 0,
+        "physics_frame": 218,
+        "position": [
+          590.4375,
+          576.0
+        ],
+        "profile": "katana",
+        "render_frame": 217,
+        "source_pose": "c10_attack2_release",
+        "tag": "katana_face1_combo",
+        "visible_tint": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "file": "attack3_native_2k.png",
+      "sha256": "b27aed8f21565ff0d1ac0fe33fdc1df058ad47a5d70d0cb9dde9f1b9bdd170a8",
+      "source_frame": "f00114.webp",
+      "source_frame_sha256": "f9b250c0daf510c4c81ac9ee877e8ca2c4701a261de95a7510c0bd728e30cb89",
+      "frame_record": {
+        "body_layers": [
+          {
+            "file": "layers/59eb3ed44fee763607bb161a660f52dcf30df42521743c41e960a3dfd7e10681.png",
+            "weight": 1.0
+          }
+        ],
+        "clip": "attack3",
+        "clock": 13.0,
+        "facing": 1,
+        "frame": 114,
+        "framebuffer_rgb_sha256": "0b3591de3e64f906522037aaab8c38584c8134b2c109ed806c5863109b30e01a",
+        "invincible": 0,
+        "physics_frame": 242,
+        "position": [
+          607.1875,
+          576.0
+        ],
+        "profile": "katana",
+        "render_frame": 241,
+        "source_pose": "c10_attack3_lift",
+        "tag": "katana_face1_combo",
+        "visible_tint": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    }
+  ]
+}

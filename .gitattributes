@@ -20,8 +20,10 @@ game/assets/swordsman_v7_*/**/*.json text eol=lf
 art/animations/players/swordsman/v7/sources/**/*prompt*.txt text eol=lf
 docs/previews/v7_c*/**/*.html text eol=lf
 docs/previews/v7_c*/**/*.json text eol=lf
+docs/screenshots/v7_c10/**/*.json text eol=lf
 tools/**/*swordsman*.py text eol=lf
 tools/actor_motion.py text eol=lf
+tools/whole_body_motion.py text eol=lf
 tools/motion_neural.py text eol=lf
 tools/setup_motion_model.py text eol=lf
 

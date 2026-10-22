@@ -122,7 +122,11 @@ static func controls(g: Dictionary, limbs := false) -> PackedVector2Array:
 func _geometry(sources: Array) -> Dictionary:
 	var first: Dictionary = sources[0]["frame"]["motion_geometry"]
 	var g := {"head_center":[0.0,0.0],"head_size":0.0,"head_angle":float(first["head_angle"]),"grip":[0.0,0.0],"root":[0.0,0.0],"secondary_grip":[0.0,0.0],"joints":[]}
-	for _joint in first["joints"]:g["joints"].append([0.0,0.0])
+	var compatible_joints := true
+	for source in sources:
+		if source["frame"]["motion_geometry"]["joints"].size() != first["joints"].size():compatible_joints = false
+	if compatible_joints:
+		for _joint in first["joints"]:g["joints"].append([0.0,0.0])
 	for source in sources:
 		var m: Dictionary = source["frame"]["motion_geometry"]
 		var w := float(source["weight"])
@@ -159,7 +163,9 @@ func _blades(sources: Array, g: Dictionary) -> Dictionary:
 		if u.length() < 0.035:u = Vector2(u.x,-0.035)
 		var normal := Vector2(-u.y,u.x).normalized()
 		if absf(v.dot(normal)) < 0.025:v += normal * (0.025 if v.dot(normal) >= 0 else -0.025)
-		var spec: Dictionary = Library.data()["weapon_sources"][profile]
+		var set_key := String(Library.clip(_key).get("weapon_set", ""))
+		var weapon_set: Dictionary = Library.data().get("weapon_sets", {}).get(set_key, Library.data()["weapon_sources"])
+		var spec: Dictionary = weapon_set[profile]
 		var marks: Dictionary = spec["marks"]
 		var source_axis := (_point(marks["tip"])-_point(marks["guard"])).normalized()
 		var scale := float(spec["physical_blade_length"])/_point(marks["tip"]).distance_to(_point(marks["guard"]))
@@ -200,7 +206,7 @@ func present(targets: Array, profile: String) -> Dictionary:
 func _update_surface(sources: Array, g: Dictionary) -> void:
 	# Only state bridges need limb alignment. Within a baked walk cycle the
 	# correspondence model owns crossing-leg occlusion; do not re-rig it.
-	var bridge := _elapsed < _duration and not _outgoing.is_empty()
+	var bridge: bool = _elapsed < _duration and not _outgoing.is_empty() and not g["joints"].is_empty()
 	var destination := controls(g,bridge)
 	var originals: Array = []
 	for source in sources:originals.append(controls(source["frame"]["motion_geometry"],bridge))

@@ -174,6 +174,9 @@
     "swordsman_c9_run_painted_key_diagnostic": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_cycle_c4/key_review.json",
     "swordsman_c9_run_source_revision": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_cycle_c4/motion_review.json",
     "swordsman_c9_run_passing_study": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_motion_c5/motion_review.json",
-    "swordsman_c9_run_motion_direction_approval": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_motion_c5/direction_approval.json"
+    "swordsman_c9_run_motion_direction_approval": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_motion_c5/direction_approval.json",
+    "swordsman_c10_run_combo_spec": "art/animations/players/swordsman/v7/sources/base_batch_c10/spec.json",
+    "swordsman_c10_run_combo_export": "art/animations/players/swordsman/v7/exports/run_combo_c10/manifest.json",
+    "swordsman_c10_run_combo_runtime": "game/assets/swordsman_v7_c10/manifest.json"
   }
 }

@@ -1,0 +1,127 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-22",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_b/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": false,
+  "annotation_method": "Manual visible crown, actual lower jaw and same-sheet neutral ruler; complete-person uniform downscale only. Review overlay before export.",
+  "sources": {
+    "body": {
+      "sha256": "9bd25ed9e6d9decae8600865df797e1e2298d16ff374161e972b24d4c21948db",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 20,
+        "standing_bottom_y": 508,
+        "sole": [
+          277,
+          508
+        ],
+        "crop_bbox": [
+          180,
+          0,
+          455,
+          518
+        ],
+        "head": {
+          "hair_top": [
+            342,
+            20
+          ],
+          "chin": [
+            365,
+            94
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c10_run_05",
+      "head": {
+        "hair_top": [
+          964,
+          76
+        ],
+        "chin": [
+          980,
+          150
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c10_run_06",
+      "head": {
+        "hair_top": [
+          1536,
+          88
+        ],
+        "chin": [
+          1558,
+          163
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c10_run_07",
+      "head": {
+        "hair_top": [
+          421,
+          534
+        ],
+        "chin": [
+          441,
+          608
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c10_run_08",
+      "head": {
+        "hair_top": [
+          961,
+          533
+        ],
+        "chin": [
+          980,
+          608
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c10_run_09",
+      "head": {
+        "hair_top": [
+          1482,
+          527
+        ],
+        "chin": [
+          1506,
+          605
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "landmark_overlay.png",
+    "sha256": "7d37a23f4ff2ca065f1060b7e2c3e70d8edac7e2a3f059a42a086f987b0a08c1",
+    "reviewed": false
+  }
+}

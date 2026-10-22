@@ -1,0 +1,48 @@
+{
+  "c10_attack2_release": {
+    "primary": [
+      1121,
+      240
+    ],
+    "secondary": [
+      1145,
+      243
+    ],
+    "blade_axis": null,
+    "cutting_direction": [
+      0,
+      1
+    ],
+    "review_note": "Actual near/right primary is the left fist, matching load. Corrected prior main/off-hand label inversion before final delivery."
+  },
+  "c10_attack2_sweep": {
+    "primary": [
+      741,
+      559
+    ],
+    "secondary": [
+      724,
+      581
+    ],
+    "blade_axis": null,
+    "cutting_direction": [
+      0,
+      1
+    ]
+  },
+  "c10_attack3_recover": {
+    "primary": [
+      1318,
+      554
+    ],
+    "secondary": [
+      1305,
+      576
+    ],
+    "blade_axis": null,
+    "cutting_direction": [
+      0,
+      -1
+    ]
+  }
+}

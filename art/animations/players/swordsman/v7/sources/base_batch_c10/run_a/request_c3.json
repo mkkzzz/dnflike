@@ -1,0 +1,7 @@
+{
+  "prompt": "Use case: precise-object-edit. Correct the HEAD SCALE CONSISTENCY on this clean six-figure run sheet. The neutral head is okay, but some running heads, especially LOWER ROW, were made TOO SMALL during the previous repair. Redraw EACH of the five running heads at the SAME PHYSICAL visible crown-to-lowest-jaw size as the TOP LEFT NEUTRAL HEAD, matching neutral's skull, hair mass and face size. Aim allsix at approximately75px hair-to-jaw on a1672x941 version (or proportional on requested2560x1440). Currentlowerrowheads around60px must be enlarged ANATOMICALLY BY REDRAWING, not shrinkingbody. This is original art correction, retainadultlonglegged proportions and exact bodypixel scale. Draw hair, face, jaw and neck as one connected region. Maintain head positions and gaze responding to torso lean and motion; don't anchor them all at one height. Top-left neutral body/hair must have transparentpadding above; use same existingheadface for allfive. KeepALL body poses, thighs/shins, feet, empty trailing handgrip, coat shape, layout and neutral standing height unchanged. NO weapon/hilt/sheath/effects/labels. Transparent PNG requested native2560x1440. Do NOT copy the small running heads; match the NEUTRAL's native head dimension for every running figure.",
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/base_batch_c10/run_a/source_c2.png"
+  ],
+  "transparent_background": true
+}

@@ -1,0 +1,196 @@
+{
+  "revision": "v7_c10_run_combo",
+  "date": "2026-10-22",
+  "user_instruction": "按照这个逻辑继续制作，完成跑动、三段普攻的实装",
+  "scope": [
+    "run",
+    "run_start",
+    "run_stop",
+    "attack1",
+    "attack2",
+    "attack3"
+  ],
+  "authorizations": [
+    "C5 continuous run direction",
+    "C7/C8 first attack direction",
+    "Continue all four clips and integration"
+  ],
+  "target_scene": [
+    2560,
+    1440
+  ],
+  "actor_canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "upscale_allowed": false,
+  "body_method": "full painted source poses + whole-image correspondence, no leg cutout/IK assembly or per-pose head resize",
+  "runtime_acceptance_pending": true,
+  "status": "integrated",
+  "source_2k_canvas_met": false,
+  "actual_generated_canvas": [
+    1672,
+    941
+  ],
+  "selected_new_whole_person_keys": 20,
+  "generation_events": 22,
+  "source_G1_passed": true,
+  "export_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/manifest.json",
+  "export_manifest_sha256": "3763654801e46c775e176028df8becb5c6ab9d098a0b45a3f7832b96c31328b0",
+  "runtime_manifest": "game/assets/swordsman_v7_c10/manifest.json",
+  "review": "docs/previews/v7_c10_run_combo/index.html",
+  "report": "docs/reports/ws2/2026-10/2026-10-22_C10跑动与三连实装.md",
+  "source_inputs": [
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/pass_near/body_config.json",
+      "sha256": "b74c29fea504dc66cfd7ea32794e172ace9245d2eb6d3101fb25d27bb740ad02",
+      "audit_sha256": "3b59bddb619bd6ff210760f92c8d051c48de6abe18009bb4f9a3fd79a4247185",
+      "hand_sha256": "f66df13ed0780e0d0dd2b354deb07372687ff4c94b88d9c4ffffffd05118205e",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/b74c29fea504/manifest.json",
+      "body_manifest_sha256": "9aee6e51cce10a2a023225b2f44ca389dbc504ce3c3324547f16a5f5c941750b"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/push_near/body_config.json",
+      "sha256": "7bf69839c645f5c13f0c2e5759623412cc4a911013973d91fdc51b89af8c233c",
+      "audit_sha256": "dd13dd2ed0bb7edf18ccb6f84e3eeadce2159dd76bcceaab542b5e3a5cd17798",
+      "hand_sha256": "802b950c1775256829f8fb27f04248efa80d3c2b275b2dd63ff1c6c08ffbcf34",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/7bf69839c645/manifest.json",
+      "body_manifest_sha256": "1786d9776c1caf94e97eeb46f2e585dd303394943aec73dc907d6b0e571004e3"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/pre_far/body_config.json",
+      "sha256": "7b6a9bc012ecc3adb5f873c9e5fac5ff79dee62f0e6ab0906334869fa58dc4c8",
+      "audit_sha256": "4f958dbaadee8abccb855e41242f2954a877ce21bcbed9ce7152433f912b0bf3",
+      "hand_sha256": "d4392f88423b0612f3a3321fc3eae08ee9b98784e6307a6d9891fd0890883e4d",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/7b6a9bc012ec/manifest.json",
+      "body_manifest_sha256": "03fbe33159cc85a2b3e8057d38fd79466992102510a5f31266c3e88358b6b383"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/pass_far/body_config.json",
+      "sha256": "7807ab7e72bbeef74cf0fade6cd813fab0e80a608e5834ab0b1ad9dfd624a8fc",
+      "audit_sha256": "f1bd3ce84beeacc414b532f0c90f06a5494dde6b517f70fb16c1c40e0aa741bc",
+      "hand_sha256": "07f78879939d78ce246326a8122d2201d68773f9f3cd0548c25f790109cac443",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/7807ab7e72bb/manifest.json",
+      "body_manifest_sha256": "395071a712bc6354a13289e5566d76f1c5d42ec66a8e5d0465063f7d948ac213"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/push_far/body_config.json",
+      "sha256": "4c953777783e1409ebb414e232fe64f2b6687ca199e56dd6e04e57f0b2f90793",
+      "audit_sha256": "cc0e3e8127d188b35f6ffdb9074ae6be5bb1a8070dcf34975472b3ad2286ad51",
+      "hand_sha256": "7e2c3825362738dbe816fb62511a22a02de6b723409f1f3d47142487681f509b",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/4c953777783e/manifest.json",
+      "body_manifest_sha256": "ad378551313fb1bb1ca1f9e431efba448b27ef72a7d202227c5767b93f293679"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/pre_near/body_config.json",
+      "sha256": "82c6db00a25b308e3eb2874e4daf0baaefa3d041804d0dc9886b2dfc11ad45b8",
+      "audit_sha256": "8cc8672e537c9f1982024c7b1423b415e7de4e7805124d7dfd298695b57ed801",
+      "hand_sha256": "42585a66c738344686ab0f0663fe9df7429eb0c9b7eefbaa1f90777b44f3c66c",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/82c6db00a25b/manifest.json",
+      "body_manifest_sha256": "577de874b078b64901a096cc1232737f6c62bb3d677369c30735a614e4efdf0b"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/contact_near_new/body_config.json",
+      "sha256": "eac8866f83087818f9c1d28737c8d8815e1c920ea85eb98698aced341337fc25",
+      "audit_sha256": "4e1fc471dda1cde202c361c88741c25ffd1f5c7ecfcbea23fb9e269f9bdf3c4b",
+      "hand_sha256": "3b96c67d57b2419f3aea0d0ecb846c341925ccad62e66946ed3ab2d5428e97ec",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/eac8866f8308/manifest.json",
+      "body_manifest_sha256": "c9e04b3e884fa103987503e8ad645f96b8599dd430dc317e5e5ac5d5e973a9f3"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/contact_far_new/body_config.json",
+      "sha256": "75e67090f61e63dd401d54c0629970d0a8c7b04a5af64781040ed880d8537c84",
+      "audit_sha256": "3fcfff4421305a4546f884e53d6816c8573c1f4925aa30ba96f967141ba952d7",
+      "hand_sha256": "870029224de2b3063f7287ae326b2d0db71782b4d8782b5c528ca8fe5e18c7e6",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/75e67090f61e/manifest.json",
+      "body_manifest_sha256": "0b54c35a9fbf2e45f81e1e48d5b2240cbe556628e29f85c4a3ef331ca91c00a8"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/drive_near/body_config.json",
+      "sha256": "09b12c86b308dbd3719ee793757286a51e1dd403c2206f5fdba54dfd342674db",
+      "audit_sha256": "73c6941c355c66bf7f5ef3c7664c4ac71a5ea5b50c27f5b4669a4431d4bf9b84",
+      "hand_sha256": "51f5c27809e4fdadaaae78d3fd4645eb299ade528b68ead1eeae65d991327395",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/09b12c86b308/manifest.json",
+      "body_manifest_sha256": "363101d3878a1b6154fbcdd7e8293e3ddbd1b736637c90e3a6850576371cde9f"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/drive_far/body_config.json",
+      "sha256": "b8b95556d6e63e5a00fb77ba0721c05011ef76ccf124abc81ecd310bb9fd040a",
+      "audit_sha256": "39141fd4ca51a0e1976aed1a4692097443a0f5e05912da5e76625ea2ab8aaf36",
+      "hand_sha256": "e0bca9d9fbff973a5cf1cb4d3556cef592d366b023c987a94864ec8cda7333c0",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/b8b95556d6e6/manifest.json",
+      "body_manifest_sha256": "8c7b84a10a0d2caddf1f75d21f58bb224df00a1cd02f42897cbb7169da34f5a0"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/flight_far/body_config.json",
+      "sha256": "aec2788db4e56e2453a76b69f8a8e9ef6fa1ec9348672d8b86b1101604316ef7",
+      "audit_sha256": "3dbc8dfe5589f598fd841cf6436a358b89491dfd98726fde03bf3016019a3193",
+      "hand_sha256": "35bcdcb2a58692b2757148af2d1114404c96c3d41aac11d1a21770706f9b485b",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/aec2788db4e5/manifest.json",
+      "body_manifest_sha256": "fd0cfb6b96dc7af7fce4786d4db09ccaa103dffc1a759d224f86d80fd908ff86"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/flight_near/body_config.json",
+      "sha256": "d99514f48e048e243b77f180d47a46cbbde77cfa1fa2c71009fd93c03ccb2639",
+      "audit_sha256": "006708582291213a022e53915b7428fd07ae95d8c0592112f82c037584d5a189",
+      "hand_sha256": "844044bd7040e6bb0385686beab2846e9dfcca6064844f78cc513aa5730e2233",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/d99514f48e04/manifest.json",
+      "body_manifest_sha256": "12086177eb49a067e6afe68308c2ea8dc5d51fd142c34f4df492c902f0312a54"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_c/body_config.json",
+      "sha256": "8f53797548e7079e2bda8cc936bb2b47a119339bdefdffa5c9636dee38974eb1",
+      "audit_sha256": "f49d035635c8e64ec6c85e63cca8f20b6d4ed4ea06c86b2430297bc8c502ce6f",
+      "hand_sha256": "ab2dcee84fc89671f04130bcb30ae8bf7b6c6f400fd20bd6ba2ee148827e5fc5",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/8f53797548e7/manifest.json",
+      "body_manifest_sha256": "16de64c0baa3013e63e837f53c9cfe94aa4a576ee0ab112fe900b90c27d3661e"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/attack3/body_config.json",
+      "sha256": "5d2f40f6f56b442e6e51723d738170b88adedf114114bbb55dd889d4d74247c2",
+      "audit_sha256": "a8956a7f9085aa83e5e7a3f7737855a417b44afc452e535f944838f12ae7fdc6",
+      "hand_sha256": "ccf8fe1e429d24f8319d7217a6824b84b43d2f934ef784932eef85367acddc78",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/5d2f40f6f56b/manifest.json",
+      "body_manifest_sha256": "8eb0d2d63f4de4c38e8c1cf8fe187f45fe1997e7a39bc3777272aa19af8bac42"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/combo_breakdowns/body_config.json",
+      "sha256": "73757a57dad19b55c5c59f62266c7eac9cbbf10bdf8fa909a1251d8e86927014",
+      "audit_sha256": "4b63905d4c4c48d76a150b7751e92b86c8e4017f7b0fd04ed6aa5a3c24884553",
+      "hand_sha256": "c975b8b0561978df44f8353a3f2bda79ac9f9d8d46007c26927bf5de395feeb2",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/73757a57dad1/manifest.json",
+      "body_manifest_sha256": "c768d7c693c837d13d43644ec592a271b728818c050fb09daa27c04d19b14ca1"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack3_load_c1/body_config.json",
+      "sha256": "0ee6a4e0ee2be3454f19cd971dfe818c8fdbdbd4c2eea55b4a15fceb6d187982",
+      "audit_sha256": "1152ab7886a7400f01444457e16c8b47ae235bc9c167d9125c7364185a420432",
+      "hand_sha256": "a3739c6ba70d59dd6295eefa7e775e7be4fc06f60cf39df7321ffaaec1633756",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/0ee6a4e0ee2b/manifest.json",
+      "body_manifest_sha256": "ef664658ca0f720f53d5ce1a629f58cd7719664d5f1c18c4e1b0aa74f50a5713"
+    },
+    {
+      "config": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack2_c1/body_config.json",
+      "sha256": "b7b8666cf5eca582eb1f006ff1ec64846561d74ea59cadfa6fa1caf9c6c64da7",
+      "audit_sha256": "1ee710e2559e02cde433150a82b6ac822118bd47a7d8da67164f4fb3a6856905",
+      "hand_sha256": "5732d95c992e641682f8ffbccc93842f835691035d722f6fc71cce17fb030631",
+      "body_manifest": "art/animations/players/swordsman/v7/exports/run_combo_c10/key_sources/b7b8666cf5ec/manifest.json",
+      "body_manifest_sha256": "5cd983813453f1c959d6fd4cde1d95cd7ed8e1ba64526c23c1aa27d17881ba64"
+    }
+  ],
+  "sample_ticks": {
+    "attack1": 30,
+    "run": 36,
+    "run_start": 9,
+    "run_stop": 10,
+    "attack2": 32,
+    "attack3": 41
+  },
+  "unmodified_accepted_idle": "art/animations/players/swordsman/v7/sources/base_batch_c7/idle_approval.json",
+  "inherited_actions": "walk and all other c6 clips outside this six-clip scope remain inherited; complete suite acceptance pending"
+}

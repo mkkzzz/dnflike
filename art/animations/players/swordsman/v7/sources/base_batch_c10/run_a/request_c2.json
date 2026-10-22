@@ -1,0 +1,7 @@
+{
+  "prompt": "Use case: precise-object-edit. The attached six-whole-person run animation sheet has OVERSIZED HEADS compared with the locked adult character proportions. Redraw ONLY the complete six heads including hair skull face jaw and neck attachment, making each head visible hair-crown to actual lowest jaw height about FIFTEEN PERCENT SMALLER (0.85 of current) at unchanged BODY SCALE. Keep adult handsome compact head, white spiky hair red streak, readable jaw, same gaze and expression. This is an anatomical redraw, not a shrunken whole person. Keep shoulder/neck root fixed and hair/face in proper perspective. Preserve EXACTLY all six body poses, legs, foot positions, hand grip, coat, neutral standing height and layout. Maintain whole person integrity, all visible anatomy attached. Do not change proportion by shortening legs. Keep all heads at same physical scale relative to neutral standing ruler. Include generous transparent padding above top-left neutral hair without cutting it. No weapons or sheath; preserve clean body layer. Transparent PNG, requested native2560x1440. Correct head/body proportion first; do not add details, labels or effects.",
+  "referenced_image_paths": [
+    "D:/dnf like/dnflike/art/animations/players/swordsman/v7/sources/base_batch_c10/run_a/source_c1.png"
+  ],
+  "transparent_background": true
+}

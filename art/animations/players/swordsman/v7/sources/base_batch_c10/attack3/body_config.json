@@ -1,0 +1,127 @@
+{
+  "revision": "v7_c10_attack3",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/c10_body_keys/attack3",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "source_c2.png",
+      "standing_height": 449
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "whole_person_drawings": true,
+    "runtime_install_allowed": false
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.combo.3",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c10_attack3_drive",
+          "source": "body",
+          "crop_bbox": [
+            830,
+            60,
+            1450,
+            470
+          ],
+          "root": [
+            1153,
+            451
+          ],
+          "foot": [
+            947,
+            449
+          ],
+          "component_seed": [
+            1153,
+            267
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1124,
+              273
+            ]
+          }
+        },
+        {
+          "id": "c10_attack3_lift",
+          "source": "body",
+          "crop_bbox": [
+            280,
+            460,
+            835,
+            938
+          ],
+          "root": [
+            625,
+            919
+          ],
+          "foot": [
+            449,
+            914
+          ],
+          "component_seed": [
+            625,
+            695
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              729,
+              511
+            ]
+          }
+        },
+        {
+          "id": "c10_attack3_follow",
+          "source": "body",
+          "crop_bbox": [
+            840,
+            415,
+            1455,
+            938
+          ],
+          "root": [
+            1190,
+            920
+          ],
+          "foot": [
+            1027,
+            915
+          ],
+          "component_seed": [
+            1190,
+            690
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1230,
+              446
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

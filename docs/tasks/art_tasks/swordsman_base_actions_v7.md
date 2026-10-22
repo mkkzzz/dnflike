@@ -4,15 +4,21 @@
 
 | 字段 | 内容 |
 |---|---|
-| task_id / revision | swordsman_base_actions_v7 / v7；沿用已有语义 ID，尚不替代现行资源 |
+| task_id / revision | swordsman_base_actions_v7 / v7 C10；沿用语义 ID，分片段替换已实装候选 |
 | asset_type / workflow | 玩家基础动作；[14](../../design/14_美术资源全流程.md) B、[18](../../design/18_角色锚定与动作管线.md) S4 |
 | style / theme | handpainted_action_v1 / dark_fantasy_v1 |
 | owner / integration_owner | ws2 / ws2；正式实机验收由使用者确认 |
-| lifecycle | 源图制作（source_review）；c3 体型及代表方向认可，c4 继续铺量已授权；当前保存未完成候选，整套未获验收 |
+| lifecycle | 已实装（integrated，C10 跑动/起停/三连）；其余基础动作续做，完整美术与实机未验收 |
 | scope | 按已认可 c3 体型制作不含技能的基础动作；剑系武器可替换；2026-10-18 三段普攻改双手握柄，其他动作沿用原握法 |
 | gameplay_purpose | 移动、普通攻击、防御及受击状态可读；更换武器外观复用同一套身体动作 |
 
 2026-10-17 使用者回复“我觉得这一版没问题”，认可的是上一轮展示的 c3 直立/准备比例基准。[认可记录](../../../art/animations/players/swordsman/v7/sources/proportion_reset_c3/pair_c1/artwork_approval.json)绑定实际图片与哈希，不扩展为完整动作、武器分层或实机通过。用户同时明确“基础动作（不包含技能）”并再次要求支持换武器。
+
+## 当前交付（2026-10-22）
+
+按用户最新授权完成 C10 整身跑动、起停和三段普攻，默认启用，P 可回退 c6；同一身体/手指切换三种独立武器，原获认可 idle 保留。三连双手左挥→右挥→由下上挑。关键姿势通过同源直立标尺 G1，实际生成画布1672×941未达原生2K源画布目标，入用人物仅缩小到约380px站高。导出层1024×1080，root=(448,840)，实机2K与1080p证据和工具见[C10记录](../../reports/ws2/2026-10/2026-10-22_C10跑动与三连实装.md)、[试玩预览](../../previews/v7_c10_run_combo/index.html)。
+
+此为本次跑动/三连制作与接入完成，完整自然度待用户试玩；行走与其余基础动作仍须续做，下文历次记录保留为历史边界。不能以方向批准、门禁或回归通过宣称整套已验收。
 
 ## 2. 本批清单与排除项
 

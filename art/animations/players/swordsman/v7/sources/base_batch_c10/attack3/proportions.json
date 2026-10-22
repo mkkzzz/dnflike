@@ -1,0 +1,95 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-22",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/attack3/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Manual visible crown, actual lower jaw and same-sheet neutral ruler; complete-person uniform downscale only. Review overlay before export.",
+  "sources": {
+    "body": {
+      "sha256": "4663b2612fda1a6ae34c81304382be2f9f31e9854811fccc9446e586415a3235",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 3,
+        "standing_bottom_y": 452,
+        "sole": [
+          466,
+          452
+        ],
+        "crop_bbox": [
+          360,
+          0,
+          620,
+          460
+        ],
+        "head": {
+          "hair_top": [
+            510,
+            3
+          ],
+          "chin": [
+            529,
+            76
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c10_attack3_drive",
+      "head": {
+        "hair_top": [
+          1166,
+          83
+        ],
+        "chin": [
+          1180,
+          153
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c10_attack3_lift",
+      "head": {
+        "hair_top": [
+          606,
+          472
+        ],
+        "chin": [
+          625,
+          539
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c10_attack3_follow",
+      "head": {
+        "hair_top": [
+          1139,
+          461
+        ],
+        "chin": [
+          1172,
+          532
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "landmark_overlay.png",
+    "sha256": "31f639c98167abde52a8dbbb471a0bd08c901d9b1cc445948b960ba657077009",
+    "reviewed": true
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "image_generation_history/1",
+  "events": [
+    {
+      "tool": "builtin image_gen.imagegen",
+      "date": "2026-10-22",
+      "intent": "reference-guided whole-person image generation/edit",
+      "request_file": "request.json",
+      "request_sha256": "b0609bcaa1c3a9f5437d76a71fb293fe3c69e606b7b3e1140673be342d8f5d40",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_a/source_c2.png",
+          "sha256": "6acc6dedf193d1e56c4a5e2b3870a0b14bc6c34a18453952132064f4c1cb6722",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/run_motion_c5/motion_blueprint.png",
+          "sha256": "64d37c388945b462e52f90bbd854576f658840cff1a1da67e5fd7e46b705668d",
+          "actually_submitted": true
+        }
+      ],
+      "output_file": "source_c1.png",
+      "original_returned_filename": "exec-7286992b-4f2a-4a57-a86f-89695a46b8cf.png",
+      "output_sha256": "9bd25ed9e6d9decae8600865df797e1e2298d16ff374161e972b24d4c21948db",
+      "requested_size": [
+        2560,
+        1440
+      ],
+      "actual_size": [
+        1672,
+        941
+      ],
+      "native_2k_canvas_met": false,
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "seed": null,
+      "status": "rejected",
+      "reason": "Six-figure grid has inconsistent physical/head scales, clipped boot or repeated leg lead; never exported into C10."
+    },
+    {
+      "tool": "builtin image_gen.imagegen",
+      "date": "2026-10-22",
+      "intent": "reference-guided whole-person image generation/edit",
+      "request_file": "request_c2.json",
+      "request_sha256": "2c662ae2eb29a1c124d9db879850f7260635267b2e2baf249bf733b5d60de45e",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/walk_contact_far_c2/body_c2.png",
+          "sha256": "53480b64c12f5b3f7da8f65e0da5b2dd7d4e0f47dcff025bef77914dc083492f",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_a/source_c2.png",
+          "sha256": "6acc6dedf193d1e56c4a5e2b3870a0b14bc6c34a18453952132064f4c1cb6722",
+          "actually_submitted": true
+        }
+      ],
+      "output_file": "source_c2.png",
+      "original_returned_filename": "exec-dbbd6b53-764c-42d7-a03c-2edf21e24ee2.png",
+      "output_sha256": "8d5c2e7637b1f49c4cc9b57b7eb8755dd7d17b4287e2c00d208b95ab7cd1fd12",
+      "requested_size": [
+        2560,
+        1440
+      ],
+      "actual_size": [
+        1672,
+        941
+      ],
+      "native_2k_canvas_met": false,
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "seed": null,
+      "status": "rejected",
+      "reason": "Six-figure grid has inconsistent physical/head scales, clipped boot or repeated leg lead; never exported into C10."
+    }
+  ],
+  "capability_note": "Built-in tool accepts actual image paths and transparency; canvas request still returned1672x941. No raster was upscaled. Selected figures are uniformly reduced from their same-sheet standing-height ruler to380px.",
+  "anatomy_policy": "Head, torso, pelvis, both legs, arms and coat are drawn together; no generated isolated leg or fixed-torso collage."
+}

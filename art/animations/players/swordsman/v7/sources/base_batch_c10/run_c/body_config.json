@@ -1,0 +1,127 @@
+{
+  "revision": "v7_c10_run_c",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/c10_body_keys/run_c",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "source_c1.png",
+      "standing_height": 484
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "whole_person_drawings": true,
+    "runtime_install_allowed": false
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.run",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c10_run_start",
+          "source": "body",
+          "crop_bbox": [
+            50,
+            505,
+            550,
+            937
+          ],
+          "root": [
+            326,
+            915
+          ],
+          "foot": [
+            431,
+            910
+          ],
+          "component_seed": [
+            291,
+            668
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              221,
+              688
+            ]
+          }
+        },
+        {
+          "id": "c10_run_brake",
+          "source": "body",
+          "crop_bbox": [
+            620,
+            480,
+            1110,
+            937
+          ],
+          "root": [
+            877,
+            916
+          ],
+          "foot": [
+            1041,
+            909
+          ],
+          "component_seed": [
+            837,
+            678
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              767,
+              698
+            ]
+          }
+        },
+        {
+          "id": "c10_run_settle",
+          "source": "body",
+          "crop_bbox": [
+            1210,
+            455,
+            1575,
+            938
+          ],
+          "root": [
+            1411,
+            918
+          ],
+          "foot": [
+            1345,
+            914
+          ],
+          "component_seed": [
+            1393,
+            689
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1323,
+              709
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

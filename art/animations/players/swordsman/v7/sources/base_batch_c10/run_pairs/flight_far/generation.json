@@ -1,0 +1,46 @@
+{
+  "schema": "image_generation_history/1",
+  "events": [
+    {
+      "tool": "builtin image_gen.imagegen",
+      "date": "2026-10-22",
+      "intent": "reference-guided whole-person image generation/edit",
+      "request_file": "request.json",
+      "request_sha256": "c889c5537d631232ae668e80ad008ca9f629745a79c3c9d962278181bed49c5f",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/pre_far/source.png",
+          "sha256": "825c3e57f357388965dde723d8f2951bf4941cdaae9be88289327c0134269e94",
+          "actually_submitted": true
+        },
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/push_near/source.png",
+          "sha256": "21ddea1b0a4a5aeea37bb5cd06d73280d9f567d86992541557e0ccc4cab9ee29",
+          "actually_submitted": true
+        }
+      ],
+      "output_file": "source.png",
+      "original_returned_filename": "exec-033ff88a-4238-45b9-abb7-1a069171da37.png",
+      "output_sha256": "ca4c411afda4d105e0d4a7175b0a8f54491df42d37b4f6cdb7e9a34d3a87f10e",
+      "requested_size": [
+        2560,
+        1440
+      ],
+      "actual_size": [
+        1672,
+        941
+      ],
+      "native_2k_canvas_met": false,
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "seed": null,
+      "status": "selected_source_poses_only",
+      "reason": "Only reviewed complete-person poses listed in body_config.json enter export; neutral companions remain measuring references."
+    }
+  ],
+  "capability_note": "Built-in tool accepts actual image paths and transparency; canvas request still returned1672x941. No raster was upscaled. Selected figures are uniformly reduced from their same-sheet standing-height ruler to380px.",
+  "anatomy_policy": "Head, torso, pelvis, both legs, arms and coat are drawn together; no generated isolated leg or fixed-torso collage."
+}

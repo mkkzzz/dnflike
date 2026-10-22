@@ -1,0 +1,190 @@
+{
+  "revision": "v7_c10_run_b",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/c10_body_keys/run_b",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "source_c1.png",
+      "standing_height": 488
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "whole_person_drawings": true,
+    "runtime_install_allowed": false,
+    "rejected_source_scale_consistency": true
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.run",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c10_run_05",
+          "source": "body",
+          "crop_bbox": [
+            575,
+            45,
+            1110,
+            515
+          ],
+          "root": [
+            888,
+            506
+          ],
+          "foot": [
+            1068,
+            486
+          ],
+          "component_seed": [
+            834,
+            241
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              764,
+              261
+            ]
+          }
+        },
+        {
+          "id": "c10_run_06",
+          "source": "body",
+          "crop_bbox": [
+            1135,
+            65,
+            1668,
+            515
+          ],
+          "root": [
+            1440,
+            506
+          ],
+          "foot": [
+            1589,
+            500
+          ],
+          "component_seed": [
+            1392,
+            251
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1322,
+              271
+            ]
+          }
+        },
+        {
+          "id": "c10_run_07",
+          "source": "body",
+          "crop_bbox": [
+            45,
+            515,
+            550,
+            938
+          ],
+          "root": [
+            335,
+            925
+          ],
+          "foot": [
+            285,
+            913
+          ],
+          "component_seed": [
+            291,
+            675
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              221,
+              695
+            ]
+          }
+        },
+        {
+          "id": "c10_run_08",
+          "source": "body",
+          "crop_bbox": [
+            620,
+            515,
+            1105,
+            938
+          ],
+          "root": [
+            892,
+            925
+          ],
+          "foot": [
+            793,
+            914
+          ],
+          "component_seed": [
+            833,
+            680
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              763,
+              700
+            ]
+          }
+        },
+        {
+          "id": "c10_run_09",
+          "source": "body",
+          "crop_bbox": [
+            1140,
+            515,
+            1665,
+            938
+          ],
+          "root": [
+            1432,
+            925
+          ],
+          "foot": [
+            1267,
+            899
+          ],
+          "component_seed": [
+            1398,
+            684
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1328,
+              704
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

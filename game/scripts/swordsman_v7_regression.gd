@@ -137,6 +137,7 @@ func run(main, check: Callable, frames: Callable, capture: Callable) -> void:
 		check.call(seen==["attack1","attack2","attack3"],"v7 queued gameplay input executes the complete three-cut combo")
 		await _motion_checks(main,p,renderer,check,frames)
 		await _c8_trial_checks(main,p,renderer,check,frames)
+		await _c10_checks(main,p,renderer,check,frames)
 	renderer.call("set_enabled", false)
 	main.weapon_rig.set_profile("blacksteel")
 	await frames.call(2)
@@ -281,6 +282,94 @@ func _c8_trial_checks(main,p: Player,renderer: Node2D,check: Callable,frames: Ca
 			check.call(target.hp<2000 and not p.contact_log.is_empty(),"c8 first cut hits with actual gameplay blade %s face%d" % [profile,facing])
 	p._clear_move()
 	p.state = Player.St.IDLE
-	main._on_gm_command("art",PackedStringArray(["v7"]))
+	main._on_gm_command("art",PackedStringArray(["v7c6"]))
 	await frames.call(2)
 	check.call(Library.clip("attack1")==original["clips"]["attack1"] and not Library.data().has("trial_scope"),"c8 GM trial returns to the original c6 package without stale surfaces")
+
+func _c10_checks(main,p: Player,renderer: Node2D,check: Callable,frames: Callable) -> void:
+	var original: Dictionary = Library.data().duplicate(true)
+	p._clear_move()
+	p.state = Player.St.IDLE
+	main._on_gm_command("art",PackedStringArray(["v7c10"]))
+	await frames.call(2)
+	check.call(Library.data().get("trial_scope",[])==Library.RUN_COMBO_CLIPS,"c10 selects run, start, stop and all three cuts together")
+	check.call(Library.clip("idle")==original["clips"]["idle"],"c10 keeps the accepted idle clock, geometry and all pixel references")
+	var retained := true
+	for name in original["clips"]:
+		if name not in Library.RUN_COMBO_CLIPS:retained = retained and Library.clip(name)==original["clips"][name]
+	check.call(retained and Library.data()["clips"].size()==32,"c10 preserves every clip outside its six-clip scope")
+	check.call(Library.clip("run")["duration_ticks"]==36 and bool(Library.clip("run")["loop"]),"c10 runs a complete whole-person cycle on its authored 36-tick clock")
+	var textures_ok := true
+	for reference in Library.data()["textures"].values():
+		var texture: Texture2D = Library.texture(reference)
+		textures_ok = textures_ok and texture != null and texture.get_width()==int(reference["size"][0]) and texture.get_height()==int(reference["size"][1])
+	check.call(textures_ok,"c10 actual native body, fingers and weapon textures load")
+	p._start_move("attack1")
+	await frames.call(10)
+	p.control_enabled=false
+	var before: Dictionary=renderer.call("snapshot")
+	var saved_tick := p.phase_t
+	var saved_position := p.position
+	for profile in ["katana","greatsword","shortsword"]:
+		main.weapon_rig.set_profile(profile)
+		var changed: Dictionary=renderer.call("snapshot")
+		check.call(changed["frame"]["body"]==before["frame"]["body"] and p.phase_t==saved_tick and p.position==saved_position,"c10 weapon swap shares body pixels, root and clock "+profile)
+	p.control_enabled=true
+	for profile in ["katana","greatsword","shortsword"]:
+		for direction in [1,-1]:
+			p._clear_move()
+			p.state=Player.St.IDLE
+			p.position=Vector2(500,p.ground_y)
+			p.depth_y=0
+			p.velocity=Vector2.ZERO
+			p.facing=direction
+			p.invincible=99999
+			p.control_enabled=true
+			main.weapon_rig.set_profile(profile)
+			for monster in main.monsters:
+				monster.control_enabled=false
+				monster.position.x=1150
+			p.buffer_run(direction)
+			var action := "move_right" if direction==1 else "move_left"
+			Input.action_press(action)
+			await frames.call(22)
+			var moving: bool = p.state==Player.St.RUN and renderer.call("current_clip")=="run"
+			var snap: Dictionary = renderer.call("snapshot")
+			check.call(moving and snap.get("facing",0)==direction and not snap.get("body_sources",[]).is_empty(),"c10 real running input renders a complete body %s face%d" % [profile,direction])
+			Input.action_release(action)
+			await frames.call(20)
+			check.call(p.state==Player.St.IDLE and renderer.call("current_clip")=="idle","c10 run stop recovers to accepted idle %s face%d" % [profile,direction])
+			for move in ["attack1","attack2","attack3"]:
+				p._clear_move()
+				p.state=Player.St.IDLE
+				p.position=Vector2(500,p.ground_y)
+				p.velocity=Vector2.ZERO
+				p.facing=direction
+				main.bm.freeze=0
+				var target: Monster=main.monsters[0]
+				target.position=Vector2(500+90*direction,p.ground_y)
+				target.depth_y=0
+				target.hp=5000
+				target.invincible=0
+				p._start_move(move)
+				await frames.call(55)
+				check.call(target.hp<5000 and not p.contact_log.is_empty(),"c10 actual blade hits %s %s face%d" % [move,profile,direction])
+				if move=="attack3":check.call(not p._seq_ground_done,"c10 rising third cut preserves upward-cut semantics %s face%d" % [profile,direction])
+	p._clear_move()
+	p.state=Player.St.IDLE
+	p.combo=0
+	p.position=Vector2(500,p.ground_y)
+	p.velocity=Vector2.ZERO
+	main.bm.freeze=0
+	for monster in main.monsters:monster.position.x=1150
+	var seen: Array=[]
+	for tick in 100:
+		if tick in [0,18,36]:p.buffer_action("attack")
+		await frames.call(1)
+		if p.move_name.begins_with("attack") and p.move_name not in seen:seen.append(p.move_name)
+	check.call(seen==["attack1","attack2","attack3"],"c10 actual buffered input links all three new cuts")
+	p._clear_move()
+	p.state=Player.St.IDLE
+	main._on_gm_command("art",PackedStringArray(["v7c6"]))
+	await frames.call(2)
+	check.call(not Library.data().has("trial_scope") and Library.clip("run")==original["clips"]["run"],"c10 rollback restores c6 without stale run or weapon surfaces")

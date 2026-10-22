@@ -1,0 +1,75 @@
+{
+  "schema": "image_generation_history/1",
+  "events": [
+    {
+      "tool": "builtin image_gen.imagegen",
+      "date": "2026-10-22",
+      "intent": "reference-guided whole-person image generation/edit",
+      "request_file": "request.json",
+      "request_sha256": "962c715e8413398ce2bf970e292d0ddfce4aa22e418ec7cd9067a920ee0bde57",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c8/attack3_load_c1/body_c1.png",
+          "sha256": "79ac40bbaeb51b6a18a4c985e82ded4e4e7a30af71f7dc53e5613b988845dd9d",
+          "actually_submitted": true
+        }
+      ],
+      "output_file": "source_c1.png",
+      "original_returned_filename": "exec-afc55eb9-2252-4754-aaec-5eca77b871e4.png",
+      "output_sha256": "9840f256ba5f9ab3c562a1a5c31c23a1f9e22c9cc90f3c9074d296be836cfad1",
+      "requested_size": [
+        2560,
+        1440
+      ],
+      "actual_size": [
+        1672,
+        941
+      ],
+      "native_2k_canvas_met": false,
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "seed": null,
+      "status": "superseded",
+      "reason": "Jaw occluded by shoulder in follow-through; source_c2 reveals the lower jaw."
+    },
+    {
+      "tool": "builtin image_gen.imagegen",
+      "date": "2026-10-22",
+      "intent": "reference-guided whole-person image generation/edit",
+      "request_file": "request_c2.json",
+      "request_sha256": "641db9c3cf4cecdcb05b46ec081536c2d2231d4d7c31150cd77f82d347315f0a",
+      "references": [
+        {
+          "file": "art/animations/players/swordsman/v7/sources/base_batch_c10/attack3/source_c1.png",
+          "sha256": "9840f256ba5f9ab3c562a1a5c31c23a1f9e22c9cc90f3c9074d296be836cfad1",
+          "actually_submitted": true
+        }
+      ],
+      "output_file": "source_c2.png",
+      "original_returned_filename": "exec-09256684-e352-4852-9015-7ac536c6b39a.png",
+      "output_sha256": "4663b2612fda1a6ae34c81304382be2f9f31e9854811fccc9446e586415a3235",
+      "requested_size": [
+        2560,
+        1440
+      ],
+      "actual_size": [
+        1672,
+        941
+      ],
+      "native_2k_canvas_met": false,
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "seed": null,
+      "status": "selected_source_poses_only",
+      "reason": "Only reviewed complete-person poses listed in body_config.json enter export; neutral companions remain measuring references."
+    }
+  ],
+  "capability_note": "Built-in tool accepts actual image paths and transparency; canvas request still returned1672x941. No raster was upscaled. Selected figures are uniformly reduced from their same-sheet standing-height ruler to380px.",
+  "anatomy_policy": "Head, torso, pelvis, both legs, arms and coat are drawn together; no generated isolated leg or fixed-torso collage."
+}

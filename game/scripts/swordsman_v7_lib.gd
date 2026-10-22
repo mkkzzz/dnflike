@@ -2,15 +2,18 @@ extends RefCounted
 ## Native pixels shared by the offline review and runtime. No gameplay clocks here.
 const ROOTS := ["res://assets/swordsman_v7_c6/"]
 const FIRST_CUT_ROOT := "res://assets/swordsman_v7_c8/"
+const RUN_COMBO_ROOT := "res://assets/swordsman_v7_c10/"
+const RUN_COMBO_CLIPS := ["run","run_start","run_stop","attack1","attack2","attack3"]
 static var _root := ""
 static var _data: Dictionary = {}
 static var _textures: Dictionary = {}
-static var _variant := "c6"
+static var _variant := "c6" if "--test" in OS.get_cmdline_user_args() else "c10"
 static var _overlay_files: Dictionary = {}
 
 static func select_variant(value: String) -> bool:
-	if value not in ["c6", "c8"]:return false
+	if value not in ["c6", "c8", "c10"]:return false
 	if value == "c8" and not _valid_first_cut():return false
+	if value == "c10" and not _valid_run_combo():return false
 	_variant = value
 	_data.clear()
 	_textures.clear()
@@ -24,6 +27,20 @@ static func _valid_first_cut() -> bool:
 	if not parsed is Dictionary:return false
 	var overlay: Dictionary = parsed.get("runtime_overlay", {})
 	return bool(parsed.get("validation", {}).get("passed", false)) and bool(parsed.get("authorization", {}).get("gm_preview_allowed", false)) and bool(overlay.get("explicit_gm_only", false)) and overlay.get("allowed_clips", []) == ["attack1"] and parsed.get("clips", {}).keys() == ["attack1"] and String(overlay.get("base_manifest_sha256", "")) == FileAccess.get_sha256(ROOTS[0] + "manifest.json")
+
+static func _valid_run_combo() -> bool:
+	var path := RUN_COMBO_ROOT + "manifest.json"
+	if not FileAccess.file_exists(path):return false
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	if not parsed is Dictionary:return false
+	var overlay: Dictionary = parsed.get("runtime_overlay", {})
+	if not bool(parsed.get("validation", {}).get("passed", false)) or not bool(parsed.get("authorization", {}).get("runtime_trial_allowed", false)):return false
+	if overlay.get("allowed_clips", []) != RUN_COMBO_CLIPS or String(overlay.get("base_manifest_sha256", "")) != FileAccess.get_sha256(ROOTS[0]+"manifest.json"):return false
+	var clips: Dictionary = parsed.get("clips", {})
+	if clips.size() != RUN_COMBO_CLIPS.size():return false
+	for name in RUN_COMBO_CLIPS:
+		if not clips.has(name):return false
+	return bool(overlay.get("preserve_approved_idle", false))
 
 static func data() -> Dictionary:
 	if not _data.is_empty():
@@ -43,6 +60,15 @@ static func data() -> Dictionary:
 		for key in _overlay_files:_data["textures"][key] = _overlay_files[key]
 		_data["revision"] = trial["revision"]
 		_data["trial_scope"] = ["attack1"]
+	if _variant == "c10" and not _data.is_empty() and _valid_run_combo():
+		var trial: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(RUN_COMBO_ROOT+"manifest.json"))
+		for name in RUN_COMBO_CLIPS:_data["clips"][name] = trial["clips"][name]
+		_overlay_files = trial["textures"]
+		for key in _overlay_files:_data["textures"][key] = _overlay_files[key]
+		# Per-clip weapon sets keep the accepted idle's original pixels and hilt.
+		_data["weapon_sets"] = {"c10":trial["weapon_sources"]}
+		_data["revision"] = trial["revision"]
+		_data["trial_scope"] = RUN_COMBO_CLIPS.duplicate()
 	return _data
 
 static func continuous() -> bool:
@@ -80,7 +106,8 @@ static func texture(reference: Dictionary) -> Texture2D:
 		return null
 	if not _textures.has(path):
 		data()
-		_textures[path] = load((FIRST_CUT_ROOT if _overlay_files.has(path) else _root) + path) as Texture2D
+		var overlay_root := RUN_COMBO_ROOT if _variant == "c10" else FIRST_CUT_ROOT
+		_textures[path] = load((overlay_root if _overlay_files.has(path) else _root) + path) as Texture2D
 	return _textures[path]
 
 static func anchor() -> Vector2:

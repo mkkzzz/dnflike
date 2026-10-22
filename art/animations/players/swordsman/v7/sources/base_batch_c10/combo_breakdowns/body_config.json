@@ -1,0 +1,96 @@
+{
+  "revision": "v7_c10_combo_breakdowns",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../exports/c10_body_keys/combo_breakdowns",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "source_c1.png",
+      "standing_height": 482
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "whole_person_drawings": true,
+    "runtime_install_allowed": false
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.combo.2",
+      "loop": false,
+      "root_mode": "ground",
+      "poses": [
+        {
+          "id": "c10_attack2_release",
+          "source": "body",
+          "crop_bbox": [
+            860,
+            50,
+            1460,
+            505
+          ],
+          "root": [
+            1197,
+            495
+          ],
+          "foot": [
+            972,
+            491
+          ],
+          "component_seed": [
+            1197,
+            285
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1121,
+              240
+            ]
+          }
+        },
+        {
+          "id": "c10_attack3_recover",
+          "source": "body",
+          "crop_bbox": [
+            900,
+            455,
+            1450,
+            938
+          ],
+          "root": [
+            1219,
+            920
+          ],
+          "foot": [
+            1052,
+            914
+          ],
+          "component_seed": [
+            1219,
+            700
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1318,
+              554
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

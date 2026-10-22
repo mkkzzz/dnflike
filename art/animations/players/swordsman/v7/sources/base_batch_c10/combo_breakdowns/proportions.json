@@ -1,0 +1,79 @@
+{
+  "schema": "actor_proportion_annotations/1",
+  "date": "2026-10-22",
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/combo_breakdowns/body_config.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "landmark_semantics_reviewed": true,
+  "annotation_method": "Manual visible crown, actual lower jaw and same-sheet neutral ruler; complete-person uniform downscale only. Review overlay before export.",
+  "sources": {
+    "body": {
+      "sha256": "cba76fb12d75ee436e04174f64565ea2c22bad0bc7fe5f3710b3a732d0344a1d",
+      "scale_basis": {
+        "kind": "same_sheet_neutral_companion",
+        "standing_top_y": 13,
+        "standing_bottom_y": 495,
+        "sole": [
+          402,
+          495
+        ],
+        "crop_bbox": [
+          315,
+          0,
+          610,
+          505
+        ],
+        "head": {
+          "hair_top": [
+            477,
+            13
+          ],
+          "chin": [
+            494,
+            89
+          ],
+          "projection": "upright_head"
+        }
+      }
+    }
+  },
+  "poses": [
+    {
+      "source": "body",
+      "pose_id": "c10_attack2_release",
+      "head": {
+        "hair_top": [
+          1217,
+          76
+        ],
+        "chin": [
+          1240,
+          155
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    },
+    {
+      "source": "body",
+      "pose_id": "c10_attack3_recover",
+      "head": {
+        "hair_top": [
+          1195,
+          480
+        ],
+        "chin": [
+          1216,
+          548
+        ],
+        "projection": "upright_head"
+      },
+      "uncertainty_px": 2
+    }
+  ],
+  "visual_review": {
+    "overlay": "landmark_overlay.png",
+    "sha256": "a6f0d62261b41487ce43330c54697503bcf7392bbab15760d8633a69ab952007",
+    "reviewed": true
+  }
+}

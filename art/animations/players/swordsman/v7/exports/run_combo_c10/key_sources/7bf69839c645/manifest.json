@@ -1,0 +1,181 @@
+{
+  "schema": "standard_actions_pilot/1",
+  "fps": 60,
+  "config_sha256": "7bf69839c645f5c13f0c2e5759623412cc4a911013973d91fdc51b89af8c233c",
+  "proportion_gate": {
+    "schema": "actor_proportions/1",
+    "passed": true,
+    "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/push_near/body_config.json",
+    "audit": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/push_near/proportions.json",
+    "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+    "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+    "reference_visible_head_ratio": 0.15216004589375082,
+    "tolerance_fraction": 0.08,
+    "target_standing_height": 380,
+    "measured_unique_poses": 1,
+    "required_unique_poses": 1,
+    "missing_pose_annotations": [],
+    "unknown_pose_annotations": [],
+    "neutral_checks": [
+      {
+        "source": "body",
+        "neutral_height": 914,
+        "head_ratio_error": -0.0005341170621079305,
+        "configured_height_error": 0.0
+      }
+    ],
+    "measurements": [
+      {
+        "source": "body",
+        "pose_id": "c10_run_push_near",
+        "head_source_px": 143,
+        "head_landmarks": {
+          "hair_top": [
+            1391,
+            85
+          ],
+          "chin": [
+            1415,
+            228
+          ],
+          "projection": "upright_head"
+        },
+        "source_standing_height": 914,
+        "scale_basis_verified": true,
+        "head_output_px": 59.45295404814004,
+        "reference_head_output_px": 57.82081743962531,
+        "relative_error": 0.028227491079989564,
+        "landmark_only_error_interval": [
+          0.013846687008940872,
+          0.04260829515103848
+        ],
+        "caveat": null
+      }
+    ],
+    "failures": [],
+    "artwork_approved": false,
+    "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+  },
+  "clips": {
+    "keys": {
+      "frames": [
+        {
+          "source_pose": "c10_run_push_near",
+          "source": "body",
+          "crop_bbox": [
+            600,
+            50,
+            1672,
+            935
+          ],
+          "source_root": [
+            1240.0,
+            905.0
+          ],
+          "source_foot": [
+            967.0,
+            897.0
+          ],
+          "scale": 0.41575492341356673,
+          "trim_offset_source": [
+            736,
+            81
+          ],
+          "paste_offset": [
+            238,
+            497
+          ],
+          "foot_from_anchor": [
+            -113.50109409190372,
+            -3.326039387308534
+          ],
+          "height_px": 3.326039387308534,
+          "visible_alpha_bbox": [
+            238,
+            497,
+            567,
+            838
+          ],
+          "crop_touches_alpha": false,
+          "component_isolation": {
+            "component_seed": [
+              1260,
+              410
+            ],
+            "alpha_core_threshold": 24,
+            "component_padding": 0,
+            "core_connectivity": 4,
+            "mask_file": "masks/c10_run_push_near_22806aca757be3ba.png",
+            "mask_sha256_raw_l8": "22806aca757be3ba0e93e0a0608e7ec67b89eb491cf92459f5bfcd8bce7efd70",
+            "mask_size": [
+              1072,
+              885
+            ],
+            "mask_source_origin": [
+              600,
+              50
+            ],
+            "mask_bbox_source": [
+              736,
+              81,
+              1527,
+              901
+            ],
+            "core_bbox_source": [
+              736,
+              81,
+              1527,
+              901
+            ],
+            "retained_alpha_bbox_source": [
+              736,
+              81,
+              1527,
+              901
+            ],
+            "selected_core_pixels": 224261,
+            "discarded_other_core_pixels": 0,
+            "discarded_alpha_pixels": 12466,
+            "discarded_alpha_sum": 42756,
+            "retained_alpha_pixels": 224261,
+            "landmark_checks": {
+              "grip": {
+                "source_point": [
+                  1014,
+                  438
+                ],
+                "radius": 2,
+                "source_alpha_max": 254,
+                "retained_alpha_max": 254,
+                "retained": true
+              },
+              "proportion_hair_top": {
+                "source_point": [
+                  1391,
+                  85
+                ],
+                "radius": 2,
+                "source_alpha_max": 210,
+                "retained_alpha_max": 210,
+                "retained": true
+              },
+              "proportion_chin": {
+                "source_point": [
+                  1415,
+                  228
+                ],
+                "radius": 2,
+                "source_alpha_max": 122,
+                "retained_alpha_max": 122,
+                "retained": true
+              }
+            },
+            "pixel_policy": "original RGBA unchanged inside binary mask; outside pixels set to transparent black"
+          },
+          "file": "actor/c10_run_push_near.png"
+        }
+      ]
+    }
+  },
+  "source_mode": "whole-person uniform downscale only"
+}

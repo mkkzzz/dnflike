@@ -105,9 +105,12 @@
     "sha256": "953ace9e2eb26a4a61d6611a7221223ca9f4cefaa580db4e31bf3890197ccb29"
   },
   "whole_body_gait_rework": {
-    "spec": "art/animations/players/swordsman/v7/sources/whole_body_gait_c9/spec.json",
-    "state": "spec_ready",
-    "source_images_created": false,
-    "runtime_installed": false
-  }
+    "spec": "art/animations/players/swordsman/v7/sources/base_batch_c10/spec.json",
+    "state": "integrated_partial_suite",
+    "source_images_created": true,
+    "runtime_installed": true,
+    "report": "docs/reports/ws2/2026-10/2026-10-22_C10跑动与三连实装.md",
+    "runtime_approved": false
+  },
+  "current_continuation": "C10 combines whole-person run/start/stop and all three cuts; historical C8 entries above describe their own checkpoint only."
 }

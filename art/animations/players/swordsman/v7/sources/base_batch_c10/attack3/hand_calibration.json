@@ -1,0 +1,47 @@
+{
+  "c10_attack3_drive": {
+    "primary": [
+      1124,
+      273
+    ],
+    "secondary": [
+      1094,
+      270
+    ],
+    "blade_axis": null,
+    "cutting_direction": [
+      0,
+      -1
+    ]
+  },
+  "c10_attack3_lift": {
+    "primary": [
+      729,
+      511
+    ],
+    "secondary": [
+      705,
+      531
+    ],
+    "blade_axis": null,
+    "cutting_direction": [
+      0,
+      -1
+    ]
+  },
+  "c10_attack3_follow": {
+    "primary": [
+      1230,
+      446
+    ],
+    "secondary": [
+      1225,
+      473
+    ],
+    "blade_axis": null,
+    "cutting_direction": [
+      0,
+      -1
+    ]
+  }
+}

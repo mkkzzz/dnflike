@@ -1,0 +1,65 @@
+{
+  "revision": "v7_c10_push_near",
+  "canvas": [
+    1024,
+    1080
+  ],
+  "anchor": [
+    448,
+    840
+  ],
+  "target_standing_height": 380,
+  "output_dir": "../../../../exports/c10_body_keys/push_near",
+  "proportion_check": "proportions.json",
+  "sources": {
+    "body": {
+      "file": "source.png",
+      "standing_height": 914
+    }
+  },
+  "declarations": {
+    "actor_includes_weapon": false,
+    "whole_person_drawings": true,
+    "runtime_install_allowed": false
+  },
+  "clips": {
+    "keys": {
+      "asset_id": "actor.player.base.run",
+      "loop": false,
+      "root_mode": "virtual_ground",
+      "poses": [
+        {
+          "id": "c10_run_push_near",
+          "source": "body",
+          "crop_bbox": [
+            600,
+            50,
+            1672,
+            935
+          ],
+          "root": [
+            1240,
+            905
+          ],
+          "foot": [
+            967,
+            897
+          ],
+          "component_seed": [
+            1260,
+            410
+          ],
+          "alpha_core_threshold": 24,
+          "component_padding": 0,
+          "duration_ticks": 1,
+          "landmarks": {
+            "grip": [
+              1014,
+              438
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

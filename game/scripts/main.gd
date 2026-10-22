@@ -1352,13 +1352,14 @@ func _on_gm_command(command: String, args: PackedStringArray) -> void:
 		"art":
 			var revision := args[0].to_lower() if not args.is_empty() else "v7"
 			var library := preload("res://scripts/swordsman_v7_lib.gd")
-			if not library.select_variant("c8" if revision == "v7c8" else "c6"):
+			var variant := "c8" if revision == "v7c8" else ("c10" if revision in ["v7","v7c10"] else "c6")
+			if not library.select_variant(variant):
 				gm_log("动作候选包未通过完整性检查，保持当前版本")
 				return
 			player.v7_renderer.call("set_enabled", revision != "v6")
 			player.queue_redraw()
 			weapon_rig.update_attachment()
-			gm_log("新第一刀试用已启用；其余动作仍为现有版本" if revision == "v7c8" else "基础动作：%s" % ("V7" if revision != "v6" else "V6 / 旧版"))
+			gm_log("新第一刀试用已启用；其余动作仍为现有版本" if revision == "v7c8" else ("新版跑动与三段普攻已启用" if variant == "c10" else "基础动作：%s" % ("V7 c6" if revision != "v6" else "V6 / 旧版")))
 		"weapon":
 			var identifier := args[0].to_lower() if not args.is_empty() else "katana"
 			gm_log("武器：%s" % identifier if weapon_rig.set_profile(identifier) else "可选：katana / greatsword / shortsword")

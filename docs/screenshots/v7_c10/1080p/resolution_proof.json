@@ -1,0 +1,52 @@
+{
+	"c10_manifest_sha256": "3763654801e46c775e176028df8becb5c6ab9d098a0b45a3f7832b96c31328b0",
+	"frames": [
+		{
+			"actual_clip": "run_start",
+			"clock": 5.0,
+			"file": "run_start_1080p.png",
+			"requested": "run_start",
+			"sha256": "854866682a2f61a22f5061937d796aa73675089f2ea9288eefccb238c88d4b11"
+		},
+		{
+			"actual_clip": "run",
+			"clock": 19.5,
+			"file": "run_1080p.png",
+			"requested": "run",
+			"sha256": "39c9fc578686585beb70c28009151e87eb4e03ac1817e54a220eac71250556c3"
+		},
+		{
+			"actual_clip": "run_stop",
+			"clock": 4.0,
+			"file": "run_stop_1080p.png",
+			"requested": "run_stop",
+			"sha256": "70d32809f50fdf5fed54ffc49bab112e0ef69934585b116d098f6530498fdd39"
+		},
+		{
+			"actual_clip": "attack1",
+			"clock": 12.0,
+			"file": "attack1_1080p.png",
+			"requested": "attack1",
+			"sha256": "a9aacc59e9357c42322e760b4ddb4cd61c95dab5f0b6fcfa7362f5afcea9904c"
+		},
+		{
+			"actual_clip": "attack2",
+			"clock": 10.0,
+			"file": "attack2_1080p.png",
+			"requested": "attack2",
+			"sha256": "f08fa65613f612c6722d9a657eb4ff8453504c1ca0eabe168cb882e3b9ebc07c"
+		},
+		{
+			"actual_clip": "attack3",
+			"clock": 7.0,
+			"file": "attack3_1080p.png",
+			"requested": "attack3",
+			"sha256": "e692bd2260192bc34eaedb6c194828c6f0f8533a3c3ad7c39aef94794575d8f7"
+		}
+	],
+	"size": [
+		1920,
+		1080
+	],
+	"source": "actual Godot frame_post_draw"
+}

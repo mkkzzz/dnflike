@@ -1,0 +1,54 @@
+{
+  "schema": "actor_proportions/1",
+  "passed": true,
+  "config": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/flight_near/body_config.json",
+  "audit": "art/animations/players/swordsman/v7/sources/base_batch_c10/run_pairs/flight_near/proportions.json",
+  "profile": "art/concepts/characters/players/swordsman/standard_v1/measurements/proportion_v1.json",
+  "profile_sha256": "5092a565688fbbb19653a88c909f1204757122c5cb495e71d33b7ef1d5ac627f",
+  "reference_visible_head_ratio": 0.15216004589375082,
+  "tolerance_fraction": 0.08,
+  "target_standing_height": 380,
+  "measured_unique_poses": 1,
+  "required_unique_poses": 1,
+  "missing_pose_annotations": [],
+  "unknown_pose_annotations": [],
+  "neutral_checks": [
+    {
+      "source": "body",
+      "neutral_height": 914,
+      "head_ratio_error": -0.0005341170621079305,
+      "configured_height_error": 0.0
+    }
+  ],
+  "measurements": [
+    {
+      "source": "body",
+      "pose_id": "c10_run_flight_near",
+      "head_source_px": 145,
+      "head_landmarks": {
+        "hair_top": [
+          1410,
+          91
+        ],
+        "chin": [
+          1430,
+          236
+        ],
+        "projection": "upright_head"
+      },
+      "source_standing_height": 914,
+      "scale_basis_verified": true,
+      "head_output_px": 60.284463894967175,
+      "reference_head_output_px": 57.82081743962531,
+      "relative_error": 0.04260829515103848,
+      "landmark_only_error_interval": [
+        0.028227491079989564,
+        0.05698909922208717
+      ],
+      "caveat": null
+    }
+  ],
+  "failures": [],
+  "artwork_approved": false,
+  "interpretation": "Visible head scale at the configured standing-equivalent scale; not crouched height divided by head height, and not a traditional anatomical head-count measurement."
+}
