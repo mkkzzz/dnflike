@@ -3,7 +3,7 @@ extends RefCounted
 ## not write back into the sender's state through an event.
 ## Subscription keys: exact type ("combat.hit"), module prefix ("combat."), or "*".
 
-const HISTORY_LIMIT := 512
+const HISTORY_LIMIT := 4096
 
 var tick := 0
 var time_ms := 0.0

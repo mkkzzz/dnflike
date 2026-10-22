@@ -1,34 +1,33 @@
 extends Node2D
-const Actor = preload("res://scripts/native_actor.gd")
-const Effect = preload("res://scripts/native_effect.gd")
-const Stage = preload("res://scripts/native_stage.gd")
-const Prop = preload("res://scripts/native_prop.gd")
-const Hud = preload("res://scripts/native_hud.gd")
+## Transitional battle scene: simulation + composition. Presentation lives in view/ and
+## ui/combat/ and only consumes snapshot() and combat events (doc 29, F1).
 const TestDrive = preload("res://scripts/test_drive.gd")
 const EventBus = preload("res://core/event_bus.gd")
 const ContentDB = preload("res://content/api/content_db.gd")
 const CombatSession = preload("res://combat/api/combat_session.gd")
+const BattleView = preload("res://view/battle_view.gd")
 
 ## Set before entering the tree when a flow root manages this scene (see CombatSession.mount).
 var external_mode := false
 var bus = EventBus.new()
 var content = ContentDB.new()
 var session
+var view
 var run_id := "standalone"
 var room_id := ""
 var assets: Dictionary = {}
 var rules: Dictionary = {}
 var player_clips: Dictionary = {}
 var monster_clips: Dictionary = {}
-var stage
+# Aliases into the view kept for the flow-side transition bridge (flow/legacy_combat_port.gd).
 var player_view
 var hud
-var world: Node2D
-var audio: Node
+var music: AudioStreamPlayer
+var voice_pool: Array = []
+var sound_streams: Dictionary = {}
 var player: Dictionary = {}
 var monsters: Array = []
 var props: Array = []
-var prop_views: Array = []
 var room_index := 0
 var room_cleared := false
 var room_snapshots: Dictionary = {}
@@ -41,8 +40,6 @@ var run_direction := 0
 var hitstop_ms := 0.0
 var action_seq := 0
 var _next_entity_id := 1
-var shake_ms := 0.0
-var shake_strength := 0.0
 var toast := ""
 var toast_ms := 0.0
 var elapsed_ms := 0.0
@@ -57,21 +54,19 @@ var help_visible := false
 var show_collision := false
 var god_mode := false
 var job := "weaponmaster"
-var weapon := "shortsword"
+var weapon := "shortsword":
+	set(value):
+		weapon = value
+		bus.emit("combat.appearance_changed",{"entity_id":0,"weapon":value})
 var missing_assets := false
 var door_lock_ms := 0.0
-var notes: Array = []
-var effects: Array = []
-var numbers: Array = []
-var sound_streams: Dictionary = {}
-var sound_last: Dictionary = {}
-var voice_pool: Array = []
-var voice_cursor := 0
-var music: AudioStreamPlayer
 var test_drive
 var _capture := false
 var _frame := 0
-var _muted := false
+var _muted := false:
+	set(value):
+		_muted = value
+		if view != null:view.audio.muted = value
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -83,37 +78,16 @@ func _ready() -> void:
 	rules = content.rules()
 	player_clips = content.clips("player")
 	monster_clips = content.clips("goblin")
-	world = Node2D.new()
-	add_child(world)
-	stage = Stage.new()
-	world.add_child(stage)
-	stage.setup(assets["scene"])
-	player_view = Actor.new()
-	world.add_child(player_view)
-	player_view.setup(assets["players"][weapon],player_clips)
-	var layer := CanvasLayer.new()
-	add_child(layer)
-	hud = Hud.new()
-	hud.game = self
-	layer.add_child(hud)
-	audio = Node.new()
-	add_child(audio)
-	for i in 8:
-		var voice := AudioStreamPlayer.new()
-		voice.volume_db = -15
-		audio.add_child(voice)
-		voice_pool.append(voice)
-	for key: String in assets["audio"]:
-		var file: String = "res://assets_local/"+String(assets["audio"][key]["file"])
-		sound_streams[key] = load(file)
-	music = AudioStreamPlayer.new()
-	music.volume_db = -28
-	audio.add_child(music)
+	view = BattleView.new()
+	add_child(view)
+	view.setup(assets,player_clips,monster_clips,bus,weapon)
+	player_view = view.player_actor
+	hud = view.hud
+	music = view.audio.music
+	voice_pool = view.audio.voice_pool
+	sound_streams = view.audio.sound_streams
 	# Managed mode leaves dungeon BGM to the flow side; tests never start it.
-	if sound_streams.has("music") and not external_mode and not "--test" in OS.get_cmdline_user_args():
-		music.stream = sound_streams["music"]
-		music.finished.connect(music.play)
-		music.play()
+	if not external_mode and not "--test" in OS.get_cmdline_user_args():view.audio.start_music()
 	if not external_mode:
 		session = CombatSession.new()
 		session.attach(self)
@@ -150,9 +124,7 @@ func begin_room(spec: Dictionary) -> void:
 	if snapshot.has("hp"):player["hp"] = clampf(float(snapshot["hp"]),1,float(rules["player"]["hp"]))
 	if snapshot.has("mp"):player["mp"] = clampf(float(snapshot["mp"]),0,float(rules["player"]["mp"]))
 	if snapshot.get("job","") in ["weaponmaster","berserker"]:job = String(snapshot["job"])
-	if assets["players"].has(String(snapshot.get("weapon",""))):
-		weapon = String(snapshot["weapon"])
-		player_view.setup(assets["players"][weapon],player_clips)
+	if assets["players"].has(String(snapshot.get("weapon",""))):weapon = String(snapshot["weapon"])
 	run_id = String(spec.get("run_id","standalone"))
 	room_snapshots.clear()
 	finished = false
@@ -184,8 +156,7 @@ func _input(event: InputEvent) -> void:
 			if finished and not external_mode:restart()
 		KEY_F2:
 			show_collision = not show_collision
-			stage.debug_collision = show_collision
-			stage.queue_redraw()
+			view.set_debug_collision(show_collision)
 		KEY_F3:
 			get_window().size = Vector2i(1920,1080) if get_window().size.x < 1920 else Vector2i(1280,720)
 		KEY_M:
@@ -197,7 +168,6 @@ func _input(event: InputEvent) -> void:
 				notice("职业切换："+("狂战士" if job == "berserker" else "剑魂"))
 		KEY_1,KEY_2,KEY_3:
 			weapon = ["shortsword","katana","greatsword"][code-KEY_1]
-			player_view.setup(assets["players"][weapon],player_clips)
 		KEY_LEFT,KEY_RIGHT:
 			var direction := -1 if code == KEY_LEFT else 1
 			var now := Time.get_ticks_msec()
@@ -218,6 +188,7 @@ func _physics_process(delta: float) -> void:
 	toast_ms = maxf(0,toast_ms-ms)
 	bus.tick = _frame
 	bus.time_ms = elapsed_ms
+	var sim_ms := 0.0
 	if not paused and not finished:
 		elapsed_ms += ms
 		if hitstop_ms > 0:
@@ -225,11 +196,8 @@ func _physics_process(delta: float) -> void:
 			consume_buffer()
 		else:
 			step_game(ms)
-	update_presentation()
-	for i in range(numbers.size()-1,-1,-1):
-		numbers[i]["ms"] = float(numbers[i]["ms"])+ms
-		if float(numbers[i]["ms"])>650:numbers.remove_at(i)
-	hud.queue_redraw()
+			sim_ms = ms
+	view.present(view_snapshot(),ms,sim_ms)
 	taps.clear()
 	if test_drive != null:test_drive.after_tick()
 	if _capture and _frame in [25,130,260,400]:
@@ -351,25 +319,18 @@ func step_game(ms: float) -> void:
 	for enemy: Dictionary in monsters:update_enemy(enemy,ms)
 	for prop: Dictionary in props:
 		if prop.get("broken",false):prop["broken_ms"] = float(prop.get("broken_ms",0))+ms
-	for fx in effects:
-		if is_instance_valid(fx) and not fx.is_queued_for_deletion():fx.advance(ms)
-	effects = effects.filter(func(fx):return is_instance_valid(fx) and not fx.is_queued_for_deletion())
 	var all_dead := true
 	for enemy: Dictionary in monsters:
 		if float(enemy["hp"])<=0:report_defeat(enemy)
 		if float(enemy["hp"])>0 or float(enemy["death_ms"])<820:all_dead = false
 	if all_dead and not room_cleared:
 		room_cleared = true
-		stage.cleared = true
-		stage.queue_redraw()
 		room_snapshots[room_index] = {"cleared":true,"props":props.duplicate(true)}
 		var boss := bool(rules["rooms"][room_index].get("boss",false))
 		bus.emit("combat.room_combat_finished",flow_payload({"boss":boss}))
 		if boss:
 			finished = true
 			victory = true
-			stage.cleared = false
-			stage.queue_redraw()
 		else:notice("房间清空 · 通道已开启")
 	if room_cleared and not finished and door_lock_ms<=0:
 		for door: Dictionary in doors:
@@ -452,14 +413,12 @@ func apply_player_hits(old_ms: float,new_ms: float) -> void:
 			if offset.x*int(player["facing"])>=-10 and offset.x*int(player["facing"])<=float(rule["reach"]) and absf(offset.y)<25:
 				p["broken"] = true
 				p["broken_ms"] = 0.0
-				stage.queue_redraw()
 				spawn_effect("hit",p["pos"]-Vector2(0,18),int(player["facing"]))
 
 func hit_enemy(enemy: Dictionary,rule: Dictionary,group := 0) -> void:
 	var damage := float(rule["damage"])*(1.2 if float(player["buff_ms"])>0 else 1.0)
 	bus.emit("combat.hit",{"attacker":0,"target":enemy["id"],"instance":action_seq,"group":group,
 		"point":Vector3(Vector2(enemy["pos"]).x,Vector2(enemy["pos"]).y,float(enemy["z"])),"guarded":false})
-	bus.emit("combat.damage",{"target":enemy["id"],"amount":damage,"critical":false,"category":"physical"})
 	enemy["hp"] = maxf(0,float(enemy["hp"])-damage)
 	enemy["state"] = "hurt"
 	enemy["clock"] = 0.0
@@ -472,12 +431,12 @@ func hit_enemy(enemy: Dictionary,rule: Dictionary,group := 0) -> void:
 		enemy["bounced"] = false
 	if rule.get("bleed",false):enemy["bleed_ms"] = 2400.0
 	hitstop_ms = maxf(hitstop_ms,float(rule["hitstop_ms"]))
-	shake_ms = 120
-	shake_strength = 2 if damage>=40 else 1
 	combo_count += 1
 	combo_ms = 1500
 	hit_count += 1
-	numbers.append({"pos":Vector2(enemy["pos"])-Vector2(0,65+float(enemy["z"])),"text":str(int(damage)),"ms":0.0,"heavy":damage>=70})
+	# point = target ground position and height after the reaction is applied.
+	bus.emit("combat.damage",{"target":enemy["id"],"amount":damage,"critical":false,"category":"physical",
+		"point":Vector3(Vector2(enemy["pos"]).x,Vector2(enemy["pos"]).y,float(enemy["z"]))})
 	spawn_effect("heavy" if damage>=40 else "hit",Vector2(enemy["pos"]),int(player["facing"]),35+float(enemy["z"]))
 	play_sound("goblin_hurt")
 	if float(enemy["hp"])<=0:
@@ -486,15 +445,9 @@ func hit_enemy(enemy: Dictionary,rule: Dictionary,group := 0) -> void:
 		play_sound("goblin_die")
 		report_defeat(enemy)
 
+## Presentation cue; the view decides whether and how to show it.
 func spawn_effect(name: String, point: Vector2, direction: int, z := 0.0) -> void:
-	if not assets["effects"].has(name):return
-	var fx = Effect.new()
-	world.add_child(fx)
-	fx.position = point-Vector2(0,z)
-	fx.z_index = int(point.y)+4
-	fx.setup(assets["effects"][name],direction)
-	fx.advance(0)
-	effects.append(fx)
+	bus.emit("combat.cue",{"kind":"fx","key":name,"point":point,"height":z,"facing":direction})
 
 func update_enemy(enemy: Dictionary,ms: float) -> void:
 	var dt := ms/1000
@@ -592,15 +545,7 @@ func move_player(delta: Vector2) -> void:
 	player["pos"] = move_in_world(player["pos"],delta)
 
 func load_room(index: int, from_side: String) -> void:
-	for view in prop_views:
-		if is_instance_valid(view):view.queue_free()
-	prop_views.clear()
-	for enemy: Dictionary in monsters:
-		if is_instance_valid(enemy["visual"]):enemy["visual"].queue_free()
 	monsters.clear()
-	for fx in effects:
-		if is_instance_valid(fx):fx.queue_free()
-	effects.clear()
 	room_index = index
 	room_id = "trial:%d"%index
 	doors.clear()
@@ -618,16 +563,7 @@ func load_room(index: int, from_side: String) -> void:
 		{"sprite":"tree","pos":Vector2(13,270),"collision":Rect2(5,264,16,10),"broken":false},
 		{"sprite":"tree","pos":Vector2(641,285),"collision":Rect2(633,279,16,10),"broken":false}]
 	if room_snapshots.has(index):props = room_snapshots[index]["props"].duplicate(true)
-	for prop: Dictionary in props:
-		var view = Prop.new()
-		world.add_child(view)
-		view.setup(assets["scene"],prop)
-		prop_views.append(view)
-	stage.room_index = index
-	stage.props = props
-	stage.doors = doors
-	stage.cleared = room_cleared and not bool(entry.get("boss",false))
-	stage.queue_redraw()
+	bus.emit("combat.room_loaded",{"room_index":index,"room_id":room_id,"props":props.duplicate(true)})
 	player["pos"] = Vector2(70,250) if from_side=="right" else Vector2(480,285) if from_side=="up" else Vector2(570,250) if from_side=="left" else Vector2(480,190) if from_side=="down" else Vector2(125,250)
 	player["z"] = 0.0
 	player["vz"] = 0.0
@@ -643,69 +579,72 @@ func door_point(side: String) -> Vector2:
 	return {"right":Vector2(603,249),"left":Vector2(37,249),"up":Vector2(480,174),"down":Vector2(480,295)}.get(side,Vector2.ZERO)
 
 func spawn_enemy(point: Vector2, chief := false) -> Dictionary:
-	var view = Actor.new()
-	world.add_child(view)
-	view.setup(assets["goblins"]["chief" if chief else "normal"],monster_clips)
-	view.shadow_width = 14
 	var hp := float(rules["goblin"]["chief_hp"] if chief else rules["goblin"]["hp"])
 	var enemy := {"id":_next_entity_id,"pos":constrain_pos(point),"z":0.0,"vz":0.0,"state":"idle","clock":0.0,"hp":hp,"max_hp":hp,"chief":chief,
-		"hurt_ms":0.0,"flash_ms":0.0,"cooldown":0.5,"attack_done":false,"bounced":false,"death_ms":0.0,"bleed_ms":0.0,"visual":view}
+		"hurt_ms":0.0,"flash_ms":0.0,"cooldown":0.5,"attack_done":false,"bounced":false,"death_ms":0.0,"bleed_ms":0.0}
 	monsters.append(enemy)
 	_next_entity_id += 1
+	bus.emit("combat.entity_spawned",{"entity_id":enemy["id"],"kind":"monster","appearance":"goblin_chief" if chief else "goblin"})
 	return enemy
 
-func update_presentation() -> void:
-	for view in prop_views:
-		if is_instance_valid(view):view.refresh()
-	var pose := "stay"
-	var ms := float(player["motion_clock"])
-	var state: String = player["state"]
-	if state=="action":
-		pose = String(rules["moves"][player["action"]]["ani"])
-		ms = float(player["clock"])
-	elif state=="dead":pose = "down";ms = 20200
-	elif state=="hurt":pose = "damage1";ms = 0
-	elif state=="guard":pose = "guard";ms = 0
-	elif state=="backstep":pose = "hitback";ms = float(player["clock"])
-	elif float(player["z"])>0:
-		pose = "jump"
-		ms = minf(float(player["air_ms"]),600) if float(player["vz"])>=0 else 10680
-	elif float(player["landing_ms"])>0:pose = "sit";ms = 0
-	elif state=="move":pose = "dash" if run_direction!=0 else "move"
-	player_view.position = Vector2(player["pos"]).round()
-	player_view.z_index = int(Vector2(player["pos"]).y)
-	player_view.present(pose,ms,int(player["facing"]),float(player["z"]),1.0 if float(player["flash_ms"])>0 else 0.0,Color(1.15,0.85,0.85) if float(player["buff_ms"])>0 else Color.WHITE)
+func clear_monsters() -> void:
 	for enemy: Dictionary in monsters:
-		var view = enemy["visual"]
-		var epose := "stay"
-		var eclock := float(enemy["clock"])
-		match String(enemy["state"]):
-			"move":epose = "move"
-			"attack":epose = "attack1"
-			"hurt":epose = "overturn" if float(enemy["z"])>0 else "damage1";eclock = 0
-			"down":epose = "down";eclock = 20160
-			"dead":epose = "down";eclock = 160+minf(float(enemy["death_ms"]),500)
-		view.position = Vector2(enemy["pos"]).round()
-		view.z_index = int(Vector2(enemy["pos"]).y)
-		var alpha := clampf(1.0-(float(enemy["death_ms"])-400)/400,0,1) if float(enemy["hp"])<=0 else 1.0
-		view.present(epose,eclock,int(enemy.get("facing",-1)),float(enemy["z"]),1.0 if float(enemy["flash_ms"])>0 else 0.0,Color(1,1,1,alpha))
-	if shake_ms>0 and not paused:
-		shake_ms = maxf(0,shake_ms-1000.0/60)
-		world.position = Vector2(sin(_frame*2.3),cos(_frame*1.7)).round()*shake_strength
-	else:world.position = Vector2.ZERO
+		bus.emit("combat.entity_removed",{"entity_id":enemy["id"]})
+	monsters.clear()
 
+func player_ani() -> Array:
+	var state: String = player["state"]
+	if state=="action":return [String(rules["moves"][player["action"]]["ani"]),float(player["clock"])]
+	if state=="dead":return ["down",20200.0]
+	if state=="hurt":return ["damage1",0.0]
+	if state=="guard":return ["guard",0.0]
+	if state=="backstep":return ["hitback",float(player["clock"])]
+	if float(player["z"])>0:return ["jump",minf(float(player["air_ms"]),600) if float(player["vz"])>=0 else 10680.0]
+	if float(player["landing_ms"])>0:return ["sit",0.0]
+	if state=="move":return ["dash" if run_direction!=0 else "move",float(player["motion_clock"])]
+	return ["stay",float(player["motion_clock"])]
+
+func enemy_ani(enemy: Dictionary) -> Array:
+	match String(enemy["state"]):
+		"move":return ["move",float(enemy["clock"])]
+		"attack":return ["attack1",float(enemy["clock"])]
+		"hurt":return ["overturn" if float(enemy["z"])>0 else "damage1",0.0]
+		"down":return ["down",20160.0]
+		"dead":return ["down",160+minf(float(enemy["death_ms"]),500)]
+	return ["stay",float(enemy["clock"])]
+
+## Read-only per-tick state for view/ and ui/combat/ (contract doc 29 section 4). Values only.
+func view_snapshot() -> Dictionary:
+	var ani := player_ani()
+	var enemies: Array = []
+	var alive := 0
+	for enemy: Dictionary in monsters:
+		var e_ani := enemy_ani(enemy)
+		var is_alive := float(enemy["hp"])>0
+		if is_alive:alive += 1
+		enemies.append({"id":enemy["id"],"pos":Vector2(enemy["pos"]),"z":float(enemy["z"]),"facing":int(enemy.get("facing",-1)),
+			"ani":e_ani[0],"clock":e_ani[1],"flash":float(enemy["flash_ms"])>0,"alive":is_alive,
+			"death_ms":float(enemy["death_ms"]),"hp_ratio":float(enemy["hp"])/float(enemy["max_hp"]),"chief":enemy["chief"]})
+	var route: Array = []
+	for i in rules["rooms"].size():
+		var room: Dictionary = rules["rooms"][i]
+		route.append({"cell":room["cell"],"visited":room_snapshots.has(i),"current":i==room_index,"boss":bool(room.get("boss",false))})
+	var boss_room := bool(rules["rooms"][room_index].get("boss",false))
+	return {"frame":_frame,"paused":paused,
+		"player":{"pos":Vector2(player["pos"]),"z":float(player["z"]),"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],
+			"flash":float(player["flash_ms"])>0,"buff":float(player["buff_ms"])>0,"weapon":weapon},
+		"enemies":enemies,"props":props.duplicate(true),
+		"stage":{"room_index":room_index,"cleared":room_cleared and not boss_room,"doors":doors.duplicate(true)},
+		"hud":{"room_name":String(rules["rooms"][room_index]["name"]),"alive":alive,"room_cleared":room_cleared,
+			"route":route,"combo":combo_count,"toast":toast,"toast_ms":toast_ms,
+			"player":{"hp":float(player["hp"]),"mp":float(player["mp"]),"hp_max":float(rules["player"]["hp"]),"mp_max":float(rules["player"]["mp"]),
+				"job":job,"weapon":weapon,"buff_ms":float(player["buff_ms"]),"cooldowns":Dictionary(player["cooldowns"]).duplicate()},
+			"overlay":{"finished":finished,"external":external_mode,"victory":victory,"damage_taken":damage_taken,
+				"elapsed_ms":elapsed_ms,"paused":paused,"help":help_visible}}}
+
+## Presentation cue; the view's audio router plays it.
 func play_sound(key: String) -> void:
-	if _muted or not sound_streams.has(key):return
-	var now := Time.get_ticks_msec()
-	if now-int(sound_last.get(key,-1000))<75:return
-	sound_last[key] = now
-	var voice: AudioStreamPlayer = voice_pool[voice_cursor%voice_pool.size()]
-	voice_cursor += 1
-	voice.stream = sound_streams[key]
-	# Conservative peak budget, even before source PCM normalization:
-	# 8*10^(-21/20)+10^(-28/20)=0.753 < 0.86 (assuming peak <= 1).
-	voice.volume_db = -23 if key.begins_with("goblin") else -21
-	voice.play()
+	bus.emit("combat.cue",{"kind":"sound","key":key})
 
 func capture_frame(name: String) -> void:
 	await RenderingServer.frame_post_draw

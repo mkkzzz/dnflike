@@ -11,12 +11,16 @@ var game
 var api
 var checks := 0
 var failures := 0
+var _trace: FileAccess
 
 func before_tick() -> void:pass
-func after_tick() -> void:pass
+func after_tick() -> void:
+	if _trace != null:_trace.store_line(JSON.stringify(api.presentation_state()))
 
 func _ready() -> void:
 	api = TestAPI.new(game)
+	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--trace="):_trace = FileAccess.open(arg.substr(8),FileAccess.WRITE)
 	call_deferred("run")
 
 func check(value: bool,message: String) -> void:
@@ -60,6 +64,7 @@ func run() -> void:
 		await ticks(2)
 		await api.capture("boss_native")
 	print("[DNF_TEST] COMPLETE checks=%d failures=%d"%[checks,failures])
+	if _trace != null:_trace.close()
 	get_tree().quit(0 if failures==0 else 1)
 
 func check_core() -> void:
@@ -77,6 +82,12 @@ func check_core() -> void:
 	var a = DetRng.new(42)
 	var b = DetRng.new(42)
 	check(a.next_float()==b.next_float() and a.range_int(0,999)==b.range_int(0,999),"deterministic random source repeats with the same seed")
+	var orders: Array = game.view.hud.painters.map(func(w): return w.ORDER)
+	var sorted := orders.duplicate()
+	sorted.sort()
+	check(orders.size()==8 and orders==sorted,"combat HUD widgets are discovered from their folder in draw order")
+	var source := FileAccess.get_file_as_string("res://scripts/main.gd")
+	check(not source.contains("draw_texture") and not source.contains("draw_rect") and not source.contains("player_view.present") and not source.contains("AudioStreamPlayer.new"),"battle simulation no longer draws or owns presentation nodes")
 
 func check_content() -> void:
 	check(api.manifest_schema()=="dnf_native_runtime/1","native local resource manifest loaded")
@@ -142,6 +153,7 @@ func run_combat() -> void:
 	await ticks(6)
 	check(String(api.p("action"))=="air_attack","airborne attack selects original jumpattack ANI")
 	check(Vector2(api.p("pos")).y==jump_root.y,"jump height is not applied to depth coordinate")
+	check(game.view.enemy_actors.size()==1 and game.view.enemy_actors.has(enemy["id"]),"view keeps exactly one actor per live simulation entity")
 	await ticks(80)
 	check(float(api.p("z"))==0,"jump eventually lands")
 	api.set_p("state","idle")
