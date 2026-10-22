@@ -86,12 +86,22 @@ func sprite_button(parent: Node, group: String, frames: Array, at: Vector2, acti
 func close_button(parent: Node, at: Vector2, action: Callable) -> void:
 	sprite_button(parent, "close", [4, 5, 6], at, action, "关闭 Esc")
 
-func item_cell(parent: Node, at: Vector2) -> void:
-	# An actual native bag cell, with its one-pixel grid. No generic raised button.
-	var atlas := AtlasTexture.new()
-	atlas.atlas = texture("inventory_grid")
-	atlas.region = Rect2(18, 178, 30, 30)
-	image(parent, atlas, at)
+func item_grid(parent: Node, at: Vector2, columns: int, rows: int) -> Control:
+	# The source grid starts at (16,174), repeats every 32px, and has a
+	# final 2px border. Draw continuous row bands so shared edges occur once.
+	# (18,178,30,30) cut off the top/left and included the next cell's edge.
+	var grid := Control.new()
+	grid.position = at
+	grid.size = Vector2(columns * 32 + 2, rows * 32 + 2)
+	grid.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(grid)
+	var row := 0
+	while row < rows:
+		var count := mini(4, rows - row)
+		var height := count * 32 + (2 if row + count == rows else 0)
+		image_region(grid, texture("inventory_grid"), Rect2(16, 174, columns * 32 + 2, height), Vector2(0, row * 32))
+		row += count
+	return grid
 
 func image(parent: Node, tex: Texture2D, at: Vector2, shrink := 1.0) -> TextureRect:
 	var view := TextureRect.new()

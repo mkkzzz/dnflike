@@ -73,6 +73,32 @@ func click_item(name: String) -> bool:
 			return true
 	return false
 
+func check_item_grid(name: String, columns: int, rows: int) -> void:
+	var grid := game.modal.find_child(name, true, false) as Control
+	check(is_instance_valid(grid), "native item grid exists: " + name)
+	if not is_instance_valid(grid):return
+	var occupied: Array[Rect2] = []
+	for hit in grid.find_children("*", "Button", true, false):
+		var icon := hit.get_node("item_icon") as TextureRect
+		var bounds: Rect2 = hit.get_rect()
+		var cavity := Rect2(Vector2(floorf(bounds.position.x / 32), floorf(bounds.position.y / 32)) * 32 + Vector2(2, 2), Vector2(28, 28))
+		check(bounds == cavity and icon.get_rect() == Rect2(0, 0, 28, 28), "item icon and hit area fit native cell: " + String(hit.get_meta("item_name")))
+		for previous in occupied:check(not previous.intersects(bounds), "adjacent item areas do not overlap")
+		occupied.append(bounds)
+	if not capture:return
+	await RenderingServer.frame_post_draw
+	var shot := get_viewport().get_texture().get_image()
+	var factor := float(shot.get_width()) / 800.0
+	var source: Image = game.skin.texture("inventory_grid").get_image()
+	var points := [Vector2i(0, 16), Vector2i(16, 0), Vector2i(columns * 32, 16), Vector2i(16, rows * 32)]
+	var intact := true
+	for point: Vector2i in points:
+		var source_y := point.y % 128 if point.y < rows * 32 else ((rows - 1) % 4 + 1) * 32
+		var expected := source.get_pixel(16 + point.x, 174 + source_y)
+		var at: Vector2 = (grid.global_position + Vector2(point)) * factor
+		if not shot.get_pixel(int(at.x), int(at.y)).is_equal_approx(expected):intact = false
+	check(intact, "rendered native grid retains all four borders: " + name)
+
 func unit_states() -> void:
 	var s = game.Session.new()
 	check(not s.command("items.buy", {"id": "unknown"})["ok"], "reject unknown merchandise")
@@ -175,6 +201,8 @@ func run() -> void:
 	game.show_overlay("shop")
 	await ticks(2)
 	await frame("04_shop")
+	await check_item_grid("native_shop_grid", 7, 6)
+	await check_item_grid("native_inventory_grid", 8, 4)
 	check(click_item("恢复药剂"), "click native shop item to purchase")
 	await ticks(2)
 	check(game.session.profile["gold"] == 260 and game.session.profile["inventory"]["potion"] == 4, "purchase exchanges gold for item")
@@ -193,6 +221,8 @@ func run() -> void:
 	for node in game.modal.find_children("*", "Button", true, false):
 		if node.get_meta("item_name", "") == "恢复药剂":potion_visible = true
 	check(potion_visible, "consumable tab filters inventory to consumable items")
+	await check_item_grid("native_inventory_grid", 8, 4)
+	await frame("05c_inventory_consumables")
 	check(click_text("装备"), "inventory equipment category can be restored")
 	await ticks(3)
 	var item_hit: Control
@@ -204,6 +234,13 @@ func run() -> void:
 		get_viewport().push_input(motion, true)
 		await ticks(3)
 		check(is_instance_valid(game.windows.tip), "hover creates native item detail panel")
+		if capture:
+			await RenderingServer.frame_post_draw
+			var shot := get_viewport().get_texture().get_image()
+			var icon := item_hit.get_node("item_icon") as TextureRect
+			var factor := float(shot.get_width()) / 800.0
+			var at: Vector2 = (icon.global_position + Vector2(14, 14)) * factor
+			check(shot.get_pixel(int(at.x), int(at.y)).is_equal_approx(icon.texture.get_image().get_pixel(14, 14)), "hover keeps the original item icon visible without button fill")
 		if is_instance_valid(game.windows.tip):
 			check(game.windows.tip.texture == game.skin.tooltip_texture, "item detail uses original translucent Global frame")
 			var bounds: Rect2 = game.windows.tip.get_global_rect()

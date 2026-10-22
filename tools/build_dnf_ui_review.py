@@ -11,13 +11,14 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SCREENS = [
+    ('物品格修正 · 商店与背包', '统一原生32像素网格，完整保留上下左右边框；28像素图标居中，空格与物品格共用边线。', '04_shop.png'),
+    ('物品格修正 · 装备', '两件装备在相邻格内，边框连续；物品按钮不再叠加通用底板。', '11_reward_equipment.png'),
+    ('物品格修正 · 消耗品', '恢复药剂和数量位于同一格内；分类、购买与数量数据仍走实际游戏流程。', '05c_inventory_consumables.png'),
+    ('物品悬停详情', '悬停不遮盖图标，原Global细金边详情框继续使用；边缘自动避让。', '05b_inventory_hover.png'),
     ('城镇 · 两倍窗口', '1600×1200实机：原素材整数缩放，动态文字按窗口分辨率绘制，HUD透明区下方补齐原地面。', '01_town.png'),
     ('城镇 · 原始大小', '800×600原始大小对照。原素材没有更高分辨率细节；菜单可切换原始大小和两倍大小。', '01c_native_1x.png'),
     ('NPC 对话', '原包林纳斯186×226上半身大立绘；底部对话板，正文与选项留出人物空间。', '02_linus.png'),
     ('任务列表', '可接受、进行中、已完成分类；左侧列表和右侧目标、奖励详情。', '03_quest.png'),
-    ('商店', '商店与背包并排；原商品格与滚动组件，悬停显示商品价格。', '04_shop.png'),
-    ('背包与装备', '原图1:1裁去空白，保留装备区与网格；避开HUD，页签不重叠，负重按实际持有物品计算。', '11_reward_equipment.png'),
-    ('物品悬停详情', '原Global组件的细金边半透明黑底，名称、类型、要求、效果与操作分层。', '05b_inventory_hover.png'),
     ('地下城选择', '原800×600羊皮地图、原地下城卡片、中文难度和冒险按钮。', '06_departure.png'),
     ('战斗', '当前接入的五房试炼战斗，使用原版角色与场景素材。', '09_combat_action.png'),
     ('通关结算', '原评价底图与奖励卡片；实际战斗统计。', '10_result.png'),
@@ -62,8 +63,8 @@ article{background:#1b231d;border:1px solid #45513c;border-radius:8px;overflow:h
 .caption p{color:#bac0ad;font-size:13px;margin:5px 0 0}footer{color:#a5ad99;padding-top:0}dialog{padding:0;background:#111713;color:#eee4c8;border:1px solid #a58b50;max-width:96vw;max-height:96vh}
 dialog::backdrop{background:#000d}.toolbar{display:flex;align-items:center;gap:14px;padding:10px 14px;position:sticky;top:0;background:#1b231d;z-index:1}
 .toolbar button{font:inherit;color:#edcf87;background:#293427;border:1px solid #6d7756;padding:4px 12px;cursor:pointer}.viewer{overflow:auto;max-width:95vw;max-height:85vh}.viewer img{display:block;image-rendering:auto;max-width:none}
-</style><header><h1>当前游戏 · 第二轮界面精修</h1><p>本次实际运行截图 · 全中文 · 点开适合屏幕，切换原始像素后可横向滑动查看细节</p>
-<p>已修HUD黑带、窗口排版、物品说明、大立绘与ASDFGH技能栏；Z/X/C不列入技能槽，药剂改用1。前两张对比原始大小和两倍窗口；场景保留原像素，文字按窗口分辨率绘制。末尾为原包攻略。</p>
+</style><header><h1>当前游戏 · 物品格定位修正</h1><p>本次实际运行截图 · 全中文 · 点开适合屏幕，切换原始像素后可横向滑动查看细节</p>
+<p>前四张为本轮商店、装备、消耗品与悬停实拍：纠正原网格裁切起点和32像素间距，图标居中，移除悬停按钮底板。后续保留城镇、对白、选图和结算。场景保留原像素，文字按窗口分辨率绘制；末尾为原包攻略。</p>
 <a href="screenshots.zip" download>下载全部截图</a></header><main>'''+''.join(cards)+'''</main>
 <footer>实机截图未修图，原包攻略截图单独标注。原资源与UI配置已核对；尚未取得原客户端同条件实机截图，不能据此宣称像素级一致。</footer>
 <dialog id="zoom"><div class="toolbar"><strong id="name"></strong><button id="scale">原始像素</button><button id="close">关闭</button></div><div class="viewer"><img id="full" alt="游戏实机原图"></div></dialog>

@@ -1,7 +1,7 @@
 {
   "schema": "dnflike_loop_store/1",
-  "version": "dnf-loop-v4-ui-polish-20261022",
-  "tag": "dnf-loop-v4-ui-polish-20261022",
+  "version": "dnf-loop-v5-item-grid-20261022",
+  "tag": "dnf-loop-v5-item-grid-20261022",
   "repository": "mkkzzz/dnflike-assets",
   "base_asset_version": "dnf-native-assets-v1-20261022",
   "packs": [
@@ -18,10 +18,10 @@
     {
       "name": "evidence-01.zip",
       "kind": "evidence",
-      "bytes": 10887764,
-      "sha256": "291bbf854f311c5a1bbd7560d9796f5fae1c31af46ade87ec048ade7af23a20a",
-      "files": 25,
-      "unpacked_bytes": 11161732
+      "bytes": 11368483,
+      "sha256": "1e1c45d1e29a853d6dd2eb256dfbbecfa74c7d6bb7a66cce9f09dad318b02d5e",
+      "files": 27,
+      "unpacked_bytes": 11676941
     }
   ]
 }

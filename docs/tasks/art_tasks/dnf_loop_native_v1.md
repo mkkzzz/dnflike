@@ -4,12 +4,12 @@
 
 | 字段 | 内容 |
 |---|---|
-| task_id / revision | dnf_loop_native_v1 / 04；v3样式方向认可后，精修布局/说明框/大立绘/清晰度及ASDFGH |
+| task_id / revision | dnf_loop_native_v1 / 05；续修背包/商店格子裁切、32px步距、物品内框和悬停底板 |
 | asset_id | scene.town.elvengard、actor.npc.linus、actor.npc.danjin、ui.loop.hud/inventory/shop/quest/departure/result |
 | asset_type / workflow | 原资源只读提取、原UI组件拼装；14文档H/F路线，不调用生图 |
 | style_profile / theme_pack | 原版DNF像素资源；用户本轮明确要求使用原图，禁用临时色块 |
 | owner / integration_owner | ws2；其它区自行接收，不代填其状态 |
-| lifecycle | 已发布；首版已被用户退回，本轮修正、来源与验证见[二轮精修](../../reports/ws2/2026-10/2026-10-22_UI二轮精修与清晰度.md)，原版一致性待用户复核 |
+| lifecycle | 已发布；首版已被用户退回，本轮定位修正见[格子返修](../../reports/ws2/2026-10/2026-10-22_背包商店格子与图标定位.md)，前轮说明框/大立绘等保持，原版一致性待用户复核 |
 | gameplay_purpose | 走动城镇、NPC委托/购买、背包/装备、出征、胜负结算、回城与成长 |
 
 本轮沿用用户已指定的原素材路线，不生成或补画新人物。原图复用不等于完整还原原版布局、规则和数值。
@@ -35,8 +35,8 @@
 | HUD | Interface2/HUD/HUD.img 800×92，血蓝56×56；ui/hud/hud.ui控件坐标 | 移除常驻说明/六个大按钮；原菜单图标、两侧快捷槽、真实血蓝/经验/冷却；技能ASDFGH，ZXC不显示、药剂1 |
 | 底部对白 | Interface2/npc_dialogue_ui.img 718×165；npc_dialog_face.img第0帧186×226 | 原尺寸底部板，林纳斯透明上半身大立绘浮在左侧；中文对白/任务/商店入口 |
 | 任务列表 | newstyle/windows/quest.img、quest/reformquestwindow.img、WindowCommon组件 | 分类、左列表/右详情、目标/奖励与接取/交付；外窗位置仍为E-INFER |
-| 背包 | newstyle/windows/inventory/fuck_1.img 313×578（含透明留边），源图自带中文页签 | 删48px空白后保持组件1:1，避开HUD；八列四行、分类/实际负重/金币、原说明框 |
-| 商店 | 原WindowCommon边框/纹理、StackableShopWindow原滚动组件及原商品格 | 七列六行商品与背包并排，购买/悬停价格；整体拼装为E-INFER |
+| 背包 | newstyle/windows/inventory/fuck_1.img 313×578（含透明留边），源图自带中文页签 | 删48px空白后保持组件1:1，避开HUD；八列四行，源网格起点(16,174)/步距32/图标28内缩2；分类/实际负重/金币与原说明框 |
+| 商店 | 原WindowCommon边框/纹理、StackableShopWindow原滚动组件及原商品格 | 七列六行32px网格，与背包同源行带/2px收边，图标28居中；购买/悬停价格；整体拼装为E-INFER |
 | 说明板/物品详情 | 普通窗WindowCommon＋商店纹理40×35；物品专用Global九片24×25 | 外窗连续边缘；详情细金边半透明黑底，不混用组件家族 |
 | 出征 | WorldMap/granfloris.img 800×600、SelectDungeonSlot/granfloris原图卡、SelectDungeon02_cn中文组件 | 全屏羊皮地图、卡片选中框、普通级、原冒险按钮；未开放卡片明示不可进入 |
 | 结算 | Interface2/reward_ver2.0/reward_ver2.img原底图800×600、卡牌153×97与确认按钮；NewResult原评级 | 实际统计、四张卡片/鼠标翻开/确认回城；奖励仅展示已结算收益，不冒充原版随机翻牌规则 |

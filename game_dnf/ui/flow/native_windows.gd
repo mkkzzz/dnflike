@@ -110,14 +110,20 @@ func item_tip(id: String, rect: Rect2, buying := false) -> void:
 	skin.label(tip, "购买价格：%d 金币" % int(data["price"]) if buying else "点击装备" if data["kind"] == "weapon" else "点击使用 · 地下城内有效", Vector2(16, 169), 12, Color("f0d18a"))
 
 func item_slot(parent: Node, id: String, at: Vector2, action: Callable, buying := false) -> Button:
-	skin.image(parent, item_texture(id), at)
 	var hit := Button.new()
 	hit.position = at
 	hit.size = Vector2(28, 28)
 	hit.flat = true
 	hit.focus_mode = Control.FOCUS_NONE
+	# The original icon already contains its dark cavity texture. Keep it
+	# inside the 28px hit area; generic Button hover/pressed plates cover it.
+	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
+		hit.add_theme_stylebox_override(state, StyleBoxEmpty.new())
+	var icon: TextureRect = skin.image(hit, item_texture(id), Vector2.ZERO)
+	icon.name = "item_icon"
 	# Custom tooltip replaces the engine's default popup while preserving accessible name.
 	hit.set_meta("item_name", game.Catalog.ITEMS[id]["name"])
+	hit.set_meta("item_id", id)
 	hit.mouse_entered.connect(func(): item_tip(id, hit.get_global_rect(), buying))
 	hit.mouse_exited.connect(hide_tooltip)
 	hit.pressed.connect(func(): hide_tooltip(); action.call())
@@ -146,20 +152,22 @@ func inventory(at := Vector2(484, 22), can_close := true) -> void:
 		var tab := node.get_node("inventory_tab_" + str(i)) as Button
 		tab.pressed.connect(func(): inventory_tab = tab_index; game.show_overlay(game.overlay))
 		if i == inventory_tab:tab.modulate = Color("fff3ac")
-	# Original PVF grid: eight columns, four rows, 30x30, no margins.
-	for y in 4:
-		for x in 8:skin.item_cell(node, Vector2(20 + x * 30, 218 + y * 30))
+	var grid: Control = skin.item_grid(node, Vector2(20, 218), 8, 4)
+	grid.name = "native_inventory_grid"
 	var index := 0
 	for id: String in game.Catalog.ITEMS:
 		var qty := int(game.session.profile["inventory"].get(id, 0))
 		var kind: String = game.Catalog.ITEMS[id]["kind"]
 		if qty < 1 or (inventory_tab == 0 and kind != "weapon") or (inventory_tab == 1 and kind == "weapon") or inventory_tab > 1:continue
-		var point := Vector2(21 + (index % 8) * 30, 219 + (index / 8) * 30)
-		item_slot(node, id, point, func():
+		var point := Vector2(2 + (index % 8) * 32, 2 + (index / 8) * 32)
+		var slot := item_slot(grid, id, point, func():
 			if kind == "weapon":
 				if game.act("items.equip", {"id": id}):game.show_overlay(game.overlay)
 			else:game.use_potion())
-		if qty > 1:skin.label(node, str(qty), point + Vector2(17, 14), 10)
+		if qty > 1:
+			var amount: Label = skin.label(slot, str(qty), Vector2(1, 14), 10)
+			amount.size.x = 26
+			amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		index += 1
 	skin.label(node, "0 点", Vector2(75, 378), 11)
 	skin.label(node, "0 点", Vector2(217, 378), 11)
@@ -173,11 +181,11 @@ func shop() -> void:
 	skin.image(node, skin.texture("portrait", 9), Vector2(12, 39))
 	skin.label(node, "好好保养武器，\n它才能保护你。", Vector2(96, 54), 12)
 	skin.label(node, "商品", Vector2(24, 125), 12, Color("f0d18a"))
-	for y in 6:
-		for x in 7:skin.item_cell(node, Vector2(24 + x * 32, 151 + y * 32))
+	var grid: Control = skin.item_grid(node, Vector2(24, 151), 7, 6)
+	grid.name = "native_shop_grid"
 	for i in 2:
 		var id: String = ["potion", "forest_sword"][i]
-		item_slot(node, id, Vector2(25 + i * 32, 152), func():
+		item_slot(grid, id, Vector2(2 + i * 32, 2), func():
 			if game.act("items.buy", {"id": id}):game.notice("购入 " + game.Catalog.ITEMS[id]["name"]); game.show_overlay("shop"), true)
 	skin.image(node, skin.texture("shop", 13), Vector2(264, 167))
 	skin.image(node, skin.texture("shop", 9), Vector2(264, 151))
