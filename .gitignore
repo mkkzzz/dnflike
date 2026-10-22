@@ -7,7 +7,7 @@ tools/godot/
 # Godot 工程本地缓存
 game/.godot/
 
-# 新版验证工程：提取的第三方资源仅本地存放，不提交/推送
+# 新版资源消费副本和导入缓存：共享包通过独立资源仓库 Release 拉取，不进入源码 Git
 game_dnf/.godot/
 game_dnf/assets_local/
 

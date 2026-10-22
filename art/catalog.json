@@ -1,6 +1,14 @@
 {
   "schema_version": 1,
   "path_base": "repository_root",
+  "external_resource_stores": {
+    "dnf_native_v1": {
+      "lock": "game_dnf/asset_store.json",
+      "guide": "docs/design/23_DNF资源共享与工作区接入.md",
+      "storage": "Versioned external cache; selected runtime consumption copy in game_dnf/assets_local",
+      "source": "Existing local DNF client extraction; original ownership retained"
+    }
+  },
   "layout": {
     "concepts/characters/players": "玩家角色原画，按身份/版本细分",
     "concepts/characters/monsters": "怪物与 Boss 原画，按身份/版本细分",

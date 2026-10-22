@@ -2,7 +2,7 @@
 
 独立 Godot 项目，使用现有本地 DNF IMG/ANI 资源实现战斗与五房副本样板。
 玩法范围对照旧工程；原生像素、动作时序、锚点和分层按本套资源建立。
-首轮仍是本地验证，完整观感、音量和手感待用户试玩。
+首轮实机视频演示已获用户验收；后续新增内容仍按具体范围验收。
 
 引擎沿用仓库固定 Godot 4.7.2。旧工程入口保持在 `game/`。
 
@@ -15,21 +15,25 @@ tools/run_dnf.ps1 -Editor
 tools/run_dnf.ps1 -Test -Capture
 ```
 
-## 本地资源
+## 共享资源
 
-`assets_local/` 包含选用原始 IMG、ANI 元数据、原始 Ogg、图集与来源/哈希。
-该目录和 Godot 导入缓存均被 Git 忽略，不提交、不推送。
-用户授权将所需资源复制到项目路径；未据此推断素材的再分发许可。
+完整资源存放在工程外，通过独立资源仓库的版本包共享。
+启动时缺少资源或资源版本变化会自动同步小型运行包；完整库不用复制进每个 Godot 项目。
+`asset_store.json` 固定包版本与 SHA256；`assets_local/` 只是被 Git 忽略的消费副本。
 
 ```powershell
-# 初次准备：需 Pillow；路径指向已提取的本机资源库
-python tools/build_dnf_assets.py --library "temp/dnf_unpack_probe/library_v1"
-# 本地 sources/ 已齐备时，可脱离原客户端与临时资源库重新编译
-python tools/build_dnf_assets.py
+# 各工作区拉取运行包，随后用 tools/run_dnf.ps1 启动
+python tools/dnf_asset_store.py sync
+# 需要选资源、查动作时，拉取完整库到工程外；同机各 clone 共用一份
+python tools/dnf_asset_store.py sync --full
+# 查看完整分类库、动作帧和配置（需Pillow）
+python tools/browse_dnf_assets.py
 ```
 
-新 clone 不附带上述第三方素材；先按本机已有资源准备，再运行。
-资源缺失时主场景给出提示；启动脚本会明确报缺资源。
+Windows 默认缓存根为仓库所在盘的 `dnflike-assets`；可设 `DNFLIKE_ASSET_HOME`。
+GitHub 凭据从现有 Git 登录或本机 `GH_TOKEN` 读取，凭据不写入仓库。
+从外部完整库重建需 Pillow；已选源齐全时运行 `python tools/build_dnf_assets.py`。
+来源、权限和完整同步步骤见[共享说明](../docs/design/23_DNF资源共享与工作区接入.md)。
 
 ## 操作
 

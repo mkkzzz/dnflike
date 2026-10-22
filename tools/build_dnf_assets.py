@@ -1,7 +1,8 @@
 """Select existing local IMG/ANI/audio, preserve sources, and compile native atlases.
 
-All third-party bytes and manifests remain inside ignored assets_local/. Runtime
-never depends on the original client or the temporary SQL catalog after baking.
+Runtime uses an ignored consumption copy in assets_local/. The complete versioned
+library is shared outside the checkout; see dnf_asset_store.py. Runtime never
+depends on the original client or the SQL catalog after baking.
 """
 from __future__ import annotations
 import argparse
@@ -42,7 +43,7 @@ def stage(library):
     c = sqlite3.connect(library/'catalog.sqlite');c.row_factory = sqlite3.Row
     a = sqlite3.connect(library/'pvf_config.sqlite')
     manifest = {'schema': 'dnf_selected_sources/1', 'images': {}, 'animations': {}, 'audio': {},
-                'rights': 'Existing local client assets; no redistribution authorization inferred; Git ignored.',
+                'rights': 'Existing client resources; user authorized project sharing, without transfer of third-party ownership. Binary archives live outside source Git.',
                 'config_provenance': '111Script.pvf backup; runtime PVF equivalence unconfirmed.'}
     def image(path):
         path = path.lower()

@@ -1,10 +1,10 @@
 # 幽暗回廊 · DNF-like
 
-原创手绘风单机横版动作 RPG，Godot 4.7.2。当前交付**战斗 demo**：三波遭遇、双转职与连段训练；三段普攻与拔刀斩使用角色与剑一体的原画 + 分层序列帧特效。
+Godot 4.7.2 单机横版动作 RPG。原生像素新版已接基础战斗、双职业代表技能与五房副本，实机视频获用户验收；原手绘工程保留作玩法对照。
 
 > 参与开发先读 [AGENTS.md](AGENTS.md)。当前进度见 [进度看板](docs/project/01_进度看板.md)，全部文档见 [文档索引](docs/project/07_文档索引.md)。
 
-**原生像素新版验证**：[game_dnf](game_dnf/README.md)，本机运行 `tools/run_dnf.ps1`。使用本地 DNF 资源，素材不上传；下方原工程保留作玩法对照。
+**原生像素新版**：[game_dnf](game_dnf/README.md)，运行 `tools/run_dnf.ps1`。资源从独立私有库同步，完整库放工程外；接入见[共享说明](docs/design/23_DNF资源共享与工作区接入.md)。
 
 ## 开始试玩
 
@@ -12,11 +12,14 @@
 # 首次：安装指定引擎（必须 4.7.2，其它版本会改写导入文件，启动脚本会拒绝）
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/setup_godot.ps1
 
-# 启动
+# 启动新版（资源同步需要 Python 与资源库访问权限）
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_dnf.ps1
+
+# 旧版对照
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_demo.ps1
 ```
 
-也可用 Godot 4.7.2 打开 `game/project.godot` 按 F5；自备 4.7.2 引擎可传 `-GodotPath "C:\path\godot.exe"`。正式贴图与音频已入库，无需 Python 或重新烘焙。
+Godot 可打开新版 `game_dnf/project.godot` 或旧版 `game/project.godot` 按 F5；自备 4.7.2 引擎可传 `-GodotPath "C:\path\godot.exe"`。新版先同步资源；旧版素材已入库。
 
 操作键位、帧率设置与玩法入口见 [战斗系统](docs/design/06_战斗系统.md#当前实机操作与设置)。
 
@@ -33,7 +36,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_demo.ps1 -Capture
 python tools/check_docs.py
 ```
 
-## 资源重建（仅修改美术 / 音频源时）
+## 旧版资源重建（仅修改美术 / 音频源时）
 
 ```powershell
 python -m pip install -r requirements.txt
@@ -45,6 +48,7 @@ python tools/bake_seq_v6.py; python tools/test_seq_v6.py; python tools/preview_v
 
 | 目录 | 内容 |
 |---|---|
+| `game_dnf/` | 原生像素新版、资源版本锁与小型消费副本入口 |
 | `game/` | Godot 工程：脚本、数据、实装资源 |
 | `art/`、`audio/` | 美术与音频源文件、生成记录、导出 |
 | `tools/` | 安装、启动、烘焙、录像、校验与开工同步脚本 |

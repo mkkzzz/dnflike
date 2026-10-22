@@ -12,8 +12,26 @@ if ($BuildAssets) {
     & python @buildArgs
     if ($LASTEXITCODE -ne 0) {throw "Local DNF resource build failed."}
 }
-if (-not (Test-Path -LiteralPath (Join-Path $gamePath "assets_local/manifest.json"))) {
-    throw "Local assets missing. Use -BuildAssets -LibraryPath <local extraction library>; raw client assets are deliberately excluded from Git."
+$assetLock=Join-Path $gamePath "asset_store.json"
+$needsSync=-not (Test-Path -LiteralPath (Join-Path $gamePath "assets_local/manifest.json"))
+if (Test-Path -LiteralPath $assetLock) {
+    $sharedLock=Get-Content -LiteralPath $assetLock -Raw | ConvertFrom-Json
+    $stampPath=Join-Path $gamePath "assets_local/.asset_store_install.json"
+    if (Test-Path -LiteralPath $stampPath) {
+        $installed=Get-Content -LiteralPath $stampPath -Raw | ConvertFrom-Json
+        if ($installed.version -ne $sharedLock.version) {$needsSync=$true}
+        foreach ($entry in @($sharedLock.packs | Where-Object {$_.kind -eq 'runtime'})) {
+            if ($installed.runtime_packs.PSObject.Properties[$entry.name].Value -ne $entry.sha256) {$needsSync=$true}
+        }
+    } else {$needsSync=$true}
+}
+if ($needsSync) {
+    if (Test-Path -LiteralPath $assetLock) {
+        & python (Join-Path $PSScriptRoot "dnf_asset_store.py") sync
+        if ($LASTEXITCODE -ne 0) {throw "Shared runtime asset sync failed. Check GitHub access and the network; see game_dnf/README.md."}
+    } else {
+        throw "Shared asset lock missing. Use -BuildAssets -LibraryPath <local extraction library>."
+    }
 }
 $ErrorActionPreference="Continue"
 $importOutput=& $GodotPath --headless --path $gamePath --editor --import --quit 2>&1
