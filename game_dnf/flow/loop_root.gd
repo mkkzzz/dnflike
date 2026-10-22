@@ -33,11 +33,16 @@ var save_failed := false
 var skill_views: Dictionary = {}
 
 func _ready() -> void:
+	test_mode = "--loop-test" in OS.get_cmdline_user_args()
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	get_window().content_scale_size = Vector2i(800, 600)
-	get_window().size = Vector2i(1600, 1200)
+	# Rasterize dynamic fonts at the physical window resolution. Native textures
+	# still use nearest filtering and integer scaling, without invented pixels.
+	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+	get_window().content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
+	var usable := DisplayServer.screen_get_usable_rect().size
+	get_window().size = Vector2i(1600, 1200) if test_mode or (usable.x >= 1600 and usable.y >= 1240) else Vector2i(800, 600)
 	get_window().title = "艾尔文防线 · 冒险循环"
-	test_mode = "--loop-test" in OS.get_cmdline_user_args()
 	if test_mode:store.path = "res://../temp/loop_tests/ui_profile.json"
 	else:
 		store.read_into(session)
@@ -82,17 +87,19 @@ func build_hud() -> void:
 	skin.sprite_button(hud, "hud", [11, 12, 13], Vector2(325, 560), func(): hud_action("quest"), "任务 Q")
 	skin.sprite_button(hud, "hud", [68, 69, 70], Vector2(451, 560), func(): hud_action("menu"), "菜单 Esc")
 	for i in 6:
-		skin.label(hud, str(i + 1), Vector2(86 + i * 30, 574), 9)
-		skin.label(hud, ["Z", "A", "S", "D", "F", "G"][i], Vector2(538 + i * 30, 574), 9)
+		skin.label(hud, str(i + 1), Vector2(86 + i * 30, 574), 9).z_index = 2
+		var hotkey: Label = skin.label(hud, ["A", "S", "D", "F", "G", "H"][i], Vector2(538 + i * 30, 574), 9)
+		hotkey.set_meta("skill_hotkey", true)
+		hotkey.z_index = 2
 	skin.image(hud, town.loader.texture(town.loader.data["ui"]["items"]["potion"]), Vector2(86, 555))
 	var potion_hit := Button.new()
 	potion_hit.position = Vector2(85, 555)
 	potion_hit.size = Vector2(28, 28)
 	potion_hit.flat = true
-	potion_hit.tooltip_text = "恢复药剂 H"
+	potion_hit.tooltip_text = "恢复药剂 1"
 	potion_hit.pressed.connect(use_potion)
 	hud.add_child(potion_hit)
-	for entry in [[0, "upper", 94, KEY_Z, "上挑 Z"], [1, "draw", 8, KEY_A, "拔刀斩 A"], [2, "thrust", 336, KEY_S, "连突刺 S"], [5, "guard", 24, KEY_G, "格挡 G"]]:
+	for entry in [[0, "draw", 8, KEY_A, "拔刀斩 A"], [1, "thrust", 336, KEY_S, "连突刺 S"], [4, "guard", 24, KEY_G, "格挡 G"]]:
 		var code: int = entry[3]
 		var view: TextureButton = skin.sprite_button(hud, "skill_icons", [entry[2], entry[2], entry[2] + 1], Vector2(537 + int(entry[0]) * 30, 555), func(): press_combat_key(code), entry[4])
 		var counter: Label = skin.label(hud, "", view.position + Vector2(6, 5), 12)
@@ -145,7 +152,7 @@ func _process(delta: float) -> void:
 		hp_max = float(snap["hp_max"])
 		mp_max = float(snap["mp_max"])
 		cooldowns = snap.get("cooldowns", {})
-		status_text.text = skin.chinese("%s  %d / %d  · X 普攻  Z/A/S 技能  C 跳跃" % [snap["room_name"], snap["room"], snap["room_count"]])
+		status_text.text = skin.chinese("%s  %d / %d" % [snap["room_name"], snap["room"], snap["room_count"]])
 	else:status_text.text = "艾尔文防线  · 方向键移动  E 交谈  · 药剂 ×%d" % int(p["inventory"].get("potion", 0))
 	if save_failed:status_text.text = "存档写入失败 · 请检查目录后重试保存"
 	hp_bar.value = hp * 100 / hp_max
@@ -182,7 +189,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_Q:hud_action("quest")
 		KEY_D:
 			if session.state == "town":hud_action("dungeon")
-		KEY_H:use_potion()
+		KEY_1:use_potion()
 		KEY_F5:save_profile()
 		KEY_ESCAPE:
 			if overlay == "" or session.state == "result":show_overlay("menu" if session.state != "result" else "result")
@@ -221,7 +228,7 @@ func show_overlay(which: String) -> void:
 		windows.quest_tab = 0 if session.profile["quest"] == "available" else 2 if session.profile["quest"] == "done" else 1
 	overlay = which
 	windows.hide_tooltip()
-	hud.visible = which != "dungeon"
+	hud.visible = which not in ["dungeon", "result"]
 	for child in modal.get_children():
 		if child is Control:child.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		child.queue_free()
@@ -293,12 +300,14 @@ func return_town() -> void:
 	notice("回到艾尔文防线 · " + ("保存失败，请重试" if save_failed else "进度已保存"))
 
 func menu_panel() -> void:
-	var panel = title_panel("冒险菜单", Rect2(166, 100, 308, 245))
+	var panel = title_panel("冒险菜单", Rect2(246, 120, 308, 280))
 	skin.button(panel, "继续游戏", Vector2(103, 63), func(): show_overlay(""))
 	skin.button(panel, "保存进度", Vector2(103, 105), func(): save_profile())
 	if session.state == "battle":skin.button(panel, "撤退回城", Vector2(103, 147), func():
 		if act("flow.retreat"):show_overlay("result"))
-	skin.label(panel, "中断的战斗重进后安全回城", Vector2(48, 204), 12)
+	skin.button(panel, "原始大小", Vector2(48, 195), func(): get_window().size = Vector2i(800, 600))
+	skin.button(panel, "两倍大小", Vector2(160, 195), func(): get_window().size = Vector2i(1600, 1200))
+	skin.label(panel, "中断的战斗重进后安全回城", Vector2(48, 245), 12)
 
 func use_potion() -> void:
 	if not is_instance_valid(battle) or session.state != "battle":notice("进入地下城后可使用恢复药剂"); return

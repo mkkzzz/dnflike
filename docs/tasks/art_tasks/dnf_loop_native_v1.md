@@ -4,12 +4,12 @@
 
 | 字段 | 内容 |
 |---|---|
-| task_id / revision | dnf_loop_native_v1 / 03；用户退回UI后，重选原包组件家族与布局，保留独立战斗入口 |
+| task_id / revision | dnf_loop_native_v1 / 04；v3样式方向认可后，精修布局/说明框/大立绘/清晰度及ASDFGH |
 | asset_id | scene.town.elvengard、actor.npc.linus、actor.npc.danjin、ui.loop.hud/inventory/shop/quest/departure/result |
 | asset_type / workflow | 原资源只读提取、原UI组件拼装；14文档H/F路线，不调用生图 |
 | style_profile / theme_pack | 原版DNF像素资源；用户本轮明确要求使用原图，禁用临时色块 |
 | owner / integration_owner | ws2；其它区自行接收，不代填其状态 |
-| lifecycle | 已发布；首版已被用户退回，本轮返修实装、来源与验证见[UI返修记录](../../reports/ws2/2026-10/2026-10-22_原包UI组件返修.md)，原版一致性待用户复核 |
+| lifecycle | 已发布；首版已被用户退回，本轮修正、来源与验证见[二轮精修](../../reports/ws2/2026-10/2026-10-22_UI二轮精修与清晰度.md)，原版一致性待用户复核 |
 | gameplay_purpose | 走动城镇、NPC委托/购买、背包/装备、出征、胜负结算、回城与成长 |
 
 本轮沿用用户已指定的原素材路线，不生成或补画新人物。原图复用不等于完整还原原版布局、规则和数值。
@@ -30,20 +30,20 @@
 
 | 对象 | 来源及规格 | 实装方式 |
 |---|---|---|
-| 城镇 | map/elvengard/elvengard.map，7列224×480原TIL，共1568×480 | 800×600循环视口水平卷轴，场景整体下移28，地面y映射沿T2偏移120 |
+| 城镇 | map/elvengard/elvengard.map，7列224×480原TIL，共1568×480 | 800×600循环视口水平卷轴，场景整体下移28，地面y映射沿T2偏移120；末48px草地1:1延续至HUD透明区 |
 | NPC | npc/linus.npc、npc/danjin.npc的field animation与MAP原坐标 | 原IMG裁切偏移＋ANI时长，循环采样，不用静态色块代替 |
-| HUD | Interface2/HUD/HUD.img 800×92，血蓝56×56；ui/hud/hud.ui控件坐标 | 移除常驻说明/六个大按钮；原菜单图标、两侧快捷槽、真实血蓝/经验/冷却 |
-| 底部对白 | Interface2/npc_dialogue_ui.img 718×165；林纳斯big face由NPC脚本定位 | 原尺寸底部板，原头像悬在左侧上方；中文对白/任务/商店入口 |
+| HUD | Interface2/HUD/HUD.img 800×92，血蓝56×56；ui/hud/hud.ui控件坐标 | 移除常驻说明/六个大按钮；原菜单图标、两侧快捷槽、真实血蓝/经验/冷却；技能ASDFGH，ZXC不显示、药剂1 |
+| 底部对白 | Interface2/npc_dialogue_ui.img 718×165；npc_dialog_face.img第0帧186×226 | 原尺寸底部板，林纳斯透明上半身大立绘浮在左侧；中文对白/任务/商店入口 |
 | 任务列表 | newstyle/windows/quest.img、quest/reformquestwindow.img、WindowCommon组件 | 分类、左列表/右详情、目标/奖励与接取/交付；外窗位置仍为E-INFER |
-| 背包 | newstyle/windows/inventory/fuck_1.img 313×578（含透明留边），源图自带中文页签 | 装备区、八列四行物品、分类、负重/金币；原格子与悬停详情 |
+| 背包 | newstyle/windows/inventory/fuck_1.img 313×578（含透明留边），源图自带中文页签 | 删48px空白后保持组件1:1，避开HUD；八列四行、分类/实际负重/金币、原说明框 |
 | 商店 | 原WindowCommon边框/纹理、StackableShopWindow原滚动组件及原商品格 | 七列六行商品与背包并排，购买/悬停价格；整体拼装为E-INFER |
-| 说明板 | WindowCommon原边框＋商店无字纹理40×35裁切 | 原像素组合平铺，避免透明透底及整张渐变反复平铺产生条纹 |
+| 说明板/物品详情 | 普通窗WindowCommon＋商店纹理40×35；物品专用Global九片24×25 | 外窗连续边缘；详情细金边半透明黑底，不混用组件家族 |
 | 出征 | WorldMap/granfloris.img 800×600、SelectDungeonSlot/granfloris原图卡、SelectDungeon02_cn中文组件 | 全屏羊皮地图、卡片选中框、普通级、原冒险按钮；未开放卡片明示不可进入 |
 | 结算 | Interface2/reward_ver2.0/reward_ver2.img原底图800×600、卡牌153×97与确认按钮；NewResult原评级 | 实际统计、四张卡片/鼠标翻开/确认回城；奖励仅展示已结算收益，不冒充原版随机翻牌规则 |
 | 物品 | 原katana图标、ptn_hplowest.stk指向的药剂图标 | 语义ID固定；两把试炼刀复用同一katana角色外观，尚无逐装备外观 |
 | 字体 | 原Fonts/msjh.ttf | 原字体动态中文；原图韩文标题/负重字区先清理，再放中文 |
 
-本入口改为800×600原生像素循环，1600×1200整数倍窗口；独立战斗验证仍为640×360，不改工程全局配置。
+本入口逻辑800×600、CANVAS_ITEMS按窗口分辨率绘制文字；场景原像素nearest/整数缩放。菜单选800×600或1600×1200，默认按可用屏幕选择；独立战斗全局配置不改。
 RGBA原像素保留，不插值放大、不量化重绘。PNG每帧记录IMG SHA256、原NPK、帧号、尺寸与偏移。
 地面范围、卷轴、外窗锚点与层序是适配/推定，未拿原版同条件录像逐项认可。原包攻略可验证HUD/背包/选图家族，不能替代实际生效客户端的逐状态对照。
 用户后续明确禁止游戏中出现韩文；[语言规范](../../design/15_统一风格与题材规范.md#游戏语言所有工作区)覆盖贴图内文字。背包字区与招牌用原无字材质做表现层修补，不修改存档、物品ID、PNG源字节或动作时钟。

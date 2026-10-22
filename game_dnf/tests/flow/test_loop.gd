@@ -137,13 +137,34 @@ func run() -> void:
 	check(not Language.contains_korean("背包 负重 普通难度 X HP 评价 S"), "Chinese text and normal key/rank notation are accepted")
 	check(game.town.loader.errors.is_empty(), "all native town textures load")
 	check(game.town.animated.size() >= 2, "source NPC/environment animation is active")
+	var hotkeys: Array[String] = []
+	for label in game.hud.find_children("*", "Label", true, false):
+		if label.get_meta("skill_hotkey", false):
+			hotkeys.append(label.text)
+			check(label.z_index > 0, "skill key stays above its icon: " + label.text)
+	check(hotkeys == ["A", "S", "D", "F", "G", "H"], "HUD shows ASDFGH without basic ZXC actions")
+	check(not game.skill_views.has("upper"), "basic upper attack is absent from skill slots")
+	check(game.get_window().content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS, "dynamic UI renders at window resolution")
 	await frame("01_town")
+	if capture:
+		var shot: Image = get_viewport().get_texture().get_image()
+		check(shot.get_size() == Vector2i(1600, 1200), "2x capture contains physical-resolution UI")
+		var clear: Color = ProjectSettings.get_setting("rendering/environment/defaults/default_clear_color")
+		check(not shot.get_pixel(800, 1060).is_equal_approx(clear), "transparent HUD has original ground underneath")
+		game.get_window().size = Vector2i(800, 600)
+		await ticks(4)
+		await frame("01c_native_1x")
+		check(get_viewport().get_texture().get_image().get_size() == Vector2i(800, 600), "1x capture preserves native dimensions")
+		game.get_window().size = Vector2i(1600, 1200)
+		await ticks(4)
 	game.town.ground = Vector2(1120, 230)
 	await ticks(3)
 	await frame("01b_town_east")
 	game.town.ground = Vector2(445, 222)
 	game.show_overlay("npc")
 	await ticks(3)
+	var portrait = game.modal.find_child("linus_dialogue_illustration", true, false)
+	check(is_instance_valid(portrait) and portrait.texture.get_size() == Vector2(186, 226), "dialogue uses original Linus torso illustration at 1:1")
 	await frame("02_linus")
 	check(click_text("委托任务"), "NPC opens quest UI")
 	await ticks(2)
@@ -160,6 +181,12 @@ func run() -> void:
 	game.show_overlay("inventory")
 	await ticks(3)
 	await frame("05_inventory")
+	var bag = game.modal.find_child("native_inventory", true, false)
+	check(bag.get_global_rect().end.y < 508, "compact native bag ends above HUD")
+	var tabs: Array[Rect2] = []
+	for i in 5:
+		tabs.append(bag.get_node("inventory_tab_" + str(i)).get_rect())
+		if i > 0:check(tabs[i - 1].end.x <= tabs[i].position.x, "inventory tabs do not overlap: " + str(i))
 	check(click_text("消耗品"), "inventory category tab responds to viewport clicks")
 	await ticks(3)
 	var potion_visible := false
@@ -178,6 +205,7 @@ func run() -> void:
 		await ticks(3)
 		check(is_instance_valid(game.windows.tip), "hover creates native item detail panel")
 		if is_instance_valid(game.windows.tip):
+			check(game.windows.tip.texture == game.skin.tooltip_texture, "item detail uses original translucent Global frame")
 			var bounds: Rect2 = game.windows.tip.get_global_rect()
 			check(Rect2(0, 0, 800, 600).encloses(bounds), "item detail panel stays inside native viewport")
 		await frame("05b_inventory_hover")
@@ -195,8 +223,15 @@ func run() -> void:
 		var before: Dictionary = game.combat.read_view()
 		if float(before["hp"]) <= float(before["hp_max"]) - 150:
 			var old := int(game.session.profile["inventory"]["potion"])
-			game.use_potion()
+			key(KEY_H, true)
+			await ticks(2)
+			key(KEY_H, false)
+			check(int(game.session.profile["inventory"]["potion"]) == old, "H no longer consumes items")
+			key(KEY_1, true)
+			await ticks(2)
+			key(KEY_1, false)
 			healed = int(game.session.profile["inventory"]["potion"]) == old - 1
+			check(healed, "number 1 consumes a potion through actual input")
 			break
 		await ticks(1)
 	# Real combat autopilot: read copied snapshot and send normal physical input.

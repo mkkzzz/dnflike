@@ -31,6 +31,12 @@ def audit(library: Path, output: Path) -> dict:
         inventory = manifest['images'][manifest['ui']['inventory']['0']]
         assert inventory['source_path'].lower().endswith('/inventory/fuck_1.img')
         assert manifest['images'][manifest['ui']['worldmap']['0']]['size'] == [800, 600]
+        face = manifest['images'][manifest['ui']['dialog_face']['0']]
+        assert face['size'] == [186, 226] and face['source_path'].lower() == 'sprite/interface/npc_dialog_face.img'
+        tooltip = Image.open(output/'tooltip.png').convert('RGBA')
+        for n, at in [(0, (0, 0)), (1, (6, 0)), (2, (18, 0)), (4, (0, 6)), (5, (6, 6)), (6, (18, 6)), (8, (0, 19)), (9, (6, 19)), (10, (18, 19))]:
+            piece = Image.open(output/manifest['images'][manifest['ui']['tooltip'][str(n)]]['file']).convert('RGBA')
+            assert tooltip.crop((*at, at[0]+piece.width, at[1]+piece.height)).tobytes() == piece.tobytes()
         sources = {s['path']: s for s in manifest['ui_layout_sources']}
         controls = [[v.get('value') for v in span['values']] for span in sources['ui/hud/hud.ui']['spans'] if span['tag'] == '[ui controls]']
         button = next(c for c in controls if c[1] == 'inventory_button')
@@ -38,6 +44,7 @@ def audit(library: Path, output: Path) -> dict:
         result = {'schema': 'native_ui_source_audit/1', 'images_checked': len(manifest['images']),
                   'mismatched_frames': failures, 'hud_source_and_control_coordinates': 'pass',
                   'inventory_patched_client_family': 'pass', 'map_native_dimensions': 'pass',
+                  'linus_original_torso_186x226': 'pass', 'tooltip_native_nine_parts': 'pass',
                   'runtime_client_layout_certified': False,
                   'limits': 'Raw pixels/source tokens checked; window reconstruction is not an original-client runtime comparison.'}
         if failures:raise ValueError(json.dumps(result))

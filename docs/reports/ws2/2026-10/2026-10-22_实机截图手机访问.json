@@ -4,11 +4,11 @@
   "access": "owner-private",
   "service": "Sites",
   "project_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c",
-  "version_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c~appgver_a6f797647c888191a03c6b46472c41da",
-  "deployment_id": "appgdep_6ada02724b0c8191a3ff89caa3747760",
+  "version_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c~appgver_4f3cf5a0da6481918ac33ec4a0dc481f",
+  "deployment_id": "appgdep_6ada0b919fdc8191b1eaf57c09cfb69d",
   "status": "succeeded",
-  "source_commit": "a54ee43df6209f043ae05fd0a1d90df74499d6fb",
-  "game_commit": "6139d4f",
-  "screens": 12,
-  "note": "手机浏览器使用当前ChatGPT账号访问；十张本轮UI返修实机、两张原包攻略对照分别标注。PNG原字节不变；网页部署去除重复截图ZIP，手机可长按单图保存。"
+  "source_commit": "0dd565a6e243e486cca8f16c3fa8c49ad6a84449",
+  "game_commit": "071b596 + UI v4 working tree; flow_store.json locks immutable art and evidence",
+  "screens": 13,
+  "note": "手机使用既有账号访问；11张本轮Godot实机（含800×600原始大小与1600×1200两倍窗口）、2张原包攻略分别标注。PNG原字节保留；动态字体按窗口分辨率绘制，源美术像素不重采样。弹层适合屏幕/原始像素切换。"
 }

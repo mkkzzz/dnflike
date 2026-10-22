@@ -51,7 +51,8 @@ def build(library: Path, output: Path) -> dict:
             'base': ('Interface/Base.img', [36, 50, 64, 67]),
             'close': ('Interface/commonbtn01.img', [4, 5, 6]),
             'dialog': ('Interface2/npc_dialogue_ui.img', [0, 20]),
-            'dialog_face': ('Interface/npc_dialog_face.img', [8, 9]),
+            'dialog_face': ('Interface/npc_dialog_face.img', [0]),
+            'tooltip': ('Interface/Global.img', list(range(12))),
             'quest': ('Interface/newstyle/windows/quest.img', list(range(20))),
             'quest_list': ('Interface/quest/reformquestwindow.img', [0, 2, 3, 4, 5, 9, 10]),
             'portrait': ('Map/Npc/NpcFace01.img', [8, 9]),
@@ -80,10 +81,21 @@ def build(library: Path, output: Path) -> dict:
         shop_image = Image.open(output / lib.images[ui['shop']['0']]['file']).convert('RGBA')
         panel = shop_image.crop((108, 30, 148, 65))
         pieces = [Image.open(output / lib.images[ui['common'][str(i)]]['file']) for i in range(9)]
-        for i, at in [(0, (0, 0)), (1, (14, 0)), (2, (26, 0)), (3, (0, 11)),
-                      (5, (29, 11)), (6, (0, 24)), (7, (11, 24)), (8, (29, 24))]:
-            panel.alpha_composite(pieces[i].convert('RGBA'), at)
+        # Fill each complete edge: tiling a short assembled bottom leaves teeth
+        # of transparent gaps when NinePatch repeats the incomplete middle.
+        for x in range(11, 29):
+            panel.paste(pieces[1].crop((5, 0, 6, 11)), (x, 0))
+            panel.paste(pieces[7].crop((5, 0, 6, 11)), (x, 24))
+        for i, at in [(0, (0, 0)), (2, (26, 0)), (3, (0, 11)),
+                      (5, (29, 11)), (6, (0, 24)), (8, (29, 24))]:
+            panel.paste(pieces[i].convert('RGBA'), at)
         panel.save(output / 'panel.png')
+        tooltip = Image.new('RGBA', (24, 25))
+        for n, at in [(0, (0, 0)), (1, (6, 0)), (2, (18, 0)),
+                      (4, (0, 6)), (5, (6, 6)), (6, (18, 6)),
+                      (8, (0, 19)), (9, (6, 19)), (10, (18, 19))]:
+            tooltip.paste(Image.open(output / lib.images[ui['tooltip'][str(n)]]['file']).convert('RGBA'), at)
+        tooltip.save(output / 'tooltip.png')
         fonts = lib.catalog.execute("select * from assets where lower(original_path)='fonts/msjh.ttf'").fetchall()
         if not fonts:
             raise ValueError('Original Chinese font missing')
@@ -93,7 +105,7 @@ def build(library: Path, output: Path) -> dict:
             raise ValueError('Original font hash mismatch')
         shutil.copyfile(source, output / 'msjh.ttf')
         result = {
-            'schema': 'dnf_native_map/1', 'flow_schema': 'dnf_loop_art/3',
+            'schema': 'dnf_native_map/1', 'flow_schema': 'dnf_loop_art/4',
             'source': {'asset_version': json.loads(LOCK.read_text(encoding='utf-8'))['version'],
                        'exporter': 'tools/build_dnf_flow_assets.py',
                        'config_role': '111Script backup; effective original runtime unconfirmed',
@@ -110,6 +122,9 @@ def build(library: Path, output: Path) -> dict:
             'panel': {'file': 'panel.png', 'size': [40, 35], 'sources': [ui['shop']['0']] + [ui['common'][str(i)] for i in range(9)],
                       'center_crop': [108, 30, 40, 35],
                       'operation': 'Native fragments composed at 1:1; tiled by NinePatchRect, no painted fill'},
+            'tooltip': {'file': 'tooltip.png', 'size': [24, 25], 'margins': [6, 6, 6, 6],
+                        'sources': [ui['tooltip'][str(i)] for i in [0, 1, 2, 4, 5, 6, 8, 9, 10]],
+                        'operation': 'Native translucent black/gold Global frame at 1:1'},
             'item_appearance': {'potion': {'path': potion_script['path'], 'sha256': potion_script['sha256'],
                                           'icon': potion_icon}, 'weapons': 'Native katana icons; v1 equipment is E-ADAPT'},
         }

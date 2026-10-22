@@ -20,6 +20,7 @@ func _ready() -> void:
 	loader.load_export("res://assets_local/flow_v1/manifest.json")
 	map_root = loader.build(loader.placements()[0])
 	add_child(map_root)
+	extend_ground_under_hud()
 	for node in map_root.get_children():
 		if node is Loader.MapSprite and node.frames.size() > 1:animated.append(node)
 	var assets: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/manifest.json"))
@@ -35,6 +36,24 @@ func _ready() -> void:
 	labels.z_index = 4000
 	map_root.add_child(labels)
 	labels.draw.connect(_draw_names)
+
+func extend_ground_under_hud() -> void:
+	# The original 480-high field must continue behind the transparent HUD.
+	# Repeat only the last native ground strip; all source pixels stay 1:1.
+	var room: Dictionary = map_root.get_meta("room")
+	for tile: Dictionary in room["tiles"]:
+		if tile["image"] == null:continue
+		var source: Texture2D = loader.texture(tile["image"])
+		var strip := AtlasTexture.new()
+		strip.atlas = source
+		strip.region = Rect2(0, source.get_height() - 48, source.get_width(), 48)
+		var sprite := Sprite2D.new()
+		sprite.centered = false
+		sprite.texture = strip
+		sprite.position = Vector2(float(tile["column"]) * 224 + tile["offset"][0], tile["offset"][1] + source.get_height())
+		sprite.z_index = -3100
+		sprite.set_meta("hud_ground_extension", true)
+		map_root.add_child(sprite)
 
 func localize_signs() -> void:
 	for node in map_root.get_children():

@@ -5,6 +5,7 @@ const TextPatch = preload("res://ui/flow/native_text_patch.gd")
 var art
 var font: Font
 var panel_texture: Texture2D
+var tooltip_texture: Texture2D
 
 func _init(loader) -> void:
 	art = loader
@@ -12,6 +13,7 @@ func _init(loader) -> void:
 	# Opaque native grain and native border fragments, tiled without scaling.
 	# Do not tile the complete description-board gradient: it creates stripes.
 	panel_texture = ImageTexture.create_from_image(Image.load_from_file(ProjectSettings.globalize_path("res://assets_local/flow_v1/panel.png")))
+	tooltip_texture = ImageTexture.create_from_image(Image.load_from_file(ProjectSettings.globalize_path("res://assets_local/flow_v1/tooltip.png")))
 
 func texture(group: String, frame: int = 0) -> Texture2D:
 	return art.texture(art.data["ui"][group][str(frame)])
@@ -21,16 +23,21 @@ func chinese(value: String) -> String:
 
 func inventory(parent: Node) -> void:
 	var tex := texture("inventory")
-	image(parent, tex, Vector2.ZERO)
+	# Remove 48px of empty body space, preserving equipment, cells and borders
+	# at native 1:1. The complete bag now ends above the HUD orb silhouette.
+	image_region(parent, tex, Rect2(0, 0, 313, 360), Vector2.ZERO)
+	image_region(parent, tex, Rect2(0, 408, 313, 170), Vector2(0, 360))
 	# This patched client supplies Chinese title tabs in the source itself.
 	image(parent, texture("inventory", 21), Vector2(19, 198))
-	image(parent, texture("inventory", 13), Vector2(19, 421))
-	label(parent, "负重", Vector2(20, 400), 11)
-	image(parent, texture("inventory", 2), Vector2(49, 405))
-	image(parent, texture("inventory", 1), Vector2(49, 405))
-	label(parent, "1.2 / 50 kg", Vector2(151, 399), 10)
+	image(parent, texture("inventory", 13), Vector2(19, 373))
+	label(parent, "负重", Vector2(20, 352), 11)
+	image(parent, texture("inventory", 2), Vector2(49, 357))
+	var weight := image(parent, texture("inventory", 1), Vector2(49, 357))
+	weight.name = "weight_fill"
+	label(parent, "1.2 / 50 kg", Vector2(151, 351), 10).name = "weight_label"
 	for i in 5:
 		var tab := button(parent, ["装备", "消耗品", "材料", "副职业", "任务"][i], Vector2(20 + i * 48, 196), func(): pass, false)
+		tab.add_theme_font_size_override("font_size", 11)
 		tab.size = Vector2(48, 20)
 		tab.name = "inventory_tab_" + str(i)
 
@@ -45,6 +52,21 @@ func surface(parent: Node, rect: Rect2, group: String, frame: int, margins := 5)
 	view.patch_margin_bottom = margins
 	view.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_TILE
 	view.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_TILE
+	view.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(view)
+	return view
+
+func item_board(parent: Node, rect: Rect2) -> NinePatchRect:
+	var view := NinePatchRect.new()
+	view.texture = tooltip_texture
+	view.patch_margin_left = 6
+	view.patch_margin_right = 6
+	view.patch_margin_top = 6
+	view.patch_margin_bottom = 6
+	view.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_TILE
+	view.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_TILE
+	view.position = rect.position
+	view.size = rect.size
 	view.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	parent.add_child(view)
 	return view
@@ -82,6 +104,12 @@ func image(parent: Node, tex: Texture2D, at: Vector2, shrink := 1.0) -> TextureR
 	view.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	parent.add_child(view)
 	return view
+
+func image_region(parent: Node, tex: Texture2D, region: Rect2, at: Vector2) -> TextureRect:
+	var atlas := AtlasTexture.new()
+	atlas.atlas = tex
+	atlas.region = region
+	return image(parent, atlas, at)
 
 func panel(parent: Node, rect: Rect2) -> NinePatchRect:
 	var view := NinePatchRect.new()
@@ -127,6 +155,10 @@ func button(parent: Node, text: String, at: Vector2, action: Callable, wide := t
 		style.texture = texture("common", entry[1])
 		style.texture_margin_left = 5
 		style.texture_margin_right = 5
+		style.content_margin_left = 4
+		style.content_margin_right = 4
+		style.content_margin_top = 2
+		style.content_margin_bottom = 2
 		view.add_theme_stylebox_override(entry[0], style)
 	view.focus_mode = Control.FOCUS_NONE
 	view.pressed.connect(action)
