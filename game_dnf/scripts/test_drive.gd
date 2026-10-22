@@ -50,6 +50,7 @@ func run() -> void:
 	check_core()
 	check_content()
 	await run_combat()
+	await run_kernel()
 	await run_rooms()
 	await run_session()
 	if "--capture" in OS.get_cmdline_user_args():
@@ -95,13 +96,13 @@ func check_content() -> void:
 	check(api.clip("attack1")["duration_ms"]==600,"ANI milliseconds retained without frame-number guessing")
 	check(api.clip("guard")["duration_ms"]==20000,"state-hold frames remain source metadata")
 	var db = api.content()
-	check(db.layer_of("clips/player/attack1")=="base" and db.layer_of("moves/attack1/damage")=="adapt","content layers distinguish original base from adaptation values")
+	check(db.layer_of("clips/player/attack1")=="base" and db.layer_of("hitstop/hit_ms")=="adapt","content layers distinguish original base from adaptation values")
 	check(db.conflicts.is_empty(),"current adaptation values never shadow original base data")
 	var probe = ContentDB.new()
 	probe.load_files("res://assets_local/manifest.json","res://data/combat.json","res://tests/content/override_fixture")
-	var overridden: bool = probe.value("moves/attack1/hitstop_ms")==80 and probe.layer_of("moves/attack1/hitstop_ms")=="override"
+	var overridden: bool = probe.value("hitstop/hit_ms")==80 and probe.layer_of("hitstop/hit_ms")=="override"
 	probe.set_override_enabled(false)
-	check(overridden and probe.value("moves/attack1/hitstop_ms")==55 and probe.layer_of("moves/attack1/hitstop_ms")=="adapt","override layer wins and switching it off restores the baseline")
+	check(overridden and probe.value("hitstop/hit_ms")==60 and probe.layer_of("hitstop/hit_ms")=="adapt","override layer wins and switching it off restores the baseline")
 	probe.load_files("res://assets_local/manifest.json","res://tests/content/adapt_conflict.json","res://tests/content/none")
 	check("clips/player/attack1/duration_ms" in probe.conflicts and probe.value("clips/player/attack1/duration_ms")==600,"adaptation cannot overwrite an original base value and the collision is reported")
 	if not db.has_pack():
@@ -116,6 +117,26 @@ func check_content() -> void:
 	check(is_equal_approx(float(stats["jump_power"]),430) and db.original("character/swordman/swordman.chr","attack_infos").size()==3,"original character base stats and three-hit attack info list are queryable")
 	var ani: Dictionary = db.original("character/swordman/animation/attack3.ani","timeline")[2]
 	check(ani["attack_boxes"].size()==1 and is_equal_approx(float(ani["start_ms"]),100),"original ANI timeline exposes per-frame attack boxes with their start times")
+	check_kernel_tables()
+
+## F3~F5: every rule value below is read from original records, not from data/combat.json.
+func check_kernel_tables() -> void:
+	var t = api.table()
+	check(t.problems.is_empty(),"kernel tables resolve every linked original file")
+	var a1: Dictionary = api.move("attack1")
+	var a3: Dictionary = api.move("attack3")
+	check(String(a3["hits"][0]["source"])=="body" and String(a1["hits"][0]["source"]).begins_with("borrow:"),"attack3 uses its own ANI boxes; box-less attack1 borrows an original swordman box timeline")
+	check(is_equal_approx(float(a1["hits"][0]["percent"]),85) and is_equal_approx(float(a3["hits"][0]["percent"]),120),"normal attack percent = 100 + original ATK damage bonus")
+	var upper: Dictionary = api.move("upper")
+	check(upper["mp"]==6 and upper["cool_ms"]==2000 and is_equal_approx(float(upper["hits"][0]["percent"]),120) and is_equal_approx(float(upper["hits"][0]["lift"]),350),"upper slash MP, cooldown, damage percent and launch come from the SKL dungeon level-1 row")
+	var triple: Dictionary = api.move("triple")
+	check(triple["stages"].size()==3 and triple["cool_ms"]==6000 and String(triple["stages"][2]["ani"])=="tripleslash3","triple slash has three original stages and its SKL cooldown")
+	check(api.move("draw")["cool_ms"]==15000 and api.move("draw")["hits"][0]["kind"]=="object","draw slash hits through its original wave passive object")
+	check(api.move("rage_slash")["hits"][2]["kind"]=="object" and String(api.move("rage_slash")["hits"][2]["object"]).ends_with("gorecross.obj"),"gore cross ends with its original cross passive object")
+	var goblin: Dictionary = t.monsters["goblin"]
+	check(is_equal_approx(float(goblin["hp"]),112) and goblin["attack_delay"]==1200 and String(goblin["motions"]["stay"])=="stay" and String(goblin["dir"]).ends_with("animation_goblin2"),"goblin stats and motions come from goblin.mob (HP 70%, attack delay, Animation_Goblin2)")
+	check(t.monsters["goblin_thrower"].has("throw") and int(t.monsters["goblin_thrower"]["throw"]["frame"])==2 and is_equal_approx(float(t.monsters["goblin_thrower"]["throw"]["speed"]),250),"goblin thrower throws its original stone object on throw frame 2 at the particle speed")
+	check(is_equal_approx(float(t.player["jump_power"]),430) and float(t.player["hp_max"])==180,"player jump power and default HP come from the CHR initial values")
 
 func run_combat() -> void:
 	api.set_god(true)
@@ -197,34 +218,38 @@ func run_combat() -> void:
 	check(is_equal_approx(hp-float(api.p("hp")),50),"guard does not protect from behind")
 	api.restart()
 	api.set_god(true)
-	api.set_job("weaponmaster")
-	api.spawn_dummy(Vector2(300,250))
+	api.spawn_dummy(Vector2(330,250))
 	await tap(KEY_A)
 	await ticks(2)
-	check(String(api.p("action"))=="draw","swordmaster A starts original draw-slash timeline")
+	check(String(api.p("action"))=="draw","A starts the original draw-slash timeline")
 	check(api.effect_count()>0,"draw slash and actor share a spawned source effect timeline")
 	await ticks(90)
+	api.set_p("mp",api.p("mp")+200.0)
 	await tap(KEY_S)
 	await ticks(3)
-	check(String(api.p("action"))=="thrust","swordmaster S starts multi-hit thrust")
-	await ticks(55)
-	await tap(KEY_TAB)
-	await tap(KEY_A)
+	check(String(api.p("action"))=="triple" and int(api.p("stage"))==0,"S starts the first original triple-slash stage")
+	await ticks(60)
+	api.set_p("state","idle")
+	api.set_p("action","")
+	api.set_p("mp",500.0)
+	await tap(KEY_F)
 	await ticks(2)
-	check(api.job()=="berserker" and float(api.p("buff_ms"))>0,"berserker blood rage applies attack-speed buff")
-	await tap(KEY_S)
+	check(float(api.p("buff_ms"))>0 and String(api.p("action"))=="buff","F casts frenzy with its original buff motion")
+	await ticks(40)
+	await tap(KEY_D)
 	await ticks(2)
-	check(String(api.p("action"))=="rage_slash","berserker S selects two-cut source animation")
+	check(String(api.p("action"))=="rage_slash","D selects the gore-cross source animation")
 	api.restart()
 	api.set_god(true)
 	api.spawn_dummy(Vector2(550,250))
-	api.start_action("thrust")
-	api.set_p("clock",400.0)
+	api.set_p("mp",500.0)
+	api.start_action("triple")
+	api.set_p("clock",100.0)
 	api.set_p("queued_skill","upper")
 	await ticks(5)
-	check(api.p("action")=="thrust","buffered skill cannot cut off final native thrust hit window")
+	check(api.p("action")=="triple","buffered skill cannot cut off the active slash window")
 	await ticks(10)
-	check(api.p("action")=="upper","buffered skill starts after final native hit window")
+	check(api.p("action")=="upper","buffered skill starts after the active window")
 	api.restart()
 	api.set_god(false)
 	enemy = api.spawn_dummy(Vector2(165,250))
@@ -275,6 +300,144 @@ func run_combat() -> void:
 	key(KEY_C,false)
 	key(KEY_X,false)
 	check(api.p("action")=="air_attack","same-tick jump and attack selects airborne source pose")
+
+## F3~F5 kernel behaviour: box judgement, ATK reactions, local hitstop, cues, objects, AI.
+func run_kernel() -> void:
+	var bus = api.bus()
+	# Box judgement: just beyond the farthest attack1 box edge (143 px) nothing lands.
+	api.restart()
+	api.set_god(true)
+	var far: Dictionary = api.spawn_dummy(Vector2(125+175,250))
+	api.set_p("pos",Vector2(125,250))
+	api.start_action("attack1")
+	await ticks(30)
+	check(float(api.e(far,"hp"))==5000,"target outside every original attack box is not hit")
+	# attack1: [damage] reaction staggers on the ground, pushes away, freezes only the pair.
+	api.restart()
+	api.set_god(true)
+	var target: Dictionary = api.spawn_dummy(Vector2(200,250))
+	var bystander: Dictionary = api.spawn_monster(Vector2(560,180))
+	api.set_p("pos",Vector2(125,250))
+	var damages_before: int = bus.events_of("combat.damage").size()
+	var sounds_before: int = bus.events_of("combat.cue").size()
+	var x0 := float(Vector2(api.e(target,"pos")).x)
+	api.start_action("attack1")
+	var hit_tick := -1
+	for i in 30:
+		await ticks(1)
+		if bus.events_of("combat.damage").size()>damages_before:
+			hit_tick = i
+			break
+	check(hit_tick>=0 and String(api.e(target,"state"))=="hurt" and float(api.e(target,"z"))==0,"attack1 [damage] reaction staggers a grounded target without launching it")
+	var dmg: Dictionary = bus.events_of("combat.damage")[-1]
+	check(int(dmg["amount"])==21 and String(dmg["victim"])=="monster","damage = attack power 25 x (100-15)% from the original ATK")
+	check(float(api.p("stuck_ms"))>0 and api.stuck(target)>0 and api.stuck(bystander)==0,"hitstop freezes only attacker and target, not the rest of the room")
+	var cues: Array = bus.events_of("combat.cue").slice(sounds_before)
+	var keys: Array = cues.map(func(e): return String(e["key"]))
+	var wav: Array = api.table().weapon_wav(api.weapon())
+	var info: Array = api.table().weapon_hit_info(api.weapon())
+	var fx_prefix := "hit_cut_l" if float(info[2])>=100 else "hit_cut_s"
+	check(String(wav[2]) in keys and keys.any(func(k): return String(k).begins_with(fx_prefix)),"weapon hit plays its CHR weapon hit sound and sized cut effect ("+api.weapon()+")")
+	check(String(wav[0]) in keys,"attack swing plays the CHR weapon swing sound ("+api.weapon()+")")
+	check(game.view.numbers.size()>0 and String(game.view.numbers[-1]["style"])=="damage","damage number uses the original white digit set")
+	await ticks(20)
+	check(float(Vector2(api.e(target,"pos")).x)>x0+3,"ATK push aside slides the target away from the attacker")
+	# attack3: [down] + lift up 300 launches, then lands into the original down motion.
+	api.set_p("state","idle")
+	api.set_p("action","")
+	api.set_e(target,"pos",Vector2(200,250))
+	api.set_e(target,"state","idle")
+	api.start_action("attack3")
+	var launched := false
+	for i in 40:
+		await ticks(1)
+		if float(api.e(target,"z"))>20:
+			launched = true
+			break
+	check(launched,"attack3 [down] with lift up launches the target into the air")
+	var downed := false
+	for i in 90:
+		await ticks(1)
+		if String(api.e(target,"state"))=="down":
+			downed = true
+			break
+	check(downed and String(api.enemy_ani(target)[0])=="down","launched target lands into its original down motion")
+	# Gore cross: two slashes, then the original cross object spawns and hits.
+	api.restart()
+	api.set_god(true)
+	target = api.spawn_dummy(Vector2(205,250))
+	api.set_p("pos",Vector2(125,250))
+	api.set_p("mp",500.0)
+	var hits_before: int = api.hit_count()
+	api.start_action("rage_slash")
+	var saw_object := false
+	for i in 110:
+		await ticks(1)
+		if api.object_count()>0:saw_object = true
+	check(saw_object and api.hit_count()-hits_before>=2,"gore cross lands its slashes and spawns the cross object")
+	# Draw slash wave reaches far targets through its passive object.
+	api.restart()
+	api.set_god(true)
+	target = api.spawn_dummy(Vector2(125+190,250))
+	api.set_p("pos",Vector2(125,250))
+	api.set_p("mp",500.0)
+	api.start_action("draw")
+	await ticks(60)
+	check(float(api.e(target,"hp"))<5000,"draw slash wave object hits a target 190 px away")
+	# Triple slash: pressing S again continues to the next original stage.
+	api.restart()
+	api.set_god(true)
+	target = api.spawn_dummy(Vector2(205,250))
+	api.set_p("pos",Vector2(125,250))
+	api.set_p("mp",500.0)
+	hits_before = api.hit_count()
+	api.start_action("triple")
+	var max_stage := 0
+	for i in 12:
+		await tap(KEY_S)
+		await ticks(9)
+		max_stage = maxi(max_stage,int(api.p("stage")))
+	check(max_stage==2,"repeated S walks the three triple-slash stages")
+	check(api.hit_count()-hits_before>=3,"each triple-slash stage lands its own hit")
+	# Monster AI from MOB fields: goblin approaches and its own attack box hits the player.
+	api.restart()
+	api.set_god(false)
+	game.clear_monsters()
+	api.set_p("pos",Vector2(200,250))
+	api.set_p("hp",150.0)
+	api.set_p("invuln_ms",0.0)
+	var goblin: Dictionary = api.spawn_monster(Vector2(320,250))
+	var start_x := float(Vector2(api.e(goblin,"pos")).x)
+	var hp := float(api.p("hp"))
+	var hurt := false
+	for i in 400:
+		await ticks(1)
+		if float(api.p("hp"))<hp:
+			hurt = true
+			break
+	check(float(Vector2(api.e(goblin,"pos")).x)<start_x-20,"goblin walks toward the player at its MOB move speed")
+	check(hurt and String(bus.events_of("combat.damage")[-1]["victim"])=="player","goblin attack lands through its own attack box onto the player's damage box")
+	check(game.view.numbers.size()>0 and String(game.view.numbers[-1]["style"])=="damage_taken","damage taken uses the original red digit set")
+	check(api.view_enemy_texture(goblin).contains("mob_goblin"),"goblin is drawn from its own original Animation_Goblin2 body bank")
+	# Thrower: keeps distance, throws the original stone object, which hits the player.
+	api.restart()
+	api.set_god(false)
+	game.clear_monsters()
+	api.set_p("pos",Vector2(150,250))
+	api.set_p("hp",150.0)
+	api.set_p("invuln_ms",0.0)
+	api.spawn_monster(Vector2(330,250),"goblin_thrower")
+	hp = float(api.p("hp"))
+	var thrown := false
+	hurt = false
+	for i in 500:
+		await ticks(1)
+		if api.object_count()>0:thrown = true
+		if float(api.p("hp"))<hp:
+			hurt = true
+			break
+	check(thrown and hurt,"goblin thrower's stone object travels and hits the player")
+	api.set_god(true)
 
 func run_rooms() -> void:
 	api.restart()
@@ -332,7 +495,7 @@ func run_rooms() -> void:
 		check(api.room_index()==next_index,"actual four-direction route reaches room "+str(next_index))
 		check(float(api.p("invuln_ms"))>0,"paired door grants safe spawn guard for room "+str(next_index))
 	api.load_room(4,"up")
-	check(api.monster(0,"chief"),"boss room spawns original alternate goblin appearance")
+	check(api.monster(0,"chief") and String(api.monster(0,"mob")).ends_with("goblinthrower.mob"),"boss room spawns the original goblin thrower as its boss")
 	api.kill_all_monsters()
 	await ticks(3)
 	check(api.finished() and api.victory(),"boss clear enters victory result")

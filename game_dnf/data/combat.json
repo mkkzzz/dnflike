@@ -1,24 +1,79 @@
 {
-  "schema":"dnf_combat_adaptation/1",
-  "clock":"ANI milliseconds; 10000ms state holds are controlled by gameplay, not played as literal action lengths",
-  "player":{"hp":500,"mp":180,"walk_speed":105,"run_speed":195,"jump_velocity":410,"gravity":1050},
-  "moves":{
-    "attack1":{"ani":"attack1","damage":25,"windows":[[150,250]],"reach":85,"depth":19,"hitstop_ms":55,"push":17,"step":10,"source":"Adapter windows: body ANI contains no attack boxes; aligned to authored swing poses 3-4."},
-    "attack2":{"ani":"attack2","damage":29,"windows":[[150,300]],"reach":93,"depth":20,"hitstop_ms":65,"push":20,"step":13,"source":"Adapter windows: body ANI contains no attack boxes; aligned to authored swing poses 13-15."},
-    "attack3":{"ani":"attack3","damage":42,"windows":[[100,200]],"reach":110,"depth":23,"hitstop_ms":85,"push":32,"launch":170,"step":15,"source":"Authored ANI attack boxes at poses 35/36 determine active interval; planar gameplay reach capped for this trial."},
-    "dash_attack":{"ani":"dashattack","damage":35,"windows":[[100,250]],"reach":100,"depth":20,"hitstop_ms":65,"push":35,"step":40},
-    "air_attack":{"ani":"jumpattack","damage":28,"windows":[[150,200]],"reach":94,"depth":20,"hitstop_ms":55,"push":18,"launch":100},
-    "upper":{"ani":"upperslashafter","damage":32,"windows":[[100,300]],"reach":75,"depth":19,"hitstop_ms":75,"push":6,"launch":365,"mp":9,"cooldown":2.0,"step":8,"source":"Animation selected from original upper-slash body poses; hit interval explicitly authored for the trial."},
-    "draw":{"ani":"momentaryslash","damage":100,"windows":[[550,625]],"reach":205,"depth":36,"hitstop_ms":100,"push":55,"launch":210,"mp":24,"cooldown":5.0,"step":18,"fx":"draw","source":"Actor and slash effect share the original 1055ms timeline; effect starts at the original 550ms offset."},
-    "thrust":{"ani":"triplestab","damage":26,"windows":[[45,180],[271,406],[496,586]],"reach":155,"depth":18,"hitstop_ms":35,"push":9,"mp":18,"cooldown":3.5,"step":54,"source":"ANI attack-box frame intervals split into three explicit hit groups."},
-    "rage_slash":{"ani":"gorecross","damage":43,"windows":[[200,340],[780,940]],"reach":130,"depth":30,"hitstop_ms":65,"push":12,"launch":160,"bleed":true,"mp":20,"cooldown":4.5,"step":8,"source":"Original gorecross body ANI supplies the visible two-cut poses; blood-rage gameplay is our existing design adaptation."}
+  "schema":"dnf_combat_adaptation/2",
+  "doc":"E-ADAPT layer (doc 29). Only what the original data does not say: which original file the engine links to each trial move, unit scales and base numbers that come from tables we do not have. Every original value (ANI frames/boxes, ATK reaction fields, SKL MP/cool/level info, CHR/MOB stats) is read from the compiled content pack, never copied here.",
+  "player":{
+    "chr":"character/swordman/swordman.chr",
+    "physical_attack":25,
+    "walk_speed":105,
+    "run_speed":195,
+    "gravity":1050,
+    "hp_regen_per_s":0,
+    "mp_regen_per_s":2.2,
+    "hit_invuln_ms":400,
+    "guard_factor":0.2,
+    "weapon_index":{"shortsword":0,"katana":1,"greatsword":3},
+    "source":"physical_attack has no original equivalent until equipment/stats exist; walk/run px/s are the trial calibration for CHR move speed 850; weapon_index is the CHR weapon subtype row (E-INFER from sound names)."
   },
-  "goblin":{"hp":110,"chief_hp":360,"speed":55,"damage":18,"chief_damage":29,"attack_cooldown":1.0,"attack_active_ms":[240,320],"source":"Original goblin ANI attack frame 3: 240-320ms; fixed appearance trial."},
+  "units":{
+    "move_speed_reference":850,
+    "depth_speed_ratio":0.58,
+    "source":"CHR/MOB move speed values are scaled by walk_speed/move_speed_reference to px/s. PTL move variables are already px/s (throw stone 250 px/s x 1200 ms = goblin sight 300)."
+  },
+  "reaction":{
+    "stun_base_ms":260,
+    "stun_reference_recovery":500,
+    "push_speed_per_unit":2.0,
+    "push_decay_ms":250,
+    "lift_speed_per_unit":1.0,
+    "monster_gravity":900,
+    "down_hold_ms":400,
+    "getup_ms":500,
+    "bounce_min_speed":240,
+    "bounce_speed":140,
+    "source":"Units of ATK push aside / lift up and of hit recovery are not documented by the data; these scales make attack3 (push 40, lift 300) launch about 50 px high."
+  },
+  "hitstop":{"hit_ms":60,"down_ms":85,"received_ms":45,"source":"No ATK in scope carries [stuck]; per-reaction defaults."},
+  "combo_window_ms":1500,
+  "monster_base":{"hp":160,"attack":20,"boss_hp_scale":3.5,"boss_attack_scale":1.6,"source":"Monster level tables are absent; MOB [ability category] percentages multiply these bases."},
+  "buff":{"duration_ms":8000,"attack_speed":1.25,"move_speed":1.2,"damage":1.2,"damage_taken":1.3,"source":"Frenzy level info columns are not decoded yet; trial effect values kept from the previous adaptation."},
+  "keys":{"upper":"Z","draw":"A","triple":"S","rage_slash":"D","buff":"F"},
+  "moves":{
+    "attack1":{"ani":"attack1","atk":"character/swordman/attackinfo/attack1.atk","hits":[{"borrow":"character/swordman/effect/animation/shortswordmastery/shortattack1dodge.ani"}],"swing":0,"voice":"swing1","next":"attack2"},
+    "attack2":{"ani":"attack2","atk":"character/swordman/attackinfo/attack2.atk","hits":[{"borrow":"character/swordman/effect/animation/shortswordmastery/shortattack2dodge.ani"}],"swing":0,"voice":"swing2","next":"attack3"},
+    "attack3":{"ani":"attack3","atk":"character/swordman/attackinfo/attack3.atk","hits":[{"body":true}],"swing":1,"voice":"swing3"},
+    "dash_attack":{"ani":"dashattack","atk":"character/swordman/attackinfo/dashattack.atk","hits":[{"body":true}],"swing":1,"voice":"swing2"},
+    "air_attack":{"ani":"jumpattack","atk":"character/swordman/attackinfo/jumpattack.atk","hits":[{"body":true}],"swing":0,"voice":"jump_attack","air":true},
+    "upper":{"ani":"upperslashafter","skill":"skill/swordman/upperslash.skl","atk":"character/swordman/attackinfo/upperslashafter.atk",
+      "hits":[{"derived":"upper1","window":[50,200],"percent_col":0,"lift_col":1}],
+      "fx":[{"key":"upper1","at":0},{"key":"upper2","at":200}],"voice":"upper","name":"上挑",
+      "source":"Body ANI has no attack box; box = extent of the original upward slash effect while it is drawn (upperslash1.ani 0-200 ms)."},
+    "draw":{"ani":"momentaryslash","skill":"skill/swordman/momentaryslash.skl",
+      "hits":[{"object":"passiveobject/character/swordman/momentaryslashwave.obj","at":550,"active_ms":50,"percent_col":0}],
+      "fx":[{"key":"draw","at":0}],"voice":"draw_ready","sounds":[{"key":"draw","at":550}],"name":"拔刀斩"},
+    "triple":{"skill":"skill/swordman/tripleslash.skl","name":"三段斩",
+      "stages":[
+        {"ani":"tripleslash1","atk":"character/swordman/attackinfo/tripleslash1.atk","hits":[{"derived":"triple1","window":[70,210],"percent_col":0}],"fx":[{"key":"triple1","at":0}],"voice":"triple1"},
+        {"ani":"tripleslash2","atk":"character/swordman/attackinfo/tripleslash2.atk","hits":[{"derived":"triple2","window":[70,210],"percent_col":1}],"fx":[{"key":"triple2","at":0}],"voice":"triple2"},
+        {"ani":"tripleslash3","atk":"character/swordman/attackinfo/tripleslash3.atk","hits":[{"derived":"triple3","window":[70,210],"percent_col":2}],"fx":[{"key":"triple3","at":0}],"voice":"triple3"}],
+      "dash":{"speed_static":0,"until":280},
+      "source":"Slash bodies carry no attack boxes; boxes are the original slash effect extents. static_data[0]=600 read as dash speed in CHR move units."},
+    "rage_slash":{"ani":"gorecross","skill":"skill/swordman/gorecross.skl","name":"十字斩",
+      "hits":[{"derived":"gore_slash1","window":[100,300],"atk":"character/swordman/attackinfo/gorecross1.atk","percent_col":0},
+        {"derived":"gore_slash2","window":[300,500],"atk":"character/swordman/attackinfo/gorecross2.atk","percent_col":1},
+        {"object":"passiveobject/character/swordman/gorecross.obj","at":960,"offset":[70,0,60],"percent_col":10}],
+      "fx":[{"key":"gore_slash1","at":0},{"key":"gore_slash2","at":300}],"voice":"gorecross",
+      "source":"Slash windows follow the body pose groups (frames 0-5, 6-9); the cross object starts at frame 14 where the ANI cues GORECROSS_ATK3."},
+    "buff":{"ani":"summon2","skill":"skill/swordman/frenzy.skl","name":"暴走","cast_fx":"frenzy_cast","aura_fx":"frenzy_buff"}
+  },
+  "monsters":{
+    "goblin":{"mob":"monster/goblin/goblin.mob","bank":"goblin"},
+    "goblin_thrower":{"mob":"monster/goblin/goblinthrower.mob","bank":"goblin_thrower","keep_distance":150}
+  },
   "rooms":[
     {"name":"林间入口","cell":[0,1],"next":"right","enemies":2},
     {"name":"幽暗林径","cell":[1,1],"next":"up","enemies":3},
     {"name":"哥布林营地","cell":[1,0],"next":"right","enemies":3},
     {"name":"密林深处","cell":[2,0],"next":"up","enemies":4},
-    {"name":"密林领主","cell":[2,-1],"next":"","enemies":3,"boss":true}
+    {"name":"密林领主","cell":[2,-1],"next":"","enemies":3,"boss":true,"boss_monster":"goblin_thrower"}
   ]
 }

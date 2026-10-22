@@ -1,3 +1,3 @@
 {"schema":"dnf_override/1","entries":[
- {"path":"moves/attack1/hitstop_ms","value":80,"reason":"fixture: override layer wins and can be switched off"}
+ {"path":"hitstop/hit_ms","value":80,"reason":"fixture: override layer wins and can be switched off"}
 ]}
