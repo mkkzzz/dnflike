@@ -11,7 +11,9 @@
 
 ## 最近完成
 
-- 2026-10-20 **招式音与出招人声改用真实 CC0 录音**：九个招式音（Swishes 暖气流 + StarNinjas 金属剑击）、四档起手人声（HaelDB 男声）。金属类被反馈"太刺太短"后，用**四级低通 5 kHz** + 降调加长修到质心 5~7.8 kHz。**人声仍未通过验收**（负责人要求重做，已记入待办）。来源与许可登记在 `audio/sword_swing/`、`audio/effort_voice/`
+- 2026-10-22 **把 ws2 新版工程 `game_dnf` 接到本机**：加入稀疏范围、按资源库 Release 安装 runtime 资产（61 文件，sha256 全通过），跑通 `game_dnf` 回归；启动窗口「格兰之森 · 新版战斗验证」。随后上游新增战斗模块，`game_dnf` 现在需要**完整库**编译的战斗资产，故后台分批下载 3.31 GB 的 11 个 library 包（分片续传，进行中）
+- 2026-10-22 开工补齐两个必需稀疏目录：`game/assets/swordsman_v7_c8`（297 文件）与 `c10`（1417 文件）；不补则主回归挂 3 条（c8/c10 断言）。主工程回归 **527 项 failures=0**
+- 2026-10-20 **招式音与出招人声改用真实 CC0 录音**：九个招式音（Swishes 暖气流 + StarNinjas 金属剑击）、四档起手人声（HaelDB 男声）。金属类被反馈"太刺太短"后，用**四级低通 5 kHz** + 降调加长修到质心 5~7.8 kHz。**人声仍未通过验收**（负责人要求重做，已记入待办）
 - 2026-10-20 **技能命中声逐技能**：`impact_thrust/quick_draw/rage_slash/upper` 各 3 变体，映射在 `battle_fx.SKILL_IMPACT`，质心按气质排开（怒斩最沉 1780 Hz → 拔刀斩最锐 5350 Hz）
 - 2026-10-20 小地图按门方向排版、未访问隐藏、清房后直连房间闪烁；血蓝每秒回 1%；上挑蓝耗 6 点且与技能共用固定点数结算
 - 2026-10-19 同步到 `6536a6d`（16 个提交）并补齐稀疏检出：上游新增 `game/shaders/` 与 `game/assets/swordsman_v7_c6/` 不在本区目录清单内，补入后本区回归 **449 项 failures=0**
@@ -32,6 +34,10 @@
 | 图像生成 | **本机无任何图像生成工具**（仅 Godot 实装与文档能力） | 需生图的任务不能在本机做，见 [待办](../02_待办.md) |
 | 仓库外目录 | `D:\dnflike_local\`（portablegit + 安装文档），**不属仓库** | 不要重建 `_tools/`、`_dl/` 于仓库内 |
 | 访问 `github.com` | 真实 GitHub 直连不可达，依赖 **SteamTools 加速**（HTTPS 中间人）。其根证书已并入 `C:\Users\57860\.dnflike-tls\ca-bundle-combined.pem`，并配 `http.sslBackend=openssl` | **不要删除该 CA 配置**，否则 git 全部连不上 github |
+| **`game_dnf` 的资源库** | 资源在**私有**仓库 `mkkzzz/dnflike-assets` 的 Release（tag `dnf-native-assets-v1-20261022`）。需 GitHub 令牌：从 `git credential fill`（host=github.com，账号 asakura-kirisawa）取出后设为 `GH_TOKEN` | `python tools/dnf_asset_store.py sync` 装 runtime（61 文件）；`--full` 才下 11 个 library 包（3.31 GB） |
+| **`run_dnf.ps1` 的 python** | 脚本内部直接调用 `python`，本机解析到 Store 占位 → 报 `Module dependency check failed` | 运行前把真 Python 目录**前置到 PATH**：`$env:PATH="E:\dsh\...\dependencies\python;$env:PATH"` |
+| **GitHub 大文件下载** | 直连被限速到 **~0.11 MB/s**（对照 Cloudflare 直连 0.9 MB/s，排除本机带宽）；一次性流式下载会在 ~4 MB 处被掐断 | 用 **2 MB 分片 Range 续传**（`D:\dnflike_local\dnf_fetch_library.py`），每块短连接避开切断点；跨域跳转必须去掉 `Authorization`，否则 S3 拒绝（官方工具用 `SafeRedirect`） |
+| 7890 代理 | Clash（CordCCore）**会自行退出**，`ProxyEnable=1` 但端口不监听，导致 `10061 连接被拒` | 下载/拉取失败时先查 `Get-NetTCPConnection -LocalPort 7890 -State Listen` |
 
 ## 历史说明（更正记录）
 
