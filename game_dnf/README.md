@@ -15,6 +15,8 @@ tools/run_dnf.ps1
 tools/run_dnf.ps1 -Editor
 # 自动化战斗/副本验证；-Capture 额外保存实际渲染帧到 temp/
 tools/run_dnf.ps1 -Test -Capture
+# 原地图导出与独立验证场景（T2，需完整库）
+tools/run_dnf_map.ps1 -Test
 ```
 
 ## 共享资源
