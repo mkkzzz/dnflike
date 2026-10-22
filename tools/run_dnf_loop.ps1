@@ -6,6 +6,8 @@ if (-not $GodotPath) {$GodotPath=Join-Path $PSScriptRoot "godot/Godot_v4.7.2-sta
 if (-not (Test-Path -LiteralPath $GodotPath)) {throw "Run tools/setup_godot.ps1 first."}
 $versionText="$(& $GodotPath --version 2>$null | Select-Object -First 1)".Trim()
 if (-not $versionText.StartsWith("4.7.2.")) {throw "Godot 4.7.2 required; found $versionText"}
+& python (Join-Path $PSScriptRoot "check_game_chinese.py")
+if ($LASTEXITCODE -ne 0) {throw "Game text must use Chinese; Korean text is not permitted."}
 if (-not (Test-Path -LiteralPath (Join-Path $gamePath "assets_local/manifest.json"))) {
     & python (Join-Path $PSScriptRoot "dnf_asset_store.py") sync
     if ($LASTEXITCODE -ne 0) {throw "Base runtime sync failed."}

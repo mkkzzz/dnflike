@@ -2,6 +2,7 @@ extends Node2D
 signal interact(target: String)
 const Loader = preload("res://scripts/native_map_loader.gd")
 const Actor = preload("res://scripts/native_actor.gd")
+const TextPatch = preload("res://ui/flow/native_text_patch.gd")
 var loader = Loader.new()
 var map_root: Node2D
 var actor
@@ -29,10 +30,32 @@ func _ready() -> void:
 	map_root.add_child(actor)
 	actor.setup(assets["players"]["katana"], clips)
 	font = load("res://assets_local/flow_v1/msjh.ttf")
+	localize_signs()
 	labels = Node2D.new()
 	labels.z_index = 4000
 	map_root.add_child(labels)
 	labels.draw.connect(_draw_names)
+
+func localize_signs() -> void:
+	for node in map_root.get_children():
+		if not node is Loader.MapSprite:continue
+		for frame: Dictionary in node.frames:
+			var info: Dictionary = loader.data["images"].get(frame.get("image"), {})
+			if info.get("source_path") != "sprite/map/flags.img":continue
+			# Replace the two foreign-looking cloth inscriptions, retaining the
+			# original border, anvil emblem, pole and native cloth pixels.
+			TextPatch.attach(node, node.texture, Rect2(12, 33, 8, 13), Rect2(node.offset + Vector2(11, 20), Vector2(44, 12)))
+			TextPatch.attach(node, node.texture, Rect2(13, 93, 8, 13), Rect2(node.offset + Vector2(13, 109), Vector2(44, 12)))
+			for entry in [[Vector2(17, 18), "林纳斯"], [Vector2(19, 107), "铁匠铺"]]:
+				var label := Label.new()
+				label.text = entry[1]
+				label.position = node.offset + entry[0]
+				label.add_theme_font_override("font", font)
+				label.add_theme_font_size_override("font_size", 10)
+				label.add_theme_color_override("font_color", Color("e1d4c6"))
+				label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				node.add_child(label)
+			break
 
 func _process(delta: float) -> void:
 	clock_ms += delta * 1000

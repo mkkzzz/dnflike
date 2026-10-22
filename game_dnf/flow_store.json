@@ -1,7 +1,7 @@
 {
   "schema": "dnflike_loop_store/1",
-  "version": "dnf-loop-v1-20261022",
-  "tag": "dnf-loop-v1-20261022",
+  "version": "dnf-loop-v2-zhcn-20261022",
+  "tag": "dnf-loop-v2-zhcn-20261022",
   "repository": "mkkzzz/dnflike-assets",
   "base_asset_version": "dnf-native-assets-v1-20261022",
   "packs": [
@@ -9,7 +9,7 @@
       "name": "flow_v1-01.zip",
       "kind": "flow_v1",
       "bytes": 15417964,
-      "sha256": "f5be33e87daa0a1461b703f05f615b88555b2372bb15a98a050447b32e9a4b28",
+      "sha256": "0b46c6d8deecbf47b8a260799b55ad0fadb79dd8267add4c7f981484d1774d34",
       "files": 85,
       "unpacked_bytes": 23353527
     }
@@ -18,10 +18,10 @@
     {
       "name": "evidence-01.zip",
       "kind": "evidence",
-      "bytes": 4139423,
-      "sha256": "0892c2d793234fef870c5853f62619001439615b073fb79799707fdfaff2cd13",
-      "files": 16,
-      "unpacked_bytes": 4160967
+      "bytes": 4465900,
+      "sha256": "04f88a973c70751e8f4c20a62340516f2302b846eece4059ab9902bb217edc95",
+      "files": 17,
+      "unpacked_bytes": 4488185
     }
   ]
 }

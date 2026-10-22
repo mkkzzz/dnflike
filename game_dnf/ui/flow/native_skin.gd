@@ -1,5 +1,7 @@
 extends RefCounted
 ## Native textures only. Text and layout are adapted for the standalone loop.
+const Language = preload("res://ui/flow/language_guard.gd")
+const TextPatch = preload("res://ui/flow/native_text_patch.gd")
 var art
 var font: Font
 var panel_texture: Texture2D
@@ -11,6 +13,19 @@ func _init(loader) -> void:
 
 func texture(group: String, frame: int = 0) -> Texture2D:
 	return art.texture(art.data["ui"][group][str(frame)])
+
+func chinese(value: String) -> String:
+	return Language.display(value)
+
+func inventory(parent: Node) -> void:
+	var tex := texture("inventory")
+	image(parent, tex, Vector2.ZERO)
+	# Baked title/weight are repaired before drawing Chinese labels. Preserve the
+	# native raised title border and weight bar; never draw Chinese over Korean.
+	TextPatch.attach(parent, tex, Rect2(247, 8, 12, 19), Rect2(185, 8, 64, 19))
+	TextPatch.attach(parent, tex, Rect2(140, 313, 14, 15), Rect2(86, 313, 46, 15))
+	label(parent, "背包 / 装备", Vector2(175, 5), 13)
+	label(parent, "负重", Vector2(87, 312), 11)
 
 func image(parent: Node, tex: Texture2D, at: Vector2, shrink := 1.0) -> TextureRect:
 	var view := TextureRect.new()
@@ -41,7 +56,7 @@ func panel(parent: Node, rect: Rect2) -> NinePatchRect:
 
 func label(parent: Node, text: String, at: Vector2, size := 14, color := Color("e8ddb9")) -> Label:
 	var view := Label.new()
-	view.text = text
+	view.text = chinese(text)
 	view.position = at
 	view.add_theme_font_override("font", font)
 	view.add_theme_font_size_override("font_size", size)
@@ -55,7 +70,7 @@ func label(parent: Node, text: String, at: Vector2, size := 14, color := Color("
 
 func button(parent: Node, text: String, at: Vector2, action: Callable, wide := true) -> Button:
 	var view := Button.new()
-	view.text = text
+	view.text = chinese(text)
 	view.position = at
 	view.size = Vector2(97 if wide else 56, 23)
 	view.add_theme_font_override("font", font)

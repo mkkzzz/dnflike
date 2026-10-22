@@ -6,6 +6,7 @@ var failures := 0
 var capture := false
 var captured: Array = []
 var controls: Dictionary = {}
+const Language = preload("res://ui/flow/language_guard.gd")
 
 func _ready() -> void:
 	capture = "--capture" in OS.get_cmdline_user_args()
@@ -22,6 +23,12 @@ func ticks(count: int) -> void:
 	for i in count:await get_tree().physics_frame
 
 func frame(name: String) -> void:
+	var korean_found := false
+	for node in get_tree().root.find_children("*", "Control", true, false):
+		if node is Label or node is Button:
+			if Language.contains_korean(node.text):korean_found = true
+		if Language.contains_korean(node.tooltip_text):korean_found = true
+	check(not korean_found, "Chinese screen text and tooltips: " + name)
 	if not capture:return
 	await RenderingServer.frame_post_draw
 	var path := "res://../temp/loop_review/" + name + ".png"
@@ -126,9 +133,14 @@ func unit_states() -> void:
 func run() -> void:
 	await ticks(4)
 	unit_states()
+	check(Language.contains_korean(String.chr(0xac00)) and Language.contains_korean(String.chr(0x3131)), "Korean syllables and Jamo are rejected")
+	check(not Language.contains_korean("背包 负重 普通难度 X HP 评价 S"), "Chinese text and normal key/rank notation are accepted")
 	check(game.town.loader.errors.is_empty(), "all native town textures load")
 	check(game.town.animated.size() >= 2, "source NPC/environment animation is active")
 	await frame("01_town")
+	game.town.ground = Vector2(1120, 230)
+	await ticks(3)
+	await frame("01b_town_east")
 	game.town.ground = Vector2(445, 222)
 	game.show_overlay("npc")
 	await ticks(3)

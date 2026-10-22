@@ -4,7 +4,7 @@
 
 | 字段 | 内容 |
 |---|---|
-| task_id / revision | dnf_loop_native_v1 / 01；新增独立循环，不替换战斗验证入口 |
+| task_id / revision | dnf_loop_native_v1 / 02；中文文字修订，保留独立战斗入口 |
 | asset_id | scene.town.elvengard、actor.npc.linus、actor.npc.danjin、ui.loop.hud/inventory/shop/quest/departure/result |
 | asset_type / workflow | 原资源只读提取、原UI组件拼装；14文档H/F路线，不调用生图 |
 | style_profile / theme_pack | 原版DNF像素资源；用户本轮明确要求使用原图，禁用临时色块 |
@@ -35,14 +35,15 @@
 | HUD | Interface/MainHud.img；底图640×88，红蓝球各56×56 | 血蓝比例真实更新；原球覆盖底图内盘，文字独立 |
 | 背包 / 商店 | ItemInventoryWindow.img 291×410 / StackableShopWindow.img 291×380 | 原面板和原格子；点击原图标装备/购买，中文提示 |
 | 通用面板 | WindowCommon原边框＋商店无文字纹理40×35裁切 | 1:1组合，NinePatch平铺；没有新画纯色背景 |
-| 出征 | Map/CutScene/Lorien.img 800×600，SelectDungeon02原难度字 | 插画仅缩小到264×198；不是把原图放大成高清 |
-| 结算 | NewResult/Result.img原Results字与S/A/B图 | 显示实际统计与适配评价；评价公式不是原版取证结论 |
+| 出征 | Map/CutScene/Lorien.img 800×600，中文难度文字 | 插画仅缩小到264×198；普通难度使用中文文字层 |
+| 结算 | 中文结算标题与NewResult/Result.img原S/A/B图 | 显示实际统计与适配评价；评价公式不是原版取证结论 |
 | 物品 | 原katana图标、ptn_hplowest.stk指向的药剂图标 | 语义ID固定；两把试炼刀复用同一katana角色外观，尚无逐装备外观 |
-| 字体 | 原Fonts/msjh.ttf | 原字体动态中文；贴图内原韩文保留在未替换区域 |
+| 字体 | 原Fonts/msjh.ttf | 原字体动态中文；原图韩文标题/负重字区先清理，再放中文 |
 
 本入口是640×480原生像素循环，1280×960整数倍窗口；独立战斗验证仍为640×360，不改工程全局配置。
 RGBA原像素保留，不插值放大、不量化重绘。PNG每帧记录IMG SHA256、原NPK、帧号、尺寸与偏移。
 地面范围、卷轴和层序是适配/推定，未拿原版同条件录像逐项认可。
+用户后续明确禁止游戏中出现韩文；[语言规范](../../design/15_统一风格与题材规范.md#游戏语言所有工作区)覆盖贴图内文字。背包字区与招牌用原无字材质做表现层修补，不修改存档、物品ID、PNG源字节或动作时钟。
 
 ## 可复现构建与预览
 
@@ -66,4 +67,4 @@ python tools/sync_dnf_flow.py --evidence
 - 技术：源像素/字体、原图加载、真实鼠标按钮、正常战斗输入、跨Run装备成长、保存恢复和幂等结算已验证；当前项数见[看板](../../project/01_进度看板.md)。
 - 组合：城镇/NPC/任务/商店/背包/出征/实际战斗/结果/奖励装备/回城均保存实际帧缓冲。
 - 实机视觉：已自行查看并修复球体遮挡、插画溢出、弹窗文字底纹和提示遮挡；用户尚未验收。
-- 原版运行版本、城镇碰撞/层序、完整本地化、任务对白和逐装备外观继续补证；不将技术通过写成原版水准已达成。
+- 原版运行版本、城镇碰撞/层序、原版任务对白和逐装备外观继续补证；新增内容仍须中文检查，不将技术通过写成原版水准已达成。

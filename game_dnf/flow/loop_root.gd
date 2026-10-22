@@ -100,18 +100,18 @@ func _process(delta: float) -> void:
 		mp = float(snap["mp"])
 		hp_max = float(snap["max_hp"])
 		mp_max = float(snap["max_mp"])
-		status_text.text = "%s  %d / %d  · X 普攻  Z/A/S 技能  C 跳跃" % [snap["room_name"], snap["room"], snap["room_count"]]
+		status_text.text = skin.chinese("%s  %d / %d  · X 普攻  Z/A/S 技能  C 跳跃" % [snap["room_name"], snap["room"], snap["room_count"]])
 	else:status_text.text = "艾尔文防线  · 方向键移动  E 交谈  · 药剂 ×%d" % int(p["inventory"].get("potion", 0))
 	if save_failed:status_text.text = "存档写入失败 · 请检查目录后重试保存"
 	hp_bar.value = hp * 100 / hp_max
 	mp_bar.value = mp * 100 / mp_max
 	hp_text.text = "%d/%d" % [hp, hp_max]
 	mp_text.text = "%d/%d" % [mp, mp_max]
-	info_text.text = "Lv.%d  %s    金币 %d    %s" % [p["level"], p["name"], p["gold"], Catalog.ITEMS[p["equipped"]]["name"]]
+	info_text.text = skin.chinese("等级 %d  %s    金币 %d    %s" % [p["level"], p["name"], p["gold"], Catalog.ITEMS[p["equipped"]]["name"]])
 	town.enabled = overlay == "" and session.state == "town"
 	if notification_seconds > 0:
 		notification_seconds -= delta
-		toast_text.text = notification
+		toast_text.text = skin.chinese(notification)
 		toast_panel.visible = notification_seconds > 0 and overlay == ""
 	if is_instance_valid(battle) and overlay == "" and battle.snapshot()["paused"]:
 		show_overlay("menu")
@@ -205,9 +205,7 @@ func inventory_panel() -> void:
 	var panel := Control.new()
 	panel.position = Vector2(330, 0)
 	modal.add_child(panel)
-	skin.image(panel, skin.texture("inventory"), Vector2.ZERO)
-	skin.panel(panel, Rect2(150, 0, 130, 30))
-	skin.label(panel, "背包 / 装备", Vector2(166, 5), 13)
+	skin.inventory(panel)
 	skin.button(panel, "关闭", Vector2(226, 382), func(): show_overlay(""), false)
 	var equipped: String = session.profile["equipped"]
 	skin.image(panel, town.loader.texture(town.loader.data["ui"]["items"][equipped]), Vector2(211, 82))
@@ -222,7 +220,7 @@ func inventory_panel() -> void:
 		hit.position = at
 		hit.size = Vector2(30, 30)
 		hit.flat = true
-		hit.tooltip_text = Catalog.ITEMS[id]["name"] + "\n" + Catalog.ITEMS[id]["description"] + "\n点击装备 / 使用"
+		hit.tooltip_text = skin.chinese(Catalog.ITEMS[id]["name"] + "\n" + Catalog.ITEMS[id]["description"] + "\n点击装备 / 使用")
 		hit.pressed.connect(func():
 			if Catalog.ITEMS[id]["kind"] == "weapon":
 				if act("items.equip", {"id": id}):show_overlay("inventory")
@@ -249,7 +247,7 @@ func shop_panel() -> void:
 		hit.position = at
 		hit.size = Vector2(30, 30)
 		hit.flat = true
-		hit.tooltip_text = "%s · %d 金币\n%s" % [Catalog.ITEMS[id]["name"], Catalog.ITEMS[id]["price"], Catalog.ITEMS[id]["description"]]
+		hit.tooltip_text = skin.chinese("%s · %d 金币\n%s" % [Catalog.ITEMS[id]["name"], Catalog.ITEMS[id]["price"], Catalog.ITEMS[id]["description"]])
 		hit.pressed.connect(func():
 			if act("items.buy", {"id": id}):notice("购入 " + Catalog.ITEMS[id]["name"]); show_overlay("shop"))
 		panel.add_child(hit)
@@ -261,7 +259,7 @@ func dungeon_panel() -> void:
 	var panel = title_panel("格兰之森 · 地下城选择", Rect2(50, 38, 540, 337))
 	skin.image(panel, skin.texture("lorien"), Vector2(23, 58), 0.33)
 	skin.label(panel, "密林试炼", Vector2(316, 60), 21, Color("f0d18a"))
-	skin.image(panel, skin.texture("select", 11), Vector2(318, 96))
+	skin.label(panel, "普通难度", Vector2(318, 96), 14, Color("a7dd74"))
 	skin.label(panel, "五个房间 · 哥布林领主\n\n清除怪物，沿开放的门深入。\n通关奖励：150 金币 / 120 经验\n恢复药剂 ×1", Vector2(316, 125), 12)
 	skin.label(panel, "X 普攻  Z 上挑  A 拔刀  S 连刺\nC 跳跃  V 后跳  G 格挡  H 药剂", Vector2(23, 268), 12)
 	skin.button(panel, "进入地下城", Vector2(316, 270), depart)
@@ -287,7 +285,7 @@ func result_panel() -> void:
 	var r: Dictionary = session.result
 	var panel = title_panel("冒险结束", Rect2(102, 45, 436, 326))
 	var won := bool(r.get("victory", false))
-	skin.image(panel, skin.texture("result", 12), Vector2(27, 52))
+	skin.label(panel, "通关结算" if won else "冒险结算", Vector2(27, 58), 24, Color("f0d18a"))
 	if won:skin.image(panel, skin.texture("result", {"S": 3, "A": 6, "B": 7}[r.get("rank", "B")]), Vector2(264, 69), 0.8)
 	skin.label(panel, "地下城通关" if won else "已撤退" if r.get("stats", {}).get("reason") == "retreat" else "冒险失败", Vector2(29, 116), 20, Color("f0d18a"))
 	var details: Dictionary = r.get("stats", {})

@@ -9,9 +9,22 @@ from dnf_asset_store import ROOT, digest
 from dnf_asset_reader import parse, decode
 from export_dnf_map import Library
 from sync_dnf_flow import sync_flow
+from check_game_chinese import scan
 
 
 class FlowAssets(unittest.TestCase):
+    def test_chinese_gate_distinguishes_game_text_from_raw_sources(self):
+        with tempfile.TemporaryDirectory(prefix='dnf-language-') as temp:
+            base = Path(temp)
+            game = base/'ui.gd'
+            game.write_text('var text = "' + chr(0xac00) + '"\n', encoding='utf-8')
+            raw = base/'assets_local'
+            raw.mkdir()
+            (raw/'source.json').write_text(chr(0x3131), encoding='utf-8')
+            self.assertEqual(scan(base), [{'path': 'ui.gd', 'line': 1}])
+            game.write_text('var text = "背包 负重 普通难度 X HP S"\n', encoding='utf-8')
+            self.assertEqual(scan(base), [])
+
     def test_export_matches_original_pixels(self):
         root = ROOT/'game_dnf/assets_local/flow_v1'
         if not (root/'manifest.json').exists():self.skipTest('Build original flow assets first')
