@@ -1,0 +1,24 @@
+{
+  "schema":"dnf_combat_adaptation/1",
+  "clock":"ANI milliseconds; 10000ms state holds are controlled by gameplay, not played as literal action lengths",
+  "player":{"hp":500,"mp":180,"walk_speed":105,"run_speed":195,"jump_velocity":410,"gravity":1050},
+  "moves":{
+    "attack1":{"ani":"attack1","damage":25,"windows":[[150,250]],"reach":85,"depth":19,"hitstop_ms":55,"push":17,"step":10,"source":"Adapter windows: body ANI contains no attack boxes; aligned to authored swing poses 3-4."},
+    "attack2":{"ani":"attack2","damage":29,"windows":[[150,300]],"reach":93,"depth":20,"hitstop_ms":65,"push":20,"step":13,"source":"Adapter windows: body ANI contains no attack boxes; aligned to authored swing poses 13-15."},
+    "attack3":{"ani":"attack3","damage":42,"windows":[[100,200]],"reach":110,"depth":23,"hitstop_ms":85,"push":32,"launch":170,"step":15,"source":"Authored ANI attack boxes at poses 35/36 determine active interval; planar gameplay reach capped for this trial."},
+    "dash_attack":{"ani":"dashattack","damage":35,"windows":[[100,250]],"reach":100,"depth":20,"hitstop_ms":65,"push":35,"step":40},
+    "air_attack":{"ani":"jumpattack","damage":28,"windows":[[150,200]],"reach":94,"depth":20,"hitstop_ms":55,"push":18,"launch":100},
+    "upper":{"ani":"upperslashafter","damage":32,"windows":[[100,300]],"reach":75,"depth":19,"hitstop_ms":75,"push":6,"launch":365,"mp":9,"cooldown":2.0,"step":8,"source":"Animation selected from original upper-slash body poses; hit interval explicitly authored for the trial."},
+    "draw":{"ani":"momentaryslash","damage":100,"windows":[[550,625]],"reach":205,"depth":36,"hitstop_ms":100,"push":55,"launch":210,"mp":24,"cooldown":5.0,"step":18,"fx":"draw","source":"Actor and slash effect share the original 1055ms timeline; effect starts at the original 550ms offset."},
+    "thrust":{"ani":"triplestab","damage":26,"windows":[[45,180],[271,406],[496,586]],"reach":155,"depth":18,"hitstop_ms":35,"push":9,"mp":18,"cooldown":3.5,"step":54,"source":"ANI attack-box frame intervals split into three explicit hit groups."},
+    "rage_slash":{"ani":"gorecross","damage":43,"windows":[[200,340],[780,940]],"reach":130,"depth":30,"hitstop_ms":65,"push":12,"launch":160,"bleed":true,"mp":20,"cooldown":4.5,"step":8,"source":"Original gorecross body ANI supplies the visible two-cut poses; blood-rage gameplay is our existing design adaptation."}
+  },
+  "goblin":{"hp":110,"chief_hp":360,"speed":55,"damage":18,"chief_damage":29,"attack_cooldown":1.0,"attack_active_ms":[240,320],"source":"Original goblin ANI attack frame 3: 240-320ms; fixed appearance trial."},
+  "rooms":[
+    {"name":"林间入口","cell":[0,1],"next":"right","enemies":2},
+    {"name":"幽暗林径","cell":[1,1],"next":"up","enemies":3},
+    {"name":"哥布林营地","cell":[1,0],"next":"right","enemies":3},
+    {"name":"密林深处","cell":[2,0],"next":"up","enemies":4},
+    {"name":"密林领主","cell":[2,-1],"next":"","enemies":3,"boss":true}
+  ]
+}

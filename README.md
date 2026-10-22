@@ -4,6 +4,8 @@
 
 > 参与开发先读 [AGENTS.md](AGENTS.md)。当前进度见 [进度看板](docs/project/01_进度看板.md)，全部文档见 [文档索引](docs/project/07_文档索引.md)。
 
+**原生像素新版验证**：[game_dnf](game_dnf/README.md)，本机运行 `tools/run_dnf.ps1`。使用本地 DNF 资源，素材不上传；下方原工程保留作玩法对照。
+
 ## 开始试玩
 
 ```powershell
