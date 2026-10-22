@@ -104,6 +104,18 @@ func check_content() -> void:
 	check(overridden and probe.value("moves/attack1/hitstop_ms")==55 and probe.layer_of("moves/attack1/hitstop_ms")=="adapt","override layer wins and switching it off restores the baseline")
 	probe.load_files("res://assets_local/manifest.json","res://tests/content/adapt_conflict.json","res://tests/content/none")
 	check("clips/player/attack1/duration_ms" in probe.conflicts and probe.value("clips/player/attack1/duration_ms")==600,"adaptation cannot overwrite an original base value and the collision is reported")
+	if not db.has_pack():
+		print("[DNF_TEST] SKIP compiled content pack absent; run python tools/compile_dnf_content.py (needs sync --full)")
+		return
+	var info: Dictionary = db.pack_info()
+	check(info["records"]>=500 and info["missing_references"]==0,"compiled original content pack loads with every reference resolved")
+	check(db.original("character/swordman/attackinfo/attack3.atk","push_aside")==40 and db.original("character/swordman/attackinfo/attack3.atk","lift_up")==300,"original attack info knockback and launch values are queryable")
+	var upper: String = db.index("swordman_skills").get("46","")
+	check(upper=="skill/swordman/upperslash.skl" and db.original(upper,"dungeon")["cool_time"][0]==2000,"original skill ID table resolves and keeps the dungeon-context cool time")
+	var stats: Dictionary = db.original("character/swordman/swordman.chr","stat_groups")["initial_value"]
+	check(is_equal_approx(float(stats["jump_power"]),430) and db.original("character/swordman/swordman.chr","attack_infos").size()==3,"original character base stats and three-hit attack info list are queryable")
+	var ani: Dictionary = db.original("character/swordman/animation/attack3.ani","timeline")[2]
+	check(ani["attack_boxes"].size()==1 and is_equal_approx(float(ani["start_ms"]),100),"original ANI timeline exposes per-frame attack boxes with their start times")
 
 func run_combat() -> void:
 	api.set_god(true)

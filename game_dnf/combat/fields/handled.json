@@ -1,0 +1,8 @@
+{
+ "_doc": "Original fields that the runtime currently EXECUTES, per kind: decoded key -> handler file under combat/fields/. Empty until F3/F4 land handlers; tools/compile_dnf_content.py reads this to fill the coverage report's runtime column.",
+ "atk": {},
+ "skl": {},
+ "chr": {},
+ "mob": {},
+ "ani": {}
+}

@@ -1,6 +1,6 @@
 extends RefCounted
 ## ContentDB: one read-only view over three layers, later layers win.
-##   base     — compiled from original data (E-PARSE+); currently the runtime manifest clips
+##   base     — compiled from original data (E-PARSE+): runtime manifest clips + content pack records
 ##   adapt    — temporary values where original semantics are unknown (E-ADAPT, data/combat.json)
 ##   override — post-baseline enhancements (data/override/*.json), switchable as a whole
 ## Adapt may only fill paths the base does not define; collisions are reported, base wins.
@@ -71,6 +71,55 @@ func override_reason(path: String) -> String:
 
 func clips(group: String) -> Dictionary:
 	return _merged.get("clips", {}).get(group, {})
+
+# --- compiled original content pack (tools/compile_dnf_content.py, dnf_combat_content/1) ---
+# Records are keyed by original archive path (e.g. "character/swordman/attackinfo/attack1.atk"),
+# so they live beside the "/"-path tree instead of inside it. Loaded lazily on first query.
+const PACK_SCHEMA := "dnf_combat_content/1"
+var pack_path := "res://assets_local/content/combat_content.json"
+var _pack: Dictionary = {}
+var _pack_tried := false
+
+func has_pack() -> bool:
+	_ensure_pack()
+	return not _pack.is_empty()
+
+func pack_info() -> Dictionary:
+	_ensure_pack()
+	if _pack.is_empty():return {}
+	return {"schema":_pack["schema"],"asset_version":_pack["asset_version"],"compiler_version":_pack["compiler_version"],
+		"records":_pack["records"].size(),"missing_references":_pack["missing_references"].size()}
+
+func record(id: String) -> Dictionary:
+	_ensure_pack()
+	return _pack.get("records",{}).get(id.to_lower(),{})
+
+## Decoded original field of a record, or default when the record or field is absent.
+func original(id: String, key: String, default_value = null):
+	return record(id).get("decoded",{}).get(key,default_value)
+
+func evidence(id: String, key: String) -> String:
+	return String(record(id).get("evidence",{}).get(key,""))
+
+func record_ids(kind: String) -> Array:
+	_ensure_pack()
+	var out: Array = []
+	for id: String in _pack.get("records",{}):
+		if _pack["records"][id]["kind"] == kind:out.append(id)
+	return out
+
+## Original ID tables, e.g. index("swordman_skills")["46"] -> "skill/swordman/upperslash.skl".
+func index(name: String) -> Dictionary:
+	_ensure_pack()
+	return _pack.get("indexes",{}).get(name,{})
+
+func _ensure_pack() -> void:
+	if _pack_tried:return
+	_pack_tried = true
+	if not FileAccess.file_exists(pack_path):return
+	var doc = JSON.parse_string(FileAccess.get_file_as_string(pack_path))
+	if doc is Dictionary and doc.get("schema","") == PACK_SCHEMA:_pack = doc
+	else:push_warning("Content pack schema mismatch: "+pack_path)
 
 func _rebuild() -> void:
 	_merged = _base.duplicate(true)
