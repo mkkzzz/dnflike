@@ -49,8 +49,8 @@ func release_all() -> void:
 	for code in controls.keys():key(int(code), false)
 
 func click_text(text: String) -> bool:
-	for node in game.modal.find_children("*", "Button", true, false):
-		if node.text == text and not node.is_queued_for_deletion():
+	for node in game.modal.find_children("*", "BaseButton", true, false):
+		if ((node is Button and node.text == text) or node.get_meta("action_label", "") == text) and not node.is_queued_for_deletion():
 			click_control(node)
 			return true
 	return false
@@ -68,7 +68,7 @@ func click_control(node: Control) -> void:
 
 func click_item(name: String) -> bool:
 	for node in game.modal.find_children("*", "Button", true, false):
-		if node.tooltip_text.begins_with(name) and not node.is_queued_for_deletion():
+		if String(node.get_meta("item_name", "")).begins_with(name) and not node.is_queued_for_deletion():
 			click_control(node)
 			return true
 	return false
@@ -160,6 +160,27 @@ func run() -> void:
 	game.show_overlay("inventory")
 	await ticks(3)
 	await frame("05_inventory")
+	check(click_text("消耗品"), "inventory category tab responds to viewport clicks")
+	await ticks(3)
+	var potion_visible := false
+	for node in game.modal.find_children("*", "Button", true, false):
+		if node.get_meta("item_name", "") == "恢复药剂":potion_visible = true
+	check(potion_visible, "consumable tab filters inventory to consumable items")
+	check(click_text("装备"), "inventory equipment category can be restored")
+	await ticks(3)
+	var item_hit: Control
+	for node in game.modal.find_children("*", "Button", true, false):
+		if node.get_meta("item_name", "") == "练习太刀":item_hit = node
+	if is_instance_valid(item_hit):
+		var motion := InputEventMouseMotion.new()
+		motion.position = item_hit.get_global_rect().get_center()
+		get_viewport().push_input(motion, true)
+		await ticks(3)
+		check(is_instance_valid(game.windows.tip), "hover creates native item detail panel")
+		if is_instance_valid(game.windows.tip):
+			var bounds: Rect2 = game.windows.tip.get_global_rect()
+			check(Rect2(0, 0, 800, 600).encloses(bounds), "item detail panel stays inside native viewport")
+		await frame("05b_inventory_hover")
 	game.show_overlay("dungeon")
 	await ticks(3)
 	await frame("06_departure")
@@ -231,6 +252,16 @@ func run() -> void:
 	check(healed, "real damage permits consuming healing item")
 	await frame("10_result")
 	if game.session.state == "result":
+		var card = game.modal.find_child("reward_card_0", true, false)
+		check(is_instance_valid(card), "victory presents original reward card row")
+		if is_instance_valid(card):click_control(card)
+		await ticks(3)
+		check(game.windows.selected_card == 0, "reward card flips through viewport input")
+		var reward_gold := int(game.session.profile["gold"])
+		game.show_overlay("result")
+		await ticks(3)
+		check(game.windows.selected_card == 0 and int(game.session.profile["gold"]) == reward_gold, "reopening settlement retains flipped card without paying twice")
+		await frame("10b_result_reward")
 		check(click_text("返回城镇"), "result button returns to town")
 		await ticks(3)
 		game.town.ground = Vector2(445, 222)

@@ -51,6 +51,7 @@ func snapshot() -> Dictionary:
 	var exit_target := Vector2.ZERO
 	if room_cleared and not finished:exit_target = door_point(String(rules["rooms"][room_index]["next"]))
 	return {"hp": player.get("hp", 0), "mp": player.get("mp", 0), "pos": Vector2(player.get("pos", Vector2.ZERO)),
+		"cooldowns": player.get("cooldowns", {}).duplicate(true),
 		"attack_damage": rules["moves"]["attack1"]["damage"],
 		"facing": player.get("facing", 1), "enemies": enemies, "exit_target": exit_target, "cleared": room_cleared,
 		"max_hp": rules["player"]["hp"], "max_mp": rules["player"]["mp"],

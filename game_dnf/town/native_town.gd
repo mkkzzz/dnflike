@@ -70,7 +70,7 @@ func _process(delta: float) -> void:
 	ground += direction * delta * 115
 	ground.x = clampf(ground.x, 24, 1540)
 	ground.y = clampf(ground.y, 195, 262)
-	camera_x = clampf(ground.x - 320, 0, 928)
+	camera_x = clampf(ground.x - 400, 0, 768)
 	map_root.position.x = -roundf(camera_x)
 	loader.apply_camera(map_root, camera_x)
 	actor.position = Vector2(roundf(ground.x), roundf(ground.y + 120))
