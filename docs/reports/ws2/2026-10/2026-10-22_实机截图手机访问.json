@@ -4,11 +4,11 @@
   "access": "owner-private",
   "service": "Sites",
   "project_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c",
-  "version_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c~appgver_90da3b741cb481918e4d573530d6917c",
-  "deployment_id": "appgdep_6ada13dbbda88191bac6e74310c20501",
+  "version_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c~appgver_ff7d7583f0788191b86ce27df17b50c2",
+  "deployment_id": "appgdep_6ada1dba93cc819195035a4a997ef853",
   "status": "succeeded",
-  "source_commit": "c64a96fd9d3477e58e4e87dd315a5bb7ca51b32f",
-  "game_commit": "10a7e81 + item grid repair working tree; flow_store.json locks runtime and evidence",
-  "screens": 14,
-  "note": "前四张为本轮商店/背包装备/消耗品数量/悬停实拍；其余为流程和原包攻略，14项中12张Godot实机、2张原包攻略。源PNG字节保持，手机同一账号访问，适合屏幕/原始像素切换。"
+  "source_commit": "875cf42e75ab9d27b60291fec77ac165b4efd652",
+  "game_commit": "547e98a + HUD/inventory eight-item repair working tree; flow_store.json locks runtime and evidence",
+  "screens": 17,
+  "note": "17项中15张Godot实机、2张原包攻略；新增普通/稀有品质详情、血蓝悬停，更新背包武器槽、页签底栏、HUD格框。源PNG字节保持，手机同一账号访问，适合屏幕/原始像素切换。"
 }

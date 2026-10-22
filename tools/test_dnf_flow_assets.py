@@ -13,6 +13,29 @@ from check_game_chinese import scan
 
 
 class FlowAssets(unittest.TestCase):
+    def test_combat_runtime_bundle_has_limited_roots_and_preserves_local_edits(self):
+        import hashlib
+        with tempfile.TemporaryDirectory(prefix='dnf-combat-pack-') as temp:
+            base = Path(temp)
+            archive = base/'combat.zip'
+            def bundle(paths):
+                records = [{'path': path, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} for path, data in paths.items()]
+                with zipfile.ZipFile(archive, 'w') as out:
+                    for path, data in paths.items():out.writestr(path, data)
+                    out.writestr('_manifests/combat.zip.json', json.dumps(records))
+                return {'name': archive.name, 'kind': 'combat_runtime', 'bytes': archive.stat().st_size,
+                        'sha256': digest(archive), 'files': len(records), 'unpacked_bytes': sum(r['bytes'] for r in records)}
+            lock = {'schema': 'dnflike_loop_store/1', 'version': 'combat-v1', 'packs': [bundle({'combat_runtime/combat/manifest.json': b'{}', 'combat_runtime/content/combat_content.json': b'{"records":[]} '})]}
+            project = base/'clone'
+            sync_flow(lock, base/'cache', project, base)
+            self.assertTrue(installed_matches(lock, project))
+            (project/'assets_local/combat/manifest.json').write_bytes(b'local generated changes')
+            with self.assertRaisesRegex(ValueError, 'preserved'):sync_flow(lock, base/'cache', project, base)
+            self.assertEqual((project/'assets_local/combat/manifest.json').read_bytes(), b'local generated changes')
+            lock.update(version='combat-v2', packs=[bundle({'combat_runtime/content/private.json': b'forbidden scope'})])
+            with self.assertRaisesRegex(ValueError, 'Unexpected runtime package root'):sync_flow(lock, base/'cache', project, base)
+            self.assertFalse((project/'assets_local/content/private.json').exists())
+
     def test_chinese_gate_distinguishes_game_text_from_raw_sources(self):
         with tempfile.TemporaryDirectory(prefix='dnf-language-') as temp:
             base = Path(temp)

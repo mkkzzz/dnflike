@@ -31,6 +31,11 @@ def audit(library: Path, output: Path) -> dict:
         inventory = manifest['images'][manifest['ui']['inventory']['0']]
         assert inventory['source_path'].lower().endswith('/inventory/fuck_1.img')
         assert manifest['images'][manifest['ui']['worldmap']['0']]['size'] == [800, 600]
+        assert manifest['images'][manifest['ui']['base']['119']]['size'] == [28, 28]
+        for name, source in manifest['skill_icon_sources'].items():
+            image = manifest['images'][manifest['ui']['active_skills'][name]]
+            assert image['source_path'].lower() == 'sprite/' + source['icon'][0].lower()
+            assert image['frame'] == source['icon'][1]
         face = manifest['images'][manifest['ui']['dialog_face']['0']]
         assert face['size'] == [186, 226] and face['source_path'].lower() == 'sprite/interface/npc_dialog_face.img'
         tooltip = Image.open(output/'tooltip.png').convert('RGBA')
@@ -45,6 +50,7 @@ def audit(library: Path, output: Path) -> dict:
                   'mismatched_frames': failures, 'hud_source_and_control_coordinates': 'pass',
                   'inventory_patched_client_family': 'pass', 'map_native_dimensions': 'pass',
                   'linus_original_torso_186x226': 'pass', 'tooltip_native_nine_parts': 'pass',
+                  'rarity_neutral_outline_28x28': 'pass', 'active_skill_icons_from_skl': 'pass',
                   'runtime_client_layout_certified': False,
                   'limits': 'Raw pixels/source tokens checked; window reconstruction is not an original-client runtime comparison.'}
         if failures:raise ValueError(json.dumps(result))

@@ -22,8 +22,6 @@ var notification := ""
 var notification_seconds := 0.0
 var hp_bar: TextureProgressBar
 var mp_bar: TextureProgressBar
-var hp_text: Label
-var mp_text: Label
 var status_text: Label
 var info_text: Label
 var toast_text: Label
@@ -79,30 +77,33 @@ func build_hud() -> void:
 	skin.image(hud, skin.texture("hud"), Vector2(0, 508))
 	hp_bar = orb(hud, skin.texture("hud", 1), Vector2(13, 521))
 	mp_bar = orb(hud, skin.texture("hud", 2), Vector2(731, 521))
-	hp_text = skin.label(hud, "", Vector2(13, 542), 9)
-	mp_text = skin.label(hud, "", Vector2(731, 542), 9)
+	hp_bar.mouse_filter = Control.MOUSE_FILTER_PASS
+	mp_bar.mouse_filter = Control.MOUSE_FILTER_PASS
+	hp_bar.mouse_entered.connect(func(): windows.gauge_tip(hp_bar))
+	mp_bar.mouse_entered.connect(func(): windows.gauge_tip(mp_bar))
+	hp_bar.mouse_exited.connect(windows.hide_tooltip)
+	mp_bar.mouse_exited.connect(windows.hide_tooltip)
 	# Source ui/hud/hud.ui controls are relative to the bottom board.
 	skin.sprite_button(hud, "hud", [5, 6, 7], Vector2(273, 560), func(): hud_action("inventory"), "角色装备 I")
 	skin.sprite_button(hud, "hud", [8, 9, 10], Vector2(299, 560), func(): hud_action("inventory"), "背包 I")
 	skin.sprite_button(hud, "hud", [11, 12, 13], Vector2(325, 560), func(): hud_action("quest"), "任务 Q")
 	skin.sprite_button(hud, "hud", [68, 69, 70], Vector2(451, 560), func(): hud_action("menu"), "菜单 Esc")
 	for i in 6:
-		skin.label(hud, str(i + 1), Vector2(86 + i * 30, 574), 9).z_index = 2
-		var hotkey: Label = skin.label(hud, ["A", "S", "D", "F", "G", "H"][i], Vector2(538 + i * 30, 574), 9)
+		skin.label(hud, str(i + 1), Vector2(87 + i * 30, 574), 9).z_index = 2
+		var hotkey: Label = skin.label(hud, ["A", "S", "D", "F", "G", "H"][i], Vector2(540 + i * 30, 574), 9)
 		hotkey.set_meta("skill_hotkey", true)
 		hotkey.z_index = 2
-	skin.image(hud, town.loader.texture(town.loader.data["ui"]["items"]["potion"]), Vector2(86, 555))
-	var potion_hit := Button.new()
-	potion_hit.position = Vector2(85, 555)
-	potion_hit.size = Vector2(28, 28)
-	potion_hit.flat = true
+	# The baked HUD uses 30px pitch; its 28px cavities begin 2px inside.
+	# The previous y555/x537 positions painted over the original top/left rim.
+	var potion_hit: Button = skin.icon_button(hud, town.loader.texture(town.loader.data["ui"]["items"]["potion"]), Vector2(85, 558), use_potion)
+	potion_hit.name = "hud_potion"
+	skin.rarity_frame(potion_hit, int(Catalog.ITEMS["potion"]["rarity"]), Color(Catalog.RARITIES[int(Catalog.ITEMS["potion"]["rarity"])]["color"]))
 	potion_hit.tooltip_text = "恢复药剂 1"
-	potion_hit.pressed.connect(use_potion)
-	hud.add_child(potion_hit)
-	# ws1 2026-10-22: S is now triple slash (SKL icon frame 18/19, not yet in the flow skill_icons pack; G23).
-	for entry in [[0, "draw", 8, KEY_A, "拔刀斩 A"], [1, "triple", 336, KEY_S, "三段斩 S"], [4, "guard", 24, KEY_G, "格挡 G"]]:
-		var code: int = entry[3]
-		var view: TextureButton = skin.sprite_button(hud, "skill_icons", [entry[2], entry[2], entry[2] + 1], Vector2(537 + int(entry[0]) * 30, 555), func(): press_combat_key(code), entry[4])
+	for entry in [[0, "draw", KEY_A, "拔刀斩 A"], [1, "triple", KEY_S, "三段斩 S"], [2, "rage_slash", KEY_D, "十字斩 D"], [3, "buff", KEY_F, "暴走 F"], [4, "guard", KEY_G, "格挡 G"]]:
+		var code: int = entry[2]
+		var tex: Texture2D = town.loader.texture(town.loader.data["ui"]["active_skills"][entry[1]])
+		var view: Button = skin.icon_button(hud, tex, Vector2(538 + int(entry[0]) * 30, 558), func(): press_combat_key(code))
+		view.tooltip_text = entry[3]
 		var counter: Label = skin.label(hud, "", view.position + Vector2(6, 5), 12)
 		skill_views[entry[1]] = {"view": view, "counter": counter}
 	skin.label(hud, "Lv.", Vector2(14, 583), 10, Color("f0d18a"))
@@ -158,17 +159,14 @@ func _process(delta: float) -> void:
 	if save_failed:status_text.text = "存档写入失败 · 请检查目录后重试保存"
 	hp_bar.value = hp * 100 / hp_max
 	mp_bar.value = mp * 100 / mp_max
-	hp_text.text = "%d%%" % int(hp * 100 / hp_max)
-	mp_text.text = "%d%%" % int(mp * 100 / mp_max)
-	hp_text.position.x = 27
-	mp_text.position.x = 746
-	hp_bar.tooltip_text = "HP %d / %d" % [hp, hp_max]
-	mp_bar.tooltip_text = "MP %d / %d" % [mp, mp_max]
+	hp_bar.set_meta("value_text", "生命值  %d / %d" % [hp, hp_max])
+	mp_bar.set_meta("value_text", "魔法值  %d / %d" % [mp, mp_max])
+	windows.update_gauge_tip()
 	info_text.text = str(p["level"])
 	(hud.get_node("experience") as TextureProgressBar).value = float(p["xp"]) * 100.0 / 100.0
 	for id: String in skill_views:
 		var remaining := float(cooldowns.get(id, 0))
-		var view: TextureButton = skill_views[id]["view"]
+		var view: Button = skill_views[id]["view"]
 		var counter: Label = skill_views[id]["counter"]
 		view.modulate = Color("777777") if remaining > 0 else Color.WHITE
 		counter.text = "%.1f" % remaining if remaining > 0 else ""

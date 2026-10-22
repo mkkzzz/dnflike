@@ -25,9 +25,27 @@ def pack(output: Path, version: str) -> dict:
         entries.append({'name': archive_path.name, 'kind': kind, 'bytes': archive_path.stat().st_size,
                         'sha256': digest(archive_path), 'files': len(inventory),
                         'unpacked_bytes': sum(f['bytes'] for f in inventory)})
+    # The ws1 kernel now requires compiled content and original combat banks.
+    # Ship these inputs too, so consumers still need no full extraction library.
+    combat_base = ROOT/'game_dnf/assets_local'
+    combat_files = sorted(p for p in (combat_base/'combat').rglob('*') if p.is_file() and not p.name.endswith('.import'))
+    content = combat_base/'content/combat_content.json'
+    if not combat_files or not content.is_file():raise ValueError('Build ws1 combat runtime inputs before publishing the loop')
+    combat_files.append(content)
+    archive_path = output/'combat_runtime-01.zip'
+    inventory = []
+    with zipfile.ZipFile(archive_path, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
+        for file in combat_files:
+            name = 'combat_runtime/' + file.relative_to(combat_base).as_posix()
+            inventory.append({'path': name, 'bytes': file.stat().st_size, 'sha256': digest(file)})
+            archive.write(file, name)
+        archive.writestr('_manifests/'+archive_path.name+'.json', json.dumps(inventory).encode())
+    entries.append({'name': archive_path.name, 'kind': 'combat_runtime', 'bytes': archive_path.stat().st_size,
+                    'sha256': digest(archive_path), 'files': len(inventory),
+                    'unpacked_bytes': sum(f['bytes'] for f in inventory)})
     lock = {'schema': 'dnflike_loop_store/1', 'version': version, 'tag': version,
             'repository': 'mkkzzz/dnflike-assets', 'base_asset_version': 'dnf-native-assets-v1-20261022',
-            'packs': [p for p in entries if p['kind'] == 'flow_v1'],
+            'packs': [p for p in entries if p['kind'] in ['flow_v1', 'combat_runtime']],
             'evidence': [p for p in entries if p['kind'] == 'evidence']}
     write_json(output / 'flow_store.json', lock)
     write_json(output / 'asset_store.json', dict(lock, packs=entries))

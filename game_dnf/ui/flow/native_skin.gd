@@ -27,18 +27,35 @@ func inventory(parent: Node) -> void:
 	# at native 1:1. The complete bag now ends above the HUD orb silhouette.
 	image_region(parent, tex, Rect2(0, 0, 313, 360), Vector2.ZERO)
 	image_region(parent, tex, Rect2(0, 408, 313, 170), Vector2(0, 360))
+	# This patched client bakes a close mark into the pet tab. Remove only
+	# that mark with adjacent native cream grain; the active close lives below.
+	TextPatch.attach(parent, tex, Rect2(201, 11, 8, 12), Rect2(253, 8, 19, 18))
+	label(parent, "角色装备", Vector2(20, 34), 11, Color("c3b897"))
 	# This patched client supplies Chinese title tabs in the source itself.
 	image(parent, texture("inventory", 21), Vector2(19, 198))
-	image(parent, texture("inventory", 13), Vector2(19, 373))
-	label(parent, "负重", Vector2(20, 352), 11)
-	image(parent, texture("inventory", 2), Vector2(49, 357))
-	var weight := image(parent, texture("inventory", 1), Vector2(49, 357))
+	label(parent, "负重", Vector2(25, 357), 11)
+	image(parent, texture("inventory", 2), Vector2(58, 363))
+	var weight := image(parent, texture("inventory", 1), Vector2(58, 363))
 	weight.name = "weight_fill"
-	label(parent, "1.2 / 50 kg", Vector2(151, 351), 10).name = "weight_label"
+	var weight_label := label(parent, "", Vector2(164, 357), 11)
+	weight_label.name = "weight_label"
+	weight_label.size.x = 109
+	weight_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	for y in [382, 409]:
+		image(parent, texture("inventory_bottom", 0), Vector2(25, y))
+		image(parent, texture("inventory_bottom", 1), Vector2(132, y))
+	image(parent, texture("inventory_bottom", 5), Vector2(28, 385))
+	image_region(parent, texture("inventory", 13), Rect2(106, 0, 21, 23), Vector2(134, 382))
+	image_region(parent, texture("inventory", 13), Rect2(106, 27, 21, 23), Vector2(134, 409))
+	label(parent, "复活币", Vector2(50, 384), 11)
+	label(parent, "决斗点", Vector2(157, 384), 11)
+	label(parent, "点券", Vector2(33, 411), 11)
+	label(parent, "金币", Vector2(157, 411), 11)
 	for i in 5:
-		var tab := button(parent, ["装备", "消耗品", "材料", "副职业", "任务"][i], Vector2(20 + i * 48, 196), func(): pass, false)
+		var tab := button(parent, ["装备", "消耗品", "材料", "副职业", "任务"][i], Vector2(20 + i * 52, 196), func(): pass, false)
 		tab.add_theme_font_size_override("font_size", 11)
-		tab.size = Vector2(48, 20)
+		tab.size = Vector2(52 if i < 4 else 50, 22)
+		tab.toggle_mode = true
 		tab.name = "inventory_tab_" + str(i)
 
 func surface(parent: Node, rect: Rect2, group: String, frame: int, margins := 5) -> NinePatchRect:
@@ -71,6 +88,25 @@ func item_board(parent: Node, rect: Rect2) -> NinePatchRect:
 	parent.add_child(view)
 	return view
 
+func icon_button(parent: Node, tex: Texture2D, at: Vector2, action: Callable) -> Button:
+	var hit := Button.new()
+	hit.position = at
+	hit.size = tex.get_size()
+	hit.focus_mode = Control.FOCUS_NONE
+	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
+		hit.add_theme_stylebox_override(state, StyleBoxEmpty.new())
+	var icon := image(hit, tex, Vector2.ZERO)
+	icon.name = "item_icon"
+	hit.pressed.connect(action)
+	parent.add_child(hit)
+	return hit
+
+func rarity_frame(parent: Node, rarity: int, color: Color) -> void:
+	var frame := image(parent, texture("base", 119), Vector2.ZERO)
+	frame.name = "rarity_frame"
+	frame.self_modulate = color
+	frame.set_meta("rarity", rarity)
+
 func sprite_button(parent: Node, group: String, frames: Array, at: Vector2, action: Callable, hint := "") -> TextureButton:
 	var view := TextureButton.new()
 	view.position = at
@@ -83,8 +119,8 @@ func sprite_button(parent: Node, group: String, frames: Array, at: Vector2, acti
 	parent.add_child(view)
 	return view
 
-func close_button(parent: Node, at: Vector2, action: Callable) -> void:
-	sprite_button(parent, "close", [4, 5, 6], at, action, "关闭 Esc")
+func close_button(parent: Node, at: Vector2, action: Callable) -> TextureButton:
+	return sprite_button(parent, "close", [4, 5, 6], at, action, "关闭 Esc")
 
 func item_grid(parent: Node, at: Vector2, columns: int, rows: int) -> Control:
 	# The source grid starts at (16,174), repeats every 32px, and has a

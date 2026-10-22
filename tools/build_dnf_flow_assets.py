@@ -43,12 +43,13 @@ def build(library: Path, output: Path) -> dict:
                                 'direction_raw': direction, 'anchor': [x, y, z]})
         refs = {
             'hud': ('Interface2/HUD/HUD.img', list(range(20)) + [21, 30, 31, 32, 37, 45, 68, 69, 70]),
-            'common': ('Interface/WindowCommon.img', list(range(29)) + list(range(66, 70)) + [90, 91, 92, 97, 98, 99, 100, 101, 102, 103, 104, 105, 147, 213, 214, 215, 216, 217, 218, 219, 220, 221, 248]),
+            'common': ('Interface/WindowCommon.img', list(range(29)) + list(range(66, 70)) + [90, 91, 92, 97, 98, 99, 100, 101, 102, 103, 104, 105, 147, 213, 214, 215, 216, 217, 218, 219, 220, 221, 230, 248]),
             'inventory': ('Interface/newstyle/windows/inventory/fuck_1.img', [0, 1, 2, 13, 14, 21, 38, 49]),
             'inventory_grid': ('Interface/ItemInventoryWindow.img', [0]),
+            'inventory_bottom': ('Interface/newstyle/windows/inventory/Inventory_tw.img', [0, 1, 5]),
             'equipment': ('Interface/newstyle/windows/inventory/inventory.img', [19, 20, 21, 22]),
             'shop': ('Interface/StackableShopWindow.img', [0, 7, 8, 9, 10, 11, 12, 13]),
-            'base': ('Interface/Base.img', [36, 50, 64, 67]),
+            'base': ('Interface/Base.img', [36, 50, 64, 67, 119]),
             'close': ('Interface/commonbtn01.img', [4, 5, 6]),
             'dialog': ('Interface2/npc_dialogue_ui.img', [0, 20]),
             'dialog_face': ('Interface/npc_dialog_face.img', [0]),
@@ -66,6 +67,14 @@ def build(library: Path, output: Path) -> dict:
         }
         ui = {name: {str(n): lib.image(ref, n, 'flow/' + name) for n in frames}
               for name, (ref, frames) in refs.items()}
+        skill_sources = {}
+        ui['active_skills'] = {}
+        for key, filename in {'draw': 'momentaryslash', 'triple': 'tripleslash',
+                              'rage_slash': 'gorecross', 'buff': 'frenzy', 'guard': 'guard'}.items():
+            script = lib.script('skill/swordman/' + filename + '.skl')
+            icon = span_values(script['spans'], '[icon]')
+            ui['active_skills'][key] = lib.image(icon[0], icon[1], 'flow/active_skills')
+            skill_sources[key] = {'path': script['path'], 'sha256': script['sha256'], 'icon': icon}
         # Icons are explicitly appearance references; v1 item balance is E-ADAPT.
         potion_script = lib.script('stackable/ptn_hplowest.stk')
         potion_icon = span_values(potion_script['spans'], '[icon]')
@@ -105,7 +114,7 @@ def build(library: Path, output: Path) -> dict:
             raise ValueError('Original font hash mismatch')
         shutil.copyfile(source, output / 'msjh.ttf')
         result = {
-            'schema': 'dnf_native_map/1', 'flow_schema': 'dnf_loop_art/4',
+            'schema': 'dnf_native_map/1', 'flow_schema': 'dnf_loop_art/6',
             'source': {'asset_version': json.loads(LOCK.read_text(encoding='utf-8'))['version'],
                        'exporter': 'tools/build_dnf_flow_assets.py',
                        'config_role': '111Script backup; effective original runtime unconfirmed',
@@ -119,6 +128,7 @@ def build(library: Path, output: Path) -> dict:
             'npcs': npc_sources, 'ui': ui, 'font': {'file': 'msjh.ttf', 'sha256': font['sha256'],
                                                   'source': font['original_path']},
             'images': lib.images, 'diagnostics': lib.diags,
+            'skill_icon_sources': skill_sources,
             'panel': {'file': 'panel.png', 'size': [40, 35], 'sources': [ui['shop']['0']] + [ui['common'][str(i)] for i in range(9)],
                       'center_crop': [108, 30, 40, 35],
                       'operation': 'Native fragments composed at 1:1; tiled by NinePatchRect, no painted fill'},
@@ -126,7 +136,9 @@ def build(library: Path, output: Path) -> dict:
                         'sources': [ui['tooltip'][str(i)] for i in [0, 1, 2, 4, 5, 6, 8, 9, 10]],
                         'operation': 'Native translucent black/gold Global frame at 1:1'},
             'item_appearance': {'potion': {'path': potion_script['path'], 'sha256': potion_script['sha256'],
-                                          'icon': potion_icon}, 'weapons': 'Native katana icons; v1 equipment is E-ADAPT'},
+                                          'icon': potion_icon, 'rarity': span_values(potion_script['spans'], '[rarity]')},
+                                'weapons': 'Native katana icons; v1 equipment is E-ADAPT',
+                                'rarity_frame': {'source': ui['base']['119'], 'operation': 'Native neutral outline with runtime rarity tint; exact original frame use and palette not certified'}},
         }
         result['ui_layout_sources'] = [lib.script(path) for path in [
             'ui/hud/hud.ui', 'ui/inventory/iteminventorywindow.ui',

@@ -32,7 +32,7 @@ def sync_flow(lock: dict, home: Path, project: Path, local_archives: Path | None
     if home.resolve() == ROOT or ROOT in home.resolve().parents:
         raise ValueError('Cache must stay outside the source checkout')
     entries = list(lock['packs'])
-    if not entries or any(p.get('kind') != 'flow_v1' or not safe_name(p.get('name', '')) for p in entries):
+    if not entries or any(p.get('kind') not in ['flow_v1', 'combat_runtime'] or not safe_name(p.get('name', '')) for p in entries):
         raise ValueError('Invalid loop package kind/name')
     if len({p['name'] for p in entries}) != len(entries):
         raise ValueError('Duplicate loop packages')
@@ -55,7 +55,15 @@ def sync_flow(lock: dict, home: Path, project: Path, local_archives: Path | None
             if entry['name'] not in remote:raise ValueError('Missing loop archive: ' + entry['name'])
             download(github, remote[entry['name']], entry, archive)
         members = install_archive(archive, entry, destination)
-        if entry['kind'] == 'flow_v1':inventory.extend(members)
+        if entry['kind'] in ['flow_v1', 'combat_runtime']:
+            for info in members:
+                parts = PurePosixPath(info['path']).parts
+                target = PurePosixPath(*parts[1:]) if entry['kind'] == 'combat_runtime' else PurePosixPath(*parts)
+                root = target.parts[0]
+                allowed = root == 'flow_v1' if entry['kind'] == 'flow_v1' else (root == 'combat' or target.as_posix() == 'content/combat_content.json')
+                if not allowed:raise ValueError('Unexpected runtime package root: ' + info['path'])
+                info['_target'] = target.as_posix()
+            inventory.extend(members)
     unresolved = project / 'assets_local'
     if unresolved.is_symlink():raise ValueError('Asset consumer cannot be a symbolic link')
     target_root = unresolved.resolve()
@@ -64,15 +72,16 @@ def sync_flow(lock: dict, home: Path, project: Path, local_archives: Path | None
     old_hashes = previous.get('files', {})
     planned, hashes = [], {}
     for info in inventory:
-        relative = PurePosixPath(info['path'])
-        if relative.parts[0] != 'flow_v1':raise ValueError('Unexpected loop root')
+        relative = PurePosixPath(info.get('_target', info['path']))
+        if relative.parts[0] not in ['flow_v1', 'combat'] and relative.as_posix() != 'content/combat_content.json':raise ValueError('Unexpected loop root')
+        if relative.as_posix() in hashes:raise ValueError('Duplicate runtime file: ' + relative.as_posix())
         target = target_root / relative.as_posix()
         if target_root not in target.resolve().parents:raise ValueError('Consumer path escapes assets_local')
         current = digest(target) if target.exists() else None
         if current and current not in [info['sha256'], old_hashes.get(relative.as_posix())]:
             raise ValueError('Local loop asset differs; preserved: ' + str(target))
         hashes[relative.as_posix()] = info['sha256']
-        if current != info['sha256']:planned.append((destination / relative.as_posix(), target))
+        if current != info['sha256']:planned.append((destination / info['path'], target))
     for source, target in planned:
         target.parent.mkdir(parents=True, exist_ok=True)
         with tempfile.NamedTemporaryFile(dir=target.parent, prefix='.dnf-flow-', delete=False) as out:

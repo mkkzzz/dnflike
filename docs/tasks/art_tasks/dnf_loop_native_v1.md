@@ -4,12 +4,12 @@
 
 | 字段 | 内容 |
 |---|---|
-| task_id / revision | dnf_loop_native_v1 / 05；续修背包/商店格子裁切、32px步距、物品内框和悬停底板 |
+| task_id / revision | dnf_loop_native_v1 / 06；HUD/品质详情/血蓝悬停与背包页签底栏/武器槽八项精修 |
 | asset_id | scene.town.elvengard、actor.npc.linus、actor.npc.danjin、ui.loop.hud/inventory/shop/quest/departure/result |
 | asset_type / workflow | 原资源只读提取、原UI组件拼装；14文档H/F路线，不调用生图 |
 | style_profile / theme_pack | 原版DNF像素资源；用户本轮明确要求使用原图，禁用临时色块 |
 | owner / integration_owner | ws2；其它区自行接收，不代填其状态 |
-| lifecycle | 已发布；首版已被用户退回，本轮定位修正见[格子返修](../../reports/ws2/2026-10/2026-10-22_背包商店格子与图标定位.md)，前轮说明框/大立绘等保持，原版一致性待用户复核 |
+| lifecycle | 已发布；首版已被用户退回，本轮见[八项返修](../../reports/ws2/2026-10/2026-10-22_HUD品质与背包八项返修.md)，原图与旧版证据保留，原版一致性待用户复核 |
 | gameplay_purpose | 走动城镇、NPC委托/购买、背包/装备、出征、胜负结算、回城与成长 |
 
 本轮沿用用户已指定的原素材路线，不生成或补画新人物。原图复用不等于完整还原原版布局、规则和数值。
@@ -32,12 +32,12 @@
 |---|---|---|
 | 城镇 | map/elvengard/elvengard.map，7列224×480原TIL，共1568×480 | 800×600循环视口水平卷轴，场景整体下移28，地面y映射沿T2偏移120；末48px草地1:1延续至HUD透明区 |
 | NPC | npc/linus.npc、npc/danjin.npc的field animation与MAP原坐标 | 原IMG裁切偏移＋ANI时长，循环采样，不用静态色块代替 |
-| HUD | Interface2/HUD/HUD.img 800×92，血蓝56×56；ui/hud/hud.ui控件坐标 | 移除常驻说明/六个大按钮；原菜单图标、两侧快捷槽、真实血蓝/经验/冷却；技能ASDFGH，ZXC不显示、药剂1 |
+| HUD | Interface2/HUD/HUD.img 800×92，血蓝56×56；ui/hud/hud.ui控件坐标 | 移除常驻说明/六个大按钮；原菜单图标、两侧快捷槽、真实血蓝/经验/冷却；原HUD步距30/图标28内缩2；技能ASDFGH，ZXC不显示、药剂1；血蓝仅悬停数值 |
 | 底部对白 | Interface2/npc_dialogue_ui.img 718×165；npc_dialog_face.img第0帧186×226 | 原尺寸底部板，林纳斯透明上半身大立绘浮在左侧；中文对白/任务/商店入口 |
 | 任务列表 | newstyle/windows/quest.img、quest/reformquestwindow.img、WindowCommon组件 | 分类、左列表/右详情、目标/奖励与接取/交付；外窗位置仍为E-INFER |
-| 背包 | newstyle/windows/inventory/fuck_1.img 313×578（含透明留边），源图自带中文页签 | 删48px空白后保持组件1:1，避开HUD；八列四行，源网格起点(16,174)/步距32/图标28内缩2；分类/实际负重/金币与原说明框 |
+| 背包 | newstyle/windows/inventory/fuck_1.img 313×578（含透明留边），源图自带中文页签 | 删48px空白后保持组件1:1，避开HUD；八列四行，源网格起点(16,174)/步距32/图标28内缩2；分类条与网格258宽齐边；货币/负重原底板，武器图标(210,88)，关闭另置标题行 |
 | 商店 | 原WindowCommon边框/纹理、StackableShopWindow原滚动组件及原商品格 | 七列六行32px网格，与背包同源行带/2px收边，图标28居中；购买/悬停价格；整体拼装为E-INFER |
-| 说明板/物品详情 | 普通窗WindowCommon＋商店纹理40×35；物品专用Global九片24×25 | 外窗连续边缘；详情细金边半透明黑底，不混用组件家族 |
+| 说明板/物品详情 | 普通窗WindowCommon＋商店纹理40×35；物品专用Global九片24×25 | 外窗连续边缘；详情细金边黑底、品质标题/条件/属性/操作分层；原中性框染色区分稀有度，精确原版用法待核 |
 | 出征 | WorldMap/granfloris.img 800×600、SelectDungeonSlot/granfloris原图卡、SelectDungeon02_cn中文组件 | 全屏羊皮地图、卡片选中框、普通级、原冒险按钮；未开放卡片明示不可进入 |
 | 结算 | Interface2/reward_ver2.0/reward_ver2.img原底图800×600、卡牌153×97与确认按钮；NewResult原评级 | 实际统计、四张卡片/鼠标翻开/确认回城；奖励仅展示已结算收益，不冒充原版随机翻牌规则 |
 | 物品 | 原katana图标、ptn_hplowest.stk指向的药剂图标 | 语义ID固定；两把试炼刀复用同一katana角色外观，尚无逐装备外观 |

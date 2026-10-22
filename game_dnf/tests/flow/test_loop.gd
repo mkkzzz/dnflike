@@ -66,6 +66,12 @@ func click_control(node: Control) -> void:
 	event.pressed = false
 	get_viewport().push_input(event, true)
 
+func hover_control(node: Control) -> void:
+	var motion := InputEventMouseMotion.new()
+	motion.position = node.get_global_rect().get_center()
+	get_viewport().push_input(motion, true)
+	await ticks(3)
+
 func click_item(name: String) -> bool:
 	for node in game.modal.find_children("*", "Button", true, false):
 		if String(node.get_meta("item_name", "")).begins_with(name) and not node.is_queued_for_deletion():
@@ -171,6 +177,14 @@ func run() -> void:
 	check(hotkeys == ["A", "S", "D", "F", "G", "H"], "HUD shows ASDFGH without basic ZXC actions")
 	check(not game.skill_views.has("upper"), "basic upper attack is absent from skill slots")
 	check(game.get_window().content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS, "dynamic UI renders at window resolution")
+	var percentages := false
+	for label in game.hud.find_children("*", "Label", true, false):
+		if "%" in label.text:percentages = true
+	check(not percentages, "orbs contain no persistent percentages")
+	check(game.hud.get_node("hud_potion").get_rect() == Rect2(85, 558, 28, 28), "HUD item icon fits the native cavity")
+	for id: String in game.skill_views:
+		var view: Control = game.skill_views[id]["view"]
+		check(view.size == Vector2(28, 28) and view.position.y == 558 and int(view.position.x - 538) % 30 == 0, "HUD skill stays inside native rim: " + id)
 	await frame("01_town")
 	if capture:
 		var shot: Image = get_viewport().get_texture().get_image()
@@ -183,6 +197,22 @@ func run() -> void:
 		check(get_viewport().get_texture().get_image().get_size() == Vector2i(800, 600), "1x capture preserves native dimensions")
 		game.get_window().size = Vector2i(1600, 1200)
 		await ticks(4)
+	await hover_control(game.hp_bar)
+	check(is_instance_valid(game.windows.tip) and game.windows.tip.has_meta("gauge"), "actual HP hover opens native value detail")
+	if is_instance_valid(game.windows.tip):check(game.windows.tip.get_node("gauge_value").text == game.hp_bar.get_meta("value_text"), "HP detail shows current and maximum values")
+	await frame("01d_hp_hover")
+	await hover_control(game.mp_bar)
+	check(is_instance_valid(game.windows.tip) and game.windows.tip.has_meta("gauge"), "actual MP hover opens native value detail")
+	if is_instance_valid(game.windows.tip):check(game.windows.tip.get_node("gauge_value").text == game.mp_bar.get_meta("value_text"), "MP detail shows current and maximum values")
+	await frame("01e_mp_hover")
+	if capture:
+		await RenderingServer.frame_post_draw
+		var hud_shot := get_viewport().get_texture().get_image()
+		var native_hud: Image = game.skin.texture("hud").get_image()
+		var intact := true
+		for point in [Vector2i(83, 62), Vector2i(98, 48), Vector2i(536, 62), Vector2i(550, 48), Vector2i(566, 62)]:
+			if not hud_shot.get_pixel(point.x * 2, (point.y + 508) * 2).is_equal_approx(native_hud.get_pixel(point.x, point.y)):intact = false
+		check(intact, "HUD item and skill icons preserve the baked top and side borders")
 	game.town.ground = Vector2(1120, 230)
 	await ticks(3)
 	await frame("01b_town_east")
@@ -203,6 +233,15 @@ func run() -> void:
 	await frame("04_shop")
 	await check_item_grid("native_shop_grid", 7, 6)
 	await check_item_grid("native_inventory_grid", 8, 4)
+	var merchandise: Control
+	for node in game.modal.find_child("native_shop_grid", true, false).get_children():
+		if node is Button and node.get_meta("item_id", "") == "forest_sword":merchandise = node
+	if is_instance_valid(merchandise):
+		check(merchandise.get_node("rarity_frame").get_meta("rarity") == 2, "rare merchandise carries its rarity frame")
+		await hover_control(merchandise)
+		var title := game.windows.tip.get_node("tooltip_title") as Label
+		check(title.get_theme_font_size("font_size") == 16 and title.get_theme_color("font_color") == Color(game.Catalog.RARITIES[2]["color"]), "item detail title uses rarity color and larger type")
+		await frame("04b_shop_detail")
 	check(click_item("恢复药剂"), "click native shop item to purchase")
 	await ticks(2)
 	check(game.session.profile["gold"] == 260 and game.session.profile["inventory"]["potion"] == 4, "purchase exchanges gold for item")
@@ -211,6 +250,14 @@ func run() -> void:
 	await frame("05_inventory")
 	var bag = game.modal.find_child("native_inventory", true, false)
 	check(bag.get_global_rect().end.y < 508, "compact native bag ends above HUD")
+	var weapon := bag.get_node("equipped_weapon") as Control
+	check(Rect2(208, 86, 32, 32).encloses(weapon.get_rect()) and weapon.get_meta("item_id") == game.session.profile["equipped"], "equipped weapon sits in the source weapon slot")
+	var close := bag.get_node("inventory_close") as Control
+	check(not close.get_rect().intersects(Rect2(13, 0, 265, 32)), "close button clears the top page tabs")
+	var item_grid := bag.get_node("native_inventory_grid") as Control
+	check(bag.get_node("inventory_tab_0").position.x == item_grid.position.x and bag.get_node("inventory_tab_4").get_rect().end.x == item_grid.get_rect().end.x, "category tabs align with both grid edges")
+	for entry in [["resurrection_coins", Rect2(25, 382, 104, 23)], ["duel_points", Rect2(132, 382, 141, 23)], ["cash_points", Rect2(25, 409, 104, 23)], ["gold", Rect2(132, 409, 141, 23)]]:
+		check(entry[1].encloses(bag.get_node("inventory_" + entry[0]).get_rect()), "currency value stays in its own native field: " + entry[0])
 	var tabs: Array[Rect2] = []
 	for i in 5:
 		tabs.append(bag.get_node("inventory_tab_" + str(i)).get_rect())
@@ -246,6 +293,11 @@ func run() -> void:
 			var bounds: Rect2 = game.windows.tip.get_global_rect()
 			check(Rect2(0, 0, 800, 600).encloses(bounds), "item detail panel stays inside native viewport")
 		await frame("05b_inventory_hover")
+	var closing := game.modal.find_child("inventory_close", true, false) as Control
+	if is_instance_valid(closing):
+		click_control(closing)
+		await ticks(3)
+		check(game.overlay == "", "relocated inventory close still responds to mouse input")
 	game.show_overlay("dungeon")
 	await ticks(3)
 	await frame("06_departure")

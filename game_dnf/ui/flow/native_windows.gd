@@ -94,47 +94,74 @@ func hide_tooltip() -> void:
 func item_tip(id: String, rect: Rect2, buying := false) -> void:
 	hide_tooltip()
 	var data: Dictionary = game.Catalog.ITEMS[id]
-	var at := Vector2(rect.position.x - 260, rect.position.y)
+	var rarity: Dictionary = game.Catalog.RARITIES[int(data["rarity"])]
+	var is_weapon: bool = data["kind"] == "weapon"
+	var height := 256 if is_weapon else 220
+	var at := Vector2(rect.position.x - 288, rect.position.y)
 	if at.x < 8:at.x = rect.end.x + 8
-	at.x = clampf(at.x, 8, 540)
-	at.y = clampf(at.y, 8, 306)
-	tip = skin.item_board(game.modal, Rect2(at, Vector2(252, 202)))
+	at.x = clampf(at.x, 8, 512)
+	at.y = clampf(at.y, 8, 508 - height)
+	tip = skin.item_board(game.modal, Rect2(at, Vector2(280, height)))
 	tip.name = "native_item_detail"
 	tip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	tip.z_index = 100
-	skin.image(tip, item_texture(id), Vector2(15, 14))
-	skin.label(tip, data["name"], Vector2(54, 13), 15, Color("c6a3ff") if id == "forest_sword" else Color("eeeeee"))
-	skin.label(tip, "已装备" if game.session.profile["equipped"] == id else "消耗品" if data["kind"] != "weapon" else "武器 · 太刀", Vector2(54, 36), 11, Color("a7dd74"))
-	skin.label(tip, "等级要求：1\n鬼剑士可以使用" if data["kind"] == "weapon" else "携带数量：%d" % int(game.session.profile["inventory"].get(id, 0)), Vector2(16, 72), 12, Color("cccccc"))
-	skin.label(tip, data["description"], Vector2(16, 123), 12, Color("a7dd74"))
-	skin.label(tip, "购买价格：%d 金币" % int(data["price"]) if buying else "点击装备" if data["kind"] == "weapon" else "点击使用 · 地下城内有效", Vector2(16, 169), 12, Color("f0d18a"))
+	# One more native translucent center layer gives readable body contrast.
+	skin.surface(tip, Rect2(6, 6, 268, height - 12), "tooltip", 5, 0)
+	skin.label(tip, data["name"], Vector2(16, 12), 16, Color(rarity["color"])).name = "tooltip_title"
+	skin.label(tip, rarity["name"] + (" · 武器 · 太刀" if is_weapon else " · 消耗品"), Vector2(16, 42), 11, Color(rarity["color"]))
+	var icon: TextureRect = skin.image(tip, item_texture(id), Vector2(236, 14))
+	skin.rarity_frame(icon, int(data["rarity"]), Color(rarity["color"]))
+	skin.image(tip, skin.texture("common", 230), Vector2(39, 69))
+	if is_weapon:
+		skin.label(tip, "需要等级  %d" % int(data["level"]), Vector2(16, 82), 12, Color("a7dd74") if int(game.session.profile["level"]) >= int(data["level"]) else Color("ff7777"))
+		skin.label(tip, "鬼剑士可以使用", Vector2(16, 108), 12, Color("cccccc"))
+		skin.label(tip, "重量  %.2f kg" % float(data["weight"]), Vector2(163, 108), 11, Color("a59c88"))
+		skin.image(tip, skin.texture("common", 230), Vector2(39, 140))
+		skin.label(tip, "装备属性", Vector2(16, 152), 12, Color("d4c399"))
+		skin.label(tip, data["description"], Vector2(16, 178), 14, Color("a7dd74"))
+		if game.session.profile["equipped"] == id:skin.label(tip, "已装备", Vector2(211, 151), 11, Color("a7dd74"))
+	else:
+		skin.label(tip, "使用效果", Vector2(16, 82), 12, Color("d4c399"))
+		skin.label(tip, "恢复 %d HP" % int(data["heal"]), Vector2(16, 108), 16, Color("a7dd74"))
+		skin.label(tip, "地下城内使用", Vector2(16, 142), 12, Color("cccccc"))
+	skin.image(tip, skin.texture("common", 230), Vector2(39, height - 44))
+	var hint: String
+	if buying:hint = "购买价格  %d 金币" % int(data["price"])
+	elif is_weapon:hint = "当前正在装备" if game.session.profile["equipped"] == id else "鼠标点击装备"
+	else:hint = "鼠标点击使用  ·  快捷键 1"
+	skin.label(tip, hint, Vector2(16, height - 30), 11, Color("f0d18a") if buying else Color("a59c88"))
+
+func gauge_tip(gauge: Control) -> void:
+	hide_tooltip()
+	var at := Vector2(86 if gauge.position.x < 400 else 526, 518)
+	tip = skin.item_board(game.ui, Rect2(at, Vector2(188, 34)))
+	tip.z_index = 100
+	tip.set_meta("gauge", gauge)
+	var value: Label = skin.label(tip, "", Vector2(12, 7), 12)
+	value.name = "gauge_value"
+	update_gauge_tip()
+
+func update_gauge_tip() -> void:
+	if is_instance_valid(tip) and tip.has_meta("gauge"):
+		var gauge: Control = tip.get_meta("gauge")
+		(tip.get_node("gauge_value") as Label).text = String(gauge.get_meta("value_text", ""))
 
 func item_slot(parent: Node, id: String, at: Vector2, action: Callable, buying := false) -> Button:
-	var hit := Button.new()
-	hit.position = at
-	hit.size = Vector2(28, 28)
-	hit.flat = true
-	hit.focus_mode = Control.FOCUS_NONE
-	# The original icon already contains its dark cavity texture. Keep it
-	# inside the 28px hit area; generic Button hover/pressed plates cover it.
-	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
-		hit.add_theme_stylebox_override(state, StyleBoxEmpty.new())
-	var icon: TextureRect = skin.image(hit, item_texture(id), Vector2.ZERO)
-	icon.name = "item_icon"
+	var hit: Button = skin.icon_button(parent, item_texture(id), at, func(): hide_tooltip(); action.call())
+	var data: Dictionary = game.Catalog.ITEMS[id]
+	skin.rarity_frame(hit, int(data["rarity"]), Color(game.Catalog.RARITIES[int(data["rarity"])]["color"]))
 	# Custom tooltip replaces the engine's default popup while preserving accessible name.
 	hit.set_meta("item_name", game.Catalog.ITEMS[id]["name"])
 	hit.set_meta("item_id", id)
 	hit.mouse_entered.connect(func(): item_tip(id, hit.get_global_rect(), buying))
 	hit.mouse_exited.connect(hide_tooltip)
-	hit.pressed.connect(func(): hide_tooltip(); action.call())
-	parent.add_child(hit)
 	return hit
 
 func inventory(at := Vector2(484, 22), can_close := true) -> void:
 	var node = container(game.modal, at, Vector2(303, 476))
 	node.name = "native_inventory"
 	skin.inventory(node)
-	if can_close:skin.close_button(node, Vector2(255, 8), func(): game.show_overlay(""))
+	if can_close:skin.close_button(node, Vector2(268, 35), func(): game.show_overlay("")).name = "inventory_close"
 	var equipped: String = game.session.profile["equipped"]
 	var weight := 0.0
 	for id: String in game.Catalog.ITEMS:
@@ -146,17 +173,18 @@ func inventory(at := Vector2(484, 22), can_close := true) -> void:
 	region.region = Rect2(0, 0, maxf(1, floorf(region.atlas.get_width() * minf(weight / 50.0, 1.0))), region.atlas.get_height())
 	fill.texture = region
 	fill.size = region.get_size()
-	item_slot(node, equipped, Vector2(177, 88), func(): pass)
+	var weapon := item_slot(node, equipped, Vector2(210, 88), func(): pass)
+	weapon.name = "equipped_weapon"
 	for i in 5:
 		var tab_index := i
 		var tab := node.get_node("inventory_tab_" + str(i)) as Button
 		tab.pressed.connect(func(): inventory_tab = tab_index; game.show_overlay(game.overlay))
-		if i == inventory_tab:tab.modulate = Color("fff3ac")
+		tab.button_pressed = i == inventory_tab
 	var grid: Control = skin.item_grid(node, Vector2(20, 218), 8, 4)
 	grid.name = "native_inventory_grid"
 	var index := 0
 	for id: String in game.Catalog.ITEMS:
-		var qty := int(game.session.profile["inventory"].get(id, 0))
+		var qty := int(game.session.profile["inventory"].get(id, 0)) - (1 if id == equipped else 0)
 		var kind: String = game.Catalog.ITEMS[id]["kind"]
 		if qty < 1 or (inventory_tab == 0 and kind != "weapon") or (inventory_tab == 1 and kind == "weapon") or inventory_tab > 1:continue
 		var point := Vector2(2 + (index % 8) * 32, 2 + (index / 8) * 32)
@@ -169,10 +197,11 @@ func inventory(at := Vector2(484, 22), can_close := true) -> void:
 			amount.size.x = 26
 			amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		index += 1
-	skin.label(node, "0 点", Vector2(75, 378), 11)
-	skin.label(node, "0 点", Vector2(217, 378), 11)
-	skin.label(node, str(int(game.session.profile["gold"])), Vector2(42, 404), 12)
-	skin.label(node, "0 金币", Vector2(204, 404), 11)
+	for entry in [["resurrection_coins", 0, 88, 384, 36], ["duel_points", 0, 218, 384, 50], ["cash_points", 0, 72, 411, 52], ["gold", 0, 200, 411, 68]]:
+		var value: Label = skin.label(node, str(int(game.session.profile.get(entry[0], entry[1]))), Vector2(entry[2], entry[3]), 11)
+		value.size.x = entry[4]
+		value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		value.name = "inventory_" + String(entry[0])
 
 func shop() -> void:
 	# Native board, original eight/seven-column trade grid, scrollbar and paired inventory.
