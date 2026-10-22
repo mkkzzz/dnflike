@@ -1,8 +1,60 @@
 {
- "_doc": "Original fields that the runtime currently EXECUTES, per kind: decoded key -> handler file under combat/fields/. Empty until F3/F4 land handlers; tools/compile_dnf_content.py reads this to fill the coverage report's runtime column.",
- "atk": {},
- "skl": {},
- "chr": {},
- "mob": {},
- "ani": {}
+ "_doc": "Original fields the runtime currently EXECUTES, per kind: decoded key -> handler file. tools/compile_dnf_content.py fills the coverage report's runtime column from this file. Update it together with the handler.",
+ "atk": {
+  "damage_bonus": "combat/data/move_table.gd (percent = 100 + bonus)",
+  "damage_reaction": "combat/resolve/reaction.gd",
+  "attack_direction": "combat/resolve/reaction.gd (damage motion 1/2)",
+  "push_aside": "combat/resolve/reaction.gd",
+  "lift_up": "combat/resolve/reaction.gd",
+  "hit_info": "scripts/main.gd hit_cues (effect kind/size/scale, blood)",
+  "hit_wav": "scripts/main.gd hit_cues"
+ },
+ "skl": {
+  "dungeon": "combat/data/move_table.gd (consume MP, cool time, casting time, level info row 1, static data)",
+  "consume_mp": "combat/data/move_table.gd",
+  "cool_time": "combat/data/move_table.gd",
+  "level_info": "combat/data/move_table.gd",
+  "static_data": "combat/data/move_table.gd (triple slash dash speed)",
+  "casting_time": "combat/data/move_table.gd"
+ },
+ "chr": {
+  "stat_groups": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+  "weapon_wav": "scripts/main.gd (swing/hit sounds)",
+  "weapon_hit_info": "scripts/main.gd hit_cues",
+  "attack_infos": "data/combat.json links -> combat/data/move_table.gd",
+  "jumpattack_info": "combat/data/move_table.gd",
+  "dashattack_info": "combat/data/move_table.gd"
+ },
+ "mob": {
+  "ability_category": "combat/data/move_table.gd (HP/attack percent of the base table)",
+  "move_speed": "combat/ai/monster_ai.gd via move_table",
+  "sight": "combat/ai/monster_ai.gd",
+  "attack_delay": "scripts/main.gd enemy_attack cooldown",
+  "hit_recovery": "combat/resolve/reaction.gd stun",
+  "attack_motions": "combat/data/move_table.gd",
+  "attack_infos": "combat/data/move_table.gd",
+  "throw_attack": "scripts/main.gd enemy_attack + passive object",
+  "waiting_motion": "combat/data/move_table.gd",
+  "move_motion": "combat/data/move_table.gd",
+  "damage_motion_1": "combat/data/move_table.gd",
+  "damage_motion_2": "combat/data/move_table.gd",
+  "down_motion": "combat/data/move_table.gd",
+  "overturn_motion": "combat/data/move_table.gd"
+ },
+ "ani": {
+  "timeline": "combat/action/timeline.gd",
+  "attack_boxes": "combat/hit/hit_judge.gd",
+  "damage_boxes": "combat/hit/hit_judge.gd",
+  "sound_events": "scripts/main.gd action_cues"
+ },
+ "obj": {
+  "basic_motion": "combat/data/move_table.gd object()",
+  "attack_infos": "combat/data/move_table.gd object()",
+  "add_object_effect": "scripts/main.gd spawn_object",
+  "piercing_power": "scripts/main.gd step_objects"
+ },
+ "ptl": {
+  "move_variable_1": "combat/data/move_table.gd throw speed",
+  "life_time": "scripts/main.gd step_objects"
+ }
 }

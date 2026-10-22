@@ -27,6 +27,8 @@ if ($BuildAssets) {
     }
 }
 $ErrorActionPreference="Continue"
+# Original combat inputs (ws1, doc 29 F2~F5): content pack + combat banks, built from the full library.
+& (Join-Path $PSScriptRoot "ensure_dnf_combat.ps1")
 $importOutput=& $GodotPath --headless --path $gamePath --editor --import --quit 2>&1
 $importExit=$LASTEXITCODE
 $ErrorActionPreference="Stop"

@@ -8,17 +8,22 @@ const WIDGET_DIR := "res://ui/combat/widgets"
 var font: SystemFont
 var atlas: Texture2D
 var items: Dictionary = {}
+var digit_atlas: Texture2D
+var digits: Dictionary = {}
 var painters: Array = []
 var state: Dictionary = {}
 ## Every draw call of the last frame, for headless equivalence checks.
 var trace: Array = []
 
-func setup(ui_assets: Dictionary) -> void:
+func setup(ui_assets: Dictionary, digit_bank := {}) -> void:
 	font = SystemFont.new()
 	font.font_names = PackedStringArray(["Microsoft YaHei UI","Microsoft YaHei","Noto Sans CJK SC"])
 	font.font_weight = 500
 	atlas = load(String(ui_assets["texture"])) as Texture2D
 	items = ui_assets["items"]
+	if not digit_bank.is_empty():
+		digit_atlas = load(String(digit_bank["texture"])) as Texture2D
+		digits = digit_bank["items"]
 	painters = discover(WIDGET_DIR)
 
 static func discover(dir_path: String) -> Array:
@@ -63,3 +68,28 @@ func piece(key: String,point: Vector2,fill := 1.0) -> void:
 
 func item_rect(key: String) -> Array:
 	return items[key]["rect"]
+
+## Original bitmap glyph from sprite/common/etc/combo.img (key e.g. "damage_7", "combo_label_0").
+## Returns the glyph width so callers can lay out strings.
+func glyph(key: String, point: Vector2, alpha := 1.0) -> float:
+	var item: Dictionary = digits.get(key,{})
+	if item.is_empty() or digit_atlas == null:return 0.0
+	var r: Array = item["rect"]
+	var o: Array = item["offset"]
+	var dest := Rect2(point+Vector2(float(o[0]),float(o[1])),Vector2(float(r[2]),float(r[3])))
+	trace.append(["d",key,str(dest),snappedf(alpha,0.001)])
+	draw_texture_rect_region(digit_atlas,dest,Rect2(float(r[0]),float(r[1]),float(r[2]),float(r[3])),Color(1,1,1,alpha))
+	return float(r[2])
+
+func glyph_width(key: String) -> float:
+	var item: Dictionary = digits.get(key,{})
+	return float(item["rect"][2]) if not item.is_empty() else 0.0
+
+## Draws an integer with a digit style; anchor is the centre-left/right/centre per `align`.
+func number(style: String, value: int, point: Vector2, alpha := 1.0, align := 0) -> float:
+	var text := str(value)
+	var width := 0.0
+	for c in text:width += glyph_width(style+"_"+c)-2
+	var x := point.x-(width*0.5 if align == 0 else width if align > 0 else 0.0)
+	for c in text:x += glyph(style+"_"+c,Vector2(x,point.y),alpha)-2
+	return width

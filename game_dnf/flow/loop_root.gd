@@ -99,7 +99,8 @@ func build_hud() -> void:
 	potion_hit.tooltip_text = "恢复药剂 1"
 	potion_hit.pressed.connect(use_potion)
 	hud.add_child(potion_hit)
-	for entry in [[0, "draw", 8, KEY_A, "拔刀斩 A"], [1, "thrust", 336, KEY_S, "连突刺 S"], [4, "guard", 24, KEY_G, "格挡 G"]]:
+	# ws1 2026-10-22: S is now triple slash (SKL icon frame 18/19, not yet in the flow skill_icons pack; G23).
+	for entry in [[0, "draw", 8, KEY_A, "拔刀斩 A"], [1, "triple", 336, KEY_S, "三段斩 S"], [4, "guard", 24, KEY_G, "格挡 G"]]:
 		var code: int = entry[3]
 		var view: TextureButton = skin.sprite_button(hud, "skill_icons", [entry[2], entry[2], entry[2] + 1], Vector2(537 + int(entry[0]) * 30, 555), func(): press_combat_key(code), entry[4])
 		var counter: Label = skin.label(hud, "", view.position + Vector2(6, 5), 12)

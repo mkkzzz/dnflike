@@ -154,7 +154,7 @@ MOB_FIELDS = {
     '[hp regen rate]': ('hp_regen_rate', 'list', 'E-PARSE', ''),
     '[stuckbonus on damage]': ('stuck_bonus_on_damage', 'list', 'E-PARSE', 'Hit-stop related; meaning unknown'),
     '[int data]': ('int_data', 'list', 'E-PARSE', 'Monster-specific constants'),
-    '[throw attack]': ('throw_attack', 'list', 'E-PARSE', ''),
+    '[throw attack]': ('throw_attack', 'tagged', 'E-PARSE', 'Inline [key] value pairs; passive object by index'),
 }
 for res in ['fire', 'water', 'dark', 'light', 'freeze', 'slow', 'stun', 'stone', 'hold', 'poison', 'bleeding',
             'burn', 'lightning', 'curse', 'blind', 'confuse', 'sleep']:
@@ -162,7 +162,32 @@ for res in ['fire', 'water', 'dark', 'light', 'freeze', 'slow', 'stun', 'stone',
 for motion in ['waiting', 'move', 'sit', 'damage motion 1', 'damage motion 2', 'down', 'overturn']:
     tag = f'[{motion} motion]' if 'motion' not in motion else f'[{motion}]'
     MOB_FIELDS[tag] = (key_of(tag), 'paths', 'E-PARSE', '')
-FIELD_TABLES = {'atk': ATK_FIELDS, 'skl': SKL_FIELDS, 'chr': CHR_FIELDS, 'mob': MOB_FIELDS}
+OBJ_FIELDS = {
+    '[width]': ('width', 'list', 'E-PARSE', ''),
+    '[floating height]': ('floating_height', 'number', 'E-PARSE', ''),
+    '[layer]': ('layer', 'str', 'E-PARSE', ''),
+    '[pass type]': ('pass_type', 'str', 'E-PARSE', ''),
+    '[piercing power]': ('piercing_power', 'int', 'E-PARSE', ''),
+    '[basic motion]': ('basic_motion', 'paths', 'E-PARSE', ''),
+    '[attack info]': ('attack_infos', 'paths', 'E-PARSE', ''),
+    '[etc motion]': ('etc_motions', 'paths', 'E-PARSE', ''),
+    '[etc attack info]': ('etc_attack_infos', 'paths', 'E-PARSE', ''),
+    '[add object effect]': ('add_object_effect', 'list', 'E-PARSE', 'ANI path, layer'),
+    '[destroy particle]': ('destroy_particle', 'paths', 'E-PARSE', ''),
+    '[object destroy condition]': ('destroy_condition', 'list', 'E-PARSE', ''),
+    '[int data]': ('int_data', 'list', 'E-PARSE', ''),
+    '[name]': ('name', 'list', 'E-PARSE', ''),
+}
+PTL_FIELDS = {
+    '[x axis]': ('x_axis', 'section', 'E-PARSE', ''),
+    '[move type]': ('move_type', 'str', 'E-PARSE', ''),
+    '[move variable 1]': ('move_variable_1', 'list', 'E-PARSE', 'Speed min, max (px/s, E-INFER)'),
+    '[life time]': ('life_time', 'int', 'E-PARSE', 'Milliseconds (E-INFER)'),
+    '[landing type]': ('landing_type', 'str', 'E-PARSE', ''),
+}
+FIELD_TABLES = {'atk': ATK_FIELDS, 'skl': SKL_FIELDS, 'chr': CHR_FIELDS, 'mob': MOB_FIELDS, 'obj': OBJ_FIELDS, 'ptl': PTL_FIELDS}
+# Passive objects spawned by the trial skills (engine code links them, not a script field).
+SKILL_OBJECTS = ['passiveobject/character/swordman/gorecross.obj', 'passiveobject/character/swordman/momentaryslashwave.obj']
 
 
 def first(node: dict):
@@ -181,6 +206,15 @@ def decode_value(node: dict, shape: str, base_path: str):
         return [[v[i], v[i + 1]] for i in range(0, len(v) - 1, 2)]
     if shape == 'section':
         return {'present': True}
+    if shape == 'tagged':
+        out, key = {}, None
+        for value in node['values']:
+            if isinstance(value, str) and value.startswith('[') and value.endswith(']'):
+                key = key_of(value)
+                out[key] = None
+            elif key is not None:
+                out[key] = value if out[key] is None else (out[key] if isinstance(out[key], list) else [out[key]]) + [value]
+        return out
     return node['values']
 
 
@@ -293,6 +327,8 @@ def compile_scope(lib: Library) -> dict:
             skill_index[str(index)] = p
     monsters = lib.listing('monster/monster.lst')
     monster_index = {}
+    object_paths: list[str] = list(SKILL_OBJECTS)
+    object_index: dict[str, str] = {}
     for index, rel in sorted(monsters.items()):
         p = ('monster/' + rel).lower()
         if not p.startswith('monster/goblin/'):
@@ -308,8 +344,34 @@ def compile_scope(lib: Library) -> dict:
             if 'motion' in key:
                 for p2 in value or []:
                     if isinstance(p2, str) and p2.endswith('.ani'):add(p2, 'ani', p)
+        throw = md.get('throw_attack') or {}
+        if throw.get('passive_object_filename'):
+            name = str(throw['passive_object_filename'])
+            # Some mobs write archive-root paths here; prefer the script-relative one when it exists.
+            relative = resolve(p, name)
+            add(relative if lib.exists(relative) else name.replace('\\', '/').lower(), 'ptl', p)
+        if throw.get('passive_object_index') is not None:
+            obj_rel = lib.listing('passiveobject/passiveobject.lst').get(int(throw['passive_object_index']))
+            if obj_rel:
+                object_paths.append(('passiveobject/' + obj_rel).lower())
+                object_index[str(throw['passive_object_index'])] = object_paths[-1]
+            else:
+                missing.append({'id': str(throw['passive_object_index']), 'kind': 'obj_index', 'referenced_by': p})
+    for p in object_paths:
+        obj = add(p, 'obj', 'scope')
+        if not obj:
+            continue
+        od = obj['decoded']
+        for key in ['basic_motion', 'etc_motions', 'destroy_particle']:
+            for p2 in od.get(key) or []:
+                if isinstance(p2, str) and p2:add(p2, 'ani' if p2.endswith('.ani') else 'ptl', p)
+        for key in ['attack_infos', 'etc_attack_infos']:
+            for p2 in od.get(key) or []:
+                if p2:add(p2, 'atk', p)
+        effect = od.get('add_object_effect') or []
+        if effect and isinstance(effect[0], str):add(resolve(p, effect[0]), 'ani', p)
     return {'records': records, 'missing': missing,
-            'indexes': {'swordman_skills': skill_index, 'monsters_goblin': monster_index}}
+            'indexes': {'swordman_skills': skill_index, 'monsters_goblin': monster_index, 'passive_objects': object_index}}
 
 
 def coverage(lib: Library, handled: dict) -> dict:

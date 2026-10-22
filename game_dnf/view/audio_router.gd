@@ -1,15 +1,17 @@
 extends Node
-## Plays combat sound cues. Throttle, voice pool and gain budget are unchanged from the
-## trial battle scene; cue keys still come from hand-written adaptation (G10/DNF-D015).
+## Plays combat sound cues. Keys are original sound keys (ATK [hit wav], CHR [weapon wav], ANI
+## frame events) resolved by tools/build_dnf_combat_assets.py; R_ keys pick a random variant.
+## Throttle, voice pool and gain budget are unchanged from the trial battle scene.
 
 var muted := false
 var sound_streams: Dictionary = {}
+var variants: Dictionary = {}
 var voice_pool: Array = []
 var music: AudioStreamPlayer
 var _last: Dictionary = {}
 var _cursor := 0
 
-func setup(audio_assets: Dictionary) -> void:
+func setup(audio_assets: Dictionary, combat_audio := {}) -> void:
 	for i in 8:
 		var voice := AudioStreamPlayer.new()
 		voice.volume_db = -15
@@ -17,6 +19,10 @@ func setup(audio_assets: Dictionary) -> void:
 		voice_pool.append(voice)
 	for key: String in audio_assets:
 		sound_streams[key] = load("res://assets_local/"+String(audio_assets[key]["file"]))
+	for key: String in combat_audio:
+		var list: Array = []
+		for entry: Dictionary in combat_audio[key]:list.append(load(String(entry["file"])))
+		variants[key] = list
 	music = AudioStreamPlayer.new()
 	music.volume_db = -28
 	add_child(music)
@@ -36,18 +42,23 @@ func _exit_tree() -> void:
 		voice.stop()
 		voice.stream = null
 	sound_streams.clear()
+	variants.clear()
 
 func on_cue(event: Dictionary) -> void:
 	if String(event.get("kind","")) == "sound":play(String(event["key"]))
 
 func play(key: String) -> void:
-	if muted or not sound_streams.has(key):return
+	if muted:return
+	var stream: AudioStream = null
+	if variants.has(key) and not variants[key].is_empty():stream = variants[key][randi()%variants[key].size()]
+	elif sound_streams.has(key):stream = sound_streams[key]
+	if stream == null:return
 	var now := Time.get_ticks_msec()
 	if now-int(_last.get(key,-1000))<75:return
 	_last[key] = now
 	var voice: AudioStreamPlayer = voice_pool[_cursor%voice_pool.size()]
 	_cursor += 1
-	voice.stream = sound_streams[key]
+	voice.stream = stream
 	# Conservative peak budget, even before source PCM normalization:
 	# 8*10^(-21/20)+10^(-28/20)=0.753 < 0.86 (assuming peak <= 1).
 	voice.volume_db = -23 if key.begins_with("goblin") else -21

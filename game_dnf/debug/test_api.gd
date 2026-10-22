@@ -39,7 +39,8 @@ func view_texture() -> String:return String(game.view.player_actor.bank["texture
 func view_pose() -> String:return game.view.player_actor.pose
 func run_direction() -> int:return game.run_direction
 func clear_direction_taps() -> void:game.last_direction_tap.clear()
-func set_hitstop(ms: float) -> void:game.hitstop_ms = ms
+## Local hitstop on the player (the kernel freezes attacker and target, not the world).
+func set_hitstop(ms: float) -> void:game.player["stuck_ms"] = ms
 
 # --- combat bookkeeping ---
 func hit_count() -> int:return game.hit_count
@@ -47,14 +48,13 @@ func combo_count() -> int:return game.combo_count
 func effect_count() -> int:return game.view.effects.size()
 
 # --- monsters ---
-## Replaces all monsters with one durable dummy and returns its opaque handle.
+## Replaces all monsters with one durable, AI-less dummy and returns its opaque handle.
 func spawn_dummy(point: Vector2) -> Dictionary:
 	game.clear_monsters()
 	var enemy: Dictionary = game.spawn_enemy(point)
 	enemy["hp"] = 5000.0
 	enemy["max_hp"] = 5000.0
-	enemy["state"] = "hurt"
-	enemy["hurt_ms"] = 100000.0
+	enemy["ai"] = false
 	return enemy
 func e(handle: Dictionary, key: String):return handle[key]
 func set_e(handle: Dictionary, key: String, value) -> void:handle[key] = value
@@ -98,7 +98,7 @@ func presentation_state() -> Dictionary:
 			nodes.append(["other",base,str(s)])
 	var numbers: Array = []
 	for n: Dictionary in _numbers():
-		numbers.append([str(n["pos"]),n["text"],snappedf(float(n["ms"]),0.001),n["heavy"]])
+		numbers.append([str(n["pos"]),n["value"],snappedf(float(n["ms"]),0.001),n["style"]])
 	return {"world":str(game.view.world.position),"nodes":nodes,"numbers":numbers,"hud":_hud_values(),
 		"hud_draw":_hud_trace(),"stage":[game.view.stage.room_index,game.view.stage.cleared,game.view.stage.debug_collision,str(game.view.stage.doors)]}
 
@@ -117,17 +117,27 @@ func _hud_values() -> Dictionary:
 		if float(enemy["hp"])<=0:continue
 		alive += 1
 		bars.append([str(enemy["pos"]),snappedf(float(enemy["z"]),0.001),snappedf(float(enemy["hp"])/float(enemy["max_hp"]),0.0001),enemy["chief"]])
-	var skills: Array = ["upper","buff","rage_slash"] if game.job=="berserker" else ["upper","draw","thrust"]
 	var cds: Array = []
-	for name: String in skills:
-		var cd := float(p["cooldowns"].get(name,0))
-		cds.append("%.1f"%cd if cd>0 else "")
+	for skill: Dictionary in game.skill_bar():
+		cds.append("%.1f"%float(skill["cooldown"]) if float(skill["cooldown"])>0 else "")
 	var route: Array = []
 	for i in game.rules["rooms"].size():
 		route.append([game.room_snapshots.has(i),i==game.room_index,bool(game.rules["rooms"][i].get("boss",false))])
 	return {"combo":game.combo_count,"toast":game.toast if game.toast_ms>0 else "","bars":bars,
-		"hp":int(p["hp"]),"mp":int(p["mp"]),"hp_fill":snappedf(float(p["hp"])/float(game.rules["player"]["hp"]),0.0001),
-		"mp_fill":snappedf(float(p["mp"])/float(game.rules["player"]["mp"]),0.0001),"job":game.job,"weapon":game.weapon,
+		"hp":int(p["hp"]),"mp":int(p["mp"]),"hp_fill":snappedf(float(p["hp"])/game.max_hp,0.0001),
+		"mp_fill":snappedf(float(p["mp"])/game.max_mp,0.0001),"job":game.job,"weapon":game.weapon,
 		"buff":"%.1f"%(float(p["buff_ms"])/1000) if float(p["buff_ms"])>0 else "","cds":cds,
 		"room":[String(game.rules["rooms"][game.room_index]["name"]),alive,game.room_cleared],"route":route,
 		"overlay":[game.finished and not game.external_mode,game.victory,game.damage_taken,"%.1f"%(game.elapsed_ms/1000),game.paused,game.help_visible]}
+
+# --- kernel (F3~F5) ---
+func table():return game.table
+func move(name: String) -> Dictionary:return game.move_def(name)
+func object_count() -> int:return game.objects.size()
+func objects() -> Array:return game.objects
+func stuck(handle: Dictionary) -> float:return float(handle.get("stuck_ms",0))
+func spawn_monster(point: Vector2, kind := "goblin", chief := false) -> Dictionary:return game.spawn_enemy(point,chief,kind)
+func enemy_ani(handle: Dictionary) -> Array:return game.enemy_ani(handle)
+func player_ani() -> Array:return game.player_ani()
+func attack_power() -> float:return game.attack_power()
+func view_enemy_texture(handle: Dictionary) -> String:return String(game.view.enemy_actors[handle["id"]].bank["texture"])

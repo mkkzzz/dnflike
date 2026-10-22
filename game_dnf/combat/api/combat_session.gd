@@ -70,7 +70,7 @@ func read_view() -> Dictionary:
 		"room":game.room_index+1,"room_count":rooms.size(),"room_name":String(rooms[game.room_index]["name"]),
 		"hp":float(p["hp"]),"hp_max":game.max_hp,"mp":float(p["mp"]),"mp_max":game.max_mp,
 		"pos":Vector2(p["pos"]),"facing":int(p["facing"]),"job":game.job,"weapon":game.weapon,
-		"attack_damage":float(game.rules["moves"]["attack1"]["damage"])*game.damage_scale,
+		"attack_damage":game.attack_power(),
 		"cooldowns":Dictionary(p["cooldowns"]).duplicate(),"buff_ms":float(p["buff_ms"]),
 		"enemies":enemies,"alive_monsters":enemies.size(),"exit_target":exit_target,
 		"room_cleared":game.room_cleared,"finished":game.finished,"victory":game.victory,"paused":game.paused}
