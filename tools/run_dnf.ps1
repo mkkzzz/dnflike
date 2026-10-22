@@ -42,6 +42,10 @@ if ($importExit -ne 0 -or ($importOutput -match 'SCRIPT ERROR|ERROR:')) {
     throw "New project import failed."
 }
 if ($Editor) {& $GodotPath --path $gamePath --editor; exit $LASTEXITCODE}
+if ($Test) {
+    & python (Join-Path $PSScriptRoot "check_dnf_deps.py")
+    if ($LASTEXITCODE -ne 0) {throw "Module dependency check failed; see docs/design/29_新版工程框架.md."}
+}
 $runArgs=@("--path",$gamePath)
 if ($Test) {
     $runArgs+=@("--fixed-fps","60","--quit-after","3500")
