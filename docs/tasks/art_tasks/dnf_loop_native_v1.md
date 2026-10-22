@@ -4,12 +4,12 @@
 
 | 字段 | 内容 |
 |---|---|
-| task_id / revision | dnf_loop_native_v1 / 06；HUD/品质详情/血蓝悬停与背包页签底栏/武器槽八项精修 |
-| asset_id | scene.town.elvengard、actor.npc.linus、actor.npc.danjin、ui.loop.hud/inventory/shop/quest/departure/result |
+| task_id / revision | dnf_loop_native_v1 / 07；固定1080p与GM调试面板，复用06原UI导出，无新增图片 |
+| asset_id | scene.town.elvengard、actor.npc.linus、actor.npc.danjin、ui.loop.hud/inventory/shop/quest/departure/result/debug |
 | asset_type / workflow | 原资源只读提取、原UI组件拼装；14文档H/F路线，不调用生图 |
 | style_profile / theme_pack | 原版DNF像素资源；用户本轮明确要求使用原图，禁用临时色块 |
 | owner / integration_owner | ws2；其它区自行接收，不代填其状态 |
-| lifecycle | 已发布；首版已被用户退回，本轮见[八项返修](../../reports/ws2/2026-10/2026-10-22_HUD品质与背包八项返修.md)，原图与旧版证据保留，原版一致性待用户复核 |
+| lifecycle | 已发布；本轮见[1080p与GM](../../reports/ws2/2026-10/2026-10-22_固定1080p与GM调试面板.md)，前轮[八项返修](../../reports/ws2/2026-10/2026-10-22_HUD品质与背包八项返修.md)与原图证据保留，原版一致性待用户复核 |
 | gameplay_purpose | 走动城镇、NPC委托/购买、背包/装备、出征、胜负结算、回城与成长 |
 
 本轮沿用用户已指定的原素材路线，不生成或补画新人物。原图复用不等于完整还原原版布局、规则和数值。
@@ -41,6 +41,7 @@
 | 出征 | WorldMap/granfloris.img 800×600、SelectDungeonSlot/granfloris原图卡、SelectDungeon02_cn中文组件 | 全屏羊皮地图、卡片选中框、普通级、原冒险按钮；未开放卡片明示不可进入 |
 | 结算 | Interface2/reward_ver2.0/reward_ver2.img原底图800×600、卡牌153×97与确认按钮；NewResult原评级 | 实际统计、四张卡片/鼠标翻开/确认回城；奖励仅展示已结算收益，不冒充原版随机翻牌规则 |
 | 物品 | 原katana图标、ptn_hplowest.stk指向的药剂图标 | 语义ID固定；两把试炼刀复用同一katana角色外观，尚无逐装备外观 |
+| 固定输出/GM | 复用WindowCommon原窗/按钮、Global说明底板与msjh字体，原图字节不变 | 1920×1080固定输出；800×600内容1.8倍居中、两侧各240px黑边；P面板696×514，4列6行按钮、原底板命令输入/日志，详见[记录](../../reports/ws2/2026-10/2026-10-22_固定1080p与GM调试面板.md) |
 | 字体 | 原Fonts/msjh.ttf | 原字体动态中文；原图韩文标题/负重字区先清理，再放中文 |
 
 本入口逻辑800×600、CANVAS_ITEMS按窗口分辨率绘制文字；场景原像素nearest/整数缩放。菜单选800×600或1600×1200，默认按可用屏幕选择；独立战斗全局配置不改。

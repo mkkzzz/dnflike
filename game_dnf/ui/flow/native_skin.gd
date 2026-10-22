@@ -10,6 +10,9 @@ var tooltip_texture: Texture2D
 func _init(loader) -> void:
 	art = loader
 	font = load("res://assets_local/flow_v1/msjh.ttf")
+	# The fixed 1080p frame scales native UI by 1.8; rasterize its font at
+	# that density instead of scaling a low-resolution glyph atlas.
+	(font as FontFile).oversampling = 1.8
 	# Opaque native grain and native border fragments, tiled without scaling.
 	# Do not tile the complete description-board gradient: it creates stripes.
 	panel_texture = ImageTexture.create_from_image(Image.load_from_file(ProjectSettings.globalize_path("res://assets_local/flow_v1/panel.png")))

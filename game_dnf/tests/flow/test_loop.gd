@@ -58,7 +58,7 @@ func click_text(text: String) -> bool:
 func click_control(node: Control) -> void:
 	# Viewport-local mouse events exercise GUI hit testing and button dispatch.
 	var event := InputEventMouseButton.new()
-	event.position = node.get_global_rect().get_center()
+	event.position = node.get_global_transform_with_canvas() * (node.size / 2)
 	event.button_index = MOUSE_BUTTON_LEFT
 	event.pressed = true
 	get_viewport().push_input(event, true)
@@ -68,7 +68,7 @@ func click_control(node: Control) -> void:
 
 func hover_control(node: Control) -> void:
 	var motion := InputEventMouseMotion.new()
-	motion.position = node.get_global_rect().get_center()
+	motion.position = node.get_global_transform_with_canvas() * (node.size / 2)
 	get_viewport().push_input(motion, true)
 	await ticks(3)
 
@@ -94,14 +94,13 @@ func check_item_grid(name: String, columns: int, rows: int) -> void:
 	if not capture:return
 	await RenderingServer.frame_post_draw
 	var shot := get_viewport().get_texture().get_image()
-	var factor := float(shot.get_width()) / 800.0
 	var source: Image = game.skin.texture("inventory_grid").get_image()
 	var points := [Vector2i(0, 16), Vector2i(16, 0), Vector2i(columns * 32, 16), Vector2i(16, rows * 32)]
 	var intact := true
 	for point: Vector2i in points:
 		var source_y := point.y % 128 if point.y < rows * 32 else ((rows - 1) % 4 + 1) * 32
 		var expected := source.get_pixel(16 + point.x, 174 + source_y)
-		var at: Vector2 = (grid.global_position + Vector2(point)) * factor
+		var at: Vector2 = grid.get_global_transform_with_canvas() * (Vector2(point) + Vector2(0.5, 0.5))
 		if not shot.get_pixel(int(at.x), int(at.y)).is_equal_approx(expected):intact = false
 	check(intact, "rendered native grid retains all four borders: " + name)
 
@@ -176,7 +175,7 @@ func run() -> void:
 			check(label.z_index > 0, "skill key stays above its icon: " + label.text)
 	check(hotkeys == ["A", "S", "D", "F", "G", "H"], "HUD shows ASDFGH without basic ZXC actions")
 	check(not game.skill_views.has("upper"), "basic upper attack is absent from skill slots")
-	check(game.get_window().content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS, "dynamic UI renders at window resolution")
+	check(game.get_window().content_scale_mode == Window.CONTENT_SCALE_MODE_VIEWPORT and game.get_window().content_scale_size == Vector2i(1920, 1080), "fixed 1080p output keeps the original layout transform")
 	var percentages := false
 	for label in game.hud.find_children("*", "Label", true, false):
 		if "%" in label.text:percentages = true
@@ -188,15 +187,9 @@ func run() -> void:
 	await frame("01_town")
 	if capture:
 		var shot: Image = get_viewport().get_texture().get_image()
-		check(shot.get_size() == Vector2i(1600, 1200), "2x capture contains physical-resolution UI")
-		var clear: Color = ProjectSettings.get_setting("rendering/environment/defaults/default_clear_color")
-		check(not shot.get_pixel(800, 1060).is_equal_approx(clear), "transparent HUD has original ground underneath")
-		game.get_window().size = Vector2i(800, 600)
-		await ticks(4)
-		await frame("01c_native_1x")
-		check(get_viewport().get_texture().get_image().get_size() == Vector2i(800, 600), "1x capture preserves native dimensions")
-		game.get_window().size = Vector2i(1600, 1200)
-		await ticks(4)
+		check(shot.get_size() == Vector2i(1920, 1080), "capture is exactly 1920x1080")
+		check(not shot.get_pixel(960, 954).is_equal_approx(Color.BLACK), "transparent HUD has original ground underneath")
+		check(shot.get_pixel(120, 400).is_equal_approx(Color.BLACK) and shot.get_pixel(1800, 400).is_equal_approx(Color.BLACK), "original 4:3 content stays within black pillarboxes")
 	await hover_control(game.hp_bar)
 	check(is_instance_valid(game.windows.tip) and game.windows.tip.has_meta("gauge"), "actual HP hover opens native value detail")
 	if is_instance_valid(game.windows.tip):check(game.windows.tip.get_node("gauge_value").text == game.hp_bar.get_meta("value_text"), "HP detail shows current and maximum values")
@@ -211,7 +204,8 @@ func run() -> void:
 		var native_hud: Image = game.skin.texture("hud").get_image()
 		var intact := true
 		for point in [Vector2i(83, 62), Vector2i(98, 48), Vector2i(536, 62), Vector2i(550, 48), Vector2i(566, 62)]:
-			if not hud_shot.get_pixel(point.x * 2, (point.y + 508) * 2).is_equal_approx(native_hud.get_pixel(point.x, point.y)):intact = false
+			var output := Vector2i((Vector2(point.x, point.y + 508) + Vector2(0.5, 0.5)) * 1.8 + Vector2(240, 0))
+			if not hud_shot.get_pixel(output.x, output.y).is_equal_approx(native_hud.get_pixel(point.x, point.y)):intact = false
 		check(intact, "HUD item and skill icons preserve the baked top and side borders")
 	game.town.ground = Vector2(1120, 230)
 	await ticks(3)
@@ -277,7 +271,7 @@ func run() -> void:
 		if node.get_meta("item_name", "") == "练习太刀":item_hit = node
 	if is_instance_valid(item_hit):
 		var motion := InputEventMouseMotion.new()
-		motion.position = item_hit.get_global_rect().get_center()
+		motion.position = item_hit.get_global_transform_with_canvas() * (item_hit.size / 2)
 		get_viewport().push_input(motion, true)
 		await ticks(3)
 		check(is_instance_valid(game.windows.tip), "hover creates native item detail panel")
@@ -285,8 +279,7 @@ func run() -> void:
 			await RenderingServer.frame_post_draw
 			var shot := get_viewport().get_texture().get_image()
 			var icon := item_hit.get_node("item_icon") as TextureRect
-			var factor := float(shot.get_width()) / 800.0
-			var at: Vector2 = (icon.global_position + Vector2(14, 14)) * factor
+			var at: Vector2 = icon.get_global_transform_with_canvas() * Vector2(14.5, 14.5)
 			check(shot.get_pixel(int(at.x), int(at.y)).is_equal_approx(icon.texture.get_image().get_pixel(14, 14)), "hover keeps the original item icon visible without button fill")
 		if is_instance_valid(game.windows.tip):
 			check(game.windows.tip.texture == game.skin.tooltip_texture, "item detail uses original translucent Global frame")
@@ -418,6 +411,12 @@ func run() -> void:
 	game.show_overlay("")
 	await ticks(2)
 	await frame("12_return_town")
+	var debug_tests = load("res://tests/flow/test_debug.gd").new()
+	debug_tests.game = game
+	debug_tests.host = self
+	add_child(debug_tests)
+	await debug_tests.run()
+	debug_tests.queue_free()
 	# Dummy audio still releases its final Ogg playback on the mixer thread. At
 	# fixed-fps headless speed the last run can start/stop in < one audio block.
 	# Give that worker one bounded wall-clock drain before engine shutdown.

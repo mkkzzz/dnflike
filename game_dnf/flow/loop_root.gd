@@ -8,6 +8,7 @@ const Windows = preload("res://ui/flow/native_windows.gd")
 const CombatSession = preload("res://combat/api/combat_session.gd")
 const Catalog = preload("res://items/catalog.gd")
 const DisplaySettings = preload("res://ui/flow/display_settings.gd")
+const DebugPanel = preload("res://ui/flow/debug_panel.gd")
 var session = Session.new()
 var store = Store.new()
 var town
@@ -31,24 +32,36 @@ var test_mode := false
 var save_failed := false
 var skill_views: Dictionary = {}
 var display_settings = DisplaySettings.new()
+var debug_panel
+var world_clip: Control
 
 func _ready() -> void:
 	test_mode = "--loop-test" in OS.get_cmdline_user_args()
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	display_settings.setup(get_window(), test_mode)
+	transform = display_settings.content_transform()
+	RenderingServer.set_default_clear_color(Color.BLACK)
 	get_window().title = "艾尔文防线 · 冒险循环"
 	if test_mode:store.path = "res://../temp/loop_tests/ui_profile.json"
 	else:
 		store.read_into(session)
 	town = Town.new()
 	town.position.y = 28
-	add_child(town)
+	world_clip = Control.new()
+	world_clip.size = Vector2(800, 600)
+	world_clip.clip_contents = true
+	world_clip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(world_clip)
+	world_clip.add_child(town)
 	town.interact.connect(func(target: String): show_overlay("npc" if target == "linus" else "dungeon"))
 	skin = NativeSkin.new(town.loader)
 	windows = Windows.new(self)
 	var layer := CanvasLayer.new()
+	layer.transform = display_settings.content_transform()
 	add_child(layer)
 	ui = Control.new()
+	ui.size = Vector2(800, 600)
+	ui.clip_contents = true
 	ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(ui)
 	build_hud()
@@ -59,6 +72,9 @@ func _ready() -> void:
 	toast_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	toast_text = skin.label(toast_panel, "", Vector2(14, 5), 12)
 	toast_panel.hide()
+	debug_panel = DebugPanel.new()
+	ui.add_child(debug_panel)
+	debug_panel.setup(self)
 	if session.state == "result":show_overlay("result")
 	else:notice("已从备份恢复存档 · 艾尔文防线" if store.recovered else "艾尔文防线 · 方向键移动，靠近林纳斯按 E")
 	if test_mode:
@@ -166,19 +182,28 @@ func _process(delta: float) -> void:
 		var counter: Label = skill_views[id]["counter"]
 		view.modulate = Color("777777") if remaining > 0 else Color.WHITE
 		counter.text = "%.1f" % remaining if remaining > 0 else ""
-	town.enabled = overlay == "" and session.state == "town"
+	town.enabled = overlay == "" and session.state == "town" and not debug_is_open()
+	debug_panel.refresh_status()
 	if notification_seconds > 0:
 		notification_seconds -= delta
 		toast_text.text = skin.chinese(notification)
 		toast_panel.visible = notification_seconds > 0 and overlay == ""
-	if is_instance_valid(battle) and overlay == "" and combat.read_view()["paused"]:
+	if is_instance_valid(battle) and overlay == "" and not debug_is_open() and combat.read_view()["paused"]:
 		show_overlay("menu")
 
 func _input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.is_pressed() or event.is_echo():return
 	var key := int(event.physical_keycode if event.physical_keycode else event.keycode)
+	if key == KEY_P and not debug_panel.is_typing():
+		set_debug_open(not debug_is_open())
+		get_viewport().set_input_as_handled()
+		return
+	if key == KEY_ESCAPE and debug_is_open():
+		set_debug_open(false)
+		get_viewport().set_input_as_handled()
+		return
 	if key == KEY_F3:
-		display_settings.cycle_window_size()
+		notice(display_settings.description())
 	elif key == KEY_F11:
 		display_settings.toggle_fullscreen()
 	else:return
@@ -187,6 +212,7 @@ func _input(event: InputEvent) -> void:
 	notice(display_settings.description())
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if debug_is_open():return
 	if not event.is_pressed() or event.is_echo():return
 	var key := int(event.physical_keycode if event.physical_keycode else event.keycode)
 	match key:
@@ -240,7 +266,7 @@ func show_overlay(which: String) -> void:
 		if child is Control:child.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		child.queue_free()
 	town.enabled = which == "" and session.state == "town"
-	if is_instance_valid(battle):combat.set_paused(which != "" or session.state != "battle")
+	sync_debug_pause()
 	match which:
 		"npc":npc_panel()
 		"quest":quest_panel()
@@ -276,7 +302,7 @@ func depart() -> void:
 	show_overlay("")
 	town.hide()
 	combat = CombatSession.new()
-	battle = combat.mount(self)
+	battle = combat.mount(world_clip)
 	battle.position = Vector2(80, 100)
 	combat.room_combat_finished.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
 	combat.player_defeated.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
@@ -286,6 +312,7 @@ func depart() -> void:
 		"player": {"hp_max": stat["hp"], "mp_max": stat["mp"], "damage_multiplier": stat["damage_multiplier"], "weapon": stat["weapon"]},
 		"audio": {"muted": headless_test, "bgm_volume_db": -32}, "show_hud": false})
 	notice("密林试炼 · 清除怪物后前往出口")
+	sync_debug_pause()
 
 func on_combat_event(event: Dictionary) -> void:
 	var response: Dictionary = session.combat_event(event)
@@ -307,25 +334,34 @@ func return_town() -> void:
 	notice("回到艾尔文防线 · " + ("保存失败，请重试" if save_failed else "进度已保存"))
 
 func menu_panel() -> void:
-	var panel = title_panel("冒险菜单", Rect2(218, 88, 364, 360))
+	var panel = title_panel("冒险菜单", Rect2(218, 105, 364, 300))
 	skin.button(panel, "继续游戏", Vector2(132, 58), func(): show_overlay(""))
 	skin.button(panel, "保存进度", Vector2(132, 96), func(): save_profile())
 	if session.state == "battle":skin.button(panel, "撤退回城", Vector2(132, 134), func():
 		if act("flow.retreat"):show_overlay("result"))
-	skin.label(panel, "画面大小", Vector2(24, 178), 13, Color("f0d18a"))
-	for entry in [["800×600", Vector2i(800, 600)], ["1200×900", Vector2i(1200, 900)], ["1600×1200", Vector2i(1600, 1200)]]:
-		var size: Vector2i = entry[1]
-		var index: int = DisplaySettings.PRESETS.find(size)
-		skin.button(panel, entry[0], Vector2(24 + index * 107, 205), func():
-			display_settings.set_window_size(size)
-			show_overlay("menu")
-			notice(display_settings.description()))
-	skin.button(panel, "返回窗口" if display_settings.is_fullscreen() else "切换全屏", Vector2(24, 244), func():
+	skin.label(panel, "画面分辨率：1920×1080（固定）", Vector2(24, 177), 12, Color("f0d18a"))
+	skin.button(panel, "返回窗口" if display_settings.is_fullscreen() else "切换全屏", Vector2(24, 211), func():
 		display_settings.toggle_fullscreen()
 		show_overlay("menu"))
-	skin.label(panel, display_settings.description(), Vector2(24, 278), 11)
-	skin.label(panel, "保持原版比例 · 小屏自动适配", Vector2(24, 300), 11)
-	skin.label(panel, "中断的战斗重进后安全回城", Vector2(24, 324), 11)
+	skin.button(panel, "调试面板 P", Vector2(135, 211), func(): set_debug_open(true))
+	skin.label(panel, "F11 切换全屏 · 原版比例居中", Vector2(24, 255), 11)
+
+func debug_is_open() -> bool:
+	return is_instance_valid(debug_panel) and debug_panel.visible
+
+func set_debug_open(open: bool) -> void:
+	if not open:debug_panel.command_input.release_focus()
+	debug_panel.visible = open
+	if open:windows.hide_tooltip()
+	sync_debug_pause()
+	debug_panel.refresh_status()
+
+func sync_debug_pause() -> void:
+	var open := debug_is_open()
+	if is_instance_valid(town):town.enabled = not open and overlay == "" and session.state == "town"
+	if is_instance_valid(battle):
+		battle.set_process_input(not open)
+		combat.set_paused(open or overlay != "" or session.state != "battle")
 
 func use_potion() -> void:
 	if not is_instance_valid(battle) or session.state != "battle":notice("进入地下城后可使用恢复药剂"); return
