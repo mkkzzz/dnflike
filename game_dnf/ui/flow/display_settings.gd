@@ -13,6 +13,9 @@ func setup(target: Window, testing: bool) -> void:
 	window.content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
 	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
 	window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+	# Embedded Game View owns native size/position/flags. Its startup dimensions
+	# come from project.godot's window overrides, not these standalone controls.
+	if Engine.is_embedded_in_editor():return
 	window.unresizable = true
 	window.min_size = OUTPUT
 	window.max_size = OUTPUT
@@ -30,6 +33,7 @@ func is_fullscreen() -> bool:
 	return window.mode in [Window.MODE_FULLSCREEN, Window.MODE_EXCLUSIVE_FULLSCREEN]
 
 func toggle_fullscreen() -> void:
+	if Engine.is_embedded_in_editor():return
 	if is_fullscreen():
 		window.mode = Window.MODE_WINDOWED
 		window.size = OUTPUT
@@ -39,4 +43,5 @@ func toggle_fullscreen() -> void:
 		window.mode = Window.MODE_FULLSCREEN
 
 func description() -> String:
+	if Engine.is_embedded_in_editor():return "固定 1920×1080 · 编辑器预览"
 	return "固定 1920×1080 · F11 " + ("返回窗口" if is_fullscreen() else "全屏")

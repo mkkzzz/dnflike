@@ -340,11 +340,12 @@ func menu_panel() -> void:
 	if session.state == "battle":skin.button(panel, "撤退回城", Vector2(132, 134), func():
 		if act("flow.retreat"):show_overlay("result"))
 	skin.label(panel, "画面分辨率：1920×1080（固定）", Vector2(24, 177), 12, Color("f0d18a"))
-	skin.button(panel, "返回窗口" if display_settings.is_fullscreen() else "切换全屏", Vector2(24, 211), func():
+	var fullscreen: Button = skin.button(panel, "编辑器预览" if Engine.is_embedded_in_editor() else "返回窗口" if display_settings.is_fullscreen() else "切换全屏", Vector2(24, 211), func():
 		display_settings.toggle_fullscreen()
 		show_overlay("menu"))
+	fullscreen.disabled = Engine.is_embedded_in_editor()
 	skin.button(panel, "调试面板 P", Vector2(135, 211), func(): set_debug_open(true))
-	skin.label(panel, "F11 切换全屏 · 原版比例居中", Vector2(24, 255), 11)
+	skin.label(panel, "编辑器工具栏控制预览 · 原版比例居中" if Engine.is_embedded_in_editor() else "F11 切换全屏 · 原版比例居中", Vector2(24, 255), 11)
 
 func debug_is_open() -> bool:
 	return is_instance_valid(debug_panel) and debug_panel.visible
