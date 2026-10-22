@@ -1,0 +1,13 @@
+{
+  "title": "中文游戏实机截图",
+  "url": "https://dnf-chinese-gameplay-review.coralllama12.chatgpt.site",
+  "access": "owner-private",
+  "service": "Sites",
+  "project_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c",
+  "version_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c~appgver_a875fa429ae48191bd6f646af08cc32c",
+  "deployment_id": "appgdep_6ad9f5d53308819191033262b092a7bd",
+  "status": "succeeded",
+  "source_commit": "e2725c9e44471d41209cd1113450a27ca4d12ee1",
+  "screens": 8,
+  "note": "手机浏览器使用当前ChatGPT账号访问；原始截图与既有中文证据包相同。"
+}
