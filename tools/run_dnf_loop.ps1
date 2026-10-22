@@ -19,8 +19,12 @@ if ($BuildAssets) {
     if ($LASTEXITCODE -ne 0) {throw "Native loop art build failed."}
 } else {
     # Separate immutable pack needs no full library or original client installation.
-    & python (Join-Path $PSScriptRoot "sync_dnf_flow.py")
-    if ($LASTEXITCODE -ne 0) {throw "Native loop art sync failed."}
+    # Once installed, validate local version/hashes and play without network.
+    & python (Join-Path $PSScriptRoot "sync_dnf_flow.py") --check-installed
+    if ($LASTEXITCODE -ne 0) {
+        & python (Join-Path $PSScriptRoot "sync_dnf_flow.py")
+        if ($LASTEXITCODE -ne 0) {throw "Native loop art sync failed."}
+    }
 }
 $ErrorActionPreference="Continue"
 $importOutput=& $GodotPath --headless --path $gamePath --editor --import --quit 2>&1

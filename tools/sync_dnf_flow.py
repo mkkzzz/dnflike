@@ -12,6 +12,20 @@ from sync_dnf_references import safe_name
 LOCK = ROOT / 'game_dnf/flow_store.json'
 
 
+def installed_matches(lock: dict, project: Path) -> bool:
+    """Read-only launch check: an installed immutable pack needs no network."""
+    root = (project/'assets_local').resolve()
+    try:
+        stamp = json.loads((root/'.flow_install.json').read_text(encoding='utf8'))
+        hashes = stamp['files']
+        if stamp['version'] != lock['version'] or len(hashes) != sum(p['files'] for p in lock['packs']):return False
+        for name, expected in hashes.items():
+            file = root/name
+            if not file.resolve().is_relative_to(root) or not file.is_file() or digest(file) != expected:return False
+        return True
+    except (OSError, ValueError, KeyError, TypeError):return False
+
+
 def sync_flow(lock: dict, home: Path, project: Path, local_archives: Path | None = None, evidence=False) -> Path:
     if lock.get('schema') != 'dnflike_loop_store/1' or not safe_name(lock.get('version', '')):
         raise ValueError('Unsupported loop lock/version')
@@ -78,8 +92,14 @@ def main():
     parser.add_argument('--project', type=Path, default=ROOT / 'game_dnf')
     parser.add_argument('--local-archives', type=Path)
     parser.add_argument('--evidence', action='store_true')
+    parser.add_argument('--check-installed', action='store_true', help='Verify the current project pack without network')
     args = parser.parse_args()
-    sync_flow(json.loads(args.lock.read_text(encoding='utf-8')), args.home or cache_home(),
+    lock = json.loads(args.lock.read_text(encoding='utf-8'))
+    if args.check_installed:
+        if not installed_matches(lock, args.project.resolve()):raise SystemExit(1)
+        print('LOOP installed version and file hashes verified; offline launch ready')
+        return
+    sync_flow(lock, args.home or cache_home(),
               args.project.resolve(), args.local_archives, args.evidence)
 
 

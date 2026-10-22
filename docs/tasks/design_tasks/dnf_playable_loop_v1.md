@@ -30,7 +30,7 @@ LOOP-01与城镇材料调查可并行；LOOP-03先复用现版战斗验证生命
 
 - ws1已发布的export_dnf_map.py、native_map_loader.gd与map_preview由ws2承接后续世界接入，保留T2来源与诊断。
 - ws2新增流程根场景、session/profile/save/rewards等独立模块；main.gd交ws1战斗维护，桥接按接口交接，不并发修改其内部。
-- native_stage.gd、native_hud.gd、战斗配置与公共文档接入前登记占位；不要多区同时改同一主脚本。
+- native_stage.gd、ui/combat/、战斗配置与公共文档接入前登记占位；F1已删除native_hud，新的战斗表现归ws1，不要多区同时改同一主脚本。
 - 原版材质、字体、NPC和UI缺口通过共享资源流程补，不用聊天绝对路径或未经回放的新资产。
 - 抽取town/elvengard.twn、map/elvengard等链路只作候选调查，不预设已正确还原其规则。
 
@@ -52,4 +52,4 @@ LOOP-01与城镇材料调查可并行；LOOP-03先复用现版战斗验证生命
 | LOOP-06 | 本地原子保存/备份恢复/损坏校验，中断战斗安全回城 | 多角色/存档迁移和战斗断点续打 |
 | LOOP-07 | 已保存同入口真实渲染和连续操作检查，共享证据包 | 用户视觉试玩、原版同条件对照与连续录像 |
 
-现版main未改，临时桥只在flow/legacy_combat_port.gd隔离旧字段；不得把该桥接口误认作29的start_room/combat/api已交付。
+本区未改战斗main，临时桥只在flow/legacy_combat_port.gd隔离旧字段；ws1已发布F0/F1，尚待本区正式改接。新UI已接原组件/任务列表/物品详情/结算翻牌，见[返修记录](../../reports/ws2/2026-10/2026-10-22_原包UI组件返修.md)；当前翻牌只展示幂等结算后的固定收益，正式原版随机奖励仍在剩余项。

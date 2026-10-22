@@ -8,7 +8,7 @@ from PIL import Image
 from dnf_asset_store import ROOT, digest
 from dnf_asset_reader import parse, decode
 from export_dnf_map import Library
-from sync_dnf_flow import sync_flow
+from sync_dnf_flow import sync_flow, installed_matches
 from check_game_chinese import scan
 
 
@@ -65,8 +65,10 @@ class FlowAssets(unittest.TestCase):
             sync_flow(lock, base/'cache', project, base)
             self.assertEqual((target/info['path']).read_bytes(), content)
             self.assertEqual(stamp.read_text(), 'base stamp untouched')
+            self.assertTrue(installed_matches(lock, project))
             sync_flow(lock, base/'cache', project, base)
             (target/info['path']).write_bytes(b'local edit')
+            self.assertFalse(installed_matches(lock, project))
             with self.assertRaisesRegex(ValueError, 'preserved'):
                 sync_flow(lock, base/'cache', project, base)
             self.assertEqual((target/info['path']).read_bytes(), b'local edit')
