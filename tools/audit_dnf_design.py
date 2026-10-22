@@ -124,7 +124,8 @@ def animation_summary(path: str, row: tuple) -> dict:
     return result
 
 
-def audit(library: Path, client: Path | None = None) -> dict:
+def audit(library: Path, client: Path | None = None,
+          script_paths: list[str] | None = None) -> dict:
     lock = json.loads(LOCK.read_text(encoding='utf-8'))
     report = {'schema': 'dnf_design_evidence_audit/1', 'asset_version': lock['version'],
               'scope': 'archived_backup_not_verified_effective_runtime',
@@ -150,7 +151,8 @@ def audit(library: Path, client: Path | None = None) -> dict:
         content = config.execute("select content from files where path='stringtable.bin'").fetchone()[0]
         strings = Strings(content)
         report['strings'] = {'count': strings.count, 'encoding_policy': 'cp949_replace_as_existing_archive; localization_indirection_unresolved'}
-        for path in SAMPLES:
+        selected_paths = SAMPLES if script_paths is None else script_paths
+        for path in selected_paths:
             row = config.execute('select content,sha256,crc_ok from files where path=?', (path,)).fetchone()
             if row is None:
                 report['script_samples'].append({'path': path, 'error': 'absent'})
@@ -189,6 +191,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--library', type=Path)
     parser.add_argument('--client', type=Path, help='Optional client directory for PVF fingerprints only')
+    parser.add_argument('--script', action='append', dest='script_paths',
+                        help='Exact archived script path to decode; repeat for multiple. Defaults to baseline samples.')
     parser.add_argument('--output', type=Path, default=ROOT / 'temp/dnf_design_audit/audit.json')
     args = parser.parse_args()
     output = args.output.resolve()
@@ -196,7 +200,8 @@ def main() -> None:
         parser.error('Generated audit must be under this checkout temp directory')
     lock = json.loads(LOCK.read_text(encoding='utf-8'))
     library = args.library or cache_home() / lock['version'] / 'library_v1'
-    result = audit(library.resolve(), args.client.resolve() if args.client else None)
+    result = audit(library.resolve(), args.client.resolve() if args.client else None,
+                   args.script_paths)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + '\n', encoding='utf-8')
     print(json.dumps({'output': str(output), 'files': sum(result['files_by_extension'].values()),
