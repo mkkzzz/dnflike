@@ -16,6 +16,10 @@ const Characters = preload("res://save/characters.gd")
 const CharacterScreen = preload("res://ui/flow/character_screen.gd")
 const NumberWindows = preload("res://ui/flow/number_windows.gd")
 const QuestWindows = preload("res://ui/flow/quest_windows.gd")
+const InventoryTools = preload("res://ui/flow/inventory_tools.gd")
+const LootBridge = preload("res://loot/bridge.gd")
+var inventory_tools
+var loot_bridge
 var quest_windows
 var selected_dungeon := "lorien"
 var number_windows
@@ -77,6 +81,8 @@ func _ready() -> void:
 	windows = Windows.new(self)
 	number_windows = NumberWindows.new(self)
 	quest_windows = QuestWindows.new(self)
+	inventory_tools = InventoryTools.new(self)
+	loot_bridge = LootBridge.new();loot_bridge.setup(self);add_child(loot_bridge)
 	skill_catalog = SkillCatalog.new()
 	var layer := CanvasLayer.new()
 	layer.transform = display_settings.content_transform()
@@ -99,7 +105,9 @@ func _ready() -> void:
 	debug_panel.setup(self)
 	show_character_selection()
 	if test_mode:
-		var runner = load("res://tests/quests/test_chapter.gd" if "--quests-only" in OS.get_cmdline_user_args() else "res://tests/flow/test_loop.gd").new()
+		var runner_path: String="res://tests/quests/test_chapter.gd" if "--quests-only" in OS.get_cmdline_user_args() else "res://tests/flow/test_loop.gd"
+		if "--items-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_inventory_flow.gd"
+		var runner = load(runner_path).new()
 		runner.game = self
 		add_child(runner)
 
@@ -283,6 +291,7 @@ func save_profile() -> bool:
 
 func act(kind: String, payload: Dictionary = {}) -> bool:
 	if kind.begins_with("quest."):return quest_action(kind,payload)
+	if kind.begins_with("items.") or kind.begins_with("numbers.gear") or kind=="slots.move":return item_action(kind,payload)
 	var before_level := int(session.profile["level"])
 	var response: Dictionary = session.command(kind, payload)
 	if not response["ok"]:
@@ -293,6 +302,16 @@ func act(kind: String, payload: Dictionary = {}) -> bool:
 	save_profile()
 	if int(session.profile["level"])>before_level:notice("等级提升 · Lv.%d" % int(session.profile["level"]))
 	return true
+
+func item_action(kind: String, payload: Dictionary) -> bool:
+	if not character_active:return false
+	var candidate=Session.new()
+	candidate.profile=session.profile.duplicate(true);candidate.run=session.run.duplicate(true)
+	candidate.state=session.state;candidate.result=session.result.duplicate(true)
+	var response: Dictionary=candidate.command(kind,payload)
+	if not response.get("ok",false):notice(response.get("message","物品操作失败"));return false
+	if not store.write(candidate):save_failed=true;notice("物品变更未提交：存档写入失败，请重试");return false
+	session=candidate;save_failed=false;sync_number_changes(kind);return true
 
 func quest_action(kind: String, payload: Dictionary = {}) -> bool:
 	if not character_active:return false
@@ -421,7 +440,7 @@ func depart() -> void:
 func on_combat_event(event: Dictionary) -> void:
 	var before_level := int(session.profile["level"])
 	var response: Dictionary = session.combat_event(event)
-	if response["ok"] and event.get("type")=="combat.monster_defeated" and (int(response.get("amount",0))>0 or response.get("quest_changed",false)):
+	if response["ok"] and event.get("type")=="combat.monster_defeated" and (int(response.get("amount",0))>0 or response.get("quest_changed",false) or response.get("loot_changed",false)):
 		if int(session.profile["level"])>before_level:sync_number_changes("numbers.xp")
 		save_profile()
 	if response["ok"] and session.state == "result":
@@ -431,6 +450,10 @@ func on_combat_event(event: Dictionary) -> void:
 
 func result_panel() -> void:
 	windows.result()
+	if combat!=null:
+		var view: Dictionary=combat.read_view()
+		if not view.is_empty() and view["room_cleared"]:
+			skin.button(modal,"收取本房掉落",Vector2(320,460),loot_bridge.collect_room).name="collect_room_loot"
 
 func return_town() -> void:
 	if not act("flow.return"):return
@@ -555,9 +578,10 @@ func slot_texture(cell: Dictionary) -> Texture2D:
 func slot_hover(cell: Control) -> void:
 	if cell.cell.get("id", "") == "":return
 	if cell.cell["place"] == "skill":windows.skill_tip(cell.cell["id"], cell.get_global_rect())
-	else:windows.item_tip(cell.cell["id"], cell.get_global_rect(), cell.cell["place"] == "shop", cell.cell["place"] == "quick")
+	else:windows.item_tip(cell.cell["id"], cell.get_global_rect(), cell.cell["place"] == "shop", cell.cell["place"] == "quick",cell.cell.get("uid",""))
 
 func slot_pressed(cell: Control) -> void:
+	if cell.cell["place"] in ["bag","storage"]:inventory_tools.select(cell.cell)
 	match cell.cell["place"]:
 		"shop":windows.purchase_dialog(cell.cell["id"])
 		"quick":use_quick(int(cell.cell["index"]))
@@ -566,9 +590,9 @@ func slot_pressed(cell: Control) -> void:
 func slot_double_clicked(cell: Control) -> void:
 	var id: String = cell.cell.get("id", "")
 	if cell.cell["place"] == "equipment":
-		if act("items.unequip"):refresh_item_views()
+		if act("items.unequip",{"slot":cell.cell.get("slot","weapon")}):refresh_item_views()
 	elif cell.cell["place"] == "bag" and Catalog.ITEMS.get(id, {}).get("kind") == "weapon":
-		if act("items.equip", {"id":id}):refresh_item_views()
+		if act("items.equip", {"id":id,"uid":cell.cell.get("uid","")}):refresh_item_views()
 
 func can_drop_slot(source: Dictionary, target: Dictionary) -> bool:
 	if source.get("place") == "shop":return target.get("place") in ["bag", "quick", "equipment"] and Catalog.ITEMS.get(source.get("id"), {}).get("kind") == (target.get("category") if target.get("place") == "bag" else "weapon" if target.get("place") == "equipment" else "consumable")
@@ -604,8 +628,12 @@ func use_potion() -> void:
 	var snap: Dictionary = combat.read_view()
 	if float(snap["hp"]) >= float(snap["hp_max"]):notice("生命值已满"); return
 	if bool(snap["paused"]):notice("请关闭菜单后使用药剂"); return
-	if int(session.profile["inventory"].get("potion", 0)) < 1:notice("恢复药剂不足"); return
-	if combat.apply_effect({"kind": "heal", "amount": int(Catalog.ITEMS["potion"]["heal"])}):
-		session.consume_potion()
-		save_profile()
-		notice("使用恢复药剂 · HP +150")
+	var candidate=Session.new()
+	candidate.profile=session.profile.duplicate(true);candidate.run=session.run.duplicate(true)
+	candidate.state=session.state;candidate.result=session.result.duplicate(true)
+	var consumed: Dictionary=candidate.consume_potion()
+	if not consumed["ok"]:notice(consumed["message"]);return
+	if not store.write(candidate):save_failed=true;notice("药剂未使用：存档写入失败");return
+	session=candidate;save_failed=false
+	combat.apply_effect({"kind":"heal","amount":int(consumed["heal"])})
+	notice("使用恢复药剂 · HP +150")

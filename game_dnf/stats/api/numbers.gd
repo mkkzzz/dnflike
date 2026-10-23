@@ -200,7 +200,7 @@ static func valid(profile: Dictionary) -> bool:
 		counts[gear["definition"]] = int(counts.get(gear["definition"],0))+1
 	if int(profile["next_gear"]) <= max_serial:return false
 	for id in ["iron_sword","forest_sword"]:
-		if int(counts.get(id,0)) != int(profile["inventory"].get(id,0)):return false
+		if not profile.has("item_state") and int(counts.get(id,0)) != int(profile["inventory"].get(id,0)):return false
 	for slot in profile["equipment"]:
 		if slot not in cfg["equipment_slots"]:return false
 		var uid = profile["equipment"][slot]

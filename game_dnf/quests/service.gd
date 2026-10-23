@@ -143,6 +143,7 @@ func command(profile: Dictionary, kind: String, payload: Dictionary, context: Di
 			for item: String in q["consume"]:candidate["inventory"][item] -= int(q["consume"][item])
 			var outcome = grant.call(candidate, reward, tx)
 			if not outcome is Dictionary or not outcome.get("ok", false):return fail(outcome.get("message", "任务奖励提交失败") if outcome is Dictionary else "任务奖励提交失败")
+			ledger=candidate["quest_state"] # Reward services may replace a transactional candidate.
 			ledger["entries"][id]["state"] = "completed"
 			ledger["transactions"][tx] = true
 			ledger["tracked"].erase(id)
@@ -182,6 +183,7 @@ static func transaction_id(id: String) -> String:
 	return "quest:" + id + ":once"
 
 static func stock(profile: Dictionary, item: String) -> int:
+	if profile.has("item_state"):return preload("res://items/inventory.gd").stock(profile,item)
 	return maxi(0, int(profile.get("inventory", {}).get(item, 0)) - (1 if profile.get("equipped") == item else 0))
 
 static func fail(message: String) -> Dictionary:

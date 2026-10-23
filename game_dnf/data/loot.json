@@ -1,0 +1,8 @@
+{
+  "revision": 1,
+  "note": "E-ADAPT functional defaults; rates and rewards are not original DNF balance.",
+  "pickup_range": [90, 32],
+  "enabled_dungeons": ["lorien", "lorien_inside"],
+  "normal": [{"id":"gold", "chance":100, "min":5, "max":12}, {"id":"potion", "chance":35, "min":1, "max":2}, {"id":"forest_sword", "chance":8, "min":1, "max":1}],
+  "boss": [{"id":"gold", "chance":100, "min":30, "max":50}, {"id":"potion", "chance":100, "min":2, "max":3}, {"id":"forest_sword", "chance":100, "min":1, "max":1}]
+}

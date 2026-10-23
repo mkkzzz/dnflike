@@ -2,6 +2,12 @@
   "schema_version": 1,
   "path_base": "repository_root",
   "external_resource_stores": {
+    "dnf_items_v1": {
+      "lock": "game_dnf/items_store.json",
+      "guide": "docs/tasks/art_tasks/dnf_items_native_v1.md",
+      "storage": "Independent immutable private release; assets_local/items_v1 consumption copy",
+      "source": "Original native 28x28 equipment icons; E-ADAPT sample identities and inventory layout"
+    },
     "dnf_native_v1": {
       "lock": "game_dnf/asset_store.json",
       "guide": "docs/design/23_DNF资源共享与工作区接入.md",

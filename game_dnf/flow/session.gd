@@ -4,6 +4,8 @@ const CATALOG := preload("res://items/catalog.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
 const Layout = preload("res://items/slot_layout.gd")
 const Quests = preload("res://quests/service.gd")
+const Inventory = preload("res://items/inventory.gd")
+const Loot = preload("res://loot/service.gd")
 var quests = Quests.new()
 var dungeons: Dictionary = {}
 var profile: Dictionary = {}
@@ -17,6 +19,7 @@ func _init() -> void:
 		"quest": "available", "clears": 0, "next_run": 1, "settled": {}}
 	Layout.normalize(profile, CATALOG.ITEMS)
 	Numbers.normalize(profile)
+	Inventory.initialize(profile)
 	quests.initialize(profile)
 	profile["town_location"] = "seria_room"
 	dungeons = JSON.parse_string(FileAccess.get_file_as_string("res://data/dungeons.json"))["dungeons"]
@@ -44,7 +47,18 @@ func grant_quest_reward(candidate: Dictionary, reward: Dictionary, tx: String) -
 	var outcome: Dictionary = Numbers.Growth.grant(candidate,int(reward["xp"]),tx,Numbers.config()["progression"])
 	if not outcome.get("ok",false):return outcome
 	candidate["gold"] += int(reward["gold"])
-	for item: String in reward["items"]:candidate["inventory"][item] = int(candidate["inventory"].get(item,0))+int(reward["items"][item])
+	# Quest consumption is expressed through the old count view. Apply that delta
+	# to unlocked backpack instances before awarding anything to the candidate.
+	var requested: Dictionary=candidate["inventory"].duplicate(true)
+	Inventory.sync(candidate)
+	for item: String in requested:
+		var used:=int(candidate["inventory"].get(item,0))-int(requested[item])
+		if used>0:
+			var consumed:=Inventory.consume(candidate,item,used)
+			if not consumed["ok"]:return consumed
+	for item: String in reward["items"]:
+		var given:=Inventory.give(candidate,item,int(reward["items"][item]))
+		if not given["ok"]:return given
 	Numbers.normalize(candidate)
 	Layout.normalize(candidate,CATALOG.ITEMS)
 	return {"ok":true}
@@ -72,6 +86,19 @@ func xp_needed() -> int:
 
 func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 	Numbers.normalize(profile)
+	if kind in ["items.equip","items.unequip","items.split","items.sort","items.lock","items.deposit","items.withdraw","items.recover"]:
+		if state!="town" and kind in ["items.equip","items.unequip","items.deposit","items.withdraw","items.recover"]:return reject("请回城后操作")
+		return Inventory.command(profile,kind,payload)
+	if kind=="numbers.gear_give":
+		if not Numbers.config()["equipment"].has(payload.get("id","")):return reject("装备定义不存在")
+		if not Numbers.whole(payload.get("quality",50),0,100):return reject("品质范围为 0 至 100")
+		var serial:=int(profile["next_gear"])
+		var response:=Inventory.give(profile,String(payload.get("id","")),1,int(payload.get("quality",50)))
+		if response["ok"]:response["uid"]="gear_%d" % serial
+		return response
+	if kind in ["numbers.gear_equip","numbers.gear_unequip"]:
+		if state!="town":return reject("请回城后调整装备")
+		return Inventory.command(profile,"items.equip" if kind=="numbers.gear_equip" else "items.unequip",payload)
 	if kind.begins_with("numbers."):
 		if state != "town" and kind in ["numbers.gear_equip","numbers.gear_unequip","numbers.reinforce","numbers.enchant"]:return reject("请回城后调整装备")
 		var response: Dictionary = Numbers.command(profile,kind,payload)
@@ -96,8 +123,9 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 			if not count is int or count < 1 or count > 999:return reject("购买数量无效")
 			var price: int = int(CATALOG.ITEMS[id]["price"]) * int(count)
 			if int(profile["gold"]) < price:return reject("金币不足")
+			var given:=Inventory.give(profile,id,count)
+			if not given["ok"]:return given
 			profile["gold"] -= price
-			add_item(id, count)
 		"items.equip":
 			if state != "town":return reject("请回城后更换装备")
 			var id := String(payload.get("id", ""))
@@ -142,21 +170,20 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 
 func consume_potion() -> Dictionary:
 	if state != "battle" or int(profile["inventory"].get("potion", 0)) < 1:return reject("没有可用的恢复药剂")
-	profile["inventory"]["potion"] -= 1
+	var consumed:=Inventory.consume(profile,"potion",1)
+	if not consumed["ok"]:return consumed
 	return {"ok": true, "heal": int(CATALOG.ITEMS["potion"]["heal"])}
 
 func add_item(id: String, count: int) -> void:
-	# Fixed v1 catalog stacks by semantic ID; no finite-slot discard path.
-	if count <= 0 or not CATALOG.ITEMS.has(id):return
-	profile["inventory"][id] = int(profile["inventory"].get(id, 0)) + count
-	Numbers.normalize(profile)
-	Layout.normalize(profile, CATALOG.ITEMS)
+	# Guaranteed settlement rewards and legacy migration use recoverable overflow.
+	Inventory.give(profile,id,count,50,true)
 
 func combat_event(event: Dictionary) -> Dictionary:
 	if state != "battle" or event.get("run_id") != run.get("id"):return reject("忽略过期战斗事件")
 	match event.get("type", ""):
 		"combat.player_defeated":return finish_run(false, event.get("stats", {}))
 		"combat.monster_defeated":
+			var loot_changed:=Loot.generate(run,event)
 			var quest_changed := false
 			if event.has("event_id"):
 				var quest_event := event.duplicate(true)
@@ -169,8 +196,9 @@ func combat_event(event: Dictionary) -> Dictionary:
 			if amount>0:
 				var reward: Dictionary=Numbers.Growth.grant(profile,amount,"kill:"+String(run["id"])+":"+str(event.get("event_id",event.get("entity_id",-1))),Numbers.config()["progression"])
 				reward["quest_changed"]=quest_changed
+				reward["loot_changed"]=loot_changed
 				return reward
-			return {"ok":true,"quest_changed":quest_changed}
+			return {"ok":true,"quest_changed":quest_changed,"loot_changed":loot_changed}
 		"combat.room_combat_finished":
 			if bool(event.get("final_room", false)):return finish_run(true, event.get("stats", {}))
 	return {"ok": true}
@@ -194,15 +222,15 @@ func finish_run(won: bool, details: Dictionary) -> Dictionary:
 	return {"ok": true}
 
 func serialize() -> Dictionary:
-	return {"schema": "dnf_loop_save/2", "profile": profile.duplicate(true), "state": state,
+	return {"schema": "dnf_loop_save/3", "profile": profile.duplicate(true), "state": state,
 		"run": run.duplicate(true), "result": result.duplicate(true)}
 
 func restore(data: Dictionary) -> bool:
-	if data.get("schema") not in ["dnf_loop_save/1","dnf_loop_save/2"] or not data.get("profile") is Dictionary:return false
+	if data.get("schema") not in ["dnf_loop_save/1","dnf_loop_save/2","dnf_loop_save/3"] or not data.get("profile") is Dictionary:return false
 	var p: Dictionary = data["profile"].duplicate(true)
 	var legacy := not p.has("numbers_revision")
 	for k: String in profile:
-		if k in ["quest_state", "town_location"]:continue
+		if k in ["quest_state", "town_location", "item_state"]:continue
 		if k in ["bag_layout", "quick_items", "skill_slots", "difficulty", "attack_element"]:continue
 		if legacy and k in ["numbers_revision","growtype","sp_bonus","skills","skill_purchases","xp_transactions","gear","next_gear","equipment","stat_modifiers","attack_element"]:continue
 		if not p.has(k) or typeof(p[k]) != typeof(profile[k]) and not (p[k] is float and profile[k] is int):return false
@@ -215,6 +243,7 @@ func restore(data: Dictionary) -> bool:
 		if float(p[key]) < (1 if key in ["level", "next_run"] else 0) or float(p[key]) != floorf(float(p[key])):return false
 	if p["equipped"] != "" and int(p["inventory"].get(p["equipped"], 0)) < 1:return false
 	if not data.get("run", {}) is Dictionary or not data.get("result", {}) is Dictionary:return false
+	if not Loot.valid(data.get("run",{})):return false
 	for id in p["settled"]:
 		if not id is String or not p["settled"][id] is bool or not p["settled"][id]:return false
 	if data.get("state") == "result":
@@ -226,6 +255,9 @@ func restore(data: Dictionary) -> bool:
 	if legacy:Numbers.normalize(p)
 	if not p.has("attack_element"):p["attack_element"] = "none"
 	if not Numbers.valid(p):return false
+	if p.has("item_state"):
+		if not Inventory.valid(p):return false
+	else:Inventory.initialize(p)
 	quests.initialize(p,true)
 	if not quests.valid(p):return false
 	quests.canonicalize(p)

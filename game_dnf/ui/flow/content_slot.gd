@@ -36,10 +36,13 @@ func refresh_quantity() -> void:
 	if not is_instance_valid(amount):return
 	var id: String = cell["id"]
 	var count := int(cell.get("count", game.session.profile["inventory"].get(id, 0)))
-	if cell["place"] == "bag":count = game.session.Layout.available(game.session.profile, id)
+	if cell.has("uid") and cell["uid"]!="":count=game.session.Inventory.count(game.session.profile,cell["uid"])
+	elif cell["place"] == "bag":count = game.session.Layout.available(game.session.profile, id)
 	amount.text = str(count) if game.Catalog.ITEMS[id]["kind"] == "consumable" or count > 1 else ""
 	if cell["place"] in ["equipment", "shop"]:amount.text = ""
 	if cell["place"] == "quick":image_view.modulate = Color.WHITE if count > 0 else Color("666666")
+	if cell.get("uid","")!="" and game.session.Inventory.locked(game.session.profile,cell["uid"]):
+		amount.text="锁";amount.modulate=Color("ffdd85")
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and event.double_click:

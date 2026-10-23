@@ -7,6 +7,7 @@ static func create(profile: Dictionary, definition: String, quality := 50, reinf
 	return uid
 
 static func normalize(profile: Dictionary, definitions: Dictionary, counts: Dictionary) -> void:
+	if profile.has("item_state"):return # Instance ownership is managed by the inventory ledger.
 	for key: String in definitions:
 		if not counts.has(key):continue
 		var matches: Array = []

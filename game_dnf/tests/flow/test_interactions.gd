@@ -58,6 +58,7 @@ func run() -> void:
 	var original = game.session
 	var path: String = game.store.path
 	game.session = game.Session.new()
+	game.town.set_location("elvengard",Vector2(445,222))
 	game.store.path = "res://../temp/loop_tests/interaction_profile.json"
 	game.build_hotbars()
 	game.show_overlay("npc")
@@ -192,6 +193,7 @@ func run() -> void:
 	var saved = game.Session.new()
 	host.check(saved.restore(game.session.serialize()) and saved.profile["bag_layout"] == game.session.profile["bag_layout"] and saved.profile["skill_slots"] == game.session.profile["skill_slots"], "save roundtrip retains dragged cells and skill bindings")
 	var legacy: Dictionary = game.session.serialize()
+	legacy["profile"].erase("item_state")
 	for key in ["bag_layout", "quick_items", "skill_slots", "difficulty"]:legacy["profile"].erase(key)
 	host.check(saved.restore(legacy) and saved.profile["skill_slots"] == game.session.Layout.DEFAULT_SKILLS, "old saves migrate to default layouts")
 	game.depart()
@@ -236,6 +238,7 @@ func compact_and_motion() -> void:
 	await host.frame("21_inventory_six_rows")
 	var old: Dictionary = game.session.serialize()
 	for category in old["profile"]["bag_layout"]:old["profile"]["bag_layout"][category].resize(32)
+	old["profile"].erase("item_state")
 	var migrated = game.Session.new()
 	host.check(migrated.restore(old) and migrated.profile["bag_layout"]["weapon"].size() == 48, "previous 32-cell save migrates into six rows")
 	game.show_overlay("dungeon")

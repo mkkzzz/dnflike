@@ -3,11 +3,15 @@ extends RefCounted
 const BAG_CAPACITY := 48
 const KINDS := ["weapon", "consumable", "material", "profession", "quest"]
 const DEFAULT_SKILLS := ["draw", "triple", "rage_slash", "buff", "guard", ""]
+const Inventory = preload("res://items/inventory.gd")
 static func normalize(profile: Dictionary, catalog: Dictionary) -> void:
 	if not profile.has("bag_layout"):profile["bag_layout"] = {}
 	if not profile.has("quick_items"):profile["quick_items"] = ["potion", "", "", "", "", ""]
 	if not profile.has("skill_slots"):profile["skill_slots"] = DEFAULT_SKILLS.duplicate()
 	if not profile.has("difficulty"):profile["difficulty"] = "normal"
+	if profile.has("item_state"):
+		Inventory.sync(profile)
+		return
 	for kind: String in KINDS:
 		var cells: Array = profile["bag_layout"].get(kind, [])
 		cells.resize(BAG_CAPACITY)
@@ -47,6 +51,7 @@ static func valid(p: Dictionary, catalog: Dictionary) -> bool:
 
 static func move(p: Dictionary, catalog: Dictionary, source: Dictionary, target: Dictionary) -> bool:
 	normalize(p, catalog)
+	if p.has("item_state"):return Inventory.move(p,source,target)
 	var from: String = source.get("place", "")
 	var to: String = target.get("place", "")
 	var id: String = source.get("id", "")

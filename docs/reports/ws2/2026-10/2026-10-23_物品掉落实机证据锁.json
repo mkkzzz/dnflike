@@ -1,0 +1,16 @@
+{
+  "schema": "dnflike_evidence_store/1",
+  "version": "dnf-items-evidence-v1-20261023",
+  "tag": "dnf-items-evidence-v1-20261023",
+  "repository": "mkkzzz/dnflike-assets",
+  "packs": [
+    {
+      "name": "evidence-01.zip",
+      "kind": "evidence",
+      "bytes": 2535138,
+      "sha256": "dc94283c022f88b035842f8bf2fbacfa5b5ba79ebd74f125134dfcaa9f96cd8a",
+      "files": 7,
+      "unpacked_bytes": 3032876
+    }
+  ]
+}

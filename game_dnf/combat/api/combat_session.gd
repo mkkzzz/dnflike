@@ -139,7 +139,7 @@ func read_view() -> Dictionary:
 	return {"run_id":game.run_id,"room_id":game.room_id,"room_index":game.room_index,
 		"room":game.room_index+1,"room_count":rooms.size(),"room_name":String(rooms[game.room_index]["name"]),
 		"hp":float(p["hp"]),"hp_max":game.max_hp,"mp":float(p["mp"]),"mp_max":game.max_mp,
-		"pos":Vector2(p["pos"]),"facing":int(p["facing"]),"job":game.job,"weapon":game.weapon,
+		"pos":Vector2(p["pos"]),"camera_x":roundf(game.view.camera_x),"facing":int(p["facing"]),"job":game.job,"weapon":game.weapon,
 		"attack_damage":game.attack_power(),
 		"numbers":game.numeric_player.values.duplicate(true) if game.numeric_player != null else {},
 		"sources":game.numeric_player.sources.duplicate(true) if game.numeric_player != null else {},

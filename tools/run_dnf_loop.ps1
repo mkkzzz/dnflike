@@ -1,4 +1,4 @@
-param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly)
+param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly)
 $ErrorActionPreference="Stop"
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
@@ -33,6 +33,12 @@ if ($BuildAssets) {
     }
 }
 $ErrorActionPreference="Continue"
+# Item icons have an independent lock so town art releases remain independent.
+& python (Join-Path $PSScriptRoot "dnf_items_assets.py") sync --check-installed
+if ($LASTEXITCODE -ne 0) {
+    & python (Join-Path $PSScriptRoot "dnf_items_assets.py") sync
+    if ($LASTEXITCODE -ne 0) {throw "Original item icon sync failed."}
+}
 # Original combat inputs (ws1, doc 29 F2~F5): content pack + combat banks, built from the full library.
 & (Join-Path $PSScriptRoot "ensure_dnf_combat.ps1")
 $importOutput=& $GodotPath --headless --path $gamePath --editor --import --quit 2>&1
@@ -43,6 +49,9 @@ if ($importExit -ne 0 -or ($importOutput -match 'SCRIPT ERROR|ERROR:')) {
     throw "Loop project import failed."
 }
 if ($Test) {
+    $itemOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_inventory.gd 2>&1
+    $itemOutput | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($itemOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($itemOutput -match '\[ITEM_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Item regression failed."}
     $numericOutput=& $GodotPath --headless --path $gamePath --script res://tests/stats/test_numbers.gd 2>&1
     $numericOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($numericOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($numericOutput -match '\[NUMBERS_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Numeric regression failed."}
@@ -57,6 +66,7 @@ if ($Test) {
     $runArgs+=@("--","--loop-test")
     if ($NumbersOnly) {$runArgs+="--numbers-only"}
     if ($QuestsOnly) {$runArgs+="--quests-only"}
+    if ($ItemsOnly) {$runArgs+="--items-only"}
     if ($Capture) {$runArgs+="--capture"}
 }
 $ErrorActionPreference="Continue"

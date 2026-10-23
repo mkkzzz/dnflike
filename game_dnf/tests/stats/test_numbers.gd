@@ -81,6 +81,11 @@ func _initialize() -> void:
 	check(not loaded.restore(corrupt),"wrong equipment slot rejected")
 	var legacy: Dictionary = s.serialize()
 	legacy["schema"]="dnf_loop_save/1"
+	legacy["profile"].erase("item_state")
+	# Old numeric-only armor was outside the legacy count-based inventory.
+	legacy["profile"]["inventory"].erase("training_coat")
+	legacy["profile"]["inventory"].erase("training_necklace")
+	legacy["profile"]["bag_layout"]["weapon"]=Session.Inventory.cells()
 	for key in ["numbers_revision","growtype","sp_bonus","skills","skill_purchases","xp_transactions","gear","next_gear","equipment","stat_modifiers"]:legacy["profile"].erase(key)
 	check(loaded.restore(JSON.parse_string(JSON.stringify(legacy))),"legacy profile restores")
 	check(loaded.profile["gear"].size()==2 and loaded.profile["inventory"]["iron_sword"]==2,"legacy weapon counts migrate without losing duplicates")

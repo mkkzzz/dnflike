@@ -13,6 +13,7 @@ var purchase_count: SpinBox
 var shop_page := 0
 var skill_tip_id := ""
 var skill_tip_rect: Rect2
+var item_icons: Dictionary = {}
 
 func _init(root) -> void:
 	game = root
@@ -90,13 +91,16 @@ func quests() -> void:
 	skin.label(node, "委托记录", Vector2(23, 379), 11, Color("a59c88"))
 
 func item_texture(id: String) -> Texture2D:
+	if id in ["training_coat","training_necklace"]:
+		if item_icons.is_empty():item_icons=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/items_v1/manifest.json"))
+		return load("res://assets_local/items_v1/"+String(item_icons["images"][item_icons["items"][id]]["file"]))
 	return game.town.loader.texture(game.town.loader.data["ui"]["items"][id])
 
 func hide_tooltip() -> void:
 	if is_instance_valid(tip):tip.queue_free()
 	tip = null
 
-func item_tip(id: String, rect: Rect2, buying := false, attached := false) -> void:
+func item_tip(id: String, rect: Rect2, buying := false, attached := false, instance_uid := "") -> void:
 	hide_tooltip()
 	var data: Dictionary = game.Catalog.ITEMS[id]
 	var rarity: Dictionary = game.Catalog.RARITIES[int(data["rarity"])]
@@ -114,7 +118,7 @@ func item_tip(id: String, rect: Rect2, buying := false, attached := false) -> vo
 	# One more native translucent center layer gives readable body contrast.
 	skin.surface(tip, Rect2(6, 6, 268, height - 12), "tooltip", 5, 0)
 	skin.label(tip, data["name"], Vector2(16, 12), 16, Color(rarity["color"])).name = "tooltip_title"
-	skin.label(tip, rarity["name"] + (" · 武器 · 太刀" if is_weapon else " · 消耗品"), Vector2(16, 42), 11, Color(rarity["color"]))
+	skin.label(tip, rarity["name"] + (" · 装备" if is_weapon else " · 消耗品"), Vector2(16, 42), 11, Color(rarity["color"]))
 	var icon: TextureRect = skin.image(tip, item_texture(id), Vector2(236, 14))
 	skin.rarity_frame(icon, int(data["rarity"]), Color(rarity["color"]))
 	skin.image(tip, skin.texture("common", 230), Vector2(39, 69))
@@ -127,17 +131,17 @@ func item_tip(id: String, rect: Rect2, buying := false, attached := false) -> vo
 		var definition: Dictionary = game.session.Numbers.config()["equipment"][id]
 		var detail := ""
 		var properties: Dictionary = definition["stats"]
-		var equipped_uid: String = game.session.profile["equipment"].get("weapon","")
+		var equipped_uid: String = instance_uid if instance_uid!="" else game.session.profile["equipment"].get("weapon","")
 		if equipped_uid!="" and game.session.profile["gear"][equipped_uid]["definition"]==id:properties = game.session.Numbers.gear_detail(game.session.profile,equipped_uid)
 		for stat: String in properties:
 			detail += "%s +%s  " % [game.number_windows.NAMES.get(stat,stat),properties[stat]]
 		skin.label(tip, detail, Vector2(16, 178), 12, Color("a7dd74"))
-		var uid: String = game.session.profile["equipment"].get("weapon","")
+		var uid: String = equipped_uid
 		if uid!="" and game.session.profile["gear"][uid]["definition"]==id:
 			var instance: Dictionary = game.session.profile["gear"][uid]
-			skin.label(tip,"品质 %d · 强化 +%d" % [instance["quality"],instance["reinforce"]],Vector2(16,201),10)
+			skin.label(tip,"%s · 品质 %d · 强化 +%d%s" % [uid,instance["quality"],instance["reinforce"]," · 已锁定" if instance.get("locked",false) else ""],Vector2(16,201),10)
 		else:skin.label(tip,"具体品质与强化见 O 键的装备管理",Vector2(16,201),10)
-		if game.session.profile["equipped"] == id:skin.label(tip, "已装备", Vector2(211, 151), 11, Color("a7dd74"))
+		if (instance_uid!="" and instance_uid in game.session.profile["equipment"].values()) or (instance_uid=="" and game.session.profile["equipped"]==id):skin.label(tip, "已装备", Vector2(211, 151), 11, Color("a7dd74"))
 	else:
 		skin.label(tip, "使用效果", Vector2(16, 82), 12, Color("d4c399"))
 		skin.label(tip, "恢复 %d HP" % int(data["heal"]), Vector2(16, 108), 16, Color("a7dd74"))
@@ -234,7 +238,9 @@ func inventory(at := Vector2(484, 16), can_close := true) -> void:
 	var category: String = game.session.Layout.KINDS[inventory_tab]
 	var cells: Array = game.session.profile["bag_layout"][category]
 	for index in cells.size():
-		game.make_slot(grid, {"place":"bag", "category":category, "index":index, "id":cells[index]}, Vector2(2 + (index % 8) * 32, 2 + (index / 8) * 32))
+		var uid: String=game.session.profile["item_state"]["bags"][category][index]
+		game.make_slot(grid, {"place":"bag", "category":category, "index":index, "id":cells[index],"uid":uid,"count":game.session.Inventory.count(game.session.profile,uid)}, Vector2(2 + (index % 8) * 32, 2 + (index / 8) * 32))
+	if game.overlay=="inventory":game.inventory_tools.render()
 	for entry in [["resurrection_coins", 0, 99, 408, 40], ["duel_points", 0, 232, 408, 40], ["cash_points", 0, 86, 435, 53], ["gold", 0, 224, 435, 48]]:
 		var value: Label = skin.label(node, str(int(game.session.profile.get(entry[0], entry[1]))), Vector2(entry[2], entry[3]), 11)
 		value.size.x = entry[4]
@@ -316,11 +322,14 @@ func purchase_dialog(id: String, target: Dictionary = {}) -> void:
 	purchase_count.value_changed.connect(func(value: float): total.text = "总价  %d 金币" % (price * int(value)))
 	skin.button(board, "确认购买", Vector2(65, 173), func():
 		purchase_count.apply()
+		var next_gear:=int(game.session.profile["next_gear"])
 		if game.act("items.buy", {"id":id, "count":int(purchase_count.value)}):
 			if not target.is_empty():
 				var category: String = game.Catalog.ITEMS[id]["kind"]
 				var index: int = game.session.profile["bag_layout"][category].find(id)
-				if index >= 0:game.act("slots.move", {"source":{"place":"bag", "category":category, "index":index, "id":id}, "target":target})
+				var uid: String="gear_%d" % next_gear if game.session.Numbers.config()["equipment"].has(id) else ""
+				if uid!="":index=game.session.profile["item_state"]["bags"][category].find(uid)
+				if index >= 0:game.act("slots.move", {"source":{"place":"bag", "category":category, "index":index, "id":id,"uid":uid}, "target":target})
 			purchase.queue_free()
 			purchase = null
 			game.refresh_item_views())
