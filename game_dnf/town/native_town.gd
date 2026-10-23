@@ -3,6 +3,7 @@ signal interact(target: String)
 const Loader = preload("res://scripts/native_map_loader.gd")
 const Actor = preload("res://scripts/native_actor.gd")
 const TextPatch = preload("res://ui/flow/native_text_patch.gd")
+const UIFont = preload("res://ui/flow/ui_font.gd")
 var loader = Loader.new()
 var map_root: Node2D
 var actor
@@ -15,6 +16,9 @@ var moving := false
 var labels: Node2D
 var font: Font
 var animated: Array = []
+var running := false
+var last_tap := {KEY_LEFT:-1000, KEY_RIGHT:-1000}
+var run_direction := 0
 
 func _ready() -> void:
 	loader.load_export("res://assets_local/flow_v1/manifest.json")
@@ -30,7 +34,7 @@ func _ready() -> void:
 	actor = Actor.new()
 	map_root.add_child(actor)
 	actor.setup(assets["players"]["katana"], clips)
-	font = load("res://assets_local/flow_v1/msjh.ttf")
+	font = UIFont.make()
 	localize_signs()
 	labels = Node2D.new()
 	labels.z_index = 4000
@@ -86,15 +90,15 @@ func _process(delta: float) -> void:
 	moving = direction.length_squared() > 0
 	if direction.x != 0:facing = int(signf(direction.x))
 	# Native town rectangles; collision semantics of the source grid remain unverified.
-	ground += direction * delta * 115
+	running = direction.x != 0 and int(signf(direction.x)) == run_direction
+	ground = constrain_ground(ground + direction * delta * (285 if running else 155))
 	ground.x = clampf(ground.x, 24, 1540)
-	ground.y = clampf(ground.y, 195, 262)
 	camera_x = clampf(ground.x - 400, 0, 768)
 	map_root.position.x = -roundf(camera_x)
 	loader.apply_camera(map_root, camera_x)
 	actor.position = Vector2(roundf(ground.x), roundf(ground.y + 120))
 	actor.z_index = int(ground.y)
-	actor.present("move" if moving else "stay", clock_ms, facing, 0, 0)
+	actor.present("dash" if running else "move" if moving else "stay", clock_ms, facing, 0, 0)
 	for node in animated:
 		var total := 0.0
 		for frame: Dictionary in node.frames:total += maxf(1, float(frame.get("delay_ms", 100)))
@@ -112,9 +116,22 @@ func nearest() -> String:
 	return ""
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if enabled and event is InputEventKey:
+		var key := int(event.physical_keycode if event.physical_keycode else event.keycode)
+		if key in [KEY_LEFT, KEY_RIGHT]:
+			if not event.pressed:run_direction = 0
+			elif not event.echo:
+				var now := Time.get_ticks_msec()
+				if now - int(last_tap[key]) < 260:run_direction = -1 if key == KEY_LEFT else 1
+				last_tap[key] = now
 	if enabled and event.is_pressed() and not event.is_echo() and (event.physical_keycode == KEY_E or event.keycode == KEY_E):
 		var target := nearest()
 		if target != "":interact.emit(target)
+
+func constrain_ground(point: Vector2) -> Vector2:
+	# Grass/stone foreground is walkable too. The tree/shop silhouettes stay
+	# behind the upper ground contour; the lowest foot position clears the HUD.
+	return Vector2(clampf(point.x, 24, 1540), clampf(point.y, 175, 352))
 
 func _draw_names() -> void:
 	for entry in [[Vector2(445, 49), "林纳斯"], [Vector2(1335, 48), "土罐"], [Vector2(1460, 95), "格兰之森 →"]]:

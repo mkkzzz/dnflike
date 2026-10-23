@@ -7,11 +7,11 @@ import zipfile
 from dnf_asset_store import ROOT, digest, write_json
 
 
-def pack(output: Path, version: str) -> dict:
+def pack(output: Path, version: str, evidence: Path | None = None) -> dict:
     if output.exists() and any(output.iterdir()):raise ValueError('Use a new empty release folder')
     output.mkdir(parents=True, exist_ok=True)
     entries = []
-    for kind, base in [('flow_v1', ROOT/'game_dnf/assets_local/flow_v1'), ('evidence', ROOT/'temp/loop_review')]:
+    for kind, base in [('flow_v1', ROOT/'game_dnf/assets_local/flow_v1'), ('evidence', evidence or ROOT/'temp/loop_review')]:
         archive_path = output / (kind + '-01.zip')
         inventory = []
         files = sorted(p for p in base.rglob('*') if p.is_file() and not p.name.endswith('.import'))
@@ -56,6 +56,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--version', required=True)
+    parser.add_argument('--evidence-source', type=Path)
     args = parser.parse_args()
     if not args.output.resolve().is_relative_to((ROOT/'temp').resolve()):parser.error('Pack output must stay in temp/')
-    print(json.dumps(pack(args.output.resolve(), args.version)))
+    if args.evidence_source and not args.evidence_source.resolve().is_relative_to((ROOT/'temp').resolve()):parser.error('Evidence must stay in temp/')
+    print(json.dumps(pack(args.output.resolve(), args.version, args.evidence_source)))

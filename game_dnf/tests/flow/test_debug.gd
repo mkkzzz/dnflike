@@ -108,7 +108,7 @@ func run() -> void:
 	await host.frame("14_gm_battle")
 	game.debug_panel.command_input.release_focus()
 	await key(KEY_P)
-	host.check(not game.debug_is_open() and not game.combat.read_view()["paused"] and game.battle.is_processing_input(), "P closes panel and restores battle input")
+	host.check(not game.debug_is_open() and not game.combat.read_view()["paused"] and not game.battle.is_processing_input(), "P closes panel and restores routed battle input")
 	await key(KEY_P)
 	await button("clear")
 	game.set_debug_open(false)

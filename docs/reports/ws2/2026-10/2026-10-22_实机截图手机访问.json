@@ -4,11 +4,11 @@
   "access": "owner-private",
   "service": "Sites",
   "project_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c",
-  "version_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c~appgver_ff7d7583f0788191b86ce27df17b50c2",
-  "deployment_id": "appgdep_6ada1dba93cc819195035a4a997ef853",
+  "version_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c~appgver_1fad6e4a600081918b09c33a90e06233",
+  "deployment_id": "appgdep_6adacc553744819183feda5689312861",
   "status": "succeeded",
-  "source_commit": "875cf42e75ab9d27b60291fec77ac165b4efd652",
-  "game_commit": "547e98a + HUD/inventory eight-item repair working tree; flow_store.json locks runtime and evidence",
-  "screens": 17,
-  "note": "17项中15张Godot实机、2张原包攻略；新增普通/稀有品质详情、血蓝悬停，更新背包武器槽、页签底栏、HUD格框。源PNG字节保持，手机同一账号访问，适合屏幕/原始像素切换。"
+  "source_commit": "7aaa802b91647b406c4d005da291558cd101144e",
+  "game_commit": "6b99f09 + v7 interaction polish; exact runtime/evidence SHA256 in game_dnf/flow_store.json",
+  "screens": 22,
+  "note": "22项：20张当前Godot实机、2张原包攻略；新增拖拽后背包、购买数量/总价确认、技能Shift详细说明、快捷物品详情、经验悬停和卡下难度。保留原PNG字节，owner-private权限未变；本轮按23项反馈返修。"
 }

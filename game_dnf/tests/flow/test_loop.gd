@@ -49,7 +49,7 @@ func release_all() -> void:
 	for code in controls.keys():key(int(code), false)
 
 func click_text(text: String) -> bool:
-	for node in game.modal.find_children("*", "BaseButton", true, false):
+	for node in game.ui.find_children("*", "BaseButton", true, false):
 		if ((node is Button and node.text == text) or node.get_meta("action_label", "") == text) and not node.is_queued_for_deletion():
 			click_control(node)
 			return true
@@ -72,12 +72,24 @@ func hover_control(node: Control) -> void:
 	get_viewport().push_input(motion, true)
 	await ticks(3)
 
-func click_item(name: String) -> bool:
+func click_item(name: String, twice := false) -> bool:
 	for node in game.modal.find_children("*", "Button", true, false):
 		if String(node.get_meta("item_name", "")).begins_with(name) and not node.is_queued_for_deletion():
-			click_control(node)
+			if twice:double_click_control(node)
+			else:click_control(node)
 			return true
 	return false
+
+func double_click_control(node: Control) -> void:
+	var event := InputEventMouseButton.new()
+	event.position = node.get_global_transform_with_canvas() * (node.size / 2)
+	event.button_index = MOUSE_BUTTON_LEFT
+	event.pressed = true
+	event.double_click = true
+	get_viewport().push_input(event, true)
+	event = event.duplicate()
+	event.pressed = false
+	get_viewport().push_input(event, true)
 
 func check_item_grid(name: String, columns: int, rows: int) -> void:
 	var grid := game.modal.find_child(name, true, false) as Control
@@ -85,6 +97,7 @@ func check_item_grid(name: String, columns: int, rows: int) -> void:
 	if not is_instance_valid(grid):return
 	var occupied: Array[Rect2] = []
 	for hit in grid.find_children("*", "Button", true, false):
+		if hit.get_meta("item_id", "") == "":continue
 		var icon := hit.get_node("item_icon") as TextureRect
 		var bounds: Rect2 = hit.get_rect()
 		var cavity := Rect2(Vector2(floorf(bounds.position.x / 32), floorf(bounds.position.y / 32)) * 32 + Vector2(2, 2), Vector2(28, 28))
@@ -163,6 +176,15 @@ func unit_states() -> void:
 
 func run() -> void:
 	await ticks(4)
+	if "--interactions-only" in OS.get_cmdline_user_args():
+		var suite = load("res://tests/flow/test_interactions.gd").new()
+		suite.game = game
+		suite.host = self
+		add_child(suite)
+		await suite.run()
+		print("[LOOP_TEST] COMPLETE checks=%d failures=%d captures=%d" % [checks, failures, captured.size()])
+		get_tree().quit(1 if failures else 0)
+		return
 	unit_states()
 	check(Language.contains_korean(String.chr(0xac00)) and Language.contains_korean(String.chr(0x3131)), "Korean syllables and Jamo are rejected")
 	check(not Language.contains_korean("背包 负重 普通难度 X HP 评价 S"), "Chinese text and normal key/rank notation are accepted")
@@ -238,6 +260,9 @@ func run() -> void:
 		await frame("04b_shop_detail")
 	check(click_item("恢复药剂"), "click native shop item to purchase")
 	await ticks(2)
+	check(game.session.profile["gold"] == 300 and is_instance_valid(game.windows.purchase), "shop opens confirmation before exchanging gold")
+	check(click_text("确认购买"), "confirm purchase through native dialog")
+	await ticks(3)
 	check(game.session.profile["gold"] == 260 and game.session.profile["inventory"]["potion"] == 4, "purchase exchanges gold for item")
 	game.show_overlay("inventory")
 	await ticks(3)
@@ -250,7 +275,7 @@ func run() -> void:
 	check(not close.get_rect().intersects(Rect2(13, 0, 265, 32)), "close button clears the top page tabs")
 	var item_grid := bag.get_node("native_inventory_grid") as Control
 	check(bag.get_node("inventory_tab_0").position.x == item_grid.position.x and bag.get_node("inventory_tab_4").get_rect().end.x == item_grid.get_rect().end.x, "category tabs align with both grid edges")
-	for entry in [["resurrection_coins", Rect2(25, 382, 104, 23)], ["duel_points", Rect2(132, 382, 141, 23)], ["cash_points", Rect2(25, 409, 104, 23)], ["gold", Rect2(132, 409, 141, 23)]]:
+	for entry in [["resurrection_coins", Rect2(20, 341, 125, 23)], ["duel_points", Rect2(153, 341, 125, 23)], ["cash_points", Rect2(20, 368, 125, 23)], ["gold", Rect2(153, 368, 125, 23)]]:
 		check(entry[1].encloses(bag.get_node("inventory_" + entry[0]).get_rect()), "currency value stays in its own native field: " + entry[0])
 	var tabs: Array[Rect2] = []
 	for i in 5:
@@ -389,7 +414,7 @@ func run() -> void:
 		check(game.session.profile["quest"] == "done", "full town battle result quest cycle complete")
 		game.show_overlay("inventory")
 		await ticks(3)
-		check(click_item("林间太刀"), "click inventory slot to equip quest reward")
+		check(click_item("林间太刀", true), "double-click inventory slot to equip quest reward")
 		await ticks(3)
 		check(game.session.profile["equipped"] == "forest_sword", "inventory GUI equips real profile item")
 		await frame("11_reward_equipment")
@@ -417,6 +442,12 @@ func run() -> void:
 	add_child(debug_tests)
 	await debug_tests.run()
 	debug_tests.queue_free()
+	var interactions = load("res://tests/flow/test_interactions.gd").new()
+	interactions.game = game
+	interactions.host = self
+	add_child(interactions)
+	await interactions.run()
+	interactions.queue_free()
 	# Dummy audio still releases its final Ogg playback on the mixer thread. At
 	# fixed-fps headless speed the last run can start/stop in < one audio block.
 	# Give that worker one bounded wall-clock drain before engine shutdown.

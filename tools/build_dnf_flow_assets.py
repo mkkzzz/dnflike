@@ -46,7 +46,7 @@ def build(library: Path, output: Path) -> dict:
             'common': ('Interface/WindowCommon.img', list(range(29)) + list(range(66, 70)) + [90, 91, 92, 97, 98, 99, 100, 101, 102, 103, 104, 105, 147, 213, 214, 215, 216, 217, 218, 219, 220, 221, 230, 248]),
             'inventory': ('Interface/newstyle/windows/inventory/fuck_1.img', [0, 1, 2, 13, 14, 21, 38, 49]),
             'inventory_grid': ('Interface/ItemInventoryWindow.img', [0]),
-            'inventory_bottom': ('Interface/newstyle/windows/inventory/Inventory_tw.img', [0, 1, 5]),
+            'inventory_bottom': ('Interface/newstyle/windows/inventory/Inventory_tw.img', [0, 1, 4, 5, 7]),
             'equipment': ('Interface/newstyle/windows/inventory/inventory.img', [19, 20, 21, 22]),
             'shop': ('Interface/StackableShopWindow.img', [0, 7, 8, 9, 10, 11, 12, 13]),
             'base': ('Interface/Base.img', [36, 50, 64, 67, 119]),
@@ -114,7 +114,7 @@ def build(library: Path, output: Path) -> dict:
             raise ValueError('Original font hash mismatch')
         shutil.copyfile(source, output / 'msjh.ttf')
         result = {
-            'schema': 'dnf_native_map/1', 'flow_schema': 'dnf_loop_art/6',
+            'schema': 'dnf_native_map/1', 'flow_schema': 'dnf_loop_art/7',
             'source': {'asset_version': json.loads(LOCK.read_text(encoding='utf-8'))['version'],
                        'exporter': 'tools/build_dnf_flow_assets.py',
                        'config_role': '111Script backup; effective original runtime unconfirmed',

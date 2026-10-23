@@ -2,6 +2,8 @@ extends RefCounted
 ## Native components; native dimensions and source UI control coordinates.
 const Language = preload("res://ui/flow/language_guard.gd")
 const TextPatch = preload("res://ui/flow/native_text_patch.gd")
+const NativeButton = preload("res://ui/flow/native_button.gd")
+const UIFont = preload("res://ui/flow/ui_font.gd")
 var art
 var font: Font
 var panel_texture: Texture2D
@@ -9,10 +11,7 @@ var tooltip_texture: Texture2D
 
 func _init(loader) -> void:
 	art = loader
-	font = load("res://assets_local/flow_v1/msjh.ttf")
-	# The fixed 1080p frame scales native UI by 1.8; rasterize its font at
-	# that density instead of scaling a low-resolution glyph atlas.
-	(font as FontFile).oversampling = 1.8
+	font = UIFont.make()
 	# Opaque native grain and native border fragments, tiled without scaling.
 	# Do not tile the complete description-board gradient: it creates stripes.
 	panel_texture = ImageTexture.create_from_image(Image.load_from_file(ProjectSettings.globalize_path("res://assets_local/flow_v1/panel.png")))
@@ -26,36 +25,46 @@ func chinese(value: String) -> String:
 
 func inventory(parent: Node) -> void:
 	var tex := texture("inventory")
-	# Remove 48px of empty body space, preserving equipment, cells and borders
-	# at native 1:1. The complete bag now ends above the HUD orb silhouette.
-	image_region(parent, tex, Rect2(0, 0, 313, 360), Vector2.ZERO)
-	image_region(parent, tex, Rect2(0, 408, 313, 170), Vector2(0, 360))
+	# Preserve the source equipment header and outer rim; tile only clean
+	# native cloth over the obsolete inner footer rails.
+	image_region(parent, tex, Rect2(0, 0, 313, 158), Vector2.ZERO)
+	image_region(parent, tex, Rect2(0, 240, 313, 246), Vector2(0, 158))
+	image_region(parent, tex, Rect2(0, 510, 313, 14), Vector2(0, 404))
+	var cloth := NinePatchRect.new()
+	var cloth_atlas := AtlasTexture.new()
+	cloth_atlas.atlas = tex
+	cloth_atlas.region = Rect2(80, 240, 32, 32)
+	cloth.texture = cloth_atlas
+	cloth.position = Vector2(16, 158)
+	cloth.size = Vector2(267, 246)
+	cloth.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_TILE
+	cloth.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_TILE
+	cloth.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(cloth)
 	# This patched client bakes a close mark into the pet tab. Remove only
 	# that mark with adjacent native cream grain; the active close lives below.
 	TextPatch.attach(parent, tex, Rect2(201, 11, 8, 12), Rect2(253, 8, 19, 18))
-	label(parent, "角色装备", Vector2(20, 34), 11, Color("c3b897"))
 	# This patched client supplies Chinese title tabs in the source itself.
-	image(parent, texture("inventory", 21), Vector2(19, 198))
-	label(parent, "负重", Vector2(25, 357), 11)
-	image(parent, texture("inventory", 2), Vector2(58, 363))
-	var weight := image(parent, texture("inventory", 1), Vector2(58, 363))
+	label(parent, "负重", Vector2(20, 317), 11)
+	image(parent, texture("inventory", 2), Vector2(57, 320))
+	var weight := image(parent, texture("inventory", 1), Vector2(57, 320))
 	weight.name = "weight_fill"
-	var weight_label := label(parent, "", Vector2(164, 357), 11)
+	var weight_label := label(parent, "", Vector2(163, 317), 11)
 	weight_label.name = "weight_label"
-	weight_label.size.x = 109
+	weight_label.size.x = 115
 	weight_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	for y in [382, 409]:
-		image(parent, texture("inventory_bottom", 0), Vector2(25, y))
-		image(parent, texture("inventory_bottom", 1), Vector2(132, y))
-	image(parent, texture("inventory_bottom", 5), Vector2(28, 385))
-	image_region(parent, texture("inventory", 13), Rect2(106, 0, 21, 23), Vector2(134, 382))
-	image_region(parent, texture("inventory", 13), Rect2(106, 27, 21, 23), Vector2(134, 409))
-	label(parent, "复活币", Vector2(50, 384), 11)
-	label(parent, "决斗点", Vector2(157, 384), 11)
-	label(parent, "点券", Vector2(33, 411), 11)
-	label(parent, "金币", Vector2(157, 411), 11)
+	for y in [341, 368]:
+		for x in [20, 153]:surface(parent, Rect2(x, y, 125, 23), "inventory_bottom", 0, 2)
+	for entry in [[5, Vector2(24, 344)], [7, Vector2(158, 345)], [4, Vector2(158, 372)]]:
+		var frame := image(parent, texture("base", 119), entry[1] - Vector2(1, 1))
+		frame.scale = Vector2.ONE * (18.0 / 28.0)
+		image(parent, texture("inventory_bottom", entry[0]), entry[1])
+	label(parent, "复活币", Vector2(46, 344), 10)
+	label(parent, "决斗点", Vector2(178, 344), 10)
+	label(parent, "点券", Vector2(27, 371), 10)
+	label(parent, "金币", Vector2(178, 371), 10)
 	for i in 5:
-		var tab := button(parent, ["装备", "消耗品", "材料", "副职业", "任务"][i], Vector2(20 + i * 52, 196), func(): pass, false)
+		var tab := button(parent, ["装备", "消耗品", "材料", "副职业", "任务"][i], Vector2(20 + i * 52, 154), func(): pass, false)
 		tab.add_theme_font_size_override("font_size", 11)
 		tab.size = Vector2(52 if i < 4 else 50, 22)
 		tab.toggle_mode = true
@@ -190,8 +199,7 @@ func label(parent: Node, text: String, at: Vector2, size := 14, color := Color("
 	return view
 
 func button(parent: Node, text: String, at: Vector2, action: Callable, wide := true) -> Button:
-	var view := Button.new()
-	view.text = chinese(text)
+	var view := NativeButton.new()
 	view.position = at
 	view.size = Vector2(97 if wide else 56, 23)
 	view.add_theme_font_override("font", font)
@@ -212,4 +220,5 @@ func button(parent: Node, text: String, at: Vector2, action: Callable, wide := t
 	view.focus_mode = Control.FOCUS_NONE
 	view.pressed.connect(action)
 	parent.add_child(view)
+	view.configure(font, chinese(text))
 	return view

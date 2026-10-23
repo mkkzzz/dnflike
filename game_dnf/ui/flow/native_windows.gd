@@ -8,6 +8,11 @@ var inventory_tab := 0
 var quest_tab := 0
 var selected_card := -1
 var quest_detail: Control
+var purchase: Control
+var purchase_count: SpinBox
+var shop_page := 0
+var skill_tip_id := ""
+var skill_tip_rect: Rect2
 
 func _init(root) -> void:
 	game = root
@@ -74,7 +79,7 @@ func quests() -> void:
 		skin.label(quest_detail, "击败密林领主  %d / 1" % (1 if q in ["ready", "done"] else 0), Vector2(0, 163), 12, Color("a7dd74"))
 		skin.label(quest_detail, "任务奖励", Vector2(0, 201), 12, Color("f0d18a"))
 		skin.label(quest_detail, "金币 200", Vector2(0, 233), 12)
-		skin.image(quest_detail, item_texture("forest_sword"), Vector2(105, 228))
+		game.make_slot(quest_detail, {"place":"reward", "id":"forest_sword", "count":1}, Vector2(105, 228))
 		skin.label(quest_detail, "林间太刀", Vector2(139, 233), 12, Color("c6a3ff"))
 		if q == "available":skin.button(node, "接受委托", Vector2(450, 377), func():
 			if game.act("flow.accept_quest"):quest_tab = 1; game.show_overlay("quest"))
@@ -125,10 +130,7 @@ func item_tip(id: String, rect: Rect2, buying := false) -> void:
 		skin.label(tip, "恢复 %d HP" % int(data["heal"]), Vector2(16, 108), 16, Color("a7dd74"))
 		skin.label(tip, "地下城内使用", Vector2(16, 142), 12, Color("cccccc"))
 	skin.image(tip, skin.texture("common", 230), Vector2(39, height - 44))
-	var hint: String
-	if buying:hint = "购买价格  %d 金币" % int(data["price"])
-	elif is_weapon:hint = "当前正在装备" if game.session.profile["equipped"] == id else "鼠标点击装备"
-	else:hint = "鼠标点击使用  ·  快捷键 1"
+	var hint := "购买价格  %d 金币" % int(data.get("price", 0)) if buying else "持有数量  %d" % int(game.session.profile["inventory"].get(id, 0))
 	skin.label(tip, hint, Vector2(16, height - 30), 11, Color("f0d18a") if buying else Color("a59c88"))
 
 func gauge_tip(gauge: Control) -> void:
@@ -146,19 +148,38 @@ func update_gauge_tip() -> void:
 		var gauge: Control = tip.get_meta("gauge")
 		(tip.get_node("gauge_value") as Label).text = String(gauge.get_meta("value_text", ""))
 
-func item_slot(parent: Node, id: String, at: Vector2, action: Callable, buying := false) -> Button:
-	var hit: Button = skin.icon_button(parent, item_texture(id), at, func(): hide_tooltip(); action.call())
-	var data: Dictionary = game.Catalog.ITEMS[id]
-	skin.rarity_frame(hit, int(data["rarity"]), Color(game.Catalog.RARITIES[int(data["rarity"])]["color"]))
-	# Custom tooltip replaces the engine's default popup while preserving accessible name.
-	hit.set_meta("item_name", game.Catalog.ITEMS[id]["name"])
-	hit.set_meta("item_id", id)
-	hit.mouse_entered.connect(func(): item_tip(id, hit.get_global_rect(), buying))
-	hit.mouse_exited.connect(hide_tooltip)
-	return hit
+func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
+	hide_tooltip()
+	skill_tip_id = id
+	skill_tip_rect = rect
+	var data: Dictionary = game.SkillDescriptions.SKILLS[id]
+	var values: Dictionary = game.skill_catalog.get_skill(id)
+	var height := 260 if detailed else 178
+	var at := Vector2(clampf(rect.position.x - 150, 8, 492), 508 - height - 8)
+	tip = skin.item_board(game.ui, Rect2(at, Vector2(300, height)))
+	tip.z_index = 100
+	tip.set_meta("skill", id)
+	skin.label(tip, data["name"], Vector2(16, 12), 16, Color("f0d18a"))
+	skin.label(tip, "技能等级 1", Vector2(16, 40), 11, Color("b9b1a0"))
+	skin.image(tip, game.slot_texture({"place":"skill", "id":id}), Vector2(254, 14))
+	skin.label(tip, data["brief"], Vector2(16, 69), 12)
+	skin.label(tip, "魔法消耗  %d     冷却  %.1f 秒" % [values["mp"], values["cooldown"]], Vector2(16, 99), 11, Color("a7dd74"))
+	var row := "伤害倍率  "
+	for value in values["damage_percent"]:row += "%d%%  " % int(value)
+	if not values["damage_percent"].is_empty():skin.label(tip, row, Vector2(16, 122), 11)
+	if detailed:
+		var text: Label = skin.label(tip, data["detail"], Vector2(16, 154), 11)
+		text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		text.clip_text = true
+		text.set_deferred("size", Vector2(268, 76))
+	else:skin.label(tip, "按住 Shift 查看详细说明", Vector2(16, 150), 10, Color("b9b1a0"))
+
+func update_skill_detail(detailed: bool) -> void:
+	if is_instance_valid(tip) and tip.has_meta("skill"):skill_tip(skill_tip_id, skill_tip_rect, detailed)
 
 func inventory(at := Vector2(484, 22), can_close := true) -> void:
-	var node = container(game.modal, at, Vector2(303, 476))
+	game.session.Layout.normalize(game.session.profile, game.Catalog.ITEMS)
+	var node = container(game.modal, at, Vector2(303, 424))
 	node.name = "native_inventory"
 	skin.inventory(node)
 	if can_close:skin.close_button(node, Vector2(268, 35), func(): game.show_overlay("")).name = "inventory_close"
@@ -173,31 +194,20 @@ func inventory(at := Vector2(484, 22), can_close := true) -> void:
 	region.region = Rect2(0, 0, maxf(1, floorf(region.atlas.get_width() * minf(weight / 50.0, 1.0))), region.atlas.get_height())
 	fill.texture = region
 	fill.size = region.get_size()
-	var weapon := item_slot(node, equipped, Vector2(210, 88), func(): pass)
+	var weapon = game.make_slot(node, {"place":"equipment", "id":equipped}, Vector2(210, 88))
 	weapon.name = "equipped_weapon"
 	for i in 5:
 		var tab_index := i
 		var tab := node.get_node("inventory_tab_" + str(i)) as Button
 		tab.pressed.connect(func(): inventory_tab = tab_index; game.show_overlay(game.overlay))
 		tab.button_pressed = i == inventory_tab
-	var grid: Control = skin.item_grid(node, Vector2(20, 218), 8, 4)
+	var grid: Control = skin.item_grid(node, Vector2(20, 176), 8, 4)
 	grid.name = "native_inventory_grid"
-	var index := 0
-	for id: String in game.Catalog.ITEMS:
-		var qty := int(game.session.profile["inventory"].get(id, 0)) - (1 if id == equipped else 0)
-		var kind: String = game.Catalog.ITEMS[id]["kind"]
-		if qty < 1 or (inventory_tab == 0 and kind != "weapon") or (inventory_tab == 1 and kind == "weapon") or inventory_tab > 1:continue
-		var point := Vector2(2 + (index % 8) * 32, 2 + (index / 8) * 32)
-		var slot := item_slot(grid, id, point, func():
-			if kind == "weapon":
-				if game.act("items.equip", {"id": id}):game.show_overlay(game.overlay)
-			else:game.use_potion())
-		if qty > 1:
-			var amount: Label = skin.label(slot, str(qty), Vector2(1, 14), 10)
-			amount.size.x = 26
-			amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		index += 1
-	for entry in [["resurrection_coins", 0, 88, 384, 36], ["duel_points", 0, 218, 384, 50], ["cash_points", 0, 72, 411, 52], ["gold", 0, 200, 411, 68]]:
+	var category: String = game.session.Layout.KINDS[inventory_tab]
+	var cells: Array = game.session.profile["bag_layout"][category]
+	for index in cells.size():
+		game.make_slot(grid, {"place":"bag", "category":category, "index":index, "id":cells[index]}, Vector2(2 + (index % 8) * 32, 2 + (index / 8) * 32))
+	for entry in [["resurrection_coins", 0, 99, 344, 40], ["duel_points", 0, 232, 344, 40], ["cash_points", 0, 86, 371, 53], ["gold", 0, 224, 371, 48]]:
 		var value: Label = skin.label(node, str(int(game.session.profile.get(entry[0], entry[1]))), Vector2(entry[2], entry[3]), 11)
 		value.size.x = entry[4]
 		value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -212,17 +222,85 @@ func shop() -> void:
 	skin.label(node, "商品", Vector2(24, 125), 12, Color("f0d18a"))
 	var grid: Control = skin.item_grid(node, Vector2(24, 151), 7, 6)
 	grid.name = "native_shop_grid"
-	for i in 2:
-		var id: String = ["potion", "forest_sword"][i]
-		item_slot(grid, id, Vector2(2 + i * 32, 2), func():
-			if game.act("items.buy", {"id": id}):game.notice("购入 " + game.Catalog.ITEMS[id]["name"]); game.show_overlay("shop"), true)
-	skin.image(node, skin.texture("shop", 13), Vector2(264, 167))
-	skin.image(node, skin.texture("shop", 9), Vector2(264, 151))
-	skin.image(node, skin.texture("shop", 12), Vector2(264, 329))
-	skin.image(node, skin.texture("shop", 8), Vector2(264, 169))
-	skin.label(node, "移至物品查看价格，点击购买", Vector2(24, 351), 11, Color("a59c88"))
+	# Two real catalog entries live in a scrollable 12-row catalog; empty cells
+	# remain empty instead of inventing products just to populate the scrollbar.
+	var viewport := container(node, Vector2(24, 151), Vector2(226, 194))
+	viewport.clip_contents = true
+	grid.reparent(viewport)
+	grid.position = Vector2.ZERO
+	for i in 2:game.make_slot(grid, {"place":"shop", "index":i, "id":["potion", "forest_sword"][i]}, Vector2(2 + i * 32, 2))
+	var more: Control = skin.item_grid(viewport, Vector2(0, 194), 7, 6)
+	var scroll := VScrollBar.new()
+	scroll.position = Vector2(263, 151)
+	scroll.size = Vector2(14, 194)
+	scroll.min_value = 0
+	scroll.max_value = 388
+	scroll.page = 194
+	scroll.step = 16
+	scroll.value = shop_page
+	for state in ["grabber", "grabber_highlight", "grabber_pressed"]:
+		var style := StyleBoxTexture.new()
+		style.texture = skin.texture("shop", 8)
+		style.texture_margin_top = 3
+		style.texture_margin_bottom = 3
+		scroll.add_theme_stylebox_override(state, style)
+	var track := StyleBoxTexture.new()
+	track.texture = skin.texture("shop", 13)
+	scroll.add_theme_stylebox_override("scroll", track)
+	for pair in [["increment",12],["increment_highlight",12],["increment_pressed",12],["decrement",9],["decrement_highlight",9],["decrement_pressed",9]]:scroll.add_theme_icon_override(pair[0], skin.texture("shop", pair[1]))
+	scroll.value_changed.connect(func(value: float): shop_page = int(value); grid.position.y = -value; more.position.y = 194 - value)
+	node.add_child(scroll)
+	scroll.name = "shop_scroll"
+	grid.position.y = -shop_page
+	more.position.y = 194 - shop_page
+	viewport.gui_input.connect(func(event: InputEvent):
+		if event is InputEventMouseButton and event.pressed:
+			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:scroll.value += 32; viewport.accept_event()
+			elif event.button_index == MOUSE_BUTTON_WHEEL_UP:scroll.value -= 32; viewport.accept_event())
 	skin.button(node, "返回", Vector2(100, 378), func(): game.show_overlay("npc"))
 	inventory(Vector2(484, 22), false)
+
+func purchase_dialog(id: String, target: Dictionary = {}) -> void:
+	hide_tooltip()
+	if is_instance_valid(purchase):purchase.queue_free()
+	purchase = container(game.ui, Vector2.ZERO, Vector2(800, 600))
+	purchase.name = "purchase_confirm"
+	purchase.z_index = 200
+	var board = skin.panel(purchase, Rect2(228, 165, 344, 220))
+	skin.label(board, "确认购买", Vector2(20, 14), 16, Color("f0d18a"))
+	skin.image(board, item_texture(id), Vector2(22, 51))
+	skin.label(board, game.Catalog.ITEMS[id]["name"], Vector2(62, 54), 13)
+	var price := int(game.Catalog.ITEMS[id]["price"])
+	skin.label(board, "单价  %d 金币" % price, Vector2(22, 91), 12)
+	skin.label(board, "数量", Vector2(22, 126), 12)
+	purchase_count = SpinBox.new()
+	purchase_count.position = Vector2(73, 121)
+	purchase_count.size = Vector2(94, 28)
+	purchase_count.min_value = 1
+	purchase_count.max_value = mini(999, maxi(1, int(game.session.profile["gold"]) / price))
+	purchase_count.value = 1
+	purchase_count.add_theme_font_override("font", skin.font)
+	board.add_child(purchase_count)
+	purchase_count.get_line_edit().add_theme_font_override("font", skin.font)
+	purchase_count.get_line_edit().add_theme_font_size_override("font_size", 12)
+	var total: Label = skin.label(board, "", Vector2(185, 126), 12, Color("f0d18a"))
+	total.text = "总价  %d 金币" % price
+	purchase_count.value_changed.connect(func(value: float): total.text = "总价  %d 金币" % (price * int(value)))
+	skin.button(board, "确认购买", Vector2(65, 173), func():
+		purchase_count.apply()
+		if game.act("items.buy", {"id":id, "count":int(purchase_count.value)}):
+			if not target.is_empty():
+				var category: String = game.Catalog.ITEMS[id]["kind"]
+				var index: int = game.session.profile["bag_layout"][category].find(id)
+				if index >= 0:game.act("slots.move", {"source":{"place":"bag", "category":category, "index":index, "id":id}, "target":target})
+			purchase.queue_free()
+			purchase = null
+			game.refresh_item_views())
+	skin.button(board, "取消", Vector2(181, 173), close_purchase)
+
+func close_purchase() -> void:
+	if is_instance_valid(purchase):purchase.queue_free()
+	purchase = null
 
 func dungeon() -> void:
 	var node = container(game.modal, Vector2.ZERO, Vector2(800, 600))
@@ -236,12 +314,31 @@ func dungeon() -> void:
 		var pic = skin.image(node, skin.texture("dungeon_cards", i), locations[i])
 		if i > 0:pic.modulate = Color("999999")
 		else:
-			skin.surface(node, Rect2(locations[i] - Vector2(5, 4), Vector2(178, 88)), "select", 22, 6)
-			skin.label(node, "密林试炼", locations[i] + Vector2(15, 83), 14, Color("ffdf75"))
-	skin.surface(node, Rect2(33, 442, 450, 110), "select", 0, 9)
-	skin.label(node, "密林试炼  ·  普通级", Vector2(49, 451), 16, Color("f0d18a"))
-	skin.label(node, "推荐等级 Lv.1  ·  五个房间\n通关奖励：150 金币、120 经验、恢复药剂 ×1", Vector2(49, 480), 12)
-	skin.image(node, skin.texture("select", 11), Vector2(506, 462))
+			# Card has a 12px crown above its rectangular body. Outline the body,
+			# with a native 4px rim; never tile the border across the artwork.
+			var selected := NinePatchRect.new()
+			selected.texture = skin.texture("select", 22)
+			selected.position = locations[i] + Vector2(-3, 9)
+			selected.size = Vector2(174, 74)
+			selected.patch_margin_left = 4
+			selected.patch_margin_right = 4
+			selected.patch_margin_top = 4
+			selected.patch_margin_bottom = 4
+			selected.draw_center = false
+			selected.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			node.add_child(selected)
+	var difficulty: String = game.session.profile.get("difficulty", "normal")
+	var choices := ["normal", "adventure", "king"]
+	var current := choices.find(difficulty)
+	var bar := container(node, Vector2(324, 330), Vector2(118, 27))
+	bar.name = "difficulty_selector"
+	skin.image(bar, skin.texture("select", 2), Vector2.ZERO)
+	skin.image(bar, skin.texture("select", {"normal":11,"adventure":12,"king":14}[difficulty]), Vector2(36, 4))
+	for entry in [[-1, Vector2(0, 4), [3,4,5]], [1, Vector2(98, 4), [7,8,9]]]:
+		var next: String = choices[posmod(current + entry[0], 3)]
+		var button: TextureButton = skin.sprite_button(bar, "select", entry[2], entry[1], func():
+			if game.act("flow.difficulty", {"id":next}):game.show_overlay("dungeon"))
+		button.name = "difficulty_previous" if entry[0] == -1 else "difficulty_next"
 	var enter: TextureButton = skin.sprite_button(node, "select", [164, 165, 166], Vector2(621, 446), game.depart, "进入地下城 Space")
 	enter.set_meta("action_label", "进入地下城")
 	skin.button(node, "返回城镇", Vector2(631, 528), func(): game.show_overlay(""))
@@ -255,7 +352,7 @@ func result() -> void:
 	skin.image(node, skin.texture("reward", 33), Vector2.ZERO)
 	skin.image(node, skin.texture("reward", 35), Vector2(138, 28))
 	skin.label(node, "通关结算" if won else "冒险结束", Vector2(163, 43), 26, Color("f0d18a"))
-	skin.label(node, "密林试炼  ·  普通级", Vector2(166, 91), 14)
+	skin.label(node, "密林试炼  ·  " + {"normal":"普通级", "adventure":"冒险级", "king":"王者级"}.get(game.session.run.get("difficulty", "normal"), "普通级"), Vector2(166, 91), 14)
 	var stats: Dictionary = r.get("stats", {})
 	skin.label(node, "通关时间    %.1f 秒\n承受伤害    %d\n获得金币    %d\n获得经验    %d" % [float(stats.get("time_ms", 0)) / 1000, int(stats.get("damage_taken", 0)), int(r.get("gold", 0)), int(r.get("xp", 0))], Vector2(166, 125), 14)
 	if won:skin.image(node, skin.texture("result", {"S": 3, "A": 6, "B": 7}[r.get("rank", "B")]), Vector2(490, 85))
@@ -284,7 +381,7 @@ func reveal_card(index: int, node: Control, persist := true) -> void:
 		card.disabled = true
 		card.texture_disabled = skin.texture("reward", 41 if i == index else 45)
 		if i == index:
-			skin.image(node, item_texture("potion"), Vector2(133 + i * 167, 365))
+			game.make_slot(node, {"place":"reward", "id":"potion", "count":1}, Vector2(133 + i * 167, 365))
 			skin.label(node, "恢复药剂 ×1", Vector2(112 + i * 167, 412), 12)
 	(node.get_node("result_return") as BaseButton).disabled = false
 	# Reward was committed once by Session before rendering. Flipping never pays twice.

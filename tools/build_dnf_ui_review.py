@@ -11,13 +11,18 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SCREENS = [
+    ('背包 · 统一格子与底栏', '移除说明和多余留白，货币图标完整显示；物品已通过真实鼠标拖拽移动到第三行。', '16_inventory_polished.png'),
+    ('购买数量确认', '点击商品先确认数量、单价和总价，确认后扣款；取消保留金币和物品。', '17_purchase_quantity.png'),
+    ('技能详细说明', '悬停显示简介、耗蓝、冷却和伤害倍率，按住Shift展开中文说明；数值读取当前战斗表。', '15_skill_detail.png'),
+    ('快捷物品详情', '快捷栏与背包共用物品详情和数量；支持拖拽放入、换位和移回背包。', '14_quick_item_hover.png'),
+    ('经验条悬停', '经验进度与原背景槽位对齐；悬停显示当前经验和下一级所需经验。', '13_experience_hover.png'),
+    ('地图与难度', '选中框贴合地图卡片；下方原生难度组件可切换普通、冒险、王者，去掉左下房间说明。', '18_difficulty_selector.png'),
     ('商店 · 品质与底栏', '物品框随品质变化；分类条与底板齐边，负重、复活币、点券、决斗点和金币分别对齐。', '04_shop.png'),
     ('稀有武器详情', '品质标题、类型、等级/职业、重量、属性与购买价格分区；原生细线划分层级。', '04b_shop_detail.png'),
     ('背包 · 正确武器槽', '已装备武器落在原图武器槽，不再放进首饰区；背包显示尚未穿戴的装备，关闭按钮避开页签。', '11_reward_equipment.png'),
     ('背包 · 消耗品', '药剂品质框与数量位于格内，分类条与物品底板对齐。', '05c_inventory_consumables.png'),
-    ('普通武器详情', '白色普通、紫色稀有的名称和边框区分；已装备状态、属性和操作提示分层。', '05b_inventory_hover.png'),
-    ('城镇 · 两倍窗口', '1600×1200实机：原素材整数缩放，动态文字按窗口分辨率绘制，HUD透明区下方补齐原地面。', '01_town.png'),
-    ('城镇 · 原始大小', '800×600原始大小对照。原素材没有更高分辨率细节；菜单可切换原始大小和两倍大小。', '01c_native_1x.png'),
+    ('普通武器详情', '白色普通、紫色稀有的名称和边框区分；已装备状态、条件和属性分层；不再写装备操作说明。', '05b_inventory_hover.png'),
+    ('城镇 · 固定1080p', '1920×1080实机：保持4:3原像素构图，中文文字按显示密度绘制；城镇草地和前景地面已扩展为可走区域。', '01_town.png'),
     ('生命值悬停', '血球不常驻百分比；真实鼠标悬停显示当前生命值/上限。快捷栏图标保持在原生格框内。', '01d_hp_hover.png'),
     ('魔法值悬停', '蓝球不常驻百分比；真实鼠标悬停显示当前魔法值/上限。', '01e_mp_hover.png'),
     ('NPC 对话', '原包林纳斯186×226上半身大立绘；底部对话板，正文与选项留出人物空间。', '02_linus.png'),
@@ -66,8 +71,8 @@ article{background:#1b231d;border:1px solid #45513c;border-radius:8px;overflow:h
 .caption p{color:#bac0ad;font-size:13px;margin:5px 0 0}footer{color:#a5ad99;padding-top:0}dialog{padding:0;background:#111713;color:#eee4c8;border:1px solid #a58b50;max-width:96vw;max-height:96vh}
 dialog::backdrop{background:#000d}.toolbar{display:flex;align-items:center;gap:14px;padding:10px 14px;position:sticky;top:0;background:#1b231d;z-index:1}
 .toolbar button{font:inherit;color:#edcf87;background:#293427;border:1px solid #6d7756;padding:4px 12px;cursor:pointer}.viewer{overflow:auto;max-width:95vw;max-height:85vh}.viewer img{display:block;image-rendering:auto;max-width:none}
-</style><header><h1>当前游戏 · HUD与背包精修</h1><p>本次实际运行截图 · 全中文 · 点开适合屏幕，切换原始像素后可横向滑动查看细节</p>
-<p>本轮：快捷栏格框定位、品质框/标题、分层物品详情、血蓝悬停、关闭按钮、分类条、货币负重和武器槽。前五张为背包/商店与详情，随后有真实血蓝悬停；保留城镇、对白、选图、战斗和结算，末尾为原包攻略。</p>
+</style><header><h1>当前游戏 · 交互与界面细节</h1><p>本次实际运行截图 · 全中文 · 点开适合屏幕，切换原始像素后可横向滑动查看细节</p>
+<p>本轮：物品/装备/技能拖拽，双击装备，购买数量确认，快捷物品/技能/经验悬停，HUD与背包布局，中文字体和难度选择。以下均为实际运行截图，末两张原包攻略另行标注。</p>
 <a href="screenshots.zip" download>下载全部截图</a></header><main>'''+''.join(cards)+'''</main>
 <footer>实机截图未修图，原包攻略截图单独标注。原资源与UI配置已核对；尚未取得原客户端同条件实机截图，不能据此宣称像素级一致。</footer>
 <dialog id="zoom"><div class="toolbar"><strong id="name"></strong><button id="scale">原始像素</button><button id="close">关闭</button></div><div class="viewer"><img id="full" alt="游戏实机原图"></div></dialog>

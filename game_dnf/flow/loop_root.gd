@@ -9,6 +9,11 @@ const CombatSession = preload("res://combat/api/combat_session.gd")
 const Catalog = preload("res://items/catalog.gd")
 const DisplaySettings = preload("res://ui/flow/display_settings.gd")
 const DebugPanel = preload("res://ui/flow/debug_panel.gd")
+const ContentSlot = preload("res://ui/flow/content_slot.gd")
+const SkillCatalog = preload("res://combat/api/skill_catalog.gd")
+const SkillDescriptions = preload("res://items/skill_descriptions.gd")
+const SKILL_KEYS := [KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H]
+const SKILL_CODES := {"draw":KEY_A, "triple":KEY_S, "rage_slash":KEY_D, "buff":KEY_F, "guard":KEY_G}
 var session = Session.new()
 var store = Store.new()
 var town
@@ -34,6 +39,8 @@ var skill_views: Dictionary = {}
 var display_settings = DisplaySettings.new()
 var debug_panel
 var world_clip: Control
+var skill_catalog
+var quick_views: Array = []
 
 func _ready() -> void:
 	test_mode = "--loop-test" in OS.get_cmdline_user_args()
@@ -56,6 +63,7 @@ func _ready() -> void:
 	town.interact.connect(func(target: String): show_overlay("npc" if target == "linus" else "dungeon"))
 	skin = NativeSkin.new(town.loader)
 	windows = Windows.new(self)
+	skill_catalog = SkillCatalog.new()
 	var layer := CanvasLayer.new()
 	layer.transform = display_settings.content_transform()
 	add_child(layer)
@@ -87,8 +95,8 @@ func build_hud() -> void:
 	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.add_child(hud)
 	skin.image(hud, skin.texture("hud"), Vector2(0, 508))
-	hp_bar = orb(hud, skin.texture("hud", 1), Vector2(13, 521))
-	mp_bar = orb(hud, skin.texture("hud", 2), Vector2(731, 521))
+	hp_bar = orb(hud, skin.texture("hud", 1), Vector2(15, 525))
+	mp_bar = orb(hud, skin.texture("hud", 2), Vector2(733, 525))
 	hp_bar.mouse_filter = Control.MOUSE_FILTER_PASS
 	mp_bar.mouse_filter = Control.MOUSE_FILTER_PASS
 	hp_bar.mouse_entered.connect(func(): windows.gauge_tip(hp_bar))
@@ -105,28 +113,19 @@ func build_hud() -> void:
 		var hotkey: Label = skin.label(hud, ["A", "S", "D", "F", "G", "H"][i], Vector2(540 + i * 30, 574), 9)
 		hotkey.set_meta("skill_hotkey", true)
 		hotkey.z_index = 2
-	# The baked HUD uses 30px pitch; its 28px cavities begin 2px inside.
-	# The previous y555/x537 positions painted over the original top/left rim.
-	var potion_hit: Button = skin.icon_button(hud, town.loader.texture(town.loader.data["ui"]["items"]["potion"]), Vector2(85, 558), use_potion)
-	potion_hit.name = "hud_potion"
-	skin.rarity_frame(potion_hit, int(Catalog.ITEMS["potion"]["rarity"]), Color(Catalog.RARITIES[int(Catalog.ITEMS["potion"]["rarity"])]["color"]))
-	potion_hit.tooltip_text = "恢复药剂 1"
-	for entry in [[0, "draw", KEY_A, "拔刀斩 A"], [1, "triple", KEY_S, "三段斩 S"], [2, "rage_slash", KEY_D, "十字斩 D"], [3, "buff", KEY_F, "暴走 F"], [4, "guard", KEY_G, "格挡 G"]]:
-		var code: int = entry[2]
-		var tex: Texture2D = town.loader.texture(town.loader.data["ui"]["active_skills"][entry[1]])
-		var view: Button = skin.icon_button(hud, tex, Vector2(538 + int(entry[0]) * 30, 558), func(): press_combat_key(code))
-		view.tooltip_text = entry[3]
-		var counter: Label = skin.label(hud, "", view.position + Vector2(6, 5), 12)
-		skill_views[entry[1]] = {"view": view, "counter": counter}
-	skin.label(hud, "Lv.", Vector2(14, 583), 10, Color("f0d18a"))
-	info_text = skin.label(hud, "", Vector2(36, 583), 10, Color("f0d18a"))
+	build_hotbars()
+	info_text = skin.label(hud, "", Vector2(13, 583), 8, Color("f0d18a"))
+	info_text.size.x = 50
+	info_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	status_text = skin.label(ui, "", Vector2(14, 16), 12)
 	status_text.hide()
 	var experience := TextureProgressBar.new()
 	experience.texture_progress = skin.texture("hud", 4)
-	experience.position = Vector2(86, 590)
+	experience.position = Vector2(87, 591)
 	experience.value = 0
-	experience.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	experience.mouse_filter = Control.MOUSE_FILTER_PASS
+	experience.mouse_entered.connect(func(): windows.gauge_tip(experience))
+	experience.mouse_exited.connect(windows.hide_tooltip)
 	hud.add_child(experience)
 	experience.name = "experience"
 
@@ -142,14 +141,9 @@ func orb(parent: Node, tex: Texture2D, at: Vector2) -> TextureProgressBar:
 
 func press_combat_key(code: int) -> void:
 	if not is_instance_valid(battle) or session.state != "battle" or overlay != "":return
-	var event := InputEventKey.new()
-	event.physical_keycode = code
-	event.pressed = true
-	Input.parse_input_event(event)
+	forward_battle_key(code, true)
 	await get_tree().physics_frame
-	event = event.duplicate()
-	event.pressed = false
-	Input.parse_input_event(event)
+	forward_battle_key(code, false)
 
 func _process(delta: float) -> void:
 	var p: Dictionary = session.profile
@@ -174,8 +168,12 @@ func _process(delta: float) -> void:
 	hp_bar.set_meta("value_text", "生命值  %d / %d" % [hp, hp_max])
 	mp_bar.set_meta("value_text", "魔法值  %d / %d" % [mp, mp_max])
 	windows.update_gauge_tip()
-	info_text.text = str(p["level"])
-	(hud.get_node("experience") as TextureProgressBar).value = float(p["xp"]) * 100.0 / 100.0
+	info_text.text = "Lv.%d" % int(p["level"])
+	var experience := hud.get_node("experience") as TextureProgressBar
+	experience.value = float(p["xp"]) * 100.0 / (int(p["level"]) * 100)
+	experience.set_meta("value_text", "经验  %d / %d" % [p["xp"], int(p["level"]) * 100])
+	for cell in quick_views:
+		if is_instance_valid(cell):cell.refresh_quantity()
 	for id: String in skill_views:
 		var remaining := float(cooldowns.get(id, 0))
 		var view: Button = skill_views[id]["view"]
@@ -192,8 +190,13 @@ func _process(delta: float) -> void:
 		show_overlay("menu")
 
 func _input(event: InputEvent) -> void:
-	if not event is InputEventKey or not event.is_pressed() or event.is_echo():return
+	if not event is InputEventKey:return
 	var key := int(event.physical_keycode if event.physical_keycode else event.keycode)
+	if key == KEY_SHIFT:windows.update_skill_detail(event.pressed)
+	if key not in [KEY_P, KEY_ESCAPE, KEY_F3, KEY_F11]:
+		if session.state == "battle" and overlay == "" and not debug_is_open():forward_battle_key(key, event.pressed, event.echo)
+		return
+	if not event.is_pressed() or event.is_echo():return
 	if key == KEY_P and not debug_panel.is_typing():
 		set_debug_open(not debug_is_open())
 		get_viewport().set_input_as_handled()
@@ -212,6 +215,9 @@ func _input(event: InputEvent) -> void:
 	notice(display_settings.description())
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if is_instance_valid(windows.purchase):
+		if event.is_pressed() and event.keycode == KEY_ESCAPE:windows.close_purchase()
+		return
 	if debug_is_open():return
 	if not event.is_pressed() or event.is_echo():return
 	var key := int(event.physical_keycode if event.physical_keycode else event.keycode)
@@ -222,7 +228,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_Q:hud_action("quest")
 		KEY_D:
 			if session.state == "town":hud_action("dungeon")
-		KEY_1:use_potion()
+		KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6:use_quick(key - KEY_1)
 		KEY_F5:save_profile()
 		KEY_ESCAPE:
 			if overlay == "" or session.state == "result":show_overlay("menu" if session.state != "result" else "result")
@@ -256,6 +262,7 @@ func act(kind: String, payload: Dictionary = {}) -> bool:
 	return true
 
 func show_overlay(which: String) -> void:
+	windows.close_purchase()
 	if session.state == "result" and which == "":which = "result"
 	if which == "quest" and overlay != "quest":
 		windows.quest_tab = 0 if session.profile["quest"] == "available" else 2 if session.profile["quest"] == "done" else 1
@@ -311,6 +318,7 @@ func depart() -> void:
 	combat.start_room({"run_id": String(session.run["id"]), "room_id": "forest_trial:0", "room_index": 0,
 		"player": {"hp_max": stat["hp"], "mp_max": stat["mp"], "damage_multiplier": stat["damage_multiplier"], "weapon": stat["weapon"]},
 		"audio": {"muted": headless_test, "bgm_volume_db": -32}, "show_hud": false})
+	combat.configure_trial(1.35, String(session.run.get("difficulty", "normal")))
 	notice("密林试炼 · 清除怪物后前往出口")
 	sync_debug_pause()
 
@@ -361,8 +369,85 @@ func sync_debug_pause() -> void:
 	var open := debug_is_open()
 	if is_instance_valid(town):town.enabled = not open and overlay == "" and session.state == "town"
 	if is_instance_valid(battle):
-		battle.set_process_input(not open)
+		battle.set_process_input(false)
 		combat.set_paused(open or overlay != "" or session.state != "battle")
+
+func build_hotbars() -> void:
+	session.Layout.normalize(session.profile, Catalog.ITEMS)
+	for view in quick_views:
+		if is_instance_valid(view):view.queue_free()
+	quick_views.clear()
+	for entry in skill_views.values():
+		entry["view"].queue_free()
+		entry["counter"].queue_free()
+	skill_views.clear()
+	for i in 6:
+		var cell = make_slot(hud, {"place":"quick", "index":i, "id":session.profile["quick_items"][i]}, Vector2(85 + i * 30, 558))
+		cell.name = "hud_potion" if i == 0 else "hud_item_" + str(i)
+		quick_views.append(cell)
+		var id: String = session.profile["skill_slots"][i]
+		var skill = make_slot(hud, {"place":"skill", "index":i, "id":id}, Vector2(538 + i * 30, 558))
+		var counter: Label = skin.label(hud, "", skill.position + Vector2(6, 5), 12)
+		if id != "":skill_views[id] = {"view":skill, "counter":counter}
+		else:skill_views["empty_" + str(i)] = {"view":skill, "counter":counter}
+
+func make_slot(parent: Node, data: Dictionary, at: Vector2):
+	var cell = ContentSlot.new()
+	cell.position = at
+	parent.add_child(cell)
+	cell.setup(self, data)
+	return cell
+
+func slot_texture(cell: Dictionary) -> Texture2D:
+	if cell["place"] == "skill":return town.loader.texture(town.loader.data["ui"]["active_skills"][cell["id"]])
+	return windows.item_texture(cell["id"])
+
+func slot_hover(cell: Control) -> void:
+	if cell.cell.get("id", "") == "":return
+	if cell.cell["place"] == "skill":windows.skill_tip(cell.cell["id"], cell.get_global_rect())
+	else:windows.item_tip(cell.cell["id"], cell.get_global_rect(), cell.cell["place"] == "shop")
+
+func slot_pressed(cell: Control) -> void:
+	match cell.cell["place"]:
+		"shop":windows.purchase_dialog(cell.cell["id"])
+		"quick":use_quick(int(cell.cell["index"]))
+		"skill":press_combat_key(SKILL_KEYS[int(cell.cell["index"])])
+
+func slot_double_clicked(cell: Control) -> void:
+	var id: String = cell.cell.get("id", "")
+	if cell.cell["place"] == "equipment":
+		if act("items.unequip"):refresh_item_views()
+	elif cell.cell["place"] == "bag" and Catalog.ITEMS.get(id, {}).get("kind") == "weapon":
+		if act("items.equip", {"id":id}):refresh_item_views()
+
+func can_drop_slot(source: Dictionary, target: Dictionary) -> bool:
+	if source.get("place") == "shop":return target.get("place") in ["bag", "quick", "equipment"] and Catalog.ITEMS.get(source.get("id"), {}).get("kind") == (target.get("category") if target.get("place") == "bag" else "weapon" if target.get("place") == "equipment" else "consumable")
+	if session.state != "town" and (source.get("place") == "equipment" or target.get("place") == "equipment"):return false
+	return session.Layout.move(session.profile.duplicate(true), Catalog.ITEMS, source, target)
+
+func drop_slot(source: Dictionary, target: Dictionary) -> void:
+	if source.get("place") == "shop":windows.purchase_dialog(source["id"], target); return
+	if act("slots.move", {"source":source, "target":target}):
+		refresh_item_views()
+		sync_debug_pause()
+
+func refresh_item_views() -> void:
+	windows.hide_tooltip()
+	build_hotbars()
+	if overlay in ["inventory", "shop"]:show_overlay(overlay)
+
+func use_quick(index: int) -> void:
+	var id: String = session.profile["quick_items"][index]
+	if id == "potion":use_potion()
+
+func forward_battle_key(code: int, pressed: bool, echo := false) -> void:
+	if not is_instance_valid(battle):return
+	var index := SKILL_KEYS.find(code)
+	if index >= 0:
+		var id: String = session.profile["skill_slots"][index]
+		if id == "":return
+		code = SKILL_CODES[id]
+	combat.submit_key(code, pressed, echo)
 
 func use_potion() -> void:
 	if not is_instance_valid(battle) or session.state != "battle":notice("进入地下城后可使用恢复药剂"); return

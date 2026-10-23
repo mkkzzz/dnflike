@@ -1,0 +1,58 @@
+{
+  "schema": "dnf_loop_polish_validation/1",
+  "engine": "Godot 4.7.2",
+  "asset_version": "dnf-loop-v7-interaction-polish-20261023",
+  "rendered": {
+    "checks": 247,
+    "failures": 0,
+    "captures": 30
+  },
+  "fresh_consumer": {
+    "checks": 237,
+    "failures": 0,
+    "captures": 0,
+    "formal_launcher": true,
+    "full_library_present": false,
+    "downloaded_from_remote": true
+  },
+  "source_audit": {
+    "frames": 277,
+    "mismatches": 0
+  },
+  "tool_tests": 4,
+  "dependencies_violations": 0,
+  "release": "https://github.com/mkkzzz/dnflike-assets/releases/tag/dnf-loop-v7-interaction-polish-20261023",
+  "private": true,
+  "packs": [
+    {
+      "name": "flow_v1-01.zip",
+      "kind": "flow_v1",
+      "bytes": 17789148,
+      "sha256": "70c3b4ddb599374db67bda208c1d9fdc0828c807281a5f5e9e958ab5b8d073ec",
+      "files": 293,
+      "unpacked_bytes": 25910303
+    },
+    {
+      "name": "combat_runtime-01.zip",
+      "kind": "combat_runtime",
+      "bytes": 1754352,
+      "sha256": "dd68767395f8ba2ca8890aa23ad45893bfa4a58e1dcf1970bca324d09905489d",
+      "files": 103,
+      "unpacked_bytes": 4659282
+    }
+  ],
+  "logs": {
+    "interaction_rendered_test.log": {
+      "sha256": "12db97d0386f0b8d375b016af5e788681d8c9f60efef29e1ec31a5fcd7ff0e70"
+    },
+    "v7_consumer_install.log": {
+      "sha256": "7f09fa73586227c8c86b2c48256002c78878fb1e99140dd6142c4e6e36c7220c"
+    },
+    "v7_consumer_flow_install.log": {
+      "sha256": "822fa60f0aed04030c6c2d0eff7139989409fc4570d40e9a77fc5aa4d740c1e5"
+    },
+    "v7_consumer_run.log": {
+      "sha256": "e3e05d7d32345f6d46a1dd10defb718e9513b41af00943685615b4884afea1cc"
+    }
+  }
+}

@@ -34,6 +34,32 @@ func start_room(spec: Dictionary) -> bool:
 	game.begin_room(spec)
 	return true
 
+## The outer UI owns configurable hotkeys; standalone battle keeps its own input.
+func submit_key(code: int, pressed: bool, echo := false) -> void:
+	if not _alive():return
+	var event := InputEventKey.new()
+	event.physical_keycode = code
+	event.keycode = code
+	event.pressed = pressed
+	event.echo = echo
+	game._input(event)
+
+func configure_trial(movement_scale: float, difficulty: String) -> void:
+	if not _alive():return
+	# Per-session copy: increase player locomotion only, leaving MOB tables intact.
+	game.rules = game.rules.duplicate(true)
+	game.rules["player"]["walk_speed"] *= movement_scale
+	game.rules["player"]["run_speed"] *= movement_scale
+	var factor: float = {"normal":1.0, "adventure":1.3, "king":1.6}.get(difficulty, 1.0)
+	game.table.monsters = game.table.monsters.duplicate(true)
+	for monster: Dictionary in game.table.monsters.values():
+		monster["hp"] *= factor
+		monster["attack"] *= factor
+	for enemy: Dictionary in game.monsters:
+		enemy["hp"] *= factor
+		enemy["max_hp"] *= factor
+		enemy["attack"] *= factor
+
 ## Pausing also drops held keys and buffered presses so nothing fires on resume.
 func pause() -> void:
 	if _alive():game.set_input_paused(true)
