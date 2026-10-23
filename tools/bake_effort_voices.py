@@ -37,8 +37,10 @@ META_DIR = ROOT / "audio/effort_voice"
 
 TIERS = ["voice_light", "voice_mid", "voice_heavy", "voice_rage"]
 PER_TIER = 3
-# 每档的时长上限（秒）：起手声要"短促"，超过就是完整喊叫，会盖住招式音
-TIER_MAX = {"voice_light": 0.26, "voice_mid": 0.34, "voice_heavy": 0.44, "voice_rage": 0.60}
+# 每档的时长上限（秒）。2026-10-23 修订：负责人反馈"人声不行"，主要问题是
+# 0.22~0.58s 太长、和挥剑声重叠成一团。起手声应该只是"一下子"，
+# 所以整体砍到 0.16~0.30s（取每段发声最靠前的一段，砍掉后面的拖音）。
+TIER_MAX = {"voice_light": 0.16, "voice_mid": 0.20, "voice_heavy": 0.24, "voice_rage": 0.30}
 # 候选池只取较短的一段，避免选到整句长啸
 TIER_SPAN = {"voice_light": (0.00, 0.22), "voice_mid": (0.15, 0.40),
              "voice_heavy": (0.35, 0.62), "voice_rage": (0.55, 1.00)}
