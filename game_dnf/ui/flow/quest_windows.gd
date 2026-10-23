@@ -19,19 +19,30 @@ func text(parent: Node, value: String, at: Vector2, size: Vector2, font_size := 
 
 func dialogue() -> void:
 	var npc: String = game.town.nearest()
-	if npc not in ["linus", "seria"]:
+	if not game.town.is_npc(npc):
 		game.notice("请走到人物身旁交谈")
 		return
 	focus_npc = npc
 	game.record_npc_visit(npc)
 	var node = game.windows.container(game.modal, Vector2(41,343), Vector2(718,165))
 	game.skin.image(node,game.skin.texture("dialog"),Vector2.ZERO)
-	var portrait: Texture2D = game.town.quest_loader.texture(game.town.quest_loader.data["ui"]["seria_portrait"]) if npc == "seria" else game.skin.texture("dialog_face")
+	var portrait: Texture2D
+	if npc=="seria":portrait=game.town.quest_loader.texture(game.town.quest_loader.data["ui"]["seria_portrait"])
+	elif npc=="linus":portrait=game.skin.texture("dialog_face")
+	else:portrait=game.town.hendon_loader.texture(game.town.hendon_loader.data["ui"]["portraits"][npc])
 	game.skin.image(node,portrait,Vector2(8,165-portrait.get_height())).name = npc + "_dialogue_illustration"
 	text(node,game.session.quests.npc_name(npc),Vector2(215,18),Vector2(370,25),16,Color("f0d18a"))
-	var line := "你好，冒险家。林纳斯大叔就在外面的铁匠铺，\n出发前，请先去和他打个招呼吧。" if npc == "seria" else "冒险的路还很长。先去洛兰练练身手，\n带好武器和药剂，平安回来。"
+	var line: String=game.town.npc_definition(npc)["dialogue"]
+	if npc=="linus" and game.session.quests.status(game.session.profile,"hendon.meet_pungjin") in ["available","active"]:line="你已经历练了一番。沿防线左侧去赫顿玛尔吧，经城市区向上走，到主街找风振聊聊。"
+	if npc=="seria" and game.session.quests.status(game.session.profile,"elvengard.seria_fate")=="completed":line="看到你平安回来，我就放心了。赫顿玛尔还有许多值得结识的人，祝你旅途顺利。"
 	var ready: Array = game.session.quests.list(game.session.profile,["ready"],npc)
 	if not ready.is_empty():line = "你回来了，辛苦了。\n打开任务记录，把这次冒险的收获告诉我吧。"
+	for q: Dictionary in ready:
+		match q["id"]:
+			"hendon.meet_pungjin":line="林纳斯让你来的？欢迎来到赫顿玛尔。\n这里有许多能帮助你修行的人，先让我介绍一下。"
+			"hendon.swordman_start":line="鬼剑士要走的路，需要你自己选择。\n先去后街拜访辛达，他会告诉你更多。"
+			"hendon.meet_sinda":line="风振介绍你来的？我是铁匠辛达。\n坐下聊聊吧，修行和装备都有不少学问。"
+			"hendon.job_introduction":line="转职会让你的修行走向不同道路。\n眼下先磨炼基础，之后可向G.S.D了解鬼剑士的修行。"
 	text(node,line,Vector2(215,51),Vector2(475,62),13)
 	game.skin.button(node,"委托任务",Vector2(215,120),func():
 		var active: Array = game.session.quests.list(game.session.profile,["ready","active"],npc)
@@ -39,6 +50,9 @@ func dialogue() -> void:
 		selected = ""
 		game.show_overlay("quest"))
 	if npc == "linus":game.skin.button(node,"购买物品",Vector2(325,120),func():game.show_overlay("shop"))
+	var services: Array=game.town.npc_definition(npc)["services"]
+	if "skills" in services:game.skin.button(node,"学习技能",Vector2(325,120),func():game.number_windows.tab=1;game.show_overlay("numbers"))
+	if "equipment" in services:game.skin.button(node,"装备整备",Vector2(325,120),func():game.number_windows.tab=2;game.show_overlay("numbers"))
 	game.skin.button(node,"结束对话",Vector2(600,120),func():game.show_overlay(""))
 	game.skin.close_button(node,Vector2(686,13),func():game.show_overlay(""))
 
@@ -178,6 +192,7 @@ func refresh_tracker() -> void:
 		tracker.mouse_filter=Control.MOUSE_FILTER_IGNORE
 		tracker_text=text(tracker,"",Vector2.ZERO,Vector2(205,148),11,Color("f0d18a"))
 	tracker.visible=game.character_active and game.overlay=="" and not game.debug_is_open() and game.session.state in ["town","battle"]
+	tracker.position.y=82 if game.toast_panel.visible else 43
 	var lines := ""
 	var marks := {}
 	for q: Dictionary in game.session.quests.list(game.session.profile,["available","active","ready"]):

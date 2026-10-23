@@ -1,4 +1,4 @@
-param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly)
+param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly)
 $ErrorActionPreference="Stop"
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
@@ -23,6 +23,10 @@ if ($BuildAssets) {
     if ($LibraryPath) {$questBuildArgs+=@("--library",$LibraryPath)}
     & python @questBuildArgs
     if ($LASTEXITCODE -ne 0) {throw "Original quest art build failed."}
+    $townBuildArgs=@((Join-Path $PSScriptRoot "build_dnf_hendon_assets.py"))
+    if ($LibraryPath) {$townBuildArgs+=@("--library",$LibraryPath)}
+    & python @townBuildArgs
+    if ($LASTEXITCODE -ne 0) {throw "Original Hendon art build failed."}
 } else {
     # Separate immutable pack needs no full library or original client installation.
     # Once installed, validate local version/hashes and play without network.
@@ -58,6 +62,9 @@ if ($Test) {
     $questOutput=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/quests/run_quests.gd 2>&1
     $questOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($questOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($questOutput -match '\[QUEST_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Quest unit regression failed."}
+    $worldOutput=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/town/run_world.gd 2>&1
+    $worldOutput | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($worldOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($worldOutput -match '\[TOWN_UNIT\] COMPLETE checks=\d+ failures=0')) {throw "Town topology regression failed."}
 }
 $runArgs=@("--path",$gamePath,"res://scenes/loop.tscn")
 if ($Test) {
@@ -67,6 +74,7 @@ if ($Test) {
     if ($NumbersOnly) {$runArgs+="--numbers-only"}
     if ($QuestsOnly) {$runArgs+="--quests-only"}
     if ($ItemsOnly) {$runArgs+="--items-only"}
+    if ($TownsOnly) {$runArgs+="--towns-only"}
     if ($Capture) {$runArgs+="--capture"}
 }
 $ErrorActionPreference="Continue"
@@ -74,4 +82,4 @@ $ErrorActionPreference="Continue"
 $engineExit=$LASTEXITCODE
 $ErrorActionPreference="Stop"
 if ($engineExit -ne 0 -or ($runOutput -match 'SCRIPT ERROR|ERROR:')) {throw "Native loop runtime failed."}
-if ($Test -and -not ($runOutput -match $(if ($QuestsOnly) {'\[QUEST_CHAPTER\] COMPLETE checks=\d+ failures=0'} else {'\[LOOP_TEST\] COMPLETE checks=\d+ failures=0'}))) {throw "Native loop checks did not complete."}
+if ($Test -and -not ($runOutput -match $(if ($TownsOnly) {'\[HENDON_TEST\] COMPLETE checks=\d+ failures=0'} elseif ($QuestsOnly) {'\[QUEST_CHAPTER\] COMPLETE checks=\d+ failures=0'} else {'\[LOOP_TEST\] COMPLETE checks=\d+ failures=0'}))) {throw "Native loop checks did not complete."}

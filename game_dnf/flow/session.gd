@@ -4,9 +4,11 @@ const CATALOG := preload("res://items/catalog.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
 const Layout = preload("res://items/slot_layout.gd")
 const Quests = preload("res://quests/service.gd")
+const TownWorld = preload("res://town/world.gd")
 const Inventory = preload("res://items/inventory.gd")
 const Loot = preload("res://loot/service.gd")
 var quests = Quests.new()
+var town_world = TownWorld.new()
 var dungeons: Dictionary = {}
 var profile: Dictionary = {}
 var state := "town"
@@ -22,6 +24,7 @@ func _init() -> void:
 	Inventory.initialize(profile)
 	quests.initialize(profile)
 	profile["town_location"] = "seria_room"
+	town_world.normalize(profile)
 	dungeons = JSON.parse_string(FileAccess.get_file_as_string("res://data/dungeons.json"))["dungeons"]
 
 func quest_command(kind: String, payload: Dictionary, context: Dictionary) -> Dictionary:
@@ -230,7 +233,7 @@ func restore(data: Dictionary) -> bool:
 	var p: Dictionary = data["profile"].duplicate(true)
 	var legacy := not p.has("numbers_revision")
 	for k: String in profile:
-		if k in ["quest_state", "town_location", "item_state"]:continue
+		if k in ["quest_state", "town_location", "item_state", "town_position", "inn_return"]:continue
 		if k in ["bag_layout", "quick_items", "skill_slots", "difficulty", "attack_element"]:continue
 		if legacy and k in ["numbers_revision","growtype","sp_bonus","skills","skill_purchases","xp_transactions","gear","next_gear","equipment","stat_modifiers","attack_element"]:continue
 		if not p.has(k) or typeof(p[k]) != typeof(profile[k]) and not (p[k] is float and profile[k] is int):return false
@@ -262,7 +265,8 @@ func restore(data: Dictionary) -> bool:
 	if not quests.valid(p):return false
 	quests.canonicalize(p)
 	if not p.has("town_location"):p["town_location"]="elvengard"
-	if p["town_location"] not in ["elvengard","seria_room"]:p["town_location"]="elvengard"
+	if not town_world.errors.is_empty():return false
+	town_world.normalize(p)
 	Numbers.canonicalize(p)
 	profile = p.duplicate(true)
 	Layout.normalize(profile, CATALOG.ITEMS)

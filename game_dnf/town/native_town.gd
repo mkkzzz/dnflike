@@ -4,99 +4,128 @@ const Loader = preload("res://scripts/native_map_loader.gd")
 const Actor = preload("res://scripts/native_actor.gd")
 const TextPatch = preload("res://ui/flow/native_text_patch.gd")
 const UIFont = preload("res://ui/flow/ui_font.gd")
-var loader = Loader.new()
+const World = preload("res://town/world.gd")
+var world=World.new()
+var loader=Loader.new()
+var quest_loader=Loader.new()
+var hendon_loader=Loader.new()
 var map_root: Node2D
-var actor
-var ground := Vector2(540, 230)
-var camera_x := 200.0
-var clock_ms := 0.0
-var facing := -1
-var enabled := true
-var moving := false
-var labels: Node2D
-var font: Font
-var animated: Array = []
-var running := false
-var last_tap := {KEY_LEFT:-1000, KEY_RIGHT:-1000}
-var run_direction := 0
-var player_name := ""
-var location := "elvengard"
+var map_nodes: Dictionary={}
+var map_loaders: Dictionary={}
 var street: Node2D
 var inn: Node2D
-var quest_loader = Loader.new()
-var quest_marks: Dictionary = {}
+var actor
+var labels: Node2D
+var font: Font
+var ground:=Vector2(540,230)
+var camera_x:=200.0
+var camera_y:=0.0
+var clock_ms:=0.0
+var facing:=-1
+var enabled:=true
+var moving:=false
+var running:=false
+var animated: Array=[]
+var last_tap:={KEY_LEFT:-1000,KEY_RIGHT:-1000}
+var run_direction:=0
+var player_name:=""
+var location:="elvengard"
+var inn_return:="enter_inn"
+var quest_marks: Dictionary={}
+var await_direction_release:=false
 
 func _ready() -> void:
 	loader.load_export("res://assets_local/flow_v1/manifest.json")
-	map_root = loader.build(loader.placements()[0])
-	street = map_root
-	add_child(map_root)
-	extend_ground_under_hud()
-	for node in map_root.get_children():
-		if node is Loader.MapSprite and node.frames.size() > 1:animated.append(node)
-	actor = Actor.new()
-	map_root.add_child(actor)
-	var combat_assets: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/combat/manifest.json"))
-	var town_motion: Dictionary = combat_assets["player_locomotion"]["town"]
-	actor.setup(town_motion["bank"], town_motion["clips"])
-	font = UIFont.make()
+	street=loader.build(loader.placements()[0])
+	map_root=street
+	map_nodes["elvengard"]=street
+	map_loaders["elvengard"]=loader
+	add_child(street)
+	extend_ground(street,loader)
+	actor=Actor.new()
+	street.add_child(actor)
+	var assets: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/combat/manifest.json"))
+	var motion: Dictionary=assets["player_locomotion"]["town"]
+	actor.setup(motion["bank"],motion["clips"])
+	font=UIFont.make()
 	localize_signs()
-	labels = Node2D.new()
-	labels.z_index = 4000
-	map_root.add_child(labels)
+	labels=Node2D.new()
+	labels.z_index=4000
+	street.add_child(labels)
 	labels.draw.connect(_draw_names)
-	if quest_loader.load_export("res://assets_local/flow_v1/early_quests/manifest.json"):
-		inn = quest_loader.build(quest_loader.placements()[0])
-		add_child(inn)
-		# Extend only the last 48 native floor pixels behind the transparent HUD.
-		# The room uses a full background ANI and intentional dummy tiles.
-		for node in inn.get_children():
-			if node is Loader.MapSprite and node.get_meta("layer", "")=="closeback" and node.frames.size()==1 and node.texture and node.texture.get_width()>=800:
-				var strip:=AtlasTexture.new()
-				strip.atlas=node.texture
-				strip.region=Rect2(0,node.texture.get_height()-48,node.texture.get_width(),48)
-				var floor:=Sprite2D.new()
-				floor.texture=strip
-				floor.centered=false
-				floor.position=Vector2(node.offset.x,node.position.y+node.offset.y+node.texture.get_height())
-				floor.z_index=-3000
-				inn.add_child(floor)
-				break
-		inn.hide()
+	ensure_location("seria_room")
+	set_location("elvengard",ground)
 
-func set_location(id: String, point := Vector2.ZERO) -> bool:
-	if id not in ["elvengard", "seria_room"] or (id == "seria_room" and not is_instance_valid(inn)):return false
-	location = id
-	map_root = inn if id == "seria_room" else street
-	actor.reparent(map_root, false)
-	labels.reparent(map_root, false)
-	street.visible = id == "elvengard"
-	if is_instance_valid(inn):inn.visible = id == "seria_room"
-	ground = point if point != Vector2.ZERO else Vector2(390, 200) if id == "seria_room" else Vector2(775, 205)
-	running = false
-	run_direction = 0
+func ensure_location(id: String) -> bool:
+	if map_nodes.has(id):return true
+	if not world.location_exists(id):return false
+	var active_loader=quest_loader if id=="seria_room" else hendon_loader
+	if active_loader.data.is_empty() and not active_loader.load_export(world.scene(id)["asset"]):return false
+	for placement: Dictionary in active_loader.placements():
+		if placement["id"]!=world.scene(id)["placement"]:continue
+		var node: Node2D=active_loader.build(placement)
+		add_child(node)
+		node.hide()
+		map_nodes[id]=node
+		map_loaders[id]=active_loader
+		if id=="seria_room":
+			inn=node
+			for part in node.get_children():
+				if part is Loader.MapSprite and part.get_meta("layer","")=="closeback" and part.frames.size()==1 and part.texture and part.texture.get_width()>=800:
+					append_strip(node,part.texture,Vector2(part.offset.x,part.position.y+part.offset.y+part.texture.get_height()),-3000)
+					break
+		else:extend_ground(node,active_loader)
+		return true
+	return false
+
+func set_location(id: String, point:=Vector2.ZERO) -> bool:
+	if not ensure_location(id):return false
+	location=id
+	map_root=map_nodes[id]
+	if actor.get_parent()!=map_root:actor.reparent(map_root,false)
+	if labels.get_parent()!=map_root:labels.reparent(map_root,false)
+	for key: String in map_nodes:map_nodes[key].visible=key==id
+	ground=world.constrain(id,point if point!=Vector2.ZERO else World.vec(world.scene(id)["spawn"]))
+	running=false
+	run_direction=0
+	await_direction_release=true
+	last_tap={KEY_LEFT:-1000,KEY_RIGHT:-1000}
+	clock_ms=0
 	animated.clear()
 	for node in map_root.get_children():
-		if node is Loader.MapSprite and node.frames.size() > 1:animated.append(node)
+		if node is Loader.MapSprite and node.frames.size()>1:animated.append(node)
+	update_camera()
 	return true
 
-func extend_ground_under_hud() -> void:
-	# The original 480-high field must continue behind the transparent HUD.
-	# Repeat only the last native ground strip; all source pixels stay 1:1.
-	var room: Dictionary = map_root.get_meta("room")
-	for tile: Dictionary in room["tiles"]:
-		if tile["image"] == null:continue
-		var source: Texture2D = loader.texture(tile["image"])
-		var strip := AtlasTexture.new()
-		strip.atlas = source
-		strip.region = Rect2(0, source.get_height() - 48, source.get_width(), 48)
-		var sprite := Sprite2D.new()
-		sprite.centered = false
-		sprite.texture = strip
-		sprite.position = Vector2(float(tile["column"]) * 224 + tile["offset"][0], tile["offset"][1] + source.get_height())
-		sprite.z_index = -3100
-		sprite.set_meta("hud_ground_extension", true)
-		map_root.add_child(sprite)
+func update_camera() -> void:
+	camera_x=clampf(ground.x-400,0,maxf(0,float(map_root.get_meta("room")["width"])-800))
+	camera_y=clampf(ground.y-300,0,float(world.scene(location).get("camera_y",0)))
+	map_root.position=Vector2(-roundf(camera_x),-roundf(camera_y))
+	map_loaders[location].apply_camera(map_root,camera_x)
+	actor.position=Vector2(roundf(ground.x),roundf(ground.y+120))
+	actor.z_index=int(ground.y)
+
+func append_strip(parent: Node, texture: Texture2D, at: Vector2, depth: int) -> void:
+	var strip:=AtlasTexture.new()
+	strip.atlas=texture
+	strip.region=Rect2(0,texture.get_height()-48,texture.get_width(),48)
+	var sprite:=Sprite2D.new()
+	sprite.centered=false
+	sprite.texture=strip
+	sprite.position=at
+	sprite.z_index=depth
+	sprite.set_meta("hud_ground_extension",true)
+	parent.add_child(sprite)
+
+func extend_ground(parent: Node2D, source_loader) -> void:
+	var last: Dictionary={}
+	for tile: Dictionary in parent.get_meta("room")["tiles"]:
+		if tile["image"]==null:continue
+		var col: int=tile["column"]
+		if not last.has(col) or tile["offset"][1]>last[col]["offset"][1]:last[col]=tile
+	for tile: Dictionary in last.values():
+		var texture: Texture2D=source_loader.texture(tile["image"])
+		append_strip(parent,texture,Vector2(float(tile["column"])*224+tile["offset"][0],tile["offset"][1]+texture.get_height()),-3100)
 
 func localize_signs() -> void:
 	for node in map_root.get_children():
@@ -120,83 +149,82 @@ func localize_signs() -> void:
 			break
 
 func _process(delta: float) -> void:
-	clock_ms += delta * 1000
-	var direction := Vector2.ZERO
-	if enabled:
-		direction = Vector2(float(Input.is_physical_key_pressed(KEY_RIGHT)) - float(Input.is_physical_key_pressed(KEY_LEFT)),
-			float(Input.is_physical_key_pressed(KEY_DOWN)) - float(Input.is_physical_key_pressed(KEY_UP)))
-	if direction.length() > 1:direction = direction.normalized()
-	moving = direction.length_squared() > 0
-	if direction.x != 0:facing = int(signf(direction.x))
-	# Native town rectangles; collision semantics of the source grid remain unverified.
-	running = direction.x != 0 and int(signf(direction.x)) == run_direction
-	ground = constrain_ground(ground + direction * delta * (285 if running else 155))
-	camera_x = clampf(ground.x - 400, 0, 96 if location == "seria_room" else 768)
-	map_root.position.x = -roundf(camera_x)
-	loader.apply_camera(map_root, camera_x)
-	actor.position = Vector2(roundf(ground.x), roundf(ground.y + 120))
-	actor.z_index = int(ground.y)
-	actor.present("dash" if running else "move" if moving else "stay", clock_ms, facing, 0, 0)
+	clock_ms+=delta*1000
+	var direction:=Vector2.ZERO
+	if await_direction_release and not [KEY_LEFT,KEY_RIGHT,KEY_UP,KEY_DOWN].any(func(key):return Input.is_physical_key_pressed(key)):await_direction_release=false
+	if enabled and not await_direction_release:
+		direction=Vector2(float(Input.is_physical_key_pressed(KEY_RIGHT))-float(Input.is_physical_key_pressed(KEY_LEFT)),float(Input.is_physical_key_pressed(KEY_DOWN))-float(Input.is_physical_key_pressed(KEY_UP)))
+	if direction.length()>1:direction=direction.normalized()
+	moving=direction.length_squared()>0
+	if direction.x!=0:facing=int(signf(direction.x))
+	running=direction.x!=0 and int(signf(direction.x))==run_direction
+	ground=constrain_ground(ground+direction*delta*(285 if running else 155))
+	update_camera()
+	actor.present("dash" if running else "move" if moving else "stay",clock_ms,facing,0,0)
 	for node in animated:
-		var total := 0.0
-		for frame: Dictionary in node.frames:total += maxf(1, float(frame.get("delay_ms") if frame.get("delay_ms") != null else 100))
-		var local := fposmod(clock_ms, total)
+		var total:=0.0
+		for frame: Dictionary in node.frames:total+=maxf(1,float(frame.get("delay_ms") if frame.get("delay_ms")!=null else 100))
+		var local:=fposmod(clock_ms,total)
 		for i in node.frames.size():
-			local -= maxf(1, float(node.frames[i].get("delay_ms") if node.frames[i].get("delay_ms") != null else 100))
-			if local < 0:
-				node.show_frame(i)
-				break
+			local-=maxf(1,float(node.frames[i].get("delay_ms") if node.frames[i].get("delay_ms")!=null else 100))
+			if local<0:node.show_frame(i);break
 	labels.queue_redraw()
 
+func is_npc(id: String) -> bool:
+	return world.data["npcs"].has(id)
+
+func npc_definition(id: String) -> Dictionary:
+	return world.data["npcs"].get(id,{})
+
 func nearest() -> String:
-	if location == "seria_room":
-		if ground.distance_to(Vector2(477, 160)) < 100:return "seria"
-		if ground.y > 295:return "exit_inn"
-		return ""
-	if ground.distance_to(Vector2(445, 212)) < 95:return "linus"
-	if ground.distance_to(Vector2(775, 185)) < 85:return "enter_inn"
-	if ground.x > 1355:return "dungeon"
+	var closest:=""
+	var distance:=INF
+	for id: String in world.scene(location)["npcs"]:
+		var d:=ground.distance_to(World.vec(world.scene(location)["npcs"][id]))
+		if d<(100.0 if id=="seria" else 95.0) and d<distance:closest=id;distance=d
+	if closest!="":return closest
+	var portal:=world.portal_at(location,ground,inn_return)
+	if portal!="":return portal
+	if location=="elvengard" and ground.x>1355:return "dungeon"
 	return ""
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if enabled and event is InputEventKey:
-		var key := int(event.physical_keycode if event.physical_keycode else event.keycode)
-		if key in [KEY_LEFT, KEY_RIGHT]:
-			if not event.pressed:run_direction = 0
-			elif not event.echo:
-				var now := Time.get_ticks_msec()
-				if now - int(last_tap[key]) < 260:run_direction = -1 if key == KEY_LEFT else 1
-				last_tap[key] = now
-	if enabled and event.is_pressed() and not event.is_echo() and (event.physical_keycode == KEY_E or event.keycode == KEY_E):
-		var target := nearest()
-		if target != "":interact.emit(target)
+	if not enabled or not event is InputEventKey:return
+	var key:=int(event.physical_keycode if event.physical_keycode else event.keycode)
+	if key in [KEY_LEFT,KEY_RIGHT]:
+		if not event.pressed:run_direction=0
+		elif not event.echo:
+			var now:=Time.get_ticks_msec()
+			if now-int(last_tap[key])<260:run_direction=-1 if key==KEY_LEFT else 1
+			last_tap[key]=now
+	if event.is_pressed() and not event.is_echo() and key==KEY_E:
+		var target:=nearest()
+		if target!="":interact.emit(target)
 
 func constrain_ground(point: Vector2) -> Vector2:
-	if location == "seria_room":return Vector2(clampf(point.x, 330, 619), clampf(point.y, 178, 348))
-	# Grass/stone foreground is walkable too. The tree/shop silhouettes stay
-	# behind the upper ground contour; the lowest foot position clears the HUD.
-	return Vector2(clampf(point.x, 24, 1540), clampf(point.y, 175, 352))
+	return world.constrain(location,point)
+
+func draw_caption(value: String, at: Vector2, size:=13, color:=Color("e9d49a")) -> void:
+	at.x-=font.get_string_size(value,HORIZONTAL_ALIGNMENT_LEFT,-1,size).x/2
+	labels.draw_string_outline(font,at,value,HORIZONTAL_ALIGNMENT_LEFT,-1,size,3,Color.BLACK)
+	labels.draw_string(font,at,value,HORIZONTAL_ALIGNMENT_LEFT,-1,size,color)
 
 func _draw_names() -> void:
-	if player_name != "":
-		var at: Vector2 = actor.position + Vector2(-font.get_string_size(player_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x / 2, -134)
-		labels.draw_string_outline(font, at, player_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, 3, Color.BLACK)
-		labels.draw_string(font, at, player_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("d4edb0"))
-	var entries := [[Vector2(477, 22), "赛丽亚"], [Vector2(448, 340), "艾尔文防线 ↓"]] if location == "seria_room" else [[Vector2(445, 49), "林纳斯"], [Vector2(775, 38), "赛丽亚房间"], [Vector2(1335, 48), "土罐"], [Vector2(1460, 95), "格兰之森 →"]]
-	for entry in entries:
-		var text: String = entry[1]
-		var at: Vector2 = entry[0]
-		at.x -= font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x / 2
-		at.y += 120
-		labels.draw_string_outline(font, at, text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, 3, Color.BLACK)
-		labels.draw_string(font, at, text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color("e9d49a"))
-	var npc_id := "seria" if location == "seria_room" else "linus"
-	if quest_marks.get(npc_id, "") != "":
-		var at := Vector2(477, 120) if npc_id == "seria" else Vector2(445, 147)
-		labels.draw_string_outline(font, at, quest_marks[npc_id], HORIZONTAL_ALIGNMENT_CENTER, 28, 18, 3, Color.BLACK)
-		labels.draw_string(font, at, quest_marks[npc_id], HORIZONTAL_ALIGNMENT_CENTER, 28, 18, Color("ffe074"))
-	var hint: String = {"linus":"E 交谈 / 商店", "seria":"E 与赛丽亚交谈", "dungeon":"E 进入格兰之森", "enter_inn":"E 进入赛丽亚房间", "exit_inn":"E 返回艾尔文防线"}.get(nearest(), "")
-	if hint != "":
-		var at: Vector2 = actor.position + Vector2(-48, -110)
-		labels.draw_string_outline(font, at, hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, 3, Color.BLACK)
-		labels.draw_string(font, at, hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("fff2b5"))
+	if player_name!="":draw_caption(player_name,actor.position+Vector2(0,-134),12,Color("d4edb0"))
+	for npc: String in world.scene(location)["npcs"]:
+		var at:=World.vec(world.scene(location)["npcs"][npc])+Vector2(0,120-138)
+		draw_caption(npc_definition(npc)["name"],at)
+		if quest_marks.get(npc,"")!="":draw_caption(quest_marks[npc],at+Vector2(0,-24),18,Color("ffe074"))
+	for label: Array in world.scene(location)["labels"]:draw_caption(label[2],Vector2(label[0],label[1]+120-30),12)
+	for portal: Dictionary in world.portals(location,inn_return).values():
+		var rect:=World.box(portal["rect"])
+		var center:=rect.get_center()
+		if center.x<camera_x-30 or center.x>camera_x+830:continue
+		center.x=clampf(center.x,camera_x+90,camera_x+710)
+		draw_caption(portal["label"],center+Vector2(0,120-35),12)
+	var target:=nearest()
+	var hint:=""
+	if is_npc(target):hint="E 与"+npc_definition(target)["name"]+"交谈"
+	elif target=="dungeon":hint="E 进入格兰之森"
+	elif target!="":hint="E "+String(world.data["portals"][target]["label"])
+	if hint!="":draw_caption(hint,actor.position+Vector2(0,-110),12,Color("fff2b5"))

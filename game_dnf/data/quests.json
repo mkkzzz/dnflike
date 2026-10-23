@@ -1,6 +1,6 @@
 {
   "schema": "dnf_quests/1",
-  "revision": 1,
+  "revision": 2,
   "limits": {
     "active": 12,
     "tracked": 3
@@ -8,7 +8,15 @@
   "evidence": "Only four source quest nodes in this batch. Reward XP, item substitutions and local transaction rules are E-ADAPT, not original balance.",
   "npcs": {
     "linus": "林纳斯",
-    "seria": "赛丽亚"
+    "seria": "赛丽亚",
+    "pungjin": "风振",
+    "sinda": "辛达",
+    "gsd": "G.S.D",
+    "kanna": "卡妮娜",
+    "kiri": "凯丽",
+    "norton": "诺顿",
+    "grandis": "歌兰蒂斯",
+    "albert": "阿尔伯特"
   },
   "dungeons": {
     "lorien": "洛兰",
@@ -195,6 +203,163 @@
       "legacy": true,
       "source": {
         "evidence": "E-ADAPT; previous loop profile.quest"
+      }
+    },
+    {
+      "id": "hendon.meet_pungjin",
+      "name": "流动的丛林 格兰之森",
+      "category": "main",
+      "chapter": "赫顿的引荐",
+      "min_level": 3,
+      "requires": [
+        "elvengard.seria_fate"
+      ],
+      "giver": "linus",
+      "receiver": "pungjin",
+      "objectives": [
+        {
+          "id": "meet",
+          "type": "meet_npc",
+          "target": "pungjin",
+          "amount": 1
+        }
+      ],
+      "description": "沿艾尔文防线左侧前往赫顿玛尔，经城市区上行到主街，拜访风振。",
+      "reward": {
+        "gold": 100,
+        "xp": 100,
+        "items": {},
+        "choices": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false,
+      "source": {
+        "id": 104,
+        "path": "n_quest/handonmyre/mirkwood/epic_2_mirkwood_mutant_1.qst",
+        "sha256": "813b64e3a4278357244e4444f4986fc7c10ddd9c2644ba0a91b676f11ad2f3f0",
+        "raw_objective": [
+          6
+        ],
+        "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT"
+      }
+    },
+    {
+      "id": "hendon.swordman_start",
+      "name": "鬼剑士之路—开始",
+      "category": "main",
+      "chapter": "赫顿的引荐",
+      "min_level": 3,
+      "requires": [
+        "hendon.meet_pungjin"
+      ],
+      "giver": "pungjin",
+      "receiver": "pungjin",
+      "objectives": [
+        {
+          "id": "meet",
+          "type": "meet_npc",
+          "target": "pungjin",
+          "amount": 1
+        }
+      ],
+      "description": "再次与风振对话，听取关于鬼剑士修行和赫顿居民的介绍。",
+      "reward": {
+        "gold": 200,
+        "xp": 200,
+        "items": {},
+        "choices": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false,
+      "source": {
+        "id": 1901,
+        "path": "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd.qst",
+        "sha256": "56628248463de2601b8c243cc876afb1af79ee91025e1b8cba1d32c1408e19e4",
+        "raw_objective": [
+          6
+        ],
+        "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT"
+      }
+    },
+    {
+      "id": "hendon.meet_sinda",
+      "name": "鬼剑士之路—赫顿玛尔的辛达",
+      "category": "main",
+      "chapter": "赫顿的引荐",
+      "min_level": 4,
+      "requires": [
+        "hendon.swordman_start"
+      ],
+      "giver": "pungjin",
+      "receiver": "sinda",
+      "objectives": [
+        {
+          "id": "meet",
+          "type": "meet_npc",
+          "target": "sinda",
+          "amount": 1
+        }
+      ],
+      "description": "从主街上行到后街，找到铁匠辛达。",
+      "reward": {
+        "gold": 300,
+        "xp": 120,
+        "items": {},
+        "choices": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false,
+      "source": {
+        "id": 501,
+        "path": "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_2.qst",
+        "sha256": "283e61c39af0709c0a6c17b9bf458c910ee316fbf660efba9b7c007246a31ae5",
+        "raw_objective": [
+          4
+        ],
+        "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT"
+      }
+    },
+    {
+      "id": "hendon.job_introduction",
+      "name": "鬼剑士之路—所谓的转职是？",
+      "category": "main",
+      "chapter": "赫顿的引荐",
+      "min_level": 4,
+      "requires": [
+        "hendon.meet_sinda"
+      ],
+      "giver": "sinda",
+      "receiver": "sinda",
+      "objectives": [
+        {
+          "id": "meet",
+          "type": "meet_npc",
+          "target": "sinda",
+          "amount": 1
+        }
+      ],
+      "description": "再次与辛达交谈，听取职业与修行的说明。现在还不会进行转职。",
+      "reward": {
+        "gold": 200,
+        "xp": 120,
+        "items": {},
+        "choices": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false,
+      "source": {
+        "id": 502,
+        "path": "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_3.qst",
+        "sha256": "26e054594772491816d6f89b7d9b085974a7ff2b229fb2ac35c0e553b1bfc6d3",
+        "raw_objective": [
+          4,
+          0
+        ],
+        "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT"
       }
     }
   ]

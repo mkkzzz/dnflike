@@ -1,0 +1,535 @@
+{
+  "schema": "dnf_towns/1",
+  "revision": 1,
+  "locations": {
+    "elvengard": {
+      "name": "艾尔文防线",
+      "asset": "res://assets_local/flow_v1/manifest.json",
+      "placement": "elvengard",
+      "spawn": [
+        775,
+        205
+      ],
+      "walk": [
+        [
+          24,
+          175,
+          1516,
+          177
+        ]
+      ],
+      "npcs": {
+        "linus": [
+          445,
+          186
+        ]
+      },
+      "labels": [
+        [
+          1335,
+          173,
+          "土罐"
+        ],
+        [
+          1460,
+          215,
+          "格兰之森 →"
+        ]
+      ],
+      "camera_y": 0
+    },
+    "seria_room": {
+      "name": "赛丽亚房间",
+      "asset": "res://assets_local/flow_v1/early_quests/manifest.json",
+      "placement": "seria_room",
+      "spawn": [
+        390,
+        200
+      ],
+      "walk": [
+        [
+          330,
+          178,
+          289,
+          170
+        ]
+      ],
+      "npcs": {
+        "seria": [
+          477,
+          160
+        ]
+      },
+      "labels": [],
+      "camera_y": 0
+    },
+    "hendon_city": {
+      "name": "赫顿玛尔 · 城市区",
+      "asset": "res://assets_local/flow_v1/hendon_v1/manifest.json",
+      "placement": "hendon_city",
+      "spawn": [
+        3670,
+        265
+      ],
+      "walk": [
+        [
+          13,
+          223,
+          3774,
+          108
+        ],
+        [
+          748,
+          171,
+          107,
+          59
+        ]
+      ],
+      "npcs": {
+        "grandis": [
+          1447,
+          201
+        ],
+        "albert": [
+          3294,
+          210
+        ],
+        "norton": [
+          474,
+          195
+        ]
+      },
+      "labels": [],
+      "camera_y": 0
+    },
+    "hendon_main": {
+      "name": "赫顿玛尔 · 主街",
+      "asset": "res://assets_local/flow_v1/hendon_v1/manifest.json",
+      "placement": "hendon_main",
+      "spawn": [
+        1066,
+        400
+      ],
+      "walk": [
+        [
+          9,
+          226,
+          2439,
+          220
+        ],
+        [
+          289,
+          167,
+          106,
+          62
+        ],
+        [
+          1016,
+          434,
+          101,
+          40
+        ],
+        [
+          2083,
+          178,
+          98,
+          50
+        ]
+      ],
+      "npcs": {
+        "pungjin": [
+          838,
+          210
+        ],
+        "kiri": [
+          1694,
+          217
+        ],
+        "kanna": [
+          1303,
+          210
+        ]
+      },
+      "labels": [
+        [
+          60,
+          285,
+          "格兰之森（暂未开放）"
+        ],
+        [
+          2370,
+          290,
+          "西海岸（暂未开放）"
+        ],
+        [
+          2130,
+          185,
+          "月光酒馆（暂未开放）"
+        ]
+      ],
+      "camera_y": 120
+    },
+    "hendon_auction": {
+      "name": "赫顿玛尔 · 后街",
+      "asset": "res://assets_local/flow_v1/hendon_v1/manifest.json",
+      "placement": "hendon_auction",
+      "spawn": [
+        388,
+        295
+      ],
+      "walk": [
+        [
+          12,
+          221,
+          1993,
+          116
+        ],
+        [
+          240,
+          166,
+          91,
+          60
+        ],
+        [
+          333,
+          326,
+          93,
+          40
+        ],
+        [
+          772,
+          181,
+          78,
+          44
+        ]
+      ],
+      "npcs": {
+        "gsd": [
+          1496,
+          208
+        ],
+        "sinda": [
+          1198,
+          209
+        ]
+      },
+      "labels": [],
+      "camera_y": 0
+    }
+  },
+  "portals": {
+    "elven_to_city": {
+      "from": "elvengard",
+      "rect": [
+        24,
+        192,
+        28,
+        141
+      ],
+      "to": "hendon_city",
+      "spawn": [
+        3670,
+        265
+      ],
+      "label": "← 赫顿玛尔",
+      "reciprocal": "city_to_elven",
+      "source_raw": [
+        -5,
+        192,
+        29,
+        141,
+        2,
+        1
+      ],
+      "min_level": 1,
+      "evidence": "E-INFER topology from town.lst and reciprocal MAP six-value groups; trigger/landing E-ADAPT"
+    },
+    "city_to_elven": {
+      "from": "hendon_city",
+      "rect": [
+        3777,
+        219,
+        20,
+        117
+      ],
+      "to": "elvengard",
+      "spawn": [
+        100,
+        260
+      ],
+      "label": "艾尔文防线 →",
+      "reciprocal": "elven_to_city",
+      "source_raw": [
+        3777,
+        219,
+        20,
+        117,
+        1,
+        0
+      ],
+      "min_level": 1,
+      "evidence": "E-INFER topology from town.lst and reciprocal MAP six-value groups; trigger/landing E-ADAPT"
+    },
+    "city_to_main": {
+      "from": "hendon_city",
+      "rect": [
+        747,
+        163,
+        106,
+        18
+      ],
+      "to": "hendon_main",
+      "spawn": [
+        1066,
+        400
+      ],
+      "label": "赫顿玛尔主街 ↑",
+      "reciprocal": "main_to_city",
+      "source_raw": [
+        747,
+        163,
+        106,
+        18,
+        2,
+        0
+      ],
+      "min_level": 1,
+      "evidence": "E-INFER topology from town.lst and reciprocal MAP six-value groups; trigger/landing E-ADAPT"
+    },
+    "main_to_city": {
+      "from": "hendon_main",
+      "rect": [
+        1016,
+        456,
+        100,
+        40
+      ],
+      "to": "hendon_city",
+      "spawn": [
+        800,
+        250
+      ],
+      "label": "城市区 ↓",
+      "reciprocal": "city_to_main",
+      "source_raw": [
+        1016,
+        456,
+        100,
+        40,
+        2,
+        1
+      ],
+      "min_level": 1,
+      "evidence": "E-INFER topology from town.lst and reciprocal MAP six-value groups; trigger/landing E-ADAPT"
+    },
+    "main_to_auction": {
+      "from": "hendon_main",
+      "rect": [
+        298,
+        157,
+        107,
+        21
+      ],
+      "to": "hendon_auction",
+      "spawn": [
+        388,
+        295
+      ],
+      "label": "后街 · 辛达 / G.S.D ↑",
+      "reciprocal": "auction_to_main",
+      "source_raw": [
+        298,
+        157,
+        107,
+        21,
+        2,
+        2
+      ],
+      "min_level": 1,
+      "evidence": "E-INFER topology from town.lst and reciprocal MAP six-value groups; trigger/landing E-ADAPT"
+    },
+    "auction_to_main": {
+      "from": "hendon_auction",
+      "rect": [
+        341,
+        350,
+        95,
+        19
+      ],
+      "to": "hendon_main",
+      "spawn": [
+        348,
+        245
+      ],
+      "label": "赫顿玛尔主街 ↓",
+      "reciprocal": "main_to_auction",
+      "source_raw": [
+        341,
+        350,
+        95,
+        19,
+        2,
+        0
+      ],
+      "min_level": 1,
+      "evidence": "E-INFER topology from town.lst and reciprocal MAP six-value groups; trigger/landing E-ADAPT"
+    },
+    "enter_inn": {
+      "from": "elvengard",
+      "rect": [
+        690,
+        175,
+        170,
+        95
+      ],
+      "to": "seria_room",
+      "spawn": [
+        390,
+        200
+      ],
+      "label": "赛丽亚房间 ↑",
+      "reciprocal": "exit_inn",
+      "source_raw": [
+        730,
+        147,
+        110,
+        22,
+        1,
+        1
+      ],
+      "min_level": 1,
+      "evidence": "E-INFER topology from town.lst and reciprocal MAP six-value groups; trigger/landing E-ADAPT"
+    },
+    "exit_inn": {
+      "from": "seria_room",
+      "rect": [
+        330,
+        296,
+        289,
+        52
+      ],
+      "to": "elvengard",
+      "spawn": [
+        775,
+        270
+      ],
+      "label": "艾尔文防线 ↓",
+      "reciprocal": "enter_inn",
+      "source_raw": [],
+      "min_level": 1,
+      "evidence": "E-INFER topology from town.lst and reciprocal MAP six-value groups; trigger/landing E-ADAPT"
+    },
+    "enter_hendon_inn": {
+      "from": "hendon_auction",
+      "rect": [
+        781,
+        170,
+        79,
+        24
+      ],
+      "to": "seria_room",
+      "spawn": [
+        390,
+        200
+      ],
+      "label": "赛丽亚房间 ↑",
+      "reciprocal": "exit_hendon_inn",
+      "source_raw": [
+        781,
+        170,
+        79,
+        24,
+        2,
+        5
+      ],
+      "min_level": 1,
+      "evidence": "E-INFER source town2 area5; shared room art, dynamic return E-ADAPT"
+    },
+    "exit_hendon_inn": {
+      "from": "seria_room",
+      "rect": [
+        330,
+        296,
+        289,
+        52
+      ],
+      "to": "hendon_auction",
+      "spawn": [
+        810,
+        245
+      ],
+      "label": "赫顿玛尔后街 ↓",
+      "reciprocal": "enter_hendon_inn",
+      "source_raw": [],
+      "min_level": 1,
+      "evidence": "E-ADAPT safe landing beyond original entrance"
+    }
+  },
+  "npcs": {
+    "linus": {
+      "name": "林纳斯",
+      "services": [
+        "shop"
+      ],
+      "dialogue": "冒险的路还很长，记得检查武器和药剂。"
+    },
+    "seria": {
+      "name": "赛丽亚",
+      "services": [],
+      "dialogue": "你好，冒险家。林纳斯大叔就在外面的铁匠铺，出发前先去和他打个招呼吧。"
+    },
+    "pungjin": {
+      "name": "风振",
+      "services": [],
+      "dialogue": "欢迎来到赫顿玛尔。我是风振。若想了解这座城和自己的道路，不妨先去后街拜访辛达。"
+    },
+    "sinda": {
+      "name": "辛达",
+      "services": [
+        "equipment"
+      ],
+      "dialogue": "我是这里的铁匠辛达。磨炼技艺之前，先了解自己的职业和装备。鬼剑士的修行，也可以向G.S.D请教。"
+    },
+    "gsd": {
+      "name": "G.S.D",
+      "services": [
+        "skills"
+      ],
+      "dialogue": "年轻的鬼剑士，左臂中的力量并非只有毁灭。先学会驾驭它，再决定自己的道路。"
+    },
+    "kanna": {
+      "name": "卡妮娜",
+      "services": [],
+      "dialogue": "欢迎来到赫顿玛尔！这里的街道很热闹，第一次来可不要迷路哦。"
+    },
+    "kiri": {
+      "name": "凯丽",
+      "services": [],
+      "dialogue": "我是凯丽。冒险靠的不只是运气，也得多练练自己的本领。"
+    },
+    "norton": {
+      "name": "诺顿",
+      "services": [],
+      "dialogue": "科学能解释许多看似神秘的现象。装备分解的研究还在准备中，先别急着把东西丢掉。"
+    },
+    "grandis": {
+      "name": "歌兰蒂斯",
+      "services": [],
+      "dialogue": "愿你在旅途中守护自己的信念，也愿你平安归来。"
+    },
+    "albert": {
+      "name": "阿尔伯特",
+      "services": [],
+      "dialogue": "想变强就多去实战。看清对手的动作，才能找到自己的机会。"
+    }
+  },
+  "source": {
+    "selection": "E-ADAPT (r)hendon replaces missing Hendon.map; cities and graph source-preserved; unsupported regional exits not enabled",
+    "town_listing": {
+      "1": "elvengard.twn",
+      "2": "hendonmyre.twn"
+    },
+    "movement": "Union of explicit ground rectangles; source virtual movable areas for Hendon, previous approved Elvengard/Seria bounds retained",
+    "entry": "E interaction, no teleport menu; no level lock on exploring safe cities"
+  }
+}

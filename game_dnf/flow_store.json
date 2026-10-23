@@ -1,23 +1,23 @@
 {
   "schema": "dnflike_loop_store/1",
-  "version": "dnf-loop-v11-quests-20261023",
-  "tag": "dnf-loop-v11-quests-20261023",
+  "version": "dnf-loop-v12-hendon-20261023",
+  "tag": "dnf-loop-v12-hendon-20261023",
   "repository": "mkkzzz/dnflike-assets",
   "base_asset_version": "dnf-native-assets-v1-20261022",
   "packs": [
     {
       "name": "flow_v1-01.zip",
       "kind": "flow_v1",
-      "bytes": 20903315,
-      "sha256": "ee350d44d859bef4133b3e49d7d37ee84b94b430a552dc7d0031571e5da42e5a",
-      "files": 391,
-      "unpacked_bytes": 32115016
+      "bytes": 22682411,
+      "sha256": "477fc1d722f19078e5e1058b5e7b56cdac20bcd17e83f75e43d2d94bd667b6ec",
+      "files": 513,
+      "unpacked_bytes": 34483762
     },
     {
       "name": "combat_runtime-01.zip",
       "kind": "combat_runtime",
       "bytes": 2956848,
-      "sha256": "5c729a9823c66afeba7d07b20d95cf99297225575f4cb98225d93d3853426f42",
+      "sha256": "5bbc914b036ae227f69ef37d10de815b81b161906781b932db3eb03056ae4bca",
       "files": 171,
       "unpacked_bytes": 7593106
     }
@@ -26,10 +26,10 @@
     {
       "name": "evidence-01.zip",
       "kind": "evidence",
-      "bytes": 6732104,
-      "sha256": "44f66591d67f6f9055ebb180dc1520a128503f033be66c3a94009d506a26f7e9",
+      "bytes": 4108888,
+      "sha256": "94cc31f20fbbc195005a324d17f8726308724af1035f0b9525317e013b169a79",
       "files": 11,
-      "unpacked_bytes": 6926704
+      "unpacked_bytes": 4246581
     }
   ]
 }

@@ -22,6 +22,7 @@ var inventory_tools
 var loot_bridge
 var quest_windows
 var selected_dungeon := "lorien"
+var transitioning := false
 var number_windows
 const SKILL_KEYS := [KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H]
 const SKILL_CODES := {"draw":KEY_A, "triple":KEY_S, "rage_slash":KEY_D, "buff":KEY_F, "guard":KEY_G}
@@ -105,7 +106,7 @@ func _ready() -> void:
 	debug_panel.setup(self)
 	show_character_selection()
 	if test_mode:
-		var runner_path: String="res://tests/quests/test_chapter.gd" if "--quests-only" in OS.get_cmdline_user_args() else "res://tests/flow/test_loop.gd"
+		var runner_path: String="res://tests/town/test_hendon.gd" if "--towns-only" in OS.get_cmdline_user_args() else "res://tests/quests/test_chapter.gd" if "--quests-only" in OS.get_cmdline_user_args() else "res://tests/flow/test_loop.gd"
 		if "--items-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_inventory_flow.gd"
 		var runner = load(runner_path).new()
 		runner.game = self
@@ -201,7 +202,7 @@ func _process(delta: float) -> void:
 		var counter: Label = skill_views[id]["counter"]
 		view.modulate = Color("777777") if remaining > 0 else Color.WHITE
 		counter.text = "%.1f" % remaining if remaining > 0 else ""
-	town.enabled = overlay == "" and session.state == "town" and not debug_is_open()
+	town.enabled = not transitioning and overlay == "" and session.state == "town" and not debug_is_open()
 	debug_panel.refresh_status()
 	quest_windows.refresh_tracker()
 	if notification_seconds > 0:
@@ -213,6 +214,7 @@ func _process(delta: float) -> void:
 		show_overlay("menu")
 
 func _input(event: InputEvent) -> void:
+	if transitioning:get_viewport().set_input_as_handled();return
 	if not event is InputEventKey:return
 	var key := int(event.physical_keycode if event.physical_keycode else event.keycode)
 	if not character_active and key != KEY_F11:return
@@ -239,6 +241,7 @@ func _input(event: InputEvent) -> void:
 	notice(display_settings.description())
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if transitioning:get_viewport().set_input_as_handled();return
 	if not character_active:
 		if event.is_pressed() and not event.is_echo() and is_instance_valid(character_screen):
 			character_screen.handle_key(int(event.physical_keycode if event.physical_keycode else event.keycode))
@@ -284,12 +287,15 @@ func notice(message: String) -> void:
 
 func save_profile() -> bool:
 	if not character_active:return false
+	remember_town_position()
 	var ok: bool = store.write(session)
 	save_failed = not ok
 	notice("进度已保存" if ok else "保存失败，请检查存档目录")
 	return ok
 
 func act(kind: String, payload: Dictionary = {}) -> bool:
+	if transitioning:return false
+	if session.state=="town":remember_town_position()
 	if kind.begins_with("quest."):return quest_action(kind,payload)
 	if kind.begins_with("items.") or kind.begins_with("numbers.gear") or kind=="slots.move":return item_action(kind,payload)
 	var before_level := int(session.profile["level"])
@@ -314,7 +320,7 @@ func item_action(kind: String, payload: Dictionary) -> bool:
 	session=candidate;save_failed=false;sync_number_changes(kind);return true
 
 func quest_action(kind: String, payload: Dictionary = {}) -> bool:
-	if not character_active:return false
+	if not character_active or transitioning:return false
 	# Write the complete candidate first. A failed disk write cannot leak XP,
 	# consumed materials or completion into the live character.
 	var candidate = Session.new()
@@ -323,7 +329,7 @@ func quest_action(kind: String, payload: Dictionary = {}) -> bool:
 	candidate.run=session.run.duplicate(true)
 	candidate.result=session.result.duplicate(true)
 	var npc: String=town.nearest() if session.state=="town" else ""
-	var response: Dictionary=candidate.quest_command(kind,payload,{"npc":npc,"nearby":npc in ["seria","linus"]})
+	var response: Dictionary=candidate.quest_command(kind,payload,{"npc":npc,"nearby":town.is_npc(npc)})
 	if not response.get("ok",false):notice(response.get("message","任务操作失败"));return false
 	if not store.write(candidate):
 		save_failed=true
@@ -342,15 +348,57 @@ func record_npc_visit(npc: String) -> void:
 	if outcome.get("ok",false) and not outcome["changed"].is_empty():save_profile()
 
 func interact_town(target: String) -> void:
-	if target in ["seria","linus"]:show_overlay("npc")
+	if not character_active or transitioning or session.state!="town" or target!=town.nearest():return
+	if town.is_npc(target):show_overlay("npc")
 	elif target=="dungeon":show_overlay("dungeon")
-	elif target in ["enter_inn","exit_inn"]:
-		var location := "seria_room" if target=="enter_inn" else "elvengard"
-		if town.set_location(location):
-			session.profile["town_location"]=location
-			save_profile()
-			show_overlay("")
-		else:notice("城镇资源未就绪，请通过正式入口同步资源")
+	else:transition_town(target)
+
+func remember_town_position() -> void:
+	if session.state=="town" and town.location==session.profile.get("town_location"):
+		session.profile["town_position"]=[town.ground.x,town.ground.y]
+		session.profile["inn_return"]=town.inn_return
+
+func transition_town(portal: String) -> bool:
+	if transitioning or not character_active:return false
+	var plan: Dictionary=town.world.plan(session.profile,portal,town.ground,session.state=="town")
+	if not plan["ok"]:notice(plan["message"]);return false
+	if not town.ensure_location(plan["location"]):notice("目标场景资源未就绪，请通过正式入口同步");return false
+	var candidate=Session.new()
+	candidate.profile=session.profile.duplicate(true)
+	candidate.state=session.state
+	candidate.run=session.run.duplicate(true)
+	candidate.result=session.result.duplicate(true)
+	candidate.profile["town_location"]=plan["location"]
+	candidate.profile["town_position"]=plan["point"]
+	candidate.profile["inn_return"]=plan["inn_return"]
+	candidate.town_world.normalize(candidate.profile)
+	if not store.write(candidate):save_failed=true;notice("切换未提交：存档写入失败，请重试");return false
+	transitioning=true
+	town.enabled=false
+	windows.hide_tooltip()
+	var cover:=ColorRect.new()
+	cover.size=Vector2(800,600)
+	cover.color=Color(0,0,0,0)
+	cover.z_index=200
+	cover.mouse_filter=Control.MOUSE_FILTER_STOP
+	ui.add_child(cover)
+	var tween=create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	tween.tween_property(cover,"color:a",1.0,0.12)
+	await tween.finished
+	session=candidate
+	town.inn_return=plan["inn_return"]
+	town.set_location(plan["location"],session.TownWorld.vec(candidate.profile["town_position"]))
+	quest_windows.focus_npc=""
+	show_overlay("")
+	var reveal=create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	reveal.tween_property(cover,"color:a",0.0,0.16)
+	await reveal.finished
+	cover.queue_free()
+	transitioning=false
+	save_failed=false
+	sync_debug_pause()
+	notice(String(plan["label"]))
+	return true
 
 func sync_number_changes(kind := "numbers.update") -> void:
 	if is_instance_valid(battle) and session.state=="battle":
@@ -370,7 +418,7 @@ func show_overlay(which: String) -> void:
 	for child in modal.get_children():
 		if child is Control:child.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		child.queue_free()
-	town.enabled = which == "" and session.state == "town"
+	town.enabled = not transitioning and which == "" and session.state == "town"
 	sync_debug_pause()
 	match which:
 		"npc":npc_panel()
@@ -463,7 +511,8 @@ func return_town() -> void:
 		combat = null
 	town.show()
 	show_overlay("")
-	notice("回到艾尔文防线 · " + ("保存失败，请重试" if save_failed else "进度已保存"))
+	town.set_location(session.profile["town_location"],session.TownWorld.vec(session.profile["town_position"]))
+	notice("回到"+String(town.world.scene(town.location)["name"])+" · " + ("保存失败，请重试" if save_failed else "进度已保存"))
 
 func menu_panel() -> void:
 	var panel = title_panel("冒险菜单", Rect2(218, 105, 364, 300))
@@ -516,12 +565,17 @@ func enter_character(path: String) -> bool:
 	build_hotbars()
 	world_clip.show()
 	town.show()
-	town.set_location(String(session.profile.get("town_location","elvengard")))
+	town.inn_return=session.profile.get("inn_return","enter_inn")
+	if not town.set_location(String(session.profile.get("town_location","elvengard")),session.TownWorld.vec(session.profile["town_position"])):
+		town.set_location("elvengard",Vector2(100,260))
+		session.profile["town_location"]="elvengard"
+		remember_town_position()
+		notice("场景资源缺失，已返回艾尔文安全点")
 	town.player_name = skin.chinese(String(session.profile["name"]))
 	town.running = false
 	town.run_direction = 0
 	show_overlay("result" if session.state == "result" else "")
-	notice("已从备份恢复存档 · 艾尔文防线" if store.recovered else "艾尔文防线 · 欢迎 " + String(session.profile["name"]))
+	notice("已从备份恢复存档 · "+String(town.world.scene(town.location)["name"]) if store.recovered else String(town.world.scene(town.location)["name"])+" · 欢迎 "+String(session.profile["name"]))
 	return true
 
 func debug_is_open() -> bool:
@@ -536,7 +590,7 @@ func set_debug_open(open: bool) -> void:
 
 func sync_debug_pause() -> void:
 	var open := debug_is_open()
-	if is_instance_valid(town):town.enabled = not open and overlay == "" and session.state == "town"
+	if is_instance_valid(town):town.enabled = not transitioning and not open and overlay == "" and session.state == "town"
 	if is_instance_valid(battle):
 		battle.set_process_input(false)
 		combat.set_paused(open or overlay != "" or session.state != "battle")
