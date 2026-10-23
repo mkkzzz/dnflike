@@ -8,6 +8,8 @@ const TownWorld = preload("res://town/world.gd")
 const Inventory = preload("res://items/inventory.gd")
 const Loot = preload("res://loot/service.gd")
 const Services=preload("res://items/services.gd")
+const Consumables=preload("res://items/consumables.gd")
+const Recovery=preload("res://flow/recovery.gd")
 var quests = Quests.new()
 var town_world = TownWorld.new()
 var dungeons: Dictionary = {}
@@ -173,6 +175,7 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 			var dungeon: String = String(payload.get("dungeon", "forest_trial"))
 			if not dungeon_available(dungeon):return reject("地下城尚未开放，请先完成前置任务")
 			run = {"id": "run_%d" % int(profile["next_run"]), "dungeon": dungeon, "difficulty":profile.get("difficulty", "normal"), "stats": stats()}
+			Consumables.initialize(run);Recovery.initialize(run)
 			profile["next_run"] += 1
 			result = {}
 			state = "battle"
@@ -183,15 +186,26 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 		"flow.retreat":
 			if state != "battle":return reject("当前没有战斗")
 			finish_run(false, {"reason": "retreat"})
+		"flow.abandon":
+			if state!="defeated":return reject("当前没有待处理的死亡")
+			var details: Dictionary=run["recovery"]["pending"]["stats"].duplicate(true);details["reason"]="death"
+			return finish_run(false,details)
 		_:
 			return reject("未知操作：" + kind)
 	return {"ok": true}
 
-func consume_potion() -> Dictionary:
-	if state != "battle" or int(profile["inventory"].get("potion", 0)) < 1:return reject("没有可用的恢复药剂")
-	var consumed:=Inventory.consume(profile,"potion",1)
-	if not consumed["ok"]:return consumed
-	return {"ok": true, "heal": int(CATALOG.ITEMS["potion"]["heal"])}
+func use_consumable(id: String, view: Dictionary, tx: String) -> Dictionary:
+	if state!="battle":return reject("请在战斗中使用恢复物品")
+	return Consumables.use(profile,run,id,view,tx)
+
+func consume_potion(view: Dictionary={}, tx: String="") -> Dictionary:
+	return use_consumable("potion",view,tx)
+
+func revive_command(payload: Dictionary) -> Dictionary:
+	if state!="defeated":return reject("当前没有待处理的死亡")
+	var response:=Recovery.revive(profile,run,payload)
+	if response["ok"]:state="battle";run["stats"]=stats()
+	return response
 
 func add_item(id: String, count: int) -> void:
 	# Guaranteed settlement rewards and legacy migration use recoverable overflow.
@@ -201,8 +215,11 @@ func combat_event(event: Dictionary) -> Dictionary:
 	if state != "battle" or event.get("run_id") != run.get("id"):return reject("忽略过期战斗事件")
 	match event.get("type", ""):
 		"combat.player_defeated":
+			var response:=Recovery.defeat(run,event)
+			if not response["ok"]:return response
 			Services.death_penalty(profile)
-			return finish_run(false, event.get("stats", {}))
+			state="defeated";result={}
+			return {"ok":true}
 		"combat.monster_defeated":
 			var loot_changed:=Loot.generate(run,event)
 			var quest_changed := false
@@ -226,7 +243,7 @@ func combat_event(event: Dictionary) -> Dictionary:
 
 func finish_run(won: bool, details: Dictionary) -> Dictionary:
 	var id := String(run.get("id", ""))
-	if id.is_empty() or profile["settled"].has(id) or state != "battle":return reject("该冒险已结算")
+	if id.is_empty() or profile["settled"].has(id) or state not in ["battle","defeated"] or won and state!="battle":return reject("该冒险已结算")
 	profile["settled"][id] = true
 	result = {"run_id": id, "victory": won, "gold": 0, "xp": 0, "potion": 0, "stats": details.duplicate(true)}
 	if won:
@@ -243,11 +260,11 @@ func finish_run(won: bool, details: Dictionary) -> Dictionary:
 	return {"ok": true}
 
 func serialize() -> Dictionary:
-	return {"schema": "dnf_loop_save/4", "profile": profile.duplicate(true), "state": state,
+	return {"schema": "dnf_loop_save/5", "profile": profile.duplicate(true), "state": state,
 		"run": run.duplicate(true), "result": result.duplicate(true)}
 
 func restore(data: Dictionary) -> bool:
-	if data.get("schema") not in ["dnf_loop_save/1","dnf_loop_save/2","dnf_loop_save/3","dnf_loop_save/4"] or not data.get("profile") is Dictionary:return false
+	if data.get("schema") not in ["dnf_loop_save/1","dnf_loop_save/2","dnf_loop_save/3","dnf_loop_save/4","dnf_loop_save/5"] or not data.get("profile") is Dictionary:return false
 	var p: Dictionary = data["profile"].duplicate(true)
 	var legacy := not p.has("numbers_revision")
 	for k: String in profile:
@@ -265,6 +282,11 @@ func restore(data: Dictionary) -> bool:
 	if p["equipped"] != "" and int(p["inventory"].get(p["equipped"], 0)) < 1:return false
 	if not data.get("run", {}) is Dictionary or not data.get("result", {}) is Dictionary:return false
 	if not Loot.valid(data.get("run",{})):return false
+	if not Consumables.valid(data.get("run",{})) or not Recovery.valid(data.get("run",{})):return false
+	if data.get("state") not in ["town","battle","defeated","result"]:return false
+	if data.get("state")=="defeated":
+		var adventure: Dictionary=data["run"]
+		if not adventure.get("id") is String or adventure["id"].is_empty() or p["settled"].has(adventure["id"]) or adventure.get("recovery",{}).get("pending",{}).is_empty() or not dungeons.has(adventure.get("dungeon","")):return false
 	for id in p["settled"]:
 		if not id is String or not p["settled"][id] is bool or not p["settled"][id]:return false
 	if data.get("state") == "result":
@@ -296,6 +318,10 @@ func restore(data: Dictionary) -> bool:
 	state = "result" if data.get("state") == "result" else "town"
 	run = data.get("run", {}).duplicate(true) if state == "result" else {}
 	result = data.get("result", {}).duplicate(true) if state == "result" else {}
+	if data.get("state")=="defeated":
+		run=data["run"].duplicate(true);state="defeated"
+		var details: Dictionary=run["recovery"]["pending"]["stats"].duplicate(true);details["reason"]="death"
+		finish_run(false,details) # No suspended world snapshot: reload ends this adventure without a second penalty.
 	# Interrupted battles return safely to town without reward; run serial is kept.
 	return true
 

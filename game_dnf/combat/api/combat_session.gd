@@ -110,6 +110,11 @@ func set_paused(value: bool) -> void:
 	else:resume()
 
 ## Effect already validated and paid for by the flow side, e.g. {"kind":"heal","amount":150}.
+func can_apply_effect(effect: Dictionary) -> bool:
+	if not _alive() or game.player.is_empty() or game.finished or game.paused:return false
+	var amount=effect.get("amount")
+	return effect.get("kind")=="heal" and (amount is int or amount is float) and is_finite(float(amount)) and amount>0 and float(game.player["hp"])>0 and float(game.player["hp"])<game.max_hp
+
 func apply_effect(effect: Dictionary) -> bool:
 	return _alive() and game.apply_effect(effect)
 
@@ -137,6 +142,7 @@ func read_view() -> Dictionary:
 	var exit_target := Vector2.ZERO
 	if game.room_cleared and not game.finished:exit_target = game.door_point(String(rooms[game.room_index]["next"]))
 	return {"run_id":game.run_id,"room_id":game.room_id,"room_index":game.room_index,
+		"time_ms":game.elapsed_ms,
 		"room":game.room_index+1,"room_count":rooms.size(),"room_name":String(rooms[game.room_index]["name"]),
 		"hp":float(p["hp"]),"hp_max":game.max_hp,"mp":float(p["mp"]),"mp_max":game.max_mp,
 		"pos":Vector2(p["pos"]),"camera_x":roundf(game.view.camera_x),"facing":int(p["facing"]),"job":game.job,"weapon":game.weapon,

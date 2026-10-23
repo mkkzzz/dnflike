@@ -97,13 +97,16 @@ func persist(message: String) -> Dictionary:
 	return result(ok, message + (" · 已保存" if ok else " · 保存失败"))
 
 func back_to_town() -> void:
+	if not game.recovery_bridge.pending_death.is_empty() and not game.recovery_bridge.commit_death():return
+	if game.session.state=="defeated":
+		if not game.act("flow.abandon"):return
 	if game.session.state == "battle":game.act("flow.retreat")
 	if game.session.state == "result":game.return_town()
 	game.show_overlay("")
 
 func status() -> String:
 	var p: Dictionary = game.session.profile
-	var text := "%s · 等级 %d · 金币 %d · 药剂 %d" % [{"town":"城镇", "battle":"战斗", "result":"结算"}[game.session.state], p["level"], p["gold"], p["inventory"].get("potion", 0)]
+	var text := "%s · 等级 %d · 金币 %d · 药剂 %d" % [{"town":"城镇", "battle":"战斗", "defeated":"等待复活选择", "result":"结算"}[game.session.state], p["level"], p["gold"], p["inventory"].get("potion", 0)]
 	if game.session.state == "battle" and is_instance_valid(game.battle):
 		var view: Dictionary = game.combat.read_view()
 		text += "\n房间 %d/%d · 生命 %d/%d · 魔法 %d/%d · 敌人 %d" % [view["room"], view["room_count"], view["hp"], view["hp_max"], view["mp"], view["mp_max"], view["alive_monsters"]]

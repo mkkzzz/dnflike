@@ -1,0 +1,8 @@
+{
+  "revision":1,
+  "note":"E-ADAPT functional defaults; gold revival is not original DNF coin economy",
+  "consumables":{
+    "potion":{"level":1,"cooldown_ms":10000,"group":"recovery","group_cooldown_ms":10000,"effect":{"kind":"heal","amount":150}}
+  },
+  "revival":{"limit":3,"gold":100,"gold_increment":100,"hp_percent":50,"mp_percent":50,"invulnerable_ms":3000}
+}

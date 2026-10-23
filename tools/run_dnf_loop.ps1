@@ -1,4 +1,4 @@
-param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly, [switch]$GranOnly, [switch]$UpgradesOnly)
+param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly, [switch]$GranOnly, [switch]$UpgradesOnly, [switch]$RecoveryOnly)
 $ErrorActionPreference="Stop"
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
@@ -6,6 +6,8 @@ if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/d
 if ($LASTEXITCODE -ne 0) {throw "Town service configuration invalid."}
 & python (Join-Path $PSScriptRoot "check_dnf_upgrades.py")
 if ($LASTEXITCODE -ne 0) {throw "Equipment upgrade configuration invalid."}
+& python (Join-Path $PSScriptRoot "check_dnf_recovery.py")
+if ($LASTEXITCODE -ne 0) {throw "Recovery configuration invalid."}
 $repoRoot=Split-Path $PSScriptRoot -Parent
 $gamePath=Join-Path $repoRoot "game_dnf"
 if (-not $GodotPath) {$GodotPath=Join-Path $PSScriptRoot "godot/Godot_v4.7.2-stable_win64_console.exe"}
@@ -61,6 +63,9 @@ if ($importExit -ne 0 -or ($importOutput -match 'SCRIPT ERROR|ERROR:')) {
     throw "Loop project import failed."
 }
 if ($Test) {
+    $recoveryOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_recovery.gd 2>&1
+    $recoveryOutput | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($recoveryOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($recoveryOutput -match '\[RECOVERY_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Recovery regression failed."}
     $upgradeOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_upgrades.gd 2>&1
     $upgradeOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($upgradeOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($upgradeOutput -match '\[UPGRADE_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Upgrade regression failed."}
@@ -93,6 +98,7 @@ if ($Test) {
     if ($ItemsOnly) {$runArgs+="--items-only"}
     if ($ServicesOnly) {$runArgs+="--services-only"}
     if ($UpgradesOnly) {$runArgs+="--upgrades-only"}
+    if ($RecoveryOnly) {$runArgs+="--recovery-only"}
     if ($TownsOnly) {$runArgs+="--towns-only"}
     if ($GranOnly) {$runArgs+="--gran-only"}
     if ($Capture) {$runArgs+="--capture"}

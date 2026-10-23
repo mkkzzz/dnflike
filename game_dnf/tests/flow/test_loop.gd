@@ -165,7 +165,8 @@ func unit_states() -> void:
 	loaded.command("flow.depart")
 	var death_gold := int(loaded.profile["gold"])
 	loaded.combat_event({"type": "combat.player_defeated", "run_id": loaded.run["id"], "stats": {"damage_taken": 700}})
-	check(loaded.state == "result" and not loaded.result["victory"] and int(loaded.profile["gold"]) == death_gold, "death event settles failure without clear reward")
+	check(loaded.state == "defeated" and loaded.result.is_empty() and int(loaded.profile["gold"]) == death_gold, "death event waits for revival choice without clear reward")
+	check(loaded.command("flow.abandon")["ok"] and loaded.state=="result" and not loaded.result["victory"],"abandoning pending death settles failure")
 	var bad: Dictionary = loaded.serialize()
 	bad["profile"]["inventory"]["potion"] = -4
 	check(not interrupted.restore(bad), "reject malformed inventory")

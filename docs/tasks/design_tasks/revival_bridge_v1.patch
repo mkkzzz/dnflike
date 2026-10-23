@@ -1,0 +1,60 @@
+--- a/game_dnf/scripts/main.gd
++++ b/game_dnf/scripts/main.gd
+@@ -72,0 +73 @@
++var last_defeat_id := 0
+@@ -163,0 +165,35 @@
++## Public recovery bridge: paid/committed by flow; preserves room, enemies and run clocks.
++func can_revive(spec: Dictionary) -> bool:
++	if player.is_empty() or not finished or victory or float(player["hp"])>0:return false
++	if spec.get("run_id")!=run_id or spec.get("room_id")!=room_id or spec.get("death_id")!=last_defeat_id or last_defeat_id<=0:return false
++	for field in ["hp_percent","mp_percent","invulnerable_ms"]:
++		if not Numbers.whole(spec.get(field),1 if field=="hp_percent" else 0,30000 if field=="invulnerable_ms" else 100):return false
++	var actor=spec.get("player")
++	if not actor is Dictionary or not actor.get("numbers") is Dictionary or not actor.get("number_seed") is Dictionary or not actor.get("skills") is Dictionary:return false
++	for field in ["hp_max","mp_max"]:
++		var value=actor["numbers"].get(field)
++		if not (value is int or value is float) or not is_finite(float(value)) or value<(1 if field=="hp_max" else 0):return false
++	var seed: Dictionary=actor["number_seed"];var cfg:=Numbers.config()
++	if not Numbers.whole(seed.get("level"),1,int(cfg["progression"]["level_cap"])) or not cfg["growtypes"].has(seed.get("growtype","")) or not seed.get("modifiers") is Array:return false
++	for mod in seed["modifiers"]:
++		if not Numbers.valid_modifier(mod,cfg):return false
++	for id in actor["skills"]:
++		if not cfg["skills"].has(id) or not Numbers.whole(actor["skills"][id],0,int(cfg["skills"][id]["max_level"])):return false
++	return true
++
++func revive_player(spec: Dictionary) -> bool:
++	if not can_revive(spec):return false
++	var point: Vector2=player["pos"];var facing: int=player["facing"]
++	var cooldowns: Dictionary=player["cooldowns"].duplicate(true)
++	end_action_fx()
++	player=new_player();player["pos"]=point;player["facing"]=facing;player["cooldowns"]=cooldowns
++	numeric_player=ActorNumbers.new() # Death clears temporary player effects, not enemies.
++	update_numbers(spec["player"],"refill")
++	player["hp"]=maxf(1,max_hp*int(spec["hp_percent"])/100.0)
++	player["mp"]=max_mp*int(spec["mp_percent"])/100.0
++	player["invuln_ms"]=float(spec["invulnerable_ms"])
++	finished=false;victory=false;paused=true
++	held.clear();requests.clear();taps.clear();last_direction_tap.clear();last_direction_release.clear();run_direction=0
++	bus.emit("combat.player_revived",flow_payload({"death_id":last_defeat_id,"invulnerable_ms":spec["invulnerable_ms"]}))
++	return true
++
+@@ -206 +242 @@
+-				bus.emit("combat.player_defeated",flow_payload())
++				last_defeat_id=int(bus.emit("combat.player_defeated",flow_payload())["event_id"])
+@@ -242,0 +279 @@
++	last_defeat_id = 0
+@@ -950 +987 @@
+-		bus.emit("combat.player_defeated",flow_payload())
++		last_defeat_id=int(bus.emit("combat.player_defeated",flow_payload())["event_id"])
+--- a/game_dnf/combat/api/combat_session.gd
++++ b/game_dnf/combat/api/combat_session.gd
+@@ -120,0 +121,6 @@
++func can_revive(spec: Dictionary) -> bool:
++	return _alive() and game.can_revive(spec)
++
++func revive(spec: Dictionary) -> bool:
++	return _alive() and game.revive_player(spec)
++
+@@ -145 +151 @@
+-		"time_ms":game.elapsed_ms,
++		"time_ms":game.elapsed_ms,"death_id":game.last_defeat_id,"invulnerable_ms":float(p["invuln_ms"]),

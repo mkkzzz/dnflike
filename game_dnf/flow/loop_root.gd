@@ -20,9 +20,13 @@ const InventoryTools = preload("res://ui/flow/inventory_tools.gd")
 const LootBridge = preload("res://loot/bridge.gd")
 const ServiceWindows=preload("res://ui/flow/service_windows.gd")
 const UpgradeWindows=preload("res://ui/flow/upgrade_windows.gd")
+const RecoveryBridge=preload("res://flow/recovery_bridge.gd")
+const RecoveryWindows=preload("res://ui/flow/recovery_windows.gd")
 const DurabilityBridge=preload("res://items/durability_bridge.gd")
 var service_windows
 var upgrade_windows
+var recovery_bridge
+var recovery_windows
 var inventory_tools
 var loot_bridge
 var quest_windows
@@ -90,6 +94,7 @@ func _ready() -> void:
 	inventory_tools = InventoryTools.new(self)
 	service_windows=ServiceWindows.new(self)
 	upgrade_windows=UpgradeWindows.new(self)
+	recovery_bridge=RecoveryBridge.new(self);recovery_windows=RecoveryWindows.new(self)
 	var durability_bridge=DurabilityBridge.new();durability_bridge.setup(self);add_child(durability_bridge)
 	loot_bridge = LootBridge.new();loot_bridge.setup(self);add_child(loot_bridge)
 	skill_catalog = SkillCatalog.new()
@@ -118,6 +123,8 @@ func _ready() -> void:
 		if "--items-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_inventory_flow.gd"
 		if "--services-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_services_flow.gd"
 		if "--upgrades-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_upgrades_flow.gd"
+		if "--recovery-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_consumables_flow.gd"
+		if "--consumables-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_consumables_flow.gd"
 		if "--gran-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_gran.gd"
 		var runner = load(runner_path).new()
 		runner.game = self
@@ -186,6 +193,7 @@ func _process(delta: float) -> void:
 	var hp_max := hp
 	var mp_max := mp
 	var cooldowns: Dictionary = {}
+	var item_clock:=0.0
 	if is_instance_valid(battle):
 		var snap: Dictionary = combat.read_view()
 		hp = float(snap["hp"])
@@ -193,6 +201,7 @@ func _process(delta: float) -> void:
 		hp_max = float(snap["hp_max"])
 		mp_max = float(snap["mp_max"])
 		cooldowns = snap.get("cooldowns", {})
+		item_clock=float(snap.get("time_ms",0))
 		status_text.text = skin.chinese("%s  %d / %d" % [snap["room_name"], snap["room"], snap["room_count"]])
 	else:status_text.text = "艾尔文防线  · 方向键移动  E 交谈  · 药剂 ×%d" % int(p["inventory"].get("potion", 0))
 	if save_failed:status_text.text = "存档写入失败 · 请检查目录后重试保存"
@@ -206,7 +215,12 @@ func _process(delta: float) -> void:
 	experience.value = float(p["xp"]) * 100.0 / session.xp_needed() if session.xp_needed()>0 else 100
 	experience.set_meta("value_text", "经验  %d / %d" % [p["xp"], session.xp_needed()] if session.xp_needed()>0 else "已达等级上限")
 	for cell in quick_views:
-		if is_instance_valid(cell):cell.refresh_quantity()
+		if is_instance_valid(cell):
+			cell.refresh_quantity()
+			var remaining: float=Session.Consumables.remaining(session.run,cell.cell.get("id",""),item_clock)/1000
+			var item_counter: Label=cell.get_node("item_cooldown")
+			item_counter.text=str(ceili(remaining)) if remaining>0 else ""
+			if remaining>0 and is_instance_valid(cell.image_view):cell.image_view.modulate=Color("777777")
 	for id: String in skill_views:
 		var remaining := float(cooldowns.get(id, 0))
 		var view: Button = skill_views[id]["view"]
@@ -220,7 +234,7 @@ func _process(delta: float) -> void:
 		notification_seconds -= delta
 		toast_text.text = skin.chinese(notification)
 		toast_panel.position.y = 4 if overlay=="numbers" else 43
-		toast_panel.visible = notification_seconds > 0 and overlay in ["","numbers"]
+		toast_panel.visible = notification_seconds > 0 and overlay in ["","numbers","death"]
 	if is_instance_valid(battle) and overlay == "" and not debug_is_open() and combat.read_view()["paused"]:
 		show_overlay("menu")
 
@@ -298,6 +312,10 @@ func notice(message: String) -> void:
 
 func save_profile() -> bool:
 	if not character_active:return false
+	if recovery_bridge!=null and not recovery_bridge.pending_death.is_empty():
+		var committed: bool=recovery_bridge.commit_death()
+		if overlay=="death":show_overlay("death")
+		return committed
 	remember_town_position()
 	var ok: bool = store.write(session)
 	save_failed = not ok
@@ -309,6 +327,7 @@ func act(kind: String, payload: Dictionary = {}) -> bool:
 	if session.state=="town":remember_town_position()
 	if kind.begins_with("quest."):return quest_action(kind,payload)
 	if kind.begins_with("services."):return service_action(kind,payload)
+	if kind in ["flow.depart","flow.return","flow.retreat","flow.abandon"]:return lifecycle_action(kind,payload)
 	if kind.begins_with("items.") or kind.begins_with("numbers.gear") or kind=="slots.move":return item_action(kind,payload)
 	var before_level := int(session.profile["level"])
 	var response: Dictionary = session.command(kind, payload)
@@ -320,6 +339,14 @@ func act(kind: String, payload: Dictionary = {}) -> bool:
 	save_profile()
 	if int(session.profile["level"])>before_level:notice("等级提升 · Lv.%d" % int(session.profile["level"]))
 	return true
+
+func lifecycle_action(kind: String, payload: Dictionary) -> bool:
+	if not character_active:return false
+	var candidate=recovery_bridge.candidate()
+	var response: Dictionary=candidate.command(kind,payload)
+	if not response["ok"]:notice(response["message"]);return false
+	if not store.write(candidate):save_failed=true;notice("冒险变更未提交：存档写入失败，请重试");return false
+	session=candidate;save_failed=false;return true
 
 func item_action(kind: String, payload: Dictionary) -> bool:
 	if not character_active:return false
@@ -437,6 +464,7 @@ func sync_number_changes(kind := "numbers.update") -> void:
 
 func show_overlay(which: String) -> void:
 	if not character_active:return
+	if session.state=="defeated" or not recovery_bridge.pending_death.is_empty() or not recovery_bridge.pending_effect.is_empty():which="death"
 	windows.close_purchase()
 	if session.state == "result" and which == "":which = "result"
 	if which=="quest" and overlay not in ["quest","npc"]:
@@ -458,6 +486,7 @@ func show_overlay(which: String) -> void:
 		"shop":shop_panel()
 		"services":service_windows.open()
 		"upgrades":upgrade_windows.open()
+		"death":recovery_windows.open()
 		"dungeon":dungeon_panel()
 		"result":result_panel()
 		"menu":menu_panel()
@@ -491,6 +520,7 @@ func dungeon_panel() -> void:
 
 func depart() -> void:
 	if not act("flow.depart",{"dungeon":selected_dungeon}):return
+	recovery_bridge.reset()
 	show_overlay("")
 	town.hide()
 	combat = CombatSession.new()
@@ -520,6 +550,7 @@ func depart() -> void:
 	sync_debug_pause()
 
 func on_combat_event(event: Dictionary) -> void:
+	if event.get("type")=="combat.player_defeated":recovery_bridge.receive(event);return
 	var before_level := int(session.profile["level"])
 	var response: Dictionary = session.combat_event(event)
 	if response["ok"] and event.get("type")=="combat.monster_defeated" and (int(response.get("amount",0))>0 or response.get("quest_changed",false) or response.get("loot_changed",false)):
@@ -565,6 +596,7 @@ func menu_panel() -> void:
 	skin.label(panel, "编辑器工具栏控制预览 · 原版比例居中" if Engine.is_embedded_in_editor() else "F11 切换全屏 · 原版比例居中", Vector2(24, 255), 11)
 
 func show_character_selection() -> void:
+	if recovery_bridge!=null:recovery_bridge.reset()
 	character_active = false
 	set_debug_open(false)
 	windows.close_purchase()
@@ -644,6 +676,7 @@ func build_hotbars() -> void:
 	skill_views.clear()
 	for i in 6:
 		var cell = make_slot(hud, {"place":"quick", "index":i, "id":session.profile["quick_items"][i]}, Vector2(85 + i * 30, 558))
+		var item_counter: Label=skin.label(cell,"",Vector2(2,3),10,Color.WHITE);item_counter.name="item_cooldown";item_counter.z_index=3
 		cell.name = "hud_potion" if i == 0 else "hud_item_" + str(i)
 		quick_views.append(cell)
 		var id: String = session.profile["skill_slots"][i]
@@ -702,7 +735,7 @@ func refresh_item_views() -> void:
 
 func use_quick(index: int) -> void:
 	var id: String = session.profile["quick_items"][index]
-	if id == "potion":use_potion()
+	if id!="":recovery_bridge.use_item(id)
 
 func forward_battle_key(code: int, pressed: bool, echo := false) -> void:
 	if not is_instance_valid(battle):return
@@ -714,16 +747,4 @@ func forward_battle_key(code: int, pressed: bool, echo := false) -> void:
 	combat.submit_key(code, pressed, echo)
 
 func use_potion() -> void:
-	if not is_instance_valid(battle) or session.state != "battle":notice("进入地下城后可使用恢复药剂"); return
-	var snap: Dictionary = combat.read_view()
-	if float(snap["hp"]) >= float(snap["hp_max"]):notice("生命值已满"); return
-	if bool(snap["paused"]):notice("请关闭菜单后使用药剂"); return
-	var candidate=Session.new()
-	candidate.profile=session.profile.duplicate(true);candidate.run=session.run.duplicate(true)
-	candidate.state=session.state;candidate.result=session.result.duplicate(true)
-	var consumed: Dictionary=candidate.consume_potion()
-	if not consumed["ok"]:notice(consumed["message"]);return
-	if not store.write(candidate):save_failed=true;notice("药剂未使用：存档写入失败");return
-	session=candidate;save_failed=false
-	combat.apply_effect({"kind":"heal","amount":int(consumed["heal"])})
-	notice("使用恢复药剂 · HP +150")
+	recovery_bridge.use_item("potion")

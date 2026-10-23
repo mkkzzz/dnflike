@@ -127,7 +127,7 @@ func run() -> void:
 	host.check(game.session.state == "battle" and game.combat.read_view()["room"] == 1 and game.combat.read_view()["paused"], "restart button creates a fresh paused adventure")
 	await button("lose")
 	await ticks(8)
-	host.check(game.session.state == "result" and not game.session.result["victory"] and game.session.result["gold"] == 0, "lose command reaches normal defeat without rewards")
+	host.check(game.session.state == "defeated" and game.session.result.is_empty() and not game.session.run["recovery"]["pending"].is_empty(), "lose command reaches pending death choice without rewards")
 	game.set_debug_open(true)
 	await button("town")
 	host.check(game.session.state == "town" and not is_instance_valid(game.battle), "town button cleans up combat and restores town")
