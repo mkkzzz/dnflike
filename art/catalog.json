@@ -4,9 +4,9 @@
   "external_resource_stores": {
     "dnf_items_v1": {
       "lock": "game_dnf/items_store.json",
-      "guide": "docs/tasks/art_tasks/dnf_items_native_v1.md",
-      "storage": "Independent immutable private release; assets_local/items_v1 consumption copy",
-      "source": "Original native 28x28 equipment icons; E-ADAPT sample identities and inventory layout"
+      "guide": "docs/tasks/art_tasks/dnf_services_native_v1.md",
+      "storage": "Versioned private item releases; current items_v2 consumption copy, items_v1 preserved",
+      "source": "Original native 28x28 equipment/material icons; E-ADAPT sample identities and service layout"
     },
     "dnf_native_v1": {
       "lock": "game_dnf/asset_store.json",

@@ -1,16 +1,16 @@
 {
   "schema": "dnflike_items_store/1",
-  "version": "dnf-items-v1-20261023",
-  "tag": "dnf-items-v1-20261023",
+  "version": "dnf-items-v2-services-20261023",
+  "tag": "dnf-items-v2-services-20261023",
   "repository": "mkkzzz/dnflike-assets",
   "packs": [
     {
-      "kind": "items_v1",
-      "name": "items_v1-01.zip",
-      "bytes": 4717,
-      "sha256": "bd64f8165adbe8ef3efe728bd9690c56b99b091b1eec4c1d3981a984e4817fdb",
-      "files": 3,
-      "unpacked_bytes": 4789
+      "kind": "items_v2",
+      "name": "items_v2-01.zip",
+      "bytes": 6254,
+      "sha256": "a534980c6a1430fc35ab446d67663a17f46d4aadd3e701e139bae7eee3102681",
+      "files": 4,
+      "unpacked_bytes": 6539
     }
   ]
 }

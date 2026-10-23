@@ -272,6 +272,7 @@ static func valid(p: Dictionary) -> bool:
 		if not state.get(key) is Array or (key=="storage" and state[key].size()!=CAPACITY):return false
 		all.append_array(state[key])
 	all.append_array(p["equipment"].values())
+	for entry: Dictionary in p.get("services",{}).get("buyback",[]):all.append(entry["uid"])
 	var seen: Dictionary={}
 	for uid in all:
 		if not uid is String:return false
@@ -288,10 +289,11 @@ static func valid(p: Dictionary) -> bool:
 		if not seen.has(uid) or not p["gear"][uid].get("locked",false) is bool:return false
 	if int(state["next_stack"])<=max_serial or seen.size()!=p["gear"].size()+state["stacks"].size():return false
 	var view:=p.duplicate(true);sync(view)
-	if view["inventory"].size()!=p["inventory"].size():return false
 	for id: String in view["inventory"]:
+		if not p["inventory"].has(id) and int(view["inventory"][id])==0:p["inventory"][id]=0
 		if not Numbers.whole(p["inventory"].get(id),0,1000000000) or int(p["inventory"][id])!=int(view["inventory"][id]):return false
 		p["inventory"][id]=int(p["inventory"][id])
+	if view["inventory"].size()!=p["inventory"].size():return false
 	state["next_stack"]=int(state["next_stack"]);state["revision"]=1
 	return view["bag_layout"]==p["bag_layout"] and view["equipped"]==p["equipped"]
 

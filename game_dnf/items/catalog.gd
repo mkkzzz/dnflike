@@ -1,6 +1,7 @@
 extends RefCounted
 ## Trial adaptation; source icons do not imply these are original item stats.
 const ITEMS := {
+	"scrap_iron": {"name":"铁质碎片", "kind":"material", "rarity":0, "level":1, "weight":0.01, "description":"分解装备获得的基础材料"},
 	"training_coat": {"name":"练习布甲", "kind":"weapon", "rarity":0, "level":1, "weight":1.0, "description":"防御与生命加成"},
 	"training_necklace": {"name":"练习项链", "kind":"weapon", "rarity":0, "level":1, "weight":0.3, "description":"魔防与法力加成"},
 	"iron_sword": {"name": "练习太刀", "kind": "weapon", "rarity": 0, "level": 1, "weight": 1.2, "multiplier": 1.0, "description": "物理伤害 ×1.00"},

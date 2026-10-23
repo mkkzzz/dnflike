@@ -1,7 +1,9 @@
-param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly)
+param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly)
 $ErrorActionPreference="Stop"
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
+& python (Join-Path $PSScriptRoot "check_dnf_services.py")
+if ($LASTEXITCODE -ne 0) {throw "Town service configuration invalid."}
 $repoRoot=Split-Path $PSScriptRoot -Parent
 $gamePath=Join-Path $repoRoot "game_dnf"
 if (-not $GodotPath) {$GodotPath=Join-Path $PSScriptRoot "godot/Godot_v4.7.2-stable_win64_console.exe"}
@@ -53,6 +55,9 @@ if ($importExit -ne 0 -or ($importOutput -match 'SCRIPT ERROR|ERROR:')) {
     throw "Loop project import failed."
 }
 if ($Test) {
+    $serviceOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_services.gd 2>&1
+    $serviceOutput | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($serviceOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($serviceOutput -match '\[SERVICE_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Service regression failed."}
     $itemOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_inventory.gd 2>&1
     $itemOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($itemOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($itemOutput -match '\[ITEM_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Item regression failed."}
@@ -74,6 +79,7 @@ if ($Test) {
     if ($NumbersOnly) {$runArgs+="--numbers-only"}
     if ($QuestsOnly) {$runArgs+="--quests-only"}
     if ($ItemsOnly) {$runArgs+="--items-only"}
+    if ($ServicesOnly) {$runArgs+="--services-only"}
     if ($TownsOnly) {$runArgs+="--towns-only"}
     if ($Capture) {$runArgs+="--capture"}
 }

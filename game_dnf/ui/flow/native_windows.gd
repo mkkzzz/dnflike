@@ -91,9 +91,9 @@ func quests() -> void:
 	skin.label(node, "委托记录", Vector2(23, 379), 11, Color("a59c88"))
 
 func item_texture(id: String) -> Texture2D:
-	if id in ["training_coat","training_necklace"]:
-		if item_icons.is_empty():item_icons=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/items_v1/manifest.json"))
-		return load("res://assets_local/items_v1/"+String(item_icons["images"][item_icons["items"][id]]["file"]))
+	if id in ["training_coat","training_necklace","scrap_iron"]:
+		if item_icons.is_empty():item_icons=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/items_v2/manifest.json"))
+		return load("res://assets_local/items_v2/"+String(item_icons["images"][item_icons["items"][id]]["file"]))
 	return game.town.loader.texture(game.town.loader.data["ui"]["items"][id])
 
 func hide_tooltip() -> void:
@@ -105,7 +105,7 @@ func item_tip(id: String, rect: Rect2, buying := false, attached := false, insta
 	var data: Dictionary = game.Catalog.ITEMS[id]
 	var rarity: Dictionary = game.Catalog.RARITIES[int(data["rarity"])]
 	var is_weapon: bool = data["kind"] == "weapon"
-	var height := 256 if is_weapon else 220
+	var height := 280 if is_weapon else 220
 	var at := Vector2(rect.position.x - 288, rect.position.y)
 	if at.x < 8:at.x = rect.end.x + 8
 	at.x = clampf(at.x, 8, 512)
@@ -118,7 +118,7 @@ func item_tip(id: String, rect: Rect2, buying := false, attached := false, insta
 	# One more native translucent center layer gives readable body contrast.
 	skin.surface(tip, Rect2(6, 6, 268, height - 12), "tooltip", 5, 0)
 	skin.label(tip, data["name"], Vector2(16, 12), 16, Color(rarity["color"])).name = "tooltip_title"
-	skin.label(tip, rarity["name"] + (" · 装备" if is_weapon else " · 消耗品"), Vector2(16, 42), 11, Color(rarity["color"]))
+	skin.label(tip, rarity["name"] + (" · 装备" if is_weapon else " · 消耗品" if data["kind"]=="consumable" else " · 材料"), Vector2(16, 42), 11, Color(rarity["color"]))
 	var icon: TextureRect = skin.image(tip, item_texture(id), Vector2(236, 14))
 	skin.rarity_frame(icon, int(data["rarity"]), Color(rarity["color"]))
 	skin.image(tip, skin.texture("common", 230), Vector2(39, 69))
@@ -140,12 +140,13 @@ func item_tip(id: String, rect: Rect2, buying := false, attached := false, insta
 		if uid!="" and game.session.profile["gear"][uid]["definition"]==id:
 			var instance: Dictionary = game.session.profile["gear"][uid]
 			skin.label(tip,"%s · 品质 %d · 强化 +%d%s" % [uid,instance["quality"],instance["reinforce"]," · 已锁定" if instance.get("locked",false) else ""],Vector2(16,201),10)
+			skin.label(tip,"耐久 %d / %d%s" % [instance["durability"],instance["durability_max"]," · 属性已失效" if int(instance["durability"])==0 else ""],Vector2(16,218),11,Color("ff7777") if int(instance["durability"])==0 else Color("a7dd74"))
 		else:skin.label(tip,"具体品质与强化见 O 键的装备管理",Vector2(16,201),10)
 		if (instance_uid!="" and instance_uid in game.session.profile["equipment"].values()) or (instance_uid=="" and game.session.profile["equipped"]==id):skin.label(tip, "已装备", Vector2(211, 151), 11, Color("a7dd74"))
 	else:
 		skin.label(tip, "使用效果", Vector2(16, 82), 12, Color("d4c399"))
-		skin.label(tip, "恢复 %d HP" % int(data["heal"]), Vector2(16, 108), 16, Color("a7dd74"))
-		skin.label(tip, "地下城内使用", Vector2(16, 142), 12, Color("cccccc"))
+		skin.label(tip, "恢复 %d HP" % int(data["heal"]) if data.has("heal") else data["description"], Vector2(16, 108), 14, Color("a7dd74"))
+		skin.label(tip, "地下城内使用" if data.has("heal") else "可用于后续装备养成", Vector2(16, 142), 12, Color("cccccc"))
 	skin.image(tip, skin.texture("common", 230), Vector2(39, height - 44))
 	var hint := "购买价格  %d 金币" % int(data.get("price", 0)) if buying else "持有数量  %d" % int(game.session.profile["inventory"].get(id, 0))
 	skin.label(tip, hint, Vector2(16, height - 30), 11, Color("f0d18a") if buying else Color("a59c88"))

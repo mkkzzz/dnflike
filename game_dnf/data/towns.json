@@ -475,7 +475,9 @@
     "linus": {
       "name": "林纳斯",
       "services": [
-        "shop"
+        "shop",
+        "trade",
+        "repair"
       ],
       "dialogue": "冒险的路还很长，记得检查武器和药剂。"
     },
@@ -492,7 +494,9 @@
     "sinda": {
       "name": "辛达",
       "services": [
-        "equipment"
+        "equipment",
+        "trade",
+        "repair"
       ],
       "dialogue": "我是这里的铁匠辛达。磨炼技艺之前，先了解自己的职业和装备。鬼剑士的修行，也可以向G.S.D请教。"
     },
@@ -505,7 +509,9 @@
     },
     "kanna": {
       "name": "卡妮娜",
-      "services": [],
+      "services": [
+        "trade"
+      ],
       "dialogue": "欢迎来到赫顿玛尔！这里的街道很热闹，第一次来可不要迷路哦。"
     },
     "kiri": {
@@ -515,8 +521,11 @@
     },
     "norton": {
       "name": "诺顿",
-      "services": [],
-      "dialogue": "科学能解释许多看似神秘的现象。装备分解的研究还在准备中，先别急着把东西丢掉。"
+      "services": [
+        "trade",
+        "disassemble"
+      ],
+      "dialogue": "科学能让旧装备焕发新的价值。把不需要的装备交给我，分解前先确认材料产出。"
     },
     "grandis": {
       "name": "歌兰蒂斯",

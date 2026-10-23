@@ -35,6 +35,8 @@ static func canonicalize(profile: Dictionary) -> void:
 	for purchases: Array in profile["skill_purchases"].values():
 		for index in purchases.size():purchases[index] = int(purchases[index])
 	for instance: Dictionary in profile["gear"].values():
+		for key in ["durability","durability_max","wear_progress"]:
+			if instance.has(key):instance[key]=int(instance[key])
 		instance["quality"] = int(instance["quality"])
 		instance["reinforce"] = int(instance["reinforce"])
 		for mod: Dictionary in instance["enchants"]:mod["value"] = float(mod["value"])
@@ -195,6 +197,7 @@ static func valid(profile: Dictionary) -> bool:
 		var gear = profile["gear"][uid]
 		if not gear is Dictionary or not cfg["equipment"].has(gear.get("definition","")):return false
 		if not whole(gear.get("quality"),0,100) or not whole(gear.get("reinforce"),0,30) or not gear.get("enchants") is Array:return false
+		if gear.has("durability_max") and (not whole(gear["durability_max"],1,100000) or not whole(gear.get("durability"),0,int(gear["durability_max"])) or not whole(gear.get("wear_progress"),0,1000000)):return false
 		for mod in gear["enchants"]:
 			if not valid_modifier(mod,cfg):return false
 		counts[gear["definition"]] = int(counts.get(gear["definition"],0))+1

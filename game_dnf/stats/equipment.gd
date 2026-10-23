@@ -1,9 +1,10 @@
 extends RefCounted
-## Instances supplement the legacy item-count view. The counts remain ownership authority.
+## Equipment instances; the inventory ledger owns locations, old counts support migration.
 static func create(profile: Dictionary, definition: String, quality := 50, reinforce := 0) -> String:
 	var uid := "gear_%d" % int(profile["next_gear"])
 	profile["next_gear"] += 1
-	profile["gear"][uid] = {"definition":definition,"quality":clampi(quality,0,100),"reinforce":clampi(reinforce,0,30),"enchants":[]}
+	var maximum:=int(JSON.parse_string(FileAccess.get_file_as_string("res://data/services.json"))["durability_max"])
+	profile["gear"][uid] = {"definition":definition,"quality":clampi(quality,0,100),"reinforce":clampi(reinforce,0,30),"enchants":[],"durability_max":maximum,"durability":maximum,"wear_progress":0}
 	return uid
 
 static func normalize(profile: Dictionary, definitions: Dictionary, counts: Dictionary) -> void:
@@ -43,6 +44,7 @@ static func modifiers(profile: Dictionary, config: Dictionary) -> Array:
 	for slot: String in profile["equipment"]:
 		var instance: Dictionary = profile["gear"].get(profile["equipment"][slot],{})
 		if instance.is_empty():continue
+		if int(instance.get("durability",1))<=0:continue
 		var definition: Dictionary = config["equipment"][instance["definition"]]
 		# Lowering level does not delete owned gear; ineligible gear ceases to contribute.
 		if int(profile["level"]) < int(definition.get("required_level",1)):continue

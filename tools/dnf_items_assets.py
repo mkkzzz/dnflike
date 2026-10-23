@@ -15,7 +15,7 @@ ITEM_LOCK = ROOT/'game_dnf/items_store.json'
 def build(library: Path, release: Path) -> None:
     if release.exists() and any(release.iterdir()):raise ValueError('Use a new empty release directory')
     release.mkdir(parents=True, exist_ok=True)
-    output = ROOT/'game_dnf/assets_local/items_v1'
+    output = ROOT/'game_dnf/assets_local/items_v2'
     lib = Library(library, output)
     try:
         icons = {}
@@ -23,6 +23,7 @@ def build(library: Path, release: Path) -> None:
         for item, path in {
             'training_coat':'equipment/character/common/jacket/cloth/100050017.equ',
             'training_necklace':'equipment/character/common/amulet/100300001.equ',
+            'scrap_iron':'stackable/material/piece_iron.stk',
         }.items():
             reference = span_values(lib.script(path)['spans'], '[icon]')
             icons[item] = lib.image(reference[0], int(reference[1]), item)
@@ -33,17 +34,17 @@ def build(library: Path, release: Path) -> None:
             'selection':'E-ADAPT sample equipment uses original icons, not the source item identity or balance',
             'pixel_policy':'Original native RGBA, no resize, no drawing, no atlas replacement'})
     finally:lib.close()
-    archive = release/'items_v1-01.zip'
+    archive = release/'items_v2-01.zip'
     inventory = []
     with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as target:
         for source in sorted(output.rglob('*')):
             if not source.is_file() or source.name.endswith('.import'):continue
-            name='items_v1/'+source.relative_to(output).as_posix()
+            name='items_v2/'+source.relative_to(output).as_posix()
             inventory.append({'path':name,'bytes':source.stat().st_size,'sha256':digest(source)})
             target.write(source,name)
         target.writestr('_manifests/'+archive.name+'.json',json.dumps(inventory).encode())
-    lock={'schema':'dnflike_items_store/1','version':'dnf-items-v1-20261023','tag':'dnf-items-v1-20261023',
-          'repository':'mkkzzz/dnflike-assets','packs':[{'kind':'items_v1','name':archive.name,
+    lock={'schema':'dnflike_items_store/1','version':'dnf-items-v2-services-20261023','tag':'dnf-items-v2-services-20261023',
+          'repository':'mkkzzz/dnflike-assets','packs':[{'kind':'items_v2','name':archive.name,
           'bytes':archive.stat().st_size,'sha256':digest(archive),'files':len(inventory),
           'unpacked_bytes':sum(f['bytes'] for f in inventory)}]}
     write_json(release/'asset_store.json',lock)
@@ -74,13 +75,13 @@ def sync(lock: dict, project: Path, local: Path | None) -> None:
         remote={a['name']:a for a in release['assets']}
     hashes={};planned=[]
     for entry in lock['packs']:
-        if entry['kind']!='items_v1' or entry['name']!='items_v1-01.zip':raise ValueError('Unexpected item archive')
+        if entry['kind'] not in ['items_v1','items_v2'] or entry['name']!=entry['kind']+'-01.zip':raise ValueError('Unexpected item archive')
         archive=(local or cache_home()/'downloads'/version)/entry['name']
         if local is None:download(github,remote[entry['name']],entry,archive)
         base=cache_home()/version
         for info in install_archive(archive,entry,base):
             parts=PurePosixPath(info['path']).parts
-            if parts[0]!='items_v1':raise ValueError('Unexpected item asset root')
+            if parts[0]!=entry['kind']:raise ValueError('Unexpected item asset root')
             target=root/info['path']
             if not target.resolve().is_relative_to(root):raise ValueError('Item asset escapes root')
             if target.exists() and digest(target)!=info['sha256']:raise ValueError('Local item asset differs; preserved: '+str(target))

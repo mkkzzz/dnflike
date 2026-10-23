@@ -1,0 +1,15 @@
+{
+  "revision": 1,
+  "note": "E-ADAPT functional defaults, not original DNF economy",
+  "buyback_limit": 20,
+  "durability_max": 40,
+  "wear": {"weapon_hits":20, "armor_hits":10, "death_loss":3},
+  "items": {
+    "iron_sword":{"sell":12,"repair_point":2,"disassemble":{"scrap_iron":2}},
+    "forest_sword":{"sell":60,"repair_point":3,"disassemble":{"scrap_iron":5}},
+    "training_coat":{"sell":15,"repair_point":1,"disassemble":{"scrap_iron":2}},
+    "training_necklace":{"sell":18,"repair_point":1,"disassemble":{"scrap_iron":2}},
+    "potion":{"sell":10},
+    "scrap_iron":{"sell":2}
+  }
+}

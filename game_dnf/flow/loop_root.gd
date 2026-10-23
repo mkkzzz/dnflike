@@ -18,6 +18,9 @@ const NumberWindows = preload("res://ui/flow/number_windows.gd")
 const QuestWindows = preload("res://ui/flow/quest_windows.gd")
 const InventoryTools = preload("res://ui/flow/inventory_tools.gd")
 const LootBridge = preload("res://loot/bridge.gd")
+const ServiceWindows=preload("res://ui/flow/service_windows.gd")
+const DurabilityBridge=preload("res://items/durability_bridge.gd")
+var service_windows
 var inventory_tools
 var loot_bridge
 var quest_windows
@@ -83,6 +86,8 @@ func _ready() -> void:
 	number_windows = NumberWindows.new(self)
 	quest_windows = QuestWindows.new(self)
 	inventory_tools = InventoryTools.new(self)
+	service_windows=ServiceWindows.new(self)
+	var durability_bridge=DurabilityBridge.new();durability_bridge.setup(self);add_child(durability_bridge)
 	loot_bridge = LootBridge.new();loot_bridge.setup(self);add_child(loot_bridge)
 	skill_catalog = SkillCatalog.new()
 	var layer := CanvasLayer.new()
@@ -108,6 +113,7 @@ func _ready() -> void:
 	if test_mode:
 		var runner_path: String="res://tests/town/test_hendon.gd" if "--towns-only" in OS.get_cmdline_user_args() else "res://tests/quests/test_chapter.gd" if "--quests-only" in OS.get_cmdline_user_args() else "res://tests/flow/test_loop.gd"
 		if "--items-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_inventory_flow.gd"
+		if "--services-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_services_flow.gd"
 		var runner = load(runner_path).new()
 		runner.game = self
 		add_child(runner)
@@ -297,6 +303,7 @@ func act(kind: String, payload: Dictionary = {}) -> bool:
 	if transitioning:return false
 	if session.state=="town":remember_town_position()
 	if kind.begins_with("quest."):return quest_action(kind,payload)
+	if kind.begins_with("services."):return service_action(kind,payload)
 	if kind.begins_with("items.") or kind.begins_with("numbers.gear") or kind=="slots.move":return item_action(kind,payload)
 	var before_level := int(session.profile["level"])
 	var response: Dictionary = session.command(kind, payload)
@@ -318,6 +325,17 @@ func item_action(kind: String, payload: Dictionary) -> bool:
 	if not response.get("ok",false):notice(response.get("message","物品操作失败"));return false
 	if not store.write(candidate):save_failed=true;notice("物品变更未提交：存档写入失败，请重试");return false
 	session=candidate;save_failed=false;sync_number_changes(kind);return true
+
+func service_action(kind: String, payload: Dictionary) -> bool:
+	if not character_active or transitioning:return false
+	var candidate=Session.new()
+	candidate.profile=session.profile.duplicate(true);candidate.run=session.run.duplicate(true)
+	candidate.state=session.state;candidate.result=session.result.duplicate(true)
+	var npc: String=town.nearest()
+	var response: Dictionary=candidate.service_command(kind,payload,{"npc":npc,"nearby":town.is_npc(npc)})
+	if not response["ok"]:notice(response["message"]);return false
+	if not store.write(candidate):save_failed=true;notice("服务未提交：存档写入失败，请重试");return false
+	session=candidate;save_failed=false;sync_number_changes(kind);notice("操作完成，进度已保存");return true
 
 func quest_action(kind: String, payload: Dictionary = {}) -> bool:
 	if not character_active or transitioning:return false
@@ -427,6 +445,7 @@ func show_overlay(which: String) -> void:
 		"legacy_quest":windows.quests()
 		"inventory":inventory_panel()
 		"shop":shop_panel()
+		"services":service_windows.open()
 		"dungeon":dungeon_panel()
 		"result":result_panel()
 		"menu":menu_panel()
@@ -636,7 +655,8 @@ func slot_hover(cell: Control) -> void:
 	else:windows.item_tip(cell.cell["id"], cell.get_global_rect(), cell.cell["place"] == "shop", cell.cell["place"] == "quick",cell.cell.get("uid",""))
 
 func slot_pressed(cell: Control) -> void:
-	if cell.cell["place"] in ["bag","storage"]:inventory_tools.select(cell.cell)
+	if overlay=="services" and cell.cell["place"] in ["bag","service_equipment"]:service_windows.select(cell.cell)
+	elif cell.cell["place"] in ["bag","storage"]:inventory_tools.select(cell.cell)
 	match cell.cell["place"]:
 		"shop":windows.purchase_dialog(cell.cell["id"])
 		"quick":use_quick(int(cell.cell["index"]))
