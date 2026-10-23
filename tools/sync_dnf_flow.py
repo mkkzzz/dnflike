@@ -60,7 +60,8 @@ def sync_flow(lock: dict, home: Path, project: Path, local_archives: Path | None
                 parts = PurePosixPath(info['path']).parts
                 target = PurePosixPath(*parts[1:]) if entry['kind'] == 'combat_runtime' else PurePosixPath(*parts)
                 root = target.parts[0]
-                allowed = root == 'flow_v1' if entry['kind'] == 'flow_v1' else (root == 'combat' or target.as_posix() == 'content/combat_content.json')
+                allowed = root == 'flow_v1' if entry['kind'] == 'flow_v1' else (root == 'combat' or target.as_posix() == 'content/combat_content.json'
+                                                                               or target.parts[:2] == ('native_maps', 'lorien'))
                 if not allowed:raise ValueError('Unexpected runtime package root: ' + info['path'])
                 info['_target'] = target.as_posix()
             inventory.extend(members)
@@ -73,7 +74,8 @@ def sync_flow(lock: dict, home: Path, project: Path, local_archives: Path | None
     planned, hashes = [], {}
     for info in inventory:
         relative = PurePosixPath(info.get('_target', info['path']))
-        if relative.parts[0] not in ['flow_v1', 'combat'] and relative.as_posix() != 'content/combat_content.json':raise ValueError('Unexpected loop root')
+        if relative.parts[0] not in ['flow_v1', 'combat'] and relative.as_posix() != 'content/combat_content.json' \
+                and relative.parts[:2] != ('native_maps', 'lorien'):raise ValueError('Unexpected loop root')
         if relative.as_posix() in hashes:raise ValueError('Duplicate runtime file: ' + relative.as_posix())
         target = target_root / relative.as_posix()
         if target_root not in target.resolve().parents:raise ValueError('Consumer path escapes assets_local')

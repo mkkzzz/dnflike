@@ -25,10 +25,12 @@ class FlowAssets(unittest.TestCase):
                     out.writestr('_manifests/combat.zip.json', json.dumps(records))
                 return {'name': archive.name, 'kind': 'combat_runtime', 'bytes': archive.stat().st_size,
                         'sha256': digest(archive), 'files': len(records), 'unpacked_bytes': sum(r['bytes'] for r in records)}
-            lock = {'schema': 'dnflike_loop_store/1', 'version': 'combat-v1', 'packs': [bundle({'combat_runtime/combat/manifest.json': b'{}', 'combat_runtime/content/combat_content.json': b'{"records":[]} '})]}
+            lock = {'schema': 'dnflike_loop_store/1', 'version': 'combat-v1', 'packs': [bundle({'combat_runtime/combat/manifest.json': b'{}', 'combat_runtime/content/combat_content.json': b'{"records":[]} ',
+                                                                                              'combat_runtime/native_maps/lorien/map_export.json': b'{}'})]}
             project = base/'clone'
             sync_flow(lock, base/'cache', project, base)
             self.assertTrue(installed_matches(lock, project))
+            self.assertTrue((project/'assets_local/native_maps/lorien/map_export.json').is_file())
             (project/'assets_local/combat/manifest.json').write_bytes(b'local generated changes')
             with self.assertRaisesRegex(ValueError, 'preserved'):sync_flow(lock, base/'cache', project, base)
             self.assertEqual((project/'assets_local/combat/manifest.json').read_bytes(), b'local generated changes')

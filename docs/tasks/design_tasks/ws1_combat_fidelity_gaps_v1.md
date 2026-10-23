@@ -45,7 +45,7 @@
 | G23 | 循环 HUD 的 S 技能图标 | ws2 流程 HUD 的 S 槽已改为三段斩（冷却联动），但图标仍是连突刺图（skill_icons 包只含 SkillIcon.img 帧 8/24/94/336） | 三段斩 SKL [icon] = SkillIcon.img 帧 18/19；十字斩 132、暴走 134、上挑 94 | ws2 | 待补包 |
 | G24 | 怪物名字/等级文字 | 系统字体；中文名为手填（原档只有韩/日文字串：哥布林、哥布林投掷手） | 原版字体与国服名称核对 | ws1 | 待查 |
 | G25 | 后跳动作与打断虚影 | 原版无后跳专用动作文件（CHR [back motion] 指向 attack3.ani），用 jump.ani 起跳/下落姿势；打断虚影为半透明蓝白色原姿势淡出 320ms（引擎绘制，E-ADAPT） | 用户试玩对照原版 | ws1 | 待验收 |
-| G26 | 无完整库机器的战斗资源 | 战斗场景现需原版洛兰地图导出（assets_local/native_maps/lorien）；ws2 的 combat_runtime 小包还不含它，也还是上一版战斗资源（无 monster_hp 血条、无 UPPER_SLASH_01） | 重新打包发布 combat_runtime（含 native_maps/lorien） | ws2/ws1 | 待发布 |
+| G26 | 无完整库机器的战斗资源 | **已发布**（2026-10-23，用户授权 ws1 自行上传）：私库 dnf-loop-v10-ws1-combat-lorien-20261023 的 combat_runtime 含本轮战斗资源与 `native_maps/lorien`；干净目录（无本机构建标记）安装后循环 315、战斗 143 项通过 | 之后战斗资源变化时用 `pack_dnf_flow.py --reuse-archives` 重发 | ws1 | 已发布 |
 
 已排除：F2 碰撞叠加、地图预览网格（调试用），资源缺失报错页。
 
