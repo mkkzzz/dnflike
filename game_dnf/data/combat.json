@@ -69,7 +69,8 @@
     "source":"Down + jump. Original back step has no motion file of its own (CHR [back motion] points at attack3.ani); the jump.ani rise/fall poses are used (E-ADAPT). Only normal attacks can be cancelled for now (user 2026-10-23); a cancel leaves a fading afterimage of the cancelled pose (engine-drawn in the original, E-ADAPT)."},
   "monsters":{
     "goblin":{"mob":"monster/goblin/goblin.mob","bank":"goblin","name":"哥布林"},
-    "goblin_thrower":{"mob":"monster/goblin/goblinthrower.mob","bank":"goblin_thrower","keep_distance":150,"name":"哥布林投掷手"}
+    "goblin_thrower":{"mob":"monster/goblin/goblinthrower.mob","bank":"goblin_thrower","keep_distance":150,"name":"哥布林投掷手"},
+    "tau_army":{"mob":"monster/tau/tauarmy.mob","bank":"tau_army","name":"牛头兵"}
   },
   "boss_hp_lines":3,
   "map_export":"res://assets_local/native_maps/lorien/map_export.json",

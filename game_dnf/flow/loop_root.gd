@@ -15,6 +15,9 @@ const SkillDescriptions = preload("res://items/skill_descriptions.gd")
 const Characters = preload("res://save/characters.gd")
 const CharacterScreen = preload("res://ui/flow/character_screen.gd")
 const NumberWindows = preload("res://ui/flow/number_windows.gd")
+const QuestWindows = preload("res://ui/flow/quest_windows.gd")
+var quest_windows
+var selected_dungeon := "lorien"
 var number_windows
 const SKILL_KEYS := [KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H]
 const SKILL_CODES := {"draw":KEY_A, "triple":KEY_S, "rage_slash":KEY_D, "buff":KEY_F, "guard":KEY_G}
@@ -69,10 +72,11 @@ func _ready() -> void:
 	world_clip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(world_clip)
 	world_clip.add_child(town)
-	town.interact.connect(func(target: String): show_overlay("npc" if target == "linus" else "dungeon"))
+	town.interact.connect(interact_town)
 	skin = NativeSkin.new(town.loader)
 	windows = Windows.new(self)
 	number_windows = NumberWindows.new(self)
+	quest_windows = QuestWindows.new(self)
 	skill_catalog = SkillCatalog.new()
 	var layer := CanvasLayer.new()
 	layer.transform = display_settings.content_transform()
@@ -95,7 +99,7 @@ func _ready() -> void:
 	debug_panel.setup(self)
 	show_character_selection()
 	if test_mode:
-		var runner = load("res://tests/flow/test_loop.gd").new()
+		var runner = load("res://tests/quests/test_chapter.gd" if "--quests-only" in OS.get_cmdline_user_args() else "res://tests/flow/test_loop.gd").new()
 		runner.game = self
 		add_child(runner)
 
@@ -191,6 +195,7 @@ func _process(delta: float) -> void:
 		counter.text = "%.1f" % remaining if remaining > 0 else ""
 	town.enabled = overlay == "" and session.state == "town" and not debug_is_open()
 	debug_panel.refresh_status()
+	quest_windows.refresh_tracker()
 	if notification_seconds > 0:
 		notification_seconds -= delta
 		toast_text.text = skin.chinese(notification)
@@ -277,6 +282,7 @@ func save_profile() -> bool:
 	return ok
 
 func act(kind: String, payload: Dictionary = {}) -> bool:
+	if kind.begins_with("quest."):return quest_action(kind,payload)
 	var before_level := int(session.profile["level"])
 	var response: Dictionary = session.command(kind, payload)
 	if not response["ok"]:
@@ -288,6 +294,45 @@ func act(kind: String, payload: Dictionary = {}) -> bool:
 	if int(session.profile["level"])>before_level:notice("等级提升 · Lv.%d" % int(session.profile["level"]))
 	return true
 
+func quest_action(kind: String, payload: Dictionary = {}) -> bool:
+	if not character_active:return false
+	# Write the complete candidate first. A failed disk write cannot leak XP,
+	# consumed materials or completion into the live character.
+	var candidate = Session.new()
+	candidate.profile=session.profile.duplicate(true)
+	candidate.state=session.state
+	candidate.run=session.run.duplicate(true)
+	candidate.result=session.result.duplicate(true)
+	var npc: String=town.nearest() if session.state=="town" else ""
+	var response: Dictionary=candidate.quest_command(kind,payload,{"npc":npc,"nearby":npc in ["seria","linus"]})
+	if not response.get("ok",false):notice(response.get("message","任务操作失败"));return false
+	if not store.write(candidate):
+		save_failed=true
+		notice("任务未提交：存档写入失败，请重试")
+		return false
+	session=candidate
+	save_failed=false
+	sync_number_changes("numbers.xp" if kind=="quest.claim" else kind)
+	if kind=="quest.claim":notice("任务已完成，奖励已保存")
+	if overlay=="quest":show_overlay("quest")
+	return true
+
+func record_npc_visit(npc: String) -> void:
+	if session.state!="town" or town.nearest()!=npc:return
+	var outcome: Dictionary=session.quests.ingest(session.profile,{"type":"npc.met","event_id":"visit:"+str(Time.get_ticks_usec()),"npc":npc})
+	if outcome.get("ok",false) and not outcome["changed"].is_empty():save_profile()
+
+func interact_town(target: String) -> void:
+	if target in ["seria","linus"]:show_overlay("npc")
+	elif target=="dungeon":show_overlay("dungeon")
+	elif target in ["enter_inn","exit_inn"]:
+		var location := "seria_room" if target=="enter_inn" else "elvengard"
+		if town.set_location(location):
+			session.profile["town_location"]=location
+			save_profile()
+			show_overlay("")
+		else:notice("城镇资源未就绪，请通过正式入口同步资源")
+
 func sync_number_changes(kind := "numbers.update") -> void:
 	if is_instance_valid(battle) and session.state=="battle":
 		combat.update_numbers(session.stats(),String(session.Numbers.config()["progression"]["level_up_vitals"]) if kind in ["numbers.xp","numbers.level"] else "preserve")
@@ -297,8 +342,9 @@ func show_overlay(which: String) -> void:
 	if not character_active:return
 	windows.close_purchase()
 	if session.state == "result" and which == "":which = "result"
-	if which == "quest" and overlay != "quest":
-		windows.quest_tab = 0 if session.profile["quest"] == "available" else 2 if session.profile["quest"] == "done" else 1
+	if which=="quest" and overlay not in ["quest","npc"]:
+		quest_windows.focus_npc=""
+		quest_windows.tab=1 if session.quests.active_count(session.profile)>0 else 0
 	overlay = which
 	windows.hide_tooltip()
 	hud.visible = which not in ["dungeon", "result"]
@@ -310,6 +356,7 @@ func show_overlay(which: String) -> void:
 	match which:
 		"npc":npc_panel()
 		"quest":quest_panel()
+		"legacy_quest":windows.quests()
 		"inventory":inventory_panel()
 		"shop":shop_panel()
 		"dungeon":dungeon_panel()
@@ -324,10 +371,12 @@ func title_panel(title: String, rect := Rect2(103, 93, 434, 250)) -> Control:
 	return panel
 
 func npc_panel() -> void:
-	windows.dialogue()
+	if selected_dungeon=="forest_trial" and town.nearest()=="linus":windows.dialogue()
+	else:quest_windows.dialogue()
 
 func quest_panel() -> void:
-	windows.quests()
+	if selected_dungeon=="forest_trial":windows.quests()
+	else:quest_windows.show_window()
 
 func inventory_panel() -> void:
 	windows.inventory()
@@ -336,10 +385,13 @@ func shop_panel() -> void:
 	windows.shop()
 
 func dungeon_panel() -> void:
-	windows.dungeon()
+	if selected_dungeon=="forest_trial":
+		windows.dungeon()
+		skin.button(modal,"洛兰主线",Vector2(34,528),func():selected_dungeon="lorien";show_overlay("dungeon"))
+	else:quest_windows.dungeon()
 
 func depart() -> void:
-	if not act("flow.depart"):return
+	if not act("flow.depart",{"dungeon":selected_dungeon}):return
 	show_overlay("")
 	town.hide()
 	combat = CombatSession.new()
@@ -350,7 +402,7 @@ func depart() -> void:
 	combat.monster_defeated.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
 	var stat: Dictionary = session.run["stats"]
 	var headless_test := test_mode and DisplayServer.get_name() == "headless"
-	var started: bool = combat.start_room({"run_id": String(session.run["id"]), "room_id": "forest_trial:0", "room_index": 0,
+	var started: bool = combat.start_room({"run_id": String(session.run["id"]), "dungeon":selected_dungeon, "route":session.dungeons[selected_dungeon], "room_id": selected_dungeon+":0", "room_index": 0,
 		"player": stat,
 		"audio": {"muted": headless_test, "bgm_volume_db": -32}, "show_hud": false})
 	if not started:
@@ -363,13 +415,13 @@ func depart() -> void:
 		notice("战斗资源尚未准备完成，请通过正式启动脚本重试")
 		return
 	combat.configure_trial(1.35, String(session.run.get("difficulty", "normal")))
-	notice("密林试炼 · 清除怪物后前往出口")
+	notice(String(session.dungeons[selected_dungeon]["name"])+" · 清除怪物后前往出口")
 	sync_debug_pause()
 
 func on_combat_event(event: Dictionary) -> void:
 	var before_level := int(session.profile["level"])
 	var response: Dictionary = session.combat_event(event)
-	if response["ok"] and event.get("type")=="combat.monster_defeated" and int(response.get("amount",0))>0:
+	if response["ok"] and event.get("type")=="combat.monster_defeated" and (int(response.get("amount",0))>0 or response.get("quest_changed",false)):
 		if int(session.profile["level"])>before_level:sync_number_changes("numbers.xp")
 		save_profile()
 	if response["ok"] and session.state == "result":
@@ -434,13 +486,14 @@ func enter_character(path: String) -> bool:
 	store = candidate
 	active_character_path = path
 	session = next_session
+	selected_dungeon="lorien"
 	character_active = true
 	save_failed = false
 	character_screen = null
 	build_hotbars()
 	world_clip.show()
 	town.show()
-	town.ground = Vector2(540, 230)
+	town.set_location(String(session.profile.get("town_location","elvengard")))
 	town.player_name = skin.chinese(String(session.profile["name"]))
 	town.running = false
 	town.run_direction = 0

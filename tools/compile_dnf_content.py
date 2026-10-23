@@ -331,7 +331,7 @@ def compile_scope(lib: Library) -> dict:
     object_index: dict[str, str] = {}
     for index, rel in sorted(monsters.items()):
         p = ('monster/' + rel).lower()
-        if not p.startswith('monster/goblin/'):
+        if not p.startswith('monster/goblin/') and p != 'monster/tau/tauarmy.mob':
             continue
         mob = add(p, 'mob', 'monster/monster.lst')
         if not mob:

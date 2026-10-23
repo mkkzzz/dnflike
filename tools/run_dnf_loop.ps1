@@ -1,4 +1,4 @@
-param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly)
+param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly)
 $ErrorActionPreference="Stop"
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
@@ -19,6 +19,10 @@ if ($BuildAssets) {
     if ($LibraryPath) {$buildArgs+=@("--library",$LibraryPath)}
     & python @buildArgs
     if ($LASTEXITCODE -ne 0) {throw "Native loop art build failed."}
+    $questBuildArgs=@((Join-Path $PSScriptRoot "build_dnf_quest_assets.py"))
+    if ($LibraryPath) {$questBuildArgs+=@("--library",$LibraryPath)}
+    & python @questBuildArgs
+    if ($LASTEXITCODE -ne 0) {throw "Original quest art build failed."}
 } else {
     # Separate immutable pack needs no full library or original client installation.
     # Once installed, validate local version/hashes and play without network.
@@ -42,6 +46,9 @@ if ($Test) {
     $numericOutput=& $GodotPath --headless --path $gamePath --script res://tests/stats/test_numbers.gd 2>&1
     $numericOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($numericOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($numericOutput -match '\[NUMBERS_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Numeric regression failed."}
+    $questOutput=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/quests/run_quests.gd 2>&1
+    $questOutput | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($questOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($questOutput -match '\[QUEST_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Quest unit regression failed."}
 }
 $runArgs=@("--path",$gamePath,"res://scenes/loop.tscn")
 if ($Test) {
@@ -49,6 +56,7 @@ if ($Test) {
     if ($Capture) {$runArgs+=@("--position","-32000,-32000")} else {$runArgs+="--headless"}
     $runArgs+=@("--","--loop-test")
     if ($NumbersOnly) {$runArgs+="--numbers-only"}
+    if ($QuestsOnly) {$runArgs+="--quests-only"}
     if ($Capture) {$runArgs+="--capture"}
 }
 $ErrorActionPreference="Continue"
@@ -56,4 +64,4 @@ $ErrorActionPreference="Continue"
 $engineExit=$LASTEXITCODE
 $ErrorActionPreference="Stop"
 if ($engineExit -ne 0 -or ($runOutput -match 'SCRIPT ERROR|ERROR:')) {throw "Native loop runtime failed."}
-if ($Test -and -not ($runOutput -match '\[LOOP_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Native loop checks did not complete."}
+if ($Test -and -not ($runOutput -match $(if ($QuestsOnly) {'\[QUEST_CHAPTER\] COMPLETE checks=\d+ failures=0'} else {'\[LOOP_TEST\] COMPLETE checks=\d+ failures=0'}))) {throw "Native loop checks did not complete."}

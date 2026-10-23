@@ -31,6 +31,41 @@ func attach(existing: Node) -> void:
 
 func start_room(spec: Dictionary) -> bool:
 	if not _alive() or game.missing_assets:return false
+	var route: Dictionary=spec.get("route",{})
+	if route.has("map_export"):
+		# Validate the complete route before changing the live map/table. Unknown
+		# monsters must reject entry rather than silently vanishing from a room.
+		var probe=game.map_loader.get_script().new()
+		if not probe.load_export(String(route["map_export"])):return false
+		var rooms=route.get("rooms",[])
+		if not rooms is Array or rooms.is_empty():return false
+		var placements: Array[Dictionary]=[]
+		for i in rooms.size():
+			var room: Dictionary=rooms[i]
+			var found: Dictionary={}
+			for placement: Dictionary in probe.placements():
+				if placement["id"]==room.get("placement"):found=placement;break
+			if found.is_empty():return false
+			placements.append(found)
+			for monster: Dictionary in probe.room(found["map"])["monsters"]:
+				if game.table.monster_by_mob(String(monster["mob"]))=="":return false
+			if i<rooms.size()-1 and room.get("next") not in ["left","right","up","down"]:return false
+		if not rooms[-1].get("boss",false):return false
+		var opposite := {"left":"right","right":"left","up":"down","down":"up"}
+		for i in range(rooms.size()-1):
+			var direction: String=rooms[i]["next"]
+			var reciprocal := false
+			var forward := false
+			for gate: Dictionary in placements[i]["gates"]:
+				if gate["direction"]==direction and gate["target_cell"]==placements[i+1]["cell"] and gate["anchor"]!=null:forward=true
+			for gate: Dictionary in placements[i+1]["gates"]:
+				if gate["direction"]==opposite[direction] and gate["target_cell"]==placements[i]["cell"] and gate["anchor"]!=null:reciprocal=true
+			if not forward or not reciprocal:return false
+		game.rules=game.rules.duplicate(true)
+		game.rules["rooms"]=rooms.duplicate(true)
+		game.map_loader.data=probe.data
+		game.map_loader.base_dir=probe.base_dir
+		game.map_loader.textures.clear()
 	game.begin_room(spec)
 	return true
 

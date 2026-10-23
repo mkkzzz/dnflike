@@ -1,0 +1,201 @@
+{
+  "schema": "dnf_quests/1",
+  "revision": 1,
+  "limits": {
+    "active": 12,
+    "tracked": 3
+  },
+  "evidence": "Only four source quest nodes in this batch. Reward XP, item substitutions and local transaction rules are E-ADAPT, not original balance.",
+  "npcs": {
+    "linus": "林纳斯",
+    "seria": "赛丽亚"
+  },
+  "dungeons": {
+    "lorien": "洛兰",
+    "lorien_inside": "洛兰深处",
+    "forest_trial": "密林试炼（旧样板）"
+  },
+  "quests": [
+    {
+      "id": "elvengard.meet_linus",
+      "source": {
+        "id": 101,
+        "path": "n_quest/elvengard/lorien/epic_1_lorien_1.qst",
+        "sha256": "1ae5f9738c8ed588310fa89fe15c6cfdf6612890b302a44d35238e11ba3adcc8",
+        "evidence": "E-PARSE for source graph; rewards and local execution E-ADAPT"
+      },
+      "name": "林纳斯大叔",
+      "category": "main",
+      "chapter": "冒险开始",
+      "min_level": 1,
+      "requires": [],
+      "giver": "seria",
+      "receiver": "linus",
+      "objectives": [
+        {
+          "id": "meet",
+          "type": "meet_npc",
+          "target": "linus",
+          "amount": 1
+        }
+      ],
+      "description": "前往艾尔文防线，拜访铁匠林纳斯。",
+      "reward": {
+        "gold": 100,
+        "xp": 40,
+        "items": {},
+        "choices": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false
+    },
+    {
+      "id": "lorien.first_clear",
+      "source": {
+        "id": 102,
+        "path": "n_quest/elvengard/lorien/epic_1_lorien_2.qst",
+        "sha256": "b1fe2adb40cefb86292d1e0f1fc9d116accfffa8ec6551274f66453368cf0cba",
+        "evidence": "E-PARSE for source graph; rewards and local execution E-ADAPT"
+      },
+      "name": "冒险开始",
+      "category": "main",
+      "chapter": "冒险开始",
+      "min_level": 1,
+      "requires": [
+        "elvengard.meet_linus"
+      ],
+      "giver": "linus",
+      "receiver": "linus",
+      "objectives": [
+        {
+          "id": "clear",
+          "type": "clear_dungeon",
+          "target": "lorien",
+          "amount": 1
+        }
+      ],
+      "description": "从艾尔文防线右侧进入洛兰，通关后向林纳斯报告。",
+      "reward": {
+        "gold": 200,
+        "xp": 80,
+        "items": {
+          "potion": 1
+        },
+        "choices": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false
+    },
+    {
+      "id": "lorien.goblin_noise",
+      "source": {
+        "id": 103,
+        "path": "n_quest/elvengard/lorieninside/epic_2_lorieninside_3.qst",
+        "sha256": "c1eb9acd96e4b249e35729d0b6b22bc0426bda649ae630008bc441eb052766eb",
+        "evidence": "E-PARSE for source graph; rewards and local execution E-ADAPT"
+      },
+      "name": "噪音公害",
+      "category": "main",
+      "chapter": "冒险开始",
+      "min_level": 2,
+      "requires": [
+        "lorien.first_clear"
+      ],
+      "giver": "linus",
+      "receiver": "linus",
+      "objectives": [
+        {
+          "id": "goblins",
+          "type": "kill_monster",
+          "target": "monster/goblin/goblin.mob",
+          "amount": 10,
+          "dungeon": "lorien_inside"
+        }
+      ],
+      "description": "前往洛兰深处，消灭10只哥布林，再向林纳斯报告。",
+      "reward": {
+        "gold": 200,
+        "xp": 100,
+        "items": {
+          "potion": 2
+        },
+        "choices": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false
+    },
+    {
+      "id": "elvengard.seria_fate",
+      "source": {
+        "id": 4301,
+        "path": "n_quest/elvengard/lorieninside/epic_2_lorieninside_4.qst",
+        "sha256": "929c11e4f4f3c3ee28c87fa7503ce607d7e3ff18b585634dfb759d05d6fa4e97",
+        "evidence": "E-PARSE for source graph; rewards and local execution E-ADAPT"
+      },
+      "name": "与赛丽亚的缘分",
+      "category": "main",
+      "chapter": "冒险开始",
+      "min_level": 2,
+      "requires": [
+        "lorien.goblin_noise"
+      ],
+      "giver": "linus",
+      "receiver": "seria",
+      "objectives": [
+        {
+          "id": "meet",
+          "type": "meet_npc",
+          "target": "seria",
+          "amount": 1
+        }
+      ],
+      "description": "回到赛丽亚身边，告诉她森林中的见闻。",
+      "reward": {
+        "gold": 100,
+        "xp": 40,
+        "items": {},
+        "choices": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false
+    },
+    {
+      "id": "legacy.trial",
+      "name": "森林的异变（旧委托）",
+      "category": "side",
+      "chapter": "旧委托记录",
+      "min_level": 1,
+      "requires": [],
+      "giver": "linus",
+      "receiver": "linus",
+      "objectives": [
+        {
+          "id": "clear",
+          "type": "clear_dungeon",
+          "target": "forest_trial",
+          "amount": 1
+        }
+      ],
+      "description": "保留旧版本林纳斯委托；与原洛兰主线分开记录。",
+      "reward": {
+        "gold": 200,
+        "xp": 0,
+        "items": {
+          "forest_sword": 1
+        },
+        "choices": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": true,
+      "legacy": true,
+      "source": {
+        "evidence": "E-ADAPT; previous loop profile.quest"
+      }
+    }
+  ]
+}

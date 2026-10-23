@@ -35,6 +35,7 @@ var session
 var view
 var run_id := "standalone"
 var room_id := ""
+var dungeon_id := "lorien"
 var assets: Dictionary = {}
 var combat_assets: Dictionary = {}
 var rules: Dictionary = {}
@@ -214,6 +215,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 ## Long-term profile data stays with flow; these are the per-run combat stats it hands over.
 ## Without flow values, HP/MP start from the original CHR level-1 initial stats.
 func begin_room(spec: Dictionary) -> void:
+	dungeon_id=String(spec.get("dungeon","lorien"))
 	var snapshot: Dictionary = spec.get("player",{})
 	numeric_player = null
 	skill_levels = {}
@@ -1041,7 +1043,7 @@ func load_room(index: int, from_side: String) -> void:
 	objects.clear()
 	end_action_fx()
 	room_index = index
-	room_id = "lorien:%d"%index
+	room_id = "%s:%d"%[dungeon_id,index]
 	bar_target = -1
 	doors.clear()
 	var entry: Dictionary = rules["rooms"][index]

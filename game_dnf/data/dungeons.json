@@ -1,0 +1,74 @@
+{
+  "schema": "dnf_quest_dungeons/1",
+  "evidence": "E-ADAPT deterministic route selected from source dungeon cells, candidate maps and reciprocal gates. Original randomness and full AI not reproduced.",
+  "dungeons": {
+    "lorien": {
+      "name": "洛兰",
+      "requires": [],
+      "map_export": "res://assets_local/native_maps/lorien/map_export.json",
+      "rooms": [
+        {
+          "name": "洛兰",
+          "placement": "1_0:s3",
+          "next": "left"
+        },
+        {
+          "name": "洛兰",
+          "placement": "0_0:s2",
+          "next": "down"
+        },
+        {
+          "name": "洛兰",
+          "placement": "0_1:8",
+          "next": "right"
+        },
+        {
+          "name": "洛兰",
+          "placement": "1_1:9",
+          "next": "down"
+        },
+        {
+          "name": "洛兰",
+          "placement": "1_2:b3",
+          "next": "",
+          "boss": true
+        }
+      ]
+    },
+    "lorien_inside": {
+      "name": "洛兰深处",
+      "requires": [
+        "lorien.first_clear"
+      ],
+      "map_export": "res://assets_local/flow_v1/early_quests/lorien_inside/map_export.json",
+      "rooms": [
+        {
+          "name": "洛兰深处",
+          "placement": "0_0:s101",
+          "next": "right"
+        },
+        {
+          "name": "洛兰深处",
+          "placement": "1_0:110",
+          "next": "down"
+        },
+        {
+          "name": "洛兰深处",
+          "placement": "1_1:107",
+          "next": "right"
+        },
+        {
+          "name": "洛兰深处",
+          "placement": "2_1:b101",
+          "next": "",
+          "boss": true
+        }
+      ]
+    },
+    "forest_trial": {
+      "name": "密林试炼（旧样板）",
+      "requires": [],
+      "legacy": true
+    }
+  }
+}

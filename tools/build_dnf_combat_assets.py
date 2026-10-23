@@ -32,12 +32,13 @@ from dnf_locomotion import build as build_locomotion
 
 OUT = ROOT / 'game_dnf/assets_local/combat'
 SCHEMA = 'dnf_combat_assets/1'
-BUILD_VERSION = 4
+BUILD_VERSION = 5
 
 MONSTERS = {
     # key: (mob path, clip dir, extra clips)
     'goblin': ('monster/goblin/goblin.mob', 'monster/goblin/animation_goblin2', []),
     'goblin_thrower': ('monster/goblin/goblinthrower.mob', 'monster/goblin/animation_thrower', []),
+    'tau_army': ('monster/tau/tauarmy.mob', 'monster/tau/armyanimation', []),
 }
 MONSTER_CLIPS = ['stay', 'move', 'attack1', 'throw', 'damage1', 'damage2', 'down', 'sit', 'overturn']
 OBJECTS = {

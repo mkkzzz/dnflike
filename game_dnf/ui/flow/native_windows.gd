@@ -381,7 +381,7 @@ func result() -> void:
 	skin.image(node, skin.texture("reward", 33), Vector2.ZERO)
 	skin.image(node, skin.texture("reward", 35), Vector2(138, 28))
 	skin.label(node, "通关结算" if won else "冒险结束", Vector2(163, 43), 26, Color("f0d18a"))
-	skin.label(node, "密林试炼  ·  " + {"normal":"普通级", "adventure":"冒险级", "king":"王者级"}.get(game.session.run.get("difficulty", "normal"), "普通级"), Vector2(166, 91), 14)
+	skin.label(node, String(game.session.dungeons.get(game.session.run.get("dungeon","forest_trial"),{}).get("name","冒险"))+"  ·  " + {"normal":"普通级", "adventure":"冒险级", "king":"王者级"}.get(game.session.run.get("difficulty", "normal"), "普通级"), Vector2(166, 91), 14)
 	var stats: Dictionary = r.get("stats", {})
 	skin.label(node, "通关时间    %.1f 秒\n承受伤害    %d\n获得金币    %d\n获得经验    %d" % [float(stats.get("time_ms", 0)) / 1000, int(stats.get("damage_taken", 0)), int(r.get("gold", 0)), int(r.get("xp", 0))], Vector2(166, 125), 14)
 	if won:skin.image(node, skin.texture("result", {"S": 3, "A": 6, "B": 7}[r.get("rank", "B")]), Vector2(490, 85))

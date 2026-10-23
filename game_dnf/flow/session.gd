@@ -3,6 +3,9 @@ extends RefCounted
 const CATALOG := preload("res://items/catalog.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
 const Layout = preload("res://items/slot_layout.gd")
+const Quests = preload("res://quests/service.gd")
+var quests = Quests.new()
+var dungeons: Dictionary = {}
 var profile: Dictionary = {}
 var state := "town"
 var run: Dictionary = {}
@@ -14,6 +17,43 @@ func _init() -> void:
 		"quest": "available", "clears": 0, "next_run": 1, "settled": {}}
 	Layout.normalize(profile, CATALOG.ITEMS)
 	Numbers.normalize(profile)
+	quests.initialize(profile)
+	profile["town_location"] = "seria_room"
+	dungeons = JSON.parse_string(FileAccess.get_file_as_string("res://data/dungeons.json"))["dungeons"]
+
+func quest_command(kind: String, payload: Dictionary, context: Dictionary) -> Dictionary:
+	context = context.duplicate()
+	context["in_town"] = state == "town"
+	var response: Dictionary=quests.command(profile,kind,payload,context,grant_quest_reward)
+	if response.get("ok",false) and payload.get("id")=="legacy.trial":
+		profile["quest"]={"active":"active","ready":"ready","completed":"done","available":"available"}.get(quests.status(profile,"legacy.trial"),"available")
+	return response
+
+func mirror_legacy() -> void:
+	if profile["quest"] not in ["active","ready","done"]:return
+	var entry: Dictionary=quests.new_entry(quests.catalog.definitions["legacy.trial"])
+	entry["progress"]["clear"]=1 if profile["quest"] in ["ready","done"] else 0
+	if profile["quest"]=="done":
+		entry["state"]="completed"
+		profile["quest_state"]["transactions"][Quests.transaction_id("legacy.trial")]=true
+	profile["quest_state"]["entries"]["legacy.trial"]=entry
+
+func grant_quest_reward(candidate: Dictionary, reward: Dictionary, tx: String) -> Dictionary:
+	for item: String in reward["items"]:
+		if not CATALOG.ITEMS.has(item):return reject("任务奖励物品尚未接入")
+	var outcome: Dictionary = Numbers.Growth.grant(candidate,int(reward["xp"]),tx,Numbers.config()["progression"])
+	if not outcome.get("ok",false):return outcome
+	candidate["gold"] += int(reward["gold"])
+	for item: String in reward["items"]:candidate["inventory"][item] = int(candidate["inventory"].get(item,0))+int(reward["items"][item])
+	Numbers.normalize(candidate)
+	Layout.normalize(candidate,CATALOG.ITEMS)
+	return {"ok":true}
+
+func dungeon_available(id: String) -> bool:
+	if not dungeons.has(id):return false
+	for required: String in dungeons[id]["requires"]:
+		if quests.status(profile,required) != "completed":return false
+	return true
 
 func snapshot() -> Dictionary:
 	return {"profile": profile.duplicate(true), "state": state, "run": run.duplicate(true),
@@ -41,11 +81,13 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 		"flow.accept_quest":
 			if state != "town" or profile["quest"] != "available":return reject("现在无法接受这个任务")
 			profile["quest"] = "active"
+			mirror_legacy()
 		"flow.claim_quest":
 			if state != "town" or profile["quest"] != "ready":return reject("先击败密林领主，再来找林纳斯")
 			profile["quest"] = "done"
 			profile["gold"] += 200
 			add_item("forest_sword", 1)
+			mirror_legacy()
 		"items.buy":
 			if state != "town":return reject("请回城后购买")
 			var id := String(payload.get("id", ""))
@@ -81,8 +123,9 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 			profile["difficulty"] = payload["id"]
 		"flow.depart":
 			if state != "town":return reject("已有进行中的冒险")
-			if payload.get("dungeon", "forest_trial") != "forest_trial":return reject("地下城未开放")
-			run = {"id": "run_%d" % int(profile["next_run"]), "dungeon": "forest_trial", "difficulty":profile.get("difficulty", "normal"), "stats": stats()}
+			var dungeon: String = String(payload.get("dungeon", "forest_trial"))
+			if not dungeon_available(dungeon):return reject("地下城尚未开放，请先完成前置任务")
+			run = {"id": "run_%d" % int(profile["next_run"]), "dungeon": dungeon, "difficulty":profile.get("difficulty", "normal"), "stats": stats()}
 			profile["next_run"] += 1
 			result = {}
 			state = "battle"
@@ -114,9 +157,20 @@ func combat_event(event: Dictionary) -> Dictionary:
 	match event.get("type", ""):
 		"combat.player_defeated":return finish_run(false, event.get("stats", {}))
 		"combat.monster_defeated":
+			var quest_changed := false
+			if event.has("event_id"):
+				var quest_event := event.duplicate(true)
+				quest_event["event_id"] = String(run["id"])+":"+String(event.get("room_id",""))+":"+str(event["event_id"])
+				quest_event["dungeon"] = run["dungeon"]
+				quest_event["difficulty"] = run["difficulty"]
+				var outcome: Dictionary=quests.ingest(profile,quest_event)
+				quest_changed=outcome.get("ok",false) and not outcome["changed"].is_empty()
 			var amount := int(Numbers.config()["progression"]["kill_xp"])
-			if amount>0:return Numbers.Growth.grant(profile,amount,"kill:"+String(run["id"])+":"+str(event.get("event_id",event.get("entity_id",-1))),Numbers.config()["progression"])
-			return {"ok":true}
+			if amount>0:
+				var reward: Dictionary=Numbers.Growth.grant(profile,amount,"kill:"+String(run["id"])+":"+str(event.get("event_id",event.get("entity_id",-1))),Numbers.config()["progression"])
+				reward["quest_changed"]=quest_changed
+				return reward
+			return {"ok":true,"quest_changed":quest_changed}
 		"combat.room_combat_finished":
 			if bool(event.get("final_room", false)):return finish_run(true, event.get("stats", {}))
 	return {"ok": true}
@@ -127,6 +181,7 @@ func finish_run(won: bool, details: Dictionary) -> Dictionary:
 	profile["settled"][id] = true
 	result = {"run_id": id, "victory": won, "gold": 0, "xp": 0, "potion": 0, "stats": details.duplicate(true)}
 	if won:
+		quests.ingest(profile,{"type":"dungeon.cleared","event_id":"clear:"+id,"dungeon":run["dungeon"],"difficulty":run["difficulty"],"victory":true})
 		result.merge({"gold": 150, "xp": int(Numbers.config()["progression"]["clear_xp"]), "potion": 1}, true)
 		var damage := int(details.get("damage_taken", 0))
 		result["rank"] = "S" if damage <= 50 else "A" if damage <= 250 else "B"
@@ -134,7 +189,7 @@ func finish_run(won: bool, details: Dictionary) -> Dictionary:
 		Numbers.Growth.grant(profile,int(Numbers.config()["progression"]["clear_xp"]),"clear:"+id,Numbers.config()["progression"])
 		profile["clears"] += 1
 		add_item("potion", 1)
-		if profile["quest"] == "active":profile["quest"] = "ready"
+		if profile["quest"] == "active" and run["dungeon"]=="forest_trial":profile["quest"] = "ready";mirror_legacy()
 	state = "result"
 	return {"ok": true}
 
@@ -147,6 +202,7 @@ func restore(data: Dictionary) -> bool:
 	var p: Dictionary = data["profile"].duplicate(true)
 	var legacy := not p.has("numbers_revision")
 	for k: String in profile:
+		if k in ["quest_state", "town_location"]:continue
 		if k in ["bag_layout", "quick_items", "skill_slots", "difficulty", "attack_element"]:continue
 		if legacy and k in ["numbers_revision","growtype","sp_bonus","skills","skill_purchases","xp_transactions","gear","next_gear","equipment","stat_modifiers","attack_element"]:continue
 		if not p.has(k) or typeof(p[k]) != typeof(profile[k]) and not (p[k] is float and profile[k] is int):return false
@@ -170,6 +226,11 @@ func restore(data: Dictionary) -> bool:
 	if legacy:Numbers.normalize(p)
 	if not p.has("attack_element"):p["attack_element"] = "none"
 	if not Numbers.valid(p):return false
+	quests.initialize(p,true)
+	if not quests.valid(p):return false
+	quests.canonicalize(p)
+	if not p.has("town_location"):p["town_location"]="elvengard"
+	if p["town_location"] not in ["elvengard","seria_room"]:p["town_location"]="elvengard"
 	Numbers.canonicalize(p)
 	profile = p.duplicate(true)
 	Layout.normalize(profile, CATALOG.ITEMS)

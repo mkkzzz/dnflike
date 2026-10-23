@@ -182,6 +182,11 @@ func run() -> void:
 	character_tests.game = game
 	character_tests.host = self
 	await character_tests.run()
+	# Retain the old sample-loop regression alongside the separate original
+	# chapter test. Its adapted task/reward is deliberately not source quest 101.
+	game.town.set_location("elvengard",Vector2(540,230))
+	game.session.profile["town_location"]="elvengard"
+	game.selected_dungeon="forest_trial"
 	if "--characters-only" in OS.get_cmdline_user_args():
 		print("[LOOP_TEST] COMPLETE checks=%d failures=%d captures=%d" % [checks, failures, captured.size()])
 		get_tree().quit(1 if failures else 0)
