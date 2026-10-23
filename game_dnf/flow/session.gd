@@ -1,6 +1,7 @@
 extends RefCounted
 ## Pure flow state. v1 rewards/items are E-ADAPT, never claimed as original balance.
 const CATALOG := preload("res://items/catalog.gd")
+const Numbers = preload("res://stats/api/numbers.gd")
 const Layout = preload("res://items/slot_layout.gd")
 var profile: Dictionary = {}
 var state := "town"
@@ -12,17 +13,30 @@ func _init() -> void:
 		"inventory": {"iron_sword": 1, "potion": 3}, "equipped": "iron_sword",
 		"quest": "available", "clears": 0, "next_run": 1, "settled": {}}
 	Layout.normalize(profile, CATALOG.ITEMS)
+	Numbers.normalize(profile)
 
 func snapshot() -> Dictionary:
 	return {"profile": profile.duplicate(true), "state": state, "run": run.duplicate(true),
 		"result": result.duplicate(true), "stats": stats()}
 
 func stats() -> Dictionary:
-	var item: Dictionary = CATALOG.ITEMS.get(profile["equipped"], {"multiplier": 0.8})
-	return {"hp": 500 + (int(profile["level"]) - 1) * 25, "mp": 180,
-		"damage_multiplier": float(item["multiplier"]), "weapon": "katana"}
+	Numbers.normalize(profile)
+	var result: Dictionary = Numbers.combat_spec(profile)
+	result["hp"] = result["hp_max"]
+	result["mp"] = result["mp_max"]
+	result["damage_multiplier"] = float(CATALOG.ITEMS.get(profile["equipped"], {"multiplier":0.8})["multiplier"])
+	return result
+
+func xp_needed() -> int:
+	return Numbers.Growth.need(int(profile["level"]),Numbers.config()["progression"])
 
 func command(kind: String, payload: Dictionary = {}) -> Dictionary:
+	Numbers.normalize(profile)
+	if kind.begins_with("numbers."):
+		if state != "town" and kind in ["numbers.gear_equip","numbers.gear_unequip","numbers.reinforce","numbers.enchant"]:return reject("请回城后调整装备")
+		var response: Dictionary = Numbers.command(profile,kind,payload)
+		Layout.normalize(profile,CATALOG.ITEMS)
+		return response
 	match kind:
 		"flow.accept_quest":
 			if state != "town" or profile["quest"] != "available":return reject("现在无法接受这个任务")
@@ -46,16 +60,22 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 			if state != "town":return reject("请回城后更换装备")
 			var id := String(payload.get("id", ""))
 			if not CATALOG.ITEMS.has(id) or CATALOG.ITEMS[id].get("kind") != "weapon" or int(profile["inventory"].get(id, 0)) < 1:return reject("没有这件装备")
+			if int(profile["level"]) < int(CATALOG.ITEMS[id].get("level",1)):return reject("角色等级不足")
 			profile["equipped"] = id
+			Numbers.normalize(profile)
 			Layout.normalize(profile, CATALOG.ITEMS)
 		"items.unequip":
 			if state != "town":return reject("请回城后更换装备")
 			profile["equipped"] = ""
+			Numbers.normalize(profile)
 			Layout.normalize(profile, CATALOG.ITEMS)
 		"slots.move":
 			if payload.get("source", {}).get("place") == "equipment" or payload.get("target", {}).get("place") == "equipment":
 				if state != "town":return reject("请回城后更换装备")
-			if not Layout.move(profile, CATALOG.ITEMS, payload.get("source", {}), payload.get("target", {})):return reject("这里不能放置该物品或技能")
+			var source: Dictionary = payload.get("source",{})
+			if payload.get("target",{}).get("place")=="equipment" and int(profile["level"]) < int(CATALOG.ITEMS.get(source.get("id",""),{}).get("level",1)):return reject("角色等级不足")
+			if not Layout.move(profile, CATALOG.ITEMS, source, payload.get("target", {})):return reject("这里不能放置该物品或技能")
+			Numbers.normalize(profile)
 		"flow.difficulty":
 			if state != "town" or payload.get("id") not in ["normal", "adventure", "king"]:return reject("难度无效")
 			profile["difficulty"] = payload["id"]
@@ -84,13 +104,19 @@ func consume_potion() -> Dictionary:
 
 func add_item(id: String, count: int) -> void:
 	# Fixed v1 catalog stacks by semantic ID; no finite-slot discard path.
+	if count <= 0 or not CATALOG.ITEMS.has(id):return
 	profile["inventory"][id] = int(profile["inventory"].get(id, 0)) + count
+	Numbers.normalize(profile)
 	Layout.normalize(profile, CATALOG.ITEMS)
 
 func combat_event(event: Dictionary) -> Dictionary:
 	if state != "battle" or event.get("run_id") != run.get("id"):return reject("忽略过期战斗事件")
 	match event.get("type", ""):
 		"combat.player_defeated":return finish_run(false, event.get("stats", {}))
+		"combat.monster_defeated":
+			var amount := int(Numbers.config()["progression"]["kill_xp"])
+			if amount>0:return Numbers.Growth.grant(profile,amount,"kill:"+String(run["id"])+":"+str(event.get("event_id",event.get("entity_id",-1))),Numbers.config()["progression"])
+			return {"ok":true}
 		"combat.room_combat_finished":
 			if bool(event.get("final_room", false)):return finish_run(true, event.get("stats", {}))
 	return {"ok": true}
@@ -101,29 +127,28 @@ func finish_run(won: bool, details: Dictionary) -> Dictionary:
 	profile["settled"][id] = true
 	result = {"run_id": id, "victory": won, "gold": 0, "xp": 0, "potion": 0, "stats": details.duplicate(true)}
 	if won:
-		result.merge({"gold": 150, "xp": 120, "potion": 1}, true)
+		result.merge({"gold": 150, "xp": int(Numbers.config()["progression"]["clear_xp"]), "potion": 1}, true)
 		var damage := int(details.get("damage_taken", 0))
 		result["rank"] = "S" if damage <= 50 else "A" if damage <= 250 else "B"
 		profile["gold"] += 150
-		profile["xp"] += 120
+		Numbers.Growth.grant(profile,int(Numbers.config()["progression"]["clear_xp"]),"clear:"+id,Numbers.config()["progression"])
 		profile["clears"] += 1
 		add_item("potion", 1)
 		if profile["quest"] == "active":profile["quest"] = "ready"
-		while int(profile["xp"]) >= int(profile["level"]) * 100:
-			profile["xp"] -= int(profile["level"]) * 100
-			profile["level"] += 1
 	state = "result"
 	return {"ok": true}
 
 func serialize() -> Dictionary:
-	return {"schema": "dnf_loop_save/1", "profile": profile.duplicate(true), "state": state,
+	return {"schema": "dnf_loop_save/2", "profile": profile.duplicate(true), "state": state,
 		"run": run.duplicate(true), "result": result.duplicate(true)}
 
 func restore(data: Dictionary) -> bool:
-	if data.get("schema") != "dnf_loop_save/1" or not data.get("profile") is Dictionary:return false
-	var p: Dictionary = data["profile"]
+	if data.get("schema") not in ["dnf_loop_save/1","dnf_loop_save/2"] or not data.get("profile") is Dictionary:return false
+	var p: Dictionary = data["profile"].duplicate(true)
+	var legacy := not p.has("numbers_revision")
 	for k: String in profile:
-		if k in ["bag_layout", "quick_items", "skill_slots", "difficulty"]:continue
+		if k in ["bag_layout", "quick_items", "skill_slots", "difficulty", "attack_element"]:continue
+		if legacy and k in ["numbers_revision","growtype","sp_bonus","skills","skill_purchases","xp_transactions","gear","next_gear","equipment","stat_modifiers","attack_element"]:continue
 		if not p.has(k) or typeof(p[k]) != typeof(profile[k]) and not (p[k] is float and profile[k] is int):return false
 	if not p["inventory"] is Dictionary or not p["settled"] is Dictionary:return false
 	if p["quest"] not in ["available", "active", "ready", "done"] or (p["equipped"] != "" and not CATALOG.ITEMS.has(p["equipped"])):return false
@@ -142,6 +167,10 @@ func restore(data: Dictionary) -> bool:
 		if not p["settled"].has(r["run_id"]) or data["run"].get("id") != r["run_id"]:return false
 		for key in ["gold", "xp", "potion"]:
 			if not (r.get(key) is int or r.get(key) is float) or float(r[key]) < 0:return false
+	if legacy:Numbers.normalize(p)
+	if not p.has("attack_element"):p["attack_element"] = "none"
+	if not Numbers.valid(p):return false
+	Numbers.canonicalize(p)
 	profile = p.duplicate(true)
 	Layout.normalize(profile, CATALOG.ITEMS)
 	for key in ["schema", "level", "gold", "xp", "clears", "next_run"]:profile[key] = int(profile[key])

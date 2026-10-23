@@ -195,6 +195,16 @@ func run() -> void:
 		print("[LOOP_TEST] COMPLETE checks=%d failures=%d captures=%d" % [checks, failures, captured.size()])
 		get_tree().quit(1 if failures else 0)
 		return
+	if "--numbers-only" in OS.get_cmdline_user_args():
+		var suite = load("res://tests/flow/test_number_flow.gd").new()
+		suite.game = game
+		suite.host = self
+		await suite.run()
+		OS.delay_msec(100)
+		await ticks(3)
+		print("[LOOP_TEST] COMPLETE checks=%d failures=%d captures=%d" % [checks,failures,captured.size()])
+		get_tree().quit(1 if failures else 0)
+		return
 	unit_states()
 	check(Language.contains_korean(String.chr(0xac00)) and Language.contains_korean(String.chr(0x3131)), "Korean syllables and Jamo are rejected")
 	check(not Language.contains_korean("背包 负重 普通难度 X HP 评价 S"), "Chinese text and normal key/rank notation are accepted")
@@ -433,7 +443,7 @@ func run() -> void:
 		click_text("进入地下城")
 		await ticks(4)
 		var second: Dictionary = game.combat.read_view()
-		check(second["hp_max"] == 525 and second["attack_damage"] == 30, "next adventure applies level and equipment to actual combat")
+		check(is_equal_approx(float(second["hp_max"]),527.1) and is_equal_approx(float(second["attack_damage"]),30.24), "next adventure applies level and equipment to actual combat")
 		game.show_overlay("menu")
 		await ticks(3)
 		check(click_text("撤退回城"), "retreat menu opens failure result")

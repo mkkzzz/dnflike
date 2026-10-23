@@ -50,6 +50,9 @@ func configure_trial(movement_scale: float, difficulty: String) -> void:
 	game.rules = game.rules.duplicate(true)
 	game.rules["player"]["walk_speed"] *= movement_scale
 	game.rules["player"]["run_speed"] *= movement_scale
+	if game.numeric_player != null:
+		game.configure_monster_numbers(game.numeric_monster_level,difficulty)
+		return
 	var factor: float = {"normal":1.0, "adventure":1.3, "king":1.6}.get(difficulty, 1.0)
 	game.table.monsters = game.table.monsters.duplicate(true)
 	for monster: Dictionary in game.table.monsters.values():
@@ -75,6 +78,12 @@ func set_paused(value: bool) -> void:
 func apply_effect(effect: Dictionary) -> bool:
 	return _alive() and game.apply_effect(effect)
 
+func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
+	return _alive() and game.update_numbers(spec,vitals_policy)
+
+func configure_monsters(level: int, difficulty := "normal") -> bool:
+	return _alive() and game.configure_monster_numbers(level,difficulty)
+
 func stop() -> void:
 	if _alive():game.queue_free()
 	game = null
@@ -97,6 +106,10 @@ func read_view() -> Dictionary:
 		"hp":float(p["hp"]),"hp_max":game.max_hp,"mp":float(p["mp"]),"mp_max":game.max_mp,
 		"pos":Vector2(p["pos"]),"facing":int(p["facing"]),"job":game.job,"weapon":game.weapon,
 		"attack_damage":game.attack_power(),
+		"numbers":game.numeric_player.values.duplicate(true) if game.numeric_player != null else {},
+		"sources":game.numeric_player.sources.duplicate(true) if game.numeric_player != null else {},
+		"effects":game.numeric_player.effects.view() if game.numeric_player != null else [],
+		"skills":game.skill_levels.duplicate(true),"last_damage":game.last_damage.duplicate(true),
 		"cooldowns":Dictionary(p["cooldowns"]).duplicate(),"buff_ms":float(p["buff_ms"]),
 		"enemies":enemies,"alive_monsters":enemies.size(),"exit_target":exit_target,
 		"room_cleared":game.room_cleared,"finished":game.finished,"victory":game.victory,"paused":game.paused}

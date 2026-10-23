@@ -142,6 +142,7 @@ func build(placement: Dictionary) -> Node2D:
 			if s.setup(bg["sprite"], self):
 				s.position = Vector2(i * width, 0)
 				layer.add_child(s)
+			else:s.free()
 		root.add_child(layer)
 		parallax.append(layer)
 	root.set_meta("parallax", parallax)
@@ -179,7 +180,9 @@ func build(placement: Dictionary) -> Node2D:
 
 func _place(root: Node2D, sprite: Dictionary, anchor: Array, layer: String) -> MapSprite:
 	var s := MapSprite.new()
-	if not s.setup(sprite, self):return null
+	if not s.setup(sprite, self):
+		s.free()
+		return null
 	s.position = ground_to_screen(anchor)
 	s.z_index = z_for(layer, float(anchor[1]))
 	s.set_meta("layer", layer)

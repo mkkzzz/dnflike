@@ -1,10 +1,10 @@
 """Layering guard for game_dnf (docs/design/29_新版工程框架.md, sections 2/5/10).
 
 Enforced on every res:// reference to a .gd/.tscn/.tres file:
-1. Kernel purity: core(0) < content(1) < combat(2). A kernel module may only depend on
+1. Kernel purity: core(0) < content(1) < stats(2) < combat(3). A kernel module may only depend on
    lower kernel modules; it never reaches upper modules or the transitional scripts/ and
    scenes/ (allowlisted bridges excepted).
-2. Kernel encapsulation: from any other module, content/ and combat/ are reached only
+2. Kernel encapsulation: from any other module, content/, stats/ and combat/ are reached only
    through their api/ folder. core/ is public as a whole.
 Above the kernel (map/flow/items/save/town/view/ui), internal organisation and the use of
 legacy scripts/ during migration are left to the owning workspace (doc 28).
@@ -19,8 +19,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / 'game_dnf'
-KERNEL = {'core': 0, 'content': 1, 'combat': 2}
-ENCAPSULATED = {'content', 'combat'}
+KERNEL = {'core': 0, 'content': 1, 'stats': 2, 'combat': 3}
+ENCAPSULATED = {'content', 'stats', 'combat'}
 EXEMPT_SOURCES = {'debug', 'tests', 'scripts', 'scenes', 'assets_local', '.godot'}
 LEGACY = {'scripts', 'scenes'}
 # Transitional bridges that wrap the legacy battle scene until the World kernel lands (F3).

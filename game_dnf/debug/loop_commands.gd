@@ -1,7 +1,8 @@
 extends RefCounted
 ## Bounded GM commands. No evaluation of GDScript or shell expressions.
+const NumberCommands = preload("res://debug/number_commands.gd")
 const RuntimeAPI = preload("res://debug/runtime_api.gd")
-const HELP := "help 帮助 / status 状态 / dungeon enter|restart 进本或重开 / town 回城\nroom 1~5|next|boss 跳房 / spawn goblin|thrower|chief 1~20 刷怪 / clear 清怪\ngod [on|off] 无敌 / heal 回满 / cooldown 清冷却 / collision [on|off] 碰撞\nweapon katana|shortsword|greatsword 临时外观 / win 通关 / lose 失败\ngive potion|iron_sword|forest_sword 数量 / gold 数量 / level 1~60 / save 保存"
+const HELP := "help 帮助 / status 状态 / dungeon enter|restart 进本或重开 / town 回城\nroom 1~5|next|boss 跳房 / spawn goblin|thrower|chief 1~20 刷怪 / clear 清怪\ngod [on|off] 无敌 / heal 回满 / cooldown 清冷却 / collision [on|off] 碰撞\nweapon katana|shortsword|greatsword 临时外观 / win 通关 / lose 失败\ngive potion|iron_sword|forest_sword 数量 / gold 数量 / level 1~60 / save 保存\nxp 数量 / sp 数量 / skill 技能 等级 / stat 属性 增量 / stats [属性]\ngear give|equip|reinforce|enchant / buff|unbuff 效果 [目标] / monster 等级 / damage 伤害明细\nelement none|fire|water|light|dark 属性攻击"
 var game
 
 func _init(target) -> void:game = target
@@ -10,6 +11,8 @@ func result(ok: bool, message: String) -> Dictionary:return {"ok": ok, "message"
 func execute(text: String) -> Dictionary:
 	var words := text.strip_edges().replace("\t", " ").split(" ", false)
 	if words.is_empty():return result(false, "请输入命令；help 查看帮助")
+	var numerical: Dictionary = NumberCommands.new(game).execute(words)
+	if not numerical.is_empty():return numerical
 	var cmd := words[0].to_lower()
 	var args := words.slice(1)
 	match cmd:
@@ -36,10 +39,9 @@ func execute(text: String) -> Dictionary:
 			game.session.profile["gold"] += int(args[0])
 			return persist("金币增加 %d" % int(args[0]))
 		"level":
-			if args.size() != 1 or not positive_int(args[0], 60):return result(false, "用法：level 1~60")
-			game.session.profile["level"] = int(args[0])
-			game.session.profile["xp"] = 0
-			return persist("等级设为 %s；角色属性在下一次出征生效" % args[0])
+			if args.size()!=1 or not args[0].is_valid_int():return result(false,"用法：level 等级")
+			return NumberCommands.new(game).mutate("numbers.level",{"level":int(args[0])})
+
 	if cmd not in ["heal", "cooldown", "god", "collision", "clear", "room", "spawn", "weapon", "win", "lose"]:return result(false, "未知命令：%s；help 查看帮助" % cmd)
 	if game.session.state != "battle" or not is_instance_valid(game.battle) or not game.combat.is_running():
 		return result(false, "此命令需要进行中的战斗；先用 dungeon enter")

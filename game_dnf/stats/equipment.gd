@@ -1,0 +1,65 @@
+extends RefCounted
+## Instances supplement the legacy item-count view. The counts remain ownership authority.
+static func create(profile: Dictionary, definition: String, quality := 50, reinforce := 0) -> String:
+	var uid := "gear_%d" % int(profile["next_gear"])
+	profile["next_gear"] += 1
+	profile["gear"][uid] = {"definition":definition,"quality":clampi(quality,0,100),"reinforce":clampi(reinforce,0,30),"enchants":[]}
+	return uid
+
+static func normalize(profile: Dictionary, definitions: Dictionary, counts: Dictionary) -> void:
+	for key: String in definitions:
+		if not counts.has(key):continue
+		var matches: Array = []
+		for uid: String in profile["gear"]:
+			if profile["gear"][uid]["definition"] == key:matches.append(uid)
+		while matches.size() < int(counts[key]):matches.append(create(profile,key))
+		while matches.size() > int(counts[key]):
+			var uid: String = matches.pop_back()
+			profile["gear"].erase(uid)
+			for slot: String in profile["equipment"]:
+				if profile["equipment"][slot] == uid:profile["equipment"].erase(slot)
+	var old := String(profile.get("equipped",""))
+	var current: String = profile["equipment"].get("weapon","")
+	if old == "":profile["equipment"].erase("weapon")
+	elif current == "" or not profile["gear"].has(current) or profile["gear"][current]["definition"] != old:
+		for uid: String in profile["gear"]:
+			if profile["gear"][uid]["definition"] == old:
+				profile["equipment"]["weapon"] = uid
+				break
+
+static func equip(profile: Dictionary, uid: String, config: Dictionary) -> Dictionary:
+	if not profile["gear"].has(uid):return {"ok":false,"message":"装备不存在"}
+	var definition: Dictionary = config["equipment"][profile["gear"][uid]["definition"]]
+	if int(profile["level"]) < int(definition.get("required_level",1)):return {"ok":false,"message":"角色等级不足"}
+	if definition.has("growtypes") and profile["growtype"] not in definition["growtypes"]:return {"ok":false,"message":"职业不符合穿戴要求"}
+	profile["equipment"][definition["slot"]] = uid
+	if definition["slot"] == "weapon":profile["equipped"] = profile["gear"][uid]["definition"]
+	return {"ok":true}
+
+static func modifiers(profile: Dictionary, config: Dictionary) -> Array:
+	var result: Array = []
+	var sets := {}
+	for slot: String in profile["equipment"]:
+		var instance: Dictionary = profile["gear"].get(profile["equipment"][slot],{})
+		if instance.is_empty():continue
+		var definition: Dictionary = config["equipment"][instance["definition"]]
+		# Lowering level does not delete owned gear; ineligible gear ceases to contribute.
+		if int(profile["level"]) < int(definition.get("required_level",1)):continue
+		if definition.has("growtypes") and profile["growtype"] not in definition["growtypes"]:continue
+		var scale := lerpf(float(config["formula"]["quality_min_scale"]),float(config["formula"]["quality_max_scale"]),float(instance["quality"])/100)
+		for stat: String in definition.get("stats",{}):result.append({"source":definition["name"]+" · 编号 "+String(profile["equipment"][slot]).trim_prefix("gear_"),"stat":stat,"op":"add","value":float(definition["stats"][stat])*scale})
+		if slot == "weapon":
+			for stat: String in ["physical_attack","magical_attack"]:result.append({"source":"武器强化","stat":stat,"op":"add","value":int(instance["reinforce"])*float(config["formula"]["reinforce_attack_per_level"])})
+		for mod: Dictionary in instance.get("enchants",[]):
+			var entry := mod.duplicate(true)
+			entry["source"] = "装备附魔"
+			result.append(entry)
+		if definition.has("set"):sets[definition["set"]] = int(sets.get(definition["set"],0))+1
+	for key: String in config.get("sets",{}):
+		for threshold: Dictionary in config["sets"][key]:
+			if int(sets.get(key,0)) >= int(threshold["count"]):
+				for mod: Dictionary in threshold["modifiers"]:
+					var entry := mod.duplicate(true)
+					entry["source"] = "套装 · "+key
+					result.append(entry)
+	return result

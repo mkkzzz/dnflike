@@ -132,7 +132,7 @@ func run() -> void:
 	await button("town")
 	host.check(game.session.state == "town" and not is_instance_valid(game.battle), "town button cleans up combat and restores town")
 	await button("level 60")
-	host.check(game.session.profile["level"] == 60 and game.session.stats()["hp"] == 1975, "level command updates the next-run stat source")
+	host.check(game.session.profile["level"] == 60 and is_equal_approx(float(game.session.stats()["hp"]),2441.1), "level command updates the next-run stat source")
 	game.set_debug_open(false)
 	await key(KEY_F3)
 	host.check(game.get_window().content_scale_size == Vector2i(1920, 1080), "F3 cannot change the fixed output resolution")

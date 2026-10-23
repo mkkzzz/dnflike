@@ -1,5 +1,5 @@
 extends Node2D
-## Independent outer loop. ws1's original main scene and files stay untouched.
+## Outer flow owns profile transactions; combat owns simulation state.
 const Session = preload("res://flow/session.gd")
 const Store = preload("res://save/store.gd")
 const Town = preload("res://town/native_town.gd")
@@ -14,6 +14,8 @@ const SkillCatalog = preload("res://combat/api/skill_catalog.gd")
 const SkillDescriptions = preload("res://items/skill_descriptions.gd")
 const Characters = preload("res://save/characters.gd")
 const CharacterScreen = preload("res://ui/flow/character_screen.gd")
+const NumberWindows = preload("res://ui/flow/number_windows.gd")
+var number_windows
 const SKILL_KEYS := [KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H]
 const SKILL_CODES := {"draw":KEY_A, "triple":KEY_S, "rage_slash":KEY_D, "buff":KEY_F, "guard":KEY_G}
 var session = Session.new()
@@ -70,6 +72,7 @@ func _ready() -> void:
 	town.interact.connect(func(target: String): show_overlay("npc" if target == "linus" else "dungeon"))
 	skin = NativeSkin.new(town.loader)
 	windows = Windows.new(self)
+	number_windows = NumberWindows.new(self)
 	skill_catalog = SkillCatalog.new()
 	var layer := CanvasLayer.new()
 	layer.transform = display_settings.content_transform()
@@ -110,7 +113,7 @@ func build_hud() -> void:
 	hp_bar.mouse_exited.connect(windows.hide_tooltip)
 	mp_bar.mouse_exited.connect(windows.hide_tooltip)
 	# Source ui/hud/hud.ui controls are relative to the bottom board.
-	skin.sprite_button(hud, "hud", [5, 6, 7], Vector2(273, 560), func(): hud_action("inventory"), "角色装备 I")
+	skin.sprite_button(hud, "hud", [5, 6, 7], Vector2(273, 560), func(): hud_action("numbers"), "角色属性 O")
 	skin.sprite_button(hud, "hud", [8, 9, 10], Vector2(299, 560), func(): hud_action("inventory"), "背包 I")
 	skin.sprite_button(hud, "hud", [11, 12, 13], Vector2(325, 560), func(): hud_action("quest"), "任务 Q")
 	skin.sprite_button(hud, "hud", [68, 69, 70], Vector2(451, 560), func(): hud_action("menu"), "菜单 Esc")
@@ -176,8 +179,8 @@ func _process(delta: float) -> void:
 	windows.update_gauge_tip()
 	info_text.text = "Lv.%d" % int(p["level"])
 	var experience := hud.get_node("experience") as TextureProgressBar
-	experience.value = float(p["xp"]) * 100.0 / (int(p["level"]) * 100)
-	experience.set_meta("value_text", "经验  %d / %d" % [p["xp"], int(p["level"]) * 100])
+	experience.value = float(p["xp"]) * 100.0 / session.xp_needed() if session.xp_needed()>0 else 100
+	experience.set_meta("value_text", "经验  %d / %d" % [p["xp"], session.xp_needed()] if session.xp_needed()>0 else "已达等级上限")
 	for cell in quick_views:
 		if is_instance_valid(cell):cell.refresh_quantity()
 	for id: String in skill_views:
@@ -191,7 +194,8 @@ func _process(delta: float) -> void:
 	if notification_seconds > 0:
 		notification_seconds -= delta
 		toast_text.text = skin.chinese(notification)
-		toast_panel.visible = notification_seconds > 0 and overlay == ""
+		toast_panel.position.y = 4 if overlay=="numbers" else 43
+		toast_panel.visible = notification_seconds > 0 and overlay in ["","numbers"]
 	if is_instance_valid(battle) and overlay == "" and not debug_is_open() and combat.read_view()["paused"]:
 		show_overlay("menu")
 
@@ -237,6 +241,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_SPACE:
 			if overlay == "dungeon":depart()
 		KEY_I:hud_action("inventory")
+		KEY_O:hud_action("numbers")
+		KEY_K:
+			number_windows.tab = 1
+			show_overlay("numbers")
 		KEY_Q:hud_action("quest")
 		KEY_D:
 			if session.state == "town":hud_action("dungeon")
@@ -269,12 +277,21 @@ func save_profile() -> bool:
 	return ok
 
 func act(kind: String, payload: Dictionary = {}) -> bool:
+	var before_level := int(session.profile["level"])
 	var response: Dictionary = session.command(kind, payload)
 	if not response["ok"]:
 		notice(response["message"])
 		return false
+	if kind.begins_with("numbers."):
+		sync_number_changes(kind)
 	save_profile()
+	if int(session.profile["level"])>before_level:notice("等级提升 · Lv.%d" % int(session.profile["level"]))
 	return true
+
+func sync_number_changes(kind := "numbers.update") -> void:
+	if is_instance_valid(battle) and session.state=="battle":
+		combat.update_numbers(session.stats(),String(session.Numbers.config()["progression"]["level_up_vitals"]) if kind in ["numbers.xp","numbers.level"] else "preserve")
+	build_hotbars()
 
 func show_overlay(which: String) -> void:
 	if not character_active:return
@@ -298,6 +315,7 @@ func show_overlay(which: String) -> void:
 		"dungeon":dungeon_panel()
 		"result":result_panel()
 		"menu":menu_panel()
+		"numbers":number_windows.show_window()
 
 func title_panel(title: String, rect := Rect2(103, 93, 434, 250)) -> Control:
 	var panel = skin.panel(modal, rect)
@@ -329,20 +347,35 @@ func depart() -> void:
 	battle.position = Vector2(80, 100)
 	combat.room_combat_finished.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
 	combat.player_defeated.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
+	combat.monster_defeated.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
 	var stat: Dictionary = session.run["stats"]
 	var headless_test := test_mode and DisplayServer.get_name() == "headless"
-	combat.start_room({"run_id": String(session.run["id"]), "room_id": "forest_trial:0", "room_index": 0,
-		"player": {"hp_max": stat["hp"], "mp_max": stat["mp"], "damage_multiplier": stat["damage_multiplier"], "weapon": stat["weapon"]},
+	var started: bool = combat.start_room({"run_id": String(session.run["id"]), "room_id": "forest_trial:0", "room_index": 0,
+		"player": stat,
 		"audio": {"muted": headless_test, "bgm_volume_db": -32}, "show_hud": false})
+	if not started:
+		combat.stop()
+		battle = null
+		combat = null
+		session.command("flow.retreat")
+		session.command("flow.return")
+		town.show()
+		notice("战斗资源尚未准备完成，请通过正式启动脚本重试")
+		return
 	combat.configure_trial(1.35, String(session.run.get("difficulty", "normal")))
 	notice("密林试炼 · 清除怪物后前往出口")
 	sync_debug_pause()
 
 func on_combat_event(event: Dictionary) -> void:
+	var before_level := int(session.profile["level"])
 	var response: Dictionary = session.combat_event(event)
+	if response["ok"] and event.get("type")=="combat.monster_defeated" and int(response.get("amount",0))>0:
+		if int(session.profile["level"])>before_level:sync_number_changes("numbers.xp")
+		save_profile()
 	if response["ok"] and session.state == "result":
 		save_profile()
 		show_overlay("result")
+	if int(session.profile["level"])>before_level:notice("等级提升 · Lv.%d" % int(session.profile["level"]))
 
 func result_panel() -> void:
 	windows.result()

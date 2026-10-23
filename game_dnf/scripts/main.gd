@@ -16,6 +16,13 @@ const PLAYER_ID := 0
 const OPPOSITE := {"left":"right","right":"left","up":"down","down":"up"}
 ## Double tap window for running, measured from the release of the first tap.
 const RUN_TAP_MS := 240
+const Numbers = preload("res://stats/api/numbers.gd")
+const ActorNumbers = preload("res://stats/api/actor_numbers.gd")
+var numeric_player
+var skill_levels: Dictionary = {}
+var numeric_monster_level := 1
+var numeric_difficulty := "normal"
+var last_damage: Dictionary = {}
 
 ## Set before entering the tree when a flow root manages this scene (see CombatSession.mount).
 var external_mode := false
@@ -135,7 +142,72 @@ func restart() -> void:
 
 ## Physical attack power before skill percentages (E-ADAPT until equipment/stats exist).
 func attack_power() -> float:
+	if numeric_player != null:return float(numeric_player.values["physical_panel"])
 	return float(rules["player"]["physical_attack"])*damage_scale
+
+func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
+	if player.is_empty() or not spec.get("numbers") is Dictionary or spec["numbers"].is_empty():return false
+	if vitals_policy not in ["preserve","refill"]:return false
+	if numeric_player == null:numeric_player = ActorNumbers.new()
+	numeric_player.configure(spec)
+	skill_levels = spec.get("skills",Numbers.config()["skill_defaults"]).duplicate(true)
+	table.configure_skills(skill_levels)
+	max_hp = float(numeric_player.values["hp_max"])
+	max_mp = float(numeric_player.values["mp_max"])
+	player["hp"] = max_hp if vitals_policy=="refill" else clampf(float(player["hp"]),0,max_hp)
+	player["mp"] = max_mp if vitals_policy=="refill" else clampf(float(player["mp"]),0,max_mp)
+	if spec.has("weapon") and assets["players"].has(spec["weapon"]):weapon = spec["weapon"]
+	bus.emit("combat.attributes_changed",{"target":PLAYER_ID,"numbers":numeric_player.values.duplicate(true)})
+	return true
+
+func configure_monster_numbers(level: int, difficulty: String) -> bool:
+	if numeric_player == null or level<1 or level>int(Numbers.config()["progression"]["level_cap"]):return false
+	if not Numbers.config()["monsters"]["difficulty"].has(difficulty):return false
+	numeric_monster_level = level
+	numeric_difficulty = difficulty
+	for enemy: Dictionary in monsters:configure_enemy_numbers(enemy)
+	return true
+
+func configure_enemy_numbers(enemy: Dictionary) -> void:
+	var m: Dictionary = enemy["def"]
+	var base: Dictionary = rules["monster_base"]
+	var monster_base := {"hp":float(m["hp"])*(float(base["boss_hp_scale"]) if enemy["chief"] else 1.0),"attack":float(m["attack"])*(float(base["boss_attack_scale"]) if enemy["chief"] else 1.0),"hit_recovery":float(m["hit_recovery"])}
+	var ratio := float(enemy["hp"])/maxf(1,float(enemy["max_hp"]))
+	var actor = enemy.get("numeric")
+	if actor == null:actor = ActorNumbers.new()
+	actor.configure({"numbers":Numbers.monster(monster_base,numeric_monster_level,bool(enemy["chief"]),numeric_difficulty)})
+	enemy["numeric"] = actor
+	enemy["max_hp"] = float(actor.values["hp_max"])
+	enemy["hp"] = float(enemy["max_hp"])*ratio
+	enemy["attack"] = float(actor.values["physical_attack"])
+
+func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
+	if float(body["hp"])<=0:return
+	var events: Array = actor.step(ms)
+	if int(body["id"])!=PLAYER_ID:
+		body["max_hp"] = float(actor.values["hp_max"])
+		body["attack"] = float(actor.values["physical_attack"])
+	body["hp"] = minf(float(body["hp"]),float(actor.values["hp_max"]))
+	for event: Dictionary in events:
+		if event["type"]=="removed":
+			bus.emit("combat.status",{"target":body["id"],"id":event["id"],"change":"removed"})
+			continue
+		if int(body["id"])==PLAYER_ID and god_mode:continue
+		var amount := Numbers.Damage.resolve({"independent_attack":100,"level":numeric_monster_level},actor.values,{"percent":0,"fixed":event["damage"],"damage_type":event["damage_type"]},[0.0,1.0],Numbers.config()["formula"])
+		body["hp"] = maxf(0,float(body["hp"])-int(amount["amount"]))
+		bus.emit("combat.damage",{"target":body["id"],"amount":amount["amount"],"critical":false,"category":event["damage_type"],"victim":"player" if body["id"]==PLAYER_ID else "monster","reaction":"none","point":Vector3(body["pos"].x,body["pos"].y,float(body["z"]))})
+		if body["id"]==PLAYER_ID:
+			damage_taken += int(amount["amount"])
+			if float(body["hp"])<=0:
+				body["state"] = "dead"
+				finished = true
+				victory = false
+				bus.emit("combat.player_defeated",flow_payload())
+		elif float(body["hp"])<=0:
+			body["state"] = "dead"
+			body["death_ms"] = 0.0
+			report_defeat(body)
+		if float(body["hp"])<=0:break
 
 ## Spec fields (contract v1): run_id, room_id, room_index (transitional trial route), from (entry side),
 ## player {hp, mp, hp_max, mp_max, damage_multiplier, job, weapon}, audio {muted, bgm_volume_db}, show_hud.
@@ -143,10 +215,17 @@ func attack_power() -> float:
 ## Without flow values, HP/MP start from the original CHR level-1 initial stats.
 func begin_room(spec: Dictionary) -> void:
 	var snapshot: Dictionary = spec.get("player",{})
+	numeric_player = null
+	skill_levels = {}
+	last_damage = {}
+	numeric_monster_level = 1
+	numeric_difficulty = "normal"
+	table.configure_skills({})
 	max_hp = float(snapshot.get("hp_max",table.player["hp_max"]))
 	max_mp = float(snapshot.get("mp_max",table.player["mp_max"]))
 	damage_scale = float(snapshot.get("damage_multiplier",1.0))
 	player = new_player()
+	if snapshot.has("numbers"):update_numbers(snapshot,"refill")
 	if snapshot.has("hp"):player["hp"] = clampf(float(snapshot["hp"]),1,max_hp)
 	if snapshot.has("mp"):player["mp"] = clampf(float(snapshot["mp"]),0,max_mp)
 	if snapshot.get("job","") in ["weaponmaster","berserker"]:job = String(snapshot["job"])
@@ -305,14 +384,22 @@ func end_action() -> void:
 
 func step_game(ms: float) -> void:
 	var dt := ms/1000
+	if numeric_player != null:
+		step_numeric_actor(player,numeric_player,ms)
+		if finished:return
+		player["buff_ms"] = float(numeric_player.effects.active.get("frenzy",{}).get("remaining_ms",0))
+		max_hp = float(numeric_player.values["hp_max"])
+		max_mp = float(numeric_player.values["mp_max"])
+		player["hp"] = minf(max_hp,float(player["hp"])+float(numeric_player.values["hp_regen"])*dt)
+		player["mp"] = minf(max_mp,float(player["mp"])+float(numeric_player.values["mp_regen"])*dt)
 	player["invuln_ms"] = maxf(0,float(player["invuln_ms"])-ms)
 	player["flash_ms"] = maxf(0,float(player["flash_ms"])-ms)
-	player["buff_ms"] = maxf(0,float(player["buff_ms"])-ms)
+	if numeric_player == null:player["buff_ms"] = maxf(0,float(player["buff_ms"])-ms)
 	player["landing_ms"] = maxf(0,float(player["landing_ms"])-ms)
 	door_lock_ms = maxf(0,door_lock_ms-ms)
 	for name: String in player["cooldowns"]:
 		player["cooldowns"][name] = maxf(0,float(player["cooldowns"][name])-dt)
-	player["mp"] = minf(max_mp,float(player["mp"])+dt*float(rules["player"]["mp_regen_per_s"]))
+	if numeric_player == null:player["mp"] = minf(max_mp,float(player["mp"])+dt*float(rules["player"]["mp_regen_per_s"]))
 	combo_ms = maxf(0,combo_ms-ms)
 	if combo_ms <= 0:combo_count = 0
 	var move := Vector2(float(bool(held.get(KEY_RIGHT,false)))-float(bool(held.get(KEY_LEFT,false))),float(bool(held.get(KEY_DOWN,false)))-float(bool(held.get(KEY_UP,false))))
@@ -323,6 +410,9 @@ func step_game(ms: float) -> void:
 		player["stuck_ms"] = maxf(0,float(player["stuck_ms"])-ms)
 		for code: int in requests:buffering(code)
 		requests.clear()
+	elif numeric_player != null and numeric_player.effects.controlled():
+		requests.clear()
+		Kernel.Reaction.step_body(player,ms,float(rules["player"]["gravity"]),rules["reaction"],move_in_world)
 	else:
 		step_player(ms,move)
 	for enemy: Dictionary in monsters:update_enemy(enemy,ms)
@@ -365,7 +455,7 @@ func step_player(ms: float, move: Vector2) -> void:
 				state = "backstep"
 			elif state == "action":buffering(code)
 			elif state in ["idle","move","guard"] and grounded:
-				player["vz"] = float(table.player["jump_power"])
+				player["vz"] = float(numeric_player.values["jump_power"]) if numeric_player != null else float(table.player["jump_power"])
 				player["air_ms"] = 0.0
 				player["state"] = "jump"
 				play_sound("jump")
@@ -392,13 +482,14 @@ func step_player(ms: float, move: Vector2) -> void:
 		move_player(Vector2(-int(player["facing"])*float(rules["backstep"]["speed"])*dt,0))
 		if float(player["clock"])>=float(rules["backstep"]["duration_ms"]) and float(player["z"])==0:player["state"] = "idle"
 	elif state != "dead":
-		if held.get(KEY_G,false) and float(player["z"])==0 and float(player["vz"])<=0:
+		if held.get(KEY_G,false) and float(player["z"])==0 and float(player["vz"])<=0 and int(skill_levels.get("guard",1))>0:
 			player["state"] = "guard"
 			if move.x!=0:player["facing"] = 1 if move.x>0 else -1
 		elif move.length_squared()>0:
 			if move.x!=0:player["facing"] = 1 if move.x>0 else -1
 			var speed := float(rules["player"]["run_speed"] if run_direction!=0 else rules["player"]["walk_speed"])
-			if float(player["buff_ms"])>0:speed *= float(rules["buff"]["move_speed"])
+			if numeric_player != null:speed *= float(numeric_player.values["move_speed"])
+			elif float(player["buff_ms"])>0:speed *= float(rules["buff"]["move_speed"])
 			move_player(Vector2(move.x*speed,move.y*speed*float(rules["units"]["depth_speed_ratio"]))*dt)
 			player["state"] = "jump" if float(player["z"])>0 else "move"
 		else:
@@ -420,6 +511,9 @@ func step_action(ms: float, move: Vector2) -> void:
 	var stage := action_def()
 	var old_clock := float(player["clock"])
 	var speed: float = float(rules["buff"]["attack_speed"]) if float(player["buff_ms"])>0 and name != "buff" else 1.0
+	if numeric_player != null:
+		var speed_kind: String = Numbers.config()["skills"].get(name,{}).get("speed","attack")
+		speed = float(numeric_player.values["cast_speed" if speed_kind=="cast" else "attack_speed"])
 	var clock := old_clock+ms*speed
 	player["clock"] = clock
 	if m.has("dash"):
@@ -433,7 +527,7 @@ func step_action(ms: float, move: Vector2) -> void:
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
 	if bool(m.get("air",false)) and move.length_squared() > 0:
 		# Jump attacks keep the airborne steering of a plain jump; facing stays locked.
-		var air_speed := float(rules["player"]["walk_speed"])
+		var air_speed := float(rules["player"]["walk_speed"])*(float(numeric_player.values["move_speed"]) if numeric_player != null else 1.0)
 		move_player(Vector2(move.x*air_speed,move.y*air_speed*float(rules["units"]["depth_speed_ratio"]))*ms/1000.0)
 	action_cues(stage,old_clock,clock)
 	apply_player_hits(stage,old_clock,clock)
@@ -443,7 +537,7 @@ func step_action(ms: float, move: Vector2) -> void:
 		end_action_fx()
 		player["state"] = "jump"
 		player["action"] = ""
-		player["vz"] = float(table.player["jump_power"])
+		player["vz"] = float(numeric_player.values["jump_power"]) if numeric_player != null else float(table.player["jump_power"])
 		player["air_ms"] = 0.0
 		player["queued_jump"] = false
 		play_sound("jump")
@@ -468,6 +562,34 @@ func flow_payload(extra := {}) -> Dictionary:
 
 ## Effects already validated and paid for by the flow side (e.g. potions). Returns whether it applied.
 func apply_effect(effect: Dictionary) -> bool:
+	if String(effect.get("kind","")) in ["effect","remove_effect"]:
+		if numeric_player == null or finished:return false
+		var body: Dictionary = player
+		var actor = numeric_player
+		if int(effect.get("target",PLAYER_ID)) != PLAYER_ID:
+			actor = null
+			for enemy: Dictionary in monsters:
+				if int(enemy["id"]) == int(effect["target"]):
+					body = enemy
+					actor = enemy.get("numeric")
+		if actor == null or float(body["hp"])<=0:return false
+		var id := String(effect.get("id",""))
+		var applied: bool = actor.add_effect(id,int(effect.get("rank",1))) if effect["kind"]=="effect" else actor.remove_effect(id)
+		if applied:
+			if actor.effects.controlled():
+				if body == player:end_action_fx()
+				body["action"] = ""
+				body["state"] = "idle"
+			body["hp"] = minf(float(body["hp"]),float(actor.values["hp_max"]))
+			if body != player:
+				body["max_hp"] = float(actor.values["hp_max"])
+				body["attack"] = float(actor.values["physical_attack"])
+			if body == player:
+				max_hp = float(actor.values["hp_max"])
+				max_mp = float(actor.values["mp_max"])
+				player["mp"] = minf(float(player["mp"]),max_mp)
+			bus.emit("combat.status",{"target":body["id"],"id":id,"change":"added" if effect["kind"]=="effect" else "removed"})
+		return applied
 	if player.is_empty() or finished or paused:return false
 	match String(effect.get("kind","")):
 		"heal":
@@ -497,13 +619,15 @@ func reject_action(name: String, reason: String) -> bool:
 func start_action(name: String, cancel := false) -> bool:
 	var m := move_def(name)
 	if m.is_empty():return reject_action(name,"unknown")
+	if numeric_player != null and (numeric_player.effects.controlled() or skill_levels.has(name) and int(skill_levels[name])<=0):return reject_action(name,"unavailable")
 	var airborne := float(player["z"])>0 or float(player["vz"])>0
 	if airborne != bool(m.get("air",false)):return reject_action(name,"state")
 	if not cancel and String(player["state"]) in ["hurt","air","down","dead","backstep","action"]:return reject_action(name,"state")
 	if float(player["cooldowns"].get(name,0))>0:return reject_action(name,"cooldown")
-	if float(player["mp"])<float(m["mp"]):return reject_action(name,"mp")
-	player["mp"] = float(player["mp"])-float(m["mp"])
-	if float(m["cool_ms"]) > 0:player["cooldowns"][name] = float(m["cool_ms"])/1000.0
+	var mp_cost := float(m["mp"])*(float(numeric_player.values["mp_cost_rate"]) if numeric_player != null else 1.0)
+	if float(player["mp"])<mp_cost:return reject_action(name,"mp")
+	player["mp"] = float(player["mp"])-mp_cost
+	if float(m["cool_ms"]) > 0:player["cooldowns"][name] = float(m["cool_ms"])/1000.0*(float(numeric_player.values["cooldown_rate"]) if numeric_player != null else 1.0)
 	end_action_fx()
 	player["state"] = "action"
 	player["action"] = name
@@ -546,6 +670,11 @@ func start_stage(index: int) -> void:
 	apply_player_hits(stage,-1.0,0.0)
 
 func apply_buff() -> void:
+	if numeric_player != null:
+		apply_effect({"kind":"effect","id":"frenzy","rank":int(skill_levels.get("buff",1))})
+		player["buff_ms"] = float(numeric_player.effects.active["frenzy"]["remaining_ms"])
+		notice(String(move_def("buff").get("label","")))
+		return
 	player["buff_ms"] = float(rules["buff"]["duration_ms"])
 	notice(String(move_def("buff").get("label",""))+" · 攻击与移动加速")
 
@@ -605,15 +734,32 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
 	var percent := float(hit["percent"])
 	var amount := Kernel.Reaction.damage(power*(float(rules["buff"]["damage"]) if by_player and float(player["buff_ms"])>0 else 1.0),percent)
+	var resolved := {"critical":false,"category":"physical","missed":false}
+	if numeric_player != null:
+		var source_stats: Dictionary = numeric_player.values if by_player else attacker.get("numeric").values if attacker.get("numeric") != null else {"physical_attack":power,"magical_attack":power,"level":numeric_monster_level}
+		var target_stats: Dictionary = numeric_player.values if int(target["id"])==PLAYER_ID else target["numeric"].values
+		var context := hit.duplicate(true)
+		if by_player and String(context.get("element","none")) not in ["fire","water","light","dark"]:context["element"] = numeric_player.effective_element()
+		context["counter"] = String(target["state"]) in ["attack","action"]
+		context["back"] = int(target["facing"])==facing
+		resolved = Numbers.Damage.resolve(source_stats,target_stats,context,[rng.next_float(),rng.next_float()],Numbers.config()["formula"])
+		last_damage = resolved.duplicate(true)
+		amount = int(resolved["amount"])
+		if amount<=0:
+			bus.emit("combat.damage",{"target":target["id"],"amount":0,"critical":false,"category":resolved["category"],"missed":resolved["missed"],"victim":"player" if int(target["id"])==PLAYER_ID else "monster","reaction":"none","point":point})
+			return
 	var target_is_player := int(target.get("id",-1)) == PLAYER_ID
 	bus.emit("combat.hit",{"attacker":attacker.get("id",-1),"target":target["id"],"instance":action_seq,"point":point,"guarded":false,"atk":String(hit.get("atk_path",""))})
 	var reaction := "none"
 	if target_is_player:
+		var before_hp := float(player["hp"])
 		reaction = hurt_player(amount,attacker,atk,facing)
 		if reaction == "blocked":return
+		amount = roundi(before_hp-float(player["hp"]))
+		if numeric_player != null:last_damage["trace"]["actual_amount"] = amount
 	else:
 		target["hp"] = maxf(0,float(target["hp"])-amount)
-		reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],float(target["def"]["hit_recovery"]),float(hit.get("lift",-1)))
+		reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"]),float(hit.get("lift",-1)))
 		target["clock"] = 0.0
 		target["flash_ms"] = 65.0
 		combo_count += 1
@@ -625,10 +771,17 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	if String(hit.get("kind","")) != "object" and not hit.has("object"):
 		attacker["stuck_ms"] = maxf(float(attacker.get("stuck_ms",0)),stop)
 	target["stuck_ms"] = maxf(float(target.get("stuck_ms",0)),stop)
-	bus.emit("combat.damage",{"target":target["id"],"amount":amount,"critical":false,"category":"physical",
+	bus.emit("combat.damage",{"target":target["id"],"amount":amount,"critical":resolved["critical"],"category":resolved["category"],
 		"victim":"player" if target_is_player else "monster","reaction":reaction,
 		"point":Vector3(Vector2(target["pos"]).x,Vector2(target["pos"]).y,float(target["z"]))})
 	hit_cues(atk,point,facing,by_player)
+	if numeric_player != null and not target_is_player and float(target["hp"])>0:
+		var effect_list: Array = hit.get("effects",[]).duplicate(true)
+		if by_player:
+			var skill_id := String(hit.get("skill_id",player["action"]))
+			effect_list.append_array(Numbers.config()["skills"].get(skill_id,{}).get("on_hit",[]))
+		for effect: Dictionary in effect_list:
+			if rng.chance(float(effect.get("chance",1))):apply_effect({"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(skill_levels.get(String(hit.get("skill_id",player["action"])),1))})
 	if not target_is_player:
 		play_sound("goblin_hurt")
 		if float(target["hp"])<=0:
@@ -692,6 +845,11 @@ func player_damage_boxes() -> Array:
 	return Kernel.HitJudge.world_boxes(f.get("damage_boxes",[]),Kernel.HitJudge.anchor(player["pos"],float(player["z"])),int(player["facing"]))
 
 func update_enemy(enemy: Dictionary, ms: float) -> void:
+	if enemy.has("numeric") and float(enemy["hp"])>0:
+		step_numeric_actor(enemy,enemy["numeric"],ms)
+		if enemy["numeric"].effects.controlled():
+			Kernel.Reaction.step_body(enemy,ms,float(rules["reaction"]["monster_gravity"]),rules["reaction"],move_in_world)
+			return
 	enemy["flash_ms"] = maxf(0,float(enemy["flash_ms"])-ms)
 	if float(enemy["stuck_ms"]) > 0:
 		enemy["stuck_ms"] = maxf(0,float(enemy["stuck_ms"])-ms)
@@ -699,13 +857,15 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 	var dt := ms/1000
 	var m: Dictionary = enemy["def"]
 	enemy["cooldown_ms"] = maxf(0,float(enemy["cooldown_ms"])-ms)
-	enemy["clock"] = float(enemy["clock"])+ms
 	var state: String = enemy["state"]
+	var advance := ms
+	if state=="attack" and enemy.has("numeric"):advance *= float(enemy["numeric"].values["attack_speed"])
+	enemy["clock"] = float(enemy["clock"])+advance
 	if float(enemy["hp"])<=0:
 		enemy["state"] = "dead"
 		enemy["death_ms"] = float(enemy["death_ms"])+ms
 	elif state == "attack":
-		enemy_attack(enemy,ms)
+		enemy_attack(enemy,advance)
 	elif state in ["idle","move"] and enemy.get("ai",true):
 		var intent: Dictionary = Kernel.MonsterAI.think(enemy,m,player["pos"],float(player["z"]))
 		enemy["facing"] = int(intent["face"])
@@ -716,7 +876,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			enemy["thrown"] = false
 		elif Vector2(intent["move"]).length_squared() > 0:
 			var dir: Vector2 = intent["move"]
-			enemy["pos"] = move_in_world(enemy["pos"],Vector2(dir.x,dir.y*float(rules["units"]["depth_speed_ratio"]))*float(m["speed"])*dt)
+			enemy["pos"] = move_in_world(enemy["pos"],Vector2(dir.x,dir.y*float(rules["units"]["depth_speed_ratio"]))*float(m["speed"])*dt*(float(enemy["numeric"].values["move_speed"]) if enemy.has("numeric") else 1.0))
 			if state != "move":enemy["clock"] = 0.0
 			enemy["state"] = "move"
 		else:
@@ -760,19 +920,24 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 	if god_mode or float(player["invuln_ms"])>0 or finished:return "blocked"
 	var guarded: bool = String(player["state"])=="guard" and (Vector2(source["pos"]).x-Vector2(player["pos"]).x)*int(player["facing"])>=0
 	var taken := float(amount)
-	if guarded:taken *= float(rules["player"]["guard_factor"])
-	elif float(player["buff_ms"])>0:taken *= float(rules["buff"]["damage_taken"])
+	if guarded:
+		var guard_factor := float(rules["player"]["guard_factor"])
+		if numeric_player != null:
+			var definition: Dictionary = Numbers.config()["skills"]["guard"]
+			guard_factor = maxf(0,float(definition["guard_factor"])-(int(skill_levels.get("guard",1))-1)*float(definition["guard_per_level"]))
+		taken *= guard_factor
+	elif numeric_player == null and float(player["buff_ms"])>0:taken *= float(rules["buff"]["damage_taken"])
 	player["hp"] = maxf(0,float(player["hp"])-taken)
 	damage_taken += int(taken)
 	player["flash_ms"] = 65.0
 	player["invuln_ms"] = float(rules["player"]["hit_invuln_ms"])
 	var reaction := "guard" if guarded else "none"
-	if not guarded and float(player["buff_ms"])<=0:
+	if not guarded and not (numeric_player.effects.flag("super_armor") if numeric_player != null else float(player["buff_ms"])>0):
 		end_action_fx()
 		player["action"] = ""
 		player["queued_combo"] = false
 		player["queued_skill"] = ""
-		reaction = Kernel.Reaction.apply(player,atk,facing,rules["reaction"],float(table.player["hit_recovery"]))
+		reaction = Kernel.Reaction.apply(player,atk,facing,rules["reaction"],float(numeric_player.values["hit_recovery"]) if numeric_player != null else float(table.player["hit_recovery"]))
 		if reaction == "none":player["state"] = "idle"
 	play_sound("hurt")
 	if float(player["hp"])<=0:
@@ -833,7 +998,7 @@ func step_objects(ms: float) -> void:
 					var c: Dictionary = Kernel.HitJudge.contact(world,player_damage_boxes())
 					if not c.is_empty():
 						o["hits"][PLAYER_ID] = true
-						land_hit({"id":-1,"pos":o["pos"],"stuck_ms":0.0},player,hit,c["point"],int(o["facing"]),float(o["power"]))
+						land_hit(o["source"] if not o["source"].is_empty() else {"id":-1,"pos":o["pos"],"stuck_ms":0.0},player,hit,c["point"],int(o["facing"]),float(o["power"]))
 						if int(obj["piercing"]) <= 0:done = true
 		if life > 0 and t >= life:done = true
 		elif life <= 0 and t >= Kernel.Timeline.duration(tl) and (active < 0 or t >= active):done = true
@@ -934,6 +1099,7 @@ func spawn_enemy(point: Vector2, chief := false, kind := "goblin") -> Dictionary
 		"attack":float(m["attack"])*(float(base["boss_attack_scale"]) if chief else 1.0),
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
 		"flash_ms":0.0,"cooldown_ms":500.0,"hits":{},"thrown":false,"death_ms":0.0,"ai":true}
+	if numeric_player != null:configure_enemy_numbers(enemy)
 	monsters.append(enemy)
 	_next_entity_id += 1
 	bus.emit("combat.entity_spawned",{"entity_id":enemy["id"],"kind":"monster","appearance":String(m["bank"]),"chief":chief})
@@ -997,7 +1163,7 @@ func monster_bar() -> Dictionary:
 			if enemy["chief"] and float(enemy["hp"]) > 0:pick = enemy
 	if pick.is_empty():return {}
 	var m: Dictionary = pick["def"]
-	return {"id":pick["id"],"mob":String(pick["mob"]),"name":String(m["name"]),"level":int(m["level"]),
+	return {"id":pick["id"],"mob":String(pick["mob"]),"name":String(m["name"]),"level":int(pick["numeric"].values["level"]) if pick.has("numeric") else int(m["level"]),
 		"rank":"boss" if pick["chief"] else "normal","hp":float(pick["hp"]),"max_hp":float(pick["max_hp"]),
 		"lines":int(rules["boss_hp_lines"]) if pick["chief"] else 1}
 

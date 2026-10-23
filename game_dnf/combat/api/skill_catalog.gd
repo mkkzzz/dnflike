@@ -9,7 +9,8 @@ func _init() -> void:
 	var assets: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/combat/manifest.json"))
 	table.build(db, db.rules(), assets)
 
-func get_skill(id: String) -> Dictionary:
+func get_skill(id: String, rank := 1) -> Dictionary:
+	table.configure_skills({id:rank})
 	var move: Dictionary = table.moves.get(id, {})
 	var percentages: Array = []
 	for hit: Dictionary in move.get("hits", []):

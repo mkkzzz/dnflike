@@ -124,7 +124,19 @@ func item_tip(id: String, rect: Rect2, buying := false, attached := false) -> vo
 		skin.label(tip, "重量  %.2f kg" % float(data["weight"]), Vector2(163, 108), 11, Color("a59c88"))
 		skin.image(tip, skin.texture("common", 230), Vector2(39, 140))
 		skin.label(tip, "装备属性", Vector2(16, 152), 12, Color("d4c399"))
-		skin.label(tip, data["description"], Vector2(16, 178), 14, Color("a7dd74"))
+		var definition: Dictionary = game.session.Numbers.config()["equipment"][id]
+		var detail := ""
+		var properties: Dictionary = definition["stats"]
+		var equipped_uid: String = game.session.profile["equipment"].get("weapon","")
+		if equipped_uid!="" and game.session.profile["gear"][equipped_uid]["definition"]==id:properties = game.session.Numbers.gear_detail(game.session.profile,equipped_uid)
+		for stat: String in properties:
+			detail += "%s +%s  " % [game.number_windows.NAMES.get(stat,stat),properties[stat]]
+		skin.label(tip, detail, Vector2(16, 178), 12, Color("a7dd74"))
+		var uid: String = game.session.profile["equipment"].get("weapon","")
+		if uid!="" and game.session.profile["gear"][uid]["definition"]==id:
+			var instance: Dictionary = game.session.profile["gear"][uid]
+			skin.label(tip,"品质 %d · 强化 +%d" % [instance["quality"],instance["reinforce"]],Vector2(16,201),10)
+		else:skin.label(tip,"具体品质与强化见 O 键的装备管理",Vector2(16,201),10)
 		if game.session.profile["equipped"] == id:skin.label(tip, "已装备", Vector2(211, 151), 11, Color("a7dd74"))
 	else:
 		skin.label(tip, "使用效果", Vector2(16, 82), 12, Color("d4c399"))
@@ -157,14 +169,14 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 	skill_tip_id = id
 	skill_tip_rect = rect
 	var data: Dictionary = game.SkillDescriptions.SKILLS[id]
-	var values: Dictionary = game.skill_catalog.get_skill(id)
+	var values: Dictionary = game.skill_catalog.get_skill(id,int(game.session.profile["skills"].get(id,1)))
 	var height := 260 if detailed else 178
 	var at := slot_tip_anchor(rect, Vector2(300, height))
 	tip = skin.item_board(game.ui, Rect2(at, Vector2(300, height)))
 	tip.z_index = 100
 	tip.set_meta("skill", id)
 	skin.label(tip, data["name"], Vector2(16, 12), 16, Color("f0d18a"))
-	skin.label(tip, "技能等级 1", Vector2(16, 40), 11, Color("b9b1a0"))
+	skin.label(tip, "技能等级 %d" % int(game.session.profile["skills"].get(id,1)), Vector2(16, 40), 11, Color("b9b1a0"))
 	skin.image(tip, game.slot_texture({"place":"skill", "id":id}), Vector2(254, 14))
 	skin.label(tip, data["brief"], Vector2(16, 69), 12)
 	skin.label(tip, "魔法消耗  %d     冷却  %.1f 秒" % [values["mp"], values["cooldown"]], Vector2(16, 99), 11, Color("a7dd74"))
@@ -172,7 +184,19 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 	for value in values["damage_percent"]:row += "%d%%  " % int(value)
 	if not values["damage_percent"].is_empty():skin.label(tip, row, Vector2(16, 122), 11)
 	if detailed:
-		var text: Label = skin.label(tip, data["detail"], Vector2(16, 154), 11)
+		var detail: String = data["detail"]
+		if id == "buff":
+			var effect: Dictionary = game.session.Numbers.config()["effects"]["frenzy"]
+			detail = "持续 %.1f 秒" % (float(effect["duration_ms"])/1000)
+			var index := 0
+			for mod: Dictionary in effect["modifiers"]:
+				if index%2 == 0:detail += "\n"
+				detail += "  %s ×%.2f" % [game.number_windows.NAMES.get(mod["stat"],mod["stat"]),float(mod["value"])+float(mod.get("per_level",0))*(int(game.session.profile["skills"][id])-1)]
+				index += 1
+		if id == "guard":
+			var definition: Dictionary = game.session.Numbers.config()["skills"][id]
+			detail += "\n当前正面承伤 %.0f%%" % (maxf(0,float(definition["guard_factor"])-(int(game.session.profile["skills"][id])-1)*float(definition["guard_per_level"]))*100)
+		var text: Label = skin.label(tip, detail, Vector2(16, 154), 11)
 		text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		text.clip_text = true
 		text.set_deferred("size", Vector2(268, 76))

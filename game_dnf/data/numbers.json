@@ -1,0 +1,384 @@
+{
+  "schema": "dnf_numbers/1",
+  "revision": 1,
+  "evidence": "E-ADAPT: configurable functional baseline, not verified original balance. Original skill rows remain in the content pack.",
+  "progression": {
+    "level_cap": 60,
+    "xp_per_level": [
+      100,
+      200,
+      300,
+      400,
+      500
+    ],
+    "xp_fallback_per_level": 100,
+    "sp_initial": 0,
+    "sp_per_level": 20,
+    "level_up_vitals": "preserve",
+    "enforce_skill_requirements": false,
+    "clear_xp": 120,
+    "kill_xp": 0
+  },
+  "formula": {
+    "main_stat_divisor": 250,
+    "vitality_divisor": 250,
+    "spirit_divisor": 250,
+    "defense_base": 200,
+    "defense_per_attacker_level": 20,
+    "element_divisor": 220,
+    "element_min": 0.1,
+    "critical_multiplier": 1.5,
+    "minimum_damage": 1,
+    "hit_base": 1.0,
+    "hit_min": 0.0,
+    "hit_max": 1.0,
+    "counter_multiplier": 1.25,
+    "back_multiplier": 1.0,
+    "reinforce_attack_per_level": 2,
+    "quality_min_scale": 0.9,
+    "quality_max_scale": 1.1,
+    "defense_per_vitality": 1,
+    "defense_per_spirit": 1
+  },
+  "base": {
+    "hp_max": 500,
+    "mp_max": 180,
+    "strength": 0,
+    "intelligence": 0,
+    "vitality": 0,
+    "spirit": 0,
+    "physical_attack": 20,
+    "magical_attack": 20,
+    "independent_attack": 100,
+    "physical_defense": 0,
+    "magical_defense": 0,
+    "hit": 0,
+    "evasion": 0,
+    "physical_crit": 0,
+    "magical_crit": 0,
+    "attack_speed": 1,
+    "move_speed": 1,
+    "cast_speed": 1,
+    "cooldown_rate": 1,
+    "mp_cost_rate": 1,
+    "damage_rate": 1,
+    "taken_rate": 1,
+    "skill_rate": 1,
+    "hp_regen": 0,
+    "mp_regen": 2.2,
+    "hit_recovery": 600,
+    "jump_power": 430,
+    "fire_attack": 0,
+    "water_attack": 0,
+    "light_attack": 0,
+    "dark_attack": 0,
+    "fire_resist": 0,
+    "water_resist": 0,
+    "light_resist": 0,
+    "dark_resist": 0,
+    "status_resist": 0
+  },
+  "growth": {
+    "hp_max": 25,
+    "mp_max": 3,
+    "strength": 2,
+    "intelligence": 1,
+    "vitality": 1,
+    "spirit": 1
+  },
+  "growtypes": {
+    "swordman": {},
+    "weaponmaster": {
+      "strength": 1
+    },
+    "berserker": {
+      "hp_max": 5,
+      "strength": 1
+    }
+  },
+  "limits": {
+    "attack_speed": [
+      0.1,
+      5
+    ],
+    "move_speed": [
+      0.1,
+      5
+    ],
+    "cast_speed": [
+      0.1,
+      5
+    ],
+    "cooldown_rate": [
+      0.05,
+      5
+    ],
+    "mp_cost_rate": [
+      0,
+      5
+    ],
+    "damage_rate": [
+      0,
+      100
+    ],
+    "taken_rate": [
+      0,
+      100
+    ],
+    "skill_rate": [
+      0,
+      100
+    ],
+    "physical_crit": [
+      0,
+      1
+    ],
+    "magical_crit": [
+      0,
+      1
+    ],
+    "evasion": [
+      0,
+      1
+    ],
+    "hp_max": [
+      1,
+      1000000000
+    ],
+    "mp_max": [
+      0,
+      1000000000
+    ],
+    "physical_defense": [
+      0,
+      1000000000.0
+    ],
+    "magical_defense": [
+      0,
+      1000000000.0
+    ],
+    "status_resist": [
+      0,
+      1
+    ]
+  },
+  "equipment": {
+    "iron_sword": {
+      "name": "练习太刀",
+      "slot": "weapon",
+      "weapon": "katana",
+      "required_level": 1,
+      "stats": {
+        "physical_attack": 5,
+        "magical_attack": 4
+      }
+    },
+    "forest_sword": {
+      "name": "林间太刀",
+      "slot": "weapon",
+      "weapon": "katana",
+      "required_level": 1,
+      "stats": {
+        "physical_attack": 10,
+        "magical_attack": 7
+      }
+    },
+    "training_coat": {
+      "name": "训练上衣",
+      "slot": "coat",
+      "required_level": 1,
+      "stats": {
+        "physical_defense": 25,
+        "hp_max": 30
+      }
+    },
+    "training_necklace": {
+      "name": "训练项链",
+      "slot": "necklace",
+      "required_level": 1,
+      "stats": {
+        "magical_defense": 25,
+        "mp_max": 20
+      }
+    }
+  },
+  "equipment_slots": [
+    "weapon",
+    "coat",
+    "pants",
+    "shoulder",
+    "belt",
+    "shoes",
+    "bracelet",
+    "necklace",
+    "ring"
+  ],
+  "skill_defaults": {
+    "upper": 1,
+    "draw": 1,
+    "triple": 1,
+    "rage_slash": 1,
+    "buff": 1,
+    "guard": 1,
+    "physical_mastery": 0
+  },
+  "skills": {
+    "upper": {
+      "name": "上挑",
+      "path": "skill/swordman/upperslash.skl",
+      "max_level": 10,
+      "cost": 20,
+      "speed": "attack"
+    },
+    "draw": {
+      "name": "拔刀斩",
+      "path": "skill/swordman/momentaryslash.skl",
+      "max_level": 50,
+      "cost": 40,
+      "speed": "attack"
+    },
+    "triple": {
+      "name": "三段斩",
+      "path": "skill/swordman/tripleslash.skl",
+      "max_level": 50,
+      "cost": 15,
+      "speed": "attack"
+    },
+    "rage_slash": {
+      "name": "十字斩",
+      "path": "skill/swordman/gorecross.skl",
+      "max_level": 50,
+      "cost": 15,
+      "speed": "attack",
+      "on_hit": [
+        {
+          "id": "bleed",
+          "chance": 0.2
+        }
+      ]
+    },
+    "buff": {
+      "name": "暴走",
+      "path": "skill/swordman/frenzy.skl",
+      "max_level": 20,
+      "cost": 25,
+      "speed": "cast"
+    },
+    "guard": {
+      "name": "格挡",
+      "max_level": 5,
+      "cost": 20,
+      "speed": "attack",
+      "guard_factor": 0.2,
+      "guard_per_level": 0.02
+    },
+    "physical_mastery": {
+      "name": "基础力量精通",
+      "max_level": 10,
+      "cost": 20,
+      "passive": [
+        {
+          "stat": "strength",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    }
+  },
+  "effects": {
+    "frenzy": {
+      "name": "暴走",
+      "duration_ms": 8000,
+      "stacking": "refresh",
+      "max_stacks": 1,
+      "modifiers": [
+        {
+          "stat": "attack_speed",
+          "op": "mul",
+          "value": 1.25
+        },
+        {
+          "stat": "move_speed",
+          "op": "mul",
+          "value": 1.2
+        },
+        {
+          "stat": "damage_rate",
+          "op": "mul",
+          "value": 1.2,
+          "per_level": 0.02
+        },
+        {
+          "stat": "taken_rate",
+          "op": "mul",
+          "value": 1.3
+        }
+      ],
+      "super_armor": true
+    },
+    "strength_potion": {
+      "name": "力量增益",
+      "duration_ms": 30000,
+      "stacking": "refresh",
+      "max_stacks": 1,
+      "modifiers": [
+        {
+          "stat": "strength",
+          "op": "add",
+          "value": 25
+        }
+      ]
+    },
+    "bleed": {
+      "name": "出血",
+      "duration_ms": 5000,
+      "stacking": "stack",
+      "max_stacks": 3,
+      "interval_ms": 1000,
+      "tick_damage": 5,
+      "damage_type": "physical"
+    },
+    "stun": {
+      "name": "眩晕",
+      "duration_ms": 1500,
+      "stacking": "refresh",
+      "max_stacks": 1,
+      "control": "stun"
+    },
+    "freeze": {
+      "name": "冰冻",
+      "duration_ms": 1500,
+      "stacking": "refresh",
+      "max_stacks": 1,
+      "control": "freeze"
+    },
+    "fire_weapon": {
+      "name": "火属性攻击",
+      "duration_ms": 30000,
+      "stacking": "refresh",
+      "max_stacks": 1,
+      "element": "fire"
+    }
+  },
+  "monsters": {
+    "hp_per_level": 0.15,
+    "attack_per_level": 0.1,
+    "defense_per_level": 2,
+    "difficulty": {
+      "normal": 1,
+      "adventure": 1.3,
+      "king": 1.6
+    }
+  },
+  "skill_index": {
+    "46": "upper",
+    "9": "draw",
+    "8": "triple",
+    "64": "rage_slash"
+  },
+  "growtype_index": {
+    "swordman": 0,
+    "weaponmaster": 1,
+    "berserker": 3
+  }
+}

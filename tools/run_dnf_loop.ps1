@@ -1,5 +1,7 @@
-param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="")
+param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly)
 $ErrorActionPreference="Stop"
+& python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
+if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
 $repoRoot=Split-Path $PSScriptRoot -Parent
 $gamePath=Join-Path $repoRoot "game_dnf"
 if (-not $GodotPath) {$GodotPath=Join-Path $PSScriptRoot "godot/Godot_v4.7.2-stable_win64_console.exe"}
@@ -36,11 +38,17 @@ if ($importExit -ne 0 -or ($importOutput -match 'SCRIPT ERROR|ERROR:')) {
     $importOutput | Write-Output
     throw "Loop project import failed."
 }
+if ($Test) {
+    $numericOutput=& $GodotPath --headless --path $gamePath --script res://tests/stats/test_numbers.gd 2>&1
+    $numericOutput | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($numericOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($numericOutput -match '\[NUMBERS_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Numeric regression failed."}
+}
 $runArgs=@("--path",$gamePath,"res://scenes/loop.tscn")
 if ($Test) {
     $runArgs+=@("--fixed-fps","60","--quit-after","24000")
     if ($Capture) {$runArgs+=@("--position","-32000,-32000")} else {$runArgs+="--headless"}
     $runArgs+=@("--","--loop-test")
+    if ($NumbersOnly) {$runArgs+="--numbers-only"}
     if ($Capture) {$runArgs+="--capture"}
 }
 $ErrorActionPreference="Continue"

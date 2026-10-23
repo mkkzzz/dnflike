@@ -5,6 +5,8 @@ extends RefCounted
 ##                                             unit scales and missing base tables;
 ##   assets_local/combat/manifest.json        — baked banks for presentation and borrowed ANIs.
 const Timeline = preload("res://combat/action/timeline.gd")
+const Numbers = preload("res://stats/api/numbers.gd")
+var skill_levels: Dictionary = {}
 
 const CHR_ANI := "character/swordman/animation/"
 
@@ -96,6 +98,10 @@ func _skill_row(path: String) -> Dictionary:
 		problems.append("SKL not found: "+path)
 		return {}
 	var d: Dictionary = rec["decoded"]
+	if not skill_levels.is_empty():
+		var cfg := Numbers.config()
+		for id: String in cfg["skills"]:
+			if cfg["skills"][id].get("path","") == path:return Numbers.Skills.sample(d,int(skill_levels.get(id,1)))
 	var dungeon: Dictionary = d.get("dungeon",{})
 	var pick = func(key: String):return dungeon.get(key,d.get(key,[]))
 	var info: Array = pick.call("level_info")
@@ -108,6 +114,10 @@ func _skill_row(path: String) -> Dictionary:
 	return {"mp":float(mp[0]) if not mp.is_empty() else 0.0,"cool_ms":float(cool[0]) if not cool.is_empty() else 0.0,
 		"cast_ms":float(cast[0]) if not cast.is_empty() else 0.0,"level_row":info.slice(1,1+cols) if cols > 0 else [],
 		"static":static_data}
+
+func configure_skills(levels: Dictionary) -> void:
+	skill_levels = levels.duplicate(true)
+	for name: String in rules["moves"]:moves[name] = _build_move(name,rules["moves"][name])
 
 func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	var skill: Dictionary = _skill_row(String(spec["skill"])) if spec.has("skill") else {}
@@ -126,6 +136,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move.merge(move["stages"][0],false)
 	else:
 		move.merge(_build_stage(spec,skill),false)
+	for stage: Dictionary in move.get("stages",[move]):
+		for hit: Dictionary in stage.get("hits",[]):hit["skill_id"] = name
 	return move
 
 func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
@@ -141,7 +153,12 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 		if h.has("percent_col") and row.size() > int(h["percent_col"]):percent = float(row[int(h["percent_col"])])
 		var lift := -1.0
 		if h.has("lift_col") and row.size() > int(h["lift_col"]):lift = float(row[int(h["lift_col"])])
-		var hit := {"atk":decoded,"atk_path":atk_path,"percent":percent,"lift":lift,"skill":skill.size() > 0}
+		var hit := {"atk":decoded,"atk_path":atk_path,"percent":percent,"lift":lift,"skill":skill.size() > 0,
+			"ignore_defense":bool(h.get("ignore_defense",enum_value(decoded,"attack_type")=="[ignore defense]")),"true_damage":float(h.get("true_damage",0)),
+			"effects":h.get("effects",[]),
+			"fixed":float(row[int(h["fixed_col"])]) if h.has("fixed_col") and row.size()>int(h["fixed_col"]) else float(decoded.get("absolute_damage",0)),
+			"damage_type":String(h.get("damage_type","magical" if enum_value(decoded,"attack_type")=="[magic]" else "physical")),
+			"element":String(h.get("element",enum_value(decoded,"element", "[none element]").trim_prefix("[").trim_suffix(" element]")))}
 		if h.get("body",false):
 			hit["kind"] = "boxes"
 			hit["source"] = "body"

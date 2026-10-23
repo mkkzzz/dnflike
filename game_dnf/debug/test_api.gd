@@ -65,6 +65,9 @@ func e(handle: Dictionary, key: String):return handle[key]
 func set_e(handle: Dictionary, key: String, value) -> void:handle[key] = value
 func monster_count() -> int:return game.monsters.size()
 func monster(index: int, key: String):return game.monsters[index][key]
+func monster_handle(index: int) -> Dictionary:return game.monsters[index]
+func actor_numbers(handle: Dictionary) -> Dictionary:return handle["numeric"].values.duplicate(true)
+func actor_controlled(handle: Dictionary) -> bool:return handle["numeric"].effects.controlled()
 func kill_all_monsters() -> void:
 	for enemy: Dictionary in game.monsters:
 		enemy["hp"] = 0

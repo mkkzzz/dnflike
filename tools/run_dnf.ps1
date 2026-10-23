@@ -1,5 +1,7 @@
 param([string]$GodotPath="",[switch]$Test,[switch]$Capture,[switch]$Editor,[switch]$BuildAssets,[string]$LibraryPath="")
 $ErrorActionPreference="Stop"
+& python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
+if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
 $repoRoot=Split-Path $PSScriptRoot -Parent
 $gamePath=Join-Path $repoRoot "game_dnf"
 if (-not $GodotPath) {$GodotPath=Join-Path $PSScriptRoot "godot/Godot_v4.7.2-stable_win64_console.exe"}
@@ -50,6 +52,8 @@ if ($Test) {
 }
 $runArgs=@("--path",$gamePath)
 if ($Test) {
+	# Tests always target the combat scene, even when the user's editor main scene is the loop.
+	$runArgs+="res://scenes/main.tscn"
     $runArgs+=@("--fixed-fps","60","--quit-after","3500")
     if ($Capture) {$runArgs+=@("--position","-32000,-32000")} else {$runArgs+="--headless"}
     $runArgs+=@("--","--test")
