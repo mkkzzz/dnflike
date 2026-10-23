@@ -10,6 +10,13 @@ var hitstop_sensitive := true
 var loop := false
 ## Whole-effect scale from ATK/CHR hit info (1.0 = native pixels).
 var base_scale := 1.0
+## Effects tied to a skill can be cut early (e.g. gore-cross marks end when the cross flies).
+var tag := ""
+var max_ms := -1.0
+## Attached effects follow the casting entity every frame instead of staying where spawned.
+var follow := -1
+var fade := 1.0
+var _frame_local := 0.0
 
 func setup(info: Dictionary,direction: int) -> void:
 	data = info
@@ -21,6 +28,9 @@ func advance(ms: float) -> void:
 
 func seek(t: float) -> void:
 	clock_ms = t
+	if max_ms >= 0 and clock_ms >= max_ms:
+		queue_free()
+		return
 	var duration := float(data["duration_ms"])
 	if clock_ms >= duration:
 		if not loop or duration <= 0:
@@ -31,10 +41,12 @@ func seek(t: float) -> void:
 	frame = {}
 	for f: Dictionary in data["frames"]:
 		var delay = f.get("delay_ms",100)
-		elapsed += float(delay if delay != null else 0)
-		if local < elapsed:
+		var span := float(delay if delay != null else 0)
+		if local < elapsed+span:
 			frame = f
+			_frame_local = local-elapsed
 			break
+		elapsed += span
 	if frame.is_empty() and not data["frames"].is_empty():frame = data["frames"][-1]
 	var blend: Dictionary = frame.get("items",{}).get("11",{})
 	var mode := int(blend.get("type",0))
@@ -50,6 +62,14 @@ func _draw() -> void:
 	var o: Array = item["offset"]
 	var rgba: Array = frame.get("items",{}).get("9",[255,255,255,255])
 	var rate: Array = frame.get("items",{}).get("7",[1.0,1.0])
+	# [ROTATE] is in radians; [INTERPOLATION] (item 10) eases it toward the next frame.
 	var rotate := float(frame.get("items",{}).get("8",0.0))
-	draw_set_transform(Vector2.ZERO,deg_to_rad(rotate),Vector2(facing*float(rate[0])*base_scale,float(rate[1])*base_scale))
-	draw_texture_rect_region(atlas,Rect2(float(o[0]),float(o[1]),float(r[2]),float(r[3])),Rect2(float(r[0]),float(r[1]),float(r[2]),float(r[3])),Color(float(rgba[0])/255,float(rgba[1])/255,float(rgba[2])/255,float(rgba[3])/255))
+	if int(frame.get("items",{}).get("10",0)) == 1:
+		var i: int = data["frames"].find(frame)
+		if i >= 0 and i+1 < data["frames"].size():
+			var span := float(frame.get("delay_ms",0) if frame.get("delay_ms") != null else 0)
+			var next_rot := float(data["frames"][i+1].get("items",{}).get("8",0.0))
+			if span > 0:rotate = lerpf(rotate,next_rot,clampf(_frame_local/span,0,1))
+	draw_set_transform(Vector2.ZERO,rotate*facing,Vector2(facing*float(rate[0])*base_scale,float(rate[1])*base_scale))
+	var alpha := float(rgba[3])/255*fade
+	draw_texture_rect_region(atlas,Rect2(float(o[0]),float(o[1]),float(r[2]),float(r[3])),Rect2(float(r[0]),float(r[1]),float(r[2]),float(r[3])),Color(float(rgba[0])/255,float(rgba[1])/255,float(rgba[2])/255,alpha))

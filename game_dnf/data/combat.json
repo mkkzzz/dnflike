@@ -43,10 +43,10 @@
     "attack3":{"ani":"attack3","atk":"character/swordman/attackinfo/attack3.atk","hits":[{"body":true}],"swing":1,"voice":"swing3"},
     "dash_attack":{"ani":"dashattack","atk":"character/swordman/attackinfo/dashattack.atk","hits":[{"body":true}],"swing":1,"voice":"swing2"},
     "air_attack":{"ani":"jumpattack","atk":"character/swordman/attackinfo/jumpattack.atk","hits":[{"body":true}],"swing":0,"voice":"jump_attack","air":true},
-    "upper":{"ani":"upperslashafter","skill":"skill/swordman/upperslash.skl","atk":"character/swordman/attackinfo/upperslashafter.atk",
-      "hits":[{"derived":"upper1","window":[50,200],"percent_col":0,"lift_col":1}],
-      "fx":[{"key":"upper1","at":0},{"key":"upper2","at":200}],"voice":"upper","name":"上挑",
-      "source":"Body ANI has no attack box; box = extent of the original upward slash effect while it is drawn (upperslash1.ani 0-200 ms)."},
+    "upper":{"ani":"hitback","skill":"skill/swordman/upperslash.skl","atk":"character/swordman/attackinfo/upperslash.atk",
+      "hits":[{"derived":"upper1","window":[150,300],"percent_col":0,"lift_col":1}],
+      "fx":[{"key":"upper1","at":150},{"key":"upper2","at":200}],"voice":"upper","sounds":[{"key":"UPPER_SLASH_01","at":150}],"name":"上挑",
+      "source":"Motion = CHR [etc motion] #2 hitback.ani (sm_body 51-59: low guard, rising swing, sword overhead); the oldest etc slots are guard / hardattack (鬼斩) / upper slash (E-INFER). upperslashafter.ani reuses the 裂波斩 vaneslashtry poses 199-203 and is not the 1-level skill. Effects upperslash1/2.ani line up with the swing at 150/200 ms; box = their pixel extent; UPPER_SLASH_01 = sounds/char/swordman/effect/upper_slash_01.ogg."},
     "draw":{"ani":"momentaryslash","skill":"skill/swordman/momentaryslash.skl",
       "hits":[{"object":"passiveobject/character/swordman/momentaryslashwave.obj","at":550,"active_ms":50,"percent_col":0}],
       "fx":[{"key":"draw","at":0}],"voice":"draw_ready","sounds":[{"key":"draw","at":550}],"name":"拔刀斩"},
@@ -55,25 +55,30 @@
         {"ani":"tripleslash1","atk":"character/swordman/attackinfo/tripleslash1.atk","hits":[{"derived":"triple1","window":[70,210],"percent_col":0}],"fx":[{"key":"triple1","at":0}],"voice":"triple1"},
         {"ani":"tripleslash2","atk":"character/swordman/attackinfo/tripleslash2.atk","hits":[{"derived":"triple2","window":[70,210],"percent_col":1}],"fx":[{"key":"triple2","at":0}],"voice":"triple2"},
         {"ani":"tripleslash3","atk":"character/swordman/attackinfo/tripleslash3.atk","hits":[{"derived":"triple3","window":[70,210],"percent_col":2}],"fx":[{"key":"triple3","at":0}],"voice":"triple3"}],
-      "dash":{"speed_static":0,"until":280},
-      "source":"Slash bodies carry no attack boxes; boxes are the original slash effect extents. static_data[0]=600 read as dash speed in CHR move units."},
+      "dash":{"speed_static":0,"accel_static":1},
+      "source":"Slash bodies carry no attack boxes; boxes are the original slash effect extents. SKL static_data [600, -1000] read as slide start speed px/s and deceleration px/s² (E-INFER): each stage slides 180 px, easing to a stop at 600 ms."},
     "rage_slash":{"ani":"gorecross","skill":"skill/swordman/gorecross.skl","name":"十字斩",
       "hits":[{"derived":"gore_slash1","window":[100,300],"atk":"character/swordman/attackinfo/gorecross1.atk","percent_col":0},
         {"derived":"gore_slash2","window":[300,500],"atk":"character/swordman/attackinfo/gorecross2.atk","percent_col":1},
-        {"object":"passiveobject/character/swordman/gorecross.obj","at":960,"offset":[70,0,60],"percent_col":10}],
+        {"object":"passiveobject/character/swordman/gorecross.obj","at":960,"percent_col":10}],
       "fx":[{"key":"gore_slash1","at":0},{"key":"gore_slash2","at":300}],"voice":"gorecross",
-      "source":"Slash windows follow the body pose groups (frames 0-5, 6-9); the cross object starts at frame 14 where the ANI cues GORECROSS_ATK3."},
+      "source":"Slash windows follow the body pose groups (frames 0-5, 6-9); the crescent object starts at frame 14 (GORECROSS_ATK3) on the caster's own anchor (composite of gorecross.ani + gorecross1.ani lines up without offset)."},
     "buff":{"ani":"summon2","skill":"skill/swordman/frenzy.skl","name":"暴走","cast_fx":"frenzy_cast","aura_fx":"frenzy_buff"}
   },
+  "backstep":{"cancels":["attack1","attack2","attack3","dash_attack"],"duration_ms":470,"speed":150,"lift":220,"invuln_ms":110,
+    "source":"Down + jump. Original back step has no motion file of its own (CHR [back motion] points at attack3.ani); the jump.ani rise/fall poses are used (E-ADAPT). Only normal attacks can be cancelled for now (user 2026-10-23); a cancel leaves a fading afterimage of the cancelled pose (engine-drawn in the original, E-ADAPT)."},
   "monsters":{
-    "goblin":{"mob":"monster/goblin/goblin.mob","bank":"goblin"},
-    "goblin_thrower":{"mob":"monster/goblin/goblinthrower.mob","bank":"goblin_thrower","keep_distance":150}
+    "goblin":{"mob":"monster/goblin/goblin.mob","bank":"goblin","name":"哥布林"},
+    "goblin_thrower":{"mob":"monster/goblin/goblinthrower.mob","bank":"goblin_thrower","keep_distance":150,"name":"哥布林投掷手"}
   },
+  "boss_hp_lines":3,
+  "map_export":"res://assets_local/native_maps/lorien/map_export.json",
   "rooms":[
-    {"name":"林间入口","cell":[0,1],"next":"right","enemies":2},
-    {"name":"幽暗林径","cell":[1,1],"next":"up","enemies":3},
-    {"name":"哥布林营地","cell":[1,0],"next":"right","enemies":3},
-    {"name":"密林深处","cell":[2,0],"next":"up","enemies":4},
-    {"name":"密林领主","cell":[2,-1],"next":"","enemies":3,"boss":true,"boss_monster":"goblin_thrower"}
-  ]
+    {"name":"洛兰","placement":"1_0:s3","next":"left"},
+    {"name":"洛兰","placement":"0_0:s2","next":"down"},
+    {"name":"洛兰","placement":"0_1:8","next":"right"},
+    {"name":"洛兰","placement":"1_1:9","next":"down"},
+    {"name":"洛兰","placement":"1_2:b3","next":"","boss":true}
+  ],
+  "rooms_source":"Original lorien.dgn grid (2x3). Start (1,0) is a listed start candidate; boss (1,2) a listed boss cell; each step uses a door both neighbours own. Map per cell picked from its candidates (start/normal/boss role). Monster names are the CN client names typed in (the archive only has Korean strings), E-ADAPT."
 }

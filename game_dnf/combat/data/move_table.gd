@@ -120,8 +120,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		for stage: Dictionary in spec["stages"]:move["stages"].append(_build_stage(stage,skill))
 		var dash: Dictionary = spec.get("dash",{})
 		var stat: Array = skill.get("static",[])
-		var units := float(stat[int(dash.get("speed_static",0))]) if stat.size() > int(dash.get("speed_static",0)) else 0.0
-		move["dash"] = {"speed":move_px(units),"until":float(dash.get("until",0))}
+		var vi := int(dash.get("speed_static",0))
+		var ai := int(dash.get("accel_static",1))
+		move["dash"] = {"speed":float(stat[vi]) if stat.size() > vi else 0.0,"accel":float(stat[ai]) if stat.size() > ai else 0.0}
 		move.merge(move["stages"][0],false)
 	else:
 		move.merge(_build_stage(spec,skill),false)
@@ -228,6 +229,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 	var base: Dictionary = rules["monster_base"]
 	var motion_dir := String(mob.get("waiting_motion",[""])[0]).get_base_dir()
 	var m := {"key":key,"mob":path,"bank":String(spec.get("bank",key)),"dir":motion_dir,
+		"name":String(spec.get("name",key)),"level":int(mob.get("level",[1])[0]),
 		"hp":float(base["hp"])*_ability(mob,"[HP MAX]")/100.0,
 		"attack":float(base["attack"])*_ability(mob,"[EQUIPMENT_PHYSICAL_ATTACK]")/100.0,
 		"speed":move_px(float(mob.get("move_speed",[300])[0])),"sight":float(mob.get("sight",300)),
@@ -258,3 +260,9 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 func monster_timeline(m: Dictionary, motion: String) -> Array:
 	var stem := String(m["motions"].get(motion,motion))
 	return timeline(String(m["dir"]).path_join(stem+".ani"))
+
+## Monster definition by MOB path (map spawn lists name the MOB file).
+func monster_by_mob(mob: String) -> String:
+	for key: String in monsters:
+		if String(monsters[key].get("mob","")) == mob.to_lower():return key
+	return ""

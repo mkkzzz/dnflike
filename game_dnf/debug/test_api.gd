@@ -17,7 +17,10 @@ func room_next(index: int) -> String:return String(game.rules["rooms"][index]["n
 # --- session / lifecycle ---
 func session():return game.session
 func bus():return game.bus
-func restart() -> void:game.restart()
+func restart() -> void:
+	game.restart()
+	# Combat checks use a fixed spot of the first room (map x 125, depth 250 is open ground).
+	game.player["pos"] = Vector2(125,250)
 func set_god(enabled: bool) -> void:game.god_mode = enabled
 func finished() -> bool:return game.finished
 func victory() -> bool:return game.victory
@@ -38,7 +41,9 @@ func weapon() -> String:return game.weapon
 func view_texture() -> String:return String(game.view.player_actor.bank["texture"])
 func view_pose() -> String:return game.view.player_actor.pose
 func run_direction() -> int:return game.run_direction
-func clear_direction_taps() -> void:game.last_direction_tap.clear()
+func clear_direction_taps() -> void:
+	game.last_direction_tap.clear()
+	game.last_direction_release.clear()
 ## Local hitstop on the player (the kernel freezes attacker and target, not the world).
 func set_hitstop(ms: float) -> void:game.player["stuck_ms"] = ms
 
@@ -76,6 +81,21 @@ func prop(index: int, key: String):return game.props[index][key]
 func set_prop(index: int, key: String, value) -> void:game.props[index][key] = value
 func prop_view_z(index: int) -> int:return game.view.prop_views[index].z_index
 func move_in_world(from: Vector2, delta: Vector2) -> Vector2:return game.move_in_world(from,delta)
+func walkable(point: Vector2) -> bool:return game.walkable(point)
+func room_width() -> float:return game.room_width
+func room_placement() -> String:return String(game.rules["rooms"][game.room_index]["placement"])
+func camera_x() -> float:return game.view.camera_x
+func monster_bar() -> Dictionary:return game.monster_bar()
+func ghost_count() -> int:return game.view.ghosts.size()
+func effects_tagged(tag: String) -> int:
+	return game.view.effects.filter(func(fx): return is_instance_valid(fx) and not fx.is_queued_for_deletion() and fx.tag == tag).size()
+func player_dict() -> Dictionary:return game.player
+func press(code: int, pressed := true) -> void:
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.physical_keycode = code
+	event.pressed = pressed
+	game._input(event)
 
 # --- presentation trace (headless equivalence checks; no window needed) ---
 const ActorScript = preload("res://view/actor_view.gd")
@@ -100,7 +120,7 @@ func presentation_state() -> Dictionary:
 	for n: Dictionary in _numbers():
 		numbers.append([str(n["pos"]),n["value"],snappedf(float(n["ms"]),0.001),n["style"]])
 	return {"world":str(game.view.world.position),"nodes":nodes,"numbers":numbers,"hud":_hud_values(),
-		"hud_draw":_hud_trace(),"stage":[game.view.stage.room_index,game.view.stage.cleared,game.view.stage.debug_collision,str(game.view.stage.doors)]}
+		"hud_draw":_hud_trace(),"stage":[game.view.stage.room_index,game.view.stage.cleared,game.view.stage.debug_collision,str(game.doors)]}
 
 func _hud_trace() -> Array:
 	return game.view.hud.trace.duplicate()

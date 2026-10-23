@@ -1,15 +1,18 @@
 extends Node2D
 ## Battle presentation root (L4). Reads the per-tick snapshot and combat events only;
 ## never writes simulation state. Contract: docs/design/29_新版工程框架_接口契约.md.
-## Every drawn element is an original bank: runtime manifest (players, scene, ui, legacy fx)
-## or assets_local/combat (monsters, passive objects, skill/hit effects, digits).
+## Every drawn element is an original bank: runtime manifest (players, ui, legacy fx),
+## assets_local/combat (monsters, passive objects, skill/hit effects, digits, HP bar) and the
+## exported original Lorien maps (assets_local/native_maps).
 const ActorView = preload("res://view/actor_view.gd")
 const FxView = preload("res://view/fx_view.gd")
 const AudioRouter = preload("res://view/audio_router.gd")
+const MapStage = preload("res://view/map_stage.gd")
 const CombatHud = preload("res://ui/combat/combat_hud.gd")
-# Scene drawing stays with the world side (doc 28); the view only feeds it.
-const StageView = preload("res://scripts/native_stage.gd")
 const PropView = preload("res://scripts/native_prop.gd")
+## Afterimage of a cancelled pose (E-ADAPT: engine-drawn in the original, no data file).
+const GHOST_MS := 320.0
+const GHOST_TINT := Color(0.62,0.78,1.0,0.6)
 
 var world: Node2D
 var stage
@@ -21,15 +24,18 @@ var numbers: Array = []
 var prop_views: Array = []
 var enemy_actors: Dictionary = {}
 var object_views: Dictionary = {}
+var ghosts: Array = []
 var aura
+var camera_x := 0.0
 var _assets: Dictionary
 var _combat: Dictionary
 var _effects: Dictionary = {}
 var _player_clips: Dictionary
 var _weapon := ""
-var _stage_key := ""
+var _player_pos := Vector2.ZERO
+var _player_z := 0.0
 
-func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictionary, bus, weapon: String) -> void:
+func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictionary, bus, weapon: String, map_loader) -> void:
 	_assets = assets
 	_combat = combat_assets
 	_player_clips = player_clips
@@ -37,9 +43,9 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 	_effects.merge(combat_assets.get("effects",{}),true)
 	world = Node2D.new()
 	add_child(world)
-	stage = StageView.new()
+	stage = MapStage.new()
 	world.add_child(stage)
-	stage.setup(assets["scene"])
+	stage.setup(map_loader)
 	player_actor = ActorView.new()
 	world.add_child(player_actor)
 	_set_weapon(weapon)
@@ -47,7 +53,7 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 	add_child(layer)
 	hud = CombatHud.new()
 	layer.add_child(hud)
-	hud.setup(assets["ui"],combat_assets.get("digits",{}))
+	hud.setup(assets["ui"],combat_assets.get("digits",{}),combat_assets.get("monster_hp",{}))
 	audio = AudioRouter.new()
 	add_child(audio)
 	audio.setup(assets["audio"],combat_assets.get("audio",{}))
@@ -65,19 +71,23 @@ func set_debug_collision(enabled: bool) -> void:
 
 ## frame_ms always elapses (damage numbers); sim_ms is the simulation time actually advanced.
 func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
+	var p: Dictionary = s["player"]
+	_player_pos = Vector2(p["pos"])
+	_player_z = float(p["z"])
 	for fx in effects:
-		if is_instance_valid(fx) and not fx.is_queued_for_deletion():fx.advance(sim_ms)
+		if is_instance_valid(fx) and not fx.is_queued_for_deletion():
+			if fx.follow == 0:fx.position = _player_pos.round()-Vector2(0,_player_z)
+			fx.advance(sim_ms)
 	effects = effects.filter(func(fx):return is_instance_valid(fx) and not fx.is_queued_for_deletion())
-	_present_stage(s["stage"],s["props"])
+	stage.show_room(s["stage"])
 	var props: Array = s["props"]
 	for i in prop_views.size():
 		if is_instance_valid(prop_views[i]) and i < props.size():
 			prop_views[i].data = props[i]
 			prop_views[i].refresh()
-	var p: Dictionary = s["player"]
 	if String(p["weapon"]) != _weapon:_set_weapon(String(p["weapon"]))
-	player_actor.position = Vector2(p["pos"]).round()
-	player_actor.z_index = int(Vector2(p["pos"]).y)
+	player_actor.position = _player_pos.round()
+	player_actor.z_index = int(_player_pos.y)
 	player_actor.present(p["ani"],p["clock"],p["facing"],p["z"],1.0 if p["flash"] else 0.0)
 	_present_aura(String(p.get("aura","")),p,sim_ms)
 	for e: Dictionary in s["enemies"]:
@@ -88,29 +98,33 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 		var alpha := clampf(1.0-(float(e["death_ms"])-400)/400,0,1) if not e["alive"] else 1.0
 		actor.present(e["ani"],e["clock"],e["facing"],e["z"],1.0 if e["flash"] else 0.0,Color(1,1,1,alpha))
 	_present_objects(s.get("objects",[]))
-	world.position = Vector2.ZERO
+	for i in range(ghosts.size()-1,-1,-1):
+		var g: Dictionary = ghosts[i]
+		g["ms"] = float(g["ms"])+frame_ms
+		var node = g["node"]
+		if float(g["ms"]) >= GHOST_MS or not is_instance_valid(node):
+			if is_instance_valid(node):node.queue_free()
+			ghosts.remove_at(i)
+			continue
+		var c := GHOST_TINT
+		c.a *= 1.0-float(g["ms"])/GHOST_MS
+		node.tint = c
+		node.queue_redraw()
+	camera_x = stage.camera_for(_player_pos.x)
+	world.position = Vector2(-roundf(camera_x),0)
+	stage.apply_camera(roundf(camera_x))
 	for i in range(numbers.size()-1,-1,-1):
 		numbers[i]["ms"] = float(numbers[i]["ms"])+frame_ms
 		if float(numbers[i]["ms"])>650:numbers.remove_at(i)
 	var hud_state: Dictionary = s["hud"].duplicate()
 	hud_state["enemies"] = s["enemies"]
 	hud_state["numbers"] = numbers
+	hud_state["camera"] = Vector2(roundf(camera_x),0)
 	hud.present(hud_state)
 
 func _set_weapon(weapon: String) -> void:
 	_weapon = weapon
 	player_actor.setup(_assets["players"][weapon],_player_clips, _combat.get("player_locomotion", {}).get("battle", {}).get(weapon, {}))
-
-func _present_stage(info: Dictionary, props: Array) -> void:
-	var broken: Array = props.map(func(p: Dictionary) -> bool: return bool(p.get("broken",false)))
-	var key := str([info["room_index"],info["cleared"],info["doors"],broken])
-	if key == _stage_key:return
-	_stage_key = key
-	stage.room_index = info["room_index"]
-	stage.cleared = info["cleared"]
-	stage.doors = info["doors"]
-	stage.props = props
-	stage.queue_redraw()
 
 ## Frenzy-style auras follow the body and loop the original effect while the buff lasts.
 func _present_aura(key: String, p: Dictionary, sim_ms: float) -> void:
@@ -162,6 +176,10 @@ func _on_room_loaded(event: Dictionary) -> void:
 	for v in object_views.values():
 		if is_instance_valid(v):v.queue_free()
 	object_views.clear()
+	for g: Dictionary in ghosts:
+		if is_instance_valid(g["node"]):g["node"].queue_free()
+	ghosts.clear()
+	numbers.clear()
 	for prop: Dictionary in event["props"]:
 		var view = PropView.new()
 		world.add_child(view)
@@ -185,20 +203,41 @@ func _on_entity_removed(event: Dictionary) -> void:
 func _on_cue(event: Dictionary) -> void:
 	match String(event["kind"]):
 		"sound":audio.on_cue(event)
-		"fx":_spawn_fx(String(event["key"]),event["point"],int(event["facing"]),float(event["height"]),float(event.get("scale",1.0)))
+		"fx":_spawn_fx(event)
+		"fx_clear":
+			for fx in effects:
+				if is_instance_valid(fx) and fx.tag == String(event["tag"]):fx.queue_free()
+		"ghost":_spawn_ghost(event)
 
-func _spawn_fx(key: String, point: Vector2, facing: int, height: float, scale := 1.0) -> void:
+func _spawn_fx(event: Dictionary) -> void:
+	var key := String(event["key"])
 	if not _effects.has(key):return
+	var point: Vector2 = event["point"]
 	var fx = FxView.new()
 	world.add_child(fx)
-	fx.position = point-Vector2(0,height)
+	fx.position = point-Vector2(0,float(event["height"]))
 	fx.z_index = int(point.y)+4
-	fx.base_scale = scale
-	fx.setup(_effects[key],facing)
+	fx.base_scale = float(event.get("scale",1.0))
+	fx.tag = String(event.get("tag",""))
+	fx.follow = int(event.get("follow",-1))
+	fx.max_ms = float(event.get("max_ms",-1.0))
+	fx.setup(_effects[key],int(event["facing"]))
 	fx.advance(0)
 	effects.append(fx)
 
+## Translucent copy of the player's pose at the moment an action is cancelled.
+func _spawn_ghost(event: Dictionary) -> void:
+	var node = ActorView.new()
+	world.add_child(node)
+	node.setup(_assets["players"][_weapon],_player_clips,_combat.get("player_locomotion",{}).get("battle",{}).get(_weapon,{}))
+	node.shadow_width = 0
+	node.position = Vector2(event["pos"]).round()
+	node.z_index = int(Vector2(event["pos"]).y)-1
+	node.present(String(event["ani"]),float(event["clock"]),int(event["facing"]),float(event["z"]),0.0,GHOST_TINT)
+	ghosts.append({"node":node,"ms":0.0})
+
 ## Bitmap damage digits (sprite/common/etc/combo.img): monster damage white, damage taken red.
+## Positions are world coordinates; the HUD subtracts the camera.
 func _on_damage(event: Dictionary) -> void:
 	var point: Vector3 = event["point"]
 	var style := "damage_taken" if String(event.get("victim","monster")) == "player" else "damage_crit" if event.get("critical",false) else "damage"

@@ -2,6 +2,7 @@ extends RefCounted
 ## Bottom bar: HP/MP orbs, class/weapon, skill slots, key hints.
 ## Placeholders G05/G06 (cropped source bar, system font, text skill slots).
 const ORDER := 60
+var chrome := true
 const WEAPON_NAMES := {"shortsword":"短剑","katana":"太刀","greatsword":"巨剑"}
 
 func paint(h, s: Dictionary) -> void:
@@ -29,5 +30,5 @@ func paint(h, s: Dictionary) -> void:
 		h.text(point+Vector2(5,27),String(skill["label"]),10)
 		if cd>0:h.text(point+Vector2(15,41),"%.1f"%cd,10,Color.WHITE)
 	h.text(Vector2(437,312),"X 普攻  C 跳跃",10)
-	h.text(Vector2(437,329),"V 后跳  G 格挡",10)
+	h.text(Vector2(437,329),"↓+C 后跳  G 格挡",10)
 	h.text(Vector2(437,346),"F1 操作说明",9,Color(0.62,0.67,0.62))

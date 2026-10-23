@@ -104,6 +104,10 @@ def main():
     parser.add_argument('--check-installed', action='store_true', help='Verify the current project pack without network')
     args = parser.parse_args()
     lock = json.loads(args.lock.read_text(encoding='utf-8'))
+    # ws1 2026-10-23: a machine with the full library builds combat/ and the content pack itself
+    # (tools/build_dnf_combat_assets.py writes this marker); keep that build, install flow art only.
+    if (args.project.resolve()/'assets_local/.combat_local_build.json').is_file():
+        lock = {**lock, 'packs': [p for p in lock['packs'] if p.get('kind') != 'combat_runtime']}
     if args.check_installed:
         if not installed_matches(lock, args.project.resolve()):raise SystemExit(1)
         print('LOOP installed version and file hashes verified; offline launch ready')

@@ -109,7 +109,8 @@ CUE_SOUNDS = {
     'goblin_die': ['sounds/mon/act1/gbn_die_01.ogg', 'sounds/mon/act1/gbn_die_02.ogg'],
 }
 SOUND_KEYS = ['STAFF_HIT', 'R_STICK_HIT', 'R_DRAWING_SWORD_HIT', 'R_SLESSSWDA_HIT', 'R_SQUARESWDC_HIT',
-              'R_GORECROSS_HIT', 'THROW_STONE', 'GORECROSS_ATK3', 'ASTROM_HIT_LIGHT']
+              'R_GORECROSS_HIT', 'THROW_STONE', 'GORECROSS_ATK3', 'ASTROM_HIT_LIGHT', 'UPPER_SLASH_01']
+MONSTER_HP_IMG = 'sprite/interface/newstyle/windows/monster_hp/monster_hp.img'
 
 
 def sha(data: bytes) -> str:
@@ -337,6 +338,22 @@ def build(library: Path | None) -> dict:
             atlas.add(f'{key}_{n - start}', image, offset)
     manifest['digits'] = atlas.save()
     manifest['digits']['source'] = 'sprite/common/etc/combo.img'
+    # Top-of-screen monster HP bar (frames + right caps + colour lines) and MOB [face image] frames.
+    atlas = Atlas('ui_monster_hp')
+    for n in range(19):
+        image, meta = src.frame(MONSTER_HP_IMG, n)
+        atlas.add(f'f{n}', image, [meta['x'], meta['y']])
+    for mob, _, _ in MONSTERS.values():
+        face = src.lib.script(mob, 'mob')
+        ref = next((f['values'] for f in face['fields'] if f['tag'] == '[face image]'), None)
+        if ref and isinstance(ref[0], str):
+            image, meta = src.frame(ref[0], int(ref[1]))
+            image, offset = cropped(image, meta)
+            atlas.add('face:' + mob, image, offset)
+        else:
+            unresolved.append({'kind': 'face_image', 'monster': mob})
+    manifest['monster_hp'] = atlas.save()
+    manifest['monster_hp']['source'] = MONSTER_HP_IMG
     for key, files in CUE_SOUNDS.items():
         copy_audio(src, files, manifest['audio'], key, unresolved)
     for key in SOUND_KEYS:
@@ -356,6 +373,11 @@ def build(library: Path | None) -> dict:
                'effects': len(manifest['effects']), 'digits': len(manifest['digits']['items']),
                'audio_keys': len(manifest['audio']), 'unresolved': len(unresolved)}
     (OUT / 'build_summary.json').write_text(json.dumps({**summary, 'unresolved_items': unresolved}, ensure_ascii=False, indent=1), encoding='utf-8')
+    # Marks a machine that builds combat banks from the full library itself. Kept outside the
+    # combat/ folder so the shared combat_runtime pack (tools/pack_dnf_flow.py) never carries it;
+    # the loop launcher then keeps this local build instead of installing the shared pack.
+    (OUT.parent / '.combat_local_build.json').write_text(json.dumps(
+        {'asset_version': src.lib.asset_version, 'build_version': BUILD_VERSION}), encoding='utf-8')
     return summary
 
 

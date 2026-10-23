@@ -381,6 +381,10 @@ def export_map(lib: Library, path: str, ids: dict) -> dict:
     sound = span_values(spans, '[sound]')
     room['sound'] = sound
     handled.update({'[sound]', '[/sound]', '[dungeon]', '[/dungeon]'})
+    # [dungeon start area] = x, y, width, depth of the player's entry rectangle (E-PARSE values).
+    start = span_values(spans, '[dungeon start area]')
+    room['start_area'] = start if start and len(start) == 4 else None
+    handled.add('[dungeon start area]')
     unhandled = sorted({s['tag'] for s in spans} - handled)
     room['unhandled_tags'] = unhandled
     if unhandled:

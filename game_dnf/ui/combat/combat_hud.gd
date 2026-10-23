@@ -10,12 +10,17 @@ var atlas: Texture2D
 var items: Dictionary = {}
 var digit_atlas: Texture2D
 var digits: Dictionary = {}
+var mhp_atlas: Texture2D
+var mhp_items: Dictionary = {}
 var painters: Array = []
 var state: Dictionary = {}
+## A flow root that draws its own HUD hides the "chrome" widgets (bottom bar, room info,
+## minimap, notices, overlay); combat feedback (numbers, combo, monster HP) stays visible.
+var chrome_visible := true
 ## Every draw call of the last frame, for headless equivalence checks.
 var trace: Array = []
 
-func setup(ui_assets: Dictionary, digit_bank := {}) -> void:
+func setup(ui_assets: Dictionary, digit_bank := {}, monster_hp_bank := {}) -> void:
 	font = SystemFont.new()
 	font.font_names = PackedStringArray(["Microsoft YaHei UI","Microsoft YaHei","Noto Sans CJK SC"])
 	font.font_weight = 500
@@ -24,6 +29,9 @@ func setup(ui_assets: Dictionary, digit_bank := {}) -> void:
 	if not digit_bank.is_empty():
 		digit_atlas = load(String(digit_bank["texture"])) as Texture2D
 		digits = digit_bank["items"]
+	if not monster_hp_bank.is_empty():
+		mhp_atlas = load(String(monster_hp_bank["texture"])) as Texture2D
+		mhp_items = monster_hp_bank["items"]
 	painters = discover(WIDGET_DIR)
 
 static func discover(dir_path: String) -> Array:
@@ -43,7 +51,25 @@ func _draw() -> void:
 	trace.clear()
 	if state.is_empty() or atlas == null:return
 	for painter in painters:
+		if not chrome_visible and painter.get("chrome") == true:continue
 		painter.paint(self,state)
+
+## Piece of the original monster HP bar image (sprite/interface/newstyle/windows/monster_hp).
+## width < 0 draws the full frame; otherwise the frame is cut to that many pixels from the left.
+func mhp(key: String, point: Vector2, width := -1.0) -> void:
+	var item: Dictionary = mhp_items.get(key,{})
+	if item.is_empty() or mhp_atlas == null:return
+	var r: Array = item["rect"]
+	var w := float(r[2]) if width < 0 else clampf(width,0,float(r[2]))
+	if w <= 0:return
+	var o: Array = item["offset"]
+	var dest := Rect2(point+Vector2(float(o[0]),float(o[1])),Vector2(w,float(r[3])))
+	trace.append(["m",key,str(dest)])
+	draw_texture_rect_region(mhp_atlas,dest,Rect2(float(r[0]),float(r[1]),w,float(r[3])))
+
+func mhp_size(key: String) -> Vector2:
+	var item: Dictionary = mhp_items.get(key,{})
+	return Vector2.ZERO if item.is_empty() else Vector2(float(item["rect"][2]),float(item["rect"][3]))
 
 func rect(r: Rect2,c: Color,filled := true) -> void:
 	trace.append(["r",str(r),str(c),filled])

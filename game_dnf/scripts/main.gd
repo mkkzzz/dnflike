@@ -10,14 +10,19 @@ const ContentDB = preload("res://content/api/content_db.gd")
 const CombatSession = preload("res://combat/api/combat_session.gd")
 const Kernel = preload("res://combat/api/kernel.gd")
 const BattleView = preload("res://view/battle_view.gd")
+const MapLoader = preload("res://scripts/native_map_loader.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
+const OPPOSITE := {"left":"right","right":"left","up":"down","down":"up"}
+## Double tap window for running, measured from the release of the first tap.
+const RUN_TAP_MS := 240
 
 ## Set before entering the tree when a flow root manages this scene (see CombatSession.mount).
 var external_mode := false
 var bus = EventBus.new()
 var content = ContentDB.new()
 var table = Kernel.MoveTable.new()
+var map_loader = MapLoader.new()
 var rng = DetRng.new(1)
 var session
 var view
@@ -34,12 +39,16 @@ var props: Array = []
 var room_index := 0
 var room_cleared := false
 var room_snapshots: Dictionary = {}
+var room_map: Dictionary = {}
+var room_width := 640.0
 var doors: Array = []
 var held: Dictionary = {}
 var taps: Dictionary = {}
 var requests: Array = []
 var last_direction_tap: Dictionary = {}
+var last_direction_release: Dictionary = {}
 var run_direction := 0
+var bar_target := -1
 var max_hp := 0.0
 var max_mp := 0.0
 var damage_scale := 1.0
@@ -85,11 +94,13 @@ func _ready() -> void:
 	combat_assets = JSON.parse_string(FileAccess.get_file_as_string(COMBAT_ASSETS))
 	if not table.build(content,rules,combat_assets):
 		return _fail("Combat tables incomplete: "+", ".join(table.problems.slice(0,3)))
+	if not map_loader.load_export(String(rules["map_export"])):
+		return _fail("Lorien map export missing. Run tools/run_dnf.ps1 (needs the full library).")
 	player_clips = content.clips("player").duplicate()
 	player_clips.merge(combat_assets.get("player_clips",{}),false)
 	view = BattleView.new()
 	add_child(view)
-	view.setup(assets,combat_assets,player_clips,bus,weapon)
+	view.setup(assets,combat_assets,player_clips,bus,weapon,map_loader)
 	# Managed mode leaves dungeon BGM to the flow side; tests never start it.
 	if not external_mode and not "--test" in OS.get_cmdline_user_args():view.audio.start_music()
 	if not external_mode:
@@ -103,7 +114,7 @@ func _ready() -> void:
 			test_drive = TestDrive.new()
 			test_drive.game = self
 			add_child(test_drive)
-	if not external_mode:get_window().title = "格兰之森 · 新版战斗验证"
+	if not external_mode:get_window().title = "洛兰 · 新版战斗验证"
 	if "--review" in OS.get_cmdline_user_args():paused = true
 
 func _fail(reason: String) -> void:
@@ -120,7 +131,7 @@ func _notification(what: int) -> void:
 
 func restart() -> void:
 	begin_room({"run_id":"standalone","room_index":0,"from":"start"})
-	notice("格兰之森 · 清除怪物，继续深入")
+	notice("洛兰 · 清除怪物，继续深入")
 
 ## Physical attack power before skill percentages (E-ADAPT until equipment/stats exist).
 func attack_power() -> float:
@@ -143,7 +154,7 @@ func begin_room(spec: Dictionary) -> void:
 	var audio_spec: Dictionary = spec.get("audio",{})
 	if audio_spec.has("muted"):_muted = bool(audio_spec["muted"])
 	if audio_spec.has("bgm_volume_db") and not _muted:view.audio.start_music(float(audio_spec["bgm_volume_db"]))
-	view.hud.visible = bool(spec.get("show_hud",true))
+	view.hud.chrome_visible = bool(spec.get("show_hud",true))
 	run_id = String(spec.get("run_id","standalone"))
 	rng.reseed(hash(run_id))
 	room_snapshots.clear()
@@ -165,7 +176,7 @@ func new_player() -> Dictionary:
 		"facing":1,"state":"idle","action":"","stage":0,"clock":0.0,"motion_clock":0.0,
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
 		"invuln_ms":0.0,"flash_ms":0.0,"landing_ms":0.0,"buff_ms":0.0,"cooldowns":{},"hits":{},
-		"queued_combo":false,"queued_skill":"","queued_jump":false}
+		"queued_combo":false,"queued_skill":"","queued_jump":false,"queued_backstep":false,"fx_tag":""}
 
 ## Keys owned by the flow side when externally managed: restart, pause/menu, character and debug switches.
 const FLOW_OWNED_KEYS := [KEY_R,KEY_TAB,KEY_1,KEY_2,KEY_3,KEY_ESCAPE,KEY_F2,KEY_F3]
@@ -176,8 +187,19 @@ func _input(event: InputEvent) -> void:
 	var key_event := event as InputEventKey
 	var code := int(key_event.physical_keycode if key_event.physical_keycode != 0 else key_event.keycode)
 	if external_mode and code in FLOW_OWNED_KEYS:return
+	if key_event.echo:return
 	held[code] = key_event.pressed
-	if not key_event.pressed or key_event.echo:return
+	if code in [KEY_LEFT,KEY_RIGHT]:
+		var direction := -1 if code == KEY_LEFT else 1
+		var now := Time.get_ticks_msec()
+		if not key_event.pressed:
+			last_direction_release[direction] = now
+		else:
+			# Run = press, release, press again within the window (DNF double tap).
+			if last_direction_release.has(direction) and now-int(last_direction_release[direction]) < RUN_TAP_MS:run_direction = direction
+			last_direction_release.erase(direction)
+			last_direction_tap[direction] = now
+	if not key_event.pressed:return
 	taps[code] = true
 	if missing_assets:return
 	match code:
@@ -195,12 +217,7 @@ func _input(event: InputEvent) -> void:
 			view.audio.music.volume_db = -80 if _muted else -28
 		KEY_1,KEY_2,KEY_3:
 			weapon = ["shortsword","katana","greatsword"][code-KEY_1]
-		KEY_LEFT,KEY_RIGHT:
-			var direction := -1 if code == KEY_LEFT else 1
-			var now := Time.get_ticks_msec()
-			if now-int(last_direction_tap.get(direction,-1000)) < 240:run_direction = direction
-			last_direction_tap[direction] = now
-		KEY_X,KEY_Z,KEY_A,KEY_S,KEY_D,KEY_F,KEY_C,KEY_SPACE,KEY_V:
+		KEY_X,KEY_Z,KEY_A,KEY_S,KEY_D,KEY_F,KEY_C,KEY_SPACE:
 			if not paused and not finished:requests.append(code)
 
 func notice(message: String) -> void:
@@ -243,9 +260,48 @@ func action_duration(action: String) -> float:
 	return float(m.get("duration",0))
 
 func buffering(code: int) -> void:
-	if code == KEY_X and String(player["action"]).begins_with("attack"):player["queued_combo"] = true
+	if code in [KEY_C,KEY_SPACE] and held.get(KEY_DOWN,false) and backstep_allowed():player["queued_backstep"] = true
+	elif code == KEY_X and String(player["action"]).begins_with("attack"):player["queued_combo"] = true
 	elif SKILL_KEYS.has(code):player["queued_skill"] = SKILL_KEYS[code]
 	elif code in [KEY_C,KEY_SPACE] and String(player["action"]) == "upper":player["queued_jump"] = true
+
+## Back step (Down + jump): from free ground states, or cancelling the moves the adapt layer lists.
+func backstep_allowed() -> bool:
+	if float(player["z"]) > 0 or float(player["vz"]) > 0:return false
+	var state := String(player["state"])
+	if state in ["idle","move","guard"]:return true
+	return state == "action" and String(player["action"]) in rules["backstep"]["cancels"]
+
+func start_backstep() -> void:
+	var b: Dictionary = rules["backstep"]
+	if String(player["state"]) == "action":
+		var ani := player_ani()
+		bus.emit("combat.cue",{"kind":"ghost","pos":Vector2(player["pos"]),"z":float(player["z"]),
+			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1]})
+		bus.emit("combat.action_cancelled",{"entity_id":PLAYER_ID,"action":player["action"],"by":"backstep"})
+		end_action_fx()
+	player["state"] = "backstep"
+	player["action"] = ""
+	player["clock"] = 0.0
+	player["air_ms"] = 0.0
+	player["vz"] = float(b["lift"])
+	player["invuln_ms"] = maxf(float(player["invuln_ms"]),float(b["invuln_ms"]))
+	player["queued_backstep"] = false
+	player["queued_combo"] = false
+	player["queued_skill"] = ""
+	player["queued_jump"] = false
+	play_sound("backstep")
+
+## Action-bound effects (slash marks, auras of a move) vanish when the move ends or is cut.
+func end_action_fx() -> void:
+	if String(player.get("fx_tag","")) != "":
+		bus.emit("combat.cue",{"kind":"fx_clear","tag":player["fx_tag"]})
+	player["fx_tag"] = ""
+
+func end_action() -> void:
+	end_action_fx()
+	player["state"] = "jump" if float(player["z"])>0 else "idle"
+	player["action"] = ""
 
 func step_game(ms: float) -> void:
 	var dt := ms/1000
@@ -288,48 +344,53 @@ func step_game(ms: float) -> void:
 		else:notice("房间清空 · 通道已开启")
 	if room_cleared and not finished and door_lock_ms<=0:
 		for door: Dictionary in doors:
-			if Vector2(player["pos"]).distance_to(door["pos"])<24 and (move.length()>0 or taps.get(KEY_E,false)):
+			# Walking into the gate passes; standing right on it passes as well.
+			var distance := Vector2(player["pos"]).distance_to(door["pos"])
+			if distance<24 and (move.length()>0 or distance<14 or taps.get(KEY_E,false)):
 				load_room(int(door["to"]),String(door["side"]))
 				break
 
 func step_player(ms: float, move: Vector2) -> void:
 	var dt := ms/1000
 	player["motion_clock"] = float(player["motion_clock"])+ms
+	if bool(player["queued_backstep"]):
+		player["queued_backstep"] = false
+		if backstep_allowed():start_backstep()
 	var state: String = player["state"]
 	var grounded := float(player["z"])==0 and float(player["vz"])<=0
 	for code: int in requests:
 		if code in [KEY_C,KEY_SPACE]:
-			if state == "action":buffering(code)
+			if held.get(KEY_DOWN,false) and backstep_allowed():
+				start_backstep()
+				state = "backstep"
+			elif state == "action":buffering(code)
 			elif state in ["idle","move","guard"] and grounded:
 				player["vz"] = float(table.player["jump_power"])
 				player["air_ms"] = 0.0
 				player["state"] = "jump"
 				play_sound("jump")
-		elif code == KEY_V:
-			if state in ["idle","move","guard"] and grounded:
-				player["state"] = "backstep"
-				player["clock"] = 0.0
-				player["vz"] = 220.0
-				player["invuln_ms"] = 110.0
-				play_sound("backstep")
 		elif code == KEY_X:
 			if String(player["state"]) == "action":buffering(code)
-			else:start_action("air_attack" if float(player["z"])>0 or float(player["vz"])>0 else "dash_attack" if run_direction!=0 else "attack1")
+			elif float(player["z"])>0 or float(player["vz"])>0:start_action("air_attack")
+			# Dash attack only out of an actual run (double-tapped direction, still moving).
+			elif state == "move" and run_direction != 0 and int(move.x) == run_direction:start_action("dash_attack")
+			else:start_action("attack1")
 		elif SKILL_KEYS.has(code):
 			if String(player["state"]) == "action":buffering(code)
 			else:start_action(SKILL_KEYS[code])
 	requests.clear()
 	state = player["state"]
 	if state == "action":
-		step_action(ms)
+		step_action(ms,move)
 	elif state in ["hurt","air","down"]:
 		if Kernel.Reaction.step_body(player,ms,float(rules["player"]["gravity"]),rules["reaction"],move_in_world) == "landed":
 			player["landing_ms"] = 0.0
 		return
 	elif state == "backstep":
 		player["clock"] = float(player["clock"])+ms
-		move_player(Vector2(-int(player["facing"])*150*dt,0))
-		if float(player["clock"])>=470:player["state"] = "idle"
+		player["air_ms"] = float(player["clock"])
+		move_player(Vector2(-int(player["facing"])*float(rules["backstep"]["speed"])*dt,0))
+		if float(player["clock"])>=float(rules["backstep"]["duration_ms"]) and float(player["z"])==0:player["state"] = "idle"
 	elif state != "dead":
 		if held.get(KEY_G,false) and float(player["z"])==0 and float(player["vz"])<=0:
 			player["state"] = "guard"
@@ -349,12 +410,11 @@ func step_player(ms: float, move: Vector2) -> void:
 		if float(player["z"])==0 and float(player["vz"])<0:
 			player["vz"] = 0.0
 			player["landing_ms"] = 100.0
-			if String(player["state"]) in ["jump","backstep"]:player["state"] = "idle"
+			if String(player["state"]) == "jump":player["state"] = "idle"
 			elif String(player["state"]) == "action" and move_def(String(player["action"])).get("air",false):
-				player["state"] = "idle"
-				player["action"] = ""
+				end_action()
 
-func step_action(ms: float) -> void:
+func step_action(ms: float, move: Vector2) -> void:
 	var name: String = player["action"]
 	var m := move_def(name)
 	var stage := action_def()
@@ -362,13 +422,25 @@ func step_action(ms: float) -> void:
 	var speed: float = float(rules["buff"]["attack_speed"]) if float(player["buff_ms"])>0 and name != "buff" else 1.0
 	var clock := old_clock+ms*speed
 	player["clock"] = clock
-	if m.has("dash") and clock <= float(m["dash"]["until"]):
-		move_player(Vector2(float(m["dash"]["speed"])*int(player["facing"])*ms/1000.0,0))
+	if m.has("dash"):
+		# Decelerating slide per stage: x(t) = v0 t + a t^2 / 2 until the speed reaches zero.
+		var v0 := float(m["dash"]["speed"])
+		var a := float(m["dash"]["accel"])
+		var stop := v0/-a if a < 0 else float(stage.get("duration",0))/1000.0
+		var t0 := minf(old_clock/1000.0,stop)
+		var t1 := minf(clock/1000.0,stop)
+		var dx := (v0*t1+0.5*a*t1*t1)-(v0*t0+0.5*a*t0*t0)
+		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
+	if bool(m.get("air",false)) and move.length_squared() > 0:
+		# Jump attacks keep the airborne steering of a plain jump; facing stays locked.
+		var air_speed := float(rules["player"]["walk_speed"])
+		move_player(Vector2(move.x*air_speed,move.y*air_speed*float(rules["units"]["depth_speed_ratio"]))*ms/1000.0)
 	action_cues(stage,old_clock,clock)
 	apply_player_hits(stage,old_clock,clock)
 	var duration := action_duration(name)
 	var cancel_at := float(stage.get("cancel_at",duration))
 	if clock >= cancel_at and bool(player["queued_jump"]) and name == "upper":
+		end_action_fx()
 		player["state"] = "jump"
 		player["action"] = ""
 		player["vz"] = float(table.player["jump_power"])
@@ -385,8 +457,7 @@ func step_action(ms: float) -> void:
 	elif clock >= cancel_at and bool(player["queued_combo"]) and String(m.get("next","")) != "":
 		start_action(String(m["next"]),true)
 	elif clock >= duration:
-		player["state"] = "jump" if float(player["z"])>0 else "idle"
-		player["action"] = ""
+		end_action()
 
 func flow_payload(extra := {}) -> Dictionary:
 	var payload := {"run_id":run_id,"room_id":room_id,"room_index":room_index,
@@ -433,11 +504,13 @@ func start_action(name: String, cancel := false) -> bool:
 	if float(player["mp"])<float(m["mp"]):return reject_action(name,"mp")
 	player["mp"] = float(player["mp"])-float(m["mp"])
 	if float(m["cool_ms"]) > 0:player["cooldowns"][name] = float(m["cool_ms"])/1000.0
+	end_action_fx()
 	player["state"] = "action"
 	player["action"] = name
 	player["queued_combo"] = false
 	player["queued_skill"] = ""
 	player["queued_jump"] = false
+	player["queued_backstep"] = false
 	if name == "buff":
 		player["stage"] = 0
 		player["clock"] = 0.0
@@ -447,6 +520,7 @@ func start_action(name: String, cancel := false) -> bool:
 		if String(m["cast_fx"]) != "":spawn_effect(String(m["cast_fx"]),player["pos"],int(player["facing"]),float(player["z"]))
 		apply_buff()
 		return true
+	player["fx_tag"] = "act:%d" % (action_seq+1)
 	start_stage(0)
 	return true
 
@@ -456,8 +530,12 @@ func start_stage(index: int) -> void:
 	player["clock"] = 0.0
 	player["hits"] = {}
 	action_seq += 1
-	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
 	var m := move_def(name)
+	# Multi-stage slides may turn round between stages (each slash picks its own side).
+	if m.has("stages"):
+		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
+		if turn != 0:player["facing"] = turn
+	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
 	var stage := action_def()
 	if String(stage.get("voice","")) != "":play_sound(String(stage["voice"]))
 	var swing := int(m.get("swing",-1))
@@ -472,10 +550,14 @@ func apply_buff() -> void:
 	notice(String(move_def("buff").get("label",""))+" · 攻击与移动加速")
 
 ## Timed effect/sound cues of the move plus the ANI's own frame sound events.
+## Move effects are tagged with the running action and capped at the time it has left.
 func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 	for fx: Dictionary in stage.get("fx",[]):
 		var at := float(fx["at"])
-		if at > old_t and at <= new_t:spawn_effect(String(fx["key"]),player["pos"],int(player["facing"]),float(player["z"]))
+		if at > old_t and at <= new_t:
+			var left := action_duration(String(player["action"]))-at
+			bus.emit("combat.cue",{"kind":"fx","key":String(fx["key"]),"point":Vector2(player["pos"]),"height":float(player["z"]),
+				"facing":int(player["facing"]),"tag":String(player["fx_tag"]),"follow":PLAYER_ID,"max_ms":maxf(left,1.0)})
 	for s: Dictionary in stage.get("sounds",[]):
 		var at := float(s["at"])
 		if at > old_t and at <= new_t:play_sound(String(s["key"]))
@@ -537,6 +619,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		combo_count += 1
 		combo_ms = float(rules["combo_window_ms"])
 		hit_count += 1
+		if by_player:bar_target = int(target["id"])
 	var stop := float(rules["hitstop"]["down_ms"] if reaction in ["launch","down","air"] else rules["hitstop"]["hit_ms"])
 	# Thrown and spawned objects freeze only their target; the caster keeps moving.
 	if String(hit.get("kind","")) != "object" and not hit.has("object"):
@@ -685,6 +768,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 	player["invuln_ms"] = float(rules["player"]["hit_invuln_ms"])
 	var reaction := "guard" if guarded else "none"
 	if not guarded and float(player["buff_ms"])<=0:
+		end_action_fx()
 		player["action"] = ""
 		player["queued_combo"] = false
 		player["queued_skill"] = ""
@@ -711,7 +795,7 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 	if obj.is_empty():return
 	var off: Vector3 = hit.get("offset",Vector3.ZERO)
 	var entity := {"id":_next_entity_id,"def":obj,"owner":owner,"source":source,"hit":hit,"power":power,
-		"pos":constrain_pos(Vector2(pos.x+off.x*facing,pos.y+off.y)),"z":z+off.z,"facing":facing,"clock":0.0,
+		"pos":Vector2(pos.x+off.x*facing,pos.y+off.y),"z":z+off.z,"facing":facing,"clock":0.0,
 		"speed":float(hit.get("speed",0)),"life_ms":float(hit.get("life_ms",-1)),"hits":{}}
 	_next_entity_id += 1
 	objects.append(entity)
@@ -757,20 +841,32 @@ func step_objects(ms: float) -> void:
 		if done:objects.remove_at(i)
 
 # ---------------------------------------------------------------- world
+# Rooms are original Lorien maps (data/combat.json "rooms" -> map export placement). Ground
+# positions are map coordinates (x pixels, y ground depth); walkability is the map's pass grid.
 
+func room_placement(index: int) -> Dictionary:
+	var id := String(rules["rooms"][index]["placement"])
+	for p: Dictionary in map_loader.placements():
+		if String(p["id"]) == id:return p
+	return {}
+
+func walkable(p: Vector2) -> bool:
+	if room_map.is_empty() or p.x < 0 or p.x >= room_width:return false
+	return map_loader.is_walkable(room_map,p.x,p.y)
+
+## Nearest walkable ground point (spawn anchors may sit on a blocked cell edge).
 func constrain_pos(value: Vector2) -> Vector2:
-	return Vector2(clampf(value.x,26,614),clampf(value.y,166,302))
+	if walkable(value):return value
+	for r in range(4,200,4):
+		for d: Vector2 in [Vector2(0,r),Vector2(0,-r),Vector2(r,0),Vector2(-r,0),Vector2(r,r),Vector2(-r,r),Vector2(r,-r),Vector2(-r,-r)]:
+			if walkable(value+d):return value+d
+	return value
 
 func move_in_world(from: Vector2,delta: Vector2) -> Vector2:
-	var result := constrain_pos(from+Vector2(delta.x,0))
-	for p: Dictionary in props:
-		if p.get("broken",false):continue
-		var rect: Rect2 = p["collision"]
-		if rect.has_point(result):result.x = from.x
-	var next := constrain_pos(result+Vector2(0,delta.y))
-	for p: Dictionary in props:
-		if not p.get("broken",false) and Rect2(p["collision"]).has_point(next):next.y = result.y
-	return next
+	var result := from
+	if walkable(from+Vector2(delta.x,0)):result = from+Vector2(delta.x,0)
+	if walkable(result+Vector2(0,delta.y)):result += Vector2(0,delta.y)
+	return result
 
 func move_player(delta: Vector2) -> void:
 	player["pos"] = move_in_world(player["pos"],delta)
@@ -778,25 +874,32 @@ func move_player(delta: Vector2) -> void:
 func load_room(index: int, from_side: String) -> void:
 	clear_monsters()
 	objects.clear()
+	end_action_fx()
 	room_index = index
-	room_id = "trial:%d"%index
+	room_id = "lorien:%d"%index
+	bar_target = -1
 	doors.clear()
 	var entry: Dictionary = rules["rooms"][index]
-	var previous_side := ""
+	var placement := room_placement(index)
+	room_map = map_loader.room(String(placement["map"]))
+	room_width = float(room_map["width"])
 	if index>0:
-		previous_side = "left" if String(rules["rooms"][index-1]["next"])=="right" else "down"
-		doors.append({"side":previous_side,"to":index-1,"pos":door_point(previous_side)})
+		var back := String(OPPOSITE[String(rules["rooms"][index-1]["next"])])
+		doors.append({"side":back,"to":index-1,"pos":door_point(back)})
 	if index<rules["rooms"].size()-1:
 		var next_side: String = entry["next"]
 		doors.append({"side":next_side,"to":index+1,"pos":door_point(next_side)})
 	room_cleared = bool(room_snapshots.get(index,{}).get("cleared",false))
-	props = [{"sprite":"rock","pos":Vector2(240,205),"collision":Rect2(230,199,20,12),"broken":false},
-		{"sprite":"grass","pos":Vector2(385,278),"collision":Rect2(375,274,20,8),"breakable":true,"broken":false},
-		{"sprite":"tree","pos":Vector2(13,270),"collision":Rect2(5,264,16,10),"broken":false},
-		{"sprite":"tree","pos":Vector2(641,285),"collision":Rect2(633,279,16,10),"broken":false}]
-	if room_snapshots.has(index):props = room_snapshots[index]["props"].duplicate(true)
-	bus.emit("combat.room_loaded",{"room_index":index,"room_id":room_id,"props":props.duplicate(true)})
-	player["pos"] = Vector2(70,250) if from_side=="right" else Vector2(480,285) if from_side=="up" else Vector2(570,250) if from_side=="left" else Vector2(480,190) if from_side=="down" else Vector2(125,250)
+	props = []
+	bus.emit("combat.room_loaded",{"room_index":index,"room_id":room_id,"placement":String(placement["id"]),"props":props.duplicate(true)})
+	# Dungeon entry: centre of the map's own [dungeon start area]; doors spawn beside the paired gate.
+	var spawn := Vector2(room_width-160,250)
+	var area = room_map.get("start_area")
+	if area is Array and area.size() == 4:spawn = Vector2(float(area[0])+float(area[2])/2,float(area[1])+float(area[3])/2)
+	if OPPOSITE.has(from_side):
+		var side: String = OPPOSITE[from_side]
+		spawn = door_point(side)+{"left":Vector2(48,0),"right":Vector2(-48,0),"up":Vector2(0,36),"down":Vector2(0,-36)}[side]
+	player["pos"] = constrain_pos(spawn)
 	player["z"] = 0.0
 	player["vz"] = 0.0
 	player["state"] = "idle"
@@ -806,14 +909,20 @@ func load_room(index: int, from_side: String) -> void:
 	player["invuln_ms"] = 700.0
 	door_lock_ms = 700.0
 	if not room_cleared:
-		var boss := bool(entry.get("boss",false))
-		for i in int(entry["enemies"]):
-			var kind := String(entry.get("boss_monster","goblin")) if boss and i==0 else "goblin"
-			spawn_enemy(Vector2(350+i*65,222+(i%2)*38),boss and i==0,kind)
+		for m: Dictionary in room_map["monsters"]:
+			var kind: String = table.monster_by_mob(String(m["mob"]))
+			if kind == "":continue
+			var anchor: Array = m["anchor"]
+			spawn_enemy(Vector2(float(anchor[0]),float(anchor[1])),String(m["raw"][-1]) == "[boss]",kind)
 	notice(String(entry["name"])+(" · 领主出现" if entry.get("boss",false) else ""))
 
+## Gate anchor of the current room on the given side (placement gate, else map pathgate).
 func door_point(side: String) -> Vector2:
-	return {"right":Vector2(603,249),"left":Vector2(37,249),"up":Vector2(480,174),"down":Vector2(480,295)}.get(side,Vector2.ZERO)
+	if room_map.is_empty():return Vector2.ZERO
+	for g: Dictionary in room_placement(room_index).get("gates",[]):
+		if String(g["direction"]) == side and g["anchor"] != null:return Vector2(float(g["anchor"][0]),float(g["anchor"][1]))
+	var p = room_map["pathgate_pos"].get(side)
+	return Vector2(float(p[0]),float(p[1])) if p != null else Vector2.ZERO
 
 ## HP and attack are the adapt bases scaled by the MOB [ability category] percentages.
 func spawn_enemy(point: Vector2, chief := false, kind := "goblin") -> Dictionary:
@@ -848,7 +957,7 @@ func player_ani() -> Array:
 	if state=="air":return ["overturn",0.0]
 	if state=="down":return ["down",Kernel.Reaction.down_clock(player,rp,table.player_timeline("down"))]
 	if state=="guard":return ["guard",0.0]
-	if state=="backstep":return ["hitback",float(player["clock"])]
+	if state=="backstep":return ["jump",minf(float(player["clock"]),600) if float(player["vz"])>=0 else 10680.0]
 	if float(player["z"])>0:return ["jump",minf(float(player["air_ms"]),600) if float(player["vz"])>=0 else 10680.0]
 	if float(player["landing_ms"])>0:return ["sit",0.0]
 	if state=="move":return ["dash" if run_direction!=0 else "move",float(player["motion_clock"])]
@@ -877,6 +986,21 @@ func skill_bar() -> Array:
 			"cooldown":float(player["cooldowns"].get(name,0)),"mp":float(move_def(name).get("mp",0))})
 	return out
 
+## Top HP bar subject: the monster the player hit last; a living boss otherwise.
+func monster_bar() -> Dictionary:
+	var pick: Dictionary = {}
+	for enemy: Dictionary in monsters:
+		if int(enemy["id"]) == bar_target:pick = enemy
+	if pick.is_empty() or (float(pick["hp"]) <= 0 and float(pick["death_ms"]) > 800):
+		pick = {}
+		for enemy: Dictionary in monsters:
+			if enemy["chief"] and float(enemy["hp"]) > 0:pick = enemy
+	if pick.is_empty():return {}
+	var m: Dictionary = pick["def"]
+	return {"id":pick["id"],"mob":String(pick["mob"]),"name":String(m["name"]),"level":int(m["level"]),
+		"rank":"boss" if pick["chief"] else "normal","hp":float(pick["hp"]),"max_hp":float(pick["max_hp"]),
+		"lines":int(rules["boss_hp_lines"]) if pick["chief"] else 1}
+
 ## Read-only per-tick state for view/ and ui/combat/ (contract doc 29 section 4). Values only.
 func view_snapshot() -> Dictionary:
 	var ani := player_ani()
@@ -896,16 +1020,17 @@ func view_snapshot() -> Dictionary:
 	var route: Array = []
 	for i in rules["rooms"].size():
 		var room: Dictionary = rules["rooms"][i]
-		route.append({"cell":room["cell"],"visited":room_snapshots.has(i),"current":i==room_index,"boss":bool(room.get("boss",false))})
+		route.append({"cell":room_placement(i).get("cell",[0,0]),"visited":room_snapshots.has(i),"current":i==room_index,"boss":bool(room.get("boss",false))})
 	var boss_room := bool(rules["rooms"][room_index].get("boss",false))
 	return {"frame":_frame,"paused":paused,
 		"player":{"pos":Vector2(player["pos"]),"z":float(player["z"]),"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],
 			"flash":float(player["flash_ms"])>0,"buff":float(player["buff_ms"])>0,"weapon":weapon,
 			"aura":String(move_def("buff").get("aura_fx","")) if float(player["buff_ms"])>0 else ""},
 		"enemies":enemies,"objects":objs,"props":props.duplicate(true),
-		"stage":{"room_index":room_index,"cleared":room_cleared and not boss_room,"doors":doors.duplicate(true)},
+		"stage":{"room_index":room_index,"placement":String(rules["rooms"][room_index]["placement"]),
+			"cleared":room_cleared and not boss_room,"doors":doors.duplicate(true)},
 		"hud":{"room_name":String(rules["rooms"][room_index]["name"]),"alive":alive,"room_cleared":room_cleared,
-			"route":route,"combo":combo_count,"toast":toast,"toast_ms":toast_ms,"skills":skill_bar(),
+			"route":route,"combo":combo_count,"toast":toast,"toast_ms":toast_ms,"skills":skill_bar(),"monster_bar":monster_bar(),
 			"player":{"hp":float(player["hp"]),"mp":float(player["mp"]),"hp_max":max_hp,"mp_max":max_mp,
 				"job":job,"weapon":weapon,"buff_ms":float(player["buff_ms"]),"buff_label":String(move_def("buff").get("label","")),
 				"cooldowns":Dictionary(player["cooldowns"]).duplicate()},

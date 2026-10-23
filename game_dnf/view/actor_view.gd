@@ -54,11 +54,15 @@ func present(next_pose: String, ms: float, direction: int, z: float, white: floa
 func _draw() -> void:
 	if atlas == null:return
 	# Shadow stays on the ground while only the sprite moves in height.
-	draw_set_transform(Vector2.ZERO,0,Vector2(1,0.28))
-	draw_circle(Vector2.ZERO,shadow_width,Color(0.015,0.025,0.02,0.38))
-	draw_set_transform(Vector2(0,-roundf(height)),0,Vector2(facing,1))
+	if shadow_width > 0:
+		draw_set_transform(Vector2.ZERO,0,Vector2(1,0.28))
+		draw_circle(Vector2.ZERO,shadow_width,Color(0.015,0.025,0.02,0.38))
 	var frame := sample()
 	if frame.is_empty():return
+	# ANI [ROTATE] (item 8, radians) turns the frame around the anchor; overturn.ani uses pi
+	# to show the damage pose upside down. Mirroring flips the rotation direction.
+	var rotate := float(frame.get("items",{}).get("8",0.0))
+	draw_set_transform(Vector2(0,-roundf(height)),rotate*facing,Vector2(facing,1))
 	var key := str(int(frame.get("img_frame",0)))
 	var frame_bank: Dictionary = pose_banks.get(pose, bank)
 	var frame_atlas: Texture2D = pose_atlases.get(pose, atlas)

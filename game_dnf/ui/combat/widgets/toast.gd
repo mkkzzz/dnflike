@@ -1,6 +1,7 @@
 extends RefCounted
 ## Center notice line. Placeholder G13 (program panel, system font).
 const ORDER := 70
+var chrome := true
 
 func paint(h, s: Dictionary) -> void:
 	if float(s["toast_ms"])<=0:return

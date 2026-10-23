@@ -1,6 +1,7 @@
 extends RefCounted
 ## Room route map. Placeholder G12 (program cells, rules unverified: DNF-D009).
 const ORDER := 20
+var chrome := true
 
 func paint(h, s: Dictionary) -> void:
 	var base := Vector2(566,42)
