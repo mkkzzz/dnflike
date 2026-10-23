@@ -61,5 +61,8 @@
   ],
   "gallery_images": 33,
   "gallery_png_hashes_match": true,
-  "visual_acceptance": "pending user review"
+  "visual_acceptance": "pending user review",
+  "runtime_commit": "09bb5386a05930eec482cf7c93e222e1bbbe92f3",
+  "phone_deployment_status": "succeeded",
+  "phone_source_commit": "4a655b80617926a323cd8d603cbc4f6a1a80d366"
 }
