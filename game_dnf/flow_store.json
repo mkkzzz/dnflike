@@ -1,23 +1,23 @@
 {
   "schema": "dnflike_loop_store/1",
-  "version": "dnf-loop-v8-town-motion-20261023",
-  "tag": "dnf-loop-v8-town-motion-20261023",
+  "version": "dnf-loop-v9-character-entry-20261023",
+  "tag": "dnf-loop-v9-character-entry-20261023",
   "repository": "mkkzzz/dnflike-assets",
   "base_asset_version": "dnf-native-assets-v1-20261022",
   "packs": [
     {
       "name": "flow_v1-01.zip",
       "kind": "flow_v1",
-      "bytes": 17789148,
-      "sha256": "ae3f602325bd716c95798f3944b2555ff6649a7a5a71459ed9ddf441603be723",
-      "files": 293,
-      "unpacked_bytes": 25910303
+      "bytes": 19310614,
+      "sha256": "d52044d7d17820d37adb8c92e1adb68ae73d0486a02a9e6603976eebdeb90555",
+      "files": 308,
+      "unpacked_bytes": 27679790
     },
     {
       "name": "combat_runtime-01.zip",
       "kind": "combat_runtime",
       "bytes": 1915061,
-      "sha256": "e661c690771cd4fac4fc63ad4d96f25d589b1ca302ade9f3e0b9109edd946169",
+      "sha256": "293fa0b0ba774daedc97d252b299b04fdbedeee23741efdd945c49073d6de9b0",
       "files": 107,
       "unpacked_bytes": 4835442
     }
@@ -26,10 +26,10 @@
     {
       "name": "evidence-01.zip",
       "kind": "evidence",
-      "bytes": 26579470,
-      "sha256": "43651123da07b10c520ad1c83833efd5e4c4658d17055f1b040e7720069eac43",
-      "files": 54,
-      "unpacked_bytes": 27669644
+      "bytes": 30381335,
+      "sha256": "c6e68bb6bb4751cc9421b82fbf282c49ffd998446d52cb3b7e1781476fd05978",
+      "files": 56,
+      "unpacked_bytes": 31484403
     }
   ]
 }

@@ -4,13 +4,13 @@
 
 | 字段 | 内容 |
 |---|---|
-| task_id / revision | dnf_loop_native_v1 / 09；快捷详情/难度紧贴、数字翻牌与六排背包，原运动显示图集 |
-| asset_id | scene.town.elvengard、actor.npc.linus、actor.npc.danjin、ui.loop.hud/inventory/shop/quest/departure/result/debug |
+| task_id / revision | dnf_loop_native_v1 / 10；原舞台选人、固定鬼剑士建角与独立角色存档 |
+| asset_id | scene.town.elvengard、actor.npc.linus、actor.npc.danjin、ui.loop.hud/inventory/shop/quest/departure/result/debug/characters/create |
 | asset_type / workflow | 原资源只读提取、原UI组件拼装；14文档H/F路线，不调用生图 |
 | style_profile / theme_pack | 原版DNF像素资源；用户本轮明确要求使用原图，禁用临时色块 |
 | owner / integration_owner | ws2；其它区自行接收，不代填其状态 |
-| lifecycle | 已发布；本轮见[界面与动作](../../reports/ws2/2026-10/2026-10-23_界面紧贴翻牌与城镇动作修复.md)，前轮[23项返修](../../reports/ws2/2026-10/2026-10-23_交互与界面二十三项返修.md)，前轮[1080p与GM](../../reports/ws2/2026-10/2026-10-22_固定1080p与GM调试面板.md)，前轮[八项返修](../../reports/ws2/2026-10/2026-10-22_HUD品质与背包八项返修.md)与原图证据保留，原版一致性待用户复核 |
-| gameplay_purpose | 走动城镇、NPC委托/购买、背包/装备、出征、胜负结算、回城与成长 |
+| lifecycle | 已发布；本轮见[选人与建角](../../reports/ws2/2026-10/2026-10-23_选人与创建鬼剑士入口.md)，前轮[界面与动作](../../reports/ws2/2026-10/2026-10-23_界面紧贴翻牌与城镇动作修复.md)，前轮[23项返修](../../reports/ws2/2026-10/2026-10-23_交互与界面二十三项返修.md)，前轮[1080p与GM](../../reports/ws2/2026-10/2026-10-22_固定1080p与GM调试面板.md)，前轮[八项返修](../../reports/ws2/2026-10/2026-10-22_HUD品质与背包八项返修.md)与原图证据保留，原版一致性待用户复核 |
+| gameplay_purpose | 选人/创建鬼剑士、走动城镇、NPC委托/购买、背包/装备、出征、胜负结算、回城与成长 |
 
 本轮沿用用户已指定的原素材路线，不生成或补画新人物。原图复用不等于完整还原原版布局、规则和数值。
 
@@ -31,6 +31,7 @@
 | 对象 | 来源及规格 | 实装方式 |
 |---|---|---|
 | 城镇 | map/elvengard/elvengard.map，7列224×480原TIL，共1568×480 | 800×600循环视口水平卷轴，场景整体下移28，地面y映射沿T2偏移120，可走草地/石路ground.y为175至352；末48px草地1:1延续至HUD透明区 |
+| 选人/建角 | Interface2/SelectCharacter/SelectCharacter.img原舞台800×600、选中框119×207、光圈119×44、开始106×54；CharacterCreate.img原背景800×600/鬼剑士386×600/职业图标70×70 | 原生像素1:1拼装、固定鬼剑士无职业列表；六位独立存档，中文取名、旧存档原位读取，布局为E-INFER |
 | NPC | npc/linus.npc、npc/danjin.npc的field animation与MAP原坐标 | 原IMG裁切偏移＋ANI时长，循环采样，不用静态色块代替 |
 | HUD | Interface2/HUD/HUD.img 800×92，血蓝56×56；ui/hud/hud.ui控件坐标 | 移除常驻说明/六个大按钮；原菜单图标、两侧快捷槽、真实血蓝/经验/冷却；原HUD步距30/图标28内缩2；技能ASDFGH，ZXC不显示、药剂1；血蓝仅悬停数值 |
 | 底部对白 | Interface2/npc_dialogue_ui.img 718×165；npc_dialog_face.img第0帧186×226 | 原尺寸底部板，林纳斯透明上半身大立绘浮在左侧；中文对白/任务/商店入口 |

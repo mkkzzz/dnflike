@@ -178,6 +178,14 @@ func unit_states() -> void:
 
 func run() -> void:
 	await ticks(4)
+	var character_tests = load("res://tests/flow/test_characters.gd").new()
+	character_tests.game = game
+	character_tests.host = self
+	await character_tests.run()
+	if "--characters-only" in OS.get_cmdline_user_args():
+		print("[LOOP_TEST] COMPLETE checks=%d failures=%d captures=%d" % [checks, failures, captured.size()])
+		get_tree().quit(1 if failures else 0)
+		return
 	if "--interactions-only" in OS.get_cmdline_user_args():
 		var suite = load("res://tests/flow/test_interactions.gd").new()
 		suite.game = game

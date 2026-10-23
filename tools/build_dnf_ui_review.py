@@ -11,6 +11,11 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SCREENS = [
+    ('角色选择', '启动先进入原包舞台；创建后选中鬼剑士，点击原开始按钮、双击角色或Enter进入城镇。', '49_character_selected.png'),
+    ('创建鬼剑士', '原版建角背景与386×600鬼剑士立绘，固定职业，输入中文角色名创建独立存档。', '47_character_create.png'),
+    ('多个独立角色', '角色等级、金币、任务和物品独立保存；可从城镇菜单返回选人。', '50_character_roster.png'),
+    ('名字校验', '空名、重名与无效字符会提示；创建失败保留既有角色。', '48_character_name_error.png'),
+    ('首次启动', '没有存档时保留空角色位和创建入口；已有单角色存档自动原位显示。', '46_character_empty.png'),
     ('城镇 · 原休闲站姿', '原Rest 176～179帧；城镇隐藏手持武器，与战斗持刀警戒站姿区分。', '23_town_rest.png'),
     ('城镇 · 移动', '使用原Move完整彩色服装图层，城镇无持刀显示；不是SIMPLE白色轮廓。', '24_town_walk.png'),
     ('走路穿帮 · 原像素分层对照', '离线素材对照：同一帧修复前后；181/185走路、105/109跑步。修复裤子后层被身体覆盖，不删帧、不补画。', 'source_locomotion_comparison.png'),
@@ -77,8 +82,8 @@ article{background:#1b231d;border:1px solid #45513c;border-radius:8px;overflow:h
 .caption p{color:#bac0ad;font-size:13px;margin:5px 0 0}footer{color:#a5ad99;padding-top:0}dialog{padding:0;background:#111713;color:#eee4c8;border:1px solid #a58b50;max-width:96vw;max-height:96vh}
 dialog::backdrop{background:#000d}.toolbar{display:flex;align-items:center;gap:14px;padding:10px 14px;position:sticky;top:0;background:#1b231d;z-index:1}
 .toolbar button{font:inherit;color:#edcf87;background:#293427;border:1px solid #6d7756;padding:4px 12px;cursor:pointer}.viewer{overflow:auto;max-width:95vw;max-height:85vh}.viewer img{display:block;image-rendering:auto;max-width:none}
-</style><header><h1>当前游戏 · 界面与原运动返修</h1><p>本次实际运行截图 · 全中文 · 点开适合屏幕，切换原始像素后可横向滑动查看细节</p>
-<p>本轮：城镇休闲站姿与无持刀移动、战斗走路/跑步服装分层修复、背包六排、贴近快捷详情/地图难度与1234直接翻牌。素材对照单独标注，末两张为原包攻略，其余为Godot实机截图。</p>
+</style><header><h1>当前游戏 · 选人与创建鬼剑士</h1><p>本次实际运行截图 · 全中文 · 点开适合屏幕，切换原始像素后可横向滑动查看细节</p>
+<p>本轮新增：原版舞台角色选择、鬼剑士大立绘建角、中文取名与独立角色存档；城镇、副本、结算、背包等完整流程保留。素材对照单独标注，末两张为原包攻略，其余为Godot实机截图。</p>
 <a href="screenshots.zip" download>下载全部截图</a></header><main>'''+''.join(cards)+'''</main>
 <footer>实机截图未修图，离线源像素对照和原包攻略单独标注。原资源与UI配置已核对；尚未取得原客户端同条件实机截图，不能据此宣称像素级一致。</footer>
 <dialog id="zoom"><div class="toolbar"><strong id="name"></strong><button id="scale">原始像素</button><button id="close">关闭</button></div><div class="viewer"><img id="full" alt="游戏实机原图"></div></dialog>

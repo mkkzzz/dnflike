@@ -12,6 +12,8 @@ const DebugPanel = preload("res://ui/flow/debug_panel.gd")
 const ContentSlot = preload("res://ui/flow/content_slot.gd")
 const SkillCatalog = preload("res://combat/api/skill_catalog.gd")
 const SkillDescriptions = preload("res://items/skill_descriptions.gd")
+const Characters = preload("res://save/characters.gd")
+const CharacterScreen = preload("res://ui/flow/character_screen.gd")
 const SKILL_KEYS := [KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H]
 const SKILL_CODES := {"draw":KEY_A, "triple":KEY_S, "rage_slash":KEY_D, "buff":KEY_F, "guard":KEY_G}
 var session = Session.new()
@@ -41,6 +43,10 @@ var debug_panel
 var world_clip: Control
 var skill_catalog
 var quick_views: Array = []
+var characters = Characters.new()
+var character_screen
+var character_active := false
+var active_character_path := ""
 
 func _ready() -> void:
 	test_mode = "--loop-test" in OS.get_cmdline_user_args()
@@ -49,9 +55,10 @@ func _ready() -> void:
 	transform = display_settings.content_transform()
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	get_window().title = "艾尔文防线 · 冒险循环"
-	if test_mode:store.path = "res://../temp/loop_tests/ui_profile.json"
-	else:
-		store.read_into(session)
+	if test_mode:
+		store.path = "res://../temp/loop_tests/ui_profile.json"
+		characters.directory = "res://../temp/loop_tests/characters"
+		characters.legacy_path = "res://../temp/loop_tests/character_legacy.json"
 	town = Town.new()
 	town.position.y = 28
 	world_clip = Control.new()
@@ -83,8 +90,7 @@ func _ready() -> void:
 	debug_panel = DebugPanel.new()
 	ui.add_child(debug_panel)
 	debug_panel.setup(self)
-	if session.state == "result":show_overlay("result")
-	else:notice("已从备份恢复存档 · 艾尔文防线" if store.recovered else "艾尔文防线 · 方向键移动，靠近林纳斯按 E")
+	show_character_selection()
 	if test_mode:
 		var runner = load("res://tests/flow/test_loop.gd").new()
 		runner.game = self
@@ -192,6 +198,7 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if not event is InputEventKey:return
 	var key := int(event.physical_keycode if event.physical_keycode else event.keycode)
+	if not character_active and key != KEY_F11:return
 	if key == KEY_SHIFT:windows.update_skill_detail(event.pressed)
 	if key not in [KEY_P, KEY_ESCAPE, KEY_F3, KEY_F11]:
 		if session.state == "battle" and overlay == "" and not debug_is_open():forward_battle_key(key, event.pressed, event.echo)
@@ -215,6 +222,11 @@ func _input(event: InputEvent) -> void:
 	notice(display_settings.description())
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if not character_active:
+		if event.is_pressed() and not event.is_echo() and is_instance_valid(character_screen):
+			character_screen.handle_key(int(event.physical_keycode if event.physical_keycode else event.keycode))
+			get_viewport().set_input_as_handled()
+		return
 	if is_instance_valid(windows.purchase):
 		if event.is_pressed() and event.keycode == KEY_ESCAPE:windows.close_purchase()
 		return
@@ -250,6 +262,7 @@ func notice(message: String) -> void:
 	notification_seconds = 4
 
 func save_profile() -> bool:
+	if not character_active:return false
 	var ok: bool = store.write(session)
 	save_failed = not ok
 	notice("进度已保存" if ok else "保存失败，请检查存档目录")
@@ -264,6 +277,7 @@ func act(kind: String, payload: Dictionary = {}) -> bool:
 	return true
 
 func show_overlay(which: String) -> void:
+	if not character_active:return
 	windows.close_purchase()
 	if session.state == "result" and which == "":which = "result"
 	if which == "quest" and overlay != "quest":
@@ -347,6 +361,8 @@ func menu_panel() -> void:
 	var panel = title_panel("冒险菜单", Rect2(218, 105, 364, 300))
 	skin.button(panel, "继续游戏", Vector2(132, 58), func(): show_overlay(""))
 	skin.button(panel, "保存进度", Vector2(132, 96), func(): save_profile())
+	if session.state == "town":skin.button(panel, "返回选人", Vector2(132, 134), func():
+		if save_profile():show_character_selection())
 	if session.state == "battle":skin.button(panel, "撤退回城", Vector2(132, 134), func():
 		if act("flow.retreat"):show_overlay("result"))
 	skin.label(panel, "画面分辨率：1920×1080（固定）", Vector2(24, 177), 12, Color("f0d18a"))
@@ -356,6 +372,48 @@ func menu_panel() -> void:
 	fullscreen.disabled = Engine.is_embedded_in_editor()
 	skin.button(panel, "调试面板 P", Vector2(135, 211), func(): set_debug_open(true))
 	skin.label(panel, "编辑器工具栏控制预览 · 原版比例居中" if Engine.is_embedded_in_editor() else "F11 切换全屏 · 原版比例居中", Vector2(24, 255), 11)
+
+func show_character_selection() -> void:
+	character_active = false
+	set_debug_open(false)
+	windows.close_purchase()
+	windows.hide_tooltip()
+	overlay = "characters"
+	hud.hide()
+	world_clip.hide()
+	toast_panel.hide()
+	for child in modal.get_children():
+		if child is Control:child.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		child.queue_free()
+	character_screen = CharacterScreen.new()
+	character_screen.selected_path = active_character_path
+	modal.add_child(character_screen)
+	character_screen.setup(self)
+	sync_debug_pause()
+
+func enter_character(path: String) -> bool:
+	# Read into a new state first, so a failed load cannot modify active progress.
+	if character_active:return false
+	var candidate = Store.new()
+	candidate.path = path
+	var next_session = Session.new()
+	if not candidate.read_into(next_session):return false
+	store = candidate
+	active_character_path = path
+	session = next_session
+	character_active = true
+	save_failed = false
+	character_screen = null
+	build_hotbars()
+	world_clip.show()
+	town.show()
+	town.ground = Vector2(540, 230)
+	town.player_name = skin.chinese(String(session.profile["name"]))
+	town.running = false
+	town.run_direction = 0
+	show_overlay("result" if session.state == "result" else "")
+	notice("已从备份恢复存档 · 艾尔文防线" if store.recovered else "艾尔文防线 · 欢迎 " + String(session.profile["name"]))
+	return true
 
 func debug_is_open() -> bool:
 	return is_instance_valid(debug_panel) and debug_panel.visible
@@ -377,9 +435,13 @@ func sync_debug_pause() -> void:
 func build_hotbars() -> void:
 	session.Layout.normalize(session.profile, Catalog.ITEMS)
 	for view in quick_views:
-		if is_instance_valid(view):view.queue_free()
+		if is_instance_valid(view):
+			hud.remove_child(view)
+			view.queue_free()
 	quick_views.clear()
 	for entry in skill_views.values():
+		hud.remove_child(entry["view"])
+		hud.remove_child(entry["counter"])
 		entry["view"].queue_free()
 		entry["counter"].queue_free()
 	skill_views.clear()

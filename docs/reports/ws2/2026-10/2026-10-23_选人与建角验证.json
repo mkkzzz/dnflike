@@ -1,0 +1,65 @@
+{
+  "schema": "dnf_character_entry_validation/1",
+  "engine": "Godot 4.7.2",
+  "tests": {
+    "render": {
+      "checks": 327,
+      "failures": 0,
+      "log_sha256": "d61913939bbe8fea111d9c484f04be88a62b326b298840f3fa8b6d880aa4fe36"
+    },
+    "fresh_consumer": {
+      "checks": 317,
+      "failures": 0,
+      "log_sha256": "07f649a790666f6581da56331fe32aed02003be016c119b5b9b8707ac504cf30"
+    },
+    "combat": {
+      "checks": 121,
+      "failures": 0,
+      "log_sha256": "b4172a539eb3cee4525d5e579006ae5a9b47eba39d6489c3ad34c944e6a53873"
+    }
+  },
+  "captures": 50,
+  "source_audit": {
+    "frames": 292,
+    "mismatches": 0,
+    "report_sha256": "a6a703a481a24aae0987d29187f415b57900cf1ee591da370212ff61eba5f2a3"
+  },
+  "sync_tool_tests": 4,
+  "dependency_violations": 0,
+  "fresh_consumer_full_library_present": false,
+  "fresh_consumer_code_matches": true,
+  "resource_release": "https://github.com/mkkzzz/dnflike-assets/releases/tag/dnf-loop-v9-character-entry-20261023",
+  "release_id": 421465920,
+  "lock_sha256": "2fd80645ba23b37cd2f5ac9ef0251baeb271d39fbc6ce04ee77a9a1f01323711",
+  "packs": [
+    {
+      "name": "flow_v1-01.zip",
+      "kind": "flow_v1",
+      "bytes": 19310614,
+      "sha256": "d52044d7d17820d37adb8c92e1adb68ae73d0486a02a9e6603976eebdeb90555",
+      "files": 308,
+      "unpacked_bytes": 27679790
+    },
+    {
+      "name": "combat_runtime-01.zip",
+      "kind": "combat_runtime",
+      "bytes": 1915061,
+      "sha256": "293fa0b0ba774daedc97d252b299b04fdbedeee23741efdd945c49073d6de9b0",
+      "files": 107,
+      "unpacked_bytes": 4835442
+    }
+  ],
+  "evidence": [
+    {
+      "name": "evidence-01.zip",
+      "kind": "evidence",
+      "bytes": 30381335,
+      "sha256": "c6e68bb6bb4751cc9421b82fbf282c49ffd998446d52cb3b7e1781476fd05978",
+      "files": 56,
+      "unpacked_bytes": 31484403
+    }
+  ],
+  "gallery_images": 33,
+  "gallery_png_hashes_match": true,
+  "visual_acceptance": "pending user review"
+}

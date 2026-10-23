@@ -64,6 +64,8 @@ def build(library: Path, output: Path) -> dict:
             'dungeon_cards': ('WorldMap/SelectDungeonSlot/granfloris.img', list(range(9))),
             'skill_icons': ('Character/Swordman/Effect/SkillIcon.img', [8, 9, 24, 25, 94, 95, 336, 337]),
             'lorien': ('Map/CutScene/Lorien.img', [0]),
+            'characters': ('Interface2/SelectCharacter/SelectCharacter.img', [0, 1, 3, 6, 7, 8, 9, 10, 11, 12, 17]),
+            'character_create': ('Interface2/CharacterCreate/CharacterCreate.img', [0, 5, 6, 38]),
         }
         ui = {name: {str(n): lib.image(ref, n, 'flow/' + name) for n in frames}
               for name, (ref, frames) in refs.items()}
@@ -114,7 +116,7 @@ def build(library: Path, output: Path) -> dict:
             raise ValueError('Original font hash mismatch')
         shutil.copyfile(source, output / 'msjh.ttf')
         result = {
-            'schema': 'dnf_native_map/1', 'flow_schema': 'dnf_loop_art/7',
+            'schema': 'dnf_native_map/1', 'flow_schema': 'dnf_loop_art/8',
             'source': {'asset_version': json.loads(LOCK.read_text(encoding='utf-8'))['version'],
                        'exporter': 'tools/build_dnf_flow_assets.py',
                        'config_role': '111Script backup; effective original runtime unconfirmed',
@@ -143,7 +145,8 @@ def build(library: Path, output: Path) -> dict:
         result['ui_layout_sources'] = [lib.script(path) for path in [
             'ui/hud/hud.ui', 'ui/inventory/iteminventorywindow.ui',
             'ui/inventory/inventory_item.ui', 'ui/inventory/inventory_bottom.ui',
-            'data/ui/newresult.sd']]
+            'data/ui/newresult.sd', 'ui/selectcharacter/selectcharacterunder.ui',
+            'ui/selectcharacter/selectcharacterover.ui']]
         (output / 'manifest.json').write_text(json.dumps(result, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
         return result
     finally:

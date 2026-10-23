@@ -19,6 +19,7 @@ var animated: Array = []
 var running := false
 var last_tap := {KEY_LEFT:-1000, KEY_RIGHT:-1000}
 var run_direction := 0
+var player_name := ""
 
 func _ready() -> void:
 	loader.load_export("res://assets_local/flow_v1/manifest.json")
@@ -132,6 +133,10 @@ func constrain_ground(point: Vector2) -> Vector2:
 	return Vector2(clampf(point.x, 24, 1540), clampf(point.y, 175, 352))
 
 func _draw_names() -> void:
+	if player_name != "":
+		var at: Vector2 = actor.position + Vector2(-font.get_string_size(player_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x / 2, -134)
+		labels.draw_string_outline(font, at, player_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, 3, Color.BLACK)
+		labels.draw_string(font, at, player_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("d4edb0"))
 	for entry in [[Vector2(445, 49), "林纳斯"], [Vector2(1335, 48), "土罐"], [Vector2(1460, 95), "格兰之森 →"]]:
 		var text: String = entry[1]
 		var at: Vector2 = entry[0]
