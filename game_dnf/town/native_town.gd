@@ -33,6 +33,7 @@ var location:="elvengard"
 var inn_return:="enter_inn"
 var quest_marks: Dictionary={}
 var await_direction_release:=false
+var entry_latch:=""
 
 func _ready() -> void:
 	loader.load_export("res://assets_local/flow_v1/manifest.json")
@@ -86,6 +87,7 @@ func set_location(id: String, point:=Vector2.ZERO) -> bool:
 	if labels.get_parent()!=map_root:labels.reparent(map_root,false)
 	for key: String in map_nodes:map_nodes[key].visible=key==id
 	ground=world.constrain(id,point if point!=Vector2.ZERO else World.vec(world.scene(id)["spawn"]))
+	entry_latch=entry_target()
 	running=false
 	run_direction=0
 	await_direction_release=true
@@ -169,12 +171,22 @@ func _process(delta: float) -> void:
 			local-=maxf(1,float(node.frames[i].get("delay_ms") if node.frames[i].get("delay_ms")!=null else 100))
 			if local<0:node.show_frame(i);break
 	labels.queue_redraw()
+	var entry:=entry_target()
+	if entry=="":entry_latch=""
+	elif enabled and moving and entry!=entry_latch:
+		# Latch before emitting: failed loads or closing map selection must not
+		# retry every frame. Leave the edge zone before entering it again.
+		entry_latch=entry
+		interact.emit(entry)
 
 func is_npc(id: String) -> bool:
 	return world.data["npcs"].has(id)
 
 func npc_definition(id: String) -> Dictionary:
 	return world.data["npcs"].get(id,{})
+
+func entry_target() -> String:
+	return world.entry_at(location,ground,inn_return)
 
 func nearest() -> String:
 	var closest:=""
@@ -183,10 +195,7 @@ func nearest() -> String:
 		var d:=ground.distance_to(World.vec(world.scene(location)["npcs"][id]))
 		if d<(100.0 if id=="seria" else 95.0) and d<distance:closest=id;distance=d
 	if closest!="":return closest
-	var portal:=world.portal_at(location,ground,inn_return)
-	if portal!="":return portal
-	if location=="elvengard" and ground.x>1355:return "dungeon"
-	return ""
+	return entry_target()
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not enabled or not event is InputEventKey:return
@@ -199,7 +208,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			last_tap[key]=now
 	if event.is_pressed() and not event.is_echo() and key==KEY_E:
 		var target:=nearest()
-		if target!="":interact.emit(target)
+		if is_npc(target):interact.emit(target)
 
 func constrain_ground(point: Vector2) -> Vector2:
 	return world.constrain(location,point)
@@ -225,6 +234,6 @@ func _draw_names() -> void:
 	var target:=nearest()
 	var hint:=""
 	if is_npc(target):hint="E 与"+npc_definition(target)["name"]+"交谈"
-	elif target=="dungeon":hint="E 进入格兰之森"
-	elif target!="":hint="E "+String(world.data["portals"][target]["label"])
+	elif target=="dungeon":hint="走向出口进入格兰之森"
+	elif target!="":hint="走向出口自动进入"
 	if hint!="":draw_caption(hint,actor.position+Vector2(0,-110),12,Color("fff2b5"))

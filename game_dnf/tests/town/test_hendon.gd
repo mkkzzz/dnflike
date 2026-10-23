@@ -1,9 +1,11 @@
 extends "res://tests/flow/test_loop.gd"
 ## New-town test starts from a declared completed-Lorien fixture, then uses
-## physical movement/E, real NPC GUI and disk saves for every new task/exit.
+## physical movement for entrances, E for NPCs, real GUI and disk saves.
+var auto_entries: Array[String]=[]
 
 func run() -> void:
 	await ticks(4)
+	game.town.interact.connect(func(target: String):auto_entries.append(target))
 	var state=game.Session.new()
 	state.profile["name"]="赫顿旅人"
 	state.profile["level"]=3
@@ -24,17 +26,25 @@ func run() -> void:
 	await task("hendon.meet_pungjin","接受委托",0)
 	check(game.session.quests.status(game.session.profile,"hendon.meet_pungjin")=="active","original 104 accepts at Linus")
 	game.show_overlay("")
-	await walk_to(Vector2(32,260))
 	var before: String=JSON.stringify(game.session.serialize())
 	var asset: String=game.town.world.scene("hendon_city")["asset"]
 	game.town.world.data["locations"]["hendon_city"]["asset"]="res://assets_local/missing_hendon.json"
-	check(not await game.transition_town("elven_to_city") and game.town.location=="elvengard" and JSON.stringify(game.session.serialize())==before,"missing target art keeps source scene and save unchanged")
+	await walk_to(Vector2(32,260))
+	check(game.town.location=="elvengard" and JSON.stringify(game.session.serialize())==before and auto_entries.count("elven_to_city")==1,"automatic entrance missing target art keeps source scene and save unchanged")
+	key(KEY_LEFT,true)
+	await ticks(12)
+	key(KEY_LEFT,false)
+	check(auto_entries.count("elven_to_city")==1,"failed automatic entry does not retry every frame while holding into edge")
 	game.town.world.data["locations"]["hendon_city"]["asset"]=asset
 	game.town.hendon_loader.errors.clear()
 	var original_path: String=game.store.path
 	game.store.path="res://data/towns.json/not_a_directory.json"
-	check(not await game.transition_town("elven_to_city") and game.town.location=="elvengard" and JSON.stringify(game.session.serialize())==before,"disk failure cannot commit partial cross-town state")
+	await walk_to(Vector2(100,260))
+	await walk_to(Vector2(32,260))
+	check(game.town.location=="elvengard" and JSON.stringify(game.session.serialize())==before and auto_entries.count("elven_to_city")==2,"automatic entrance disk failure cannot commit partial cross-town state")
 	game.store.path=original_path
+	await walk_to(Vector2(100,260))
+	await walk_to(Vector2(32,260))
 	await cross("elven_to_city","hendon_city")
 	check(game.town.ground.distance_to(Vector2(3670,265))<1,"Elvengard left road lands beyond Hendon city right exit")
 	await frame("hendon_01_city_arrival")
@@ -90,7 +100,7 @@ func run() -> void:
 	game.save_profile()
 	var loaded=game.Session.new()
 	check(game.store.read_into(loaded) and loaded.profile["inn_return"]=="enter_hendon_inn" and loaded.profile["town_location"]=="seria_room","inn return context survives JSON disk load")
-	await walk_to(Vector2(448,320))
+	await walk_to(Vector2(448,340))
 	await cross("exit_hendon_inn","hendon_auction")
 	check(game.town.ground.distance_to(Vector2(810,245))<1,"Hendon Seria exit returns to Hendon rather than Elvengard")
 	# Reload through the real character screen; preserve position and task state.
@@ -122,6 +132,36 @@ func run() -> void:
 	await cross("city_to_elven","elvengard")
 	check(game.town.ground.distance_to(Vector2(100,260))<1,"complete city route returns through original Elvengard left entrance")
 	await frame("hendon_11_elven_return")
+	# Both Elvengard entrances must use movement and preserve NPC-only E.
+	await walk_to(Vector2(775,245))
+	key(KEY_E,true)
+	await ticks(2)
+	key(KEY_E,false)
+	check(not game.transitioning and game.town.location=="elvengard","passing Seria doorway does not enter early or require E")
+	await walk_to(Vector2(775,185))
+	await cross("enter_inn","seria_room")
+	await walk_to(Vector2(448,340))
+	await cross("exit_inn","elvengard")
+	await walk_to(Vector2(1460,260))
+	key(KEY_E,true)
+	await ticks(2)
+	key(KEY_E,false)
+	check(game.overlay=="","dungeon approach no longer opens selection through E")
+	await walk_to(Vector2(1528,260))
+	check(game.overlay=="dungeon" and auto_entries.count("dungeon")==1,"walking to the road edge automatically opens dungeon selection without E")
+	key(KEY_RIGHT,true)
+	await ticks(10)
+	game.show_overlay("")
+	await ticks(12)
+	check(game.overlay=="" and auto_entries.count("dungeon")==1,"closing map selection while holding into edge does not reopen it")
+	key(KEY_RIGHT,false)
+	await walk_to(Vector2(1460,260))
+	await walk_to(Vector2(1528,260))
+	check(game.overlay=="dungeon" and auto_entries.count("dungeon")==2,"leaving the edge and walking back rearms automatic selection")
+	await frame("hendon_12_automatic_selection")
+	game.show_overlay("")
+	await walk_to(Vector2(1460,260))
+	game.save_profile()
 	var final_state=game.Session.new()
 	check(game.store.read_into(final_state) and final_state.profile==game.session.profile,"round trip persists all rewards and current world state")
 	OS.delay_msec(100)
@@ -138,19 +178,17 @@ func walk_to(point: Vector2) -> void:
 		key(KEY_UP,d.y < -3)
 		key(KEY_DOWN,d.y > 3)
 		await ticks(1)
+		if game.transitioning or game.overlay!="":break
 	release_all()
 	await ticks(2)
-	check(game.town.ground.distance_to(point)<7,"physical town movement reaches "+str(point))
+	check(game.town.ground.distance_to(point)<7 or (game.town.entry_target()!="" and (game.transitioning or game.overlay=="dungeon")),"physical town movement reaches point or automatic edge: "+str(point))
 
 func cross(portal: String, destination: String) -> void:
-	check(game.town.nearest()==portal,"source exit is reachable and recognized: "+portal)
-	key(KEY_E,true)
-	await ticks(1)
-	key(KEY_E,false)
+	check(game.town.entry_target()==portal,"source automatic exit is reachable and recognized: "+portal)
 	check(game.transitioning,"scene transition owns input during fade: "+portal)
 	if portal=="elven_to_city":key(KEY_RIGHT,true)
 	await ticks(22)
-	check(not game.transitioning and game.town.location==destination and game.session.profile["town_location"]==destination,"physical E loads and commits target scene: "+destination)
+	check(not game.transitioning and game.town.location==destination and game.session.profile["town_location"]==destination,"walking without E loads and commits target scene: "+destination)
 	if portal=="elven_to_city":
 		check(game.town.ground.distance_to(Vector2(3670,265))<1,"held movement cannot carry character away during or after transition")
 		key(KEY_RIGHT,false)

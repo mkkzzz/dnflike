@@ -348,7 +348,8 @@ func record_npc_visit(npc: String) -> void:
 	if outcome.get("ok",false) and not outcome["changed"].is_empty():save_profile()
 
 func interact_town(target: String) -> void:
-	if not character_active or transitioning or session.state!="town" or target!=town.nearest():return
+	if not character_active or transitioning or session.state!="town":return
+	if target!=town.nearest() and target!=town.entry_target():return
 	if town.is_npc(target):show_overlay("npc")
 	elif target=="dungeon":show_overlay("dungeon")
 	else:transition_town(target)

@@ -15,6 +15,7 @@ func run() -> void:
 		var profile:={"town_location":p["from"],"level":1,"inn_return":"enter_hendon_inn" if id=="exit_hendon_inn" else "enter_inn"}
 		var at: Vector2=world.constrain(p["from"],World.box(p["rect"]).get_center())
 		check(World.box(p["rect"]).has_point(at),"source exit reachable from declared ground: "+id)
+		check(world.entry_at(p["from"],at,profile["inn_return"])==id,"edge query recognizes automatic entrance: "+id)
 		var plan: Dictionary=world.plan(profile,id,at,true)
 		check(plan.get("ok",false) and plan["location"]==p["to"] and world.walkable(plan["location"],World.vec(plan["point"])),"portal has safe reciprocal destination: "+id)
 		check(not world.plan(profile,id,at,false)["ok"],"battle state blocks cross-town travel: "+id)
@@ -26,7 +27,10 @@ func run() -> void:
 	p={"town_location":"hendon_main","town_position":[-900,900]}
 	world.normalize(p)
 	check(world.walkable("hendon_main",World.vec(p["town_position"])),"invalid saved coordinates project onto native ground union")
-	check(world.portal_at("seria_room",Vector2(448,320),"enter_hendon_inn")=="exit_hendon_inn" and world.portal_at("seria_room",Vector2(448,320),"enter_inn")=="exit_inn","shared Seria room preserves entrance-specific return")
+	check(world.portal_at("seria_room",Vector2(448,340),"enter_hendon_inn")=="exit_hendon_inn" and world.portal_at("seria_room",Vector2(448,340),"enter_inn")=="exit_inn","shared Seria room preserves entrance-specific return")
+	check(world.entry_at("elvengard",Vector2(775,205))=="" and world.entry_at("seria_room",Vector2(448,320))=="","walking past the doorway or inside the room cannot trigger early")
+	check(world.entry_at("elvengard",Vector2(1460,260))=="" and world.entry_at("elvengard",Vector2(1525,260))=="dungeon","dungeon selection belongs to the far road edge rather than approach area")
+	check(world.entry_at("elvengard",Vector2(445,222))=="","NPC conversation is not an automatic entrance")
 	p={"town_location":42,"town_position":false,"inn_return":[]}
 	world.normalize(p)
 	check(p["town_location"]=="elvengard" and p["inn_return"]=="enter_inn","malformed optional old-save location fields safely normalize")
@@ -39,5 +43,8 @@ func run() -> void:
 	bad=world.data.duplicate(true)
 	bad["locations"]["hendon_main"]["npcs"]["nonexistent"]=[500,230]
 	check(not World.new(bad).errors.is_empty(),"unknown NPC cannot enter scene registry")
+	bad=world.data.duplicate(true)
+	bad["locations"]["elvengard"]["dungeon_entry"]=[1,2,-3,4]
+	check(not World.new(bad).errors.is_empty(),"invalid dungeon entrance geometry is rejected")
 	print("[TOWN_UNIT] COMPLETE checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)

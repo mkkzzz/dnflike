@@ -26,6 +26,7 @@ func _init(config: Dictionary = {}) -> void:
 		for rect in loc["walk"]:
 			if not rectangle(rect):errors.append("城镇走区无效："+str(id))
 		if not vector(loc.get("spawn")):errors.append("城镇落点无效："+str(id))
+		if loc.has("dungeon_entry") and not rectangle(loc["dungeon_entry"]):errors.append("副本入口范围无效："+str(id))
 		if not loc.get("npcs") is Dictionary:errors.append("城镇NPC表无效："+str(id))
 		else:
 			for npc in loc["npcs"]:
@@ -80,6 +81,12 @@ func portal_at(id: String, point: Vector2, inn_return := "enter_inn") -> String:
 	for key: String in visible:
 		if box(visible[key]["rect"]).has_point(point):return key
 	return ""
+
+func entry_at(id: String, point: Vector2, inn_return := "enter_inn") -> String:
+	var portal:=portal_at(id,point,inn_return)
+	if portal!="":return portal
+	var rect=scene(id).get("dungeon_entry")
+	return "dungeon" if rectangle(rect) and box(rect).has_point(point) else ""
 
 func plan(profile: Dictionary, portal: String, point: Vector2, in_town: bool) -> Dictionary:
 	if not errors.is_empty():return fail("城镇配置无效")

@@ -1,6 +1,6 @@
 {
   "schema": "dnf_towns/1",
-  "revision": 1,
+  "revision": 2,
   "locations": {
     "elvengard": {
       "name": "艾尔文防线",
@@ -36,7 +36,13 @@
           "格兰之森 →"
         ]
       ],
-      "camera_y": 0
+      "camera_y": 0,
+      "dungeon_entry": [
+        1512,
+        192,
+        28,
+        141
+      ]
     },
     "seria_room": {
       "name": "赛丽亚房间",
@@ -377,10 +383,10 @@
     "enter_inn": {
       "from": "elvengard",
       "rect": [
-        690,
+        730,
         175,
-        170,
-        95
+        110,
+        16
       ],
       "to": "seria_room",
       "spawn": [
@@ -404,9 +410,9 @@
       "from": "seria_room",
       "rect": [
         330,
-        296,
+        332,
         289,
-        52
+        16
       ],
       "to": "elvengard",
       "spawn": [
@@ -449,9 +455,9 @@
       "from": "seria_room",
       "rect": [
         330,
-        296,
+        332,
         289,
-        52
+        16
       ],
       "to": "hendon_auction",
       "spawn": [
@@ -530,6 +536,6 @@
       "2": "hendonmyre.twn"
     },
     "movement": "Union of explicit ground rectangles; source virtual movable areas for Hendon, previous approved Elvengard/Seria bounds retained",
-    "entry": "E interaction, no teleport menu; no level lock on exploring safe cities"
+    "entry": "Walk into the enabled exit edge; one automatic trigger per entry. NPC dialogue still uses E. No level lock on exploring safe cities."
   }
 }
