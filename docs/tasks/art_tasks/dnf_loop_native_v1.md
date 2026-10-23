@@ -4,12 +4,12 @@
 
 | 字段 | 内容 |
 |---|---|
-| task_id / revision | dnf_loop_native_v1 / 08；23项交互/视觉返修，原币图补帧，原生控件复用 |
+| task_id / revision | dnf_loop_native_v1 / 09；快捷详情/难度紧贴、数字翻牌与六排背包，原运动显示图集 |
 | asset_id | scene.town.elvengard、actor.npc.linus、actor.npc.danjin、ui.loop.hud/inventory/shop/quest/departure/result/debug |
 | asset_type / workflow | 原资源只读提取、原UI组件拼装；14文档H/F路线，不调用生图 |
 | style_profile / theme_pack | 原版DNF像素资源；用户本轮明确要求使用原图，禁用临时色块 |
 | owner / integration_owner | ws2；其它区自行接收，不代填其状态 |
-| lifecycle | 已发布；本轮见[23项返修](../../reports/ws2/2026-10/2026-10-23_交互与界面二十三项返修.md)，前轮[1080p与GM](../../reports/ws2/2026-10/2026-10-22_固定1080p与GM调试面板.md)，前轮[八项返修](../../reports/ws2/2026-10/2026-10-22_HUD品质与背包八项返修.md)与原图证据保留，原版一致性待用户复核 |
+| lifecycle | 已发布；本轮见[界面与动作](../../reports/ws2/2026-10/2026-10-23_界面紧贴翻牌与城镇动作修复.md)，前轮[23项返修](../../reports/ws2/2026-10/2026-10-23_交互与界面二十三项返修.md)，前轮[1080p与GM](../../reports/ws2/2026-10/2026-10-22_固定1080p与GM调试面板.md)，前轮[八项返修](../../reports/ws2/2026-10/2026-10-22_HUD品质与背包八项返修.md)与原图证据保留，原版一致性待用户复核 |
 | gameplay_purpose | 走动城镇、NPC委托/购买、背包/装备、出征、胜负结算、回城与成长 |
 
 本轮沿用用户已指定的原素材路线，不生成或补画新人物。原图复用不等于完整还原原版布局、规则和数值。
@@ -35,11 +35,12 @@
 | HUD | Interface2/HUD/HUD.img 800×92，血蓝56×56；ui/hud/hud.ui控件坐标 | 移除常驻说明/六个大按钮；原菜单图标、两侧快捷槽、真实血蓝/经验/冷却；原HUD步距30/图标28内缩2；技能ASDFGH，ZXC不显示、药剂1；血蓝仅悬停数值 |
 | 底部对白 | Interface2/npc_dialogue_ui.img 718×165；npc_dialog_face.img第0帧186×226 | 原尺寸底部板，林纳斯透明上半身大立绘浮在左侧；中文对白/任务/商店入口 |
 | 任务列表 | newstyle/windows/quest.img、quest/reformquestwindow.img、WindowCommon组件 | 分类、左列表/右详情、目标/奖励与接取/交付；外窗位置仍为E-INFER |
-| 背包 | newstyle/windows/inventory/fuck_1.img 313×578（含透明留边），源图自带中文页签 | 原装备头/外框与无字布纹重拼，消除黑栏/留白，保持组件1:1，避开HUD；八列四行，源网格起点(16,174)/步距32/图标28内缩2；分类条与网格258宽齐边；货币/负重原底板，武器图标(210,88)，关闭另置标题行 |
+| 背包 | newstyle/windows/inventory/fuck_1.img 313×578（含透明留边），源图自带中文页签 | 原装备头/外框与无字布纹重拼，消除黑栏/留白，保持组件1:1，避开HUD；八列六行，源网格起点(16,174)/步距32/图标28内缩2；分类条与网格258宽齐边；货币/负重原底板，武器图标(210,88)，关闭另置标题行；旧32格存档迁移48格 |
 | 商店 | 原WindowCommon边框/纹理、StackableShopWindow原滚动组件及原商品格 | 七列六行32px网格，与背包同源行带/2px收边，图标28居中；购买/悬停价格；整体拼装为E-INFER |
 | 说明板/物品详情 | 普通窗WindowCommon＋商店纹理40×35；物品专用Global九片24×25 | 外窗连续边缘；详情细金边黑底、品质标题/条件/属性/价格或数量分层；原中性框染色区分稀有度，精确原版用法待核 |
-| 出征 | WorldMap/granfloris.img 800×600、SelectDungeonSlot/granfloris原图卡、SelectDungeon02_cn中文组件 | 全屏羊皮地图、卡片正文选中框、卡下普通/冒险/王者三档、原冒险按钮；未开放卡片明示不可进入 |
-| 结算 | Interface2/reward_ver2.0/reward_ver2.img原底图800×600、卡牌153×97与确认按钮；NewResult原评级 | 实际统计、四张卡片/鼠标翻开/确认回城；奖励仅展示已结算收益，不冒充原版随机翻牌规则 |
+| 出征 | WorldMap/granfloris.img 800×600、SelectDungeonSlot/granfloris原图卡、SelectDungeon02_cn中文组件 | 全屏羊皮地图、卡片正文选中框、紧贴卡下普通/冒险/王者三档、原冒险按钮；未开放卡片明示不可进入 |
+| 结算 | Interface2/reward_ver2.0/reward_ver2.img原底图800×600、卡牌153×97与确认按钮；NewResult原评级 | 实际统计、四张卡片/鼠标或1234直接翻开/返回城镇；奖励仅展示已结算收益，不冒充原版随机翻牌规则 |
+| 原运动图集 | 原skin/pants/shoes/coat/hair/weapon IMG，原Rest/Move/Dash ANI | combat_runtime新增三武器走/跑48帧、城镇Rest/Move/Dash20帧，原尺寸/偏移/时间；skin先于两侧裤鞋，修移动露腿。城镇无持刀显示为适配，见本轮记录 |
 | 物品 | 原katana图标、ptn_hplowest.stk指向的药剂图标 | 语义ID固定；两把试炼刀复用同一katana角色外观，尚无逐装备外观 |
 | 固定输出/GM | 复用WindowCommon原窗/按钮、Global说明底板与统一中文字体，原图字节不变 | 1920×1080固定输出；800×600内容1.8倍居中、两侧各240px黑边；P面板696×514，4列6行按钮、原底板命令输入/日志，详见[记录](../../reports/ws2/2026-10/2026-10-22_固定1080p与GM调试面板.md) |
 | 字体 | 系统中文UI字体，不分发字体文件 | 优先微软雅黑UI/微软雅黑，回退Noto CJK；按显示密度绘制，原字体保留归档但不作UI默认 |

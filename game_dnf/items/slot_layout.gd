@@ -1,5 +1,6 @@
 extends RefCounted
 ## Slot positions and shortcut bindings never duplicate item ownership counts.
+const BAG_CAPACITY := 48
 const KINDS := ["weapon", "consumable", "material", "profession", "quest"]
 const DEFAULT_SKILLS := ["draw", "triple", "rage_slash", "buff", "guard", ""]
 static func normalize(profile: Dictionary, catalog: Dictionary) -> void:
@@ -9,7 +10,7 @@ static func normalize(profile: Dictionary, catalog: Dictionary) -> void:
 	if not profile.has("difficulty"):profile["difficulty"] = "normal"
 	for kind: String in KINDS:
 		var cells: Array = profile["bag_layout"].get(kind, [])
-		cells.resize(32)
+		cells.resize(BAG_CAPACITY)
 		var seen := {}
 		for i in cells.size():
 			var id: String = cells[i] if cells[i] is String else ""
@@ -29,7 +30,7 @@ static func valid(p: Dictionary, catalog: Dictionary) -> bool:
 	if p.has("bag_layout"):
 		if not p["bag_layout"] is Dictionary:return false
 		for key in p["bag_layout"]:
-			if key not in KINDS or not p["bag_layout"][key] is Array or p["bag_layout"][key].size() != 32:return false
+			if key not in KINDS or not p["bag_layout"][key] is Array or p["bag_layout"][key].size() not in [32, BAG_CAPACITY]:return false
 			for id in p["bag_layout"][key]:
 				if not id is String or (id != "" and (not catalog.has(id) or catalog[id]["kind"] != key)):return false
 	for key in ["quick_items", "skill_slots"]:
@@ -75,7 +76,7 @@ static func move(p: Dictionary, catalog: Dictionary, source: Dictionary, target:
 		normalize(p, catalog)
 		return true
 	var category: String = target.get("category", "")
-	if to != "bag" or category != catalog[id]["kind"] or index not in range(32):return false
+	if to != "bag" or category != catalog[id]["kind"] or index not in range(BAG_CAPACITY):return false
 	var cells: Array = p["bag_layout"][category]
 	var previous: String = cells[index]
 	if from == "equipment":p["equipped"] = previous

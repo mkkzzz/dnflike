@@ -29,14 +29,15 @@ func inventory(parent: Node) -> void:
 	# native cloth over the obsolete inner footer rails.
 	image_region(parent, tex, Rect2(0, 0, 313, 158), Vector2.ZERO)
 	image_region(parent, tex, Rect2(0, 240, 313, 246), Vector2(0, 158))
-	image_region(parent, tex, Rect2(0, 510, 313, 14), Vector2(0, 404))
+	image_region(parent, tex, Rect2(0, 240, 313, 64), Vector2(0, 404))
+	image_region(parent, tex, Rect2(0, 510, 313, 14), Vector2(0, 468))
 	var cloth := NinePatchRect.new()
 	var cloth_atlas := AtlasTexture.new()
 	cloth_atlas.atlas = tex
 	cloth_atlas.region = Rect2(80, 240, 32, 32)
 	cloth.texture = cloth_atlas
 	cloth.position = Vector2(16, 158)
-	cloth.size = Vector2(267, 246)
+	cloth.size = Vector2(267, 310)
 	cloth.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_TILE
 	cloth.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_TILE
 	cloth.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -45,24 +46,24 @@ func inventory(parent: Node) -> void:
 	# that mark with adjacent native cream grain; the active close lives below.
 	TextPatch.attach(parent, tex, Rect2(201, 11, 8, 12), Rect2(253, 8, 19, 18))
 	# This patched client supplies Chinese title tabs in the source itself.
-	label(parent, "负重", Vector2(20, 317), 11)
-	image(parent, texture("inventory", 2), Vector2(57, 320))
-	var weight := image(parent, texture("inventory", 1), Vector2(57, 320))
+	label(parent, "负重", Vector2(20, 381), 11)
+	image(parent, texture("inventory", 2), Vector2(57, 384))
+	var weight := image(parent, texture("inventory", 1), Vector2(57, 384))
 	weight.name = "weight_fill"
-	var weight_label := label(parent, "", Vector2(163, 317), 11)
+	var weight_label := label(parent, "", Vector2(163, 381), 11)
 	weight_label.name = "weight_label"
 	weight_label.size.x = 115
 	weight_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	for y in [341, 368]:
+	for y in [405, 432]:
 		for x in [20, 153]:surface(parent, Rect2(x, y, 125, 23), "inventory_bottom", 0, 2)
-	for entry in [[5, Vector2(24, 344)], [7, Vector2(158, 345)], [4, Vector2(158, 372)]]:
+	for entry in [[5, Vector2(24, 408)], [7, Vector2(158, 409)], [4, Vector2(158, 436)]]:
 		var frame := image(parent, texture("base", 119), entry[1] - Vector2(1, 1))
 		frame.scale = Vector2.ONE * (18.0 / 28.0)
 		image(parent, texture("inventory_bottom", entry[0]), entry[1])
-	label(parent, "复活币", Vector2(46, 344), 10)
-	label(parent, "决斗点", Vector2(178, 344), 10)
-	label(parent, "点券", Vector2(27, 371), 10)
-	label(parent, "金币", Vector2(178, 371), 10)
+	label(parent, "复活币", Vector2(46, 408), 10)
+	label(parent, "决斗点", Vector2(178, 408), 10)
+	label(parent, "点券", Vector2(27, 435), 10)
+	label(parent, "金币", Vector2(178, 435), 10)
 	for i in 5:
 		var tab := button(parent, ["装备", "消耗品", "材料", "副职业", "任务"][i], Vector2(20 + i * 52, 154), func(): pass, false)
 		tab.add_theme_font_size_override("font_size", 11)

@@ -30,6 +30,8 @@ func frame(name: String) -> void:
 		if Language.contains_korean(node.tooltip_text):korean_found = true
 	check(not korean_found, "Chinese screen text and tooltips: " + name)
 	if not capture:return
+	# Wait for deferred layouts and queued old overlays to finish drawing.
+	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	var path := "res://../temp/loop_review/" + name + ".png"
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(path.get_base_dir()))
@@ -248,7 +250,7 @@ func run() -> void:
 	await ticks(2)
 	await frame("04_shop")
 	await check_item_grid("native_shop_grid", 7, 6)
-	await check_item_grid("native_inventory_grid", 8, 4)
+	await check_item_grid("native_inventory_grid", 8, 6)
 	var merchandise: Control
 	for node in game.modal.find_child("native_shop_grid", true, false).get_children():
 		if node is Button and node.get_meta("item_id", "") == "forest_sword":merchandise = node
@@ -275,7 +277,7 @@ func run() -> void:
 	check(not close.get_rect().intersects(Rect2(13, 0, 265, 32)), "close button clears the top page tabs")
 	var item_grid := bag.get_node("native_inventory_grid") as Control
 	check(bag.get_node("inventory_tab_0").position.x == item_grid.position.x and bag.get_node("inventory_tab_4").get_rect().end.x == item_grid.get_rect().end.x, "category tabs align with both grid edges")
-	for entry in [["resurrection_coins", Rect2(20, 341, 125, 23)], ["duel_points", Rect2(153, 341, 125, 23)], ["cash_points", Rect2(20, 368, 125, 23)], ["gold", Rect2(153, 368, 125, 23)]]:
+	for entry in [["resurrection_coins", Rect2(20, 405, 125, 23)], ["duel_points", Rect2(153, 405, 125, 23)], ["cash_points", Rect2(20, 432, 125, 23)], ["gold", Rect2(153, 432, 125, 23)]]:
 		check(entry[1].encloses(bag.get_node("inventory_" + entry[0]).get_rect()), "currency value stays in its own native field: " + entry[0])
 	var tabs: Array[Rect2] = []
 	for i in 5:
@@ -287,7 +289,7 @@ func run() -> void:
 	for node in game.modal.find_children("*", "Button", true, false):
 		if node.get_meta("item_name", "") == "恢复药剂":potion_visible = true
 	check(potion_visible, "consumable tab filters inventory to consumable items")
-	await check_item_grid("native_inventory_grid", 8, 4)
+	await check_item_grid("native_inventory_grid", 8, 6)
 	await frame("05c_inventory_consumables")
 	check(click_text("装备"), "inventory equipment category can be restored")
 	await ticks(3)

@@ -8,7 +8,7 @@ $repoRoot=Split-Path $PSScriptRoot -Parent
 $local=Join-Path $repoRoot "game_dnf/assets_local"
 $jobs=@(
     @{out=(Join-Path $local "content/combat_content.json"); tool="compile_dnf_content.py"; deps=@("compile_dnf_content.py","dnf_pvf.py")},
-    @{out=(Join-Path $local "combat/manifest.json"); tool="build_dnf_combat_assets.py"; deps=@("build_dnf_combat_assets.py","dnf_pvf.py")}
+    @{out=(Join-Path $local "combat/manifest.json"); tool="build_dnf_combat_assets.py"; deps=@("build_dnf_combat_assets.py","dnf_locomotion.py","dnf_pvf.py")}
 )
 foreach ($job in $jobs) {
     $stale=-not (Test-Path -LiteralPath $job.out)

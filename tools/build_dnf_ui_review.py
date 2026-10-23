@@ -11,12 +11,18 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SCREENS = [
-    ('背包 · 统一格子与底栏', '移除说明和多余留白，货币图标完整显示；物品已通过真实鼠标拖拽移动到第三行。', '16_inventory_polished.png'),
+    ('城镇 · 原休闲站姿', '原Rest 176～179帧；城镇隐藏手持武器，与战斗持刀警戒站姿区分。', '23_town_rest.png'),
+    ('城镇 · 移动', '使用原Move完整彩色服装图层，城镇无持刀显示；不是SIMPLE白色轮廓。', '24_town_walk.png'),
+    ('走路穿帮 · 原像素分层对照', '离线素材对照：同一帧修复前后；181/185走路、105/109跑步。修复裤子后层被身体覆盖，不删帧、不补画。', 'source_locomotion_comparison.png'),
+    ('战斗走路 · 第181帧', '真实键盘行走自然到达该相位后暂停截取，检查原先露腿处。', '26_battle_walk_181.png'),
+    ('战斗走路 · 第185帧', '另一个原先露腿相位；八相位均保存到同版证据包，动作时钟未改。', '26_battle_walk_185.png'),
+    ('数字键直接翻牌', '实机按4翻开第四张卡，不需二次确认；保留返回城镇出口，翻牌不会重复支付。', '25_number_card_flip.png'),
+    ('背包 · 统一格子与底栏', '八列六排48格；第六排末格支持实际拖拽与持久化，负重和货币随底板下移。', '21_inventory_six_rows.png'),
     ('购买数量确认', '点击商品先确认数量、单价和总价，确认后扣款；取消保留金币和物品。', '17_purchase_quantity.png'),
-    ('技能详细说明', '悬停显示简介、耗蓝、冷却和伤害倍率，按住Shift展开中文说明；数值读取当前战斗表。', '15_skill_detail.png'),
-    ('快捷物品详情', '快捷栏与背包共用物品详情和数量；支持拖拽放入、换位和移回背包。', '14_quick_item_hover.png'),
+    ('技能详细说明', '悬停显示简介、耗蓝、冷却和伤害倍率，按住Shift展开中文说明；数值读取当前战斗表；详情底边紧贴对应技能格。', '20_attached_skill_detail.png'),
+    ('快捷物品详情', '物品详情贴在所属快捷格正上方；支持拖拽放入、换位和移回背包。', '19_attached_item_detail.png'),
     ('经验条悬停', '经验进度与原背景槽位对齐；悬停显示当前经验和下一级所需经验。', '13_experience_hover.png'),
-    ('地图与难度', '选中框贴合地图卡片；下方原生难度组件可切换普通、冒险、王者，去掉左下房间说明。', '18_difficulty_selector.png'),
+    ('地图与难度', '选中框贴合地图卡片；下方原生难度组件可切换普通、冒险、王者，去掉左下房间说明。', '22_attached_difficulty.png'),
     ('商店 · 品质与底栏', '物品框随品质变化；分类条与底板齐边，负重、复活币、点券、决斗点和金币分别对齐。', '04_shop.png'),
     ('稀有武器详情', '品质标题、类型、等级/职业、重量、属性与购买价格分区；原生细线划分层级。', '04b_shop_detail.png'),
     ('背包 · 正确武器槽', '已装备武器落在原图武器槽，不再放进首饰区；背包显示尚未穿戴的装备，关闭按钮避开页签。', '11_reward_equipment.png'),
@@ -30,7 +36,7 @@ SCREENS = [
     ('地下城选择', '原800×600羊皮地图、原地下城卡片、中文难度和冒险按钮。', '06_departure.png'),
     ('战斗', '当前接入的五房试炼战斗，使用原版角色与场景素材。', '09_combat_action.png'),
     ('通关结算', '原评价底图与奖励卡片；实际战斗统计。', '10_result.png'),
-    ('翻牌后', '鼠标翻开卡牌后确认回城；重开结算不会重复发奖。', '10b_result_reward.png'),
+    ('翻牌后', '鼠标直接翻开卡牌，翻开后可回城；重开结算不会重复发奖。', '10b_result_reward.png'),
     ('原包攻略对照 · 背包与HUD', '来自原包附带攻略，角色与场景不同，仅用于核对界面家族、材质和构图。', 'reference_hud_inventory.png'),
     ('原包攻略对照 · 选图', '来自同一攻略的原游戏选图；与当前实机截图分开标注。', 'reference_dungeon_map.png'),
 ]
@@ -50,14 +56,14 @@ def build(source: Path, output: Path) -> Path:
         target = images/filename
         shutil.copyfile(path, target)
         records.append({'title': title, 'file': 'screens/'+filename,
-                        'source': 'supplied_client_guide' if filename.startswith('reference_') else 'godot_framebuffer',
+                        'source': 'supplied_client_guide' if filename.startswith('reference_') else 'source_pixel_comparison' if filename.startswith('source_') else 'godot_framebuffer',
                         'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data)})
         cards.append(f'''<article><button class="shot" data-title="{html.escape(title)}" aria-label="查看{title}原图">
 <img src="screens/{filename}" alt="{title}"></button>
 <div class="caption"><h2><span>{index:02}</span> {title}</h2><p>{caption}</p></div></article>''')
     commit = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], cwd=ROOT,
                             capture_output=True, text=True, check=True).stdout.strip()
-    metadata = {'source': 'Godot framebuffer and explicitly labeled original guide references; unchanged PNG bytes',
+    metadata = {'source': 'Godot framebuffer and explicitly labeled source-pixel comparison / original guide references; unchanged PNG bytes',
                 'commit': commit, 'screens': records}
     (output/'manifest.json').write_text(json.dumps(metadata, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     page = '''<!doctype html><html lang="zh-CN"><meta charset="utf-8">
@@ -71,10 +77,10 @@ article{background:#1b231d;border:1px solid #45513c;border-radius:8px;overflow:h
 .caption p{color:#bac0ad;font-size:13px;margin:5px 0 0}footer{color:#a5ad99;padding-top:0}dialog{padding:0;background:#111713;color:#eee4c8;border:1px solid #a58b50;max-width:96vw;max-height:96vh}
 dialog::backdrop{background:#000d}.toolbar{display:flex;align-items:center;gap:14px;padding:10px 14px;position:sticky;top:0;background:#1b231d;z-index:1}
 .toolbar button{font:inherit;color:#edcf87;background:#293427;border:1px solid #6d7756;padding:4px 12px;cursor:pointer}.viewer{overflow:auto;max-width:95vw;max-height:85vh}.viewer img{display:block;image-rendering:auto;max-width:none}
-</style><header><h1>当前游戏 · 交互与界面细节</h1><p>本次实际运行截图 · 全中文 · 点开适合屏幕，切换原始像素后可横向滑动查看细节</p>
-<p>本轮：物品/装备/技能拖拽，双击装备，购买数量确认，快捷物品/技能/经验悬停，HUD与背包布局，中文字体和难度选择。以下均为实际运行截图，末两张原包攻略另行标注。</p>
+</style><header><h1>当前游戏 · 界面与原运动返修</h1><p>本次实际运行截图 · 全中文 · 点开适合屏幕，切换原始像素后可横向滑动查看细节</p>
+<p>本轮：城镇休闲站姿与无持刀移动、战斗走路/跑步服装分层修复、背包六排、贴近快捷详情/地图难度与1234直接翻牌。素材对照单独标注，末两张为原包攻略，其余为Godot实机截图。</p>
 <a href="screenshots.zip" download>下载全部截图</a></header><main>'''+''.join(cards)+'''</main>
-<footer>实机截图未修图，原包攻略截图单独标注。原资源与UI配置已核对；尚未取得原客户端同条件实机截图，不能据此宣称像素级一致。</footer>
+<footer>实机截图未修图，离线源像素对照和原包攻略单独标注。原资源与UI配置已核对；尚未取得原客户端同条件实机截图，不能据此宣称像素级一致。</footer>
 <dialog id="zoom"><div class="toolbar"><strong id="name"></strong><button id="scale">原始像素</button><button id="close">关闭</button></div><div class="viewer"><img id="full" alt="游戏实机原图"></div></dialog>
 <script>const d=document.querySelector('#zoom'),im=document.querySelector('#full'),s=document.querySelector('#scale');
 let native=false;const fit=()=>Math.min(im.naturalWidth,innerWidth*.95);document.querySelectorAll('.shot').forEach(b=>b.onclick=()=>{im.onload=()=>{im.style.width=fit()+'px'};im.src=b.querySelector('img').src;native=false;document.querySelector('#name').textContent=b.dataset.title;s.textContent='原始像素';d.showModal()});

@@ -99,7 +99,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 
 func _set_weapon(weapon: String) -> void:
 	_weapon = weapon
-	player_actor.setup(_assets["players"][weapon],_player_clips)
+	player_actor.setup(_assets["players"][weapon],_player_clips, _combat.get("player_locomotion", {}).get("battle", {}).get(weapon, {}))
 
 func _present_stage(info: Dictionary, props: Array) -> void:
 	var broken: Array = props.map(func(p: Dictionary) -> bool: return bool(p.get("broken",false)))

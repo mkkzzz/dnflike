@@ -4,11 +4,11 @@
   "access": "owner-private",
   "service": "Sites",
   "project_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c",
-  "version_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c~appgver_1fad6e4a600081918b09c33a90e06233",
-  "deployment_id": "appgdep_6adacc553744819183feda5689312861",
+  "version_id": "appgprj_6ad9f5646f788191bf3460e2558cd37c~appgver_7387c1f809a88191ba31e026b710bf28",
+  "deployment_id": "appgdep_6adae2cc4b9481918b2736a1653bd4d5",
   "status": "succeeded",
-  "source_commit": "7aaa802b91647b406c4d005da291558cd101144e",
-  "game_commit": "6b99f09 + v7 interaction polish; exact runtime/evidence SHA256 in game_dnf/flow_store.json",
-  "screens": 22,
-  "note": "22项：20张当前Godot实机、2张原包攻略；新增拖拽后背包、购买数量/总价确认、技能Shift详细说明、快捷物品详情、经验悬停和卡下难度。保留原PNG字节，owner-private权限未变；本轮按23项反馈返修。"
+  "source_commit": "d400bbbafdff99717984a1bfd4679e42b85e940d",
+  "game_commit": "30c10f9 + v8 UI/town locomotion repair; exact runtime/evidence in game_dnf/flow_store.json",
+  "screens": 28,
+  "note": "28项：25张当前Godot实机、1张明确标注的离线原像素分层对照、2张原包攻略。新增原Rest站姿/无持刀移动、Move181/185实际相位、数字直接翻牌、六排48格、快捷详情/难度紧贴。原始截图PNG字节保持；owner-private权限未变。"
 }

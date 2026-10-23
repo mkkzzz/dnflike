@@ -28,10 +28,11 @@ from PIL import Image
 from dnf_asset_reader import decode, parse
 from dnf_asset_store import ROOT
 from dnf_pvf import open_library
+from dnf_locomotion import build as build_locomotion
 
 OUT = ROOT / 'game_dnf/assets_local/combat'
 SCHEMA = 'dnf_combat_assets/1'
-BUILD_VERSION = 3
+BUILD_VERSION = 4
 
 MONSTERS = {
     # key: (mob path, clip dir, extra clips)
@@ -292,10 +293,11 @@ def weapon_sounds(src: Source) -> dict:
 
 
 def build(library: Path | None) -> dict:
+    # Validate the full source library before replacing a consumable runtime.
+    src = Source(library)
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir(parents=True)
-    src = Source(library)
     unresolved: list = []
     manifest = {'schema': SCHEMA, 'build_version': BUILD_VERSION, 'asset_version': src.lib.asset_version,
                 'monsters': {}, 'objects': {}, 'effects': {}, 'digits': {}, 'audio': {}, 'weapon_sounds': {},
@@ -347,6 +349,7 @@ def build(library: Path | None) -> dict:
             copy_audio(src, sound_files(src, key), manifest['audio'], key, unresolved)
             keys.append(key if key in manifest['audio'] else '')
         manifest['weapon_sounds'][weapon] = keys
+    manifest['player_locomotion'] = build_locomotion(src, Atlas)
     manifest['sources'] = dict(sorted(src.sources.items()))
     (OUT / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     summary = {'monsters': list(manifest['monsters']), 'objects': list(manifest['objects']),

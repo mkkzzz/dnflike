@@ -96,7 +96,7 @@ func hide_tooltip() -> void:
 	if is_instance_valid(tip):tip.queue_free()
 	tip = null
 
-func item_tip(id: String, rect: Rect2, buying := false) -> void:
+func item_tip(id: String, rect: Rect2, buying := false, attached := false) -> void:
 	hide_tooltip()
 	var data: Dictionary = game.Catalog.ITEMS[id]
 	var rarity: Dictionary = game.Catalog.RARITIES[int(data["rarity"])]
@@ -106,6 +106,7 @@ func item_tip(id: String, rect: Rect2, buying := false) -> void:
 	if at.x < 8:at.x = rect.end.x + 8
 	at.x = clampf(at.x, 8, 512)
 	at.y = clampf(at.y, 8, 508 - height)
+	if attached:at = slot_tip_anchor(rect, Vector2(280, height))
 	tip = skin.item_board(game.modal, Rect2(at, Vector2(280, height)))
 	tip.name = "native_item_detail"
 	tip.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -148,6 +149,9 @@ func update_gauge_tip() -> void:
 		var gauge: Control = tip.get_meta("gauge")
 		(tip.get_node("gauge_value") as Label).text = String(gauge.get_meta("value_text", ""))
 
+func slot_tip_anchor(rect: Rect2, dimensions: Vector2) -> Vector2:
+	return Vector2(clampf(rect.position.x, 4, 796 - dimensions.x), maxf(4, rect.position.y - dimensions.y - 3))
+
 func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 	hide_tooltip()
 	skill_tip_id = id
@@ -155,7 +159,7 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 	var data: Dictionary = game.SkillDescriptions.SKILLS[id]
 	var values: Dictionary = game.skill_catalog.get_skill(id)
 	var height := 260 if detailed else 178
-	var at := Vector2(clampf(rect.position.x - 150, 8, 492), 508 - height - 8)
+	var at := slot_tip_anchor(rect, Vector2(300, height))
 	tip = skin.item_board(game.ui, Rect2(at, Vector2(300, height)))
 	tip.z_index = 100
 	tip.set_meta("skill", id)
@@ -177,9 +181,9 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 func update_skill_detail(detailed: bool) -> void:
 	if is_instance_valid(tip) and tip.has_meta("skill"):skill_tip(skill_tip_id, skill_tip_rect, detailed)
 
-func inventory(at := Vector2(484, 22), can_close := true) -> void:
+func inventory(at := Vector2(484, 16), can_close := true) -> void:
 	game.session.Layout.normalize(game.session.profile, game.Catalog.ITEMS)
-	var node = container(game.modal, at, Vector2(303, 424))
+	var node = container(game.modal, at, Vector2(303, 488))
 	node.name = "native_inventory"
 	skin.inventory(node)
 	if can_close:skin.close_button(node, Vector2(268, 35), func(): game.show_overlay("")).name = "inventory_close"
@@ -201,13 +205,13 @@ func inventory(at := Vector2(484, 22), can_close := true) -> void:
 		var tab := node.get_node("inventory_tab_" + str(i)) as Button
 		tab.pressed.connect(func(): inventory_tab = tab_index; game.show_overlay(game.overlay))
 		tab.button_pressed = i == inventory_tab
-	var grid: Control = skin.item_grid(node, Vector2(20, 176), 8, 4)
+	var grid: Control = skin.item_grid(node, Vector2(20, 176), 8, 6)
 	grid.name = "native_inventory_grid"
 	var category: String = game.session.Layout.KINDS[inventory_tab]
 	var cells: Array = game.session.profile["bag_layout"][category]
 	for index in cells.size():
 		game.make_slot(grid, {"place":"bag", "category":category, "index":index, "id":cells[index]}, Vector2(2 + (index % 8) * 32, 2 + (index / 8) * 32))
-	for entry in [["resurrection_coins", 0, 99, 344, 40], ["duel_points", 0, 232, 344, 40], ["cash_points", 0, 86, 371, 53], ["gold", 0, 224, 371, 48]]:
+	for entry in [["resurrection_coins", 0, 99, 408, 40], ["duel_points", 0, 232, 408, 40], ["cash_points", 0, 86, 435, 53], ["gold", 0, 224, 435, 48]]:
 		var value: Label = skin.label(node, str(int(game.session.profile.get(entry[0], entry[1]))), Vector2(entry[2], entry[3]), 11)
 		value.size.x = entry[4]
 		value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -258,7 +262,7 @@ func shop() -> void:
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:scroll.value += 32; viewport.accept_event()
 			elif event.button_index == MOUSE_BUTTON_WHEEL_UP:scroll.value -= 32; viewport.accept_event())
 	skin.button(node, "返回", Vector2(100, 378), func(): game.show_overlay("npc"))
-	inventory(Vector2(484, 22), false)
+	inventory(Vector2(484, 16), false)
 
 func purchase_dialog(id: String, target: Dictionary = {}) -> void:
 	hide_tooltip()
@@ -312,6 +316,7 @@ func dungeon() -> void:
 	var locations := [Vector2(300, 230), Vector2(132, 111), Vector2(466, 93), Vector2(562, 292), Vector2(130, 360)]
 	for i in locations.size():
 		var pic = skin.image(node, skin.texture("dungeon_cards", i), locations[i])
+		if i == 0:pic.name = "selected_dungeon_card"
 		if i > 0:pic.modulate = Color("999999")
 		else:
 			# Card has a 12px crown above its rectangular body. Outline the body,
@@ -330,7 +335,7 @@ func dungeon() -> void:
 	var difficulty: String = game.session.profile.get("difficulty", "normal")
 	var choices := ["normal", "adventure", "king"]
 	var current := choices.find(difficulty)
-	var bar := container(node, Vector2(324, 330), Vector2(118, 27))
+	var bar := container(node, Vector2(325, 314), Vector2(118, 27))
 	bar.name = "difficulty_selector"
 	skin.image(bar, skin.texture("select", 2), Vector2.ZERO)
 	skin.image(bar, skin.texture("select", {"normal":11,"adventure":12,"king":14}[difficulty]), Vector2(36, 4))
@@ -358,18 +363,22 @@ func result() -> void:
 	if won:skin.image(node, skin.texture("result", {"S": 3, "A": 6, "B": 7}[r.get("rank", "B")]), Vector2(490, 85))
 	else:skin.label(node, "已撤退" if stats.get("reason") == "retreat" else "挑战失败", Vector2(491, 128), 25)
 	if won:
-		var prompt: Label = skin.label(node, "请选择一张奖励卡牌", Vector2(292, 303), 18, Color("f0d18a"))
+		var prompt: Label = skin.label(node, "点击卡牌或按 1 / 2 / 3 / 4 翻开", Vector2(235, 303), 18, Color("f0d18a"))
 		prompt.name = "reward_prompt"
 		for i in 4:
 			var index := i
 			var card: TextureButton = skin.sprite_button(node, "reward", [36, 46, 36], Vector2(72 + i * 167, 345), func(): reveal_card(index, node))
 			card.name = "reward_card_" + str(i)
+			card.set_meta("card_index", i)
 			skin.label(node, str(i + 1), Vector2(140 + i * 167, 445), 12)
-	var back: TextureButton = skin.sprite_button(node, "reward", [95, 96, 97], Vector2(588, 475), game.return_town, "确认后返回城镇")
-	back.set_meta("action_label", "返回城镇")
+	var back: Button = skin.button(node, "返回城镇", Vector2(626, 505), game.return_town)
 	back.name = "result_return"
 	back.disabled = won
 	if won and r.has("card_choice"):reveal_card(int(r["card_choice"]), node, false)
+
+func flip_card(index: int) -> void:
+	var card := game.modal.find_child("reward_card_" + str(index), true, false) as TextureButton
+	if is_instance_valid(card) and not card.disabled:reveal_card(index, card.get_parent())
 
 func reveal_card(index: int, node: Control, persist := true) -> void:
 	if selected_card >= 0:return

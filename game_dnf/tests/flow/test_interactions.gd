@@ -204,7 +204,105 @@ func run() -> void:
 	game.act("flow.retreat")
 	game.return_town()
 	await ticks()
+	await compact_and_motion()
 	game.session = original
 	game.store.path = path
 	game.build_hotbars()
 	game.show_overlay("")
+
+func compact_and_motion() -> void:
+	game.show_overlay("")
+	await ticks()
+	await host.hover_control(cell("quick", 0))
+	var tip: Control = game.windows.tip
+	var quick: Control = cell("quick", 0)
+	host.check(absf(tip.get_rect().end.y - quick.get_global_rect().position.y + 3) < 0.1 and tip.get_rect().intersects(Rect2(quick.get_global_rect().position - Vector2(0, tip.size.y + 3), Vector2(28, tip.size.y))), "quick detail stays three native pixels above its own cell")
+	await host.frame("19_attached_item_detail")
+	await host.hover_control(cell("skill", 1))
+	tip = game.windows.tip
+	host.check(absf(tip.get_rect().end.y - cell("skill", 1).get_global_rect().position.y + 3) < 0.1, "brief skill detail touches the hotbar with a three-pixel gap")
+	host.key(KEY_SHIFT, true)
+	await ticks()
+	host.check(absf(game.windows.tip.get_rect().end.y - cell("skill", 1).get_global_rect().position.y + 3) < 0.1, "expanded skill detail preserves the same attached edge")
+	await host.frame("20_attached_skill_detail")
+	host.key(KEY_SHIFT, false)
+	game.windows.inventory_tab = 0
+	game.show_overlay("inventory")
+	await ticks()
+	var grid: Control = game.modal.find_child("native_inventory_grid", true, false)
+	host.check(grid.size == Vector2(258, 194) and grid.get_child_count() >= 48, "inventory has eight columns and six complete rows")
+	await drag(cell("bag", -1, "forest_sword"), cell("bag", 47), "weapon into last added row")
+	host.check(game.session.profile["bag_layout"]["weapon"][47] == "forest_sword", "sixth-row destination persists in actual bag layout")
+	await host.frame("21_inventory_six_rows")
+	var old: Dictionary = game.session.serialize()
+	for category in old["profile"]["bag_layout"]:old["profile"]["bag_layout"][category].resize(32)
+	var migrated = game.Session.new()
+	host.check(migrated.restore(old) and migrated.profile["bag_layout"]["weapon"].size() == 48, "previous 32-cell save migrates into six rows")
+	game.show_overlay("dungeon")
+	await ticks()
+	var selected: Control = game.modal.find_child("selected_dungeon_card", true, false)
+	var selector: Control = game.modal.find_child("difficulty_selector", true, false)
+	host.check(selector.get_rect().position.y - selected.get_rect().end.y == 4, "difficulty row sits four native pixels below selected map")
+	await host.frame("22_attached_difficulty")
+	game.show_overlay("")
+	await ticks()
+	host.check(game.town.actor.clips["stay"]["frames"][0]["img_frame"] == 176 and game.town.actor.bank["texture"].ends_with("motion_town.png"), "town uses original neutral Rest motion and its separate unarmed avatar bank")
+	game.town.ground = Vector2(540, 230)
+	await ticks()
+	await host.frame("23_town_rest")
+	host.key(KEY_LEFT, true)
+	await ticks(10)
+	host.check(game.town.actor.pose == "move", "actual town walking selects the casual avatar motion")
+	await host.frame("24_town_walk")
+	host.key(KEY_LEFT, false)
+	game.depart()
+	await ticks()
+	var actor = game.battle.view.player_actor
+	host.check(actor.pose_banks.has("move") and actor.pose_banks.has("dash") and actor.pose_banks["move"]["texture"].ends_with("motion_katana.png"), "battle rendering binds corrected walking and running banks without changing attack bank")
+	var probe = load("res://debug/runtime_api.gd").new(game.battle)
+	probe.spawn_dummy(Vector2(1000, 400))
+	probe.set_p("pos", Vector2(400, 340))
+	probe.clear_direction_taps()
+	var phases := {}
+	host.key(KEY_RIGHT, true)
+	for tick in 120:
+		await ticks(1)
+		if actor.pose != "move":continue
+		var index: int = actor.sample().get("img_frame", -1)
+		if index in range(180, 188) and not phases.has(index):
+			phases[index] = true
+			# Freeze each naturally reached phase for two complete render frames.
+			# Suspend the outer pause-menu detector only during the test capture.
+			game.set_process(false)
+			probe.set_paused(true)
+			await host.frame("26_battle_walk_" + str(index))
+			probe.set_paused(false)
+			game.set_process(true)
+		if phases.size() == 8:break
+	host.key(KEY_RIGHT, false)
+	host.check(phases.size() == 8, "all eight actual keyboard walking phases reach the corrected battle renderer")
+	game.combat.stop()
+	game.battle = null
+	game.combat = null
+	game.session.state = "town"
+	game.session.run = {}
+	game.town.show()
+	for i in 4:
+		game.session.command("flow.depart")
+		game.session.combat_event({"type":"combat.room_combat_finished", "run_id":game.session.run["id"], "final_room":true})
+		game.show_overlay("result")
+		await ticks()
+		var gold: int = game.session.profile["gold"]
+		host.key(KEY_1 + i, true)
+		await ticks()
+		host.key(KEY_1 + i, false)
+		await ticks()
+		host.check(game.windows.selected_card == i and game.session.result.get("card_choice") == i, "actual number key flips reward card: " + str(i + 1))
+		host.check(game.session.profile["gold"] == gold, "card key does not pay duplicate rewards")
+		var confirm := false
+		for control in game.modal.find_children("*", "BaseButton", true, false):
+			if control.get_meta("action_label", "") == "确认" or control.get_meta("action_label", "") == "确认翻牌":confirm = true
+		host.check(not confirm, "flipped card needs no confirm step")
+		if i == 3:await host.frame("25_number_card_flip")
+		game.return_town()
+		await ticks()

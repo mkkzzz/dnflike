@@ -27,13 +27,11 @@ func _ready() -> void:
 	extend_ground_under_hud()
 	for node in map_root.get_children():
 		if node is Loader.MapSprite and node.frames.size() > 1:animated.append(node)
-	var assets: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/manifest.json"))
-	var clips: Dictionary = {}
-	for key: String in assets["clips"]:
-		if key.begins_with("player/"):clips[key.get_slice("/", 1)] = assets["clips"][key]
 	actor = Actor.new()
 	map_root.add_child(actor)
-	actor.setup(assets["players"]["katana"], clips)
+	var combat_assets: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/combat/manifest.json"))
+	var town_motion: Dictionary = combat_assets["player_locomotion"]["town"]
+	actor.setup(town_motion["bank"], town_motion["clips"])
 	font = UIFont.make()
 	localize_signs()
 	labels = Node2D.new()

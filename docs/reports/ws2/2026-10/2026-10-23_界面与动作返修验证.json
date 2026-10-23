@@ -1,0 +1,155 @@
+{
+  "schema": "dnf_ui_motion_validation/1",
+  "engine": "Godot 4.7.2",
+  "version": "dnf-loop-v8-town-motion-20261023",
+  "rendered": {
+    "checks": 287,
+    "failures": 0,
+    "captures": 45
+  },
+  "fresh_consumer": {
+    "checks": 277,
+    "failures": 0,
+    "full_library_present": false,
+    "remote_download": true,
+    "formal_launcher": true
+  },
+  "standalone_combat": {
+    "checks": 121,
+    "failures": 0
+  },
+  "ui_source_frames": 277,
+  "source_ui_mismatches": 0,
+  "locomotion": {
+    "schema": "dnf_locomotion_audit/1",
+    "passed": true,
+    "battle_pose_frames": 48,
+    "town_pose_frames": 20,
+    "clothing_witnesses": [
+      {
+        "weapon": "shortsword",
+        "pose": "move",
+        "frame": 181,
+        "source_pixels": 477,
+        "visible_source_pixels": 457
+      },
+      {
+        "weapon": "shortsword",
+        "pose": "move",
+        "frame": 185,
+        "source_pixels": 578,
+        "visible_source_pixels": 538
+      },
+      {
+        "weapon": "shortsword",
+        "pose": "dash",
+        "frame": 105,
+        "source_pixels": 600,
+        "visible_source_pixels": 562
+      },
+      {
+        "weapon": "shortsword",
+        "pose": "dash",
+        "frame": 109,
+        "source_pixels": 624,
+        "visible_source_pixels": 599
+      },
+      {
+        "weapon": "katana",
+        "pose": "move",
+        "frame": 181,
+        "source_pixels": 549,
+        "visible_source_pixels": 529
+      },
+      {
+        "weapon": "katana",
+        "pose": "move",
+        "frame": 185,
+        "source_pixels": 629,
+        "visible_source_pixels": 589
+      },
+      {
+        "weapon": "katana",
+        "pose": "dash",
+        "frame": 105,
+        "source_pixels": 600,
+        "visible_source_pixels": 562
+      },
+      {
+        "weapon": "katana",
+        "pose": "dash",
+        "frame": 109,
+        "source_pixels": 624,
+        "visible_source_pixels": 599
+      },
+      {
+        "weapon": "greatsword",
+        "pose": "move",
+        "frame": 181,
+        "source_pixels": 443,
+        "visible_source_pixels": 423
+      },
+      {
+        "weapon": "greatsword",
+        "pose": "move",
+        "frame": 185,
+        "source_pixels": 497,
+        "visible_source_pixels": 457
+      },
+      {
+        "weapon": "greatsword",
+        "pose": "dash",
+        "frame": 105,
+        "source_pixels": 600,
+        "visible_source_pixels": 562
+      },
+      {
+        "weapon": "greatsword",
+        "pose": "dash",
+        "frame": 109,
+        "source_pixels": 624,
+        "visible_source_pixels": 599
+      }
+    ],
+    "native_resize_operations": 0,
+    "source_rest": "character/swordman/animation/rest.ani",
+    "interpretation": "Town hides held weapon; exact original town-client behavior remains unverified."
+  },
+  "sync_tool_tests": 4,
+  "dependencies_violations": 0,
+  "packs": [
+    {
+      "name": "flow_v1-01.zip",
+      "kind": "flow_v1",
+      "bytes": 17789148,
+      "sha256": "ae3f602325bd716c95798f3944b2555ff6649a7a5a71459ed9ddf441603be723",
+      "files": 293,
+      "unpacked_bytes": 25910303
+    },
+    {
+      "name": "combat_runtime-01.zip",
+      "kind": "combat_runtime",
+      "bytes": 1915061,
+      "sha256": "e661c690771cd4fac4fc63ad4d96f25d589b1ca302ade9f3e0b9109edd946169",
+      "files": 107,
+      "unpacked_bytes": 4835442
+    }
+  ],
+  "logs": {
+    "compact_motion_test.log": {
+      "sha256": "2fb78d294487111cf13d2360ef2488634d02efb87c9ba36a704472b13c1cc508"
+    },
+    "compact_motion_combat_test.log": {
+      "sha256": "b4172a539eb3cee4525d5e579006ae5a9b47eba39d6489c3ad34c944e6a53873"
+    },
+    "v8_consumer_install.log": {
+      "sha256": "e6d04d161719c8502e5bcfc4a485f6a0fd8e9c6db4e7330a5da921690bdb5c22"
+    },
+    "v8_consumer_flow_install.log": {
+      "sha256": "df2acd8306038e573e69bd15a4a10c5666714494b4f5328593dabba8c57531fd"
+    },
+    "v8_consumer_run.log": {
+      "sha256": "51500b3004669914a7b82d230ec6cddaa4da05b49440528b8476a8051c1714b7"
+    }
+  }
+}

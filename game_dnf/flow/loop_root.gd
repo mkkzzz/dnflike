@@ -228,7 +228,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_Q:hud_action("quest")
 		KEY_D:
 			if session.state == "town":hud_action("dungeon")
-		KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6:use_quick(key - KEY_1)
+		KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6:
+			if overlay == "result" and key <= KEY_4:windows.flip_card(key - KEY_1)
+			elif session.state != "result":use_quick(key - KEY_1)
 		KEY_F5:save_profile()
 		KEY_ESCAPE:
 			if overlay == "" or session.state == "result":show_overlay("menu" if session.state != "result" else "result")
@@ -405,7 +407,7 @@ func slot_texture(cell: Dictionary) -> Texture2D:
 func slot_hover(cell: Control) -> void:
 	if cell.cell.get("id", "") == "":return
 	if cell.cell["place"] == "skill":windows.skill_tip(cell.cell["id"], cell.get_global_rect())
-	else:windows.item_tip(cell.cell["id"], cell.get_global_rect(), cell.cell["place"] == "shop")
+	else:windows.item_tip(cell.cell["id"], cell.get_global_rect(), cell.cell["place"] == "shop", cell.cell["place"] == "quick")
 
 func slot_pressed(cell: Control) -> void:
 	match cell.cell["place"]:

@@ -3,6 +3,8 @@ extends Node2D
 var bank: Dictionary
 var clips: Dictionary
 var atlas: Texture2D
+var pose_banks: Dictionary = {}
+var pose_atlases: Dictionary = {}
 var pose := "stay"
 var clock_ms := 0.0
 var facing := 1
@@ -12,9 +14,12 @@ var tint := Color.WHITE
 var shadow_width := 18.0
 var _flash_material: ShaderMaterial
 
-func setup(atlas_bank: Dictionary, animation_clips: Dictionary) -> void:
+func setup(atlas_bank: Dictionary, animation_clips: Dictionary, overrides: Dictionary = {}) -> void:
 	bank = atlas_bank
 	clips = animation_clips
+	pose_banks = overrides
+	pose_atlases.clear()
+	for key: String in overrides:pose_atlases[key] = load(String(overrides[key]["texture"])) as Texture2D
 	atlas = load(String(bank["texture"])) as Texture2D
 	var shader := Shader.new()
 	shader.code = "shader_type canvas_item; uniform float hit_flash=0.0; void fragment(){ vec4 c=texture(TEXTURE,UV)*COLOR; c.rgb=mix(c.rgb,vec3(1.0),hit_flash); COLOR=c; }"
@@ -55,12 +60,14 @@ func _draw() -> void:
 	var frame := sample()
 	if frame.is_empty():return
 	var key := str(int(frame.get("img_frame",0)))
-	var item: Dictionary = bank["items"].get(key,{})
+	var frame_bank: Dictionary = pose_banks.get(pose, bank)
+	var frame_atlas: Texture2D = pose_atlases.get(pose, atlas)
+	var item: Dictionary = frame_bank["items"].get(key,{})
 	if item.is_empty():return
 	var rect: Array = item["rect"]
 	var offset: Array = item["offset"]
 	var pos: Array = frame.get("pos",[0,0])
 	var source := Rect2(float(rect[0]),float(rect[1]),float(rect[2]),float(rect[3]))
 	var dest := Rect2(float(offset[0])+float(pos[0]),float(offset[1])+float(pos[1]),source.size.x,source.size.y)
-	draw_texture_rect_region(atlas,dest,source,tint)
+	draw_texture_rect_region(frame_atlas,dest,source,tint)
 	draw_set_transform(Vector2.ZERO)
