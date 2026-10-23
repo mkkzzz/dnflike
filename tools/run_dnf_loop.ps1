@@ -1,4 +1,4 @@
-param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly)
+param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly, [switch]$GranOnly)
 $ErrorActionPreference="Stop"
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
@@ -29,6 +29,10 @@ if ($BuildAssets) {
     if ($LibraryPath) {$townBuildArgs+=@("--library",$LibraryPath)}
     & python @townBuildArgs
     if ($LASTEXITCODE -ne 0) {throw "Original Hendon art build failed."}
+    $granBuildArgs=@((Join-Path $PSScriptRoot "build_dnf_gran_assets.py"))
+    if ($LibraryPath) {$granBuildArgs+=@("--library",$LibraryPath)}
+    & python @granBuildArgs
+    if ($LASTEXITCODE -ne 0) {throw "Original Granfloris art build failed."}
 } else {
     # Separate immutable pack needs no full library or original client installation.
     # Once installed, validate local version/hashes and play without network.
@@ -70,10 +74,13 @@ if ($Test) {
     $worldOutput=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/town/run_world.gd 2>&1
     $worldOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($worldOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($worldOutput -match '\[TOWN_UNIT\] COMPLETE checks=\d+ failures=0')) {throw "Town topology regression failed."}
+    $granOutput=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/quests/run_gran_rules.gd 2>&1
+    $granOutput | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($granOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($granOutput -match '\[GRAN_UNIT\] COMPLETE checks=\d+ failures=0')) {throw "Granfloris source task regression failed."}
 }
 $runArgs=@("--path",$gamePath,"res://scenes/loop.tscn")
 if ($Test) {
-    $runArgs+=@("--fixed-fps","60","--quit-after","24000")
+    $runArgs+=@("--fixed-fps","60","--quit-after",$(if ($GranOnly) {"80000"} else {"24000"}))
     if ($Capture) {$runArgs+=@("--position","-32000,-32000")} else {$runArgs+="--headless"}
     $runArgs+=@("--","--loop-test")
     if ($NumbersOnly) {$runArgs+="--numbers-only"}
@@ -81,6 +88,7 @@ if ($Test) {
     if ($ItemsOnly) {$runArgs+="--items-only"}
     if ($ServicesOnly) {$runArgs+="--services-only"}
     if ($TownsOnly) {$runArgs+="--towns-only"}
+    if ($GranOnly) {$runArgs+="--gran-only"}
     if ($Capture) {$runArgs+="--capture"}
 }
 $ErrorActionPreference="Continue"
@@ -88,4 +96,4 @@ $ErrorActionPreference="Continue"
 $engineExit=$LASTEXITCODE
 $ErrorActionPreference="Stop"
 if ($engineExit -ne 0 -or ($runOutput -match 'SCRIPT ERROR|ERROR:')) {throw "Native loop runtime failed."}
-if ($Test -and -not ($runOutput -match $(if ($TownsOnly) {'\[HENDON_TEST\] COMPLETE checks=\d+ failures=0'} elseif ($QuestsOnly) {'\[QUEST_CHAPTER\] COMPLETE checks=\d+ failures=0'} else {'\[LOOP_TEST\] COMPLETE checks=\d+ failures=0'}))) {throw "Native loop checks did not complete."}
+if ($Test -and -not ($runOutput -match $(if ($GranOnly) {'\[GRAN_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($TownsOnly) {'\[HENDON_TEST\] COMPLETE checks=\d+ failures=0'} elseif ($QuestsOnly) {'\[QUEST_CHAPTER\] COMPLETE checks=\d+ failures=0'} else {'\[LOOP_TEST\] COMPLETE checks=\d+ failures=0'}))) {throw "Native loop checks did not complete."}

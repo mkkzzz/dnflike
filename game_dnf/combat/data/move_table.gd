@@ -263,7 +263,8 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 	if not throw.is_empty():
 		var objects_index: Dictionary = db.index("passive_objects")
 		var obj := object(String(objects_index.get(str(int(throw.get("passive_object_index",-1))),"")))
-		var ptl_path := path.get_base_dir().path_join(String(throw.get("passive_object_filename",""))).to_lower()
+		var filename:=String(throw.get("passive_object_filename","")).to_lower()
+		var ptl_path:=filename if filename.begins_with("passiveobject/") else path.get_base_dir().path_join(filename)
 		var ptl: Dictionary = db.record(ptl_path).get("decoded",{})
 		var speed: Array = ptl.get("move_variable_1",[0])
 		m["throw"] = {"object":obj,"frame":int(throw.get("throw_frame",0)),"sound":String(throw.get("throw_sound","")),
@@ -272,6 +273,15 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 			"speed":float(speed[0]),"life_ms":float(ptl.get("life_time",1000))}
 		if obj.is_empty() or ptl.is_empty():problems.append("throw object/particle missing for "+path)
 		m["atk"] = obj.get("atk",{})
+	# Explicit content adaptation for the archived Gero MOB: no attack info or
+	# throw record survives there. Reuse the declared thrower's projectile data,
+	# keeping this MOB's original motion/bank. This does not restore its full AI.
+	elif spec.has("attack_template"):
+		var template: Dictionary=monsters.get(spec["attack_template"],{})
+		if template.has("throw"):
+			m["throw"]=template["throw"].duplicate(true)
+			m["atk"]=template["atk"].duplicate(true)
+		else:problems.append("monster attack template unavailable: "+key)
 	return m
 
 func monster_timeline(m: Dictionary, motion: String) -> Array:

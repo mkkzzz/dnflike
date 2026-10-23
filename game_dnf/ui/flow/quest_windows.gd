@@ -29,6 +29,7 @@ func dialogue() -> void:
 	var portrait: Texture2D
 	if npc=="seria":portrait=game.town.quest_loader.texture(game.town.quest_loader.data["ui"]["seria_portrait"])
 	elif npc=="linus":portrait=game.skin.texture("dialog_face")
+	elif npc=="shylock":portrait=game.town.gran_loader.texture(game.town.gran_loader.data["ui"]["portraits"][npc])
 	else:portrait=game.town.hendon_loader.texture(game.town.hendon_loader.data["ui"]["portraits"][npc])
 	game.skin.image(node,portrait,Vector2(8,165-portrait.get_height())).name = npc + "_dialogue_illustration"
 	text(node,game.session.quests.npc_name(npc),Vector2(215,18),Vector2(370,25),16,Color("f0d18a"))
@@ -43,6 +44,9 @@ func dialogue() -> void:
 			"hendon.swordman_start":line="鬼剑士要走的路，需要你自己选择。\n先去后街拜访辛达，他会告诉你更多。"
 			"hendon.meet_sinda":line="风振介绍你来的？我是铁匠辛达。\n坐下聊聊吧，修行和装备都有不少学问。"
 			"hendon.job_introduction":line="转职会让你的修行走向不同道路。\n眼下先磨炼基础，之后可向G.S.D了解鬼剑士的修行。"
+			"gran.tau_rage":line="牛头巨兽已经被击败了？辛苦了。\n森林深处的猫妖也很不安分，接下来还得请你帮忙。"
+			"gran.cat_trouble":line="猫妖的数量总算减少了。\n关于那只呼唤闪电的哥布林，后街小巷的夏洛克也许知道些什么。"
+			"gran.meet_shylock":line="风振让你来打听凯诺？森林里的事，我可知道不少。\n先坐下来聊聊，别把我和那些闹事的哥布林混为一谈。"
 	text(node,line,Vector2(215,51),Vector2(475,62),13)
 	game.skin.button(node,"委托任务",Vector2(215,120),func():
 		var active: Array = game.session.quests.list(game.session.profile,["ready","active"],npc)
@@ -128,21 +132,30 @@ func objective_line(o: Dictionary) -> String:
 	match o["type"]:
 		"meet_npc":label="拜访"+game.session.quests.npc_name(o["target"])
 		"clear_dungeon":label="通关"+String(game.session.quests.catalog.config["dungeons"].get(o["target"],o["target"]))
-		"kill_monster":label="洛兰深处 · 哥布林"
+		"kill_monster":label=String(game.session.quests.catalog.config["dungeons"].get(o.get("dungeon",""),""))+" · "+String(game.session.quests.catalog.config.get("monsters",{}).get(o["target"],"目标怪物"))
 		"collect_item":label=String(game.Catalog.ITEMS.get(o["target"],{}).get("name",o["target"]))
 	return "%s  %d / %d" % [label,int(o["current"]),int(o["amount"])]
 
 func dungeon() -> void:
-	if not game.session.dungeon_available(game.selected_dungeon):game.selected_dungeon="lorien"
+	var region: String=game.town.world.scene(game.town.location).get("dungeon_region","lorien")
+	var dungeon_ids: Array[String]=game.session.dungeon_choices(region)
+	if game.selected_dungeon not in dungeon_ids or not game.session.dungeon_available(game.selected_dungeon):
+		game.selected_dungeon=dungeon_ids[0]
+		for id: String in dungeon_ids:
+			if game.session.dungeon_available(id):game.selected_dungeon=id;break
+	if region=="granfloris" and not game.town.ensure_location("hendon_forest_gate"):
+		game.notice("格兰之森资源未就绪，请通过正式入口同步")
+		return
+	var loader=game.town.gran_loader if region=="granfloris" else game.town.quest_loader
 	var node=game.windows.container(game.modal,Vector2.ZERO,Vector2(800,600))
 	game.skin.image(node,game.skin.texture("worldmap"),Vector2.ZERO)
 	game.skin.image(node,game.skin.texture("select",79),Vector2.ZERO)
 	game.skin.image(node,game.skin.texture("select",58),Vector2(104,0))
-	text(node,"洛兰",Vector2(34,65),Vector2(250,40),22,Color("f0d18a"))
-	var locations := {"lorien":Vector2(300,230),"lorien_inside":Vector2(132,111)}
+	text(node,"格兰之森" if region=="granfloris" else "洛兰",Vector2(34,65),Vector2(250,40),22,Color("f0d18a"))
+	var locations := {dungeon_ids[0]:Vector2(300,230),dungeon_ids[1]:Vector2(132,111)}
 	for id: String in locations:
 		var at: Vector2=locations[id]
-		var image: Texture2D=game.town.quest_loader.texture(game.town.quest_loader.data["ui"]["dungeons"][id])
+		var image: Texture2D=loader.texture(loader.data["ui"]["dungeons"][id])
 		var card: TextureRect=game.skin.image(node,image,at)
 		var unlocked: bool=game.session.dungeon_available(id)
 		if not unlocked:card.modulate=Color("777777")
@@ -150,11 +163,13 @@ func dungeon() -> void:
 		button.position=at
 		button.size=image.get_size()
 		button.flat=true
-		button.tooltip_text="洛兰深处 · 完成「冒险开始」后开放" if not unlocked else game.session.dungeons[id]["name"]
+		var required: Array=game.session.dungeons[id]["requires"]
+		var requirement: String=game.session.quests.catalog.definitions[required[0]]["name"] if not required.is_empty() else "前置任务"
+		button.tooltip_text=game.session.dungeons[id]["name"]+(" · 完成「"+requirement+"」后开放" if not unlocked else "")
 		button.set_meta("dungeon_id",id)
 		button.pressed.connect(func():
 			if unlocked:game.selected_dungeon=id;game.show_overlay("dungeon")
-			else:game.notice("请先完成林纳斯的「冒险开始」任务"))
+			else:game.notice("请先完成「"+requirement+"」并达到进入等级"))
 		node.add_child(button)
 		if id==game.selected_dungeon:
 			card.name="selected_dungeon_card"
@@ -183,6 +198,7 @@ func dungeon() -> void:
 		button.name="difficulty_previous" if entry[0]==-1 else "difficulty_next"
 	var enter: TextureButton=game.skin.sprite_button(node,"select",[164,165,166],Vector2(621,446),game.depart,"进入地下城 Space")
 	enter.set_meta("action_label","进入地下城")
+	enter.disabled=not game.session.dungeon_available(game.selected_dungeon)
 	game.skin.button(node,"返回城镇",Vector2(631,528),func():game.show_overlay(""))
 	if game.session.quests.status(game.session.profile,"legacy.trial")=="active":
 		game.skin.button(node,"继续旧试炼",Vector2(34,528),func():game.selected_dungeon="forest_trial";game.show_overlay("dungeon"))

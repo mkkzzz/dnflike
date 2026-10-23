@@ -114,6 +114,7 @@ func _ready() -> void:
 		var runner_path: String="res://tests/town/test_hendon.gd" if "--towns-only" in OS.get_cmdline_user_args() else "res://tests/quests/test_chapter.gd" if "--quests-only" in OS.get_cmdline_user_args() else "res://tests/flow/test_loop.gd"
 		if "--items-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_inventory_flow.gd"
 		if "--services-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_services_flow.gd"
+		if "--gran-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_gran.gd"
 		var runner = load(runner_path).new()
 		runner.game = self
 		add_child(runner)
@@ -369,7 +370,13 @@ func interact_town(target: String) -> void:
 	if not character_active or transitioning or session.state!="town":return
 	if target!=town.nearest() and target!=town.entry_target():return
 	if town.is_npc(target):show_overlay("npc")
-	elif target=="dungeon":show_overlay("dungeon")
+	elif target=="dungeon":
+		var choices: Array[String]=session.dungeon_choices(String(town.world.scene(town.location).get("dungeon_region","lorien")))
+		if selected_dungeon not in choices:
+			selected_dungeon=choices[0]
+			for id: String in choices:
+				if session.dungeon_available(id):selected_dungeon=id;break
+		show_overlay("dungeon")
 	else:transition_town(target)
 
 func remember_town_position() -> void:
@@ -502,6 +509,8 @@ func depart() -> void:
 		notice("战斗资源尚未准备完成，请通过正式启动脚本重试")
 		return
 	combat.configure_trial(1.35, String(session.run.get("difficulty", "normal")))
+	if session.dungeons[selected_dungeon].has("monster_level"):
+		combat.configure_monsters(int(session.dungeons[selected_dungeon]["monster_level"]),String(session.run.get("difficulty","normal")))
 	notice(String(session.dungeons[selected_dungeon]["name"])+" · 清除怪物后前往出口")
 	sync_debug_pause()
 

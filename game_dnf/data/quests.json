@@ -1,11 +1,11 @@
 {
   "schema": "dnf_quests/1",
-  "revision": 2,
+  "revision": 3,
   "limits": {
     "active": 12,
     "tracked": 3
   },
-  "evidence": "Only four source quest nodes in this batch. Reward XP, item substitutions and local transaction rules are E-ADAPT, not original balance.",
+  "evidence": "Source ID/prerequisites/levels/NPCs/objectives preserved for enabled nodes; local rewards, deterministic routes and runtime balance E-ADAPT.",
   "npcs": {
     "linus": "林纳斯",
     "seria": "赛丽亚",
@@ -16,12 +16,15 @@
     "kiri": "凯丽",
     "norton": "诺顿",
     "grandis": "歌兰蒂斯",
-    "albert": "阿尔伯特"
+    "albert": "阿尔伯特",
+    "shylock": "夏洛克"
   },
   "dungeons": {
     "lorien": "洛兰",
     "lorien_inside": "洛兰深处",
-    "forest_trial": "密林试炼（旧样板）"
+    "forest_trial": "密林试炼（旧样板）",
+    "mirkwood": "幽暗密林",
+    "mirkwood_deep": "幽暗密林深处"
   },
   "quests": [
     {
@@ -361,6 +364,158 @@
         ],
         "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT"
       }
+    },
+    {
+      "id": "gran.tau_rage",
+      "name": "牛头兽的狂暴",
+      "category": "main",
+      "chapter": "格兰之森的异变",
+      "min_level": 3,
+      "requires": [
+        "hendon.meet_pungjin"
+      ],
+      "giver": "pungjin",
+      "receiver": "pungjin",
+      "objectives": [
+        {
+          "id": "hunt",
+          "type": "kill_monster",
+          "target": "monster/tau/taubeast.mob",
+          "amount": 1,
+          "dungeon": "mirkwood"
+        }
+      ],
+      "description": "沿风振左侧进入森林入口区，前往幽暗密林击败领主牛头巨兽，再回风振处交付。",
+      "reward": {
+        "gold": 500,
+        "xp": 350,
+        "items": {},
+        "choices": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false,
+      "source": {
+        "id": 105,
+        "path": "n_quest/handonmyre/mirkwood/epic_2_mirkwood_mutant_2.qst",
+        "sha256": "a5f1c3e0d43dbdc2a0df3c54884aae3627732325001218bc69d3a3496ffd1f63",
+        "raw_objective": [
+          3,
+          -1,
+          12,
+          1
+        ],
+        "raw_reward": [
+          0,
+          500,
+          10580,
+          1,
+          22001,
+          1
+        ],
+        "evidence": "E-PARSE objective/NPC/level/prerequisite; -1 complete NPC uses giver E-INFER; XP/gold and omitted original item rewards E-ADAPT"
+      }
+    },
+    {
+      "id": "gran.cat_trouble",
+      "name": "让人感到头痛的猫妖群",
+      "category": "main",
+      "chapter": "格兰之森的异变",
+      "min_level": 4,
+      "requires": [
+        "gran.tau_rage"
+      ],
+      "giver": "pungjin",
+      "receiver": "pungjin",
+      "objectives": [
+        {
+          "id": "hunt",
+          "type": "kill_monster",
+          "target": "monster/lugaru/lugaru.mob",
+          "amount": 5,
+          "dungeon": "mirkwood_deep"
+        }
+      ],
+      "description": "前往幽暗密林深处，击杀5只猫妖，再向风振报告。",
+      "reward": {
+        "gold": 500,
+        "xp": 450,
+        "items": {},
+        "choices": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false,
+      "source": {
+        "id": 106,
+        "path": "n_quest/handonmyre/mirkwooddeep/epic_4_mirkwooddeep_mutant_3.qst",
+        "sha256": "c417c90290711dfdcaa17b2341422f6a3980e8fbceda96d83426cceb1623bc40",
+        "raw_objective": [
+          4,
+          -1,
+          5001,
+          5
+        ],
+        "raw_reward": [
+          0,
+          500,
+          1106,
+          5,
+          1112,
+          5,
+          16403,
+          1
+        ],
+        "evidence": "E-PARSE objective/NPC/level/prerequisite; -1 complete NPC uses giver E-INFER; XP/gold and omitted original item rewards E-ADAPT"
+      }
+    },
+    {
+      "id": "gran.meet_shylock",
+      "name": "呼唤闪电的哥布林",
+      "category": "main",
+      "chapter": "格兰之森的异变",
+      "min_level": 5,
+      "requires": [
+        "gran.cat_trouble"
+      ],
+      "giver": "pungjin",
+      "receiver": "shylock",
+      "objectives": [
+        {
+          "id": "meet",
+          "type": "meet_npc",
+          "target": "shylock",
+          "amount": 1
+        }
+      ],
+      "description": "前往赫顿后街，沿上方路口进入小巷，与哥布林商人夏洛克交谈。",
+      "reward": {
+        "gold": 100,
+        "xp": 150,
+        "items": {},
+        "choices": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false,
+      "source": {
+        "id": 107,
+        "path": "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_4.qst",
+        "sha256": "efc9e5451cf8d2a7c501dd5e70545da0afb84b6394d589df77d1f40f24d8b63e",
+        "raw_objective": [
+          9
+        ],
+        "raw_reward": [
+          0,
+          100
+        ],
+        "evidence": "E-PARSE objective/NPC/level/prerequisite; -1 complete NPC uses giver E-INFER; XP/gold and omitted original item rewards E-ADAPT"
+      }
     }
-  ]
+  ],
+  "monsters": {
+    "monster/goblin/goblin.mob": "哥布林",
+    "monster/tau/taubeast.mob": "牛头巨兽",
+    "monster/lugaru/lugaru.mob": "猫妖"
+  }
 }

@@ -77,9 +77,16 @@ func grant_quest_reward(candidate: Dictionary, reward: Dictionary, tx: String) -
 
 func dungeon_available(id: String) -> bool:
 	if not dungeons.has(id):return false
+	if int(profile["level"])<int(dungeons[id].get("min_level",1)):return false
 	for required: String in dungeons[id]["requires"]:
 		if quests.status(profile,required) != "completed":return false
 	return true
+
+func dungeon_choices(region: String) -> Array[String]:
+	var choices: Array[String]=[]
+	for id: String in dungeons:
+		if not dungeons[id].get("legacy",false) and dungeons[id].get("region","lorien")==region:choices.append(id)
+	return choices
 
 func snapshot() -> Dictionary:
 	return {"profile": profile.duplicate(true), "state": state, "run": run.duplicate(true),

@@ -1,6 +1,6 @@
 {
   "schema": "dnf_towns/1",
-  "revision": 2,
+  "revision": 3,
   "locations": {
     "elvengard": {
       "name": "艾尔文防线",
@@ -106,7 +106,8 @@
         ]
       },
       "labels": [],
-      "camera_y": 0
+      "camera_y": 0,
+      "dungeon_region": "granfloris"
     },
     "hendon_main": {
       "name": "赫顿玛尔 · 主街",
@@ -158,11 +159,6 @@
       },
       "labels": [
         [
-          60,
-          285,
-          "格兰之森（暂未开放）"
-        ],
-        [
           2370,
           290,
           "西海岸（暂未开放）"
@@ -173,7 +169,8 @@
           "月光酒馆（暂未开放）"
         ]
       ],
-      "camera_y": 120
+      "camera_y": 120,
+      "dungeon_region": "granfloris"
     },
     "hendon_auction": {
       "name": "赫顿玛尔 · 后街",
@@ -220,7 +217,93 @@
         ]
       },
       "labels": [],
-      "camera_y": 0
+      "camera_y": 0,
+      "dungeon_region": "granfloris"
+    },
+    "hendon_forest_gate": {
+      "name": "格兰之森入口",
+      "asset": "res://assets_local/flow_v1/gran_v1/manifest.json",
+      "placement": "hendon_forest_gate",
+      "spawn": [
+        820,
+        230
+      ],
+      "walk": [
+        [
+          275,
+          144,
+          611,
+          158
+        ],
+        [
+          6,
+          160,
+          520,
+          162
+        ]
+      ],
+      "npcs": {},
+      "labels": [
+        [
+          70,
+          200,
+          "← 格兰之森"
+        ]
+      ],
+      "camera_y": 0,
+      "dungeon_region": "granfloris",
+      "source": {
+        "path": "map/hendonmyre/d_hendon.map",
+        "sha256": "9449210dd5487d729405a3da8075d58728acfc844963be342d82836b43e6549b"
+      },
+      "dungeon_entry": [
+        6,
+        160,
+        18,
+        140
+      ]
+    },
+    "hendon_alley": {
+      "name": "赫顿玛尔 · 小巷",
+      "asset": "res://assets_local/flow_v1/gran_v1/manifest.json",
+      "placement": "hendon_alley",
+      "spawn": [
+        507,
+        300
+      ],
+      "walk": [
+        [
+          7,
+          211,
+          956,
+          120
+        ],
+        [
+          461,
+          329,
+          94,
+          30
+        ]
+      ],
+      "npcs": {
+        "shylock": [
+          619,
+          193
+        ]
+      },
+      "labels": [
+        [
+          50,
+          245,
+          "雪山方向（暂未开放）"
+        ]
+      ],
+      "camera_y": 0,
+      "dungeon_region": "granfloris",
+      "source": {
+        "path": "map/hendonmyre/hendon_ura.map",
+        "sha256": "91852f5f318a7376ed11f29e481a4bef772526d69b4dacf2d1095e40671e8a8c"
+      }
     }
   },
   "portals": {
@@ -469,6 +552,110 @@
       "source_raw": [],
       "min_level": 1,
       "evidence": "E-ADAPT safe landing beyond original entrance"
+    },
+    "main_to_forest_gate": {
+      "from": "hendon_main",
+      "rect": [
+        1,
+        230,
+        19,
+        195
+      ],
+      "to": "hendon_forest_gate",
+      "spawn": [
+        820,
+        230
+      ],
+      "label": "← 格兰之森入口",
+      "reciprocal": "forest_gate_to_main",
+      "source_raw": [
+        1,
+        230,
+        19,
+        195,
+        2,
+        6
+      ],
+      "min_level": 1,
+      "evidence": "E-PARSE reciprocal MAP groups; safe landing E-ADAPT"
+    },
+    "forest_gate_to_main": {
+      "from": "hendon_forest_gate",
+      "rect": [
+        873,
+        122,
+        22,
+        187
+      ],
+      "to": "hendon_main",
+      "spawn": [
+        70,
+        280
+      ],
+      "label": "赫顿玛尔主街 →",
+      "reciprocal": "main_to_forest_gate",
+      "source_raw": [
+        873,
+        122,
+        22,
+        187,
+        2,
+        0
+      ],
+      "min_level": 1,
+      "evidence": "E-PARSE reciprocal MAP groups; safe landing E-ADAPT"
+    },
+    "auction_to_alley": {
+      "from": "hendon_auction",
+      "rect": [
+        237,
+        155,
+        87,
+        19
+      ],
+      "to": "hendon_alley",
+      "spawn": [
+        507,
+        300
+      ],
+      "label": "小巷 · 夏洛克 ↑",
+      "reciprocal": "alley_to_auction",
+      "source_raw": [
+        237,
+        155,
+        87,
+        19,
+        2,
+        3
+      ],
+      "min_level": 1,
+      "evidence": "E-PARSE reciprocal MAP groups; safe landing E-ADAPT"
+    },
+    "alley_to_auction": {
+      "from": "hendon_alley",
+      "rect": [
+        462,
+        342,
+        91,
+        20
+      ],
+      "to": "hendon_auction",
+      "spawn": [
+        285,
+        245
+      ],
+      "label": "赫顿玛尔后街 ↓",
+      "reciprocal": "auction_to_alley",
+      "source_raw": [
+        462,
+        342,
+        91,
+        20,
+        2,
+        2
+      ],
+      "min_level": 1,
+      "evidence": "E-PARSE reciprocal MAP groups; safe landing E-ADAPT"
     }
   },
   "npcs": {
@@ -536,6 +723,11 @@
       "name": "阿尔伯特",
       "services": [],
       "dialogue": "想变强就多去实战。看清对手的动作，才能找到自己的机会。"
+    },
+    "shylock": {
+      "name": "夏洛克",
+      "services": [],
+      "dialogue": "我是夏洛克，赫顿玛尔的哥布林商人。你想打听格兰之森？先说清楚来意，我可不喜欢被当成森林里的那些家伙。"
     }
   },
   "source": {

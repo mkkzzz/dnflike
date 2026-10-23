@@ -9,6 +9,7 @@ var world=World.new()
 var loader=Loader.new()
 var quest_loader=Loader.new()
 var hendon_loader=Loader.new()
+var gran_loader=Loader.new()
 var map_root: Node2D
 var map_nodes: Dictionary={}
 var map_loaders: Dictionary={}
@@ -60,7 +61,7 @@ func _ready() -> void:
 func ensure_location(id: String) -> bool:
 	if map_nodes.has(id):return true
 	if not world.location_exists(id):return false
-	var active_loader=quest_loader if id=="seria_room" else hendon_loader
+	var active_loader=quest_loader if id=="seria_room" else gran_loader if id in ["hendon_forest_gate","hendon_alley"] else hendon_loader
 	if active_loader.data.is_empty() and not active_loader.load_export(world.scene(id)["asset"]):return false
 	for placement: Dictionary in active_loader.placements():
 		if placement["id"]!=world.scene(id)["placement"]:continue
@@ -224,7 +225,10 @@ func _draw_names() -> void:
 		var at:=World.vec(world.scene(location)["npcs"][npc])+Vector2(0,120-138)
 		draw_caption(npc_definition(npc)["name"],at)
 		if quest_marks.get(npc,"")!="":draw_caption(quest_marks[npc],at+Vector2(0,-24),18,Color("ffe074"))
-	for label: Array in world.scene(location)["labels"]:draw_caption(label[2],Vector2(label[0],label[1]+120-30),12)
+	for label: Array in world.scene(location)["labels"]:
+		var half_width:=font.get_string_size(label[2],HORIZONTAL_ALIGNMENT_LEFT,-1,12).x/2
+		if label[0]-half_width<camera_x or label[0]+half_width>camera_x+800:continue
+		draw_caption(label[2],Vector2(label[0],label[1]+120-30),12)
 	for portal: Dictionary in world.portals(location,inn_return).values():
 		var rect:=World.box(portal["rect"])
 		var center:=rect.get_center()

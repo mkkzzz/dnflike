@@ -39,11 +39,20 @@ MONSTERS = {
     'goblin': ('monster/goblin/goblin.mob', 'monster/goblin/animation_goblin2', []),
     'goblin_thrower': ('monster/goblin/goblinthrower.mob', 'monster/goblin/animation_thrower', []),
     'tau_army': ('monster/tau/tauarmy.mob', 'monster/tau/armyanimation', []),
+    'tau_beast': ('monster/tau/taubeast.mob', 'monster/tau/beastanimation', []),
+    'lugaru': ('monster/lugaru/lugaru.mob', 'monster/lugaru/animation_lugaru', ['stay_2','attack']),
+    'kurogaru': ('monster/lugaru/kurogaru.mob', 'monster/lugaru/animation_blacklugaru', ['stay_2','attack']),
+    'goblin_ice': ('monster/goblin/seagab.mob','monster/goblin/animation_islandgoblin',[]),
+    'goblin_fire': ('monster/goblin/hillgab.mob','monster/goblin/animation_mountaingoblin',[]),
+    'goblin_taskmaster': ('monster/goblin/goblintaskmaster.mob','monster/goblin/animation_kinol2',[]),
+    'goblin_thrower_taskmaster': ('monster/goblin/goblinthrowertaskmaster.mob','monster/goblin/animation_gero',[]),
 }
 MONSTER_CLIPS = ['stay', 'move', 'attack1', 'throw', 'damage1', 'damage2', 'down', 'sit', 'overturn']
 OBJECTS = {
     'gorecross': 'passiveobject/character/swordman/animation/gorecross1.ani',
     'throwstone': 'passiveobject/monster/goblin/animation/throwstone.ani',
+    'goblin_ice': 'passiveobject/common/animation/icemissile1.ani',
+    'goblin_fire': 'passiveobject/common/animation/firemissile.ani',
 }
 # Player motions used by the trial skills that the runtime manifest does not carry yet.
 # Frames index the same 210-pose body/weapon atlases (all <= 209).
@@ -223,9 +232,9 @@ def effect_bank(src: Source, key: str, ani_path: str, unresolved: list) -> dict:
     return bank
 
 
-def monster_bank(src: Source, key: str, mob: str, clip_dir: str, unresolved: list) -> dict:
+def monster_bank(src: Source, key: str, mob: str, clip_dir: str, unresolved: list, extra=()) -> dict:
     clips, used, images = {}, set(), set()
-    for name in MONSTER_CLIPS:
+    for name in MONSTER_CLIPS+list(extra):
         path = f'{clip_dir}/{name}.ani'
         try:
             ani = src.animation(path)
@@ -304,8 +313,8 @@ def build(library: Path | None) -> dict:
     manifest = {'schema': SCHEMA, 'build_version': BUILD_VERSION, 'asset_version': src.lib.asset_version,
                 'monsters': {}, 'objects': {}, 'effects': {}, 'digits': {}, 'audio': {}, 'weapon_sounds': {},
                 'unresolved': unresolved}
-    for key, (mob, clip_dir, _) in MONSTERS.items():
-        manifest['monsters'][key] = monster_bank(src, key, mob, clip_dir, unresolved)
+    for key, (mob, clip_dir, extra) in MONSTERS.items():
+        manifest['monsters'][key] = monster_bank(src, key, mob, clip_dir, unresolved, extra)
     for key, path in OBJECTS.items():
         manifest['objects'][key] = effect_bank(src, 'obj_' + key, path, unresolved)
         manifest['objects'][key]['clip'] = src.animation(path)

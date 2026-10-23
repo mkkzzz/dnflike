@@ -70,7 +70,14 @@
   "monsters":{
     "goblin":{"mob":"monster/goblin/goblin.mob","bank":"goblin","name":"哥布林"},
     "goblin_thrower":{"mob":"monster/goblin/goblinthrower.mob","bank":"goblin_thrower","keep_distance":150,"name":"哥布林投掷手"},
-    "tau_army":{"mob":"monster/tau/tauarmy.mob","bank":"tau_army","name":"牛头兵"}
+    "tau_army":{"mob":"monster/tau/tauarmy.mob","bank":"tau_army","name":"牛头兵"},
+    "tau_beast":{"mob":"monster/tau/taubeast.mob","bank":"tau_beast","name":"牛头巨兽"},
+    "lugaru":{"mob":"monster/lugaru/lugaru.mob","bank":"lugaru","name":"猫妖"},
+    "kurogaru":{"mob":"monster/lugaru/kurogaru.mob","bank":"kurogaru","name":"暗咒猫妖"},
+    "goblin_ice":{"mob":"monster/goblin/seagab.mob","bank":"goblin_ice","name":"青哥布林","keep_distance":150},
+    "goblin_fire":{"mob":"monster/goblin/hillgab.mob","bank":"goblin_fire","name":"赤哥布林","keep_distance":150},
+    "goblin_taskmaster":{"mob":"monster/goblin/goblintaskmaster.mob","bank":"goblin_taskmaster","name":"哥布林十夫长"},
+    "goblin_thrower_taskmaster":{"mob":"monster/goblin/goblinthrowertaskmaster.mob","bank":"goblin_thrower_taskmaster","name":"投掷哥布林十夫长","keep_distance":150,"attack_template":"goblin_thrower","adaptation":"E-ADAPT missing archived attack definition; existing stone projectile; full AI not restored"}
   },
   "boss_hp_lines":3,
   "map_export":"res://assets_local/native_maps/lorien/map_export.json",
