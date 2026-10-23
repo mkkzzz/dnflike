@@ -1,5 +1,10 @@
 extends RefCounted
 ## Equipment instances; the inventory ledger owns locations, old counts support migration.
+static var _upgrade_config: Dictionary={}
+static func reinforcement_bonuses() -> Dictionary:
+	if _upgrade_config.is_empty():_upgrade_config=JSON.parse_string(FileAccess.get_file_as_string("res://data/upgrades.json"))
+	return _upgrade_config["reinforcement"]["bonuses"]
+
 static func create(profile: Dictionary, definition: String, quality := 50, reinforce := 0) -> String:
 	var uid := "gear_%d" % int(profile["next_gear"])
 	profile["next_gear"] += 1
@@ -53,6 +58,10 @@ static func modifiers(profile: Dictionary, config: Dictionary) -> Array:
 		for stat: String in definition.get("stats",{}):result.append({"source":definition["name"]+" · 编号 "+String(profile["equipment"][slot]).trim_prefix("gear_"),"stat":stat,"op":"add","value":float(definition["stats"][stat])*scale})
 		if slot == "weapon":
 			for stat: String in ["physical_attack","magical_attack"]:result.append({"source":"武器强化","stat":stat,"op":"add","value":int(instance["reinforce"])*float(config["formula"]["reinforce_attack_per_level"])})
+		else:
+			var bonuses: Dictionary=reinforcement_bonuses().get(slot,{})
+			for stat: String in bonuses:
+				result.append({"source":"装备强化","stat":stat,"op":"add","value":int(instance["reinforce"])*float(bonuses[stat])})
 		for mod: Dictionary in instance.get("enchants",[]):
 			var entry := mod.duplicate(true)
 			entry["source"] = "装备附魔"

@@ -19,8 +19,10 @@ const QuestWindows = preload("res://ui/flow/quest_windows.gd")
 const InventoryTools = preload("res://ui/flow/inventory_tools.gd")
 const LootBridge = preload("res://loot/bridge.gd")
 const ServiceWindows=preload("res://ui/flow/service_windows.gd")
+const UpgradeWindows=preload("res://ui/flow/upgrade_windows.gd")
 const DurabilityBridge=preload("res://items/durability_bridge.gd")
 var service_windows
+var upgrade_windows
 var inventory_tools
 var loot_bridge
 var quest_windows
@@ -87,6 +89,7 @@ func _ready() -> void:
 	quest_windows = QuestWindows.new(self)
 	inventory_tools = InventoryTools.new(self)
 	service_windows=ServiceWindows.new(self)
+	upgrade_windows=UpgradeWindows.new(self)
 	var durability_bridge=DurabilityBridge.new();durability_bridge.setup(self);add_child(durability_bridge)
 	loot_bridge = LootBridge.new();loot_bridge.setup(self);add_child(loot_bridge)
 	skill_catalog = SkillCatalog.new()
@@ -114,6 +117,7 @@ func _ready() -> void:
 		var runner_path: String="res://tests/town/test_hendon.gd" if "--towns-only" in OS.get_cmdline_user_args() else "res://tests/quests/test_chapter.gd" if "--quests-only" in OS.get_cmdline_user_args() else "res://tests/flow/test_loop.gd"
 		if "--items-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_inventory_flow.gd"
 		if "--services-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_services_flow.gd"
+		if "--upgrades-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_upgrades_flow.gd"
 		if "--gran-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_gran.gd"
 		var runner = load(runner_path).new()
 		runner.game = self
@@ -336,7 +340,7 @@ func service_action(kind: String, payload: Dictionary) -> bool:
 	var response: Dictionary=candidate.service_command(kind,payload,{"npc":npc,"nearby":town.is_npc(npc)})
 	if not response["ok"]:notice(response["message"]);return false
 	if not store.write(candidate):save_failed=true;notice("服务未提交：存档写入失败，请重试");return false
-	session=candidate;save_failed=false;sync_number_changes(kind);notice("操作完成，进度已保存");return true
+	session=candidate;save_failed=false;sync_number_changes(kind);notice(response.get("message","操作完成，进度已保存"));return true
 
 func quest_action(kind: String, payload: Dictionary = {}) -> bool:
 	if not character_active or transitioning:return false
@@ -453,6 +457,7 @@ func show_overlay(which: String) -> void:
 		"inventory":inventory_panel()
 		"shop":shop_panel()
 		"services":service_windows.open()
+		"upgrades":upgrade_windows.open()
 		"dungeon":dungeon_panel()
 		"result":result_panel()
 		"menu":menu_panel()
@@ -665,6 +670,7 @@ func slot_hover(cell: Control) -> void:
 
 func slot_pressed(cell: Control) -> void:
 	if overlay=="services" and cell.cell["place"] in ["bag","service_equipment"]:service_windows.select(cell.cell)
+	elif overlay=="upgrades" and cell.cell["place"] in ["bag","upgrade_equipment"]:upgrade_windows.select(cell.cell)
 	elif cell.cell["place"] in ["bag","storage"]:inventory_tools.select(cell.cell)
 	match cell.cell["place"]:
 		"shop":windows.purchase_dialog(cell.cell["id"])
@@ -692,7 +698,7 @@ func drop_slot(source: Dictionary, target: Dictionary) -> void:
 func refresh_item_views() -> void:
 	windows.hide_tooltip()
 	build_hotbars()
-	if overlay in ["inventory", "shop"]:show_overlay(overlay)
+	if overlay in ["inventory", "shop", "services", "upgrades"]:show_overlay(overlay)
 
 func use_quick(index: int) -> void:
 	var id: String = session.profile["quick_items"][index]

@@ -1,0 +1,24 @@
+{
+  "revision": 1,
+  "note": "E-ADAPT functional economy and Sinda enchant service; not original DNF rules",
+  "reinforcement": {
+    "bonuses": {"coat":{"physical_defense":3}, "necklace":{"magical_defense":3}},
+    "steps": [
+      {"gold":20,"materials":{"scrap_iron":1},"chance":100,"failure_level":0},
+      {"gold":40,"materials":{"scrap_iron":2},"chance":100,"failure_level":1},
+      {"gold":60,"materials":{"scrap_iron":3},"chance":100,"failure_level":2},
+      {"gold":100,"materials":{"scrap_iron":4},"chance":85,"failure_level":3},
+      {"gold":150,"materials":{"scrap_iron":5},"chance":75,"failure_level":4},
+      {"gold":210,"materials":{"scrap_iron":6},"chance":65,"failure_level":5},
+      {"gold":280,"materials":{"scrap_iron":7},"chance":55,"failure_level":6},
+      {"gold":360,"materials":{"scrap_iron":8},"chance":45,"failure_level":7},
+      {"gold":450,"materials":{"scrap_iron":9},"chance":35,"failure_level":8},
+      {"gold":550,"materials":{"scrap_iron":10},"chance":25,"failure_level":9}
+    ]
+  },
+  "enchants": {
+    "strength":{"name":"力量附魔","slots":["weapon","coat"],"gold":80,"materials":{"scrap_iron":3},"modifier":{"stat":"strength","op":"add","value":3}},
+    "intelligence":{"name":"智力附魔","slots":["weapon","necklace"],"gold":80,"materials":{"scrap_iron":3},"modifier":{"stat":"intelligence","op":"add","value":3}},
+    "vitality":{"name":"体力附魔","slots":["coat","necklace"],"gold":80,"materials":{"scrap_iron":3},"modifier":{"stat":"vitality","op":"add","value":3}}
+  }
+}

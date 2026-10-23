@@ -40,7 +40,7 @@ func quest_command(kind: String, payload: Dictionary, context: Dictionary) -> Di
 func service_command(kind: String, payload: Dictionary, context: Dictionary) -> Dictionary:
 	if state!="town":return reject("请回城后使用服务")
 	var npc: String=context.get("npc","")
-	var needed: String={"services.sell":"trade","services.buyback":"trade","services.repair":"repair","services.disassemble":"disassemble"}.get(kind,"")
+	var needed: String={"services.sell":"trade","services.buyback":"trade","services.repair":"repair","services.disassemble":"disassemble","services.reinforce":"reinforce","services.enchant":"enchant","services.enchant_clear":"enchant"}.get(kind,"")
 	if needed=="" or not context.get("nearby",false) or needed not in town_world.data["npcs"].get(npc,{}).get("services",[]):return reject("请走到提供该服务的NPC身旁")
 	return Services.command(profile,kind,payload)
 
@@ -278,6 +278,7 @@ func restore(data: Dictionary) -> bool:
 	if not Numbers.valid(p):return false
 	if not p.has("services"):Services.initialize(p)
 	if not Services.valid(p):return false
+	Services.initialize(p) # Initialize additive upgrade state only after validating existing data.
 	if p.has("item_state"):
 		if not Inventory.valid(p):return false
 	else:Inventory.initialize(p)

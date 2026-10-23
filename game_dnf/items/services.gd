@@ -2,11 +2,13 @@ extends RefCounted
 ## Pure service quotes/transactions. The flow commits a candidate before applying it.
 const Inventory=preload("res://items/inventory.gd")
 const Numbers=preload("res://stats/api/numbers.gd")
+const Upgrades=preload("res://items/upgrades.gd")
 static func config() -> Dictionary:
 	return JSON.parse_string(FileAccess.get_file_as_string("res://data/services.json"))
 
 static func initialize(p: Dictionary) -> void:
 	if not p.has("services"):p["services"]={"revision":1,"next_sale":1,"buyback":[],"transactions":{}}
+	Upgrades.initialize(p)
 	for gear: Dictionary in p["gear"].values():
 		if not gear.has("durability_max"):gear["durability_max"]=int(config()["durability_max"])
 		if not gear.has("durability"):gear["durability"]=int(gear["durability_max"])
@@ -28,6 +30,9 @@ static func quote(p: Dictionary, kind: String, data: Dictionary) -> Dictionary:
 	var cfg:=config();var uid:=String(data.get("uid",""))
 	var result: Dictionary={"ok":true,"kind":kind,"uid":uid,"count":1,"price":0,"output":{},"targets":[]}
 	match kind:
+		"services.reinforce", "services.enchant", "services.enchant_clear":
+			result=Upgrades.quote(p,kind,data)
+			if not result["ok"]:return result
 		"services.sell", "services.disassemble":
 			if not carried(p,uid):return Inventory.fail("请选择背包物品；穿戴、仓库和待领取区的物品不能处理")
 			if Inventory.locked(p,uid):return Inventory.fail("请先解锁物品")
@@ -83,11 +88,12 @@ static func command(p: Dictionary, kind: String, data: Dictionary) -> Dictionary
 	if not result["ok"]:return result
 	candidate["services"]["transactions"][tx]=true
 	Inventory.sync(candidate);p.assign(candidate)
-	return {"ok":true,"quote":q}
+	return {"ok":true,"quote":q,"message":result.get("message","操作完成，进度已保存")}
 
 static func apply_quote(p: Dictionary, q: Dictionary) -> Dictionary:
 	var uid: String=q["uid"];var state: Dictionary=p["services"]
 	match q["kind"]:
+		"services.reinforce", "services.enchant", "services.enchant_clear":return Upgrades.apply_quote(p,q)
 		"services.sell":
 			var sold:=uid
 			var location:=Inventory.locate(p,uid)
@@ -140,6 +146,7 @@ static func death_penalty(p: Dictionary) -> void:
 static func valid(p: Dictionary) -> bool:
 	var state=p.get("services")
 	if not state is Dictionary or state.get("revision")!=1 or not state.get("buyback") is Array or state["buyback"].size()>1000 or not state.get("transactions") is Dictionary or not Numbers.whole(state.get("next_sale"),1,1000000000):return false
+	if not Upgrades.valid(state):return false
 	var seen: Dictionary={};var max_sale:=0
 	var ledger=p.get("item_state")
 	if not state["buyback"].is_empty() and (not ledger is Dictionary or not ledger.get("stacks") is Dictionary):return false

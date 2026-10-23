@@ -58,6 +58,7 @@ func dialogue() -> void:
 	if services.any(func(id):return id in ["trade","repair","disassemble"]):game.skin.button(node,"物品服务",Vector2(435,120),func():game.show_overlay("services"))
 	if "skills" in services:game.skin.button(node,"学习技能",Vector2(325,120),func():game.number_windows.tab=1;game.show_overlay("numbers"))
 	if "equipment" in services:game.skin.button(node,"装备整备",Vector2(325,120),func():game.number_windows.tab=2;game.show_overlay("numbers"))
+	if services.any(func(id):return id in ["reinforce","enchant"]):game.skin.button(node,"强化" if "reinforce" in services else "附魔",Vector2(540,120),func():game.show_overlay("upgrades"),false)
 	game.skin.button(node,"结束对话",Vector2(600,120),func():game.show_overlay(""))
 	game.skin.close_button(node,Vector2(686,13),func():game.show_overlay(""))
 

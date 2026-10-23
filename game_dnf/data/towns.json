@@ -681,6 +681,7 @@
     "sinda": {
       "name": "辛达",
       "services": [
+        "enchant",
         "equipment",
         "trade",
         "repair"
@@ -703,7 +704,7 @@
     },
     "kiri": {
       "name": "凯丽",
-      "services": [],
+      "services": ["reinforce"],
       "dialogue": "我是凯丽。冒险靠的不只是运气，也得多练练自己的本领。"
     },
     "norton": {
