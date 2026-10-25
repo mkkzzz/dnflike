@@ -223,7 +223,7 @@ func run() -> void:
 			check(label.z_index > 0, "skill key stays above its icon: " + label.text)
 	check(hotkeys == ["A", "S", "D", "F", "G", "H"], "HUD shows ASDFGH without basic ZXC actions")
 	check(not game.skill_views.has("upper"), "basic upper attack is absent from skill slots")
-	check(game.get_window().content_scale_mode == Window.CONTENT_SCALE_MODE_VIEWPORT and game.get_window().content_scale_size == Vector2i(1920, 1080), "fixed 1080p output keeps the original layout transform")
+	check(game.get_window().content_scale_mode == Window.CONTENT_SCALE_MODE_VIEWPORT and game.get_window().content_scale_size == game.display_settings.OUTPUT, "fixed output keeps the original layout transform")
 	var percentages := false
 	for label in game.hud.find_children("*", "Label", true, false):
 		if "%" in label.text:percentages = true
@@ -235,9 +235,14 @@ func run() -> void:
 	await frame("01_town")
 	if capture:
 		var shot: Image = get_viewport().get_texture().get_image()
-		check(shot.get_size() == Vector2i(1920, 1080), "capture is exactly 1920x1080")
-		check(not shot.get_pixel(960, 954).is_equal_approx(Color.BLACK), "transparent HUD has original ground underneath")
-		check(shot.get_pixel(120, 400).is_equal_approx(Color.BLACK) and shot.get_pixel(1800, 400).is_equal_approx(Color.BLACK), "original 4:3 content stays within black pillarboxes")
+		var output_size := Vector2i(game.display_settings.OUTPUT)
+		check(shot.get_size() == output_size, "capture matches the fixed output size %s" % str(output_size))
+		check(not shot.get_pixel(output_size.x / 2, output_size.y - 126).is_equal_approx(Color.BLACK), "transparent HUD has original ground underneath")
+		var bar := int(game.display_settings.CONTENT_OFFSET.x)
+		if bar > 0:
+			check(shot.get_pixel(bar / 2, output_size.y * 37 / 100).is_equal_approx(Color.BLACK) and shot.get_pixel(output_size.x - bar / 2, output_size.y * 37 / 100).is_equal_approx(Color.BLACK), "original 4:3 content stays within black pillarboxes")
+		else:
+			check(not shot.get_pixel(1, output_size.y * 37 / 100).is_equal_approx(Color.BLACK), "integer scale fills the window without pillarboxes")
 	await hover_control(game.hp_bar)
 	check(is_instance_valid(game.windows.tip) and game.windows.tip.has_meta("gauge"), "actual HP hover opens native value detail")
 	if is_instance_valid(game.windows.tip):check(game.windows.tip.get_node("gauge_value").text == game.hp_bar.get_meta("value_text"), "HP detail shows current and maximum values")
@@ -252,7 +257,7 @@ func run() -> void:
 		var native_hud: Image = game.skin.texture("hud").get_image()
 		var intact := true
 		for point in [Vector2i(83, 62), Vector2i(98, 48), Vector2i(536, 62), Vector2i(550, 48), Vector2i(566, 62)]:
-			var output := Vector2i((Vector2(point.x, point.y + 508) + Vector2(0.5, 0.5)) * 1.8 + Vector2(240, 0))
+			var output := Vector2i((Vector2(point.x, point.y + 508) + Vector2(0.5, 0.5)) * game.display_settings.CONTENT_SCALE + game.display_settings.CONTENT_OFFSET)
 			if not hud_shot.get_pixel(output.x, output.y).is_equal_approx(native_hud.get_pixel(point.x, point.y)):intact = false
 		check(intact, "HUD item and skill icons preserve the baked top and side borders")
 	game.town.ground = Vector2(1120, 230)

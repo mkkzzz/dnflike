@@ -11,7 +11,11 @@
 
 ## 最近完成
 
-- 2026-10-23 **两项共享资源接收完成并登记**：①DNF assets v1——runtime 61 文件 + library 全 11 包（3.31 GB / 47,100 文件）逐包校验通过，库落 `D:\dnflike-assets\dnf-native-assets-v1-20261022\library_v1`（4.87 GB），原始 zip 缓存可离线重装；装库后 `game_dnf` 回归 **143 项 failures=0** ②DNF references v1——`references-01.zip` 5 文件校验通过。两处登记已写入[版本注册表](../../project/05_版本注册表.md)
+- 2026-10-26 **本机显示改为 2 倍整数放大（不入库）**：`display_settings.gd` 本地改成 `OUTPUT=1600x1200 / CONTENT_SCALE=2.0 / OFFSET=0`，每个美术像素正好 2×2、无左右黑边（原 1920x1080 按 1.8 倍会左右各留 240 黑边且像素 1~2px 不均）。**该文件只在本机改，不提交**，清单见 `D:\dnflike_local\LOCAL_ONLY_CHANGES.md`；配套的测试与设置面板文字已改成读 `display_settings` 常量，因此两种配置都能过
+- 2026-10-26 **城镇也手持武器**：城镇角色从无武器分层包换成运行时清单的带武器合成包（`players.<weapon>` + `player/stay|move|dash`），武器类型取 `numbers.json` 的 `equipment.<id>.weapon`
+- 2026-10-26 **常驻任务指引面板**：贴右边缘 (641,132)、原生 `quest.img` 帧14/帧0/帧1 按 2/3 缩放成 159×98、对话框同源字体；无追踪任务时显示"暂未追踪任务 + 可接任务/找谁"
+- 2026-10-26 **地面掉落改用原版素材（半成品，待修）**：`tools/bake_loot_sprites.py` 从资源库烘出 `itemdropeffect/beam.png` 与 `floor.png` 到 `assets_local/loot/`（本地生成，gitignore）；掉落本体改成裁掉 28×28 图标外框后的 22×22 本体 + 原版光柱。**负责人反馈"地图没掉东西了"，明天继续修**
+- 2026-10-23 **两项共享资源接收完成并登记**：①DNF assets v1——runtime 61 文件 + library 全 11 包（3.31 GB / 47,100 文件）逐包校验通过，库落 `D:\dnflike-assets\dnf-native-assets-v1-20261022\library_v1`（4.87 GB）②DNF references v1——`references-01.zip` 5 文件校验通过。两处登记已写入[版本注册表](../../project/05_版本注册表.md)
 - 2026-10-23 出招人声按"太长"砍短：0.22/0.34/0.44/0.58 s → **0.16/0.20/0.24/0.30 s**（`2b3b543`），去掉与挥剑声的重叠
 - 2026-10-22 **把 ws2 新版工程 `game_dnf` 接到本机**：加入稀疏范围、按资源库 Release 安装 runtime 资产（61 文件，sha256 全通过），跑通 `game_dnf` 回归；启动窗口「格兰之森 · 新版战斗验证」
 - 2026-10-22 开工补齐两个必需稀疏目录：`game/assets/swordsman_v7_c8`（297 文件）与 `c10`（1417 文件）；不补则主回归挂 3 条（c8/c10 断言）。主工程回归 **527 项 failures=0**
@@ -40,6 +44,7 @@
 | **`run_dnf.ps1` 的 python** | 脚本内部直接调用 `python`，本机解析到 Store 占位 → 报 `Module dependency check failed` | 运行前把真 Python 目录**前置到 PATH**：`$env:PATH="E:\dsh\...\dependencies\python;$env:PATH"` |
 | **GitHub 大文件下载** | 直连被限速到 **~0.11 MB/s**（对照 Cloudflare 直连 0.9 MB/s，排除本机带宽）；一次性流式下载会在 ~4 MB 处被掐断 | 用 **2 MB 分片 Range 续传**（`D:\dnflike_local\dnf_fetch_library.py`），每块短连接避开切断点；跨域跳转必须去掉 `Authorization`，否则 S3 拒绝（官方工具用 `SafeRedirect`） |
 | 7890 代理 | Clash（CordCCore）**会自行退出**，`ProxyEnable=1` 但端口不监听，导致 `10061 连接被拒` | 下载/拉取失败时先查 `Get-NetTCPConnection -LocalPort 7890 -State Listen` |
+| **本机显示（2 倍整数）** | `game_dnf/ui/flow/display_settings.gd` 在本机被改成 `1600x1200 / CONTENT_SCALE=2.0 / OFFSET=0`（不入库）；屏幕 2560×1440、窗口 1600×1200 | 收工**不要提交**该文件，也不要 `checkout` 它；冲突处理见 `D:\dnflike_local\LOCAL_ONLY_CHANGES.md` |
 
 ## 历史说明（更正记录）
 

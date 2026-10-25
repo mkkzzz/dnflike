@@ -105,5 +105,13 @@ func run() -> void:
 		game.quest_windows.refresh_tracker()
 		await ticks(3)
 		check(guide().visible and row_texts().any(func(t):return String(t)=="暂未追踪任务"), "guide stays on screen after untracking")
+	# 地面掉落：本体不许带背包图标外框，光柱用资源库烘出的原版贴图
+	var potion_tex: Texture2D = game.loot.drop_texture("potion")
+	check(potion_tex != null and potion_tex is AtlasTexture, "ground drop uses the icon body without the inventory frame")
+	if potion_tex is AtlasTexture:
+		check((potion_tex as AtlasTexture).region.size == Vector2(22, 22), "inventory frame border is cropped off")
+	check(game.loot.drop_texture("gold") != null, "gold keeps its native coin sprite")
+	var beam: Texture2D = game.loot.loot_beam_texture()
+	check(beam != null and beam.get_size() == Vector2(179, 600), "baked original drop beam is available: " + (str(beam.get_size()) if beam != null else "missing"))
 	print("[GUIDE_TOWN] COMPLETE checks=%d failures=%d captures=%d" % [checks, failures, captured.size()])
 	get_tree().quit(1 if failures else 0)

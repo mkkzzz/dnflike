@@ -1,9 +1,34 @@
 extends Node
 ## Presentation/input adapter. The candidate is written before becoming live.
 const Loot=preload("res://loot/service.gd")
+const LOOT_BEAM := "res://assets_local/loot/beam.png"
+## 背包图标是 28x28 且外圈带底框；地面掉落要的是"没有背景"的物品本体，
+## 所以按这个像素数裁掉四边外框。
+const ICON_BORDER := 3
 var game
 var layer: Node2D
 var signature := ""
+var _beam_texture: Texture2D
+var _beam_loaded := false
+
+## 原版掉落光柱；资源库未烘焙（其它工作区没有 assets_local/loot）时返回 null，自动降级。
+func loot_beam_texture() -> Texture2D:
+	if not _beam_loaded:
+		_beam_loaded = true
+		if ResourceLoader.exists(LOOT_BEAM):_beam_texture = load(LOOT_BEAM) as Texture2D
+	return _beam_texture
+
+## 地面掉落的物品贴图：金币用原生金币帧，其余用图标裁掉外框后的本体。
+func drop_texture(id: String) -> Texture2D:
+	if id == "gold":return game.skin.texture("inventory_bottom",4)
+	var source: Texture2D = game.windows.item_texture(id)
+	if source == null:return null
+	var size := source.get_size()
+	if size.x <= ICON_BORDER * 2 or size.y <= ICON_BORDER * 2:return source
+	var atlas := AtlasTexture.new()
+	atlas.atlas = source
+	atlas.region = Rect2(ICON_BORDER, ICON_BORDER, size.x - ICON_BORDER * 2, size.y - ICON_BORDER * 2)
+	return atlas
 
 func setup(root) -> void:
 	game=root
@@ -26,8 +51,19 @@ func _process(_delta: float) -> void:
 	for drop: Dictionary in drops:
 		var node:=Node2D.new();node.position=Vector2(float(drop["position"][0]),float(drop["position"][1]));node.z_index=int(node.position.y);layer.add_child(node)
 		var id: String=drop["item"]
-		var texture: Texture2D=game.skin.texture("inventory_bottom",4) if id=="gold" else game.windows.item_texture(id)
-		var sprite:=Sprite2D.new();sprite.texture=texture;sprite.position=Vector2(0,-10);node.add_child(sprite)
+		# 地面掉落用原版表现：物品本体不带背包图标外框，下面加原版掉落光柱
+		# （itemdropeffect/beam.img，由 tools/bake_loot_sprites.py 从资源库烘到 assets_local/loot/）。
+		var beam_tex:=loot_beam_texture()
+		if beam_tex!=null:
+			var beam:=Sprite2D.new();beam.texture=beam_tex;beam.centered=false
+			var beam_scale:=0.2
+			var beam_size:=beam_tex.get_size()*beam_scale
+			beam.scale=Vector2(beam_scale,beam_scale)
+			beam.position=Vector2(-beam_size.x*0.5,-beam_size.y+6)
+			beam.modulate=Color(1,1,1,0.85)
+			node.add_child(beam)
+		var texture: Texture2D=drop_texture(id)
+		var sprite:=Sprite2D.new();sprite.texture=texture;sprite.position=Vector2(0,-10);sprite.scale=Vector2(0.85,0.85);node.add_child(sprite)
 		var text: String=("金币" if id=="gold" else String(game.Catalog.ITEMS[id]["name"]))+" ×"+str(drop["count"])
 		var at:=Vector2(node.position.x-45,node.position.y-43)
 		var bounds:=Rect2(at,Vector2(maxi(90,text.length()*11),15))

@@ -588,7 +588,7 @@ func menu_panel() -> void:
 		if save_profile():show_character_selection())
 	if session.state == "battle":skin.button(panel, "撤退回城", Vector2(132, 134), func():
 		if act("flow.retreat"):show_overlay("result"))
-	skin.label(panel, "画面分辨率：1920×1080（固定）", Vector2(24, 177), 12, Color("f0d18a"))
+	skin.label(panel, "画面分辨率：%d×%d（固定）" % [display_settings.OUTPUT.x, display_settings.OUTPUT.y], Vector2(24, 177), 12, Color("f0d18a"))
 	var fullscreen: Button = skin.button(panel, "编辑器预览" if Engine.is_embedded_in_editor() else "返回窗口" if display_settings.is_fullscreen() else "切换全屏", Vector2(24, 211), func():
 		display_settings.toggle_fullscreen()
 		show_overlay("menu"))

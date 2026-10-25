@@ -135,11 +135,11 @@ func run() -> void:
 	host.check(game.session.profile["level"] == 60 and is_equal_approx(float(game.session.stats()["hp"]),2441.1), "level command updates the next-run stat source")
 	game.set_debug_open(false)
 	await key(KEY_F3)
-	host.check(game.get_window().content_scale_size == Vector2i(1920, 1080), "F3 cannot change the fixed output resolution")
+	host.check(game.get_window().content_scale_size == Vector2i(game.display_settings.OUTPUT), "F3 cannot change the fixed output resolution")
 	if host.capture:
 		await key(KEY_F11)
 		await RenderingServer.frame_post_draw
-		host.check(get_viewport().get_texture().get_image().get_size() == Vector2i(1920, 1080), "fullscreen keeps a 1920x1080 render target")
+		host.check(get_viewport().get_texture().get_image().get_size() == Vector2i(game.display_settings.OUTPUT), "fullscreen keeps the fixed render target")
 		await key(KEY_F11)
 	game.session = original
 	game.store.path = path
