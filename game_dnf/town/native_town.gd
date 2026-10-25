@@ -35,6 +35,9 @@ var inn_return:="enter_inn"
 var quest_marks: Dictionary={}
 var await_direction_release:=false
 var entry_latch:=""
+## 城镇也显示手上的武器。默认用带武器的合成动作包（运行时清单 players + player/stay|move|dash），
+## 武器类型来自 numbers.json 的 equipment.<id>.weapon；清单缺失时回退到原来的无武器分层包。
+var weapon_shape:="katana"
 
 func _ready() -> void:
 	loader.load_export("res://assets_local/flow_v1/manifest.json")
@@ -46,9 +49,7 @@ func _ready() -> void:
 	extend_ground(street,loader)
 	actor=Actor.new()
 	street.add_child(actor)
-	var assets: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/combat/manifest.json"))
-	var motion: Dictionary=assets["player_locomotion"]["town"]
-	actor.setup(motion["bank"],motion["clips"])
+	setup_actor()
 	font=UIFont.make()
 	localize_signs()
 	labels=Node2D.new()
@@ -57,6 +58,29 @@ func _ready() -> void:
 	labels.draw.connect(_draw_names)
 	ensure_location("seria_room")
 	set_location("elvengard",ground)
+
+## 城镇角色的绘制包：优先带武器的合成帧，缺武器时回退到无武器分层帧。
+func setup_actor() -> void:
+	if actor == null:return
+	var runtime: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/manifest.json"))
+	var players: Dictionary = runtime.get("players", {})
+	var clips: Dictionary = runtime.get("clips", {})
+	if players.has(weapon_shape) and clips.has("player/stay") and clips.has("player/move") and clips.has("player/dash"):
+		actor.setup(players[weapon_shape], {
+			"stay":clips["player/stay"],
+			"move":clips["player/move"],
+			"dash":clips["player/dash"],
+		})
+		return
+	var assets: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/combat/manifest.json"))
+	var motion: Dictionary = assets["player_locomotion"]["town"]
+	actor.setup(motion["bank"],motion["clips"])
+
+## 换武器（或重新进城镇）时刷新手上的武器外观。
+func set_weapon(shape: String) -> void:
+	if shape == "" or shape == weapon_shape:return
+	weapon_shape = shape
+	setup_actor()
 
 func ensure_location(id: String) -> bool:
 	if map_nodes.has(id):return true

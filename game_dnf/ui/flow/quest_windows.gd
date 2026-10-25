@@ -5,7 +5,6 @@ var selected := ""
 var tab := 0
 var focus_npc := ""
 var tracker: Control
-var tracker_text: Label
 var tracker_signature := ""
 
 func _init(root) -> void:
@@ -204,22 +203,115 @@ func dungeon() -> void:
 	if game.session.quests.status(game.session.profile,"legacy.trial")=="active":
 		game.skin.button(node,"继续旧试炼",Vector2(34,528),func():game.selected_dungeon="forest_trial";game.show_overlay("dungeon"))
 
+## 任务指引面板：常驻，贴屏幕最右侧、纵向中间偏上。
+## 底板与图标用原版 quest.img 的原生帧（帧14 = 239x147 暗底面板，帧0 = 39x39 金环图标，
+## 帧1 = 236x3 分隔线），按 2/3 缩放 => 159x98，文字与对话框同源（skin.label）。
+## refresh_tracker 每帧被 loop_root 调用，因此用签名比对，只有内容变化才重建文字。
+const GUIDE_SCALE := 2.0 / 3.0
+const GUIDE_SIZE := Vector2(159, 98)
+const GUIDE_ORIGIN := Vector2(641, 132)   # 800 - 159 = 641：整块贴右边缘
+const GUIDE_TOAST_DROP := 30.0
+const GUIDE_TITLE_COLOR := Color("f0d18a")
+const GUIDE_BODY_COLOR := Color("c9bda3")
+const GUIDE_DONE_COLOR := Color("8fc46a")
+const GUIDE_MAX_OBJECTIVES := 3
+const GUIDE_TITLE_FONT := 10
+const GUIDE_BODY_FONT := 9
+const GUIDE_ROW_STEP := 12.0
+
 func refresh_tracker() -> void:
 	if not is_instance_valid(tracker):
-		tracker=game.windows.container(game.ui,Vector2(584,43),Vector2(205,148))
-		tracker.mouse_filter=Control.MOUSE_FILTER_IGNORE
-		tracker_text=text(tracker,"",Vector2.ZERO,Vector2(205,148),11,Color("f0d18a"))
-	tracker.visible=game.character_active and game.overlay=="" and not game.debug_is_open() and game.session.state in ["town","battle"]
-	tracker.position.y=82 if game.toast_panel.visible else 43
-	var lines := ""
+		_build_tracker()
+	var shown: bool = game.character_active and game.overlay=="" and not game.debug_is_open() and game.session.state in ["town","battle"]
+	var tracked: Array = []
+	var offers: Array = []
 	var marks := {}
 	for q: Dictionary in game.session.quests.list(game.session.profile,["available","active","ready"]):
 		if q["status"]=="ready":marks[q["receiver"]]="?"
 		elif q["status"]=="available" and not marks.has(q["giver"]):marks[q["giver"]]="!"
-		if q["tracked"]:
-			lines += q["name"]+"\n"
-			if q["status"]=="ready":lines+="  向"+game.session.quests.npc_name(q["receiver"])+"交付\n"
-			else:
-				for o: Dictionary in q["objectives"]:lines+="  "+objective_line(o)+"\n"
-	tracker_text.text=lines
+		if q["tracked"]:tracked.append(q)
+		elif q["status"]=="available" and offers.is_empty():offers.append(q)
 	game.town.quest_marks=marks
+	# 常驻：没有追踪任务也显示面板（改用占位与可接提示），方便随时知道下一步做什么。
+	tracker.visible=shown
+	if not tracker.visible:return
+	tracker.position=GUIDE_ORIGIN + (Vector2(0,GUIDE_TOAST_DROP) if game.toast_panel.visible else Vector2.ZERO)
+	tracker.modulate.a=1.0 if game.session.state=="town" else 0.92
+	var signature := ""
+	for q: Dictionary in tracked:
+		signature += str(q["id"])+"|"+str(q["status"])
+		for o: Dictionary in q["objectives"]:signature+="|"+str(o["id"])+":"+str(o["current"])
+		signature += "\n"
+	signature += "offer:"+str(offers[0]["id"] if not offers.is_empty() else "")
+	if signature == tracker_signature:return
+	tracker_signature = signature
+	_fill_tracker(tracked, offers)
+
+func _build_tracker() -> void:
+	tracker=game.windows.container(game.ui,GUIDE_ORIGIN,GUIDE_SIZE)
+	tracker.name="quest_guide"
+	tracker.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	game.skin.image(tracker,game.skin.texture("quest",14),Vector2.ZERO,GUIDE_SCALE).name="quest_guide_board"
+	game.skin.image(tracker,game.skin.texture("quest",0),Vector2(5,4),GUIDE_SCALE).name="quest_guide_icon"
+	game.skin.image(tracker,game.skin.texture("quest",1),Vector2(2,30),GUIDE_SCALE).name="quest_guide_rule"
+	tracker.set_meta("rows",[])
+
+func _fill_tracker(tracked: Array, offers: Array = []) -> void:
+	for row in tracker.get_meta("rows",[]):
+		if is_instance_valid(row):row.queue_free()
+	var rows: Array = []
+	if tracked.is_empty():
+		rows.append(_guide_title("任务指引"))
+		var idle_y := 34.0
+		idle_y=_guide_row(rows,"暂未追踪任务",GUIDE_BODY_COLOR,idle_y)
+		if not offers.is_empty():
+			var offer: Dictionary = offers[0]
+			idle_y=_guide_row(rows,"可接："+String(offer["name"]),GUIDE_TITLE_COLOR,idle_y)
+			idle_y=_guide_row(rows,"找 "+game.session.quests.npc_name(offer["giver"]),GUIDE_BODY_COLOR,idle_y)
+		tracker.set_meta("rows",rows)
+		return
+	var q: Dictionary = tracked[0]
+	rows.append(_guide_title(str(q["name"])))
+	var y := 34.0
+	if q["status"]=="ready":
+		y=_guide_row(rows,"目标已完成",GUIDE_DONE_COLOR,y)
+		y=_guide_row(rows,"回城向 %s 交付"%game.session.quests.npc_name(q["receiver"]),GUIDE_TITLE_COLOR,y)
+	else:
+		var objectives: Array = q["objectives"]
+		for index in mini(objectives.size(),GUIDE_MAX_OBJECTIVES):
+			var o: Dictionary = objectives[index]
+			var done: bool = int(o["current"]) >= int(o["amount"])
+			var mark := "✓" if done else "·"
+			y=_guide_row(rows,mark+" "+objective_line(o),GUIDE_DONE_COLOR if done else GUIDE_BODY_COLOR,y)
+		if objectives.size() > GUIDE_MAX_OBJECTIVES:
+			y=_guide_row(rows,"  另有 %d 项"%(objectives.size()-GUIDE_MAX_OBJECTIVES),GUIDE_BODY_COLOR,y)
+		if tracked.size() > 1:
+			y=_guide_row(rows,"  另 %d 条追踪中"%(tracked.size()-1),GUIDE_BODY_COLOR,y)
+	tracker.set_meta("rows",rows)
+
+func _guide_title(value: String) -> Label:
+	var title := Label.new()
+	title.text=game.skin.chinese(value)
+	title.position=Vector2(36,7)
+	title.size=Vector2(116,15)
+	title.clip_text=true
+	title.add_theme_font_override("font",game.skin.font)
+	title.add_theme_font_size_override("font_size",GUIDE_TITLE_FONT)
+	title.add_theme_color_override("font_color",GUIDE_TITLE_COLOR)
+	title.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	tracker.add_child(title)
+	return title
+
+func _guide_row(rows: Array, value: String, color: Color, y: float) -> float:
+	var label := Label.new()
+	label.text=game.skin.chinese(value)
+	label.position=Vector2(8,y)
+	label.size=Vector2(146,13)
+	label.clip_text=true
+	label.add_theme_font_override("font",game.skin.font)
+	label.add_theme_font_size_override("font_size",GUIDE_BODY_FONT)
+	label.add_theme_color_override("font_color",color)
+	label.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	tracker.add_child(label)
+	rows.append(label)
+	return y+GUIDE_ROW_STEP

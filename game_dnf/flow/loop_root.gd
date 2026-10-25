@@ -126,6 +126,7 @@ func _ready() -> void:
 		if "--recovery-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_consumables_flow.gd"
 		if "--consumables-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_consumables_flow.gd"
 		if "--gran-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_gran.gd"
+		if "--quest-guide-only" in OS.get_cmdline_user_args():runner_path="res://tests/flow/test_quest_guide_town.gd"
 		var runner = load(runner_path).new()
 		runner.game = self
 		add_child(runner)
@@ -632,6 +633,7 @@ func enter_character(path: String) -> bool:
 	world_clip.show()
 	town.show()
 	town.inn_return=session.profile.get("inn_return","enter_inn")
+	town.set_weapon(equipped_weapon_shape())
 	if not town.set_location(String(session.profile.get("town_location","elvengard")),session.TownWorld.vec(session.profile["town_position"])):
 		town.set_location("elvengard",Vector2(100,260))
 		session.profile["town_location"]="elvengard"
@@ -731,7 +733,16 @@ func drop_slot(source: Dictionary, target: Dictionary) -> void:
 func refresh_item_views() -> void:
 	windows.hide_tooltip()
 	build_hotbars()
+	# 换装后同步城镇手上的武器外观（同种武器时是空操作）。
+	if is_instance_valid(town):town.set_weapon(equipped_weapon_shape())
 	if overlay in ["inventory", "shop", "services", "upgrades"]:show_overlay(overlay)
+
+## 当前装备武器的外观类型（numbers.json 的 equipment.<id>.weapon），缺省太刀。
+func equipped_weapon_shape() -> String:
+	if session == null:return "katana"
+	var id := String(session.profile.get("equipped", ""))
+	var entry: Dictionary = session.Numbers.config().get("equipment", {}).get(id, {})
+	return String(entry.get("weapon", "katana"))
 
 func use_quick(index: int) -> void:
 	var id: String = session.profile["quick_items"][index]

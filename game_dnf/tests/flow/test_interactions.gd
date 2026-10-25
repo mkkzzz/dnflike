@@ -249,7 +249,9 @@ func compact_and_motion() -> void:
 	await host.frame("22_attached_difficulty")
 	game.show_overlay("")
 	await ticks()
-	host.check(game.town.actor.clips["stay"]["frames"][0]["img_frame"] == 176 and game.town.actor.bank["texture"].ends_with("motion_town.png"), "town uses original neutral Rest motion and its separate unarmed avatar bank")
+	# 2026-10-25 负责人要求城镇也持武器：改用运行时清单的带武器合成动作包
+	# （players.<weapon> + player/stay|move|dash），不再是 motion_town.png 的无武器分层帧。
+	host.check(game.town.actor.bank["texture"].ends_with("player_" + game.town.weapon_shape + ".png") and game.town.actor.clips["stay"]["frames"][0]["img_frame"] == 90, "town shows the equipped weapon using the armed original motion bank")
 	game.town.ground = Vector2(540, 230)
 	await ticks()
 	await host.frame("23_town_rest")
