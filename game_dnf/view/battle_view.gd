@@ -34,6 +34,12 @@ var _player_clips: Dictionary
 var _weapon := ""
 var _player_pos := Vector2.ZERO
 var _player_z := 0.0
+## 拾取下蹲：这段时间内把玩家姿势临时换成 sit（原版下蹲帧），到点自动回到模拟姿势。
+## 由 loot/bridge.gd 在拾取成功时调用 request_pickup_pose()。
+var pickup_pose_until_ms := 0
+
+func request_pickup_pose(duration_ms := 420.0) -> void:
+	pickup_pose_until_ms = Time.get_ticks_msec() + int(duration_ms)
 
 func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictionary, bus, weapon: String, map_loader) -> void:
 	_assets = assets
@@ -88,7 +94,13 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	if String(p["weapon"]) != _weapon:_set_weapon(String(p["weapon"]))
 	player_actor.position = _player_pos.round()
 	player_actor.z_index = int(_player_pos.y)
-	player_actor.present(p["ani"],p["clock"],p["facing"],p["z"],1.0 if p["flash"] else 0.0)
+	# 拾取瞬间播放下蹲（原版 sit 帧），其余时间完全按模拟给的动作。
+	var pose := String(p["ani"])
+	var pose_clock := float(p["clock"])
+	if Time.get_ticks_msec() < pickup_pose_until_ms:
+		pose = "sit"
+		pose_clock = 30.0
+	player_actor.present(pose,pose_clock,p["facing"],p["z"],1.0 if p["flash"] else 0.0)
 	_present_aura(String(p.get("aura","")),p,sim_ms)
 	for e: Dictionary in s["enemies"]:
 		var actor = enemy_actors.get(e["id"])

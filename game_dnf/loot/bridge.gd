@@ -14,6 +14,8 @@ var _manifest: Dictionary = {}
 var _manifest_loaded := false
 var _frame_sets: Dictionary = {}
 var _drop_textures: Dictionary = {}
+var _pickup_audio: AudioStreamPlayer
+var _pickup_streams: Dictionary = {}
 
 func loot_manifest() -> Dictionary:
 	if not _manifest_loaded:
@@ -154,6 +156,32 @@ func _key_out_slot_background(source: Texture2D) -> Texture2D:
 
 func setup(root) -> void:
 	game=root
+	var player := AudioStreamPlayer.new()
+	player.name="loot_pickup_audio"
+	add_child(player)
+	_pickup_audio=player
+	_load_pickup_sounds()
+
+## 拾取音效（原版 item_pick / coin_pick_01..03）由 bake_loot_sprites.py 复制到
+## assets_local/loot/audio/；缺失时不播，不影响拾取。
+func _load_pickup_sounds() -> void:
+	var sounds: Dictionary = loot_manifest().get("sounds", {})
+	for key: String in sounds:
+		var list: Array[AudioStream] = []
+		for file: String in sounds[key]:
+			var path := LOOT_DIR + "audio/" + file
+			if ResourceLoader.exists(path):
+				var stream := load(path) as AudioStream
+				if stream != null:list.append(stream)
+		if not list.is_empty():_pickup_streams[key] = list
+
+func play_pickup_sound(id: String) -> void:
+	if _pickup_audio == null:return
+	var key := "coin_pick" if id == "gold" else "item_pick"
+	var list: Array = _pickup_streams.get(key, [])
+	if list.is_empty():return
+	_pickup_audio.stream = list[randi() % list.size()]
+	_pickup_audio.play()
 
 func _process(_delta: float) -> void:
 	if game==null:return
@@ -252,6 +280,11 @@ func claim(id: String, view: Dictionary, cleared: bool) -> bool:
 		game.save_failed=true;game.notice("拾取未提交：存档写入失败，请重试");return false
 	game.session=candidate;game.save_failed=false
 	game.notice("已拾取 %s ×%d" % ["金币" if response["item"]=="gold" else game.Catalog.ITEMS[response["item"]]["name"],response["count"]])
+	# 拾取表现：下蹲一下 + 原版拾取音效
+	var battle_view: Variant = game.battle.get("view") if is_instance_valid(game.battle) else null
+	if battle_view != null and battle_view.has_method("request_pickup_pose"):
+		battle_view.request_pickup_pose()
+	play_pickup_sound(String(response.get("item", "")))
 	game.build_hotbars();return true
 
 func collect_room() -> void:

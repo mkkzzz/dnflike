@@ -388,6 +388,16 @@ func run() -> void:
 		await ticks(3)
 		var gold_after := int(game.session.profile["gold"])
 		check(gold_after > gold_before, "attack key X picks up the drop at the player's feet (%d -> %d)" % [gold_before, gold_after])
+		# 拾取表现：下蹲姿势 + 原版音效
+		var battle_view: Variant = game.battle.get("view")
+		check(battle_view != null and battle_view.pickup_pose_until_ms > 0, "pickup requests the crouch pose")
+		if battle_view != null:
+			check(battle_view.player_actor.clips.has("sit"), "player clips carry the original sit (crouch) frames")
+			await ticks(2)
+			check(String(battle_view.player_actor.pose) == "sit", "player actually plays the crouch pose while picking up (%s)" % str(battle_view.player_actor.pose))
+			await frame("07c_pickup")
+		check(game.loot_bridge._pickup_streams.size() > 0, "original pickup sounds are loaded")
+		check(game.loot_bridge._pickup_audio != null and game.loot_bridge._pickup_audio.stream != null, "pickup sound actually started")
 		# 附近没有掉落时 X 仍应照常出招（不应被拾取拦掉）
 		var pose_before := String(game.combat.read_view().get("player_pose", ""))
 		key(KEY_X, true)
@@ -423,7 +433,20 @@ func run() -> void:
 		if int(snap["room"]) != previous_room:
 			previous_room = int(snap["room"])
 			print("[LOOP_TEST] ACTUAL ROOM ", previous_room)
-			if previous_room > 1:await frame("08_room_%d" % previous_room)
+			if previous_room > 1:
+				await frame("08_room_%d" % previous_room)
+			# 换房后不应残留上一房间的敌人贴图：actor 数必须等于本房间实际敌人
+			await ticks(2)
+			var room_enemies: Array = game.combat.read_view()["enemies"]
+			var actors: int = game.battle.view.enemy_actors.size()
+			check(actors == room_enemies.size(), "room %d draws exactly its own enemies (actors %d vs enemies %d)" % [previous_room, actors, room_enemies.size()])
+			# 敌人必须站在可行走宽度内，否则会卡在墙外、看得见打不到
+			var room_width := float(game.battle.room_width)
+			var outside: Array = []
+			for enemy: Dictionary in room_enemies:
+				if float(enemy["pos"].x) < 40.0 or float(enemy["pos"].x) > room_width - 40.0:
+					outside.append("%d@%.0f" % [int(enemy["id"]), float(enemy["pos"].x)])
+			check(outside.is_empty() and room_width > 0.0, "room %d enemies stand inside the walkable width %.0f (outside: %s)" % [previous_room, room_width, str(outside)])
 		var pos: Vector2 = snap["pos"]
 		var target := pos
 		var enemy_near := false

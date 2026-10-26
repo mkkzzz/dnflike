@@ -155,7 +155,11 @@ func build(placement: Dictionary) -> Node2D:
 		s.z_index = z_for("bottom", 0) - 100
 		root.add_child(s)
 	var placed := 0
-	for list_key in ["animations", "objects", "monsters"]:
+	# 只画真正的场景美术：animations / objects。
+	# 地图数据里的 monsters[] 是怪物刷新锚点，不是背景装饰——以前把它也画出来，
+	# 结果同一只哥布林既有"画上去的一份（打不到）"又有战斗系统生成的一份（能打），
+	# 房间里就出现打不动的哥布林贴图。怪物一律由战斗系统生成。
+	for list_key in ["animations", "objects"]:
 		for item: Dictionary in room_data[list_key]:
 			if item.get("sprite") == null:continue
 			var layer := String(item.get("layer", "normal"))

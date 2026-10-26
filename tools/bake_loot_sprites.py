@@ -41,6 +41,11 @@ SHEETS = {
     "training_necklace": ("sprite/item/fieldimage.img", [7]),
 }
 FPS = {"beam": 12, "gold": 8}
+# 拾取音效（原版）：金币用 coin_pick_01..03，其它物品用 item_pick
+SOUNDS = {
+    "coin_pick": ["sounds/effect/coin_pick_01.ogg", "sounds/effect/coin_pick_02.ogg", "sounds/effect/coin_pick_03.ogg"],
+    "item_pick": ["sounds/effect/item_pick.ogg"],
+}
 
 
 def main() -> int:
@@ -91,6 +96,33 @@ def main() -> int:
         print("  %-16s %2d 帧  %-46s %dx%d" % (key, len(files), original.split("/")[-1], size[0], size[1]))
     (OUT / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(" 输出:", OUT)
+    # 拾取音效：原样复制（ogg 不需要再编码）
+    audio_dir = OUT / "audio"
+    audio_dir.mkdir(parents=True, exist_ok=True)
+    sounds: dict[str, list[str]] = {}
+    for key, originals in SOUNDS.items():
+        files: list[str] = []
+        for original in originals:
+            row = con.execute(
+                "select local_path from assets where lower(original_path)=? limit 1", (original.lower(),)
+            ).fetchone()
+            if not row:
+                print("  ❌ 音效缺失：", original)
+                continue
+            source = args.library / row[0]
+            # 库里本地文件名带 20 位哈希前缀，这里还原成原始文件名
+            clean = source.name
+            if len(clean) > 21 and clean[20] == "_":
+                clean = clean[21:]
+            target = audio_dir / clean
+            target.write_bytes(source.read_bytes())
+            files.append(clean)
+        if files:
+            sounds[key] = files
+    manifest["sounds"] = sounds
+    (OUT / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for key, files in sounds.items():
+        print("  音效 %-10s %s" % (key, ", ".join(files)))
     con.close()
     return 0
 
