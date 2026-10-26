@@ -11,10 +11,11 @@
 
 ## 最近完成
 
-- 2026-10-26 **掉落物改用原版 field 贴图 + 动画光柱 + 普攻键拾取**：①本体从"背包图标去底色"换成原版 `sprite/item/field_{consumption,material,weapon,image}.img` 与 `sprite/common/etc/usecoin.img`（金币 6 帧翻转），统一缩放到 22px 方框，金币不再比药水大 ②光柱用 `itemdropeffect/beam.img` 的 **16 帧**循环动画（加色混合，黑底不再盖住物品）③拾取改为**普攻键 X**：附近有掉落先捡、没掉落照常出招（E 仍可手动拾取）④`tools/bake_loot_sprites.py` 重写为按帧烘焙 + 映射表
-- 2026-10-26 **本机显示改为 2 倍整数放大（不入库）**：`display_settings.gd` 本地改成 `OUTPUT=1600x1200 / CONTENT_SCALE=2.0 / OFFSET=0`，每个美术像素正好 2×2、无左右黑边（原 1920x1080 按 1.8 倍会左右各留 240 黑边且像素 1~2px 不均）。**该文件只在本机改，不提交**，清单见 `D:\dnflike_local\LOCAL_ONLY_CHANGES.md`；配套的测试与设置面板文字已改成读 `display_settings` 常量，因此两种配置都能过
-- 2026-10-26 **城镇也手持武器**：城镇角色从无武器分层包换成运行时清单的带武器合成包（`players.<weapon>` + `player/stay|move|dash`），武器类型取 `numbers.json` 的 `equipment.<id>.weapon`
-- 2026-10-26 **常驻任务指引面板**：贴右边缘 (641,132)、原生 `quest.img` 帧14/帧0/帧1 按 2/3 缩放成 159×98、对话框同源字体；无追踪任务时显示"暂未追踪任务 + 可接任务/找谁"
+- 2026-10-26 **修掉房间里"打不了的哥布林"**：地图数据里的 `monsters[]` 是刷新锚点，`native_map_loader` 却把它当背景美术画出来 → 同一只哥布林有"画上去的（非实体）"和"战斗系统生成的（实体）"两份。改为地图只画 `animations`/`objects`，怪物一律由战斗系统生成。新增两条回归：每房间 actor 数 == 该房间敌人、敌人必须在可行走宽度内
+- 2026-10-26 **拾取下蹲动作 + 原版音效**：拾取成功后在 `battle_view.request_pickup_pose()` 的 420ms 内把玩家姿势切成原版 `sit`（下蹲帧 157）；音效从资源库取 `sounds/effect/item_pick.ogg` 与 `coin_pick_01..03.ogg`（金币随机），烘到 `assets_local/loot/audio/` 由 `AudioStreamPlayer` 播放
+- 2026-10-26 **掉落物改用原版 field 贴图 + 动画光柱 + 普攻键拾取**：①本体换成原版 `sprite/item/field_{consumption,material,weapon,image}.img` 与 `sprite/common/etc/usecoin.img`（金币 6 帧翻转），统一缩放到 22px 方框 ②光柱用 `itemdropeffect/beam.img` 的 **16 帧**循环动画（加色混合，黑底不再盖住物品）③拾取改为**普攻键 X**：附近有掉落先捡、没掉落照常出招（E 仍可手动拾取）④`tools/bake_loot_sprites.py` 按帧烘焙 + 映射表 + 音效
+- 2026-10-26 **本机显示改为 2 倍整数放大（不入库）**：`display_settings.gd` 本地改成 `OUTPUT=1600x1200 / CONTENT_SCALE=2.0 / OFFSET=0`，每个美术像素正好 2×2、无左右黑边。**该文件只在本机改，不提交**，清单见 `D:\dnflike_local\LOCAL_ONLY_CHANGES.md`
+- 2026-10-26 **城镇也手持武器 + 常驻任务指引面板**：城镇角色改用带武器合成包（`players.<weapon>` + `player/stay|move|dash`）；任务指引贴右边缘 (641,132)、原生 `quest.img` 帧 14/0/1 按 2/3 缩放成 159×98、对话框同源字体、无任务时显示"暂未追踪任务 + 可接任务/找谁"
 - 2026-10-23 **两项共享资源接收完成并登记**：DNF assets v1（runtime 61 文件 + library 11 包 47,100 文件）与 DNF references v1（5 文件）均逐包校验通过并写入[版本注册表](../../project/05_版本注册表.md)
 - 2026-10-23 出招人声按"太长"砍短：0.22/0.34/0.44/0.58 s → **0.16/0.20/0.24/0.30 s**（`2b3b543`），去掉与挥剑声的重叠
 - 2026-10-22 **把 ws2 新版工程 `game_dnf` 接到本机**：加入稀疏范围、按资源库 Release 安装 runtime 资产（61 文件，sha256 全通过），跑通 `game_dnf` 回归；启动窗口「格兰之森 · 新版战斗验证」
