@@ -11,11 +11,11 @@
 
 ## 最近完成
 
+- 2026-10-26 **掉落物改用原版 field 贴图 + 动画光柱 + 普攻键拾取**：①本体从"背包图标去底色"换成原版 `sprite/item/field_{consumption,material,weapon,image}.img` 与 `sprite/common/etc/usecoin.img`（金币 6 帧翻转），统一缩放到 22px 方框，金币不再比药水大 ②光柱用 `itemdropeffect/beam.img` 的 **16 帧**循环动画（加色混合，黑底不再盖住物品）③拾取改为**普攻键 X**：附近有掉落先捡、没掉落照常出招（E 仍可手动拾取）④`tools/bake_loot_sprites.py` 重写为按帧烘焙 + 映射表
 - 2026-10-26 **本机显示改为 2 倍整数放大（不入库）**：`display_settings.gd` 本地改成 `OUTPUT=1600x1200 / CONTENT_SCALE=2.0 / OFFSET=0`，每个美术像素正好 2×2、无左右黑边（原 1920x1080 按 1.8 倍会左右各留 240 黑边且像素 1~2px 不均）。**该文件只在本机改，不提交**，清单见 `D:\dnflike_local\LOCAL_ONLY_CHANGES.md`；配套的测试与设置面板文字已改成读 `display_settings` 常量，因此两种配置都能过
 - 2026-10-26 **城镇也手持武器**：城镇角色从无武器分层包换成运行时清单的带武器合成包（`players.<weapon>` + `player/stay|move|dash`），武器类型取 `numbers.json` 的 `equipment.<id>.weapon`
 - 2026-10-26 **常驻任务指引面板**：贴右边缘 (641,132)、原生 `quest.img` 帧14/帧0/帧1 按 2/3 缩放成 159×98、对话框同源字体；无追踪任务时显示"暂未追踪任务 + 可接任务/找谁"
-- 2026-10-26 **地面掉落改用原版素材（半成品，待修）**：`tools/bake_loot_sprites.py` 从资源库烘出 `itemdropeffect/beam.png` 与 `floor.png` 到 `assets_local/loot/`（本地生成，gitignore）；掉落本体改成裁掉 28×28 图标外框后的 22×22 本体 + 原版光柱。**负责人反馈"地图没掉东西了"，明天继续修**
-- 2026-10-23 **两项共享资源接收完成并登记**：①DNF assets v1——runtime 61 文件 + library 全 11 包（3.31 GB / 47,100 文件）逐包校验通过，库落 `D:\dnflike-assets\dnf-native-assets-v1-20261022\library_v1`（4.87 GB）②DNF references v1——`references-01.zip` 5 文件校验通过。两处登记已写入[版本注册表](../../project/05_版本注册表.md)
+- 2026-10-23 **两项共享资源接收完成并登记**：DNF assets v1（runtime 61 文件 + library 11 包 47,100 文件）与 DNF references v1（5 文件）均逐包校验通过并写入[版本注册表](../../project/05_版本注册表.md)
 - 2026-10-23 出招人声按"太长"砍短：0.22/0.34/0.44/0.58 s → **0.16/0.20/0.24/0.30 s**（`2b3b543`），去掉与挥剑声的重叠
 - 2026-10-22 **把 ws2 新版工程 `game_dnf` 接到本机**：加入稀疏范围、按资源库 Release 安装 runtime 资产（61 文件，sha256 全通过），跑通 `game_dnf` 回归；启动窗口「格兰之森 · 新版战斗验证」
 - 2026-10-22 开工补齐两个必需稀疏目录：`game/assets/swordsman_v7_c8`（297 文件）与 `c10`（1417 文件）；不补则主回归挂 3 条（c8/c10 断言）。主工程回归 **527 项 failures=0**

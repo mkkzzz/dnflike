@@ -1,34 +1,107 @@
 extends Node
 ## Presentation/input adapter. The candidate is written before becoming live.
 const Loot=preload("res://loot/service.gd")
-const LOOT_BEAM := "res://assets_local/loot/beam.png"
-## 背包图标是画在"深色格子底"上的 28x28 图；地面掉落只要物品本体。
-## 这里从四角洪水填充掉底色（按颜色容差），得到透明背景的物体轮廓，并按 id 缓存。
-## 背包格子底是一层深浅不一的暗色纹理（16/32/48 混合），容差要放宽到能覆盖这层纹理，
-## 又远小于物品本体的亮色，才不会把物品吃掉。
+## 原版地面掉落：本体用 sprite/item/field*.img，光柱用 itemdropeffect/beam.img（16 帧循环）。
+## 这些由 tools/bake_loot_sprites.py 从资源库烘到 assets_local/loot/（本机生成物，gitignore）。
+## 没有烘焙结果时退回"背包图标去底色"的老方案，保证其它工作区仍能跑。
+const LOOT_MANIFEST := "res://assets_local/loot/manifest.json"
+const LOOT_DIR := "res://assets_local/loot/"
 const ICON_BG_TOLERANCE := 0.38
 var game
 var layer: Node2D
 var signature := ""
-var _beam_texture: Texture2D
-var _beam_loaded := false
+var _manifest: Dictionary = {}
+var _manifest_loaded := false
+var _frame_sets: Dictionary = {}
 var _drop_textures: Dictionary = {}
 
-## 原版掉落光柱；资源库未烘焙（其它工作区没有 assets_local/loot）时返回 null，自动降级。
-func loot_beam_texture() -> Texture2D:
-	if not _beam_loaded:
-		_beam_loaded = true
-		if ResourceLoader.exists(LOOT_BEAM):_beam_texture = load(LOOT_BEAM) as Texture2D
-	return _beam_texture
+func loot_manifest() -> Dictionary:
+	if not _manifest_loaded:
+		_manifest_loaded = true
+		if FileAccess.file_exists(LOOT_MANIFEST):
+			var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(LOOT_MANIFEST))
+			if parsed is Dictionary:_manifest = parsed
+	return _manifest
 
-## 地面掉落的物品贴图：去掉背包格子的底色，只留物品本体。
+## 某个 key（物品 id 或 "beam"）的烘焙信息；没有则返回空字典。
+func loot_entry(key: String) -> Dictionary:
+	var sprites: Dictionary = loot_manifest().get("sprites", {})
+	return sprites.get(key, {})
+
+## 单帧贴图（多帧时取第 0 帧）。
+func loot_texture(key: String) -> Texture2D:
+	var entry := loot_entry(key)
+	if entry.is_empty():return null
+	var files: Array = entry.get("frames", [])
+	if files.is_empty():return null
+	var path := LOOT_DIR + String(files[0])
+	if not ResourceLoader.exists(path):return null
+	return load(path) as Texture2D
+
+## 动画用的 SpriteFrames（帧数>1 时循环播放）。
+func loot_sprite_frames(key: String) -> SpriteFrames:
+	if _frame_sets.has(key):return _frame_sets[key]
+	var entry := loot_entry(key)
+	if entry.is_empty():return null
+	var files: Array = entry.get("frames", [])
+	if files.is_empty():return null
+	var frames := SpriteFrames.new()
+	frames.remove_animation("default")
+	frames.add_animation("default")
+	frames.set_animation_loop("default", true)
+	frames.set_animation_speed("default", float(entry.get("fps", 10)))
+	for file in files:
+		var path := LOOT_DIR + String(file)
+		if ResourceLoader.exists(path):frames.add_frame("default", load(path) as Texture2D)
+	if frames.get_frame_count("default") == 0:return null
+	_frame_sets[key] = frames
+	return frames
+
+## 原版光柱的动画；未烘焙时返回 null，自动降级为不画光柱。
+func loot_beam_frames() -> SpriteFrames:
+	return loot_sprite_frames("beam")
+
+## 兼容旧调用：返回光柱首帧贴图（测试与外部脚本用）。
+func loot_beam_texture() -> Texture2D:
+	return loot_texture("beam")
+
+## 地面掉落本体：所有物品统一缩放到同一个外框（金币原来 28x34，比药水大太多）。
+const DROP_BODY_BOX := 22.0
+
+## 地面掉落本体：优先用原版 field 图；没有烘焙结果时退回背包图标去底色。
 func drop_texture(id: String) -> Texture2D:
+	if not loot_entry(id).is_empty():
+		return loot_texture(id)
 	if _drop_textures.has(id):return _drop_textures[id]
 	var source: Texture2D = game.skin.texture("inventory_bottom",4) if id == "gold" else game.windows.item_texture(id)
 	if source == null:return null
 	var keyed := _key_out_slot_background(source)
 	_drop_textures[id] = keyed
 	return keyed
+
+## 落地效果：原版 field 图用动画精灵；单帧或回退方案用静态精灵。
+## 所有本体统一缩放到 DROP_BODY_BOX 的方框内，保证金币和药水看着一样大。
+func build_drop_body(id: String) -> Node2D:
+	var frames := loot_sprite_frames(id)
+	if frames != null:
+		var animated := AnimatedSprite2D.new()
+		animated.sprite_frames = frames
+		animated.animation = "default"
+		animated.play()
+		animated.scale = _body_scale(frames.get_frame_texture("default", 0))
+		return animated
+	var sprite := Sprite2D.new()
+	sprite.texture = drop_texture(id)
+	if sprite.texture != null:sprite.scale = _body_scale(sprite.texture)
+	return sprite
+
+func _body_scale(texture: Texture2D) -> Vector2:
+	if texture == null:return Vector2.ONE
+	var size := texture.get_size()
+	var longest := maxf(size.x, size.y)
+	if longest <= 0.0:return Vector2.ONE
+	var factor := DROP_BODY_BOX / longest
+	return Vector2(factor, factor)
 
 ## 从"最占面积的不透明颜色"（即背包格子底）向内洪水填充成透明。
 ## 注意不能拿角落像素当底色：图标四角常是 alpha=0 的透明像素，颜色不可靠。
@@ -100,24 +173,28 @@ func _process(_delta: float) -> void:
 	for drop: Dictionary in drops:
 		var node:=Node2D.new();node.position=Vector2(float(drop["position"][0]),float(drop["position"][1]));node.z_index=int(node.position.y);layer.add_child(node)
 		var id: String=drop["item"]
-		# 地面掉落用原版表现：物品本体不带背包图标外框，下面加原版掉落光柱
-		# （itemdropeffect/beam.img，由 tools/bake_loot_sprites.py 从资源库烘到 assets_local/loot/）。
-		var beam_tex:=loot_beam_texture()
-		if beam_tex!=null:
-			var beam:=Sprite2D.new();beam.texture=beam_tex;beam.centered=false
+		# 原版表现：16 帧循环光柱 + field 系列掉落本体（都没有背包格子底）
+		var beam_frames:=loot_beam_frames()
+		if beam_frames!=null:
+			var beam:=AnimatedSprite2D.new()
+			beam.sprite_frames=beam_frames;beam.animation="default";beam.centered=false
+			beam.play()
 			# 原版光柱贴图自带不透明黑底（DNF 用加色混合画光）。必须同样用
 			# BLEND_MODE_ADD，否则会盖出一块黑方块，把物品本体整个遮住。
 			var additive:=CanvasItemMaterial.new()
 			additive.blend_mode=CanvasItemMaterial.BLEND_MODE_ADD
 			beam.material=additive
 			var beam_scale:=0.2
-			var beam_size:=beam_tex.get_size()*beam_scale
+			var beam_texture: Texture2D = beam_frames.get_frame_texture("default", 0)
+			var beam_size:=beam_texture.get_size()*beam_scale
 			beam.scale=Vector2(beam_scale,beam_scale)
 			beam.position=Vector2(-beam_size.x*0.5,-beam_size.y+6)
 			beam.modulate=Color(1,1,1,0.9)
 			node.add_child(beam)
-		var texture: Texture2D=drop_texture(id)
-		var sprite:=Sprite2D.new();sprite.texture=texture;sprite.position=Vector2(0,-10);sprite.scale=Vector2(0.85,0.85);node.add_child(sprite)
+		var body:=build_drop_body(id)
+		# 缩放已在 build_drop_body 里按 DROP_BODY_BOX 归一化（金币不再比药水大），此处只定位。
+		body.position=Vector2(0,-10)
+		node.add_child(body)
 		var text: String=("金币" if id=="gold" else String(game.Catalog.ITEMS[id]["name"]))+" ×"+str(drop["count"])
 		var at:=Vector2(node.position.x-45,node.position.y-43)
 		var bounds:=Rect2(at,Vector2(maxi(90,text.length()*11),15))
@@ -131,6 +208,25 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if game==null or not event is InputEventKey or not event.pressed or event.echo or event.keycode!=KEY_E:return
 	if game.session.state!="battle" or game.overlay!="" or game.debug_panel.visible:return
 	pickup_nearest();get_viewport().set_input_as_handled()
+
+## 普攻键拾取用：附近有掉落就捡走并返回 true（没有则安静返回 false，让 X 照常出招）。
+func try_pickup() -> bool:
+	if game==null or game.combat==null:return false
+	var view: Dictionary=game.combat.read_view()
+	if view.is_empty() or view.get("paused",true):return false
+	var nearest := _nearest_drop(view)
+	if nearest.is_empty():return false
+	return claim(String(nearest["id"]),view,false)
+
+func _nearest_drop(view: Dictionary) -> Dictionary:
+	var nearest: Dictionary={};var distance:=INF
+	for drop: Dictionary in Loot.pending(game.session.run,String(view["room_id"])):
+		var point:=Vector2(float(drop["position"][0]),float(drop["position"][1]))
+		var delta: Vector2=point-Vector2(view["pos"])
+		var limits: Array=Loot.config()["pickup_range"]
+		if absf(delta.x)>float(limits[0]) or absf(delta.y)>float(limits[1]):continue
+		if delta.length_squared()<distance:nearest=drop;distance=delta.length_squared()
+	return nearest
 
 func pickup_nearest() -> bool:
 	if game.combat==null:return false
@@ -152,7 +248,8 @@ func claim(id: String, view: Dictionary, cleared: bool) -> bool:
 	candidate.state=game.session.state;candidate.result=game.session.result.duplicate(true)
 	var response:=Loot.claim(candidate.profile,candidate.run,id,String(view["room_id"]),Vector2(view["pos"]),cleared and bool(view["room_cleared"]))
 	if not response["ok"]:game.notice(response["message"]);return false
-	if not game.store.write(candidate):game.save_failed=true;game.notice("拾取未提交：存档写入失败，请重试");return false
+	if not game.store.write(candidate):
+		game.save_failed=true;game.notice("拾取未提交：存档写入失败，请重试");return false
 	game.session=candidate;game.save_failed=false
 	game.notice("已拾取 %s ×%d" % ["金币" if response["item"]=="gold" else game.Catalog.ITEMS[response["item"]]["name"],response["count"]])
 	game.build_hotbars();return true

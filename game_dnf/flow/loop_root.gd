@@ -246,7 +246,12 @@ func _input(event: InputEvent) -> void:
 	if not character_active and key != KEY_F11:return
 	if key == KEY_SHIFT:windows.update_skill_detail(event.pressed)
 	if key not in [KEY_P, KEY_ESCAPE, KEY_F3, KEY_F11]:
-		if session.state == "battle" and overlay == "" and not debug_is_open():forward_battle_key(key, event.pressed, event.echo)
+		if session.state == "battle" and overlay == "" and not debug_is_open():
+			# 普攻键（X）兼职拾取：附近有地面掉落时先捡，没掉落才照常出招。
+			if key == KEY_X and event.pressed and not event.echo and loot_bridge != null and loot_bridge.try_pickup():
+				get_viewport().set_input_as_handled()
+				return
+			forward_battle_key(key, event.pressed, event.echo)
 		return
 	if not event.is_pressed() or event.is_echo():return
 	if key == KEY_P and not debug_panel.is_typing():

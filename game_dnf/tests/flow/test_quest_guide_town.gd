@@ -105,24 +105,16 @@ func run() -> void:
 		game.quest_windows.refresh_tracker()
 		await ticks(3)
 		check(guide().visible and row_texts().any(func(t):return String(t)=="暂未追踪任务"), "guide stays on screen after untracking")
-	# 地面掉落：本体要去掉背包格子底（透明背景），光柱用资源库烘出的原版贴图
+	# 地面掉落：本体用原版 field 图（不是背包图标），光柱是原版 16 帧动画
 	var potion_tex: Texture2D = game.loot_bridge.drop_texture("potion")
 	check(potion_tex != null, "ground drop has an item body texture")
+	check(game.loot_bridge.loot_entry("potion").size() > 0, "potion body comes from the original field_consumption sheet")
 	if potion_tex != null:
-		var body: Image = potion_tex.get_image()
-		var corners_clear := true
-		var body_opaque := 0
-		var width := body.get_width()
-		var height := body.get_height()
-		for point in [Vector2i(0, 0), Vector2i(width - 1, 0), Vector2i(0, height - 1), Vector2i(width - 1, height - 1)]:
-			if body.get_pixel(point.x, point.y).a > 0.1:corners_clear = false
-		for y in height:
-			for x in width:
-				if body.get_pixel(x, y).a > 0.5:body_opaque += 1
-		check(corners_clear, "inventory slot background is keyed out (corners transparent)")
-		check(body_opaque > 20, "the item body itself stays visible (%d opaque pixels)" % body_opaque)
-	check(game.loot_bridge.drop_texture("gold") != null, "gold keeps a drop body texture")
-	var beam: Texture2D = game.loot_bridge.loot_beam_texture()
-	check(beam != null and beam.get_size() == Vector2(179, 600), "baked original drop beam is available: " + (str(beam.get_size()) if beam != null else "missing"))
+		check(potion_tex.get_size() == Vector2(21, 10), "potion body keeps the native field sprite size %s" % str(potion_tex.get_size()))
+	check(game.loot_bridge.loot_entry("gold").size() > 0, "gold body comes from the original usecoin sheet")
+	check((game.loot_bridge.loot_entry("gold").get("frames", []) as Array).size() > 1, "gold body has its own coin animation")
+	var beam_frames: SpriteFrames = game.loot_bridge.loot_beam_frames()
+	check(beam_frames != null and beam_frames.get_frame_count("default") > 1, "drop beam is the original animated strip")
+	check(game.loot_bridge.loot_texture("beam") != null and game.loot_bridge.loot_texture("beam").get_size() == Vector2(179, 600), "beam frame keeps its native size")
 	print("[GUIDE_TOWN] COMPLETE checks=%d failures=%d captures=%d" % [checks, failures, captured.size()])
 	get_tree().quit(1 if failures else 0)

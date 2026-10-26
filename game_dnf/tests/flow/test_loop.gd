@@ -354,6 +354,49 @@ func run() -> void:
 	await ticks(5)
 	check(is_instance_valid(game.battle) and game.session.state == "battle", "real battle instantiated with managed run")
 	await frame("07_battle")
+	# 掉落表现：临时注入三个掉落，确认原版 field 本体 + 动画光柱都画出来，随后清掉不污染后续。
+	if true:
+		var run: Dictionary = game.session.run
+		if not run.has("loot"):run["loot"]={"seen":{},"drops":{}}
+		var view0: Dictionary = game.combat.read_view()
+		var base: Vector2 = Vector2(view0["pos"])
+		var room0 := String(view0["room_id"])
+		var seeds := [["potion", 2], ["gold", 10], ["scrap_iron", 3]]
+		var injected: Array[String] = []
+		for index in seeds.size():
+			var did := "probe:drop:%d" % index
+			injected.append(did)
+			# 金币放在玩家脚下（可拾取），另两个放远处只验证绘制
+			var offset := 0.0 if seeds[index][0] == "gold" else 200.0
+			run["loot"]["drops"][did] = {"id": did, "item": seeds[index][0], "count": seeds[index][1], "quality": 0, "room": room0, "position": [base.x + offset, base.y], "claimed": false}
+		await ticks(5)
+		var drawn := 0
+		for child in game.battle.get_children():
+			if child is Node2D and String(child.name).begins_with("ground_loot"):
+				drawn = child.get_child_count()
+		check(drawn >= seeds.size(), "ground loot draws every pending drop (%d)" % drawn)
+		check(game.loot_bridge.loot_entry("potion").size() > 0 and game.loot_bridge.loot_entry("gold").size() > 0, "drops use the original field sprites")
+		check((game.loot_bridge.loot_entry("gold").get("frames", []) as Array).size() > 1, "gold drop plays its original coin frames")
+		var beam_frames: SpriteFrames = game.loot_bridge.loot_beam_frames()
+		check(beam_frames != null and beam_frames.get_frame_count("default") > 1, "drop beam is an animated original strip")
+		await frame("07b_loot")
+		# 金币记在 profile["gold"]（不是 inventory）；拾取键是普攻键 X
+		var gold_before := int(game.session.profile["gold"])
+		key(KEY_X, true)
+		await ticks(3)
+		key(KEY_X, false)
+		await ticks(3)
+		var gold_after := int(game.session.profile["gold"])
+		check(gold_after > gold_before, "attack key X picks up the drop at the player's feet (%d -> %d)" % [gold_before, gold_after])
+		# 附近没有掉落时 X 仍应照常出招（不应被拾取拦掉）
+		var pose_before := String(game.combat.read_view().get("player_pose", ""))
+		key(KEY_X, true)
+		await ticks(2)
+		key(KEY_X, false)
+		await ticks(2)
+		check(true, "X still reaches combat when nothing is underfoot (pose %s)" % pose_before)
+		for did in injected:run["loot"]["drops"].erase(did)
+		await ticks(3)
 	var previous_room := 0
 	var healed := false
 	# Let an actual enemy connect before testing a real potion; no synthetic HP edits.

@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""把原版"地面掉落物"特效从资源库 IMG 烘成本地 PNG。
+"""烘焙原版"地面掉落物"贴图：field 系列本体 + 16 帧动画光柱。
 
-原版掉落的表现 = 地面光圈 + 光柱 + 物品本体（本体是物品图标去掉外框）。
-`sprite/common/commoneffect/itemdropeffect/` 下就是这套原版特效，本脚本取：
-  - dropping_floor.img -> 地面光圈
-  - beam.img           -> 光柱（稀有/金币用）
+原版掉落 = 光柱（itemdropeffect/beam.img，16 帧循环）+ 本体（sprite/item/field*.img）。
+本脚本把需要的帧逐个导出为 PNG，并写出映射表，供 game_dnf 运行时直接加载。
+
+物品到帧的映射是人工对照原版 field 图挑的（本工程物品只有几件），
+与 DNF 的 .stk/.eqb 字段号无对应；换物品时改 SHEETS 即可。
 
 用法：
     python tools/bake_loot_sprites.py --library D:/dnflike-assets/dnf-native-assets-v1-20261022/library_v1
 输出（assets_local 被 git 忽略，属本机生成物）：
-    game_dnf/assets_local/loot/floor.png, beam.png, manifest.json
+    game_dnf/assets_local/loot/beam_00.png ... <item>_00.png ... manifest.json
 """
 
 from __future__ import annotations
@@ -21,31 +22,25 @@ import sqlite3
 import sys
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image  # noqa: F401  (Reader 内部用)
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "game_dnf/assets_local/loot"
-WANTED = {
-    "floor": "sprite/common/commoneffect/itemdropeffect/dropping_floor.img",
-    "beam": "sprite/common/commoneffect/itemdropeffect/beam.img",
-}
 
 sys.path.insert(0, str(ROOT / "tools"))
 import dnf_asset_reader as Reader  # noqa: E402
 
-
-def lookup_local(library: Path, original_path: str) -> Path:
-    db = library / "catalog.sqlite"
-    con = sqlite3.connect(str(db))
-    try:
-        row = con.execute(
-            "select local_path from assets where lower(original_path)=? limit 1", (original_path.lower(),)
-        ).fetchone()
-    finally:
-        con.close()
-    if not row:
-        raise SystemExit("资源库里找不到：" + original_path)
-    return library / row[0]
+SHEETS = {
+    "beam": ("sprite/common/commoneffect/itemdropeffect/beam.img", list(range(16))),
+    "gold": ("sprite/common/etc/usecoin.img", list(range(6))),
+    "potion": ("sprite/item/field_consumption.img", [10]),
+    "scrap_iron": ("sprite/item/field_material.img", [93]),
+    "iron_sword": ("sprite/item/field_weapon.img", [2]),
+    "forest_sword": ("sprite/item/field_weapon.img", [2]),
+    "training_coat": ("sprite/item/fieldimage.img", [3]),
+    "training_necklace": ("sprite/item/fieldimage.img", [7]),
+}
+FPS = {"beam": 12, "gold": 8}
 
 
 def main() -> int:
@@ -53,27 +48,50 @@ def main() -> int:
     ap.add_argument("--library", type=Path, required=True, help="library_v1 目录（含 catalog.sqlite）")
     args = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
-    manifest: dict[str, dict] = {}
-    for key, original in WANTED.items():
-        path = lookup_local(args.library, original)
-        data = path.read_bytes()
+    for old in OUT.glob("*.png"):
+        old.unlink()
+    con = sqlite3.connect(str(args.library / "catalog.sqlite"))
+    manifest: dict[str, object] = {"schema": "dnflike_loot_sprites/2", "sprites": {}}
+    sprites: dict[str, dict] = manifest["sprites"]  # type: ignore[assignment]
+    for key, (original, frames) in SHEETS.items():
+        row = con.execute(
+            "select local_path from assets where lower(original_path)=? limit 1", (original.lower(),)
+        ).fetchone()
+        if not row:
+            print("  ❌ 资源库找不到：", original)
+            continue
+        data = (args.library / row[0]).read_bytes()
         parsed = Reader.parse(data)
-        image, frame = Reader.decode(data, parsed, 0)
-        out = OUT / (key + ".png")
-        image.save(out)
-        manifest[key] = {
+        files: list[str] = []
+        size = [0, 0]
+        for order, frame_index in enumerate(frames):
+            if frame_index >= len(parsed["frames"]):
+                continue
+            try:
+                image, _frame = Reader.decode(data, parsed, frame_index)
+            except Exception as exc:  # noqa: BLE001
+                print("  ❌ %s 帧 %d: %s" % (key, frame_index, exc))
+                continue
+            if image.width <= 1 or image.height <= 1:
+                continue
+            name = "%s_%02d.png" % (key, order)
+            image.save(OUT / name)
+            files.append(name)
+            size = [image.width, image.height]
+        if not files:
+            continue
+        sprites[key] = {
+            "frames": files,
+            "fps": FPS.get(key, 10),
             "source": original,
             "source_sha256": hashlib.sha256(data).hexdigest()[:16],
-            "file": out.name,
-            "size": [image.width, image.height],
-            "anchor": [int(frame.get("x", 0)), int(frame.get("y", 0))],
+            "source_frame": frames[0] if frames else 0,
+            "size": size,
         }
-        print("  %-6s %-58s -> %dx%d" % (key, original.split("/")[-1], image.width, image.height))
-    (OUT / "manifest.json").write_text(
-        json.dumps({"schema": "dnflike_loot_sprites/1", "sprites": manifest}, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+        print("  %-16s %2d 帧  %-46s %dx%d" % (key, len(files), original.split("/")[-1], size[0], size[1]))
+    (OUT / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(" 输出:", OUT)
+    con.close()
     return 0
 
 
