@@ -55,6 +55,15 @@ if ($LASTEXITCODE -ne 0) {
 }
 # Original combat inputs (ws1, doc 29 F2~F5): content pack + combat banks, built from the full library.
 & (Join-Path $PSScriptRoot "ensure_dnf_combat.ps1")
+# Town portal gate light (ws4): original gateup/gatedown frames, also built from the full library.
+$gateOut=Join-Path $gamePath "assets_local/town_gate/manifest.json"
+$gateTool=Join-Path $PSScriptRoot "bake_town_gate_light.py"
+$gateStale=-not (Test-Path -LiteralPath $gateOut)
+if (-not $gateStale) {$gateStale=(Get-Item -LiteralPath $gateTool).LastWriteTimeUtc -gt (Get-Item -LiteralPath $gateOut).LastWriteTimeUtc}
+if ($gateStale) {
+    & python $gateTool *> $null
+    if ($LASTEXITCODE -ne 0) {Write-Output "[DNF_GATE] bake_town_gate_light.py failed (full library missing? run python tools/dnf_asset_store.py sync --full)"}
+}
 $importOutput=& $GodotPath --headless --path $gamePath --editor --import --quit 2>&1
 $importExit=$LASTEXITCODE
 $ErrorActionPreference="Stop"

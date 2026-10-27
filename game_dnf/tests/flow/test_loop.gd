@@ -7,6 +7,7 @@ var capture := false
 var captured: Array = []
 var controls: Dictionary = {}
 const Language = preload("res://ui/flow/language_guard.gd")
+const GateLight = preload("res://town/gate_light.gd")
 
 func _ready() -> void:
 	capture = "--capture" in OS.get_cmdline_user_args()
@@ -216,6 +217,15 @@ func run() -> void:
 	check(not Language.contains_korean("背包 负重 普通难度 X HP 评价 S"), "Chinese text and normal key/rank notation are accepted")
 	check(game.town.loader.errors.is_empty(), "all native town textures load")
 	check(game.town.animated.size() >= 2, "source NPC/environment animation is active")
+	if GateLight.available():
+		var visible_portals: int = game.town.world.portals(game.town.location, game.town.inn_return).size()
+		var entry: Array = game.town.world.scene(game.town.location).get("dungeon_entry", [])
+		var expected: int = visible_portals + (1 if entry is Array and entry.size() == 4 else 0)
+		check(expected > 0 and game.town.gate_light_count() == expected, "every town portal shows the original gate light")
+		var gate_ok := true
+		for light in game.town.gate_lights:
+			if not is_instance_valid(light) or light.frame_count() != 29 or light.up == null or light.down == null:gate_ok = false
+		check(gate_ok, "gate light keeps the original 29-frame up and down clips")
 	var hotkeys: Array[String] = []
 	for label in game.hud.find_children("*", "Label", true, false):
 		if label.get_meta("skill_hotkey", false):

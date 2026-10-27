@@ -2,6 +2,7 @@ extends Node2D
 signal interact(target: String)
 const Loader = preload("res://scripts/native_map_loader.gd")
 const Actor = preload("res://scripts/native_actor.gd")
+const GateLight = preload("res://town/gate_light.gd")
 const TextPatch = preload("res://ui/flow/native_text_patch.gd")
 const UIFont = preload("res://ui/flow/ui_font.gd")
 const World = preload("res://town/world.gd")
@@ -27,6 +28,9 @@ var enabled:=true
 var moving:=false
 var running:=false
 var animated: Array=[]
+var gate_lights: Array=[]
+## 地面逻辑坐标 → 屏幕坐标的固定视觉偏移（角色脚部 = ground + (0,120)）。
+const GROUND_DRAW_OFFSET := 120
 var last_tap:={KEY_LEFT:-1000,KEY_RIGHT:-1000}
 var run_direction:=0
 var player_name:=""
@@ -121,8 +125,37 @@ func set_location(id: String, point:=Vector2.ZERO) -> bool:
 	animated.clear()
 	for node in map_root.get_children():
 		if node is Loader.MapSprite and node.frames.size()>1:animated.append(node)
+	rebuild_gate_lights()
 	update_camera()
 	return true
+
+## 每个可见传送点（含副本入口）放一组原版"开门光墙"（上 gateup + 下 gatedown）。
+## 只画表现：不建碰撞、不改进出判定；素材缺失时静默跳过（town 仍可运行）。
+func rebuild_gate_lights() -> void:
+	for node in gate_lights:
+		if is_instance_valid(node):node.queue_free()
+	gate_lights.clear()
+	if not GateLight.available():return
+	for key: String in world.portals(location,inn_return):
+		_add_gate_light(key,key,World.box(world.data["portals"][key]["rect"]),world.data["portals"][key]["rect"])
+	var entry: Array=world.scene(location).get("dungeon_entry",[])
+	if entry is Array and entry.size()==4:
+		_add_gate_light("dungeon","dungeon",World.box(entry),entry)
+
+func _add_gate_light(name: String, target: String, rect: Rect2, raw: Array) -> void:
+	var anchor:=Vector2(rect.get_center().x,rect.end.y+GROUND_DRAW_OFFSET)
+	var light=GateLight.new()
+	if not light.setup(anchor,int(rect.end.y)):
+		light.free()
+		return
+	light.name="gate_light_"+name
+	light.set_meta("portal",target)
+	light.set_meta("rect",raw)
+	map_root.add_child(light)
+	gate_lights.append(light)
+
+func gate_light_count() -> int:
+	return gate_lights.size()
 
 func update_camera() -> void:
 	camera_x=clampf(ground.x-400,0,maxf(0,float(map_root.get_meta("room")["width"])-800))
