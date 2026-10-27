@@ -11,6 +11,8 @@
 
 ## 最近完成
 
+- 2026-10-27 **T0 来源锁定静态凭证**：复算客户端根目录 / `ImagePacks2/` / `Video/` 三份 `Script.pvf` 与相邻 `111` 备份的 SHA256（与库内 `来源文件与哈希.csv` 一致），确认资源库由 111 备份建立、四份互不相同且分属两类文件头；补记首轮审计漏掉的 `Video/Script.pvf`。本机无客户端，运行期加载证据登记为 ws2 待办，取证步骤见 [四份 PVF 静态凭证](../../reports/ws3/2026-10/2026-10-27_DNF来源锁定_四份PVF静态凭证.md)
+
 - 2026-10-26 **修掉房间里"打不了的哥布林"**：地图数据里的 `monsters[]` 是刷新锚点，`native_map_loader` 却把它当背景美术画出来 → 同一只哥布林有"画上去的（非实体）"和"战斗系统生成的（实体）"两份。改为地图只画 `animations`/`objects`，怪物一律由战斗系统生成。新增两条回归：每房间 actor 数 == 该房间敌人、敌人必须在可行走宽度内
 - 2026-10-26 **拾取下蹲动作 + 原版音效**：拾取成功后在 `battle_view.request_pickup_pose()` 的 420ms 内把玩家姿势切成原版 `sit`（下蹲帧 157）；音效从资源库取 `sounds/effect/item_pick.ogg` 与 `coin_pick_01..03.ogg`（金币随机），烘到 `assets_local/loot/audio/` 由 `AudioStreamPlayer` 播放
 - 2026-10-26 **掉落物改用原版 field 贴图 + 动画光柱 + 普攻键拾取**：①本体换成原版 `sprite/item/field_{consumption,material,weapon,image}.img` 与 `sprite/common/etc/usecoin.img`（金币 6 帧翻转），统一缩放到 22px 方框 ②光柱用 `itemdropeffect/beam.img` 的 **16 帧**循环动画（加色混合，黑底不再盖住物品）③拾取改为**普攻键 X**：附近有掉落先捡、没掉落照常出招（E 仍可手动拾取）④`tools/bake_loot_sprites.py` 按帧烘焙 + 映射表 + 音效
