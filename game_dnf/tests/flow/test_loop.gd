@@ -226,6 +226,14 @@ func run() -> void:
 		for light in game.town.gate_lights:
 			if not is_instance_valid(light) or light.frame_count() != 29 or light.up == null or light.down == null:gate_ok = false
 		check(gate_ok, "gate light keeps the original 29-frame up and down clips")
+		var under_player := true
+		var loops := true
+		for light in game.town.gate_lights:
+			if light.z_index >= int(game.town.ground.y):under_player = false
+			light.advance(0.06 * float(light.frame_count()))
+			if light.index != 0 or not light.playing:loops = false
+		check(under_player, "gate light always renders under the player")
+		check(loops, "gate light animation loops")
 	var hotkeys: Array[String] = []
 	for label in game.hud.find_children("*", "Label", true, false):
 		if label.get_meta("skill_hotkey", false):

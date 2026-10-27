@@ -7,6 +7,7 @@ extends Node2D
 ## 帧由 tools/bake_town_gate_light.py 从共享库烘焙到 assets_local/town_gate/（不入库）。
 ##
 ## 只负责表现：不参与走区判定、不改世界坐标；一处传送点 = 一个本节点，两个 Sprite2D。
+## 传送点常亮，动画循环播放；整个节点压在任何角色之下（见 native_town 的 GATE_LIGHT_DEPTH）。
 
 const MANIFEST := "res://assets_local/town_gate/manifest.json"
 const SCHEMA := "dnflike_town_gate_light/1"
@@ -46,9 +47,6 @@ func setup(anchor: Vector2, depth: int = 0, manifest: Dictionary = {}) -> bool:
 	z_index = depth
 	up = _make_sprite(frames_up)
 	down = _make_sprite(frames_down)
-	# 地面光斑贴着门槛，常被门框底边挡住；单独抬到地图美术之上、HUD 之下，保证"下有光"。
-	if down:
-		down.z_index = 2400
 	show_frame(0)
 	playing = true
 	elapsed = 0.0
@@ -95,13 +93,13 @@ func frame_count() -> int:
 	return maxi(frames_up.size(), frames_down.size())
 
 func _process(delta: float) -> void:
-	if not playing:
+	advance(delta)
+
+## 循环播放：末帧之后回到第 0 帧，传送点常亮不停。
+func advance(seconds: float) -> void:
+	if not playing or frame_count() == 0:
 		return
-	elapsed += delta * 1000.0
-	if elapsed < float(delay_ms):
-		return
-	elapsed -= float(delay_ms)
-	if index + 1 >= frame_count():
-		playing = false
-		return
-	show_frame(index + 1)
+	elapsed += seconds * 1000.0
+	while elapsed >= float(delay_ms):
+		elapsed -= float(delay_ms)
+		show_frame((index + 1) % frame_count())

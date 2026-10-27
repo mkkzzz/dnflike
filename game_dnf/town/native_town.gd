@@ -31,6 +31,9 @@ var animated: Array=[]
 var gate_lights: Array=[]
 ## 地面逻辑坐标 → 屏幕坐标的固定视觉偏移（角色脚部 = ground + (0,120)）。
 const GROUND_DRAW_OFFSET := 120
+## 光墙整体压在地面美术之上、任何角色/物件之下：角色 z = ground.y（>=0），光墙固定 -1500，
+## 所以人物贴图永远在光墙上方；背景层 -2500/-3000/-4000 仍在光墙之下。
+const GATE_LIGHT_DEPTH := -1500
 var last_tap:={KEY_LEFT:-1000,KEY_RIGHT:-1000}
 var run_direction:=0
 var player_name:=""
@@ -145,7 +148,7 @@ func rebuild_gate_lights() -> void:
 func _add_gate_light(name: String, target: String, rect: Rect2, raw: Array) -> void:
 	var anchor:=Vector2(rect.get_center().x,rect.end.y+GROUND_DRAW_OFFSET)
 	var light=GateLight.new()
-	if not light.setup(anchor,int(rect.end.y)):
+	if not light.setup(anchor,GATE_LIGHT_DEPTH):
 		light.free()
 		return
 	light.name="gate_light_"+name
