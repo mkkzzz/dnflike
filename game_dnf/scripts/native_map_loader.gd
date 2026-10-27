@@ -188,7 +188,12 @@ func _place(root: Node2D, sprite: Dictionary, anchor: Array, layer: String) -> M
 		s.free()
 		return null
 	s.position = ground_to_screen(anchor)
-	s.z_index = z_for(layer, float(anchor[1]))
+	# 地图里的 normal 层道具（门、物件）与角色同用 y 排序。同 y 时因为地图节点
+	# 比角色节点后挂到树上，会盖住角色（人站在门里被门框挡住）；统一减 1，
+	# 让角色在相同 y 上永远压在地图物件前面。
+	var z := z_for(layer, float(anchor[1]))
+	if layer == "normal":z -= 1
+	s.z_index = z
 	s.set_meta("layer", layer)
 	root.add_child(s)
 	return s

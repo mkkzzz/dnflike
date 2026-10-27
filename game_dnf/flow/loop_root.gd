@@ -531,7 +531,16 @@ func depart() -> void:
 	town.hide()
 	combat = CombatSession.new()
 	battle = combat.mount(world_clip)
-	battle.position = Vector2(80, 100)
+	# 战斗视图按原始 640×480 设计（map_stage.VIEW_WIDTH），但循环画布是 800×600：
+	# 不缩放时地图只画到 y≈476，底部约 124 px 全黑。按 1.25 等比铺满画布，
+	# 相机仍以 640 地图像素为窗口（800/1.25 = 640），可见范围不变。
+	battle.scale = Vector2(1.25, 1.25)
+	battle.position = Vector2(0, 130)
+	# CanvasLayer 不继承父变换：战斗 HUD 必须单独套上同一份 2× 内容变换，
+	# 否则怪物血条等按 1:1 画在 1600×1200 视口里，只有一半大小。
+	# mount() 返回的是战斗场景根（main.gd），渲染视图在它的 view 属性上。
+	if battle.get("view") != null:
+		battle.view.hud_layer.transform = display_settings.content_transform()
 	combat.room_combat_finished.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
 	combat.player_defeated.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
 	combat.monster_defeated.connect(func(event: Dictionary): call_deferred("on_combat_event", event))

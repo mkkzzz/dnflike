@@ -437,9 +437,14 @@ func step_game(ms: float) -> void:
 	if room_cleared and not finished and door_lock_ms<=0:
 		for door: Dictionary in doors:
 			# Walking into the gate passes; standing right on it passes as well.
-			var distance := Vector2(player["pos"]).distance_to(door["pos"])
-			if distance<24 and (move.length()>0 or distance<14 or taps.get(KEY_E,false)):
-				load_room(int(door["to"]),String(door["side"]))
+			# The trigger zone follows the gate's own orientation: side doors are narrow in x,
+			# up/down doors are narrow in y. A bare 24 px radius missed the wide arch of an
+			# up/down gate, so standing on the visible arch could fail to leave the room.
+			var offset := Vector2(player["pos"]) - Vector2(door["pos"])
+			var side := String(door.get("side",""))
+			var inside := absf(offset.y) < 28.0 and absf(offset.x) < 48.0 if side in ["up","down"] else absf(offset.x) < 28.0 and absf(offset.y) < 48.0
+			if inside and (move.length()>0 or offset.length()<14 or taps.get(KEY_E,false)):
+				load_room(int(door["to"]),side)
 				break
 
 func step_player(ms: float, move: Vector2) -> void:

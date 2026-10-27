@@ -18,6 +18,10 @@ var world: Node2D
 var stage
 var player_actor
 var hud
+## CanvasLayer hosting the combat HUD. A CanvasLayer ignores its parent's transform, so a
+## flow root that scales its own canvas (the loop) must scale this layer explicitly, or the
+## HUD draws at half size while the world is scaled.
+var hud_layer
 var audio
 var effects: Array = []
 var numbers: Array = []
@@ -57,6 +61,7 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 	_set_weapon(weapon)
 	var layer := CanvasLayer.new()
 	add_child(layer)
+	hud_layer = layer
 	hud = CombatHud.new()
 	layer.add_child(hud)
 	hud.setup(assets["ui"],combat_assets.get("digits",{}),combat_assets.get("monster_hp",{}))
