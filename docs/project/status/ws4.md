@@ -6,11 +6,12 @@
 |---|---|
 | 使用者 | OY315 |
 | 状态 | 进行中 |
-| 正在做 | 城镇传送点光墙已按用户反馈改为循环播放、并固定压到人物之下；无窗口 loop **343 项 failures=0**。后续可做开关门时序、按方向选上下、以及 T1 内容台账下一批（65 条非日文未解析判定、4 张非标准 LST、105 组同路径多版本） |
+| 正在做 | 城镇传送点光墙：循环播放、固定压到人物之下、只保留城镇传送点（副本入口那组已按用户要求删除）；无窗口 loop **343 项 failures=0**。后续可做开关门时序、按方向选上下、以及 T1 内容台账下一批（65 条非日文未解析判定、4 张非标准 LST、105 组同路径多版本） |
 | 产出位置 | `game_dnf/town/gate_light.gd`、`tools/bake_town_gate_light.py`、`tools/ledger_dnf_content.py`、`docs/reports/ws4/2026-10/` |
 
 ## 最近完成
 
+- 2026-10-27 **只保留城镇传送点光墙**：按用户要求删除副本入口（`dungeon_entry`）那组光墙，`rebuild_gate_lights()` 现在只遍历 `world.portals()`；无窗口 loop **343 项 failures=0**
 - 2026-10-27 **城镇传送点开门光墙（循环 + 人物在上）**：29 帧改为循环播放；整组深度固定 `-1500`（地面/背景之上、任何角色之下），人物贴图始终压在光墙上方；无窗口 loop **343 项 failures=0**（新增 4 条断言）。详见[报告](../../reports/ws4/2026-10/2026-10-27_城镇传送点开门光墙.md)
 - 2026-10-27 **城镇传送点开门光墙**：`world.portals()` 的每个可见传送点 + 副本入口各放一组原版 `gateup`/`gatedown`（29 帧 ×60ms，加色混合），帧由 `tools/bake_town_gate_light.py` 从共享库烘焙
 - 2026-10-27 **开工基线**：本机三套回归 `run_demo` **527**、`run_dnf` **143**、`run_dnf_loop` **339** 项 failures=0（Godot 4.7.2，`verify.ps1`）。**注意**：`game_dnf/assets_local/` 不入库，新 clone 少了掉落贴图/音效时 loop 套件会挂 5 项（掉落原版精灵、金币翻转、光柱动画、拾取音效加载与实际播放）；先跑 `python tools/bake_loot_sprites.py`（需完整库）再测

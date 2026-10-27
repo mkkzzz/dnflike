@@ -218,9 +218,7 @@ func run() -> void:
 	check(game.town.loader.errors.is_empty(), "all native town textures load")
 	check(game.town.animated.size() >= 2, "source NPC/environment animation is active")
 	if GateLight.available():
-		var visible_portals: int = game.town.world.portals(game.town.location, game.town.inn_return).size()
-		var entry: Array = game.town.world.scene(game.town.location).get("dungeon_entry", [])
-		var expected: int = visible_portals + (1 if entry is Array and entry.size() == 4 else 0)
+		var expected: int = game.town.world.portals(game.town.location, game.town.inn_return).size()
 		check(expected > 0 and game.town.gate_light_count() == expected, "every town portal shows the original gate light")
 		var gate_ok := true
 		for light in game.town.gate_lights:

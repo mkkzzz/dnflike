@@ -132,8 +132,9 @@ func set_location(id: String, point:=Vector2.ZERO) -> bool:
 	update_camera()
 	return true
 
-## 每个可见传送点（含副本入口）放一组原版"开门光墙"（上 gateup + 下 gatedown）。
+## 每个可见城镇传送点放一组原版"开门光墙"（上 gateup + 下 gatedown）。
 ## 只画表现：不建碰撞、不改进出判定；素材缺失时静默跳过（town 仍可运行）。
+## 副本入口（dungeon_entry）按用户 2026-10-27 要求不放光墙。
 func rebuild_gate_lights() -> void:
 	for node in gate_lights:
 		if is_instance_valid(node):node.queue_free()
@@ -141,9 +142,6 @@ func rebuild_gate_lights() -> void:
 	if not GateLight.available():return
 	for key: String in world.portals(location,inn_return):
 		_add_gate_light(key,key,World.box(world.data["portals"][key]["rect"]),world.data["portals"][key]["rect"])
-	var entry: Array=world.scene(location).get("dungeon_entry",[])
-	if entry is Array and entry.size()==4:
-		_add_gate_light("dungeon","dungeon",World.box(entry),entry)
 
 func _add_gate_light(name: String, target: String, rect: Rect2, raw: Array) -> void:
 	var anchor:=Vector2(rect.get_center().x,rect.end.y+GROUND_DRAW_OFFSET)
