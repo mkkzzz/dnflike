@@ -1,6 +1,9 @@
 {
- "schema": "dnf_bgm/1",
- "evidence": "原版 Music/*.ogg 原字节，E-PARSE",
+ "schema": "dnf_bgm/2",
+ "evidence": "原版 Music/*.ogg 与 sounds/amb/*.ogg 原字节（E-PARSE）；boss 代用为 E-ADAPT",
+ "screens": {
+  "select": "characterselectstage"
+ },
  "scenes": {
   "elvengard": "forest_town",
   "seria_room": "sera_shop_new",
@@ -8,49 +11,107 @@
   "hendon_main": "hendonmyre_new",
   "hendon_auction": "hendonmyre_new",
   "hendon_forest_gate": "forest_town",
-  "hendon_alley": "hendonmyre_new",
-  "lorien": "forest01"
+  "hendon_alley": "hendonmyre_new"
+ },
+ "dungeons": {
+  "lorien": {
+   "normal": "forest01",
+   "boss": "forest02"
+  },
+  "lorien_inside": {
+   "normal": "forest01",
+   "boss": "forest01"
+  },
+  "forest_trial": {
+   "normal": "forest02",
+   "boss": "forest02"
+  },
+  "mirkwood": {
+   "normal": "forest02",
+   "boss": "forest02"
+  },
+  "mirkwood_deep": {
+   "normal": "forest02",
+   "boss": "forest02"
+  }
+ },
+ "ambience": {
+  "town": [
+   "amb_town_01",
+   "amb_town_02",
+   "amb_town_03"
+  ],
+  "forest": [
+   "amb_forest_01",
+   "amb_forest_02"
+  ]
  },
  "tracks": {
+  "characterselectstage": {
+   "file": "audio/bgm/characterselectstage.ogg",
+   "source": "music/characterselectstage.ogg",
+   "sha256": "52fa32502705d393fd2a18e346f42d8f56e1aed59cfcc1034abfb16bbef2fc31",
+   "bytes": 2188806
+  },
   "forest_town": {
    "file": "audio/bgm/forest_town.ogg",
    "source": "music/forest_town.ogg",
    "sha256": "a35d68704bce6835963ebc4105a02374aadac4a350ba89dbc5b2ae3b8b1572d6",
-   "bytes": 1415766,
-   "scenes": [
-    "elvengard",
-    "hendon_forest_gate"
-   ]
+   "bytes": 1415766
   },
   "sera_shop_new": {
    "file": "audio/bgm/sera_shop_new.ogg",
    "source": "music/sera_shop_new.ogg",
    "sha256": "bae1f4e5115ef6892e1ed8db8008e3ac86f9db5fbb840a3f48c05d121bc07415",
-   "bytes": 886155,
-   "scenes": [
-    "seria_room"
-   ]
+   "bytes": 886155
   },
   "hendonmyre_new": {
    "file": "audio/bgm/hendonmyre_new.ogg",
    "source": "music/hendonmyre_new.ogg",
    "sha256": "5a7bdef30f50f34400a8a5c9e924ac98653f6853957f10f954c056a341714dfe",
-   "bytes": 1202845,
-   "scenes": [
-    "hendon_city",
-    "hendon_main",
-    "hendon_auction",
-    "hendon_alley"
-   ]
+   "bytes": 1202845
   },
   "forest01": {
    "file": "audio/bgm/forest01.ogg",
    "source": "music/forest01.ogg",
    "sha256": "5e96ef5b6687e759b880abc09e662c28eb463e900e59ca2ab0bcf598d517c9be",
-   "bytes": 3451709,
-   "scenes": [
-    "lorien"
-   ]
+   "bytes": 3451709
+  },
+  "forest02": {
+   "file": "audio/bgm/forest02.ogg",
+   "source": "music/forest02.ogg",
+   "sha256": "f6d13d984fdd83fb623855a43119ecf64120ef41a5fda579ec02bed8dea7347b",
+   "bytes": 1323690
+  },
+  "amb_town_01": {
+   "file": "audio/bgm/amb_town_01.ogg",
+   "source": "sounds/amb/amb_town_01.ogg",
+   "sha256": "87cae26e41321c55324e93d348023552c31b19289bed80354e3051df7540a967",
+   "bytes": 490979
+  },
+  "amb_town_02": {
+   "file": "audio/bgm/amb_town_02.ogg",
+   "source": "sounds/amb/amb_town_02.ogg",
+   "sha256": "57b40ddb438dbd5cd9b6e7b19b053bcc9dd4277bad34f20fd5f237e6d8f3029e",
+   "bytes": 486160
+  },
+  "amb_town_03": {
+   "file": "audio/bgm/amb_town_03.ogg",
+   "source": "sounds/amb/amb_town_03.ogg",
+   "sha256": "ca8058fe16d4f47837f8c330a1f8f544dc2ce99863252374ec43633464fad008",
+   "bytes": 480068
+  },
+  "amb_forest_01": {
+   "file": "audio/bgm/amb_forest_01.ogg",
+   "source": "sounds/amb/amb_forest_01.ogg",
+   "sha256": "8308ebd60155cc68d5bd020fb509e09a08ae56937dd8863f4edb84ba8e046c32",
+   "bytes": 472125
+  },
+  "amb_forest_02": {
+   "file": "audio/bgm/amb_forest_02.ogg",
+   "source": "sounds/amb/amb_forest_02.ogg",
+   "sha256": "3964ca0e7d7d7f535165826dc0c3517bc613ca3ac7cb06f960c696047812e23e",
+   "bytes": 493157
   }
  }
 }

@@ -439,6 +439,8 @@ func step_game(ms: float) -> void:
 		room_cleared = true
 		room_snapshots[room_index] = {"cleared":true,"props":props.duplicate(true)}
 		var boss := bool(rules["rooms"][room_index].get("boss",false))
+		# BOSS 房换战斗曲（data/bgm.json 的 dungeons.<id>.boss；缺省沿用普通曲）。
+		if not _muted:view.audio.play_music("forest02" if boss else "forest01", view.audio.music.volume_db)
 		bus.emit("combat.room_combat_finished",flow_payload({"boss":boss,"final_room":boss}))
 		if boss:
 			finished = true

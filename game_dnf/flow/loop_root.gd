@@ -62,9 +62,13 @@ var debug_panel
 var world_clip: Control
 ## 城镇 BGM：场景 → 原版曲目（data/bgm.json），战斗时让位给战斗侧音乐。
 var town_bgm: AudioStreamPlayer
+var town_amb: AudioStreamPlayer
 var bgm_tracks: Dictionary = {}
 var bgm_scenes: Dictionary = {}
+var bgm_screens: Dictionary = {}
+var bgm_ambience: Dictionary = {}
 var _bgm_scene := ""
+var _bgm_ambience := ""
 var skill_catalog
 var quick_views: Array = []
 var characters = Characters.new()
@@ -673,14 +677,20 @@ func set_debug_open(open: bool) -> void:
 	sync_debug_pause()
 	debug_panel.refresh_status()
 
-## 城镇 BGM 初始化：原版 Music/*.ogg 原字节，按场景映射（tools/bake_dnf_bgm.py）。
+## 选人/城镇 BGM 与环境音初始化：原版 Music/*.ogg、sounds/amb/*.ogg 原字节，
+## 映射见 data/bgm.json（tools/bake_dnf_bgm.py 生成，新场景在该表补一行即可）。
 func _setup_bgm() -> void:
 	town_bgm = AudioStreamPlayer.new()
 	town_bgm.volume_db = -32.0
 	add_child(town_bgm)
+	town_amb = AudioStreamPlayer.new()
+	town_amb.volume_db = -26.0
+	add_child(town_amb)
 	if not FileAccess.file_exists("res://data/bgm.json"):return
 	var doc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/bgm.json"))
 	bgm_scenes = doc.get("scenes", {})
+	bgm_screens = doc.get("screens", {})
+	bgm_ambience = doc.get("ambience", {})
 	for key: String in doc.get("tracks", {}):
 		var path := "res://assets_local/" + String(doc["tracks"][key]["file"])
 		if not ResourceLoader.exists(path):continue
@@ -688,22 +698,38 @@ func _setup_bgm() -> void:
 		if stream is AudioStreamOggVorbis:stream.loop = true
 		bgm_tracks[key] = stream
 
-## 场景变化时换曲；战斗交给战斗侧，取消/缺曲则停。
+## 三态切换：选人界面用界面曲，城镇用城市场景曲，战斗交给战斗侧（含 BOSS 曲）。
 func update_bgm() -> void:
 	if town_bgm == null or test_mode:return
-	if session.state == "battle" or not is_instance_valid(town):
-		if town_bgm.playing:town_bgm.stop()
-		_bgm_scene = ""
-		return
-	var scene := String(town.location)
-	if scene == _bgm_scene:return
-	_bgm_scene = scene
-	var key: String = bgm_scenes.get(scene, "")
-	if key == "" or not bgm_tracks.has(key):
-		town_bgm.stop()
-		return
-	town_bgm.stream = bgm_tracks[key]
-	town_bgm.play()
+	var scene := ""
+	if not character_active:
+		scene = "select"
+	elif session.state != "battle" and is_instance_valid(town):
+		scene = String(town.location)
+	if scene != _bgm_scene:
+		_bgm_scene = scene
+		var key := ""
+		if scene == "select":
+			key = String(bgm_screens.get("select", ""))
+		elif scene != "":
+			key = String(bgm_scenes.get(scene, ""))
+		if key != "" and bgm_tracks.has(key):
+			town_bgm.stream = bgm_tracks[key]
+			town_bgm.play()
+		else:
+			town_bgm.stop()
+	var amb := ""
+	if scene != "" and scene != "select":
+		amb = "town" if bgm_scenes.has(scene) else "forest"
+	if amb != _bgm_ambience:
+		_bgm_ambience = amb
+		var list: Array = bgm_ambience.get(amb, []) if amb != "" else []
+		var pick := String(list[0]) if list.size() > 0 else ""
+		if pick != "" and bgm_tracks.has(pick):
+			town_amb.stream = bgm_tracks[pick]
+			town_amb.play()
+		else:
+			town_amb.stop()
 
 func sync_debug_pause() -> void:
 	var open := debug_is_open()

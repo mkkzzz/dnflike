@@ -1,7 +1,8 @@
-"""把原版 BGM 复制进工程并生成场景映射（不转码，保留原文件字节）。
+"""把原版 BGM 与环境音复制进工程，并生成场景映射（不转码，保留原文件字节）。
 
-来源：原版库 catalog 的 kind='audio' 记录（`Music/*.ogg`），按场景复制到
-`game_dnf/assets_local/audio/bgm/`，映射与哈希写入 `game_dnf/data/bgm.json`。
+来源：原版库 catalog 的 kind='audio' 记录。输出：
+  game_dnf/assets_local/audio/bgm/*.ogg   曲目原字节
+  game_dnf/data/bgm.json                  场景/界面/环境音映射（新场景只需在此加一行）
 
 用法：python tools/bake_dnf_bgm.py [--library DIR]
 """
@@ -10,7 +11,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import shutil
 import sqlite3
 import sys
 from pathlib import Path
@@ -23,8 +23,10 @@ GAME = ROOT / 'game_dnf'
 OUT = GAME / 'assets_local/audio/bgm'
 MAP = GAME / 'data/bgm.json'
 
-# 场景 → 原版曲目（60 版命名：森林城镇 forest_town、赫顿 hendonmyre_new、赛丽亚 sera_shop_new）
-SCENES = {
+# 界面：选人/建角
+SCREENS = {'select': 'music/characterselectstage.ogg'}
+# 城镇（key 与 data/towns.json 的 location 一一对应）
+TOWNS = {
     'elvengard': 'music/forest_town.ogg',
     'seria_room': 'music/sera_shop_new.ogg',
     'hendon_city': 'music/hendonmyre_new.ogg',
@@ -32,7 +34,19 @@ SCENES = {
     'hendon_auction': 'music/hendonmyre_new.ogg',
     'hendon_forest_gate': 'music/forest_town.ogg',
     'hendon_alley': 'music/hendonmyre_new.ogg',
-    'lorien': 'music/forest01.ogg',
+}
+# 副本（key 与 data/dungeons.json 的 id 对应）；boss 曲为 E-ADAPT：原版洛兰无独立 BOSS 曲，用森林深处曲代用
+DUNGEONS = {
+    'lorien': {'normal': 'music/forest01.ogg', 'boss': 'music/forest02.ogg'},
+    'lorien_inside': {'normal': 'music/forest01.ogg', 'boss': 'music/forest01.ogg'},
+    'forest_trial': {'normal': 'music/forest02.ogg', 'boss': 'music/forest02.ogg'},
+    'mirkwood': {'normal': 'music/forest02.ogg', 'boss': 'music/forest02.ogg'},
+    'mirkwood_deep': {'normal': 'music/forest02.ogg', 'boss': 'music/forest02.ogg'},
+}
+# 环境音：与 BGM 叠加的低音量底噪（原版 sounds/amb）
+AMBIENCE = {
+    'town': ['sounds/amb/amb_town_01.ogg', 'sounds/amb/amb_town_02.ogg', 'sounds/amb/amb_town_03.ogg'],
+    'forest': ['sounds/amb/amb_forest_01.ogg', 'sounds/amb/amb_forest_02.ogg'],
 }
 
 
@@ -45,31 +59,44 @@ def main() -> int:
     cat.row_factory = sqlite3.Row
     OUT.mkdir(parents=True, exist_ok=True)
     tracks: dict[str, dict] = {}
+    missing: list[str] = []
+
+    def take(source: str) -> str:
+        key = Path(source).stem
+        if key in tracks:
+            return key
+        row = cat.execute("select local_path, sha256, bytes from assets where kind='audio' and lower(original_path)=? order by container limit 1",
+                          (source,)).fetchone()
+        if row is None:
+            missing.append(source)
+            return ''
+        data = (lib.path / row['local_path']).read_bytes()
+        if hashlib.sha256(data).hexdigest() != row['sha256']:
+            raise ValueError('音频哈希不一致: ' + source)
+        (OUT / (key + '.ogg')).write_bytes(data)
+        tracks[key] = {'file': 'audio/bgm/%s.ogg' % key, 'source': source,
+                       'sha256': row['sha256'], 'bytes': row['bytes']}
+        return key
+
     try:
-        for scene, source in SCENES.items():
-            row = cat.execute("select local_path, sha256, bytes from assets where kind='audio' and lower(original_path)=? order by container limit 1",
-                              (source,)).fetchone()
-            if row is None:
-                print('[BGM] 缺少 ' + source, file=sys.stderr)
-                return 2
-            key = Path(source).stem
-            if key in tracks:
-                tracks[key]['scenes'].append(scene)
-                continue
-            data = (lib.path / row['local_path']).read_bytes()
-            if hashlib.sha256(data).hexdigest() != row['sha256']:
-                raise ValueError('BGM hash mismatch: ' + source)
-            target = OUT / (key + '.ogg')
-            target.write_bytes(data)
-            tracks[key] = {'file': 'audio/bgm/%s.ogg' % key, 'source': source,
-                           'sha256': row['sha256'], 'bytes': row['bytes'], 'scenes': [scene]}
+        screens = {name: take(source) for name, source in SCREENS.items()}
+        scenes = {name: take(source) for name, source in TOWNS.items()}
+        dungeons = {name: {slot: take(source) for slot, source in slots.items()} for name, slots in DUNGEONS.items()}
+        ambience = {name: [take(source) for source in sources] for name, sources in AMBIENCE.items()}
     finally:
         cat.close()
         lib.close()
-    mapping = {scene: next(key for key, entry in tracks.items() if scene in entry['scenes']) for scene in SCENES}
-    MAP.write_text(json.dumps({'schema': 'dnf_bgm/1', 'evidence': '原版 Music/*.ogg 原字节，E-PARSE',
-                               'scenes': mapping, 'tracks': tracks}, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
-    print('[BGM] tracks=%d scenes=%d bytes=%d' % (len(tracks), len(mapping), sum(t['bytes'] for t in tracks.values())))
+    if missing:
+        print('[BGM] 缺少原版音频: ' + ', '.join(missing), file=sys.stderr)
+        return 2
+    MAP.write_text(json.dumps({
+        'schema': 'dnf_bgm/2',
+        'evidence': '原版 Music/*.ogg 与 sounds/amb/*.ogg 原字节（E-PARSE）；boss 代用为 E-ADAPT',
+        'screens': screens, 'scenes': scenes, 'dungeons': dungeons, 'ambience': ambience, 'tracks': tracks,
+    }, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+    print('[BGM] tracks=%d screens=%d towns=%d dungeons=%d amb=%d bytes=%d'
+          % (len(tracks), len(screens), len(scenes), len(dungeons), sum(len(v) for v in ambience.values()),
+             sum(t['bytes'] for t in tracks.values())))
     return 0
 
 

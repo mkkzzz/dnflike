@@ -8,6 +8,7 @@ var sound_streams: Dictionary = {}
 var variants: Dictionary = {}
 var voice_pool: Array = []
 var music: AudioStreamPlayer
+var music_bank: Dictionary = {}
 var _last: Dictionary = {}
 var _cursor := 0
 
@@ -28,11 +29,27 @@ func setup(audio_assets: Dictionary, combat_audio := {}) -> void:
 	add_child(music)
 
 func start_music(volume_db := -28.0) -> void:
-	if not sound_streams.has("music") or music.playing:return
+	if music.playing:return
+	play_music("forest01", volume_db)
+
+## 按 data/bgm.json 的键播放原版曲目（曲目已随仓库分发，循环由流自身负责）。
+func play_music(key: String, volume_db := -28.0) -> void:
+	_load_music_bank()
+	if not music_bank.has(key):return
+	if music.stream == music_bank[key] and music.playing:return
 	music.volume_db = volume_db
-	music.stream = sound_streams["music"]
-	if not music.finished.is_connected(music.play):music.finished.connect(music.play)
+	music.stream = music_bank[key]
 	music.play()
+
+func _load_music_bank() -> void:
+	if not music_bank.is_empty() or not FileAccess.file_exists("res://data/bgm.json"):return
+	var doc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/bgm.json"))
+	for key: String in doc.get("tracks", {}):
+		var path := "res://assets_local/" + String(doc["tracks"][key]["file"])
+		if not ResourceLoader.exists(path):continue
+		var stream = load(path)
+		if stream is AudioStreamOggVorbis:stream.loop = true
+		music_bank[key] = stream
 
 ## Release streams before the node leaves so no Ogg playback outlives the scene.
 func _exit_tree() -> void:
