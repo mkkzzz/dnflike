@@ -19,6 +19,9 @@ $versionText="$(& $GodotPath --version 2>$null | Select-Object -First 1)".Trim()
 if (-not $versionText.StartsWith("4.7.2.")) {throw "Godot 4.7.2 required; found $versionText"}
 & python (Join-Path $PSScriptRoot "check_game_chinese.py")
 if ($LASTEXITCODE -ne 0) {throw "Game text must use Chinese; Korean text is not permitted."}
+# 副本配置契约：新增副本只要过这一关，运行时不需要逐副本用例。
+& python (Join-Path $PSScriptRoot "check_dnf_dungeons.py")
+if ($LASTEXITCODE -ne 0) {throw "Dungeon configuration contract violated; see the lines above."}
 if (-not (Test-Path -LiteralPath (Join-Path $gamePath "assets_local/manifest.json"))) {
     & python (Join-Path $PSScriptRoot "dnf_asset_store.py") sync
     if ($LASTEXITCODE -ne 0) {throw "Base runtime sync failed."}
