@@ -101,7 +101,7 @@ static func command(profile: Dictionary, kind: String, payload: Dictionary) -> D
 			profile["level"] = level
 			profile["xp"] = 0
 		"numbers.skill":
-			return Skills.change(profile,String(payload.get("id","")),int(payload.get("delta",0)),cfg,record(String(payload.get("id",""))))
+			return Skills.change(profile,String(payload.get("id","")),int(payload.get("delta",0)),cfg,record(String(payload.get("id",""))),bool(payload.get("force",false)))
 		"numbers.skill_reset":
 			profile["skills"] = cfg["skill_defaults"].duplicate(true)
 			profile["skill_purchases"] = {}
@@ -109,8 +109,13 @@ static func command(profile: Dictionary, kind: String, payload: Dictionary) -> D
 			if payload.get("element") not in ["none","fire","water","light","dark"]:return fail("属性攻击无效")
 			profile["attack_element"] = payload["element"]
 		"numbers.growtype":
-			if not cfg["growtypes"].has(payload.get("growtype","")):return fail("成长类型不存在")
-			profile["growtype"] = payload["growtype"]
+			var target := String(payload.get("growtype",""))
+			if not cfg["growtypes"].has(target):return fail("成长类型不存在")
+			if not bool(payload.get("force",false)):
+				if int(profile["level"]) < int(cfg["progression"].get("job_change_level",18)):return fail("%d 级才能转职" % int(cfg["progression"].get("job_change_level",18)))
+				if String(profile["growtype"]) != "swordman":return fail("已经转职")
+				if target == "swordman":return fail("请选择剑魂或狂战士")
+			profile["growtype"] = target
 		"numbers.sp":
 			if not whole(payload.get("amount"),0,1000000):return fail("SP 数量无效")
 			if int(profile["sp_bonus"])+int(payload["amount"])>1000000:return fail("SP 已达调试上限")

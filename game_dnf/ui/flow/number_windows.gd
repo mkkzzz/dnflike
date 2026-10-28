@@ -1,14 +1,18 @@
 extends RefCounted
 ## Existing native skin only. Every displayed value comes from the live numeric APIs.
 const Numbers = preload("res://stats/api/numbers.gd")
+const SkillPanel = preload("res://ui/flow/skill_panel.gd")
 var game
+var skill_panel
 var tab := 0
 var page := 0
 var selected_stat := "physical_attack"
 const NAMES := {"hp_max":"生命上限","mp_max":"魔法上限","strength":"力量","intelligence":"智力","vitality":"体力","spirit":"精神","physical_attack":"基础物攻","magical_attack":"基础魔攻","independent_attack":"独立攻击","physical_panel":"物理攻击面板","magical_panel":"魔法攻击面板","physical_defense":"物理防御","magical_defense":"魔法防御","hit":"命中修正","evasion":"回避率","physical_crit":"物理暴击","magical_crit":"魔法暴击","attack_speed":"攻击速度","move_speed":"移动速度","cast_speed":"施放速度","cooldown_rate":"冷却系数","mp_cost_rate":"蓝耗系数","fire_attack":"火属性强化","water_attack":"冰属性强化","light_attack":"光属性强化","dark_attack":"暗属性强化","fire_resist":"火属性抗性","water_resist":"冰属性抗性","light_resist":"光属性抗性","dark_resist":"暗属性抗性","damage_rate":"伤害系数","taken_rate":"承伤系数","skill_rate":"技能伤害系数","hp_regen":"每秒回血","mp_regen":"每秒回蓝","status_resist":"异常抗性","hit_recovery":"硬直恢复","jump_power":"跳跃力"}
 const SLOT_NAMES := {"weapon":"武器","coat":"上衣","pants":"下装","shoulder":"头肩","belt":"腰带","shoes":"鞋","bracelet":"手镯","necklace":"项链","ring":"戒指"}
 
-func _init(target) -> void:game = target
+func _init(target) -> void:
+	game = target
+	skill_panel = SkillPanel.new(target)
 
 func show_window() -> void:
 	var skin = game.skin
@@ -18,7 +22,7 @@ func show_window() -> void:
 		var value := index
 		skin.button(node,["角色属性","技能加点","装备管理"][index],Vector2(18+index*115,40),func(): tab=value; page=0; game.show_overlay("numbers"))
 	if tab == 0:attributes(node)
-	elif tab == 1:skills(node)
+	elif tab == 1:skill_panel.show_window(node)
 	else:equipment(node)
 	skin.label(node,"O 角色成长   K 技能加点   Esc 关闭",Vector2(20,428),11,Color("a59c88"))
 
@@ -59,33 +63,6 @@ func attributes(node: Control) -> void:
 		var text := "当前效果："
 		for effect: Dictionary in effects:text += "%s %.1fs  " % [effect["definition"].get("name",effect["id"]),float(effect["remaining_ms"])/1000]
 		skin.label(node,text,Vector2(480,385),10)
-
-func skills(node: Control) -> void:
-	var cfg := Numbers.config()
-	var skin = game.skin
-	var profile: Dictionary = game.session.profile
-	skin.label(node,"可用 SP：%d" % Numbers.Skills.available(profile,cfg),Vector2(20,79),14,Color("f0d18a")).name="number_sp"
-	skin.button(node,"重置加点",Vector2(620,75),func(): game.act("numbers.skill_reset"); game.show_overlay("numbers"),false)
-	var index := 0
-	for id: String in cfg["skills"]:
-		var definition: Dictionary = cfg["skills"][id]
-		var rank := int(profile["skills"].get(id,0))
-		var values: Dictionary = game.skill_catalog.get_skill(id,rank)
-		var y := 115+index*40
-		skin.label(node,"%s  %d / %d" % [definition["name"],rank,definition["max_level"]],Vector2(20,y),12)
-		var detail := "每级力量 +5" if id=="physical_mastery" else "正面承伤 %.0f%%" % (maxf(0,float(definition["guard_factor"])-(rank-1)*float(definition["guard_per_level"]))*100) if id=="guard" else "MP %d · CD %.1fs" % [values["mp"],values["cooldown"]]
-		var percentages: Array = values.get("damage_percent",[])
-		if not percentages.is_empty():detail += " · %d%%" % percentages[0]
-		skin.label(node,detail,Vector2(205,y),11,Color("a7dd74"))
-		skin.label(node,"SP %d" % definition["cost"],Vector2(510,y),11)
-		var skill_id := id
-		skin.button(node,"减点",Vector2(579,y-4),func(): change_skill(skill_id,-1),false)
-		skin.button(node,"加点",Vector2(657,y-4),func(): change_skill(skill_id,1),false)
-		index += 1
-	skin.label(node,"选择技能投入 SP；已购买的等级可退点。",Vector2(20,405),11,Color("a59c88"))
-
-func change_skill(id: String, delta: int) -> void:
-	if game.act("numbers.skill",{"id":id,"delta":delta}):game.show_overlay("numbers")
 
 func equipment(node: Control) -> void:
 	var cfg := Numbers.config()

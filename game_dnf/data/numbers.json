@@ -15,7 +15,8 @@
     "sp_initial": 0,
     "sp_per_level": 20,
     "level_up_vitals": "preserve",
-    "enforce_skill_requirements": false,
+    "job_change_level": 18,
+    "enforce_skill_requirements": true,
     "clear_xp": 120,
     "kill_xp": 0
   },

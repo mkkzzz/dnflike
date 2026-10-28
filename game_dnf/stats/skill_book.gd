@@ -10,7 +10,8 @@ static func spent(profile: Dictionary) -> int:
 static func available(profile: Dictionary, config: Dictionary) -> int:
 	return Growth.sp_total(profile,config["progression"])-spent(profile)
 
-static func change(profile: Dictionary, id: String, delta: int, config: Dictionary, record: Dictionary = {}) -> Dictionary:
+## force=true 跳过等级/职业/前置校验（调试入口），仍受技能上限与 SP 约束。
+static func change(profile: Dictionary, id: String, delta: int, config: Dictionary, record: Dictionary = {}, force := false) -> Dictionary:
 	if not config["skills"].has(id) or delta not in [-1,1]:return {"ok":false,"message":"技能或操作无效"}
 	var definition: Dictionary = config["skills"][id]
 	var rank := int(profile["skills"].get(id,0))
@@ -20,7 +21,7 @@ static func change(profile: Dictionary, id: String, delta: int, config: Dictiona
 		purchases.pop_back()
 	else:
 		if rank >= int(definition["max_level"]):return {"ok":false,"message":"技能已达上限"}
-		if config["progression"]["enforce_skill_requirements"]:
+		if config["progression"]["enforce_skill_requirements"] and not force:
 			var caps: Array = record.get("growtype_max_level",[])
 			var grow_index := int(config.get("growtype_index",{}).get(profile["growtype"],0))
 			if not caps.is_empty() and (grow_index>=caps.size() or rank>=int(caps[grow_index])):return {"ok":false,"message":"该职业无法继续学习此技能"}

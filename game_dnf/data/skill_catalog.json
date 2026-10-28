@@ -1,0 +1,5729 @@
+{
+ "schema": "dnf_skill_catalog/1",
+ "note": "E-ADAPT 名称；原版要求数据 E-PARSE",
+ "skills": [
+  {
+   "id": 1,
+   "key": "guard",
+   "path": "skill/swordman/guard.skl",
+   "name": "格挡",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 5,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/guard.png",
+   "icon_selected": "icons/guard_on.png",
+   "implemented": "",
+   "local_id": "guard",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 2,
+   "key": "reflectguard",
+   "path": "skill/swordman/reflectguard.skl",
+   "name": "反击格挡",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 70,
+   "required_level": 15,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [
+    {
+     "id": 47,
+     "level": 1
+    }
+   ],
+   "icon": "icons/reflectguard.png",
+   "icon_selected": "icons/reflectguard_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 3,
+   "key": "autoguard",
+   "path": "skill/swordman/autoguard.skl",
+   "name": "自动格挡",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 20,
+   "required_level": 25,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    10,
+    0,
+    0,
+    0,
+    10
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [
+    {
+     "id": 1,
+     "level": 1
+    }
+   ],
+   "icon": "icons/autoguard.png",
+   "icon_selected": "icons/autoguard_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 4,
+   "key": "lightswordmastery",
+   "path": "skill/swordman/lightswordmastery.skl",
+   "name": "光剑精通",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 20,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    30
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/lightswordmastery.png",
+   "icon_selected": "icons/lightswordmastery_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 5,
+   "key": "hardattack",
+   "path": "skill/swordman/hardattack.skl",
+   "name": "重击",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 700,
+   "required_level": 1,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 15,
+   "pre_required_skill": [],
+   "icon": "icons/hardattack.png",
+   "icon_selected": "icons/hardattack_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 6,
+   "key": "hardattackcharge",
+   "path": "skill/swordman/hardattackcharge.skl",
+   "name": "蓄力重击",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 50,
+   "required_level": 25,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    20,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 15,
+   "pre_required_skill": [
+    {
+     "id": 5,
+     "level": 1
+    }
+   ],
+   "icon": "icons/hardattackcharge.png",
+   "icon_selected": "icons/hardattackcharge_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 7,
+   "key": "hitback",
+   "path": "skill/swordman/hitback.skl",
+   "name": "后跳",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 30,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    20,
+    20,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/hitback.png",
+   "icon_selected": "icons/hitback_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 8,
+   "key": "tripleslash",
+   "path": "skill/swordman/tripleslash.skl",
+   "name": "三段斩",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 70,
+   "required_level": 15,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 15,
+   "pre_required_skill": [],
+   "icon": "icons/tripleslash.png",
+   "icon_selected": "icons/tripleslash_on.png",
+   "implemented": "triple",
+   "local_id": "triple",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 9,
+   "key": "momentaryslash",
+   "path": "skill/swordman/momentaryslash.skl",
+   "name": "拔刀斩",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 70,
+   "required_level": 35,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    50
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 40,
+   "pre_required_skill": [],
+   "icon": "icons/momentaryslash.png",
+   "icon_selected": "icons/momentaryslash_on.png",
+   "implemented": "draw",
+   "local_id": "draw",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 11,
+   "key": "dashattackmultihit",
+   "path": "skill/swordman/dashattackmultihit.skl",
+   "name": "冲刺连斩",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 70,
+   "required_level": 5,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 15,
+   "pre_required_skill": [],
+   "icon": "icons/dashattackmultihit.png",
+   "icon_selected": "icons/dashattackmultihit_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 12,
+   "key": "shortswordmastery",
+   "path": "skill/swordman/shortswordmastery.skl",
+   "name": "短剑精通",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 15,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    30,
+    1,
+    30,
+    30,
+    30,
+    30
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/shortswordmastery.png",
+   "icon_selected": "icons/shortswordmastery_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 13,
+   "key": "blademastery",
+   "path": "skill/swordman/blademastery.skl",
+   "name": "太刀精通",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 15,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    30,
+    1,
+    30,
+    30,
+    30,
+    30
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/blademastery.png",
+   "icon_selected": "icons/blademastery_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 14,
+   "key": "heavyswordmastery",
+   "path": "skill/swordman/heavyswordmastery.skl",
+   "name": "巨剑精通",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 15,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    30,
+    1,
+    30,
+    30,
+    30,
+    30
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/heavyswordmastery.png",
+   "icon_selected": "icons/heavyswordmastery_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 15,
+   "key": "bluntmastery",
+   "path": "skill/swordman/bluntmastery.skl",
+   "name": "钝器精通",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 15,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    30,
+    1,
+    30,
+    30,
+    30,
+    30
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/bluntmastery.png",
+   "icon_selected": "icons/bluntmastery_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 16,
+   "key": "ashenfork",
+   "path": "skill/swordman/ashenfork.skl",
+   "name": "灰烬之叉",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 70,
+   "required_level": 5,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 15,
+   "pre_required_skill": [],
+   "icon": "icons/ashenfork.png",
+   "icon_selected": "icons/ashenfork_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 17,
+   "key": "jumpattackmulti",
+   "path": "skill/swordman/jumpattackmulti.skl",
+   "name": "空中连斩",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 5,
+   "required_level_range": 1,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 50,
+   "pre_required_skill": [],
+   "icon": "icons/jumpattackmulti.png",
+   "icon_selected": "icons/jumpattackmulti_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 18,
+   "key": "ghoststep",
+   "path": "skill/swordman/ghoststep.skl",
+   "name": "鬼影步",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 50,
+   "required_level": 20,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    30,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 30,
+   "pre_required_skill": [
+    {
+     "id": 41,
+     "level": 1
+    }
+   ],
+   "icon": "icons/ghoststep.png",
+   "icon_selected": "icons/ghoststep_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 19,
+   "key": "pinchpowerup",
+   "path": "skill/swordman/pinchpowerup.skl",
+   "name": "抓头强化",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 50,
+   "required_level": 15,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    20,
+    0,
+    20
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [],
+   "icon": "icons/pinchpowerup.png",
+   "icon_selected": "icons/pinchpowerup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 20,
+   "key": "normalwave",
+   "path": "skill/swordman/normalwave.skl",
+   "name": "波动剑",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 70,
+   "required_level": 15,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 15,
+   "pre_required_skill": [],
+   "icon": "icons/normalwave.png",
+   "icon_selected": "icons/normalwave_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 21,
+   "key": "icewave",
+   "path": "skill/swordman/icewave.skl",
+   "name": "冰刃·波动剑",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 70,
+   "required_level": 30,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [],
+   "icon": "icons/icewave.png",
+   "icon_selected": "icons/icewave_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 22,
+   "key": "firewave",
+   "path": "skill/swordman/firewave.skl",
+   "name": "爆炎·波动剑",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 70,
+   "required_level": 35,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 40,
+   "pre_required_skill": [
+    {
+     "id": 21,
+     "level": 3
+    }
+   ],
+   "icon": "icons/firewave.png",
+   "icon_selected": "icons/firewave_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 23,
+   "key": "sacrifice",
+   "path": "skill/swordman/sacrifice.skl",
+   "name": "血气之刃",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 50,
+   "required_level": 35,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    20,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 30,
+   "pre_required_skill": [
+    {
+     "id": 24,
+     "level": 1
+    }
+   ],
+   "icon": "icons/sacrifice.png",
+   "icon_selected": "icons/sacrifice_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 24,
+   "key": "bloodblast",
+   "path": "skill/swordman/bloodblast.skl",
+   "name": "血气爆发",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 70,
+   "required_level": 30,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    50,
+    0,
+    50
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 40,
+   "pre_required_skill": [
+    {
+     "id": 76,
+     "level": 3
+    }
+   ],
+   "icon": "icons/bloodblast.png",
+   "icon_selected": "icons/bloodblast_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 25,
+   "key": "khazan",
+   "path": "skill/swordman/khazan.skl",
+   "name": "刀魂之卡赞",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 50,
+   "required_level": 5,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    10,
+    10,
+    20,
+    10,
+    10,
+    20
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/khazan.png",
+   "icon_selected": "icons/khazan_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 27,
+   "key": "weaponmasteryup",
+   "path": "skill/swordman/weaponmasteryup.skl",
+   "name": "武器精通强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 15,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    30,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/weaponmasteryup.png",
+   "icon_selected": "icons/weaponmasteryup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 29,
+   "key": "darkfriendship",
+   "path": "skill/swordman/darkfriendship.skl",
+   "name": "暗黑契约",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 1,
+   "required_level": 18,
+   "required_level_range": null,
+   "growtype_max_level": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/darkfriendship.png",
+   "icon_selected": "icons/darkfriendship_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 30,
+   "key": "darktoleranceup",
+   "path": "skill/swordman/darktoleranceup.skl",
+   "name": "暗黑抗性强化",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 20,
+   "required_level": 15,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    10,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 30,
+   "pre_required_skill": [],
+   "icon": "icons/darktoleranceup.png",
+   "icon_selected": "icons/darktoleranceup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 31,
+   "key": "grabblastblood",
+   "path": "skill/swordman/grabblastblood.skl",
+   "name": "抓头爆破",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 70,
+   "required_level": 25,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    50,
+    10,
+    10,
+    50,
+    10,
+    50
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [],
+   "icon": "icons/grabblastblood.png",
+   "icon_selected": "icons/grabblastblood_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 32,
+   "key": "releasewave",
+   "path": "skill/swordman/releasewave.skl",
+   "name": "释放波动",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 50,
+   "required_level": 25,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    10,
+    10,
+    10,
+    30,
+    10
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/releasewave.png",
+   "icon_selected": "icons/releasewave_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 33,
+   "key": "equiplightsword",
+   "path": "skill/swordman/equiplightsword.skl",
+   "name": "未开放技能 33",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 1,
+   "required_level": null,
+   "required_level_range": null,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    1
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/equiplightsword.png",
+   "icon_selected": "icons/equiplightsword_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 34,
+   "key": "diehard",
+   "path": "skill/swordman/diehard.skl",
+   "name": "血气唤醒",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 50,
+   "required_level": 20,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    20,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/diehard.png",
+   "icon_selected": "icons/diehard_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 35,
+   "key": "ghostpowerup",
+   "path": "skill/swordman/ghostpowerup.skl",
+   "name": "鬼力强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 1,
+   "required_level": null,
+   "required_level_range": null,
+   "growtype_max_level": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/ghostpowerup.png",
+   "icon_selected": "icons/ghostpowerup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 36,
+   "key": "saya",
+   "path": "skill/swordman/saya.skl",
+   "name": "剑鞘",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 70,
+   "required_level": 30,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    50
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 40,
+   "pre_required_skill": [
+    {
+     "id": 41,
+     "level": 3
+    }
+   ],
+   "icon": "icons/saya.png",
+   "icon_selected": "icons/saya_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 37,
+   "key": "fastequip",
+   "path": "skill/swordman/fastequip.skl",
+   "name": "快速换装",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 1,
+   "required_level": null,
+   "required_level_range": null,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    1
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/fastequip.png",
+   "icon_selected": "icons/fastequip_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 38,
+   "key": "overdrive",
+   "path": "skill/swordman/overdrive.skl",
+   "name": "超频",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 25,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    20,
+    0,
+    0,
+    0,
+    20
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [],
+   "icon": "icons/overdrive.png",
+   "icon_selected": "icons/overdrive_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 39,
+   "key": "durabilityup",
+   "path": "skill/swordman/durabilityup.skl",
+   "name": "耐久强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 20,
+   "required_level": 20,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    10,
+    0,
+    0,
+    0,
+    10
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/durabilityup.png",
+   "icon_selected": "icons/durabilityup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 40,
+   "key": "reckless",
+   "path": "skill/swordman/reckless.skl",
+   "name": "狂暴化",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 50,
+   "required_level": 25,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    20,
+    0,
+    20
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [],
+   "icon": "icons/reckless.png",
+   "icon_selected": "icons/reckless_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 41,
+   "key": "bremen",
+   "path": "skill/swordman/bremen.skl",
+   "name": "侵蚀之普戾蒙",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 50,
+   "required_level": 15,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    20,
+    10,
+    20,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [
+    {
+     "id": 25,
+     "level": 1
+    }
+   ],
+   "icon": "icons/bremen.png",
+   "icon_selected": "icons/bremen_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 42,
+   "key": "disjointitemdark",
+   "path": "skill/swordman/disjointitemdark.skl",
+   "name": "暗黑分解",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 5,
+   "required_level": 22,
+   "required_level_range": 4,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 40,
+   "pre_required_skill": [],
+   "icon": "icons/disjointitemdark.png",
+   "icon_selected": "icons/disjointitemdark_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 43,
+   "key": "jumpattackhighfast",
+   "path": "skill/swordman/jumpattackhighfast.skl",
+   "name": "高空速降斩",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 1,
+   "required_level": 14,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/jumpattackhighfast.png",
+   "icon_selected": "icons/jumpattackhighfast_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 44,
+   "key": "tombstonerain",
+   "path": "skill/swordman/tombstonerain.skl",
+   "name": "崩山击",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 70,
+   "required_level": 35,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 40,
+   "pre_required_skill": [],
+   "icon": "icons/tombstonerain.png",
+   "icon_selected": "icons/tombstonerain_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 46,
+   "key": "upperslash",
+   "path": "skill/swordman/upperslash.skl",
+   "name": "上挑",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 1,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/upperslash.png",
+   "icon_selected": "icons/upperslash_on.png",
+   "implemented": "upper",
+   "local_id": "upper",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 47,
+   "key": "wavemark",
+   "path": "skill/swordman/wavemark.skl",
+   "name": "波动标记",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 50,
+   "required_level": 15,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    30,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/wavemark.png",
+   "icon_selected": "icons/wavemark_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 49,
+   "key": "backstepcutter",
+   "path": "skill/swordman/backstepcutter.skl",
+   "name": "后跳斩",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 1,
+   "required_level": 15,
+   "required_level_range": 1,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    1
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 50,
+   "pre_required_skill": [],
+   "icon": "icons/backstepcutter.png",
+   "icon_selected": "icons/backstepcutter_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 50,
+   "key": "grandwave",
+   "path": "skill/swordman/grandwave.skl",
+   "name": "波动爆发",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 70,
+   "required_level": 20,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    50,
+    10,
+    10,
+    10,
+    50,
+    10
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [],
+   "icon": "icons/grandwave.png",
+   "icon_selected": "icons/grandwave_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 51,
+   "key": "grandwavecharge",
+   "path": "skill/swordman/grandwavecharge.skl",
+   "name": "蓄力波动爆发",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 20,
+   "required_level": 20,
+   "required_level_range": 1,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 50,
+   "pre_required_skill": [
+    {
+     "id": 50,
+     "level": 1
+    }
+   ],
+   "icon": "icons/grandwavecharge.png",
+   "icon_selected": "icons/grandwavecharge_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 52,
+   "key": "dotarea",
+   "path": "skill/swordman/dotarea.skl",
+   "name": "出血领域",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 70,
+   "required_level": 30,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 30,
+   "pre_required_skill": [
+    {
+     "id": 53,
+     "level": 1
+    }
+   ],
+   "icon": "icons/dotarea.png",
+   "icon_selected": "icons/dotarea_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 53,
+   "key": "mindflash",
+   "path": "skill/swordman/mindflash.skl",
+   "name": "心剑",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 50,
+   "required_level": 25,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    30,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/mindflash.png",
+   "icon_selected": "icons/mindflash_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 55,
+   "key": "senseviolenttemper",
+   "path": "skill/swordman/senseviolenttemper.skl",
+   "name": "狂暴感知",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 1,
+   "required_level": 18,
+   "required_level_range": 1,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/senseviolenttemper.png",
+   "icon_selected": "icons/senseviolenttemper_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 56,
+   "key": "armormasteryheavybk",
+   "path": "skill/swordman/armormasteryheavybk.skl",
+   "name": "重甲精通",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 1,
+   "required_level": 1,
+   "required_level_range": null,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    1,
+    0,
+    1
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/armormasteryheavybk.png",
+   "icon_selected": "icons/armormasteryheavybk_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 57,
+   "key": "shockwavearea",
+   "path": "skill/swordman/shockwavearea.skl",
+   "name": "冲击波领域",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 70,
+   "required_level": 40,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 50,
+   "pre_required_skill": [
+    {
+     "id": 52,
+     "level": 1
+    }
+   ],
+   "icon": "icons/shockwavearea.png",
+   "icon_selected": "icons/shockwavearea_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 58,
+   "key": "vaneslash",
+   "path": "skill/swordman/vaneslash.skl",
+   "name": "剑气斩",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 70,
+   "required_level": 10,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 15,
+   "pre_required_skill": [],
+   "icon": "icons/vaneslash.png",
+   "icon_selected": "icons/vaneslash_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 60,
+   "key": "ghoststepslash",
+   "path": "skill/swordman/ghoststepslash.skl",
+   "name": "鬼影步斩",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 50,
+   "required_level": 40,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    30,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 50,
+   "pre_required_skill": [
+    {
+     "id": 18,
+     "level": 1
+    }
+   ],
+   "icon": "icons/ghoststepslash.png",
+   "icon_selected": "icons/ghoststepslash_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 61,
+   "key": "armormasteryplatewave",
+   "path": "skill/swordman/armormasteryplatewave.skl",
+   "name": "板甲精通",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 1,
+   "required_level": 1,
+   "required_level_range": null,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/armormasteryplatewave.png",
+   "icon_selected": "icons/armormasteryplatewave_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 62,
+   "key": "standalonewave",
+   "path": "skill/swordman/standalonewave.skl",
+   "name": "独立波动",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 70,
+   "required_level": 35,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 40,
+   "pre_required_skill": [
+    {
+     "id": 52,
+     "level": 1
+    }
+   ],
+   "icon": "icons/standalonewave.png",
+   "icon_selected": "icons/standalonewave_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 63,
+   "key": "bloodyvigorous",
+   "path": "skill/swordman/bloodyvigorous.skl",
+   "name": "血气旺盛",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 1,
+   "required_level": 15,
+   "required_level_range": 1,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    1,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/bloodyvigorous.png",
+   "icon_selected": "icons/bloodyvigorous_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 64,
+   "key": "gorecross",
+   "path": "skill/swordman/gorecross.skl",
+   "name": "十字斩",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 70,
+   "required_level": 15,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 15,
+   "pre_required_skill": [],
+   "icon": "icons/gorecross.png",
+   "icon_selected": "icons/gorecross_on.png",
+   "implemented": "rage_slash",
+   "local_id": "rage_slash",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 65,
+   "key": "hopsmash",
+   "path": "skill/swordman/hopsmash.skl",
+   "name": "跃击",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 70,
+   "required_level": 10,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 15,
+   "pre_required_skill": [],
+   "icon": "icons/hopsmash.png",
+   "icon_selected": "icons/hopsmash_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 67,
+   "key": "weaponcombo",
+   "path": "skill/swordman/weaponcombo.skl",
+   "name": "武器连击",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 1,
+   "required_level": 15,
+   "required_level_range": 1,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    1
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 50,
+   "pre_required_skill": [],
+   "icon": "icons/weaponcombo.png",
+   "icon_selected": "icons/weaponcombo_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 68,
+   "key": "chargecrash",
+   "path": "skill/swordman/chargecrash.skl",
+   "name": "冲撞",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 70,
+   "required_level": 30,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    50
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 30,
+   "pre_required_skill": [],
+   "icon": "icons/chargecrash.png",
+   "icon_selected": "icons/chargecrash_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 72,
+   "key": "rapidmoveslash",
+   "path": "skill/swordman/rapidmoveslash.skl",
+   "name": "疾影斩",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 70,
+   "required_level": 40,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 50,
+   "pre_required_skill": [
+    {
+     "id": 8,
+     "level": 5
+    },
+    {
+     "id": 68,
+     "level": 3
+    }
+   ],
+   "icon": "icons/rapidmoveslash.png",
+   "icon_selected": "icons/rapidmoveslash_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 73,
+   "key": "illusionslash",
+   "path": "skill/swordman/illusionslash.skl",
+   "name": "幻影剑",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 70,
+   "required_level": 45,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    50
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 60,
+   "pre_required_skill": [
+    {
+     "id": 9,
+     "level": 1
+    }
+   ],
+   "icon": "icons/illusionslash.png",
+   "icon_selected": "icons/illusionslash_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 74,
+   "key": "wavespinarea",
+   "path": "skill/swordman/wavespinarea.skl",
+   "name": "旋波斩",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 70,
+   "required_level": 45,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": 60,
+   "pre_required_skill": [
+    {
+     "id": 2,
+     "level": 1
+    }
+   ],
+   "icon": "icons/wavespinarea.png",
+   "icon_selected": "icons/wavespinarea_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 75,
+   "key": "epidemicrasa",
+   "path": "skill/swordman/epidemicrasa.skl",
+   "name": "瘟疫之罗刹",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 70,
+   "required_level": 35,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 40,
+   "pre_required_skill": [
+    {
+     "id": 36,
+     "level": 1
+    }
+   ],
+   "icon": "icons/epidemicrasa.png",
+   "icon_selected": "icons/epidemicrasa_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 76,
+   "key": "frenzy",
+   "path": "skill/swordman/frenzy.skl",
+   "name": "暴走",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 50,
+   "required_level": 17,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    20,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 35,
+   "pre_required_skill": [],
+   "icon": "icons/frenzy.png",
+   "icon_selected": "icons/frenzy_on.png",
+   "implemented": "buff",
+   "local_id": "buff",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 77,
+   "key": "moonlightslash",
+   "path": "skill/swordman/moonlightslash.skl",
+   "name": "月光斩",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 70,
+   "required_level": 15,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/moonlightslash.png",
+   "icon_selected": "icons/moonlightslash_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 79,
+   "key": "bloodyrave",
+   "path": "skill/swordman/bloodyrave.skl",
+   "name": "嗜血",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 50,
+   "required_level": 35,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    30,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 50,
+   "pre_required_skill": [
+    {
+     "id": 24,
+     "level": 1
+    }
+   ],
+   "icon": "icons/bloodyrave.png",
+   "icon_selected": "icons/bloodyrave_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 80,
+   "key": "moonlightslashfull",
+   "path": "skill/swordman/moonlightslashfull.skl",
+   "name": "满月斩",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 1,
+   "required_level": 20,
+   "required_level_range": 1,
+   "growtype_max_level": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 100,
+   "pre_required_skill": [
+    {
+     "id": 77,
+     "level": 1
+    }
+   ],
+   "icon": "icons/moonlightslashfull.png",
+   "icon_selected": "icons/moonlightslashfull_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 81,
+   "key": "outragebreak",
+   "path": "skill/swordman/outragebreak.skl",
+   "name": "怒气爆发",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 70,
+   "required_level": 45,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    50,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 60,
+   "pre_required_skill": [
+    {
+     "id": 24,
+     "level": 1
+    }
+   ],
+   "icon": "icons/outragebreak.png",
+   "icon_selected": "icons/outragebreak_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 82,
+   "key": "kalla",
+   "path": "skill/swordman/kalla.skl",
+   "name": "卡拉斯",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 70,
+   "required_level": 45,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 60,
+   "pre_required_skill": [
+    {
+     "id": 75,
+     "level": 1
+    }
+   ],
+   "icon": "icons/kalla.png",
+   "icon_selected": "icons/kalla_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 84,
+   "key": "keiga",
+   "path": "skill/swordman/keiga.skl",
+   "name": "鬼牙",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 20,
+   "required_level": 20,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    10,
+    0,
+    0,
+    10
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/keiga.png",
+   "icon_selected": "icons/keiga_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 85,
+   "key": "hellbenter",
+   "path": "skill/swordman/hellbenter.skl",
+   "name": "地狱突刺",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 50,
+   "required_level": 48,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 200,
+   "pre_required_skill": [
+    {
+     "id": 81,
+     "level": 3
+    }
+   ],
+   "icon": "icons/hellbenter.png",
+   "icon_selected": "icons/hellbenter_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 86,
+   "key": "hundredsword",
+   "path": "skill/swordman/hundredsword.skl",
+   "name": "幻影剑舞",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 70,
+   "required_level": 48,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 200,
+   "pre_required_skill": [],
+   "icon": "icons/hundredsword.png",
+   "icon_selected": "icons/hundredsword_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 87,
+   "key": "blache",
+   "path": "skill/swordman/blache.skl",
+   "name": "血剑",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 70,
+   "required_level": 48,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 200,
+   "pre_required_skill": [
+    {
+     "id": 82,
+     "level": 1
+    }
+   ],
+   "icon": "icons/blache.png",
+   "icon_selected": "icons/blache_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 88,
+   "key": "waveeye",
+   "path": "skill/swordman/waveeye.skl",
+   "name": "波动眼",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 50,
+   "required_level": 48,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 200,
+   "pre_required_skill": [
+    {
+     "id": 52,
+     "level": 1
+    }
+   ],
+   "icon": "icons/waveeye.png",
+   "icon_selected": "icons/waveeye_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 89,
+   "key": "darkaura",
+   "path": "skill/swordman/darkaura.skl",
+   "name": "暗黑光环",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 50,
+   "required_level": 48,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 45,
+   "pre_required_skill": [],
+   "icon": "icons/darkaura.png",
+   "icon_selected": "icons/darkaura_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 90,
+   "key": "bleedingmastery",
+   "path": "skill/swordman/bleedingmastery.skl",
+   "name": "未开放技能 90",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 50,
+   "required_level": 48,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 45,
+   "pre_required_skill": [],
+   "icon": "icons/bleedingmastery.png",
+   "icon_selected": "icons/bleedingmastery_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 91,
+   "key": "defensedownoncritical",
+   "path": "skill/swordman/defensedownoncritical.skl",
+   "name": "未开放技能 91",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 48,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 45,
+   "pre_required_skill": [],
+   "icon": "icons/defensedownoncritical.png",
+   "icon_selected": "icons/defensedownoncritical_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 92,
+   "key": "stuckuponcounter",
+   "path": "skill/swordman/stuckuponcounter.skl",
+   "name": "未开放技能 92",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 50,
+   "required_level": 48,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 45,
+   "pre_required_skill": [],
+   "icon": "icons/stuckuponcounter.png",
+   "icon_selected": "icons/stuckuponcounter_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 93,
+   "key": "armormasteryclothsb",
+   "path": "skill/swordman/armormasteryclothsb.skl",
+   "name": "布甲精通",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 1,
+   "required_level": 1,
+   "required_level_range": null,
+   "growtype_max_level": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/armormasteryclothsb.png",
+   "icon_selected": "icons/armormasteryclothsb_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 94,
+   "key": "armormasterylightwm",
+   "path": "skill/swordman/armormasterylightwm.skl",
+   "name": "轻甲精通",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 1,
+   "required_level": 1,
+   "required_level_range": null,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    1
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/armormasterylightwm.png",
+   "icon_selected": "icons/armormasterylightwm_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 95,
+   "key": "tombstonerainex",
+   "path": "skill/swordman/tombstonerainex.skl",
+   "name": "崩山击·强化",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 50,
+   "required_level": 70,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 70,
+   "pre_required_skill": [
+    {
+     "id": 44,
+     "level": 5
+    }
+   ],
+   "icon": "icons/tombstonerainex.png",
+   "icon_selected": "icons/tombstonerainex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 96,
+   "key": "sayaex",
+   "path": "skill/swordman/sayaex.skl",
+   "name": "剑鞘·强化",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 50,
+   "required_level": 60,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 60,
+   "pre_required_skill": [
+    {
+     "id": 36,
+     "level": 1
+    }
+   ],
+   "icon": "icons/sayaex.png",
+   "icon_selected": "icons/sayaex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 97,
+   "key": "momentaryslashex",
+   "path": "skill/swordman/momentaryslashex.skl",
+   "name": "拔刀斩·强化",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 70,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 70,
+   "pre_required_skill": [
+    {
+     "id": 9,
+     "level": 1
+    }
+   ],
+   "icon": "icons/momentaryslashex.png",
+   "icon_selected": "icons/momentaryslashex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 98,
+   "key": "chargecrashex",
+   "path": "skill/swordman/chargecrashex.skl",
+   "name": "冲撞·强化",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 60,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 60,
+   "pre_required_skill": [
+    {
+     "id": 72,
+     "level": 1
+    }
+   ],
+   "icon": "icons/chargecrashex.png",
+   "icon_selected": "icons/chargecrashex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 99,
+   "key": "firewaveex",
+   "path": "skill/swordman/firewaveex.skl",
+   "name": "爆炎·波动剑·强化",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 50,
+   "required_level": 70,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 70,
+   "pre_required_skill": [
+    {
+     "id": 22,
+     "level": 1
+    }
+   ],
+   "icon": "icons/firewaveex.png",
+   "icon_selected": "icons/firewaveex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 100,
+   "key": "icewaveex",
+   "path": "skill/swordman/icewaveex.skl",
+   "name": "冰刃·波动剑·强化",
+   "type": "[active]",
+   "skill_class": 0,
+   "max_level": 50,
+   "required_level": 60,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 60,
+   "pre_required_skill": [
+    {
+     "id": 22,
+     "level": 1
+    }
+   ],
+   "icon": "icons/icewaveex.png",
+   "icon_selected": "icons/icewaveex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 101,
+   "key": "bloodblastex",
+   "path": "skill/swordman/bloodblastex.skl",
+   "name": "血气爆发·强化",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 50,
+   "required_level": 70,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 70,
+   "pre_required_skill": [
+    {
+     "id": 24,
+     "level": 5
+    }
+   ],
+   "icon": "icons/bloodblastex.png",
+   "icon_selected": "icons/bloodblastex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 102,
+   "key": "grabblastbloodex",
+   "path": "skill/swordman/grabblastbloodex.skl",
+   "name": "抓头爆破·强化",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 50,
+   "required_level": 60,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [],
+   "purchase_cost": 60,
+   "pre_required_skill": [
+    {
+     "id": 79,
+     "level": 1
+    }
+   ],
+   "icon": "icons/grabblastbloodex.png",
+   "icon_selected": "icons/grabblastbloodex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 103,
+   "key": "bloodsword",
+   "path": "skill/swordman/bloodsword.skl",
+   "name": "未开放技能 103",
+   "type": "[active]",
+   "skill_class": 2,
+   "max_level": 50,
+   "required_level": 40,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    30,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 50,
+   "pre_required_skill": [
+    {
+     "id": 23,
+     "level": 1
+    }
+   ],
+   "icon": "icons/bloodsword.png",
+   "icon_selected": "icons/bloodsword_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 105,
+   "key": "flowmind",
+   "path": "skill/swordman/flowmind.skl",
+   "name": "心流",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 1,
+   "required_level": 20,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 50,
+   "pre_required_skill": [],
+   "icon": "icons/flowmind.png",
+   "icon_selected": "icons/flowmind_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 107,
+   "key": "flowmindone",
+   "path": "skill/swordman/flowmindone.skl",
+   "name": "心流·一",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 70,
+   "required_level": 20,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [
+    {
+     "id": 105,
+     "level": 1
+    }
+   ],
+   "icon": "icons/flowmindone.png",
+   "icon_selected": "icons/flowmindone_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 108,
+   "key": "flowmindtwo",
+   "path": "skill/swordman/flowmindtwo.skl",
+   "name": "心流·二",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 70,
+   "required_level": 25,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [
+    {
+     "id": 105,
+     "level": 1
+    }
+   ],
+   "icon": "icons/flowmindtwo.png",
+   "icon_selected": "icons/flowmindtwo_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 109,
+   "key": "flowmindthree",
+   "path": "skill/swordman/flowmindthree.skl",
+   "name": "心流·三",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 70,
+   "required_level": 30,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 30,
+   "pre_required_skill": [
+    {
+     "id": 105,
+     "level": 1
+    }
+   ],
+   "icon": "icons/flowmindthree.png",
+   "icon_selected": "icons/flowmindthree_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 110,
+   "key": "flowmindpowerup",
+   "path": "skill/swordman/flowmindpowerup.skl",
+   "name": "心流强化",
+   "type": "[active]",
+   "skill_class": 1,
+   "max_level": 50,
+   "required_level": 30,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    30,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 30,
+   "pre_required_skill": [
+    {
+     "id": 105,
+     "level": 1
+    }
+   ],
+   "icon": "icons/flowmindpowerup.png",
+   "icon_selected": "icons/flowmindpowerup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 111,
+   "key": "ghostsidewind",
+   "path": "skill/swordman/ghostsidewind.skl",
+   "name": "鬼影侧风",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 70,
+   "required_level": 30,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 30,
+   "pre_required_skill": [
+    {
+     "id": 18,
+     "level": 1
+    }
+   ],
+   "icon": "icons/ghostsidewind.png",
+   "icon_selected": "icons/ghostsidewind_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 112,
+   "key": "triplestab",
+   "path": "skill/swordman/triplestab.skl",
+   "name": "三段刺",
+   "type": "[active]",
+   "skill_class": 3,
+   "max_level": 70,
+   "required_level": 35,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": 30,
+   "pre_required_skill": [
+    {
+     "id": 111,
+     "level": 1
+    }
+   ],
+   "icon": "icons/triplestab.png",
+   "icon_selected": "icons/triplestab_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 115,
+   "key": "ghostsidewindex",
+   "path": "skill/swordman/ghostsidewindex.skl",
+   "name": "鬼影侧风·强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 111,
+     "level": 5
+    }
+   ],
+   "icon": "icons/ghostsidewindex.png",
+   "icon_selected": "icons/ghostsidewindex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 116,
+   "key": "triplestabex",
+   "path": "skill/swordman/triplestabex.skl",
+   "name": "三段刺·强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 112,
+     "level": 5
+    }
+   ],
+   "icon": "icons/triplestabex.png",
+   "icon_selected": "icons/triplestabex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 139,
+   "key": "pinchpowerupex",
+   "path": "skill/swordman/pinchpowerupex.skl",
+   "name": "抓头强化·强化",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 1,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    1,
+    0,
+    1
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 19,
+     "level": 10
+    }
+   ],
+   "icon": "icons/pinchpowerupex.png",
+   "icon_selected": "icons/pinchpowerupex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 140,
+   "key": "normalwaveex",
+   "path": "skill/swordman/normalwaveex.skl",
+   "name": "波动剑·强化",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 10,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 20,
+     "level": 10
+    }
+   ],
+   "icon": "icons/normalwaveex.png",
+   "icon_selected": "icons/normalwaveex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 141,
+   "key": "gorecrossex",
+   "path": "skill/swordman/gorecrossex.skl",
+   "name": "十字斩·强化",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 10,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 64,
+     "level": 10
+    }
+   ],
+   "icon": "icons/gorecrossex.png",
+   "icon_selected": "icons/gorecrossex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 142,
+   "key": "hardattackex",
+   "path": "skill/swordman/hardattackex.skl",
+   "name": "重击·强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 10,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 5,
+     "level": 10
+    }
+   ],
+   "icon": "icons/hardattackex.png",
+   "icon_selected": "icons/hardattackex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 143,
+   "key": "tripleslashex",
+   "path": "skill/swordman/tripleslashex.skl",
+   "name": "三段斩·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 8,
+     "level": 5
+    }
+   ],
+   "icon": "icons/tripleslashex.png",
+   "icon_selected": "icons/tripleslashex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 144,
+   "key": "hitbackex",
+   "path": "skill/swordman/hitbackex.skl",
+   "name": "后跳·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    5
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 7,
+     "level": 10
+    }
+   ],
+   "icon": "icons/hitbackex.png",
+   "icon_selected": "icons/hitbackex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 145,
+   "key": "autoguardex",
+   "path": "skill/swordman/autoguardex.skl",
+   "name": "自动格挡·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    5
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 3,
+     "level": 10
+    }
+   ],
+   "icon": "icons/autoguardex.png",
+   "icon_selected": "icons/autoguardex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 146,
+   "key": "bremenex",
+   "path": "skill/swordman/bremenex.skl",
+   "name": "侵蚀之普戾蒙·强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 41,
+     "level": 5
+    }
+   ],
+   "icon": "icons/bremenex.png",
+   "icon_selected": "icons/bremenex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 147,
+   "key": "ghoststepex",
+   "path": "skill/swordman/ghoststepex.skl",
+   "name": "鬼影步·强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 18,
+     "level": 10
+    }
+   ],
+   "icon": "icons/ghoststepex.png",
+   "icon_selected": "icons/ghoststepex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 148,
+   "key": "diehardex",
+   "path": "skill/swordman/diehardex.skl",
+   "name": "血气唤醒·强化",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 34,
+     "level": 10
+    }
+   ],
+   "icon": "icons/diehardex.png",
+   "icon_selected": "icons/diehardex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 149,
+   "key": "recklessex",
+   "path": "skill/swordman/recklessex.skl",
+   "name": "狂暴化·强化",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 5,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    5
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 40,
+     "level": 10
+    }
+   ],
+   "icon": "icons/recklessex.png",
+   "icon_selected": "icons/recklessex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 150,
+   "key": "dotareaex",
+   "path": "skill/swordman/dotareaex.skl",
+   "name": "出血领域·强化",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 52,
+     "level": 10
+    }
+   ],
+   "icon": "icons/dotareaex.png",
+   "icon_selected": "icons/dotareaex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 151,
+   "key": "wavemarkex",
+   "path": "skill/swordman/wavemarkex.skl",
+   "name": "波动标记·强化",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 47,
+     "level": 10
+    }
+   ],
+   "icon": "icons/wavemarkex.png",
+   "icon_selected": "icons/wavemarkex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 152,
+   "key": "rapidmoveslashex",
+   "path": "skill/swordman/rapidmoveslashex.skl",
+   "name": "疾影斩·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 72,
+     "level": 10
+    }
+   ],
+   "icon": "icons/rapidmoveslashex.png",
+   "icon_selected": "icons/rapidmoveslashex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 153,
+   "key": "ashenforkex",
+   "path": "skill/swordman/ashenforkex.skl",
+   "name": "灰烬之叉·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 16,
+     "level": 10
+    }
+   ],
+   "icon": "icons/ashenforkex.png",
+   "icon_selected": "icons/ashenforkex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 154,
+   "key": "momentaryslashexp",
+   "path": "skill/swordman/momentaryslashexp.skl",
+   "name": "拔刀斩·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    5
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 9,
+     "level": 10
+    }
+   ],
+   "icon": "icons/momentaryslashexp.png",
+   "icon_selected": "icons/momentaryslashexp_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 155,
+   "key": "moonlightslashex",
+   "path": "skill/swordman/moonlightslashex.skl",
+   "name": "月光斩·强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 10,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 77,
+     "level": 10
+    }
+   ],
+   "icon": "icons/moonlightslashex.png",
+   "icon_selected": "icons/moonlightslashex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 156,
+   "key": "epidemicrasaex",
+   "path": "skill/swordman/epidemicrasaex.skl",
+   "name": "瘟疫之罗刹·强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 75,
+     "level": 10
+    }
+   ],
+   "icon": "icons/epidemicrasaex.png",
+   "icon_selected": "icons/epidemicrasaex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 157,
+   "key": "hopsmashex",
+   "path": "skill/swordman/hopsmashex.skl",
+   "name": "跃击·强化",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 10,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 65,
+     "level": 10
+    }
+   ],
+   "icon": "icons/hopsmashex.png",
+   "icon_selected": "icons/hopsmashex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 158,
+   "key": "bloodyraveex",
+   "path": "skill/swordman/bloodyraveex.skl",
+   "name": "嗜血·强化",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 79,
+     "level": 10
+    }
+   ],
+   "icon": "icons/bloodyraveex.png",
+   "icon_selected": "icons/bloodyraveex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 159,
+   "key": "vaneslashex",
+   "path": "skill/swordman/vaneslashex.skl",
+   "name": "剑气斩·强化",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 5,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 58,
+     "level": 10
+    }
+   ],
+   "icon": "icons/vaneslashex.png",
+   "icon_selected": "icons/vaneslashex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 160,
+   "key": "reflectguardex",
+   "path": "skill/swordman/reflectguardex.skl",
+   "name": "反击格挡·强化",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 5,
+   "required_level": 99,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    2,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 1,
+     "level": 1
+    }
+   ],
+   "icon": "icons/reflectguardex.png",
+   "icon_selected": "icons/reflectguardex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 161,
+   "key": "basicattackupex",
+   "path": "skill/swordman/basicattackupex.skl",
+   "name": "基础攻击强化·强化",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 5,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [],
+   "icon": "icons/basicattackupex.png",
+   "icon_selected": "icons/basicattackupex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 162,
+   "key": "dashattackmultihitex",
+   "path": "skill/swordman/dashattackmultihitex.skl",
+   "name": "冲刺连斩·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 11,
+     "level": 10
+    }
+   ],
+   "icon": "icons/dashattackmultihitex.png",
+   "icon_selected": "icons/dashattackmultihitex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 163,
+   "key": "guardex",
+   "path": "skill/swordman/guardex.skl",
+   "name": "格挡·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 3,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 1,
+     "level": 5
+    }
+   ],
+   "icon": "icons/guardex.png",
+   "icon_selected": "icons/guardex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 164,
+   "key": "khazanex",
+   "path": "skill/swordman/khazanex.skl",
+   "name": "刀魂之卡赞·强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 10,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 25,
+     "level": 10
+    }
+   ],
+   "icon": "icons/khazanex.png",
+   "icon_selected": "icons/khazanex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 165,
+   "key": "grabblastbloodexp",
+   "path": "skill/swordman/grabblastbloodexp.skl",
+   "name": "抓头爆破·强化",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 31,
+     "level": 10
+    }
+   ],
+   "icon": "icons/grabblastbloodexp.png",
+   "icon_selected": "icons/grabblastbloodexp_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 166,
+   "key": "bloodblastexp",
+   "path": "skill/swordman/bloodblastexp.skl",
+   "name": "血气爆发·强化",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 24,
+     "level": 10
+    }
+   ],
+   "icon": "icons/bloodblastexp.png",
+   "icon_selected": "icons/bloodblastexp_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 167,
+   "key": "outragebreakex",
+   "path": "skill/swordman/outragebreakex.skl",
+   "name": "怒气爆发·强化",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 81,
+     "level": 10
+    }
+   ],
+   "icon": "icons/outragebreakex.png",
+   "icon_selected": "icons/outragebreakex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 168,
+   "key": "bloodswordex",
+   "path": "skill/swordman/bloodswordex.skl",
+   "name": "未开放技能 168",
+   "type": "[passive]",
+   "skill_class": 2,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    5
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 103,
+     "level": 10
+    }
+   ],
+   "icon": "icons/bloodswordex.png",
+   "icon_selected": "icons/bloodswordex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 169,
+   "key": "backstep",
+   "path": "skill/swordman/backstep.skl",
+   "name": "后跳",
+   "type": "[active]",
+   "skill_class": 4,
+   "max_level": 1,
+   "required_level": 1,
+   "required_level_range": null,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 30,
+   "pre_required_skill": [],
+   "icon": "icons/backstep.png",
+   "icon_selected": "icons/backstep_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 172,
+   "key": "armormasterylight",
+   "path": "skill/swordman/armormasterylight.skl",
+   "name": "轻甲精通",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 1,
+   "required_level": 1,
+   "required_level_range": null,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/armormasterylight.png",
+   "icon_selected": "icons/armormasterylight_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 173,
+   "key": "armormasteryheavy",
+   "path": "skill/swordman/armormasteryheavy.skl",
+   "name": "重甲精通",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 1,
+   "required_level": 1,
+   "required_level_range": null,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "fitness_growtype": [
+    3
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/armormasteryheavy.png",
+   "icon_selected": "icons/armormasteryheavy_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 174,
+   "key": "basicattackup",
+   "path": "skill/swordman/basicattackup.skl",
+   "name": "基础攻击强化",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 100,
+   "required_level": 1,
+   "required_level_range": 1,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/basicattackup.png",
+   "icon_selected": "icons/basicattackup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 175,
+   "key": "jumppowerup",
+   "path": "skill/swordman/jumppowerup.skl",
+   "name": "跳跃力强化",
+   "type": "[active]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 10,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/jumppowerup.png",
+   "icon_selected": "icons/jumppowerup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 176,
+   "key": "magicalattackup",
+   "path": "skill/swordman/magicalattackup.skl",
+   "name": "魔法攻击强化",
+   "type": "[active]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 15,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [],
+   "icon": "icons/magicalattackup.png",
+   "icon_selected": "icons/magicalattackup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 177,
+   "key": "throwmastery",
+   "path": "skill/swordman/throwmastery.skl",
+   "name": "投掷精通",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 10,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [],
+   "icon": "icons/throwmastery.png",
+   "icon_selected": "icons/throwmastery_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 178,
+   "key": "physicalbackattackcritical",
+   "path": "skill/swordman/physicalbackattackcritical.skl",
+   "name": "物理背击暴击",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 20,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/physicalbackattackcritical.png",
+   "icon_selected": "icons/physicalbackattackcritical_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 179,
+   "key": "disjointitem",
+   "path": "skill/swordman/disjointitem.skl",
+   "name": "分解",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 10,
+   "required_level": 1,
+   "required_level_range": null,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 10,
+   "pre_required_skill": [],
+   "icon": "icons/disjointitem.png",
+   "icon_selected": "icons/disjointitem_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 180,
+   "key": "superarmoroncast",
+   "path": "skill/swordman/superarmoroncast.skl",
+   "name": "施放霸体",
+   "type": "[active]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 15,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 25,
+   "pre_required_skill": [],
+   "icon": "icons/superarmoroncast.png",
+   "icon_selected": "icons/superarmoroncast_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 181,
+   "key": "compoundcraft",
+   "path": "skill/swordman/compoundcraft.skl",
+   "name": "制作·工艺",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 10,
+   "required_level": 1,
+   "required_level_range": 10,
+   "growtype_max_level": [
+    2,
+    4,
+    4,
+    2,
+    2,
+    2
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 10,
+   "pre_required_skill": [],
+   "icon": "icons/compoundcraft.png",
+   "icon_selected": "icons/compoundcraft_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 182,
+   "key": "compoundweaving",
+   "path": "skill/swordman/compoundweaving.skl",
+   "name": "制作·织物",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 10,
+   "required_level": 1,
+   "required_level_range": 10,
+   "growtype_max_level": [
+    2,
+    4,
+    4,
+    2,
+    2,
+    2
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 10,
+   "pre_required_skill": [],
+   "icon": "icons/compoundweaving.png",
+   "icon_selected": "icons/compoundweaving_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 183,
+   "key": "compoundmachine",
+   "path": "skill/swordman/compoundmachine.skl",
+   "name": "制作·机械",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 10,
+   "required_level": 1,
+   "required_level_range": 10,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 10,
+   "pre_required_skill": [],
+   "icon": "icons/compoundmachine.png",
+   "icon_selected": "icons/compoundmachine_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 184,
+   "key": "compoundchemistry",
+   "path": "skill/swordman/compoundchemistry.skl",
+   "name": "制作·化学",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 10,
+   "required_level": 1,
+   "required_level_range": 10,
+   "growtype_max_level": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 10,
+   "pre_required_skill": [],
+   "icon": "icons/compoundchemistry.png",
+   "icon_selected": "icons/compoundchemistry_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 185,
+   "key": "armormasteryleather",
+   "path": "skill/swordman/armormasteryleather.skl",
+   "name": "皮甲精通",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 1,
+   "required_level": 1,
+   "required_level_range": null,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/armormasteryleather.png",
+   "icon_selected": "icons/armormasteryleather_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 186,
+   "key": "physicalcriticalhitup",
+   "path": "skill/swordman/physicalcriticalhitup.skl",
+   "name": "物理暴击强化",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 20,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/physicalcriticalhitup.png",
+   "icon_selected": "icons/physicalcriticalhitup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 187,
+   "key": "armormasterycloth",
+   "path": "skill/swordman/armormasterycloth.skl",
+   "name": "布甲精通",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 1,
+   "required_level": 1,
+   "required_level_range": null,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/armormasterycloth.png",
+   "icon_selected": "icons/armormasterycloth_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 188,
+   "key": "magicalcriticalhitup",
+   "path": "skill/swordman/magicalcriticalhitup.skl",
+   "name": "魔法暴击强化",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 20,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/magicalcriticalhitup.png",
+   "icon_selected": "icons/magicalcriticalhitup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 189,
+   "key": "magicalbackattackcritical",
+   "path": "skill/swordman/magicalbackattackcritical.skl",
+   "name": "魔法背击暴击",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 20,
+   "required_level_range": 3,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 20,
+   "pre_required_skill": [],
+   "icon": "icons/magicalbackattackcritical.png",
+   "icon_selected": "icons/magicalbackattackcritical_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 190,
+   "key": "quickstanding",
+   "path": "skill/swordman/quickstanding.skl",
+   "name": "快速起身",
+   "type": "[active]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 1,
+   "required_level_range": null,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 10,
+   "pre_required_skill": [],
+   "icon": "icons/quickstanding.png",
+   "icon_selected": "icons/quickstanding_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 191,
+   "key": "enchant",
+   "path": "skill/swordman/enchant.skl",
+   "name": "附魔",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 20,
+   "required_level_range": null,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/enchant.png",
+   "icon_selected": "icons/enchant_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 192,
+   "key": "dollmaking",
+   "path": "skill/swordman/dollmaking.skl",
+   "name": "人偶制作",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 20,
+   "required_level_range": null,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/dollmaking.png",
+   "icon_selected": "icons/dollmaking_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 193,
+   "key": "alchemy",
+   "path": "skill/swordman/alchemy.skl",
+   "name": "炼金",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 20,
+   "required_level_range": null,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/alchemy.png",
+   "icon_selected": "icons/alchemy_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 194,
+   "key": "opendisjointshop",
+   "path": "skill/swordman/opendisjointshop.skl",
+   "name": "分解商店",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 20,
+   "required_level_range": null,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/opendisjointshop.png",
+   "icon_selected": "icons/opendisjointshop_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 195,
+   "key": "basichpmaxup",
+   "path": "skill/swordman/basichpmaxup.skl",
+   "name": "生命上限强化",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 30,
+   "required_level": 0,
+   "required_level_range": 1,
+   "growtype_max_level": [
+    20,
+    20,
+    20,
+    20,
+    20,
+    20
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "",
+   "icon_selected": "",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 196,
+   "key": "armormasteryplate",
+   "path": "skill/swordman/armormasteryplate.skl",
+   "name": "板甲精通",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 1,
+   "required_level": 1,
+   "required_level_range": null,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/armormasteryplate.png",
+   "icon_selected": "icons/armormasteryplate_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 197,
+   "key": "conversion",
+   "path": "skill/swordman/conversion.skl",
+   "name": "转换",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 1,
+   "required_level": 20,
+   "required_level_range": 1,
+   "growtype_max_level": [
+    0,
+    1,
+    1,
+    1,
+    1,
+    0
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/conversion.png",
+   "icon_selected": "icons/conversion_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 200,
+   "key": "statusup",
+   "path": "skill/swordman/statusup.skl",
+   "name": "状态强化",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 2,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/statusup.png",
+   "icon_selected": "icons/statusup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 201,
+   "key": "experienceup",
+   "path": "skill/swordman/experienceup.skl",
+   "name": "经验强化",
+   "type": "[passive]",
+   "skill_class": 4,
+   "max_level": 20,
+   "required_level": 1,
+   "required_level_range": 2,
+   "growtype_max_level": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": 0,
+   "pre_required_skill": [],
+   "icon": "icons/experienceup.png",
+   "icon_selected": "icons/experienceup_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 210,
+   "key": "releasewaveex",
+   "path": "skill/swordman/releasewaveex.skl",
+   "name": "释放波动·强化",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 32,
+     "level": 10
+    }
+   ],
+   "icon": "icons/releasewaveex.png",
+   "icon_selected": "icons/releasewaveex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 211,
+   "key": "grandwaveex",
+   "path": "skill/swordman/grandwaveex.skl",
+   "name": "波动爆发·强化",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 50,
+     "level": 10
+    }
+   ],
+   "icon": "icons/grandwaveex.png",
+   "icon_selected": "icons/grandwaveex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 212,
+   "key": "firewaveexp",
+   "path": "skill/swordman/firewaveexp.skl",
+   "name": "爆炎·波动剑·强化",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 22,
+     "level": 10
+    }
+   ],
+   "icon": "icons/firewaveexp.png",
+   "icon_selected": "icons/firewaveexp_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 213,
+   "key": "standalonewaveex",
+   "path": "skill/swordman/standalonewaveex.skl",
+   "name": "独立波动·强化",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 62,
+     "level": 10
+    }
+   ],
+   "icon": "icons/standalonewaveex.png",
+   "icon_selected": "icons/standalonewaveex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 214,
+   "key": "wavespinareaex",
+   "path": "skill/swordman/wavespinareaex.skl",
+   "name": "旋波斩·强化",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 74,
+     "level": 10
+    }
+   ],
+   "icon": "icons/wavespinareaex.png",
+   "icon_selected": "icons/wavespinareaex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 215,
+   "key": "upperslashex",
+   "path": "skill/swordman/upperslashex.skl",
+   "name": "上挑·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 50,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "fitness_growtype": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 46,
+     "level": 10
+    }
+   ],
+   "icon": "icons/upperslashex.png",
+   "icon_selected": "icons/upperslashex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 216,
+   "key": "icewaveexp",
+   "path": "skill/swordman/icewaveexp.skl",
+   "name": "冰刃·波动剑·强化",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 3,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 21,
+     "level": 10
+    }
+   ],
+   "icon": "icons/icewaveexp.png",
+   "icon_selected": "icons/icewaveexp_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 217,
+   "key": "illusionslashexp",
+   "path": "skill/swordman/illusionslashexp.skl",
+   "name": "幻影剑·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 73,
+     "level": 10
+    }
+   ],
+   "icon": "icons/illusionslashexp.png",
+   "icon_selected": "icons/illusionslashexp_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 218,
+   "key": "chargecrashexp",
+   "path": "skill/swordman/chargecrashexp.skl",
+   "name": "冲撞·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 68,
+     "level": 10
+    }
+   ],
+   "icon": "icons/chargecrashexp.png",
+   "icon_selected": "icons/chargecrashexp_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 219,
+   "key": "flowmindoneex",
+   "path": "skill/swordman/flowmindoneex.skl",
+   "name": "心流·一·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 107,
+     "level": 10
+    }
+   ],
+   "icon": "icons/flowmindoneex.png",
+   "icon_selected": "icons/flowmindoneex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 220,
+   "key": "flowmindtwoex",
+   "path": "skill/swordman/flowmindtwoex.skl",
+   "name": "心流·二·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 108,
+     "level": 10
+    }
+   ],
+   "icon": "icons/flowmindtwoex.png",
+   "icon_selected": "icons/flowmindtwoex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 221,
+   "key": "flowmindthreeex",
+   "path": "skill/swordman/flowmindthreeex.skl",
+   "name": "心流·三·强化",
+   "type": "[passive]",
+   "skill_class": 1,
+   "max_level": 10,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    1
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 109,
+     "level": 10
+    }
+   ],
+   "icon": "icons/flowmindthreeex.png",
+   "icon_selected": "icons/flowmindthreeex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 224,
+   "key": "sayaexp",
+   "path": "skill/swordman/sayaexp.skl",
+   "name": "剑鞘·强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    5
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 36,
+     "level": 10
+    }
+   ],
+   "icon": "icons/sayaexp.png",
+   "icon_selected": "icons/sayaexp_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 225,
+   "key": "tombstonerainexp",
+   "path": "skill/swordman/tombstonerainexp.skl",
+   "name": "崩山击·强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 5,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 44,
+     "level": 10
+    }
+   ],
+   "icon": "icons/tombstonerainexp.png",
+   "icon_selected": "icons/tombstonerainexp_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 226,
+   "key": "ghoststepslashex",
+   "path": "skill/swordman/ghoststepslashex.skl",
+   "name": "鬼影步斩·强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 60,
+     "level": 10
+    }
+   ],
+   "icon": "icons/ghoststepslashex.png",
+   "icon_selected": "icons/ghoststepslashex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 227,
+   "key": "kallaex",
+   "path": "skill/swordman/kallaex.skl",
+   "name": "卡拉斯·强化",
+   "type": "[passive]",
+   "skill_class": 3,
+   "max_level": 10,
+   "required_level": 65,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "fitness_growtype": [
+    2
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 82,
+     "level": 10
+    }
+   ],
+   "icon": "icons/kallaex.png",
+   "icon_selected": "icons/kallaex_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  },
+  {
+   "id": 228,
+   "key": "reflectguardexp",
+   "path": "skill/swordman/reflectguardexp.skl",
+   "name": "反击格挡·强化",
+   "type": "[passive]",
+   "skill_class": 0,
+   "max_level": 5,
+   "required_level": 55,
+   "required_level_range": 5,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "fitness_growtype": [
+    4
+   ],
+   "purchase_cost": null,
+   "pre_required_skill": [
+    {
+     "id": 2,
+     "level": 10
+    }
+   ],
+   "icon": "icons/reflectguardexp.png",
+   "icon_selected": "icons/reflectguardexp_on.png",
+   "implemented": "",
+   "local_id": "",
+   "evidence": "SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）"
+  }
+ ]
+}

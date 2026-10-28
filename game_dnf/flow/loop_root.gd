@@ -730,6 +730,7 @@ func slot_double_clicked(cell: Control) -> void:
 		if act("items.equip", {"id":id,"uid":cell.cell.get("uid","")}):refresh_item_views()
 
 func can_drop_slot(source: Dictionary, target: Dictionary) -> bool:
+	if source.get("place") == "skill_catalog":return target.get("place") == "skill"
 	if source.get("place") == "shop":return target.get("place") in ["bag", "quick", "equipment"] and Catalog.ITEMS.get(source.get("id"), {}).get("kind") == (target.get("category") if target.get("place") == "bag" else "weapon" if target.get("place") == "equipment" else "consumable")
 	if session.state != "town" and (source.get("place") == "equipment" or target.get("place") == "equipment"):return false
 	return session.Layout.move(session.profile.duplicate(true), Catalog.ITEMS, source, target)

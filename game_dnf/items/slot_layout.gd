@@ -51,12 +51,22 @@ static func valid(p: Dictionary, catalog: Dictionary) -> bool:
 
 static func move(p: Dictionary, catalog: Dictionary, source: Dictionary, target: Dictionary) -> bool:
 	normalize(p, catalog)
-	if p.has("item_state"):return Inventory.move(p,source,target)
 	var from: String = source.get("place", "")
 	var to: String = target.get("place", "")
 	var id: String = source.get("id", "")
-	if from not in ["bag", "quick", "equipment", "skill"]:return false
 	var index := int(target.get("index", -1))
+	# 技能面板拖入：只接受可入槽的主动技能，且必须已学会；同技能不重复占槽。
+	# 放在 item_state 分支之前——它只改 skill_slots，与物品系统无关。
+	if from == "skill_catalog":
+		if to != "skill" or index < 0 or index >= 6:return false
+		if not id in DEFAULT_SKILLS:return false
+		if int(p.get("skills", {}).get(id, 0)) < 1:return false
+		for i in 6:
+			if p["skill_slots"][i] == id:p["skill_slots"][i] = ""
+		p["skill_slots"][index] = id
+		return true
+	if p.has("item_state"):return Inventory.move(p,source,target)
+	if from not in ["bag", "quick", "equipment", "skill"]:return false
 	if from == "skill" and to == "skill" and index >= 0 and index < 6:
 		var old := int(source.get("index", -1))
 		if old < 0 or old >= 6 or p["skill_slots"][old] != id:return false
