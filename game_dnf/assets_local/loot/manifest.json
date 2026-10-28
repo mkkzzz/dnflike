@@ -1,0 +1,139 @@
+{
+  "schema": "dnflike_loot_sprites/2",
+  "sprites": {
+    "beam": {
+      "frames": [
+        "beam_00.png",
+        "beam_01.png",
+        "beam_02.png",
+        "beam_03.png",
+        "beam_04.png",
+        "beam_05.png",
+        "beam_06.png",
+        "beam_07.png",
+        "beam_08.png",
+        "beam_09.png",
+        "beam_10.png",
+        "beam_11.png",
+        "beam_12.png",
+        "beam_13.png",
+        "beam_14.png",
+        "beam_15.png"
+      ],
+      "fps": 12,
+      "source": "sprite/common/commoneffect/itemdropeffect/beam.img",
+      "source_sha256": "3df92f6cf19f5897",
+      "source_frame": 0,
+      "size": [
+        179,
+        600
+      ]
+    },
+    "gold": {
+      "frames": [
+        "gold_00.png",
+        "gold_01.png",
+        "gold_02.png",
+        "gold_03.png",
+        "gold_04.png",
+        "gold_05.png"
+      ],
+      "fps": 8,
+      "source": "sprite/common/etc/usecoin.img",
+      "source_sha256": "64a29e30ca01e8fd",
+      "source_frame": 0,
+      "size": [
+        28,
+        34
+      ]
+    },
+    "potion": {
+      "frames": [
+        "potion_00.png"
+      ],
+      "fps": 10,
+      "source": "sprite/item/field_consumption.img",
+      "source_sha256": "abf9838390f8a683",
+      "source_frame": 10,
+      "size": [
+        21,
+        10
+      ]
+    },
+    "scrap_iron": {
+      "frames": [
+        "scrap_iron_00.png"
+      ],
+      "fps": 10,
+      "source": "sprite/item/field_material.img",
+      "source_sha256": "b10713272a3d9c14",
+      "source_frame": 93,
+      "size": [
+        26,
+        26
+      ]
+    },
+    "iron_sword": {
+      "frames": [
+        "iron_sword_00.png"
+      ],
+      "fps": 10,
+      "source": "sprite/item/field_weapon.img",
+      "source_sha256": "0778b93c5f5def58",
+      "source_frame": 2,
+      "size": [
+        42,
+        14
+      ]
+    },
+    "forest_sword": {
+      "frames": [
+        "forest_sword_00.png"
+      ],
+      "fps": 10,
+      "source": "sprite/item/field_weapon.img",
+      "source_sha256": "0778b93c5f5def58",
+      "source_frame": 2,
+      "size": [
+        42,
+        14
+      ]
+    },
+    "training_coat": {
+      "frames": [
+        "training_coat_00.png"
+      ],
+      "fps": 10,
+      "source": "sprite/item/fieldimage.img",
+      "source_sha256": "aefbfc6433d3ea3d",
+      "source_frame": 3,
+      "size": [
+        18,
+        13
+      ]
+    },
+    "training_necklace": {
+      "frames": [
+        "training_necklace_00.png"
+      ],
+      "fps": 10,
+      "source": "sprite/item/fieldimage.img",
+      "source_sha256": "aefbfc6433d3ea3d",
+      "source_frame": 7,
+      "size": [
+        11,
+        9
+      ]
+    }
+  },
+  "sounds": {
+    "coin_pick": [
+      "coin_pick_01.ogg",
+      "coin_pick_02.ogg",
+      "coin_pick_03.ogg"
+    ],
+    "item_pick": [
+      "item_pick.ogg"
+    ]
+  }
+}

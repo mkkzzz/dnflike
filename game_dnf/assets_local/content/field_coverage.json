@@ -1,0 +1,3648 @@
+{
+ "asset_version": "dnf-native-assets-v1-20261022",
+ "kinds": {
+  "atk": {
+   "decoded_tags": 31,
+   "distinct_tags": 46,
+   "enum_values": {
+    "[active status]": {
+     "[armor break]": 14,
+     "[bleeding]": 250,
+     "[blind]": 48,
+     "[burn]": 76,
+     "[confuse]": 41,
+     "[curse]": 56,
+     "[freeze]": 130,
+     "[hold]": 39,
+     "[lightning]": 145,
+     "[none]": 35,
+     "[poison]": 106,
+     "[sleep]": 20,
+     "[slow]": 43,
+     "[stone]": 29,
+     "[stun]": 267,
+     "[weakness]": 17,
+     "[weapon break]": 2
+    },
+    "[attack direction]": {
+     "[DDASH_HIT]": 1,
+     "[damage]": 9,
+     "[down]": 3,
+     "[hit down]": 1701,
+     "[hit horizon]": 2369,
+     "[hit lift up]": 765,
+     "[hit up]": 2,
+     "[hit vertical]": 2
+    },
+    "[attack type]": {
+     "[ignore defense]": 85,
+     "[magic]": 1643,
+     "[physic]": 4261
+    },
+    "[damage reaction]": {
+     "[damage except human]": 23,
+     "[damage]": 3445,
+     "[down]": 2077,
+     "[none]": 507
+    },
+    "[elemental property]": {
+     "[dark element]": 473,
+     "[fire element]": 641,
+     "[ice element]": 2,
+     "[light element]": 402,
+     "[no element]": 4114,
+     "[water element]": 272
+    },
+    "[hit direction]": {
+     "[auto]": 2,
+     "[back]": 6,
+     "[front]": 115,
+     "[inner]": 8,
+     "[outer]": 1
+    },
+    "[hit info]": {
+     "[blood]": 1648,
+     "[blow]": 4165,
+     "[burn]": 61,
+     "[cut]": 1098,
+     "[etc]": 178,
+     "[hit]": 15,
+     "[knock]": 13,
+     "[knuck back]": 3,
+     "[mana burn]": 5,
+     "[no blood]": 3818,
+     "[slash]": 4,
+     "[stuck]": 50
+    }
+   },
+   "fields": [
+    {
+     "decoded_as": "damage_reaction",
+     "evidence": "E-PARSE",
+     "files": 6063,
+     "occurrences": 6089,
+     "runtime": "combat/resolve/reaction.gd",
+     "tag": "[damage reaction]"
+    },
+    {
+     "decoded_as": "attack_type",
+     "evidence": "E-PARSE",
+     "files": 6024,
+     "occurrences": 6025,
+     "runtime": "none",
+     "tag": "[attack type]"
+    },
+    {
+     "decoded_as": "element",
+     "evidence": "E-PARSE",
+     "files": 5931,
+     "occurrences": 5938,
+     "runtime": "none",
+     "tag": "[elemental property]"
+    },
+    {
+     "decoded_as": "hit_info",
+     "evidence": "E-PARSE",
+     "files": 5641,
+     "occurrences": 5686,
+     "runtime": "scripts/main.gd hit_cues (effect kind/size/scale, blood)",
+     "tag": "[hit info]"
+    },
+    {
+     "decoded_as": "attack_enemy",
+     "evidence": "E-PARSE",
+     "files": 5427,
+     "occurrences": 5430,
+     "runtime": "none",
+     "tag": "[attack enemy]"
+    },
+    {
+     "decoded_as": "hit_wav",
+     "evidence": "E-PARSE",
+     "files": 5123,
+     "occurrences": 5164,
+     "runtime": "scripts/main.gd hit_cues",
+     "tag": "[hit wav]"
+    },
+    {
+     "decoded_as": "lift_up",
+     "evidence": "E-PARSE",
+     "files": 5116,
+     "occurrences": 5132,
+     "runtime": "combat/resolve/reaction.gd",
+     "tag": "[lift up]"
+    },
+    {
+     "decoded_as": "push_aside",
+     "evidence": "E-PARSE",
+     "files": 5037,
+     "occurrences": 5042,
+     "runtime": "combat/resolve/reaction.gd",
+     "tag": "[push aside]"
+    },
+    {
+     "decoded_as": "weapon_damage_apply",
+     "evidence": "E-PARSE",
+     "files": 4973,
+     "occurrences": 4984,
+     "runtime": "none",
+     "tag": "[weapon damage apply]"
+    },
+    {
+     "decoded_as": "attack_direction",
+     "evidence": "E-PARSE",
+     "files": 4894,
+     "occurrences": 4901,
+     "runtime": "combat/resolve/reaction.gd (damage motion 1/2)",
+     "tag": "[attack direction]"
+    },
+    {
+     "decoded_as": "damage_bonus",
+     "evidence": "E-PARSE",
+     "files": 3285,
+     "occurrences": 3314,
+     "runtime": "combat/data/move_table.gd (percent = 100 + bonus)",
+     "tag": "[damage bonus]"
+    },
+    {
+     "decoded_as": "active_status",
+     "evidence": "E-PARSE",
+     "files": 1287,
+     "occurrences": 1333,
+     "runtime": "none",
+     "tag": "[active status]"
+    },
+    {
+     "decoded_as": "knock_back",
+     "evidence": "E-PARSE",
+     "files": 1135,
+     "occurrences": 1137,
+     "runtime": "none",
+     "tag": "[knuck back]"
+    },
+    {
+     "decoded_as": "damage",
+     "evidence": "E-PARSE",
+     "files": 848,
+     "occurrences": 849,
+     "runtime": "none",
+     "tag": "[damage]"
+    },
+    {
+     "decoded_as": "absolute_damage",
+     "evidence": "E-PARSE",
+     "files": 534,
+     "occurrences": 534,
+     "runtime": "none",
+     "tag": "[absolute damage]"
+    },
+    {
+     "decoded_as": "bounce",
+     "evidence": "E-PARSE",
+     "files": 223,
+     "occurrences": 223,
+     "runtime": "none",
+     "tag": "[bounce]"
+    },
+    {
+     "decoded_as": "stuck",
+     "evidence": "E-PARSE",
+     "files": 193,
+     "occurrences": 193,
+     "runtime": "none",
+     "tag": "[stuck]"
+    },
+    {
+     "decoded_as": "attack_friend",
+     "evidence": "E-PARSE",
+     "files": 182,
+     "occurrences": 183,
+     "runtime": "none",
+     "tag": "[attack friend]"
+    },
+    {
+     "decoded_as": "hit_direction",
+     "evidence": "E-PARSE",
+     "files": 132,
+     "occurrences": 132,
+     "runtime": "none",
+     "tag": "[hit direction]"
+    },
+    {
+     "decoded_as": "pvp",
+     "evidence": "E-PARSE",
+     "files": 88,
+     "occurrences": 88,
+     "runtime": "none",
+     "tag": "[pvp]"
+    },
+    {
+     "decoded_as": "monster_damage_rate",
+     "evidence": "E-PARSE",
+     "files": 83,
+     "occurrences": 83,
+     "runtime": "none",
+     "tag": "[monster damage rate]"
+    },
+    {
+     "decoded_as": "ignore_defense",
+     "evidence": "E-PARSE",
+     "files": 57,
+     "occurrences": 57,
+     "runtime": "none",
+     "tag": "[ignore defense]"
+    },
+    {
+     "decoded_as": "hit_number_increasing",
+     "evidence": "E-PARSE",
+     "files": 55,
+     "occurrences": 55,
+     "runtime": "none",
+     "tag": "[is hit number increasing]"
+    },
+    {
+     "decoded_as": "mp_drain",
+     "evidence": "E-PARSE",
+     "files": 48,
+     "occurrences": 48,
+     "runtime": "none",
+     "tag": "[MP drain]"
+    },
+    {
+     "decoded_as": "attack_myself",
+     "evidence": "E-PARSE",
+     "files": 43,
+     "occurrences": 43,
+     "runtime": "none",
+     "tag": "[attack myself]"
+    },
+    {
+     "decoded_as": "ignore_weight",
+     "evidence": "E-PARSE",
+     "files": 38,
+     "occurrences": 38,
+     "runtime": "none",
+     "tag": "[ignore weight]"
+    },
+    {
+     "decoded_as": "max_targets",
+     "evidence": "E-PARSE",
+     "files": 36,
+     "occurrences": 36,
+     "runtime": "none",
+     "tag": "[max target hit number]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 34,
+     "occurrences": 34,
+     "runtime": "none",
+     "tag": "[blood]"
+    },
+    {
+     "decoded_as": "ignore_super_armor",
+     "evidence": "E-PARSE",
+     "files": 23,
+     "occurrences": 24,
+     "runtime": "none",
+     "tag": "[ignore super armor]"
+    },
+    {
+     "decoded_as": "hp_drain",
+     "evidence": "E-PARSE",
+     "files": 18,
+     "occurrences": 18,
+     "runtime": "none",
+     "tag": "[HP drain]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 17,
+     "occurrences": 17,
+     "runtime": "none",
+     "tag": "[no blood]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 17,
+     "occurrences": 17,
+     "runtime": "none",
+     "tag": "[weakness]"
+    },
+    {
+     "decoded_as": "human_damage_rate",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[human damage rate]"
+    },
+    {
+     "decoded_as": "critical_hit",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[critical hit]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 6,
+     "occurrences": 6,
+     "runtime": "none",
+     "tag": "[stuck prob increase]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 6,
+     "occurrences": 6,
+     "runtime": "none",
+     "tag": "[ignore diehard]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 6,
+     "occurrences": 6,
+     "runtime": "none",
+     "tag": "[human active status rate]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 5,
+     "occurrences": 5,
+     "runtime": "none",
+     "tag": "[fort damage rate]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "none",
+     "tag": "[curse]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 2,
+     "occurrences": 2,
+     "runtime": "none",
+     "tag": "[damage increase rate]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 2,
+     "occurrences": 2,
+     "runtime": "none",
+     "tag": "[catch object]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 2,
+     "occurrences": 2,
+     "runtime": "none",
+     "tag": "[hit check by screen pos]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 2,
+     "occurrences": 2,
+     "runtime": "none",
+     "tag": "[freeze]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[slow]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[poison]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[force hit stun time]"
+    }
+   ],
+   "files": 6089,
+   "runtime_handled_tags": 7
+  },
+  "chr": {
+   "decoded_tags": 60,
+   "distinct_tags": 71,
+   "enum_values": {},
+   "fields": [
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 181,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[MP regen speed]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 181,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[inventory limit]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 181,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[magical defense]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 181,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[magical attack]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 181,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[physical defense]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 181,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[physical attack]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 181,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[MP MAX]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 181,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[HP MAX]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 179,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[hit recovery]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 174,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[module damage rate]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 106,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[awakening skill]"
+    },
+    {
+     "decoded_as": "weapon_wav",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 66,
+     "runtime": "scripts/main.gd (swing/hit sounds)",
+     "tag": "[weapon wav]"
+    },
+    {
+     "decoded_as": "base_skills",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 64,
+     "runtime": "none",
+     "tag": "[skill]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 53,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[awakening 2]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 53,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[awakening 1]"
+    },
+    {
+     "decoded_as": "awakening_name_refs",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 53,
+     "runtime": "none",
+     "tag": "[awakening name]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[weapon durability decrease rate]"
+    },
+    {
+     "decoded_as": "body_image",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[body image path]"
+    },
+    {
+     "decoded_as": "upgrade_weapon_attack_rate",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[upgrade weapon attack power rate]"
+    },
+    {
+     "decoded_as": "weapon_skill_info",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[weapon skill info]"
+    },
+    {
+     "decoded_as": "weapon_hit_info",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "scripts/main.gd hit_cues",
+     "tag": "[weapon hit info]"
+    },
+    {
+     "decoded_as": "etc_attack_infos",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[etc attack info]"
+    },
+    {
+     "decoded_as": "attack_infos",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "data/combat.json links -> combat/data/move_table.gd",
+     "tag": "[attack info]"
+    },
+    {
+     "decoded_as": "dashattack_info",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[dashattack info]"
+    },
+    {
+     "decoded_as": "jumpattack_info",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[jumpattack info]"
+    },
+    {
+     "decoded_as": "etc_motions",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[etc motion]"
+    },
+    {
+     "decoded_as": "ghost_motions",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[ghost motion]"
+    },
+    {
+     "decoded_as": "attack_motions",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[attack motion]"
+    },
+    {
+     "decoded_as": "back_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[back motion]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[simple move motion]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[simple rest motion]"
+    },
+    {
+     "decoded_as": "buff_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[buff motion]"
+    },
+    {
+     "decoded_as": "getitem_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[getitem motion]"
+    },
+    {
+     "decoded_as": "dashattack_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[dashattack motion]"
+    },
+    {
+     "decoded_as": "dash_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[dash motion]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[throw motion 2-2]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[throw motion 2-1]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[throw motion 1-2]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[throw motion 1-1]"
+    },
+    {
+     "decoded_as": "rest_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[rest motion]"
+    },
+    {
+     "decoded_as": "jumpattack_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[jumpattack motion]"
+    },
+    {
+     "decoded_as": "jump_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[jump motion]"
+    },
+    {
+     "decoded_as": "overturn_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[overturn motion]"
+    },
+    {
+     "decoded_as": "down_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[down motion]"
+    },
+    {
+     "decoded_as": "damage_motion_2",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[damage motion 2]"
+    },
+    {
+     "decoded_as": "damage_motion_1",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[damage motion 1]"
+    },
+    {
+     "decoded_as": "sit_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[sit motion]"
+    },
+    {
+     "decoded_as": "move_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[move motion]"
+    },
+    {
+     "decoded_as": "waiting_motion",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[waiting motion]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[growtype 5]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[growtype 4]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[growtype 3]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[growtype 2]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[growtype 1]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[jump speed]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[weight]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[jump power]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[cast speed]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[attack speed]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[move speed]"
+    },
+    {
+     "decoded_as": "initial",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[initial value]"
+    },
+    {
+     "decoded_as": "width",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[width]"
+    },
+    {
+     "decoded_as": "growtype_name_refs",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[growtype name]"
+    },
+    {
+     "decoded_as": "job",
+     "evidence": "E-PARSE",
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[job]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 9,
+     "occurrences": 9,
+     "runtime": "none",
+     "tag": "[throw motion 3-2]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 9,
+     "occurrences": 9,
+     "runtime": "none",
+     "tag": "[throw motion 3-1]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 9,
+     "occurrences": 9,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[growtype 6]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 6,
+     "occurrences": 6,
+     "runtime": "none",
+     "tag": "[throw motion 4-2]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 6,
+     "occurrences": 6,
+     "runtime": "none",
+     "tag": "[throw motion 4-1]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[light resistance]"
+    },
+    {
+     "decoded_as": "stat_groups",
+     "evidence": "E-PARSE",
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "combat/data/move_table.gd (initial HP/MP, jump power, hit recovery)",
+     "tag": "[dark resistance]"
+    }
+   ],
+   "files": 11,
+   "runtime_handled_tags": 32
+  },
+  "mob": {
+   "decoded_tags": 50,
+   "distinct_tags": 239,
+   "enum_values": {},
+   "fields": [
+    {
+     "decoded_as": "category",
+     "evidence": "E-PARSE",
+     "files": 2066,
+     "occurrences": 2146,
+     "runtime": "none",
+     "tag": "[category]"
+    },
+    {
+     "decoded_as": "level",
+     "evidence": "E-PARSE",
+     "files": 2078,
+     "occurrences": 2080,
+     "runtime": "none",
+     "tag": "[level]"
+    },
+    {
+     "decoded_as": "attack_speed",
+     "evidence": "E-PARSE",
+     "files": 2074,
+     "occurrences": 2079,
+     "runtime": "none",
+     "tag": "[attack speed]"
+    },
+    {
+     "decoded_as": "weight",
+     "evidence": "E-PARSE",
+     "files": 2076,
+     "occurrences": 2078,
+     "runtime": "none",
+     "tag": "[weight]"
+    },
+    {
+     "decoded_as": "ability_category",
+     "evidence": "E-PARSE",
+     "files": 2078,
+     "occurrences": 2078,
+     "runtime": "combat/data/move_table.gd (HP/attack percent of the base table)",
+     "tag": "[ability category]"
+    },
+    {
+     "decoded_as": "name_ref",
+     "evidence": "E-PARSE",
+     "files": 2077,
+     "occurrences": 2077,
+     "runtime": "none",
+     "tag": "[name]"
+    },
+    {
+     "decoded_as": "hit_recovery",
+     "evidence": "E-PARSE",
+     "files": 2075,
+     "occurrences": 2077,
+     "runtime": "combat/resolve/reaction.gd stun",
+     "tag": "[hit recovery]"
+    },
+    {
+     "decoded_as": "face_image",
+     "evidence": "E-PARSE",
+     "files": 2062,
+     "occurrences": 2074,
+     "runtime": "none",
+     "tag": "[face image]"
+    },
+    {
+     "decoded_as": "move_speed",
+     "evidence": "E-PARSE",
+     "files": 2046,
+     "occurrences": 2051,
+     "runtime": "combat/ai/monster_ai.gd via move_table",
+     "tag": "[move speed]"
+    },
+    {
+     "decoded_as": "attack_infos",
+     "evidence": "E-PARSE",
+     "files": 2030,
+     "occurrences": 2034,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[attack info]"
+    },
+    {
+     "decoded_as": "stuck_bonus_on_damage",
+     "evidence": "E-PARSE",
+     "files": 1803,
+     "occurrences": 1826,
+     "runtime": "none",
+     "tag": "[stuckbonus on damage]"
+    },
+    {
+     "decoded_as": "die_effect",
+     "evidence": "E-PARSE",
+     "files": 1659,
+     "occurrences": 1659,
+     "runtime": "none",
+     "tag": "[die effect]"
+    },
+    {
+     "decoded_as": "cast_speed",
+     "evidence": "E-PARSE",
+     "files": 1629,
+     "occurrences": 1634,
+     "runtime": "none",
+     "tag": "[cast speed]"
+    },
+    {
+     "decoded_as": "warlike",
+     "evidence": "E-PARSE",
+     "files": 1569,
+     "occurrences": 1625,
+     "runtime": "none",
+     "tag": "[warlike]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1289,
+     "occurrences": 1468,
+     "runtime": "none",
+     "tag": "[easy]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1281,
+     "occurrences": 1459,
+     "runtime": "none",
+     "tag": "[ultimate]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1281,
+     "occurrences": 1459,
+     "runtime": "none",
+     "tag": "[hard]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1281,
+     "occurrences": 1459,
+     "runtime": "none",
+     "tag": "[medium]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1240,
+     "occurrences": 1418,
+     "runtime": "none",
+     "tag": "[hero]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1373,
+     "occurrences": 1374,
+     "runtime": "none",
+     "tag": "[cooltime]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1356,
+     "occurrences": 1356,
+     "runtime": "none",
+     "tag": "[ai pattern]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1317,
+     "occurrences": 1324,
+     "runtime": "none",
+     "tag": "[think term]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1280,
+     "occurrences": 1280,
+     "runtime": "none",
+     "tag": "[waiting action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1249,
+     "occurrences": 1261,
+     "runtime": "none",
+     "tag": "[vision]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1234,
+     "occurrences": 1241,
+     "runtime": "none",
+     "tag": "[lie frame]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1223,
+     "occurrences": 1230,
+     "runtime": "none",
+     "tag": "[destination change term]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1219,
+     "occurrences": 1219,
+     "runtime": "none",
+     "tag": "[move action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1182,
+     "occurrences": 1202,
+     "runtime": "none",
+     "tag": "[keep distance with target]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1152,
+     "occurrences": 1183,
+     "runtime": "none",
+     "tag": "[damage sound]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1182,
+     "occurrences": 1182,
+     "runtime": "none",
+     "tag": "[common champion drop item]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1121,
+     "occurrences": 1149,
+     "runtime": "none",
+     "tag": "[die sound]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1103,
+     "occurrences": 1103,
+     "runtime": "none",
+     "tag": "[attack action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1099,
+     "occurrences": 1100,
+     "runtime": "none",
+     "tag": "[damage action 1]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1069,
+     "occurrences": 1069,
+     "runtime": "none",
+     "tag": "[damage action 2]"
+    },
+    {
+     "decoded_as": "drop_items",
+     "evidence": "E-PARSE",
+     "files": 1012,
+     "occurrences": 1023,
+     "runtime": "none",
+     "tag": "[item]"
+    },
+    {
+     "decoded_as": "floating_height",
+     "evidence": "E-PARSE",
+     "files": 994,
+     "occurrences": 994,
+     "runtime": "none",
+     "tag": "[floating height]"
+    },
+    {
+     "decoded_as": "water_resistance",
+     "evidence": "E-PARSE",
+     "files": 983,
+     "occurrences": 984,
+     "runtime": "none",
+     "tag": "[water resistance]"
+    },
+    {
+     "decoded_as": "freeze_resistance",
+     "evidence": "E-PARSE",
+     "files": 977,
+     "occurrences": 982,
+     "runtime": "none",
+     "tag": "[freeze resistance]"
+    },
+    {
+     "decoded_as": "fire_resistance",
+     "evidence": "E-PARSE",
+     "files": 976,
+     "occurrences": 977,
+     "runtime": "none",
+     "tag": "[fire resistance]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 961,
+     "occurrences": 967,
+     "runtime": "none",
+     "tag": "[ability table]"
+    },
+    {
+     "decoded_as": "light_resistance",
+     "evidence": "E-PARSE",
+     "files": 920,
+     "occurrences": 920,
+     "runtime": "none",
+     "tag": "[light resistance]"
+    },
+    {
+     "decoded_as": "dark_resistance",
+     "evidence": "E-PARSE",
+     "files": 915,
+     "occurrences": 915,
+     "runtime": "none",
+     "tag": "[dark resistance]"
+    },
+    {
+     "decoded_as": "curse_resistance",
+     "evidence": "E-PARSE",
+     "files": 904,
+     "occurrences": 904,
+     "runtime": "none",
+     "tag": "[curse resistance]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 867,
+     "occurrences": 867,
+     "runtime": "none",
+     "tag": "[sit action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 860,
+     "occurrences": 860,
+     "runtime": "none",
+     "tag": "[overturn action]"
+    },
+    {
+     "decoded_as": "stone_resistance",
+     "evidence": "E-PARSE",
+     "files": 857,
+     "occurrences": 859,
+     "runtime": "none",
+     "tag": "[stone resistance]"
+    },
+    {
+     "decoded_as": "stun_resistance",
+     "evidence": "E-PARSE",
+     "files": 850,
+     "occurrences": 852,
+     "runtime": "none",
+     "tag": "[stun resistance]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 849,
+     "occurrences": 849,
+     "runtime": "none",
+     "tag": "[down action]"
+    },
+    {
+     "decoded_as": "blind_resistance",
+     "evidence": "E-PARSE",
+     "files": 846,
+     "occurrences": 846,
+     "runtime": "none",
+     "tag": "[blind resistance]"
+    },
+    {
+     "decoded_as": "slow_resistance",
+     "evidence": "E-PARSE",
+     "files": 819,
+     "occurrences": 824,
+     "runtime": "none",
+     "tag": "[slow resistance]"
+    },
+    {
+     "decoded_as": "hold_resistance",
+     "evidence": "E-PARSE",
+     "files": 816,
+     "occurrences": 822,
+     "runtime": "none",
+     "tag": "[hold resistance]"
+    },
+    {
+     "decoded_as": "sight",
+     "evidence": "E-PARSE",
+     "files": 813,
+     "occurrences": 814,
+     "runtime": "combat/ai/monster_ai.gd",
+     "tag": "[sight]"
+    },
+    {
+     "decoded_as": "poison_resistance",
+     "evidence": "E-PARSE",
+     "files": 809,
+     "occurrences": 811,
+     "runtime": "none",
+     "tag": "[poison resistance]"
+    },
+    {
+     "decoded_as": "width",
+     "evidence": "E-PARSE",
+     "files": 806,
+     "occurrences": 806,
+     "runtime": "none",
+     "tag": "[width]"
+    },
+    {
+     "decoded_as": "sleep_resistance",
+     "evidence": "E-PARSE",
+     "files": 806,
+     "occurrences": 806,
+     "runtime": "none",
+     "tag": "[sleep resistance]"
+    },
+    {
+     "decoded_as": "confuse_resistance",
+     "evidence": "E-PARSE",
+     "files": 802,
+     "occurrences": 802,
+     "runtime": "none",
+     "tag": "[confuse resistance]"
+    },
+    {
+     "decoded_as": "damage_motion_1",
+     "evidence": "E-PARSE",
+     "files": 796,
+     "occurrences": 796,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[damage motion 1]"
+    },
+    {
+     "decoded_as": "waiting_motion",
+     "evidence": "E-PARSE",
+     "files": 795,
+     "occurrences": 795,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[waiting motion]"
+    },
+    {
+     "decoded_as": "damage_motion_2",
+     "evidence": "E-PARSE",
+     "files": 776,
+     "occurrences": 776,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[damage motion 2]"
+    },
+    {
+     "decoded_as": "attack_delay",
+     "evidence": "E-PARSE",
+     "files": 765,
+     "occurrences": 766,
+     "runtime": "scripts/main.gd enemy_attack cooldown",
+     "tag": "[attack delay]"
+    },
+    {
+     "decoded_as": "move_motion",
+     "evidence": "E-PARSE",
+     "files": 763,
+     "occurrences": 763,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[move motion]"
+    },
+    {
+     "decoded_as": "lightning_resistance",
+     "evidence": "E-PARSE",
+     "files": 752,
+     "occurrences": 752,
+     "runtime": "none",
+     "tag": "[lightning resistance]"
+    },
+    {
+     "decoded_as": "bleeding_resistance",
+     "evidence": "E-PARSE",
+     "files": 733,
+     "occurrences": 733,
+     "runtime": "none",
+     "tag": "[bleeding resistance]"
+    },
+    {
+     "decoded_as": "attack_motions",
+     "evidence": "E-PARSE",
+     "files": 705,
+     "occurrences": 705,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[attack motion]"
+    },
+    {
+     "decoded_as": "attack_kind",
+     "evidence": "E-PARSE",
+     "files": 697,
+     "occurrences": 697,
+     "runtime": "none",
+     "tag": "[attack kind]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 689,
+     "occurrences": 692,
+     "runtime": "none",
+     "tag": "[appear sound]"
+    },
+    {
+     "decoded_as": "overturn_motion",
+     "evidence": "E-PARSE",
+     "files": 685,
+     "occurrences": 685,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[overturn motion]"
+    },
+    {
+     "decoded_as": "down_motion",
+     "evidence": "E-PARSE",
+     "files": 669,
+     "occurrences": 669,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[down motion]"
+    },
+    {
+     "decoded_as": "sit_motion",
+     "evidence": "E-PARSE",
+     "files": 661,
+     "occurrences": 661,
+     "runtime": "none",
+     "tag": "[sit motion]"
+    },
+    {
+     "decoded_as": "burn_resistance",
+     "evidence": "E-PARSE",
+     "files": 660,
+     "occurrences": 660,
+     "runtime": "none",
+     "tag": "[burn resistance]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 635,
+     "occurrences": 635,
+     "runtime": "none",
+     "tag": "[HP regen speed]"
+    },
+    {
+     "decoded_as": "int_data",
+     "evidence": "E-PARSE",
+     "files": 616,
+     "occurrences": 617,
+     "runtime": "none",
+     "tag": "[int data]"
+    },
+    {
+     "decoded_as": "etc_motions",
+     "evidence": "E-PARSE",
+     "files": 616,
+     "occurrences": 616,
+     "runtime": "none",
+     "tag": "[etc motion]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 573,
+     "occurrences": 581,
+     "runtime": "none",
+     "tag": "[ambient sound]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 529,
+     "occurrences": 533,
+     "runtime": "none",
+     "tag": "[intelligence]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 528,
+     "occurrences": 528,
+     "runtime": "none",
+     "tag": "[speech on situation]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 494,
+     "occurrences": 503,
+     "runtime": "none",
+     "tag": "[attack sound]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 457,
+     "occurrences": 457,
+     "runtime": "none",
+     "tag": "[MP regen speed]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 440,
+     "occurrences": 445,
+     "runtime": "none",
+     "tag": "[common champion elemental property]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 400,
+     "occurrences": 401,
+     "runtime": "none",
+     "tag": "[keep range distance with target]"
+    },
+    {
+     "decoded_as": "targeting_nearest",
+     "evidence": "E-PARSE",
+     "files": 394,
+     "occurrences": 395,
+     "runtime": "none",
+     "tag": "[targeting nearest]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 362,
+     "occurrences": 362,
+     "runtime": "none",
+     "tag": "[piercing resistance]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 336,
+     "occurrences": 336,
+     "runtime": "none",
+     "tag": "[proc action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 334,
+     "occurrences": 334,
+     "runtime": "none",
+     "tag": "[last action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 240,
+     "occurrences": 240,
+     "runtime": "none",
+     "tag": "[action list]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 227,
+     "occurrences": 227,
+     "runtime": "none",
+     "tag": "[targeting bonus]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 190,
+     "occurrences": 190,
+     "runtime": "none",
+     "tag": "[level of difficulty]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 179,
+     "occurrences": 179,
+     "runtime": "none",
+     "tag": "[etc attack info]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 178,
+     "occurrences": 178,
+     "runtime": "none",
+     "tag": "[targeting time term]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 166,
+     "occurrences": 166,
+     "runtime": "none",
+     "tag": "[set damage check]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 110,
+     "occurrences": 165,
+     "runtime": "none",
+     "tag": "[event super on scr]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 139,
+     "occurrences": 139,
+     "runtime": "none",
+     "tag": "[targeting high level]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 69,
+     "occurrences": 134,
+     "runtime": "none",
+     "tag": "[atk super on scr]"
+    },
+    {
+     "decoded_as": "hp_regen_rate",
+     "evidence": "E-PARSE",
+     "files": 129,
+     "occurrences": 129,
+     "runtime": "none",
+     "tag": "[hp regen rate]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 129,
+     "occurrences": 129,
+     "runtime": "none",
+     "tag": "[weapon break resistance]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 121,
+     "occurrences": 121,
+     "runtime": "none",
+     "tag": "[targeting low HP]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 118,
+     "occurrences": 118,
+     "runtime": "none",
+     "tag": "[etc action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 113,
+     "occurrences": 113,
+     "runtime": "none",
+     "tag": "[jump power]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 109,
+     "occurrences": 109,
+     "runtime": "none",
+     "tag": "[add gravity in aerial]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 107,
+     "occurrences": 107,
+     "runtime": "none",
+     "tag": "[targeting low level]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 28,
+     "occurrences": 102,
+     "runtime": "none",
+     "tag": "[pattern]"
+    },
+    {
+     "decoded_as": "throw_attack",
+     "evidence": "E-PARSE",
+     "files": 55,
+     "occurrences": 95,
+     "runtime": "scripts/main.gd enemy_attack + passive object",
+     "tag": "[throw attack]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 92,
+     "occurrences": 92,
+     "runtime": "none",
+     "tag": "[stuck resistance]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 91,
+     "occurrences": 91,
+     "runtime": "none",
+     "tag": "[jump speed]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 82,
+     "occurrences": 82,
+     "runtime": "none",
+     "tag": "[spawn prob]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 41,
+     "occurrences": 81,
+     "runtime": "none",
+     "tag": "[ready action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 23,
+     "occurrences": 80,
+     "runtime": "none",
+     "tag": "[detail]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 23,
+     "occurrences": 80,
+     "runtime": "none",
+     "tag": "[title]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 19,
+     "occurrences": 76,
+     "runtime": "none",
+     "tag": "[PASSIVE]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 73,
+     "occurrences": 73,
+     "runtime": "none",
+     "tag": "[overhead gauge type]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 22,
+     "occurrences": 72,
+     "runtime": "none",
+     "tag": "[ridableskill explanation]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 69,
+     "occurrences": 69,
+     "runtime": "none",
+     "tag": "[is direction to move]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 61,
+     "occurrences": 61,
+     "runtime": "none",
+     "tag": "[jump motion]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 55,
+     "occurrences": 55,
+     "runtime": "none",
+     "tag": "[armor break resistance]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 49,
+     "occurrences": 51,
+     "runtime": "none",
+     "tag": "[equipment]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 49,
+     "occurrences": 49,
+     "runtime": "none",
+     "tag": "[superarmor on attack]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 45,
+     "occurrences": 45,
+     "runtime": "none",
+     "tag": "[monster title]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 43,
+     "occurrences": 43,
+     "runtime": "none",
+     "tag": "[come in action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 31,
+     "occurrences": 39,
+     "runtime": "none",
+     "tag": "[summon skill status up rate]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 10,
+     "occurrences": 39,
+     "runtime": "none",
+     "tag": "[subtitle]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 38,
+     "occurrences": 38,
+     "runtime": "none",
+     "tag": "[death tower item]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 34,
+     "occurrences": 34,
+     "runtime": "none",
+     "tag": "[moveback action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 31,
+     "occurrences": 31,
+     "runtime": "none",
+     "tag": "[forced knockback]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 30,
+     "occurrences": 30,
+     "runtime": "none",
+     "tag": "[master]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 30,
+     "occurrences": 30,
+     "runtime": "none",
+     "tag": "[etc sound]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 29,
+     "occurrences": 29,
+     "runtime": "none",
+     "tag": "[jump action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 28,
+     "occurrences": 28,
+     "runtime": "none",
+     "tag": "[change direction by target]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 26,
+     "occurrences": 26,
+     "runtime": "none",
+     "tag": "[slayer]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 26,
+     "occurrences": 26,
+     "runtime": "none",
+     "tag": "[king]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 26,
+     "occurrences": 26,
+     "runtime": "none",
+     "tag": "[expert]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 26,
+     "occurrences": 26,
+     "runtime": "none",
+     "tag": "[normal]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 26,
+     "occurrences": 26,
+     "runtime": "none",
+     "tag": "[attack down prob]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 26,
+     "occurrences": 26,
+     "runtime": "none",
+     "tag": "[summon skill status up type]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 26,
+     "occurrences": 26,
+     "runtime": "none",
+     "tag": "[hold attack]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 18,
+     "occurrences": 26,
+     "runtime": "none",
+     "tag": "[fix direction]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 23,
+     "occurrences": 24,
+     "runtime": "none",
+     "tag": "[ridableskill definition]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 23,
+     "occurrences": 24,
+     "runtime": "none",
+     "tag": "[skill]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 23,
+     "occurrences": 24,
+     "runtime": "none",
+     "tag": "[image path]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 15,
+     "occurrences": 23,
+     "runtime": "none",
+     "tag": "[dash attack]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 23,
+     "occurrences": 23,
+     "runtime": "none",
+     "tag": "[super champion drop item]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 21,
+     "occurrences": 21,
+     "runtime": "none",
+     "tag": "[jumpattack info]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 21,
+     "occurrences": 21,
+     "runtime": "none",
+     "tag": "[jumpattack motion]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 20,
+     "occurrences": 20,
+     "runtime": "none",
+     "tag": "[initial target]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 18,
+     "occurrences": 18,
+     "runtime": "none",
+     "tag": "[targeting attacker]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 12,
+     "occurrences": 17,
+     "runtime": "none",
+     "tag": "[jump attack]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 16,
+     "runtime": "none",
+     "tag": "[option]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 15,
+     "occurrences": 15,
+     "runtime": "none",
+     "tag": "[counter attack]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 13,
+     "occurrences": 13,
+     "runtime": "none",
+     "tag": "[stun time balance]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 13,
+     "occurrences": 13,
+     "runtime": "none",
+     "tag": "[damage time balance]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 13,
+     "occurrences": 13,
+     "runtime": "none",
+     "tag": "[dash action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 12,
+     "occurrences": 12,
+     "runtime": "none",
+     "tag": "[keep distance]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 12,
+     "occurrences": 12,
+     "runtime": "none",
+     "tag": "[targeting low physical defense]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 6,
+     "occurrences": 12,
+     "runtime": "none",
+     "tag": "[warp attack]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[start immune time]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 10,
+     "occurrences": 10,
+     "runtime": "none",
+     "tag": "[out of targetting]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 10,
+     "occurrences": 10,
+     "runtime": "none",
+     "tag": "[targeting downed]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 9,
+     "occurrences": 9,
+     "runtime": "none",
+     "tag": "[dashattack action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 9,
+     "occurrences": 9,
+     "runtime": "none",
+     "tag": "[is grabable]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 9,
+     "occurrences": 9,
+     "runtime": "none",
+     "tag": "[back vision]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[physical attack besed on diff]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[ridableskill explain]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[emergency state recovery]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[set stay action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[condition]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[time after setstate]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[pvp]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[targeting high HP]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[control passive object]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[transparency]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[others]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[velocity y]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[velocity x]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[height]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[y pos]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[x pos]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[index]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[unmounting action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[mounted action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[mounting action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[hell monster]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[flying mark]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[reflection object]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[drop item offset]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 7,
+     "occurrences": 7,
+     "runtime": "none",
+     "tag": "[hitstun resistance system]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 7,
+     "occurrences": 7,
+     "runtime": "none",
+     "tag": "[decrease time]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 7,
+     "occurrences": 7,
+     "runtime": "none",
+     "tag": "[increase time]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 7,
+     "occurrences": 7,
+     "runtime": "none",
+     "tag": "[hitstun resistance]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 7,
+     "occurrences": 7,
+     "runtime": "none",
+     "tag": "[overhead gauge pos]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 6,
+     "occurrences": 6,
+     "runtime": "none",
+     "tag": "[destroy count damage]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 6,
+     "occurrences": 6,
+     "runtime": "none",
+     "tag": "[destroy count]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 6,
+     "occurrences": 6,
+     "runtime": "none",
+     "tag": "[non targeted]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 5,
+     "occurrences": 5,
+     "runtime": "none",
+     "tag": "[diving sight]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 5,
+     "occurrences": 5,
+     "runtime": "none",
+     "tag": "[targeting from direction]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 5,
+     "occurrences": 5,
+     "runtime": "none",
+     "tag": "[no change target]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "none",
+     "tag": "[is named monster]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "none",
+     "tag": "[no champion]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "none",
+     "tag": "[jumpattack action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "none",
+     "tag": "[basic action]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "none",
+     "tag": "[life max]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 3,
+     "occurrences": 3,
+     "runtime": "none",
+     "tag": "[is on the object]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 3,
+     "occurrences": 3,
+     "runtime": "none",
+     "tag": "[hold immune system]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 3,
+     "occurrences": 3,
+     "runtime": "none",
+     "tag": "[come in action ex]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 3,
+     "occurrences": 3,
+     "runtime": "none",
+     "tag": "[keep range distance with target 1]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 3,
+     "occurrences": 3,
+     "runtime": "none",
+     "tag": "[No Combo Rate Monster]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 2,
+     "occurrences": 2,
+     "runtime": "none",
+     "tag": "[slant dash speed]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 2,
+     "occurrences": 2,
+     "runtime": "none",
+     "tag": "[normal dash speed]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 2,
+     "occurrences": 2,
+     "runtime": "none",
+     "tag": "[show hp state gague]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 2,
+     "runtime": "none",
+     "tag": "[Pattern]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 2,
+     "occurrences": 2,
+     "runtime": "none",
+     "tag": "[come in motion]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 2,
+     "occurrences": 2,
+     "runtime": "none",
+     "tag": "[can beat index]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[ridableobject skill]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[explain]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[weak]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[target appendage]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[base table]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[catch item]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[strong]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[fixed height]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[dash]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[stand]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[CHARACTER]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[strengthen damaged effect]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[layer effect]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[body only]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[alpha max]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[frequency rate]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[shaking]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[use shaking dissipation]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[shaking frequency]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[apply hitstun shaking power rate]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[max]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[min]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[effective state]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[apply absolute time]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[enable]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[specific gen rate item]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[MP MAX]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[HP MAX]"
+    }
+   ],
+   "files": 2078,
+   "runtime_handled_tags": 14
+  },
+  "skl": {
+   "decoded_tags": 34,
+   "distinct_tags": 86,
+   "enum_values": {},
+   "fields": [
+    {
+     "decoded_as": "level_info",
+     "evidence": "E-PARSE",
+     "files": 1497,
+     "occurrences": 2845,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[level info]"
+    },
+    {
+     "decoded_as": "static_data",
+     "evidence": "E-PARSE",
+     "files": 1667,
+     "occurrences": 2275,
+     "runtime": "combat/data/move_table.gd (triple slash dash speed)",
+     "tag": "[static data]"
+    },
+    {
+     "decoded_as": "type",
+     "evidence": "E-PARSE",
+     "files": 1961,
+     "occurrences": 1964,
+     "runtime": "none",
+     "tag": "[type]"
+    },
+    {
+     "decoded_as": "icon",
+     "evidence": "E-PARSE",
+     "files": 1961,
+     "occurrences": 1962,
+     "runtime": "none",
+     "tag": "[icon]"
+    },
+    {
+     "decoded_as": "name_ref",
+     "evidence": "E-PARSE",
+     "files": 1961,
+     "occurrences": 1962,
+     "runtime": "none",
+     "tag": "[name]"
+    },
+    {
+     "decoded_as": "growtype_max_level",
+     "evidence": "E-PARSE",
+     "files": 1961,
+     "occurrences": 1961,
+     "runtime": "none",
+     "tag": "[growtype maximum level]"
+    },
+    {
+     "decoded_as": "max_level",
+     "evidence": "E-PARSE",
+     "files": 1961,
+     "occurrences": 1961,
+     "runtime": "none",
+     "tag": "[maximum level]"
+    },
+    {
+     "decoded_as": "basic_explain_ref",
+     "evidence": "E-PARSE",
+     "files": 1959,
+     "occurrences": 1961,
+     "runtime": "none",
+     "tag": "[basic explain]"
+    },
+    {
+     "decoded_as": "fitness_growtype",
+     "evidence": "E-PARSE",
+     "files": 1960,
+     "occurrences": 1960,
+     "runtime": "none",
+     "tag": "[skill fitness growtype]"
+    },
+    {
+     "decoded_as": "explain_ref",
+     "evidence": "E-PARSE",
+     "files": 1958,
+     "occurrences": 1960,
+     "runtime": "none",
+     "tag": "[explain]"
+    },
+    {
+     "decoded_as": "name2_ref",
+     "evidence": "E-PARSE",
+     "files": 1960,
+     "occurrences": 1960,
+     "runtime": "none",
+     "tag": "[name2]"
+    },
+    {
+     "decoded_as": "skill_class",
+     "evidence": "E-PARSE",
+     "files": 1959,
+     "occurrences": 1959,
+     "runtime": "none",
+     "tag": "[skill class]"
+    },
+    {
+     "decoded_as": "required_level",
+     "evidence": "E-PARSE",
+     "files": 1946,
+     "occurrences": 1947,
+     "runtime": "none",
+     "tag": "[required level]"
+    },
+    {
+     "decoded_as": "required_level_range",
+     "evidence": "E-PARSE",
+     "files": 1522,
+     "occurrences": 1522,
+     "runtime": "none",
+     "tag": "[required level range]"
+    },
+    {
+     "decoded_as": "level_property",
+     "evidence": "E-PARSE",
+     "files": 1500,
+     "occurrences": 1500,
+     "runtime": "none",
+     "tag": "[level property]"
+    },
+    {
+     "decoded_as": "pvp",
+     "evidence": "E-PARSE",
+     "files": 1480,
+     "occurrences": 1480,
+     "runtime": "none",
+     "tag": "[pvp]"
+    },
+    {
+     "decoded_as": "purchase_cost",
+     "evidence": "E-PARSE",
+     "files": 1407,
+     "occurrences": 1407,
+     "runtime": "none",
+     "tag": "[purchase cost]"
+    },
+    {
+     "decoded_as": "cool_time",
+     "evidence": "E-PARSE",
+     "files": 708,
+     "occurrences": 1033,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[cool time]"
+    },
+    {
+     "decoded_as": "pre_required_skill",
+     "evidence": "E-PARSE",
+     "files": 974,
+     "occurrences": 975,
+     "runtime": "none",
+     "tag": "[pre required skill]"
+    },
+    {
+     "decoded_as": "death_tower",
+     "evidence": "E-PARSE",
+     "files": 891,
+     "occurrences": 897,
+     "runtime": "none",
+     "tag": "[death tower]"
+    },
+    {
+     "decoded_as": "warroom",
+     "evidence": "E-PARSE",
+     "files": 856,
+     "occurrences": 856,
+     "runtime": "none",
+     "tag": "[warroom]"
+    },
+    {
+     "decoded_as": "consume_mp",
+     "evidence": "E-PARSE",
+     "files": 758,
+     "occurrences": 854,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[consume MP]"
+    },
+    {
+     "decoded_as": "dungeon",
+     "evidence": "E-PARSE",
+     "files": 800,
+     "occurrences": 800,
+     "runtime": "combat/data/move_table.gd (consume MP, cool time, casting time, level info row 1, static data)",
+     "tag": "[dungeon]"
+    },
+    {
+     "decoded_as": "command",
+     "evidence": "E-PARSE",
+     "files": 796,
+     "occurrences": 796,
+     "runtime": "none",
+     "tag": "[command]"
+    },
+    {
+     "decoded_as": "durability_decrease_rate",
+     "evidence": "E-PARSE",
+     "files": 793,
+     "occurrences": 793,
+     "runtime": "none",
+     "tag": "[durability decrease rate]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 737,
+     "occurrences": 737,
+     "runtime": "none",
+     "tag": "[skill preloading image]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 682,
+     "occurrences": 686,
+     "runtime": "none",
+     "tag": "[command key explain]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 457,
+     "occurrences": 606,
+     "runtime": "none",
+     "tag": "[special level up]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 553,
+     "occurrences": 558,
+     "runtime": "none",
+     "tag": "[feature skill type]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 554,
+     "occurrences": 554,
+     "runtime": "none",
+     "tag": "[special purchase cost]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 459,
+     "occurrences": 459,
+     "runtime": "none",
+     "tag": "[basic explain ex]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 459,
+     "occurrences": 459,
+     "runtime": "none",
+     "tag": "[explain ex]"
+    },
+    {
+     "decoded_as": "feature_skill_index",
+     "evidence": "E-PARSE",
+     "files": 443,
+     "occurrences": 449,
+     "runtime": "none",
+     "tag": "[feature skill index]"
+    },
+    {
+     "decoded_as": "casting_time",
+     "evidence": "E-PARSE",
+     "files": 337,
+     "occurrences": 432,
+     "runtime": "combat/data/move_table.gd",
+     "tag": "[casting time]"
+    },
+    {
+     "decoded_as": "weapon_effect_type",
+     "evidence": "E-PARSE",
+     "files": 404,
+     "occurrences": 404,
+     "runtime": "none",
+     "tag": "[weapon effect type]"
+    },
+    {
+     "decoded_as": "command_advantage",
+     "evidence": "E-PARSE",
+     "files": 369,
+     "occurrences": 371,
+     "runtime": "none",
+     "tag": "[skill command advantage]"
+    },
+    {
+     "decoded_as": "consume_item",
+     "evidence": "E-PARSE",
+     "files": 308,
+     "occurrences": 321,
+     "runtime": "none",
+     "tag": "[consume item]"
+    },
+    {
+     "decoded_as": "start_cool_time",
+     "evidence": "E-PARSE",
+     "files": 271,
+     "occurrences": 272,
+     "runtime": "none",
+     "tag": "[start cool time]"
+    },
+    {
+     "decoded_as": "executable_states",
+     "evidence": "E-PARSE",
+     "files": 221,
+     "occurrences": 233,
+     "runtime": "none",
+     "tag": "[executable states]"
+    },
+    {
+     "decoded_as": "shake_screen",
+     "evidence": "E-PARSE",
+     "files": 216,
+     "occurrences": 216,
+     "runtime": "none",
+     "tag": "[shake screen]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 149,
+     "occurrences": 149,
+     "runtime": "none",
+     "tag": "[skill fitness second growtype]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 149,
+     "occurrences": 149,
+     "runtime": "none",
+     "tag": "[second growtype maximum level]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 129,
+     "occurrences": 129,
+     "runtime": "none",
+     "tag": "[command customizing]"
+    },
+    {
+     "decoded_as": "auto_cooltime_apply",
+     "evidence": "E-PARSE",
+     "files": 118,
+     "occurrences": 118,
+     "runtime": "none",
+     "tag": "[auto cooltime apply]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 113,
+     "occurrences": 113,
+     "runtime": "none",
+     "tag": "[skill under cooltime effect]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 63,
+     "occurrences": 63,
+     "runtime": "none",
+     "tag": "[skill under cooltime effect each]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 9,
+     "occurrences": 41,
+     "runtime": "none",
+     "tag": "[AutoSkill]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 9,
+     "occurrences": 41,
+     "runtime": "none",
+     "tag": "[growtype]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 29,
+     "occurrences": 29,
+     "runtime": "none",
+     "tag": "[league ban]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 28,
+     "occurrences": 28,
+     "runtime": "none",
+     "tag": "[steel learning skill]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 24,
+     "occurrences": 27,
+     "runtime": "none",
+     "tag": "[linked blast add point]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 22,
+     "occurrences": 22,
+     "runtime": "none",
+     "tag": "[assault]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 20,
+     "occurrences": 20,
+     "runtime": "none",
+     "tag": "[purchase gold]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 20,
+     "occurrences": 20,
+     "runtime": "none",
+     "tag": "[purchase gsp]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 7,
+     "occurrences": 19,
+     "runtime": "none",
+     "tag": "[index]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 15,
+     "occurrences": 15,
+     "runtime": "none",
+     "tag": "[seal enable]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 15,
+     "occurrences": 15,
+     "runtime": "none",
+     "tag": "[post teleport]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 15,
+     "occurrences": 15,
+     "runtime": "none",
+     "tag": "[pre teleport]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 12,
+     "occurrences": 12,
+     "runtime": "none",
+     "tag": "[passive]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 12,
+     "occurrences": 12,
+     "runtime": "none",
+     "tag": "[is linked blast]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[physical magical change]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 11,
+     "occurrences": 11,
+     "runtime": "none",
+     "tag": "[active status recovery]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 9,
+     "occurrences": 9,
+     "runtime": "none",
+     "tag": "[job]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 5,
+     "occurrences": 9,
+     "runtime": "none",
+     "tag": "[buff]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[maintain MP]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[active status buff]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[active status]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[active status buff event type]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[probability]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[active status duration]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 8,
+     "occurrences": 8,
+     "runtime": "none",
+     "tag": "[duration]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 7,
+     "occurrences": 7,
+     "runtime": "none",
+     "tag": "[move]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 7,
+     "occurrences": 7,
+     "runtime": "none",
+     "tag": "[cooltime level info]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 6,
+     "occurrences": 6,
+     "runtime": "none",
+     "tag": "[limit count]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 6,
+     "occurrences": 6,
+     "runtime": "none",
+     "tag": "[combo set]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 5,
+     "occurrences": 5,
+     "runtime": "none",
+     "tag": "[auto limit count reduce]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 5,
+     "occurrences": 5,
+     "runtime": "none",
+     "tag": "[reduce probability to human armor at pvp module]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "none",
+     "tag": "[additional animation]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "none",
+     "tag": "[end addtional animation]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "none",
+     "tag": "[loop addtional animation]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "none",
+     "tag": "[start addtional animation]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 4,
+     "occurrences": 4,
+     "runtime": "none",
+     "tag": "[duration time]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 2,
+     "occurrences": 2,
+     "runtime": "none",
+     "tag": "[active seal enable]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[linked blast dec point]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[reduce probability to human armor]"
+    },
+    {
+     "decoded_as": null,
+     "evidence": null,
+     "files": 1,
+     "occurrences": 1,
+     "runtime": "none",
+     "tag": "[reduce probability at pvp type module]"
+    }
+   ],
+   "files": 2009,
+   "runtime_handled_tags": 6
+  }
+ },
+ "schema": "dnf_field_coverage/1"
+}

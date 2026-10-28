@@ -1,0 +1,40 @@
+{
+ "records": {
+  "chr": 1,
+  "atk": 118,
+  "ani": 400,
+  "skl": 175,
+  "mob": 52,
+  "ptl": 4,
+  "obj": 5
+ },
+ "missing_references": 0,
+ "pack_sha256": "557e0de56fd4318eede9a8bce92c1e61c0212c6060baf3871dfb78ce8b0a5e8d",
+ "unsupported_in_scope": 628,
+ "coverage": {
+  "atk": {
+   "files": 6089,
+   "tags": 46,
+   "decoded": 31,
+   "runtime": 7
+  },
+  "skl": {
+   "files": 2009,
+   "tags": 86,
+   "decoded": 34,
+   "runtime": 6
+  },
+  "chr": {
+   "files": 11,
+   "tags": 71,
+   "decoded": 60,
+   "runtime": 32
+  },
+  "mob": {
+   "files": 2078,
+   "tags": 239,
+   "decoded": 50,
+   "runtime": 14
+  }
+ }
+}

@@ -1,0 +1,159 @@
+{
+ "schema": "dnf_skill_panel/1",
+ "source": {
+  "bank": "Interface2/UI/SkillShop/Skillshop.img",
+  "pack": "assets_local/content/combat_content.json",
+  "icon_field": "SKL [icon]",
+  "exporter": "tools/build_dnf_skill_panel.py"
+ },
+ "parts": {
+  "dim": {
+   "file": "parts/dim.png",
+   "size": [
+    800,
+    600
+   ],
+   "frame": 14,
+   "note": "全屏暗化背景 800×600"
+  },
+  "title": {
+   "file": "parts/title.png",
+   "size": [
+    237,
+    30
+   ],
+   "frame": 3,
+   "note": "标题条 237×30"
+  },
+  "cell": {
+   "file": "parts/cell.png",
+   "size": [
+    28,
+    28
+   ],
+   "frame": 32,
+   "note": "技能格 28×28"
+  },
+  "cell_plain": {
+   "file": "parts/cell_plain.png",
+   "size": [
+    30,
+    30
+   ],
+   "frame": 5,
+   "note": "技能底格 30×30"
+  },
+  "frame_selected": {
+   "file": "parts/frame_selected.png",
+   "size": [
+    166,
+    100
+   ],
+   "frame": 4,
+   "note": "选中大图框 166×100"
+  },
+  "desc_box": {
+   "file": "parts/desc_box.png",
+   "size": [
+    230,
+    60
+   ],
+   "frame": 19,
+   "note": "说明底框 230×60"
+  },
+  "button": {
+   "file": "parts/button.png",
+   "size": [
+    108,
+    30
+   ],
+   "frame": 20,
+   "note": "按钮 108×30"
+  },
+  "button_hot": {
+   "file": "parts/button_hot.png",
+   "size": [
+    106,
+    28
+   ],
+   "frame": 21,
+   "note": "按钮高亮 106×28"
+  },
+  "button_wide": {
+   "file": "parts/button_wide.png",
+   "size": [
+    180,
+    30
+   ],
+   "frame": 30,
+   "note": "宽按钮 180×30"
+  },
+  "button_wide_hot": {
+   "file": "parts/button_wide_hot.png",
+   "size": [
+    180,
+    30
+   ],
+   "frame": 31,
+   "note": "宽按钮高亮 180×30"
+  },
+  "plus": {
+   "file": "parts/plus.png",
+   "size": [
+    19,
+    19
+   ],
+   "frame": 22,
+   "note": "加号 19×19"
+  },
+  "minus": {
+   "file": "parts/minus.png",
+   "size": [
+    19,
+    19
+   ],
+   "frame": 23,
+   "note": "减号 19×19"
+  },
+  "sp_icon": {
+   "file": "parts/sp_icon.png",
+   "size": [
+    181,
+    18
+   ],
+   "frame": 15,
+   "note": "SP 图标 19×19"
+  },
+  "arrow_down": {
+   "file": "parts/arrow_down.png",
+   "size": [
+    17,
+    10
+   ],
+   "frame": 33,
+   "note": "下拉箭头 17×10"
+  },
+  "icon_frame": {
+   "file": "parts/icon_frame.png",
+   "size": [
+    107,
+    40
+   ],
+   "frame": 45,
+   "note": "技能图标框 107×40"
+  },
+  "icon_big": {
+   "file": "parts/icon_big.png",
+   "size": [
+    140,
+    48
+   ],
+   "frame": 57,
+   "note": "说明图标框 74×48"
+  }
+ },
+ "icons": 174,
+ "missing_icons": [
+  "basichpmaxup"
+ ]
+}

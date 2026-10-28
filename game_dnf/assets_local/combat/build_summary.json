@@ -1,0 +1,110 @@
+{
+ "monsters": [
+  "goblin",
+  "goblin_thrower",
+  "tau_army",
+  "tau_beast",
+  "lugaru",
+  "kurogaru",
+  "goblin_ice",
+  "goblin_fire",
+  "goblin_taskmaster",
+  "goblin_thrower_taskmaster"
+ ],
+ "objects": [
+  "gorecross",
+  "throwstone",
+  "goblin_ice",
+  "goblin_fire"
+ ],
+ "effects": 24,
+ "digits": 61,
+ "audio_keys": 48,
+ "unresolved": 14,
+ "unresolved_items": [
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/goblinthrower.mob",
+   "path": "Monster/Goblin/tcc2.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/goblinthrower.mob",
+   "path": "Monster/Goblin/acc2.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/goblinthrower.mob",
+   "path": "Monster/Goblin/hcc3.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/goblinthrower.mob",
+   "path": "Monster/Goblin/gcc1.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/seagab.mob",
+   "path": "Monster/Goblin/acc4.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/seagab.mob",
+   "path": "Monster/Goblin/Hcc2.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/seagab.mob",
+   "path": "Monster/Goblin/gcc1-3.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/seagab.mob",
+   "path": "Monster/Goblin/tcc1-2.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/seagab.mob",
+   "path": "Monster/Goblin/bcc1-2.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/hillgab.mob",
+   "path": "Monster/Goblin/acc4-2.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/hillgab.mob",
+   "path": "Monster/Goblin/Hcc2-2.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/hillgab.mob",
+   "path": "Monster/Goblin/gcc1-3.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/hillgab.mob",
+   "path": "Monster/Goblin/tcc1-2.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_equipment",
+   "monster": "monster/goblin/hillgab.mob",
+   "path": "Monster/Goblin/bcc1-2.equ",
+   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  }
+ ]
+}

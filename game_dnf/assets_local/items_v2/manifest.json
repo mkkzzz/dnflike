@@ -1,0 +1,65 @@
+{
+  "schema": "dnf_item_icons/1",
+  "items": {
+    "training_coat": "932057214a34_335",
+    "training_necklace": "3a8a308fe833_69",
+    "scrap_iron": "2238723ea8b2_3"
+  },
+  "images": {
+    "932057214a34_335": {
+      "file": "img/932057214a34_335.png",
+      "source_path": "sprite/item/common/coat.img",
+      "source_npk": "ImagePacks2/sprite_item_common.NPK",
+      "img_sha256": "932057214a3433c01db1597eaef4752013034cc92e32591f9fcbd712b0c576cc",
+      "frame": 335,
+      "size": [
+        28,
+        28
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "variants": 2
+    },
+    "3a8a308fe833_69": {
+      "file": "img/3a8a308fe833_69.png",
+      "source_path": "sprite/item/new_equipment/08_necklace/necklace.img",
+      "source_npk": "ImagePacks2/sprite_item_new_equipment_08_necklace.NPK",
+      "img_sha256": "3a8a308fe833a291e458c001d8db59c1e1b605555d6977d72e9a547ca6c7d9f4",
+      "frame": 69,
+      "size": [
+        28,
+        28
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "variants": 1
+    },
+    "2238723ea8b2_3": {
+      "file": "img/2238723ea8b2_3.png",
+      "source_path": "sprite/item/iconmaterial.img",
+      "source_npk": "ImagePacks2/sprite_item.NPK",
+      "img_sha256": "2238723ea8b2a0b182e2eb3e2933affe43c30d6f3328989693df3f3718b42784",
+      "frame": 3,
+      "size": [
+        28,
+        28
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "variants": 1
+    }
+  },
+  "sources": {
+    "training_coat": "equipment/character/common/jacket/cloth/100050017.equ",
+    "training_necklace": "equipment/character/common/amulet/100300001.equ",
+    "scrap_iron": "stackable/material/piece_iron.stk"
+  },
+  "selection": "E-ADAPT sample equipment uses original icons, not the source item identity or balance",
+  "pixel_policy": "Original native RGBA, no resize, no drawing, no atlas replacement"
+}

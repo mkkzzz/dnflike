@@ -1,0 +1,262 @@
+{
+ "schema": "dnflike_town_gate_light/1",
+ "evidence": "E-FILE; generic path-gate light (gateall_00/02)",
+ "clips": {
+  "up": {
+   "source_path": "sprite/common/commoneffect/gate/gateup.img",
+   "source_sha256": "03f7eed8e35e0560f5f205adc39e008ef09ce72b2c2a22c34749a8347de79408",
+   "source_file": "assets/09_shared/!!!!!!!!!!补丁文件 (2)_60c061/9de74e25af7a4122bc22_gateup.img",
+   "frames": [
+    {
+     "file": "up_00.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_01.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_02.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_03.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_04.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_05.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_06.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_07.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_08.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_09.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_10.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_11.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_12.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_13.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_14.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_15.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_16.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_17.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_18.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_19.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_20.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_21.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_22.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_23.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_24.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_25.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_26.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_27.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "up_28.png",
+     "delay_ms": 60
+    }
+   ],
+   "size": [
+    82,
+    177
+   ],
+   "blend": "add"
+  },
+  "down": {
+   "source_path": "sprite/common/commoneffect/gate/gatedown.img",
+   "source_sha256": "08e56c532545e8b998a0367e3e9be3be3bce8c9b2560ec88a6dff9f0578e2251",
+   "source_file": "assets/09_shared/!!!!!!!!!!补丁文件 (2)_60c061/6e57f5a0d637c150a9c1_gatedown.img",
+   "frames": [
+    {
+     "file": "down_00.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_01.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_02.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_03.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_04.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_05.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_06.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_07.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_08.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_09.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_10.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_11.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_12.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_13.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_14.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_15.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_16.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_17.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_18.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_19.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_20.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_21.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_22.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_23.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_24.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_25.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_26.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_27.png",
+     "delay_ms": 60
+    },
+    {
+     "file": "down_28.png",
+     "delay_ms": 60
+    }
+   ],
+   "size": [
+    107,
+    39
+   ],
+   "blend": "add"
+  }
+ }
+}
