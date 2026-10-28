@@ -1,4 +1,4 @@
-param([string]$GodotPath="",[switch]$Test,[switch]$Capture,[switch]$Editor,[switch]$BuildAssets,[string]$LibraryPath="")
+param([string]$GodotPath="",[switch]$Test,[switch]$Capture,[switch]$Editor,[switch]$BuildAssets,[switch]$SyncAssets,[string]$LibraryPath="")
 $ErrorActionPreference="Stop"
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
@@ -15,18 +15,10 @@ if ($BuildAssets) {
     if ($LASTEXITCODE -ne 0) {throw "Local DNF resource build failed."}
 }
 $assetLock=Join-Path $gamePath "asset_store.json"
+# 2026-10-28 起运行时资源随仓库分发：清单在就直接用，不再比对安装标记。
+# 需要按 Release 更新/重建时才加 -SyncAssets。
 $needsSync=-not (Test-Path -LiteralPath (Join-Path $gamePath "assets_local/manifest.json"))
-if (Test-Path -LiteralPath $assetLock) {
-    $sharedLock=Get-Content -LiteralPath $assetLock -Raw | ConvertFrom-Json
-    $stampPath=Join-Path $gamePath "assets_local/.asset_store_install.json"
-    if (Test-Path -LiteralPath $stampPath) {
-        $installed=Get-Content -LiteralPath $stampPath -Raw | ConvertFrom-Json
-        if ($installed.version -ne $sharedLock.version) {$needsSync=$true}
-        foreach ($entry in @($sharedLock.packs | Where-Object {$_.kind -eq 'runtime'})) {
-            if ($installed.runtime_packs.PSObject.Properties[$entry.name].Value -ne $entry.sha256) {$needsSync=$true}
-        }
-    } else {$needsSync=$true}
-}
+if ($SyncAssets) {$needsSync=$true}
 if ($needsSync) {
     if (Test-Path -LiteralPath $assetLock) {
         & python (Join-Path $PSScriptRoot "dnf_asset_store.py") sync

@@ -1,4 +1,4 @@
-param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly, [switch]$GranOnly, [switch]$UpgradesOnly, [switch]$RecoveryOnly)
+param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [switch]$SyncAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly, [switch]$GranOnly, [switch]$UpgradesOnly, [switch]$RecoveryOnly)
 $ErrorActionPreference="Stop"
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
@@ -10,6 +10,9 @@ if ($LASTEXITCODE -ne 0) {throw "Equipment upgrade configuration invalid."}
 if ($LASTEXITCODE -ne 0) {throw "Recovery configuration invalid."}
 $repoRoot=Split-Path $PSScriptRoot -Parent
 $gamePath=Join-Path $repoRoot "game_dnf"
+# 2026-10-28 起运行时资源随仓库分发：清单在就直接用，各 sync/烘焙步骤默认跳过。
+# 需要按 Release 更新或从原版库重建时才加 -SyncAssets（或 -BuildAssets）。
+$assetsBundled=(Test-Path -LiteralPath (Join-Path $gamePath "assets_local/manifest.json")) -and -not $SyncAssets
 if (-not $GodotPath) {$GodotPath=Join-Path $PSScriptRoot "godot/Godot_v4.7.2-stable_win64_console.exe"}
 if (-not (Test-Path -LiteralPath $GodotPath)) {throw "Run tools/setup_godot.ps1 first."}
 $versionText="$(& $GodotPath --version 2>$null | Select-Object -First 1)".Trim()
@@ -37,7 +40,7 @@ if ($BuildAssets) {
     if ($LibraryPath) {$granBuildArgs+=@("--library",$LibraryPath)}
     & python @granBuildArgs
     if ($LASTEXITCODE -ne 0) {throw "Original Granfloris art build failed."}
-} else {
+} elseif (-not $assetsBundled) {
     # Separate immutable pack needs no full library or original client installation.
     # Once installed, validate local version/hashes and play without network.
     & python (Join-Path $PSScriptRoot "sync_dnf_flow.py") --check-installed
@@ -48,18 +51,20 @@ if ($BuildAssets) {
 }
 $ErrorActionPreference="Continue"
 # Item icons have an independent lock so town art releases remain independent.
-& python (Join-Path $PSScriptRoot "dnf_items_assets.py") sync --check-installed
-if ($LASTEXITCODE -ne 0) {
-    & python (Join-Path $PSScriptRoot "dnf_items_assets.py") sync
-    if ($LASTEXITCODE -ne 0) {throw "Original item icon sync failed."}
+if (-not $assetsBundled) {
+    & python (Join-Path $PSScriptRoot "dnf_items_assets.py") sync --check-installed
+    if ($LASTEXITCODE -ne 0) {
+        & python (Join-Path $PSScriptRoot "dnf_items_assets.py") sync
+        if ($LASTEXITCODE -ne 0) {throw "Original item icon sync failed."}
+    }
 }
 # Original combat inputs (ws1, doc 29 F2~F5): content pack + combat banks, built from the full library.
-& (Join-Path $PSScriptRoot "ensure_dnf_combat.ps1")
+if (-not $assetsBundled) {& (Join-Path $PSScriptRoot "ensure_dnf_combat.ps1")}
 # Town portal gate light (ws4): original gateup/gatedown frames, also built from the full library.
 $gateOut=Join-Path $gamePath "assets_local/town_gate/manifest.json"
 $gateTool=Join-Path $PSScriptRoot "bake_town_gate_light.py"
-$gateStale=-not (Test-Path -LiteralPath $gateOut)
-if (-not $gateStale) {$gateStale=(Get-Item -LiteralPath $gateTool).LastWriteTimeUtc -gt (Get-Item -LiteralPath $gateOut).LastWriteTimeUtc}
+$gateStale=(-not $assetsBundled) -and (-not (Test-Path -LiteralPath $gateOut))
+if (-not $gateStale -and -not $assetsBundled) {$gateStale=(Get-Item -LiteralPath $gateTool).LastWriteTimeUtc -gt (Get-Item -LiteralPath $gateOut).LastWriteTimeUtc}
 if ($gateStale) {
     & python $gateTool *> $null
     if ($LASTEXITCODE -ne 0) {Write-Output "[DNF_GATE] bake_town_gate_light.py failed (full library missing? run python tools/dnf_asset_store.py sync --full)"}
