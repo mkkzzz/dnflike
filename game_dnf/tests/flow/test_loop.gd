@@ -225,6 +225,13 @@ func run() -> void:
 	check(Language.contains_korean(String.chr(0xac00)) and Language.contains_korean(String.chr(0x3131)), "Korean syllables and Jamo are rejected")
 	check(not Language.contains_korean("背包 负重 普通难度 X HP 评价 S"), "Chinese text and normal key/rank notation are accepted")
 	check(game.town.loader.errors.is_empty(), "all native town textures load")
+	var elven_choices: Array = game.session.dungeon_choices("lorien")
+	check("lorien" in elven_choices and "lorien_inside" in elven_choices, "艾尔文入口可选洛兰与洛兰深处")
+	var gran_choices: Array = game.session.dungeon_choices("granfloris")
+	check("mirkwood" in gran_choices and "mirkwood_deep" in gran_choices, "森林入口可选幽暗密林与深处")
+	for dungeon_id: String in game.session.dungeons:
+		var dungeon_spec: Dictionary = game.session.dungeons[dungeon_id]
+		check(bool(dungeon_spec.get("legacy", false)) or (dungeon_spec.get("rooms", []) as Array).size() > 0, "副本 %s 有房间编排" % dungeon_id)
 	check(game.town.animated.size() >= 2, "source NPC/environment animation is active")
 	var town_bottom := art_bottom(game.town.map_root)
 	check(town_bottom >= 556.0, "town art reaches the HUD cut-out instead of leaving a bottom band (bottom=%.0f)" % town_bottom)

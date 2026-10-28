@@ -19,8 +19,11 @@ import argparse
 import collections
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
+
+KOREAN = re.compile(r'[\uac00-\ud7af\u1100-\u11ff]')
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import dnf_pvf as P
@@ -64,6 +67,11 @@ def as_text(values: list) -> str:
     return str(values[0]) if values else ''
 
 
+def safe(value: str) -> str:
+    """游戏内不得出现韩文；含韩文的槽位一律留空，只保留 name_sig 供后续对齐。"""
+    return '' if KOREAN.search(value or '') else value
+
+
 def as_int(values: list):
     return int(values[0]) if values and isinstance(values[0], (int, float)) else None
 
@@ -92,8 +100,8 @@ def parse(path: str, lib) -> dict | None:
     entry['grade'] = numeric.pop('grade', None)
     for tag, key in TEXT.items():
         if tag in spans:
-            entry[key] = as_text(spans[tag])
-    entry['name_en'] = as_text(spans['[name2]']) if '[name2]' in spans else ''
+            entry[key] = safe(as_text(spans[tag]))
+    entry['name_en'] = safe(as_text(spans['[name2]'])) if '[name2]' in spans else ''
     raw = lib.raw(path)
     if raw is not None:
         entry['name_sig'] = hashlib.sha1(raw[0]).hexdigest()[:10]

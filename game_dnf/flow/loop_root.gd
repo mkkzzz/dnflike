@@ -420,8 +420,8 @@ func interact_town(target: String) -> void:
 	if town.is_npc(target):show_overlay("npc")
 	elif target=="dungeon":
 		var choices: Array[String]=session.dungeon_choices(String(town.world.scene(town.location).get("dungeon_region","lorien")))
-		if selected_dungeon not in choices:
-			selected_dungeon=choices[0]
+		if not choices.is_empty():
+			if selected_dungeon not in choices:selected_dungeon=choices[0]
 			for id: String in choices:
 				if session.dungeon_available(id):selected_dungeon=id;break
 		show_overlay("dungeon")
