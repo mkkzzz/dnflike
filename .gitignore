@@ -7,9 +7,15 @@ tools/godot/
 # Godot 工程本地缓存
 game/.godot/
 
-# 新版资源消费副本和导入缓存：共享包通过独立资源仓库 Release 拉取，不进入源码 Git
+# Godot 导入缓存
 game_dnf/.godot/
-game_dnf/assets_local/
+
+# 运行时资源随仓库分发（clone 后直接可跑）；只排除本机安装/构建标记
+game_dnf/assets_local/.asset_store_install.json
+game_dnf/assets_local/.combat_local_build.json
+game_dnf/assets_local/.flow_install.json
+game_dnf/assets_local/.items_install.json
+game_dnf/assets_local/build_validation.json
 
 # 烘焙贴图：由 tools/bake_game_assets.py 从 render_preview.py 生成，不入库
 game/art/
