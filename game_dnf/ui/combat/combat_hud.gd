@@ -47,6 +47,13 @@ func present(s: Dictionary) -> void:
 	state = s
 	queue_redraw()
 
+## 画布宽度由视图给出（view/world_frame.gd 的 800×600），控件不再写死 640。
+func canvas_width(s: Dictionary) -> float:
+	return float(s.get("width",640.0))
+
+func canvas_height(s: Dictionary) -> float:
+	return float(s.get("height",360.0))
+
 func _draw() -> void:
 	trace.clear()
 	if state.is_empty() or atlas == null:return

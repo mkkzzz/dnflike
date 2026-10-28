@@ -1,10 +1,12 @@
 extends Node2D
 ## Room backdrop from the original Lorien maps (tools/export_dnf_map.py -> dnf_native_map/1):
 ## parallax background layers, tile strip, map animations/objects and path gates, all drawn by
-## scripts/native_map_loader.gd. The simulation's ground y is the map y, so the map root sits at
-## y = -screen_y_offset (map screen_y = map_y + offset - z).
+## scripts/native_map_loader.gd. The loader already returns canvas coordinates (view/world_frame.gd),
+## so this node sits at the origin and never adds its own vertical offset.
+## Screen = map y + screen_y_offset + ART_DY - z.
 const Loader = preload("res://scripts/native_map_loader.gd")
-const VIEW_WIDTH := 640.0
+const Frame = preload("res://view/world_frame.gd")
+const VIEW_WIDTH := float(Frame.WIDTH)
 
 var loader
 var root: Node2D
@@ -29,7 +31,6 @@ func show_room(info: Dictionary) -> void:
 		for p: Dictionary in loader.placements():
 			if String(p["id"]) == placement:
 				root = loader.build(p)
-				root.position.y = -float(loader.constants()["screen_y_offset"])
 				add_child(root)
 				var room: Dictionary = loader.room(String(p["map"]))
 				walk_grid = room["walk_grid"]
@@ -57,4 +58,4 @@ func _draw() -> void:
 	for r in walk_grid.size():
 		var row: Array = walk_grid[r]
 		for c in row.size():
-			if int(row[c]) != 0:draw_rect(Rect2(c*cw,r*ch,cw-1,ch-1),Color(1,0.3,0.3,0.25),false)
+			if int(row[c]) != 0:draw_rect(Rect2(c*cw,r*ch+Frame.MAP_DY,cw-1,ch-1),Color(1,0.3,0.3,0.25),false)

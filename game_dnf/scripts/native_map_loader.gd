@@ -1,8 +1,11 @@
 extends RefCounted
 ## Builds Godot nodes from tools/export_dnf_map.py output (dnf_native_map/1).
+## 纵向一律输出"画布坐标"：地砖/背景（美术坐标）+ART_DY，锚点（map 坐标）+MAP_DY，
+## 基准见 view/world_frame.gd。调用方不再对地图根节点加偏移。
 ## Trial loader: coordinate/layer/scroll rules are E-INFER, recorded in the export's
 ## "coordinates" block; it does not touch main.gd or the combat simulation.
 
+const Frame = preload("res://view/world_frame.gd")
 const SCHEMA := "dnf_native_map/1"
 const LAYER_BASE := {"distantback": -4000, "middleback": -3500, "bottom": -3000, "closeback": -2500, "normal": 0, "close": 3000}
 
@@ -106,7 +109,7 @@ func room(map_path: String) -> Dictionary:
 	return data["dungeon"]["rooms"][map_path]
 
 func ground_to_screen(anchor: Array) -> Vector2:
-	return Vector2(float(anchor[0]), float(anchor[1]) + float(constants()["screen_y_offset"]) - float(anchor[2]))
+	return Vector2(float(anchor[0]), float(anchor[1]) + float(constants()["screen_y_offset"]) + Frame.ART_DY - float(anchor[2]))
 
 func is_walkable(room_data: Dictionary, x: float, y: float) -> bool:
 	var k := constants()
@@ -140,7 +143,7 @@ func build(placement: Dictionary) -> Node2D:
 		for i in copies:
 			var s := MapSprite.new()
 			if s.setup(bg["sprite"], self):
-				s.position = Vector2(i * width, 0)
+				s.position = Vector2(i * width, Frame.ART_DY)
 				layer.add_child(s)
 			else:s.free()
 		root.add_child(layer)
@@ -151,7 +154,7 @@ func build(placement: Dictionary) -> Node2D:
 		var s := Sprite2D.new()
 		s.centered = false
 		s.texture = texture(tile["image"])
-		s.position = Vector2(float(tile["column"]) * float(k["tile_width"]), 0) + Vector2(tile["offset"][0], tile["offset"][1])
+		s.position = Vector2(float(tile["column"]) * float(k["tile_width"]), Frame.ART_DY) + Vector2(tile["offset"][0], tile["offset"][1])
 		s.z_index = z_for("bottom", 0) - 100
 		root.add_child(s)
 	var placed := 0

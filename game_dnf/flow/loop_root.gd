@@ -79,7 +79,7 @@ func _ready() -> void:
 		characters.directory = "res://../temp/loop_tests/characters"
 		characters.legacy_path = "res://../temp/loop_tests/character_legacy.json"
 	town = Town.new()
-	town.position.y = 28
+	# 城镇与副本共用画布基准：地图美术的纵向偏移由 loader 统一加，节点自身不再位移。
 	world_clip = Control.new()
 	world_clip.size = Vector2(800, 600)
 	world_clip.clip_contents = true
@@ -531,13 +531,9 @@ func depart() -> void:
 	town.hide()
 	combat = CombatSession.new()
 	battle = combat.mount(world_clip)
-	# 战斗视图按原始 640×480 设计（map_stage.VIEW_WIDTH），但循环画布是 800×600：
-	# 不缩放时地图只画到 y≈476，底部约 124 px 全黑。按 1.25 等比铺满画布，
-	# 相机仍以 640 地图像素为窗口（800/1.25 = 640），可见范围不变。
-	battle.scale = Vector2(1.25, 1.25)
-	battle.position = Vector2(0, 130)
-	# CanvasLayer 不继承父变换：战斗 HUD 必须单独套上同一份 2× 内容变换，
-	# 否则怪物血条等按 1:1 画在 1600×1200 视口里，只有一半大小。
+	# 战斗视图与城镇同用 800×600 画布基准（view/world_frame.gd），1:1 像素，
+	# 不缩放、不位移；地图与角色的纵向定位由 loader/view 统一承担。
+	# CanvasLayer 不继承父变换：战斗 HUD 单独套同一份内容变换。
 	# mount() 返回的是战斗场景根（main.gd），渲染视图在它的 view 属性上。
 	if battle.get("view") != null:
 		battle.view.hud_layer.transform = display_settings.content_transform()

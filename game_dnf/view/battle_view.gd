@@ -8,6 +8,7 @@ const ActorView = preload("res://view/actor_view.gd")
 const FxView = preload("res://view/fx_view.gd")
 const AudioRouter = preload("res://view/audio_router.gd")
 const MapStage = preload("res://view/map_stage.gd")
+const Frame = preload("res://view/world_frame.gd")
 const CombatHud = preload("res://ui/combat/combat_hud.gd")
 const PropView = preload("res://scripts/native_prop.gd")
 ## Afterimage of a cancelled pose (E-ADAPT: engine-drawn in the original, no data file).
@@ -87,7 +88,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	_player_z = float(p["z"])
 	for fx in effects:
 		if is_instance_valid(fx) and not fx.is_queued_for_deletion():
-			if fx.follow == 0:fx.position = _player_pos.round()-Vector2(0,_player_z)
+			if fx.follow == 0:fx.position = _canvas(_player_pos, _player_z)
 			fx.advance(sim_ms)
 	effects = effects.filter(func(fx):return is_instance_valid(fx) and not fx.is_queued_for_deletion())
 	stage.show_room(s["stage"])
@@ -97,7 +98,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 			prop_views[i].data = props[i]
 			prop_views[i].refresh()
 	if String(p["weapon"]) != _weapon:_set_weapon(String(p["weapon"]))
-	player_actor.position = _player_pos.round()
+	player_actor.position = _canvas(_player_pos, 0.0)
 	player_actor.z_index = int(_player_pos.y)
 	# 拾取瞬间播放下蹲（原版 sit 帧），其余时间完全按模拟给的动作。
 	var pose := String(p["ani"])
@@ -110,7 +111,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	for e: Dictionary in s["enemies"]:
 		var actor = enemy_actors.get(e["id"])
 		if actor == null:continue
-		actor.position = Vector2(e["pos"]).round()
+		actor.position = _canvas(Vector2(e["pos"]), 0.0)
 		actor.z_index = int(Vector2(e["pos"]).y)
 		var alpha := clampf(1.0-(float(e["death_ms"])-400)/400,0,1) if not e["alive"] else 1.0
 		actor.present(e["ani"],e["clock"],e["facing"],e["z"],1.0 if e["flash"] else 0.0,Color(1,1,1,alpha))
@@ -137,6 +138,8 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	hud_state["enemies"] = s["enemies"]
 	hud_state["numbers"] = numbers
 	hud_state["camera"] = Vector2(roundf(camera_x),0)
+	hud_state["width"] = float(Frame.WIDTH)
+	hud_state["height"] = float(Frame.HEIGHT)
 	hud.present(hud_state)
 
 func _set_weapon(weapon: String) -> void:
@@ -155,7 +158,7 @@ func _present_aura(key: String, p: Dictionary, sim_ms: float) -> void:
 		aura.setup(_effects[key],int(p["facing"]))
 		aura.loop = true
 	aura.facing = int(p["facing"])
-	aura.position = Vector2(p["pos"]).round()-Vector2(0,float(p["z"]))
+	aura.position = _canvas(Vector2(p["pos"]), float(p["z"]))
 	aura.z_index = int(Vector2(p["pos"]).y)+1
 	aura.advance(sim_ms)
 
@@ -172,7 +175,7 @@ func _present_objects(list: Array) -> void:
 			v.setup(bank,int(o["facing"]))
 			v.loop = true
 			object_views[o["id"]] = v
-		v.position = Vector2(o["pos"]).round()-Vector2(0,float(o["z"]))
+		v.position = _canvas(Vector2(o["pos"]), float(o["z"]))
 		v.z_index = int(Vector2(o["pos"]).y)+2
 		v.seek(float(o["clock"]))
 	for id in object_views.keys():
@@ -232,7 +235,7 @@ func _spawn_fx(event: Dictionary) -> void:
 	var point: Vector2 = event["point"]
 	var fx = FxView.new()
 	world.add_child(fx)
-	fx.position = point-Vector2(0,float(event["height"]))
+	fx.position = _canvas(point, float(event["height"]))
 	fx.z_index = int(point.y)+4
 	fx.base_scale = float(event.get("scale",1.0))
 	fx.tag = String(event.get("tag",""))
@@ -248,14 +251,18 @@ func _spawn_ghost(event: Dictionary) -> void:
 	world.add_child(node)
 	node.setup(_assets["players"][_weapon],_player_clips,_combat.get("player_locomotion",{}).get("battle",{}).get(_weapon,{}))
 	node.shadow_width = 0
-	node.position = Vector2(event["pos"]).round()
+	node.position = _canvas(Vector2(event["pos"]), 0.0)
 	node.z_index = int(Vector2(event["pos"]).y)-1
 	node.present(String(event["ani"]),float(event["clock"]),int(event["facing"]),float(event["z"]),0.0,GHOST_TINT)
 	ghosts.append({"node":node,"ms":0.0})
 
 ## Bitmap damage digits (sprite/common/etc/combo.img): monster damage white, damage taken red.
-## Positions are world coordinates; the HUD subtracts the camera.
+## Positions are canvas coordinates; the HUD subtracts the camera.
 func _on_damage(event: Dictionary) -> void:
 	var point: Vector3 = event["point"]
 	var style := "damage_taken" if String(event.get("victim","monster")) == "player" else "damage_crit" if event.get("critical",false) else "damage"
-	numbers.append({"pos":Vector2(point.x,point.y)-Vector2(0,65+point.z),"value":int(event["amount"]),"ms":0.0,"style":style})
+	numbers.append({"pos":Vector2(point.x,point.y+Frame.MAP_DY)-Vector2(0,65+point.z),"value":int(event["amount"]),"ms":0.0,"style":style})
+
+## map 坐标（角色/敌人/物件/特效）→ 画布坐标。
+func _canvas(point: Vector2, height: float) -> Vector2:
+	return Vector2(roundf(point.x), roundf(point.y+Frame.MAP_DY-height))

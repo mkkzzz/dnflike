@@ -109,6 +109,8 @@ func _ready() -> void:
 	view = BattleView.new()
 	add_child(view)
 	view.setup(assets,combat_assets,player_clips,bus,weapon,map_loader)
+	# 独立入口与循环共用同一画面基准（800×600 内容居中呈现）；循环里由 flow 自己设置。
+	if not external_mode:_setup_display()
 	# Managed mode leaves dungeon BGM to the flow side; tests never start it.
 	if not external_mode and not "--test" in OS.get_cmdline_user_args():view.audio.start_music()
 	if not external_mode:
@@ -123,6 +125,14 @@ func _ready() -> void:
 			test_drive.game = self
 			add_child(test_drive)
 	if not external_mode:get_window().title = "洛兰 · 新版战斗验证"
+
+## 独立入口没有 flow 层，自己套一份与本循环相同的内容变换，保持 1:1 原生像素。
+func _setup_display() -> void:
+	if DisplayServer.get_name() == "headless":return
+	var settings = preload("res://ui/flow/display_settings.gd").new()
+	settings.setup(get_window(), false)
+	view.transform = settings.content_transform()
+	if view.hud_layer != null:view.hud_layer.transform = settings.content_transform()
 	if "--review" in OS.get_cmdline_user_args():paused = true
 
 func _fail(reason: String) -> void:

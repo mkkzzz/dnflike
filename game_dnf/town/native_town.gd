@@ -1,6 +1,7 @@
 extends Node2D
 signal interact(target: String)
 const Loader = preload("res://scripts/native_map_loader.gd")
+const Frame = preload("res://view/world_frame.gd")
 const Actor = preload("res://scripts/native_actor.gd")
 const GateLight = preload("res://town/gate_light.gd")
 const TextPatch = preload("res://ui/flow/native_text_patch.gd")
@@ -29,8 +30,8 @@ var moving:=false
 var running:=false
 var animated: Array=[]
 var gate_lights: Array=[]
-## 地面逻辑坐标 → 屏幕坐标的固定视觉偏移（角色脚部 = ground + (0,120)）。
-const GROUND_DRAW_OFFSET := 120
+## 地面逻辑坐标 → 画布坐标的偏移（角色脚部 = ground + MAP_DY），与 loader 同源。
+const GROUND_DRAW_OFFSET := Frame.MAP_DY
 ## 光墙整体压在地面美术之上、任何角色/物件之下：角色 z = ground.y（>=0），光墙固定 -1500，
 ## 所以人物贴图永远在光墙上方；背景层 -2500/-3000/-4000 仍在光墙之下。
 const GATE_LIGHT_DEPTH := -1500
@@ -53,7 +54,6 @@ func _ready() -> void:
 	map_nodes["elvengard"]=street
 	map_loaders["elvengard"]=loader
 	add_child(street)
-	extend_ground(street,loader)
 	actor=Actor.new()
 	street.add_child(actor)
 	setup_actor()
@@ -101,13 +101,7 @@ func ensure_location(id: String) -> bool:
 		node.hide()
 		map_nodes[id]=node
 		map_loaders[id]=active_loader
-		if id=="seria_room":
-			inn=node
-			for part in node.get_children():
-				if part is Loader.MapSprite and part.get_meta("layer","")=="closeback" and part.frames.size()==1 and part.texture and part.texture.get_width()>=800:
-					append_strip(node,part.texture,Vector2(part.offset.x,part.position.y+part.offset.y+part.texture.get_height()),-3000)
-					break
-		else:extend_ground(node,active_loader)
+		if id=="seria_room":inn=node
 		return true
 	return false
 
@@ -163,30 +157,8 @@ func update_camera() -> void:
 	camera_y=clampf(ground.y-300,0,float(world.scene(location).get("camera_y",0)))
 	map_root.position=Vector2(-roundf(camera_x),-roundf(camera_y))
 	map_loaders[location].apply_camera(map_root,camera_x)
-	actor.position=Vector2(roundf(ground.x),roundf(ground.y+120))
+	actor.position=Vector2(roundf(ground.x),roundf(ground.y+GROUND_DRAW_OFFSET))
 	actor.z_index=int(ground.y)
-
-func append_strip(parent: Node, texture: Texture2D, at: Vector2, depth: int) -> void:
-	var strip:=AtlasTexture.new()
-	strip.atlas=texture
-	strip.region=Rect2(0,texture.get_height()-48,texture.get_width(),48)
-	var sprite:=Sprite2D.new()
-	sprite.centered=false
-	sprite.texture=strip
-	sprite.position=at
-	sprite.z_index=depth
-	sprite.set_meta("hud_ground_extension",true)
-	parent.add_child(sprite)
-
-func extend_ground(parent: Node2D, source_loader) -> void:
-	var last: Dictionary={}
-	for tile: Dictionary in parent.get_meta("room")["tiles"]:
-		if tile["image"]==null:continue
-		var col: int=tile["column"]
-		if not last.has(col) or tile["offset"][1]>last[col]["offset"][1]:last[col]=tile
-	for tile: Dictionary in last.values():
-		var texture: Texture2D=source_loader.texture(tile["image"])
-		append_strip(parent,texture,Vector2(float(tile["column"])*224+tile["offset"][0],tile["offset"][1]+texture.get_height()),-3100)
 
 func localize_signs() -> void:
 	for node in map_root.get_children():
@@ -280,19 +252,19 @@ func draw_caption(value: String, at: Vector2, size:=13, color:=Color("e9d49a")) 
 func _draw_names() -> void:
 	if player_name!="":draw_caption(player_name,actor.position+Vector2(0,-134),12,Color("d4edb0"))
 	for npc: String in world.scene(location)["npcs"]:
-		var at:=World.vec(world.scene(location)["npcs"][npc])+Vector2(0,120-138)
+		var at:=World.vec(world.scene(location)["npcs"][npc])+Vector2(0,GROUND_DRAW_OFFSET-138)
 		draw_caption(npc_definition(npc)["name"],at)
 		if quest_marks.get(npc,"")!="":draw_caption(quest_marks[npc],at+Vector2(0,-24),18,Color("ffe074"))
 	for label: Array in world.scene(location)["labels"]:
 		var half_width:=font.get_string_size(label[2],HORIZONTAL_ALIGNMENT_LEFT,-1,12).x/2
 		if label[0]-half_width<camera_x or label[0]+half_width>camera_x+800:continue
-		draw_caption(label[2],Vector2(label[0],label[1]+120-30),12)
+		draw_caption(label[2],Vector2(label[0],label[1]+GROUND_DRAW_OFFSET-30),12)
 	for portal: Dictionary in world.portals(location,inn_return).values():
 		var rect:=World.box(portal["rect"])
 		var center:=rect.get_center()
 		if center.x<camera_x-30 or center.x>camera_x+830:continue
 		center.x=clampf(center.x,camera_x+90,camera_x+710)
-		draw_caption(portal["label"],center+Vector2(0,120-35),12)
+		draw_caption(portal["label"],center+Vector2(0,GROUND_DRAW_OFFSET-35),12)
 	var target:=nearest()
 	var hint:=""
 	if is_npc(target):hint="E 与"+npc_definition(target)["name"]+"交谈"

@@ -21,7 +21,7 @@ func paint(h, s: Dictionary) -> void:
 	var rank := String(bar["rank"])
 	var st: Dictionary = STYLES.get(rank,STYLES["normal"])
 	var total: float = h.mhp_size(st["frame"]).x+h.mhp_size(st["cap"]).x
-	var origin := Vector2(roundf((640-total)/2),3) if rank == "boss" else Vector2(3,3)
+	var origin := Vector2(roundf((h.canvas_width(s)-total)/2),3) if rank == "boss" else Vector2(3,3)
 	h.mhp(st["frame"],origin)
 	h.mhp(st["cap"],origin+Vector2(st["cap_at"]))
 	h.mhp("face:"+String(bar["mob"]),origin+Vector2(st["face"]))

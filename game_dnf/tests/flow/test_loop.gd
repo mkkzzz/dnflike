@@ -13,6 +13,15 @@ func _ready() -> void:
 	capture = "--capture" in OS.get_cmdline_user_args()
 	call_deferred("run")
 
+## 场景地砖/物件的画布底边（含 sprite 自身 offset），用于验证"原图铺到画布底部"。
+func art_bottom(root: Node) -> float:
+	var bottom := -INF
+	if root == null:return 0.0
+	for node in root.get_children():
+		if node is Sprite2D and node.texture != null:
+			bottom = maxf(bottom, node.position.y + node.offset.y + float(node.texture.get_height()))
+	return bottom if bottom > -INF else 0.0
+
 func check(value: bool, message: String) -> void:
 	checks += 1
 	if value:print("[LOOP_TEST] PASS " + message)
@@ -217,6 +226,12 @@ func run() -> void:
 	check(not Language.contains_korean("背包 负重 普通难度 X HP 评价 S"), "Chinese text and normal key/rank notation are accepted")
 	check(game.town.loader.errors.is_empty(), "all native town textures load")
 	check(game.town.animated.size() >= 2, "source NPC/environment animation is active")
+	var town_bottom := art_bottom(game.town.map_root)
+	check(town_bottom >= 556.0, "town art reaches the HUD cut-out instead of leaving a bottom band (bottom=%.0f)" % town_bottom)
+	var patched := 0
+	for node in game.town.map_root.get_children():
+		if node is Sprite2D and node.get_meta("hud_ground_extension", false):patched += 1
+	check(patched == 0, "town does not fake the bottom with repeated ground strips")
 	if GateLight.available():
 		var expected: int = game.town.world.portals(game.town.location, game.town.inn_return).size()
 		check(expected > 0 and game.town.gate_light_count() == expected, "every town portal shows the original gate light")
@@ -406,6 +421,10 @@ func run() -> void:
 		check(gold_after > gold_before, "attack key X picks up the drop at the player's feet (%d -> %d)" % [gold_before, gold_after])
 		# 拾取表现：下蹲姿势 + 原版音效
 		var battle_view: Variant = game.battle.get("view")
+		check(game.battle.scale == Vector2.ONE and game.battle.position == Vector2.ZERO, "battle renders 1:1 on the shared 800x600 canvas")
+		var battle_bottom := art_bottom(battle_view.stage.root)
+		check(battle_bottom >= 556.0, "battle art reaches the HUD cut-out instead of leaving a bottom band (bottom=%.0f)" % battle_bottom)
+		check(battle_view.stage.root != null and battle_view.stage.root.position.y == 0.0, "map root keeps its canvas position (no private vertical offset)")
 		check(battle_view != null and battle_view.pickup_pose_until_ms > 0, "pickup requests the crouch pose")
 		if battle_view != null:
 			check(battle_view.player_actor.clips.has("sit"), "player clips carry the original sit (crouch) frames")
