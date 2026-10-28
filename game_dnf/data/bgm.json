@@ -1,0 +1,56 @@
+{
+ "schema": "dnf_bgm/1",
+ "evidence": "原版 Music/*.ogg 原字节，E-PARSE",
+ "scenes": {
+  "elvengard": "forest_town",
+  "seria_room": "sera_shop_new",
+  "hendon_city": "hendonmyre_new",
+  "hendon_main": "hendonmyre_new",
+  "hendon_auction": "hendonmyre_new",
+  "hendon_forest_gate": "forest_town",
+  "hendon_alley": "hendonmyre_new",
+  "lorien": "forest01"
+ },
+ "tracks": {
+  "forest_town": {
+   "file": "audio/bgm/forest_town.ogg",
+   "source": "music/forest_town.ogg",
+   "sha256": "a35d68704bce6835963ebc4105a02374aadac4a350ba89dbc5b2ae3b8b1572d6",
+   "bytes": 1415766,
+   "scenes": [
+    "elvengard",
+    "hendon_forest_gate"
+   ]
+  },
+  "sera_shop_new": {
+   "file": "audio/bgm/sera_shop_new.ogg",
+   "source": "music/sera_shop_new.ogg",
+   "sha256": "bae1f4e5115ef6892e1ed8db8008e3ac86f9db5fbb840a3f48c05d121bc07415",
+   "bytes": 886155,
+   "scenes": [
+    "seria_room"
+   ]
+  },
+  "hendonmyre_new": {
+   "file": "audio/bgm/hendonmyre_new.ogg",
+   "source": "music/hendonmyre_new.ogg",
+   "sha256": "5a7bdef30f50f34400a8a5c9e924ac98653f6853957f10f954c056a341714dfe",
+   "bytes": 1202845,
+   "scenes": [
+    "hendon_city",
+    "hendon_main",
+    "hendon_auction",
+    "hendon_alley"
+   ]
+  },
+  "forest01": {
+   "file": "audio/bgm/forest01.ogg",
+   "source": "music/forest01.ogg",
+   "sha256": "5e96ef5b6687e759b880abc09e662c28eb463e900e59ca2ab0bcf598d517c9be",
+   "bytes": 3451709,
+   "scenes": [
+    "lorien"
+   ]
+  }
+ }
+}

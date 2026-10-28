@@ -60,6 +60,11 @@ var skill_views: Dictionary = {}
 var display_settings = DisplaySettings.new()
 var debug_panel
 var world_clip: Control
+## 城镇 BGM：场景 → 原版曲目（data/bgm.json），战斗时让位给战斗侧音乐。
+var town_bgm: AudioStreamPlayer
+var bgm_tracks: Dictionary = {}
+var bgm_scenes: Dictionary = {}
+var _bgm_scene := ""
 var skill_catalog
 var quick_views: Array = []
 var characters = Characters.new()
@@ -117,6 +122,7 @@ func _ready() -> void:
 	debug_panel = DebugPanel.new()
 	ui.add_child(debug_panel)
 	debug_panel.setup(self)
+	_setup_bgm()
 	show_character_selection()
 	if test_mode:
 		var runner_path: String="res://tests/town/test_hendon.gd" if "--towns-only" in OS.get_cmdline_user_args() else "res://tests/quests/test_chapter.gd" if "--quests-only" in OS.get_cmdline_user_args() else "res://tests/flow/test_loop.gd"
@@ -229,6 +235,7 @@ func _process(delta: float) -> void:
 		view.modulate = Color("777777") if remaining > 0 else Color.WHITE
 		counter.text = "%.1f" % remaining if remaining > 0 else ""
 	town.enabled = not transitioning and overlay == "" and session.state == "town" and not debug_is_open()
+	update_bgm()
 	debug_panel.refresh_status()
 	quest_windows.refresh_tracker()
 	if notification_seconds > 0:
@@ -665,6 +672,38 @@ func set_debug_open(open: bool) -> void:
 	if open:windows.hide_tooltip()
 	sync_debug_pause()
 	debug_panel.refresh_status()
+
+## 城镇 BGM 初始化：原版 Music/*.ogg 原字节，按场景映射（tools/bake_dnf_bgm.py）。
+func _setup_bgm() -> void:
+	town_bgm = AudioStreamPlayer.new()
+	town_bgm.volume_db = -32.0
+	add_child(town_bgm)
+	if not FileAccess.file_exists("res://data/bgm.json"):return
+	var doc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/bgm.json"))
+	bgm_scenes = doc.get("scenes", {})
+	for key: String in doc.get("tracks", {}):
+		var path := "res://assets_local/" + String(doc["tracks"][key]["file"])
+		if not ResourceLoader.exists(path):continue
+		var stream = load(path)
+		if stream is AudioStreamOggVorbis:stream.loop = true
+		bgm_tracks[key] = stream
+
+## 场景变化时换曲；战斗交给战斗侧，取消/缺曲则停。
+func update_bgm() -> void:
+	if town_bgm == null or test_mode:return
+	if session.state == "battle" or not is_instance_valid(town):
+		if town_bgm.playing:town_bgm.stop()
+		_bgm_scene = ""
+		return
+	var scene := String(town.location)
+	if scene == _bgm_scene:return
+	_bgm_scene = scene
+	var key: String = bgm_scenes.get(scene, "")
+	if key == "" or not bgm_tracks.has(key):
+		town_bgm.stop()
+		return
+	town_bgm.stream = bgm_tracks[key]
+	town_bgm.play()
 
 func sync_debug_pause() -> void:
 	var open := debug_is_open()
