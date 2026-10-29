@@ -2,6 +2,14259 @@
  "schema": "dnf_boss_rules/1",
  "evidence": "由 .ai 反编译脚本提取：is target in attack area(x,y,z,w) + [return] 技能号",
  "count": 855,
+ "index": {
+  "blackscalemoussambani": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     140,
+     40,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     240,
+     60,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     340,
+     330,
+     230,
+     230
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chiefmong": [
+   {
+    "skill": 2,
+    "area": [
+     320,
+     320,
+     280,
+     280
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chiefmongghost": [
+   {
+    "skill": 0,
+    "area": [
+     180,
+     180,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chiefmongghost_2nd": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     105,
+     105,
+     42,
+     42
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chiefmongghost_3rd": [
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chiefsars": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     250,
+     250,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     800,
+     800,
+     500,
+     500
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chiefsars_crow": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     80,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "congcong": [
+   {
+    "skill": 10,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "crokhan": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     20,
+     20,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "crokhan_spearman": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     30,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     350,
+     30,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dark_ghost": [
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     600,
+     0,
+     110,
+     110
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ghost_flu": [
+   {
+    "skill": 11,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     90,
+     90,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "knifetooth": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     15,
+     15,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     350,
+     50,
+     50,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "lavineter": [
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "masaccio": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     200,
+     40,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     300,
+     70,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     500,
+     500,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mermadia_mage": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mermadia_warrior": [
+   {
+    "skill": 1,
+    "area": [
+     150,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "merman": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mermanhook": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     300,
+     300,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mini_flu": [
+   {
+    "skill": 0,
+    "area": [
+     50,
+     50,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "oneeyedmermaid": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     30,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     350,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "plover": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     30,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "skeleton_mermadia": [
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "turtlecannon": [
+   {
+    "skill": 1,
+    "area": [
+     80,
+     80,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "turtlek": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "wooden_doll": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 5,
+    "area": [
+     230,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     500,
+     500,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "wooden_doll_l": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 4,
+    "area": [
+     65,
+     65,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     220,
+     220,
+     45,
+     45
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "wooden_doll_nomnal": [
+   {
+    "skill": 0,
+    "area": [
+     50,
+     50,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "wooden_doll_p": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     60,
+     60,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     170,
+     170,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "wooden_doll_t": [
+   {
+    "skill": 2,
+    "area": [
+     60,
+     60,
+     180,
+     180
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     250,
+     250,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     250,
+     250,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "woodendoll_nb": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "woodendoll_ng": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     250,
+     155,
+     155
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "woodendoll_np": [
+   {
+    "skill": 0,
+    "area": [
+     170,
+     30,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "woodendoll_ny": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     170,
+     30,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "zombie_marine": [
+   {
+    "skill": 1,
+    "area": [
+     0,
+     2000,
+     2000,
+     2000
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "casillas": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     140,
+     40,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     240,
+     60,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gun_congcong": [
+   {
+    "skill": 3,
+    "area": [
+     100,
+     100,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     120,
+     120,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     800,
+     20,
+     200,
+     -50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     800,
+     20,
+     -50,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gungoblin": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     50,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gunman": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     500,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "macgee": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 7,
+    "area": [
+     50,
+     50,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     300,
+     300,
+     60,
+     -25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     300,
+     300,
+     -25,
+     60
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     24,
+     24
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "agamemnon": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "astray_gbl_devotee": [
+   {
+    "skill": 0,
+    "area": [
+     750,
+     50,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "astray_gbl_w_devotee": [
+   {
+    "skill": 0,
+    "area": [
+     520,
+     520,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "attackbody": [
+   {
+    "skill": 0,
+    "area": [
+     50,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "axeoutlaw": [
+   {
+    "skill": 0,
+    "area": [
+     130,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bigsoldier": [
+   {
+    "skill": 0,
+    "area": [
+     120,
+     0,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "biker": [
+   {
+    "skill": 0,
+    "area": [
+     30,
+     1000,
+     500,
+     500
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     1000,
+     0,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     1000,
+     30,
+     30,
+     500
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     1000,
+     30,
+     500,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "biker2": [
+   {
+    "skill": 0,
+    "area": [
+     130,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "blacktentacle": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "captainshured": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     30,
+     500,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     300,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chainbiker": [
+   {
+    "skill": 0,
+    "area": [
+     130,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chainbiker2": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     30,
+     1000,
+     500,
+     500
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     1000,
+     0,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     1000,
+     30,
+     30,
+     500
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     1000,
+     30,
+     500,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "confusethief": [
+   {
+    "skill": 1,
+    "area": [
+     130,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     200,
+     0,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "cutpurse": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     55,
+     55,
+     22,
+     22
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "cypher": [
+   {
+    "skill": 4,
+    "area": [
+     60,
+     60,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     250,
+     250,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     250,
+     250,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dendroid_disguise": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "enjosipho": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "fastcannon-lightning": [
+   {
+    "skill": 0,
+    "area": [
+     500,
+     500,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "flare_worm": [
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     22,
+     22
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "frenken": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     140,
+     0,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     380,
+     0,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "frenken_baby": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gang2": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gbltentacle": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     90,
+     90,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     300,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gt_proto": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 5,
+    "area": [
+     250,
+     250,
+     130,
+     130
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "hydracle": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     250,
+     250,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     300,
+     300,
+     250,
+     250
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "icegolem": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "incendiarysoldier": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     350,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "invader": [
+   {
+    "skill": 0,
+    "area": [
+     120,
+     120,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "isadora": [
+   {
+    "skill": 9,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 10,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 12,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [
+     100,
+     100,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     200,
+     200,
+     110,
+     110
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 11,
+    "area": [
+     300,
+     300,
+     210,
+     210
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "isadora_grim": [
+   {
+    "skill": 9,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 10,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 12,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [
+     100,
+     100,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     200,
+     200,
+     110,
+     110
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 11,
+    "area": [
+     300,
+     300,
+     210,
+     210
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "larva": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     60,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "launcher": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "launcher_ride": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "louis": [
+   {
+    "skill": 0,
+    "area": [
+     170,
+     170,
+     28,
+     28
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     230,
+     230,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "macgee2": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 7,
+    "area": [
+     50,
+     50,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     300,
+     300,
+     60,
+     -25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     300,
+     300,
+     -25,
+     60
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     24,
+     24
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "medic": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "minorsoldier": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "normalsoldier": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "peltshu": [
+   {
+    "skill": 11,
+    "area": [
+     180,
+     180,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [
+     250,
+     250,
+     800,
+     800
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "poisoningthief": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "richgoblin2": [
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ricu": [
+   {
+    "skill": 2,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     500,
+     500,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ricubaby": [
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "rod_aradman": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     52,
+     52,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "sasquatch": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     40,
+     40,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     160,
+     160,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     400,
+     400,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     500,
+     500,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "silkhat": [
+   {
+    "skill": 4,
+    "area": [
+     180,
+     180,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     250,
+     250,
+     800,
+     800
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "silverclown_ballacrobat": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     150,
+     150,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "silverclown_fluent": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     350,
+     350,
+     350,
+     350
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     420,
+     420,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "silverclown_jugglingacrobat2": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "snowman": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "soniccannon-thunder": [
+   {
+    "skill": 0,
+    "area": [
+     500,
+     500,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "special_rod_aradman": [
+   {
+    "skill": 0,
+    "area": [
+     60,
+     60,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     202,
+     -100,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "specialforce": [
+   {
+    "skill": 0,
+    "area": [
+     30,
+     5000,
+     400,
+     400
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     -10,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "spy": [
+   {
+    "skill": 0,
+    "area": [
+     250,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "stickban": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 11,
+    "area": [
+     300,
+     300,
+     1000,
+     1000
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "vangelis": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     60,
+     60,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     40,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     250,
+     40,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "warjack": [
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     100,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     200,
+     50,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     400,
+     50,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     400,
+     50,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "woody_plant": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "zx_5_1": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "zx_5_2": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "zx_5_3": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "zx_5_4": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "zx_5_beta": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "zx_5_gamma": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "zx_9": [
+   {
+    "skill": 2,
+    "area": [
+     200,
+     200,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "zx_99": [
+   {
+    "skill": 0,
+    "area": [
+     50,
+     50,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "miumiu": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     200,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     300,
+     150,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "japa": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     300,
+     10,
+     90,
+     190
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "japa_babydragon": [
+   {
+    "skill": 0,
+    "area": [
+     90,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     600,
+     10,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     900,
+     10,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "japa_genie": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "japa_spirit": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     600,
+     40,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ewisp": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "firesoul": [
+   {
+    "skill": 0,
+    "area": [
+     90,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     200,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     400,
+     100,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "samador": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mj": [
+   {
+    "skill": 8,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "bloodlugaru": [
+   {
+    "skill": 0,
+    "area": [
+     120,
+     40,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     250,
+     40,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "burninghella": [
+   {
+    "skill": 0,
+    "area": [
+     80,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "darkelf_sprit_hunter": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     0,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "evileye": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     0,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     400,
+     0,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "expeller_axion": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     130,
+     80,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "expeller_lsw": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     120,
+     100,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "goblintaskmaster": [
+   {
+    "skill": 0,
+    "area": [
+     80,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "goliath": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "greatgolem": [
+   {
+    "skill": 0,
+    "area": [
+     130,
+     130,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "hammerking": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     100,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "headrlessknight": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ice_goblin": [
+   {
+    "skill": 0,
+    "area": [
+     250,
+     0,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "keraha": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     130,
+     40,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     300,
+     70,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "melee_ghoul": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "metacow": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     250,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "shauta": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     250,
+     50,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "skullkane": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     800,
+     0,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tauarmy": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "vinoshu": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     130,
+     40,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     300,
+     70,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "wraith": [
+   {
+    "skill": 0,
+    "area": [
+     350,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "zetes": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [
+     150,
+     0,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "zombie": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dollmaster": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "dollmaster2": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "melee_goblin": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     90,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mermedia_w": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     90,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "throw_goblin": [
+   {
+    "skill": 0,
+    "area": [
+     350,
+     350,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "turtlekdeckhand": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "goblin_propeller": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gang": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     100,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "pubman": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "sinead": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 5,
+    "area": [
+     55,
+     55,
+     22,
+     22
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "longsword": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "shortsword": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "albert": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     130,
+     130,
+     130,
+     130
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "infected_ghoula": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "infected_ghoulb": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "infected_ghoulc": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "noir_dimension_gate": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "arad_lugaru_master": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "boss_aradman": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     0,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     500,
+     200,
+     0,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gblrebirtharadman": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     135,
+     85,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_aradman": [
+   {
+    "skill": 0,
+    "area": [
+     140,
+     120,
+     26,
+     26
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     140,
+     120,
+     26,
+     26
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_aradman_n": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     0,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_crazy": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_crazy_ghost": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     70,
+     70,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_crazy_n": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     90,
+     90,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_hwaian": [
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     450,
+     0,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     450,
+     0,
+     120,
+     0
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     450,
+     0,
+     0,
+     120
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_kungfu": [
+   {
+    "skill": 0,
+    "area": [
+     220,
+     0,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     0,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_kungfu_staff": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 9,
+    "area": [
+     180,
+     180,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_yorkshire": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     320,
+     320,
+     100,
+     0
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     320,
+     320,
+     0,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "poisonhand": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "proto_aradman": [
+   {
+    "skill": 1,
+    "area": [
+     70,
+     70,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     120,
+     0,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     300,
+     0,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "soldier_aradman": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 4,
+    "area": [
+     300,
+     300,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "soldier_aradman2": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "gbl_chief_libraian": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     0,
+     17,
+     17
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     420,
+     420,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gbl_libraian": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     0,
+     17,
+     17
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_aradwoma": [
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_aradwoma_n": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     0,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     350,
+     350,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     350,
+     350,
+     97,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     350,
+     350,
+     30,
+     97
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_aradwoman_hidden": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     0,
+     30,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "proto_aradwoman": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     55,
+     55,
+     22,
+     22
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     10,
+     45,
+     45
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     150,
+     150,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     400,
+     400,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "_buffalomalaga": [
+   {
+    "skill": 1,
+    "area": [
+     70,
+     70,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "_buffalorari": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "_rabbitbird": [
+   {
+    "skill": 3,
+    "area": [
+     120,
+     120,
+     110,
+     11
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     400,
+     400,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "_rabbitmedusa": [
+   {
+    "skill": 7,
+    "area": [
+     450,
+     -250,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bantuwoman": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [
+     80,
+     80,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     150,
+     150,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "buffaloman": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     120,
+     120,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     130,
+     130,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "buffalowoman": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "elitebuffaloman": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     100,
+     100,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "elitebuffalowoman": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     400,
+     400,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     400,
+     400,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "emeldir": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "isil": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     180,
+     180,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mohini": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     90,
+     90,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     1000,
+     1000,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "rabbit": [
+   {
+    "skill": 1,
+    "area": [
+     50,
+     20,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     50,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "rabbitman": [
+   {
+    "skill": 0,
+    "area": [
+     20,
+     20,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     280,
+     280,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     450,
+     450,
+     280,
+     280
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "rabbitwoman": [
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     320,
+     320,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ratree": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 4,
+    "area": [
+     80,
+     80,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     150,
+     150,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     250,
+     250,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "sati": [
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "wolfpatriarch": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     50,
+     50,
+     23,
+     23
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 11,
+    "area": [
+     50,
+     50,
+     23,
+     23
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     85,
+     85,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 9,
+    "area": [
+     250,
+     250,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bee": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bee_named": [
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     0,
+     23,
+     23
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     450,
+     450,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "agaress": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     250,
+     30,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bow_goblin": [
+   {
+    "skill": 0,
+    "area": [
+     600,
+     100,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "goblin_chariot": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     100,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     600,
+     50,
+     0,
+     150
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "goblin_chariot2": [
+   {
+    "skill": 0,
+    "area": [
+     200,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "goblin_fanatic1": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     200,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "morningstar_goblin": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "spear_goblin": [
+   {
+    "skill": 0,
+    "area": [
+     400,
+     100,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ant": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "antnamed": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     250,
+     250,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ants": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bloodbutterfly": [
+   {
+    "skill": 1,
+    "area": [
+     200,
+     200,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bloodbutterflynamed": [
+   {
+    "skill": 13,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 14,
+    "area": [
+     90,
+     90,
+     22,
+     22
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "meltman": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "meltman_b": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "alterationsoldier": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     250,
+     0,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "aircrow": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     90,
+     90,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "cypherobject": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "darkcrow": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     200,
+     200,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     250,
+     250,
+     250,
+     250
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mini_stoneswarm": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     172,
+     172,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "poltergeistbookshelf": [
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     220,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 10,
+    "area": [
+     300,
+     300,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [
+     300,
+     0,
+     100,
+     0
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     480,
+     0,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 9,
+    "area": [
+     480,
+     480,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "poltergeistchair": [
+   {
+    "skill": 0,
+    "area": [
+     72,
+     72,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "poltergeistobject": [
+   {
+    "skill": 0,
+    "area": [
+     72,
+     72,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "scarecrow": [
+   {
+    "skill": 0,
+    "area": [
+     72,
+     72,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "stoneswarm": [
+   {
+    "skill": 0,
+    "area": [
+     172,
+     172,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "deserter": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     80,
+     80,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     120,
+     120,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     330,
+     330,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     400,
+     400,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dismantle": [
+   {
+    "skill": 2,
+    "area": [
+     50,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     20,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "engineer": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "signalsoldier": [
+   {
+    "skill": 0,
+    "area": [
+     600,
+     600,
+     600,
+     600
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tendersoldier": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [
+     70,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bunkertank": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "junk_thrower": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "rod_boss": [
+   {
+    "skill": 1,
+    "area": [
+     15,
+     15,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     120,
+     120,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     400,
+     400,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tower": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "trashcan": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "trashcan_thrower": [
+   {
+    "skill": 0,
+    "area": [
+     400,
+     400,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tree_thrower": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "at_walker": [
+   {
+    "skill": 0,
+    "area": [
+     230,
+     50,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bilai": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "courjeep": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [
+     130,
+     130,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     190,
+     190,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     360,
+     360,
+     45,
+     45
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     470,
+     470,
+     45,
+     45
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "goro": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 16,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     120,
+     20,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [
+     300,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 13,
+    "area": [
+     500,
+     20,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gunmax": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 16,
+    "area": [
+     100,
+     100,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 15,
+    "area": [
+     100,
+     100,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "outlaw": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "ranjerus": [
+   {
+    "skill": 2,
+    "area": [
+     100,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 9,
+    "area": [
+     250,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     300,
+     50,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     500,
+     50,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "robot_du1": [
+   {
+    "skill": 9,
+    "area": [
+     100,
+     100,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     650,
+     650,
+     800,
+     800
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "specialarmy": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     130,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_crimebuffalo": [
+   {
+    "skill": 0,
+    "area": [
+     140,
+     140,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_crimebuffalogeneral": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [
+     600,
+     600,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "treasurenamed": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     500,
+     70,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dark_dragon_nagor": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     200,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [
+     600,
+     0,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dark_spirit": [
+   {
+    "skill": 0,
+    "area": [
+     30,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "red_dragon_ashcore": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "shelder": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "astaroth": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "berias": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     160,
+     160,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "berias_sub": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "fear": [
+   {
+    "skill": 0,
+    "area": [
+     50,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "michaela": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     80,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     700,
+     700,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ozma": [
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "pincers": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "sawtooth": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     1100,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "scissors": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "skewer": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     500,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tiamat": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 6,
+    "area": [
+     120,
+     120,
+     23,
+     23
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     250,
+     0,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "check_trap": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "cocozola": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     170,
+     10,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     770,
+     0,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     1070,
+     1000,
+     1020,
+     1020
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "crimsonreaper": [
+   {
+    "skill": 0,
+    "area": [
+     75,
+     75,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     250,
+     250,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gackle": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     30,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     450,
+     30,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gackle2": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     30,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     450,
+     30,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "garmea": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     170,
+     10,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     470,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     1070,
+     1000,
+     1020,
+     1020
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gaunis": [
+   {
+    "skill": 20,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 18,
+    "area": [
+     65,
+     65,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 15,
+    "area": [
+     750,
+     750,
+     350,
+     350
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "greenfetters": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "hernion": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     170,
+     10,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     470,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     1070,
+     1000,
+     1020,
+     1020
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "insent": [
+   {
+    "skill": 4,
+    "area": [
+     150,
+     150,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     300,
+     300,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "lemonriles": [
+   {
+    "skill": 0,
+    "area": [
+     75,
+     75,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     250,
+     250,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "light": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "swaycle": [
+   {
+    "skill": 2,
+    "area": [
+     100,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     800,
+     800,
+     400,
+     400
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "venommara": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     170,
+     10,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     470,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     1070,
+     1000,
+     1020,
+     1020
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "direzie": [
+   {
+    "skill": 10,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 11,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 12,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "disease_spirit": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     55,
+     55,
+     45,
+     45
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mummy_basic": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "mummy_ghost": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "assaultdog": [
+   {
+    "skill": 1,
+    "area": [
+     170,
+     150,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     450,
+     400,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "doberman": [
+   {
+    "skill": 1,
+    "area": [
+     10,
+     10,
+     8,
+     8
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     250,
+     10,
+     38,
+     38
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dreckdog": [
+   {
+    "skill": 2,
+    "area": [
+     10,
+     10,
+     8,
+     8
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_dog": [
+   {
+    "skill": 1,
+    "area": [
+     10,
+     10,
+     8,
+     8
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     250,
+     0,
+     38,
+     38
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_dog_n": [
+   {
+    "skill": 2,
+    "area": [
+     10,
+     10,
+     8,
+     8
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     450,
+     0,
+     350,
+     350
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "calamary": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "lobotomy": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "teleport": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "underdog": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "dragonspear": [
+   {
+    "skill": 0,
+    "area": [
+     250,
+     250,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dragonsword": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dragonwizard": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "kampera": [
+   {
+    "skill": 8,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [
+     250,
+     250,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "sparrow": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     30,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "clown": [
+   {
+    "skill": 0,
+    "area": [
+     160,
+     0,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "cownugol": [
+   {
+    "skill": 0,
+    "area": [
+     160,
+     160,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     300,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "cricket": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     450,
+     0,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "event_wolf": [
+   {
+    "skill": 1,
+    "area": [
+     60,
+     60,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     130,
+     0,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mini_bus": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "looseseri": [
+   {
+    "skill": 4,
+    "area": [
+     150,
+     150,
+     250,
+     250
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "serimalion": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     110,
+     110,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     400,
+     400,
+     48,
+     48
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "acidra": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     10,
+     10,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "cocoon": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     1500,
+     1500,
+     500,
+     500
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "combinetentacle": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     60,
+     60,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gblcolossus": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     200,
+     200,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     500,
+     500,
+     400,
+     400
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gbltentaclenamed": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     90,
+     90,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     300,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ladyzealot": [
+   {
+    "skill": 1,
+    "area": [
+     80,
+     80,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     300,
+     300,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "stickcle": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     500,
+     500,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "thrower": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "webcannon": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dendroid_elder": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     130,
+     130,
+     23,
+     23
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     400,
+     400,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "flare_spawn": [
+   {
+    "skill": 1,
+    "area": [
+     210,
+     210,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "new_gbl_nomal": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "new_gbl_woman": [
+   {
+    "skill": 0,
+    "area": [
+     520,
+     520,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "astray_gbl_pope": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     750,
+     50,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "zookeeper": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "action_sample": [
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "archer_gonlin": [
+   {
+    "skill": 2,
+    "area": [
+     250,
+     1800,
+     640,
+     640
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     600,
+     600,
+     580,
+     580
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     900,
+     0,
+     220,
+     220
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     1400,
+     0,
+     640,
+     640
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "assassin_gonlin": [
+   {
+    "skill": 2,
+    "area": [
+     80,
+     80,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     200,
+     200,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bomber_gonlin": [
+   {
+    "skill": 0,
+    "area": [
+     50,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     75,
+     75,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "lv1goblin": [
+   {
+    "skill": 0,
+    "area": [
+     90,
+     90,
+     27,
+     27
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     90,
+     90,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     500,
+     500,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "lv2goblin": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     90,
+     90,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     27,
+     27
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "lv3goblin": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [
+     90,
+     90,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     200,
+     200,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     250,
+     250,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "shylock": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 4,
+    "area": [
+     90,
+     90,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     300,
+     300,
+     27,
+     27
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "wedding_goblin": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "foreman_gonlin": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "guardianarcher": [
+   {
+    "skill": 2,
+    "area": [
+     250,
+     1800,
+     640,
+     640
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     600,
+     600,
+     580,
+     580
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     900,
+     0,
+     220,
+     220
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     1400,
+     0,
+     640,
+     640
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "guardianmaster": [
+   {
+    "skill": 5,
+    "area": [
+     150,
+     10,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 9,
+    "area": [
+     170,
+     10,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 11,
+    "area": [
+     270,
+     10,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "guardianspearman": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "guardiantraper": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     200,
+     20,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [
+     300,
+     20,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "madman_gonlin": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 5,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [
+     200,
+     200,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [
+     200,
+     200,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "richgoblin": [
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "summon_archergoblin": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     400,
+     400,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "summon_goblin": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     50,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tentaclerider": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     50,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "throwgoblin": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     80,
+     80,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bomb_thrower": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "bombgoblin": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "dummytank": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "elite_goblin": [
+   {
+    "skill": 0,
+    "area": [
+     90,
+     90,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "fire_goblin": [
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "attack": [
+   {
+    "skill": 0,
+    "area": [
+     50,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "goblincannon": [
+   {
+    "skill": 22,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 21,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 20,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 19,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 18,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 17,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 16,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 15,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 14,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 13,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 12,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 11,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 10,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 9,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 8,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 23,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "golgo": [
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "golgoserver": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "holdgoblin": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "kinggalok": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     90,
+     90,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "redgoblin": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "sleepgoblin": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "slowgoblin": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "speedgoblin": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "stonegoblin": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "stungoblin": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "leader": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     50,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "rudolf": [
+   {
+    "skill": 1,
+    "area": [
+     250,
+     0,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "icewavegolem": [
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     500,
+     500,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "stormgolem": [
+   {
+    "skill": 1,
+    "area": [
+     300,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     400,
+     400,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_bogers": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     300,
+     50,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_executive": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     0,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_sorcerer": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grimfiresprit": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grimhodor": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     500,
+     500,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grimpriest_nubelus": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "death_squad": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     130,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "hass": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     350,
+     50,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     450,
+     50,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "humanhunter": [
+   {
+    "skill": 0,
+    "area": [
+     65,
+     65,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "irigare": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     500,
+     20,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "peyo_piere": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     130,
+     30,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     220,
+     30,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     350,
+     100,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "poena": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "zzjo": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "assaultmarine": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     250,
+     30,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     350,
+     0,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "big_soldier": [
+   {
+    "skill": 0,
+    "area": [
+     120,
+     0,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "cannon": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [
+     80,
+     80,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "captain_berhik": [
+   {
+    "skill": 2,
+    "area": [
+     160,
+     160,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     280,
+     280,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "captain_berhik_boss": [
+   {
+    "skill": 2,
+    "area": [
+     160,
+     160,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     280,
+     280,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "caspar": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     0,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "doctorgiselle": [
+   {
+    "skill": 0,
+    "area": [
+     260,
+     260,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     560,
+     560,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dorian": [
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     500,
+     50,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gatling_soldier": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "jena": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     250,
+     0,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     380,
+     0,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "majorcamoka": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "zx_5_alpha": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "mortar_soldier": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "nife_claese": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [
+     200,
+     200,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "sergeant": [
+   {
+    "skill": 5,
+    "area": [
+     50,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     70,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "shadow": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "smarine": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     250,
+     30,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     350,
+     0,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "vulcherspecialforce": [
+   {
+    "skill": 0,
+    "area": [
+     30,
+     5000,
+     500,
+     500
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     500,
+     500,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "zx_camo": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "john_00": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "john_01": [
+   {
+    "skill": 0,
+    "area": [
+     350,
+     350,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "john_soldier00": [
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "john_soldier01": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "john_soldier02": [
+   {
+    "skill": 0,
+    "area": [
+     170,
+     170,
+     28,
+     28
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     230,
+     230,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "saya_00": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "saya_01": [
+   {
+    "skill": 0,
+    "area": [
+     350,
+     350,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "saya_soldier00": [
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "saya_soldier01": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "saya_soldier02": [
+   {
+    "skill": 0,
+    "area": [
+     170,
+     170,
+     28,
+     28
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     230,
+     230,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "divol": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     150,
+     10,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     380,
+     50,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "duke_juris": [
+   {
+    "skill": 1,
+    "area": [
+     180,
+     180,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     1480,
+     1480,
+     305,
+     305
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "infectee": [
+   {
+    "skill": 0,
+    "area": [
+     130,
+     10,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "isangoma_nazaloh": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "melt_knight": [
+   {
+    "skill": 0,
+    "area": [
+     180,
+     50,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     380,
+     30,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "particle": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "scavenger": [
+   {
+    "skill": 1,
+    "area": [
+     30,
+     30,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     130,
+     30,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "alecto": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "megaira": [
+   {
+    "skill": 5,
+    "area": [
+     150,
+     150,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tispone": [
+   {
+    "skill": 1,
+    "area": [
+     200,
+     200,
+     150,
+     150
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dragon_man": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     70,
+     70,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     120,
+     120,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gizmo": [
+   {
+    "skill": 0,
+    "area": [
+     250,
+     -150,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "lizard_man": [
+   {
+    "skill": 9,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     70,
+     70,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     120,
+     120,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "lizardman_guard": [
+   {
+    "skill": 3,
+    "area": [
+     100,
+     10,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "shiger": [
+   {
+    "skill": 0,
+    "area": [
+     350,
+     -100,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tiguan": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "firelugaru": [
+   {
+    "skill": 0,
+    "area": [
+     200,
+     50,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "medeia": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     100,
+     12,
+     12,
+     12
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "militiaman": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     130,
+     0,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "militiamanboss": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     250,
+     0,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mimic": [
+   {
+    "skill": 0,
+    "area": [
+     70,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "blanka": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     350,
+     0,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dual_face": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 5,
+    "area": [
+     500,
+     500,
+     800,
+     800
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     2000,
+     500,
+     800,
+     800
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dual_face2": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [
+     500,
+     500,
+     800,
+     800
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     500,
+     500,
+     800,
+     800
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "marine": [
+   {
+    "skill": 0,
+    "area": [
+     250,
+     30,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     350,
+     0,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "zx_69": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     350,
+     350,
+     2000,
+     2000
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "zx_77": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "botula": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     180,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     180,
+     20,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "coward_planet": [
+   {
+    "skill": 2,
+    "area": [
+     250,
+     250,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     260,
+     260,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "granite": [
+   {
+    "skill": 1,
+    "area": [
+     200,
+     200,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "granite_fly_b": [
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     250,
+     250,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "magneume": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "samuel": [
+   {
+    "skill": 10,
+    "area": [
+     500,
+     500,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "titan": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     800,
+     800,
+     32,
+     32
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "fire_slime": [
+   {
+    "skill": 0,
+    "area": [
+     50,
+     50,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "fire_slime_big": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "fitz_archer": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     510,
+     110,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "fitz_warrior": [
+   {
+    "skill": 0,
+    "area": [
+     60,
+     60,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "rockslime": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "rockslotor": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     120,
+     0,
+     27,
+     27
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     0,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "granite_b": [
+   {
+    "skill": 0,
+    "area": [
+     250,
+     10,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "granite_fly": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     10,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     170,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "granite_great": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     10,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     200,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     300,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     370,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "granite_t": [
+   {
+    "skill": 0,
+    "area": [
+     400,
+     10,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ma_squid": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ma_squid2": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "paris": [
+   {
+    "skill": 7,
+    "area": [
+     300,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     400,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     600,
+     600,
+     600,
+     600
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "patris": [
+   {
+    "skill": 2,
+    "area": [
+     200,
+     200,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     250,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     300,
+     300,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 11,
+    "area": [
+     700,
+     700,
+     700,
+     700
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "river": [
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "river_map": [
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "queen_rosi": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     1000,
+     1000,
+     300,
+     300
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "assaulting": [
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "bitbusty": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bombgunsoldier": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "dugong": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "fireman": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     380,
+     380,
+     900,
+     900
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "g3": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "gashengrigun": [
+   {
+    "skill": 8,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     200,
+     200,
+     110,
+     110
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "jeff": [
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     130,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 12,
+    "area": [
+     250,
+     0,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     400,
+     0,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "maryjane": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     80,
+     10,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "minesoldier": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "serve_fireman": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     80,
+     80,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "sniper": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "tempester": [
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "babydragon": [
+   {
+    "skill": 0,
+    "area": [
+     50,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "minius": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     100,
+     50,
+     10,
+     10
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mirkius": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     200,
+     200,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "archer_goblin": [
+   {
+    "skill": 2,
+    "area": [
+     250,
+     1800,
+     640,
+     640
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     600,
+     600,
+     580,
+     580
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     900,
+     0,
+     220,
+     220
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     1400,
+     0,
+     640,
+     640
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "kartana": [
+   {
+    "skill": 0,
+    "area": [
+     180,
+     30,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     600,
+     600,
+     110,
+     110
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "masaccio_quest": [
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "tau": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     450,
+     50,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "zepplinex": [
+   {
+    "skill": 1,
+    "area": [
+     800,
+     100,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "robot_du5": [
+   {
+    "skill": 9,
+    "area": [
+     100,
+     100,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     650,
+     650,
+     800,
+     800
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chiefmong0": [
+   {
+    "skill": 2,
+    "area": [
+     320,
+     320,
+     280,
+     280
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chiefmongghost0": [
+   {
+    "skill": 0,
+    "area": [
+     180,
+     180,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chiefmongghost_2nd0": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     105,
+     105,
+     42,
+     42
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chiefmongghost_3rd0": [
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dark_ghost0": [
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     600,
+     0,
+     110,
+     110
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ghost_flu3": [
+   {
+    "skill": 11,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     90,
+     90,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "skeleton_mermadia2": [
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "wooden_doll1": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 5,
+    "area": [
+     230,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     500,
+     500,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "wooden_doll_l1": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 4,
+    "area": [
+     65,
+     65,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     220,
+     220,
+     45,
+     45
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "wooden_doll_p1": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     60,
+     60,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     170,
+     170,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "wooden_doll_t1": [
+   {
+    "skill": 2,
+    "area": [
+     60,
+     60,
+     180,
+     180
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     250,
+     250,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     250,
+     250,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "divol1": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     150,
+     10,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     380,
+     50,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "doomferion": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     180,
+     180,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     1480,
+     1480,
+     305,
+     305
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "jarojjaroo": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "kator": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 4,
+    "area": [
+     100,
+     100,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "pathogens": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "crimebuffalo": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "cursecrimebuffalo": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     50,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "eviledge1": [
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     160,
+     160,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "eviledge2": [
+   {
+    "skill": 0,
+    "area": [
+     2000,
+     2000,
+     500,
+     500
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "graverobberking": [
+   {
+    "skill": 0,
+    "area": [
+     200,
+     20,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     700,
+     20,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "highspectresslene": [
+   {
+    "skill": 0,
+    "area": [
+     180,
+     30,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     600,
+     600,
+     110,
+     110
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "nugol": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 10,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "rosiclock": [
+   {
+    "skill": 0,
+    "area": [
+     230,
+     230,
+     75,
+     75
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "scasababy": [
+   {
+    "skill": 0,
+    "area": [
+     70,
+     70,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     160,
+     160,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "babynugol": [
+   {
+    "skill": 0,
+    "area": [
+     160,
+     160,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     160,
+     160,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "eviledge": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     160,
+     160,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "biwoong": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     90,
+     90,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     500,
+     500,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "biwoong_mirror": [
+   {
+    "skill": 0,
+    "area": [
+     90,
+     90,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "chinchin": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     210,
+     110,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     300,
+     300,
+     223,
+     223
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "cho_lance": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     120,
+     120,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     120,
+     120,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "choa": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     100,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     170,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gado": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     230,
+     230,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     400,
+     400,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "hajin": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "haneum": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [
+     130,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     500,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "holyu": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     130,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     400,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "hukbichun": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     100,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "hwaho": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [
+     60,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     180,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "hwoaryeong": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 10,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 4,
+    "area": [
+     120,
+     120,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     510,
+     110,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     510,
+     110,
+     40,
+     0
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     510,
+     110,
+     0,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "jaunbi": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     120,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "jebi": [
+   {
+    "skill": 6,
+    "area": [
+     120,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "jin": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     60,
+     60,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     510,
+     110,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "jinpie": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 9,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 4,
+    "area": [
+     80,
+     80,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     100,
+     100,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [
+     1500,
+     1500,
+     0,
+     70
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [
+     1500,
+     1500,
+     70,
+     0
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "kaizen": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     90,
+     90,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     240,
+     240,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "kinshou": [
+   {
+    "skill": 3,
+    "area": [
+     90,
+     90,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "lin": [
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     80,
+     80,
+     23,
+     23
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     180,
+     180,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     500,
+     500,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "luck2": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     120,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     160,
+     160,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     180,
+     180,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "moonsu": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     130,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     350,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "orona": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     130,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     20,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "poison_lance": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [
+     165,
+     165,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "sarin": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     50,
+     50,
+     55,
+     0
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 9,
+    "area": [
+     50,
+     50,
+     0,
+     55
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [
+     80,
+     80,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     80,
+     80,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     220,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     400,
+     400,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "seorock": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     150,
+     150,
+     28,
+     28
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tapay": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [
+     60,
+     60,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     280,
+     280,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "white": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     200,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "yang": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [
+     120,
+     120,
+     17,
+     17
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     170,
+     170,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     170,
+     170,
+     0,
+     60
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "yen": [
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     1000,
+     1000,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "zagyu": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     100,
+     0,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     150,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "zhenlun": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     180,
+     180,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "crazyman": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     170,
+     70,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     470,
+     70,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "fatso": [
+   {
+    "skill": 1,
+    "area": [
+     150,
+     0,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     230,
+     0,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gusto": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     160,
+     0,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     0,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "silverclown": [
+   {
+    "skill": 0,
+    "area": [
+     30,
+     5000,
+     400,
+     400
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     -10,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "silverclown_crutches": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "silverclown_jugglingacrobat": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "silverclown_robert": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [
+     160,
+     0,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     165,
+     0,
+     20,
+     60
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     600,
+     0,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "silverman": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     70,
+     70,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "silversmallmana": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     150,
+     150,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "silversmallmanb": [
+   {
+    "skill": 0,
+    "area": [
+     65,
+     65,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     2000,
+     2000,
+     1000,
+     1000
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "silversmallmanc": [
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     70,
+     0,
+     28,
+     28
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "transfatso": [
+   {
+    "skill": 1,
+    "area": [
+     150,
+     0,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     230,
+     0,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tripo": [
+   {
+    "skill": 1,
+    "area": [
+     160,
+     0,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     450,
+     0,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "slime_firm": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "slime_frantic": [
+   {
+    "skill": 1,
+    "area": [
+     150,
+     0,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "slime_king": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     230,
+     0,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "slime_mini": [
+   {
+    "skill": 0,
+    "area": [
+     230,
+     0,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "slime_red": [
+   {
+    "skill": 0,
+    "area": [
+     230,
+     0,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ice_snake": [
+   {
+    "skill": 0,
+    "area": [
+     52,
+     52,
+     14,
+     14
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "medusasnake": [
+   {
+    "skill": 0,
+    "area": [
+     52,
+     52,
+     14,
+     14
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "stonesnake": [
+   {
+    "skill": 0,
+    "area": [
+     200,
+     10,
+     14,
+     14
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "slotor": [
+   {
+    "skill": 1,
+    "area": [
+     75,
+     75,
+     17,
+     17
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     170,
+     170,
+     28,
+     28
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     220,
+     220,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "slotor1": [
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     100,
+     100,
+     27,
+     27
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     190,
+     190,
+     28,
+     28
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     270,
+     2270,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     500,
+     500,
+     28,
+     28
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "slotorblind": [
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     270,
+     270,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "event_child_tau": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     450,
+     50,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "event_cow": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "summon_tau": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     450,
+     50,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tau_beast": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     450,
+     50,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_marcenary": [
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_marcenary_n": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     130,
+     130,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     320,
+     320,
+     45,
+     45
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     450,
+     450,
+     18,
+     18
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "nicolas": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     300,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "angry_dragon": [
+   {
+    "skill": 0,
+    "area": [
+     65,
+     65,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     265,
+     265,
+     55,
+     55
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "baby_hisma": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     800,
+     10,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "baby_scasa": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     800,
+     10,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "baby_spirazzi": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     800,
+     10,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "black_dragon": [
+   {
+    "skill": 0,
+    "area": [
+     400,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dragon_knight": [
+   {
+    "skill": 6,
+    "area": [
+     150,
+     10,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     250,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "fire_dragon": [
+   {
+    "skill": 1,
+    "area": [
+     100,
+     10,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     870,
+     0,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "young_scasa": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     10,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "cross_axe": [
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     250,
+     250,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mummy": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     22,
+     22
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "nillbass": [
+   {
+    "skill": 14,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 13,
+    "area": [
+     120,
+     120,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 9,
+    "area": [
+     380,
+     380,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 10,
+    "area": [
+     950,
+     950,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "shapirogracia": [
+   {
+    "skill": 0,
+    "area": [
+     140,
+     140,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "yorkshire": [
+   {
+    "skill": 0,
+    "area": [
+     220,
+     220,
+     55,
+     55
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     1050,
+     1050,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bird": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "dauwa": [
+   {
+    "skill": 9,
+    "area": [
+     200,
+     30,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     600,
+     600,
+     600,
+     600
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "eldergoblin": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "forest_elf": [
+   {
+    "skill": 2,
+    "area": [
+     700,
+     700,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "forest_m": [
+   {
+    "skill": 0,
+    "area": [
+     60,
+     60,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "forest_oak": [
+   {
+    "skill": 0,
+    "area": [
+     120,
+     50,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "forest_spider": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "forest_w": [
+   {
+    "skill": 0,
+    "area": [
+     510,
+     110,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ghoulkawish": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "grim_aradwoman": [
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "redeyes_sinua": [
+   {
+    "skill": 0,
+    "area": [
+     120,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     800,
+     800,
+     800,
+     800
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "umtara": [
+   {
+    "skill": 10,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "umtara_rage": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     40,
+     40,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "warrior_oak": [
+   {
+    "skill": 3,
+    "area": [
+     120,
+     50,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "aquajello": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "doll_fighter": [
+   {
+    "skill": 4,
+    "area": [
+     65,
+     65,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     220,
+     220,
+     45,
+     45
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "doll_priest": [
+   {
+    "skill": 1,
+    "area": [
+     60,
+     60,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     170,
+     170,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "doll_sword": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     170,
+     30,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     230,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "doll_whip": [
+   {
+    "skill": 2,
+    "area": [
+     90,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     220,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "fire_doll": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "glutton_daroo": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     100,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     350,
+     50,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "ignis": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "musicbox": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     70,
+     30,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "questmonster": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   }
+  ],
+  "spacetoy": [
+   {
+    "skill": 1,
+    "area": [
+     200,
+     20,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     500,
+     20,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "timetoy": [
+   {
+    "skill": 0,
+    "area": [
+     90,
+     30,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     180,
+     30,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "darkelf_ghoul": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     130,
+     0,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "fusion_infectee": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gackle_warrior": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     30,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     450,
+     30,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "hogas": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     150,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     250,
+     0,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "kah_divol": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     380,
+     50,
+     35,
+     35
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "melt_warrior": [
+   {
+    "skill": 0,
+    "area": [
+     180,
+     50,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "melted_residents": [
+   {
+    "skill": 0,
+    "area": [
+     130,
+     10,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "primary_infectee": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     300,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "secondary_infectee": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     30,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "skull_knight": [
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "cartelvolunteer": [
+   {
+    "skill": 1,
+    "area": [
+     100,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     20,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "fatoutlaw": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     50,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "iris": [
+   {
+    "skill": 10,
+    "area": [
+     100,
+     10,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "cachimo": [
+   {
+    "skill": 6,
+    "area": [
+     120,
+     120,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     500,
+     500,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "empiresoldier": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     180,
+     180,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "insectmagician": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     120,
+     120,
+     17,
+     17
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     1000,
+     1000,
+     1000,
+     1000
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "kaiji": [
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 9,
+    "area": [
+     120,
+     120,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [
+     350,
+     350,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "kain": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 9,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 17,
+    "area": [
+     160,
+     160,
+     23,
+     23
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     650,
+     650,
+     120,
+     120
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 18,
+    "area": [
+     650,
+     650,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mistgirl": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mistmember": [
+   {
+    "skill": 0,
+    "area": [
+     120,
+     120,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mistpowerman": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     150,
+     150,
+     28,
+     28
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "andres": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "andres_l": [
+   {
+    "skill": 9,
+    "area": [
+     200,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "andres_r": [
+   {
+    "skill": 0,
+    "area": [
+     400,
+     400,
+     60,
+     60
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "basten": [
+   {
+    "skill": 0,
+    "area": [
+     250,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     350,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [
+     800,
+     800,
+     800,
+     800
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "basten_l": [
+   {
+    "skill": 3,
+    "area": [
+     200,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "basten_r": [
+   {
+    "skill": 2,
+    "area": [
+     140,
+     20,
+     30,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     300,
+     20,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "neymar": [
+   {
+    "skill": 0,
+    "area": [
+     250,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     350,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [
+     800,
+     800,
+     800,
+     800
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "neymar_l": [
+   {
+    "skill": 3,
+    "area": [
+     200,
+     20,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "neymar_r": [
+   {
+    "skill": 2,
+    "area": [
+     140,
+     20,
+     30,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "bloodneck": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     200,
+     -100,
+     -20,
+     80
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     200,
+     -100,
+     80,
+     -20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "empire_m_fight": [
+   {
+    "skill": 0,
+    "area": [
+     200,
+     200,
+     45,
+     45
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     800,
+     800,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "empireknight": [
+   {
+    "skill": 0,
+    "area": [
+     120,
+     120,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     200,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "empireresearcher": [
+   {
+    "skill": 0,
+    "area": [
+     270,
+     100,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "empirespear": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "hmecagoblin": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [
+     450,
+     450,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "kamina": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     500,
+     500,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "kerberos": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [
+     510,
+     150,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     510,
+     110,
+     80,
+     0
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     510,
+     110,
+     0,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "rudol": [
+   {
+    "skill": 4,
+    "area": [
+     100,
+     100,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     200,
+     100,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     100,
+     70,
+     70
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     500,
+     500,
+     500,
+     500
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "toma": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     50,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     250,
+     100,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     350,
+     100,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "claris": [
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     160,
+     160,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "fluore": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "frost": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "genie": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "ixia": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [
+     100,
+     100,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "jack": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "ogong": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "pluto": [
+   {
+    "skill": 0,
+    "area": [
+     70,
+     10,
+     15,
+     15
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "robot_blind": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "robot_confuse": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "robot_freeze": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "robot_hold": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     0,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "rodem": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "silverfox": [
+   {
+    "skill": 0,
+    "area": [
+     500,
+     50,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "soldo": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     70,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "coco": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     80,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     300,
+     300,
+     200,
+     200
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "darkcrow_coco": [
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [
+     300,
+     300,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "darklizardman": [
+   {
+    "skill": 6,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     0,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 9,
+    "area": [
+     200,
+     200,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "elise": [
+   {
+    "skill": 0,
+    "area": [
+     1000,
+     1000,
+     600,
+     600
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "evilstone": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "goblinunderminer": [
+   {
+    "skill": 5,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     300,
+     60,
+     -25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     300,
+     300,
+     -25,
+     60
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     300,
+     300,
+     24,
+     24
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "gordic": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     300,
+     300,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "limit_elitebuffaloman": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 4,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     60,
+     60,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     300,
+     300,
+     32,
+     32
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "limit_ladyzealot": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     80,
+     80,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     550,
+     550,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "limit_ladyzealot_dark": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     400,
+     400,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "limit_ladyzealot_fire": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     100,
+     100,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "limit_ladyzealot_ice": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     130,
+     130,
+     32,
+     32
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "limit_marcenary": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 3,
+    "area": [
+     80,
+     80,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     90,
+     90,
+     30,
+     30
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "limit_transfatso": [
+   {
+    "skill": 2,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 1,
+    "area": [
+     170,
+     170,
+     45,
+     45
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     500,
+     500,
+     400,
+     400
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "limit_wolfpatriarch": [
+   {
+    "skill": 7,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 9,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 0,
+    "area": [
+     350,
+     0,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 2,
+    "area": [
+     350,
+     0,
+     100,
+     0
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     350,
+     0,
+     0,
+     100
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [
+     350,
+     0,
+     25,
+     25
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 11,
+    "area": [
+     350,
+     0,
+     100,
+     0
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 10,
+    "area": [
+     350,
+     0,
+     0,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "mummy_dark": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "mummy_light": [
+   {
+    "skill": 0,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "sniper_triker": [
+   {
+    "skill": 3,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "bat": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     30,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "namak": [
+   {
+    "skill": 1,
+    "area": [],
+    "cooldown_checked": false
+   },
+   {
+    "skill": 4,
+    "area": [
+     120,
+     120,
+     40,
+     40
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 5,
+    "area": [
+     450,
+     450,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "victim": [
+   {
+    "skill": 0,
+    "area": [
+     300,
+     20,
+     20,
+     20
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "rosaura": [
+   {
+    "skill": 14,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 8,
+    "area": [],
+    "cooldown_checked": true
+   }
+  ],
+  "spirit": [
+   {
+    "skill": 0,
+    "area": [
+     100,
+     100,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 1,
+    "area": [
+     500,
+     500,
+     100,
+     100
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tw_dragonspear": [
+   {
+    "skill": 0,
+    "area": [
+     250,
+     250,
+     80,
+     80
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tw_dragonsword": [
+   {
+    "skill": 0,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ],
+  "tw_kampera": [
+   {
+    "skill": 8,
+    "area": [],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 6,
+    "area": [
+     150,
+     150,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   },
+   {
+    "skill": 7,
+    "area": [
+     250,
+     250,
+     50,
+     50
+    ],
+    "cooldown_checked": true
+   }
+  ]
+ },
  "bosses": {
   "monster/act8/blackscalemoussambani/ai/action.ai": {
    "script": "monster/act8/blackscalemoussambani/ai/action.ai",

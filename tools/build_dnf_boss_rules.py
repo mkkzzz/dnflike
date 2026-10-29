@@ -143,10 +143,21 @@ def main() -> int:
                 result[path] = {'script': path, 'rules': rules}
     finally:
         lib.close()
+    # 运行时按怪物名（mob 文件名，不含扩展名）查规则：
+    # 脚本路径 monster/.../<name>/ai/action.ai 的倒数第三段就是怪物名。
+    index: dict[str, list] = {}
+    for path, entry in result.items():
+        parts = path.split('/')
+        name = parts[-3] if len(parts) >= 3 else ''
+        if not name or name in index:
+            continue
+        # 无条件分支（如“大招冷却好就放”）优先，其余按原版距离由近到远。
+        rules = sorted(entry['rules'], key=lambda r: (0 if not r['area'] else 1, r['area'][0] if r['area'] else 0))
+        index[name] = rules
     OUT.write_text(json.dumps({
         'schema': 'dnf_boss_rules/1',
         'evidence': '由 .ai 反编译脚本提取：is target in attack area(x,y,z,w) + [return] 技能号',
-        'count': len(result), 'bosses': result,
+        'count': len(result), 'index': index, 'bosses': result,
     }, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     print('[RULES] 提取 %d 份脚本的选招规则' % len(result))
     for path, entry in list(result.items())[:6]:

@@ -431,6 +431,9 @@ func run() -> void:
 		check(game.battle.scale == Vector2.ONE and game.battle.position == Vector2.ZERO, "battle renders 1:1 on the shared 800x600 canvas")
 		var battle_bottom := art_bottom(battle_view.stage.root)
 		check(battle_bottom >= 556.0, "battle art reaches the HUD cut-out instead of leaving a bottom band (bottom=%.0f)" % battle_bottom)
+		# BOSS 选招规则来自 .ai 反编译，必须真的被加载（否则退回通用选招）。
+		check(game.battle.table.boss_rules.size() > 0,
+			"boss pick rules loaded from decompiled .ai (%d monsters)" % game.battle.table.boss_rules.size())
 		check(battle_view.stage.root != null and battle_view.stage.root.position.y == 0.0, "map root keeps its canvas position (no private vertical offset)")
 		check(battle_view != null and battle_view.pickup_pose_until_ms > 0, "pickup requests the crouch pose")
 		if battle_view != null:

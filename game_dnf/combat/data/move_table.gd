@@ -21,6 +21,8 @@ var problems: Array = []
 var _timelines: Dictionary = {}
 ## 原版 HP 基准表（monster/monsterbaseparameter.tbl，每 5 级一档）。
 var base_table: Array = []
+## 原版 BOSS 选招规则（由 .ai 反编译提取，按怪物名索引）。
+var boss_rules: Dictionary = {}
 
 func build(content_db, adapt_rules: Dictionary, combat_assets: Dictionary) -> bool:
 	db = content_db
@@ -44,6 +46,10 @@ func _load_base_table() -> void:
 	var base: Dictionary = tables.get("base", {})
 	if not bool(base.get("ok", false)):return
 	base_table = base.get("table", [])
+	# 同一份数据里也有 BOSS 选招规则（由 .ai 反编译提取）。
+	if FileAccess.file_exists("res://data/boss_rules.json"):
+		var rules_doc = JSON.parse_string(FileAccess.get_file_as_string("res://data/boss_rules.json"))
+		if rules_doc is Dictionary:boss_rules = rules_doc.get("index", {})
 
 ## HP 基准按怪物等级取原版表值；表缺失时退回 data/combat.json 的旧基准。
 func monster_base_hp(mob: Dictionary) -> float:
@@ -307,6 +313,11 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 					move["atk_path"] = atk_path
 			moves.append(move)
 		if not moves.is_empty():m["moves"] = moves
+	# 原版选招规则：按 .mob 文件名（不含扩展名）在反编译出的规则表里查。
+	# 规则形如 [{skill, area, cooldown_checked}]，area 为空的是无条件分支（多为大招）。
+	var mob_stem := String(path).get_file().get_basename().to_lower()
+	if boss_rules.has(mob_stem):
+		m["rules"] = boss_rules[mob_stem]
 	var throw: Dictionary = mob.get("throw_attack",{}) if mob.get("throw_attack") is Dictionary else {}
 	if not throw.is_empty():
 		var objects_index: Dictionary = db.index("passive_objects")

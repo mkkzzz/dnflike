@@ -898,6 +898,10 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 	var dt := ms/1000
 	var m: Dictionary = enemy["def"]
 	enemy["cooldown_ms"] = maxf(0,float(enemy["cooldown_ms"])-ms)
+	# 每招独立冷却（原版 [is the skill in cooltime() N] 是按招算的）。
+	var skill_cd: Dictionary = enemy.get("skill_cd", {})
+	for skill: int in skill_cd:
+		skill_cd[skill] = maxf(0.0, float(skill_cd[skill]) - ms)
 	var state: String = enemy["state"]
 	var advance := ms
 	if state=="attack" and enemy.has("numeric"):advance *= float(enemy["numeric"].values["attack_speed"])
@@ -968,6 +972,11 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 		enemy["clock"] = 0.0
 		# 出手间隔只用 .mob 的 [attack delay]，不叠加自制系数。
 		enemy["cooldown_ms"] = float(m["attack_delay"])
+		var used := int(enemy.get("move_index", -1))
+		if used >= 0:
+			var cds: Dictionary = enemy.get("skill_cd", {})
+			cds[used] = float(m["attack_delay"])
+			enemy["skill_cd"] = cds
 
 ## Player takes a monster hit. Returns the reaction kind, or "blocked" if nothing applied.
 func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) -> String:
@@ -1241,7 +1250,8 @@ func spawn_enemy(point: Vector2, chief := false, kind := "goblin") -> Dictionary
 		"facing":-1,"state":"idle","clock":0.0,"hp":hp,"max_hp":hp,"chief":chief,
 		"attack":float(m["attack"])*(float(base["boss_attack_scale"]) if chief else 1.0),
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
-		"flash_ms":0.0,"cooldown_ms":500.0,"hits":{},"thrown":false,"death_ms":0.0,"ai":true}
+		"flash_ms":0.0,"cooldown_ms":500.0,"hits":{},"thrown":false,"death_ms":0.0,"ai":true,
+		"skill_cd":{}}
 	if numeric_player != null:configure_enemy_numbers(enemy)
 	monsters.append(enemy)
 	_next_entity_id += 1
