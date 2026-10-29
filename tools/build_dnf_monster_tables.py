@@ -34,25 +34,46 @@ TABLES = {
     'named': 'monster/namedmonsterbaseparameter.tbl',
     'summon': 'monster/summonmonsterbaseparameter.tbl',
     'chaos': 'monster/chaosmonsterbaseparameter.tbl',
+    # 等级 → 基准值（11 列 99 行）：列7/9 = 150/300/450… 等差 +150，推断为 HP 基准；
+    # 列4/5 二阶递增（50/74/101/133…），推断为经验。这张表才是"基准值"的真源。
+    'base': 'monster/monsterbaseparameter.tbl',
+    'warroom': 'monster/warroommonsterbaseparameter.tbl',
+    'apc_bonus': 'monster/monsterapcdifficultybonus.tbl',
 }
-COLUMNS = 24
+# 各表的列数不同：base 11 列、其余 24 列；apc_bonus 是 float 表（魔数 b0d004）。
+COLUMNS = {'base': 11, 'warroom': 12}
+DEFAULT_COLUMNS = 24
 
 
-def parse(blob: bytes) -> dict:
-    if len(blob) < 8 or blob[:3] != b'\xb0\xd0\x02':
-        return {'ok': False, 'reason': 'magic'}
+def parse(blob: bytes, columns: int = DEFAULT_COLUMNS) -> dict:
+    """整数表魔数 `b0 d0 02`，浮点表魔数 `b0 d0 04`；两者都是 4 字节头 + 5 字节记录。"""
+    if len(blob) < 8:
+        return {'ok': False, 'reason': 'short'}
+    head = blob[:3]
+    if head not in (b'\xb0\xd0\x02', b'\xb0\xd0\x04'):
+        return {'ok': False, 'reason': 'magic %s' % head.hex()}
+    is_float = head == b'\xb0\xd0\x04'
     header = struct.unpack('<i', blob[3:7])[0]
     body = blob[7:]
-    values = [struct.unpack('<i', body[i + 1:i + 5])[0] for i in range(0, len(body) - 4, 5)]
-    rows = len(values) // COLUMNS
+    if is_float:
+        values = [round(struct.unpack('<f', body[i + 1:i + 5])[0], 4) for i in range(0, len(body) - 4, 5)]
+    else:
+        values = [struct.unpack('<i', body[i + 1:i + 5])[0] for i in range(0, len(body) - 4, 5)]
+    rows = len(values) // columns
     table = []
     for index in range(rows):
-        cell = values[index * COLUMNS:(index + 1) * COLUMNS]
-        table.append({'level': cell[0], 'hp_pct': cell[4], 'attack_pct': cell[5],
-                      'physical_defense_pct': cell[6], 'magical_defense_pct': cell[8],
-                      'raw': cell})
-    return {'ok': True, 'header': header, 'values': len(values), 'columns': COLUMNS,
-            'rows': rows, 'trailing': values[rows * COLUMNS:], 'table': table}
+        cell = values[index * columns:(index + 1) * columns]
+        row = {'raw': cell}
+        if not is_float and columns == DEFAULT_COLUMNS:
+            row.update({'level': cell[0], 'hp_pct': cell[4], 'attack_pct': cell[5],
+                        'physical_defense_pct': cell[6], 'magical_defense_pct': cell[8]})
+        elif not is_float and columns == 11:
+            # base 表：列1/3 等级区间、列4/5 经验、列7/9 基准值（推断）。
+            row.update({'from_level': cell[1], 'to_level': cell[3],
+                        'experience': cell[4], 'base_value': cell[7]})
+        table.append(row)
+    return {'ok': True, 'float': is_float, 'header': header, 'values': len(values),
+            'columns': columns, 'rows': rows, 'trailing': values[rows * columns:], 'table': table}
 
 
 def main() -> int:
@@ -67,7 +88,7 @@ def main() -> int:
                 result[name] = {'ok': False, 'reason': 'missing'}
                 continue
             raw = lib.raw(path)
-            result[name] = parse(raw[0] if raw else b'')
+            result[name] = parse(raw[0] if raw else b'', COLUMNS.get(name, DEFAULT_COLUMNS))
     finally:
         lib.close()
     OUT.write_text(json.dumps({
@@ -76,13 +97,18 @@ def main() -> int:
         'tables': result,
     }, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     for name, table in result.items():
-        if table.get('ok'):
-            print('[TABLE] %-8s 行 %-4d 列 %d 等级 %s..%s  首行 hp%%=%s attack%%=%s'
-                  % (name, table['rows'], table['columns'],
-                     table['table'][0]['level'], table['table'][-1]['level'],
-                     table['table'][0]['hp_pct'], table['table'][0]['attack_pct']))
+        if not table.get('ok'):
+            print('[TABLE] %-9s 解析失败 %s' % (name, table.get('reason')))
+            continue
+        first, last = table['table'][0], table['table'][-1]
+        if 'level' in first:
+            print('[TABLE] %-9s 行 %-3d 列 %d 等级 %s..%s  首行 hp%%=%s atk%%=%s'
+                  % (name, table['rows'], table['columns'], first['level'], last['level'],
+                     first['hp_pct'], first['attack_pct']))
         else:
-            print('[TABLE] %-8s 解析失败 %s' % (name, table.get('reason')))
+            print('[TABLE] %-9s 行 %-3d 列 %d 等级 %s..%s  首行 base=%-6s exp=%s%s'
+                  % (name, table['rows'], table['columns'], first.get('from_level'), last.get('from_level'),
+                     first.get('base_value'), first.get('experience'), '（float 表）' if table.get('float') else ''))
     return 0
 
 

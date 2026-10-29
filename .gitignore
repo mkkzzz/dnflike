@@ -30,3 +30,6 @@ Thumbs.db
 
 # 本地工作区标识与同步位置（每个 clone 各自不同），由 tools/sync_status.py --init 生成
 .workspace
+
+# 逆向中间产物（由 tools/parse_dnf_ai.py 再生成，体积大且含原版脚本字节）
+game_dnf/data/ai_program.json
