@@ -33,3 +33,7 @@ Thumbs.db
 
 # 逆向中间产物（由 tools/parse_dnf_ai.py 再生成，体积大且含原版脚本字节）
 game_dnf/data/ai_program.json
+
+# 反编译中间产物（由 tools/decompile_dnf_ai.py 再生成）
+docs/reverse/
+game_dnf/data/ai_scripts.json
