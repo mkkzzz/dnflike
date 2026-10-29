@@ -40,6 +40,15 @@ func set_job(value: String) -> void:game.job = value
 func weapon() -> String:return game.weapon
 func view_texture() -> String:return String(game.view.player_actor.bank["texture"])
 func view_pose() -> String:return game.view.player_actor.pose
+func view_weapon_item() -> String:return String(game.view.player_actor.get_meta("weapon_item",""))
+func view_weapon_appearance() -> String:return String(game.view.player_actor.get_meta("weapon_appearance",""))
+func weapon_layers_follow_actor() -> bool:
+	var actor=game.view.player_actor
+	return actor.equipment_layers.size()==2 and actor.equipment_layers.all(func(layer):return not layer.frame.is_empty() and layer.facing==actor.facing and is_equal_approx(layer.height,actor.height))
+func emit_weapon_ghost_fixture() -> void:
+	game.bus.emit("combat.cue",{"kind":"ghost","pos":Vector2(game.player.pos),"z":0.0,"facing":1,"ani":"attack1","clock":150.0})
+func latest_ghost_weapon_item() -> String:
+	return String(game.view.ghosts[-1].node.get_meta("weapon_item","")) if not game.view.ghosts.is_empty() else ""
 func run_direction() -> int:return game.run_direction
 func clear_direction_taps() -> void:
 	game.last_direction_tap.clear()

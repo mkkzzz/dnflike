@@ -141,6 +141,7 @@ func _ready() -> void:
 		if "--poison-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_poison_chapter.gd"
 		if "--teaching-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_teaching_quick.gd"
 		if "--native-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_native_quick.gd"
+		if "--weapon-appearance-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_weapon_appearance_quick.gd"
 		if "--quest-guide-only" in OS.get_cmdline_user_args():runner_path="res://tests/flow/test_quest_guide_town.gd"
 		var runner = load(runner_path).new()
 		runner.game = self
@@ -377,6 +378,8 @@ func item_action(kind: String, payload: Dictionary) -> bool:
 	candidate.state=session.state;candidate.result=session.result.duplicate(true)
 	var response: Dictionary=candidate.command(kind,payload)
 	if not response.get("ok",false):notice(response.get("message","物品操作失败"));return false
+	if not preload("res://content/weapon_appearance.gd").can_display(equipped_weapon_item(candidate.profile)):
+		notice("武器外观资源未就绪，换装未提交");return false
 	if not store.write(candidate):save_failed=true;notice(("技能加点" if kind=="numbers.skill" else "物品变更")+"未提交：存档写入失败，请重试");return false
 	session=candidate;save_failed=false;sync_number_changes(kind)
 	if kind=="numbers.skill":notice("技能加点已保存")
@@ -484,6 +487,7 @@ func transition_town(portal: String) -> bool:
 func sync_number_changes(kind := "numbers.update") -> void:
 	if is_instance_valid(battle) and session.state=="battle":
 		combat.update_numbers(session.stats(),String(session.Numbers.config()["progression"]["level_up_vitals"]) if kind in ["numbers.xp","numbers.level"] else "preserve")
+	if is_instance_valid(town) and session.state=="town":town.set_equipped_weapon(equipped_weapon_item(),equipped_weapon_shape())
 	build_hotbars()
 
 func show_overlay(which: String) -> void:
@@ -650,6 +654,7 @@ func enter_character(path: String) -> bool:
 	candidate.path = path
 	var next_session = Session.new()
 	if not candidate.read_into(next_session):return false
+	if not preload("res://content/weapon_appearance.gd").can_display(equipped_weapon_item(next_session.profile)):return false
 	store = candidate
 	active_character_path = path
 	session = next_session
@@ -661,7 +666,7 @@ func enter_character(path: String) -> bool:
 	world_clip.show()
 	town.show()
 	town.inn_return=session.profile.get("inn_return","enter_inn")
-	town.set_weapon(equipped_weapon_shape())
+	town.set_equipped_weapon(equipped_weapon_item(),equipped_weapon_shape())
 	if not town.set_location(String(session.profile.get("town_location","elvengard")),session.TownWorld.vec(session.profile["town_position"])):
 		town.set_location("elvengard",Vector2(100,260))
 		session.profile["town_location"]="elvengard"
@@ -816,8 +821,8 @@ func drop_slot(source: Dictionary, target: Dictionary) -> void:
 func refresh_item_views() -> void:
 	windows.hide_tooltip()
 	build_hotbars()
-	# 换装后同步城镇手上的武器外观（同种武器时是空操作）。
-	if is_instance_valid(town):town.set_weapon(equipped_weapon_shape())
+	# 换装后同步城镇手上的逐件武器外观（同一物品时是空操作）。
+	if is_instance_valid(town):town.set_equipped_weapon(equipped_weapon_item(),equipped_weapon_shape())
 	if overlay in ["inventory", "shop", "services", "upgrades"]:show_overlay(overlay)
 
 ## 当前装备武器的外观类型（numbers.json 的 equipment.<id>.weapon），缺省太刀。
@@ -826,6 +831,13 @@ func equipped_weapon_shape() -> String:
 	var id := String(session.profile.get("equipped", ""))
 	var entry: Dictionary = session.Numbers.config().get("equipment", {}).get(id, {})
 	return String(entry.get("weapon", "katana"))
+
+func equipped_weapon_item(profile: Dictionary = {}) -> String:
+	if profile.is_empty():
+		if session==null:return ""
+		profile=session.profile
+	var uid: String=profile["equipment"].get("weapon","")
+	return String(profile["gear"][uid]["definition"]) if uid!="" else ""
 
 func use_quick(index: int) -> void:
 	var id: String = session.profile["quick_items"][index]

@@ -64,10 +64,10 @@ func active() -> bool:
 	return game.session.state=="battle" and is_instance_valid(game.battle)
 
 func mutate(kind: String, payload: Dictionary) -> Dictionary:
-	if kind=="numbers.skill":
+	if kind=="numbers.skill" or kind.begins_with("numbers.gear_"):
 		var saved: bool=game.item_action(kind,payload)
 		if game.overlay=="numbers":game.show_overlay("numbers")
-		return {"ok":saved,"message":"技能已保存" if saved else "技能操作未提交"}
+		return {"ok":saved,"message":"变更已保存" if saved else "变更未提交"}
 	var response: Dictionary = game.session.command(kind,payload)
 	if not response["ok"]:return response
 	game.sync_number_changes(kind)

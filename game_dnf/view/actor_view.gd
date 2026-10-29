@@ -13,8 +13,10 @@ var flash := 0.0
 var tint := Color.WHITE
 var shadow_width := 18.0
 var _flash_material: ShaderMaterial
+var equipment_layers: Array=[]
 
 func setup(atlas_bank: Dictionary, animation_clips: Dictionary, overrides: Dictionary = {}) -> void:
+	clear_equipment_layers()
 	bank = atlas_bank
 	clips = animation_clips
 	pose_banks = overrides
@@ -27,6 +29,21 @@ func setup(atlas_bank: Dictionary, animation_clips: Dictionary, overrides: Dicti
 	_flash_material.shader = shader
 	material = _flash_material
 	queue_redraw()
+
+func clear_equipment_layers() -> void:
+	for layer in equipment_layers:
+		layer.hide();layer.queue_free()
+	equipment_layers.clear()
+	if has_meta("weapon_item"):remove_meta("weapon_item")
+	if has_meta("weapon_appearance"):remove_meta("weapon_appearance")
+
+func set_equipment_layers(layers: Array) -> void:
+	clear_equipment_layers()
+	for info: Dictionary in layers:
+		var layer=preload("res://view/weapon_layer_view.gd").new()
+		add_child(layer);layer.setup(info,_flash_material)
+		equipment_layers.append(layer)
+		layer.present(pose,clock_ms,facing,height,tint)
 
 func sample() -> Dictionary:
 	var ani: Dictionary = clips.get(pose, clips.get("stay", {}))
@@ -49,6 +66,7 @@ func present(next_pose: String, ms: float, direction: int, z: float, white: floa
 	flash = white
 	tint = color
 	_flash_material.set_shader_parameter("hit_flash", clampf(flash,0,1))
+	for layer in equipment_layers:layer.present(next_pose,ms,direction,z,color)
 	queue_redraw()
 
 func _draw() -> void:

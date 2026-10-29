@@ -42,6 +42,8 @@ func attach(existing: Node) -> void:
 
 func start_room(spec: Dictionary) -> bool:
 	if not _alive() or game.missing_assets:return false
+	var player_spec: Dictionary=spec.get("player",{})
+	if not preload("res://content/weapon_appearance.gd").valid_spec(player_spec):return false
 	var route: Dictionary=spec.get("route",{})
 	if route.has("map_export"):
 		# Validate the complete route before changing the live map/table. Unknown
@@ -78,6 +80,7 @@ func start_room(spec: Dictionary) -> bool:
 		game.map_loader.base_dir=probe.base_dir
 		game.map_loader.textures.clear()
 	game.begin_room(spec)
+	if player_spec.has("weapon_item"):game.view.set_equipped_weapon(String(player_spec["weapon_item"]))
 	return true
 
 ## The outer UI owns configurable hotkeys; standalone battle keeps its own input.
@@ -131,7 +134,11 @@ func apply_effect(effect: Dictionary) -> bool:
 	return _alive() and game.apply_effect(effect)
 
 func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
-	return _alive() and game.update_numbers(spec,vitals_policy)
+	if not _alive():return false
+	if not preload("res://content/weapon_appearance.gd").valid_spec(spec):return false
+	if not game.update_numbers(spec,vitals_policy):return false
+	if spec.has("weapon_item"):return game.view.set_equipped_weapon(String(spec["weapon_item"]))
+	return true
 
 func configure_monsters(level: int, difficulty := "normal") -> bool:
 	return _alive() and game.configure_monster_numbers(level,difficulty)
@@ -157,7 +164,7 @@ func read_view() -> Dictionary:
 		"time_ms":game.elapsed_ms,
 		"room":game.room_index+1,"room_count":rooms.size(),"room_name":String(rooms[game.room_index]["name"]),
 		"hp":float(p["hp"]),"hp_max":game.max_hp,"mp":float(p["mp"]),"mp_max":game.max_mp,
-		"pos":Vector2(p["pos"]),"camera_x":roundf(game.view.camera_x),"facing":int(p["facing"]),"job":game.job,"weapon":game.weapon,
+		"pos":Vector2(p["pos"]),"camera_x":roundf(game.view.camera_x),"facing":int(p["facing"]),"job":game.job,"weapon":game.weapon,"weapon_item":String(game.view._weapon_item) if game.view._item_appearance_enabled else "",
 		"attack_damage":game.attack_power(),
 		"numbers":game.numeric_player.values.duplicate(true) if game.numeric_player != null else {},
 		"sources":game.numeric_player.sources.duplicate(true) if game.numeric_player != null else {},

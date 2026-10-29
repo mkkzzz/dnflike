@@ -1,4 +1,4 @@
-param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [switch]$SyncAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly, [switch]$GranOnly, [switch]$KainoOnly, [switch]$PoisonOnly, [switch]$TeachingOnly, [switch]$NativeOnly, [switch]$UpgradesOnly, [switch]$RecoveryOnly)
+param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [switch]$SyncAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly, [switch]$GranOnly, [switch]$KainoOnly, [switch]$PoisonOnly, [switch]$TeachingOnly, [switch]$NativeOnly, [switch]$WeaponAppearanceOnly, [switch]$UpgradesOnly, [switch]$RecoveryOnly)
 $ErrorActionPreference="Stop"
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
@@ -85,6 +85,9 @@ if ($importExit -ne 0 -or ($importOutput -match '(?m)^(SCRIPT ERROR|ERROR:)')) {
 if ($Test) {
     & python (Join-Path $PSScriptRoot "check_dnf_native_catalog.py")
     if ($LASTEXITCODE -ne 0) {throw "Complete native quest/item package is inconsistent."}
+    $weaponOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_weapon_appearance_rules.gd 2>&1
+    $weaponOutput | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($weaponOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($weaponOutput -match '\[WEAPON_RULES\] COMPLETE checks=\d+ failures=0')) {throw "Item-specific weapon appearance regression failed."}
     $nativeOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_native_bulk.gd 2>&1
     $nativeOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($nativeOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($nativeOutput -match '\[NATIVE_BULK\] COMPLETE checks=\d+ failures=0')) {throw "Native bulk data regression failed."}
@@ -139,6 +142,7 @@ if ($Test) {
     if ($PoisonOnly) {$runArgs+="--poison-only"}
     if ($TeachingOnly) {$runArgs+="--teaching-only"}
     if ($NativeOnly) {$runArgs+="--native-only"}
+    if ($WeaponAppearanceOnly) {$runArgs+="--weapon-appearance-only"}
     if ($Capture) {$runArgs+="--capture"}
 }
 $ErrorActionPreference="Continue"
@@ -146,4 +150,4 @@ $ErrorActionPreference="Continue"
 $engineExit=$LASTEXITCODE
 $ErrorActionPreference="Stop"
 if ($engineExit -ne 0 -or ($runOutput -match '(?m)^(SCRIPT ERROR|ERROR:)')) {throw "Native loop runtime failed."}
-if ($Test -and -not ($runOutput -match $(if ($NativeOnly) {'\[NATIVE_QUICK\] COMPLETE checks=\d+ failures=0'} elseif ($TeachingOnly) {'\[TEACHING_QUICK\] COMPLETE checks=\d+ failures=0'} elseif ($PoisonOnly) {'\[POISON_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($KainoOnly) {'\[KAINO_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($GranOnly) {'\[GRAN_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($TownsOnly) {'\[HENDON_TEST\] COMPLETE checks=\d+ failures=0'} elseif ($QuestsOnly) {'\[QUEST_CHAPTER\] COMPLETE checks=\d+ failures=0'} else {'\[LOOP_TEST\] COMPLETE checks=\d+ failures=0'}))) {throw "Native loop checks did not complete."}
+if ($Test -and -not ($runOutput -match $(if ($WeaponAppearanceOnly) {'\[WEAPON_QUICK\] COMPLETE checks=\d+ failures=0'} elseif ($NativeOnly) {'\[NATIVE_QUICK\] COMPLETE checks=\d+ failures=0'} elseif ($TeachingOnly) {'\[TEACHING_QUICK\] COMPLETE checks=\d+ failures=0'} elseif ($PoisonOnly) {'\[POISON_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($KainoOnly) {'\[KAINO_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($GranOnly) {'\[GRAN_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($TownsOnly) {'\[HENDON_TEST\] COMPLETE checks=\d+ failures=0'} elseif ($QuestsOnly) {'\[QUEST_CHAPTER\] COMPLETE checks=\d+ failures=0'} else {'\[LOOP_TEST\] COMPLETE checks=\d+ failures=0'}))) {throw "Native loop checks did not complete."}

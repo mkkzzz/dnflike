@@ -1,0 +1,131 @@
+{
+  "schema": "dnf_weapon_appearance_evidence/1",
+  "source_base": "d639bcb38e91915eb52e44cb6e8cb72e4c0b95d3",
+  "summary": {
+    "original_items": 155,
+    "unique_appearances": 63,
+    "weapon_layer_banks": 126,
+    "body_banks": 2,
+    "poses": 24,
+    "families": {
+      "katana": 75,
+      "shortsword": 80
+    }
+  },
+  "manifest_sha256": "ac37a2a3ebc37b25cb06abe2bc71dfa99fe9d45d08e65333ab296d5968e49db0",
+  "logs": {
+    "weapon_appearance_build.log": {
+      "gzip": "weapon_appearance_build.log.gz",
+      "sha256": "c899ef4e03e4ff9a4843acc297e954abbe873a469d13ce739e2b46d34dd502b3",
+      "completions": []
+    },
+    "weapon_appearance_hash.log": {
+      "gzip": "weapon_appearance_hash.log.gz",
+      "sha256": "9589da824aac55dc29c15a006ee0e3d1cc8a46e317045da5d568ac3b5fe46cc7",
+      "completions": []
+    },
+    "weapon_grammar.log": {
+      "gzip": "weapon_grammar.log.gz",
+      "sha256": "d8b97e937a6112d6909de2d93edcc39fee18df3c82aec60ebb1100397a7c14fc",
+      "completions": []
+    },
+    "weapon_release.log": {
+      "gzip": "weapon_release.log.gz",
+      "sha256": "ac38a4c67d462ac1b26341d5d04c1d29e3052e426f6d390b7b43dc1f4d05c621",
+      "completions": [
+        "[WEAPON_RULES] COMPLETE checks=8223 failures=0\r",
+        "[NATIVE_BULK] COMPLETE checks=7533 failures=0\r",
+        "[TEACHING_RULES] COMPLETE checks=30 failures=0\r",
+        "[POISON_RULES] COMPLETE checks=26 failures=0\r",
+        "[ORIGINAL_DATA] COMPLETE checks=31 failures=0\r",
+        "[RECOVERY_TEST] COMPLETE checks=50 failures=0\r",
+        "[UPGRADE_TEST] COMPLETE checks=46 failures=0\r",
+        "[SERVICE_TEST] COMPLETE checks=33 failures=0\r",
+        "[ITEM_TEST] COMPLETE checks=44 failures=0\r",
+        "[NUMBERS_TEST] COMPLETE checks=63 failures=0\r",
+        "[QUEST_TEST] COMPLETE checks=45 failures=0\r",
+        "[TOWN_UNIT] COMPLETE checks=102 failures=0\r",
+        "[GRAN_UNIT] COMPLETE checks=19 failures=0\r",
+        "[WEAPON_QUICK] COMPLETE checks=25 failures=0 captures=7\r"
+      ]
+    },
+    "weapon_rules_final.log": {
+      "gzip": "weapon_rules_final.log.gz",
+      "sha256": "4d2babd070056f7e3cecf5ddf1f6b926553d00465ad335a9e4c96c1c73ce7514",
+      "completions": [
+        "[WEAPON_RULES] COMPLETE checks=8225 failures=0\r"
+      ]
+    },
+    "weapon_quick_final.log": {
+      "gzip": "weapon_quick_final.log.gz",
+      "sha256": "bb28107a84410f946208ec7e04764660c0446b7b231a9f0f7306eb3787e1a99d",
+      "completions": [
+        "[WEAPON_QUICK] COMPLETE checks=27 failures=0 captures=7\r"
+      ]
+    }
+  },
+  "screenshots": [
+    {
+      "path": "docs/screenshots/2026-10-29_weapon_appearance_v1/weapon_01_town_rusty_katana.png",
+      "sha256": "b562595ddababe59b233d2d1ca8c39788bc429c270491a70081d7df21f3d6207",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_weapon_appearance_v1/weapon_02_town_sabre.png",
+      "sha256": "7a3c1663b09f5e9fcd5d22fb71690d509128b1bc797d1ac33d7e18df0aaa46fc",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_weapon_appearance_v1/weapon_03_town_short_sword.png",
+      "sha256": "b5c051b6dab877a28f583d0fa4fb9e66e67ea6669447f6164b8ca64651985546",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_weapon_appearance_v1/weapon_04_town_unarmed.png",
+      "sha256": "c37795300bbddb6d1bdd7baac661575c3dfae8db2339b8f264dc201bc86431e4",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_weapon_appearance_v1/weapon_05_battle_equipped_idle.png",
+      "sha256": "aa8047fe7fbe990bf2a3e1d82f8f67118fc04ebee3b12fb5ac268b79cdfa3395",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_weapon_appearance_v1/weapon_06_battle_attack.png",
+      "sha256": "de044f059e006f5a77dc251e0e998dd7d3acd35efe946383d287c176b75230f3",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_weapon_appearance_v1/weapon_07_battle_jump_left.png",
+      "sha256": "47ceb2f70be5e617775495f790ee669ccfb69d4ff6acf54529b45a60566b75a8",
+      "size": [
+        1920,
+        1080
+      ]
+    }
+  ],
+  "limits": [
+    "155 currently registered original weapon definitions, not all unimplemented equipment",
+    "63 original shared models/palettes; not 155 unique images",
+    "Native source pixels, technical verification is not user visual approval",
+    "Town-only equipment; no full dungeon clear, no monster AI or combat main changes"
+  ]
+}

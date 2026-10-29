@@ -43,9 +43,10 @@ var inn_return:="enter_inn"
 var quest_marks: Dictionary={}
 var await_direction_release:=false
 var entry_latch:=""
-## 城镇也显示手上的武器。默认用带武器的合成动作包（运行时清单 players + player/stay|move|dash），
-## 武器类型来自 numbers.json 的 equipment.<id>.weapon；清单缺失时回退到原来的无武器分层包。
+## 城镇以装备实例ID绑定原武器前后层；类别字段保留给旧入口/临时GM覆盖。
 var weapon_shape:="katana"
+var weapon_item:=""
+var item_appearance_enabled:=false
 ## NPC 语音（data/npc_voices.json 的 amb 循环）与立绘，按距离触发，靠近才响。
 var npc_voices: Dictionary={}
 var npc_players: Dictionary={}
@@ -136,6 +137,10 @@ func setup_actor() -> void:
 	var runtime: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/manifest.json"))
 	var players: Dictionary = runtime.get("players", {})
 	var clips: Dictionary = runtime.get("clips", {})
+	if item_appearance_enabled:
+		var motions: Dictionary={}
+		for pose: String in ["stay","move","dash"]:motions[pose]=clips["player/"+pose]
+		if preload("res://content/weapon_appearance.gd").apply(actor,weapon_item,motions):return
 	if players.has(weapon_shape) and clips.has("player/stay") and clips.has("player/move") and clips.has("player/dash"):
 		actor.setup(players[weapon_shape], {
 			"stay":clips["player/stay"],
@@ -149,9 +154,17 @@ func setup_actor() -> void:
 
 ## 换武器（或重新进城镇）时刷新手上的武器外观。
 func set_weapon(shape: String) -> void:
-	if shape == "" or shape == weapon_shape:return
+	if shape == "" or (shape == weapon_shape and not item_appearance_enabled):return
+	item_appearance_enabled=false
 	weapon_shape = shape
 	setup_actor()
+
+func set_equipped_weapon(item: String, shape: String) -> bool:
+	if not preload("res://content/weapon_appearance.gd").can_display(item):return false
+	if item_appearance_enabled and weapon_item==item and weapon_shape==shape:return true
+	weapon_item=item;weapon_shape=shape;item_appearance_enabled=true
+	setup_actor()
+	return true
 
 func ensure_location(id: String) -> bool:
 	if map_nodes.has(id):return true

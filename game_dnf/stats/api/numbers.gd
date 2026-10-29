@@ -85,7 +85,7 @@ static func combat_spec(profile: Dictionary) -> Dictionary:
 	if uid != "":weapon = String(config()["equipment"][profile["gear"][uid]["definition"]].get("weapon",weapon))
 	var element: String = profile.get("attack_element","none")
 	if uid!="":element = config()["equipment"][profile["gear"][uid]["definition"]].get("element",element)
-	return {"numbers":result["values"],"number_sources":result["sources"],"number_seed":{"level":profile["level"],"growtype":profile["growtype"],"modifiers":result["modifiers"]},"skills":profile["skills"].duplicate(true),"weapon":weapon,"element":element,"hp_max":result["values"]["hp_max"],"mp_max":result["values"]["mp_max"]}
+	return {"numbers":result["values"],"number_sources":result["sources"],"number_seed":{"level":profile["level"],"growtype":profile["growtype"],"modifiers":result["modifiers"]},"skills":profile["skills"].duplicate(true),"weapon":weapon,"weapon_item":String(profile["gear"][uid]["definition"]) if uid!="" else "","element":element,"hp_max":result["values"]["hp_max"],"mp_max":result["values"]["mp_max"]}
 
 static func monster(base: Dictionary, level: int, chief: bool, difficulty: String, cfg: Dictionary = {}) -> Dictionary:
 	if cfg.is_empty():cfg = config()

@@ -35,3 +35,6 @@ tools/setup_motion_model.py text eol=lf
 
 # 交接日志只在末尾追加：按行合并，两个工作区同时追加不会冲突（改旧行会产生重复行，故禁止改旧行）
 docs/project/04_交接日志.md merge=union
+
+# Immutable per-item weapon appearance and evidence hashes.
+game_dnf/assets_local/weapon_appearance_v1/manifest.json text eol=lf

@@ -249,9 +249,9 @@ func compact_and_motion() -> void:
 	await host.frame("22_attached_difficulty")
 	game.show_overlay("")
 	await ticks()
-	# 2026-10-25 负责人要求城镇也持武器：改用运行时清单的带武器合成动作包
-	# （players.<weapon> + player/stay|move|dash），不再是 motion_town.png 的无武器分层帧。
-	host.check(game.town.actor.bank["texture"].ends_with("player_" + game.town.weapon_shape + ".png") and game.town.actor.clips["stay"]["frames"][0]["img_frame"] == 90, "town shows the equipped weapon using the armed original motion bank")
+	# The shared body is unarmed; exact equipment identity selects its two native
+	# weapon layers. Existing stay/move/dash animation clocks remain unchanged.
+	host.check(game.town.actor.get_meta("weapon_item","")==game.equipped_weapon_item() and game.town.actor.equipment_layers.size()==2 and game.town.actor.clips["stay"]["frames"][0]["img_frame"]==90,"town shows exact equipped weapon layers on the original motion timeline")
 	game.town.ground = Vector2(540, 230)
 	await ticks()
 	await host.frame("23_town_rest")
@@ -263,7 +263,7 @@ func compact_and_motion() -> void:
 	game.depart()
 	await ticks()
 	var actor = game.battle.view.player_actor
-	host.check(actor.pose_banks.has("move") and actor.pose_banks.has("dash") and actor.pose_banks["move"]["texture"].ends_with("motion_katana.png"), "battle rendering binds corrected walking and running banks without changing attack bank")
+	host.check(actor.pose_banks.has("move") and actor.pose_banks.has("dash") and actor.pose_banks["move"]["texture"].ends_with("body_locomotion.png") and actor.equipment_layers.size()==2,"battle binds corrected locomotion body and exact equipped weapon layers")
 	var probe = load("res://debug/runtime_api.gd").new(game.battle)
 	probe.spawn_dummy(Vector2(1000, 400))
 	probe.set_p("pos", Vector2(400, 340))

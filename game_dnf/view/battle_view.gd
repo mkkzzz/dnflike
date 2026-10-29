@@ -11,6 +11,7 @@ const MapStage = preload("res://view/map_stage.gd")
 const Frame = preload("res://view/world_frame.gd")
 const CombatHud = preload("res://ui/combat/combat_hud.gd")
 const PropView = preload("res://scripts/native_prop.gd")
+const WeaponAppearance = preload("res://content/weapon_appearance.gd")
 ## Afterimage of a cancelled pose (E-ADAPT: engine-drawn in the original, no data file).
 const GHOST_MS := 320.0
 const GHOST_TINT := Color(0.62,0.78,1.0,0.6)
@@ -37,6 +38,8 @@ var _combat: Dictionary
 var _effects: Dictionary = {}
 var _player_clips: Dictionary
 var _weapon := ""
+var _weapon_item := ""
+var _item_appearance_enabled := false
 var _player_pos := Vector2.ZERO
 var _player_z := 0.0
 ## 拾取下蹲：这段时间内把玩家姿势临时换成 sit（原版下蹲帧），到点自动回到模拟姿势。
@@ -154,7 +157,20 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 
 func _set_weapon(weapon: String) -> void:
 	_weapon = weapon
+	if _item_appearance_enabled:
+		var skin: Dictionary=WeaponAppearance.skin(_weapon_item)
+		if _weapon_item=="" or skin.get("family",weapon)==weapon:
+			WeaponAppearance.apply(player_actor,_weapon_item,_player_clips)
+			return
+		# Explicit debug family changes remain a temporary visual override.
+		_item_appearance_enabled=false
 	player_actor.setup(_assets["players"][weapon],_player_clips, _combat.get("player_locomotion", {}).get("battle", {}).get(weapon, {}))
+
+func set_equipped_weapon(item: String) -> bool:
+	if not WeaponAppearance.can_display(item):return false
+	if _item_appearance_enabled and _weapon_item==item and player_actor.get_meta("weapon_item",null)==item:return true
+	_weapon_item=item;_item_appearance_enabled=true
+	return WeaponAppearance.apply(player_actor,item,_player_clips)
 
 ## Frenzy-style auras follow the body and loop the original effect while the buff lasts.
 func _present_aura(key: String, p: Dictionary, sim_ms: float) -> void:
@@ -260,6 +276,7 @@ func _spawn_ghost(event: Dictionary) -> void:
 	var node = ActorView.new()
 	world.add_child(node)
 	node.setup(_assets["players"][_weapon],_player_clips,_combat.get("player_locomotion",{}).get("battle",{}).get(_weapon,{}))
+	if _item_appearance_enabled:WeaponAppearance.apply(node,_weapon_item,_player_clips)
 	node.shadow_width = 0
 	node.position = _canvas(Vector2(event["pos"]), 0.0)
 	node.z_index = int(Vector2(event["pos"]).y)-1
