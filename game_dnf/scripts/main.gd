@@ -807,11 +807,14 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		for effect: Dictionary in effect_list:
 			if rng.chance(float(effect.get("chance",1))):apply_effect({"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(skill_levels.get(String(hit.get("skill_id",player["action"])),1))})
 	if not target_is_player:
-		play_sound("goblin_hurt")
+		# 按怪物种类播受击/死亡音（bake_dnf_monster_sounds.py 生成 mon_<key>_<event>）；
+		# 该类怪没有独立音效时退回通用的哥布林音，避免完全无声。
+		var mob_key := String(target["def"].get("key", ""))
+		play_sound("mon_%s_hit" % mob_key)
 		if float(target["hp"])<=0:
 			target["state"] = "dead"
 			target["death_ms"] = 0.0
-			play_sound("goblin_die")
+			play_sound("mon_%s_die" % mob_key)
 			report_defeat(target)
 
 ## Hit effect and hit sound from ATK [hit info]/[hit wav]; weapon rows of the CHR when the

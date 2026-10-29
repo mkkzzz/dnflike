@@ -1,0 +1,907 @@
+{
+ "schema": "dnf_monster_sounds/1",
+ "evidence": "sound ID 取自 audio.xml；按 mob 文件名优先、[category] 兜底匹配（E-PARSE）",
+ "monsters": {
+  "goblin": {
+   "mob": "monster/goblin/goblin.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin/die_01.ogg",
+     "monster_sound/goblin/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin/hit_01.ogg",
+     "monster_sound/goblin/hit_02.ogg",
+     "monster_sound/goblin/hit_03.ogg",
+     "monster_sound/goblin/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_thrower": {
+   "mob": "monster/goblin/goblinthrower.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_thrower/die_01.ogg",
+     "monster_sound/goblin_thrower/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_thrower/hit_01.ogg",
+     "monster_sound/goblin_thrower/hit_02.ogg",
+     "monster_sound/goblin_thrower/hit_03.ogg",
+     "monster_sound/goblin_thrower/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_thrower/attack_01.ogg"
+    ]
+   }
+  },
+  "tau_army": {
+   "mob": "monster/tau/tauarmy.mob",
+   "events": {
+    "die": [
+     "monster_sound/tau_army/die_01.ogg",
+     "monster_sound/tau_army/die_02.ogg",
+     "monster_sound/tau_army/die_03.ogg"
+    ],
+    "hit": [
+     "monster_sound/tau_army/hit_01.ogg",
+     "monster_sound/tau_army/hit_02.ogg",
+     "monster_sound/tau_army/hit_03.ogg",
+     "monster_sound/tau_army/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/tau_army/attack_01.ogg",
+     "monster_sound/tau_army/attack_02.ogg",
+     "monster_sound/tau_army/attack_03.ogg"
+    ]
+   }
+  },
+  "tau_beast": {
+   "mob": "monster/tau/taubeast.mob",
+   "events": {
+    "die": [
+     "monster_sound/tau_beast/die_01.ogg",
+     "monster_sound/tau_beast/die_02.ogg",
+     "monster_sound/tau_beast/die_03.ogg"
+    ],
+    "hit": [
+     "monster_sound/tau_beast/hit_01.ogg",
+     "monster_sound/tau_beast/hit_02.ogg",
+     "monster_sound/tau_beast/hit_03.ogg",
+     "monster_sound/tau_beast/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/tau_beast/attack_01.ogg",
+     "monster_sound/tau_beast/attack_02.ogg",
+     "monster_sound/tau_beast/attack_03.ogg"
+    ]
+   }
+  },
+  "goblin_ice": {
+   "mob": "monster/goblin/seagab.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_ice/die_01.ogg",
+     "monster_sound/goblin_ice/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_ice/hit_01.ogg",
+     "monster_sound/goblin_ice/hit_02.ogg",
+     "monster_sound/goblin_ice/hit_03.ogg",
+     "monster_sound/goblin_ice/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_ice/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_fire": {
+   "mob": "monster/goblin/hillgab.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_fire/die_01.ogg",
+     "monster_sound/goblin_fire/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_fire/hit_01.ogg",
+     "monster_sound/goblin_fire/hit_02.ogg",
+     "monster_sound/goblin_fire/hit_03.ogg",
+     "monster_sound/goblin_fire/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_fire/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_taskmaster": {
+   "mob": "monster/goblin/goblintaskmaster.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_taskmaster/die_01.ogg",
+     "monster_sound/goblin_taskmaster/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_taskmaster/hit_01.ogg",
+     "monster_sound/goblin_taskmaster/hit_02.ogg",
+     "monster_sound/goblin_taskmaster/hit_03.ogg",
+     "monster_sound/goblin_taskmaster/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_taskmaster/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_thrower_taskmaster": {
+   "mob": "monster/goblin/goblinthrowertaskmaster.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_thrower_taskmaster/die_01.ogg",
+     "monster_sound/goblin_thrower_taskmaster/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_thrower_taskmaster/hit_01.ogg",
+     "monster_sound/goblin_thrower_taskmaster/hit_02.ogg",
+     "monster_sound/goblin_thrower_taskmaster/hit_03.ogg",
+     "monster_sound/goblin_thrower_taskmaster/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_thrower_taskmaster/attack_01.ogg"
+    ]
+   }
+  },
+  "characterstatue_fighterstatue": {
+   "mob": "monster/characterstatue/fighterstatue.mob",
+   "events": {
+    "die": [
+     "monster_sound/characterstatue_fighterstatue/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/characterstatue_fighterstatue/hit_01.ogg",
+     "monster_sound/characterstatue_fighterstatue/hit_02.ogg",
+     "monster_sound/characterstatue_fighterstatue/hit_03.ogg",
+     "monster_sound/characterstatue_fighterstatue/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/characterstatue_fighterstatue/attack_01.ogg"
+    ]
+   }
+  },
+  "characterstatue_gunnerstatue": {
+   "mob": "monster/characterstatue/gunnerstatue.mob",
+   "events": {
+    "die": [
+     "monster_sound/characterstatue_gunnerstatue/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/characterstatue_gunnerstatue/hit_01.ogg",
+     "monster_sound/characterstatue_gunnerstatue/hit_02.ogg",
+     "monster_sound/characterstatue_gunnerstatue/hit_03.ogg",
+     "monster_sound/characterstatue_gunnerstatue/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/characterstatue_gunnerstatue/attack_01.ogg"
+    ]
+   }
+  },
+  "characterstatue_magicianstatue": {
+   "mob": "monster/characterstatue/magicianstatue.mob",
+   "events": {
+    "die": [
+     "monster_sound/characterstatue_magicianstatue/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/characterstatue_magicianstatue/hit_01.ogg",
+     "monster_sound/characterstatue_magicianstatue/hit_02.ogg",
+     "monster_sound/characterstatue_magicianstatue/hit_03.ogg",
+     "monster_sound/characterstatue_magicianstatue/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/characterstatue_magicianstatue/attack_01.ogg"
+    ]
+   }
+  },
+  "characterstatue_prieststatue": {
+   "mob": "monster/characterstatue/prieststatue.mob",
+   "events": {
+    "die": [
+     "monster_sound/characterstatue_prieststatue/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/characterstatue_prieststatue/hit_01.ogg",
+     "monster_sound/characterstatue_prieststatue/hit_02.ogg",
+     "monster_sound/characterstatue_prieststatue/hit_03.ogg",
+     "monster_sound/characterstatue_prieststatue/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/characterstatue_prieststatue/attack_01.ogg"
+    ]
+   }
+  },
+  "characterstatue_swordmanstatue": {
+   "mob": "monster/characterstatue/swordmanstatue.mob",
+   "events": {
+    "die": [
+     "monster_sound/characterstatue_swordmanstatue/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/characterstatue_swordmanstatue/hit_01.ogg",
+     "monster_sound/characterstatue_swordmanstatue/hit_02.ogg",
+     "monster_sound/characterstatue_swordmanstatue/hit_03.ogg",
+     "monster_sound/characterstatue_swordmanstatue/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/characterstatue_swordmanstatue/attack_01.ogg"
+    ]
+   }
+  },
+  "dollmaster_claymaster": {
+   "mob": "monster/dollmaster/claymaster.mob",
+   "events": {
+    "die": [
+     "monster_sound/dollmaster_claymaster/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/dollmaster_claymaster/hit_01.ogg"
+    ]
+   }
+  },
+  "dollmaster_golemmaster": {
+   "mob": "monster/dollmaster/golemmaster.mob",
+   "events": {
+    "die": [
+     "monster_sound/dollmaster_golemmaster/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/dollmaster_golemmaster/hit_01.ogg"
+    ]
+   }
+  },
+  "dollmaster_icedoll_sharedo": {
+   "mob": "monster/dollmaster/icedoll_sharedo.mob",
+   "events": {
+    "die": [
+     "monster_sound/dollmaster_icedoll_sharedo/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/dollmaster_icedoll_sharedo/hit_01.ogg"
+    ]
+   }
+  },
+  "dollmaster_masterdogri": {
+   "mob": "monster/dollmaster/masterdogri.mob",
+   "events": {
+    "die": [
+     "monster_sound/dollmaster_masterdogri/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/dollmaster_masterdogri/hit_01.ogg"
+    ]
+   }
+  },
+  "dollmaster_steelmaster": {
+   "mob": "monster/dollmaster/steelmaster.mob",
+   "events": {
+    "die": [
+     "monster_sound/dollmaster_steelmaster/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/dollmaster_steelmaster/hit_01.ogg"
+    ]
+   }
+  },
+  "dollmaster_stonemaster": {
+   "mob": "monster/dollmaster/stonemaster.mob",
+   "events": {
+    "die": [
+     "monster_sound/dollmaster_stonemaster/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/dollmaster_stonemaster/hit_01.ogg"
+    ]
+   }
+  },
+  "flydragon_harseseri": {
+   "mob": "monster/flydragon/harseseri.mob",
+   "events": {
+    "die": [
+     "monster_sound/flydragon_harseseri/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/flydragon_harseseri/hit_01.ogg",
+     "monster_sound/flydragon_harseseri/hit_02.ogg",
+     "monster_sound/flydragon_harseseri/hit_03.ogg"
+    ],
+    "attack": [
+     "monster_sound/flydragon_harseseri/attack_01.ogg",
+     "monster_sound/flydragon_harseseri/attack_02.ogg",
+     "monster_sound/flydragon_harseseri/attack_03.ogg"
+    ]
+   }
+  },
+  "flydragon_looseseri": {
+   "mob": "monster/flydragon/looseseri.mob",
+   "events": {
+    "die": [
+     "monster_sound/flydragon_looseseri/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/flydragon_looseseri/hit_01.ogg",
+     "monster_sound/flydragon_looseseri/hit_02.ogg",
+     "monster_sound/flydragon_looseseri/hit_03.ogg"
+    ],
+    "attack": [
+     "monster_sound/flydragon_looseseri/attack_01.ogg",
+     "monster_sound/flydragon_looseseri/attack_02.ogg",
+     "monster_sound/flydragon_looseseri/attack_03.ogg"
+    ]
+   }
+  },
+  "flydragon_selion": {
+   "mob": "monster/flydragon/selion.mob",
+   "events": {
+    "die": [
+     "monster_sound/flydragon_selion/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/flydragon_selion/hit_01.ogg",
+     "monster_sound/flydragon_selion/hit_02.ogg",
+     "monster_sound/flydragon_selion/hit_03.ogg"
+    ],
+    "attack": [
+     "monster_sound/flydragon_selion/attack_01.ogg",
+     "monster_sound/flydragon_selion/attack_02.ogg",
+     "monster_sound/flydragon_selion/attack_03.ogg"
+    ]
+   }
+  },
+  "flydragon_summon_serimalion": {
+   "mob": "monster/flydragon/summon_serimalion.mob",
+   "events": {
+    "die": [
+     "monster_sound/flydragon_summon_serimalion/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/flydragon_summon_serimalion/hit_01.ogg",
+     "monster_sound/flydragon_summon_serimalion/hit_02.ogg",
+     "monster_sound/flydragon_summon_serimalion/hit_03.ogg"
+    ],
+    "attack": [
+     "monster_sound/flydragon_summon_serimalion/attack_01.ogg",
+     "monster_sound/flydragon_summon_serimalion/attack_02.ogg",
+     "monster_sound/flydragon_summon_serimalion/attack_03.ogg"
+    ]
+   }
+  },
+  "goblin_bombkagel": {
+   "mob": "monster/goblin/bombkagel.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_bombkagel/die_01.ogg",
+     "monster_sound/goblin_bombkagel/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_bombkagel/hit_01.ogg",
+     "monster_sound/goblin_bombkagel/hit_02.ogg",
+     "monster_sound/goblin_bombkagel/hit_03.ogg",
+     "monster_sound/goblin_bombkagel/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_bombkagel/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_bombkagelland": {
+   "mob": "monster/goblin/bombkagelland.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_bombkagelland/die_01.ogg",
+     "monster_sound/goblin_bombkagelland/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_bombkagelland/hit_01.ogg",
+     "monster_sound/goblin_bombkagelland/hit_02.ogg",
+     "monster_sound/goblin_bombkagelland/hit_03.ogg",
+     "monster_sound/goblin_bombkagelland/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_bombkagelland/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_bullseye": {
+   "mob": "monster/goblin/bullseye.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_bullseye/die_01.ogg",
+     "monster_sound/goblin_bullseye/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_bullseye/hit_01.ogg",
+     "monster_sound/goblin_bullseye/hit_02.ogg",
+     "monster_sound/goblin_bullseye/hit_03.ogg",
+     "monster_sound/goblin_bullseye/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_bullseye/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_bunkerworker": {
+   "mob": "monster/goblin/bunkerworker.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_bunkerworker/die_01.ogg",
+     "monster_sound/goblin_bunkerworker/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_bunkerworker/hit_01.ogg",
+     "monster_sound/goblin_bunkerworker/hit_02.ogg",
+     "monster_sound/goblin_bunkerworker/hit_03.ogg",
+     "monster_sound/goblin_bunkerworker/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_bunkerworker/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_cowardgoblin": {
+   "mob": "monster/goblin/cowardgoblin.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_cowardgoblin/die_01.ogg",
+     "monster_sound/goblin_cowardgoblin/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_cowardgoblin/hit_01.ogg",
+     "monster_sound/goblin_cowardgoblin/hit_02.ogg",
+     "monster_sound/goblin_cowardgoblin/hit_03.ogg",
+     "monster_sound/goblin_cowardgoblin/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_cowardgoblin/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_flaghillgab": {
+   "mob": "monster/goblin/flaghillgab.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_flaghillgab/die_01.ogg",
+     "monster_sound/goblin_flaghillgab/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_flaghillgab/hit_01.ogg",
+     "monster_sound/goblin_flaghillgab/hit_02.ogg",
+     "monster_sound/goblin_flaghillgab/hit_03.ogg",
+     "monster_sound/goblin_flaghillgab/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_flaghillgab/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_flagseagab": {
+   "mob": "monster/goblin/flagseagab.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_flagseagab/die_01.ogg",
+     "monster_sound/goblin_flagseagab/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_flagseagab/hit_01.ogg",
+     "monster_sound/goblin_flagseagab/hit_02.ogg",
+     "monster_sound/goblin_flagseagab/hit_03.ogg",
+     "monster_sound/goblin_flagseagab/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_flagseagab/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_kinol": {
+   "mob": "monster/goblin/kinol.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_kinol/die_01.ogg",
+     "monster_sound/goblin_kinol/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_kinol/hit_01.ogg",
+     "monster_sound/goblin_kinol/hit_02.ogg",
+     "monster_sound/goblin_kinol/hit_03.ogg",
+     "monster_sound/goblin_kinol/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_kinol/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_nightvisionkagel": {
+   "mob": "monster/goblin/nightvisionkagel.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_nightvisionkagel/die_01.ogg",
+     "monster_sound/goblin_nightvisionkagel/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_nightvisionkagel/hit_01.ogg",
+     "monster_sound/goblin_nightvisionkagel/hit_02.ogg",
+     "monster_sound/goblin_nightvisionkagel/hit_03.ogg",
+     "monster_sound/goblin_nightvisionkagel/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_nightvisionkagel/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_prag": {
+   "mob": "monster/goblin/prag.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_prag/die_01.ogg",
+     "monster_sound/goblin_prag/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_prag/hit_01.ogg",
+     "monster_sound/goblin_prag/hit_02.ogg",
+     "monster_sound/goblin_prag/hit_03.ogg",
+     "monster_sound/goblin_prag/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_prag/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_surikenkagel": {
+   "mob": "monster/goblin/surikenkagel.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_surikenkagel/die_01.ogg",
+     "monster_sound/goblin_surikenkagel/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_surikenkagel/hit_01.ogg",
+     "monster_sound/goblin_surikenkagel/hit_02.ogg",
+     "monster_sound/goblin_surikenkagel/hit_03.ogg",
+     "monster_sound/goblin_surikenkagel/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_surikenkagel/attack_01.ogg"
+    ]
+   }
+  },
+  "goblin_surikenkagelland": {
+   "mob": "monster/goblin/surikenkagelland.mob",
+   "events": {
+    "die": [
+     "monster_sound/goblin_surikenkagelland/die_01.ogg",
+     "monster_sound/goblin_surikenkagelland/die_02.ogg"
+    ],
+    "hit": [
+     "monster_sound/goblin_surikenkagelland/hit_01.ogg",
+     "monster_sound/goblin_surikenkagelland/hit_02.ogg",
+     "monster_sound/goblin_surikenkagelland/hit_03.ogg",
+     "monster_sound/goblin_surikenkagelland/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/goblin_surikenkagelland/attack_01.ogg"
+    ]
+   }
+  },
+  "new_golem_biggolem": {
+   "mob": "monster/new_golem/biggolem.mob",
+   "events": {
+    "die": [
+     "monster_sound/new_golem_biggolem/die_01.ogg",
+     "monster_sound/new_golem_biggolem/die_02.ogg",
+     "monster_sound/new_golem_biggolem/die_03.ogg",
+     "monster_sound/new_golem_biggolem/die_04.ogg"
+    ],
+    "hit": [
+     "monster_sound/new_golem_biggolem/hit_01.ogg",
+     "monster_sound/new_golem_biggolem/hit_02.ogg",
+     "monster_sound/new_golem_biggolem/hit_03.ogg",
+     "monster_sound/new_golem_biggolem/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/new_golem_biggolem/attack_01.ogg",
+     "monster_sound/new_golem_biggolem/attack_02.ogg"
+    ]
+   }
+  },
+  "new_golem_bronzegolem": {
+   "mob": "monster/new_golem/bronzegolem.mob",
+   "events": {
+    "die": [
+     "monster_sound/new_golem_bronzegolem/die_01.ogg",
+     "monster_sound/new_golem_bronzegolem/die_02.ogg",
+     "monster_sound/new_golem_bronzegolem/die_03.ogg",
+     "monster_sound/new_golem_bronzegolem/die_04.ogg"
+    ],
+    "hit": [
+     "monster_sound/new_golem_bronzegolem/hit_01.ogg",
+     "monster_sound/new_golem_bronzegolem/hit_02.ogg",
+     "monster_sound/new_golem_bronzegolem/hit_03.ogg",
+     "monster_sound/new_golem_bronzegolem/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/new_golem_bronzegolem/attack_01.ogg",
+     "monster_sound/new_golem_bronzegolem/attack_02.ogg",
+     "monster_sound/new_golem_bronzegolem/attack_03.ogg",
+     "monster_sound/new_golem_bronzegolem/attack_04.ogg"
+    ]
+   }
+  },
+  "new_golem_claygolem": {
+   "mob": "monster/new_golem/claygolem.mob",
+   "events": {
+    "die": [
+     "monster_sound/new_golem_claygolem/die_01.ogg",
+     "monster_sound/new_golem_claygolem/die_02.ogg",
+     "monster_sound/new_golem_claygolem/die_03.ogg",
+     "monster_sound/new_golem_claygolem/die_04.ogg"
+    ],
+    "hit": [
+     "monster_sound/new_golem_claygolem/hit_01.ogg",
+     "monster_sound/new_golem_claygolem/hit_02.ogg",
+     "monster_sound/new_golem_claygolem/hit_03.ogg",
+     "monster_sound/new_golem_claygolem/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/new_golem_claygolem/attack_01.ogg",
+     "monster_sound/new_golem_claygolem/attack_02.ogg",
+     "monster_sound/new_golem_claygolem/attack_03.ogg",
+     "monster_sound/new_golem_claygolem/attack_04.ogg"
+    ]
+   }
+  },
+  "new_golem_greatgoleml": {
+   "mob": "monster/new_golem/greatgoleml.mob",
+   "events": {
+    "die": [
+     "monster_sound/new_golem_greatgoleml/die_01.ogg",
+     "monster_sound/new_golem_greatgoleml/die_02.ogg",
+     "monster_sound/new_golem_greatgoleml/die_03.ogg",
+     "monster_sound/new_golem_greatgoleml/die_04.ogg"
+    ],
+    "hit": [
+     "monster_sound/new_golem_greatgoleml/hit_01.ogg",
+     "monster_sound/new_golem_greatgoleml/hit_02.ogg",
+     "monster_sound/new_golem_greatgoleml/hit_03.ogg",
+     "monster_sound/new_golem_greatgoleml/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/new_golem_greatgoleml/attack_01.ogg",
+     "monster_sound/new_golem_greatgoleml/attack_02.ogg",
+     "monster_sound/new_golem_greatgoleml/attack_03.ogg",
+     "monster_sound/new_golem_greatgoleml/attack_04.ogg"
+    ]
+   }
+  },
+  "new_golem_greatgolemr": {
+   "mob": "monster/new_golem/greatgolemr.mob",
+   "events": {
+    "die": [
+     "monster_sound/new_golem_greatgolemr/die_01.ogg",
+     "monster_sound/new_golem_greatgolemr/die_02.ogg",
+     "monster_sound/new_golem_greatgolemr/die_03.ogg",
+     "monster_sound/new_golem_greatgolemr/die_04.ogg"
+    ],
+    "hit": [
+     "monster_sound/new_golem_greatgolemr/hit_01.ogg",
+     "monster_sound/new_golem_greatgolemr/hit_02.ogg",
+     "monster_sound/new_golem_greatgolemr/hit_03.ogg",
+     "monster_sound/new_golem_greatgolemr/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/new_golem_greatgolemr/attack_01.ogg",
+     "monster_sound/new_golem_greatgolemr/attack_02.ogg",
+     "monster_sound/new_golem_greatgolemr/attack_03.ogg",
+     "monster_sound/new_golem_greatgolemr/attack_04.ogg"
+    ]
+   }
+  },
+  "new_golem_platany": {
+   "mob": "monster/new_golem/platany.mob",
+   "events": {
+    "die": [
+     "monster_sound/new_golem_platany/die_01.ogg",
+     "monster_sound/new_golem_platany/die_02.ogg",
+     "monster_sound/new_golem_platany/die_03.ogg",
+     "monster_sound/new_golem_platany/die_04.ogg"
+    ],
+    "hit": [
+     "monster_sound/new_golem_platany/hit_01.ogg",
+     "monster_sound/new_golem_platany/hit_02.ogg",
+     "monster_sound/new_golem_platany/hit_03.ogg",
+     "monster_sound/new_golem_platany/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/new_golem_platany/attack_01.ogg",
+     "monster_sound/new_golem_platany/attack_02.ogg",
+     "monster_sound/new_golem_platany/attack_03.ogg",
+     "monster_sound/new_golem_platany/attack_04.ogg"
+    ]
+   }
+  },
+  "new_golem_spiritofgolem": {
+   "mob": "monster/new_golem/spiritofgolem.mob",
+   "events": {
+    "die": [
+     "monster_sound/new_golem_spiritofgolem/die_01.ogg",
+     "monster_sound/new_golem_spiritofgolem/die_02.ogg",
+     "monster_sound/new_golem_spiritofgolem/die_03.ogg",
+     "monster_sound/new_golem_spiritofgolem/die_04.ogg"
+    ],
+    "hit": [
+     "monster_sound/new_golem_spiritofgolem/hit_01.ogg",
+     "monster_sound/new_golem_spiritofgolem/hit_02.ogg",
+     "monster_sound/new_golem_spiritofgolem/hit_03.ogg",
+     "monster_sound/new_golem_spiritofgolem/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/new_golem_spiritofgolem/attack_01.ogg",
+     "monster_sound/new_golem_spiritofgolem/attack_02.ogg",
+     "monster_sound/new_golem_spiritofgolem/attack_03.ogg",
+     "monster_sound/new_golem_spiritofgolem/attack_04.ogg"
+    ]
+   }
+  },
+  "new_golem_stoneblade_razor": {
+   "mob": "monster/new_golem/stoneblade_razor.mob",
+   "events": {
+    "die": [
+     "monster_sound/new_golem_stoneblade_razor/die_01.ogg",
+     "monster_sound/new_golem_stoneblade_razor/die_02.ogg",
+     "monster_sound/new_golem_stoneblade_razor/die_03.ogg",
+     "monster_sound/new_golem_stoneblade_razor/die_04.ogg"
+    ],
+    "hit": [
+     "monster_sound/new_golem_stoneblade_razor/hit_01.ogg",
+     "monster_sound/new_golem_stoneblade_razor/hit_02.ogg",
+     "monster_sound/new_golem_stoneblade_razor/hit_03.ogg",
+     "monster_sound/new_golem_stoneblade_razor/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/new_golem_stoneblade_razor/attack_01.ogg",
+     "monster_sound/new_golem_stoneblade_razor/attack_02.ogg",
+     "monster_sound/new_golem_stoneblade_razor/attack_03.ogg",
+     "monster_sound/new_golem_stoneblade_razor/attack_04.ogg"
+    ]
+   }
+  },
+  "spirit_firespirit": {
+   "mob": "monster/spirit/firespirit.mob",
+   "events": {
+    "hit": [
+     "monster_sound/spirit_firespirit/hit_01.ogg"
+    ]
+   }
+  },
+  "tau_tauassaulter": {
+   "mob": "monster/tau/tauassaulter.mob",
+   "events": {
+    "die": [
+     "monster_sound/tau_tauassaulter/die_01.ogg",
+     "monster_sound/tau_tauassaulter/die_02.ogg",
+     "monster_sound/tau_tauassaulter/die_03.ogg"
+    ],
+    "hit": [
+     "monster_sound/tau_tauassaulter/hit_01.ogg",
+     "monster_sound/tau_tauassaulter/hit_02.ogg",
+     "monster_sound/tau_tauassaulter/hit_03.ogg",
+     "monster_sound/tau_tauassaulter/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/tau_tauassaulter/attack_01.ogg",
+     "monster_sound/tau_tauassaulter/attack_02.ogg",
+     "monster_sound/tau_tauassaulter/attack_03.ogg"
+    ]
+   }
+  },
+  "tau_tauguard": {
+   "mob": "monster/tau/tauguard.mob",
+   "events": {
+    "die": [
+     "monster_sound/tau_tauguard/die_01.ogg",
+     "monster_sound/tau_tauguard/die_02.ogg",
+     "monster_sound/tau_tauguard/die_03.ogg"
+    ],
+    "hit": [
+     "monster_sound/tau_tauguard/hit_01.ogg",
+     "monster_sound/tau_tauguard/hit_02.ogg",
+     "monster_sound/tau_tauguard/hit_03.ogg",
+     "monster_sound/tau_tauguard/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/tau_tauguard/attack_01.ogg",
+     "monster_sound/tau_tauguard/attack_02.ogg",
+     "monster_sound/tau_tauguard/attack_03.ogg"
+    ]
+   }
+  },
+  "zombie_kalkazak": {
+   "mob": "monster/zombie/kalkazak.mob",
+   "events": {
+    "die": [
+     "monster_sound/zombie_kalkazak/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/zombie_kalkazak/hit_01.ogg",
+     "monster_sound/zombie_kalkazak/hit_02.ogg",
+     "monster_sound/zombie_kalkazak/hit_03.ogg",
+     "monster_sound/zombie_kalkazak/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/zombie_kalkazak/attack_01.ogg",
+     "monster_sound/zombie_kalkazak/attack_02.ogg",
+     "monster_sound/zombie_kalkazak/attack_03.ogg",
+     "monster_sound/zombie_kalkazak/attack_04.ogg"
+    ]
+   }
+  },
+  "zombie_zombieghoulgwish": {
+   "mob": "monster/zombie/zombieghoulgwish.mob",
+   "events": {
+    "die": [
+     "monster_sound/zombie_zombieghoulgwish/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/zombie_zombieghoulgwish/hit_01.ogg",
+     "monster_sound/zombie_zombieghoulgwish/hit_02.ogg",
+     "monster_sound/zombie_zombieghoulgwish/hit_03.ogg",
+     "monster_sound/zombie_zombieghoulgwish/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/zombie_zombieghoulgwish/attack_01.ogg",
+     "monster_sound/zombie_zombieghoulgwish/attack_02.ogg",
+     "monster_sound/zombie_zombieghoulgwish/attack_03.ogg",
+     "monster_sound/zombie_zombieghoulgwish/attack_04.ogg"
+    ]
+   }
+  },
+  "zombie_zombieholloweye": {
+   "mob": "monster/zombie/zombieholloweye.mob",
+   "events": {
+    "die": [
+     "monster_sound/zombie_zombieholloweye/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/zombie_zombieholloweye/hit_01.ogg",
+     "monster_sound/zombie_zombieholloweye/hit_02.ogg",
+     "monster_sound/zombie_zombieholloweye/hit_03.ogg",
+     "monster_sound/zombie_zombieholloweye/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/zombie_zombieholloweye/attack_01.ogg",
+     "monster_sound/zombie_zombieholloweye/attack_02.ogg",
+     "monster_sound/zombie_zombieholloweye/attack_03.ogg",
+     "monster_sound/zombie_zombieholloweye/attack_04.ogg"
+    ]
+   }
+  },
+  "zombie_zombiezombie": {
+   "mob": "monster/zombie/zombiezombie.mob",
+   "events": {
+    "die": [
+     "monster_sound/zombie_zombiezombie/die_01.ogg"
+    ],
+    "hit": [
+     "monster_sound/zombie_zombiezombie/hit_01.ogg",
+     "monster_sound/zombie_zombiezombie/hit_02.ogg",
+     "monster_sound/zombie_zombiezombie/hit_03.ogg",
+     "monster_sound/zombie_zombiezombie/hit_04.ogg"
+    ],
+    "attack": [
+     "monster_sound/zombie_zombiezombie/attack_01.ogg",
+     "monster_sound/zombie_zombiezombie/attack_02.ogg",
+     "monster_sound/zombie_zombiezombie/attack_03.ogg",
+     "monster_sound/zombie_zombiezombie/attack_04.ogg"
+    ]
+   }
+  }
+ }
+}

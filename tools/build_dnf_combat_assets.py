@@ -423,6 +423,14 @@ def build(library: Path | None) -> dict:
     for key, files in sorted(events.items()):
         if key not in manifest['audio']:
             copy_audio(src, sorted(files), manifest['audio'], key, unresolved)
+    # 怪物分类音效：bake_dnf_monster_sounds.py 已把原版 ogg 复制到 monster_sound/，
+    # 这里只登记到 audio 表（key = mon_<kind>_<event>），运行时按怪种播放。
+    sounds_path = ROOT / 'game_dnf/data/monster_sounds.json'
+    if sounds_path.is_file():
+        for key, entry in json.loads(sounds_path.read_text(encoding='utf-8')).get('monsters', {}).items():
+            for event, files in (entry.get('events') or {}).items():
+                manifest['audio']['mon_%s_%s' % (key, event)] = [
+                    {'file': 'res://assets_local/' + f} for f in files]
     atlas = Atlas('digits')
     for key, (start, stop) in DIGITS.items():
         for n in range(start, stop):
