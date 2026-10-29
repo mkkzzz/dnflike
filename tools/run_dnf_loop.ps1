@@ -19,9 +19,10 @@ $versionText="$(& $GodotPath --version 2>$null | Select-Object -First 1)".Trim()
 if (-not $versionText.StartsWith("4.7.2.")) {throw "Godot 4.7.2 required; found $versionText"}
 & python (Join-Path $PSScriptRoot "check_game_chinese.py")
 if ($LASTEXITCODE -ne 0) {throw "Game text must use Chinese; Korean text is not permitted."}
-# 副本配置契约：新增副本只要过这一关，运行时不需要逐副本用例。
-& python (Join-Path $PSScriptRoot "check_dnf_dungeons.py")
-if ($LASTEXITCODE -ne 0) {throw "Dungeon configuration contract violated; see the lines above."}
+# 内容接入闸门：副本契约、BGM 覆盖、走区一致、任务进度（见设计文档 44）。
+# 新增副本/怪物/城镇只要过这四关，运行时不需要逐条写用例。
+& python (Join-Path $PSScriptRoot "pipeline_dnf.py") verify
+if ($LASTEXITCODE -ne 0) {throw "Content pipeline verification failed; see the lines above."}
 if (-not (Test-Path -LiteralPath (Join-Path $gamePath "assets_local/manifest.json"))) {
     & python (Join-Path $PSScriptRoot "dnf_asset_store.py") sync
     if ($LASTEXITCODE -ne 0) {throw "Base runtime sync failed."}

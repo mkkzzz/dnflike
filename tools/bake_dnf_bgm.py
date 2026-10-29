@@ -34,14 +34,30 @@ TOWNS = {
     'hendon_auction': 'music/hendonmyre_new.ogg',
     'hendon_forest_gate': 'music/forest_town.ogg',
     'hendon_alley': 'music/hendonmyre_new.ogg',
+    'hendon_pub': 'music/tavern.ogg',
+    'hendon_inn': 'music/sera_shop_new.ogg',
+    'alfhlyra': 'music/alfhlyra_new.ogg',
+    'westcoast': 'music/westcoast_new.ogg',
 }
-# 副本（key 与 data/dungeons.json 的 id 对应）；boss 曲为 E-ADAPT：原版洛兰无独立 BOSS 曲，用森林深处曲代用
+# 副本（key 与 data/dungeons.json 的 id 对应）。
+# 洛兰原版没有独立 BOSS 曲，用森林深处曲代用（E-ADAPT）；其余都有各自的 normal/boss。
 DUNGEONS = {
     'lorien': {'normal': 'music/forest01.ogg', 'boss': 'music/forest02.ogg'},
     'lorien_inside': {'normal': 'music/forest01.ogg', 'boss': 'music/forest01.ogg'},
     'forest_trial': {'normal': 'music/forest02.ogg', 'boss': 'music/forest02.ogg'},
-    'mirkwood': {'normal': 'music/forest02.ogg', 'boss': 'music/forest02.ogg'},
-    'mirkwood_deep': {'normal': 'music/forest02.ogg', 'boss': 'music/forest02.ogg'},
+    'mirkwood': {'normal': 'music/mirkwood.ogg', 'boss': 'music/mirkwood_boss.ogg'},
+    'mirkwood_deep': {'normal': 'music/mirkwood.ogg', 'boss': 'music/mirkwood_boss.ogg'},
+    'mirkwood_frost': {'normal': 'music/mirkwood.ogg', 'boss': 'music/mirkwood_boss.ogg'},
+    'grakkarak_burning': {'normal': 'music/grakkarak_new.ogg', 'boss': 'music/grakkarak_new_boss.ogg'},
+    'sunderland': {'normal': 'music/sunderland.ogg', 'boss': 'music/sunderland_boss.ogg'},
+    'sunderland_dark': {'normal': 'music/sunderland.ogg', 'boss': 'music/sunderland_boss.ogg'},
+    'draconiantower': {'normal': 'music/draconian_tower.ogg', 'boss': 'music/draconian_tower_boss.ogg'},
+    'draconiantower_amonlow': {'normal': 'music/draconian_tower.ogg', 'boss': 'music/draconian_tower_boss.ogg'},
+    'golemtower': {'normal': 'music/golem_tower.ogg', 'boss': 'music/golem_tower_boss.ogg'},
+    'floatingcastle': {'normal': 'music/float_castle.ogg', 'boss': 'music/b_float_castle.ogg'},
+    'palaceofload': {'normal': 'music/palace_of_load.ogg', 'boss': 'music/palace_of_load_boss.ogg'},
+    'hallofdoll': {'normal': 'music/hall_of_doll.ogg', 'boss': 'music/hall_of_doll_boss.ogg'},
+    'darkentrance': {'normal': 'music/skycastle.ogg', 'boss': 'music/skycastle_boss.ogg'},
 }
 # 环境音：与 BGM 叠加的低音量底噪（原版 sounds/amb）
 AMBIENCE = {

@@ -11,7 +11,11 @@
   "hendon_main": "hendonmyre_new",
   "hendon_auction": "hendonmyre_new",
   "hendon_forest_gate": "forest_town",
-  "hendon_alley": "hendonmyre_new"
+  "hendon_alley": "hendonmyre_new",
+  "hendon_pub": "tavern",
+  "hendon_inn": "sera_shop_new",
+  "alfhlyra": "alfhlyra_new",
+  "westcoast": "westcoast_new"
  },
  "dungeons": {
   "lorien": {
@@ -27,12 +31,56 @@
    "boss": "forest02"
   },
   "mirkwood": {
-   "normal": "forest02",
-   "boss": "forest02"
+   "normal": "mirkwood",
+   "boss": "mirkwood_boss"
   },
   "mirkwood_deep": {
-   "normal": "forest02",
-   "boss": "forest02"
+   "normal": "mirkwood",
+   "boss": "mirkwood_boss"
+  },
+  "mirkwood_frost": {
+   "normal": "mirkwood",
+   "boss": "mirkwood_boss"
+  },
+  "grakkarak_burning": {
+   "normal": "grakkarak_new",
+   "boss": "grakkarak_new_boss"
+  },
+  "sunderland": {
+   "normal": "sunderland",
+   "boss": "sunderland_boss"
+  },
+  "sunderland_dark": {
+   "normal": "sunderland",
+   "boss": "sunderland_boss"
+  },
+  "draconiantower": {
+   "normal": "draconian_tower",
+   "boss": "draconian_tower_boss"
+  },
+  "draconiantower_amonlow": {
+   "normal": "draconian_tower",
+   "boss": "draconian_tower_boss"
+  },
+  "golemtower": {
+   "normal": "golem_tower",
+   "boss": "golem_tower_boss"
+  },
+  "floatingcastle": {
+   "normal": "float_castle",
+   "boss": "b_float_castle"
+  },
+  "palaceofload": {
+   "normal": "palace_of_load",
+   "boss": "palace_of_load_boss"
+  },
+  "hallofdoll": {
+   "normal": "hall_of_doll",
+   "boss": "hall_of_doll_boss"
+  },
+  "darkentrance": {
+   "normal": "skycastle",
+   "boss": "skycastle_boss"
   }
  },
  "ambience": {
@@ -71,6 +119,24 @@
    "sha256": "5a7bdef30f50f34400a8a5c9e924ac98653f6853957f10f954c056a341714dfe",
    "bytes": 1202845
   },
+  "tavern": {
+   "file": "audio/bgm/tavern.ogg",
+   "source": "music/tavern.ogg",
+   "sha256": "003eb94ed1ea16eb1a45b558a39fcbb771ebd75e51a4cf9366ed60b6cc07199f",
+   "bytes": 1306244
+  },
+  "alfhlyra_new": {
+   "file": "audio/bgm/alfhlyra_new.ogg",
+   "source": "music/alfhlyra_new.ogg",
+   "sha256": "c29d01d7b84edff6ab7fa6f50e804a0d935b1114c24bf110e8465be84e455ba1",
+   "bytes": 2253327
+  },
+  "westcoast_new": {
+   "file": "audio/bgm/westcoast_new.ogg",
+   "source": "music/westcoast_new.ogg",
+   "sha256": "39ef2a5a8c1e0f0a948467c65d98982a5e901f554eb4bae35d3ea254f6154976",
+   "bytes": 1473210
+  },
   "forest01": {
    "file": "audio/bgm/forest01.ogg",
    "source": "music/forest01.ogg",
@@ -82,6 +148,114 @@
    "source": "music/forest02.ogg",
    "sha256": "f6d13d984fdd83fb623855a43119ecf64120ef41a5fda579ec02bed8dea7347b",
    "bytes": 1323690
+  },
+  "mirkwood": {
+   "file": "audio/bgm/mirkwood.ogg",
+   "source": "music/mirkwood.ogg",
+   "sha256": "1e19625a25789e28b2f7bf31d3a18d8b01a487e69fb7ca581f253d07ed742994",
+   "bytes": 1499973
+  },
+  "mirkwood_boss": {
+   "file": "audio/bgm/mirkwood_boss.ogg",
+   "source": "music/mirkwood_boss.ogg",
+   "sha256": "65d45d4c89e3820537bae98b8662fd05b2eacb48cee4df09138f9e577e475a66",
+   "bytes": 1303610
+  },
+  "grakkarak_new": {
+   "file": "audio/bgm/grakkarak_new.ogg",
+   "source": "music/grakkarak_new.ogg",
+   "sha256": "cb313d1cc79c1ff5f1d8db0f7772870cd63453ae5d762df31d2faca61dc2db64",
+   "bytes": 1518353
+  },
+  "grakkarak_new_boss": {
+   "file": "audio/bgm/grakkarak_new_boss.ogg",
+   "source": "music/grakkarak_new_boss.ogg",
+   "sha256": "c43282b11dee966c50e983802ac18886a52c07c5a75442dfd969ab5c669ea234",
+   "bytes": 1353792
+  },
+  "sunderland": {
+   "file": "audio/bgm/sunderland.ogg",
+   "source": "music/sunderland.ogg",
+   "sha256": "28b09b018f1cfcfd5b6b234752c641efd4b85f2ef2f448b630304b06ef5c695b",
+   "bytes": 1548859
+  },
+  "sunderland_boss": {
+   "file": "audio/bgm/sunderland_boss.ogg",
+   "source": "music/sunderland_boss.ogg",
+   "sha256": "20eac9503b1f52d0bff12390d52c259caeb0f2a19c336855d5c1fb0c5fc4237e",
+   "bytes": 1334272
+  },
+  "draconian_tower": {
+   "file": "audio/bgm/draconian_tower.ogg",
+   "source": "music/draconian_tower.ogg",
+   "sha256": "35ac1b6ccef2f4baa79be8d3f1ccca40a6398c201eba903dcb72dc1120c7df25",
+   "bytes": 1737305
+  },
+  "draconian_tower_boss": {
+   "file": "audio/bgm/draconian_tower_boss.ogg",
+   "source": "music/draconian_tower_boss.ogg",
+   "sha256": "86e813f7b083ff35c320e2a70020a1d3cb9aaa0637afd35c2ea182c2836a710c",
+   "bytes": 1344918
+  },
+  "golem_tower": {
+   "file": "audio/bgm/golem_tower.ogg",
+   "source": "music/golem_tower.ogg",
+   "sha256": "071a9766df1670352d9d228f44e5b05417d4f2b2b42d1afa641782209708bd5b",
+   "bytes": 3393403
+  },
+  "golem_tower_boss": {
+   "file": "audio/bgm/golem_tower_boss.ogg",
+   "source": "music/golem_tower_boss.ogg",
+   "sha256": "570fb0d42ada230796b96ebc5cd9ebe15a1b4c4a202a449b4e1431b1d047e82f",
+   "bytes": 1528498
+  },
+  "float_castle": {
+   "file": "audio/bgm/float_castle.ogg",
+   "source": "music/float_castle.ogg",
+   "sha256": "34fff9bfedc677e09a13b7526703614ffb9fe8ab7c8bea9be9a40adb3fd57a59",
+   "bytes": 2716285
+  },
+  "b_float_castle": {
+   "file": "audio/bgm/b_float_castle.ogg",
+   "source": "music/b_float_castle.ogg",
+   "sha256": "8ac53d007dd315f774e1eb0a1c31e6fd427e80945b4e2bb0ee7dceddeaee1f21",
+   "bytes": 445108
+  },
+  "palace_of_load": {
+   "file": "audio/bgm/palace_of_load.ogg",
+   "source": "music/palace_of_load.ogg",
+   "sha256": "e99df3d1badca4b65c22ad2639253b1d1251533e6f11d053571bd9bddce98e69",
+   "bytes": 2181349
+  },
+  "palace_of_load_boss": {
+   "file": "audio/bgm/palace_of_load_boss.ogg",
+   "source": "music/palace_of_load_boss.ogg",
+   "sha256": "ed7c8b00959487f1bbf03a9850a61e0cfac0b18df8f90bfb332152ac64abcd20",
+   "bytes": 1009004
+  },
+  "hall_of_doll": {
+   "file": "audio/bgm/hall_of_doll.ogg",
+   "source": "music/hall_of_doll.ogg",
+   "sha256": "128c071ba20947ab749f92f0f6e06b83af23bd9d2873ddf756571c9f4ce67f11",
+   "bytes": 1574275
+  },
+  "hall_of_doll_boss": {
+   "file": "audio/bgm/hall_of_doll_boss.ogg",
+   "source": "music/hall_of_doll_boss.ogg",
+   "sha256": "1cf33e0889df83b1612721b4a7e957d12af5572264629c8708a5ac3e960fca70",
+   "bytes": 1451837
+  },
+  "skycastle": {
+   "file": "audio/bgm/skycastle.ogg",
+   "source": "music/skycastle.ogg",
+   "sha256": "85824f0cfe5ec6de1f4b74ce42378680f4753732fcdd061005e6df53cde74f2e",
+   "bytes": 1269431
+  },
+  "skycastle_boss": {
+   "file": "audio/bgm/skycastle_boss.ogg",
+   "source": "music/skycastle_boss.ogg",
+   "sha256": "fc0ce6567f2ae28edade31489c74a84c78bf1a3072b602ab3ba010f21c4d7f0a",
+   "bytes": 919062
   },
   "amb_town_01": {
    "file": "audio/bgm/amb_town_01.ogg",
