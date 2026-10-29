@@ -276,12 +276,18 @@ def monster_bank(src: Source, key: str, mob: str, clip_dir: str, unresolved: lis
     body = sorted(images)[0] if images else ''
     script = src.lib.script(mob, 'mob')
     equipment = [f['values'] for f in script['fields'] if f['tag'] == '[equipment]']
+    # `.mob` 的 [equipment] 写作 `Monster/Goblin/tcc2.equ`，实际文件在
+    # `equipment/monster/goblin/tcc2.equ`；按 mob 所在的怪种目录（goblin/tau/…）拼接。
+    area = PurePosixPath(mob).parent.name.lower()
     for parts in equipment:
         for part in parts[1:]:
-            equ = ('monster/goblin/' + PurePosixPath(part).name).lower() if isinstance(part, str) else None
-            if equ and not src.lib.exists(equ):
-                unresolved.append({'kind': 'monster_equipment', 'monster': mob, 'path': part,
-                                   'note': 'Referenced .equ absent from archive; appearance drawn from body IMG only'})
+            if not isinstance(part, str):
+                continue
+            name = PurePosixPath(part.replace('\\', '/')).name.lower()
+            equ = 'equipment/monster/%s/%s' % (area, name)
+            if not src.lib.exists(equ):
+                unresolved.append({'kind': 'monster_equipment', 'monster': mob, 'path': equ,
+                                   'note': 'equipment file absent; appearance drawn from body IMG only'})
     return {'atlas': atlas.save(), 'clips': clips, 'mob': mob, 'body_image': body}
 
 

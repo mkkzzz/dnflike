@@ -84,103 +84,19 @@
  "effects": 24,
  "digits": 61,
  "audio_keys": 190,
- "unresolved": 21,
+ "unresolved": 6,
  "unresolved_items": [
   {
    "kind": "monster_equipment",
-   "monster": "monster/goblin/goblinthrower.mob",
-   "path": "Monster/Goblin/tcc2.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/goblinthrower.mob",
-   "path": "Monster/Goblin/acc2.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/goblinthrower.mob",
-   "path": "Monster/Goblin/hcc3.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/goblinthrower.mob",
-   "path": "Monster/Goblin/gcc1.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/seagab.mob",
-   "path": "Monster/Goblin/acc4.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/seagab.mob",
-   "path": "Monster/Goblin/Hcc2.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/seagab.mob",
-   "path": "Monster/Goblin/gcc1-3.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/seagab.mob",
-   "path": "Monster/Goblin/tcc1-2.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/seagab.mob",
-   "path": "Monster/Goblin/bcc1-2.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/hillgab.mob",
-   "path": "Monster/Goblin/acc4-2.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/hillgab.mob",
-   "path": "Monster/Goblin/Hcc2-2.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/hillgab.mob",
-   "path": "Monster/Goblin/gcc1-3.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/hillgab.mob",
-   "path": "Monster/Goblin/tcc1-2.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/hillgab.mob",
-   "path": "Monster/Goblin/bcc1-2.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
    "monster": "monster/new_golem/claygolem.mob",
-   "path": "monster/Golem/Light/CL_Light.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+   "path": "equipment/monster/new_golem/cl_light.equ",
+   "note": "equipment file absent; appearance drawn from body IMG only"
   },
   {
    "kind": "monster_equipment",
    "monster": "monster/new_golem/bronzegolem.mob",
-   "path": "monster/Golem/Light/BR_Light.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+   "path": "equipment/monster/new_golem/br_light.equ",
+   "note": "equipment file absent; appearance drawn from body IMG only"
   },
   {
    "kind": "monster_layers",
@@ -193,26 +109,20 @@
   {
    "kind": "monster_equipment",
    "monster": "monster/new_golem/biggolem.mob",
-   "path": "monster/Golem/Light/Big_Light.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+   "path": "equipment/monster/new_golem/big_light.equ",
+   "note": "equipment file absent; appearance drawn from body IMG only"
   },
   {
    "kind": "monster_equipment",
    "monster": "monster/new_golem/greatgoleml.mob",
-   "path": "monster/Golem/GreatArm/GreatArm.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+   "path": "equipment/monster/new_golem/greatarm.equ",
+   "note": "equipment file absent; appearance drawn from body IMG only"
   },
   {
    "kind": "monster_equipment",
    "monster": "monster/new_golem/greatgolemr.mob",
-   "path": "monster/Golem/GreatArm/GreatArm.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
-  },
-  {
-   "kind": "monster_equipment",
-   "monster": "monster/goblin/nightvisionkagel.mob",
-   "path": "Monster/Goblin/weapon01.equ",
-   "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+   "path": "equipment/monster/new_golem/greatarm.equ",
+   "note": "equipment file absent; appearance drawn from body IMG only"
   }
  ]
 }
