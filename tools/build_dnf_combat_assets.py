@@ -266,6 +266,10 @@ def monster_bank(src: Source, key: str, mob: str, clip_dir: str, unresolved: lis
             clips[name] = {'frames': frames, 'duration_ms': ani.get('duration_ms', 0), 'images': ani['images']}
     if len(images) > 1:
         unresolved.append({'kind': 'monster_layers', 'monster': mob, 'images': sorted(images)})
+    # 运行时播的 pose 是 "attack"；旧 clip 目录约定叫 "attack1"，缺了就别名过去，
+    # 否则攻击时视图回落成 stay（站着挨打）。
+    if 'attack' not in clips and 'attack1' in clips:
+        clips['attack'] = clips['attack1']
     if not clips:
         unresolved.append({'kind': 'monster_no_clips', 'monster': mob})
         return {}
@@ -365,6 +369,9 @@ def catalog_monster_specs() -> dict:
             if pose is None or not values:
                 continue
             motions[pose] = (mob['folder'] + '/' + str(values[0])).lower()
+            # 远程怪的投掷动作用攻击槽里的第二个 ANI（原版 [attack motion] 多值）。
+            if pose == 'attack' and len(values) > 1:
+                motions['throw'] = (mob['folder'] + '/' + str(values[1])).lower()
         if not motions:
             continue
         out[path.replace('monster/', '', 1).replace('.mob', '').replace('/', '_')] = {'mob': path, 'motions': motions}
