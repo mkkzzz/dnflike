@@ -1,170 +1,209 @@
 {
-  "schema": "dnf_quest_dungeons/1",
-  "evidence": "E-ADAPT deterministic route selected from source dungeon cells, candidate maps and reciprocal gates. Original randomness and full AI not reproduced.",
-  "dungeons": {
-    "lorien": {
-      "name": "洛兰",
-      "requires": [],
-      "map_export": "res://assets_local/native_maps/lorien/map_export.json",
-      "rooms": [
-        {
-          "name": "洛兰",
-          "placement": "1_0:s3",
-          "next": "left"
-        },
-        {
-          "name": "洛兰",
-          "placement": "0_0:s2",
-          "next": "down"
-        },
-        {
-          "name": "洛兰",
-          "placement": "0_1:8",
-          "next": "right"
-        },
-        {
-          "name": "洛兰",
-          "placement": "1_1:9",
-          "next": "down"
-        },
-        {
-          "name": "洛兰",
-          "placement": "1_2:b3",
-          "next": "",
-          "boss": true
-        }
-      ]
+ "schema": "dnf_quest_dungeons/1",
+ "evidence": "E-ADAPT deterministic route selected from source dungeon cells, candidate maps and reciprocal gates. Original randomness and full AI not reproduced.",
+ "dungeons": {
+  "lorien": {
+   "name": "洛兰",
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/lorien/map_export.json",
+   "rooms": [
+    {
+     "name": "洛兰",
+     "placement": "1_0:s3",
+     "next": "left"
     },
-    "lorien_inside": {
-      "name": "洛兰深处",
-      "requires": [
-        "lorien.first_clear"
-      ],
-      "map_export": "res://assets_local/flow_v1/early_quests/lorien_inside/map_export.json",
-      "rooms": [
-        {
-          "name": "洛兰深处",
-          "placement": "0_0:s101",
-          "next": "right"
-        },
-        {
-          "name": "洛兰深处",
-          "placement": "1_0:110",
-          "next": "down"
-        },
-        {
-          "name": "洛兰深处",
-          "placement": "1_1:107",
-          "next": "right"
-        },
-        {
-          "name": "洛兰深处",
-          "placement": "2_1:b101",
-          "next": "",
-          "boss": true
-        }
-      ]
+    {
+     "name": "洛兰",
+     "placement": "0_0:s2",
+     "next": "down"
     },
-    "forest_trial": {
-      "name": "密林试炼（旧样板）",
-      "requires": [],
-      "legacy": true
+    {
+     "name": "洛兰",
+     "placement": "0_1:8",
+     "next": "right"
     },
-    "mirkwood": {
-      "name": "幽暗密林",
-      "region": "granfloris",
-      "requires": [
-        "hendon.meet_pungjin"
-      ],
-      "min_level": 2,
-      "map_export": "res://assets_local/flow_v1/gran_v1/mirkwood/map_export.json",
-      "rooms": [
-        {
-          "name": "幽暗密林",
-          "placement": "0_0:s201",
-          "next": "right"
-        },
-        {
-          "name": "幽暗密林",
-          "placement": "1_0:204",
-          "next": "down"
-        },
-        {
-          "name": "幽暗密林",
-          "placement": "1_1:210",
-          "next": "down"
-        },
-        {
-          "name": "幽暗密林",
-          "placement": "1_2:210",
-          "next": "left"
-        },
-        {
-          "name": "幽暗密林",
-          "placement": "0_2:202",
-          "next": "down"
-        },
-        {
-          "name": "幽暗密林",
-          "placement": "0_3:b204",
-          "next": "",
-          "boss": true
-        }
-      ],
-      "source": {
-        "path": "dungeon/act1/mirkwood.dgn",
-        "sha256": "f3b7f6c7cfe548e22697c10d988e0d100122a0276c27ca39d295aad121d9568a",
-        "evidence": "E-ADAPT fixed source candidate route with reciprocal original gates; no original maze randomness"
-      },
-      "monster_level": 4
+    {
+     "name": "洛兰",
+     "placement": "1_1:9",
+     "next": "down"
     },
-    "mirkwood_deep": {
-      "name": "幽暗密林深处",
-      "region": "granfloris",
-      "requires": [
-        "gran.tau_rage"
-      ],
-      "min_level": 3,
-      "map_export": "res://assets_local/flow_v1/gran_v1/mirkwood_deep/map_export.json",
-      "rooms": [
-        {
-          "name": "幽暗密林深处",
-          "placement": "0_3:s401",
-          "next": "right"
-        },
-        {
-          "name": "幽暗密林深处",
-          "placement": "1_3:425",
-          "next": "up"
-        },
-        {
-          "name": "幽暗密林深处",
-          "placement": "1_2:407",
-          "next": "left"
-        },
-        {
-          "name": "幽暗密林深处",
-          "placement": "0_2:405",
-          "next": "up"
-        },
-        {
-          "name": "幽暗密林深处",
-          "placement": "0_1:409",
-          "next": "up"
-        },
-        {
-          "name": "幽暗密林深处",
-          "placement": "0_0:b413",
-          "next": "",
-          "boss": true
-        }
-      ],
-      "source": {
-        "path": "dungeon/act1/mirkwooddeep.dgn",
-        "sha256": "dd9cbcf079744fe683d6d4efd704c239781a284e4a9eaecf4565245a992569c6",
-        "evidence": "E-ADAPT fixed source candidate route with reciprocal original gates; no original maze randomness"
-      },
-      "monster_level": 6
+    {
+     "name": "洛兰",
+     "placement": "1_2:b3",
+     "next": "",
+     "boss": true
     }
+   ]
+  },
+  "lorien_inside": {
+   "name": "洛兰深处",
+   "requires": [
+    "lorien.first_clear"
+   ],
+   "map_export": "res://assets_local/flow_v1/early_quests/lorien_inside/map_export.json",
+   "rooms": [
+    {
+     "name": "洛兰深处",
+     "placement": "0_0:s101",
+     "next": "right"
+    },
+    {
+     "name": "洛兰深处",
+     "placement": "1_0:110",
+     "next": "down"
+    },
+    {
+     "name": "洛兰深处",
+     "placement": "1_1:107",
+     "next": "right"
+    },
+    {
+     "name": "洛兰深处",
+     "placement": "2_1:b101",
+     "next": "",
+     "boss": true
+    }
+   ]
+  },
+  "forest_trial": {
+   "name": "密林试炼（旧样板）",
+   "requires": [],
+   "legacy": true
+  },
+  "mirkwood": {
+   "name": "幽暗密林",
+   "region": "granfloris",
+   "requires": [
+    "hendon.meet_pungjin"
+   ],
+   "min_level": 2,
+   "map_export": "res://assets_local/flow_v1/gran_v1/mirkwood/map_export.json",
+   "rooms": [
+    {
+     "name": "幽暗密林",
+     "placement": "0_0:s201",
+     "next": "right"
+    },
+    {
+     "name": "幽暗密林",
+     "placement": "1_0:204",
+     "next": "down"
+    },
+    {
+     "name": "幽暗密林",
+     "placement": "1_1:210",
+     "next": "down"
+    },
+    {
+     "name": "幽暗密林",
+     "placement": "1_2:210",
+     "next": "left"
+    },
+    {
+     "name": "幽暗密林",
+     "placement": "0_2:202",
+     "next": "down"
+    },
+    {
+     "name": "幽暗密林",
+     "placement": "0_3:b204",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "source": {
+    "path": "dungeon/act1/mirkwood.dgn",
+    "sha256": "f3b7f6c7cfe548e22697c10d988e0d100122a0276c27ca39d295aad121d9568a",
+    "evidence": "E-ADAPT fixed source candidate route with reciprocal original gates; no original maze randomness"
+   },
+   "monster_level": 4
+  },
+  "mirkwood_deep": {
+   "name": "幽暗密林深处",
+   "region": "granfloris",
+   "requires": [
+    "gran.tau_rage"
+   ],
+   "min_level": 3,
+   "map_export": "res://assets_local/flow_v1/gran_v1/mirkwood_deep/map_export.json",
+   "rooms": [
+    {
+     "name": "幽暗密林深处",
+     "placement": "0_3:s401",
+     "next": "right"
+    },
+    {
+     "name": "幽暗密林深处",
+     "placement": "1_3:425",
+     "next": "up"
+    },
+    {
+     "name": "幽暗密林深处",
+     "placement": "1_2:407",
+     "next": "left"
+    },
+    {
+     "name": "幽暗密林深处",
+     "placement": "0_2:405",
+     "next": "up"
+    },
+    {
+     "name": "幽暗密林深处",
+     "placement": "0_1:409",
+     "next": "up"
+    },
+    {
+     "name": "幽暗密林深处",
+     "placement": "0_0:b413",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "source": {
+    "path": "dungeon/act1/mirkwooddeep.dgn",
+    "sha256": "dd9cbcf079744fe683d6d4efd704c239781a284e4a9eaecf4565245a992569c6",
+    "evidence": "E-ADAPT fixed source candidate route with reciprocal original gates; no original maze randomness"
+   },
+   "monster_level": 6
+  },
+  "mirkwood_frost": {
+   "name": "幽暗密林冰霜",
+   "region": "granfloris",
+   "map_export": "res://assets_local/flow_v1/gran_v1/mirkwood_frost/map_export.json",
+   "rooms": [
+    {
+     "name": "幽暗密林冰霜",
+     "placement": "1_0:s1401",
+     "next": "down"
+    },
+    {
+     "name": "幽暗密林冰霜",
+     "placement": "1_1:e1401",
+     "next": "right"
+    },
+    {
+     "name": "幽暗密林冰霜",
+     "placement": "2_1:n1404",
+     "next": "right"
+    },
+    {
+     "name": "幽暗密林冰霜",
+     "placement": "3_1:h1403",
+     "next": "up"
+    },
+    {
+     "name": "幽暗密林冰霜",
+     "placement": "3_0:b1401",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 7,
+   "source": {
+    "path": "",
+    "sha256": "",
+    "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
+   }
   }
+ }
 }
