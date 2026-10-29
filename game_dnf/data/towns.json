@@ -839,6 +839,122 @@
       "npcs": {},
       "labels": [],
       "camera_y": 0
+    },
+    "westcoast": {
+      "name": "西海岸",
+      "asset": "res://assets_local/flow_v1/rooms/westcoast/manifest.json",
+      "placement": "westcoast",
+      "spawn": [
+        2800,
+        320
+      ],
+      "walk": [
+        [
+          0,
+          144,
+          2912,
+          12
+        ],
+        [
+          0,
+          156,
+          2912,
+          12
+        ],
+        [
+          0,
+          168,
+          2912,
+          12
+        ],
+        [
+          0,
+          180,
+          2912,
+          12
+        ],
+        [
+          0,
+          192,
+          2912,
+          12
+        ],
+        [
+          0,
+          204,
+          2912,
+          12
+        ],
+        [
+          0,
+          216,
+          2912,
+          12
+        ],
+        [
+          0,
+          228,
+          2912,
+          12
+        ],
+        [
+          0,
+          240,
+          2912,
+          12
+        ],
+        [
+          0,
+          252,
+          2912,
+          12
+        ],
+        [
+          0,
+          264,
+          2912,
+          12
+        ],
+        [
+          0,
+          276,
+          2912,
+          12
+        ],
+        [
+          0,
+          288,
+          2912,
+          12
+        ],
+        [
+          0,
+          300,
+          2912,
+          12
+        ],
+        [
+          0,
+          312,
+          2912,
+          12
+        ],
+        [
+          0,
+          324,
+          2912,
+          12
+        ],
+        [
+          0,
+          336,
+          2912,
+          12
+        ]
+      ],
+      "npcs": {},
+      "labels": [],
+      "camera_y": 0
     }
   },
   "portals": {
@@ -1287,6 +1403,38 @@
       ],
       "label": "艾尔文防线",
       "reciprocal": "elvengard_to_alfhlyra"
+    },
+    "hendon_city_to_westcoast": {
+      "from": "hendon_city",
+      "rect": [
+        13,
+        219,
+        20,
+        117
+      ],
+      "to": "westcoast",
+      "spawn": [
+        2800,
+        320
+      ],
+      "label": "← 西海岸",
+      "reciprocal": "westcoast_exit"
+    },
+    "westcoast_exit": {
+      "from": "westcoast",
+      "rect": [
+        2700,
+        280,
+        200,
+        60
+      ],
+      "to": "hendon_city",
+      "spawn": [
+        60,
+        300
+      ],
+      "label": "赫顿玛尔城市区",
+      "reciprocal": "hendon_city_to_westcoast"
     }
   },
   "npcs": {

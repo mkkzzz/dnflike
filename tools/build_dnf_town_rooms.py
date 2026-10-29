@@ -28,6 +28,8 @@ ROOMS = {
     'hendon_pub': 'map/hendonmyre/hendon_pub.map',
     'hendon_inn': 'map/hendonmyre/(r)gate_hendon.map',
     'alfhlyra': 'map/elvengard/elven2alfh.map',
+    # 西海岸：赫顿玛尔西侧的海岸城镇，(r) 版与 hendon_main 的取法一致。
+    'westcoast': 'map/hendonmyre/(r)westcoast.map',
 }
 
 
