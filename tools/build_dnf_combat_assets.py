@@ -232,25 +232,44 @@ def effect_bank(src: Source, key: str, ani_path: str, unresolved: list) -> dict:
     return bank
 
 
-def monster_bank(src: Source, key: str, mob: str, clip_dir: str, unresolved: list, extra=()) -> dict:
-    clips, used, images = {}, set(), set()
-    for name in MONSTER_CLIPS+list(extra):
-        path = f'{clip_dir}/{name}.ani'
+def monster_bank(src: Source, key: str, mob: str, clip_dir: str, unresolved: list, extra=(), motion_map=None) -> dict:
+    """烘焙一只怪的动作图集。
+
+    有 motion_map（pose → 完整 ANI 路径）时直接按 .mob 的动作表逐帧取图：
+    帧可以来自不同 IMG，atlas 内统一重编号，clips 的 img_frame 同步改写。
+    没有 motion_map 时沿用旧的 clip_dir + MONSTER_CLIPS 约定。
+    """
+    atlas = Atlas('mob_' + key)
+    clips, images, index = {}, set(), 0
+    specs = list(motion_map.items()) if motion_map else [(n, f'{clip_dir}/{n}.ani') for n in MONSTER_CLIPS + list(extra)]
+    for name, path in specs:
         try:
             ani = src.animation(path)
         except KeyError:
             continue
-        clips[name] = ani
         images.update(ani['images'])
-        used.update(f['img_frame'] for f in ani['frames'] if f.get('img_frame') is not None)
-    if len(images) != 1:
+        frames = []
+        for frame in ani['frames']:
+            if frame.get('img_frame') is None:
+                continue
+            try:
+                image, meta = src.frame(str(frame['img']), int(frame['img_frame']))
+            except Exception:
+                continue
+            image, offset = cropped(image, meta)
+            atlas.add(index, image, offset)
+            turned = dict(frame)
+            turned['img_frame'] = index
+            frames.append(turned)
+            index += 1
+        if frames:
+            clips[name] = {'frames': frames, 'duration_ms': ani.get('duration_ms', 0), 'images': ani['images']}
+    if len(images) > 1:
         unresolved.append({'kind': 'monster_layers', 'monster': mob, 'images': sorted(images)})
-    body = sorted(images)[0]
-    atlas = Atlas('mob_' + key)
-    for n in sorted(used):
-        image, meta = src.frame(body, n)
-        image, offset = cropped(image, meta)
-        atlas.add(n, image, offset)
+    if not clips:
+        unresolved.append({'kind': 'monster_no_clips', 'monster': mob})
+        return {}
+    body = sorted(images)[0] if images else ''
     script = src.lib.script(mob, 'mob')
     equipment = [f['values'] for f in script['fields'] if f['tag'] == '[equipment]']
     for parts in equipment:
@@ -303,6 +322,62 @@ def weapon_sounds(src: Source) -> dict:
     return {names[i]: row for i, row in enumerate(rows) if i < len(names)}
 
 
+# .mob 的动作槽 ↔ 运行时 pose 名（view 按 pose 取 clip）。
+POSE_MAP = {'waiting': 'stay', 'move': 'move', 'attack': 'attack', 'damage1': 'damage1',
+            'damage2': 'damage2', 'down': 'down', 'overturn': 'overturn', 'sit': 'sit',
+            'die': 'die', 'jump': 'jump'}
+
+
+def catalog_monster_specs() -> dict:
+    """副本里出现、但不在手写 MONSTERS 里的怪：按 data/monster_catalog.json 的动作表补。
+
+    返回 {key: {'mob': path, 'motions': {pose: 完整 ANI 路径}}}。
+    """
+    catalog_path = ROOT / 'game_dnf/data/monster_catalog.json'
+    dungeons_path = ROOT / 'game_dnf/data/dungeons.json'
+    if not catalog_path.is_file():
+        return {}
+    catalog = json.loads(catalog_path.read_text(encoding='utf-8'))['monsters']
+    needed: set[str] = set()
+    if dungeons_path.is_file():
+        dungeons = json.loads(dungeons_path.read_text(encoding='utf-8'))['dungeons']
+        for spec in dungeons.values():
+            export = spec.get('map_export', '')
+            if not export:
+                continue
+            path = ROOT / 'game_dnf' / export.replace('res://', '')
+            if not path.is_file():
+                continue
+            data = json.loads(path.read_text(encoding='utf-8'))
+            for room in (data.get('dungeon', {}).get('rooms') or {}).values():
+                for monster in room.get('monsters') or []:
+                    if monster.get('mob'):
+                        needed.add(str(monster['mob']).lower())
+    builtin = {str(mob).lower() for mob, _dir, _extra in MONSTERS.values()}
+    out = {}
+    for _key, mob in catalog.items():
+        path = str(mob['path']).lower()
+        if path in builtin or path not in needed:
+            continue
+        motions = {}
+        for slot, values in (mob.get('motions') or {}).items():
+            pose = POSE_MAP.get(slot)
+            if pose is None or not values:
+                continue
+            motions[pose] = (mob['folder'] + '/' + str(values[0])).lower()
+        if not motions:
+            continue
+        out[path.replace('monster/', '', 1).replace('.mob', '').replace('/', '_')] = {'mob': path, 'motions': motions}
+    return out
+
+
+def monster_specifications() -> dict:
+    """手写条目（旧 clip 目录约定）+ 总账自动补全条目。"""
+    specs = {key: {'mob': mob, 'clip_dir': clip_dir, 'extra': extra} for key, (mob, clip_dir, extra) in MONSTERS.items()}
+    specs.update(catalog_monster_specs())
+    return specs
+
+
 def build(library: Path | None) -> dict:
     # Validate the full source library before replacing a consumable runtime.
     src = Source(library)
@@ -313,8 +388,9 @@ def build(library: Path | None) -> dict:
     manifest = {'schema': SCHEMA, 'build_version': BUILD_VERSION, 'asset_version': src.lib.asset_version,
                 'monsters': {}, 'objects': {}, 'effects': {}, 'digits': {}, 'audio': {}, 'weapon_sounds': {},
                 'unresolved': unresolved}
-    for key, (mob, clip_dir, extra) in MONSTERS.items():
-        manifest['monsters'][key] = monster_bank(src, key, mob, clip_dir, unresolved, extra)
+    for key, spec in monster_specifications().items():
+        manifest['monsters'][key] = monster_bank(src, key, spec['mob'], spec.get('clip_dir', ''), unresolved,
+                                                  spec.get('extra', ()), spec.get('motions'))
     for key, path in OBJECTS.items():
         manifest['objects'][key] = effect_bank(src, 'obj_' + key, path, unresolved)
         manifest['objects'][key]['clip'] = src.animation(path)
