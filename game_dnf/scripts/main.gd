@@ -815,6 +815,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			target["state"] = "dead"
 			target["death_ms"] = 0.0
 			play_sound("mon_%s_die" % mob_key)
+			# 死亡爆散：原版 [die effect] 的编号语义未解（E-OPEN），这里用通用 blow 特效补足死亡反馈。
+			bus.emit("combat.cue", {"kind":"fx", "key":"hit_blow_l", "point":Vector2(target["pos"]),
+				"height":float(target["z"]), "facing":int(target["facing"]), "scale":1.0})
 			report_defeat(target)
 
 ## Hit effect and hit sound from ATK [hit info]/[hit wav]; weapon rows of the CHR when the
