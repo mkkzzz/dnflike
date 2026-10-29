@@ -22,6 +22,28 @@ GAME = ROOT / 'game_dnf'
 DUNGEONS = GAME / 'data/dungeons.json'
 MOVE = {'left': (-1, 0), 'right': (1, 0), 'up': (0, -1), 'down': (0, 1)}
 
+# 待入表的副本清单：id, 导出目录（相对 game_dnf），中文名, region, monster_level
+PENDING = [
+    ('grakkarak', 'assets_local/flow_v1/gran_v1/grakkarak', '格拉卡', 'granfloris', 8),
+    ('grakkarak_burning', 'assets_local/flow_v1/gran_v1/grakkarak_burning', '燃烧的格拉卡', 'granfloris', 9),
+    ('sunderland', 'assets_local/flow_v1/gran_v1/sunderland', '桑德兰', 'granfloris', 10),
+    ('sunderland_dark', 'assets_local/flow_v1/gran_v1/sunderland_dark', '黑暗桑德兰', 'granfloris', 11),
+    ('sunderland_poison', 'assets_local/flow_v1/gran_v1/sunderland_poison', '剧毒桑德兰', 'granfloris', 12),
+    ('draconiantower', 'assets_local/flow_v1/skytower_v1/draconiantower', '龙人之塔', 'skytower', 13),
+    ('golemtower', 'assets_local/flow_v1/skytower_v1/golemtower', '石巨人塔', 'skytower', 14),
+    ('floatingcastle', 'assets_local/flow_v1/skytower_v1/floatingcastle', '悬空城', 'skytower', 15),
+    ('palaceofload', 'assets_local/flow_v1/skytower_v1/palaceofload', '城主宫殿', 'skytower', 16),
+    ('darkentrance', 'assets_local/flow_v1/skytower_v1/darkentrance', '幽暗回廊', 'skytower', 15),
+    ('hallofdoll', 'assets_local/flow_v1/skytower_v1/hallofdoll', '人偶之塔', 'skytower', 14),
+    ('amonhigh', 'assets_local/flow_v1/skytower_v1/amonhigh', '亚蒙上层', 'skytower', 13),
+    ('amonlow', 'assets_local/flow_v1/skytower_v1/amonlow', '亚蒙下层', 'skytower', 13),
+    ('oceanhigh', 'assets_local/flow_v1/skytower_v1/oceanhigh', '天空之海上层', 'skytower', 16),
+    ('oceanlow', 'assets_local/flow_v1/skytower_v1/oceanlow', '天空之海下层', 'skytower', 15),
+    ('sepahigh', 'assets_local/flow_v1/skytower_v1/sepahigh', '赛帕上层', 'skytower', 17),
+    ('sepalow', 'assets_local/flow_v1/skytower_v1/sepalow', '赛帕下层', 'skytower', 16),
+    ('draconiantower_amonlow', 'assets_local/flow_v1/skytower_v1/draconiantower_amonlow', '龙人之塔·亚蒙下层', 'skytower', 14),
+]
+
 
 def cell_graph(export: dict) -> dict:
     cells = export['dungeon']['cells']
@@ -105,9 +127,44 @@ def main() -> int:
     parser.add_argument('--requires', default='')
     parser.add_argument('--min-level', type=int, default=0)
     parser.add_argument('--monster-level', type=int, default=0)
+    parser.add_argument('--status', action='store_true', help='列出待入表副本的导出进度')
+    parser.add_argument('--apply-all', action='store_true', help='把已导出的待入表副本批量写入 dungeons.json')
     args = parser.parse_args()
     doc = json.loads(DUNGEONS.read_text(encoding='utf-8'))
     dungeons = doc['dungeons']
+    if args.status:
+        ready = 0
+        for dungeon_id, folder, name, _region, _level in PENDING:
+            done = (GAME / folder / 'map_export.json').is_file()
+            ready += 1 if done else 0
+            print('  %s %-24s %s' % ('就绪' if done else '导出中', dungeon_id, name))
+        print('\n[STATUS] 就绪 %d / 共 %d' % (ready, len(PENDING)))
+        print('[STATUS] 全部就绪，可执行 --apply-all' if ready == len(PENDING) else '[STATUS] 仍有副本在导出，稍后再跑')
+        return 0
+    if args.apply_all:
+        applied = 0
+        waiting = []
+        for dungeon_id, folder, name, region, level in PENDING:
+            export = GAME / folder / 'map_export.json'
+            if not export.is_file():
+                waiting.append(dungeon_id)
+                continue
+            export_doc = json.loads(export.read_text(encoding='utf-8'))
+            rooms = build(export_doc)
+            for room in rooms:
+                room['name'] = name
+            dungeons[dungeon_id] = {
+                'name': name, 'region': region, 'map_export': 'res://' + folder + '/map_export.json',
+                'rooms': rooms, 'monster_level': level,
+                'source': {'path': export_doc.get('source', {}).get('path', ''),
+                           'sha256': export_doc.get('source', {}).get('sha256', ''),
+                           'evidence': '由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成'}}
+            applied += 1
+            print('  [OK] %-24s rooms=%d' % (dungeon_id, len(rooms)))
+        if applied:
+            DUNGEONS.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+        print('\n[APPLY] 写入 %d 个；仍待导出 %d 个 %s' % (applied, len(waiting), waiting))
+        return 0
     if not args.write:
         # 校验模式：把已有路线与 cell 图对照，报告长度与起终点是否合法
         fails = 0
