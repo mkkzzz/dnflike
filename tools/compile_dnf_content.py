@@ -295,12 +295,39 @@ def animation_record(lib: Library, path: str) -> dict | None:
             'unsupported': [], 'source': {'path': path, 'sha256': found['sha256'], 'asset_version': lib.asset_version}}
 
 
+_CATALOG_CACHE: dict[str, list] | None = None
+
+
+def catalog_motions(mob_path: str) -> list[str]:
+    """从 monster_catalog.json 取该 mob 的动作 ANI 绝对路径（新版 mob 用）。"""
+    global _CATALOG_CACHE
+    if _CATALOG_CACHE is None:
+        _CATALOG_CACHE = {}
+        path = ROOT / 'game_dnf/data/monster_catalog.json'
+        if path.is_file():
+            for entry in json.loads(path.read_text(encoding='utf-8')).get('monsters', {}).values():
+                folder = str(entry.get('folder', ''))
+                for values in (entry.get('motions') or {}).values():
+                    for value in values or []:
+                        _CATALOG_CACHE.setdefault(str(entry.get('path', '')).lower(), []).append(
+                            (folder + '/' + str(value)).lower())
+    return _CATALOG_CACHE.get(mob_path.lower(), [])
+
+
 def referenced_mob_paths() -> set[str]:
-    """扫描 data/dungeons.json 引用的地图导出，收集房间里的 mob 路径。"""
+    """收集需要编译的 mob：地图房间引用的 + data/combat.json 里覆盖的（版本切换用）。"""
     dungeons_path = ROOT / 'game_dnf/data/dungeons.json'
     if not dungeons_path.is_file():
         return set()
     out: set[str] = set()
+    # 版本切换后 combat.json 的 mob/stats_mob 可能指向地图里没有的路径（新版 mob）。
+    combat_path = ROOT / 'game_dnf/data/combat.json'
+    if combat_path.is_file():
+        for value in json.loads(combat_path.read_text(encoding='utf-8')).get('monsters', {}).values():
+            for field_name in ('mob', 'stats_mob'):
+                target = str(value.get(field_name, '')).lower()
+                if target:
+                    out.add(target)
     dungeons = json.loads(dungeons_path.read_text(encoding='utf-8'))['dungeons']
     for spec in dungeons.values():
         export = spec.get('map_export', '')
@@ -420,6 +447,11 @@ def compile_scope(lib: Library) -> dict:
             if 'motion' in key:
                 for p2 in value or []:
                     if isinstance(p2, str) and p2.endswith('.ani'):add(located(p2), 'ani', p)
+        # 新版 mob（newmonsters）的动作不在 mob 字段里，而在 <目录>/action/*.act；
+        # 这些 ANI 已由 monster_catalog 的 motions_from_acts 反推出来，这里按同一份数据补编译。
+        if not any('motion' in key for key in md):
+            for rel in catalog_motions(p):
+                add(rel, 'ani', p)
         throw = md.get('throw_attack') or {}
         if throw.get('passive_object_filename'):
             name = str(throw['passive_object_filename'])

@@ -31,6 +31,60 @@ MOTIONS = {
 }
 SPEEDS = {'[move speed]': 'move', '[attack speed]': 'attack', '[cast speed]': 'cast', '[hit recovery]': 'hit_recovery'}
 
+# 新版（newmonsters）把动作挪到 `<mob 目录>/action/*.act`，文件名即动作名。
+# 这里把 act 名映射回 .mob 的 motion 槽位，让两代架构能共用同一套运行时。
+ACT_SLOTS = {
+    'stay': 'waiting', 'move': 'move', 'sit': 'sit', 'jump': 'jump',
+    'damage1': 'damage1', 'damage2': 'damage2', 'down': 'down',
+    'overturn': 'overturn', 'die': 'die', 'attack': 'attack',
+    'attack1': 'attack', 'attacklong': 'attack', 'attackheart': 'attack',
+}
+
+
+def motions_from_acts(lib, folder: str) -> dict:
+    """新版 mob 的 `[attack motion]` 为空时，从 `<folder>/action/*.act` 的 [BASE ANI] 反推动作表。"""
+    from decompile_dnf_ai import decode
+
+    result: dict[str, list] = {}
+    rows = [r[0] for r in lib.db.execute(
+        "select path from files where path like ? and path like '%.act' order by path",
+        (folder + '/action/%',))]
+    for path in rows:
+        stem = Path(path).stem.lower()
+        slot = ACT_SLOTS.get(stem)
+        if slot is None:
+            continue
+        raw = lib.raw(path)
+        decoded = decode(raw[0] if raw else b'', lib.strings)
+        if not decoded.get('ok'):
+            continue
+        tokens = [t.get('text', '').strip() for t in decoded['tokens']]
+        if '[BASE ANI]' not in tokens:
+            continue
+        index = tokens.index('[BASE ANI]')
+        if index + 1 >= len(tokens):
+            continue
+        ani = tokens[index + 1]
+        if not ani.lower().endswith('.ani'):
+            continue
+        # [BASE ANI] 相对 action/ 目录
+        parts: list[str] = []
+        for part in (folder + '/action/' + ani.replace('\\', '/')).split('/'):
+            if part in ('', '.'):
+                continue
+            if part == '..':
+                if parts:
+                    parts.pop()
+                continue
+            parts.append(part)
+        resolved = '/'.join(parts).lower()
+        if not lib.exists(resolved):
+            continue
+        # 与老架构一致：motion 值写成“相对 mob 目录”的路径（如 animation/stay.ani）。
+        relative = resolved[len(folder) + 1:] if resolved.startswith(folder + '/') else Path(resolved).name
+        result.setdefault(slot, []).append(relative)
+    return {slot: sorted(set(names)) for slot, names in result.items()}
+
 
 def one(spans: dict, tag: str, default=None):
     item = spans.get(tag)
@@ -133,6 +187,11 @@ def main() -> int:
                 values = [str(v) for v in many(spans, tag) if isinstance(v, str) and v.lower().endswith('.ani')]
                 if values:
                     entry['motions'][key] = values
+            # 新版架构：动作不在 mob 里，而在 <目录>/action/*.act 的 [BASE ANI]。
+            if not entry['motions']:
+                entry['motions'] = motions_from_acts(lib, folder)
+                if entry['motions']:
+                    entry['motion_source'] = 'action/*.act'
             for rel_ani in many(spans, '[attack info]'):
                 if not isinstance(rel_ani, str) or not rel_ani.lower().endswith('.atk'):
                     continue
