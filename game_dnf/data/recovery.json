@@ -1,8 +1,72 @@
 {
-  "revision":1,
-  "note":"E-ADAPT functional defaults; gold revival is not original DNF coin economy",
-  "consumables":{
-    "potion":{"level":1,"cooldown_ms":10000,"group":"recovery","group_cooldown_ms":10000,"effect":{"kind":"heal","amount":150}}
+  "revision": 1,
+  "note": "E-ADAPT functional defaults; gold revival is not original DNF coin economy",
+  "consumables": {
+    "potion": {
+      "level": 1,
+      "cooldown_ms": 10000,
+      "group": "recovery",
+      "group_cooldown_ms": 10000,
+      "effect": {
+        "kind": "heal",
+        "amount": 150
+      }
+    },
+    "original_1106": {
+      "level": 1,
+      "cooldown_ms": 10000,
+      "group": "original_0",
+      "group_cooldown_ms": 10000,
+      "effect": {
+        "kind": "restore",
+        "hp": 70,
+        "mp": 0,
+        "duration_ms": 1000
+      }
+    },
+    "original_1107": {
+      "level": 6,
+      "cooldown_ms": 10000,
+      "group": "original_0",
+      "group_cooldown_ms": 10000,
+      "effect": {
+        "kind": "restore",
+        "hp": 180,
+        "mp": 0,
+        "duration_ms": 1000
+      }
+    },
+    "original_1112": {
+      "level": 1,
+      "cooldown_ms": 10000,
+      "group": "original_1",
+      "group_cooldown_ms": 10000,
+      "effect": {
+        "kind": "restore",
+        "hp": 0,
+        "mp": 65,
+        "duration_ms": 1000
+      }
+    },
+    "original_1113": {
+      "level": 6,
+      "cooldown_ms": 10000,
+      "group": "original_1",
+      "group_cooldown_ms": 10000,
+      "effect": {
+        "kind": "restore",
+        "hp": 0,
+        "mp": 150,
+        "duration_ms": 1000
+      }
+    }
   },
-  "revival":{"limit":3,"gold":100,"gold_increment":100,"hp_percent":50,"mp_percent":50,"invulnerable_ms":3000}
+  "revival": {
+    "limit": 3,
+    "gold": 100,
+    "gold_increment": 100,
+    "hp_percent": 50,
+    "mp_percent": 50,
+    "invulnerable_ms": 3000
+  }
 }

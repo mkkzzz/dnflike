@@ -31,7 +31,10 @@ def validate(cfg, catalog):
             if not isinstance(rule.get('group'), str) or not 1 <= len(rule['group']) <= 64:
                 errors.append('invalid cooldown group ' + item)
             effect = rule.get('effect')
-            if not isinstance(effect, dict) or effect.get('kind') != 'heal' or not whole(effect.get('amount'), 1, 1000000):
+            valid_effect=isinstance(effect,dict) and effect.get('kind')=='heal' and whole(effect.get('amount'),1,1000000)
+            if isinstance(effect,dict) and effect.get('kind')=='restore':
+                valid_effect=all(whole(effect.get(k),0,1000000) for k in ['hp','mp']) and effect['hp']+effect['mp']>0 and whole(effect.get('duration_ms'),0,600000)
+            if not valid_effect:
                 errors.append('invalid healing effect ' + item)
     revival = cfg.get('revival')
     if not isinstance(revival, dict):

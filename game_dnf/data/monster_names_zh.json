@@ -1,0 +1,451 @@
+{
+  "schema": "dnf_monster_labels/1",
+  "labels": {
+    "monster/goblin/goblin.mob": "哥布林",
+    "monster/goblin/goblinthrower.mob": "投掷哥布林",
+    "monster/tau/tauarmy.mob": "牛头兵",
+    "monster/tau/taubeast.mob": "牛头巨兽",
+    "monster/lugaru/lugaru.mob": "猫妖",
+    "monster/lugaru/kurogaru.mob": "暗咒猫妖",
+    "monster/goblin/seagab.mob": "青哥布林",
+    "monster/goblin/hillgab.mob": "赤哥布林",
+    "monster/goblin/goblintaskmaster.mob": "哥布林队长",
+    "monster/goblin/goblinthrowertaskmaster.mob": "投掷十夫长",
+    "monster/characterstatue/fighterstatue.mob": "格斗家雕像",
+    "monster/characterstatue/gunnerstatue.mob": "神枪手雕像",
+    "monster/characterstatue/magicianstatue.mob": "魔法师雕像",
+    "monster/characterstatue/prieststatue.mob": "圣职者雕像",
+    "monster/characterstatue/swordmanstatue.mob": "鬼剑士雕像",
+    "monster/dollmaster/claymaster.mob": "污泥人偶师",
+    "monster/dollmaster/golemmaster.mob": "石巨人操控师",
+    "monster/dollmaster/icedoll_sharedo.mob": "寒冰人偶师沙杜",
+    "monster/dollmaster/masterdogri.mob": "人偶之王道格里",
+    "monster/dollmaster/steelmaster.mob": "钢铁人偶师",
+    "monster/dollmaster/stonemaster.mob": "岩石人偶师",
+    "monster/draconian/aurahunter_sius.mob": "雷环休斯",
+    "monster/draconian/lakius.mob": "鲁卡斯",
+    "monster/draconian/minius.mob": "米尼乌斯",
+    "monster/draconian/mirkius.mob": "龙人",
+    "monster/evileye/levileye.mob": "罪恶之左眼",
+    "monster/evileye/revileye.mob": "罪恶之右眼",
+    "monster/flydragon/harseseri.mob": "黑翼龙",
+    "monster/flydragon/looseseri.mob": "蓝翼龙",
+    "monster/flydragon/selion.mob": "火焰龙息塞仑",
+    "monster/flydragon/summon_serimalion.mob": "翼龙",
+    "monster/goblin/bombkagel.mob": "爆弹卡格",
+    "monster/goblin/bombkagelland.mob": "爆弹卡格",
+    "monster/goblin/bullseye.mob": "大将尹埃",
+    "monster/goblin/bunkerworker.mob": "碉堡工",
+    "monster/goblin/cowardgoblin.mob": "胆小哥布林",
+    "monster/goblin/flaghillgab.mob": "烈焰哥布林",
+    "monster/goblin/flagseagab.mob": "冰霜哥布林",
+    "monster/goblin/kinol.mob": "落雷凯诺",
+    "monster/goblin/nightvisionkagel.mob": "夜视镜卡格",
+    "monster/goblin/prag.mob": "普拉格",
+    "monster/goblin/surikenkagel.mob": "卡格",
+    "monster/goblin/surikenkagelland.mob": "卡格",
+    "monster/lordoflight/lordoflight.mob": "光之城主赛格哈特",
+    "monster/lugaru/gardener_ral.mob": "园丁鲁尔",
+    "monster/lugaru/penril.mob": "毒猫王",
+    "monster/lugaru/sirogaru.mob": "萤光猫妖",
+    "monster/new_golem/biggolem.mob": "浮游石巨人",
+    "monster/new_golem/bronzegolem.mob": "青铜石巨人",
+    "monster/new_golem/claygolem.mob": "泥土石巨人",
+    "monster/new_golem/greatgoleml.mob": "铁锤石巨人",
+    "monster/new_golem/greatgolemr.mob": "铁锤石巨人",
+    "monster/new_golem/platany.mob": "黄金巨人普拉塔尼",
+    "monster/new_golem/spiritofgolem.mob": "石巨人的灵魂",
+    "monster/new_golem/stoneblade_razor.mob": "石刃拉泽尔",
+    "monster/soceress/flamesoceress.mob": "炽热彼诺修",
+    "monster/soceress/icesoceress.mob": "酷寒克拉赫",
+    "monster/soceress/keraha.mob": "冰霜克拉赫",
+    "monster/soceress/vinoshu.mob": "烈焰彼诺修",
+    "monster/soceress/vinoshu_quest.mob": "烈焰彼诺修",
+    "monster/soldier/axeexpeller.mob": "斧之驱逐者",
+    "monster/soldier/axionexpeller.mob": "阿克雄",
+    "monster/soldier/expeller.mob": "驱逐者",
+    "monster/soldier/heavenexpeller.mob": "天之驱逐者",
+    "monster/soldier/legionexpeller.mob": "勒格恩",
+    "monster/soldier/tinswordmanexpeller.mob": "侍剑骑兵",
+    "monster/spirit/firespirit.mob": "亚德炎",
+    "monster/spirit/waterspirit.mob": "冰奈斯",
+    "monster/tau/tauassaulter.mob": "牛头前锋",
+    "monster/tau/tauguard.mob": "牛头护卫",
+    "monster/zombie/kalkazak.mob": "卡尔扎克",
+    "monster/zombie/zombieghoulgwish.mob": "盗尸者骨狱息",
+    "monster/zombie/zombieholloweye.mob": "饥饿僵尸",
+    "monster/zombie/zombiezombie.mob": "丛林僵尸"
+  },
+  "sources": {
+    "monster/goblin/goblin.mob": {
+      "id": 1,
+      "origin": "1031",
+      "script_sha256": "2c8a61356e31cb9f2e334ebb137826e40e7873187338043908ec6437f7525bb1"
+    },
+    "monster/goblin/goblinthrower.mob": {
+      "id": 2,
+      "origin": "1031",
+      "script_sha256": "c873b773cefc6c4642b7aaa798f0bfb25b1fc99a54375f7e1a472f6ffa5b0b32"
+    },
+    "monster/tau/tauarmy.mob": {
+      "id": 11,
+      "origin": "1031",
+      "script_sha256": "637c812ca285b40af1ceed43853a9a53e8d1214a02b906a4a890cce1bcb14947"
+    },
+    "monster/tau/taubeast.mob": {
+      "id": 12,
+      "origin": "1031",
+      "script_sha256": "0b7dc53df66c8476e768dc3abaccd45b2af8fb7ac7b7ccb7acf978ae33e78c52"
+    },
+    "monster/lugaru/lugaru.mob": {
+      "id": 5001,
+      "origin": "1031",
+      "script_sha256": "3968c83c6baf2c7536b403f5326a14fca6d86bb699fc09a4f2a62af4adc5e467"
+    },
+    "monster/lugaru/kurogaru.mob": {
+      "id": 5002,
+      "origin": "1031",
+      "script_sha256": "f9c50496c24f98791104da39ff1af7dbe1b598e118cf88f6ae532bdf126d1999"
+    },
+    "monster/goblin/seagab.mob": {
+      "id": 3,
+      "origin": "1031",
+      "script_sha256": "78b46e5aeef3b5ddf72006daf5d3793044e973238ea35b4bedd2bcf717c30c66"
+    },
+    "monster/goblin/hillgab.mob": {
+      "id": 4,
+      "origin": "1031",
+      "script_sha256": "40b4a7283598abb0320a7945ae448f7d1979352bd22c2ff7bc8e816b4c872f36"
+    },
+    "monster/goblin/goblintaskmaster.mob": {
+      "id": 5,
+      "origin": "1031",
+      "script_sha256": "4c6d17595c796cff605cab97cb15ed9607afc50a259e892eaa885757381b3ad1"
+    },
+    "monster/goblin/goblinthrowertaskmaster.mob": {
+      "id": 6,
+      "origin": "1031",
+      "script_sha256": "1d160205b7f4ffefec77971308e6dd4b162d15e99f1d620b81fbbb42cb4bf598"
+    },
+    "monster/characterstatue/fighterstatue.mob": {
+      "id": 80,
+      "origin": "1031",
+      "script_sha256": "4c87ec620cbd3b0e6f947fe63fef14b2e5e32e3a146b12ca7d437f9893233b1c"
+    },
+    "monster/characterstatue/gunnerstatue.mob": {
+      "id": 81,
+      "origin": "1031",
+      "script_sha256": "f733b1c4e7f5df939f018d7a48cdc9581aef091ae89285a9067b388de843d287"
+    },
+    "monster/characterstatue/magicianstatue.mob": {
+      "id": 82,
+      "origin": "1031",
+      "script_sha256": "b9cd2251b6b5c2418c9762782185eae0638e7aeecbc5f9a3a751e7cee690b423"
+    },
+    "monster/characterstatue/prieststatue.mob": {
+      "id": 83,
+      "origin": "1031",
+      "script_sha256": "b09abd0c9fb0fb1e1f2f122e292a2158e43c30a88842ce5b9b6764ac82b1a8c5"
+    },
+    "monster/characterstatue/swordmanstatue.mob": {
+      "id": 84,
+      "origin": "1031",
+      "script_sha256": "37aa303309522c5b1ebf9d488134a350a601b1abedb823c403da2b287e411b72"
+    },
+    "monster/dollmaster/claymaster.mob": {
+      "id": 39,
+      "origin": "1031",
+      "script_sha256": "c8dd2db9fe660a8770466c1c6b88195035104fddcb05026b41817366591092d9"
+    },
+    "monster/dollmaster/golemmaster.mob": {
+      "id": 50094,
+      "origin": "1031",
+      "script_sha256": "5848c46d9cc5979fec0c22d6f24ec89c57d8f0e121d8efd7a833555d6f8290ae"
+    },
+    "monster/dollmaster/icedoll_sharedo.mob": {
+      "id": 50006,
+      "origin": "1031",
+      "script_sha256": "aab1c29793d4be81998ab2b3b943fd53e3c59920712d01769eb966ae71208f98"
+    },
+    "monster/dollmaster/masterdogri.mob": {
+      "id": 40,
+      "origin": "1031",
+      "script_sha256": "79ad015036f3c0ef4caf6b2f06eb75733a22f792f3ac0394ebba90a88c0c1b4a"
+    },
+    "monster/dollmaster/steelmaster.mob": {
+      "id": 38,
+      "origin": "1031",
+      "script_sha256": "67979566827545da4cbb432ead0da70581cb469b53b34dee28bf560740995ccb"
+    },
+    "monster/dollmaster/stonemaster.mob": {
+      "id": 37,
+      "origin": "1031",
+      "script_sha256": "c436f3f7a686baa66dea196663de842b817a8c93bff1f2b7d946e6315fdc0118"
+    },
+    "monster/draconian/aurahunter_sius.mob": {
+      "id": 50007,
+      "origin": "1031",
+      "script_sha256": "c23eb1b9fc2459ebc7ba9bf477c9f7faf3fad57a51736deb4edc034a349418aa"
+    },
+    "monster/draconian/lakius.mob": {
+      "id": 71,
+      "origin": "1031",
+      "script_sha256": "71f6874791ecb6e5e498a9b3410cc489849cf59480e7dfc44635081011dc70d1"
+    },
+    "monster/draconian/minius.mob": {
+      "id": 72,
+      "origin": "1031",
+      "script_sha256": "b43d5dda585d822c3503bd1cf85624680d5c273ae078216ab4e2d8fdc1a74cf1"
+    },
+    "monster/draconian/mirkius.mob": {
+      "id": 70,
+      "origin": "1031",
+      "script_sha256": "22a28a221655951e9a9ba9b59faabd7747fe034556873f84c9e7f79ae14b5979"
+    },
+    "monster/evileye/levileye.mob": {
+      "id": 752,
+      "origin": "1031",
+      "script_sha256": "b076c3357cfd4329d907be8c9fac9f56fde712063582a4f47f317e48b2fce65f"
+    },
+    "monster/evileye/revileye.mob": {
+      "id": 751,
+      "origin": "1031",
+      "script_sha256": "0554f2ced387f48f648984ec1ded05402c347d233d52499b0cd74992e765a0cc"
+    },
+    "monster/flydragon/harseseri.mob": {
+      "id": 50,
+      "origin": "111_t2s",
+      "script_sha256": "021a56f93207a17760379b7eeda1f1d8e0e372a10f1c2567f14a5091c16450c3"
+    },
+    "monster/flydragon/looseseri.mob": {
+      "id": 51,
+      "origin": "111_t2s",
+      "script_sha256": "8f5053d4d549326bc9794802a171c228ddfeaaf38646f4e7e671480e6c021b85"
+    },
+    "monster/flydragon/selion.mob": {
+      "id": 53,
+      "origin": "1031",
+      "script_sha256": "f0245c5d9e32f2586f99922e71fe352277836bc1a5224eaf1a8bd074bb60618a"
+    },
+    "monster/flydragon/summon_serimalion.mob": {
+      "id": 60110,
+      "origin": "1031",
+      "script_sha256": "4ef327affbe6fa3680f3cc96e24c1ed08757c39065790458a326989bde4f4daa"
+    },
+    "monster/goblin/bombkagel.mob": {
+      "id": 60,
+      "origin": "1031",
+      "script_sha256": "5b5ac370f60a133e35a8de2da6bc75c33fd4de2517f21239917a08851cf9d9e9"
+    },
+    "monster/goblin/bombkagelland.mob": {
+      "id": 64,
+      "origin": "1031",
+      "script_sha256": "50ebf56b439a9653a2aca0666ba75338dd17288e913c9306b5a61982fcd24e05"
+    },
+    "monster/goblin/bullseye.mob": {
+      "id": 50062,
+      "origin": "1031",
+      "script_sha256": "bae21b0c7731491fc19877d372a11966ddac9ce6d9a26813835434277b0f437e"
+    },
+    "monster/goblin/bunkerworker.mob": {
+      "id": 50003,
+      "origin": "1031",
+      "script_sha256": "ee8d6a9ca66da58e9aa61bfe4294b3ae31d8fe44918cef9fa9b7ba4c3cfc21cf"
+    },
+    "monster/goblin/cowardgoblin.mob": {
+      "id": 10,
+      "origin": "1031",
+      "script_sha256": "7f62162ac1a8bd4764772140bb2443eaa16a2f13649b01e0a3f53949d5e641ff"
+    },
+    "monster/goblin/flaghillgab.mob": {
+      "id": 7,
+      "origin": "1031",
+      "script_sha256": "e21255cfca2b4bef554107879051a54b146af0934446ca8c68f297ce3c860caa"
+    },
+    "monster/goblin/flagseagab.mob": {
+      "id": 8,
+      "origin": "1031",
+      "script_sha256": "19365f9a02f3b711ba0b75084d7ddcf7846da02bd4c386c43e41fffcadf4bfdb"
+    },
+    "monster/goblin/kinol.mob": {
+      "id": 9,
+      "origin": "1031",
+      "script_sha256": "2cf76bf53422c59e13c054c76a6957971032ffba66ef1b20b1af948d2a7773dd"
+    },
+    "monster/goblin/nightvisionkagel.mob": {
+      "id": 1100,
+      "origin": "1031",
+      "script_sha256": "07ff4459deed15b48c325c6319c886ba669c334ff64831bd74bb549388731d0c"
+    },
+    "monster/goblin/prag.mob": {
+      "id": 50004,
+      "origin": "1031",
+      "script_sha256": "90277ea932d32dd190afd630797774158f9ea631da6de66a747ca43728128b4f"
+    },
+    "monster/goblin/surikenkagel.mob": {
+      "id": 61,
+      "origin": "1031",
+      "script_sha256": "7a727f51b187b997c9f98ebfaeb6cbcaf2c002a0785e86f3ebc5822a84f86a28"
+    },
+    "monster/goblin/surikenkagelland.mob": {
+      "id": 65,
+      "origin": "1031",
+      "script_sha256": "095a9e54562079490662ba93f1a444d3d0f75468e36461a6f778d8a9dd9066cb"
+    },
+    "monster/lordoflight/lordoflight.mob": {
+      "id": 3000,
+      "origin": "1031",
+      "script_sha256": "cda040dd3600eee01cbe06d268f4d088315b0d4784eedeb7508dfb7f9a0c531d"
+    },
+    "monster/lugaru/gardener_ral.mob": {
+      "id": 50000,
+      "origin": "1031",
+      "script_sha256": "2cae8569edcefd6bc0f8f85ca2ace24aa0e6ddd1aacf924c776fe5fdd529cefe"
+    },
+    "monster/lugaru/penril.mob": {
+      "id": 5004,
+      "origin": "1031",
+      "script_sha256": "d900e2c360adaeba939d8e7abaa955815b035507f473301e0ab10e9efd170bbf"
+    },
+    "monster/lugaru/sirogaru.mob": {
+      "id": 5003,
+      "origin": "1031",
+      "script_sha256": "6002f89c0693fa31706293ed2d5eeebb46cc154cbf707e0ee69373c3158d8984"
+    },
+    "monster/new_golem/biggolem.mob": {
+      "id": 75,
+      "origin": "1031",
+      "script_sha256": "f74df8b1158893654193ef4cb0eb847d7288d3b8194732bad59b848fd9382835"
+    },
+    "monster/new_golem/bronzegolem.mob": {
+      "id": 34,
+      "origin": "1031",
+      "script_sha256": "851059b60b36af2d372b286960cb3456f033271f5213efbb9b446e3a81bff2eb"
+    },
+    "monster/new_golem/claygolem.mob": {
+      "id": 33,
+      "origin": "1031",
+      "script_sha256": "7ba395fe24805f8cab0a3eabd0d2740c495e7c3dcddfce787bf4bfe1346af880"
+    },
+    "monster/new_golem/greatgoleml.mob": {
+      "id": 76,
+      "origin": "1031",
+      "script_sha256": "32f349b0a38cf5a13d6b77c15d6bb60463b6bf3a065a0978a90b54e933e552e4"
+    },
+    "monster/new_golem/greatgolemr.mob": {
+      "id": 78,
+      "origin": "1031",
+      "script_sha256": "22dba8d5bf9e10f306f1a28e005d1206a58e2d7bbf9eb5557aa3d4618ec2944c"
+    },
+    "monster/new_golem/platany.mob": {
+      "id": 3001,
+      "origin": "1031",
+      "script_sha256": "817ad66acaee6dd87afd204b3734821850883a0ee46e990786c59a3249041fb1"
+    },
+    "monster/new_golem/spiritofgolem.mob": {
+      "id": 77,
+      "origin": "1031",
+      "script_sha256": "f0c677ae98f0be9f949b6f636c63a3c230afe5d2020858972866f0687dee7ac3"
+    },
+    "monster/new_golem/stoneblade_razor.mob": {
+      "id": 50008,
+      "origin": "1031",
+      "script_sha256": "73239e69723b10d9c098a9bef059253a550b21b879296d6d0391abe85c317e4d"
+    },
+    "monster/soceress/flamesoceress.mob": {
+      "id": 50023,
+      "origin": "1031",
+      "script_sha256": "747f46a223eecbb0cc38202237504fe36e05b48aa971fcf69c39f5da194c03d2"
+    },
+    "monster/soceress/icesoceress.mob": {
+      "id": 50024,
+      "origin": "1031",
+      "script_sha256": "0a1a8af5b4dba74550f86df12899ea42c93d7ff77e70e5fa2f852252047538d1"
+    },
+    "monster/soceress/keraha.mob": {
+      "id": 21,
+      "origin": "1031",
+      "script_sha256": "9e22ee22f47e849e7be2e4aa95b11aebbf57b342b0b1c0147522ffcea767276c"
+    },
+    "monster/soceress/vinoshu.mob": {
+      "id": 22,
+      "origin": "1031",
+      "script_sha256": "fbcdcdc150a99d91bf9ff03562a7df7613202d4035d8a76fe4f1e9acc7703c9e"
+    },
+    "monster/soceress/vinoshu_quest.mob": {
+      "id": 62523,
+      "origin": "1031",
+      "script_sha256": "5f05287deecf14c5085dfe764eb0a8874940b4edca8fca7782eefe6e5303a20f"
+    },
+    "monster/soldier/axeexpeller.mob": {
+      "id": 701,
+      "origin": "1031",
+      "script_sha256": "e9764cf31e6b543f135ef8a6680d77c56f3f3938a4f8430a380ca4dc27aa4c73"
+    },
+    "monster/soldier/axionexpeller.mob": {
+      "id": 50063,
+      "origin": "1031",
+      "script_sha256": "61df9eae982d753984c4901ca969f660a7373852db8fcad8f356f644d36492bb"
+    },
+    "monster/soldier/expeller.mob": {
+      "id": 700,
+      "origin": "1031",
+      "script_sha256": "874d868ac9c71b2d189a8e3f9aaac082aef5c86b984b6972a4f37aaf99366544"
+    },
+    "monster/soldier/heavenexpeller.mob": {
+      "id": 702,
+      "origin": "1031",
+      "script_sha256": "9d6efcb822b6de1e8b0d38256687c065e944c562036ba2251966e2877026cdae"
+    },
+    "monster/soldier/legionexpeller.mob": {
+      "id": 704,
+      "origin": "1031",
+      "script_sha256": "7f42fe178d8a157cd3d11ea9006f37c626421b9d20e8d5f9ff4f49923cda2bd4"
+    },
+    "monster/soldier/tinswordmanexpeller.mob": {
+      "id": 705,
+      "origin": "1031",
+      "script_sha256": "8f4822c5c24a39752aef90122f065870a3c36753d91414715cc483a234555afc"
+    },
+    "monster/spirit/firespirit.mob": {
+      "id": 601,
+      "origin": "1031",
+      "script_sha256": "8d83c7c68e3a5ea4a6e97691cbb632fb01bcb628544267971e7de5d780a29f27"
+    },
+    "monster/spirit/waterspirit.mob": {
+      "id": 600,
+      "origin": "1031",
+      "script_sha256": "a6142418c7baab1726ec1ca23432cb241f9f425dbb50be99ec3583ff40c30cee"
+    },
+    "monster/tau/tauassaulter.mob": {
+      "id": 13,
+      "origin": "1031",
+      "script_sha256": "4dcdcc9e094bc849d090fc42fe69abd1e8c78ed6156ddae90856cf9a841e3f2c"
+    },
+    "monster/tau/tauguard.mob": {
+      "id": 14,
+      "origin": "1031",
+      "script_sha256": "2c10c617947d1858e11dc36ae02820277746c98a58aba2d47107fdb7b3ffdcad"
+    },
+    "monster/zombie/kalkazak.mob": {
+      "id": 50001,
+      "origin": "1031",
+      "script_sha256": "7c3c5878e062dc858e001f0749f66fa7f6deae57f6bbe4adaca7b296f53092b4"
+    },
+    "monster/zombie/zombieghoulgwish.mob": {
+      "id": 212,
+      "origin": "1031",
+      "script_sha256": "e5cbb6d4f05012b1b2e2e2f5d5f97b4f1d1b74f790efb6aaa9d2a8886ab6c920"
+    },
+    "monster/zombie/zombieholloweye.mob": {
+      "id": 211,
+      "origin": "1031",
+      "script_sha256": "c65e8531bbe414de019bceb11842429c1c96e6c56ae37b6ff0a414b1a905e3ef"
+    },
+    "monster/zombie/zombiezombie.mob": {
+      "id": 210,
+      "origin": "1031",
+      "script_sha256": "f18cdc308729c6c4ae074f0c987dc219fcee288a3fab32766d2364cfd968b5af"
+    }
+  }
+}

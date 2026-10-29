@@ -1,0 +1,239 @@
+{
+  "schema": "dnf_progression_evidence/1",
+  "date": "2026-10-29",
+  "engine": "Godot 4.7.2",
+  "ws1_basis": "ebbc54cb",
+  "checks": {
+    "kaino": [
+      {
+        "suite": "ORIGINAL_DATA",
+        "checks": 31,
+        "failures": 0
+      },
+      {
+        "suite": "RECOVERY_TEST",
+        "checks": 50,
+        "failures": 0
+      },
+      {
+        "suite": "UPGRADE_TEST",
+        "checks": 46,
+        "failures": 0
+      },
+      {
+        "suite": "SERVICE_TEST",
+        "checks": 33,
+        "failures": 0
+      },
+      {
+        "suite": "ITEM_TEST",
+        "checks": 44,
+        "failures": 0
+      },
+      {
+        "suite": "NUMBERS_TEST",
+        "checks": 63,
+        "failures": 0
+      },
+      {
+        "suite": "QUEST_TEST",
+        "checks": 45,
+        "failures": 0
+      },
+      {
+        "suite": "TOWN_UNIT",
+        "checks": 102,
+        "failures": 0
+      },
+      {
+        "suite": "GRAN_UNIT",
+        "checks": 19,
+        "failures": 0
+      },
+      {
+        "suite": "KAINO_CHAPTER",
+        "checks": 123,
+        "failures": 0
+      }
+    ],
+    "full": [
+      {
+        "suite": "ORIGINAL_DATA",
+        "checks": 31,
+        "failures": 0
+      },
+      {
+        "suite": "RECOVERY_TEST",
+        "checks": 50,
+        "failures": 0
+      },
+      {
+        "suite": "UPGRADE_TEST",
+        "checks": 46,
+        "failures": 0
+      },
+      {
+        "suite": "SERVICE_TEST",
+        "checks": 33,
+        "failures": 0
+      },
+      {
+        "suite": "ITEM_TEST",
+        "checks": 44,
+        "failures": 0
+      },
+      {
+        "suite": "NUMBERS_TEST",
+        "checks": 63,
+        "failures": 0
+      },
+      {
+        "suite": "QUEST_TEST",
+        "checks": 45,
+        "failures": 0
+      },
+      {
+        "suite": "TOWN_UNIT",
+        "checks": 102,
+        "failures": 0
+      },
+      {
+        "suite": "GRAN_UNIT",
+        "checks": 19,
+        "failures": 0
+      },
+      {
+        "suite": "LOOP_TEST",
+        "checks": 384,
+        "failures": 0
+      }
+    ],
+    "combat": [
+      {
+        "suite": "DNF_TEST",
+        "checks": 143,
+        "failures": 0
+      }
+    ]
+  },
+  "raw_log_sha256": {
+    "kaino": "5319a5dbf8800d878170fd1d6223742f2a100e91bb10e72c4a962922d3e12d39",
+    "full": "272faa3a0867cf3cf6bb6b4b1d7de9a0db1c4f7dd83bf8b2e5a41eb574bd21d0",
+    "combat": "aad6ccfff716aed35453e8d77c19ae0744fdbfda8c5a4aac924926c1b776bed3"
+  },
+  "log_normalization": "UTF-8 with trailing whitespace removed; raw hashes retained",
+  "capture_calls": 21,
+  "unique_screenshots": 13,
+  "build_repeat_identical_tables": 7,
+  "reward_compiler_test_methods": 4,
+  "frame_hashes_verified": 19,
+  "dependency_violations": 0,
+  "limits": [
+    "Declared level-ten completed-opening fixture, then real movement, fights and hand-ins",
+    "No claim of all quests/items or source-version fidelity",
+    "Legacy original Ogg metadata warnings retained; actual Godot errors forbidden",
+    "No visual or balance approval inferred from checks"
+  ],
+  "files": [
+    {
+      "path": "docs/reports/ws2/2026-10/progression_original_v1/kaino.log",
+      "sha256": "bb905367d17a50fdcf8e6f39fac78e2a9e9563b6fc76b5ffae66c968dbf6f61e"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/gran_battle_sunderland_1.png",
+      "sha256": "b1bb80517500daad08a815add315cf150304376009c6cc09cc6af2fa39c008a1"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/gran_battle_sunderland_2.png",
+      "sha256": "64ac3aff05e31a02c28d166d83c8ed1589fcf51da938698f7c68de6c80b5609c"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/gran_battle_sunderland_3.png",
+      "sha256": "7177dd3111e6d4cfe3a32f14f4feb391a4864a813d498c691f460cbf5fe43606"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/gran_battle_sunderland_4.png",
+      "sha256": "0a86e36bcd8cc3eb17c3592d0dd3f2c0405ffba7ad98aed874bb32cc3544f565"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/gran_battle_sunderland_5.png",
+      "sha256": "363331592171a3fe06bef1342980d6c003a1bbc242babc5d183b8e9e26a91d88"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/gran_battle_sunderland_6.png",
+      "sha256": "5b58dba0bc601cb67aba1ca6470ea3e716df14c47d3b4d006e3f192adcba8119"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/gran_boss_sunderland.png",
+      "sha256": "8505f990946b6186c69de32995e3d7456f1772c1e844b9cedc96649b0604c279"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/gran_forest_approach.png",
+      "sha256": "0edd8da3e7d38e30d1ab1c33496a87c1895278740c3a44862669d800ff47dd13"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/original_01_kaino_task.png",
+      "sha256": "6aabbc9b52dfb52f43889db74a9d9e4019ef99d6b592ec6b9ebc2ad301da911d"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/original_02_items_and_pause.png",
+      "sha256": "5e27719dee52dd4a34cb2343315f27622ddbfe26d41ff13433d81fc5f622d294"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/original_03_kaino_victory.png",
+      "sha256": "04cbfb2dd677c81993b92ff464be934dafe582e26804f47c7ce9d798477b17d4"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/original_04_source_rewards.png",
+      "sha256": "7a9ecc6714918631501d24700b14546108c759c7bb9cfd90842fc062d2421b19"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_progression_original_v1/original_05_rewards_inventory.png",
+      "sha256": "3866a6c2e13db77bde58f156ff94b88a02f689943c4eeb3227cd4778c79d303e"
+    },
+    {
+      "path": "docs/reports/ws2/2026-10/progression_original_v1/full.log",
+      "sha256": "ec61cf2874210d4e93946e21b2d9ec04981e361ab0d3d1b1301f3df799079601"
+    },
+    {
+      "path": "docs/reports/ws2/2026-10/progression_original_v1/combat.log",
+      "sha256": "aad6ccfff716aed35453e8d77c19ae0744fdbfda8c5a4aac924926c1b776bed3"
+    },
+    {
+      "path": "game_dnf/data/runtime_items.json",
+      "sha256": "3bc29c2fdb90236c64ef1a6e1adbbfe429343877a4a19a96a10846191e1edf86"
+    },
+    {
+      "path": "game_dnf/data/monster_names_zh.json",
+      "sha256": "61cdb98d3924e61a881854944a4d5623aa3a62109db58c4ba0c335595217e195"
+    },
+    {
+      "path": "game_dnf/data/numbers.json",
+      "sha256": "e263826af81bb294ad09157bffd8ad70ffb95a9dfe28b2b72d71c71aa77cb9be"
+    },
+    {
+      "path": "game_dnf/data/recovery.json",
+      "sha256": "84c6608cddc3cd3327039a6287e309129b675096a4518e0bb1e018c635633e7c"
+    },
+    {
+      "path": "game_dnf/data/services.json",
+      "sha256": "9882fda0b2e71fdaea5e323b2e6234135485d1c182ae05a98f028acb11b23c1a"
+    },
+    {
+      "path": "game_dnf/data/quests.json",
+      "sha256": "c44f7e0d955b521a9bf58efc87ce996b5bca60593806bf923613420f004101bb"
+    },
+    {
+      "path": "game_dnf/data/dungeons.json",
+      "sha256": "23827cde3fe1a6aa57a8bdcab42a13fa743b2ffbe65a62051c39446e1c282834"
+    },
+    {
+      "path": "game_dnf/data/quest_catalog.json",
+      "sha256": "c7f3b159cc92e0bd0ce99b09c5a3ab23da66f7f81be889881d3c40dd5d2459fc"
+    },
+    {
+      "path": "game_dnf/assets_local/items_original_v1/manifest.json",
+      "sha256": "eb283315b45273b9272823608a71d6f8f66e994b40447ce3a6d9ba7adeb2b862"
+    }
+  ]
+}

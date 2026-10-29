@@ -1,6 +1,6 @@
 {
  "schema": "dnf_item_catalog/1",
- "evidence": "原版 .equ/.stk/.etc 结构字段 E-PARSE；[name] 为加密槽，装备另有明文 [name2]",
+ "evidence": "原版 .equ/.stk/.etc 结构字段 E-PARSE；本总账保留名称字节指纹，中文正文另由TextResolver解析",
  "summary": {
   "total": 85533,
   "failed": 25,

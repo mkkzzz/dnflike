@@ -1,0 +1,1839 @@
+{
+  "schema": "dnf_runtime_items/1",
+  "revision": 1,
+  "items": {
+    "original_1106": {
+      "name": "诺顿的新手HP药剂",
+      "kind": "consumable",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 100,
+      "multiplier": 1.0,
+      "description": "恢复 HP 70 / MP 0，持续 1.0 秒；冷却 10.0 秒",
+      "stack_limit": 1000,
+      "source": {
+        "id": 1106,
+        "list": "stackable/stackable.lst",
+        "path": "stackable/ptn_hplowest.stk",
+        "sha256": "646662267b868dac2fec409781fccd405754d6b67dbc64c042b0c935346bbef7"
+      },
+      "source_fields": {
+        "[grade]": [
+          3
+        ],
+        "[attach type]": [
+          "[free]"
+        ],
+        "[rarity]": [
+          1
+        ],
+        "[weight]": [
+          20
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[minimum level]": [
+          1
+        ],
+        "[stack limit]": [
+          1000
+        ],
+        "[icon]": [
+          "Item/stackable/consumption.img",
+          148
+        ],
+        "[field image]": [
+          "Item/field_consumption.img",
+          7
+        ],
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[item group name]": [
+          "potion"
+        ],
+        "[price]": [
+          100
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          0
+        ],
+        "[move wav]": [
+          "POTION_TOUCH"
+        ],
+        "[hp recovery]": [
+          "+",
+          70,
+          1000,
+          "myself"
+        ]
+      },
+      "icon": [
+        "Item/stackable/consumption.img",
+        148
+      ],
+      "field_image": [
+        "Item/field_consumption.img",
+        7
+      ]
+    },
+    "original_1107": {
+      "name": "诺顿的入门HP药剂",
+      "kind": "consumable",
+      "level": 6,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 200,
+      "multiplier": 1.0,
+      "description": "恢复 HP 180 / MP 0，持续 1.0 秒；冷却 10.0 秒",
+      "stack_limit": 1000,
+      "source": {
+        "id": 1107,
+        "list": "stackable/stackable.lst",
+        "path": "stackable/ptn_hplow.stk",
+        "sha256": "d4ccd64c49d767325333d1cc5a2d7537d0fd7294f964a4baa9c7d686650fc9fc"
+      },
+      "source_fields": {
+        "[grade]": [
+          10
+        ],
+        "[attach type]": [
+          "[free]"
+        ],
+        "[rarity]": [
+          1
+        ],
+        "[weight]": [
+          20
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[minimum level]": [
+          6
+        ],
+        "[stack limit]": [
+          1000
+        ],
+        "[icon]": [
+          "Item/stackable/consumption.img",
+          150
+        ],
+        "[field image]": [
+          "Item/field_consumption.img",
+          9
+        ],
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[item group name]": [
+          "potion"
+        ],
+        "[price]": [
+          200
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          0
+        ],
+        "[move wav]": [
+          "POTION_TOUCH"
+        ],
+        "[hp recovery]": [
+          "+",
+          180,
+          1000,
+          "myself"
+        ]
+      },
+      "icon": [
+        "Item/stackable/consumption.img",
+        150
+      ],
+      "field_image": [
+        "Item/field_consumption.img",
+        9
+      ]
+    },
+    "original_1112": {
+      "name": "罗莉安的新手MP药剂",
+      "kind": "consumable",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 100,
+      "multiplier": 1.0,
+      "description": "恢复 HP 0 / MP 65，持续 1.0 秒；冷却 10.0 秒",
+      "stack_limit": 1000,
+      "source": {
+        "id": 1112,
+        "list": "stackable/stackable.lst",
+        "path": "stackable/ptn_mplowest.stk",
+        "sha256": "de867e61cbe79a7a3ee9789af3a4786b2dcca076836ca071ac805fe1402e2b04"
+      },
+      "source_fields": {
+        "[grade]": [
+          3
+        ],
+        "[attach type]": [
+          "[free]"
+        ],
+        "[rarity]": [
+          1
+        ],
+        "[weight]": [
+          20
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[minimum level]": [
+          1
+        ],
+        "[stack limit]": [
+          1000
+        ],
+        "[icon]": [
+          "Item/stackable/consumption.img",
+          149
+        ],
+        "[field image]": [
+          "Item/field_consumption.img",
+          8
+        ],
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[item group name]": [
+          "potion"
+        ],
+        "[price]": [
+          100
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          1
+        ],
+        "[move wav]": [
+          "POTION_TOUCH"
+        ],
+        "[mp recovery]": [
+          "+",
+          65,
+          1000,
+          "myself"
+        ]
+      },
+      "icon": [
+        "Item/stackable/consumption.img",
+        149
+      ],
+      "field_image": [
+        "Item/field_consumption.img",
+        8
+      ]
+    },
+    "original_1113": {
+      "name": "罗莉安的入门MP药剂",
+      "kind": "consumable",
+      "level": 6,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 200,
+      "multiplier": 1.0,
+      "description": "恢复 HP 0 / MP 150，持续 1.0 秒；冷却 10.0 秒",
+      "stack_limit": 1000,
+      "source": {
+        "id": 1113,
+        "list": "stackable/stackable.lst",
+        "path": "stackable/ptn_mplow.stk",
+        "sha256": "b9d5d24198b377ae6d014257acadc44659836b3055e9e664a95d78a7c88475ae"
+      },
+      "source_fields": {
+        "[grade]": [
+          10
+        ],
+        "[attach type]": [
+          "[free]"
+        ],
+        "[rarity]": [
+          1
+        ],
+        "[weight]": [
+          20
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[minimum level]": [
+          6
+        ],
+        "[stack limit]": [
+          1000
+        ],
+        "[icon]": [
+          "Item/stackable/consumption.img",
+          151
+        ],
+        "[field image]": [
+          "Item/field_consumption.img",
+          10
+        ],
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[item group name]": [
+          "potion"
+        ],
+        "[price]": [
+          200
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          1
+        ],
+        "[move wav]": [
+          "POTION_TOUCH"
+        ],
+        "[mp recovery]": [
+          "+",
+          150,
+          1000,
+          "myself"
+        ]
+      },
+      "icon": [
+        "Item/stackable/consumption.img",
+        151
+      ],
+      "field_image": [
+        "Item/field_consumption.img",
+        10
+      ]
+    },
+    "original_10580": {
+      "name": "磨损的冒险者胸甲",
+      "kind": "weapon",
+      "level": 4,
+      "rarity": 0,
+      "weight": 1.9,
+      "price": 2400,
+      "multiplier": 1.0,
+      "description": "原版装备 · 上衣",
+      "stack_limit": 1,
+      "source": {
+        "id": 10580,
+        "list": "equipment/equipment.lst",
+        "path": "equipment/character/common/jacket/leather/coat_10580.equ",
+        "sha256": "556ff974c6cef1d9448603965a82533e80037538dc765df22fb8d28fab0317fd"
+      },
+      "source_fields": {
+        "[grade]": [
+          4
+        ],
+        "[rarity]": [
+          0
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[attach type]": [
+          "[trade]"
+        ],
+        "[minimum level]": [
+          4
+        ],
+        "[HP MAX]": [
+          25
+        ],
+        "[price]": [
+          2400
+        ],
+        "[repair price]": [
+          1920
+        ],
+        "[value]": [
+          1728
+        ],
+        "[equipment physical defense]": [
+          48,
+          48
+        ],
+        "[icon]": [
+          "Item/IconSet.img",
+          10
+        ],
+        "[field image]": [
+          "Item/FieldImage.img",
+          0
+        ],
+        "[equipment type]": [
+          "[coat]",
+          18
+        ],
+        "[sub type]": [
+          1
+        ],
+        "[move wav]": [
+          "CLOTH_TOUCH"
+        ],
+        "[durability]": [
+          28
+        ],
+        "[weight]": [
+          1900
+        ],
+        "[item group name]": [
+          "lt coat"
+        ],
+        "[cool time]": [
+          10000
+        ]
+      },
+      "icon": [
+        "Item/IconSet.img",
+        10
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        0
+      ]
+    },
+    "original_16400": {
+      "name": "残破的牛皮腰带",
+      "kind": "weapon",
+      "level": 1,
+      "rarity": 0,
+      "weight": 0.8,
+      "price": 200,
+      "multiplier": 1.0,
+      "description": "原版装备 · 腰带",
+      "stack_limit": 1,
+      "source": {
+        "id": 16400,
+        "list": "equipment/equipment.lst",
+        "path": "equipment/character/common/belt/leather/str_crleather.equ",
+        "sha256": "574fea8329149dd47ffb6450f9e472fabbce2719e6a121c0234868fa10af2c9e"
+      },
+      "source_fields": {
+        "[grade]": [
+          1
+        ],
+        "[rarity]": [
+          0
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[attach type]": [
+          "[free]"
+        ],
+        "[minimum level]": [
+          1
+        ],
+        "[inventory limit]": [
+          3000
+        ],
+        "[price]": [
+          200
+        ],
+        "[repair price]": [
+          160
+        ],
+        "[value]": [
+          144
+        ],
+        "[creation rate]": [
+          500
+        ],
+        "[equipment physical defense]": [
+          7,
+          7
+        ],
+        "[icon]": [
+          "Item/IconArmor.img",
+          0
+        ],
+        "[field image]": [
+          "Item/FieldImage.img",
+          3
+        ],
+        "[equipment type]": [
+          "[waist]",
+          12
+        ],
+        "[sub type]": [
+          1
+        ],
+        "[move wav]": [
+          "CLOTH_TOUCH"
+        ],
+        "[durability]": [
+          20
+        ],
+        "[weight]": [
+          800
+        ],
+        "[item group name]": [
+          "lt waist"
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[possible kiri protect]": []
+      },
+      "icon": [
+        "Item/IconArmor.img",
+        0
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        3
+      ]
+    },
+    "original_16403": {
+      "name": "牛皮腰带",
+      "kind": "weapon",
+      "level": 5,
+      "rarity": 1,
+      "weight": 0.8,
+      "price": 2000,
+      "multiplier": 1.0,
+      "description": "原版装备 · 腰带",
+      "stack_limit": 1,
+      "source": {
+        "id": 16403,
+        "list": "equipment/equipment.lst",
+        "path": "equipment/character/common/belt/leather/str_leather.equ",
+        "sha256": "7186d6bfd2e9bf9a61c9de4929e7c40ab2616cb2acc34b374d81190adfa4e3b3"
+      },
+      "source_fields": {
+        "[grade]": [
+          5
+        ],
+        "[rarity]": [
+          1
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[attach type]": [
+          "[free]"
+        ],
+        "[minimum level]": [
+          5
+        ],
+        "[physical attack]": [
+          1
+        ],
+        "[magical attack]": [
+          1
+        ],
+        "[magical defense]": [
+          1
+        ],
+        "[inventory limit]": [
+          3000
+        ],
+        "[price]": [
+          2000
+        ],
+        "[repair price]": [
+          1600
+        ],
+        "[value]": [
+          1440
+        ],
+        "[creation rate]": [
+          500
+        ],
+        "[equipment physical defense]": [
+          40,
+          40
+        ],
+        "[icon]": [
+          "Item/IconArmor.img",
+          0
+        ],
+        "[field image]": [
+          "Item/FieldImage.img",
+          3
+        ],
+        "[equipment type]": [
+          "[waist]",
+          14
+        ],
+        "[sub type]": [
+          1
+        ],
+        "[move wav]": [
+          "CLOTH_TOUCH"
+        ],
+        "[durability]": [
+          20
+        ],
+        "[weight]": [
+          800
+        ],
+        "[item group name]": [
+          "lt waist"
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[possible kiri protect]": []
+      },
+      "icon": [
+        "Item/IconArmor.img",
+        0
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        3
+      ]
+    },
+    "original_22001": {
+      "name": "破旧的棉布护腕",
+      "kind": "weapon",
+      "level": 4,
+      "rarity": 0,
+      "weight": 0.25,
+      "price": 2400,
+      "multiplier": 1.0,
+      "description": "原版装备 · 手镯",
+      "stack_limit": 1,
+      "source": {
+        "id": 22001,
+        "list": "equipment/equipment.lst",
+        "path": "equipment/character/common/wrist/wrist_ucloth.equ",
+        "sha256": "3911b235428429b449978ef4330c7d156b0176901cb737414de4a8a4b0200963"
+      },
+      "source_fields": {
+        "[grade]": [
+          4
+        ],
+        "[rarity]": [
+          0
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[attach type]": [
+          "[free]"
+        ],
+        "[minimum level]": [
+          4
+        ],
+        "[price]": [
+          2400
+        ],
+        "[repair price]": [
+          1920
+        ],
+        "[value]": [
+          1728
+        ],
+        "[equipment magical defense]": [
+          144,
+          144
+        ],
+        "[icon]": [
+          "Item/IconAcc.img",
+          16
+        ],
+        "[field image]": [
+          "Item/FieldImage.img",
+          7
+        ],
+        "[equipment type]": [
+          "[wrist]",
+          16
+        ],
+        "[move wav]": [
+          "BRACELET_TOUCH"
+        ],
+        "[weight]": [
+          250
+        ],
+        "[item group name]": [
+          "wrist"
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[possible kiri protect]": []
+      },
+      "icon": [
+        "Item/IconAcc.img",
+        16
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        7
+      ]
+    },
+    "original_24116": {
+      "name": "避雷指环",
+      "kind": "weapon",
+      "level": 6,
+      "rarity": 1,
+      "weight": 0.3,
+      "price": 3600,
+      "multiplier": 1.0,
+      "description": "原版装备 · 戒指",
+      "stack_limit": 1,
+      "source": {
+        "id": 24116,
+        "list": "equipment/equipment.lst",
+        "path": "equipment/character/common/ring/ring_thunderprotect.equ",
+        "sha256": "4832a81e340bb8161347efcb4449b98cf555edfc0582f3f57308b8e5c7982c42"
+      },
+      "source_fields": {
+        "[grade]": [
+          6
+        ],
+        "[rarity]": [
+          1
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[attach type]": [
+          "[trade]"
+        ],
+        "[minimum level]": [
+          6
+        ],
+        "[physical attack]": [
+          4
+        ],
+        "[magical attack]": [
+          4
+        ],
+        "[price]": [
+          3600
+        ],
+        "[repair price]": [
+          2880
+        ],
+        "[value]": [
+          2592
+        ],
+        "[equipment magical defense]": [
+          192,
+          192
+        ],
+        "[light resistance]": [
+          5
+        ],
+        "[icon]": [
+          "Item/IconAcc.img",
+          27
+        ],
+        "[field image]": [
+          "Item/FieldImage.img",
+          5
+        ],
+        "[equipment type]": [
+          "[ring]",
+          16
+        ],
+        "[move wav]": [
+          "RING_TOUCH"
+        ],
+        "[weight]": [
+          300
+        ],
+        "[item group name]": [
+          "ring"
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[possible kiri protect]": []
+      },
+      "icon": [
+        "Item/IconAcc.img",
+        27
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        5
+      ]
+    },
+    "original_27601": {
+      "name": "生锈的武士刀",
+      "kind": "weapon",
+      "level": 3,
+      "rarity": 0,
+      "weight": 2.8,
+      "price": 2100,
+      "multiplier": 1.0,
+      "description": "原版装备 · 武器",
+      "stack_limit": 1,
+      "source": {
+        "id": 27601,
+        "list": "equipment/equipment.lst",
+        "path": "equipment/character/swordman/weapon/katana/kat_worn.equ",
+        "sha256": "fb8d74d46b2409a4e93fd89599efed0853ff83a87636fa01dee21724526765ad"
+      },
+      "source_fields": {
+        "[grade]": [
+          3
+        ],
+        "[rarity]": [
+          0
+        ],
+        "[usable job]": [
+          "[swordman]"
+        ],
+        "[attach type]": [
+          "[free]"
+        ],
+        "[minimum level]": [
+          3
+        ],
+        "[attack speed]": [
+          80
+        ],
+        "[cast speed]": [
+          40
+        ],
+        "[stuck]": [
+          1
+        ],
+        "[price]": [
+          2100
+        ],
+        "[repair price]": [
+          1680
+        ],
+        "[value]": [
+          1512
+        ],
+        "[equipment physical attack]": [
+          27,
+          27
+        ],
+        "[equipment magical attack]": [
+          29,
+          29
+        ],
+        "[separate attack]": [
+          26,
+          14
+        ],
+        "[physical critical hit]": [
+          2
+        ],
+        "[icon]": [
+          "Item/weapon/swordman/katana.img",
+          0
+        ],
+        "[field image]": [
+          "Item/FieldImage.img",
+          11
+        ],
+        "[equipment type]": [
+          "[weapon]",
+          17
+        ],
+        "[animation job]": [
+          "[swordman]"
+        ],
+        "[variation]": [
+          0,
+          1
+        ],
+        "[layer variation]": [
+          650,
+          "katanab"
+        ],
+        "[equipment ani script]": [
+          "equipment/character/swordman.lay"
+        ],
+        "[sub type]": [
+          1
+        ],
+        "[move wav]": [
+          "KATANA_TOUCH"
+        ],
+        "[durability]": [
+          35
+        ],
+        "[weight]": [
+          2800
+        ],
+        "[item group name]": [
+          "katana"
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[possible kiri protect]": []
+      },
+      "icon": [
+        "Item/weapon/swordman/katana.img",
+        0
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        11
+      ]
+    },
+    "original_27800": {
+      "name": "佩刀",
+      "kind": "weapon",
+      "level": 5,
+      "rarity": 0,
+      "weight": 2.8,
+      "price": 3500,
+      "multiplier": 1.0,
+      "description": "原版装备 · 武器",
+      "stack_limit": 1,
+      "source": {
+        "id": 27800,
+        "list": "equipment/equipment.lst",
+        "path": "equipment/character/swordman/weapon/katana/bazirang.equ",
+        "sha256": "c95c12432aa3554d2790dec27975edbd0ecb95afa1b106824dd33b87e8a0ba0d"
+      },
+      "source_fields": {
+        "[grade]": [
+          5
+        ],
+        "[rarity]": [
+          0
+        ],
+        "[usable job]": [
+          "[swordman]"
+        ],
+        "[attach type]": [
+          "[free]"
+        ],
+        "[minimum level]": [
+          5
+        ],
+        "[physical attack]": [
+          6
+        ],
+        "[magical attack]": [
+          9
+        ],
+        "[attack speed]": [
+          80
+        ],
+        "[cast speed]": [
+          40
+        ],
+        "[stuck]": [
+          1
+        ],
+        "[price]": [
+          3500
+        ],
+        "[repair price]": [
+          2800
+        ],
+        "[value]": [
+          2520
+        ],
+        "[creation rate]": [
+          500
+        ],
+        "[equipment physical attack]": [
+          42,
+          42
+        ],
+        "[equipment magical attack]": [
+          46,
+          46
+        ],
+        "[separate attack]": [
+          31,
+          18
+        ],
+        "[physical critical hit]": [
+          2
+        ],
+        "[icon]": [
+          "Item/IconWeapon.img",
+          23
+        ],
+        "[field image]": [
+          "Item/FieldImage.img",
+          11
+        ],
+        "[equipment type]": [
+          "[weapon]",
+          17
+        ],
+        "[animation job]": [
+          "[swordman]"
+        ],
+        "[variation]": [
+          1,
+          1
+        ],
+        "[layer variation]": [
+          650,
+          "katanab"
+        ],
+        "[equipment ani script]": [
+          "equipment/character/swordman.lay"
+        ],
+        "[sub type]": [
+          1
+        ],
+        "[move wav]": [
+          "KATANA_TOUCH"
+        ],
+        "[durability]": [
+          35
+        ],
+        "[weight]": [
+          2800
+        ],
+        "[item group name]": [
+          "katana"
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[possible kiri protect]": []
+      },
+      "icon": [
+        "Item/IconWeapon.img",
+        23
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        11
+      ]
+    }
+  },
+  "source_text": {
+    "stackable/ptn_hplowest.stk": {
+      "fields": {
+        "[explain]": "可以向诺顿、 赛丽亚、 林纳斯或罗莉安购买。",
+        "[flavor text]": "专为首次访问阿拉德大陆的冒险家准备的实用药剂， 可以补充HP。",
+        "[name]": "诺顿的新手HP药剂"
+      },
+      "references": {
+        "[explain]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "explain_1106",
+          "line": 5649,
+          "missing": false,
+          "needs_review": false
+        },
+        "[flavor text]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "flavor_text_1106",
+          "line": 5650,
+          "missing": false,
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "name_1106",
+          "line": 5647,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "9f6c7a444508c986890dfd52be942357c41b660c9017b25b01b1c2dedc5f6390"
+    },
+    "stackable/ptn_hplow.stk": {
+      "fields": {
+        "[explain]": "可以向诺顿、 赛丽亚、 林纳斯或罗莉安购买。",
+        "[flavor text]": "专为阿拉德大陆的冒险家准备的特效药剂， 可以补充HP。",
+        "[name]": "诺顿的入门HP药剂"
+      },
+      "references": {
+        "[explain]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "explain_1107",
+          "line": 5654,
+          "missing": false,
+          "needs_review": false
+        },
+        "[flavor text]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "flavor_text_1107",
+          "line": 5655,
+          "missing": false,
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "name_1107",
+          "line": 5652,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "2daa0b5f59806cf3b95c1e99034b369d4cf13f8663dd23c20d44a709769a8f6b"
+    },
+    "stackable/ptn_mplowest.stk": {
+      "fields": {
+        "[explain]": "可以向诺顿、 赛丽亚、 林纳斯或罗莉安购买。",
+        "[flavor text]": "专为阿拉德大陆的冒险家准备的特效药剂， 可以补充MP。",
+        "[name]": "罗莉安的新手MP药剂"
+      },
+      "references": {
+        "[explain]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "explain_1113",
+          "line": 5678,
+          "missing": false,
+          "needs_review": false
+        },
+        "[flavor text]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "flavor_text_1113",
+          "line": 5679,
+          "missing": false,
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "name_1112",
+          "line": 5671,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "3216e7c84c549e5613ce97cc84af1a78b1d50bdcc6b385bc1baf9b234671e2a8"
+    },
+    "stackable/ptn_mplow.stk": {
+      "fields": {
+        "[explain]": "可以向诺顿、 赛丽亚、 林纳斯或罗莉安购买。",
+        "[flavor text]": "专为阿拉德大陆的冒险家准备的特效药剂， 可以补充MP。",
+        "[name]": "罗莉安的入门MP药剂"
+      },
+      "references": {
+        "[explain]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "explain_1113",
+          "line": 5678,
+          "missing": false,
+          "needs_review": false
+        },
+        "[flavor text]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "flavor_text_1113",
+          "line": 5679,
+          "missing": false,
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "name_1113",
+          "line": 5676,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "7a3252939644a5477e7faacf8701ba5d0081b9c1bbc93a9a502347930d5b7522"
+    },
+    "equipment/character/common/jacket/leather/coat_10580.equ": {
+      "fields": {
+        "[name]": "磨损的冒险者胸甲"
+      },
+      "references": {
+        "[name]": {
+          "origin": "1031",
+          "table": "equipment/equipment.kor.str",
+          "table_id": 3,
+          "key": "name_10580",
+          "line": 172136,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "5f1cb279471895f46a5e22c26a1158b481797e231123735eb1d4eb2c92fda0e5"
+    },
+    "equipment/character/common/belt/leather/str_crleather.equ": {
+      "fields": {
+        "[flavor text]": "最近肚子越来越胖了， 要是没有这样的腰带， 那就太难堪了。  --林纳斯",
+        "[name]": "残破的牛皮腰带"
+      },
+      "references": {
+        "[flavor text]": {
+          "origin": "1031",
+          "table": "equipment/equipment.kor.str",
+          "table_id": 3,
+          "key": "flavor_text_16400",
+          "line": 43803,
+          "missing": false,
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "table": "equipment/equipment.kor.str",
+          "table_id": 3,
+          "key": "name_16400",
+          "line": 43801,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "8396a02f215f87fdc8128c1fcce9c01685efcd695bb16c544249a98fa233fbed"
+    },
+    "equipment/character/common/belt/leather/str_leather.equ": {
+      "fields": {
+        "[flavor text]": "一套服饰的最后步骤就是腰带！",
+        "[name]": "牛皮腰带"
+      },
+      "references": {
+        "[flavor text]": {
+          "origin": "1031",
+          "table": "equipment/equipment.kor.str",
+          "table_id": 3,
+          "key": "flavor_text_16403",
+          "line": 43815,
+          "missing": false,
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "table": "equipment/equipment.kor.str",
+          "table_id": 3,
+          "key": "name_16403",
+          "line": 43813,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "1fb0d76cc66c125e25bce1987d7b6119fd9e76566619e12d524808f9f7717265"
+    },
+    "equipment/character/common/wrist/wrist_ucloth.equ": {
+      "fields": {
+        "[name]": "破旧的棉布护腕"
+      },
+      "references": {
+        "[name]": {
+          "origin": "1031",
+          "table": "equipment/equipment.kor.str",
+          "table_id": 3,
+          "key": "name_22001",
+          "line": 27564,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "78d24632c8a379ff960be7b57a2af410b00a437388921e6e76508279fff39945"
+    },
+    "equipment/character/common/ring/ring_thunderprotect.equ": {
+      "fields": {
+        "[flavor text]": "你要去雷鸣废墟冒险？ 这个指环一定会对你有帮助的！  --风振",
+        "[name]": "避雷指环"
+      },
+      "references": {
+        "[flavor text]": {
+          "origin": "1031",
+          "table": "equipment/equipment.kor.str",
+          "table_id": 3,
+          "key": "flavor_text_24116",
+          "line": 28637,
+          "missing": false,
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "table": "equipment/equipment.kor.str",
+          "table_id": 3,
+          "key": "name_24116",
+          "line": 28635,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "06b58db1797946d7ece75641841da8ce0a072ce844b0c917025633a1aef63129"
+    },
+    "equipment/character/swordman/weapon/katana/kat_worn.equ": {
+      "fields": {
+        "[flavor text]": "    太刀的速度和准确度无人能及。  --林纳斯",
+        "[name]": "生锈的武士刀"
+      },
+      "references": {
+        "[flavor text]": {
+          "origin": "1031",
+          "string_index": 463008,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 383695,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "d1ac12abfe4e56d6604ea5e558cc9af9ccdd96127ba93e13f0029510aeaafbc1"
+    },
+    "equipment/character/swordman/weapon/katana/bazirang.equ": {
+      "fields": {
+        "[name]": "佩刀"
+      },
+      "references": {
+        "[name]": {
+          "origin": "1031",
+          "string_index": 383721,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "eb9a41130c53ed2ccee3f18a79a5590ae355606719fd08c3ddbac258c6840035"
+    }
+  },
+  "structural_source": "111 backup; runtime applicability remains separately audited",
+  "adaptations": [
+    "XP retains existing progression baseline; original XP formula unverified",
+    "Repair per point and disassembly yield remain adapted economy",
+    "Recovery tuple timing interpreted as simulation milliseconds",
+    "Equipment speed uses per-thousand; critical and stuck use percent; fixed attack uses damage-type channels"
+  ],
+  "text_source_sha256": "f761f58f5c913a1119f7661e266f2e85129bcf6b8230068e30b6dd21ae073c29",
+  "quest_text": {
+    "n_quest/elvengard/lorien/epic_1_lorien_1.qst": {
+      "fields": {
+        "[condition message]": "前往艾尔文防线拜访铁匠林纳斯。",
+        "[depend message]": "那些胆小的哥布林为什么会突然变得这幺狂暴……而且阿拉德大陆最近常常出现这种奇怪的现象……难道……？\n啊！ 对不起， 我只顾想事情……您说要去冒险啊？ 但您好像还不太熟悉周边的环境啊， 很多冒险家都是先熟悉周边环境再去冒险的。\n嗯……您就先去艾尔文防线找林纳斯大叔吧， 他是一位手艺超级棒的铁匠， 而且很喜欢和冒险家来往， 他一定会帮助您的。",
+        "[name]": "铁匠林纳斯",
+        "[solve message]": "你就是赛丽亚的救命恩人？ 嗯， 看你的样子不太像啊。 不过既然你能从哥布林手里救出赛丽亚， 我就暂且当你是个不错的人吧！"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 456397,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 456396,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 456395,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 456398,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "2e5873b9dc92f75a2c983444eba65a772ebf8c5fad97aa4c6fa65ca4f94072d0"
+    },
+    "n_quest/elvengard/lorien/epic_1_lorien_2.qst": {
+      "fields": {
+        "[condition message]": "通关洛兰地区的『洛兰』。 (沿着艾尔文防线的右侧走就可以进入洛兰地下城)",
+        "[depend message]": "你还不熟悉艾尔文防线吧？ 这里是通往精灵圣地格兰之森的惟一入口， 不过现在是那些低等生物哥布林的地盘了。\n唉， 这事说来话长， 自从格兰之森发生大火灾后， 居住在那里的精灵就突然消失了， 这一带一直怪事不断呢。\n冒险家， 既然你选择来阿拉德大陆冒险， 那就先从这里开始吧！",
+        "[name]": "开始冒险",
+        "[solve message]": "嗯， 不错不错， 不愧是赛丽亚的救命恩人呐！ 有点武术基础！ 呵呵， 我有点期待你日后的表现了， 好好努力吧！"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 456401,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 456400,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 456399,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 456402,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "12a30465eae16c8a5b4c5d66f1c3449d527199a266d11d0cc2da281f189844e1"
+    },
+    "n_quest/elvengard/lorieninside/epic_2_lorieninside_3.qst": {
+      "fields": {
+        "[condition message]": "前往洛兰地区的『洛兰深处』， 杀死10只哥布林， 然后向林纳斯回复。 (沿着艾尔文防线右侧走， 就可以进入洛兰深处地下城)",
+        "[depend message]": "噢， 还有一件事要请你帮忙。 你知道吗？ 那些哥布林不知怎么了， 突然往洛兰深处疯狂聚集， 周边地区已经陷入一片混乱了。\n你快去除掉它们吧！ 不然周边的居民就要遭殃了！",
+        "[name]": "噪音公害",
+        "[solve message]": "哈哈， 你的身手还不错啊！ 送你一件武器吧， 不要嫌弃我的手艺， 你肯定会喜欢它的， 呵呵！"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 456405,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 456404,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 456403,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 456406,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "97bda13db4ca745db1dadecd39ecc312efd9a0bbc218857aa7280057dfa7ff8e"
+    },
+    "n_quest/handonmyre/mirkwood/epic_2_mirkwood_mutant_1.qst": {
+      "fields": {
+        "[condition message]": "前往赫顿玛尔找风振谈谈。 (沿着艾尔文防线左侧走就可以到赫顿玛尔)",
+        "[depend message]": "你最近成长了不少啊， 哈哈， 既然我的事情都解决了， 你就开始新的冒险吧！ 你听说过流动的丛林格兰之森吗？ 冒险家都去那了， 你也赶紧去吧！\n嗯， 如果你不知道怎么去， 就沿着艾尔文防线左侧走， 那里通往赫顿玛尔。 然后你去找一个叫风振的人， 他会告诉你接下来要做什么。",
+        "[name]": "流动的丛林",
+        "[solve message]": "你是第一次来这儿吧？ 你想开始新的冒险啊， 呵呵， 那就从平定格兰之森的混乱开始吧！"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 457794,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 457793,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 457792,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 457795,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "1cbc87097459e496680f5e70f71b77a1a9429fea0e2b1b49b5aea45ac370cb0a"
+    },
+    "n_quest/handonmyre/mirkwood/epic_2_mirkwood_mutant_2.qst": {
+      "fields": {
+        "[condition message]": "前往格兰之森的『幽暗密林』， 杀死领主牛头巨兽。 (沿着风振的左侧走就可以进入格兰之森地下城)",
+        "[depend message]": "格兰之森原本是精灵的丛林， 自从那场大火灾过后， 丛林里的动植物就开始变得疯狂了， 而且还出现了不知名的奇怪生命体。\n更让人疑惑的是那些原本和我们非常友好的牛头怪， 不知为什么突然转了性子， 常常偷袭在丛林中穿行的赫顿玛尔居民。\n眼看越来越多的人被它们伤害， 我们不能再任由它们这样疯狂下去！ 所以冒险家， 拜托你了！",
+        "[name]": "狂暴的牛头巨兽",
+        "[solve message]": "你进入格兰之森的丛林了？ 那里的情况怎么样了？"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 457798,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 457797,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 457796,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 457799,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "04d357a207f1fdbec11d3038db8df0b70327f11b48f0bed2a71c05f36ba1bc12"
+    },
+    "n_quest/handonmyre/mirkwooddeep/epic_4_mirkwooddeep_mutant_3.qst": {
+      "fields": {
+        "[condition message]": "前往格兰之森的『幽暗密林深处』， 杀死5只猫妖。",
+        "[depend message]": "你除掉牛头巨兽了？ 身手不错啊！ 正好我需要人帮忙。 呵呵， 我听说幽暗密林深处出现了一群猫妖， 它们经常偷袭赫顿玛尔居民， 你去给它们点教训吧！",
+        "[name]": "令人头痛的猫妖",
+        "[solve message]": "这幺快就回来了？ 没有受伤吧？"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 457724,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 457723,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 457722,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 457725,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "d2b98744494941764946666fbc630391c8d85edd8616978019ac8c7abbe6dba1"
+    },
+    "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_4.qst": {
+      "fields": {
+        "[condition message]": "前往赫顿玛尔后街找哥布林商人夏洛克谈谈。",
+        "[depend message]": "格兰之森出现了一个能自由呼唤闪电的哥布林， 听说只要有它出现的地方， 就会电闪雷鸣， 暴雨不断！\n我也不知道这传说是不是真的， 你可以找夏洛克打听一下， 他在哥布林部族呆过很长一段时间。",
+        "[name]": "呼唤闪电的哥布林",
+        "[solve message]": "欢迎光临！ 我店里的东西是阿拉德大陆最便宜的！ 我绝不骗你， 不然所有东西半价送你！"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 457781,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 457780,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 457779,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 457782,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "91369af8bee5c701c3acfc17e95f9e0359f48622e1f3dda87240d19d74b9cb3b"
+    },
+    "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_5.qst": {
+      "fields": {
+        "[condition message]": "前往格兰之森的『雷鸣废墟』， 击败领主落雷凯诺。",
+        "[depend message]": "你说能呼唤闪电的哥布林？ 确实有这样的传说。\n哥布林部族每一百年会因染色体突变出现一个白色皮肤， 能自由操纵闪电的哥布林……不过我一直以为那只是传说……\n你要去找它？ 我劝你还是打消这个念头吧！ 虽然哥布林是低等生物， 但既然是传说， 就一定会有特别的地方。",
+        "[dialog]": "<monster::9>啊！竟然是侵入者…难道他不怕我的闪电吗？\n嗯，这是试验我的闪电之力的好机会！喂！你给我过来~",
+        "[name]": "落雷凯诺的传说",
+        "[solve message]": "你找到它了？ 真不敢相信！ 它一定是个可怕的怪物吧？\n你把它除掉了？ 嘿嘿， 那些哥布林应该陷入混乱了……不过他们应该还没有死心~\n这是我从哥布林部落逃走时拿的戒指， 现在赠送给你这样的勇士， 请你不要拒绝！"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 457785,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 457784,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[dialog]": {
+          "origin": "1031",
+          "string_index": 457787,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 457783,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 457786,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "13f1c2ef9d2bc561c852b7ee99612fc3a7ec642c468465e3ebc6d7b5c6484bc0"
+    },
+    "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_1.qst": {
+      "fields": {
+        "[condition message]": "前往赫顿玛尔小巷找G.S.D谈谈。",
+        "[depend message]": "你想去猛毒雷鸣废墟？ 胆子真大啊！ 格兰之森已经很危险了， 你为什么还要去那里啊？\n哦， 不管怎样， 你一定要去？ 那你最好先去前面的小巷找一个叫G.S.D的老人吧， 他是阿拉德大陆最有名的剑士， 而且他去过猛毒雷鸣废墟！ 你先听他怎么说吧。",
+        "[name]": "去过丛林深处的人",
+        "[solve message]": "听你的脚步声知道你还是个很年轻的家伙， 找我有什么事吗？"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 457739,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 457738,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 457737,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 457740,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "0dc57e55c75cb3c0d5be916f00d7a513f6668c018acf41ef9c7f13aef053fee4"
+    },
+    "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_2.qst": {
+      "fields": {
+        "[condition message]": "前往赫顿玛尔拜访辛达。",
+        "[depend message]": "冒险家， 你知道赫顿玛尔的着名铁匠--辛达吗？ 他是一位很有经历的老铁匠， 阅历非常丰富， 我听说他很想见见你呢！",
+        "[name]": "鬼剑士之路 - 赫顿玛尔的辛达",
+        "[solve message]": "你就是最近刚来到赫顿玛尔的那位冒险家吧？ 虽然你现在的实力不怎么样， 但是我很欣赏你的眼神。\n如果你能一直保持这样的眼神， 相信很快就能达到15级。"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 455598,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 455597,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 455603,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 455599,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "2ec55ff099d36df7539fb0b59e8e9f3ab0bd15417e5b39b05a1041e50d72cf10"
+    },
+    "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_3.qst": {
+      "fields": {
+        "[condition message]": "找辛达谈谈。",
+        "[depend message]": "你说到了15级能做什么？ 咳咳， 那我就给你简单介绍一下‘转职’吧。\n所谓‘转职’就是获得强大的神秘力量的一个过程， 转职时做出的选择将决定你未来的发展方向， 不同的选择之间将会有很大的差异……\n好吧， 详细的我就不跟你啰嗦了， 给你看一下‘转职’参考指南书吧。 咦？ 奇怪了， 那本书我放哪里了？",
+        "[name]": "鬼剑士之路 - 了解转职",
+        "[solve message]": "噢！ 找到了！ 来吧， 借给你看一下； 我很期待你会做出什么样的选择。"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 455586,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 455585,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 455604,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 455587,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "a2cdee8e683110ac3ee59a54f55317b3a0dbd0e56a2030944f9d584acc7c3652"
+    },
+    "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd.qst": {
+      "fields": {
+        "[condition message]": "找风振谈谈。",
+        "[depend message]": "原来你是想走鬼剑士之路啊！ 虽然我们选择的道路不同， 但只是过程不一样而已， 终点还是一样的， 不是吗？",
+        "[name]": "鬼剑士之路 - 启程",
+        "[solve message]": "你要走的路还很长， 但现在需要你做出选择了， 你会选择走什么样的路呢？\n呵呵， 我能给你的建议就是， 请坚持冒险， 不要停止！"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 455590,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 455610,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 455609,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 455591,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "f489e0c3b6c0a8e5733075b03580bfc7aa2d2095908c000c004ba91ff64530f1"
+    },
+    "n_quest/elvengard/lorieninside/epic_2_lorieninside_4.qst": {
+      "fields": {
+        "[condition message]": "找赛丽亚谈谈。",
+        "[depend message]": "看来你打算去冒险了，\n先去找赛丽亚告别吧，\n一会我会告诉你这次要去的地方。",
+        "[name]": "与赛丽亚的缘分",
+        "[solve message]": "看来你准备要去冒险了…\n不用跟我道别，\n我会一直在你身边协助您……"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 454649,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 456408,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 456407,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 456409,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "c05ef0ff13ec9a25c57b648abadc46d290b3c2f8d62db0e59194e98530ab59b9"
+    },
+    "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_6.qst": {
+      "fields": {
+        "[condition message]": "再次前往格兰之森的『雷鸣废墟』， 惩治领主落雷凯诺。",
+        "[depend message]": "没想到你比凯诺还可怕， 不过我还是比较喜欢你……\n话说这件事真的很奇怪， 按理说变异哥布林出现得很少， 为什么这次会有那幺多呢？\n不如你再去看看。 对了， 凯诺这人很记仇的， 你记得带上我给你的武器和戒指。\n哎， 不用太感谢我啊， 多来光顾我的物品店就好了~",
+        "[name]": "哥布林的异变",
+        "[solve message]": "狠狠的教训过了哥布林 暂时应该不会再出来捣乱了吧… 冒险家，下次也拜托您了。"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 457790,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 457789,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 457788,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "ep2_1_solve",
+          "line": 5875,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "9210e18e5d45f667648d735dbd5a29aa7e26182e77c1ba040706bf3e716c0c4d"
+    }
+  }
+}

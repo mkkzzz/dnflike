@@ -1,6 +1,6 @@
 {
   "schema": "dnf_quests/1",
-  "revision": 3,
+  "revision": 4,
   "limits": {
     "active": 12,
     "tracked": 3
@@ -24,7 +24,8 @@
     "lorien_inside": "洛兰深处",
     "forest_trial": "密林试炼（旧样板）",
     "mirkwood": "幽暗密林",
-    "mirkwood_deep": "幽暗密林深处"
+    "mirkwood_deep": "幽暗密林深处",
+    "sunderland": "雷鸣废墟"
   },
   "quests": [
     {
@@ -33,9 +34,15 @@
         "id": 101,
         "path": "n_quest/elvengard/lorien/epic_1_lorien_1.qst",
         "sha256": "1ae5f9738c8ed588310fa89fe15c6cfdf6612890b302a44d35238e11ba3adcc8",
-        "evidence": "E-PARSE for source graph; rewards and local execution E-ADAPT"
+        "evidence": "E-PARSE for source graph; rewards and local execution E-ADAPT",
+        "text_path": "n_quest/elvengard/lorien/epic_1_lorien_1.qst",
+        "raw_reward": [
+          0,
+          100
+        ],
+        "other_class_rewards": []
       },
-      "name": "林纳斯大叔",
+      "name": "铁匠林纳斯",
       "category": "main",
       "chapter": "冒险开始",
       "min_level": 1,
@@ -50,16 +57,21 @@
           "amount": 1
         }
       ],
-      "description": "前往艾尔文防线，拜访铁匠林纳斯。",
+      "description": "前往艾尔文防线拜访铁匠林纳斯。",
       "reward": {
         "gold": 100,
         "xp": 40,
         "items": {},
-        "choices": []
+        "choices": [],
+        "conditional_items": []
       },
       "consume": {},
       "enabled": true,
-      "abandonable": false
+      "abandonable": false,
+      "dialogue": {
+        "accept": "那些胆小的哥布林为什么会突然变得这幺狂暴……而且阿拉德大陆最近常常出现这种奇怪的现象……难道……？\n啊！ 对不起， 我只顾想事情……您说要去冒险啊？ 但您好像还不太熟悉周边的环境啊， 很多冒险家都是先熟悉周边环境再去冒险的。\n嗯……您就先去艾尔文防线找林纳斯大叔吧， 他是一位手艺超级棒的铁匠， 而且很喜欢和冒险家来往， 他一定会帮助您的。",
+        "complete": "你就是赛丽亚的救命恩人？ 嗯， 看你的样子不太像啊。 不过既然你能从哥布林手里救出赛丽亚， 我就暂且当你是个不错的人吧！"
+      }
     },
     {
       "id": "lorien.first_clear",
@@ -67,9 +79,17 @@
         "id": 102,
         "path": "n_quest/elvengard/lorien/epic_1_lorien_2.qst",
         "sha256": "b1fe2adb40cefb86292d1e0f1fc9d116accfffa8ec6551274f66453368cf0cba",
-        "evidence": "E-PARSE for source graph; rewards and local execution E-ADAPT"
+        "evidence": "E-PARSE for source graph; rewards and local execution E-ADAPT",
+        "text_path": "n_quest/elvengard/lorien/epic_1_lorien_2.qst",
+        "raw_reward": [
+          0,
+          200,
+          16400,
+          1
+        ],
+        "other_class_rewards": []
       },
-      "name": "冒险开始",
+      "name": "开始冒险",
       "category": "main",
       "chapter": "冒险开始",
       "min_level": 1,
@@ -86,18 +106,23 @@
           "amount": 1
         }
       ],
-      "description": "从艾尔文防线右侧进入洛兰，通关后向林纳斯报告。",
+      "description": "通关洛兰地区的『洛兰』。 (沿着艾尔文防线的右侧走就可以进入洛兰地下城)",
       "reward": {
         "gold": 200,
         "xp": 80,
         "items": {
-          "potion": 1
+          "original_16400": 1
         },
-        "choices": []
+        "choices": [],
+        "conditional_items": []
       },
       "consume": {},
       "enabled": true,
-      "abandonable": false
+      "abandonable": false,
+      "dialogue": {
+        "accept": "你还不熟悉艾尔文防线吧？ 这里是通往精灵圣地格兰之森的惟一入口， 不过现在是那些低等生物哥布林的地盘了。\n唉， 这事说来话长， 自从格兰之森发生大火灾后， 居住在那里的精灵就突然消失了， 这一带一直怪事不断呢。\n冒险家， 既然你选择来阿拉德大陆冒险， 那就先从这里开始吧！",
+        "complete": "嗯， 不错不错， 不愧是赛丽亚的救命恩人呐！ 有点武术基础！ 呵呵， 我有点期待你日后的表现了， 好好努力吧！"
+      }
     },
     {
       "id": "lorien.goblin_noise",
@@ -105,7 +130,173 @@
         "id": 103,
         "path": "n_quest/elvengard/lorieninside/epic_2_lorieninside_3.qst",
         "sha256": "c1eb9acd96e4b249e35729d0b6b22bc0426bda649ae630008bc441eb052766eb",
-        "evidence": "E-PARSE for source graph; rewards and local execution E-ADAPT"
+        "evidence": "E-PARSE for source graph; rewards and local execution E-ADAPT",
+        "text_path": "n_quest/elvengard/lorieninside/epic_2_lorieninside_3.qst",
+        "raw_reward": [
+          0,
+          200,
+          1106,
+          5,
+          1112,
+          5,
+          27601,
+          "[job]",
+          0,
+          -1,
+          1,
+          29901,
+          "[job]",
+          1,
+          -1,
+          1,
+          29901,
+          "[job]",
+          7,
+          -1,
+          1,
+          31301,
+          "[job]",
+          2,
+          -1,
+          1,
+          31301,
+          "[job]",
+          5,
+          -1,
+          1,
+          33601,
+          "[job]",
+          3,
+          -1,
+          1,
+          33601,
+          "[job]",
+          8,
+          -1,
+          1,
+          35002,
+          "[job]",
+          4,
+          -1,
+          1,
+          37003,
+          "[job]",
+          6,
+          -1,
+          1,
+          27601,
+          "[job]",
+          9,
+          -1,
+          1,
+          106040039,
+          "[job]",
+          10,
+          -1,
+          1
+        ],
+        "other_class_rewards": [
+          {
+            "item": "original_29901",
+            "amount": 1,
+            "jobs": [
+              1
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_29901",
+            "amount": 1,
+            "jobs": [
+              7
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_31301",
+            "amount": 1,
+            "jobs": [
+              2
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_31301",
+            "amount": 1,
+            "jobs": [
+              5
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_33601",
+            "amount": 1,
+            "jobs": [
+              3
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_33601",
+            "amount": 1,
+            "jobs": [
+              8
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_35002",
+            "amount": 1,
+            "jobs": [
+              4
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_37003",
+            "amount": 1,
+            "jobs": [
+              6
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_27601",
+            "amount": 1,
+            "jobs": [
+              9
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_106040039",
+            "amount": 1,
+            "jobs": [
+              10
+            ],
+            "grow_types": [
+              -1
+            ]
+          }
+        ]
       },
       "name": "噪音公害",
       "category": "main",
@@ -125,18 +316,35 @@
           "dungeon": "lorien_inside"
         }
       ],
-      "description": "前往洛兰深处，消灭10只哥布林，再向林纳斯报告。",
+      "description": "前往洛兰地区的『洛兰深处』， 杀死10只哥布林， 然后向林纳斯回复。 (沿着艾尔文防线右侧走， 就可以进入洛兰深处地下城)",
       "reward": {
         "gold": 200,
         "xp": 100,
         "items": {
-          "potion": 2
+          "original_1106": 5,
+          "original_1112": 5
         },
-        "choices": []
+        "choices": [],
+        "conditional_items": [
+          {
+            "item": "original_27601",
+            "amount": 1,
+            "jobs": [
+              0
+            ],
+            "grow_types": [
+              -1
+            ]
+          }
+        ]
       },
       "consume": {},
       "enabled": true,
-      "abandonable": false
+      "abandonable": false,
+      "dialogue": {
+        "accept": "噢， 还有一件事要请你帮忙。 你知道吗？ 那些哥布林不知怎么了， 突然往洛兰深处疯狂聚集， 周边地区已经陷入一片混乱了。\n你快去除掉它们吧！ 不然周边的居民就要遭殃了！",
+        "complete": "哈哈， 你的身手还不错啊！ 送你一件武器吧， 不要嫌弃我的手艺， 你肯定会喜欢它的， 呵呵！"
+      }
     },
     {
       "id": "elvengard.seria_fate",
@@ -144,7 +352,13 @@
         "id": 4301,
         "path": "n_quest/elvengard/lorieninside/epic_2_lorieninside_4.qst",
         "sha256": "929c11e4f4f3c3ee28c87fa7503ce607d7e3ff18b585634dfb759d05d6fa4e97",
-        "evidence": "E-PARSE for source graph; rewards and local execution E-ADAPT"
+        "evidence": "E-PARSE for source graph; rewards and local execution E-ADAPT",
+        "text_path": "n_quest/elvengard/lorieninside/epic_2_lorieninside_4.qst",
+        "raw_reward": [
+          0,
+          100
+        ],
+        "other_class_rewards": []
       },
       "name": "与赛丽亚的缘分",
       "category": "main",
@@ -163,16 +377,21 @@
           "amount": 1
         }
       ],
-      "description": "回到赛丽亚身边，告诉她森林中的见闻。",
+      "description": "找赛丽亚谈谈。",
       "reward": {
         "gold": 100,
         "xp": 40,
         "items": {},
-        "choices": []
+        "choices": [],
+        "conditional_items": []
       },
       "consume": {},
       "enabled": true,
-      "abandonable": false
+      "abandonable": false,
+      "dialogue": {
+        "accept": "看来你打算去冒险了，\n先去找赛丽亚告别吧，\n一会我会告诉你这次要去的地方。",
+        "complete": "看来你准备要去冒险了…\n不用跟我道别，\n我会一直在你身边协助您……"
+      }
     },
     {
       "id": "legacy.trial",
@@ -210,7 +429,7 @@
     },
     {
       "id": "hendon.meet_pungjin",
-      "name": "流动的丛林 格兰之森",
+      "name": "流动的丛林",
       "category": "main",
       "chapter": "赫顿的引荐",
       "min_level": 3,
@@ -227,12 +446,13 @@
           "amount": 1
         }
       ],
-      "description": "沿艾尔文防线左侧前往赫顿玛尔，经城市区上行到主街，拜访风振。",
+      "description": "前往赫顿玛尔找风振谈谈。 (沿着艾尔文防线左侧走就可以到赫顿玛尔)",
       "reward": {
         "gold": 100,
         "xp": 100,
         "items": {},
-        "choices": []
+        "choices": [],
+        "conditional_items": []
       },
       "consume": {},
       "enabled": true,
@@ -244,12 +464,22 @@
         "raw_objective": [
           6
         ],
-        "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT"
+        "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT",
+        "text_path": "n_quest/handonmyre/mirkwood/epic_2_mirkwood_mutant_1.qst",
+        "raw_reward": [
+          0,
+          100
+        ],
+        "other_class_rewards": []
+      },
+      "dialogue": {
+        "accept": "你最近成长了不少啊， 哈哈， 既然我的事情都解决了， 你就开始新的冒险吧！ 你听说过流动的丛林格兰之森吗？ 冒险家都去那了， 你也赶紧去吧！\n嗯， 如果你不知道怎么去， 就沿着艾尔文防线左侧走， 那里通往赫顿玛尔。 然后你去找一个叫风振的人， 他会告诉你接下来要做什么。",
+        "complete": "你是第一次来这儿吧？ 你想开始新的冒险啊， 呵呵， 那就从平定格兰之森的混乱开始吧！"
       }
     },
     {
       "id": "hendon.swordman_start",
-      "name": "鬼剑士之路—开始",
+      "name": "鬼剑士之路 - 启程",
       "category": "main",
       "chapter": "赫顿的引荐",
       "min_level": 3,
@@ -266,12 +496,13 @@
           "amount": 1
         }
       ],
-      "description": "再次与风振对话，听取关于鬼剑士修行和赫顿居民的介绍。",
+      "description": "找风振谈谈。",
       "reward": {
         "gold": 200,
         "xp": 200,
         "items": {},
-        "choices": []
+        "choices": [],
+        "conditional_items": []
       },
       "consume": {},
       "enabled": true,
@@ -283,12 +514,22 @@
         "raw_objective": [
           6
         ],
-        "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT"
+        "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT",
+        "text_path": "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd.qst",
+        "raw_reward": [
+          0,
+          200
+        ],
+        "other_class_rewards": []
+      },
+      "dialogue": {
+        "accept": "原来你是想走鬼剑士之路啊！ 虽然我们选择的道路不同， 但只是过程不一样而已， 终点还是一样的， 不是吗？",
+        "complete": "你要走的路还很长， 但现在需要你做出选择了， 你会选择走什么样的路呢？\n呵呵， 我能给你的建议就是， 请坚持冒险， 不要停止！"
       }
     },
     {
       "id": "hendon.meet_sinda",
-      "name": "鬼剑士之路—赫顿玛尔的辛达",
+      "name": "鬼剑士之路 - 赫顿玛尔的辛达",
       "category": "main",
       "chapter": "赫顿的引荐",
       "min_level": 4,
@@ -305,12 +546,13 @@
           "amount": 1
         }
       ],
-      "description": "从主街上行到后街，找到铁匠辛达。",
+      "description": "前往赫顿玛尔拜访辛达。",
       "reward": {
         "gold": 300,
         "xp": 120,
         "items": {},
-        "choices": []
+        "choices": [],
+        "conditional_items": []
       },
       "consume": {},
       "enabled": true,
@@ -322,12 +564,22 @@
         "raw_objective": [
           4
         ],
-        "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT"
+        "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT",
+        "text_path": "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_2.qst",
+        "raw_reward": [
+          0,
+          300
+        ],
+        "other_class_rewards": []
+      },
+      "dialogue": {
+        "accept": "冒险家， 你知道赫顿玛尔的着名铁匠--辛达吗？ 他是一位很有经历的老铁匠， 阅历非常丰富， 我听说他很想见见你呢！",
+        "complete": "你就是最近刚来到赫顿玛尔的那位冒险家吧？ 虽然你现在的实力不怎么样， 但是我很欣赏你的眼神。\n如果你能一直保持这样的眼神， 相信很快就能达到15级。"
       }
     },
     {
       "id": "hendon.job_introduction",
-      "name": "鬼剑士之路—所谓的转职是？",
+      "name": "鬼剑士之路 - 了解转职",
       "category": "main",
       "chapter": "赫顿的引荐",
       "min_level": 4,
@@ -344,12 +596,13 @@
           "amount": 1
         }
       ],
-      "description": "再次与辛达交谈，听取职业与修行的说明。现在还不会进行转职。",
+      "description": "找辛达谈谈。",
       "reward": {
         "gold": 200,
         "xp": 120,
         "items": {},
-        "choices": []
+        "choices": [],
+        "conditional_items": []
       },
       "consume": {},
       "enabled": true,
@@ -362,12 +615,22 @@
           4,
           0
         ],
-        "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT"
+        "evidence": "E-PARSE source NPC/level/prerequisite; runtime XP/gold/dialogue E-ADAPT",
+        "text_path": "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_3.qst",
+        "raw_reward": [
+          0,
+          200
+        ],
+        "other_class_rewards": []
+      },
+      "dialogue": {
+        "accept": "你说到了15级能做什么？ 咳咳， 那我就给你简单介绍一下‘转职’吧。\n所谓‘转职’就是获得强大的神秘力量的一个过程， 转职时做出的选择将决定你未来的发展方向， 不同的选择之间将会有很大的差异……\n好吧， 详细的我就不跟你啰嗦了， 给你看一下‘转职’参考指南书吧。 咦？ 奇怪了， 那本书我放哪里了？",
+        "complete": "噢！ 找到了！ 来吧， 借给你看一下； 我很期待你会做出什么样的选择。"
       }
     },
     {
       "id": "gran.tau_rage",
-      "name": "牛头兽的狂暴",
+      "name": "狂暴的牛头巨兽",
       "category": "main",
       "chapter": "格兰之森的异变",
       "min_level": 3,
@@ -385,12 +648,16 @@
           "dungeon": "mirkwood"
         }
       ],
-      "description": "沿风振左侧进入森林入口区，前往幽暗密林击败领主牛头巨兽，再回风振处交付。",
+      "description": "前往格兰之森的『幽暗密林』， 杀死领主牛头巨兽。 (沿着风振的左侧走就可以进入格兰之森地下城)",
       "reward": {
         "gold": 500,
         "xp": 350,
-        "items": {},
-        "choices": []
+        "items": {
+          "original_10580": 1,
+          "original_22001": 1
+        },
+        "choices": [],
+        "conditional_items": []
       },
       "consume": {},
       "enabled": true,
@@ -413,12 +680,18 @@
           22001,
           1
         ],
-        "evidence": "E-PARSE objective/NPC/level/prerequisite; -1 complete NPC uses giver E-INFER; XP/gold and omitted original item rewards E-ADAPT"
+        "evidence": "E-PARSE objective/NPC/level/prerequisite; -1 complete NPC uses giver E-INFER; XP/gold and omitted original item rewards E-ADAPT",
+        "text_path": "n_quest/handonmyre/mirkwood/epic_2_mirkwood_mutant_2.qst",
+        "other_class_rewards": []
+      },
+      "dialogue": {
+        "accept": "格兰之森原本是精灵的丛林， 自从那场大火灾过后， 丛林里的动植物就开始变得疯狂了， 而且还出现了不知名的奇怪生命体。\n更让人疑惑的是那些原本和我们非常友好的牛头怪， 不知为什么突然转了性子， 常常偷袭在丛林中穿行的赫顿玛尔居民。\n眼看越来越多的人被它们伤害， 我们不能再任由它们这样疯狂下去！ 所以冒险家， 拜托你了！",
+        "complete": "你进入格兰之森的丛林了？ 那里的情况怎么样了？"
       }
     },
     {
       "id": "gran.cat_trouble",
-      "name": "让人感到头痛的猫妖群",
+      "name": "令人头痛的猫妖",
       "category": "main",
       "chapter": "格兰之森的异变",
       "min_level": 4,
@@ -436,12 +709,17 @@
           "dungeon": "mirkwood_deep"
         }
       ],
-      "description": "前往幽暗密林深处，击杀5只猫妖，再向风振报告。",
+      "description": "前往格兰之森的『幽暗密林深处』， 杀死5只猫妖。",
       "reward": {
         "gold": 500,
         "xp": 450,
-        "items": {},
-        "choices": []
+        "items": {
+          "original_1106": 5,
+          "original_1112": 5,
+          "original_16403": 1
+        },
+        "choices": [],
+        "conditional_items": []
       },
       "consume": {},
       "enabled": true,
@@ -466,7 +744,13 @@
           16403,
           1
         ],
-        "evidence": "E-PARSE objective/NPC/level/prerequisite; -1 complete NPC uses giver E-INFER; XP/gold and omitted original item rewards E-ADAPT"
+        "evidence": "E-PARSE objective/NPC/level/prerequisite; -1 complete NPC uses giver E-INFER; XP/gold and omitted original item rewards E-ADAPT",
+        "text_path": "n_quest/handonmyre/mirkwooddeep/epic_4_mirkwooddeep_mutant_3.qst",
+        "other_class_rewards": []
+      },
+      "dialogue": {
+        "accept": "你除掉牛头巨兽了？ 身手不错啊！ 正好我需要人帮忙。 呵呵， 我听说幽暗密林深处出现了一群猫妖， 它们经常偷袭赫顿玛尔居民， 你去给它们点教训吧！",
+        "complete": "这幺快就回来了？ 没有受伤吧？"
       }
     },
     {
@@ -488,12 +772,13 @@
           "amount": 1
         }
       ],
-      "description": "前往赫顿后街，沿上方路口进入小巷，与哥布林商人夏洛克交谈。",
+      "description": "前往赫顿玛尔后街找哥布林商人夏洛克谈谈。",
       "reward": {
         "gold": 100,
         "xp": 150,
         "items": {},
-        "choices": []
+        "choices": [],
+        "conditional_items": []
       },
       "consume": {},
       "enabled": true,
@@ -509,13 +794,335 @@
           0,
           100
         ],
-        "evidence": "E-PARSE objective/NPC/level/prerequisite; -1 complete NPC uses giver E-INFER; XP/gold and omitted original item rewards E-ADAPT"
+        "evidence": "E-PARSE objective/NPC/level/prerequisite; -1 complete NPC uses giver E-INFER; XP/gold and omitted original item rewards E-ADAPT",
+        "text_path": "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_4.qst",
+        "other_class_rewards": []
+      },
+      "dialogue": {
+        "accept": "格兰之森出现了一个能自由呼唤闪电的哥布林， 听说只要有它出现的地方， 就会电闪雷鸣， 暴雨不断！\n我也不知道这传说是不是真的， 你可以找夏洛克打听一下， 他在哥布林部族呆过很长一段时间。",
+        "complete": "欢迎光临！ 我店里的东西是阿拉德大陆最便宜的！ 我绝不骗你， 不然所有东西半价送你！"
+      }
+    },
+    {
+      "id": "gran.kaino_legend",
+      "source": {
+        "id": 108,
+        "path": "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_5.qst",
+        "sha256": "e64bd802369e77a346e679d7fbb9e9389f32c1d1096ca3fcc2d6c8af6156c450",
+        "text_path": "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_5.qst",
+        "raw_reward": [
+          24116,
+          1,
+          1107,
+          5,
+          1113,
+          5,
+          27800,
+          "[job]",
+          0,
+          -1,
+          1,
+          29904,
+          "[job]",
+          1,
+          -1,
+          1,
+          29904,
+          "[job]",
+          7,
+          -1,
+          1,
+          31302,
+          "[job]",
+          2,
+          -1,
+          1,
+          31302,
+          "[job]",
+          5,
+          -1,
+          1,
+          33602,
+          "[job]",
+          3,
+          -1,
+          1,
+          33602,
+          "[job]",
+          8,
+          -1,
+          1,
+          35003,
+          "[job]",
+          4,
+          -1,
+          1,
+          37004,
+          "[job]",
+          6,
+          -1,
+          1,
+          27800,
+          "[job]",
+          9,
+          -1,
+          1,
+          106040040,
+          "[job]",
+          10,
+          -1,
+          1
+        ],
+        "other_class_rewards": [
+          {
+            "item": "original_29904",
+            "amount": 1,
+            "jobs": [
+              1
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_29904",
+            "amount": 1,
+            "jobs": [
+              7
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_31302",
+            "amount": 1,
+            "jobs": [
+              2
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_31302",
+            "amount": 1,
+            "jobs": [
+              5
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_33602",
+            "amount": 1,
+            "jobs": [
+              3
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_33602",
+            "amount": 1,
+            "jobs": [
+              8
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_35003",
+            "amount": 1,
+            "jobs": [
+              4
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_37004",
+            "amount": 1,
+            "jobs": [
+              6
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_27800",
+            "amount": 1,
+            "jobs": [
+              9
+            ],
+            "grow_types": [
+              -1
+            ]
+          },
+          {
+            "item": "original_106040040",
+            "amount": 1,
+            "jobs": [
+              10
+            ],
+            "grow_types": [
+              -1
+            ]
+          }
+        ]
+      },
+      "name": "落雷凯诺的传说",
+      "category": "main",
+      "chapter": "格兰之森",
+      "min_level": 5,
+      "requires": [
+        "gran.meet_shylock"
+      ],
+      "giver": "shylock",
+      "receiver": "shylock",
+      "objectives": [
+        {
+          "id": "kill",
+          "type": "kill_monster",
+          "target": "monster/goblin/kinol.mob",
+          "dungeon": "sunderland",
+          "amount": 1
+        }
+      ],
+      "description": "前往格兰之森的『雷鸣废墟』， 击败领主落雷凯诺。",
+      "reward": {
+        "gold": 0,
+        "xp": 180,
+        "items": {
+          "original_24116": 1,
+          "original_1107": 5,
+          "original_1113": 5
+        },
+        "choices": [],
+        "conditional_items": [
+          {
+            "item": "original_27800",
+            "amount": 1,
+            "jobs": [
+              0
+            ],
+            "grow_types": [
+              -1
+            ]
+          }
+        ]
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false,
+      "dialogue": {
+        "accept": "你说能呼唤闪电的哥布林？ 确实有这样的传说。\n哥布林部族每一百年会因染色体突变出现一个白色皮肤， 能自由操纵闪电的哥布林……不过我一直以为那只是传说……\n你要去找它？ 我劝你还是打消这个念头吧！ 虽然哥布林是低等生物， 但既然是传说， 就一定会有特别的地方。",
+        "complete": "你找到它了？ 真不敢相信！ 它一定是个可怕的怪物吧？\n你把它除掉了？ 嘿嘿， 那些哥布林应该陷入混乱了……不过他们应该还没有死心~\n这是我从哥布林部落逃走时拿的戒指， 现在赠送给你这样的勇士， 请你不要拒绝！"
+      }
+    },
+    {
+      "id": "gran.meet_gsd",
+      "source": {
+        "id": 109,
+        "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_1.qst",
+        "sha256": "1273e231f43b00dfc77d1e13d7adbf92c0c83d929c5355fa0a0f5ee53922d091",
+        "text_path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_1.qst",
+        "raw_reward": [
+          0,
+          100
+        ],
+        "other_class_rewards": []
+      },
+      "name": "去过丛林深处的人",
+      "category": "main",
+      "chapter": "格兰之森",
+      "min_level": 7,
+      "requires": [
+        "gran.goblin_mutation"
+      ],
+      "giver": "seria",
+      "receiver": "gsd",
+      "objectives": [
+        {
+          "id": "meet",
+          "type": "meet_npc",
+          "target": "gsd",
+          "amount": 1
+        }
+      ],
+      "description": "前往赫顿玛尔小巷找G.S.D谈谈。",
+      "reward": {
+        "gold": 100,
+        "xp": 80,
+        "items": {},
+        "choices": [],
+        "conditional_items": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false,
+      "dialogue": {
+        "accept": "你想去猛毒雷鸣废墟？ 胆子真大啊！ 格兰之森已经很危险了， 你为什么还要去那里啊？\n哦， 不管怎样， 你一定要去？ 那你最好先去前面的小巷找一个叫G.S.D的老人吧， 他是阿拉德大陆最有名的剑士， 而且他去过猛毒雷鸣废墟！ 你先听他怎么说吧。",
+        "complete": "听你的脚步声知道你还是个很年轻的家伙， 找我有什么事吗？"
+      }
+    },
+    {
+      "id": "gran.goblin_mutation",
+      "source": {
+        "id": 4302,
+        "path": "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_6.qst",
+        "sha256": "1ac7a400db192bbf8c87828f5a6d6f5e7826e5492543be03e002807855bcd01f",
+        "text_path": "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_6.qst",
+        "raw_reward": [
+          0,
+          100
+        ],
+        "other_class_rewards": []
+      },
+      "name": "哥布林的异变",
+      "category": "main",
+      "chapter": "格兰之森",
+      "min_level": 5,
+      "requires": [
+        "gran.kaino_legend"
+      ],
+      "giver": "shylock",
+      "receiver": "shylock",
+      "objectives": [
+        {
+          "id": "kill",
+          "type": "kill_monster",
+          "target": "monster/goblin/kinol.mob",
+          "dungeon": "sunderland",
+          "amount": 1
+        }
+      ],
+      "description": "再次前往格兰之森的『雷鸣废墟』， 惩治领主落雷凯诺。",
+      "reward": {
+        "gold": 100,
+        "xp": 180,
+        "items": {},
+        "choices": [],
+        "conditional_items": []
+      },
+      "consume": {},
+      "enabled": true,
+      "abandonable": false,
+      "dialogue": {
+        "accept": "没想到你比凯诺还可怕， 不过我还是比较喜欢你……\n话说这件事真的很奇怪， 按理说变异哥布林出现得很少， 为什么这次会有那幺多呢？\n不如你再去看看。 对了， 凯诺这人很记仇的， 你记得带上我给你的武器和戒指。\n哎， 不用太感谢我啊， 多来光顾我的物品店就好了~",
+        "complete": "狠狠的教训过了哥布林 暂时应该不会再出来捣乱了吧… 冒险家，下次也拜托您了。"
       }
     }
   ],
   "monsters": {
     "monster/goblin/goblin.mob": "哥布林",
     "monster/tau/taubeast.mob": "牛头巨兽",
-    "monster/lugaru/lugaru.mob": "猫妖"
+    "monster/lugaru/lugaru.mob": "猫妖",
+    "monster/goblin/kinol.mob": "落雷凯诺"
   }
 }

@@ -3,9 +3,9 @@
  "evidence": "原版 .qst 结构化字段 E-PARSE；名称/描述为本地化引用（string 键），正文未解出",
  "summary": {
   "total": 3716,
-  "implemented": 11,
+  "implemented": 14,
   "failed": 0,
-  "pending_name_refs": 1397,
+  "pending_name_refs": 1394,
   "groups": {
    "n_quest/urgent": 1331,
    "n_quest/common": 291,
@@ -10089,7 +10089,7 @@
    "name_ref": "string:322911",
    "implemented": true,
    "local_id": "hendon.swordman_start",
-   "local_name": "鬼剑士之路—开始"
+   "local_name": "鬼剑士之路 - 启程"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_2.qst",
@@ -10111,7 +10111,7 @@
    "name_ref": "string:322915",
    "implemented": true,
    "local_id": "hendon.meet_sinda",
-   "local_name": "鬼剑士之路—赫顿玛尔的辛达"
+   "local_name": "鬼剑士之路 - 赫顿玛尔的辛达"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_3.qst",
@@ -10133,7 +10133,7 @@
    "name_ref": "string:322919",
    "implemented": true,
    "local_id": "hendon.job_introduction",
-   "local_name": "鬼剑士之路—所谓的转职是？"
+   "local_name": "鬼剑士之路 - 了解转职"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_4.qst",
@@ -12489,7 +12489,7 @@
    "name_ref": "string:25144",
    "implemented": true,
    "local_id": "elvengard.meet_linus",
-   "local_name": "林纳斯大叔"
+   "local_name": "铁匠林纳斯"
   },
   {
    "path": "n_quest/elvengard/lorien/epic_1_lorien_2.qst",
@@ -12513,7 +12513,7 @@
    "name_ref": "string:18831",
    "implemented": true,
    "local_id": "lorien.first_clear",
-   "local_name": "冒险开始"
+   "local_name": "开始冒险"
   },
   {
    "path": "n_quest/elvengard/lorien/sq.qst",
@@ -25005,7 +25005,7 @@
    "name_ref": "string:24835",
    "implemented": true,
    "local_id": "hendon.meet_pungjin",
-   "local_name": "流动的丛林 格兰之森"
+   "local_name": "流动的丛林"
   },
   {
    "path": "n_quest/handonmyre/mirkwood/epic_2_mirkwood_mutant_2.qst",
@@ -25031,7 +25031,7 @@
    "name_ref": "string:24902",
    "implemented": true,
    "local_id": "gran.tau_rage",
-   "local_name": "牛头兽的狂暴"
+   "local_name": "狂暴的牛头巨兽"
   },
   {
    "path": "n_quest/handonmyre/mirkwood/epic_2_mirkwood_one_shot_1.qst",
@@ -25291,7 +25291,7 @@
    "name_ref": "string:18887",
    "implemented": true,
    "local_id": "gran.cat_trouble",
-   "local_name": "让人感到头痛的猫妖群"
+   "local_name": "令人头痛的猫妖"
   },
   {
    "path": "n_quest/handonmyre/mirkwooddeep/epic_4_mirkwooddeep_one_shot_2.qst",
@@ -26654,9 +26654,9 @@
     1
    ],
    "name_ref": "string:18994",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "gran.kaino_legend",
+   "local_name": "落雷凯诺的传说"
   },
   {
    "path": "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_6.qst",
@@ -26676,9 +26676,9 @@
     100
    ],
    "name_ref": "string:325530",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "gran.goblin_mutation",
+   "local_name": "哥布林的异变"
   },
   {
    "path": "n_quest/handonmyre/sunderland/epic_5_sunderland_one_shot_3.qst",
@@ -27315,9 +27315,9 @@
     100
    ],
    "name_ref": "string:19036",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "gran.meet_gsd",
+   "local_name": "去过丛林深处的人"
   },
   {
    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_2.qst",

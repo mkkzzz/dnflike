@@ -23,7 +23,13 @@ static func use(p: Dictionary, run: Dictionary, id: String, view: Dictionary, tx
 	if view.get("run_id")!=run.get("id") or view.get("paused",true) or view.get("finished",true) or float(view.get("hp",0))<=0:return Items.fail("请在存活且未暂停的战斗中使用物品")
 	var rule: Dictionary=rules[id]
 	if int(p["level"])<int(rule["level"]):return Items.fail("角色等级不足，无法使用")
-	if float(view.get("hp",0))>=float(view.get("hp_max",0)):return Items.fail("生命值已满")
+	var effect: Dictionary=rule["effect"]
+	var hp_amount:=float(effect.get("amount",0)) if effect.get("kind")=="heal" else float(effect.get("hp",0))
+	var mp_amount:=float(effect.get("mp",0))
+	if mp_amount>0 and (not finite(view.get("mp"),0,1000000000) or not finite(view.get("mp_max"),1,1000000000) or view["mp"]>view["mp_max"]):return Items.fail("魔法值快照无效")
+	var restored_hp:=minf(hp_amount,float(view["hp_max"])-float(view["hp"]))
+	var restored_mp:=minf(mp_amount,float(view.get("mp_max",0))-float(view.get("mp",0)))
+	if restored_hp<=0 and restored_mp<=0:return Items.fail("对应的生命值或魔法值已满")
 	var time_ms:=float(view["time_ms"])
 	var state: Dictionary=run.get("consumables",{"items":{},"groups":{},"transactions":{}})
 	if state["transactions"].has(tx):return Items.fail("这次使用已经提交")
@@ -36,7 +42,7 @@ static func use(p: Dictionary, run: Dictionary, id: String, view: Dictionary, tx
 	state["items"][id]=time_ms+int(rule["cooldown_ms"])
 	state["groups"][rule["group"]]=time_ms+int(rule["group_cooldown_ms"])
 	state["transactions"][tx]=true
-	return {"ok":true,"effect":rule["effect"].duplicate(true),"amount":minf(float(rule["effect"]["amount"]),float(view["hp_max"])-float(view["hp"]))}
+	return {"ok":true,"effect":effect.duplicate(true),"amount":restored_hp+restored_mp,"hp_amount":restored_hp,"mp_amount":restored_mp}
 static func valid(run: Dictionary) -> bool:
 	if not run.has("consumables"):return true
 	var state=run["consumables"]

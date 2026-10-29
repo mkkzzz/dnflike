@@ -32,6 +32,8 @@ def validate(cfg, catalog, gear):
 def load():
     source=(ROOT/'game_dnf/items/catalog.gd').read_text(encoding='utf8')
     catalog=dict(re.findall(r'^\s*"([^"]+)":\s*\{[^\n]*?"kind":\s*"([^"]+)"',source,re.M))
+    compiled=json.loads((ROOT/'game_dnf/data/runtime_items.json').read_text(encoding='utf8'))
+    catalog.update({key:value['kind'] for key,value in compiled['items'].items()})
     cfg=json.loads((ROOT/'game_dnf/data/services.json').read_text(encoding='utf8'))
     gear=json.loads((ROOT/'game_dnf/data/numbers.json').read_text(encoding='utf8'))['equipment']
     return cfg,catalog,gear

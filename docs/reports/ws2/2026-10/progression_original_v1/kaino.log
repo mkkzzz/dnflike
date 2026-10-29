@@ -1,0 +1,2953 @@
+[DNF_NUMBERS] OK errors=0
+[DNF_SERVICES] OK errors=0
+[DNF_UPGRADES] OK errors=0
+[DNF_RECOVERY] OK errors=0
+OK: game text contains no Korean; baked texture lettering requires rendered review
+[VERIFY] ������Լ       ok
+[VERIFY] BGM ����     ok
+[VERIFY] ����һ��       ok
+[VERIFY] �������       ok
+[VERIFY] ȫ��ͨ��
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[ORIGINAL_DATA] PASS original Simplified Chinese definitions load beside six compatible legacy IDs
+[ORIGINAL_DATA] PASS original source stack accepts more than the legacy limit
+[ORIGINAL_DATA] PASS per-item source stack cap splits exactly 1000 plus one
+[ORIGINAL_DATA] PASS source-sized stacks validate without raising the old potion cap
+[ORIGINAL_DATA] PASS legacy stack maximum remains 99
+[ORIGINAL_DATA] PASS source items and stack limits survive save restoration
+[ORIGINAL_DATA] PASS split and sort preserve original-item ownership
+[ORIGINAL_DATA] PASS original HP tuple compiles into a timed public request
+[ORIGINAL_DATA] PASS original MP medicine works independently of the HP group
+[ORIGINAL_DATA] PASS original HP cooldown refuses duplicate resource consumption
+[ORIGINAL_DATA] PASS different HP medicine shares its source cooldown group
+[ORIGINAL_DATA] PASS new HP and MP requests both apply to the combat receiver
+[ORIGINAL_DATA] PASS quarter-duration recovery grants exactly a quarter of both resources
+[ORIGINAL_DATA] PASS paused simulation never advances timed recovery
+[ORIGINAL_DATA] PASS exact deadline delivers each requested total once and clears both schedules
+[ORIGINAL_DATA] PASS instant mixed restoration clips both resources to their maxima
+[ORIGINAL_DATA] PASS full matching resource refuses a paid request
+[ORIGINAL_DATA] PASS death cancels recovery and cannot revive the actor
+[ORIGINAL_DATA] PASS nonfinite recovery amounts are rejected
+[ORIGINAL_DATA] PASS new equipment instances use original durability
+[ORIGINAL_DATA] PASS source armor equips in the actual coat slot
+[ORIGINAL_DATA] PASS source equipment stat range is evaluated without legacy percentage distortion
+[ORIGINAL_DATA] PASS source ring's lightning resistance affects actual attributes
+[ORIGINAL_DATA] PASS source gear has complete service rules
+[ORIGINAL_DATA] PASS 108 opens at Shylock after the original predecessor
+[ORIGINAL_DATA] PASS Kaino killed in another dungeon cannot satisfy 108
+[ORIGINAL_DATA] PASS 108 commits source fixed and class-conditioned rewards
+[ORIGINAL_DATA] PASS actual swordman gets the ring, saber and both medicine stacks exactly once
+[ORIGINAL_DATA] PASS 4302 requires a new Kaino defeat and never inherits the previous kill
+[ORIGINAL_DATA] PASS source conditional rewards cannot replay after hand-in
+[ORIGINAL_DATA] PASS new task and original equipment coexist in a restorable save
+[ORIGINAL_DATA] COMPLETE checks=31 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[RECOVERY_TEST] PASS valid healing item consumes exactly one and returns configured public effect
+[RECOVERY_TEST] PASS fractional simulation clock starts precise cooldown
+[RECOVERY_TEST] PASS repeated use transaction cannot consume twice
+[RECOVERY_TEST] PASS second shortcut cannot bypass shared cooldown
+[RECOVERY_TEST] PASS cooldown remains active before exact deadline
+[RECOVERY_TEST] PASS cooldown expires at exact simulation deadline
+[RECOVERY_TEST] PASS group cooldown blocks an individually ready item
+[RECOVERY_TEST] PASS individual cooldown also blocks a ready group
+[RECOVERY_TEST] PASS full health never consumes a healing item
+[RECOVERY_TEST] PASS dead actor cannot drink
+[RECOVERY_TEST] PASS paused menu cannot drink
+[RECOVERY_TEST] PASS finished adventure cannot drink
+[RECOVERY_TEST] PASS stale adventure snapshot cannot consume
+[RECOVERY_TEST] PASS nonfinite simulation clock rejected
+[RECOVERY_TEST] PASS invalid vitals snapshot rejected without exception
+[RECOVERY_TEST] PASS reported actual restoration is clipped to missing health
+[RECOVERY_TEST] PASS locked stack cannot be consumed
+[RECOVERY_TEST] PASS stored stack cannot be consumed
+[RECOVERY_TEST] PASS pending recovery stack cannot be consumed
+[RECOVERY_TEST] PASS equipment is never treated as consumable
+[RECOVERY_TEST] PASS new adventure resets adventure-scoped cooldown
+[RECOVERY_TEST] PASS death enters pending choice without settling or granting reward
+[RECOVERY_TEST] PASS death penalty applied once before revival choice
+[RECOVERY_TEST] PASS duplicate pending death cannot repeat penalty
+[RECOVERY_TEST] PASS pending death cannot use consumables
+[RECOVERY_TEST] PASS revival quote contains configured fee, recovery and invulnerability
+[RECOVERY_TEST] PASS changed equipment invalidates revival preview
+[RECOVERY_TEST] PASS insufficient revival fee preserves all state
+[RECOVERY_TEST] PASS paid revival returns same adventure to battle and charges once
+[RECOVERY_TEST] PASS revival never applies death penalty a second time
+[RECOVERY_TEST] PASS repeated revival cannot charge while alive
+[RECOVERY_TEST] PASS old death event after revival cannot kill profile again
+[RECOVERY_TEST] PASS new death incurs one new penalty and next configured price
+[RECOVERY_TEST] PASS second revival pays incremented price
+[RECOVERY_TEST] PASS third revival pays next price
+[RECOVERY_TEST] PASS per-adventure revival limit blocks further charge
+[RECOVERY_TEST] PASS reload during pending death ends adventure without new charge or repeated penalty
+[RECOVERY_TEST] PASS explicit abandonment settles failure without clear rewards
+[RECOVERY_TEST] PASS abandonment cannot settle twice
+[RECOVERY_TEST] PASS failed adventure can return to town
+[RECOVERY_TEST] PASS revived adventure may still clear and receive one legitimate reward
+[RECOVERY_TEST] PASS repeated clear cannot pay twice after revival
+[RECOVERY_TEST] PASS previous v4 service saves remain readable
+[RECOVERY_TEST] PASS negative saved cooldown rejected
+[RECOVERY_TEST] PASS malformed consumable state rejected
+[RECOVERY_TEST] PASS impossible saved revival count rejected
+[RECOVERY_TEST] PASS invalid death receipt rejected
+[RECOVERY_TEST] PASS malformed pending death rejected
+[RECOVERY_TEST] PASS pending death requires a nonempty adventure identity
+[RECOVERY_TEST] PASS final ownership and lifecycle contracts remain valid
+[RECOVERY_TEST] COMPLETE checks=50 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[UPGRADE_TEST] PASS quote contains configured bill and success/failure levels
+[UPGRADE_TEST] PASS opening quote never consumes or rolls RNG
+[UPGRADE_TEST] PASS reinforcement commits exact UID, gold and material bill
+[UPGRADE_TEST] PASS success returns truthful result and advances persisted attempt once
+[UPGRADE_TEST] PASS reinforcement affects actual combat stats
+[UPGRADE_TEST] PASS duplicate transaction cannot charge or roll twice
+[UPGRADE_TEST] PASS changed target invalidates old confirmation
+[UPGRADE_TEST] PASS changed RNG state invalidates pending roll
+[UPGRADE_TEST] PASS failed roll is committed outcome and retains configured level
+[UPGRADE_TEST] PASS failed roll consumes quoted bill and advances once
+[UPGRADE_TEST] PASS upgrade save accepts JSON roundtrip
+[UPGRADE_TEST] PASS reload preserves next roll without rerolling
+[UPGRADE_TEST] PASS successful probabilistic step advances exactly one level
+[UPGRADE_TEST] PASS configured enhancement cap enforced
+[UPGRADE_TEST] PASS locked target cannot upgrade
+[UPGRADE_TEST] PASS broken equipment must be repaired before upgrade
+[UPGRADE_TEST] PASS equipped armor enhancement contributes defense
+[UPGRADE_TEST] PASS accessory enhancement contributes magic defense
+[UPGRADE_TEST] PASS broken armor disables enhancement too
+[UPGRADE_TEST] PASS enchant slot restriction enforced
+[UPGRADE_TEST] PASS enchantment applies one configured stat modifier
+[UPGRADE_TEST] PASS enchantment consumes exact configured cost
+[UPGRADE_TEST] PASS identical enchant cannot charge again
+[UPGRADE_TEST] PASS replacement quote previews removal of previous bonus
+[UPGRADE_TEST] PASS replacement never accumulates obsolete enchant bonus
+[UPGRADE_TEST] PASS clear enchant removes modifier without hidden cost
+[UPGRADE_TEST] PASS empty enchant cannot be cleared twice
+[UPGRADE_TEST] PASS insufficient coins leaves exact state and RNG unchanged
+[UPGRADE_TEST] PASS insufficient total materials consumes nothing
+[UPGRADE_TEST] PASS locked materials are excluded
+[UPGRADE_TEST] PASS warehouse materials are excluded
+[UPGRADE_TEST] PASS pending recovery materials are excluded
+[UPGRADE_TEST] PASS one bill spans multiple material stacks and removes exhausted entities
+[UPGRADE_TEST] PASS stored target cannot be upgraded
+[UPGRADE_TEST] PASS buyback target cannot be upgraded
+[UPGRADE_TEST] PASS existing service save migrates RNG state
+[UPGRADE_TEST] PASS invalid RNG seed rejected
+[UPGRADE_TEST] PASS invalid attempt counter rejected
+[UPGRADE_TEST] PASS malformed upgrade state rejected safely
+[UPGRADE_TEST] PASS malformed recipe rejected without script exception
+[UPGRADE_TEST] PASS NPC without role cannot upgrade
+[UPGRADE_TEST] PASS remote NPC cannot upgrade
+[UPGRADE_TEST] PASS battle cannot use town upgrades
+[UPGRADE_TEST] PASS Kiri role accepts legitimate enhancement
+[UPGRADE_TEST] PASS Sinda role accepts legitimate enchantment
+[UPGRADE_TEST] PASS final ownership, numeric and service contracts remain valid
+[UPGRADE_TEST] COMPLETE checks=46 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[SERVICE_TEST] COMPLETE checks=33 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[ITEM_TEST] COMPLETE checks=44 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[NUMBERS_TEST] COMPLETE checks=63 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[QUEST_TEST] PASS source node definitions validate
+[QUEST_TEST] PASS new profile ledger validates
+[QUEST_TEST] PASS source predecessor gates first two tasks
+[QUEST_TEST] PASS new profile includes source opening and the Kaino/GSD extension and hides unstarted legacy adaptation
+[QUEST_TEST] PASS accepting requires correct giver
+[QUEST_TEST] PASS remote NPC cannot accept task
+[QUEST_TEST] PASS accept source 101 from Seria
+[QUEST_TEST] PASS duplicate acceptance does not reset task
+[QUEST_TEST] PASS wrong conversation does not satisfy visit
+[QUEST_TEST] PASS real target conversation makes task ready
+[QUEST_TEST] PASS claim requires receiver NPC
+[QUEST_TEST] PASS atomic source 101 reward unlocks successor
+[QUEST_TEST] PASS duplicate claim never pays again
+[QUEST_TEST] PASS predecessor completes source 102 unlock
+[QUEST_TEST] PASS failed or wrong dungeon cannot complete source task
+[QUEST_TEST] PASS source 102 clears only original Lorien identity
+[QUEST_TEST] PASS minimum level gate remains independent of story progress
+[QUEST_TEST] PASS source 103 opens at level two
+[QUEST_TEST] PASS kills in wrong original dungeon do not advance 103
+[QUEST_TEST] PASS ten unique deaths count once despite duplicate delivery
+[QUEST_TEST] PASS failed reward adapter cannot leak partial resource changes
+[QUEST_TEST] PASS successful 103 claim follows failed attempt
+[QUEST_TEST] PASS source 4301 accepts from Linus
+[QUEST_TEST] PASS source chain returns to Seria for final handoff
+[QUEST_TEST] PASS completed chapter releases active and tracking capacity
+[QUEST_TEST] PASS JSON restore preserves completion and reward idempotency
+[QUEST_TEST] PASS completed record without reward transaction is rejected
+[QUEST_TEST] PASS legacy done migrates without replaying reward
+[QUEST_TEST] PASS legacy completion never impersonates original quest 101
+[QUEST_TEST] PASS legacy ready retains deliverable reward separately
+[QUEST_TEST] PASS optional legacy task supports explicit abandonment
+[QUEST_TEST] PASS missing predecessor blocks invalid content
+[QUEST_TEST] PASS cyclic task dependencies are diagnosed
+[QUEST_TEST] PASS unsupported objective cannot silently become complete
+[QUEST_TEST] PASS ordinary room clear is not a task dungeon clear event
+[QUEST_TEST] PASS tracking can change during battle without NPC access
+[QUEST_TEST] PASS mandatory source story cannot be abandoned
+[QUEST_TEST] PASS malformed registry rejected: npcs
+[QUEST_TEST] PASS malformed registry rejected: limits
+[QUEST_TEST] PASS malformed registry rejected: dungeons
+[QUEST_TEST] PASS non-array dependencies do not crash cycle validation
+[QUEST_TEST] PASS collect objective recognizes items held before accepting
+[QUEST_TEST] PASS lost material removes derived ready state
+[QUEST_TEST] PASS missing reward choice cannot consume materials
+[QUEST_TEST] PASS chosen item and material consumption commit together
+[QUEST_TEST] COMPLETE checks=45 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[TOWN_UNIT] PASS source topology and landing rectangles validate: []
+[TOWN_UNIT] PASS source exit reachable from declared ground: elven_to_city
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: elven_to_city
+[TOWN_UNIT] PASS portal has safe reciprocal destination: elven_to_city
+[TOWN_UNIT] PASS battle state blocks cross-town travel: elven_to_city
+[TOWN_UNIT] PASS source exit reachable from declared ground: city_to_elven
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: city_to_elven
+[TOWN_UNIT] PASS portal has safe reciprocal destination: city_to_elven
+[TOWN_UNIT] PASS battle state blocks cross-town travel: city_to_elven
+[TOWN_UNIT] PASS source exit reachable from declared ground: city_to_main
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: city_to_main
+[TOWN_UNIT] PASS portal has safe reciprocal destination: city_to_main
+[TOWN_UNIT] PASS battle state blocks cross-town travel: city_to_main
+[TOWN_UNIT] PASS source exit reachable from declared ground: main_to_city
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: main_to_city
+[TOWN_UNIT] PASS portal has safe reciprocal destination: main_to_city
+[TOWN_UNIT] PASS battle state blocks cross-town travel: main_to_city
+[TOWN_UNIT] PASS source exit reachable from declared ground: main_to_auction
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: main_to_auction
+[TOWN_UNIT] PASS portal has safe reciprocal destination: main_to_auction
+[TOWN_UNIT] PASS battle state blocks cross-town travel: main_to_auction
+[TOWN_UNIT] PASS source exit reachable from declared ground: auction_to_main
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: auction_to_main
+[TOWN_UNIT] PASS portal has safe reciprocal destination: auction_to_main
+[TOWN_UNIT] PASS battle state blocks cross-town travel: auction_to_main
+[TOWN_UNIT] PASS source exit reachable from declared ground: enter_inn
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: enter_inn
+[TOWN_UNIT] PASS portal has safe reciprocal destination: enter_inn
+[TOWN_UNIT] PASS battle state blocks cross-town travel: enter_inn
+[TOWN_UNIT] PASS source exit reachable from declared ground: exit_inn
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: exit_inn
+[TOWN_UNIT] PASS portal has safe reciprocal destination: exit_inn
+[TOWN_UNIT] PASS battle state blocks cross-town travel: exit_inn
+[TOWN_UNIT] PASS source exit reachable from declared ground: enter_hendon_inn
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: enter_hendon_inn
+[TOWN_UNIT] PASS portal has safe reciprocal destination: enter_hendon_inn
+[TOWN_UNIT] PASS battle state blocks cross-town travel: enter_hendon_inn
+[TOWN_UNIT] PASS source exit reachable from declared ground: exit_hendon_inn
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: exit_hendon_inn
+[TOWN_UNIT] PASS portal has safe reciprocal destination: exit_hendon_inn
+[TOWN_UNIT] PASS battle state blocks cross-town travel: exit_hendon_inn
+[TOWN_UNIT] PASS source exit reachable from declared ground: main_to_forest_gate
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: main_to_forest_gate
+[TOWN_UNIT] PASS portal has safe reciprocal destination: main_to_forest_gate
+[TOWN_UNIT] PASS battle state blocks cross-town travel: main_to_forest_gate
+[TOWN_UNIT] PASS source exit reachable from declared ground: forest_gate_to_main
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: forest_gate_to_main
+[TOWN_UNIT] PASS portal has safe reciprocal destination: forest_gate_to_main
+[TOWN_UNIT] PASS battle state blocks cross-town travel: forest_gate_to_main
+[TOWN_UNIT] PASS source exit reachable from declared ground: auction_to_alley
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: auction_to_alley
+[TOWN_UNIT] PASS portal has safe reciprocal destination: auction_to_alley
+[TOWN_UNIT] PASS battle state blocks cross-town travel: auction_to_alley
+[TOWN_UNIT] PASS source exit reachable from declared ground: alley_to_auction
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: alley_to_auction
+[TOWN_UNIT] PASS portal has safe reciprocal destination: alley_to_auction
+[TOWN_UNIT] PASS battle state blocks cross-town travel: alley_to_auction
+[TOWN_UNIT] PASS source exit reachable from declared ground: hendon_main_to_hendon_pub
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: hendon_main_to_hendon_pub
+[TOWN_UNIT] PASS portal has safe reciprocal destination: hendon_main_to_hendon_pub
+[TOWN_UNIT] PASS battle state blocks cross-town travel: hendon_main_to_hendon_pub
+[TOWN_UNIT] PASS source exit reachable from declared ground: hendon_pub_exit
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: hendon_pub_exit
+[TOWN_UNIT] PASS portal has safe reciprocal destination: hendon_pub_exit
+[TOWN_UNIT] PASS battle state blocks cross-town travel: hendon_pub_exit
+[TOWN_UNIT] PASS source exit reachable from declared ground: hendon_main_to_hendon_inn
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: hendon_main_to_hendon_inn
+[TOWN_UNIT] PASS portal has safe reciprocal destination: hendon_main_to_hendon_inn
+[TOWN_UNIT] PASS battle state blocks cross-town travel: hendon_main_to_hendon_inn
+[TOWN_UNIT] PASS source exit reachable from declared ground: hendon_inn_exit
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: hendon_inn_exit
+[TOWN_UNIT] PASS portal has safe reciprocal destination: hendon_inn_exit
+[TOWN_UNIT] PASS battle state blocks cross-town travel: hendon_inn_exit
+[TOWN_UNIT] PASS source exit reachable from declared ground: elvengard_to_alfhlyra
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: elvengard_to_alfhlyra
+[TOWN_UNIT] PASS portal has safe reciprocal destination: elvengard_to_alfhlyra
+[TOWN_UNIT] PASS battle state blocks cross-town travel: elvengard_to_alfhlyra
+[TOWN_UNIT] PASS source exit reachable from declared ground: alfhlyra_exit
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: alfhlyra_exit
+[TOWN_UNIT] PASS portal has safe reciprocal destination: alfhlyra_exit
+[TOWN_UNIT] PASS battle state blocks cross-town travel: alfhlyra_exit
+[TOWN_UNIT] PASS source exit reachable from declared ground: hendon_city_to_westcoast
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: hendon_city_to_westcoast
+[TOWN_UNIT] PASS portal has safe reciprocal destination: hendon_city_to_westcoast
+[TOWN_UNIT] PASS battle state blocks cross-town travel: hendon_city_to_westcoast
+[TOWN_UNIT] PASS source exit reachable from declared ground: westcoast_exit
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: westcoast_exit
+[TOWN_UNIT] PASS portal has safe reciprocal destination: westcoast_exit
+[TOWN_UNIT] PASS battle state blocks cross-town travel: westcoast_exit
+[TOWN_UNIT] PASS wrong current town cannot invoke foreign exit
+[TOWN_UNIT] PASS remote exit cannot teleport character
+[TOWN_UNIT] PASS unknown location and nonfinite position recover safely
+[TOWN_UNIT] PASS invalid saved coordinates project onto native ground union
+[TOWN_UNIT] PASS shared Seria room preserves entrance-specific return
+[TOWN_UNIT] PASS walking past the doorway or inside the room cannot trigger early
+[TOWN_UNIT] PASS dungeon selection belongs to the far road edge rather than approach area
+[TOWN_UNIT] PASS NPC conversation is not an automatic entrance
+[TOWN_UNIT] PASS malformed optional old-save location fields safely normalize
+[TOWN_UNIT] PASS missing return edge is rejected
+[TOWN_UNIT] PASS unwalkable landing is rejected
+[TOWN_UNIT] PASS unknown NPC cannot enter scene registry
+[TOWN_UNIT] PASS invalid dungeon entrance geometry is rejected
+[TOWN_UNIT] COMPLETE checks=102 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[QUEST_TEST] PASS source Gran task registry validates
+[QUEST_TEST] PASS 105 opens after 104 while 106 stays locked
+[QUEST_TEST] PASS 105 cannot be accepted from unrelated NPC
+[QUEST_TEST] PASS 105 accepts from original Pungjin
+[QUEST_TEST] PASS ordinary Tau Army and wrong dungeon do not satisfy the original Tau Beast target
+[QUEST_TEST] PASS 105 reward refuses unfinished target
+[QUEST_TEST] PASS one correct Tau Beast death marks 105 ready
+[QUEST_TEST] PASS 105 cannot be handed to wrong NPC
+[QUEST_TEST] PASS 105 hand-in unlocks 106
+[QUEST_TEST] PASS 106 accepts at source giver
+[QUEST_TEST] PASS dark cat boss does not replace the original ordinary cat count
+[QUEST_TEST] PASS partial original cat progress survives JSON validation
+[QUEST_TEST] PASS replayed cat event remains deduplicated after reload
+[QUEST_TEST] PASS five distinct correct cats satisfy 106
+[QUEST_TEST] PASS 106 hands in and source 107 accepts without automatic completion
+[QUEST_TEST] PASS talking to another backstreet NPC cannot satisfy Shylock meeting
+[QUEST_TEST] PASS 107 is ready only after Shylock and cannot hand back to Pungjin
+[QUEST_TEST] PASS 107 hands in at original Shylock
+[QUEST_TEST] PASS completed new city task cannot replay rewards
+[GRAN_UNIT] COMPLETE checks=19 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 591.86 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 3060 Ti
+
+Godot_v4.7.2-stable_win64_console.exe : WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/danji
+n/amb_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+At D:\dnf like\dnflike\tools\run_dnf_loop.ps1:131 char:1
++ & $GodotPath @runArgs 2>&1 | Tee-Object -Variable runOutput
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING: Invali...bis 1.0 Final".:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_npc_voices (res://town/native_town.gd:85)
+       [1] _ready (res://town/native_town.gd:73)
+       [2] _ready (res://flow/loop_root.gd:98)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/linus/amb_01.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_npc_voices (res://town/native_town.gd:85)
+       [1] _ready (res://town/native_town.gd:73)
+       [2] _ready (res://flow/loop_root.gd:98)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/grandis/amb_01.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_npc_voices (res://town/native_town.gd:85)
+       [1] _ready (res://town/native_town.gd:73)
+       [2] _ready (res://flow/loop_root.gd:98)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/albert/amb_01.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_npc_voices (res://town/native_town.gd:85)
+       [1] _ready (res://town/native_town.gd:73)
+       [2] _ready (res://flow/loop_root.gd:98)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/norton/amb_01.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_npc_voices (res://town/native_town.gd:85)
+       [1] _ready (res://town/native_town.gd:73)
+       [2] _ready (res://flow/loop_root.gd:98)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/pungjin/amb_01.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_npc_voices (res://town/native_town.gd:85)
+       [1] _ready (res://town/native_town.gd:73)
+       [2] _ready (res://flow/loop_root.gd:98)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/kiri/amb_01.ogg", should contain '=': "Sony O
+gg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_npc_voices (res://town/native_town.gd:85)
+       [1] _ready (res://town/native_town.gd:73)
+       [2] _ready (res://flow/loop_root.gd:98)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/kanna/amb_01.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_npc_voices (res://town/native_town.gd:85)
+       [1] _ready (res://town/native_town.gd:73)
+       [2] _ready (res://flow/loop_root.gd:98)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/gsd/amb_01.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_npc_voices (res://town/native_town.gd:85)
+       [1] _ready (res://town/native_town.gd:73)
+       [2] _ready (res://flow/loop_root.gd:98)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/sinda/amb_01.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_npc_voices (res://town/native_town.gd:85)
+       [1] _ready (res://town/native_town.gd:73)
+       [2] _ready (res://flow/loop_root.gd:98)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/shylock/amb_01.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_npc_voices (res://town/native_town.gd:85)
+       [1] _ready (res://town/native_town.gd:73)
+       [2] _ready (res://flow/loop_root.gd:98)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/loot/audio/coin_pick_01.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_pickup_sounds (res://loot/bridge.gd:175)
+       [1] setup (res://loot/bridge.gd:164)
+       [2] _ready (res://flow/loop_root.gd:109)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/loot/audio/coin_pick_02.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_pickup_sounds (res://loot/bridge.gd:175)
+       [1] setup (res://loot/bridge.gd:164)
+       [2] _ready (res://flow/loop_root.gd:109)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/loot/audio/coin_pick_03.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_pickup_sounds (res://loot/bridge.gd:175)
+       [1] setup (res://loot/bridge.gd:164)
+       [2] _ready (res://flow/loop_root.gd:109)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/loot/audio/item_pick.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _load_pickup_sounds (res://loot/bridge.gd:175)
+       [1] setup (res://loot/bridge.gd:164)
+       [2] _ready (res://flow/loop_root.gd:109)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/characterselectstage.ogg", should contain '='
+: "Sonic Foundry OggVorbis Beta 3".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/forest_town.ogg", should contain '=': "Sony O
+gg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/sera_shop_new.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/hendonmyre_new.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/tavern.ogg", should contain '=': "Sonic Found
+ry OggVorbis Beta 3".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/alfhlyra_new.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/westcoast_new.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/forest01.ogg", should contain '=': "Sonic Fou
+ndry OggVorbis Beta 3".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/mirkwood.ogg", should contain '=': "Sony Ogg
+Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/mirkwood_boss.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/grakkarak_new.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/grakkarak_new_boss.ogg", should contain '=':
+"Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/sunderland.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/sunderland_boss.ogg", should contain '=': "So
+ny Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/draconian_tower.ogg", should contain '=': "So
+ny Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/draconian_tower_boss.ogg", should contain '='
+: "Sonic Foundry OggVorbis Beta 3".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/golem_tower.ogg", should contain '=': "Sony O
+gg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/golem_tower_boss.ogg", should contain '=': "S
+ony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/float_castle.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+Unicode parsing error, some characters were replaced with � (U+FFFD): Invalid UTF-8 leading byte (b1)
+Unicode parsing error: Byte c1 is not a correct continuation byte after e8
+Unicode parsing error: Byte f6 is not a correct continuation byte after c1
+Unicode parsing error: Byte ce is not a correct continuation byte after f6 b9
+Unicode parsing error: Byte 20 is not a correct continuation byte after ce
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/b_float_castle.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+Unicode parsing error, some characters were replaced with � (U+FFFD): Invalid UTF-8 leading byte (b1)
+Unicode parsing error: Byte c1 is not a correct continuation byte after e8
+Unicode parsing error: Byte f6 is not a correct continuation byte after c1
+Unicode parsing error: Byte ce is not a correct continuation byte after f6 b9
+Unicode parsing error: Byte 20 is not a correct continuation byte after ce
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/palace_of_load.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/palace_of_load_boss.ogg", should contain '=':
+ "Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/skycastle.ogg", should contain '=': "Sony Ogg
+ Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/skycastle_boss.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/amb_town_01.ogg", should contain '=': "Sony O
+gg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/amb_town_02.ogg", should contain '=': "Sony O
+gg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/amb_town_03.ogg", should contain '=': "Sony O
+gg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/amb_forest_01.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/amb_forest_02.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] _setup_bgm (res://flow/loop_root.gd:699)
+       [1] _ready (res://flow/loop_root.gd:130)
+[LOOP_TEST] PASS declared source-equipped completed-opening fixture loads beside Shylock
+[LOOP_TEST] PASS source thousand-stack exposes full split range in actual inventory
+[LOOP_TEST] PASS typed split amount is committed through actual button
+[LOOP_TEST] PASS splitting source medicine preserves all units and ownership
+[LOOP_TEST] PASS source stack actually splits at the typed amount above legacy limit
+[LOOP_TEST] PASS correct original NPC anchor reachable: shylock
+[LOOP_TEST] PASS physical E opens NPC dialogue: shylock
+[LOOP_TEST] PASS native quest action 接受委托: gran.kaino_legend
+[LOOP_TEST] PASS Chinese screen text and tooltips: original_01_kaino_task
+[LOOP_TEST] PASS long original Simplified Chinese task text uses scrollable details
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (507.0, 300.0)
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (507.0, 350.0)
+[LOOP_TEST] PASS source automatic exit is reachable and recognized: alley_to_auction
+[LOOP_TEST] PASS scene transition owns input during fade: alley_to_auction
+[LOOP_TEST] PASS walking without E loads and commits target scene: hendon_auction
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (388.0, 295.0)
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (388.0, 359.0)
+[LOOP_TEST] PASS source automatic exit is reachable and recognized: auction_to_main
+[LOOP_TEST] PASS scene transition owns input during fade: auction_to_main
+[LOOP_TEST] PASS walking without E loads and commits target scene: hendon_main
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (12.0, 280.0)
+[LOOP_TEST] PASS source automatic exit is reachable and recognized: main_to_forest_gate
+[LOOP_TEST] PASS scene transition owns input during fade: main_to_forest_gate
+[LOOP_TEST] PASS walking without E loads and commits target scene: hendon_forest_gate
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_forest_approach
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (200.0, 230.0)
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (12.0, 230.0)
+[LOOP_TEST] PASS walking through the original forest approach automatically opens selection
+[LOOP_TEST] PASS real dungeon card selects source Sunderland route
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/swing1.ogg", should contain '=': "Sony Ogg Vorbis
+ 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/swing2.ogg", should contain '=': "Sony Ogg Vorbis
+ 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/swing3.ogg", should contain '=': "Sony Ogg Vorbis
+ 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/hurt.ogg", should contain '=': "Sony Ogg Vorbis 1
+.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/jump.ogg", should contain '=': "Sony Ogg Vorbis 1
+.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/upper.ogg", should contain '=': "Sony Ogg Vorbis
+1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/draw_ready.ogg", should contain '=': "Sony Ogg Vo
+rbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/thrust.ogg", should contain '=': "Sony Ogg Vorbis
+ 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/draw.ogg", should contain '=': "Sony Ogg Vorbis 1
+.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/goblin_hurt.ogg", should contain '=': "Sony Ogg V
+orbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/goblin_die.ogg", should contain '=': "Sony Ogg Vo
+rbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/music.ogg", should contain '=': "Sonic Foundry Og
+gVorbis Beta 3".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_atk3.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_atk_01.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_atk_02.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_atk_03.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_jump.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_jumpatk_01.ogg", should contain '=': "S
+ony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_jumpatk_02.ogg", should contain '=': "S
+ony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_upslash.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_bal1.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_bal2.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_triple1.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_triple2.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_triple3.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_gorecross.ogg", should contain '=': "So
+ny Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_cross.ogg", should contain '=':
+"Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_back.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_dmg_01.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_dmg_02.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_dmg_03.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_die.ogg", should contain '=': "Sony Ogg
+ Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_01.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_02.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_03.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_04.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_die_01.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_die_02.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/staff_hit.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_hit_01.ogg", should contain '=': "S
+ony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_hit_02.ogg", should contain '=': "S
+ony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/drawing_sword_hit_01.ogg", should contain
+'=': "Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/drawing_sword_hit_02.ogg", should contain
+'=': "Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/slessswd_hit_01.ogg", should contain '=':
+"Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/slessswd_hit_02.ogg", should contain '=':
+"Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdc_hit_01.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdc_hit_02.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_hit_01.ogg", should contain '=':
+ "Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_hit_02.ogg", should contain '=':
+ "Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/throw_stone.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/astorm_hit_light.ogg", should contain '=':
+ "Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/upper_slash_01.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_01.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_02.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_03.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswdb.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_hit_01.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_hit_02.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_hit_03.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswdb_hit.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_01.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_02.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_03.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/katb.ogg", should contain '=': "Sony Ogg V
+orbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_hit_01.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_hit_02.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/katb_hit.ogg", should contain '=': "Sony O
+gg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_01.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_02.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/stickb_01.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/stickb_hit_01.ogg", should contain '=': "S
+ony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_01.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_02.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdb.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_hit_01.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_hit_02.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdb_hit.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_01.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_02.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_03.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswdb.ogg", should contain '=': "Sony O
+gg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_hit_01.ogg", should contain '=':
+"Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_hit_02.ogg", should contain '=':
+"Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswdb_hit.ogg", should contain '=': "So
+ny Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:46)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+[LOOP_TEST] PASS real selection enters the source Kaino route
+[LOOP_TEST] PASS all source monsters preflight and mount successfully
+[LOOP_TEST] PASS physical MP shortcut preserves inventory and cooldown after failed disk commit
+[LOOP_TEST] PASS physical MP shortcut consumes one source medicine
+[LOOP_TEST] PASS inventory pause freezes actual timed MP recovery
+[LOOP_TEST] PASS Chinese screen text and tooltips: original_02_items_and_pause
+[LOOP_TEST] PASS source MP restoration reaches the live player after simulation resumes
+[LOOP_TEST] PASS correct source route starts: sunderland
+[GRAN_CHAPTER] ROOM sunderland 1
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_battle_sunderland_1
+[GRAN_CHAPTER] ROOM sunderland 2
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_battle_sunderland_2
+[GRAN_CHAPTER] ROOM sunderland 3
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_battle_sunderland_3
+[GRAN_CHAPTER] ROOM sunderland 4
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_battle_sunderland_4
+[GRAN_CHAPTER] progress 5999 (1192.086, 224.6643) enemies=2
+[GRAN_CHAPTER] ROOM sunderland 5
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_battle_sunderland_5
+[GRAN_CHAPTER] ROOM sunderland 6
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_battle_sunderland_6
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_boss_sunderland
+[GRAN_CHAPTER] RESULT sunderland true { "elapsed_ms": 191766.666666647, "time_ms": 191766.666666647, "hit_count": 405, "hits": 405, "damage_taken": 835 }
+[LOOP_TEST] PASS real normal inputs clear original route: sunderland
+[LOOP_TEST] PASS original paired gates reach source final room: sunderland
+[LOOP_TEST] PASS real original boss is approached in combat: sunderland
+[LOOP_TEST] PASS actual Kaino death completes 108 through the public event
+[LOOP_TEST] PASS Chinese screen text and tooltips: original_03_kaino_victory
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (880.0, 230.0)
+[LOOP_TEST] PASS source automatic exit is reachable and recognized: forest_gate_to_main
+[LOOP_TEST] PASS scene transition owns input during fade: forest_gate_to_main
+[LOOP_TEST] PASS walking without E loads and commits target scene: hendon_main
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (348.0, 240.0)
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (348.0, 172.0)
+[LOOP_TEST] PASS source automatic exit is reachable and recognized: main_to_auction
+[LOOP_TEST] PASS scene transition owns input during fade: main_to_auction
+[LOOP_TEST] PASS walking without E loads and commits target scene: hendon_auction
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (285.0, 245.0)
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (285.0, 168.0)
+[LOOP_TEST] PASS source automatic exit is reachable and recognized: auction_to_alley
+[LOOP_TEST] PASS scene transition owns input during fade: auction_to_alley
+[LOOP_TEST] PASS walking without E loads and commits target scene: hendon_alley
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (619.0, 225.0)
+[LOOP_TEST] PASS correct original NPC anchor reachable: shylock
+[LOOP_TEST] PASS physical E opens NPC dialogue: shylock
+[LOOP_TEST] PASS Chinese screen text and tooltips: original_04_source_rewards
+[LOOP_TEST] PASS actual source-equipment reward rolls back atomically on failed storage
+[LOOP_TEST] PASS GUI hand-in delivers eligible saber and lightning ring
+[LOOP_TEST] PASS new conditional equipment reward is readable from disk
+[LOOP_TEST] PASS native quest action 接受委托: gran.goblin_mutation
+[LOOP_TEST] PASS 4302 starts with no inherited Kaino progress
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (507.0, 300.0)
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (507.0, 350.0)
+[LOOP_TEST] PASS source automatic exit is reachable and recognized: alley_to_auction
+[LOOP_TEST] PASS scene transition owns input during fade: alley_to_auction
+[LOOP_TEST] PASS walking without E loads and commits target scene: hendon_auction
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (388.0, 295.0)
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (388.0, 359.0)
+[LOOP_TEST] PASS source automatic exit is reachable and recognized: auction_to_main
+[LOOP_TEST] PASS scene transition owns input during fade: auction_to_main
+[LOOP_TEST] PASS walking without E loads and commits target scene: hendon_main
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (12.0, 280.0)
+[LOOP_TEST] PASS source automatic exit is reachable and recognized: main_to_forest_gate
+[LOOP_TEST] PASS scene transition owns input during fade: main_to_forest_gate
+[LOOP_TEST] PASS walking without E loads and commits target scene: hendon_forest_gate
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_forest_approach
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (200.0, 230.0)
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (12.0, 230.0)
+[LOOP_TEST] PASS walking through the original forest approach automatically opens selection
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/swing1.ogg", should contain '=': "Sony Ogg Vorbis
+ 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/swing2.ogg", should contain '=': "Sony Ogg Vorbis
+ 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/swing3.ogg", should contain '=': "Sony Ogg Vorbis
+ 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/hurt.ogg", should contain '=': "Sony Ogg Vorbis 1
+.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/jump.ogg", should contain '=': "Sony Ogg Vorbis 1
+.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/upper.ogg", should contain '=': "Sony Ogg Vorbis
+1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/draw_ready.ogg", should contain '=': "Sony Ogg Vo
+rbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/thrust.ogg", should contain '=': "Sony Ogg Vorbis
+ 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/draw.ogg", should contain '=': "Sony Ogg Vorbis 1
+.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/goblin_hurt.ogg", should contain '=': "Sony Ogg V
+orbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/goblin_die.ogg", should contain '=': "Sony Ogg Vo
+rbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/music.ogg", should contain '=': "Sonic Foundry Og
+gVorbis Beta 3".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:22)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_atk3.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_atk_01.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_atk_02.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_atk_03.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_jump.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_jumpatk_01.ogg", should contain '=': "S
+ony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_jumpatk_02.ogg", should contain '=': "S
+ony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_upslash.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_bal1.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_bal2.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_triple1.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_triple2.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_triple3.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_gorecross.ogg", should contain '=': "So
+ny Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_cross.ogg", should contain '=':
+"Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_back.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_dmg_01.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_dmg_02.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_dmg_03.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_die.ogg", should contain '=': "Sony Ogg
+ Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_01.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_02.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_03.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_04.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_die_01.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_die_02.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/staff_hit.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_hit_01.ogg", should contain '=': "S
+ony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_hit_02.ogg", should contain '=': "S
+ony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/drawing_sword_hit_01.ogg", should contain
+'=': "Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/drawing_sword_hit_02.ogg", should contain
+'=': "Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/slessswd_hit_01.ogg", should contain '=':
+"Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/slessswd_hit_02.ogg", should contain '=':
+"Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdc_hit_01.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdc_hit_02.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_hit_01.ogg", should contain '=':
+ "Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_hit_02.ogg", should contain '=':
+ "Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/throw_stone.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/astorm_hit_light.ogg", should contain '=':
+ "Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/upper_slash_01.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_01.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_02.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_03.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswdb.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_hit_01.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_hit_02.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_hit_03.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswdb_hit.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_01.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_02.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_03.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/katb.ogg", should contain '=': "Sony Ogg V
+orbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_hit_01.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_hit_02.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/katb_hit.ogg", should contain '=': "Sony O
+gg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_01.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_02.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/stickb_01.ogg", should contain '=': "Sony
+Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/stickb_hit_01.ogg", should contain '=': "S
+ony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_01.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_02.ogg", should contain '=': "Sony
+ Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdb.ogg", should contain '=': "Sony Og
+g Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_hit_01.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_hit_02.ogg", should contain '=': "
+Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdb_hit.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_01.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_02.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_03.ogg", should contain '=': "Son
+y Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswdb.ogg", should contain '=': "Sony O
+gg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_hit_01.ogg", should contain '=':
+"Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_hit_02.ogg", should contain '=':
+"Sony Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswdb_hit.ogg", should contain '=': "So
+ny Ogg Vorbis 1.0 Final".
+   at: maybe_update_info (modules/vorbis/audio_stream_ogg_vorbis.cpp:473)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://view/audio_router.gd:25)
+       [1] setup (res://view/battle_view.gd:71)
+       [2] _ready (res://scripts/main.gd:112)
+       [3] mount (res://combat/api/combat_session.gd:23)
+       [4] depart (res://flow/loop_root.gd:546)
+       [5] click_control (res://tests/flow/test_loop.gd:79)
+       [6] click_text (res://tests/flow/test_loop.gd:66)
+       [7] run (res://tests/quests/test_kaino_chapter.gd:83)
+       [8] ticks (res://tests/flow/test_loop.gd:33)
+[LOOP_TEST] PASS correct source route starts: sunderland
+[GRAN_CHAPTER] ROOM sunderland 1
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_battle_sunderland_1
+[GRAN_CHAPTER] ROOM sunderland 2
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_battle_sunderland_2
+[GRAN_CHAPTER] ROOM sunderland 3
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_battle_sunderland_3
+[GRAN_CHAPTER] ROOM sunderland 4
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_battle_sunderland_4
+[GRAN_CHAPTER] progress 5999 (1120.785, 274.8255) enemies=1
+[GRAN_CHAPTER] ROOM sunderland 5
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_battle_sunderland_5
+[GRAN_CHAPTER] ROOM sunderland 6
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_battle_sunderland_6
+[LOOP_TEST] PASS Chinese screen text and tooltips: gran_boss_sunderland
+[GRAN_CHAPTER] progress 11999 (885.587, 284.7874) enemies=1
+[GRAN_CHAPTER] RESULT sunderland true { "elapsed_ms": 223833.333333295, "time_ms": 223833.333333295, "hit_count": 536, "hits": 536, "damage_taken": 1454 }
+[LOOP_TEST] PASS real normal inputs clear original route: sunderland
+[LOOP_TEST] PASS original paired gates reach source final room: sunderland
+[LOOP_TEST] PASS real original boss is approached in combat: sunderland
+[LOOP_TEST] PASS second actual Kaino kill independently completes 4302
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (880.0, 230.0)
+[LOOP_TEST] PASS source automatic exit is reachable and recognized: forest_gate_to_main
+[LOOP_TEST] PASS scene transition owns input during fade: forest_gate_to_main
+[LOOP_TEST] PASS walking without E loads and commits target scene: hendon_main
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (348.0, 240.0)
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (348.0, 172.0)
+[LOOP_TEST] PASS source automatic exit is reachable and recognized: main_to_auction
+[LOOP_TEST] PASS scene transition owns input during fade: main_to_auction
+[LOOP_TEST] PASS walking without E loads and commits target scene: hendon_auction
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (285.0, 245.0)
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (285.0, 168.0)
+[LOOP_TEST] PASS source automatic exit is reachable and recognized: auction_to_alley
+[LOOP_TEST] PASS scene transition owns input during fade: auction_to_alley
+[LOOP_TEST] PASS walking without E loads and commits target scene: hendon_alley
+[LOOP_TEST] PASS physical town movement reaches point or automatic edge: (619.0, 225.0)
+[LOOP_TEST] PASS correct original NPC anchor reachable: shylock
+[LOOP_TEST] PASS physical E opens NPC dialogue: shylock
+[LOOP_TEST] PASS native quest action 领取报酬: gran.goblin_mutation
+[LOOP_TEST] PASS handing in 4302 unlocks the original next NPC task
+[LOOP_TEST] PASS Chinese screen text and tooltips: original_05_rewards_inventory
+[LOOP_TEST] PASS disk reload preserves actual double clear and one-time source rewards
+[KAINO_CHAPTER] COMPLETE checks=123 failures=0 captures=21

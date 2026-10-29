@@ -1,6 +1,6 @@
 extends RefCounted
 ## Trial adaptation; source icons do not imply these are original item stats.
-const ITEMS := {
+const LEGACY_ITEMS := {
 	"scrap_iron": {"name":"铁质碎片", "kind":"material", "rarity":0, "level":1, "weight":0.01, "description":"分解装备获得的基础材料"},
 	"training_coat": {"name":"练习布甲", "kind":"weapon", "rarity":0, "level":1, "weight":1.0, "description":"防御与生命加成"},
 	"training_necklace": {"name":"练习项链", "kind":"weapon", "rarity":0, "level":1, "weight":0.3, "description":"魔防与法力加成"},
@@ -8,6 +8,16 @@ const ITEMS := {
 	"forest_sword": {"name": "林间太刀", "kind": "weapon", "rarity": 2, "level": 1, "weight": 1.2, "multiplier": 1.2, "description": "物理伤害 ×1.20", "price": 240},
 	"potion": {"name": "恢复药剂", "kind": "consumable", "rarity": 1, "level": 1, "weight": 0.01, "heal": 150, "price": 40, "description": "恢复 150 HP；战斗中按 1"},
 }
+static var ITEMS: Dictionary = load_items()
+
+static func load_items() -> Dictionary:
+	var result: Dictionary = LEGACY_ITEMS.duplicate(true)
+	var data = JSON.parse_string(FileAccess.get_file_as_string("res://data/runtime_items.json"))
+	if data is Dictionary and data.get("schema") == "dnf_runtime_items/1":result.merge(data.get("items",{}),false)
+	return result
+
+static func stack_limit(id: String) -> int:
+	return maxi(1,int(ITEMS.get(id,{}).get("stack_limit",99)))
 ## Rarity is separate from an equipment roll's lower/upper quality grade.
 ## Trial swords retain adapted rarity; potion rarity=1 is in its source STK.
 const RARITIES := {

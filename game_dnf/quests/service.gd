@@ -94,6 +94,7 @@ func list(profile: Dictionary, statuses: Array = [], npc := "") -> Array[Diction
 		if not statuses.is_empty() and state not in statuses:continue
 		if npc != "" and npc not in [q["giver"], q["receiver"]]:continue
 		var view := q.duplicate(true)
+		view["reward"]=reward_for(profile,q)
 		view["status"] = state
 		view["tracked"] = id in profile.get("quest_state", {}).get("tracked", [])
 		var entry: Dictionary = profile.get("quest_state", {}).get("entries", {}).get(id, {})
@@ -132,7 +133,7 @@ func command(profile: Dictionary, kind: String, payload: Dictionary, context: Di
 			if not context.get("nearby", false) or context.get("npc") != q["receiver"]:return fail("请到" + npc_name(q["receiver"]) + "身旁交付任务")
 			var tx := transaction_id(id)
 			if ledger["transactions"].has(tx):return fail("任务奖励已经领取")
-			var reward: Dictionary = q["reward"].duplicate(true)
+			var reward: Dictionary = reward_for(profile,q)
 			if not reward["choices"].is_empty():
 				var chosen: Dictionary = {}
 				for choice: Dictionary in reward["choices"]:
@@ -178,6 +179,17 @@ func active_count(profile: Dictionary) -> int:
 
 func npc_name(id: String) -> String:
 	return String(catalog.config["npcs"].get(id, id))
+
+func reward_for(profile: Dictionary, quest: Dictionary) -> Dictionary:
+	var reward: Dictionary=quest["reward"].duplicate(true)
+	# Current playable class is swordman (original job 0); its growth is separate.
+	var job:=int(profile.get("job_index",0))
+	var grow:=int({"swordman":0,"weaponmaster":1,"berserker":3}.get(profile.get("growtype","swordman"),0))
+	for row: Dictionary in reward.get("conditional_items",[]):
+		if not row["jobs"].any(func(value):return int(value)==-1 or int(value)==job):continue
+		if not row["grow_types"].any(func(value):return int(value)==-1 or int(value)==grow):continue
+		reward["items"][row["item"]]=int(reward["items"].get(row["item"],0))+int(row["amount"])
+	return reward
 
 static func transaction_id(id: String) -> String:
 	return "quest:" + id + ":once"

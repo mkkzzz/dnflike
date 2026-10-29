@@ -10,7 +10,8 @@ static func resolve(attacker: Dictionary, defender: Dictionary, hit: Dictionary,
 	var critical := float(rolls[1]) < clampf(float(attacker.get("magical_crit" if magic else "physical_crit",0))+float(hit.get("critical_chance",0)),0,1)
 	var main_factor := maxf(0,1+main/float(formula["main_stat_divisor"]))
 	var percent := attack*float(hit.get("percent",100))/100
-	var fixed := float(hit.get("fixed",0))*float(attacker.get("independent_attack",100))/100
+	var independent:=float(attacker.get("independent_attack",100))+float(attacker.get("magical_independent_attack" if magic else "physical_independent_attack",0))
+	var fixed := float(hit.get("fixed",0))*independent/100
 	var defense_k := float(formula["defense_base"])+maxi(1,int(attacker.get("level",1)))*float(formula["defense_per_attacker_level"])
 	var defense_factor := 1.0 if hit.get("ignore_defense",false) else defense_k/(defense_k+defense)
 	var element_factor := 1.0

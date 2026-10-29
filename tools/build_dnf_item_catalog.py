@@ -5,9 +5,8 @@
   summary —— 各类数量、稀有度分布、带英文名的装备数
   items   —— 每件：路径、类别、稀有度、等级、职业限制、交易类型、价格、重量、图标引用、属性、名字槽指纹
 
-文本现状（实测）：`.equ` 的 `[name]` 是加密槽，但 `[name2]` 是明文英文；
-`.stk` 的 `[name]/[explain]` 同为加密槽且没有英文槽 —— 中文名需解密或中文客户端串表。
-因此总账只记录 `name2` 与 `name_sig`（原始字节长度+摘要），不伪造名称。
+本总账只记录name2与name_sig，不解析中文全文；这不是加密或缺中文的证据。
+111直接字串可按CP950读取，本地化引用由audit_dnf_reusable_data.TextResolver解出STR正文。
 
 用法：
   python tools/build_dnf_item_catalog.py            # 全量（约 85k 条，数分钟）
@@ -145,7 +144,7 @@ def main() -> int:
     with_name = sum(1 for i in items if i.get('name_en'))
     catalog = {
         'schema': 'dnf_item_catalog/1',
-        'evidence': '原版 .equ/.stk/.etc 结构字段 E-PARSE；[name] 为加密槽，装备另有明文 [name2]',
+        'evidence': '原版 .equ/.stk/.etc 结构字段 E-PARSE；本总账保留名称字节指纹，中文正文另由TextResolver解析',
         'summary': {
             'total': len(items),
             'failed': failed,

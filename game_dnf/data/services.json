@@ -3,13 +3,106 @@
   "note": "E-ADAPT functional defaults, not original DNF economy",
   "buyback_limit": 20,
   "durability_max": 40,
-  "wear": {"weapon_hits":20, "armor_hits":10, "death_loss":3},
+  "wear": {
+    "weapon_hits": 20,
+    "armor_hits": 10,
+    "death_loss": 3
+  },
   "items": {
-    "iron_sword":{"sell":12,"repair_point":2,"disassemble":{"scrap_iron":2}},
-    "forest_sword":{"sell":60,"repair_point":3,"disassemble":{"scrap_iron":5}},
-    "training_coat":{"sell":15,"repair_point":1,"disassemble":{"scrap_iron":2}},
-    "training_necklace":{"sell":18,"repair_point":1,"disassemble":{"scrap_iron":2}},
-    "potion":{"sell":10},
-    "scrap_iron":{"sell":2}
+    "iron_sword": {
+      "sell": 12,
+      "repair_point": 2,
+      "disassemble": {
+        "scrap_iron": 2
+      }
+    },
+    "forest_sword": {
+      "sell": 60,
+      "repair_point": 3,
+      "disassemble": {
+        "scrap_iron": 5
+      }
+    },
+    "training_coat": {
+      "sell": 15,
+      "repair_point": 1,
+      "disassemble": {
+        "scrap_iron": 2
+      }
+    },
+    "training_necklace": {
+      "sell": 18,
+      "repair_point": 1,
+      "disassemble": {
+        "scrap_iron": 2
+      }
+    },
+    "potion": {
+      "sell": 10
+    },
+    "scrap_iron": {
+      "sell": 2
+    },
+    "original_1106": {
+      "sell": 25
+    },
+    "original_1107": {
+      "sell": 50
+    },
+    "original_1112": {
+      "sell": 25
+    },
+    "original_1113": {
+      "sell": 50
+    },
+    "original_10580": {
+      "sell": 1728,
+      "repair_point": 68,
+      "disassemble": {
+        "scrap_iron": 2
+      }
+    },
+    "original_16400": {
+      "sell": 144,
+      "repair_point": 8,
+      "disassemble": {
+        "scrap_iron": 1
+      }
+    },
+    "original_16403": {
+      "sell": 1440,
+      "repair_point": 80,
+      "disassemble": {
+        "scrap_iron": 2
+      }
+    },
+    "original_22001": {
+      "sell": 1728,
+      "repair_point": 48,
+      "disassemble": {
+        "scrap_iron": 2
+      }
+    },
+    "original_24116": {
+      "sell": 2592,
+      "repair_point": 72,
+      "disassemble": {
+        "scrap_iron": 3
+      }
+    },
+    "original_27601": {
+      "sell": 1512,
+      "repair_point": 48,
+      "disassemble": {
+        "scrap_iron": 1
+      }
+    },
+    "original_27800": {
+      "sell": 2520,
+      "repair_point": 80,
+      "disassemble": {
+        "scrap_iron": 2
+      }
+    }
   }
 }

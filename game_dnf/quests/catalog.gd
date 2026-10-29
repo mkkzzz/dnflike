@@ -68,6 +68,17 @@ func validate_definition(q: Dictionary) -> void:
 		return
 	for key in ["gold", "xp"]:
 		if not whole(reward.get(key), 0, 1000000000):errors.append("任务奖励数值无效：" + id)
+	var conditional=reward.get("conditional_items",[])
+	if not conditional is Array:errors.append("任务职业奖励无效："+id)
+	else:
+		for row in conditional:
+			if not row is Dictionary or not row.get("item") is String or row["item"].is_empty() or not whole(row.get("amount"),1,999999):
+				errors.append("任务职业奖励条目无效："+id);continue
+			for field: String in ["jobs","grow_types"]:
+				if not row.get(field) is Array or row[field].is_empty():errors.append("任务职业条件无效："+id)
+				else:
+					for value in row[field]:
+						if not whole(value,-1,30):errors.append("任务职业条件无效："+id)
 	for bag in [q.get("consume"), reward.get("items")]:
 		if not bag is Dictionary:errors.append("任务物品表无效：" + id)
 		else:

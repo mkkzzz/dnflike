@@ -80,7 +80,7 @@ func grant_quest_reward(candidate: Dictionary, reward: Dictionary, tx: String) -
 func dungeon_available(id: String) -> bool:
 	if not dungeons.has(id):return false
 	if int(profile["level"])<int(dungeons[id].get("min_level",1)):return false
-	for required: String in dungeons[id]["requires"]:
+	for required: String in dungeons[id].get("requires",[]):
 		if quests.status(profile,required) != "completed":return false
 	return true
 

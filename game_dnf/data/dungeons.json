@@ -255,37 +255,37 @@
    }
   },
   "sunderland": {
-   "name": "桑德兰",
+   "name": "雷鸣废墟",
    "region": "granfloris",
    "map_export": "res://assets_local/flow_v1/gran_v1/sunderland/map_export.json",
    "rooms": [
     {
-     "name": "桑德兰",
+     "name": "雷鸣废墟",
      "placement": "0_0:s602",
      "next": "right"
     },
     {
-     "name": "桑德兰",
+     "name": "雷鸣废墟",
      "placement": "1_0:e602",
      "next": "right"
     },
     {
-     "name": "桑德兰",
+     "name": "雷鸣废墟",
      "placement": "2_0:e601",
      "next": "down"
     },
     {
-     "name": "桑德兰",
+     "name": "雷鸣废墟",
      "placement": "2_1:h601",
      "next": "left"
     },
     {
-     "name": "桑德兰",
+     "name": "雷鸣废墟",
      "placement": "1_1:h604",
      "next": "down"
     },
     {
-     "name": "桑德兰",
+     "name": "雷鸣废墟",
      "placement": "1_2:b601",
      "next": "",
      "boss": true
@@ -296,7 +296,11 @@
     "path": "",
     "sha256": "",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
-   }
+   },
+   "min_level": 5,
+   "requires": [
+    "gran.meet_shylock"
+   ]
   },
   "sunderland_dark": {
    "name": "黑暗桑德兰",

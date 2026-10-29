@@ -42,7 +42,7 @@ func run() -> void:
 	var p := profile()
 	check(service.valid(p), "new profile ledger validates")
 	check(service.status(p, "elvengard.meet_linus") == "available" and service.status(p, "lorien.first_clear") == "locked", "source predecessor gates first two tasks")
-	check(service.list(p).size() == 11, "new profile includes source opening, Hendon and Gran chapters and hides unstarted legacy adaptation")
+	check(service.list(p).size() == 14 and not service.list(p).any(func(q):return q["id"]=="legacy.trial"), "new profile includes source opening and the Kaino/GSD extension and hides unstarted legacy adaptation")
 	check(not command(p,"quest.accept","elvengard.meet_linus","linus")["ok"], "accepting requires correct giver")
 	check(not service.command(p,"quest.accept",{"id":"elvengard.meet_linus"},{"in_town":true,"nearby":false,"npc":"seria"},grant)["ok"], "remote NPC cannot accept task")
 	check(command(p,"quest.accept","elvengard.meet_linus","seria")["ok"], "accept source 101 from Seria")

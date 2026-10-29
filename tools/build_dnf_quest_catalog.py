@@ -4,8 +4,8 @@
   summary  —— 总数、目录分布、grade/type 分布、待中文化条目数
   quests   —— 每条：路径、grade、等级区间、类型、发布/交付 NPC 索引、职业限制、奖励、名称引用、是否已实装
 
-字段全部来自原版脚本（E-PARSE）。任务名与描述是本地化引用（只能解到 name_XXXXX 占位键），
-所以 catalog 不写中文名，只记录 name_ref；已实装的 12 条从 data/quests.json 取中文名。
+字段来自原版脚本（E-PARSE）。本总账保留本地化 name_ref，已实装项从运行表取中文名。
+完整中文可由 audit_dnf_reusable_data.TextResolver 读取STR引用；未实装不代表无中文。
 
 用法：python tools/build_dnf_quest_catalog.py [--library DIR]
 """

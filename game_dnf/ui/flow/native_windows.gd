@@ -14,6 +14,7 @@ var shop_page := 0
 var skill_tip_id := ""
 var skill_tip_rect: Rect2
 var item_icons: Dictionary = {}
+var original_icons: Dictionary = {}
 
 func _init(root) -> void:
 	game = root
@@ -103,10 +104,18 @@ func quests() -> void:
 	skin.label(node, "委托记录", Vector2(23, 379), 11, Color("a59c88"))
 
 func item_texture(id: String) -> Texture2D:
+	if id.begins_with("original_"):
+		if original_icons.is_empty():original_icons=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/items_original_v1/manifest.json"))
+		return load("res://assets_local/items_original_v1/"+String(original_icons["images"][original_icons["items"][id]]["file"]))
 	if id in ["training_coat","training_necklace","scrap_iron"]:
 		if item_icons.is_empty():item_icons=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/items_v2/manifest.json"))
 		return load("res://assets_local/items_v2/"+String(item_icons["images"][item_icons["items"][id]]["file"]))
 	return game.town.loader.texture(game.town.loader.data["ui"]["items"][id])
+
+func field_texture(id: String) -> Texture2D:
+	if not id.begins_with("original_"):return null
+	if original_icons.is_empty():original_icons=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/items_original_v1/manifest.json"))
+	return load("res://assets_local/items_original_v1/"+String(original_icons["images"][original_icons["field_images"][id]]["file"]))
 
 func hide_tooltip() -> void:
 	if is_instance_valid(tip):tip.queue_free()
@@ -136,7 +145,7 @@ func item_tip(id: String, rect: Rect2, buying := false, attached := false, insta
 	skin.image(tip, skin.texture("common", 230), Vector2(39, 69))
 	if is_weapon:
 		skin.label(tip, "需要等级  %d" % int(data["level"]), Vector2(16, 82), 12, Color("a7dd74") if int(game.session.profile["level"]) >= int(data["level"]) else Color("ff7777"))
-		skin.label(tip, "鬼剑士可以使用", Vector2(16, 108), 12, Color("cccccc"))
+		skin.label(tip, "装备部位："+String(game.number_windows.SLOT_NAMES.get(game.session.Numbers.config()["equipment"][id]["slot"],"装备")), Vector2(16, 108), 12, Color("cccccc"))
 		skin.label(tip, "重量  %.2f kg" % float(data["weight"]), Vector2(163, 108), 11, Color("a59c88"))
 		skin.image(tip, skin.texture("common", 230), Vector2(39, 140))
 		skin.label(tip, "装备属性", Vector2(16, 152), 12, Color("d4c399"))
@@ -230,13 +239,14 @@ func inventory(at := Vector2(484, 16), can_close := true) -> void:
 	if can_close:skin.close_button(node, Vector2(268, 35), func(): game.show_overlay("")).name = "inventory_close"
 	var equipped: String = game.session.profile["equipped"]
 	var weight := 0.0
+	var capacity:=float(game.session.Numbers.profile_stats(game.session.profile)["values"].get("carry_capacity",50))
 	for id: String in game.Catalog.ITEMS:
 		weight += float(game.Catalog.ITEMS[id]["weight"]) * int(game.session.profile["inventory"].get(id, 0))
-	(node.get_node("weight_label") as Label).text = "%.2f / 50 kg" % weight
+	(node.get_node("weight_label") as Label).text = "%.2f / %.0f kg" % [weight,capacity]
 	var fill := node.get_node("weight_fill") as TextureRect
 	var region := AtlasTexture.new()
 	region.atlas = skin.texture("inventory", 1)
-	region.region = Rect2(0, 0, maxf(1, floorf(region.atlas.get_width() * minf(weight / 50.0, 1.0))), region.atlas.get_height())
+	region.region = Rect2(0, 0, maxf(1, floorf(region.atlas.get_width() * minf(weight / maxf(1,capacity), 1.0))), region.atlas.get_height())
 	fill.texture = region
 	fill.size = region.get_size()
 	var weapon = game.make_slot(node, {"place":"equipment", "id":equipped}, Vector2(210, 88))
@@ -275,7 +285,8 @@ func shop() -> void:
 	viewport.clip_contents = true
 	grid.reparent(viewport)
 	grid.position = Vector2.ZERO
-	for i in 2:game.make_slot(grid, {"place":"shop", "index":i, "id":["potion", "forest_sword"][i]}, Vector2(2 + i * 32, 2))
+	var goods: Array=["potion","forest_sword","original_1106","original_1112","original_1107","original_1113"]
+	for i in goods.size():game.make_slot(grid,{"place":"shop","index":i,"id":goods[i]},Vector2(2+i*32,2))
 	var more: Control = skin.item_grid(viewport, Vector2(0, 194), 7, 6)
 	var scroll := VScrollBar.new()
 	scroll.position = Vector2(263, 151)
@@ -373,10 +384,13 @@ func dungeon() -> void:
 	skin.label(node, region_title, Vector2(34, 65), 22, Color("f0d18a"))
 	# 卡片按当前城镇的副本区动态列出（每页 5 张）；锁定的置灰并给出原因。
 	var choices: Array = game.session.dungeon_choices(regions)
+	if game.selected_dungeon=="forest_trial":choices=["forest_trial"]
+	if not choices.is_empty() and game.selected_dungeon not in choices:game.selected_dungeon=choices[0]
 	var pages := maxi(1, int(ceil(float(choices.size()) / 5.0)))
 	game.dungeon_page = clampi(game.dungeon_page, 0, pages - 1)
 	var start: int = int(game.dungeon_page) * 5
 	var locations := [Vector2(300, 230), Vector2(132, 111), Vector2(466, 93), Vector2(562, 292), Vector2(130, 360)]
+	var difficulty_position:=Vector2(325,314)
 	for i in locations.size():
 		var index: int = start + i
 		if index >= choices.size():break
@@ -385,12 +399,15 @@ func dungeon() -> void:
 		var unlocked: bool = game.session.dungeon_available(id)
 		var chosen: bool = id == game.selected_dungeon
 		var pic = skin.image(node, skin.texture("dungeon_cards", i), locations[i])
-		if chosen:pic.name = "selected_dungeon_card"
+		if chosen:
+			pic.name = "selected_dungeon_card"
+			difficulty_position=locations[i]+Vector2(25,pic.size.y+4)
 		if not unlocked:pic.modulate = Color("666666")
 		elif not chosen:pic.modulate = Color("b8b8b8")
 		skin.label(node, String(spec.get("name", id)), locations[i] + Vector2(6, 78), 12,
 			Color("f0d18a") if unlocked else Color("8a8578"))
 		var hit := Button.new()
+		hit.set_meta("dungeon_id",id)
 		hit.flat = true
 		hit.position = locations[i]
 		hit.size = Vector2(168, 78)
@@ -420,7 +437,7 @@ func dungeon() -> void:
 	var difficulty: String = game.session.profile.get("difficulty", "normal")
 	var levels := ["normal", "adventure", "king"]
 	var current := levels.find(difficulty)
-	var bar := container(node, Vector2(325, 314), Vector2(118, 27))
+	var bar := container(node, difficulty_position, Vector2(118, 27))
 	bar.name = "difficulty_selector"
 	skin.image(bar, skin.texture("select", 2), Vector2.ZERO)
 	skin.image(bar, skin.texture("select", {"normal":11,"adventure":12,"king":14}[difficulty]), Vector2(36, 4))

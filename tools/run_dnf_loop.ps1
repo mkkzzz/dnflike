@@ -1,4 +1,4 @@
-param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [switch]$SyncAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly, [switch]$GranOnly, [switch]$UpgradesOnly, [switch]$RecoveryOnly)
+param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [switch]$SyncAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly, [switch]$GranOnly, [switch]$KainoOnly, [switch]$UpgradesOnly, [switch]$RecoveryOnly)
 $ErrorActionPreference="Stop"
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
@@ -76,11 +76,16 @@ if ($gateStale) {
 $importOutput=& $GodotPath --headless --path $gamePath --editor --import --quit 2>&1
 $importExit=$LASTEXITCODE
 $ErrorActionPreference="Stop"
-if ($importExit -ne 0 -or ($importOutput -match 'SCRIPT ERROR|ERROR:')) {
+# Some original Ogg files print "Unicode parsing error:" for legacy comment tags.
+# Fail on Godot's actual error records, while preserving those metadata warnings.
+if ($importExit -ne 0 -or ($importOutput -match '(?m)^(SCRIPT ERROR|ERROR:)')) {
     $importOutput | Write-Output
     throw "Loop project import failed."
 }
 if ($Test) {
+    $originalOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_original_progression.gd 2>&1
+    $originalOutput | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($originalOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($originalOutput -match '\[ORIGINAL_DATA\] COMPLETE checks=\d+ failures=0')) {throw "Original item/task regression failed."}
     $recoveryOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_recovery.gd 2>&1
     $recoveryOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($recoveryOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($recoveryOutput -match '\[RECOVERY_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Recovery regression failed."}
@@ -108,7 +113,7 @@ if ($Test) {
 }
 $runArgs=@("--path",$gamePath,"res://scenes/loop.tscn")
 if ($Test) {
-    $runArgs+=@("--fixed-fps","60","--quit-after",$(if ($GranOnly) {"80000"} else {"24000"}))
+    $runArgs+=@("--fixed-fps","60","--quit-after",$(if ($GranOnly -or $KainoOnly) {"85000"} else {"24000"}))
     if ($Capture) {$runArgs+=@("--position","-32000,-32000")} else {$runArgs+="--headless"}
     $runArgs+=@("--","--loop-test")
     if ($NumbersOnly) {$runArgs+="--numbers-only"}
@@ -119,11 +124,12 @@ if ($Test) {
     if ($RecoveryOnly) {$runArgs+="--recovery-only"}
     if ($TownsOnly) {$runArgs+="--towns-only"}
     if ($GranOnly) {$runArgs+="--gran-only"}
+    if ($KainoOnly) {$runArgs+="--kaino-only"}
     if ($Capture) {$runArgs+="--capture"}
 }
 $ErrorActionPreference="Continue"
 & $GodotPath @runArgs 2>&1 | Tee-Object -Variable runOutput
 $engineExit=$LASTEXITCODE
 $ErrorActionPreference="Stop"
-if ($engineExit -ne 0 -or ($runOutput -match 'SCRIPT ERROR|ERROR:')) {throw "Native loop runtime failed."}
-if ($Test -and -not ($runOutput -match $(if ($GranOnly) {'\[GRAN_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($TownsOnly) {'\[HENDON_TEST\] COMPLETE checks=\d+ failures=0'} elseif ($QuestsOnly) {'\[QUEST_CHAPTER\] COMPLETE checks=\d+ failures=0'} else {'\[LOOP_TEST\] COMPLETE checks=\d+ failures=0'}))) {throw "Native loop checks did not complete."}
+if ($engineExit -ne 0 -or ($runOutput -match '(?m)^(SCRIPT ERROR|ERROR:)')) {throw "Native loop runtime failed."}
+if ($Test -and -not ($runOutput -match $(if ($KainoOnly) {'\[KAINO_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($GranOnly) {'\[GRAN_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($TownsOnly) {'\[HENDON_TEST\] COMPLETE checks=\d+ failures=0'} elseif ($QuestsOnly) {'\[QUEST_CHAPTER\] COMPLETE checks=\d+ failures=0'} else {'\[LOOP_TEST\] COMPLETE checks=\d+ failures=0'}))) {throw "Native loop checks did not complete."}

@@ -36,7 +36,7 @@ func use_item(id: String) -> bool:
 	game.session=next;game.save_failed=false
 	if not game.combat.apply_effect(response["effect"]):
 		pending_effect={"kind":"item","spec":response["effect"]};game.show_overlay("death");return false
-	game.notice("使用%s · HP +%d" % [game.Catalog.ITEMS[id]["name"],response["amount"]]);return true
+	game.notice("使用%s · HP +%d / MP +%d%s" % [game.Catalog.ITEMS[id]["name"],response.get("hp_amount",response["amount"]),response.get("mp_amount",0),"（持续恢复）" if int(response["effect"].get("duration_ms",0))>0 else ""]);return true
 func revive(payload: Dictionary) -> bool:
 	if not pending_effect.is_empty():return retry_effect()
 	if not pending_death.is_empty() or game.combat==null:return false

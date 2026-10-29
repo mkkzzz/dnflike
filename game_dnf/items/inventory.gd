@@ -31,7 +31,7 @@ static func initialize(p: Dictionary) -> void:
 		if not Numbers.config()["equipment"].has(id):
 			var remaining := int(old[id])
 			while remaining > 0:
-				var amount := mini(remaining,STACK_LIMIT)
+				var amount := mini(remaining,Catalog.stack_limit(id))
 				place(p,new_stack(p,id,amount),true);remaining -= amount
 	# Preserve the first old cell for each definition, then fit additional instances.
 	for kind: String in KINDS:
@@ -62,7 +62,9 @@ static func place(p: Dictionary, uid: String, recovery := false) -> bool:
 
 static func sync(p: Dictionary) -> void:
 	var totals := {};var layout := {}
-	for id: String in Catalog.ITEMS:totals[id]=0
+	for id: String in Catalog.LEGACY_ITEMS:totals[id]=0
+	for id: String in p.get("inventory",{}):
+		if Catalog.ITEMS.has(id):totals[id]=0
 	for kind: String in KINDS:
 		layout[kind]=[]
 		for uid: String in p["item_state"]["bags"][kind]:
@@ -92,11 +94,11 @@ static func give(p: Dictionary, id: String, amount: int, quality := 50, recovery
 		var remaining := amount
 		for uid: String in candidate["item_state"]["bags"][Catalog.ITEMS[id]["kind"]]:
 			if uid == "" or definition(candidate,uid)!=id or locked(candidate,uid):continue
-			var added := mini(remaining,STACK_LIMIT-count(candidate,uid))
+			var added := mini(remaining,Catalog.stack_limit(id)-count(candidate,uid))
 			candidate["item_state"]["stacks"][uid]["count"] += added;remaining -= added
 			if remaining == 0:break
 		while remaining > 0:
-			var added := mini(remaining,STACK_LIMIT)
+			var added := mini(remaining,Catalog.stack_limit(id))
 			if not place(candidate,new_stack(candidate,id,added),recovery):return fail("物品背包已满")
 			remaining -= added
 	sync(candidate);p.assign(candidate);return {"ok":true}
@@ -193,7 +195,7 @@ static func move_inside(p: Dictionary, source: Dictionary, target: Dictionary) -
 	if old==index:return true
 	var other: String=bag[index]
 	if other!="" and not p["gear"].has(uid) and definition(p,other)==id and not locked(p,uid) and not locked(p,other):
-		var amount:=mini(STACK_LIMIT-count(p,other),count(p,uid))
+		var amount:=mini(Catalog.stack_limit(id)-count(p,other),count(p,uid))
 		p["item_state"]["stacks"][other]["count"]+=amount;p["item_state"]["stacks"][uid]["count"]-=amount
 		if count(p,uid)==0:p["item_state"]["stacks"].erase(uid);bag[old]=""
 	else:bag[old]=other;bag[index]=uid
@@ -216,7 +218,7 @@ static func operate(p: Dictionary, kind: String, data: Dictionary) -> Dictionary
 					if bag[i]=="" or locked(p,bag[i]) or p["gear"].has(bag[i]):continue
 					for j in range(i+1,bag.size()):
 						if bag[j]=="" or locked(p,bag[j]) or definition(p,bag[i])!=definition(p,bag[j]):continue
-						var moved:=mini(STACK_LIMIT-count(p,bag[i]),count(p,bag[j]))
+						var moved:=mini(Catalog.stack_limit(definition(p,bag[i]))-count(p,bag[i]),count(p,bag[j]))
 						p["item_state"]["stacks"][bag[i]]["count"]+=moved
 						p["item_state"]["stacks"][bag[j]]["count"]-=moved
 						if count(p,bag[j])==0:p["item_state"]["stacks"].erase(bag[j]);bag[j]=""
@@ -283,7 +285,7 @@ static func valid(p: Dictionary) -> bool:
 		if not uid is String or not uid.begins_with("stack_") or not uid.trim_prefix("stack_").is_valid_int() or int(uid.trim_prefix("stack_"))<1:return false
 		max_serial=maxi(max_serial,int(uid.trim_prefix("stack_")))
 		var stack=state["stacks"][uid]
-		if not stack is Dictionary or not Catalog.ITEMS.has(stack.get("id","")) or Numbers.config()["equipment"].has(stack["id"]) or not Numbers.whole(stack.get("count"),1,STACK_LIMIT) or not stack.get("locked") is bool or not seen.has(uid):return false
+		if not stack is Dictionary or not Catalog.ITEMS.has(stack.get("id","")) or Numbers.config()["equipment"].has(stack["id"]) or not Numbers.whole(stack.get("count"),1,Catalog.stack_limit(String(stack.get("id","")))) or not stack.get("locked") is bool or not seen.has(uid):return false
 		stack["count"]=int(stack["count"])
 	for uid in p["gear"]:
 		if not seen.has(uid) or not p["gear"][uid].get("locked",false) is bool:return false

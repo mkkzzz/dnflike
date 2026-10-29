@@ -72,6 +72,7 @@ const DROP_BODY_BOX := 22.0
 
 ## 地面掉落本体：优先用原版 field 图；没有烘焙结果时退回背包图标去底色。
 func drop_texture(id: String) -> Texture2D:
+	if id.begins_with("original_"):return game.windows.field_texture(id)
 	if not loot_entry(id).is_empty():
 		return loot_texture(id)
 	if _drop_textures.has(id):return _drop_textures[id]

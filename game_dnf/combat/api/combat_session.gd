@@ -21,12 +21,23 @@ func mount(parent: Node, external := true) -> Node:
 	game = (load(SCENE) as PackedScene).instantiate()
 	game.external_mode = external
 	parent.add_child(game)
+	_localize_monster_labels()
 	_bind()
 	return game
+
+## Display-only labels from the flow's source-text data; registration/AI stay owned by ws1.
+func _localize_monster_labels() -> void:
+	var path: String="res://data/monster_names_zh.json"
+	if not FileAccess.file_exists(path):return
+	var doc=JSON.parse_string(FileAccess.get_file_as_string(path))
+	if not doc is Dictionary or doc.get("schema")!="dnf_monster_labels/1":return
+	for definition: Dictionary in game.table.monsters.values():
+		definition["name"]=doc["labels"].get(definition.get("mob",""),definition["name"])
 
 ## Standalone battle scene registers itself so tests and tools observe the same signals.
 func attach(existing: Node) -> void:
 	game = existing
+	_localize_monster_labels()
 	_bind()
 
 func start_room(spec: Dictionary) -> bool:
@@ -112,6 +123,7 @@ func set_paused(value: bool) -> void:
 ## Effect already validated and paid for by the flow side, e.g. {"kind":"heal","amount":150}.
 func can_apply_effect(effect: Dictionary) -> bool:
 	if not _alive() or game.player.is_empty() or game.finished or game.paused:return false
+	if effect.get("kind")=="restore":return preload("res://combat/item_restoration.gd").can_apply(game,effect)
 	var amount=effect.get("amount")
 	return effect.get("kind")=="heal" and (amount is int or amount is float) and is_finite(float(amount)) and amount>0 and float(game.player["hp"])>0 and float(game.player["hp"])<game.max_hp
 

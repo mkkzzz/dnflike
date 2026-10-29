@@ -59,6 +59,7 @@ var run_direction := 0
 var bar_target := -1
 var max_hp := 0.0
 var max_mp := 0.0
+var item_restorations: Array = []
 var damage_scale := 1.0
 var action_seq := 0
 var _next_entity_id := 1
@@ -213,6 +214,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 				body["state"] = "dead"
 				finished = true
 				victory = false
+				item_restorations.clear()
 				bus.emit("combat.player_defeated",flow_payload())
 		elif float(body["hp"])<=0:
 			body["state"] = "dead"
@@ -250,6 +252,7 @@ func begin_room(spec: Dictionary) -> void:
 	rng.reseed(hash(run_id))
 	room_snapshots.clear()
 	finished = false
+	item_restorations.clear()
 	victory = false
 	paused = false
 	elapsed_ms = 0
@@ -396,6 +399,7 @@ func end_action() -> void:
 
 func step_game(ms: float) -> void:
 	var dt := ms/1000
+	preload("res://combat/item_restoration.gd").step(self,ms)
 	if numeric_player != null:
 		step_numeric_actor(player,numeric_player,ms)
 		if finished:return
@@ -581,6 +585,7 @@ func flow_payload(extra := {}) -> Dictionary:
 
 ## Effects already validated and paid for by the flow side (e.g. potions). Returns whether it applied.
 func apply_effect(effect: Dictionary) -> bool:
+	if effect.get("kind")=="restore":return preload("res://combat/item_restoration.gd").apply(self,effect)
 	if String(effect.get("kind","")) in ["effect","remove_effect"]:
 		if numeric_player == null or finished:return false
 		var body: Dictionary = player
@@ -964,6 +969,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 		finished = true
 		victory = false
 		play_sound("die")
+		item_restorations.clear()
 		bus.emit("combat.player_defeated",flow_payload())
 	return reaction
 

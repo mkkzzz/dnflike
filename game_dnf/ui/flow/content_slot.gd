@@ -19,7 +19,7 @@ func setup(root, data: Dictionary) -> void:
 		image_view.name = "item_icon"
 		if cell["place"] != "skill":
 			var item: Dictionary = game.Catalog.ITEMS[id]
-			game.skin.rarity_frame(self, item["rarity"], Color(game.Catalog.RARITIES[item["rarity"]]["color"]))
+			game.skin.rarity_frame(self, int(item["rarity"]), Color(game.Catalog.RARITIES[int(item["rarity"])]["color"]))
 			set_meta("item_id", id)
 			set_meta("item_name", item["name"])
 			amount = game.skin.label(self, "", Vector2(0, 14), 9, Color.WHITE)
