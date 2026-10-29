@@ -1,7 +1,16 @@
 extends RefCounted
 ## Pure quest state and transactions. No scene, input, damage, save or numeric formula.
 const Catalog = preload("res://quests/catalog.gd")
+const Cycle=preload("res://quests/lifecycle.gd")
+const Conditions=preload("res://quests/clear_conditions.gd")
 var catalog
+var clock: Callable=func():return Time.get_unix_time_from_system()
+
+func today(profile: Dictionary) -> int:
+	return Cycle.day(profile["quest_state"],float(clock.call()),catalog.config.get("calendar",{}))
+
+func has_completed(profile: Dictionary, id: String) -> bool:
+	return Cycle.completed(profile.get("quest_state",{"entries":{}}),id)
 
 func _init(definitions = null) -> void:
 	catalog = definitions if definitions != null else Catalog.new()
@@ -38,6 +47,7 @@ func valid(profile: Dictionary) -> bool:
 	if state.has("next_skill_event") and not Catalog.whole(state["next_skill_event"],1,1000000000):return false
 	for field in ["entries", "transactions"]:
 		if not state.get(field) is Dictionary:return false
+	if not Cycle.valid(state):return false
 	if not state.get("tracked") is Array or state["tracked"].size() > int(catalog.config["limits"]["tracked"]):return false
 	var seen := {}
 	for id in state["tracked"]:
@@ -56,9 +66,10 @@ func valid(profile: Dictionary) -> bool:
 			if not key is String or not entry["seen"][key] is Dictionary or entry["seen"][key].size() > 1000000:return false
 			for event_id in entry["seen"][key]:
 				if not event_id is String or entry["seen"][key][event_id] != true:return false
-		if entry["state"] == "completed" and not state["transactions"].has(transaction_id(id)):return false
-		if entry["state"] == "active" and state["transactions"].has(transaction_id(id)):return false
+		if entry["state"] == "completed" and not state["transactions"].has(Cycle.tx(id,entry)):return false
+		if entry["state"] == "active" and state["transactions"].has(Cycle.tx(id,entry)):return false
 		if catalog.definitions.has(id):
+			if Cycle.repeating(catalog.definitions[id])!=entry.has("cycle"):return false
 			for objective: Dictionary in catalog.definitions[id]["objectives"]:
 				if not entry["progress"].has(objective["id"]) or not entry["seen"].has(objective["id"]):return false
 				if int(entry["progress"][objective["id"]]) > int(objective["amount"]):return false
@@ -68,12 +79,12 @@ func status(profile: Dictionary, id: String) -> String:
 	if not catalog.errors.is_empty() or not catalog.definitions.has(id):return "unavailable"
 	var q: Dictionary = catalog.definitions[id]
 	var entry: Dictionary = profile.get("quest_state", {}).get("entries", {}).get(id, {})
-	if entry.get("state") == "completed":return "completed"
+	if entry.get("state") == "completed" and (not Cycle.repeating(q) or not Cycle.can_claim(profile["quest_state"],q,today(profile))):return "completed"
 	if not q["enabled"] or not eligible(profile,q):return "locked"
-	if not entry.is_empty():return "ready" if objectives_done(profile, q, entry) else "active"
+	if entry.get("state")=="active":return "ready" if objectives_done(profile, q, entry) else "active"
 	if int(profile.get("level", 1)) < int(q["min_level"]):return "locked"
 	for required: String in q["requires"]:
-		if status(profile, required) != "completed":return "locked"
+		if not has_completed(profile, required):return "locked"
 	return "available"
 
 func objective_count(profile: Dictionary, o: Dictionary, entry: Dictionary) -> int:
@@ -93,11 +104,14 @@ func list(profile: Dictionary, statuses: Array = [], npc := "") -> Array[Diction
 		var q: Dictionary = catalog.definitions[id]
 		if q.get("legacy", false) and not profile.get("quest_state", {}).get("entries", {}).has(id):continue
 		var state := status(profile, id)
+		# Completion history remains inspectable even when the next round is available.
+		if statuses==["completed"] and has_completed(profile,id):state="completed"
 		if not statuses.is_empty() and state not in statuses:continue
 		if npc != "" and npc not in [q["giver"], q["receiver"]]:continue
 		var view := q.duplicate(true)
 		view["reward"]=reward_for(profile,q)
 		view["status"] = state
+		view["completions"]=int(profile["quest_state"].get("cycles",{}).get(id,{}).get("completions",1 if state=="completed" else 0))
 		view["tracked"] = id in profile.get("quest_state", {}).get("tracked", [])
 		var entry: Dictionary = profile.get("quest_state", {}).get("entries", {}).get(id, {})
 		for o: Dictionary in view["objectives"]:o["current"] = objective_count(profile, o, entry)
@@ -119,7 +133,9 @@ func command(profile: Dictionary, kind: String, payload: Dictionary, context: Di
 			if state != "available":return fail("任务尚不可接受")
 			if not context.get("nearby", false) or context.get("npc") != q["giver"]:return fail("请到" + npc_name(q["giver"]) + "身旁接受任务")
 			if active_count(profile) >= int(catalog.config["limits"]["active"]):return fail("进行中的任务已满")
-			ledger["entries"][id] = new_entry(q)
+			var fresh:=new_entry(q)
+			Cycle.begin(ledger,q,fresh,today(candidate))
+			ledger["entries"][id] = fresh
 			if ledger["tracked"].size() < int(catalog.config["limits"]["tracked"]):ledger["tracked"].append(id)
 		"quest.track":
 			if state not in ["active", "ready"]:return fail("只能追踪进行中的任务")
@@ -133,7 +149,8 @@ func command(profile: Dictionary, kind: String, payload: Dictionary, context: Di
 		"quest.claim":
 			if state != "ready":return fail("任务尚未完成或已交付")
 			if not context.get("nearby", false) or context.get("npc") != q["receiver"]:return fail("请到" + npc_name(q["receiver"]) + "身旁交付任务")
-			var tx := transaction_id(id)
+			if not Cycle.can_claim(ledger,q,today(candidate)):return fail("今日已完成，请在每日刷新后再来")
+			var tx := Cycle.tx(id,ledger["entries"][id])
 			if ledger["transactions"].has(tx):return fail("任务奖励已经领取")
 			var reward: Dictionary = reward_for(profile,q)
 			if not reward["choices"].is_empty():
@@ -149,6 +166,7 @@ func command(profile: Dictionary, kind: String, payload: Dictionary, context: Di
 			ledger=candidate["quest_state"] # Reward services may replace a transactional candidate.
 			ledger["entries"][id]["state"] = "completed"
 			ledger["transactions"][tx] = true
+			Cycle.finish(ledger,q,today(candidate))
 			ledger["tracked"].erase(id)
 		_:return fail("不支持的任务操作")
 	if not valid(candidate):return fail("任务变更校验失败")
@@ -157,7 +175,7 @@ func command(profile: Dictionary, kind: String, payload: Dictionary, context: Di
 
 func ingest(profile: Dictionary, event: Dictionary) -> Dictionary:
 	if not valid(profile):return fail("任务存档无效")
-	if event.get("type") not in ["npc.met", "combat.monster_defeated", "dungeon.cleared", "skill.learned"] or not event.get("event_id") is String or event["event_id"].is_empty():return fail("任务事件无效")
+	if event.get("type") not in ["npc.met", "combat.monster_defeated", "dungeon.cleared", "skill.learned", "item.disassembled"] or not event.get("event_id") is String or event["event_id"].is_empty():return fail("任务事件无效")
 	if event.get("type")=="skill.learned" and (not event.get("skill") is String or event["skill"].is_empty() or not Catalog.whole(event.get("levels"),1,100)):return fail("技能学习事件无效")
 	var changed: Array[String] = []
 	for id: String in profile["quest_state"]["entries"]:
@@ -167,9 +185,12 @@ func ingest(profile: Dictionary, event: Dictionary) -> Dictionary:
 		if entry["state"] != "active" or not q["enabled"] or not eligible(profile,q):continue
 		for o: Dictionary in q["objectives"]:
 			if o["type"] == "collect_item" or objective_count(profile, o, entry) >= int(o["amount"]):continue
-			var matches: bool = (o["type"] == "meet_npc" and event["type"] == "npc.met" and event.get("npc") == o["target"]) or (o["type"] == "kill_monster" and event["type"] == "combat.monster_defeated" and event.get("monster_id") == o["target"]) or (o["type"] == "clear_dungeon" and event["type"] == "dungeon.cleared" and event.get("dungeon") == o["target"] and event.get("victory", false))
+			var matches: bool = (o["type"] == "meet_npc" and event["type"] == "npc.met" and event.get("npc") == o["target"]) or (o["type"] == "kill_monster" and event["type"] == "combat.monster_defeated" and event.get("monster_id") == o["target"]) or (o["type"] == "clear_dungeon" and event["type"] == "dungeon.cleared" and (event.get("dungeon") == o["target"] or o["target"]=="any") and event.get("victory", false))
 			matches = matches or (o["type"]=="learn_skill" and event["type"]=="skill.learned" and o["target"]=="any")
-			if not matches or (o.has("dungeon") and event.get("dungeon") != o["dungeon"]) or (o.has("difficulty") and event.get("difficulty") not in o["difficulty"]):continue
+			matches = matches or (o["type"]=="disassemble_item" and event["type"]=="item.disassembled" and event.get("npc")==o.get("npc") and event.get("item") is String and not event["item"].is_empty() and (o["target"]=="any" or o["target"]==event["item"]))
+			if not matches or (o.has("dungeon") and o["dungeon"]!="any" and event.get("dungeon") != o["dungeon"]) or (o.has("difficulty") and event.get("difficulty") not in o["difficulty"]):continue
+			if o.has("allowed_dungeons") and event.get("dungeon") not in o["allowed_dungeons"]:continue
+			if not Conditions.matches(o.get("conditions",{}),event.get("facts",{})):continue
 			var seen: Dictionary = entry["seen"].get(o["id"], {})
 			if seen.has(event["event_id"]):continue
 			seen[event["event_id"]] = true

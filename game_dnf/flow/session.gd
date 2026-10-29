@@ -10,6 +10,7 @@ const Loot = preload("res://loot/service.gd")
 const Services=preload("res://items/services.gd")
 const Consumables=preload("res://items/consumables.gd")
 const Recovery=preload("res://flow/recovery.gd")
+const QuestConditions=preload("res://quests/clear_conditions.gd")
 var quests = Quests.new()
 var town_world = TownWorld.new()
 var dungeons: Dictionary = {}
@@ -44,7 +45,11 @@ func service_command(kind: String, payload: Dictionary, context: Dictionary) -> 
 	var npc: String=context.get("npc","")
 	var needed: String={"services.sell":"trade","services.buyback":"trade","services.repair":"repair","services.disassemble":"disassemble","services.reinforce":"reinforce","services.enchant":"enchant","services.enchant_clear":"enchant"}.get(kind,"")
 	if needed=="" or not context.get("nearby",false) or needed not in town_world.data["npcs"].get(npc,{}).get("services",[]):return reject("请走到提供该服务的NPC身旁")
-	return Services.command(profile,kind,payload)
+	var item: String=Inventory.definition(profile,String(payload.get("uid",""))) if kind=="services.disassemble" else ""
+	var response: Dictionary=Services.command(profile,kind,payload)
+	if response.get("ok",false) and kind=="services.disassemble":
+		quests.ingest(profile,{"type":"item.disassembled","event_id":"service:"+String(payload["transaction"]),"item":item,"npc":npc})
+	return response
 
 func mirror_legacy() -> void:
 	if profile["quest"] not in ["active","ready","done"]:return
@@ -81,7 +86,7 @@ func dungeon_available(id: String) -> bool:
 	if not dungeons.has(id):return false
 	if int(profile["level"])<int(dungeons[id].get("min_level",1)):return false
 	for required: String in dungeons[id].get("requires",[]):
-		if quests.status(profile,required) != "completed":return false
+		if not quests.has_completed(profile,required):return false
 	return true
 
 ## region 可以是单个字符串或数组：一个城镇允许同时通向多个副本区（如赫顿→格兰之森+天空之城）。
@@ -189,6 +194,7 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 			if not dungeon_available(dungeon):return reject("地下城尚未开放，请先完成前置任务")
 			run = {"id": "run_%d" % int(profile["next_run"]), "dungeon": dungeon, "difficulty":profile.get("difficulty", "normal"), "stats": stats()}
 			Consumables.initialize(run);Recovery.initialize(run)
+			QuestConditions.initialize(run)
 			profile["next_run"] += 1
 			result = {}
 			state = "battle"
@@ -255,13 +261,17 @@ func combat_event(event: Dictionary) -> Dictionary:
 			if bool(event.get("final_room", false)):return finish_run(true, event.get("stats", {}))
 	return {"ok": true}
 
+func observe_damage(event: Dictionary) -> void:
+	if state=="battle":QuestConditions.damage(run,event)
+
 func finish_run(won: bool, details: Dictionary) -> Dictionary:
 	var id := String(run.get("id", ""))
 	if id.is_empty() or profile["settled"].has(id) or state not in ["battle","defeated"] or won and state!="battle":return reject("该冒险已结算")
+	if not QuestConditions.valid_run(run):return reject("任务战斗记录无效")
 	profile["settled"][id] = true
 	result = {"run_id": id, "victory": won, "gold": 0, "xp": 0, "potion": 0, "stats": details.duplicate(true)}
 	if won:
-		quests.ingest(profile,{"type":"dungeon.cleared","event_id":"clear:"+id,"dungeon":run["dungeon"],"difficulty":run["difficulty"],"victory":true})
+		quests.ingest(profile,{"type":"dungeon.cleared","event_id":"clear:"+id,"dungeon":run["dungeon"],"difficulty":run["difficulty"],"victory":true,"facts":QuestConditions.facts(run,details)})
 		result.merge({"gold": 150, "xp": int(Numbers.config()["progression"]["clear_xp"]), "potion": 1}, true)
 		var damage := int(details.get("damage_taken", 0))
 		result["rank"] = "S" if damage <= 50 else "A" if damage <= 250 else "B"
@@ -297,6 +307,7 @@ func restore(data: Dictionary) -> bool:
 	if not data.get("run", {}) is Dictionary or not data.get("result", {}) is Dictionary:return false
 	if not Loot.valid(data.get("run",{})):return false
 	if not Consumables.valid(data.get("run",{})) or not Recovery.valid(data.get("run",{})):return false
+	if not QuestConditions.valid_run(data.get("run",{})):return false
 	if data.get("state") not in ["town","battle","defeated","result"]:return false
 	if data.get("state")=="defeated":
 		var adventure: Dictionary=data["run"]

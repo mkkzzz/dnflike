@@ -1,6 +1,6 @@
 extends RefCounted
 ## Versioned definitions, never player progress. Reject unsupported content at load.
-const TYPES := ["meet_npc", "kill_monster", "clear_dungeon", "collect_item", "learn_skill"]
+const TYPES := ["meet_npc", "kill_monster", "clear_dungeon", "collect_item", "learn_skill", "disassemble_item"]
 var config: Dictionary = {}
 var definitions: Dictionary = {}
 var errors: Array[String] = []
@@ -13,6 +13,9 @@ func _init(data: Dictionary = {}) -> void:
 			return
 		data = decoded
 		data["quests"].append_array(preload("res://content/native_catalog.gd").runtime().get("quests",[]))
+		data["quests"].append_array(preload("res://content/native_catalog.gd").quest_rules().get("quests",[]))
+		data["dungeons"].merge(preload("res://content/native_catalog.gd").quest_rules().get("dungeons",{}),false)
+		data["calendar"]=preload("res://content/native_catalog.gd").quest_rules().get("calendar",{})
 	config = data.duplicate(true)
 	for key in ["npcs", "dungeons", "limits"]:
 		if not config.get(key) is Dictionary:
@@ -38,10 +41,13 @@ func _init(data: Dictionary = {}) -> void:
 			if not required is String or not definitions.has(required):errors.append("任务前置不存在：" + id)
 		walk_dependencies(id, [])
 	var limits = config.get("limits", {})
+	var calendar=config.get("calendar",{})
+	if not calendar is Dictionary or not whole(calendar.get("utc_offset_minutes",480),-720,840) or not whole(calendar.get("reset_hour",0),0,23):errors.append("每日任务日历无效")
 	if not limits is Dictionary or not whole(limits.get("active"), 1, 100) or not whole(limits.get("tracked"), 1, 10):errors.append("任务容量配置无效")
 
 func validate_definition(q: Dictionary) -> void:
 	var id: String = q["id"]
+	if q.get("lifecycle","once") not in ["once","repeat","daily"]:errors.append("任务周期无效："+id)
 	var eligibility=q.get("eligibility",{})
 	if not eligibility is Dictionary:errors.append("任务职业资格无效："+id)
 	else:
@@ -65,15 +71,22 @@ func validate_definition(q: Dictionary) -> void:
 			errors.append("任务目标标识无效：" + id)
 			continue
 		seen[o["id"]] = true
+		if o.has("conditions") and (o.get("type")!="clear_dungeon" or not preload("res://quests/clear_conditions.gd").valid(o["conditions"])):errors.append("任务通关条件无效："+id)
+		if o.get("type")=="disassemble_item" and not config["npcs"].has(o.get("npc")):errors.append("分解任务人物无效："+id)
 		if o.get("type") not in TYPES or not whole(o.get("amount"), 1, 1000000) or not o.get("target") is String or o.get("target", "").is_empty():errors.append("任务目标不支持：" + id)
-		if o.has("dungeon") and not config["dungeons"].has(o["dungeon"]):errors.append("任务范围地下城不存在：" + id)
+		if o.has("dungeon") and not config["dungeons"].has(o["dungeon"]) and not (o["dungeon"]=="any" and o.has("allowed_dungeons")):errors.append("任务范围地下城不存在：" + id)
+		if o.has("allowed_dungeons"):
+			if not o["allowed_dungeons"] is Array or o["allowed_dungeons"].is_empty():errors.append("任务地下城范围无效："+id)
+			else:
+				for key in o["allowed_dungeons"]:
+					if not config["dungeons"].has(key):errors.append("任务地下城范围不存在："+id)
 		if o.has("difficulty") and (not o["difficulty"] is Array or o["difficulty"].is_empty()):errors.append("任务难度范围无效：" + id)
 		elif o.has("difficulty"):
 			for mode in o["difficulty"]:
 				if mode not in ["normal","adventure","king"]:errors.append("任务难度不支持："+id)
 		if o.get("type")=="learn_skill" and o.get("target")!="any":errors.append("技能学习目标不支持："+id)
 		if o.get("type") == "meet_npc" and not config.get("npcs", {}).has(o["target"]):errors.append("目标人物不存在：" + id)
-		if o.get("type") == "clear_dungeon" and not config.get("dungeons", {}).has(o["target"]):errors.append("目标地下城不存在：" + id)
+		if o.get("type") == "clear_dungeon" and not config.get("dungeons", {}).has(o["target"]) and not (o["target"]=="any" and o.has("allowed_dungeons")):errors.append("目标地下城不存在：" + id)
 	var reward = q.get("reward", {})
 	var drops=q.get("drops",[])
 	if not drops is Array:errors.append("任务掉落表无效："+id)

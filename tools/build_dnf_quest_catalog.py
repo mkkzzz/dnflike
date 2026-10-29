@@ -52,7 +52,8 @@ def main() -> int:
     implemented = {}
     quests_doc = json.loads((GAME / 'data/quests.json').read_text(encoding='utf-8'))
     native = json.loads((GAME / 'data/native_runtime.json').read_text(encoding='utf-8'))
-    for quest in quests_doc['quests'] + native['quests']:
+    extension = json.loads((GAME / 'data/native_quest_rules_v2.json').read_text(encoding='utf-8'))
+    for quest in quests_doc['quests'] + native['quests'] + extension['quests']:
         source = quest.get('source') or {}
         path = str(source.get('path', '')).lower()
         if path:
@@ -106,7 +107,7 @@ def main() -> int:
     pending = len({r['name_ref'] for r in rows if r['name_ref'] and not r['implemented']})
     catalog = {
         'schema': 'dnf_quest_catalog/1',
-        'evidence': '原版 .qst 结构化字段 E-PARSE；名称/描述为本地化引用（string 键），正文未解出',
+        'evidence': '原版 .qst 结构化字段 E-PARSE；总账保留名称/描述字符串引用，完整简体正文见 native_data_v1，启用名称取运行定义',
         'summary': {
             'total': len(rows),
             'implemented': sum(1 for r in rows if r['implemented']),

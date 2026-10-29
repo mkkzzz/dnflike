@@ -107,7 +107,8 @@ func show_window() -> void:
 		button.flat=true
 		button.add_theme_font_override("font",game.skin.font)
 		button.add_theme_font_size_override("font_size",12)
-		button.text=("[主线] " if q["category"]=="main" else "[支线] ")+q["name"]+("  ✓" if q["status"]=="ready" else "")
+		var category: String={"daily":"[每日] ","repeat":"[重复] "}.get(q.get("lifecycle","once"),"[主线] " if q["category"]=="main" else "[支线] ")
+		button.text=category+q["name"]+("  ✓" if q["status"]=="ready" else "")
 		button.alignment=HORIZONTAL_ALIGNMENT_LEFT
 		button.set_meta("quest_id",id)
 		button.pressed.connect(func():selected=id;game.show_overlay("quest"))
@@ -127,6 +128,9 @@ func show_window() -> void:
 	detail_line(detail,chosen["name"],17,Color("f0d18a"))
 	detail_line(detail,"委托：%s  交付：%s\n等级：Lv.%d" % [game.session.quests.npc_name(chosen["giver"]),game.session.quests.npc_name(chosen["receiver"]),chosen["min_level"]])
 	detail_line(detail,chosen["description"])
+	if chosen.get("lifecycle","once")!="once":
+		var calendar: Dictionary=game.session.quests.catalog.config.get("calendar",{})
+		detail_line(detail,("每日任务 · 每日 %02d:00 刷新" % int(calendar.get("reset_hour",0)) if chosen["lifecycle"]=="daily" else "重复任务 · 完成后可再次接受")+"\n累计完成 %d 次" % int(chosen.get("completions",0)),12,Color("f0d18a"))
 	detail_line(detail,"任务目标",12,Color("f0d18a"))
 	for o: Dictionary in chosen["objectives"]:detail_line(detail,objective_line(o),12,Color("a7dd74"))
 	detail_line(detail,"任务奖励",12,Color("f0d18a"))
@@ -164,10 +168,16 @@ func objective_line(o: Dictionary) -> String:
 	var label: String = ""
 	match o["type"]:
 		"meet_npc":label="拜访"+game.session.quests.npc_name(o["target"])
-		"clear_dungeon":label="通关"+String(game.session.quests.catalog.config["dungeons"].get(o["target"],o["target"]))
+		"clear_dungeon":label="通关"+("已接入的任意地下城" if o["target"]=="any" else String(game.session.quests.catalog.config["dungeons"].get(o["target"],o["target"])))
 		"kill_monster":label=String(game.session.quests.catalog.config["dungeons"].get(o.get("dungeon",""),""))+" · "+String(game.session.quests.catalog.config.get("monsters",{}).get(o["target"],"目标怪物"))
 		"collect_item":label=String(game.Catalog.ITEMS.get(o["target"],{}).get("name",o["target"]))
 		"learn_skill":label="学习任意技能一级"
+		"disassemble_item":label="在"+game.session.quests.npc_name(o["npc"])+"处分解一件装备"
+	var rules: Dictionary=o.get("conditions",{})
+	if rules.has("max_elapsed_ms"):label+=" · 限时 %g 秒" % (float(rules["max_elapsed_ms"])/1000.0)
+	if rules.has("max_hits_taken"):label+=" · 被击不超过 %d 次" % int(rules["max_hits_taken"])
+	if rules.has("max_revives"):label+=" · 复活不超过 %d 次" % int(rules["max_revives"])
+	if rules.has("min_party_size"):label+=" · 至少 %d 人" % int(rules["min_party_size"])
 	if o.has("difficulty"):
 		var names: Array=[]
 		for mode: String in o["difficulty"]:names.append({"normal":"普通级","adventure":"冒险级","king":"王者级"}.get(mode,"未知难度"))

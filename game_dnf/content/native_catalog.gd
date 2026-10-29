@@ -6,6 +6,18 @@ static var _index: Dictionary = {}
 static var _shards: Dictionary = {}
 static var _order: Array[String] = []
 static var _runtime: Dictionary = {}
+static var _quest_rules: Dictionary = {}
+static var _quest_execution: Dictionary = {}
+
+static func quest_execution(number: int) -> Dictionary:
+	if _quest_execution.is_empty():_quest_execution=read_compressed(quest_rules().get("status_file",""))
+	return _quest_execution.get("rows",{}).get(str(number),{})
+
+static func quest_rules() -> Dictionary:
+	if _quest_rules.is_empty():
+		var value=JSON.parse_string(FileAccess.get_file_as_string("res://data/native_quest_rules_v2.json"))
+		if value is Dictionary and value.get("schema")=="dnf_native_quest_rules/2":_quest_rules=value
+	return _quest_rules
 
 static func read_compressed(path: String) -> Dictionary:
 	var bytes := FileAccess.get_file_as_bytes(path)

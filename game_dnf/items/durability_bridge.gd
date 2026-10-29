@@ -12,6 +12,8 @@ func _process(_delta: float) -> void:
 	var run_id: String=game.session.run.get("id","")
 	bus.subscribe("combat.damage",func(event: Dictionary):
 		var fact:=event.duplicate(true);fact["run_id"]=run_id
+		# Observe before deferred writes: a final kill may settle this same frame.
+		game.session.observe_damage(fact)
 		call_deferred("apply_wear",fact))
 
 func apply_wear(event: Dictionary) -> void:

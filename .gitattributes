@@ -38,3 +38,7 @@ docs/project/04_交接日志.md merge=union
 
 # Immutable per-item weapon appearance and evidence hashes.
 game_dnf/assets_local/weapon_appearance_v1/manifest.json text eol=lf
+
+# Runtime quest increment and byte-pinned evidence use LF across checkouts.
+game_dnf/data/native_quest_rules_v2.json text eol=lf
+docs/reports/ws2/2026-10/2026-10-29_通用原任务规则覆盖.json text eol=lf

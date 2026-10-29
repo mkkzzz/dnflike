@@ -1,11 +1,11 @@
 {
  "schema": "dnf_quest_catalog/1",
- "evidence": "原版 .qst 结构化字段 E-PARSE；名称/描述为本地化引用（string 键），正文未解出",
+ "evidence": "原版 .qst 结构化字段 E-PARSE；总账保留名称/描述字符串引用，完整简体正文见 native_data_v1，启用名称取运行定义",
  "summary": {
   "total": 3716,
-  "implemented": 34,
+  "implemented": 43,
   "failed": 0,
-  "pending_name_refs": 1385,
+  "pending_name_refs": 1383,
   "groups": {
    "n_quest/urgent": 1331,
    "n_quest/common": 291,
@@ -9887,9 +9887,9 @@
     1300
    ],
    "name_ref": "string:322877",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.217",
+   "local_name": "获得无色小晶块碎片"
   },
   {
    "path": "n_quest/common/handonmyre/epic_10_handonmyre_kagon_love_8.qst",
@@ -27405,9 +27405,9 @@
     400
    ],
    "name_ref": "string:19101",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.513",
+   "local_name": "更强的敌人"
   },
   {
    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_ft_at.qst",
@@ -27427,9 +27427,9 @@
     400
    ],
    "name_ref": "string:19101",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.7643",
+   "local_name": "更强的敌人"
   },
   {
    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_gn.qst",
@@ -27449,9 +27449,9 @@
     400
    ],
    "name_ref": "string:19101",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.523",
+   "local_name": "更强的敌人"
   },
   {
    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_gn_at.qst",
@@ -27471,9 +27471,9 @@
     400
    ],
    "name_ref": "string:19101",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.621",
+   "local_name": "更强的敌人"
   },
   {
    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_mg.qst",
@@ -27493,9 +27493,9 @@
     400
    ],
    "name_ref": "string:19101",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.533",
+   "local_name": "更强的敌人"
   },
   {
    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_pr.qst",
@@ -27515,9 +27515,9 @@
     400
    ],
    "name_ref": "string:19101",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.543",
+   "local_name": "更强的敌人"
   },
   {
    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_th.qst",
@@ -27537,9 +27537,9 @@
     400
    ],
    "name_ref": "string:19101",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.633",
+   "local_name": "更强的敌人"
   },
   {
    "path": "n_quest/handonmyre/sunderlandpoison/normal_7_sunderlandpoison_manjin_f_4.qst",
@@ -82569,9 +82569,9 @@
     4410
    ],
    "name_ref": "string:332371",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1106",
+   "local_name": "G.S.D的修练 - 心眼"
   },
   {
    "path": "n_quest/westcost/palaceofload/normal_25_palaceofload_kiri_test_11.qst",

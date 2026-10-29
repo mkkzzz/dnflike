@@ -143,6 +143,7 @@ func _ready() -> void:
 		if "--native-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_native_quick.gd"
 		if "--weapon-appearance-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_weapon_appearance_quick.gd"
 		if "--quest-guide-only" in OS.get_cmdline_user_args():runner_path="res://tests/flow/test_quest_guide_town.gd"
+		if "--quest-rules-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_native_quest_quick.gd"
 		var runner = load(runner_path).new()
 		runner.game = self
 		add_child(runner)

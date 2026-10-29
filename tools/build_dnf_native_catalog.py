@@ -231,27 +231,40 @@ def quest_plan(fields):
     if kind == '[seeking]' and sub == -1 and values and len(values) % 2 == 0:
         if any(i <= 0 or n <= 0 for i, n in zip(values[::2], values[1::2])):return [], ['seeking_quantity']
         return [{'type': 'collect_item', 'item': i, 'amount': n} for i, n in zip(values[::2], values[1::2])], []
-    if kind == '[hunt monster]' and sub == -1 and values and len(values) % 4 == 0:
+    if kind == '[hunt monster]' and sub in [-1, 0] and values and len(values) % 4 == 0:
         return [{'type': 'kill_monster', 'dungeon': d, 'difficulty': m, 'monster': i, 'amount': n}
                 for d, m, i, n in zip(values[::4], values[1::4], values[2::4], values[3::4])], []
-    if kind == '[condition under clear]' and sub == 0 and len(values) == 2:
-        return [{'type': 'clear_dungeon', 'dungeon': values[0], 'difficulty': values[1], 'amount': 1}], []
+    if kind == '[hunt enemy]' and sub in [-1, 0] and values and len(values) % 5 == 0:
+        # enemy-kind 1 = MOB; 2 = APC and 3 = destructible object, not MOB IDs.
+        if any(k != 1 for k in values[3::5]):return [], ['hunt_enemy_nonmonster']
+        return [{'type':'kill_monster','dungeon':d,'difficulty':m,'monster':i,'amount':n}
+                for d,m,i,k,n in zip(values[::5],values[1::5],values[2::5],values[3::5],values[4::5])], []
+    if kind == '[condition under clear]' and ((sub in [4,6] and len(values)==2) or (sub in [0,1,5] and len(values)==3)):
+        conditions = {}
+        if sub in [0,1,5]:
+            if values[2] < (1 if sub in [0,5] else 0):return [], ['clear_condition_quantity']
+            conditions[{0:'max_elapsed_ms',1:'max_hits_taken',5:'min_party_size'}[sub]]=values[2]*(1000 if sub==0 else 1)
+        if sub==4:conditions['max_revives']=0
+        return [{'type': 'clear_dungeon', 'dungeon': values[0], 'difficulty': values[1], 'amount': 1,'conditions':conditions}], []
+    if kind=='[disjoint item]' and sub==0 and values==[-2,-1,-1,13]:
+        return [{'type':'disassemble_item','target':'any','npc':13,'amount':1}], []
     if kind == '[custom quest]' and sub == 0 and values == [1, 0, 1]:
         return [{'type': 'learn_skill', 'target': 'any', 'amount': 1}], []
     return [], ['objective:' + str(kind) + ':sub=' + str(sub) + ':width=' + str(len(values))]
 
 
-def compile_quest(number, path, sha, fields, words, existing, items, monster_index):
+def compile_quest(number, path, sha, fields, words, existing, items, monster_index, *, custom_events=None, dungeon_index=None, npc_index=None):
     plan, reasons = quest_plan(fields)
     if number is None:reasons.append('unindexed')
     if not words.get('[name]') or not words.get('[condition message]'):reasons.append('missing_chinese_text')
     if any(BAD.search(v) for v in words.values()):reasons.append('invalid_display_text')
     reasons.extend('field:' + k for k in fields if k not in QUEST_META)
-    if scalar(fields, '[grade]') not in ['[epic]', '[achievement]', '[common unique]', '[training]']:
+    if scalar(fields, '[grade]') not in ['[epic]', '[achievement]', '[common unique]', '[training]', '[normaly repeat]', '[daily]']:
         reasons.append('quest_grade:' + str(scalar(fields, '[grade]')))
-    giver = NPCS.get(scalar(fields, '[npc index]'))
+    npc_registry=NPCS if npc_index is None else npc_index
+    giver = npc_registry.get(scalar(fields, '[npc index]'))
     receiver_num = scalar(fields, '[complete npc index]', -1)
-    receiver = giver if receiver_num == -1 else NPCS.get(receiver_num)
+    receiver = giver if receiver_num == -1 else npc_registry.get(receiver_num)
     if not giver or not receiver:reasons.append('npc_not_in_town')
     prerequisites = fields.get('[pre required quest]', [])
     jobs = fields.get('[job]', ['[all]'])
@@ -261,14 +274,23 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
         o = {'id': 'objective_%d' % ix, 'type': p['type'], 'amount': p['amount']}
         if not 1 <= p['amount'] <= 1000000:reasons.append('objective_quantity')
         if p['type'] == 'meet_npc':
-            o['target'] = NPCS.get(p['npc'], '')
+            o['target'] = npc_registry.get(p['npc'], '')
             if not o['target']:reasons.append('target_npc_not_in_town')
         elif p['type'] == 'collect_item':
             o['target'] = 'original_%d' % p['item'];consume[o['target']] = p['amount']
             if o['target'] not in items:reasons.append('item_unavailable:' + o['target'])
-        elif p['type'] == 'learn_skill':o['target'] = 'any'
+        elif p['type'] == 'learn_skill':
+            o['target'] = 'any'
+            # [custom quest] is an external callback, not a universal skill event.
+            # Identical [1,0,1] tuples also describe UI/seal/mentor tutorials.
+            if custom_events is not None and number not in custom_events:reasons.append('custom_callback_unverified')
+        elif p['type']=='disassemble_item':
+            o['target']=p['target'];o['npc']=npc_registry.get(p['npc'],'')
+            if not o['npc']:reasons.append('target_npc_not_in_town')
         else:
-            dungeon = DUNGEONS.get(p['dungeon'])
+            dungeon = (DUNGEONS if dungeon_index is None else dungeon_index).get(p['dungeon'])
+            if p['dungeon']==-1 and dungeon_index is not None:
+                dungeon='any';o['allowed_dungeons']=sorted(set(dungeon_index.values()))
             if not dungeon:reasons.append('dungeon_unavailable:' + str(p['dungeon']))
             if p['type'] == 'clear_dungeon':o['target'] = dungeon or ''
             else:
@@ -279,6 +301,8 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
                 if p['difficulty'] not in [0, 1, 3]:reasons.append('difficulty_not_implemented:' + str(p['difficulty']))
                 else:o['difficulty'] = [{0: 'normal', 1: 'adventure', 3: 'king'}[p['difficulty']]]
         objectives.append(o)
+        if p.get('conditions'):o['conditions']=p['conditions']
+        if p.get('conditions',{}).get('min_party_size',1)>1:reasons.append('multiplayer_not_implemented')
     reward = {'gold': 0, 'xp': 0, 'items': {}, 'conditional_items': [], 'choices': []}
     try:
         reward['gold'], reward['items'], reward['conditional_items'] = reward_rows(fields.get('[reward int data]', []))
@@ -301,6 +325,8 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
          'eligibility': {'jobs': [JOBS.get(j, -999) for j in jobs], 'grow_types': fields.get('[grow type]', [-1])},
          'giver': giver or '', 'receiver': receiver or '', 'objectives': objectives,
          'reward': reward, 'consume': consume, 'enabled': True, 'abandonable': '[cant giveup]' not in fields}
+    if scalar(fields,'[grade]') in ['[normaly repeat]','[daily]']:
+        q['lifecycle']='daily' if scalar(fields,'[grade]')=='[daily]' else 'repeat'
     return q, plan, sorted(set(reasons))
 
 

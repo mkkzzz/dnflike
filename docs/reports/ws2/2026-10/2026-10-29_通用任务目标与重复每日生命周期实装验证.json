@@ -1,0 +1,135 @@
+{
+  "schema": "dnf_native_quest_rules_evidence/2",
+  "base_commit": "ad2bb39ff03c142a384869a8262b287f36ba530b",
+  "coverage": {
+    "indexed_quests": 2824,
+    "existing": 34,
+    "new_executable": 9,
+    "total_executable": 43,
+    "objective_parsed": 2297,
+    "new_lifecycles": {
+      "once": 9
+    },
+    "blocked": 2781
+  },
+  "artifacts": {
+    "game_dnf/data/native_quest_rules_v2.json": "cd74332fa96ad6e19bd876095961ab3ad38e1a43071fb8f2f27c54aed8bcfb43",
+    "game_dnf/data/native_quest_status_v2.json.gz": "e8086047915415bf3975fff53549df4c11b5cd77ef88e02a08a70ca56d2883de",
+    "docs/reports/ws2/2026-10/2026-10-29_通用原任务规则覆盖.json": "a2f20de3c7b45f518e5bcac7e7bcb6234837d8a7940bc0d3ba01b0c32cbd2a45"
+  },
+  "logs": {
+    "quest_rules_build_final.log": {
+      "file": "quest_rules_build_final.log.gz",
+      "sha256": "51effd962d06b38394bb7f6835c8ea1363323c795d8a65535c19b99ae931927c",
+      "complete": [],
+      "script_errors": []
+    },
+    "quest_rules_python_final.log": {
+      "file": "quest_rules_python_final.log.gz",
+      "sha256": "428dcf765369d7b07a15f2f00215496164e057196996ab90e316e7f0201ab0f6",
+      "complete": [],
+      "script_errors": []
+    },
+    "quest_rules_units_final.log": {
+      "file": "quest_rules_units_final.log.gz",
+      "sha256": "d711436e6b0668cfd4c88623cbd65e79437555fec99a4b44c5a0e0d123a61680",
+      "complete": [
+        "[QUEST_RULES] COMPLETE checks=89 failures=0\r"
+      ],
+      "script_errors": []
+    },
+    "quest_rules_catalog_final.log": {
+      "file": "quest_rules_catalog_final.log.gz",
+      "sha256": "4230ba403a9f5b1bcd0224db9fb79f05ca235ba44f1b1c7bf47eb4d8d6a7add2",
+      "complete": [],
+      "script_errors": []
+    },
+    "quest_rules_release_final.log": {
+      "file": "quest_rules_release_final.log.gz",
+      "sha256": "7ab70b01aeffc028be590f8ead2e1143db9c785f66a18df6198b1c1e62e182d0",
+      "complete": [
+        "[QUEST_RULES] COMPLETE checks=87 failures=0\r",
+        "[WEAPON_RULES] COMPLETE checks=8225 failures=0\r",
+        "[NATIVE_BULK] COMPLETE checks=7533 failures=0\r",
+        "[TEACHING_RULES] COMPLETE checks=30 failures=0\r",
+        "[POISON_RULES] COMPLETE checks=26 failures=0\r",
+        "[ORIGINAL_DATA] COMPLETE checks=31 failures=0\r",
+        "[RECOVERY_TEST] COMPLETE checks=50 failures=0\r",
+        "[UPGRADE_TEST] COMPLETE checks=46 failures=0\r",
+        "[SERVICE_TEST] COMPLETE checks=33 failures=0\r",
+        "[ITEM_TEST] COMPLETE checks=44 failures=0\r",
+        "[NUMBERS_TEST] COMPLETE checks=63 failures=0\r",
+        "[QUEST_TEST] COMPLETE checks=45 failures=0\r",
+        "[TOWN_UNIT] COMPLETE checks=102 failures=0\r",
+        "[GRAN_UNIT] COMPLETE checks=19 failures=0\r",
+        "[QUEST_RULES_QUICK] COMPLETE checks=50 failures=0 captures=4\r"
+      ],
+      "script_errors": []
+    },
+    "quest_rules_release.log": {
+      "file": "quest_rules_release.log.gz",
+      "sha256": "38d4bfa618c0d8f4d91e7292ecd7aeaec23fe8ef26385c4580dbbaa47aa947d4",
+      "complete": [
+        "[QUEST_RULES] COMPLETE checks=83 failures=0\r",
+        "[WEAPON_RULES] COMPLETE checks=8225 failures=0\r",
+        "[NATIVE_BULK] COMPLETE checks=7533 failures=0\r",
+        "[TEACHING_RULES] COMPLETE checks=30 failures=0\r",
+        "[POISON_RULES] COMPLETE checks=26 failures=0\r",
+        "[ORIGINAL_DATA] COMPLETE checks=31 failures=0\r",
+        "[RECOVERY_TEST] COMPLETE checks=50 failures=0\r",
+        "[UPGRADE_TEST] COMPLETE checks=46 failures=0\r",
+        "[SERVICE_TEST] COMPLETE checks=33 failures=0\r",
+        "[ITEM_TEST] COMPLETE checks=44 failures=0\r",
+        "[NUMBERS_TEST] COMPLETE checks=63 failures=0\r",
+        "[QUEST_TEST] COMPLETE checks=45 failures=0\r",
+        "[TOWN_UNIT] COMPLETE checks=102 failures=0\r",
+        "[GRAN_UNIT] COMPLETE checks=19 failures=0\r"
+      ],
+      "script_errors": [
+        "ERROR: [LOOP_TEST] FAIL player actually plays the crouch pose while picking up (stay)\r"
+      ]
+    }
+  },
+  "screenshots": [
+    {
+      "path": "docs/screenshots/2026-10-29_native_quest_rules_v2/quest_rules_01_original_disassembly.png",
+      "sha256": "c42108bdfea20a79a5489d7086d254380dd422b5032c5406f66bb1cf19062fa2",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_native_quest_rules_v2/quest_rules_02_disassembly_ready.png",
+      "sha256": "bc1d11a4e263bc1f171898c449b085431526e84969676e47c05cf62bfbe3542e",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_native_quest_rules_v2/quest_rules_03_hit_limit.png",
+      "sha256": "f3b2cb3cb4338e7b31c109dcb4940f0b8491aeb83e810e2a0652e92cb1706d82",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_native_quest_rules_v2/quest_rules_04_repeat_history.png",
+      "sha256": "204c471362a347e9fd9cafe7c4d2ddc4f78bb222993f5e6a74d54b3132f261ef",
+      "size": [
+        1920,
+        1080
+      ]
+    }
+  ],
+  "limits": [
+    "Only 9 newly admitted original nodes, 7 belong to other jobs; 2 new current-swordman nodes",
+    "Daily/repeat UI and lifecycle tested with explicit fixtures; no original daily/repeat node admitted while prerequisites/items unavailable",
+    "Time/no-revive grammar and evaluator installed; current newly admitted conditional node is hit-limit 1106",
+    "No full dungeon clear validation, AI/main/animations untouched",
+    "Default daily refresh UTC+8 midnight is configurable E-ADAPT, not a recovered original reset time",
+    "Original source XP formula and native disassembly output remain pending; new bulk XP remains explicitly zero"
+  ]
+}
