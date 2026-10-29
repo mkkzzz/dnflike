@@ -204,6 +204,491 @@
     "sha256": "",
     "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
    }
+  },
+  "grakkarak_burning": {
+   "name": "燃烧的格拉卡",
+   "region": "granfloris",
+   "map_export": "res://assets_local/flow_v1/gran_v1/grakkarak_burning/map_export.json",
+   "rooms": [
+    {
+     "name": "燃烧的格拉卡",
+     "placement": "0_0:s1201",
+     "next": "down"
+    },
+    {
+     "name": "燃烧的格拉卡",
+     "placement": "0_1:1203",
+     "next": "right"
+    },
+    {
+     "name": "燃烧的格拉卡",
+     "placement": "1_1:1210",
+     "next": "down"
+    },
+    {
+     "name": "燃烧的格拉卡",
+     "placement": "1_2:1212",
+     "next": "right"
+    },
+    {
+     "name": "燃烧的格拉卡",
+     "placement": "2_2:1214",
+     "next": "right"
+    },
+    {
+     "name": "燃烧的格拉卡",
+     "placement": "3_2:1214",
+     "next": "up"
+    },
+    {
+     "name": "燃烧的格拉卡",
+     "placement": "3_1:b1201",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 9,
+   "source": {
+    "path": "",
+    "sha256": "",
+    "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+   }
+  },
+  "sunderland": {
+   "name": "桑德兰",
+   "region": "granfloris",
+   "map_export": "res://assets_local/flow_v1/gran_v1/sunderland/map_export.json",
+   "rooms": [
+    {
+     "name": "桑德兰",
+     "placement": "0_0:s602",
+     "next": "right"
+    },
+    {
+     "name": "桑德兰",
+     "placement": "1_0:e602",
+     "next": "right"
+    },
+    {
+     "name": "桑德兰",
+     "placement": "2_0:e601",
+     "next": "down"
+    },
+    {
+     "name": "桑德兰",
+     "placement": "2_1:h601",
+     "next": "left"
+    },
+    {
+     "name": "桑德兰",
+     "placement": "1_1:h604",
+     "next": "down"
+    },
+    {
+     "name": "桑德兰",
+     "placement": "1_2:b601",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 10,
+   "source": {
+    "path": "",
+    "sha256": "",
+    "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+   }
+  },
+  "sunderland_dark": {
+   "name": "黑暗桑德兰",
+   "region": "granfloris",
+   "map_export": "res://assets_local/flow_v1/gran_v1/sunderland_dark/map_export.json",
+   "rooms": [
+    {
+     "name": "黑暗桑德兰",
+     "placement": "4_0:s2802",
+     "next": "down"
+    },
+    {
+     "name": "黑暗桑德兰",
+     "placement": "4_1:h2812",
+     "next": "left"
+    },
+    {
+     "name": "黑暗桑德兰",
+     "placement": "3_1:h2813",
+     "next": "up"
+    },
+    {
+     "name": "黑暗桑德兰",
+     "placement": "3_0:h2807",
+     "next": "left"
+    },
+    {
+     "name": "黑暗桑德兰",
+     "placement": "2_0:h2803",
+     "next": "down"
+    },
+    {
+     "name": "黑暗桑德兰",
+     "placement": "2_1:b2801",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 11,
+   "source": {
+    "path": "",
+    "sha256": "",
+    "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+   }
+  },
+  "draconiantower": {
+   "name": "龙人之塔",
+   "region": "skytower",
+   "map_export": "res://assets_local/flow_v1/skytower_v1/draconiantower/map_export.json",
+   "rooms": [
+    {
+     "name": "龙人之塔",
+     "placement": "2_0:(2,0)d1601",
+     "next": "left"
+    },
+    {
+     "name": "龙人之塔",
+     "placement": "1_0:(1,0)n1826",
+     "next": "down"
+    },
+    {
+     "name": "龙人之塔",
+     "placement": "1_1:(1,1)e1803",
+     "next": "right"
+    },
+    {
+     "name": "龙人之塔",
+     "placement": "2_1:(2,1)n1808",
+     "next": "down"
+    },
+    {
+     "name": "龙人之塔",
+     "placement": "2_2:(2,2)h1827",
+     "next": "right"
+    },
+    {
+     "name": "龙人之塔",
+     "placement": "3_2:(2,0)d1601",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 13,
+   "source": {
+    "path": "",
+    "sha256": "",
+    "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+   }
+  },
+  "golemtower": {
+   "name": "石巨人塔",
+   "region": "skytower",
+   "map_export": "res://assets_local/flow_v1/skytower_v1/golemtower/map_export.json",
+   "rooms": [
+    {
+     "name": "石巨人塔",
+     "placement": "0_2:(0,1)2002",
+     "next": "right"
+    },
+    {
+     "name": "石巨人塔",
+     "placement": "1_2:(1,1)2006",
+     "next": "right"
+    },
+    {
+     "name": "石巨人塔",
+     "placement": "2_2:(2,2)2009",
+     "next": "up"
+    },
+    {
+     "name": "石巨人塔",
+     "placement": "2_1:(2,1)2008",
+     "next": "left"
+    },
+    {
+     "name": "石巨人塔",
+     "placement": "1_1:(1,1)2006",
+     "next": "left"
+    },
+    {
+     "name": "石巨人塔",
+     "placement": "0_1:(0,1)2002",
+     "next": "up"
+    },
+    {
+     "name": "石巨人塔",
+     "placement": "0_0:(0,0)2001",
+     "next": "right"
+    },
+    {
+     "name": "石巨人塔",
+     "placement": "1_0:(1,0)2004",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 14,
+   "source": {
+    "path": "",
+    "sha256": "",
+    "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+   }
+  },
+  "floatingcastle": {
+   "name": "悬空城",
+   "region": "skytower",
+   "map_export": "res://assets_local/flow_v1/skytower_v1/floatingcastle/map_export.json",
+   "rooms": [
+    {
+     "name": "悬空城",
+     "placement": "0_8:s4601",
+     "next": "up"
+    },
+    {
+     "name": "悬空城",
+     "placement": "0_7:e4601",
+     "next": "up"
+    },
+    {
+     "name": "悬空城",
+     "placement": "0_6:e4601",
+     "next": "up"
+    },
+    {
+     "name": "悬空城",
+     "placement": "0_5:e4601",
+     "next": "up"
+    },
+    {
+     "name": "悬空城",
+     "placement": "0_4:e4601",
+     "next": "up"
+    },
+    {
+     "name": "悬空城",
+     "placement": "0_3:e4601",
+     "next": "up"
+    },
+    {
+     "name": "悬空城",
+     "placement": "0_2:e4601",
+     "next": "up"
+    },
+    {
+     "name": "悬空城",
+     "placement": "0_1:e4601",
+     "next": "up"
+    },
+    {
+     "name": "悬空城",
+     "placement": "0_0:b4601",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 15,
+   "source": {
+    "path": "",
+    "sha256": "",
+    "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+   }
+  },
+  "palaceofload": {
+   "name": "城主宫殿",
+   "region": "skytower",
+   "map_export": "res://assets_local/flow_v1/skytower_v1/palaceofload/map_export.json",
+   "rooms": [
+    {
+     "name": "城主宫殿",
+     "placement": "0_5:(0,5)d2406",
+     "next": "right"
+    },
+    {
+     "name": "城主宫殿",
+     "placement": "1_5:(1,5)p2413",
+     "next": "up"
+    },
+    {
+     "name": "城主宫殿",
+     "placement": "1_4:(0,1)de2402",
+     "next": "up"
+    },
+    {
+     "name": "城主宫殿",
+     "placement": "1_3:(0,1)de2402",
+     "next": "up"
+    },
+    {
+     "name": "城主宫殿",
+     "placement": "1_2:(1,2)de2410",
+     "next": "up"
+    },
+    {
+     "name": "城主宫殿",
+     "placement": "1_1:(0,1)de2402",
+     "next": "up"
+    },
+    {
+     "name": "城主宫殿",
+     "placement": "1_0:(1,0)b2408",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 16,
+   "source": {
+    "path": "",
+    "sha256": "",
+    "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+   }
+  },
+  "darkentrance": {
+   "name": "幽暗回廊",
+   "region": "skytower",
+   "map_export": "res://assets_local/flow_v1/skytower_v1/darkentrance/map_export.json",
+   "rooms": [
+    {
+     "name": "幽暗回廊",
+     "placement": "0_0:(0,0)d2401",
+     "next": "right"
+    },
+    {
+     "name": "幽暗回廊",
+     "placement": "1_0:(1,0)e2402",
+     "next": "down"
+    },
+    {
+     "name": "幽暗回廊",
+     "placement": "1_1:(1,1)e2602",
+     "next": "right"
+    },
+    {
+     "name": "幽暗回廊",
+     "placement": "2_1:(1,0)e2402",
+     "next": "down"
+    },
+    {
+     "name": "幽暗回廊",
+     "placement": "2_2:(2,2)e2601",
+     "next": "left"
+    },
+    {
+     "name": "幽暗回廊",
+     "placement": "1_2:(1,2)h2601",
+     "next": "left"
+    },
+    {
+     "name": "幽暗回廊",
+     "placement": "0_2:(0,0)d2401",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 15,
+   "source": {
+    "path": "",
+    "sha256": "",
+    "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+   }
+  },
+  "hallofdoll": {
+   "name": "人偶之塔",
+   "region": "skytower",
+   "map_export": "res://assets_local/flow_v1/skytower_v1/hallofdoll/map_export.json",
+   "rooms": [
+    {
+     "name": "人偶之塔",
+     "placement": "0_1:(0,1)d1616",
+     "next": "down"
+    },
+    {
+     "name": "人偶之塔",
+     "placement": "0_2:(0,2)n1817",
+     "next": "down"
+    },
+    {
+     "name": "人偶之塔",
+     "placement": "0_3:(0,3)h1831",
+     "next": "right"
+    },
+    {
+     "name": "人偶之塔",
+     "placement": "1_3:(1,3)e1803",
+     "next": "right"
+    },
+    {
+     "name": "人偶之塔",
+     "placement": "2_3:(2,3)n1617",
+     "next": "up"
+    },
+    {
+     "name": "人偶之塔",
+     "placement": "2_2:(2,2)h1820",
+     "next": "left"
+    },
+    {
+     "name": "人偶之塔",
+     "placement": "1_2:(0,3)h1831",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 14,
+   "source": {
+    "path": "",
+    "sha256": "",
+    "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+   }
+  },
+  "draconiantower_amonlow": {
+   "name": "龙人之塔·亚蒙下层",
+   "region": "skytower",
+   "map_export": "res://assets_local/flow_v1/skytower_v1/draconiantower_amonlow/map_export.json",
+   "rooms": [
+    {
+     "name": "龙人之塔·亚蒙下层",
+     "placement": "2_0:(2,0)d1601",
+     "next": "left"
+    },
+    {
+     "name": "龙人之塔·亚蒙下层",
+     "placement": "1_0:(1,0)n1826",
+     "next": "down"
+    },
+    {
+     "name": "龙人之塔·亚蒙下层",
+     "placement": "1_1:(1,1)e1803",
+     "next": "right"
+    },
+    {
+     "name": "龙人之塔·亚蒙下层",
+     "placement": "2_1:(2,1)n1808",
+     "next": "down"
+    },
+    {
+     "name": "龙人之塔·亚蒙下层",
+     "placement": "2_2:(2,2)h1827",
+     "next": "right"
+    },
+    {
+     "name": "龙人之塔·亚蒙下层",
+     "placement": "3_2:(2,0)d1601",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 14,
+   "source": {
+    "path": "",
+    "sha256": "",
+    "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+   }
   }
  }
 }

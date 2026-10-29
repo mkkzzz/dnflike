@@ -65,6 +65,9 @@ def shortest(cells: dict, start: tuple[int, int], goal: tuple[int, int]) -> list
             nxt = (current[0] + step[0], current[1] + step[1])
             if nxt not in cells or nxt in seen:
                 continue
+            # 没有候选地图的格子走不通（原版 dgn 里可能存在空 cell）。
+            if nxt != goal and not (cells[nxt].get('map_candidates') or []):
+                continue
             seen.add(nxt)
             queue.append((nxt, path + [(current, door)]))
     return None
@@ -90,16 +93,16 @@ def build(export: dict, start_cell=None, boss_cell=None) -> list[dict]:
     bosses = sorted(cells) if boss_cell is None else [tuple(boss_cell)]
     best = None
     for s in starts:
-        if not cells[s].get('start_candidate'):
+        if not cells[s].get('start_candidate') or not (cells[s].get('map_candidates') or []):
             continue
         for b in bosses:
-            if not cells[b].get('boss_candidate'):
+            if not cells[b].get('boss_candidate') or not (cells[b].get('map_candidates') or []):
                 continue
             path = shortest(cells, s, b)
             if path is not None and (best is None or len(path) < len(best[2])):
                 best = (s, b, path)
     if best is None:
-        raise SystemExit('找不到起点到 BOSS 的连通路径')
+        return None
     start, boss, path = best
     rooms = []
     for index, (cell, door) in enumerate(path):
@@ -151,6 +154,9 @@ def main() -> int:
                 continue
             export_doc = json.loads(export.read_text(encoding='utf-8'))
             rooms = build(export_doc)
+            if rooms is None:
+                waiting.append(dungeon_id + '(无连通路径)')
+                continue
             for room in rooms:
                 room['name'] = name
             dungeons[dungeon_id] = {

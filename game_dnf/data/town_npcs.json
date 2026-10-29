@@ -5,6 +5,7 @@
   "elvengard": {
    "placement": "elvengard",
    "declared": [
+    "danjin",
     "linus"
    ],
    "npcs": [
@@ -17,7 +18,7 @@
       0
      ],
      "layer": "normal",
-     "implemented": false,
+     "implemented": true,
      "field_wav": [
       "R_NPC_JAR_AMB_LOOP"
      ],
@@ -453,6 +454,26 @@
      "field_animation": "npc/animation/npc_gbn.ani"
     }
    ]
+  },
+  "hendon_pub": {
+   "placement": "hendon_pub",
+   "declared": [],
+   "npcs": []
+  },
+  "hendon_inn": {
+   "placement": "hendon_inn",
+   "declared": [],
+   "npcs": []
+  },
+  "alfhlyra": {
+   "placement": "alfhlyra",
+   "declared": [],
+   "npcs": []
+  },
+  "westcoast": {
+   "placement": "westcoast",
+   "declared": [],
+   "npcs": []
   }
  }
 }
