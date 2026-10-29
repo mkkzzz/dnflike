@@ -120,9 +120,10 @@ def main() -> int:
         if not loc.get('dungeon_entry'):
             continue
         region = loc.get('dungeon_region', DEFAULT_REGION)
+        regions = region if isinstance(region, list) else [region]
         choices = [d for d, s in dungeons.items()
-                   if not s.get('legacy') and s.get('region', DEFAULT_REGION) == region]
-        print('   %-20s region=%-11s choices=%s' % (town, region, choices))
+                   if not s.get('legacy') and s.get('region', DEFAULT_REGION) in regions]
+        print('   %-20s region=%-24s choices=%s' % (town, str(region), choices))
         for choice in choices:
             covered.setdefault(choice, []).append(town)
         if not choices:

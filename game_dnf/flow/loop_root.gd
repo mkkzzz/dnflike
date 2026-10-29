@@ -31,6 +31,7 @@ var inventory_tools
 var loot_bridge
 var quest_windows
 var selected_dungeon := "lorien"
+var dungeon_page := 0
 var transitioning := false
 var number_windows
 const SKILL_KEYS := [KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H]
@@ -419,7 +420,7 @@ func interact_town(target: String) -> void:
 	if target!=town.nearest() and target!=town.entry_target():return
 	if town.is_npc(target):show_overlay("npc")
 	elif target=="dungeon":
-		var choices: Array[String]=session.dungeon_choices(String(town.world.scene(town.location).get("dungeon_region","lorien")))
+		var choices: Array[String]=session.dungeon_choices(town.world.scene(town.location).get("dungeon_region","lorien"))
 		if not choices.is_empty():
 			if selected_dungeon not in choices:selected_dungeon=choices[0]
 			for id: String in choices:

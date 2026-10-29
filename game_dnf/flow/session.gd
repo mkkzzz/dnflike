@@ -84,10 +84,13 @@ func dungeon_available(id: String) -> bool:
 		if quests.status(profile,required) != "completed":return false
 	return true
 
-func dungeon_choices(region: String) -> Array[String]:
+## region 可以是单个字符串或数组：一个城镇允许同时通向多个副本区（如赫顿→格兰之森+天空之城）。
+func dungeon_choices(region) -> Array[String]:
+	var regions: Array = region if region is Array else [String(region)]
 	var choices: Array[String]=[]
 	for id: String in dungeons:
-		if not dungeons[id].get("legacy",false) and dungeons[id].get("region","lorien")==region:choices.append(id)
+		if dungeons[id].get("legacy",false):continue
+		if String(dungeons[id].get("region","lorien")) in regions:choices.append(id)
 	return choices
 
 func snapshot() -> Dictionary:

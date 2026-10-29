@@ -340,19 +340,56 @@ func close_purchase() -> void:
 	if is_instance_valid(purchase):purchase.queue_free()
 	purchase = null
 
+## 未解锁原因（等级 / 前置任务），用于出征界面提示。
+func dungeon_lock_reason(id: String) -> String:
+	var spec: Dictionary = game.session.dungeons.get(id, {})
+	var need := int(spec.get("min_level", 1))
+	if int(game.session.profile["level"]) < need:return "需要等级 %d" % need
+	for required: String in spec.get("requires", []):
+		if game.session.quests.status(game.session.profile, required) != "completed":return "需要先完成前置任务"
+	return "尚未开放"
+
 func dungeon() -> void:
 	var node = container(game.modal, Vector2.ZERO, Vector2(800, 600))
 	skin.image(node, skin.texture("worldmap"), Vector2.ZERO)
 	skin.image(node, skin.texture("select", 79), Vector2.ZERO)
 	skin.image(node, skin.texture("select", 58), Vector2(104, 0))
-	skin.label(node, "格兰之森", Vector2(34, 65), 22, Color("f0d18a"))
-	# All cards use actual native dungeon art. Only the implemented route is selectable.
+	var scene_data: Dictionary = game.town.world.scene(game.town.location)
+	var regions = scene_data.get("dungeon_region", "lorien")
+	if not regions is Array:regions = [regions]
+	var region_title := String({"granfloris": "格兰之森", "skytower": "天空之城", "lorien": "洛兰"}.get(String(regions[0]), "地下城"))
+	skin.label(node, region_title, Vector2(34, 65), 22, Color("f0d18a"))
+	# 卡片按当前城镇的副本区动态列出（每页 5 张）；锁定的置灰并给出原因。
+	var choices: Array = game.session.dungeon_choices(regions)
+	var pages := maxi(1, int(ceil(float(choices.size()) / 5.0)))
+	game.dungeon_page = clampi(game.dungeon_page, 0, pages - 1)
+	var start: int = int(game.dungeon_page) * 5
 	var locations := [Vector2(300, 230), Vector2(132, 111), Vector2(466, 93), Vector2(562, 292), Vector2(130, 360)]
 	for i in locations.size():
+		var index: int = start + i
+		if index >= choices.size():break
+		var id: String = choices[index]
+		var spec: Dictionary = game.session.dungeons[id]
+		var unlocked: bool = game.session.dungeon_available(id)
+		var chosen: bool = id == game.selected_dungeon
 		var pic = skin.image(node, skin.texture("dungeon_cards", i), locations[i])
-		if i == 0:pic.name = "selected_dungeon_card"
-		if i > 0:pic.modulate = Color("999999")
-		else:
+		if chosen:pic.name = "selected_dungeon_card"
+		if not unlocked:pic.modulate = Color("666666")
+		elif not chosen:pic.modulate = Color("b8b8b8")
+		skin.label(node, String(spec.get("name", id)), locations[i] + Vector2(6, 78), 12,
+			Color("f0d18a") if unlocked else Color("8a8578"))
+		var hit := Button.new()
+		hit.flat = true
+		hit.position = locations[i]
+		hit.size = Vector2(168, 78)
+		hit.pressed.connect(func():
+			if not game.session.dungeon_available(id):
+				game.notice(dungeon_lock_reason(id))
+				return
+			game.selected_dungeon = id
+			game.show_overlay("dungeon"))
+		node.add_child(hit)
+		if chosen:
 			# Card has a 12px crown above its rectangular body. Outline the body,
 			# with a native 4px rim; never tile the border across the artwork.
 			var selected := NinePatchRect.new()
@@ -366,22 +403,33 @@ func dungeon() -> void:
 			selected.draw_center = false
 			selected.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			node.add_child(selected)
+	if choices.is_empty():
+		skin.label(node, "当前城镇没有可用的地下城", Vector2(300, 400), 12, Color("c86a5a"))
 	var difficulty: String = game.session.profile.get("difficulty", "normal")
-	var choices := ["normal", "adventure", "king"]
-	var current := choices.find(difficulty)
+	var levels := ["normal", "adventure", "king"]
+	var current := levels.find(difficulty)
 	var bar := container(node, Vector2(325, 314), Vector2(118, 27))
 	bar.name = "difficulty_selector"
 	skin.image(bar, skin.texture("select", 2), Vector2.ZERO)
 	skin.image(bar, skin.texture("select", {"normal":11,"adventure":12,"king":14}[difficulty]), Vector2(36, 4))
 	for entry in [[-1, Vector2(0, 4), [3,4,5]], [1, Vector2(98, 4), [7,8,9]]]:
-		var next: String = choices[posmod(current + entry[0], 3)]
+		var next: String = levels[posmod(current + entry[0], 3)]
 		var button: TextureButton = skin.sprite_button(bar, "select", entry[2], entry[1], func():
 			if game.act("flow.difficulty", {"id":next}):game.show_overlay("dungeon"))
 		button.name = "difficulty_previous" if entry[0] == -1 else "difficulty_next"
 	var enter: TextureButton = skin.sprite_button(node, "select", [164, 165, 166], Vector2(621, 446), game.depart, "进入地下城 Space")
 	enter.set_meta("action_label", "进入地下城")
 	skin.button(node, "返回城镇", Vector2(631, 528), func(): game.show_overlay(""))
-	skin.label(node, "其余地下城尚未开放", Vector2(34, 569), 11)
+	skin.label(node, "%d / %d 页 · 共 %d 个地下城" % [game.dungeon_page + 1, pages, choices.size()], Vector2(34, 569), 11)
+	if pages > 1:
+		var previous: TextureButton = skin.sprite_button(node, "select", [3, 4, 5], Vector2(34, 540), func():
+			game.dungeon_page = maxi(0, game.dungeon_page - 1)
+			game.show_overlay("dungeon"))
+		previous.name = "dungeon_page_previous"
+		var following: TextureButton = skin.sprite_button(node, "select", [7, 8, 9], Vector2(232, 540), func():
+			game.dungeon_page = mini(pages - 1, game.dungeon_page + 1)
+			game.show_overlay("dungeon"))
+		following.name = "dungeon_page_next"
 
 func result() -> void:
 	var r: Dictionary = game.session.result

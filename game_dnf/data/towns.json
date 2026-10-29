@@ -170,7 +170,7 @@
         ]
       ],
       "camera_y": 120,
-      "dungeon_region": "granfloris"
+      "dungeon_region": ["granfloris", "skytower"]
     },
     "hendon_auction": {
       "name": "赫顿玛尔 · 后街",
