@@ -19,6 +19,8 @@ var objects: Dictionary = {}
 var player: Dictionary = {}
 var problems: Array = []
 var _timelines: Dictionary = {}
+## 原版 HP 基准表（monster/monsterbaseparameter.tbl，每 5 级一档）。
+var base_table: Array = []
 
 func build(content_db, adapt_rules: Dictionary, combat_assets: Dictionary) -> bool:
 	db = content_db
@@ -28,9 +30,34 @@ func build(content_db, adapt_rules: Dictionary, combat_assets: Dictionary) -> bo
 		problems.append("compiled content pack missing (python tools/compile_dnf_content.py)")
 		return false
 	_build_player()
+	_load_base_table()
 	for name: String in rules["moves"]:moves[name] = _build_move(name,rules["moves"][name])
 	for key: String in rules["monsters"]:monsters[key] = _build_monster(key,rules["monsters"][key])
 	return problems.is_empty()
+
+## 读 data/monster_tables.json 的 base 表（由 tools/build_dnf_monster_tables.py 生成）。
+func _load_base_table() -> void:
+	if not FileAccess.file_exists("res://data/monster_tables.json"):return
+	var doc = JSON.parse_string(FileAccess.get_file_as_string("res://data/monster_tables.json"))
+	if not doc is Dictionary:return
+	var tables: Dictionary = doc.get("tables", {})
+	var base: Dictionary = tables.get("base", {})
+	if not bool(base.get("ok", false)):return
+	base_table = base.get("table", [])
+
+## HP 基准按怪物等级取原版表值；表缺失时退回 data/combat.json 的旧基准。
+func monster_base_hp(mob: Dictionary) -> float:
+	var fallback := float(rules["monster_base"]["hp"])
+	if base_table.is_empty():return fallback
+	var levels: Array = mob.get("level", []) if mob.get("level") is Array else []
+	var level := int(levels[0]) if not levels.is_empty() else 1
+	var picked := fallback
+	for row: Dictionary in base_table:
+		if int(row.get("from_level", 0)) <= level:
+			picked = float(row.get("base_value", picked))
+		else:
+			break
+	return picked
 
 ## Timeline of any original ANI by archive path (pack first, then borrowed raw ANIs).
 func timeline(path: String) -> Array:
@@ -249,7 +276,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 	var motion_dir := String(waiting[0]).get_base_dir() if not waiting.is_empty() else ""
 	var m := {"key":key,"mob":path,"bank":String(spec.get("bank",key)),"dir":motion_dir,
 		"name":String(spec.get("name",key)),"level":int(mob.get("level",[1])[0]),
-		"hp":float(base["hp"])*_ability(mob,"[HP MAX]")/100.0,
+		"hp":monster_base_hp(mob)*_ability(mob,"[HP MAX]")/100.0,
 		"attack":float(base["attack"])*_ability(mob,"[EQUIPMENT_PHYSICAL_ATTACK]")/100.0,
 		"speed":move_px(float(mob.get("move_speed",[300])[0])),"sight":float(mob.get("sight",300)),
 		"attack_delay":float(mob.get("attack_delay",1200)),"hit_recovery":float(mob.get("hit_recovery",[500])[0]),
