@@ -47,10 +47,7 @@ static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: f
 				if gap_x >= float(span[0]) - 4 and gap_x <= float(span[1]) - 6:
 					picks.append([index, float((candidate.get("atk", {}) as Dictionary).get("damage_bonus", 0))])
 			if not picks.is_empty():
-				# 血量低于 40% 进入狂暴：优先高伤害招（E-ADAPT：原版阶段切换写在 .ai 字节码里，
-				# opcode 语义尚未解出，这里用招式自带的 damage_bonus 排序，不用写死招式名）。
-				if float(enemy["hp"]) / maxf(1.0, float(enemy["max_hp"])) < 0.4:
-					picks.sort_custom(func(a, b): return a[1] > b[1])
+				# 多招都打得到时，按 .mob 里的招式顺序取第一个（原版顺序，不额外加权）。
 				out["attack"] = true
 				out["move_index"] = int(picks[0][0])
 				return out
