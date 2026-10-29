@@ -1,0 +1,262 @@
+{
+ "schema": "dnf_breakable_particles/1",
+ "evidence": ".obj 的 [destroy particle] → .ptl 的 [object] ANI 列表",
+ "objects": {
+  "passiveobject/mapobject/breakableobject/act6box_peter.obj": [
+   "ptl_act6boxparticle01",
+   "ptl_act6boxparticle02",
+   "ptl_act6boxparticle03",
+   "ptl_act6boxparticle04"
+  ],
+  "passiveobject/mapobject/breakableobject/actionfountain.obj": [
+   "ptl_fountainparticle1",
+   "ptl_fountainparticle2",
+   "ptl_fountainparticle3",
+   "ptl_fountainparticle4",
+   "ptl_fountainparticle5",
+   "ptl_fountainparticle6",
+   "ptl_fountainparticle7"
+  ],
+  "passiveobject/mapobject/breakableobject/actionstonepillar.obj": [
+   "ptl_stonepillarparticle1",
+   "ptl_stonepillarparticle2",
+   "ptl_stonepillarparticle3",
+   "ptl_stonepillarparticle4"
+  ],
+  "passiveobject/mapobject/breakableobject/actiontree1lorien.obj": [
+   "ptl_actiontreeparticle1",
+   "ptl_actiontreeparticle2"
+  ],
+  "passiveobject/mapobject/breakableobject/actiontree1mirkwood.obj": [
+   "ptl_actiontreeparticle1",
+   "ptl_actiontreeparticle2"
+  ],
+  "passiveobject/mapobject/breakableobject/actiontree1sunderland.obj": [
+   "ptl_actiontreeparticle1",
+   "ptl_actiontreeparticle2"
+  ],
+  "passiveobject/mapobject/breakableobject/actiontree2lorien.obj": [
+   "ptl_actiontreeparticle1",
+   "ptl_actiontreeparticle2"
+  ],
+  "passiveobject/mapobject/breakableobject/actiontree2mirkwood.obj": [
+   "ptl_actiontreeparticle1",
+   "ptl_actiontreeparticle2"
+  ],
+  "passiveobject/mapobject/breakableobject/actiontree2sunderland.obj": [
+   "ptl_actiontreeparticle1",
+   "ptl_actiontreeparticle2"
+  ],
+  "passiveobject/mapobject/breakableobject/barrel.obj": [
+   "ptl_barrelparticle01",
+   "ptl_barrelparticle02",
+   "ptl_barrelparticle03",
+   "ptl_barrelparticle04",
+   "ptl_barrelparticle05",
+   "ptl_barrelparticle06",
+   "ptl_barrelparticle07",
+   "ptl_barrelparticle08",
+   "ptl_barrelparticle09",
+   "ptl_barrelparticle10",
+   "ptl_barrelparticle11",
+   "ptl_barrelparticle12"
+  ],
+  "passiveobject/mapobject/breakableobject/deadcoral.obj": [
+   "ptl_deadcoralparticle1",
+   "ptl_deadcoralparticle2",
+   "ptl_deadcoralparticle3",
+   "ptl_deadcoralparticle4",
+   "ptl_deadcoralparticle5",
+   "ptl_deadcoralparticle6",
+   "ptl_deadcoralparticle7"
+  ],
+  "passiveobject/mapobject/breakableobject/epicquestrescuelorianquestcage.obj": [
+   "ptl_questcagedest01",
+   "ptl_questcagedest02",
+   "ptl_questcagedest03",
+   "ptl_questcagedest04",
+   "ptl_questcagedest05",
+   "ptl_questcagedest06",
+   "ptl_questcagedest07"
+  ],
+  "passiveobject/mapobject/breakableobject/epicquestrescueseagunquestcage.obj": [
+   "ptl_questcagedest01",
+   "ptl_questcagedest02",
+   "ptl_questcagedest03",
+   "ptl_questcagedest04",
+   "ptl_questcagedest05",
+   "ptl_questcagedest06",
+   "ptl_questcagedest07"
+  ],
+  "passiveobject/mapobject/breakableobject/epicquestrescueseriaquestcage.obj": [
+   "ptl_questcagedest01",
+   "ptl_questcagedest02",
+   "ptl_questcagedest03",
+   "ptl_questcagedest04",
+   "ptl_questcagedest05",
+   "ptl_questcagedest06",
+   "ptl_questcagedest07"
+  ],
+  "passiveobject/mapobject/breakableobject/largegrasslorien.obj": [
+   "ptl_grassparticle01",
+   "ptl_grassparticle02",
+   "ptl_grassparticle03",
+   "ptl_grassparticle04",
+   "ptl_grassparticle05",
+   "ptl_grassparticle06",
+   "ptl_grassparticle07",
+   "ptl_grassparticle08",
+   "ptl_grassparticle09",
+   "ptl_grassparticle10"
+  ],
+  "passiveobject/mapobject/breakableobject/largegrassmirkwood.obj": [
+   "ptl_grassparticle01",
+   "ptl_grassparticle02",
+   "ptl_grassparticle03",
+   "ptl_grassparticle04",
+   "ptl_grassparticle05",
+   "ptl_grassparticle06",
+   "ptl_grassparticle07",
+   "ptl_grassparticle08",
+   "ptl_grassparticle09",
+   "ptl_grassparticle10"
+  ],
+  "passiveobject/mapobject/breakableobject/largegrasssunderland.obj": [
+   "ptl_grassparticle01",
+   "ptl_grassparticle02",
+   "ptl_grassparticle03",
+   "ptl_grassparticle04",
+   "ptl_grassparticle05",
+   "ptl_grassparticle06",
+   "ptl_grassparticle07",
+   "ptl_grassparticle08",
+   "ptl_grassparticle09",
+   "ptl_grassparticle10"
+  ],
+  "passiveobject/mapobject/breakableobject/seagrass.obj": [
+   "ptl_seagrassparticle01",
+   "ptl_seagrassparticle02",
+   "ptl_seagrassparticle03",
+   "ptl_seagrassparticle04",
+   "ptl_seagrassparticle05"
+  ],
+  "passiveobject/mapobject/breakableobject/skycastle_soldier.obj": [
+   "ptl_skycastle_soldierparticle1",
+   "ptl_skycastle_soldierparticle2",
+   "ptl_skycastle_soldierparticle3",
+   "ptl_skycastle_soldierparticle4",
+   "ptl_skycastle_soldierparticle5",
+   "ptl_skycastle_soldierparticle6",
+   "ptl_skycastle_soldierparticle7"
+  ],
+  "passiveobject/mapobject/breakableobject/skycastle_squarebox.obj": [
+   "ptl_skc_sqboxdest01",
+   "ptl_skc_sqboxdest02",
+   "ptl_skc_sqboxdest03",
+   "ptl_skc_sqboxdest04"
+  ],
+  "passiveobject/mapobject/breakableobject/skycastle_squareboxgemed.obj": [
+   "ptl_skc_sqboxdest01",
+   "ptl_skc_sqboxdest02",
+   "ptl_skc_sqboxdest03",
+   "ptl_skc_sqboxdest04"
+  ],
+  "passiveobject/mapobject/breakableobject/skycastle_squareboxpearled.obj": [
+   "ptl_skc_sqboxdest01",
+   "ptl_skc_sqboxdest02",
+   "ptl_skc_sqboxdest03",
+   "ptl_skc_sqboxdest04"
+  ],
+  "passiveobject/mapobject/breakableobject/smallgrasslorien.obj": [
+   "ptl_grassparticle01",
+   "ptl_grassparticle02",
+   "ptl_grassparticle03",
+   "ptl_grassparticle04",
+   "ptl_grassparticle05",
+   "ptl_grassparticle06",
+   "ptl_grassparticle07",
+   "ptl_grassparticle08",
+   "ptl_grassparticle09",
+   "ptl_grassparticle10"
+  ],
+  "passiveobject/mapobject/breakableobject/smallgrassmirkwood.obj": [
+   "ptl_grassparticle01",
+   "ptl_grassparticle02",
+   "ptl_grassparticle03",
+   "ptl_grassparticle04",
+   "ptl_grassparticle05",
+   "ptl_grassparticle06",
+   "ptl_grassparticle07",
+   "ptl_grassparticle08",
+   "ptl_grassparticle09",
+   "ptl_grassparticle10"
+  ],
+  "passiveobject/mapobject/breakableobject/smallgrasssunderland.obj": [
+   "ptl_grassparticle01",
+   "ptl_grassparticle02",
+   "ptl_grassparticle03",
+   "ptl_grassparticle04",
+   "ptl_grassparticle05",
+   "ptl_grassparticle06",
+   "ptl_grassparticle07",
+   "ptl_grassparticle08",
+   "ptl_grassparticle09",
+   "ptl_grassparticle10"
+  ],
+  "passiveobject/mapobject/breakableobject/stoneimage/stoneimage_fighter2.obj": [
+   "ptl_stoneimage_damage0",
+   "ptl_stoneimage_damage1",
+   "ptl_stoneimage_damage2",
+   "ptl_stoneimage_destroy0",
+   "ptl_stoneimage_destroy1",
+   "ptl_stoneimage_destroy2",
+   "ptl_stoneimage_destroy3",
+   "ptl_stoneimage_destroy4",
+   "ptl_stoneimage_destroy5"
+  ],
+  "passiveobject/mapobject/breakableobject/stoneimage/stoneimage_gunner0.obj": [
+   "ptl_stoneimage_damage0",
+   "ptl_stoneimage_damage1",
+   "ptl_stoneimage_damage2",
+   "ptl_stoneimage_destroy0",
+   "ptl_stoneimage_destroy1",
+   "ptl_stoneimage_destroy2",
+   "ptl_stoneimage_destroy3",
+   "ptl_stoneimage_destroy4",
+   "ptl_stoneimage_destroy5"
+  ],
+  "passiveobject/mapobject/breakableobject/stoneimage/stoneimage_gunner1.obj": [
+   "ptl_stoneimage_damage0",
+   "ptl_stoneimage_damage1",
+   "ptl_stoneimage_damage2",
+   "ptl_stoneimage_destroy0",
+   "ptl_stoneimage_destroy1",
+   "ptl_stoneimage_destroy2",
+   "ptl_stoneimage_destroy3",
+   "ptl_stoneimage_destroy4",
+   "ptl_stoneimage_destroy5"
+  ],
+  "passiveobject/mapobject/breakableobject/stoneimage/stoneimage_gunner2.obj": [
+   "ptl_stoneimage_damage0",
+   "ptl_stoneimage_damage1",
+   "ptl_stoneimage_damage2",
+   "ptl_stoneimage_destroy0",
+   "ptl_stoneimage_destroy1",
+   "ptl_stoneimage_destroy2",
+   "ptl_stoneimage_destroy3",
+   "ptl_stoneimage_destroy4",
+   "ptl_stoneimage_destroy5"
+  ],
+  "passiveobject/mapobject/breakableobject/stoneimage/stoneimage_wizzard1.obj": [
+   "ptl_stoneimage_damage0",
+   "ptl_stoneimage_damage1",
+   "ptl_stoneimage_damage2",
+   "ptl_stoneimage_destroy0",
+   "ptl_stoneimage_destroy1",
+   "ptl_stoneimage_destroy2",
+   "ptl_stoneimage_destroy3",
+   "ptl_stoneimage_destroy4",
+   "ptl_stoneimage_destroy5"
+  ]
+ }
+}

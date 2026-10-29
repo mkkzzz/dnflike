@@ -755,6 +755,9 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 							prop["broken"] = true
 							prop["broken_ms"] = 0.0
 							spawn_effect("hit_cut_s1", prop["pos"] - Vector2(0, 18), facing)
+							# 原版破坏粒子（.obj 的 [destroy particle] → .ptl → ANI）。
+							for particle in array_of(prop.get("particles")):
+								spawn_effect(String(particle), prop["pos"] - Vector2(0, 16), facing)
 							if String(prop.get("break_sound", "")) != "":play_sound(String(prop["break_sound"]))
 							bus.emit("combat.prop_broken", {"node": int(prop.get("node", -1))})
 						break
@@ -1067,6 +1070,19 @@ func array_of(source: Variant) -> Array:
 	# GDScript 的 `or` 返回 bool（与 Python 不同），这里显式判类型。
 	return source if source is Array else []
 
+## 可破坏物的破坏粒子表（obj 路径 → effect key 列表），由 build_dnf_combat_assets 生成。
+var breakable_particles: Dictionary = {}
+var breakable_particles_loaded := false
+
+func breakable_particle_keys(path: String) -> Array:
+	if not breakable_particles_loaded:
+		breakable_particles_loaded = true
+		if FileAccess.file_exists("res://data/breakable_particles.json"):
+			var doc = JSON.parse_string(FileAccess.get_file_as_string("res://data/breakable_particles.json"))
+			if doc is Dictionary:
+				breakable_particles = doc.get("objects", {})
+	return array_of(breakable_particles.get(path, []))
+
 func build_props(room: Dictionary) -> Array:
 	var out: Array = []
 	var objects: Array = array_of(room.get("objects"))
@@ -1097,6 +1113,7 @@ func build_props(room: Dictionary) -> Array:
 			"hp": maxi(1, hits), "def": def,
 			"break_sound": String(strings[5]) if strings.size() > 5 else "",
 			"hit_sound": String(strings[4]) if strings.size() > 4 else "",
+			"particles": breakable_particle_keys(path),
 			"node": object_index,
 		})
 	return out

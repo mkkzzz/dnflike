@@ -392,6 +392,84 @@ def catalog_monster_specs() -> dict:
     return out
 
 
+def resolve_relative(folder: str, relative: str) -> str:
+    """`../trap/particle/x.ptl` 这类相对路径 → 库内绝对路径。"""
+    stack: list[str] = []
+    for part in (folder + '/' + relative.replace('\\', '/')).split('/'):
+        if part in ('', '.'):
+            continue
+        if part == '..':
+            if stack:
+                stack.pop()
+            continue
+        stack.append(part)
+    return '/'.join(stack).lower()
+
+
+def breakable_objects() -> list[str]:
+    """副本地图里出现的可破坏物 .obj 路径（去重）。"""
+    dungeons_path = ROOT / 'game_dnf/data/dungeons.json'
+    if not dungeons_path.is_file():
+        return []
+    found: set[str] = set()
+    for spec in json.loads(dungeons_path.read_text(encoding='utf-8'))['dungeons'].values():
+        export = spec.get('map_export', '')
+        if not export:
+            continue
+        path = ROOT / 'game_dnf' / export.replace('res://', '')
+        if not path.is_file():
+            continue
+        try:
+            data = json.loads(path.read_text(encoding='utf-8'))
+        except Exception:
+            continue
+        for room in (data.get('dungeon', {}).get('rooms') or {}).values():
+            for obj in room.get('objects') or []:
+                target = str(obj.get('obj', '')).lower()
+                if 'breakableobject/' in target and target.endswith('.obj'):
+                    found.add(target)
+    return sorted(found)
+
+
+def breakable_particle_animations(src: Source) -> tuple[dict, dict]:
+    """可破坏物打碎时的粒子：`.obj` 的 `[destroy particle]` → `.ptl` → 它引用的 ANI。
+
+    返回 (effect_key → ANI 路径, obj 路径 → effect_key 列表)：
+    前者用于烘 effect bank，后者写进 data/breakable_particles.json 供运行时查。
+    """
+    particles_path = ROOT / 'game_dnf/data/particles.json'
+    if not particles_path.is_file():
+        return {}, {}
+    particles = json.loads(particles_path.read_text(encoding='utf-8'))['particles']
+    effects: dict[str, str] = {}
+    mapping: dict[str, list] = {}
+    for path in breakable_objects():
+        if not src.lib.exists(path):
+            continue
+        doc = src.lib.script(path)
+        spans: dict[str, list] = {}
+        for item in doc.get('fields') or []:
+            spans.setdefault(item['tag'], []).append(item['values'])
+        folder = str(PurePosixPath(path).parent)
+        keys: list = []
+        # 粒子有两种写法：独立的 [destroy particle] 字段，或塞在 [string data] 里
+        # （桶的 BarrelDestroy.ptl 就在 string data 第 3 项）。两条都扫。
+        candidates: list = list((spans.get('[destroy particle]') or [[]])[0])
+        candidates += list((spans.get('[string data]') or [[]])[0])
+        for value in candidates:
+            if not isinstance(value, str) or not value.lower().endswith('.ptl'):
+                continue
+            entry = particles.get(resolve_relative(folder, value), {})
+            for ani in entry.get('animations') or []:
+                key = 'ptl_' + PurePosixPath(ani).stem.lower()
+                effects.setdefault(key, ani)
+                if key not in keys:
+                    keys.append(key)
+        if keys:
+            mapping[path] = keys
+    return effects, mapping
+
+
 def monster_specifications() -> dict:
     """手写条目（旧 clip 目录约定）+ 总账自动补全条目。"""
     specs = {key: {'mob': mob, 'clip_dir': clip_dir, 'extra': extra} for key, (mob, clip_dir, extra) in MONSTERS.items()}
@@ -420,6 +498,18 @@ def build(library: Path | None) -> dict:
             manifest['effects'][key] = effect_bank(src, key, path, unresolved)
         except KeyError as error:
             unresolved.append({'kind': 'animation', 'path': path, 'error': str(error)})
+    # 可破坏物打碎的粒子（.obj 的 [destroy particle] → .ptl → ANI）。
+    breakable_effects, breakable_mapping = breakable_particle_animations(src)
+    for key, path in breakable_effects.items():
+        try:
+            manifest['effects'][key] = effect_bank(src, key, path, unresolved)
+        except KeyError as error:
+            unresolved.append({'kind': 'particle_animation', 'path': path, 'error': str(error)})
+    (ROOT / 'game_dnf/data/breakable_particles.json').write_text(json.dumps({
+        'schema': 'dnf_breakable_particles/1',
+        'evidence': '.obj 的 [destroy particle] → .ptl 的 [object] ANI 列表',
+        'objects': breakable_mapping,
+    }, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     manifest['derived_boxes'] = {k: manifest['effects'][k]['pixel_box'] for k in DERIVED_BOXES
                                  if 'pixel_box' in manifest['effects'].get(k, {})}
     manifest['player_clips'] = {k: src.animation(p) for k, p in PLAYER_CLIPS.items()}
