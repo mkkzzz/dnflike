@@ -29,6 +29,7 @@ def main() -> int:
     quests = {q['id'] for q in json.loads((GAME / 'data/quests.json').read_text(encoding='utf-8'))['quests']}
     level_cap = int(json.loads((GAME / 'data/numbers.json').read_text(encoding='utf-8'))['progression']['level_cap'])
     fails: list[str] = []
+    warnings: list[str] = []
     playable = 0
     rooms_total = 0
     covered: dict[str, list[str]] = {}
@@ -96,8 +97,10 @@ def main() -> int:
                 fails.append('%s: 第 %d 房 %s walk_grid 列数 %d != %d' % (name, index, pid, len(grid[0]), columns * cell_cols))
             if columns and int(map_room.get('width', 0)) != columns * tile_width:
                 fails.append('%s: 第 %d 房 %s width %s != %d' % (name, index, pid, map_room.get('width'), columns * tile_width))
+            # 原版部分副本的首房没有 [start area]（由 dgn 的 start map 决定出生格），
+            # 运行时按 walk_grid 首个可走点回退，这里只记提示，不阻断契约。
             if index == 0 and not map_room.get('start_area'):
-                fails.append('%s: 首房 %s 缺少出生区域 start_area' % (name, pid))
+                warnings.append('%s: 首房 %s 无 start_area，运行时按通行格回退' % (name, pid))
             for monster in map_room.get('monsters', []):
                 if len(monster.get('anchor') or []) < 3:
                     fails.append('%s: 第 %d 房 %s 有怪物锚点不完整' % (name, index, pid))
@@ -112,8 +115,9 @@ def main() -> int:
                 elif need not in [g['direction'] for g in gates]:
                     fails.append('%s: 第 %d 房 %s 的 next=%s 无对应门（有 %s）'
                                  % (name, index, pid, need, [g['direction'] for g in gates]))
+            # BOSS 身份由路线的 boss 标记决定；怪物表里的 [boss] 标签是原版附加信息，缺了只提示。
             if room.get('boss') and not any(m.get('raw') and str(m['raw'][-1]) == '[boss]' for m in map_room.get('monsters', [])):
-                fails.append('%s: BOSS 房 %s 的怪物表里没有 [boss] 标记' % (name, pid))
+                warnings.append('%s: BOSS 房 %s 的怪物表里没有 [boss] 标记' % (name, pid))
 
     print('\n== 城镇入口')
     for town, loc in towns.items():
@@ -141,6 +145,10 @@ def main() -> int:
             print('  - ' + line)
         return 1
     print('[DUNGEONS] OK 契约全部满足：路线/门/房间数据/入口/前置一致')
+    if warnings:
+        print('[DUNGEONS] 提示 %d 条（不阻断）' % len(warnings))
+        for line in warnings:
+            print('  ~ ' + line)
     return 0
 
 

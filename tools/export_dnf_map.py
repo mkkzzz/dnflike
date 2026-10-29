@@ -252,6 +252,17 @@ class Library:
                 'duration_ms': ani['meta'].get('duration_ms'), 'frames': frames}
 
 
+def flatten(values: list) -> list:
+    """把可能嵌套一层的值列表展平（原版 [dungeon]/[greed] 两种存法都存在）。"""
+    out: list = []
+    for entry in values:
+        if isinstance(entry, list):
+            out.extend(entry)
+        else:
+            out.append(entry)
+    return out
+
+
 def span_values(spans: list[dict], tag: str) -> list | None:
     for span in spans:
         if span['tag'] == tag:
@@ -472,9 +483,11 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
         map_script = lib.script(map_path)
         if not map_script:
             continue
-        owners = span_values(map_script['spans'], '[dungeon]') or []
+        # [dungeon]/[greed] 在同一批地图里可能是平铺值，也可能多包一层列表，
+        # 统一展平再比对；否则 11 in [[11]] 恒为 False，整批地图会被判成不属于该副本。
+        owners = flatten(span_values(map_script['spans'], '[dungeon]') or [])
         if dungeon_index in owners or map_path in extra_maps:
-            codes = span_values(map_script['spans'], '[greed]')
+            codes = flatten(span_values(map_script['spans'], '[greed]') or [])
             candidates[map_path] = {'map_id': map_id, 'codes': [c[0] for c in codes[0].split()] if codes and codes[0] else []}
     rooms = {path: export_map(lib, path, ids) for path in sorted(candidates)}
     for path, room in rooms.items():

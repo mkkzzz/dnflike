@@ -952,7 +952,13 @@
       "npcs": {},
       "labels": [],
       "camera_y": 0,
-      "dungeon_region": "skytower"
+      "dungeon_region": "skytower",
+      "dungeon_entry": [
+        1400,
+        300,
+        120,
+        50
+      ]
     }
   },
   "portals": {

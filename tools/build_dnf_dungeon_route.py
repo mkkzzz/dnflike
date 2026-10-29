@@ -35,14 +35,12 @@ PENDING = [
     ('palaceofload', 'assets_local/flow_v1/skytower_v1/palaceofload', '城主宫殿', 'skytower', 16),
     ('darkentrance', 'assets_local/flow_v1/skytower_v1/darkentrance', '幽暗回廊', 'skytower', 15),
     ('hallofdoll', 'assets_local/flow_v1/skytower_v1/hallofdoll', '人偶之塔', 'skytower', 14),
-    ('amonhigh', 'assets_local/flow_v1/skytower_v1/amonhigh', '亚蒙上层', 'skytower', 13),
-    ('amonlow', 'assets_local/flow_v1/skytower_v1/amonlow', '亚蒙下层', 'skytower', 13),
-    ('oceanhigh', 'assets_local/flow_v1/skytower_v1/oceanhigh', '天空之海上层', 'skytower', 16),
-    ('oceanlow', 'assets_local/flow_v1/skytower_v1/oceanlow', '天空之海下层', 'skytower', 15),
-    ('sepahigh', 'assets_local/flow_v1/skytower_v1/sepahigh', '赛帕上层', 'skytower', 17),
-    ('sepalow', 'assets_local/flow_v1/skytower_v1/sepalow', '赛帕下层', 'skytower', 16),
     ('draconiantower_amonlow', 'assets_local/flow_v1/skytower_v1/draconiantower_amonlow', '龙人之塔·亚蒙下层', 'skytower', 14),
 ]
+# 注意：amonhigh/amonlow/oceanhigh/oceanlow/sepahigh/sepalow 这 6 个 .dgn 在
+# dungeon/dungeon.lst 里没有条目（原版未注册，玩家不可进入），其地图目录
+# （map/amon、map/ocean）实际归属 DraconianTower(11)、Hallofdoll(12)、PalaceOfLoad(15)。
+# 因此天空之城可玩副本就是下面这 8 个，不要再把那 6 个加回来。
 
 
 def cell_graph(export: dict) -> dict:
