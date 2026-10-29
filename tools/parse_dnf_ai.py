@@ -70,6 +70,39 @@ def decode(blob: bytes) -> dict:
             'ints': [i['value'] for i in instructions if i['kind'] == 'int']}
 
 
+BLOCK_BEGIN = 509
+BLOCK_END = 512
+
+
+def blocks(instructions: list[dict]) -> list[dict]:
+    """按 509=块开始 / 512=块结束 切分出动作块。
+
+    实测形态（mirkius / looseseri / keraha 一致）：
+      `509 510 511 <int>`            —— 简单参数块
+      `509 510 513 <float>x4`        —— 成对浮点块（形如 [a,a][b,b]，疑为距离/速度区间）
+      `509 531 533 <int>`            —— 状态/计数块
+    块内指令原样保留，语义未定处不臆造。
+    """
+    result = []
+    current = None
+    for item in instructions:
+        if item['kind'] == 'index' and int(item['value']) == BLOCK_BEGIN:
+            current = {'items': []}
+            continue
+        if item['kind'] == 'index' and int(item['value']) == BLOCK_END:
+            if current is not None:
+                result.append(current)
+            current = None
+            continue
+        if current is not None:
+            current['items'].append(item)
+    for block in result:
+        block['indexes'] = [int(i['value']) for i in block['items'] if i['kind'] == 'index']
+        block['ints'] = [int(i['value']) for i in block['items'] if i['kind'] == 'int']
+        block['floats'] = [float(i['value']) for i in block['items'] if i['kind'] == 'float']
+    return result
+
+
 def ai_files(lib, keyword: str = '') -> list[str]:
     if keyword:
         rows = [r[0] for r in lib.db.execute(
@@ -106,6 +139,8 @@ def main() -> int:
             blob = raw[0] if raw else b''
             decoded = decode(blob)
             decoded['bytes'] = len(blob)
+            if decoded.get('ok'):
+                decoded['blocks'] = blocks(decoded['instructions'])
             programs[path] = decoded
             if args.mob:
                 print('\n== %s  %d bytes  ops=%s' % (path, len(blob), decoded.get('ops')))
