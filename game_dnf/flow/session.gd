@@ -125,7 +125,16 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 		return Inventory.command(profile,"items.equip" if kind=="numbers.gear_equip" else "items.unequip",payload)
 	if kind.begins_with("numbers."):
 		if state != "town" and kind in ["numbers.gear_equip","numbers.gear_unequip","numbers.reinforce","numbers.enchant"]:return reject("请回城后调整装备")
+		var skill_id: String=String(payload.get("id",""))
+		var skill_before:=int(profile["skills"].get(skill_id,0))
+		var track_learning: bool=kind=="numbers.skill" and int(payload.get("delta",0))>0 and not payload.get("force",false)
+		if track_learning and int(profile["quest_state"].get("next_skill_event",1))>=1000000000:return reject("技能学习记录已满")
 		var response: Dictionary = Numbers.command(profile,kind,payload)
+		if response.get("ok",false) and track_learning and int(profile["skills"].get(skill_id,0))>skill_before:
+			var serial:=int(profile["quest_state"].get("next_skill_event",1))
+			profile["quest_state"]["next_skill_event"]=serial+1
+			var learned:=quests.ingest(profile,{"type":"skill.learned","event_id":"skill:"+str(serial),"skill":skill_id,"levels":int(profile["skills"][skill_id])-skill_before})
+			response["quest_changed"]=learned.get("ok",false) and not learned["changed"].is_empty()
 		Layout.normalize(profile,CATALOG.ITEMS)
 		return response
 	match kind:

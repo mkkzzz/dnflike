@@ -1,6 +1,6 @@
 extends RefCounted
 ## Versioned definitions, never player progress. Reject unsupported content at load.
-const TYPES := ["meet_npc", "kill_monster", "clear_dungeon", "collect_item"]
+const TYPES := ["meet_npc", "kill_monster", "clear_dungeon", "collect_item", "learn_skill"]
 var config: Dictionary = {}
 var definitions: Dictionary = {}
 var errors: Array[String] = []
@@ -41,6 +41,13 @@ func _init(data: Dictionary = {}) -> void:
 
 func validate_definition(q: Dictionary) -> void:
 	var id: String = q["id"]
+	var eligibility=q.get("eligibility",{})
+	if not eligibility is Dictionary:errors.append("任务职业资格无效："+id)
+	else:
+		for field: String in eligibility:
+			if field not in ["jobs","grow_types"] or not eligibility[field] is Array or eligibility[field].is_empty():errors.append("任务职业资格无效："+id);continue
+			for value in eligibility[field]:
+				if not whole(value,-1,30):errors.append("任务职业资格无效："+id)
 	for key in ["name", "description", "giver", "receiver", "category"]:
 		if not q.get(key) is String or q[key].is_empty():errors.append("任务字段无效：" + id + "/" + key)
 	for key in ["enabled", "abandonable"]:
@@ -60,6 +67,10 @@ func validate_definition(q: Dictionary) -> void:
 		if o.get("type") not in TYPES or not whole(o.get("amount"), 1, 1000000) or not o.get("target") is String or o.get("target", "").is_empty():errors.append("任务目标不支持：" + id)
 		if o.has("dungeon") and not config["dungeons"].has(o["dungeon"]):errors.append("任务范围地下城不存在：" + id)
 		if o.has("difficulty") and (not o["difficulty"] is Array or o["difficulty"].is_empty()):errors.append("任务难度范围无效：" + id)
+		elif o.has("difficulty"):
+			for mode in o["difficulty"]:
+				if mode not in ["normal","adventure","king"]:errors.append("任务难度不支持："+id)
+		if o.get("type")=="learn_skill" and o.get("target")!="any":errors.append("技能学习目标不支持："+id)
 		if o.get("type") == "meet_npc" and not config.get("npcs", {}).has(o["target"]):errors.append("目标人物不存在：" + id)
 		if o.get("type") == "clear_dungeon" and not config.get("dungeons", {}).has(o["target"]):errors.append("目标地下城不存在：" + id)
 	var reward = q.get("reward", {})

@@ -3,9 +3,9 @@
  "evidence": "原版 .qst 结构化字段 E-PARSE；名称/描述为本地化引用（string 键），正文未解出",
  "summary": {
   "total": 3716,
-  "implemented": 15,
+  "implemented": 18,
   "failed": 0,
-  "pending_name_refs": 1393,
+  "pending_name_refs": 1391,
   "groups": {
    "n_quest/urgent": 1331,
    "n_quest/common": 291,
@@ -9753,9 +9753,9 @@
     100
    ],
    "name_ref": "string:50346",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "tutorial.learn_skill",
+   "local_name": "学习技能 2"
   },
   {
    "path": "n_quest/common/handonmyre/epic_10_handonmyre_kagon_love_2.qst",
@@ -9955,9 +9955,9 @@
     1
    ],
    "name_ref": "string:322887",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "tutorial.skill_intro",
+   "local_name": "学习技能 1"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_hanadonmyre_break_at_pungjin.qst",
@@ -27361,9 +27361,9 @@
     600
    ],
    "name_ref": "string:19101",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "gran.stronger_enemy",
+   "local_name": "更强的敌人"
   },
   {
    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_at_mg.qst",

@@ -18,7 +18,8 @@ from audit_dnf_reusable_data import TextResolver
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / 'game_dnf'
-NEW_QUESTS = {108: 'gran.kaino_legend', 4302: 'gran.goblin_mutation', 109: 'gran.meet_gsd', 110: 'gran.poison_scent'}
+NEW_QUESTS = {108: 'gran.kaino_legend', 4302: 'gran.goblin_mutation', 109: 'gran.meet_gsd', 110: 'gran.poison_scent',
+              503:'gran.stronger_enemy',1012:'tutorial.skill_intro',211:'tutorial.learn_skill'}
 SLOTS = {'[coat]':'coat', '[pants]':'pants', '[shoulder]':'shoulder', '[waist]':'belt',
          '[shoes]':'shoes', '[amulet]':'necklace', '[wrist]':'bracelet', '[ring]':'ring', '[weapon]':'weapon'}
 STATS = {'[HP MAX]':'hp_max', '[MP MAX]':'mp_max', '[physical attack]':'strength',
@@ -150,6 +151,16 @@ def main():
                 target = {'id':'meet','type':'meet_npc','target':'gsd','amount':1}
             if number == 110:
                 target = {'id':'bag','type':'collect_item','target':'original_4169','amount':1}
+            if number == 503:
+                if fields.get('[type]')!=['[condition under clear]'] or fields.get('[int data]')!=[6,1]:
+                    raise ValueError('Unverified challenge objective')
+                target = {'id':'clear','type':'clear_dungeon','target':'sunderland_poison','difficulty':['adventure'],'amount':1}
+            if number == 1012:
+                target = {'id':'meet','type':'meet_npc','target':'seria','amount':1}
+            if number == 211:
+                if fields.get('[type]')!=['[custom quest]'] or fields.get('[sub type]')!=[0] or fields.get('[int data]')!=[1,0,1]:
+                    raise ValueError('Unverified custom learning objective')
+                target = {'id':'learn','type':'learn_skill','target':'any','amount':1}
             q = {'id':ids_to_local[number], 'source':{'id':number,'path':path,'sha256':source['sha256']},
                  'name':'', 'category':'main','chapter':'格兰之森','min_level':fields['[level]'][0],
                  'requires':[ids_to_local[k] for k in fields.get('[pre required quest]',[])],
@@ -159,6 +170,16 @@ def main():
             qdoc['quests'].append(q)
             existing[q['id']] = q
         q = existing[ids_to_local[number]]
+        source_jobs=fields.get('[job]',['[all]'])
+        if any(job not in ['[all]','[swordman]'] for job in source_jobs) or fields.get('[target character]'):
+            raise ValueError('Unsupported quest character eligibility: '+path)
+        q['eligibility']={'jobs':[-1] if '[all]' in source_jobs else [0], 'grow_types':fields.get('[grow type]',[-1])}
+        q['source']['raw_type']=fields.get('[type]',[])
+        q['source']['raw_int_data']=fields.get('[int data]',[])
+        q['source']['raw_job']=source_jobs
+        if number in [1012,211]:q['chapter']='技能教学'
+        if number==211:q['source']['objective_adaptation']='Both source bodies require learning a skill; count one successful normal skill-level purchase, not GM grants, refunds or force bypass'
+        if number==503:q['source']['difficulty_adaptation']='Source index 1 maps to adventure; exact requested mode only, no unverified higher-mode threshold'
         if number == 110:
             q['consume'] = {'original_4169':1}
             raw = fields['[monster reward item]']
@@ -284,7 +305,7 @@ def main():
             services['items'][id] = {'sell':int(get('[value]',max(0,item['price']//4)))}
         runtime['items'][id] = item
         runtime['source_text'][path] = texts[path]
-    qdoc['revision'] = 5
+    qdoc['revision'] = 6
     qdoc['dungeons']['sunderland_poison'] = '猛毒雷鸣废墟'
     qdoc['monsters']['monster/lugaru/penril.mob'] = '毒猫王'
     qdoc['dungeons']['sunderland'] = '雷鸣废墟'

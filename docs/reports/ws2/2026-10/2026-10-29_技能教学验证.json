@@ -1,0 +1,137 @@
+{
+  "schema": "dnf_teaching_evidence/1",
+  "engine": "Godot 4.7.2",
+  "basis": "56c648e9 plus task/item worktree",
+  "checks": [
+    {
+      "suite": "TEACHING_RULES",
+      "checks": 30,
+      "failures": 0
+    },
+    {
+      "suite": "POISON_RULES",
+      "checks": 26,
+      "failures": 0
+    },
+    {
+      "suite": "ORIGINAL_DATA",
+      "checks": 31,
+      "failures": 0
+    },
+    {
+      "suite": "RECOVERY_TEST",
+      "checks": 50,
+      "failures": 0
+    },
+    {
+      "suite": "UPGRADE_TEST",
+      "checks": 46,
+      "failures": 0
+    },
+    {
+      "suite": "SERVICE_TEST",
+      "checks": 33,
+      "failures": 0
+    },
+    {
+      "suite": "ITEM_TEST",
+      "checks": 44,
+      "failures": 0
+    },
+    {
+      "suite": "NUMBERS_TEST",
+      "checks": 63,
+      "failures": 0
+    },
+    {
+      "suite": "QUEST_TEST",
+      "checks": 45,
+      "failures": 0
+    },
+    {
+      "suite": "TOWN_UNIT",
+      "checks": 102,
+      "failures": 0
+    },
+    {
+      "suite": "GRAN_UNIT",
+      "checks": 19,
+      "failures": 0
+    },
+    {
+      "suite": "TEACHING_QUICK",
+      "checks": 37,
+      "failures": 0
+    }
+  ],
+  "compiler_test_methods": 6,
+  "deterministic_rebuild_tables": 7,
+  "new_original_frames": 4,
+  "unique_screenshots": 4,
+  "raw_log_sha256": "01dfa9c8711f2b804b65ce773cc8e36f274d9a2633fd99256b4275b4cf40984a",
+  "log_projection": "verdict/error lines and diagnostic occurrence counts; full raw bytes in gzip",
+  "limits": [
+    "Declared level-ten opening-complete fixture",
+    "GM win skips normal/adventure dungeon combat",
+    "Only the verified 211 custom-learning encoding is compiled",
+    "Skill behavior/cost formulas and monster AI are untouched; no original-fidelity or visual approval implied"
+  ],
+  "files": [
+    {
+      "path": "docs/reports/ws2/2026-10/teaching_original_v3/quick.log",
+      "sha256": "4c4c56a1e3e2d3d16686af6de1dea102b685aac0514ac5fb860cd3446db4d44c"
+    },
+    {
+      "path": "docs/reports/ws2/2026-10/teaching_original_v3/quick.log.gz",
+      "sha256": "e1097b0f2957b27cb806456c136d6198fa59fbcabd2429ccf3ddec98350ffc24"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_teaching_original_v3/teaching_01_learning_task.png",
+      "sha256": "fa7bc5e68208a1cbecae7512dd16ece8874a89904db9b65d2d8f9a96d653ea2a"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_teaching_original_v3/teaching_02_skill_panel.png",
+      "sha256": "ce4fb200087d55387e84b186ae9baf0e69e72f697d93c9b510fc22d089440572"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_teaching_original_v3/teaching_03_food_items.png",
+      "sha256": "7d590d4e5cb4347f373ba8b68c07906d0234078b203e3c205b4e17f3496dda8a"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_teaching_original_v3/teaching_04_challenge_reward.png",
+      "sha256": "4325e32b99123c8c90363355d55f12253bd489ab4b5e73041bce7952f676755d"
+    },
+    {
+      "path": "game_dnf/data/runtime_items.json",
+      "sha256": "98ea32443ec82c7f1ba33c28a77c5cdf1de5029bd7663e907a9ecfbe0c286bc1"
+    },
+    {
+      "path": "game_dnf/data/quests.json",
+      "sha256": "804bbd611f5e04644546a63f91443e849c81ec147d13b54904965f28ca9e0453"
+    },
+    {
+      "path": "game_dnf/data/quest_catalog.json",
+      "sha256": "864c7962a4b9a2e9a649179fc14f30de19541bcfd7a6ee87ed5c6fce57beeb4c"
+    },
+    {
+      "path": "game_dnf/data/numbers.json",
+      "sha256": "bd4ada00f883c51d06da768f1dac550f98fae95cef6d8ed6be69c5902961bb23"
+    },
+    {
+      "path": "game_dnf/data/recovery.json",
+      "sha256": "f4c57d20aca867dd89b5f57a48bc0168f9bdd6610b06d88beea83097a6884290"
+    },
+    {
+      "path": "game_dnf/data/services.json",
+      "sha256": "9e94480fb3afcce0c0a1fffedbfdee999c8457a9fb9d58a8005925f7c0fa616a"
+    },
+    {
+      "path": "game_dnf/data/dungeons.json",
+      "sha256": "140a301b9384705da624b9ed3dd8367a0c19de271bca093b42240fc9d943cdb4"
+    },
+    {
+      "path": "game_dnf/assets_local/items_original_v3/manifest.json",
+      "sha256": "bd0db534e3a91bab1a2c1a72c7048e4e692afcd8042053e0bb86335d34a18c63"
+    }
+  ]
+}

@@ -2,6 +2,168 @@
   "schema": "dnf_runtime_items/1",
   "revision": 1,
   "items": {
+    "original_1062": {
+      "name": "越桔",
+      "kind": "consumable",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 240,
+      "multiplier": 1.0,
+      "description": "恢复 HP 140 / MP 0，持续 1.0 秒；冷却 10.0 秒",
+      "stack_limit": 1000,
+      "source": {
+        "id": 1062,
+        "list": "stackable/stackable.lst",
+        "path": "stackable/food_blueberry.stk",
+        "sha256": "2ef3dabafb76540ab6b7c840803f54e170a21663cae614bac15077a499a16606"
+      },
+      "source_fields": {
+        "[grade]": [
+          6
+        ],
+        "[attach type]": [
+          "[free]"
+        ],
+        "[rarity]": [
+          1
+        ],
+        "[weight]": [
+          20
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[minimum level]": [
+          1
+        ],
+        "[stack limit]": [
+          1000
+        ],
+        "[icon]": [
+          "Item/stackable/consumption.img",
+          4
+        ],
+        "[field image]": [
+          "Item/FieldImage.img",
+          21
+        ],
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[item group name]": [
+          "plant stuff"
+        ],
+        "[price]": [
+          240
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          0
+        ],
+        "[move wav]": [
+          "FOOD_TOUCH"
+        ],
+        "[hp recovery]": [
+          "+",
+          140,
+          1000,
+          "myself"
+        ]
+      },
+      "icon": [
+        "Item/stackable/consumption.img",
+        4
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        21
+      ]
+    },
+    "original_1065": {
+      "name": "魔力之花",
+      "kind": "consumable",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 280,
+      "multiplier": 1.0,
+      "description": "恢复 HP 0 / MP 115，持续 1.0 秒；冷却 10.0 秒",
+      "stack_limit": 1000,
+      "source": {
+        "id": 1065,
+        "list": "stackable/stackable.lst",
+        "path": "stackable/flower_magical.stk",
+        "sha256": "8b99f992369212c70a0eab12e37831f928c10e5a64a453ebfc3e4d212dcc8f8d"
+      },
+      "source_fields": {
+        "[grade]": [
+          7
+        ],
+        "[attach type]": [
+          "[free]"
+        ],
+        "[rarity]": [
+          1
+        ],
+        "[weight]": [
+          20
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[minimum level]": [
+          1
+        ],
+        "[stack limit]": [
+          1000
+        ],
+        "[icon]": [
+          "Item/stackable/consumption.img",
+          7
+        ],
+        "[field image]": [
+          "Item/FieldImage.img",
+          32
+        ],
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[item group name]": [
+          "plant stuff"
+        ],
+        "[price]": [
+          280
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          1
+        ],
+        "[move wav]": [
+          "FOOD_TOUCH"
+        ],
+        "[mp recovery]": [
+          "+",
+          115,
+          1000,
+          "myself"
+        ]
+      },
+      "icon": [
+        "Item/stackable/consumption.img",
+        7
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        32
+      ]
+    },
     "original_1106": {
       "name": "诺顿的新手HP药剂",
       "kind": "consumable",
@@ -1172,6 +1334,42 @@
     }
   },
   "source_text": {
+    "stackable/food_blueberry.stk": {
+      "fields": {
+        "[name]": "越桔"
+      },
+      "references": {
+        "[name]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "name_1062",
+          "line": 5534,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "8f6a682fe9e54cc26cf03e1576b63d96f3db3a5430bbe518f9dcf6a5db481a64",
+      "objective_semantics_differ": false
+    },
+    "stackable/flower_magical.stk": {
+      "fields": {
+        "[name]": "魔力之花"
+      },
+      "references": {
+        "[name]": {
+          "origin": "1031",
+          "table": "stackable/stackable.kor.str",
+          "table_id": 13,
+          "key": "name_1065",
+          "line": 5543,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "d6472a534866500e481b834b5bb74f811f6de58c92f99175906ac567007e08e6",
+      "objective_semantics_differ": false
+    },
     "stackable/ptn_hplowest.stk": {
       "fields": {
         "[explain]": "可以向诺顿、 赛丽亚、 林纳斯或罗莉安购买。",
@@ -1927,6 +2125,42 @@
       "text_script_sha256": "9d634f2b0774a4f6c4f5c96fea256a6b010ac3bbbc274922e305e41b614edb2c",
       "objective_semantics_differ": true
     },
+    "n_quest/common/handonmyre/epic_10_handonmyre_kagon_love_1.qst": {
+      "fields": {
+        "[condition message]": "打开技能栏学习技能。 (点击<学习>按钮才能学习技能)",
+        "[depend message]": "冒险家， 请打开技能栏， 试着学习一下技能吧~",
+        "[name]": "学习技能 2",
+        "[solve message]": "干得漂亮~\n当你到达15级完成转职任务时， 技能点数将会重置， 所以现在就请放心地学习技能吧！ 不过因为等级的关系， 很多技能暂时还没有办法学习， 但我相信你很快就能学到， 加油哦~"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 455551,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 455550,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 455549,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 455552,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "32a1a71820c24d09ed451550f2d95458b70ab76db3827b34ffd4bd03a37a1481",
+      "objective_semantics_differ": false
+    },
     "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_2.qst": {
       "fields": {
         "[condition message]": "前往赫顿玛尔拜访辛达。",
@@ -1997,6 +2231,78 @@
         }
       },
       "text_script_sha256": "a2cdee8e683110ac3ee59a54f55317b3a0dbd0e56a2030944f9d584acc7c3652",
+      "objective_semantics_differ": false
+    },
+    "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3.qst": {
+      "fields": {
+        "[condition message]": "通关格兰之森的『猛毒雷鸣废墟』， 要求地下城难度为冒险级。 (在地下城选择界面中， 点击地下城图标下方的箭头即可选择地下城的难度。)",
+        "[depend message]": "想挑战一下更强大的怪物？ 那你挑战一下冒险级的猛毒雷鸣废墟吧。\n比起普通级地下城的怪物， 冒险级地下城中的怪物更难对付， 你要小心。",
+        "[name]": "更强的敌人",
+        "[solve message]": "看上去受了不小的伤啊， 希望这次的经历能成为你积累经验的机会。"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 457747,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 457746,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 457745,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 457748,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "19dd33bea4b190dcab4a5deffa887202fb86a161b2fce7d36a3341094da1d64c",
+      "objective_semantics_differ": false
+    },
+    "n_quest/common/handonmyre/epic_10_handonmyre_seria_kagon.qst": {
+      "fields": {
+        "[condition message]": "找赛丽亚谈谈。",
+        "[depend message]": "冒险家， 你将来会遇到更强大的敌人， 所以你需要变得越来越强。\n而最有效的方法就是学习技能， 技能就是一种特殊的攻击， 它可以给敌人造成比普通攻击更大的伤害。",
+        "[name]": "学习技能 1",
+        "[solve message]": "我就简单教你一下如何学习技能吧……嗯……要从哪里开始讲呢？"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "1031",
+          "string_index": 454649,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "1031",
+          "string_index": 455578,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 455577,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "1031",
+          "string_index": 455579,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "aab812b6d9e9a8e7908ec9cff35ae8d130d0d55078d7063c0f7a0920b399aaca",
       "objective_semantics_differ": false
     },
     "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd.qst": {

@@ -27,6 +27,7 @@ func new_entry(q: Dictionary) -> Dictionary:
 
 func canonicalize(profile: Dictionary) -> void:
 	profile["quest_state"]["revision"]=1
+	if profile["quest_state"].has("next_skill_event"):profile["quest_state"]["next_skill_event"]=int(profile["quest_state"]["next_skill_event"])
 	for entry: Dictionary in profile["quest_state"]["entries"].values():
 		for key in entry["progress"]:entry["progress"][key]=int(entry["progress"][key])
 
@@ -34,6 +35,7 @@ func valid(profile: Dictionary) -> bool:
 	if not catalog.errors.is_empty():return false
 	var state = profile.get("quest_state")
 	if not state is Dictionary or state.get("revision") != 1:return false
+	if state.has("next_skill_event") and not Catalog.whole(state["next_skill_event"],1,1000000000):return false
 	for field in ["entries", "transactions"]:
 		if not state.get(field) is Dictionary:return false
 	if not state.get("tracked") is Array or state["tracked"].size() > int(catalog.config["limits"]["tracked"]):return false
@@ -67,7 +69,7 @@ func status(profile: Dictionary, id: String) -> String:
 	var q: Dictionary = catalog.definitions[id]
 	var entry: Dictionary = profile.get("quest_state", {}).get("entries", {}).get(id, {})
 	if entry.get("state") == "completed":return "completed"
-	if not q["enabled"]:return "locked"
+	if not q["enabled"] or not eligible(profile,q):return "locked"
 	if not entry.is_empty():return "ready" if objectives_done(profile, q, entry) else "active"
 	if int(profile.get("level", 1)) < int(q["min_level"]):return "locked"
 	for required: String in q["requires"]:
@@ -155,16 +157,18 @@ func command(profile: Dictionary, kind: String, payload: Dictionary, context: Di
 
 func ingest(profile: Dictionary, event: Dictionary) -> Dictionary:
 	if not valid(profile):return fail("任务存档无效")
-	if event.get("type") not in ["npc.met", "combat.monster_defeated", "dungeon.cleared"] or not event.get("event_id") is String or event["event_id"].is_empty():return fail("任务事件无效")
+	if event.get("type") not in ["npc.met", "combat.monster_defeated", "dungeon.cleared", "skill.learned"] or not event.get("event_id") is String or event["event_id"].is_empty():return fail("任务事件无效")
+	if event.get("type")=="skill.learned" and (not event.get("skill") is String or event["skill"].is_empty() or not Catalog.whole(event.get("levels"),1,100)):return fail("技能学习事件无效")
 	var changed: Array[String] = []
 	for id: String in profile["quest_state"]["entries"]:
 		if not catalog.definitions.has(id):continue
 		var q: Dictionary = catalog.definitions[id]
 		var entry: Dictionary = profile["quest_state"]["entries"][id]
-		if entry["state"] != "active" or not q["enabled"]:continue
+		if entry["state"] != "active" or not q["enabled"] or not eligible(profile,q):continue
 		for o: Dictionary in q["objectives"]:
 			if o["type"] == "collect_item" or objective_count(profile, o, entry) >= int(o["amount"]):continue
 			var matches: bool = (o["type"] == "meet_npc" and event["type"] == "npc.met" and event.get("npc") == o["target"]) or (o["type"] == "kill_monster" and event["type"] == "combat.monster_defeated" and event.get("monster_id") == o["target"]) or (o["type"] == "clear_dungeon" and event["type"] == "dungeon.cleared" and event.get("dungeon") == o["target"] and event.get("victory", false))
+			matches = matches or (o["type"]=="learn_skill" and event["type"]=="skill.learned" and o["target"]=="any")
 			if not matches or (o.has("dungeon") and event.get("dungeon") != o["dungeon"]) or (o.has("difficulty") and event.get("difficulty") not in o["difficulty"]):continue
 			var seen: Dictionary = entry["seen"].get(o["id"], {})
 			if seen.has(event["event_id"]):continue
@@ -176,6 +180,13 @@ func ingest(profile: Dictionary, event: Dictionary) -> Dictionary:
 
 func active_count(profile: Dictionary) -> int:
 	return list(profile, ["active", "ready"]).size()
+
+func eligible(profile: Dictionary, quest: Dictionary) -> bool:
+	var rules: Dictionary=quest.get("eligibility",{})
+	var values: Dictionary={"jobs":int(profile.get("job_index",0)),"grow_types":int({"swordman":0,"weaponmaster":1,"berserker":3}.get(profile.get("growtype","swordman"),-999))}
+	for field: String in rules:
+		if not rules[field].any(func(value):return int(value)==-1 or int(value)==int(values[field])):return false
+	return true
 
 func npc_name(id: String) -> String:
 	return String(catalog.config["npcs"].get(id, id))

@@ -152,7 +152,7 @@ func _list(parent: Control) -> void:
 		var reason := String(state["reason"])
 		if reason != "":
 			skin.label(parent, reason, Vector2(318, y + 4), 10, Color("c86a5a"))
-		skin.label(parent, "SP " + str(int(skill.get("purchase_cost") or 0)), Vector2(388, y + 4), 10, Color("a59c88"))
+		skin.label(parent, "SP " + str(_number(skill.get("purchase_cost"))), Vector2(388, y + 4), 10, Color("a59c88"))
 		var hit := Button.new()
 		hit.flat = true
 		hit.position = Vector2(56, y)
@@ -202,13 +202,13 @@ func _detail(parent: Control) -> void:
 	else:
 		var rank := int(game.session.profile["skills"].get(local, 0))
 		lines.append("等级  %d / %d" % [rank, int(skill.get("max_level", 0))])
-		lines.append("每级 SP  %s" % str(int(skill.get("purchase_cost") or 0)))
+		lines.append("每级 SP  %s" % str(_number(skill.get("purchase_cost"))))
 		var values: Dictionary = game.skill_catalog.get_skill(local, maxi(1, rank))
 		lines.append("MP %d · CD %.1fs" % [int(values.get("mp", 0)), float(values.get("cooldown", 0))])
 		var percentages: Array = values.get("damage_percent", [])
 		if not percentages.is_empty():
 			lines.append("伤害  %d%%" % int(percentages[0]))
-	lines.append("角色等级  %d（每级 +%d）" % [int(skill.get("required_level", 0)), int(skill.get("required_level_range") or 0)])
+	lines.append("角色等级  %d（每级 +%d）" % [int(skill.get("required_level", 0)), _number(skill.get("required_level_range"))])
 	var jobs := _jobs(skill)
 	if jobs != "":
 		lines.append("职业  " + jobs)
@@ -251,7 +251,7 @@ func _type_name(raw: String) -> String:
 
 func _jobs(skill: Dictionary) -> String:
 	var index: Dictionary = Numbers.config().get("growtype_index", {})
-	var caps: Array = skill.get("growtype_max_level") or []
+	var caps: Array = _array(skill.get("growtype_max_level"))
 	var out: Array[String] = []
 	for job: String in index:
 		var slot := int(index[job])
@@ -263,7 +263,7 @@ func _jobs(skill: Dictionary) -> String:
 
 func _requires(skill: Dictionary) -> String:
 	var out: Array[String] = []
-	for entry: Dictionary in skill.get("pre_required_skill") or []:
+	for entry: Dictionary in _array(skill.get("pre_required_skill")):
 		var parent: Dictionary = by_id.get(int(entry["id"]), {})
 		out.append("%s Lv%d" % [String(parent.get("name", "编号 %d" % int(entry["id"]))), int(entry["level"])])
 	return "、".join(out)
@@ -280,21 +280,21 @@ func _state(skill: Dictionary) -> Dictionary:
 	var rank := int(profile["skills"].get(local, 0))
 	if rank >= int(skill.get("max_level", 0)):
 		return {"ok": false, "reason": "已满级"}
-	var caps: Array = skill.get("growtype_max_level") or []
+	var caps: Array = _array(skill.get("growtype_max_level"))
 	var slot := int(cfg.get("growtype_index", {}).get(String(profile["growtype"]), 0))
 	if not caps.is_empty() and (slot >= caps.size() or rank >= int(caps[slot])):
 		return {"ok": false, "reason": "职业不符"}
-	var need := int(skill.get("required_level", 1)) + rank * int(skill.get("required_level_range") or 0)
+	var need := int(skill.get("required_level", 1)) + rank * _number(skill.get("required_level_range"))
 	if int(profile["level"]) < need:
 		return {"ok": false, "reason": "需 Lv%d" % need}
-	for entry: Dictionary in skill.get("pre_required_skill") or []:
+	for entry: Dictionary in _array(skill.get("pre_required_skill")):
 		var parent: Dictionary = by_id.get(int(entry["id"]), {})
 		var parent_local := String(parent.get("local_id", ""))
 		if parent_local == "":
 			return {"ok": false, "reason": "前置未实装"}
 		if int(profile["skills"].get(parent_local, 0)) < int(entry["level"]):
 			return {"ok": false, "reason": "前置 %s Lv%d" % [String(parent.get("name", "")), int(entry["level"])]}
-	if Numbers.Skills.available(profile, cfg) < int(skill.get("purchase_cost") or 0):
+	if Numbers.Skills.available(profile, cfg) < _number(skill.get("purchase_cost")):
 		return {"ok": false, "reason": "SP 不足"}
 	return {"ok": true, "reason": ""}
 
@@ -312,3 +312,6 @@ func job_change(job: String) -> void:
 	if game.act("numbers.growtype", {"growtype": job}):
 		game.notice("已转职：" + JOB_NAMES.get(job, job))
 		game.show_overlay("numbers")
+
+func _array(value) -> Array:return value if value is Array else []
+func _number(value) -> int:return int(value) if value is int or value is float else 0

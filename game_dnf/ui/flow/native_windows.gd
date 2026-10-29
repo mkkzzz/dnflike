@@ -117,7 +117,7 @@ func field_texture(id: String) -> Texture2D:
 
 func original_texture(id: String, kind: String) -> Texture2D:
 	if original_icons.is_empty():
-		for pack: String in ["items_original_v1","items_original_v2"]:
+		for pack: String in ["items_original_v1","items_original_v2","items_original_v3"]:
 			var base: String="res://assets_local/"+pack+"/"
 			var data: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(base+"manifest.json"))
 			for group: String in ["items","field_images"]:

@@ -1,0 +1,908 @@
+[DNF_NUMBERS] OK errors=0
+[DNF_SERVICES] OK errors=0
+[DNF_UPGRADES] OK errors=0
+[DNF_RECOVERY] OK errors=0
+[VERIFY] ������Լ       ok
+[VERIFY] BGM ����     ok
+[VERIFY] ����һ��       ok
+[VERIFY] �������       ok
+[VERIFY] ȫ��ͨ��
+[TEACHING_RULES] PASS all source eligibility and teaching objectives validate
+[TEACHING_RULES] PASS level-five source teaching accepts from Seria
+[TEACHING_RULES] PASS source NPC conversation hands in normally
+[TEACHING_RULES] PASS intro delivers original bilberry and magic flower
+[TEACHING_RULES] PASS 1012 hand-in unlocks original 211
+[TEACHING_RULES] PASS normal skill purchase before acceptance still works
+[TEACHING_RULES] PASS old learning is not retroactively counted by the new task
+[TEACHING_RULES] PASS GM grant cannot satisfy a learning task or spend its receipt
+[TEACHING_RULES] PASS force bypass learning is excluded
+[TEACHING_RULES] PASS refunding a rank cannot complete learning
+[TEACHING_RULES] PASS failed purchase leaves skills, SP and quest receipt unchanged
+[TEACHING_RULES] PASS successful normal purchase emits the required task event
+[TEACHING_RULES] PASS a repeated learning event cannot advance the task twice
+[TEACHING_RULES] PASS learning receipt and task progress survive JSON save restoration
+[TEACHING_RULES] PASS original second teaching reward hands in at Seria
+[TEACHING_RULES] PASS older quest saves without the additive event counter still load
+[TEACHING_RULES] PASS malformed learning counter is rejected
+[TEACHING_RULES] PASS swordman-only source challenge remains locked for another job
+[TEACHING_RULES] PASS current swordman can accept after poison hand-in
+[TEACHING_RULES] PASS challenge requires the exact requested mode: normal excluded
+[TEACHING_RULES] PASS challenge requires the exact requested mode: king excluded
+[TEACHING_RULES] PASS same difficulty in another dungeon cannot complete 503
+[TEACHING_RULES] PASS adventure clear satisfies the exact original target
+[TEACHING_RULES] PASS changing to an ineligible job cannot claim an active class task
+[TEACHING_RULES] PASS eligible source challenge reward is delivered once
+[TEACHING_RULES] PASS food effect check uses an ordinary adventure session
+[TEACHING_RULES] PASS bilberry uses its original timed HP tuple
+[TEACHING_RULES] PASS magic flower uses its original timed MP tuple
+[TEACHING_RULES] PASS both original food stacks retain source caps
+[TEACHING_RULES] PASS malformed job eligibility fails definition validation
+[TEACHING_RULES] COMPLETE checks=30 failures=0
+[POISON_RULES] PASS all definitions including drop rules validate
+[POISON_RULES] PASS baseline seeking objective has matching Simplified Chinese body
+[POISON_RULES] PASS source quest material uses quest bag and cannot be bought
+[POISON_RULES] PASS free-price hidden purchase cannot mint quest items
+[POISON_RULES] PASS killing source boss without accepting task cannot generate its quest item
+[POISON_RULES] PASS accepted exact source boss and dungeon produce one eligible rule
+[POISON_RULES] PASS stale run cannot generate quest loot
+[POISON_RULES] PASS Kaino cannot pay the poison boss item
+[POISON_RULES] PASS correct boss ID in a wrong dungeon does not qualify
+[POISON_RULES] PASS unsupported difficulty cannot receive a quest item
+[POISON_RULES] PASS identical run and death produce identical persisted quest drops
+[POISON_RULES] PASS death creates a ground record without auto-granting or completing collection
+[POISON_RULES] PASS repeated death cannot reroll loot or duplicate XP
+[POISON_RULES] PASS pending ground item reserves the source quest cap
+[POISON_RULES] PASS out-of-range pickup is harmless
+[POISON_RULES] PASS actual pickup moves ground ownership into the quest bag
+[POISON_RULES] PASS collection becomes ready only after pickup
+[POISON_RULES] PASS owned quest item also reserves its cap
+[POISON_RULES] PASS locked quest item cannot be handed in and does not allow duplicate drops
+[POISON_RULES] PASS quest item cannot be sold away through services
+[POISON_RULES] PASS result reload preserves quest material and claimed receipt together
+[POISON_RULES] PASS stored item is excluded from hand-in availability
+[POISON_RULES] PASS correct NPC hand-in awards source necklace
+[POISON_RULES] PASS hand-in consumes actual quest stack and grants one equipment instance
+[POISON_RULES] PASS completed quest cannot consume or pay twice
+[POISON_RULES] PASS malformed drop probability fails definition validation
+[POISON_RULES] COMPLETE checks=26 failures=0
+[ORIGINAL_DATA] PASS original Simplified Chinese definitions load beside six compatible legacy IDs
+[ORIGINAL_DATA] PASS original source stack accepts more than the legacy limit
+[ORIGINAL_DATA] PASS per-item source stack cap splits exactly 1000 plus one
+[ORIGINAL_DATA] PASS source-sized stacks validate without raising the old potion cap
+[ORIGINAL_DATA] PASS legacy stack maximum remains 99
+[ORIGINAL_DATA] PASS source items and stack limits survive save restoration
+[ORIGINAL_DATA] PASS split and sort preserve original-item ownership
+[ORIGINAL_DATA] PASS original HP tuple compiles into a timed public request
+[ORIGINAL_DATA] PASS original MP medicine works independently of the HP group
+[ORIGINAL_DATA] PASS original HP cooldown refuses duplicate resource consumption
+[ORIGINAL_DATA] PASS different HP medicine shares its source cooldown group
+[ORIGINAL_DATA] PASS new HP and MP requests both apply to the combat receiver
+[ORIGINAL_DATA] PASS quarter-duration recovery grants exactly a quarter of both resources
+[ORIGINAL_DATA] PASS paused simulation never advances timed recovery
+[ORIGINAL_DATA] PASS exact deadline delivers each requested total once and clears both schedules
+[ORIGINAL_DATA] PASS instant mixed restoration clips both resources to their maxima
+[ORIGINAL_DATA] PASS full matching resource refuses a paid request
+[ORIGINAL_DATA] PASS death cancels recovery and cannot revive the actor
+[ORIGINAL_DATA] PASS nonfinite recovery amounts are rejected
+[ORIGINAL_DATA] PASS new equipment instances use original durability
+[ORIGINAL_DATA] PASS source armor equips in the actual coat slot
+[ORIGINAL_DATA] PASS source equipment stat range is evaluated without legacy percentage distortion
+[ORIGINAL_DATA] PASS source ring's lightning resistance affects actual attributes
+[ORIGINAL_DATA] PASS source gear has complete service rules
+[ORIGINAL_DATA] PASS 108 opens at Shylock after the original predecessor
+[ORIGINAL_DATA] PASS Kaino killed in another dungeon cannot satisfy 108
+[ORIGINAL_DATA] PASS 108 commits source fixed and class-conditioned rewards
+[ORIGINAL_DATA] PASS actual swordman gets the ring, saber and both medicine stacks exactly once
+[ORIGINAL_DATA] PASS 4302 requires a new Kaino defeat and never inherits the previous kill
+[ORIGINAL_DATA] PASS source conditional rewards cannot replay after hand-in
+[ORIGINAL_DATA] PASS new task and original equipment coexist in a restorable save
+[ORIGINAL_DATA] COMPLETE checks=31 failures=0
+[RECOVERY_TEST] PASS valid healing item consumes exactly one and returns configured public effect
+[RECOVERY_TEST] PASS fractional simulation clock starts precise cooldown
+[RECOVERY_TEST] PASS repeated use transaction cannot consume twice
+[RECOVERY_TEST] PASS second shortcut cannot bypass shared cooldown
+[RECOVERY_TEST] PASS cooldown remains active before exact deadline
+[RECOVERY_TEST] PASS cooldown expires at exact simulation deadline
+[RECOVERY_TEST] PASS group cooldown blocks an individually ready item
+[RECOVERY_TEST] PASS individual cooldown also blocks a ready group
+[RECOVERY_TEST] PASS full health never consumes a healing item
+[RECOVERY_TEST] PASS dead actor cannot drink
+[RECOVERY_TEST] PASS paused menu cannot drink
+[RECOVERY_TEST] PASS finished adventure cannot drink
+[RECOVERY_TEST] PASS stale adventure snapshot cannot consume
+[RECOVERY_TEST] PASS nonfinite simulation clock rejected
+[RECOVERY_TEST] PASS invalid vitals snapshot rejected without exception
+[RECOVERY_TEST] PASS reported actual restoration is clipped to missing health
+[RECOVERY_TEST] PASS locked stack cannot be consumed
+[RECOVERY_TEST] PASS stored stack cannot be consumed
+[RECOVERY_TEST] PASS pending recovery stack cannot be consumed
+[RECOVERY_TEST] PASS equipment is never treated as consumable
+[RECOVERY_TEST] PASS new adventure resets adventure-scoped cooldown
+[RECOVERY_TEST] PASS death enters pending choice without settling or granting reward
+[RECOVERY_TEST] PASS death penalty applied once before revival choice
+[RECOVERY_TEST] PASS duplicate pending death cannot repeat penalty
+[RECOVERY_TEST] PASS pending death cannot use consumables
+[RECOVERY_TEST] PASS revival quote contains configured fee, recovery and invulnerability
+[RECOVERY_TEST] PASS changed equipment invalidates revival preview
+[RECOVERY_TEST] PASS insufficient revival fee preserves all state
+[RECOVERY_TEST] PASS paid revival returns same adventure to battle and charges once
+[RECOVERY_TEST] PASS revival never applies death penalty a second time
+[RECOVERY_TEST] PASS repeated revival cannot charge while alive
+[RECOVERY_TEST] PASS old death event after revival cannot kill profile again
+[RECOVERY_TEST] PASS new death incurs one new penalty and next configured price
+[RECOVERY_TEST] PASS second revival pays incremented price
+[RECOVERY_TEST] PASS third revival pays next price
+[RECOVERY_TEST] PASS per-adventure revival limit blocks further charge
+[RECOVERY_TEST] PASS reload during pending death ends adventure without new charge or repeated penalty
+[RECOVERY_TEST] PASS explicit abandonment settles failure without clear rewards
+[RECOVERY_TEST] PASS abandonment cannot settle twice
+[RECOVERY_TEST] PASS failed adventure can return to town
+[RECOVERY_TEST] PASS revived adventure may still clear and receive one legitimate reward
+[RECOVERY_TEST] PASS repeated clear cannot pay twice after revival
+[RECOVERY_TEST] PASS previous v4 service saves remain readable
+[RECOVERY_TEST] PASS negative saved cooldown rejected
+[RECOVERY_TEST] PASS malformed consumable state rejected
+[RECOVERY_TEST] PASS impossible saved revival count rejected
+[RECOVERY_TEST] PASS invalid death receipt rejected
+[RECOVERY_TEST] PASS malformed pending death rejected
+[RECOVERY_TEST] PASS pending death requires a nonempty adventure identity
+[RECOVERY_TEST] PASS final ownership and lifecycle contracts remain valid
+[RECOVERY_TEST] COMPLETE checks=50 failures=0
+[UPGRADE_TEST] PASS quote contains configured bill and success/failure levels
+[UPGRADE_TEST] PASS opening quote never consumes or rolls RNG
+[UPGRADE_TEST] PASS reinforcement commits exact UID, gold and material bill
+[UPGRADE_TEST] PASS success returns truthful result and advances persisted attempt once
+[UPGRADE_TEST] PASS reinforcement affects actual combat stats
+[UPGRADE_TEST] PASS duplicate transaction cannot charge or roll twice
+[UPGRADE_TEST] PASS changed target invalidates old confirmation
+[UPGRADE_TEST] PASS changed RNG state invalidates pending roll
+[UPGRADE_TEST] PASS failed roll is committed outcome and retains configured level
+[UPGRADE_TEST] PASS failed roll consumes quoted bill and advances once
+[UPGRADE_TEST] PASS upgrade save accepts JSON roundtrip
+[UPGRADE_TEST] PASS reload preserves next roll without rerolling
+[UPGRADE_TEST] PASS successful probabilistic step advances exactly one level
+[UPGRADE_TEST] PASS configured enhancement cap enforced
+[UPGRADE_TEST] PASS locked target cannot upgrade
+[UPGRADE_TEST] PASS broken equipment must be repaired before upgrade
+[UPGRADE_TEST] PASS equipped armor enhancement contributes defense
+[UPGRADE_TEST] PASS accessory enhancement contributes magic defense
+[UPGRADE_TEST] PASS broken armor disables enhancement too
+[UPGRADE_TEST] PASS enchant slot restriction enforced
+[UPGRADE_TEST] PASS enchantment applies one configured stat modifier
+[UPGRADE_TEST] PASS enchantment consumes exact configured cost
+[UPGRADE_TEST] PASS identical enchant cannot charge again
+[UPGRADE_TEST] PASS replacement quote previews removal of previous bonus
+[UPGRADE_TEST] PASS replacement never accumulates obsolete enchant bonus
+[UPGRADE_TEST] PASS clear enchant removes modifier without hidden cost
+[UPGRADE_TEST] PASS empty enchant cannot be cleared twice
+[UPGRADE_TEST] PASS insufficient coins leaves exact state and RNG unchanged
+[UPGRADE_TEST] PASS insufficient total materials consumes nothing
+[UPGRADE_TEST] PASS locked materials are excluded
+[UPGRADE_TEST] PASS warehouse materials are excluded
+[UPGRADE_TEST] PASS pending recovery materials are excluded
+[UPGRADE_TEST] PASS one bill spans multiple material stacks and removes exhausted entities
+[UPGRADE_TEST] PASS stored target cannot be upgraded
+[UPGRADE_TEST] PASS buyback target cannot be upgraded
+[UPGRADE_TEST] PASS existing service save migrates RNG state
+[UPGRADE_TEST] PASS invalid RNG seed rejected
+[UPGRADE_TEST] PASS invalid attempt counter rejected
+[UPGRADE_TEST] PASS malformed upgrade state rejected safely
+[UPGRADE_TEST] PASS malformed recipe rejected without script exception
+[UPGRADE_TEST] PASS NPC without role cannot upgrade
+[UPGRADE_TEST] PASS remote NPC cannot upgrade
+[UPGRADE_TEST] PASS battle cannot use town upgrades
+[UPGRADE_TEST] PASS Kiri role accepts legitimate enhancement
+[UPGRADE_TEST] PASS Sinda role accepts legitimate enchantment
+[UPGRADE_TEST] PASS final ownership, numeric and service contracts remain valid
+[UPGRADE_TEST] COMPLETE checks=46 failures=0
+[SERVICE_TEST] COMPLETE checks=33 failures=0
+[ITEM_TEST] COMPLETE checks=44 failures=0
+[NUMBERS_TEST] COMPLETE checks=63 failures=0
+[QUEST_TEST] PASS source node definitions validate
+[QUEST_TEST] PASS new profile ledger validates
+[QUEST_TEST] PASS source predecessor gates first two tasks
+[QUEST_TEST] PASS new profile includes source opening, challenge and teaching extensions and hides unstarted legacy adaptation
+[QUEST_TEST] PASS accepting requires correct giver
+[QUEST_TEST] PASS remote NPC cannot accept task
+[QUEST_TEST] PASS accept source 101 from Seria
+[QUEST_TEST] PASS duplicate acceptance does not reset task
+[QUEST_TEST] PASS wrong conversation does not satisfy visit
+[QUEST_TEST] PASS real target conversation makes task ready
+[QUEST_TEST] PASS claim requires receiver NPC
+[QUEST_TEST] PASS atomic source 101 reward unlocks successor
+[QUEST_TEST] PASS duplicate claim never pays again
+[QUEST_TEST] PASS predecessor completes source 102 unlock
+[QUEST_TEST] PASS failed or wrong dungeon cannot complete source task
+[QUEST_TEST] PASS source 102 clears only original Lorien identity
+[QUEST_TEST] PASS minimum level gate remains independent of story progress
+[QUEST_TEST] PASS source 103 opens at level two
+[QUEST_TEST] PASS kills in wrong original dungeon do not advance 103
+[QUEST_TEST] PASS ten unique deaths count once despite duplicate delivery
+[QUEST_TEST] PASS failed reward adapter cannot leak partial resource changes
+[QUEST_TEST] PASS successful 103 claim follows failed attempt
+[QUEST_TEST] PASS source 4301 accepts from Linus
+[QUEST_TEST] PASS source chain returns to Seria for final handoff
+[QUEST_TEST] PASS completed chapter releases active and tracking capacity
+[QUEST_TEST] PASS JSON restore preserves completion and reward idempotency
+[QUEST_TEST] PASS completed record without reward transaction is rejected
+[QUEST_TEST] PASS legacy done migrates without replaying reward
+[QUEST_TEST] PASS legacy completion never impersonates original quest 101
+[QUEST_TEST] PASS legacy ready retains deliverable reward separately
+[QUEST_TEST] PASS optional legacy task supports explicit abandonment
+[QUEST_TEST] PASS missing predecessor blocks invalid content
+[QUEST_TEST] PASS cyclic task dependencies are diagnosed
+[QUEST_TEST] PASS unsupported objective cannot silently become complete
+[QUEST_TEST] PASS ordinary room clear is not a task dungeon clear event
+[QUEST_TEST] PASS tracking can change during battle without NPC access
+[QUEST_TEST] PASS mandatory source story cannot be abandoned
+[QUEST_TEST] PASS malformed registry rejected: npcs
+[QUEST_TEST] PASS malformed registry rejected: limits
+[QUEST_TEST] PASS malformed registry rejected: dungeons
+[QUEST_TEST] PASS non-array dependencies do not crash cycle validation
+[QUEST_TEST] PASS collect objective recognizes items held before accepting
+[QUEST_TEST] PASS lost material removes derived ready state
+[QUEST_TEST] PASS missing reward choice cannot consume materials
+[QUEST_TEST] PASS chosen item and material consumption commit together
+[QUEST_TEST] COMPLETE checks=45 failures=0
+[TOWN_UNIT] PASS source topology and landing rectangles validate: []
+[TOWN_UNIT] PASS source exit reachable from declared ground: elven_to_city
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: elven_to_city
+[TOWN_UNIT] PASS portal has safe reciprocal destination: elven_to_city
+[TOWN_UNIT] PASS battle state blocks cross-town travel: elven_to_city
+[TOWN_UNIT] PASS source exit reachable from declared ground: city_to_elven
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: city_to_elven
+[TOWN_UNIT] PASS portal has safe reciprocal destination: city_to_elven
+[TOWN_UNIT] PASS battle state blocks cross-town travel: city_to_elven
+[TOWN_UNIT] PASS source exit reachable from declared ground: city_to_main
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: city_to_main
+[TOWN_UNIT] PASS portal has safe reciprocal destination: city_to_main
+[TOWN_UNIT] PASS battle state blocks cross-town travel: city_to_main
+[TOWN_UNIT] PASS source exit reachable from declared ground: main_to_city
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: main_to_city
+[TOWN_UNIT] PASS portal has safe reciprocal destination: main_to_city
+[TOWN_UNIT] PASS battle state blocks cross-town travel: main_to_city
+[TOWN_UNIT] PASS source exit reachable from declared ground: main_to_auction
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: main_to_auction
+[TOWN_UNIT] PASS portal has safe reciprocal destination: main_to_auction
+[TOWN_UNIT] PASS battle state blocks cross-town travel: main_to_auction
+[TOWN_UNIT] PASS source exit reachable from declared ground: auction_to_main
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: auction_to_main
+[TOWN_UNIT] PASS portal has safe reciprocal destination: auction_to_main
+[TOWN_UNIT] PASS battle state blocks cross-town travel: auction_to_main
+[TOWN_UNIT] PASS source exit reachable from declared ground: enter_inn
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: enter_inn
+[TOWN_UNIT] PASS portal has safe reciprocal destination: enter_inn
+[TOWN_UNIT] PASS battle state blocks cross-town travel: enter_inn
+[TOWN_UNIT] PASS source exit reachable from declared ground: exit_inn
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: exit_inn
+[TOWN_UNIT] PASS portal has safe reciprocal destination: exit_inn
+[TOWN_UNIT] PASS battle state blocks cross-town travel: exit_inn
+[TOWN_UNIT] PASS source exit reachable from declared ground: enter_hendon_inn
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: enter_hendon_inn
+[TOWN_UNIT] PASS portal has safe reciprocal destination: enter_hendon_inn
+[TOWN_UNIT] PASS battle state blocks cross-town travel: enter_hendon_inn
+[TOWN_UNIT] PASS source exit reachable from declared ground: exit_hendon_inn
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: exit_hendon_inn
+[TOWN_UNIT] PASS portal has safe reciprocal destination: exit_hendon_inn
+[TOWN_UNIT] PASS battle state blocks cross-town travel: exit_hendon_inn
+[TOWN_UNIT] PASS source exit reachable from declared ground: main_to_forest_gate
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: main_to_forest_gate
+[TOWN_UNIT] PASS portal has safe reciprocal destination: main_to_forest_gate
+[TOWN_UNIT] PASS battle state blocks cross-town travel: main_to_forest_gate
+[TOWN_UNIT] PASS source exit reachable from declared ground: forest_gate_to_main
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: forest_gate_to_main
+[TOWN_UNIT] PASS portal has safe reciprocal destination: forest_gate_to_main
+[TOWN_UNIT] PASS battle state blocks cross-town travel: forest_gate_to_main
+[TOWN_UNIT] PASS source exit reachable from declared ground: auction_to_alley
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: auction_to_alley
+[TOWN_UNIT] PASS portal has safe reciprocal destination: auction_to_alley
+[TOWN_UNIT] PASS battle state blocks cross-town travel: auction_to_alley
+[TOWN_UNIT] PASS source exit reachable from declared ground: alley_to_auction
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: alley_to_auction
+[TOWN_UNIT] PASS portal has safe reciprocal destination: alley_to_auction
+[TOWN_UNIT] PASS battle state blocks cross-town travel: alley_to_auction
+[TOWN_UNIT] PASS source exit reachable from declared ground: hendon_main_to_hendon_pub
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: hendon_main_to_hendon_pub
+[TOWN_UNIT] PASS portal has safe reciprocal destination: hendon_main_to_hendon_pub
+[TOWN_UNIT] PASS battle state blocks cross-town travel: hendon_main_to_hendon_pub
+[TOWN_UNIT] PASS source exit reachable from declared ground: hendon_pub_exit
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: hendon_pub_exit
+[TOWN_UNIT] PASS portal has safe reciprocal destination: hendon_pub_exit
+[TOWN_UNIT] PASS battle state blocks cross-town travel: hendon_pub_exit
+[TOWN_UNIT] PASS source exit reachable from declared ground: hendon_main_to_hendon_inn
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: hendon_main_to_hendon_inn
+[TOWN_UNIT] PASS portal has safe reciprocal destination: hendon_main_to_hendon_inn
+[TOWN_UNIT] PASS battle state blocks cross-town travel: hendon_main_to_hendon_inn
+[TOWN_UNIT] PASS source exit reachable from declared ground: hendon_inn_exit
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: hendon_inn_exit
+[TOWN_UNIT] PASS portal has safe reciprocal destination: hendon_inn_exit
+[TOWN_UNIT] PASS battle state blocks cross-town travel: hendon_inn_exit
+[TOWN_UNIT] PASS source exit reachable from declared ground: elvengard_to_alfhlyra
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: elvengard_to_alfhlyra
+[TOWN_UNIT] PASS portal has safe reciprocal destination: elvengard_to_alfhlyra
+[TOWN_UNIT] PASS battle state blocks cross-town travel: elvengard_to_alfhlyra
+[TOWN_UNIT] PASS source exit reachable from declared ground: alfhlyra_exit
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: alfhlyra_exit
+[TOWN_UNIT] PASS portal has safe reciprocal destination: alfhlyra_exit
+[TOWN_UNIT] PASS battle state blocks cross-town travel: alfhlyra_exit
+[TOWN_UNIT] PASS source exit reachable from declared ground: hendon_city_to_westcoast
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: hendon_city_to_westcoast
+[TOWN_UNIT] PASS portal has safe reciprocal destination: hendon_city_to_westcoast
+[TOWN_UNIT] PASS battle state blocks cross-town travel: hendon_city_to_westcoast
+[TOWN_UNIT] PASS source exit reachable from declared ground: westcoast_exit
+[TOWN_UNIT] PASS edge query recognizes automatic entrance: westcoast_exit
+[TOWN_UNIT] PASS portal has safe reciprocal destination: westcoast_exit
+[TOWN_UNIT] PASS battle state blocks cross-town travel: westcoast_exit
+[TOWN_UNIT] PASS wrong current town cannot invoke foreign exit
+[TOWN_UNIT] PASS remote exit cannot teleport character
+[TOWN_UNIT] PASS unknown location and nonfinite position recover safely
+[TOWN_UNIT] PASS invalid saved coordinates project onto native ground union
+[TOWN_UNIT] PASS shared Seria room preserves entrance-specific return
+[TOWN_UNIT] PASS walking past the doorway or inside the room cannot trigger early
+[TOWN_UNIT] PASS dungeon selection belongs to the far road edge rather than approach area
+[TOWN_UNIT] PASS NPC conversation is not an automatic entrance
+[TOWN_UNIT] PASS malformed optional old-save location fields safely normalize
+[TOWN_UNIT] PASS missing return edge is rejected
+[TOWN_UNIT] PASS unwalkable landing is rejected
+[TOWN_UNIT] PASS unknown NPC cannot enter scene registry
+[TOWN_UNIT] PASS invalid dungeon entrance geometry is rejected
+[TOWN_UNIT] COMPLETE checks=102 failures=0
+[QUEST_TEST] PASS source Gran task registry validates
+[QUEST_TEST] PASS 105 opens after 104 while 106 stays locked
+[QUEST_TEST] PASS 105 cannot be accepted from unrelated NPC
+[QUEST_TEST] PASS 105 accepts from original Pungjin
+[QUEST_TEST] PASS ordinary Tau Army and wrong dungeon do not satisfy the original Tau Beast target
+[QUEST_TEST] PASS 105 reward refuses unfinished target
+[QUEST_TEST] PASS one correct Tau Beast death marks 105 ready
+[QUEST_TEST] PASS 105 cannot be handed to wrong NPC
+[QUEST_TEST] PASS 105 hand-in unlocks 106
+[QUEST_TEST] PASS 106 accepts at source giver
+[QUEST_TEST] PASS dark cat boss does not replace the original ordinary cat count
+[QUEST_TEST] PASS partial original cat progress survives JSON validation
+[QUEST_TEST] PASS replayed cat event remains deduplicated after reload
+[QUEST_TEST] PASS five distinct correct cats satisfy 106
+[QUEST_TEST] PASS 106 hands in and source 107 accepts without automatic completion
+[QUEST_TEST] PASS talking to another backstreet NPC cannot satisfy Shylock meeting
+[QUEST_TEST] PASS 107 is ready only after Shylock and cannot hand back to Pungjin
+[QUEST_TEST] PASS 107 hands in at original Shylock
+[QUEST_TEST] PASS completed new city task cannot replay rewards
+[GRAN_UNIT] COMPLETE checks=19 failures=0
+[LOOP_TEST] PASS declared opening-complete fixture loads beside Seria
+[LOOP_TEST] PASS correct original NPC anchor reachable: seria
+[LOOP_TEST] PASS physical E opens NPC dialogue: seria
+[LOOP_TEST] PASS native quest action 接受委托: tutorial.skill_intro
+[LOOP_TEST] PASS correct original NPC anchor reachable: seria
+[LOOP_TEST] PASS physical E opens NPC dialogue: seria
+[LOOP_TEST] PASS native quest action 领取报酬: tutorial.skill_intro
+[LOOP_TEST] PASS NPC intro delivers the two original recovery foods
+[LOOP_TEST] PASS native quest action 接受委托: tutorial.learn_skill
+[LOOP_TEST] PASS Chinese screen text and tooltips: teaching_01_learning_task
+[LOOP_TEST] PASS normal skill panel keeps requirement bypass disabled
+[LOOP_TEST] PASS skill panel displays the source purchase cost instead of a boolean fallback
+[LOOP_TEST] PASS actual learning control is reachable
+[LOOP_TEST] PASS failed skill save preserves SP, skill rank and learning task together
+[LOOP_TEST] PASS successful UI purchase advances the actual learning objective
+[LOOP_TEST] PASS Chinese screen text and tooltips: teaching_02_skill_panel
+[LOOP_TEST] PASS correct original NPC anchor reachable: seria
+[LOOP_TEST] PASS physical E opens NPC dialogue: seria
+[LOOP_TEST] PASS native quest action 领取报酬: tutorial.learn_skill
+[LOOP_TEST] PASS skill level and original teaching completion reload atomically
+[LOOP_TEST] PASS both new original food icons render in the consumables bag
+[LOOP_TEST] PASS Chinese screen text and tooltips: teaching_03_food_items
+[LOOP_TEST] PASS correct original NPC anchor reachable: gsd
+[LOOP_TEST] PASS physical E opens NPC dialogue: gsd
+[LOOP_TEST] PASS native quest action 接受委托: gran.stronger_enemy
+[LOOP_TEST] PASS source challenge records its exact requested difficulty
+[LOOP_TEST] PASS GM command skips unrelated normal dungeon combat
+[LOOP_TEST] PASS normal-mode GM settlement does not satisfy the adventure task
+[LOOP_TEST] PASS normal result control returns from GM-skipped dungeon
+[LOOP_TEST] PASS GM command skips unrelated adventure combat
+[LOOP_TEST] PASS adventure-mode settlement reaches the task through the normal public event
+[LOOP_TEST] PASS normal result control returns from GM-skipped dungeon
+[LOOP_TEST] PASS correct original NPC anchor reachable: gsd
+[LOOP_TEST] PASS physical E opens NPC dialogue: gsd
+[LOOP_TEST] PASS native quest action 领取报酬: gran.stronger_enemy
+[LOOP_TEST] PASS Chinese screen text and tooltips: teaching_04_challenge_reward
+[LOOP_TEST] PASS challenge reward and completion persist after GM-skipped traversal
+[TEACHING_QUICK] COMPLETE checks=37 failures=0 captures=4
+
+Diagnostic counts; complete raw output is retained in quick.log.gz:
+2 x Unicode parsing error, some characters were replaced with � (U+FFFD): Invalid UTF-8 leading byte (b1)
+2 x Unicode parsing error: Byte 20 is not a correct continuation byte after ce
+2 x Unicode parsing error: Byte c1 is not a correct continuation byte after e8
+2 x Unicode parsing error: Byte ce is not a correct continuation byte after f6 b9
+2 x Unicode parsing error: Byte f6 is not a correct continuation byte after c1
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/alfhlyra_new.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/amb_forest_01.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/amb_forest_02.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/amb_town_01.ogg", should contain '=': "Sony O
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/amb_town_02.ogg", should contain '=': "Sony O
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/amb_town_03.ogg", should contain '=': "Sony O
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/b_float_castle.ogg", should contain '=': "Son
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/characterselectstage.ogg", should contain '='
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/draconian_tower.ogg", should contain '=': "So
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/draconian_tower_boss.ogg", should contain '='
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/float_castle.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/forest01.ogg", should contain '=': "Sonic Fou
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/forest_town.ogg", should contain '=': "Sony O
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/golem_tower.ogg", should contain '=': "Sony O
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/golem_tower_boss.ogg", should contain '=': "S
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/grakkarak_new.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/grakkarak_new_boss.ogg", should contain '=':
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/hendonmyre_new.ogg", should contain '=': "Son
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/mirkwood.ogg", should contain '=': "Sony Ogg
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/mirkwood_boss.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/palace_of_load.ogg", should contain '=': "Son
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/palace_of_load_boss.ogg", should contain '=':
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/sera_shop_new.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/skycastle.ogg", should contain '=': "Sony Ogg
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/skycastle_boss.ogg", should contain '=': "Son
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/sunderland.ogg", should contain '=': "Sony Og
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/sunderland_boss.ogg", should contain '=': "So
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/tavern.ogg", should contain '=': "Sonic Found
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/bgm/westcoast_new.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/draw.ogg", should contain '=': "Sony Ogg Vorbis 1
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/draw_ready.ogg", should contain '=': "Sony Ogg Vo
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/goblin_die.ogg", should contain '=': "Sony Ogg Vo
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/goblin_hurt.ogg", should contain '=': "Sony Ogg V
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/hurt.ogg", should contain '=': "Sony Ogg Vorbis 1
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/jump.ogg", should contain '=': "Sony Ogg Vorbis 1
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/music.ogg", should contain '=': "Sonic Foundry Og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/swing1.ogg", should contain '=': "Sony Ogg Vorbis
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/swing2.ogg", should contain '=': "Sony Ogg Vorbis
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/swing3.ogg", should contain '=': "Sony Ogg Vorbis
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/thrust.ogg", should contain '=': "Sony Ogg Vorbis
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/upper.ogg", should contain '=': "Sony Ogg Vorbis
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/astorm_hit_light.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_01.ogg", should contain '=': "Son
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_02.ogg", should contain '=': "Son
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_03.ogg", should contain '=': "Son
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_hit_01.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_hit_02.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswdb.ogg", should contain '=': "Sony O
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswdb_hit.ogg", should contain '=': "So
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/drawing_sword_hit_01.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/drawing_sword_hit_02.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_die_01.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_die_02.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_01.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_02.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_03.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_04.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_atk3.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_cross.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_hit_01.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_hit_02.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_01.ogg", should contain '=': "Sony Og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_02.ogg", should contain '=': "Sony Og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_03.ogg", should contain '=': "Sony Og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_hit_01.ogg", should contain '=': "Son
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_hit_02.ogg", should contain '=': "Son
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/katb.ogg", should contain '=': "Sony Ogg V
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/katb_hit.ogg", should contain '=': "Sony O
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_01.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_02.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_03.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_hit_01.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_hit_02.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_hit_03.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswdb.ogg", should contain '=': "Sony Og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswdb_hit.ogg", should contain '=': "Son
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/slessswd_hit_01.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/slessswd_hit_02.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_atk_01.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_atk_02.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_atk_03.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_back.ogg", should contain '=': "Sony Og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_bal1.ogg", should contain '=': "Sony Og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_bal2.ogg", should contain '=': "Sony Og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_die.ogg", should contain '=': "Sony Ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_dmg_01.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_dmg_02.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_dmg_03.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_gorecross.ogg", should contain '=': "So
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_jump.ogg", should contain '=': "Sony Og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_jumpatk_01.ogg", should contain '=': "S
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_jumpatk_02.ogg", should contain '=': "S
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_triple1.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_triple2.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_triple3.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_upslash.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_01.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_02.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_hit_01.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_hit_02.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdb.ogg", should contain '=': "Sony Og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdb_hit.ogg", should contain '=': "Son
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdc_hit_01.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdc_hit_02.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/staff_hit.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_01.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_02.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_hit_01.ogg", should contain '=': "S
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_hit_02.ogg", should contain '=': "S
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/stickb_01.ogg", should contain '=': "Sony
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/stickb_hit_01.ogg", should contain '=': "S
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/throw_stone.ogg", should contain '=': "Son
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/upper_slash_01.ogg", should contain '=': "
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/loot/audio/coin_pick_01.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/loot/audio/coin_pick_02.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/loot/audio/coin_pick_03.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/loot/audio/item_pick.ogg", should contain '=': "Sony Og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_fighterstatue/attack_01.o
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_fighterstatue/die_01.ogg"
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_fighterstatue/hit_01.ogg"
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_fighterstatue/hit_02.ogg"
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_fighterstatue/hit_03.ogg"
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_fighterstatue/hit_04.ogg"
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_gunnerstatue/attack_01.og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_gunnerstatue/die_01.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_gunnerstatue/hit_01.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_gunnerstatue/hit_02.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_gunnerstatue/hit_03.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_gunnerstatue/hit_04.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_magicianstatue/attack_01.
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_magicianstatue/die_01.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_magicianstatue/hit_01.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_magicianstatue/hit_02.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_magicianstatue/hit_03.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_magicianstatue/hit_04.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_prieststatue/attack_01.og
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_prieststatue/die_01.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_prieststatue/hit_01.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_prieststatue/hit_02.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_prieststatue/hit_03.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_prieststatue/hit_04.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_swordmanstatue/attack_01.
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_swordmanstatue/die_01.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_swordmanstatue/hit_01.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_swordmanstatue/hit_02.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_swordmanstatue/hit_03.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_swordmanstatue/hit_04.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_claymaster/die_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_claymaster/hit_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_golemmaster/die_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_golemmaster/hit_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_icedoll_sharedo/die_01.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_icedoll_sharedo/hit_01.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_masterdogri/die_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_masterdogri/hit_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_steelmaster/die_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_steelmaster/hit_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_stonemaster/die_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_stonemaster/hit_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/attack_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/attack_02.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/attack_03.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/die_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/hit_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/hit_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/hit_03.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/attack_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/attack_02.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/attack_03.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/die_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/hit_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/hit_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/hit_03.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/attack_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/attack_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/attack_03.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/die_01.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/hit_01.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/hit_02.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/hit_03.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/attack_01.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/attack_02.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/attack_03.ogg
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/die_01.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/hit_01.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/hit_02.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/hit_03.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/attack_01.ogg", should contain '='
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/die_01.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/die_02.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/hit_01.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/hit_02.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/hit_03.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/hit_04.ogg", should contain '=': "
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/attack_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/die_01.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/die_02.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/hit_01.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/hit_02.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/hit_03.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/hit_04.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/attack_01.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/die_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/die_02.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/hit_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/hit_02.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/hit_03.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/hit_04.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/attack_01.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/die_01.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/die_02.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/hit_01.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/hit_02.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/hit_03.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/hit_04.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/attack_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/die_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/die_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/hit_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/hit_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/hit_03.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/hit_04.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/attack_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/die_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/die_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/hit_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/hit_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/hit_03.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/hit_04.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/attack_01.ogg", should contai
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/die_01.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/die_02.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/hit_01.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/hit_02.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/hit_03.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/hit_04.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/attack_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/die_01.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/die_02.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/hit_01.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/hit_02.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/hit_03.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/hit_04.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/attack_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/die_01.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/die_02.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/hit_01.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/hit_02.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/hit_03.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/hit_04.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/attack_01.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/die_01.ogg", should contain '=
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/die_02.ogg", should contain '=
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/hit_01.ogg", should contain '=
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/hit_02.ogg", should contain '=
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/hit_03.ogg", should contain '=
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/hit_04.ogg", should contain '=
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/attack_01.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/die_01.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/die_02.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/hit_01.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/hit_02.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/hit_03.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/hit_04.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/attack_01.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/die_01.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/die_02.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/hit_01.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/hit_02.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/hit_03.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/hit_04.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/attack_01.ogg", should contai
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/die_01.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/die_02.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/hit_01.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/hit_02.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/hit_03.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/hit_04.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/attack_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/die_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/die_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/hit_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/hit_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/hit_03.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/hit_04.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/attack_01.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/die_01.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/die_02.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/hit_01.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/hit_02.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/hit_03.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/hit_04.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/attack_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/die_01.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/die_02.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/hit_01.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/hit_02.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/hit_03.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/hit_04.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/attack_01.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/die_01.ogg", should contai
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/die_02.ogg", should contai
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/hit_01.ogg", should contai
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/hit_02.ogg", should contai
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/hit_03.ogg", should contai
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/hit_04.ogg", should contai
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/attack_01.ogg",
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/die_01.ogg", sh
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/die_02.ogg", sh
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/hit_01.ogg", sh
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/hit_02.ogg", sh
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/hit_03.ogg", sh
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/hit_04.ogg", sh
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/attack_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/attack_02.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/die_01.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/die_02.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/die_03.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/die_04.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/hit_01.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/hit_02.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/hit_03.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/hit_04.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/attack_01.ogg", sho
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/attack_02.ogg", sho
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/attack_03.ogg", sho
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/attack_04.ogg", sho
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/die_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/die_02.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/die_03.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/die_04.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/hit_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/hit_02.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/hit_03.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/hit_04.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/attack_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/attack_02.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/attack_03.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/attack_04.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/die_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/die_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/die_03.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/die_04.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/hit_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/hit_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/hit_03.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/hit_04.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/attack_01.ogg", sho
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/attack_02.ogg", sho
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/attack_03.ogg", sho
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/attack_04.ogg", sho
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/die_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/die_02.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/die_03.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/die_04.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/hit_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/hit_02.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/hit_03.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/hit_04.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/attack_01.ogg", sho
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/attack_02.ogg", sho
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/attack_03.ogg", sho
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/attack_04.ogg", sho
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/die_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/die_02.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/die_03.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/die_04.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/hit_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/hit_02.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/hit_03.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/hit_04.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/attack_01.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/attack_02.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/attack_03.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/attack_04.ogg", should
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/die_01.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/die_02.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/die_03.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/die_04.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/hit_01.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/hit_02.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/hit_03.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/hit_04.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/attack_01.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/attack_02.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/attack_03.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/attack_04.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/die_01.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/die_02.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/die_03.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/die_04.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/hit_01.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/hit_02.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/hit_03.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/hit_04.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/attack_01.ogg"
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/attack_02.ogg"
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/attack_03.ogg"
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/attack_04.ogg"
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/die_01.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/die_02.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/die_03.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/die_04.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/hit_01.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/hit_02.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/hit_03.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/hit_04.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/spirit_firespirit/hit_01.ogg", should con
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/attack_01.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/attack_02.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/attack_03.ogg", should contain '
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/die_01.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/die_02.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/die_03.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/hit_01.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/hit_02.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/hit_03.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/hit_04.ogg", should contain '=':
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/attack_01.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/attack_02.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/attack_03.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/die_01.ogg", should contain '='
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/die_02.ogg", should contain '='
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/die_03.ogg", should contain '='
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/hit_01.ogg", should contain '='
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/hit_02.ogg", should contain '='
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/hit_03.ogg", should contain '='
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/hit_04.ogg", should contain '='
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/attack_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/attack_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/attack_03.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/die_01.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/die_02.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/die_03.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/hit_01.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/hit_02.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/hit_03.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/hit_04.ogg", should cont
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/attack_01.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/attack_02.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/attack_03.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/die_01.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/die_02.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/die_03.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/hit_01.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/hit_02.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/hit_03.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/hit_04.ogg", should contain
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/attack_01.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/attack_02.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/attack_03.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/attack_04.ogg", should co
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/die_01.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/hit_01.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/hit_02.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/hit_03.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/hit_04.ogg", should conta
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/attack_01.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/attack_02.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/attack_03.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/attack_04.ogg", s
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/die_01.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/hit_01.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/hit_02.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/hit_03.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/hit_04.ogg", shou
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/attack_01.ogg", sh
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/attack_02.ogg", sh
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/attack_03.ogg", sh
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/attack_04.ogg", sh
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/die_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/hit_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/hit_02.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/hit_03.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/hit_04.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/attack_01.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/attack_02.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/attack_03.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/attack_04.ogg", shoul
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/die_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/hit_01.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/hit_02.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/hit_03.ogg", should c
+2 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/hit_04.ogg", should c
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/albert/amb_01.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/grandis/amb_01.ogg", should contain '=': "Son
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/gsd/amb_01.ogg", should contain '=': "Sony Og
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/kanna/amb_01.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/kiri/amb_01.ogg", should contain '=': "Sony O
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/linus/amb_01.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/norton/amb_01.ogg", should contain '=': "Sony
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/pungjin/amb_01.ogg", should contain '=': "Son
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/shylock/amb_01.ogg", should contain '=': "Son
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/npc_voice/sinda/amb_01.ogg", should contain '=': "Sony

@@ -167,6 +167,11 @@ func objective_line(o: Dictionary) -> String:
 		"clear_dungeon":label="通关"+String(game.session.quests.catalog.config["dungeons"].get(o["target"],o["target"]))
 		"kill_monster":label=String(game.session.quests.catalog.config["dungeons"].get(o.get("dungeon",""),""))+" · "+String(game.session.quests.catalog.config.get("monsters",{}).get(o["target"],"目标怪物"))
 		"collect_item":label=String(game.Catalog.ITEMS.get(o["target"],{}).get("name",o["target"]))
+		"learn_skill":label="学习任意技能一级"
+	if o.has("difficulty"):
+		var names: Array=[]
+		for mode: String in o["difficulty"]:names.append({"normal":"普通级","adventure":"冒险级","king":"王者级"}.get(mode,"未知难度"))
+		label+="（"+"、".join(names)+"）"
 	return "%s  %d / %d" % [label,int(o["current"]),int(o["amount"])]
 
 func dungeon() -> void:

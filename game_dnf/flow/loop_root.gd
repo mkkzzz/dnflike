@@ -139,6 +139,7 @@ func _ready() -> void:
 		if "--gran-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_gran.gd"
 		if "--kaino-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_kaino_chapter.gd"
 		if "--poison-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_poison_chapter.gd"
+		if "--teaching-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_teaching_quick.gd"
 		if "--quest-guide-only" in OS.get_cmdline_user_args():runner_path="res://tests/flow/test_quest_guide_town.gd"
 		var runner = load(runner_path).new()
 		runner.game = self
@@ -348,7 +349,7 @@ func act(kind: String, payload: Dictionary = {}) -> bool:
 	if kind.begins_with("quest."):return quest_action(kind,payload)
 	if kind.begins_with("services."):return service_action(kind,payload)
 	if kind in ["flow.depart","flow.return","flow.retreat","flow.abandon"]:return lifecycle_action(kind,payload)
-	if kind.begins_with("items.") or kind.begins_with("numbers.gear") or kind=="slots.move":return item_action(kind,payload)
+	if kind.begins_with("items.") or kind.begins_with("numbers.gear") or kind in ["slots.move","numbers.skill"]:return item_action(kind,payload)
 	var before_level := int(session.profile["level"])
 	var response: Dictionary = session.command(kind, payload)
 	if not response["ok"]:
@@ -375,8 +376,10 @@ func item_action(kind: String, payload: Dictionary) -> bool:
 	candidate.state=session.state;candidate.result=session.result.duplicate(true)
 	var response: Dictionary=candidate.command(kind,payload)
 	if not response.get("ok",false):notice(response.get("message","物品操作失败"));return false
-	if not store.write(candidate):save_failed=true;notice("物品变更未提交：存档写入失败，请重试");return false
-	session=candidate;save_failed=false;sync_number_changes(kind);return true
+	if not store.write(candidate):save_failed=true;notice(("技能加点" if kind=="numbers.skill" else "物品变更")+"未提交：存档写入失败，请重试");return false
+	session=candidate;save_failed=false;sync_number_changes(kind)
+	if kind=="numbers.skill":notice("技能加点已保存")
+	return true
 
 func service_action(kind: String, payload: Dictionary) -> bool:
 	if not character_active or transitioning:return false
