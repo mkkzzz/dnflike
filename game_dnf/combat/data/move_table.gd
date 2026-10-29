@@ -23,6 +23,8 @@ var _timelines: Dictionary = {}
 var base_table: Array = []
 ## 原版 BOSS 选招规则（由 .ai 反编译提取，按怪物名索引）。
 var boss_rules: Dictionary = {}
+## 原版召唤表（.act 的 [SUMMON MONSTER]），按动作 ANI 路径索引；含 BOSS 死亡变身。
+var summons_by_ani: Dictionary = {}
 
 func build(content_db, adapt_rules: Dictionary, combat_assets: Dictionary) -> bool:
 	db = content_db
@@ -50,6 +52,9 @@ func _load_base_table() -> void:
 	if FileAccess.file_exists("res://data/boss_rules.json"):
 		var rules_doc = JSON.parse_string(FileAccess.get_file_as_string("res://data/boss_rules.json"))
 		if rules_doc is Dictionary:boss_rules = rules_doc.get("index", {})
+	if FileAccess.file_exists("res://data/summons.json"):
+		var summon_doc = JSON.parse_string(FileAccess.get_file_as_string("res://data/summons.json"))
+		if summon_doc is Dictionary:summons_by_ani = summon_doc.get("by_ani", {})
 
 ## HP 基准按怪物等级取原版表值；表缺失时退回 data/combat.json 的旧基准。
 func monster_base_hp(mob: Dictionary) -> float:
@@ -318,6 +323,18 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 	var mob_stem := String(path).get_file().get_basename().to_lower()
 	if boss_rules.has(mob_stem):
 		m["rules"] = boss_rules[mob_stem]
+	# 召唤：动作 ANI 命中 .act 的 [SUMMON MONSTER] 时挂到该招上；
+	# die 动作的召唤就是原版的“死亡变身”（如 chiefmongghost → chiefmongghost_2nd）。
+	if not summons_by_ani.is_empty():
+		for move: Dictionary in m.get("moves", []):
+			var ani_path := String(move.get("ani", "")).to_lower()
+			if summons_by_ani.has(ani_path):
+				move["summons"] = summons_by_ani[ani_path]
+		var die_stem := String((m.get("motions", {}) as Dictionary).get("die", ""))
+		if die_stem != "" and motion_dir != "":
+			var die_path := (motion_dir + "/" + die_stem + ".ani").to_lower()
+			if summons_by_ani.has(die_path):
+				m["die_summons"] = summons_by_ani[die_path]
 	var throw: Dictionary = mob.get("throw_attack",{}) if mob.get("throw_attack") is Dictionary else {}
 	if not throw.is_empty():
 		var objects_index: Dictionary = db.index("passive_objects")

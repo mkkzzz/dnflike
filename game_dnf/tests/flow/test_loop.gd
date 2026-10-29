@@ -522,7 +522,9 @@ func run() -> void:
 		key(KEY_Z, enemy_near and i % 150 < 2)
 		key(KEY_A, enemy_near and i % 330 < 2)
 		key(KEY_S, enemy_near and i % 220 < 2)
-		if float(snap["hp"]) < float(snap["hp_max"]) - 150 and int(game.session.profile["inventory"].get("potion", 0)) > 0:
+		# 阈值取 50：整场战斗未必掉到 150 以下，用 50 判“确实受过伤”更稳，
+		# 同时仍能验证“受伤后血药可用且生效”。
+		if float(snap["hp"]) < float(snap["hp_max"]) - 50 and int(game.session.profile["inventory"].get("potion", 0)) > 0:
 			var old := int(game.session.profile["inventory"]["potion"])
 			game.use_potion()
 			healed = healed or int(game.session.profile["inventory"]["potion"]) < old

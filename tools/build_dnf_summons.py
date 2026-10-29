@@ -30,6 +30,20 @@ GAME = ROOT / 'game_dnf'
 OUT = GAME / 'data/summons.json'
 
 
+def resolve_path(base_file: str, relative: str) -> str:
+    """`../Animation/Down.ani` → 库内绝对路径（相对 .act 所在目录）。"""
+    parts: list[str] = []
+    for part in (str(Path(base_file).parent).replace('\\', '/') + '/' + relative.replace('\\', '/')).split('/'):
+        if part in ('', '.'):
+            continue
+        if part == '..':
+            if parts:
+                parts.pop()
+            continue
+        parts.append(part)
+    return '/'.join(parts).lower()
+
+
 def number(text: str) -> float | None:
     try:
         return float(text)
@@ -107,17 +121,31 @@ def main() -> int:
                 resolved.append({'monster': 'monster/' + target.lower(), 'index': entry['index'],
                                  'level': entry.get('level', 0), 'pos': entry.get('pos', [0, 0, 0])})
             if resolved:
-                result[path] = resolved
+                base_ani = ''
+                for cursor, text in enumerate(tokens):
+                    if text == '[BASE ANI]' and cursor + 1 < len(tokens):
+                        base_ani = resolve_path(path, tokens[cursor + 1])
+                        break
+                result[path] = {'summons': resolved, 'ani': base_ani,
+                                'stem': Path(path).stem.lower()}
     finally:
         lib.close()
+    # 两套索引：按动作 ANI 精确匹配（优先），按动作名 stem（兜底）。
+    by_ani = {v['ani']: v['summons'] for v in result.values() if v['ani']}
+    by_stem: dict[str, list] = {}
+    for value in result.values():
+        by_stem.setdefault(value['stem'], value['summons'])
     OUT.write_text(json.dumps({
-        'schema': 'dnf_summons/1',
-        'evidence': '.act 的 [SUMMON MONSTER] [INDEX] 是 monster.lst 键，可直接反查路径',
-        'count': len(result), 'unresolved': unresolved, 'summons': result,
+        'schema': 'dnf_summons/2',
+        'evidence': '.act 的 [SUMMON MONSTER] [INDEX] 是 monster.lst 键；[BASE ANI] 给出该动作的 ANI',
+        'count': len(result), 'unresolved': unresolved,
+        'by_ani': by_ani, 'by_stem': by_stem, 'actions': result,
     }, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
-    print('[SUMMON] %d 个动作带召唤、未解析索引 %d' % (len(result), unresolved))
-    for path, entries in list(result.items())[:6]:
-        print('  %-58s %s' % (path.split('/')[-3], [e['monster'].split('/')[-1] for e in entries]))
+    print('[SUMMON] %d 个动作带召唤（ANI 索引 %d、stem 索引 %d）、未解析索引 %d'
+          % (len(result), len(by_ani), len(by_stem), unresolved))
+    for path, value in list(result.items())[:6]:
+        print('  %-52s %s -> %s' % (path.split('/')[-3], value['stem'],
+                                    [e['monster'].split('/')[-1] for e in value['summons']]))
     return 0
 
 
