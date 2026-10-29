@@ -49,7 +49,9 @@ func dialogue(npc := "linus") -> void:
 	if face == null:portrait.size = skin.texture("dialog_face").get_size()
 	game.town.play_npc_voice(npc, "talk")
 	skin.label(node, NPC_NAMES.get(npc, npc), Vector2(215, 18), 16, Color("f0d18a"))
-	skin.label(node, "武器是冒险者的伙伴，出发前可别忘了检查。\n森林里的哥布林越来越多，能帮我去调查一下吗？", Vector2(215, 51), 13)
+	var line := String(game.town.npc_definition(npc).get("dialogue", ""))
+	if line == "":line = "武器是冒险者的伙伴，出发前可别忘了检查。\n森林里的哥布林越来越多，能帮我去调查一下吗？"
+	skin.label(node, line, Vector2(215, 51), 13)
 	skin.button(node, "委托任务", Vector2(215, 120), func(): game.show_overlay("quest"))
 	skin.button(node, "购买物品", Vector2(325, 120), func(): game.show_overlay("shop"))
 	skin.button(node, "结束对话", Vector2(600, 120), func():
