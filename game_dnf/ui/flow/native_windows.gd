@@ -42,7 +42,8 @@ func dialogue(npc := "linus") -> void:
 	# Original dialogue board is 718x165. Portrait floats above its left edge.
 	var node = container(game.modal, Vector2(41, 343), Vector2(718, 165))
 	skin.image(node, skin.texture("dialog"), Vector2.ZERO)
-	var face: Texture2D = game.town.npc_face(npc) if game.town != null else null
+	# 林纳斯沿用原版躯干插画；其余 NPC 用 .npc 的脸部立绘。
+	var face: Texture2D = null if npc == "linus" else (game.town.npc_face(npc) if game.town != null else null)
 	var portrait: TextureRect = skin.image(node, face if face != null else skin.texture("dialog_face"), Vector2(8, -61))
 	portrait.name = npc + "_dialogue_illustration"
 	if face == null:portrait.size = skin.texture("dialog_face").get_size()
