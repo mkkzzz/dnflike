@@ -28,7 +28,7 @@ static func initialize(p: Dictionary) -> void:
 	for uid: String in p["gear"]:
 		if uid not in p["equipment"].values():place(p,uid,true)
 	for id: String in old:
-		if not Numbers.config()["equipment"].has(id):
+		if not Numbers.is_equipment(id):
 			var remaining := int(old[id])
 			while remaining > 0:
 				var amount := mini(remaining,Catalog.stack_limit(id))
@@ -86,7 +86,7 @@ static func stock(p: Dictionary, id: String) -> int:
 static func give(p: Dictionary, id: String, amount: int, quality := 50, recovery := false) -> Dictionary:
 	if not Catalog.ITEMS.has(id) or amount < 1 or amount > 100000:return fail("物品或数量无效")
 	var candidate := p.duplicate(true)
-	if Numbers.config()["equipment"].has(id):
+	if Numbers.is_equipment(id):
 		for i in amount:
 			var uid := Numbers.Equipment.create(candidate,id,quality)
 			if not place(candidate,uid,recovery):return fail("装备背包已满")
@@ -285,7 +285,7 @@ static func valid(p: Dictionary) -> bool:
 		if not uid is String or not uid.begins_with("stack_") or not uid.trim_prefix("stack_").is_valid_int() or int(uid.trim_prefix("stack_"))<1:return false
 		max_serial=maxi(max_serial,int(uid.trim_prefix("stack_")))
 		var stack=state["stacks"][uid]
-		if not stack is Dictionary or not Catalog.ITEMS.has(stack.get("id","")) or Numbers.config()["equipment"].has(stack["id"]) or not Numbers.whole(stack.get("count"),1,Catalog.stack_limit(String(stack.get("id","")))) or not stack.get("locked") is bool or not seen.has(uid):return false
+		if not stack is Dictionary or not Catalog.ITEMS.has(stack.get("id","")) or Numbers.is_equipment(stack["id"]) or not Numbers.whole(stack.get("count"),1,Catalog.stack_limit(String(stack.get("id","")))) or not stack.get("locked") is bool or not seen.has(uid):return false
 		stack["count"]=int(stack["count"])
 	for uid in p["gear"]:
 		if not seen.has(uid) or not p["gear"][uid].get("locked",false) is bool:return false

@@ -140,6 +140,7 @@ func _ready() -> void:
 		if "--kaino-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_kaino_chapter.gd"
 		if "--poison-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_poison_chapter.gd"
 		if "--teaching-only" in OS.get_cmdline_user_args():runner_path="res://tests/quests/test_teaching_quick.gd"
+		if "--native-only" in OS.get_cmdline_user_args():runner_path="res://tests/items/test_native_quick.gd"
 		if "--quest-guide-only" in OS.get_cmdline_user_args():runner_path="res://tests/flow/test_quest_guide_town.gd"
 		var runner = load(runner_path).new()
 		runner.game = self

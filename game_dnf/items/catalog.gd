@@ -14,6 +14,7 @@ static func load_items() -> Dictionary:
 	var result: Dictionary = LEGACY_ITEMS.duplicate(true)
 	var data = JSON.parse_string(FileAccess.get_file_as_string("res://data/runtime_items.json"))
 	if data is Dictionary and data.get("schema") == "dnf_runtime_items/1":result.merge(data.get("items",{}),false)
+	result.merge(preload("res://content/native_catalog.gd").runtime().get("items",{}),false)
 	return result
 
 static func stack_limit(id: String) -> int:
@@ -26,4 +27,5 @@ const RARITIES := {
 	2: {"name": "稀有", "color": "bb8dff"},
 	3: {"name": "神器", "color": "ff85c8"},
 	4: {"name": "史诗", "color": "ffb544"},
+	5: {"name": "勇者", "color": "ff6666"},
 }

@@ -3,9 +3,9 @@
  "evidence": "原版 .qst 结构化字段 E-PARSE；名称/描述为本地化引用（string 键），正文未解出",
  "summary": {
   "total": 3716,
-  "implemented": 18,
+  "implemented": 34,
   "failed": 0,
-  "pending_name_refs": 1391,
+  "pending_name_refs": 1385,
   "groups": {
    "n_quest/urgent": 1331,
    "n_quest/common": 291,
@@ -6387,9 +6387,9 @@
     100
    ],
    "name_ref": "string:45270",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4605",
+   "local_name": "收集防具材料"
   },
   {
    "path": "n_quest/common/behimos/normal_32_behimos_tentakle_shylock.qst",
@@ -9977,9 +9977,9 @@
     200
    ],
    "name_ref": "string:322891",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.7640",
+   "local_name": "格斗家之路 - 开始"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_hanadonmyre_break_at_pungjin_2.qst",
@@ -9999,9 +9999,9 @@
     300
    ],
    "name_ref": "string:322895",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.7641",
+   "local_name": "格斗家之路 - 赫顿玛尔的辛达"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_hanadonmyre_break_at_pungjin_3.qst",
@@ -10153,9 +10153,9 @@
     500
    ],
    "name_ref": "string:322923",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.506",
+   "local_name": "鬼剑士之路 - G.S.D"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_5.qst",
@@ -10197,9 +10197,9 @@
     200
    ],
    "name_ref": "string:322931",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1917",
+   "local_name": "盗贼之路 - 开始"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_into_darkness_minete_2.qst",
@@ -10219,9 +10219,9 @@
     300
    ],
    "name_ref": "string:322935",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.631",
+   "local_name": "盗贼之路 - 赫顿玛尔的辛达"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_into_darkness_minete_3.qst",
@@ -10307,9 +10307,9 @@
     200
    ],
    "name_ref": "string:322951",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1902",
+   "local_name": "格斗家之路 - 开始"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_mujin_pungjin_2.qst",
@@ -10329,9 +10329,9 @@
     300
    ],
    "name_ref": "string:322955",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.511",
+   "local_name": "格斗家之路 - 赫顿玛尔的辛达"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_mujin_pungjin_3.qst",
@@ -10417,9 +10417,9 @@
     200
    ],
    "name_ref": "string:35675",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1903",
+   "local_name": "神枪之路 - 开始"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_one_shot_kiri_2.qst",
@@ -10439,9 +10439,9 @@
     300
    ],
    "name_ref": "string:322974",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.521",
+   "local_name": "神枪之路 - 赫顿玛尔的辛达"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_one_shot_kiri_3.qst",
@@ -10527,9 +10527,9 @@
     200
    ],
    "name_ref": "string:35675",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1916",
+   "local_name": "神枪之路 - 开始"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_royal_garden_at_kiri_2.qst",
@@ -10549,9 +10549,9 @@
     300
    ],
    "name_ref": "string:322974",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.619",
+   "local_name": "神枪之路 - 赫顿玛尔的辛达"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_royal_garden_at_kiri_3.qst",
@@ -10637,9 +10637,9 @@
     200
    ],
    "name_ref": "string:322990",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1905",
+   "local_name": "圣职者之路 - 开始"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_saint_road_grancia_2.qst",
@@ -10659,9 +10659,9 @@
     300
    ],
    "name_ref": "string:322994",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.541",
+   "local_name": "圣职者之路 - 赫顿玛尔的辛达"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_saint_road_grancia_3.qst",
@@ -10857,9 +10857,9 @@
     200
    ],
    "name_ref": "string:35332",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1904",
+   "local_name": "魔法师之路 - 开始"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_westcost_magical_sharan_2.qst",
@@ -10879,9 +10879,9 @@
     300
    ],
    "name_ref": "string:323015",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.531",
+   "local_name": "魔法师之路 - 赫顿玛尔的辛达"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_westcost_magical_sharan_3.qst",

@@ -11,8 +11,17 @@ static var _config: Dictionary = {}
 static var _content_db
 
 static func config() -> Dictionary:
-	if _config.is_empty():_config = JSON.parse_string(FileAccess.get_file_as_string("res://data/numbers.json"))
+	ensure_config()
 	return _config.duplicate(true)
+
+static func ensure_config() -> void:
+	if _config.is_empty():
+		_config = JSON.parse_string(FileAccess.get_file_as_string("res://data/numbers.json"))
+		_config["equipment"].merge(preload("res://content/native_catalog.gd").runtime().get("equipment",{}),false)
+
+static func is_equipment(id: String) -> bool:
+	ensure_config()
+	return _config["equipment"].has(id)
 
 static func record(id: String) -> Dictionary:
 	var cfg := config()

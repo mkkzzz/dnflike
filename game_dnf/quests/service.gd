@@ -182,6 +182,7 @@ func active_count(profile: Dictionary) -> int:
 	return list(profile, ["active", "ready"]).size()
 
 func eligible(profile: Dictionary, quest: Dictionary) -> bool:
+	if int(profile.get("level",1)) > int(quest.get("max_level",999)):return false
 	var rules: Dictionary=quest.get("eligibility",{})
 	var values: Dictionary={"jobs":int(profile.get("job_index",0)),"grow_types":int({"swordman":0,"weaponmaster":1,"berserker":3}.get(profile.get("growtype","swordman"),-999))}
 	for field: String in rules:

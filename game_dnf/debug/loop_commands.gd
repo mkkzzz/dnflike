@@ -16,6 +16,7 @@ func execute(text: String) -> Dictionary:
 	var cmd := words[0].to_lower()
 	var args := words.slice(1)
 	match cmd:
+		"native":return preload("res://debug/native_commands.gd").execute(args)
 		"help":return result(true, HELP)
 		"status":return result(true, status())
 		"save":return result(game.save_profile(), "进度已保存" if not game.save_failed else "保存失败，请检查存档目录")

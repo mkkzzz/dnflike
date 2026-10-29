@@ -1,4 +1,4 @@
-param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [switch]$SyncAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly, [switch]$GranOnly, [switch]$KainoOnly, [switch]$PoisonOnly, [switch]$TeachingOnly, [switch]$UpgradesOnly, [switch]$RecoveryOnly)
+param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [switch]$SyncAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly, [switch]$GranOnly, [switch]$KainoOnly, [switch]$PoisonOnly, [switch]$TeachingOnly, [switch]$NativeOnly, [switch]$UpgradesOnly, [switch]$RecoveryOnly)
 $ErrorActionPreference="Stop"
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
@@ -83,6 +83,11 @@ if ($importExit -ne 0 -or ($importOutput -match '(?m)^(SCRIPT ERROR|ERROR:)')) {
     throw "Loop project import failed."
 }
 if ($Test) {
+    & python (Join-Path $PSScriptRoot "check_dnf_native_catalog.py")
+    if ($LASTEXITCODE -ne 0) {throw "Complete native quest/item package is inconsistent."}
+    $nativeOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_native_bulk.gd 2>&1
+    $nativeOutput | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($nativeOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($nativeOutput -match '\[NATIVE_BULK\] COMPLETE checks=\d+ failures=0')) {throw "Native bulk data regression failed."}
     $teachingOutput=& $GodotPath --headless --path $gamePath --script res://tests/quests/test_teaching_rules.gd 2>&1
     $teachingOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($teachingOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($teachingOutput -match '\[TEACHING_RULES\] COMPLETE checks=\d+ failures=0')) {throw "Teaching task regression failed."}
@@ -133,6 +138,7 @@ if ($Test) {
     if ($KainoOnly) {$runArgs+="--kaino-only"}
     if ($PoisonOnly) {$runArgs+="--poison-only"}
     if ($TeachingOnly) {$runArgs+="--teaching-only"}
+    if ($NativeOnly) {$runArgs+="--native-only"}
     if ($Capture) {$runArgs+="--capture"}
 }
 $ErrorActionPreference="Continue"
@@ -140,4 +146,4 @@ $ErrorActionPreference="Continue"
 $engineExit=$LASTEXITCODE
 $ErrorActionPreference="Stop"
 if ($engineExit -ne 0 -or ($runOutput -match '(?m)^(SCRIPT ERROR|ERROR:)')) {throw "Native loop runtime failed."}
-if ($Test -and -not ($runOutput -match $(if ($TeachingOnly) {'\[TEACHING_QUICK\] COMPLETE checks=\d+ failures=0'} elseif ($PoisonOnly) {'\[POISON_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($KainoOnly) {'\[KAINO_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($GranOnly) {'\[GRAN_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($TownsOnly) {'\[HENDON_TEST\] COMPLETE checks=\d+ failures=0'} elseif ($QuestsOnly) {'\[QUEST_CHAPTER\] COMPLETE checks=\d+ failures=0'} else {'\[LOOP_TEST\] COMPLETE checks=\d+ failures=0'}))) {throw "Native loop checks did not complete."}
+if ($Test -and -not ($runOutput -match $(if ($NativeOnly) {'\[NATIVE_QUICK\] COMPLETE checks=\d+ failures=0'} elseif ($TeachingOnly) {'\[TEACHING_QUICK\] COMPLETE checks=\d+ failures=0'} elseif ($PoisonOnly) {'\[POISON_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($KainoOnly) {'\[KAINO_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($GranOnly) {'\[GRAN_CHAPTER\] COMPLETE checks=\d+ failures=0'} elseif ($TownsOnly) {'\[HENDON_TEST\] COMPLETE checks=\d+ failures=0'} elseif ($QuestsOnly) {'\[QUEST_CHAPTER\] COMPLETE checks=\d+ failures=0'} else {'\[LOOP_TEST\] COMPLETE checks=\d+ failures=0'}))) {throw "Native loop checks did not complete."}

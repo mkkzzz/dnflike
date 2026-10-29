@@ -51,7 +51,8 @@ def main() -> int:
     args = parser.parse_args()
     implemented = {}
     quests_doc = json.loads((GAME / 'data/quests.json').read_text(encoding='utf-8'))
-    for quest in quests_doc['quests']:
+    native = json.loads((GAME / 'data/native_runtime.json').read_text(encoding='utf-8'))
+    for quest in quests_doc['quests'] + native['quests']:
         source = quest.get('source') or {}
         path = str(source.get('path', '')).lower()
         if path:

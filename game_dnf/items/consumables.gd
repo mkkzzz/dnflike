@@ -4,7 +4,9 @@ const Items=preload("res://items/inventory.gd")
 const Numbers=preload("res://stats/api/numbers.gd")
 static var _config: Dictionary={}
 static func config() -> Dictionary:
-	if _config.is_empty():_config=JSON.parse_string(FileAccess.get_file_as_string("res://data/recovery.json"))
+	if _config.is_empty():
+		_config=JSON.parse_string(FileAccess.get_file_as_string("res://data/recovery.json"))
+		_config["consumables"].merge(preload("res://content/native_catalog.gd").runtime().get("consumables",{}),false)
 	return _config
 static func initialize(run: Dictionary) -> void:
 	if not run.has("consumables"):run["consumables"]={"items":{},"groups":{},"transactions":{}}
@@ -23,7 +25,14 @@ static func use(p: Dictionary, run: Dictionary, id: String, view: Dictionary, tx
 	if view.get("run_id")!=run.get("id") or view.get("paused",true) or view.get("finished",true) or float(view.get("hp",0))<=0:return Items.fail("请在存活且未暂停的战斗中使用物品")
 	var rule: Dictionary=rules[id]
 	if int(p["level"])<int(rule["level"]):return Items.fail("角色等级不足，无法使用")
-	var effect: Dictionary=rule["effect"]
+	var effect: Dictionary=rule["effect"].duplicate(true)
+	# Resolve percentages from the current validated maxima before emitting the
+	# existing public restore request; the combat kernel receives absolute values.
+	for resource: String in ["hp","mp"]:
+		var percent:=float(effect.get(resource+"_percent",0))
+		if percent<=0:continue
+		if not finite(view.get(resource+"_max"),1,1000000000):return Items.fail("恢复上限快照无效")
+		effect[resource]=float(effect.get(resource,0))+float(view[resource+"_max"])*percent/100.0
 	var hp_amount:=float(effect.get("amount",0)) if effect.get("kind")=="heal" else float(effect.get("hp",0))
 	var mp_amount:=float(effect.get("mp",0))
 	if mp_amount>0 and (not finite(view.get("mp"),0,1000000000) or not finite(view.get("mp_max"),1,1000000000) or view["mp"]>view["mp_max"]):return Items.fail("魔法值快照无效")

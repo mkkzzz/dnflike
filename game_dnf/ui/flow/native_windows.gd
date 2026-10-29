@@ -15,6 +15,8 @@ var skill_tip_id := ""
 var skill_tip_rect: Rect2
 var item_icons: Dictionary = {}
 var original_icons: Dictionary = {}
+var native_item_manifest: Dictionary = {}
+var native_item_textures: Dictionary = {}
 
 func _init(root) -> void:
 	game = root
@@ -116,13 +118,24 @@ func field_texture(id: String) -> Texture2D:
 	return original_texture(id,"field_images")
 
 func original_texture(id: String, kind: String) -> Texture2D:
+	if native_item_manifest.is_empty():native_item_manifest=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/items_native_v1/manifest.json"))
+	if native_item_manifest.get(kind,{}).has(id):
+		var key: String=native_item_manifest[kind][id]
+		if not native_item_textures.has(key):
+			var info: Dictionary=native_item_manifest["images"][key]
+			var texture:=AtlasTexture.new()
+			texture.atlas=load("res://assets_local/items_native_v1/"+String(info["file"]))
+			var region: Array=info["region"]
+			texture.region=Rect2(region[0],region[1],region[2],region[3])
+			native_item_textures[key]=texture
+		return native_item_textures[key]
 	if original_icons.is_empty():
 		for pack: String in ["items_original_v1","items_original_v2","items_original_v3"]:
 			var base: String="res://assets_local/"+pack+"/"
 			var data: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(base+"manifest.json"))
 			for group: String in ["items","field_images"]:
 				for item: String in data[group]:original_icons[group+":"+item]=base+String(data["images"][data[group][item]]["file"])
-	return load(original_icons[kind+":"+id])
+	return load(original_icons[kind+":"+id]) if original_icons.has(kind+":"+id) else null
 
 func hide_tooltip() -> void:
 	if is_instance_valid(tip):tip.queue_free()
@@ -133,7 +146,12 @@ func item_tip(id: String, rect: Rect2, buying := false, attached := false, insta
 	var data: Dictionary = game.Catalog.ITEMS[id]
 	var rarity: Dictionary = game.Catalog.RARITIES[int(data["rarity"])]
 	var is_weapon: bool = data["kind"] == "weapon"
-	var height := 280 if is_weapon else 220
+	var definition: Dictionary=game.session.Numbers.config()["equipment"].get(id,{}) if is_weapon else {}
+	var properties: Dictionary=definition.get("stats",{})
+	var equipped_uid: String=instance_uid if instance_uid!="" else game.session.profile["equipment"].get("weapon","")
+	if is_weapon and equipped_uid!="" and game.session.profile["gear"][equipped_uid]["definition"]==id:properties=game.session.Numbers.gear_detail(game.session.profile,equipped_uid)
+	var property_rows:=ceili(properties.size()/2.0)
+	var height := maxi(280,255+property_rows*17) if is_weapon else 220
 	var at := Vector2(rect.position.x - 288, rect.position.y)
 	if at.x < 8:at.x = rect.end.x + 8
 	at.x = clampf(at.x, 8, 512)
@@ -156,20 +174,19 @@ func item_tip(id: String, rect: Rect2, buying := false, attached := false, insta
 		skin.label(tip, "重量  %.2f kg" % float(data["weight"]), Vector2(163, 108), 11, Color("a59c88"))
 		skin.image(tip, skin.texture("common", 230), Vector2(39, 140))
 		skin.label(tip, "装备属性", Vector2(16, 152), 12, Color("d4c399"))
-		var definition: Dictionary = game.session.Numbers.config()["equipment"][id]
-		var detail := ""
-		var properties: Dictionary = definition["stats"]
-		var equipped_uid: String = instance_uid if instance_uid!="" else game.session.profile["equipment"].get("weapon","")
-		if equipped_uid!="" and game.session.profile["gear"][equipped_uid]["definition"]==id:properties = game.session.Numbers.gear_detail(game.session.profile,equipped_uid)
+		var stat_index:=0
 		for stat: String in properties:
-			detail += "%s +%s  " % [game.number_windows.NAMES.get(stat,stat),properties[stat]]
-		skin.label(tip, detail, Vector2(16, 178), 12, Color("a7dd74"))
+			var percent: bool=stat in ["attack_speed","move_speed","cast_speed","physical_crit","magical_crit","hit","evasion"]
+			var value_text: String=("%+.1f%%" % (float(properties[stat])*100)) if percent else ("%+.1f" % float(properties[stat]))
+			var label: Label=skin.label(tip,"%s %s" % [game.number_windows.NAMES.get(stat,stat),value_text],Vector2(16+(stat_index%2)*125,178+floori(stat_index/2.0)*17),11,Color("a7dd74"))
+			label.set_deferred("size",Vector2(124,17));label.clip_text=true
+			stat_index+=1
 		var uid: String = equipped_uid
 		if uid!="" and game.session.profile["gear"][uid]["definition"]==id:
 			var instance: Dictionary = game.session.profile["gear"][uid]
-			skin.label(tip,"%s · 品质 %d · 强化 +%d%s" % [uid,instance["quality"],instance["reinforce"]," · 已锁定" if instance.get("locked",false) else ""],Vector2(16,201),10)
-			skin.label(tip,"耐久 %d / %d%s" % [instance["durability"],instance["durability_max"]," · 属性已失效" if int(instance["durability"])==0 else ""],Vector2(16,218),11,Color("ff7777") if int(instance["durability"])==0 else Color("a7dd74"))
-		else:skin.label(tip,"具体品质与强化见 O 键的装备管理",Vector2(16,201),10)
+			skin.label(tip,"%s · 品质 %d · 强化 +%d%s" % [uid,instance["quality"],instance["reinforce"]," · 已锁定" if instance.get("locked",false) else ""],Vector2(16,183+property_rows*17),10)
+			skin.label(tip,"耐久 %d / %d%s" % [instance["durability"],instance["durability_max"]," · 属性已失效" if int(instance["durability"])==0 else ""],Vector2(16,200+property_rows*17),11,Color("ff7777") if int(instance["durability"])==0 else Color("a7dd74"))
+		else:skin.label(tip,"具体品质与强化见 O 键的装备管理",Vector2(16,183+property_rows*17),10)
 		if (instance_uid!="" and instance_uid in game.session.profile["equipment"].values()) or (instance_uid=="" and game.session.profile["equipped"]==id):skin.label(tip, "已装备", Vector2(211, 151), 11, Color("a7dd74"))
 	else:
 		skin.label(tip, "任务物品" if data["kind"]=="quest" else "使用效果", Vector2(16, 82), 12, Color("d4c399"))

@@ -4,7 +4,9 @@ const Inventory=preload("res://items/inventory.gd")
 const Numbers=preload("res://stats/api/numbers.gd")
 const Upgrades=preload("res://items/upgrades.gd")
 static func config() -> Dictionary:
-	return JSON.parse_string(FileAccess.get_file_as_string("res://data/services.json"))
+	var data: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://data/services.json"))
+	data["items"].merge(preload("res://content/native_catalog.gd").runtime().get("services",{}),false)
+	return data
 
 static func initialize(p: Dictionary) -> void:
 	if not p.has("services"):p["services"]={"revision":1,"next_sale":1,"buyback":[],"transactions":{}}

@@ -5,6 +5,12 @@
 # 显式声明该类型为 LF，让索引与工作区期望一致，从根上消除假脏。
 *.import text eol=lf
 
+# 原库源包/运行定义/证据按原字节哈希校验，跨 clone 固定 LF。
+game_dnf/data/native_runtime.json text eol=lf
+game_dnf/assets_local/native_data_v1/manifest.json text eol=lf
+game_dnf/assets_local/items_native_v1/manifest.json text eol=lf
+docs/reports/ws2/2026-10/native_bulk_v1/*.log text eol=lf
+
 # v7 的源配置与导出记录含文件哈希，跨 clone 保持 LF，避免换行改写导致校验不一致。
 art/animations/players/swordsman/v7/sources/**/*.json text eol=lf
 art/animations/players/swordsman/v7/sources/proportion_reset_c3/**/prompt.txt text eol=lf

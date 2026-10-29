@@ -20,6 +20,7 @@ GAME = ROOT / 'game_dnf'
 def main() -> int:
     catalog = json.loads((GAME / 'data/quest_catalog.json').read_text(encoding='utf-8'))
     quests = json.loads((GAME / 'data/quests.json').read_text(encoding='utf-8'))['quests']
+    quests += json.loads((GAME / 'data/native_runtime.json').read_text(encoding='utf-8'))['quests']
     by_path = {r['path'].lower(): r for r in catalog['quests']}
     fails: list[str] = []
     if catalog['summary']['failed']:

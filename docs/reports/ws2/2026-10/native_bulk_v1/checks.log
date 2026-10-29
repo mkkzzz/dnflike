@@ -1,0 +1,13 @@
+[NATIVE_BULK] COMPLETE checks=7533 failures=0
+[TEACHING_RULES] COMPLETE checks=30 failures=0
+[POISON_RULES] COMPLETE checks=26 failures=0
+[ORIGINAL_DATA] COMPLETE checks=31 failures=0
+[RECOVERY_TEST] COMPLETE checks=50 failures=0
+[UPGRADE_TEST] COMPLETE checks=46 failures=0
+[SERVICE_TEST] COMPLETE checks=33 failures=0
+[ITEM_TEST] COMPLETE checks=44 failures=0
+[NUMBERS_TEST] COMPLETE checks=63 failures=0
+[QUEST_TEST] COMPLETE checks=45 failures=0
+[TOWN_UNIT] COMPLETE checks=102 failures=0
+[GRAN_UNIT] COMPLETE checks=19 failures=0
+[NATIVE_QUICK] COMPLETE checks=16 failures=0 captures=3

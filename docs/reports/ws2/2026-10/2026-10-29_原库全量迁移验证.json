@@ -1,0 +1,79 @@
+{
+  "schema": "dnf_native_migration_evidence/1",
+  "basis": "d5452008 plus this working tree",
+  "scope": "complete source migration; supported runtime subset; no dungeon combat playthrough",
+  "source_summary": {
+    "files": 89274,
+    "by_extension": {
+      "unindexed_files": 4769,
+      ".etc": 592,
+      ".equ": 74475,
+      ".qst": 3716,
+      ".stk": 10491
+    },
+    "indexed_ids": {
+      "quests": 2824,
+      "equipment": 67184,
+      "stackable": 14499
+    },
+    "retained_raw": 19,
+    "new_items": 3729,
+    "new_equipment": 2461,
+    "new_consumables": 76,
+    "new_quests": 16
+  },
+  "source": {
+    "kind": "111 archived extraction",
+    "pvf_sha256": "f48850456b7dc0107278fb3f3a74fd68ee404889b95880f3204ce10fbd179be0",
+    "extraction_database_sha256": "74d5681b9afd0816b50d46e1150afebd10e66fe196de14bf0fa5bf56124a2799",
+    "encoding": "cp950",
+    "display_conversion": "Traditional to Simplified; no cross-PVF index joins"
+  },
+  "frames": 1695,
+  "atlas_pages": 2,
+  "checks": [
+    "[NATIVE_BULK] COMPLETE checks=7533 failures=0",
+    "[TEACHING_RULES] COMPLETE checks=30 failures=0",
+    "[POISON_RULES] COMPLETE checks=26 failures=0",
+    "[ORIGINAL_DATA] COMPLETE checks=31 failures=0",
+    "[RECOVERY_TEST] COMPLETE checks=50 failures=0",
+    "[UPGRADE_TEST] COMPLETE checks=46 failures=0",
+    "[SERVICE_TEST] COMPLETE checks=33 failures=0",
+    "[ITEM_TEST] COMPLETE checks=44 failures=0",
+    "[NUMBERS_TEST] COMPLETE checks=63 failures=0",
+    "[QUEST_TEST] COMPLETE checks=45 failures=0",
+    "[TOWN_UNIT] COMPLETE checks=102 failures=0",
+    "[GRAN_UNIT] COMPLETE checks=19 failures=0",
+    "[NATIVE_QUICK] COMPLETE checks=16 failures=0 captures=3"
+  ],
+  "quick_final": "[NATIVE_QUICK] COMPLETE checks=16 failures=0 captures=3",
+  "commands": [
+    "python tools/check_dnf_native_catalog.py",
+    "python -m unittest discover -s tools -p test_dnf_native_catalog.py",
+    "python tools/bake_dnf_native_item_atlas.py --check",
+    "tools/run_dnf_loop.ps1 -Test -NativeOnly -Capture",
+    "Godot --path game_dnf res://scenes/loop.tscn --fixed-fps 60 --loop-test --native-only --capture (final UI-only rerun)"
+  ],
+  "files_sha256": {
+    "docs/reports/ws2/2026-10/native_bulk_v1/preflight.log.gz": "f5ff7eba51491c459f21c48bb084c6774bdbe82af1186782aa47d1475d18c0e5",
+    "docs/reports/ws2/2026-10/native_bulk_v1/quick.log.gz": "5742f7a3a1846e894a122889f42ffc593a361219f28eb06d4f883cdfc7a80b32",
+    "docs/reports/ws2/2026-10/native_bulk_v1/integrity.log": "bd124bffe717ca8c55ba457a12f19e11c0cf340c01c1b8b59075ff774a03c4d0",
+    "docs/reports/ws2/2026-10/native_bulk_v1/atlas.log": "7c205c1d70f4f56a67e01f479e4ba271049eca8f6fd1c6efc17d56c625e638be",
+    "docs/reports/ws2/2026-10/native_bulk_v1/grammar.log": "f2c53ce86fe0aefcf6ae8ae62f4dcef8a139f07b7f842d88dfeaf529d78b5683",
+    "docs/screenshots/2026-10-29_native_bulk_v1/native_01_original_equipment.png": "3ad731c0bf9eea7b1c5a5ae5591c97c5fbc5393a25185f860e1c0aa846bbca20",
+    "docs/screenshots/2026-10-29_native_bulk_v1/native_02_original_materials.png": "4fe564ede823683372bb5bba32871fda2330328a42f1d2509cc1ed226a9ddbe0",
+    "docs/screenshots/2026-10-29_native_bulk_v1/native_03_original_foods.png": "0734da5ddc41efa0299aa8ccbed3d6b01124c2e6532a37e1c5976eccb89edd29",
+    "game_dnf/assets_local/native_data_v1/manifest.json": "b2310a1f40833235d01069410508b2219da2f6084ee8d02a93d900f93a21126b",
+    "game_dnf/assets_local/items_native_v1/manifest.json": "37000fa710238520286531602e6f7243ce884baff6f407a18ff2d8af241853c5",
+    "game_dnf/data/native_runtime.json": "8c766a4c27b73d1fd635be9d1ac61a0fb2c8fb2eec159fd70ddecafb3385f73d"
+  },
+  "limitations": [
+    "full source presence does not mean complete gameplay support",
+    "current runtime PVF and level-60 whitelist unconfirmed",
+    "original XP formula not yet compiled for new bulk quests",
+    "existing three weapon appearances and town-only equipment",
+    "repair-per-point is adapted; original disassembly unimplemented",
+    "missing stack cap uses project 99; missing durability uses project 40; original omission semantics not asserted",
+    "legacy Ogg metadata warnings retained"
+  ]
+}

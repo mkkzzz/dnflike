@@ -12,6 +12,7 @@ func _init(data: Dictionary = {}) -> void:
 			errors.append("任务配置无法读取")
 			return
 		data = decoded
+		data["quests"].append_array(preload("res://content/native_catalog.gd").runtime().get("quests",[]))
 	config = data.duplicate(true)
 	for key in ["npcs", "dungeons", "limits"]:
 		if not config.get(key) is Dictionary:
