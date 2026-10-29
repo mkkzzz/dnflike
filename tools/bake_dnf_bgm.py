@@ -50,6 +50,7 @@ DUNGEONS = {
     'mirkwood_frost': {'normal': 'music/mirkwood.ogg', 'boss': 'music/mirkwood_boss.ogg'},
     'grakkarak_burning': {'normal': 'music/grakkarak_new.ogg', 'boss': 'music/grakkarak_new_boss.ogg'},
     'sunderland': {'normal': 'music/sunderland.ogg', 'boss': 'music/sunderland_boss.ogg'},
+    'sunderland_poison': {'normal': 'music/sunderland.ogg', 'boss': 'music/sunderland_boss.ogg'},
     'sunderland_dark': {'normal': 'music/sunderland.ogg', 'boss': 'music/sunderland_boss.ogg'},
     'draconiantower': {'normal': 'music/draconian_tower.ogg', 'boss': 'music/draconian_tower_boss.ogg'},
     'draconiantower_amonlow': {'normal': 'music/draconian_tower.ogg', 'boss': 'music/draconian_tower_boss.ogg'},

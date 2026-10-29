@@ -143,6 +143,7 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 			if state != "town":return reject("请回城后购买")
 			var id := String(payload.get("id", ""))
 			if not CATALOG.ITEMS.has(id) or not CATALOG.ITEMS[id].has("price"):return reject("商品不存在")
+			if not CATALOG.ITEMS[id].get("purchasable",true):return reject("该物品不能购买")
 			var count = payload.get("count", 1)
 			if not count is int or count < 1 or count > 999:return reject("购买数量无效")
 			var price: int = int(CATALOG.ITEMS[id]["price"]) * int(count)
@@ -224,7 +225,8 @@ func combat_event(event: Dictionary) -> Dictionary:
 			state="defeated";result={}
 			return {"ok":true}
 		"combat.monster_defeated":
-			var loot_changed:=Loot.generate(run,event)
+			var drops: Array=preload("res://quests/drops.gd").entries(profile,run,event,quests.catalog.definitions)
+			var loot_changed:=Loot.generate(run,event,drops)
 			var quest_changed := false
 			if event.has("event_id"):
 				var quest_event := event.duplicate(true)

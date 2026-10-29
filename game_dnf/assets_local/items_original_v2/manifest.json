@@ -1,0 +1,82 @@
+{
+  "schema": "dnf_original_item_images/1",
+  "revision": 1,
+  "items": {
+    "original_4169": "d5af423b8518_92",
+    "original_20006": "89fd6324de75_65"
+  },
+  "field_images": {
+    "original_4169": "d5af423b8518_92",
+    "original_20006": "aefbfc6433d3_6"
+  },
+  "pixel_policy": "Native source RGBA, unchanged size; no resize, repaint or separate preview assets",
+  "images": {
+    "d5af423b8518_92": {
+      "file": "img/d5af423b8518_92.png",
+      "source_path": "sprite/item/stackable/quest.img",
+      "source_npk": "ImagePacks2/sprite_item_stackable.NPK",
+      "img_sha256": "d5af423b8518273fc9242bd15b3b3294e82544816edeb2f5a5dd900310e4872d",
+      "frame": 92,
+      "size": [
+        28,
+        28
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "variants": 2
+    },
+    "89fd6324de75_65": {
+      "file": "img/89fd6324de75_65.png",
+      "source_path": "sprite/item/iconacc.img",
+      "source_npk": "ImagePacks2/sprite_item.NPK",
+      "img_sha256": "89fd6324de752c1a36101499d5a09261ec9eb48ba60ecfa5badd65b1f58d9f7d",
+      "frame": 65,
+      "size": [
+        28,
+        28
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "variants": 1
+    },
+    "aefbfc6433d3_6": {
+      "file": "img/aefbfc6433d3_6.png",
+      "source_path": "sprite/item/fieldimage.img",
+      "source_npk": "ImagePacks2/!!!!!!!!!!!!!!!!!!!!宝珠.NPK",
+      "img_sha256": "aefbfc6433d3ea3d22028bcf3d68967f23fe6e93ddefd7b3dca4a6cb567c8e8f",
+      "frame": 6,
+      "size": [
+        17,
+        18
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "variants": 3
+    }
+  },
+  "diagnostics": [
+    {
+      "level": "info",
+      "code": "image_variants",
+      "path": "original_4169",
+      "detail": "sprite/item/stackable/quest.img: 2 candidates; chose ImagePacks2/sprite_item_stackable.NPK (sprite_ package first, not proven client priority)"
+    },
+    {
+      "level": "info",
+      "code": "image_variants",
+      "path": "original_20006",
+      "detail": "sprite/item/fieldimage.img: 3 candidates; chose ImagePacks2/!!!!!!!!!!!!!!!!!!!!宝珠.NPK (sprite_ package first, not proven client priority)"
+    }
+  ],
+  "files": {
+    "img/89fd6324de75_65.png": "7281bf655409d37f1e4fdfd7c21c17f47ff1524518e3f3fd3f9210b683532e22",
+    "img/aefbfc6433d3_6.png": "9bc11a44bb11a87978fcef5aaa2f876ed54855d1d619150d44428e947d11b3b3",
+    "img/d5af423b8518_92.png": "de07860e619b6602b7d1bc1f325d9c64a9b2c22301881dccd18a4033372aedf7"
+  }
+}

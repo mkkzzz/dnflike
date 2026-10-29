@@ -1,0 +1,597 @@
+[DNF_TEST] PASS event bus routes exact and module-prefix subscribers with unique ids
+[DNF_TEST] PASS Box6 mirrors around the anchor when facing left
+[DNF_TEST] PASS Box6 overlap requires all three axes
+[DNF_TEST] PASS deterministic random source repeats with the same seed
+[DNF_TEST] PASS combat HUD widgets are discovered from their folder in draw order
+[DNF_TEST] PASS battle simulation no longer draws or owns presentation nodes
+[DNF_TEST] PASS native local resource manifest loaded
+[DNF_TEST] PASS five-room right-up-right-up route
+[DNF_TEST] PASS ANI milliseconds retained without frame-number guessing
+[DNF_TEST] PASS state-hold frames remain source metadata
+[DNF_TEST] PASS content layers distinguish original base from adaptation values
+[DNF_TEST] PASS current adaptation values never shadow original base data
+[DNF_TEST] PASS override layer wins and switching it off restores the baseline
+[DNF_TEST] PASS adaptation cannot overwrite an original base value and the collision is reported
+[DNF_TEST] PASS compiled original content pack loads with every reference resolved
+[DNF_TEST] PASS original attack info knockback and launch values are queryable
+[DNF_TEST] PASS original skill ID table resolves and keeps the dungeon-context cool time
+[DNF_TEST] PASS original character base stats and three-hit attack info list are queryable
+[DNF_TEST] PASS original ANI timeline exposes per-frame attack boxes with their start times
+[DNF_TEST] PASS kernel tables resolve every linked original file
+[DNF_TEST] PASS attack3 uses its own ANI boxes; box-less attack1 borrows an original swordman box timeline
+[DNF_TEST] PASS normal attack percent = 100 + original ATK damage bonus
+[DNF_TEST] PASS upper slash MP, cooldown, damage percent and launch come from the SKL dungeon level-1 row
+[DNF_TEST] PASS triple slash has three original stages and its SKL cooldown
+[DNF_TEST] PASS draw slash hits through its original wave passive object
+[DNF_TEST] PASS gore cross ends with its original cross passive object
+[DNF_TEST] PASS goblin stats and motions come from goblin.mob (HP 70%, attack delay, Animation_Goblin2)
+[DNF_TEST] PASS goblin thrower throws its original stone object on throw frame 2 at the particle speed
+[DNF_TEST] PASS player jump power and default HP come from the CHR initial values
+[DNF_TEST] PASS attack windup does not deal early damage
+[DNF_TEST] PASS buffered three-cut combo produces distinct real hits
+[DNF_TEST] PASS real monster health is reduced
+[DNF_TEST] PASS combat hit bookkeeping advances
+[DNF_TEST] PASS every real hit publishes paired hit and damage events
+[DNF_TEST] PASS different depth lanes cannot be hit
+[DNF_TEST] PASS upper slash launches target into physical height
+[DNF_TEST] PASS upper cooldown is active
+[DNF_TEST] PASS cooldown prevents duplicate skill cast
+[DNF_TEST] PASS failed cast does not spend MP
+[DNF_TEST] PASS rejected cast reports its reason instead of being swallowed
+[DNF_TEST] PASS jump input raises sprite above independent ground root
+[DNF_TEST] PASS airborne attack selects original jumpattack ANI
+[DNF_TEST] PASS jump height is not applied to depth coordinate
+[DNF_TEST] PASS view keeps exactly one actor per live simulation entity
+[DNF_TEST] PASS jump eventually lands
+[DNF_TEST] PASS left input moves and faces left
+[DNF_TEST] PASS three-weapon bank switches to matching original pose set
+[DNF_TEST] PASS hitstop freezes the sole action clock
+[DNF_TEST] PASS frontal guard reduces damage by eighty percent
+[DNF_TEST] PASS guard does not protect from behind
+[DNF_TEST] PASS A starts the original draw-slash timeline
+[DNF_TEST] PASS draw slash and actor share a spawned source effect timeline
+[DNF_TEST] PASS S starts the first original triple-slash stage
+[DNF_TEST] PASS F casts frenzy with its original buff motion
+[DNF_TEST] PASS D selects the gore-cross source animation
+[DNF_TEST] PASS buffered skill cannot cut off the active slash window
+[DNF_TEST] PASS buffered skill starts after the active window
+[DNF_TEST] PASS original goblin windup has no early contact damage
+[DNF_TEST] PASS original goblin active frame delivers real damage
+[DNF_TEST] PASS down + jump performs a back step: physical hop away from facing
+[DNF_TEST] PASS back step uses the jump rise/fall poses
+[DNF_TEST] PASS back step lands back to idle
+[DNF_TEST] PASS back step cancels a normal attack and leaves an afterimage of the cut pose
+[DNF_TEST] PASS skills cannot be cancelled by a back step yet
+[DNF_TEST] PASS holding a direction and pressing X is a normal attack, not a dash attack
+[DNF_TEST] PASS same-direction double tap selects original running ANI
+[DNF_TEST] PASS X out of a run starts the dash attack thrust
+[DNF_TEST] PASS walkability comes from the original map pass grid
+[DNF_TEST] PASS blocked map cells stop movement; open cells allow it
+[DNF_TEST] PASS jump buffered through upper hitstop starts aerial chase in recovery
+[DNF_TEST] PASS same-tick jump and attack selects airborne source pose
+[DNF_TEST] PASS target outside every original attack box is not hit
+[DNF_TEST] PASS attack1 [damage] reaction staggers a grounded target without launching it
+[DNF_TEST] PASS damage = attack power 25 x (100-15)% from the original ATK
+[DNF_TEST] PASS hitstop freezes only attacker and target, not the rest of the room
+[DNF_TEST] PASS weapon hit plays its CHR weapon hit sound and sized cut effect (greatsword)
+[DNF_TEST] PASS attack swing plays the CHR weapon swing sound (greatsword)
+[DNF_TEST] PASS damage number uses the original white digit set
+[DNF_TEST] PASS ATK push aside slides the target away from the attacker
+[DNF_TEST] PASS attack3 [down] with lift up launches the target into the air
+[DNF_TEST] PASS launched target lands into its original down motion
+[DNF_TEST] PASS gore cross lands its slashes and spawns the cross object
+[DNF_TEST] PASS draw slash wave object hits a target 190 px away
+[DNF_TEST] PASS repeated S walks the three triple-slash stages
+[DNF_TEST] PASS each triple-slash stage lands its own hit
+[DNF_TEST] PASS goblin walks toward the player at its MOB move speed
+ERROR: [DNF_TEST] FAIL goblin attack lands through its own attack box onto the player's damage box
+ERROR: [DNF_TEST] FAIL damage taken uses the original red digit set
+[DNF_TEST] PASS goblin is drawn from its own original Animation_Goblin2 body bank
+[DNF_TEST] PASS goblin thrower's stone object travels and hits the player
+[DNF_TEST] PASS airborne monster pose is overturn with its original pi rotation
+[DNF_TEST] PASS upper slash plays its own original motion, not the 裂波斩 poses
+[DNF_TEST] PASS upper slash cues its upperslash effects, swing sound and voice
+[DNF_TEST] PASS jump attack can still move in the air
+[DNF_TEST] PASS first slash slides forward with a smooth decelerating motion
+[DNF_TEST] PASS second slash turned left on request and slides that way
+[DNF_TEST] PASS gore cross slash marks are tagged with the running move
+[DNF_TEST] PASS gore cross crescent object spawns on the caster's own anchor
+[DNF_TEST] PASS no gore cross effect remains once the move has ended
+[DNF_TEST] PASS no monster bar before anything is hit
+[DNF_TEST] PASS hit monster shows its name, level and HP in the top bar
+[DNF_TEST] PASS top bar draws the original monster_hp.img frame, face and HP line
+[DNF_TEST] PASS no program-drawn rectangle bars over monsters
+[DNF_TEST] PASS boss room shows the centred multi-line boss bar
+[DNF_TEST] PASS first room is the original Lorien start map s3
+[DNF_TEST] PASS monsters spawn from the original map's own monster list
+[DNF_TEST] PASS camera follows the player inside the wider original room
+[DNF_TEST] PASS uncleared forward door is locked
+[DNF_TEST] PASS all monsters dead opens room doors
+[DNF_TEST] PASS each defeat and the room finish are reported exactly once
+[DNF_TEST] PASS flow events carry run and room identity
+[DNF_TEST] PASS cleared door advances to the neighbouring original cell
+[DNF_TEST] PASS entering spawns next to the paired gate on the far side
+[DNF_TEST] PASS uncleared return door is also locked
+[DNF_TEST] PASS return visit preserves cleared room state
+[DNF_TEST] PASS cleared room does not respawn monsters
+[DNF_TEST] PASS original route reaches room 2 (0_1:8)
+[DNF_TEST] PASS paired door grants safe spawn guard for room 2
+[DNF_TEST] PASS original route reaches room 3 (1_1:9)
+[DNF_TEST] PASS paired door grants safe spawn guard for room 3
+[DNF_TEST] PASS original route reaches room 4 (1_2:b3)
+[DNF_TEST] PASS paired door grants safe spawn guard for room 4
+[DNF_TEST] PASS last room is the original boss map b3
+[DNF_TEST] PASS boss room spawns the original goblin thrower marked [boss] in the map
+[DNF_TEST] PASS boss clear enters victory result
+[DNF_TEST] PASS boss result keeps every exit closed
+[DNF_TEST] PASS restart resets complete dungeon run
+[DNF_TEST] PASS player death enters defeat result
+[DNF_TEST] PASS player defeat is reported once to the flow side
+[DNF_TEST] PASS pause freezes dungeon simulation
+[DNF_TEST] PASS pause can be resumed
+[DNF_TEST] PASS external mode waits for start_room instead of auto-starting
+[DNF_TEST] PASS start_room applies the room and the flow-supplied character snapshot
+[DNF_TEST] PASS flow-supplied max HP and equipment multiplier drive the actual combat
+[DNF_TEST] PASS validated flow effect heals through the public entry
+[DNF_TEST] PASS pausing drops held input and refuses effects
+[DNF_TEST] PASS flow-owned keys are ignored by a managed combat
+[DNF_TEST] PASS session pause freezes only the managed combat
+[DNF_TEST] PASS session relays defeats and room finish as signals
+[DNF_TEST] PASS relayed events keep the flow's run and room identity
+[DNF_TEST] PASS non-boss room finish is not final and carries settlement stats
+[DNF_TEST] PASS flow-facing events have unique ids for idempotent rewards
+[DNF_TEST] PASS stop unloads the managed combat scene
+[DNF_TEST] COMPLETE checks=143 failures=2
+
+Diagnostic counts; full raw output is retained in the adjacent .log.gz:
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/draw.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/draw_ready.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/goblin_die.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/goblin_hurt.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/hurt.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/jump.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/music.ogg", should contain '=': "Sonic Foundry OggVorbis Beta 3".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/swing1.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/swing2.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/swing3.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/thrust.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/audio/upper.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/astorm_hit_light.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswda_hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswdb.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/beamswdb_hit.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/drawing_sword_hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/drawing_sword_hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gbn_dmg_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_atk3.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_cross.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/gorecross_hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/kata_hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/katb.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/katb_hit.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswda_hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswdb.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/minswdb_hit.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/slessswd_hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/slessswd_hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_atk_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_atk_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_atk_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_back.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_bal1.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_bal2.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_die.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_dmg_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_dmg_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_dmg_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_gorecross.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_jump.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_jumpatk_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_jumpatk_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_triple1.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_triple2.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_triple3.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sm_upslash.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswda_hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdb.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdb_hit.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdc_hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sqrswdc_hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/staff_hit.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/sticka_hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/stickb_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/stickb_hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/throw_stone.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/combat/audio/upper_slash_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_fighterstatue/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_fighterstatue/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_fighterstatue/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_fighterstatue/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_fighterstatue/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_fighterstatue/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_gunnerstatue/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_gunnerstatue/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_gunnerstatue/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_gunnerstatue/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_gunnerstatue/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_gunnerstatue/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_magicianstatue/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_magicianstatue/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_magicianstatue/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_magicianstatue/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_magicianstatue/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_magicianstatue/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_prieststatue/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_prieststatue/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_prieststatue/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_prieststatue/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_prieststatue/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_prieststatue/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_swordmanstatue/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_swordmanstatue/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_swordmanstatue/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_swordmanstatue/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_swordmanstatue/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/characterstatue_swordmanstatue/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_claymaster/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_claymaster/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_golemmaster/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_golemmaster/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_icedoll_sharedo/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_icedoll_sharedo/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_masterdogri/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_masterdogri/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_steelmaster/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_steelmaster/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_stonemaster/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/dollmaster_stonemaster/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_harseseri/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_looseseri/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_selion/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/flydragon_summon_serimalion/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagel/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bombkagelland/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bullseye/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_bunkerworker/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_cowardgoblin/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_fire/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flaghillgab/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_flagseagab/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_ice/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_kinol/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_nightvisionkagel/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_prag/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagel/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_surikenkagelland/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_taskmaster/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/goblin_thrower_taskmaster/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/die_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/die_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_biggolem/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/attack_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/die_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/die_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_bronzegolem/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/attack_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/die_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/die_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_claygolem/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/attack_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/die_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/die_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgoleml/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/attack_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/die_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/die_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_greatgolemr/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/attack_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/die_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/die_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_platany/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/attack_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/die_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/die_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_spiritofgolem/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/attack_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/die_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/die_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/new_golem_stoneblade_razor/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/spirit_firespirit/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/die_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_army/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/die_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_beast/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/die_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauassaulter/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/die_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/die_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/tau_tauguard/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/attack_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_kalkazak/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/attack_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieghoulgwish/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/attack_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombieholloweye/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/attack_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/attack_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/attack_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/attack_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/die_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/hit_01.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/hit_02.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/hit_03.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".
+1 x WARNING: Invalid comment in Ogg Vorbis file "res://assets_local/monster_sound/zombie_zombiezombie/hit_04.ogg", should contain '=': "Sony Ogg Vorbis 1.0 Final".

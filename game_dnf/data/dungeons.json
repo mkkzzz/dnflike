@@ -693,6 +693,59 @@
     "sha256": "",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
    }
+  },
+  "sunderland_poison": {
+   "name": "猛毒雷鸣废墟",
+   "region": "granfloris",
+   "map_export": "res://assets_local/flow_v1/gran_v1/sunderland_poison/map_export.json",
+   "rooms": [
+    {
+     "name": "猛毒雷鸣废墟",
+     "placement": "0_0:s801(1,0)",
+     "next": "right"
+    },
+    {
+     "name": "猛毒雷鸣废墟",
+     "placement": "1_0:805",
+     "next": "down"
+    },
+    {
+     "name": "猛毒雷鸣废墟",
+     "placement": "1_1:812",
+     "next": "right"
+    },
+    {
+     "name": "猛毒雷鸣废墟",
+     "placement": "2_1:804",
+     "next": "right"
+    },
+    {
+     "name": "猛毒雷鸣废墟",
+     "placement": "3_1:807",
+     "next": "up"
+    },
+    {
+     "name": "猛毒雷鸣废墟",
+     "placement": "3_0:802",
+     "next": "left"
+    },
+    {
+     "name": "猛毒雷鸣废墟",
+     "placement": "2_0:b827(2,2)",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "requires": [
+    "gran.meet_gsd"
+   ],
+   "min_level": 7,
+   "monster_level": 7,
+   "source": {
+    "path": "dungeon/act1/sunderlandpoison.dgn",
+    "sha256": "c3c9a35364fcdcc125424524eee56a5e58137a0f10c60be95b243f5e99ff7a53",
+    "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
+   }
   }
  }
 }

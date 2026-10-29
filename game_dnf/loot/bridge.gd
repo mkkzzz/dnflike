@@ -1,6 +1,7 @@
 extends Node
 ## Presentation/input adapter. The candidate is written before becoming live.
 const Loot=preload("res://loot/service.gd")
+const Frame=preload("res://view/world_frame.gd")
 ## 原版地面掉落：本体用 sprite/item/field*.img，光柱用 itemdropeffect/beam.img（16 帧循环）。
 ## 这些由 tools/bake_loot_sprites.py 从资源库烘到 assets_local/loot/（本机生成物，gitignore）。
 ## 没有烘焙结果时退回"背包图标去底色"的老方案，保证其它工作区仍能跑。
@@ -192,7 +193,7 @@ func _process(_delta: float) -> void:
 	if view.is_empty():return
 	if not is_instance_valid(layer):
 		layer=Node2D.new();layer.name="ground_loot";game.battle.add_child(layer);signature=""
-	layer.position.x=-float(view.get("camera_x",0))
+	layer.position=Vector2(-float(view.get("camera_x",0)),Frame.MAP_DY)
 	var drops:=Loot.pending(game.session.run,String(view["room_id"]))
 	var next_signature:=JSON.stringify(drops)
 	if next_signature==signature:return

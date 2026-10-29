@@ -12,13 +12,13 @@ import hashlib
 import json
 from pathlib import Path
 
-from dnf_pvf import open_library, resolve
+from dnf_pvf import open_library, resolve, parse_script
 from dnf_pvf_archive import Archive
 from audit_dnf_reusable_data import TextResolver
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / 'game_dnf'
-NEW_QUESTS = {108: 'gran.kaino_legend', 4302: 'gran.goblin_mutation', 109: 'gran.meet_gsd'}
+NEW_QUESTS = {108: 'gran.kaino_legend', 4302: 'gran.goblin_mutation', 109: 'gran.meet_gsd', 110: 'gran.poison_scent'}
 SLOTS = {'[coat]':'coat', '[pants]':'pants', '[shoulder]':'shoulder', '[waist]':'belt',
          '[shoes]':'shoes', '[amulet]':'necklace', '[wrist]':'bracelet', '[ring]':'ring', '[weapon]':'weapon'}
 STATS = {'[HP MAX]':'hp_max', '[MP MAX]':'mp_max', '[physical attack]':'strength',
@@ -53,7 +53,9 @@ def simplify(text):
 
 
 def clean(text):
-    return text.replace('\\n', '\n').replace('\r\n', '\n').replace('什幺', '什么').replace('怎幺', '怎么')
+    text = text.replace('\\n', '\n').replace('\r\n', '\n').replace('什幺', '什么').replace('怎幺', '怎么')
+    # Shipped STR entries sometimes embed development notes as comment lines.
+    return '\n'.join(line for line in text.splitlines() if not line.lstrip().startswith('//')).strip().replace('洛伦', '洛兰')
 
 
 def reward_rows(values):
@@ -108,18 +110,25 @@ def main():
         if resolve(listing, new_indices[listing].get(number, '__missing__')) != path:
             raise ValueError('Cross-version ID/path mismatch: %s:%d' % (listing, number))
         other = translated.fields(zh.raw(path)[0])
+        # Matching ID/path does not guarantee matching objective semantics.
+        # 1031 rewrites source 110 from seeking to clearing; retain baseline body.
+        semantic_conflict = False
+        if path.endswith('.qst'):
+            old_fields = {f['tag']:f['values'] for f in lib.script(path)['fields']}
+            new_fields = {f['tag']:f['values'] for f in parse_script(zh.raw(path)[0],zh.strings)['fields']}
+            semantic_conflict = any(old_fields.get(k) != new_fields.get(k) for k in ['[type]','[sub type]','[int data]'])
         output, provenance = {}, {}
         for tag in sorted(set(old) | set(other)):
             values = other.get(tag, [])
             origin = '1031'
             # This distribution has modern custom additions; retain baseline wording.
-            if not values or not values[0].get('text') or any(word in values[0]['text'] for word in ['微信', 'QQ群']):
+            if (semantic_conflict and tag != '[name]') or not values or not values[0].get('text') or any(word in values[0]['text'] for word in ['微信', 'QQ群']):
                 values = old.get(tag, [])
                 origin = '111_t2s'
             if values:
                 output[tag] = clean(values[0]['text'] if origin == '1031' else simplify(values[0]['text']))
                 provenance[tag] = {'origin':origin, **{k:v for k,v in values[0].items() if k != 'text'}}
-        texts[path] = {'fields':output, 'references':provenance, 'text_script_sha256':zh.raw(path)[1]}
+        texts[path] = {'fields':output, 'references':provenance, 'text_script_sha256':zh.raw(path)[1], 'objective_semantics_differ':semantic_conflict}
         return output
 
     ids_to_local = {q.get('source', {}).get('id'):q['id'] for q in qdoc['quests']}
@@ -139,6 +148,8 @@ def main():
             target = {'id':'kill','type':'kill_monster','target':'monster/goblin/kinol.mob','dungeon':'sunderland','amount':1}
             if number == 109:
                 target = {'id':'meet','type':'meet_npc','target':'gsd','amount':1}
+            if number == 110:
+                target = {'id':'bag','type':'collect_item','target':'original_4169','amount':1}
             q = {'id':ids_to_local[number], 'source':{'id':number,'path':path,'sha256':source['sha256']},
                  'name':'', 'category':'main','chapter':'格兰之森','min_level':fields['[level]'][0],
                  'requires':[ids_to_local[k] for k in fields.get('[pre required quest]',[])],
@@ -148,6 +159,22 @@ def main():
             qdoc['quests'].append(q)
             existing[q['id']] = q
         q = existing[ids_to_local[number]]
+        if number == 110:
+            q['consume'] = {'original_4169':1}
+            raw = fields['[monster reward item]']
+            if len(raw) % 7:
+                raise ValueError('Malformed quest monster reward tuple')
+            rules = []
+            for i in range(0,len(raw),7):
+                monster,dungeon,difficulty,item,amount,chance,limit=raw[i:i+7]
+                if (monster,dungeon,item,amount,chance,limit) != (5004,6,4169,1,100,1) or difficulty not in range(4):
+                    raise ValueError('Unverified poison quest drop semantics')
+            rules.append({'monster':'monster/lugaru/penril.mob','dungeon':'sunderland_poison',
+                          'difficulty':['normal','adventure','king'],'item':'original_4169',
+                          'amount':1,'chance':100,'limit':1})
+            q['drops'] = rules
+            q['source']['raw_monster_reward_item'] = raw
+            q['source']['drop_adaptation'] = 'Verified 100 percent fixed-one tuple; four source difficulties map to currently supported three modes'
         if number in [108,4302]:
             q['objectives'][0]['target'] = 'monster/goblin/kinol.mob'
         q['name'] = words['[name]']
@@ -165,6 +192,7 @@ def main():
         q['reward'].update(gold=gold, items=fixed, conditional_items=conditional)
         needed.update(int(k.removeprefix('original_')) for k in fixed)
         needed.update(int(r['item'].removeprefix('original_')) for r in conditional)
+        needed.update(int(k.removeprefix('original_')) for k in q['consume'])
     runtime = {'schema':'dnf_runtime_items/1','revision':1,'items':{},'source_text':{},
                'structural_source':'111 backup; runtime applicability remains separately audited',
                'adaptations':['XP retains existing progression baseline; original XP formula unverified',
@@ -181,15 +209,20 @@ def main():
         if not words.get('[name]'):
             raise ValueError('Missing item name: '+path)
         gear = listing.startswith('equipment')
+        quest_item = not gear and fields.get('[stackable type]',[None])[0] == '[quest]'
         id = 'original_%d' % number
         get = lambda tag, default: fields.get(tag, [default])[0]
-        item = {'name':words['[name]'], 'kind':'weapon' if gear else 'consumable',
+        item = {'name':words['[name]'], 'kind':'weapon' if gear else 'quest' if quest_item else 'consumable',
                 'level':max(1,int(get('[minimum level]',1))), 'rarity':int(get('[rarity]',0)),
                 'weight':float(get('[weight]',0))/1000, 'price':int(get('[price]',0)), 'multiplier':1.0,
                 'description':words.get('[explain]',''), 'stack_limit':1 if gear else int(get('[stack limit]',1000)),
                 'source':{'id':number,'list':listing,'path':path,'sha256':source['sha256']},
                 'source_fields':{k:v for k,v in fields.items() if k not in ['[name]','[name2]','[explain]','[flavor text]']},
-                'icon':fields.get('[icon]',[]), 'field_image':fields.get('[field image]',[])}
+                'icon':fields.get('[icon]',[]), 'field_image':fields.get('[field image]',fields.get('[icon]',[]))}
+        if quest_item:
+            item.update(purchasable=False,sellable=False,stack_limit=int(get('[stack limit]',99)))
+            item['adaptations']=['Quest stack cap defaults to legacy 99 when absent; trade is disabled for quest safety',
+                                 'Missing field image reuses unchanged source icon on ground']
         if gear:
             slot = SLOTS.get(get('[equipment type]',''))
             if not slot:
@@ -228,6 +261,9 @@ def main():
             numbers['equipment'][id] = definition
             services['items'][id] = {'sell':int(get('[value]',0)), 'repair_point':max(1,int(get('[repair price]',1))//max(1,definition['durability'])), 'disassemble':{'scrap_iron':max(1,item['level']//2)}}
             item['description'] = '原版装备 · '+{'weapon':'武器','coat':'上衣','belt':'腰带','bracelet':'手镯','ring':'戒指'}.get(slot,slot)
+        elif quest_item:
+            services['items'][id] = {'sell':0}
+            item['description'] = words.get('[explain]','交付时消耗；不可购买或出售')
         else:
             hp, mp, duration = 0, 0, 0
             for tag, resource in [('[hp recovery]','hp'),('[mp recovery]','mp')]:
@@ -248,7 +284,9 @@ def main():
             services['items'][id] = {'sell':int(get('[value]',max(0,item['price']//4)))}
         runtime['items'][id] = item
         runtime['source_text'][path] = texts[path]
-    qdoc['revision'] = 4
+    qdoc['revision'] = 5
+    qdoc['dungeons']['sunderland_poison'] = '猛毒雷鸣废墟'
+    qdoc['monsters']['monster/lugaru/penril.mob'] = '毒猫王'
     qdoc['dungeons']['sunderland'] = '雷鸣废墟'
     qdoc['monsters'].pop('monster/goblin/lightning_goblin.mob',None)
     qdoc['monsters']['monster/goblin/kinol.mob'] = '落雷凯诺'

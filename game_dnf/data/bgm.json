@@ -81,6 +81,10 @@
   "darkentrance": {
    "normal": "skycastle",
    "boss": "skycastle_boss"
+  },
+  "sunderland_poison": {
+   "normal": "sunderland",
+   "boss": "sunderland_boss"
   }
  },
  "ambience": {

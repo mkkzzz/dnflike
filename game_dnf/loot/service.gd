@@ -4,9 +4,10 @@ const Inventory=preload("res://items/inventory.gd")
 static func config() -> Dictionary:
 	return JSON.parse_string(FileAccess.get_file_as_string("res://data/loot.json"))
 
-static func generate(run: Dictionary, event: Dictionary) -> bool:
+static func generate(run: Dictionary, event: Dictionary, quest_drops: Array=[]) -> bool:
 	var cfg:=config()
-	if run.get("dungeon") not in cfg["enabled_dungeons"] or event.get("run_id")!=run.get("id"):return false
+	var ordinary: bool=run.get("dungeon") in cfg["enabled_dungeons"]
+	if (not ordinary and quest_drops.is_empty()) or event.get("run_id")!=run.get("id"):return false
 	if not event.has("entity_id") or not event.get("room_id") is String or event["room_id"]=="" or not event.get("position") is Vector2:return false
 	var position: Vector2=event["position"]
 	if not position.is_finite():return false
@@ -16,7 +17,8 @@ static func generate(run: Dictionary, event: Dictionary) -> bool:
 	run["loot"]["seen"][key]=true
 	var rng:=RandomNumberGenerator.new()
 	rng.seed=(String(run["id"])+":"+key).hash()
-	var table: Array=cfg["boss" if event.get("boss",false) else "normal"]
+	var table: Array=cfg["boss" if event.get("boss",false) else "normal"].duplicate(true) if ordinary else []
+	table.append_array(quest_drops)
 	var index:=0
 	for entry: Dictionary in table:
 		var roll:=rng.randi_range(1,100)
@@ -25,6 +27,7 @@ static func generate(run: Dictionary, event: Dictionary) -> bool:
 		if roll>int(entry["chance"]):continue
 		var id:=String(run["id"])+":"+key+":"+str(index)
 		run["loot"]["drops"][id]={"id":id,"item":entry["id"],"count":count,"quality":quality,"room":event["room_id"],"position":[position.x+index*28-28,position.y],"claimed":false}
+		if entry.has("quest"):run["loot"]["drops"][id]["quest"]=entry["quest"]
 		index+=1
 	return true
 

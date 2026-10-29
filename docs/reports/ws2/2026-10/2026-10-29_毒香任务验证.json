@@ -1,0 +1,299 @@
+{
+  "schema": "dnf_poison_evidence/1",
+  "engine": "Godot 4.7.2",
+  "quick_basis": "3b101930 plus current task/item changes",
+  "historical_play_and_full_basis": "dbf375dd plus task/item changes before ground projection correction",
+  "known_upstream_failure": "Independent combat has 2 failed checks; handed to ws1, not waived or marked green",
+  "checks": {
+    "quick": [
+      {
+        "suite": "POISON_RULES",
+        "checks": 26,
+        "failures": 0
+      },
+      {
+        "suite": "ORIGINAL_DATA",
+        "checks": 31,
+        "failures": 0
+      },
+      {
+        "suite": "RECOVERY_TEST",
+        "checks": 50,
+        "failures": 0
+      },
+      {
+        "suite": "UPGRADE_TEST",
+        "checks": 46,
+        "failures": 0
+      },
+      {
+        "suite": "SERVICE_TEST",
+        "checks": 33,
+        "failures": 0
+      },
+      {
+        "suite": "ITEM_TEST",
+        "checks": 44,
+        "failures": 0
+      },
+      {
+        "suite": "NUMBERS_TEST",
+        "checks": 63,
+        "failures": 0
+      },
+      {
+        "suite": "QUEST_TEST",
+        "checks": 45,
+        "failures": 0
+      },
+      {
+        "suite": "TOWN_UNIT",
+        "checks": 102,
+        "failures": 0
+      },
+      {
+        "suite": "GRAN_UNIT",
+        "checks": 19,
+        "failures": 0
+      },
+      {
+        "suite": "POISON_CHAPTER",
+        "checks": 27,
+        "failures": 0
+      }
+    ],
+    "historical_play": [
+      {
+        "suite": "POISON_RULES",
+        "checks": 26,
+        "failures": 0
+      },
+      {
+        "suite": "ORIGINAL_DATA",
+        "checks": 31,
+        "failures": 0
+      },
+      {
+        "suite": "RECOVERY_TEST",
+        "checks": 50,
+        "failures": 0
+      },
+      {
+        "suite": "UPGRADE_TEST",
+        "checks": 46,
+        "failures": 0
+      },
+      {
+        "suite": "SERVICE_TEST",
+        "checks": 33,
+        "failures": 0
+      },
+      {
+        "suite": "ITEM_TEST",
+        "checks": 44,
+        "failures": 0
+      },
+      {
+        "suite": "NUMBERS_TEST",
+        "checks": 63,
+        "failures": 0
+      },
+      {
+        "suite": "QUEST_TEST",
+        "checks": 45,
+        "failures": 0
+      },
+      {
+        "suite": "TOWN_UNIT",
+        "checks": 102,
+        "failures": 0
+      },
+      {
+        "suite": "GRAN_UNIT",
+        "checks": 19,
+        "failures": 0
+      },
+      {
+        "suite": "POISON_CHAPTER",
+        "checks": 64,
+        "failures": 0
+      }
+    ],
+    "historical_full": [
+      {
+        "suite": "POISON_RULES",
+        "checks": 26,
+        "failures": 0
+      },
+      {
+        "suite": "ORIGINAL_DATA",
+        "checks": 31,
+        "failures": 0
+      },
+      {
+        "suite": "RECOVERY_TEST",
+        "checks": 50,
+        "failures": 0
+      },
+      {
+        "suite": "UPGRADE_TEST",
+        "checks": 46,
+        "failures": 0
+      },
+      {
+        "suite": "SERVICE_TEST",
+        "checks": 33,
+        "failures": 0
+      },
+      {
+        "suite": "ITEM_TEST",
+        "checks": 44,
+        "failures": 0
+      },
+      {
+        "suite": "NUMBERS_TEST",
+        "checks": 63,
+        "failures": 0
+      },
+      {
+        "suite": "QUEST_TEST",
+        "checks": 45,
+        "failures": 0
+      },
+      {
+        "suite": "TOWN_UNIT",
+        "checks": 102,
+        "failures": 0
+      },
+      {
+        "suite": "GRAN_UNIT",
+        "checks": 19,
+        "failures": 0
+      },
+      {
+        "suite": "LOOP_TEST",
+        "checks": 385,
+        "failures": 0
+      }
+    ],
+    "upstream_combat": [
+      {
+        "suite": "DNF_TEST",
+        "checks": 143,
+        "failures": 2
+      }
+    ]
+  },
+  "unique_screenshots": 5,
+  "raw_log_sha256": {
+    "quick": "d26cb821363cdd4f6848d6184d9bfec305eacf4de3e7f11ea38c0fb92268c1a0",
+    "historical_play": "f42c6cb13dd6d9632247734ea0d431a6b7cc5609e2ec682fa5f23a210409ed37",
+    "historical_full": "f1b94e8f707f5c24a3dfeec4d6820aabf7d14fa7699cb77d0f11629fe6ebfa54",
+    "upstream_combat": "14c86b25669db9d5c5d261ffc3d98fa0ef75e273b687f12a080a50815e7d0ac6"
+  },
+  "log_projection": "UTF-8 verdict/error lines and diagnostic occurrence counts; complete raw bytes in adjacent .log.gz with original hashes retained",
+  "compiler_test_methods": 6,
+  "deterministic_rebuild_tables": 7,
+  "new_original_frames": 3,
+  "first_batch_frames_unchanged": 19,
+  "dependency_violations": 0,
+  "files": [
+    {
+      "path": "docs/reports/ws2/2026-10/poison_original_v2/quick.log",
+      "sha256": "4e1639510d588c640b858aa008953236359407945f574b61a2448c5b59580816"
+    },
+    {
+      "path": "docs/reports/ws2/2026-10/poison_original_v2/quick.log.gz",
+      "sha256": "a44453cf8b9b56759cc2ed57331b2c723ee6142cbc4413e5da3da68e246a7641"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_poison_original_v2/quick_poison_01_source_task.png",
+      "sha256": "eabe0683bfa5553232b8cc3d6f3a1c47a74bc2b856841571274b843212ace5cd"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_poison_original_v2/quick_poison_03_source_drop.png",
+      "sha256": "dff31cb90aa576adf81938afb56740e14a7c934ddc4cc798bee5cc83f817d70b"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_poison_original_v2/quick_poison_04_quest_bag.png",
+      "sha256": "fea1b166f2be3f15d0a7a7b8f22b35e3a524f9da57f4d12a65f4595fdcefeda8"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_poison_original_v2/quick_poison_05_reward.png",
+      "sha256": "8a17db3438ef34da2e193a6b81350ca5d667625f2bd4c26b967cfaeaa9750ec7"
+    },
+    {
+      "path": "docs/screenshots/2026-10-29_poison_original_v2/quick_poison_06_necklace_inventory.png",
+      "sha256": "9a914453fb9bc53638c6525d2f06db4d94f3e34f5c97306e5faa7bedf84ebbc2"
+    },
+    {
+      "path": "docs/reports/ws2/2026-10/poison_original_v2/historical_play.log",
+      "sha256": "ec7bdf2ff5738f377f8f9ed96cdabe48a70d3255f2c6d006c1e26a1f46aa9909"
+    },
+    {
+      "path": "docs/reports/ws2/2026-10/poison_original_v2/historical_play.log.gz",
+      "sha256": "fff9ef697e7eb835ceda513d1476686c12b0c4b3eeb218e225cb21223f91b31f"
+    },
+    {
+      "path": "docs/reports/ws2/2026-10/poison_original_v2/historical_full.log",
+      "sha256": "6e424bf75d43d372c26ed2929331023d1e6124ede2cec1a858e1e0fb547f3bfd"
+    },
+    {
+      "path": "docs/reports/ws2/2026-10/poison_original_v2/historical_full.log.gz",
+      "sha256": "d44646f36ddeefed919f2b3f6d999fd45756cd8efe0bfe8c85d27b40d23a5239"
+    },
+    {
+      "path": "docs/reports/ws2/2026-10/poison_original_v2/upstream_combat.log",
+      "sha256": "fcb6f05672260f4da95aab88159f77d391ba3a48e11b4550caec24f91905d391"
+    },
+    {
+      "path": "docs/reports/ws2/2026-10/poison_original_v2/upstream_combat.log.gz",
+      "sha256": "db3c33ca50bb357ac5fadea57afbc3f85fd341f3b5840096ed8963bd42714127"
+    },
+    {
+      "path": "game_dnf/data/quests.json",
+      "sha256": "ec8d13c433d5b36761403647f6ac8b72dc9e141375cc7bc874ed7c85040cd7c1"
+    },
+    {
+      "path": "game_dnf/data/quest_catalog.json",
+      "sha256": "bdf4936ffaec8ed5c4289e1ecc255268327a57b0b171fae3c2bd3ca85e17b66b"
+    },
+    {
+      "path": "game_dnf/data/runtime_items.json",
+      "sha256": "c9ebcdf3a2304130daf2a2fb964dd63dc342a02d824584b6262c3984e26e34ae"
+    },
+    {
+      "path": "game_dnf/data/dungeons.json",
+      "sha256": "140a301b9384705da624b9ed3dd8367a0c19de271bca093b42240fc9d943cdb4"
+    },
+    {
+      "path": "game_dnf/data/numbers.json",
+      "sha256": "bd4ada00f883c51d06da768f1dac550f98fae95cef6d8ed6be69c5902961bb23"
+    },
+    {
+      "path": "game_dnf/data/recovery.json",
+      "sha256": "84c6608cddc3cd3327039a6287e309129b675096a4518e0bb1e018c635633e7c"
+    },
+    {
+      "path": "game_dnf/data/services.json",
+      "sha256": "4dd233d0c954d7e8f82609de1673cc366f36bad0e813cd4d6d298ad610a98dbe"
+    },
+    {
+      "path": "game_dnf/data/bgm.json",
+      "sha256": "c7c4f9989323c9cd8290b60bf037f56473e866496be0dffed4069c1bef7cce2b"
+    },
+    {
+      "path": "game_dnf/assets_local/items_original_v2/manifest.json",
+      "sha256": "2c3c090d8286e0db93a2bee355e4ef1d31e7b896286efc8e77f48fad34c87181"
+    },
+    {
+      "path": "docs/reports/ws2/2026-10/2026-10-29_毒香与后续前置来源核对.json",
+      "sha256": "c50d07cb8402efe9d94bb1cd93b7ab74c0ff2ba4b4df7f88a88932d823c3f7c6"
+    }
+  ],
+  "limits": [
+    "Final quick test uses authorized GM win and player positioning to skip unrelated dungeon combat",
+    "Result visual layer temporarily hidden only for ground-item QA; result state remains intact",
+    "No fourth difficulty, later-class quest-chain bypass, full loot table or original-economy claim"
+  ]
+}

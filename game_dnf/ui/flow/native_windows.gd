@@ -105,8 +105,7 @@ func quests() -> void:
 
 func item_texture(id: String) -> Texture2D:
 	if id.begins_with("original_"):
-		if original_icons.is_empty():original_icons=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/items_original_v1/manifest.json"))
-		return load("res://assets_local/items_original_v1/"+String(original_icons["images"][original_icons["items"][id]]["file"]))
+		return original_texture(id,"items")
 	if id in ["training_coat","training_necklace","scrap_iron"]:
 		if item_icons.is_empty():item_icons=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/items_v2/manifest.json"))
 		return load("res://assets_local/items_v2/"+String(item_icons["images"][item_icons["items"][id]]["file"]))
@@ -114,8 +113,16 @@ func item_texture(id: String) -> Texture2D:
 
 func field_texture(id: String) -> Texture2D:
 	if not id.begins_with("original_"):return null
-	if original_icons.is_empty():original_icons=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/items_original_v1/manifest.json"))
-	return load("res://assets_local/items_original_v1/"+String(original_icons["images"][original_icons["field_images"][id]]["file"]))
+	return original_texture(id,"field_images")
+
+func original_texture(id: String, kind: String) -> Texture2D:
+	if original_icons.is_empty():
+		for pack: String in ["items_original_v1","items_original_v2"]:
+			var base: String="res://assets_local/"+pack+"/"
+			var data: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(base+"manifest.json"))
+			for group: String in ["items","field_images"]:
+				for item: String in data[group]:original_icons[group+":"+item]=base+String(data["images"][data[group][item]]["file"])
+	return load(original_icons[kind+":"+id])
 
 func hide_tooltip() -> void:
 	if is_instance_valid(tip):tip.queue_free()
@@ -165,9 +172,9 @@ func item_tip(id: String, rect: Rect2, buying := false, attached := false, insta
 		else:skin.label(tip,"具体品质与强化见 O 键的装备管理",Vector2(16,201),10)
 		if (instance_uid!="" and instance_uid in game.session.profile["equipment"].values()) or (instance_uid=="" and game.session.profile["equipped"]==id):skin.label(tip, "已装备", Vector2(211, 151), 11, Color("a7dd74"))
 	else:
-		skin.label(tip, "使用效果", Vector2(16, 82), 12, Color("d4c399"))
+		skin.label(tip, "任务物品" if data["kind"]=="quest" else "使用效果", Vector2(16, 82), 12, Color("d4c399"))
 		skin.label(tip, "恢复 %d HP" % int(data["heal"]) if data.has("heal") else data["description"], Vector2(16, 108), 14, Color("a7dd74"))
-		skin.label(tip, "地下城内使用" if data.has("heal") else "可用于后续装备养成", Vector2(16, 142), 12, Color("cccccc"))
+		skin.label(tip, "解锁并放在背包内才可交付" if data["kind"]=="quest" else "地下城内使用" if data["kind"]=="consumable" else "可用于后续装备养成", Vector2(16, 142), 12, Color("cccccc"))
 	skin.image(tip, skin.texture("common", 230), Vector2(39, height - 44))
 	var hint := "购买价格  %d 金币" % int(data.get("price", 0)) if buying else "持有数量  %d" % int(game.session.profile["inventory"].get(id, 0))
 	skin.label(tip, hint, Vector2(16, height - 30), 11, Color("f0d18a") if buying else Color("a59c88"))

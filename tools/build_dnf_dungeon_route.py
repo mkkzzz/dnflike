@@ -157,11 +157,12 @@ def main() -> int:
                 continue
             for room in rooms:
                 room['name'] = name
+            origin = export_doc.get('dungeon') or export_doc.get('source', {})
             dungeons[dungeon_id] = {
                 'name': name, 'region': region, 'map_export': 'res://' + folder + '/map_export.json',
                 'rooms': rooms, 'monster_level': level,
-                'source': {'path': export_doc.get('source', {}).get('path', ''),
-                           'sha256': export_doc.get('source', {}).get('sha256', ''),
+                'source': {'path': origin.get('path', ''),
+                           'sha256': origin.get('sha256', ''),
                            'evidence': '由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成'}}
             applied += 1
             print('  [OK] %-24s rooms=%d' % (dungeon_id, len(rooms)))
@@ -205,8 +206,9 @@ def main() -> int:
         spec['min_level'] = args.min_level
     if args.monster_level:
         spec['monster_level'] = args.monster_level
-    spec['source'] = {'path': export.get('source', {}).get('path', ''),
-                      'sha256': export.get('source', {}).get('sha256', ''),
+    origin = export.get('dungeon') or export.get('source', {})
+    spec['source'] = {'path': origin.get('path', ''),
+                      'sha256': origin.get('sha256', ''),
                       'evidence': '由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线'}
     dungeons[args.id] = spec
     DUNGEONS.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')

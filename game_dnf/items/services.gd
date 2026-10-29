@@ -37,6 +37,7 @@ static func quote(p: Dictionary, kind: String, data: Dictionary) -> Dictionary:
 			if not carried(p,uid):return Inventory.fail("请选择背包物品；穿戴、仓库和待领取区的物品不能处理")
 			if Inventory.locked(p,uid):return Inventory.fail("请先解锁物品")
 			var id:=Inventory.definition(p,uid)
+			if not Inventory.Catalog.ITEMS[id].get("sellable",true):return Inventory.fail("任务物品不能出售或分解")
 			if not cfg["items"].has(id):return Inventory.fail("该物品尚未配置服务规则")
 			var amount=data.get("count",1)
 			if not amount is int or amount<1 or amount>Inventory.count(p,uid):return Inventory.fail("处理数量无效")

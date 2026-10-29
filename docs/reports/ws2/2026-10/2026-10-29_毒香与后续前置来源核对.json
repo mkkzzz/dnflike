@@ -1,0 +1,552 @@
+{
+  "schema": "dnf_poison_source_audit/1",
+  "records": [
+    {
+      "id": 110,
+      "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_2.qst",
+      "name": "毒的香气",
+      "baseline_sha256": "34df01c688b631661a4b155d71bf3d907e937ca287c99a9da93736e32f50507a",
+      "baseline": {
+        "[type]": [
+          "[seeking]"
+        ],
+        "[sub type]": [
+          -1
+        ],
+        "[int data]": [
+          4169,
+          1
+        ],
+        "[pre required quest]": [
+          109
+        ],
+        "[job]": [
+          "[all]"
+        ],
+        "[npc index]": [
+          7
+        ],
+        "[complete npc index]": [
+          7
+        ],
+        "[level]": [
+          7,
+          99
+        ]
+      },
+      "zh_same_id_path": true,
+      "zh_script_sha256": "9d634f2b0774a4f6c4f5c96fea256a6b010ac3bbbc274922e305e41b614edb2c",
+      "zh": {
+        "[type]": [
+          "[condition under clear]"
+        ],
+        "[sub type]": [
+          6
+        ],
+        "[int data]": [
+          6,
+          -1
+        ],
+        "[job]": [
+          "[all]"
+        ],
+        "[npc index]": [
+          7
+        ],
+        "[complete npc index]": [
+          7
+        ],
+        "[level]": [
+          7,
+          7
+        ]
+      },
+      "decision": "110 uses baseline seeking and drop rules with matching simplified body; all other candidates remain disabled in runtime"
+    },
+    {
+      "id": 111,
+      "path": "n_quest/handonmyre/grakkarak/epic_10_grakkarak_shauta_3.qst",
+      "name": "牛头王萨乌塔",
+      "baseline_sha256": "7e8fd93435e46e04ba94d4a1b4e9fdc7637933c386d2972fd2c81e5afc034866",
+      "baseline": {
+        "[type]": [
+          "[hunt monster]"
+        ],
+        "[sub type]": [
+          -1
+        ],
+        "[int data]": [
+          7,
+          -1,
+          15,
+          1
+        ],
+        "[pre required quest]": [
+          4474
+        ],
+        "[job]": [
+          "[all]"
+        ],
+        "[npc index]": [
+          7
+        ],
+        "[complete npc index]": [
+          7
+        ],
+        "[level]": [
+          10,
+          99
+        ]
+      },
+      "zh_same_id_path": true,
+      "zh_script_sha256": "eff657c517e4da6fa556090a255240b420d4e0b750c4626e8e54e209de8ed360",
+      "zh": {
+        "[type]": [
+          "[condition under clear]"
+        ],
+        "[sub type]": [
+          6
+        ],
+        "[int data]": [
+          7,
+          -1
+        ],
+        "[job]": [
+          "[all]"
+        ],
+        "[npc index]": [
+          7
+        ],
+        "[complete npc index]": [
+          7
+        ],
+        "[level]": [
+          10,
+          10
+        ]
+      },
+      "decision": "110 uses baseline seeking and drop rules with matching simplified body; all other candidates remain disabled in runtime"
+    },
+    {
+      "id": 116,
+      "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_1.qst",
+      "name": "疯掉的魔法师克拉赫",
+      "baseline_sha256": "665ceb51fcc8dd678494a8c3282b656d56c34af954044f667c185dd85aa4d7ca",
+      "baseline": {
+        "[type]": [
+          "[condition under clear]"
+        ],
+        "[sub type]": [
+          6
+        ],
+        "[int data]": [
+          9,
+          -1
+        ],
+        "[pre required quest]": [
+          4471
+        ],
+        "[job]": [
+          "[all]"
+        ],
+        "[npc index]": [
+          7
+        ],
+        "[complete npc index]": [
+          -1
+        ],
+        "[level]": [
+          8,
+          99
+        ]
+      },
+      "zh_same_id_path": true,
+      "zh_script_sha256": "900871a6b44629944722ecd7ca4e857ddece9c5b5fbfbd3dbf2d6e5422ac78dd",
+      "zh": {
+        "[type]": [
+          "[condition under clear]"
+        ],
+        "[sub type]": [
+          6
+        ],
+        "[int data]": [
+          9,
+          -1
+        ],
+        "[job]": [
+          "[all]"
+        ],
+        "[npc index]": [
+          7
+        ],
+        "[complete npc index]": [
+          -1
+        ],
+        "[level]": [
+          8,
+          8
+        ]
+      },
+      "decision": "110 uses baseline seeking and drop rules with matching simplified body; all other candidates remain disabled in runtime"
+    },
+    {
+      "id": 4470,
+      "path": "n_quest/common/handonmyre/time_character02.qst",
+      "name": "寻找时间碎片1",
+      "baseline_sha256": "c5d995ee6c408b069a1233c0d49a2f28844a8f7e7dfb377c8fa1e70b0baad681",
+      "baseline": {
+        "[type]": [
+          "[meet npc]"
+        ],
+        "[sub type]": [
+          -1
+        ],
+        "[int data]": [
+          4
+        ],
+        "[pre required quest]": [
+          4469
+        ],
+        "[target character]": [
+          "[demonic swordman]",
+          -1,
+          -1,
+          "[creator mage]",
+          -1,
+          -1
+        ],
+        "[npc index]": [
+          6
+        ],
+        "[complete npc index]": [
+          4
+        ],
+        "[level]": [
+          4,
+          99
+        ]
+      },
+      "zh_same_id_path": true,
+      "zh_script_sha256": "1fe20b4c952fb42dfb6a073ce7b500ef8323cf733e1df0f98aaa8bb104caa1fb",
+      "zh": {
+        "[type]": [
+          "[meet npc]"
+        ],
+        "[sub type]": [
+          -1
+        ],
+        "[int data]": [
+          4
+        ],
+        "[target character]": [
+          "[demonic swordman]",
+          -1,
+          -1,
+          "[creator mage]",
+          -1,
+          -1
+        ],
+        "[npc index]": [
+          6
+        ],
+        "[complete npc index]": [
+          4
+        ],
+        "[level]": [
+          99,
+          99
+        ]
+      },
+      "decision": "110 uses baseline seeking and drop rules with matching simplified body; all other candidates remain disabled in runtime"
+    },
+    {
+      "id": 4471,
+      "path": "n_quest/common/handonmyre/time_character03.qst",
+      "name": "寻找时间碎片2",
+      "baseline_sha256": "f0839d3249ca4594557508e745ce8e7412aa6cabeb8136230072886b42fda166",
+      "baseline": {
+        "[type]": [
+          "[seeking]"
+        ],
+        "[sub type]": [
+          -1
+        ],
+        "[int data]": [
+          4186,
+          1
+        ],
+        "[pre required quest]": [
+          4470
+        ],
+        "[target character]": [
+          "[demonic swordman]",
+          -1,
+          -1,
+          "[creator mage]",
+          -1,
+          -1
+        ],
+        "[npc index]": [
+          4
+        ],
+        "[complete npc index]": [
+          -1
+        ],
+        "[level]": [
+          7,
+          99
+        ]
+      },
+      "zh_same_id_path": true,
+      "zh_script_sha256": "1d40858067791ef976495328dbdbfa13f3fc34dc54f0c4a01d9a99e5d1cb29c3",
+      "zh": {
+        "[type]": [
+          "[seeking]"
+        ],
+        "[sub type]": [
+          -1
+        ],
+        "[int data]": [
+          4186,
+          1
+        ],
+        "[target character]": [
+          "[demonic swordman]",
+          -1,
+          -1,
+          "[creator mage]",
+          -1,
+          -1
+        ],
+        "[npc index]": [
+          4
+        ],
+        "[complete npc index]": [
+          -1
+        ],
+        "[level]": [
+          99,
+          99
+        ]
+      },
+      "decision": "110 uses baseline seeking and drop rules with matching simplified body; all other candidates remain disabled in runtime"
+    },
+    {
+      "id": 4472,
+      "path": "n_quest/handonmyre/sunderlandpoison/time_character04.qst",
+      "name": "脆弱的时间碎片",
+      "baseline_sha256": "5cd154089de22dd48593fb40774b6347a6a2bd0cd8d5073fed0fb76ae6692b60",
+      "baseline": {
+        "[type]": [
+          "[seeking]"
+        ],
+        "[sub type]": [
+          -1
+        ],
+        "[int data]": [
+          4808,
+          1
+        ],
+        "[pre required quest]": [
+          4471
+        ],
+        "[target character]": [
+          "[demonic swordman]",
+          -1,
+          -1,
+          "[creator mage]",
+          -1,
+          -1
+        ],
+        "[npc index]": [
+          4
+        ],
+        "[complete npc index]": [
+          127
+        ],
+        "[level]": [
+          7,
+          99
+        ]
+      },
+      "zh_same_id_path": true,
+      "zh_script_sha256": "5d7dad80cbfff68b9cd190040cbfc952ae12df36d133bfbc76544e9640e1b160",
+      "zh": {
+        "[type]": [
+          "[seeking]"
+        ],
+        "[sub type]": [
+          -1
+        ],
+        "[int data]": [
+          4808,
+          1
+        ],
+        "[target character]": [
+          "[demonic swordman]",
+          -1,
+          -1,
+          "[creator mage]",
+          -1,
+          -1
+        ],
+        "[npc index]": [
+          4
+        ],
+        "[complete npc index]": [
+          127
+        ],
+        "[level]": [
+          99,
+          99
+        ]
+      },
+      "decision": "110 uses baseline seeking and drop rules with matching simplified body; all other candidates remain disabled in runtime"
+    },
+    {
+      "id": 4473,
+      "path": "n_quest/handonmyre/mirkwoodfrost/time_character05.qst",
+      "name": "强化的时间碎片 1",
+      "baseline_sha256": "e448d903c65698f715bbeb108f5ed18b53ea034a8e10e7e0d7f63f0005ffb41f",
+      "baseline": {
+        "[type]": [
+          "[condition under clear]"
+        ],
+        "[sub type]": [
+          6
+        ],
+        "[int data]": [
+          9,
+          -1
+        ],
+        "[pre required quest]": [
+          4472
+        ],
+        "[target character]": [
+          "[demonic swordman]",
+          -1,
+          -1,
+          "[creator mage]",
+          -1,
+          -1
+        ],
+        "[npc index]": [
+          127
+        ],
+        "[complete npc index]": [
+          -1
+        ],
+        "[level]": [
+          8,
+          99
+        ]
+      },
+      "zh_same_id_path": true,
+      "zh_script_sha256": "d26da320ad2310b10a2d3bf7c2545f2850e8a647b2efbec0ab57f318849ef0c5",
+      "zh": {
+        "[type]": [
+          "[condition under clear]"
+        ],
+        "[sub type]": [
+          6
+        ],
+        "[int data]": [
+          9,
+          -1
+        ],
+        "[target character]": [
+          "[demonic swordman]",
+          -1,
+          -1,
+          "[creator mage]",
+          -1,
+          -1
+        ],
+        "[npc index]": [
+          127
+        ],
+        "[complete npc index]": [
+          -1
+        ],
+        "[level]": [
+          99,
+          99
+        ]
+      },
+      "decision": "110 uses baseline seeking and drop rules with matching simplified body; all other candidates remain disabled in runtime"
+    },
+    {
+      "id": 4474,
+      "path": "n_quest/handonmyre/mirkwoodfrost/time_character06.qst",
+      "name": "强化的时间碎片 2",
+      "baseline_sha256": "0a9f6a696e2c11088bd0220e5694c71b3afaf3bfe02ab01f4b0034911909ce07",
+      "baseline": {
+        "[type]": [
+          "[seeking]"
+        ],
+        "[sub type]": [
+          -1
+        ],
+        "[int data]": [
+          4807,
+          1
+        ],
+        "[pre required quest]": [
+          4473
+        ],
+        "[target character]": [
+          "[demonic swordman]",
+          -1,
+          -1,
+          "[creator mage]",
+          -1,
+          -1
+        ],
+        "[npc index]": [
+          127
+        ],
+        "[complete npc index]": [
+          -1
+        ],
+        "[level]": [
+          8,
+          99
+        ]
+      },
+      "zh_same_id_path": true,
+      "zh_script_sha256": "4c89ce3e06874183933309160245522127f1c7d0b7a17f08c7daf38a3cfb3824",
+      "zh": {
+        "[type]": [
+          "[seeking]"
+        ],
+        "[sub type]": [
+          -1
+        ],
+        "[int data]": [
+          4807,
+          1
+        ],
+        "[target character]": [
+          "[demonic swordman]",
+          -1,
+          -1,
+          "[creator mage]",
+          -1,
+          -1
+        ],
+        "[npc index]": [
+          127
+        ],
+        "[complete npc index]": [
+          -1
+        ],
+        "[level]": [
+          99,
+          99
+        ]
+      },
+      "decision": "110 uses baseline seeking and drop rules with matching simplified body; all other candidates remain disabled in runtime"
+    }
+  ],
+  "limits": "Neither source has been verified as the active original level-60 runtime; no automatic class-chain bypass"
+}

@@ -55,6 +55,9 @@
     "original_1113": {
       "sell": 50
     },
+    "original_4169": {
+      "sell": 0
+    },
     "original_10580": {
       "sell": 1728,
       "repair_point": 68,
@@ -74,6 +77,13 @@
       "repair_point": 80,
       "disassemble": {
         "scrap_iron": 2
+      }
+    },
+    "original_20006": {
+      "sell": 4608,
+      "repair_point": 128,
+      "disassemble": {
+        "scrap_iron": 4
       }
     },
     "original_22001": {

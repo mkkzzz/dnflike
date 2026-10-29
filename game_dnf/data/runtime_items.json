@@ -326,6 +326,65 @@
         10
       ]
     },
+    "original_4169": {
+      "name": "毒猫王的毒药袋",
+      "kind": "quest",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.0,
+      "price": 0,
+      "multiplier": 1.0,
+      "description": "交付时消耗；不可购买或出售",
+      "stack_limit": 99,
+      "source": {
+        "id": 4169,
+        "list": "stackable/stackable.lst",
+        "path": "stackable/quest/penril_posionbag.stk",
+        "sha256": "2255d12f7fb50f9e5445f1cdba0fccaacd08712b3554b6b9161d7b99938f1928"
+      },
+      "source_fields": {
+        "[grade]": [
+          1
+        ],
+        "[attach type]": [
+          "[trade]"
+        ],
+        "[rarity]": [
+          1
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[minimum level]": [
+          1
+        ],
+        "[icon]": [
+          "Item/stackable/quest.img",
+          92
+        ],
+        "[stackable type]": [
+          "[quest]",
+          0
+        ],
+        "[move wav]": [
+          "FOOD_TOUCH"
+        ]
+      },
+      "icon": [
+        "Item/stackable/quest.img",
+        92
+      ],
+      "field_image": [
+        "Item/stackable/quest.img",
+        92
+      ],
+      "purchasable": false,
+      "sellable": false,
+      "adaptations": [
+        "Quest stack cap defaults to legacy 99 when absent; trade is disabled for quest safety",
+        "Missing field image reuses unchanged source icon on ground"
+      ]
+    },
     "original_10580": {
       "name": "磨损的冒险者胸甲",
       "kind": "weapon",
@@ -605,6 +664,92 @@
       "field_image": [
         "Item/FieldImage.img",
         3
+      ]
+    },
+    "original_20006": {
+      "name": "强韧的稻草项链",
+      "kind": "weapon",
+      "level": 8,
+      "rarity": 1,
+      "weight": 0.2,
+      "price": 6400,
+      "multiplier": 1.0,
+      "description": "原版装备 · necklace",
+      "stack_limit": 1,
+      "source": {
+        "id": 20006,
+        "list": "equipment/equipment.lst",
+        "path": "equipment/character/common/amulet/neck_cstraw.equ",
+        "sha256": "58c9d47760c08a518178da7d3bd8f6b22e1759dcfe6d6dcf7f2b26f0519bfe55"
+      },
+      "source_fields": {
+        "[grade]": [
+          8
+        ],
+        "[rarity]": [
+          1
+        ],
+        "[usable job]": [
+          "[all]"
+        ],
+        "[attach type]": [
+          "[free]"
+        ],
+        "[minimum level]": [
+          8
+        ],
+        "[magical attack]": [
+          4
+        ],
+        "[magical defense]": [
+          8
+        ],
+        "[price]": [
+          6400
+        ],
+        "[repair price]": [
+          5120
+        ],
+        "[value]": [
+          4608
+        ],
+        "[equipment magical defense]": [
+          640,
+          640
+        ],
+        "[icon]": [
+          "Item/IconAcc.img",
+          65
+        ],
+        "[field image]": [
+          "Item/FieldImage.img",
+          6
+        ],
+        "[equipment type]": [
+          "[amulet]",
+          18
+        ],
+        "[move wav]": [
+          "NECKLACE_TOUCH"
+        ],
+        "[weight]": [
+          200
+        ],
+        "[item group name]": [
+          "amulet"
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[possible kiri protect]": []
+      },
+      "icon": [
+        "Item/IconAcc.img",
+        65
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        6
       ]
     },
     "original_22001": {
@@ -1062,7 +1207,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "9f6c7a444508c986890dfd52be942357c41b660c9017b25b01b1c2dedc5f6390"
+      "text_script_sha256": "9f6c7a444508c986890dfd52be942357c41b660c9017b25b01b1c2dedc5f6390",
+      "objective_semantics_differ": false
     },
     "stackable/ptn_hplow.stk": {
       "fields": {
@@ -1099,7 +1245,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "2daa0b5f59806cf3b95c1e99034b369d4cf13f8663dd23c20d44a709769a8f6b"
+      "text_script_sha256": "2daa0b5f59806cf3b95c1e99034b369d4cf13f8663dd23c20d44a709769a8f6b",
+      "objective_semantics_differ": false
     },
     "stackable/ptn_mplowest.stk": {
       "fields": {
@@ -1136,7 +1283,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "3216e7c84c549e5613ce97cc84af1a78b1d50bdcc6b385bc1baf9b234671e2a8"
+      "text_script_sha256": "3216e7c84c549e5613ce97cc84af1a78b1d50bdcc6b385bc1baf9b234671e2a8",
+      "objective_semantics_differ": false
     },
     "stackable/ptn_mplow.stk": {
       "fields": {
@@ -1173,7 +1321,23 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "7a3252939644a5477e7faacf8701ba5d0081b9c1bbc93a9a502347930d5b7522"
+      "text_script_sha256": "7a3252939644a5477e7faacf8701ba5d0081b9c1bbc93a9a502347930d5b7522",
+      "objective_semantics_differ": false
+    },
+    "stackable/quest/penril_posionbag.stk": {
+      "fields": {
+        "[name]": "毒猫王的毒药袋"
+      },
+      "references": {
+        "[name]": {
+          "origin": "1031",
+          "string_index": 458161,
+          "encoding": "gb18030",
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "aebfb9f6ea4b38cb0a98773ca221421fbf77a7b4cd34075038f5a3eaca5f449c",
+      "objective_semantics_differ": false
     },
     "equipment/character/common/jacket/leather/coat_10580.equ": {
       "fields": {
@@ -1190,7 +1354,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "5f1cb279471895f46a5e22c26a1158b481797e231123735eb1d4eb2c92fda0e5"
+      "text_script_sha256": "5f1cb279471895f46a5e22c26a1158b481797e231123735eb1d4eb2c92fda0e5",
+      "objective_semantics_differ": false
     },
     "equipment/character/common/belt/leather/str_crleather.equ": {
       "fields": {
@@ -1217,7 +1382,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "8396a02f215f87fdc8128c1fcce9c01685efcd695bb16c544249a98fa233fbed"
+      "text_script_sha256": "8396a02f215f87fdc8128c1fcce9c01685efcd695bb16c544249a98fa233fbed",
+      "objective_semantics_differ": false
     },
     "equipment/character/common/belt/leather/str_leather.equ": {
       "fields": {
@@ -1244,7 +1410,26 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "1fb0d76cc66c125e25bce1987d7b6119fd9e76566619e12d524808f9f7717265"
+      "text_script_sha256": "1fb0d76cc66c125e25bce1987d7b6119fd9e76566619e12d524808f9f7717265",
+      "objective_semantics_differ": false
+    },
+    "equipment/character/common/amulet/neck_cstraw.equ": {
+      "fields": {
+        "[name]": "强韧的稻草项链"
+      },
+      "references": {
+        "[name]": {
+          "origin": "1031",
+          "table": "equipment/equipment.kor.str",
+          "table_id": 3,
+          "key": "name_20006",
+          "line": 26826,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "3caa77a56935e737a75636938315938be7f016adf17e7678edb9102746ff0897",
+      "objective_semantics_differ": false
     },
     "equipment/character/common/wrist/wrist_ucloth.equ": {
       "fields": {
@@ -1261,7 +1446,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "78d24632c8a379ff960be7b57a2af410b00a437388921e6e76508279fff39945"
+      "text_script_sha256": "78d24632c8a379ff960be7b57a2af410b00a437388921e6e76508279fff39945",
+      "objective_semantics_differ": false
     },
     "equipment/character/common/ring/ring_thunderprotect.equ": {
       "fields": {
@@ -1288,11 +1474,12 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "06b58db1797946d7ece75641841da8ce0a072ce844b0c917025633a1aef63129"
+      "text_script_sha256": "06b58db1797946d7ece75641841da8ce0a072ce844b0c917025633a1aef63129",
+      "objective_semantics_differ": false
     },
     "equipment/character/swordman/weapon/katana/kat_worn.equ": {
       "fields": {
-        "[flavor text]": "    太刀的速度和准确度无人能及。  --林纳斯",
+        "[flavor text]": "太刀的速度和准确度无人能及。  --林纳斯",
         "[name]": "生锈的武士刀"
       },
       "references": {
@@ -1309,7 +1496,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "d1ac12abfe4e56d6604ea5e558cc9af9ccdd96127ba93e13f0029510aeaafbc1"
+      "text_script_sha256": "d1ac12abfe4e56d6604ea5e558cc9af9ccdd96127ba93e13f0029510aeaafbc1",
+      "objective_semantics_differ": false
     },
     "equipment/character/swordman/weapon/katana/bazirang.equ": {
       "fields": {
@@ -1323,7 +1511,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "eb9a41130c53ed2ccee3f18a79a5590ae355606719fd08c3ddbac258c6840035"
+      "text_script_sha256": "eb9a41130c53ed2ccee3f18a79a5590ae355606719fd08c3ddbac258c6840035",
+      "objective_semantics_differ": false
     }
   },
   "structural_source": "111 backup; runtime applicability remains separately audited",
@@ -1368,7 +1557,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "2e5873b9dc92f75a2c983444eba65a772ebf8c5fad97aa4c6fa65ca4f94072d0"
+      "text_script_sha256": "2e5873b9dc92f75a2c983444eba65a772ebf8c5fad97aa4c6fa65ca4f94072d0",
+      "objective_semantics_differ": false
     },
     "n_quest/elvengard/lorien/epic_1_lorien_2.qst": {
       "fields": {
@@ -1403,26 +1593,33 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "12a30465eae16c8a5b4c5d66f1c3449d527199a266d11d0cc2da281f189844e1"
+      "text_script_sha256": "12a30465eae16c8a5b4c5d66f1c3449d527199a266d11d0cc2da281f189844e1",
+      "objective_semantics_differ": false
     },
     "n_quest/elvengard/lorieninside/epic_2_lorieninside_3.qst": {
       "fields": {
-        "[condition message]": "前往洛兰地区的『洛兰深处』， 杀死10只哥布林， 然后向林纳斯回复。 (沿着艾尔文防线右侧走， 就可以进入洛兰深处地下城)",
-        "[depend message]": "噢， 还有一件事要请你帮忙。 你知道吗？ 那些哥布林不知怎么了， 突然往洛兰深处疯狂聚集， 周边地区已经陷入一片混乱了。\n你快去除掉它们吧！ 不然周边的居民就要遭殃了！",
+        "[condition message]": "前往洛兰地区的洛兰深处，杀死10只哥布林，然后向林纳斯回复。(沿着艾尔文防线右侧走，就可以进入洛兰深处地下城)",
+        "[depend message]": "现在应该能正式委任工作给你了。 \n 近来，哥布林的数量持续增加，导致周围变成相当吵杂。 \n你要不要去帮我减少些哥布林的数目呢。",
         "[name]": "噪音公害",
-        "[solve message]": "哈哈， 你的身手还不错啊！ 送你一件武器吧， 不要嫌弃我的手艺， 你肯定会喜欢它的， 呵呵！"
+        "[solve message]": "你已经回来了？你的身手还不错啊！ \n为了表示我的感谢，送你一件武器吧！\n虽然我不是个手艺精湛的工匠，不过是目前会帮助你的物品，你挑挑看吧！"
       },
       "references": {
         "[condition message]": {
-          "origin": "1031",
-          "string_index": 456405,
-          "encoding": "gb18030",
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "condition_message_20130",
+          "line": 10795,
+          "missing": false,
           "needs_review": false
         },
         "[depend message]": {
-          "origin": "1031",
-          "string_index": 456404,
-          "encoding": "gb18030",
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "depend_message_20125",
+          "line": 2857,
+          "missing": false,
           "needs_review": false
         },
         "[name]": {
@@ -1432,13 +1629,17 @@
           "needs_review": false
         },
         "[solve message]": {
-          "origin": "1031",
-          "string_index": 456406,
-          "encoding": "gb18030",
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "solve_message_20135",
+          "line": 2859,
+          "missing": false,
           "needs_review": false
         }
       },
-      "text_script_sha256": "97bda13db4ca745db1dadecd39ecc312efd9a0bbc218857aa7280057dfa7ff8e"
+      "text_script_sha256": "97bda13db4ca745db1dadecd39ecc312efd9a0bbc218857aa7280057dfa7ff8e",
+      "objective_semantics_differ": true
     },
     "n_quest/handonmyre/mirkwood/epic_2_mirkwood_mutant_1.qst": {
       "fields": {
@@ -1473,26 +1674,33 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "1cbc87097459e496680f5e70f71b77a1a9429fea0e2b1b49b5aea45ac370cb0a"
+      "text_script_sha256": "1cbc87097459e496680f5e70f71b77a1a9429fea0e2b1b49b5aea45ac370cb0a",
+      "objective_semantics_differ": false
     },
     "n_quest/handonmyre/mirkwood/epic_2_mirkwood_mutant_2.qst": {
       "fields": {
-        "[condition message]": "前往格兰之森的『幽暗密林』， 杀死领主牛头巨兽。 (沿着风振的左侧走就可以进入格兰之森地下城)",
-        "[depend message]": "格兰之森原本是精灵的丛林， 自从那场大火灾过后， 丛林里的动植物就开始变得疯狂了， 而且还出现了不知名的奇怪生命体。\n更让人疑惑的是那些原本和我们非常友好的牛头怪， 不知为什么突然转了性子， 常常偷袭在丛林中穿行的赫顿玛尔居民。\n眼看越来越多的人被它们伤害， 我们不能再任由它们这样疯狂下去！ 所以冒险家， 拜托你了！",
+        "[condition message]": "前往格兰之森的幽暗密林，杀死领主牛头巨兽。(沿着风震的左侧走就可以进入格兰之森地下城)",
+        "[depend message]": "格兰之森… 原本是精灵们生活的丛林… \n从某一瞬间开始… 丛林里的动植物就开始变得疯狂了，而且还出现了不知名的奇怪生命体。 \n更让人疑惑的是那些原本和我们非常友好的牛头兵，不知为什么突然转了性子，常常偷袭在丛林中穿行的赫顿玛尔居民。 眼看越来越多的人被它们伤害， \n我们不能再任由它们这样疯狂下去！",
         "[name]": "狂暴的牛头巨兽",
-        "[solve message]": "你进入格兰之森的丛林了？ 那里的情况怎么样了？"
+        "[solve message]": "情况怎么样了？"
       },
       "references": {
         "[condition message]": {
-          "origin": "1031",
-          "string_index": 457798,
-          "encoding": "gb18030",
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "condition_message_20170",
+          "line": 2866,
+          "missing": false,
           "needs_review": false
         },
         "[depend message]": {
-          "origin": "1031",
-          "string_index": 457797,
-          "encoding": "gb18030",
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "depend_message_20165",
+          "line": 2865,
+          "missing": false,
           "needs_review": false
         },
         "[name]": {
@@ -1502,32 +1710,42 @@
           "needs_review": false
         },
         "[solve message]": {
-          "origin": "1031",
-          "string_index": 457799,
-          "encoding": "gb18030",
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "solve_message_20175",
+          "line": 2867,
+          "missing": false,
           "needs_review": false
         }
       },
-      "text_script_sha256": "04d357a207f1fdbec11d3038db8df0b70327f11b48f0bed2a71c05f36ba1bc12"
+      "text_script_sha256": "04d357a207f1fdbec11d3038db8df0b70327f11b48f0bed2a71c05f36ba1bc12",
+      "objective_semantics_differ": true
     },
     "n_quest/handonmyre/mirkwooddeep/epic_4_mirkwooddeep_mutant_3.qst": {
       "fields": {
-        "[condition message]": "前往格兰之森的『幽暗密林深处』， 杀死5只猫妖。",
-        "[depend message]": "你除掉牛头巨兽了？ 身手不错啊！ 正好我需要人帮忙。 呵呵， 我听说幽暗密林深处出现了一群猫妖， 它们经常偷袭赫顿玛尔居民， 你去给它们点教训吧！",
+        "[condition message]": "前往格兰之森的幽暗密林深处，杀死5只猫妖。",
+        "[depend message]": "你除掉牛头巨兽了？ 身手不错啊！ 正好我需要人帮忙。 我可以拜托你吗？ \n 我听说幽暗密林深处出现了一群猫妖，它们经常偷袭赫顿玛尔居民， \n冒险家，你去给它们点教训吧！",
         "[name]": "令人头痛的猫妖",
-        "[solve message]": "这幺快就回来了？ 没有受伤吧？"
+        "[solve message]": "我在等你！"
       },
       "references": {
         "[condition message]": {
-          "origin": "1031",
-          "string_index": 457724,
-          "encoding": "gb18030",
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "condition_message_20190",
+          "line": 8098,
+          "missing": false,
           "needs_review": false
         },
         "[depend message]": {
-          "origin": "1031",
-          "string_index": 457723,
-          "encoding": "gb18030",
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "depend_message_20185",
+          "line": 2869,
+          "missing": false,
           "needs_review": false
         },
         "[name]": {
@@ -1537,13 +1755,17 @@
           "needs_review": false
         },
         "[solve message]": {
-          "origin": "1031",
-          "string_index": 457725,
-          "encoding": "gb18030",
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "solve_message_20195",
+          "line": 2871,
+          "missing": false,
           "needs_review": false
         }
       },
-      "text_script_sha256": "d2b98744494941764946666fbc630391c8d85edd8616978019ac8c7abbe6dba1"
+      "text_script_sha256": "d2b98744494941764946666fbc630391c8d85edd8616978019ac8c7abbe6dba1",
+      "objective_semantics_differ": true
     },
     "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_4.qst": {
       "fields": {
@@ -1578,7 +1800,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "91369af8bee5c701c3acfc17e95f9e0359f48622e1f3dda87240d19d74b9cb3b"
+      "text_script_sha256": "91369af8bee5c701c3acfc17e95f9e0359f48622e1f3dda87240d19d74b9cb3b",
+      "objective_semantics_differ": false
     },
     "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_5.qst": {
       "fields": {
@@ -1620,7 +1843,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "13f1c2ef9d2bc561c852b7ee99612fc3a7ec642c468465e3ebc6d7b5c6484bc0"
+      "text_script_sha256": "13f1c2ef9d2bc561c852b7ee99612fc3a7ec642c468465e3ebc6d7b5c6484bc0",
+      "objective_semantics_differ": false
     },
     "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_1.qst": {
       "fields": {
@@ -1655,7 +1879,53 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "0dc57e55c75cb3c0d5be916f00d7a513f6668c018acf41ef9c7f13aef053fee4"
+      "text_script_sha256": "0dc57e55c75cb3c0d5be916f00d7a513f6668c018acf41ef9c7f13aef053fee4",
+      "objective_semantics_differ": false
+    },
+    "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_2.qst": {
+      "fields": {
+        "[condition message]": "前往格兰之森的猛毒雷鸣废墟，从领主毒猫王身上找到[毒猫王的毒药袋]。",
+        "[depend message]": "格兰之森深处？ \n 确实，我曾经去过。 \n 不过，那边并不推荐你们这些新手去呢。  \n 但是，你应该听不下老人家的意见吧… 也罢。 往雷鸣废墟深处走的话，就会到达一个叫做猛毒雷鸣废墟的地方。 \n 我这老人家唯一能够给你的建议，要对毒气要多加小心留意…",
+        "[name]": "毒香",
+        "[solve message]": "我大老远就闻到了浓浓的毒药味， 看来有人从猛毒雷鸣废墟回来了。"
+      },
+      "references": {
+        "[condition message]": {
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "condition_message_20270",
+          "line": 16559,
+          "missing": false,
+          "needs_review": false
+        },
+        "[depend message]": {
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "depend_message_20265",
+          "line": 2885,
+          "missing": false,
+          "needs_review": false
+        },
+        "[name]": {
+          "origin": "1031",
+          "string_index": 457741,
+          "encoding": "gb18030",
+          "needs_review": false
+        },
+        "[solve message]": {
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "solve_message_20275",
+          "line": 2887,
+          "missing": false,
+          "needs_review": false
+        }
+      },
+      "text_script_sha256": "9d634f2b0774a4f6c4f5c96fea256a6b010ac3bbbc274922e305e41b614edb2c",
+      "objective_semantics_differ": true
     },
     "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_2.qst": {
       "fields": {
@@ -1690,7 +1960,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "2ec55ff099d36df7539fb0b59e8e9f3ab0bd15417e5b39b05a1041e50d72cf10"
+      "text_script_sha256": "2ec55ff099d36df7539fb0b59e8e9f3ab0bd15417e5b39b05a1041e50d72cf10",
+      "objective_semantics_differ": false
     },
     "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd_3.qst": {
       "fields": {
@@ -1725,7 +1996,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "a2cdee8e683110ac3ee59a54f55317b3a0dbd0e56a2030944f9d584acc7c3652"
+      "text_script_sha256": "a2cdee8e683110ac3ee59a54f55317b3a0dbd0e56a2030944f9d584acc7c3652",
+      "objective_semantics_differ": false
     },
     "n_quest/common/handonmyre/epic_3_handonmyre_ghost_road_gsd.qst": {
       "fields": {
@@ -1760,7 +2032,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "f489e0c3b6c0a8e5733075b03580bfc7aa2d2095908c000c004ba91ff64530f1"
+      "text_script_sha256": "f489e0c3b6c0a8e5733075b03580bfc7aa2d2095908c000c004ba91ff64530f1",
+      "objective_semantics_differ": false
     },
     "n_quest/elvengard/lorieninside/epic_2_lorieninside_4.qst": {
       "fields": {
@@ -1795,26 +2068,33 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "c05ef0ff13ec9a25c57b648abadc46d290b3c2f8d62db0e59194e98530ab59b9"
+      "text_script_sha256": "c05ef0ff13ec9a25c57b648abadc46d290b3c2f8d62db0e59194e98530ab59b9",
+      "objective_semantics_differ": false
     },
     "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_6.qst": {
       "fields": {
-        "[condition message]": "再次前往格兰之森的『雷鸣废墟』， 惩治领主落雷凯诺。",
-        "[depend message]": "没想到你比凯诺还可怕， 不过我还是比较喜欢你……\n话说这件事真的很奇怪， 按理说变异哥布林出现得很少， 为什么这次会有那幺多呢？\n不如你再去看看。 对了， 凯诺这人很记仇的， 你记得带上我给你的武器和戒指。\n哎， 不用太感谢我啊， 多来光顾我的物品店就好了~",
+        "[condition message]": "再次消灭雷鸣废墟的凯诺",
+        "[depend message]": "比起凯诺，你让我留下比他更强悍的印象…… \n 但说也奇怪， 凯诺不可能这么容易出现，近日哥布林种族的突然变异也渐渐增多… \n 真是一个奇怪的现象啊… \n 对了，凯诺好像还没死，正等着报仇，请一定随身携带我给的武器和戒指。 以后你自然会感谢我的。",
         "[name]": "哥布林的异变",
         "[solve message]": "狠狠的教训过了哥布林 暂时应该不会再出来捣乱了吧… 冒险家，下次也拜托您了。"
       },
       "references": {
         "[condition message]": {
-          "origin": "1031",
-          "string_index": 457790,
-          "encoding": "gb18030",
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "ep2_1_condition",
+          "line": 5874,
+          "missing": false,
           "needs_review": false
         },
         "[depend message]": {
-          "origin": "1031",
-          "string_index": 457789,
-          "encoding": "gb18030",
+          "origin": "111_t2s",
+          "table": "n_quest/quest.kor.str",
+          "table_id": 11,
+          "key": "ep2_1_depend",
+          "line": 5873,
+          "missing": false,
           "needs_review": false
         },
         "[name]": {
@@ -1833,7 +2113,8 @@
           "needs_review": false
         }
       },
-      "text_script_sha256": "9210e18e5d45f667648d735dbd5a29aa7e26182e77c1ba040706bf3e716c0c4d"
+      "text_script_sha256": "9210e18e5d45f667648d735dbd5a29aa7e26182e77c1ba040706bf3e716c0c4d",
+      "objective_semantics_differ": true
     }
   }
 }

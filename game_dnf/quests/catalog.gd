@@ -63,6 +63,18 @@ func validate_definition(q: Dictionary) -> void:
 		if o.get("type") == "meet_npc" and not config.get("npcs", {}).has(o["target"]):errors.append("目标人物不存在：" + id)
 		if o.get("type") == "clear_dungeon" and not config.get("dungeons", {}).has(o["target"]):errors.append("目标地下城不存在：" + id)
 	var reward = q.get("reward", {})
+	var drops=q.get("drops",[])
+	if not drops is Array:errors.append("任务掉落表无效："+id)
+	else:
+		for rule in drops:
+			if not rule is Dictionary:errors.append("任务掉落规则无效："+id);continue
+			if not rule.get("monster") is String or rule["monster"].is_empty() or not config["dungeons"].has(rule.get("dungeon","")):errors.append("任务掉落目标无效："+id)
+			if not rule.get("item") is String or not preload("res://items/catalog.gd").ITEMS.has(rule.get("item","")):errors.append("任务掉落物品不存在："+id)
+			if not whole(rule.get("chance"),1,100) or not whole(rule.get("amount"),1,9999) or not whole(rule.get("limit"),1,9999):errors.append("任务掉落数量无效："+id)
+			if not rule.get("difficulty") is Array or rule["difficulty"].is_empty():errors.append("任务掉落难度无效："+id)
+			else:
+				for mode in rule["difficulty"]:
+					if mode not in ["normal","adventure","king"]:errors.append("任务掉落难度不支持："+id)
 	if not reward is Dictionary:
 		errors.append("任务奖励无效：" + id)
 		return

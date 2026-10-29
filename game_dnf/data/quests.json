@@ -1,6 +1,6 @@
 {
   "schema": "dnf_quests/1",
-  "revision": 4,
+  "revision": 5,
   "limits": {
     "active": 12,
     "tracked": 3
@@ -25,7 +25,8 @@
     "forest_trial": "密林试炼（旧样板）",
     "mirkwood": "幽暗密林",
     "mirkwood_deep": "幽暗密林深处",
-    "sunderland": "雷鸣废墟"
+    "sunderland": "雷鸣废墟",
+    "sunderland_poison": "猛毒雷鸣废墟"
   },
   "quests": [
     {
@@ -316,7 +317,7 @@
           "dungeon": "lorien_inside"
         }
       ],
-      "description": "前往洛兰地区的『洛兰深处』， 杀死10只哥布林， 然后向林纳斯回复。 (沿着艾尔文防线右侧走， 就可以进入洛兰深处地下城)",
+      "description": "前往洛兰地区的洛兰深处，杀死10只哥布林，然后向林纳斯回复。(沿着艾尔文防线右侧走，就可以进入洛兰深处地下城)",
       "reward": {
         "gold": 200,
         "xp": 100,
@@ -342,8 +343,8 @@
       "enabled": true,
       "abandonable": false,
       "dialogue": {
-        "accept": "噢， 还有一件事要请你帮忙。 你知道吗？ 那些哥布林不知怎么了， 突然往洛兰深处疯狂聚集， 周边地区已经陷入一片混乱了。\n你快去除掉它们吧！ 不然周边的居民就要遭殃了！",
-        "complete": "哈哈， 你的身手还不错啊！ 送你一件武器吧， 不要嫌弃我的手艺， 你肯定会喜欢它的， 呵呵！"
+        "accept": "现在应该能正式委任工作给你了。 \n 近来，哥布林的数量持续增加，导致周围变成相当吵杂。 \n你要不要去帮我减少些哥布林的数目呢。",
+        "complete": "你已经回来了？你的身手还不错啊！ \n为了表示我的感谢，送你一件武器吧！\n虽然我不是个手艺精湛的工匠，不过是目前会帮助你的物品，你挑挑看吧！"
       }
     },
     {
@@ -648,7 +649,7 @@
           "dungeon": "mirkwood"
         }
       ],
-      "description": "前往格兰之森的『幽暗密林』， 杀死领主牛头巨兽。 (沿着风振的左侧走就可以进入格兰之森地下城)",
+      "description": "前往格兰之森的幽暗密林，杀死领主牛头巨兽。(沿着风震的左侧走就可以进入格兰之森地下城)",
       "reward": {
         "gold": 500,
         "xp": 350,
@@ -685,8 +686,8 @@
         "other_class_rewards": []
       },
       "dialogue": {
-        "accept": "格兰之森原本是精灵的丛林， 自从那场大火灾过后， 丛林里的动植物就开始变得疯狂了， 而且还出现了不知名的奇怪生命体。\n更让人疑惑的是那些原本和我们非常友好的牛头怪， 不知为什么突然转了性子， 常常偷袭在丛林中穿行的赫顿玛尔居民。\n眼看越来越多的人被它们伤害， 我们不能再任由它们这样疯狂下去！ 所以冒险家， 拜托你了！",
-        "complete": "你进入格兰之森的丛林了？ 那里的情况怎么样了？"
+        "accept": "格兰之森… 原本是精灵们生活的丛林… \n从某一瞬间开始… 丛林里的动植物就开始变得疯狂了，而且还出现了不知名的奇怪生命体。 \n更让人疑惑的是那些原本和我们非常友好的牛头兵，不知为什么突然转了性子，常常偷袭在丛林中穿行的赫顿玛尔居民。 眼看越来越多的人被它们伤害， \n我们不能再任由它们这样疯狂下去！",
+        "complete": "情况怎么样了？"
       }
     },
     {
@@ -709,7 +710,7 @@
           "dungeon": "mirkwood_deep"
         }
       ],
-      "description": "前往格兰之森的『幽暗密林深处』， 杀死5只猫妖。",
+      "description": "前往格兰之森的幽暗密林深处，杀死5只猫妖。",
       "reward": {
         "gold": 500,
         "xp": 450,
@@ -749,8 +750,8 @@
         "other_class_rewards": []
       },
       "dialogue": {
-        "accept": "你除掉牛头巨兽了？ 身手不错啊！ 正好我需要人帮忙。 呵呵， 我听说幽暗密林深处出现了一群猫妖， 它们经常偷袭赫顿玛尔居民， 你去给它们点教训吧！",
-        "complete": "这幺快就回来了？ 没有受伤吧？"
+        "accept": "你除掉牛头巨兽了？ 身手不错啊！ 正好我需要人帮忙。 我可以拜托你吗？ \n 我听说幽暗密林深处出现了一群猫妖，它们经常偷袭赫顿玛尔居民， \n冒险家，你去给它们点教训吧！",
+        "complete": "我在等你！"
       }
     },
     {
@@ -1102,7 +1103,7 @@
           "amount": 1
         }
       ],
-      "description": "再次前往格兰之森的『雷鸣废墟』， 惩治领主落雷凯诺。",
+      "description": "再次消灭雷鸣废墟的凯诺",
       "reward": {
         "gold": 100,
         "xp": 180,
@@ -1114,8 +1115,106 @@
       "enabled": true,
       "abandonable": false,
       "dialogue": {
-        "accept": "没想到你比凯诺还可怕， 不过我还是比较喜欢你……\n话说这件事真的很奇怪， 按理说变异哥布林出现得很少， 为什么这次会有那幺多呢？\n不如你再去看看。 对了， 凯诺这人很记仇的， 你记得带上我给你的武器和戒指。\n哎， 不用太感谢我啊， 多来光顾我的物品店就好了~",
+        "accept": "比起凯诺，你让我留下比他更强悍的印象…… \n 但说也奇怪， 凯诺不可能这么容易出现，近日哥布林种族的突然变异也渐渐增多… \n 真是一个奇怪的现象啊… \n 对了，凯诺好像还没死，正等着报仇，请一定随身携带我给的武器和戒指。 以后你自然会感谢我的。",
         "complete": "狠狠的教训过了哥布林 暂时应该不会再出来捣乱了吧… 冒险家，下次也拜托您了。"
+      }
+    },
+    {
+      "id": "gran.poison_scent",
+      "source": {
+        "id": 110,
+        "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_2.qst",
+        "sha256": "34df01c688b631661a4b155d71bf3d907e937ca287c99a9da93736e32f50507a",
+        "raw_monster_reward_item": [
+          5004,
+          6,
+          0,
+          4169,
+          1,
+          100,
+          1,
+          5004,
+          6,
+          1,
+          4169,
+          1,
+          100,
+          1,
+          5004,
+          6,
+          2,
+          4169,
+          1,
+          100,
+          1,
+          5004,
+          6,
+          3,
+          4169,
+          1,
+          100,
+          1
+        ],
+        "drop_adaptation": "Verified 100 percent fixed-one tuple; four source difficulties map to currently supported three modes",
+        "text_path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_2.qst",
+        "raw_reward": [
+          0,
+          600,
+          20006,
+          1
+        ],
+        "other_class_rewards": []
+      },
+      "name": "毒香",
+      "category": "main",
+      "chapter": "格兰之森",
+      "min_level": 7,
+      "requires": [
+        "gran.meet_gsd"
+      ],
+      "giver": "gsd",
+      "receiver": "gsd",
+      "objectives": [
+        {
+          "id": "bag",
+          "type": "collect_item",
+          "target": "original_4169",
+          "amount": 1
+        }
+      ],
+      "description": "前往格兰之森的猛毒雷鸣废墟，从领主毒猫王身上找到[毒猫王的毒药袋]。",
+      "reward": {
+        "gold": 600,
+        "xp": 80,
+        "items": {
+          "original_20006": 1
+        },
+        "choices": [],
+        "conditional_items": []
+      },
+      "consume": {
+        "original_4169": 1
+      },
+      "enabled": true,
+      "abandonable": false,
+      "drops": [
+        {
+          "monster": "monster/lugaru/penril.mob",
+          "dungeon": "sunderland_poison",
+          "difficulty": [
+            "normal",
+            "adventure",
+            "king"
+          ],
+          "item": "original_4169",
+          "amount": 1,
+          "chance": 100,
+          "limit": 1
+        }
+      ],
+      "dialogue": {
+        "accept": "格兰之森深处？ \n 确实，我曾经去过。 \n 不过，那边并不推荐你们这些新手去呢。  \n 但是，你应该听不下老人家的意见吧… 也罢。 往雷鸣废墟深处走的话，就会到达一个叫做猛毒雷鸣废墟的地方。 \n 我这老人家唯一能够给你的建议，要对毒气要多加小心留意…",
+        "complete": "我大老远就闻到了浓浓的毒药味， 看来有人从猛毒雷鸣废墟回来了。"
       }
     }
   ],
@@ -1123,6 +1222,7 @@
     "monster/goblin/goblin.mob": "哥布林",
     "monster/tau/taubeast.mob": "牛头巨兽",
     "monster/lugaru/lugaru.mob": "猫妖",
-    "monster/goblin/kinol.mob": "落雷凯诺"
+    "monster/goblin/kinol.mob": "落雷凯诺",
+    "monster/lugaru/penril.mob": "毒猫王"
   }
 }

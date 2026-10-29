@@ -1,10 +1,16 @@
 """Reward grammar checks need neither a PVF installation nor runtime assets."""
 import unittest
 
-from build_dnf_progression_data import reward_rows
+from build_dnf_progression_data import reward_rows, clean
 
 
 class RewardGrammar(unittest.TestCase):
+    def test_source_comments_do_not_leak_into_player_body(self):
+        self.assertEqual(clean('前往洛伦\\n\n//091216 ???\n  // source note'), '前往洛兰')
+
+    def test_dialogue_paragraphs_are_preserved(self):
+        self.assertEqual(clean('第一段\r\n\r\n第二段'), '第一段\n\n第二段')
+
     def test_fixed_gold_and_duplicate_items(self):
         self.assertEqual(reward_rows([0, 50, 1106, 2, 1106, 3]),
                          (50, {'original_1106': 5}, []))

@@ -307,6 +307,40 @@
         "[all]"
       ]
     },
+    "original_20006": {
+      "name": "强韧的稻草项链",
+      "slot": "necklace",
+      "required_level": 8,
+      "stats": {
+        "intelligence": 4.0,
+        "spirit": 8.0,
+        "magical_defense": 640.0
+      },
+      "stat_ranges": {
+        "intelligence": [
+          4.0,
+          4.0
+        ],
+        "spirit": [
+          8.0,
+          8.0
+        ],
+        "magical_defense": [
+          640.0,
+          640.0
+        ]
+      },
+      "source": {
+        "id": 20006,
+        "list": "equipment/equipment.lst",
+        "path": "equipment/character/common/amulet/neck_cstraw.equ",
+        "sha256": "58c9d47760c08a518178da7d3bd8f6b22e1759dcfe6d6dcf7f2b26f0519bfe55"
+      },
+      "durability": 40,
+      "usable_jobs": [
+        "[all]"
+      ]
+    },
     "original_22001": {
       "name": "破旧的棉布护腕",
       "slot": "bracelet",

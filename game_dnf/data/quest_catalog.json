@@ -3,9 +3,9 @@
  "evidence": "原版 .qst 结构化字段 E-PARSE；名称/描述为本地化引用（string 键），正文未解出",
  "summary": {
   "total": 3716,
-  "implemented": 14,
+  "implemented": 15,
   "failed": 0,
-  "pending_name_refs": 1394,
+  "pending_name_refs": 1393,
   "groups": {
    "n_quest/urgent": 1331,
    "n_quest/common": 291,
@@ -27339,9 +27339,9 @@
     1
    ],
    "name_ref": "string:19097",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "gran.poison_scent",
+   "local_name": "毒香"
   },
   {
    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3.qst",
