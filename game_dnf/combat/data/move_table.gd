@@ -244,7 +244,9 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		problems.append("MOB not found: "+path)
 		return {}
 	var base: Dictionary = rules["monster_base"]
-	var motion_dir := String(mob.get("waiting_motion",[""])[0]).get_base_dir()
+	# 部分怪（雕像、机关类）没有 waiting motion 或 attack info，空数组直接取 [0] 会崩。
+	var waiting: Array = mob.get("waiting_motion", [])
+	var motion_dir := String(waiting[0]).get_base_dir() if not waiting.is_empty() else ""
 	var m := {"key":key,"mob":path,"bank":String(spec.get("bank",key)),"dir":motion_dir,
 		"name":String(spec.get("name",key)),"level":int(mob.get("level",[1])[0]),
 		"hp":float(base["hp"])*_ability(mob,"[HP MAX]")/100.0,
@@ -256,9 +258,10 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 			"damage1":_stem(mob.get("damage_motion_1")),"damage2":_stem(mob.get("damage_motion_2")),
 			"down":_stem(mob.get("down_motion")),"overturn":_stem(mob.get("overturn_motion")),
 			"sit":_stem(mob.get("sit_motion")),"attack":_stem(mob.get("attack_motions"))}}
-	m["attack_timeline"] = timeline(motion_dir.path_join(m["motions"]["attack"]+".ani"))
+	m["attack_timeline"] = timeline(motion_dir.path_join(m["motions"]["attack"] + ".ani")) if motion_dir != "" else {"frames": [], "duration_ms": 0}
 	m["attack_segments"] = Timeline.attack_segments(m["attack_timeline"])
-	m["atk"] = atk(String(mob.get("attack_infos",[""])[0]))
+	var attack_infos: Array = mob.get("attack_infos", [])
+	m["atk"] = atk(String(attack_infos[0])) if not attack_infos.is_empty() else {}
 	var throw: Dictionary = mob.get("throw_attack",{}) if mob.get("throw_attack") is Dictionary else {}
 	if not throw.is_empty():
 		var objects_index: Dictionary = db.index("passive_objects")

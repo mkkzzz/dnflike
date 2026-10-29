@@ -294,6 +294,32 @@ def animation_record(lib: Library, path: str) -> dict | None:
             'unsupported': [], 'source': {'path': path, 'sha256': found['sha256'], 'asset_version': lib.asset_version}}
 
 
+def referenced_mob_paths() -> set[str]:
+    """扫描 data/dungeons.json 引用的地图导出，收集房间里的 mob 路径。"""
+    dungeons_path = ROOT / 'game_dnf/data/dungeons.json'
+    if not dungeons_path.is_file():
+        return set()
+    out: set[str] = set()
+    dungeons = json.loads(dungeons_path.read_text(encoding='utf-8'))['dungeons']
+    for spec in dungeons.values():
+        export = spec.get('map_export', '')
+        if not export:
+            continue
+        path = ROOT / 'game_dnf' / export.replace('res://', '')
+        if not path.is_file():
+            continue
+        try:
+            data = json.loads(path.read_text(encoding='utf-8'))
+        except Exception:
+            continue
+        for room in (data.get('dungeon', {}).get('rooms') or {}).values():
+            for monster in room.get('monsters') or []:
+                mob = monster.get('mob')
+                if mob:
+                    out.add(str(mob).lower())
+    return out
+
+
 def compile_scope(lib: Library) -> dict:
     records: dict[str, dict] = {}
     missing: list[dict] = []
@@ -329,11 +355,14 @@ def compile_scope(lib: Library) -> dict:
     monster_index = {}
     object_paths: list[str] = list(SKILL_OBJECTS)
     object_index: dict[str, str] = {}
+    # 编译范围：哥布林家族 + 早期手写四只 + **副本实际引用到的全部 mob**。
+    # 只认硬编码范围会让天空之城/桑德兰那批怪在内容包里查不到，运行时整只怪被跳过。
+    needed = referenced_mob_paths()
     for index, rel in sorted(monsters.items()):
         p = ('monster/' + rel).lower()
-        if not p.startswith('monster/goblin/') and p not in {
+        if not (p.startswith('monster/goblin/') or p in {
                 'monster/tau/tauarmy.mob','monster/tau/taubeast.mob',
-                'monster/lugaru/lugaru.mob','monster/lugaru/kurogaru.mob'}:
+                'monster/lugaru/lugaru.mob','monster/lugaru/kurogaru.mob'} or p in needed):
             continue
         mob = add(p, 'mob', 'monster/monster.lst')
         if not mob:

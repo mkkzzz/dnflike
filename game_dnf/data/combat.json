@@ -1,92 +1,734 @@
 {
-  "schema":"dnf_combat_adaptation/2",
-  "doc":"E-ADAPT layer (doc 29). Only what the original data does not say: which original file the engine links to each trial move, unit scales and base numbers that come from tables we do not have. Every original value (ANI frames/boxes, ATK reaction fields, SKL MP/cool/level info, CHR/MOB stats) is read from the compiled content pack, never copied here.",
-  "player":{
-    "chr":"character/swordman/swordman.chr",
-    "physical_attack":25,
-    "walk_speed":105,
-    "run_speed":195,
-    "gravity":1050,
-    "hp_regen_per_s":0,
-    "mp_regen_per_s":2.2,
-    "hit_invuln_ms":400,
-    "guard_factor":0.2,
-    "weapon_index":{"shortsword":0,"katana":1,"greatsword":3},
-    "source":"physical_attack has no original equivalent until equipment/stats exist; walk/run px/s are the trial calibration for CHR move speed 850; weapon_index is the CHR weapon subtype row (E-INFER from sound names)."
+ "schema": "dnf_combat_adaptation/2",
+ "doc": "E-ADAPT layer (doc 29). Only what the original data does not say: which original file the engine links to each trial move, unit scales and base numbers that come from tables we do not have. Every original value (ANI frames/boxes, ATK reaction fields, SKL MP/cool/level info, CHR/MOB stats) is read from the compiled content pack, never copied here.",
+ "player": {
+  "chr": "character/swordman/swordman.chr",
+  "physical_attack": 25,
+  "walk_speed": 105,
+  "run_speed": 195,
+  "gravity": 1050,
+  "hp_regen_per_s": 0,
+  "mp_regen_per_s": 2.2,
+  "hit_invuln_ms": 400,
+  "guard_factor": 0.2,
+  "weapon_index": {
+   "shortsword": 0,
+   "katana": 1,
+   "greatsword": 3
   },
-  "units":{
-    "move_speed_reference":850,
-    "depth_speed_ratio":0.58,
-    "source":"CHR/MOB move speed values are scaled by walk_speed/move_speed_reference to px/s. PTL move variables are already px/s (throw stone 250 px/s x 1200 ms = goblin sight 300)."
+  "source": "physical_attack has no original equivalent until equipment/stats exist; walk/run px/s are the trial calibration for CHR move speed 850; weapon_index is the CHR weapon subtype row (E-INFER from sound names)."
+ },
+ "units": {
+  "move_speed_reference": 850,
+  "depth_speed_ratio": 0.58,
+  "source": "CHR/MOB move speed values are scaled by walk_speed/move_speed_reference to px/s. PTL move variables are already px/s (throw stone 250 px/s x 1200 ms = goblin sight 300)."
+ },
+ "reaction": {
+  "stun_base_ms": 260,
+  "stun_reference_recovery": 500,
+  "push_speed_per_unit": 2.0,
+  "push_decay_ms": 250,
+  "lift_speed_per_unit": 1.0,
+  "monster_gravity": 900,
+  "down_hold_ms": 400,
+  "getup_ms": 500,
+  "bounce_min_speed": 240,
+  "bounce_speed": 140,
+  "source": "Units of ATK push aside / lift up and of hit recovery are not documented by the data; these scales make attack3 (push 40, lift 300) launch about 50 px high."
+ },
+ "hitstop": {
+  "hit_ms": 60,
+  "down_ms": 85,
+  "received_ms": 45,
+  "source": "No ATK in scope carries [stuck]; per-reaction defaults."
+ },
+ "combo_window_ms": 1500,
+ "monster_base": {
+  "hp": 160,
+  "attack": 20,
+  "boss_hp_scale": 3.5,
+  "boss_attack_scale": 1.6,
+  "source": "Monster level tables are absent; MOB [ability category] percentages multiply these bases."
+ },
+ "buff": {
+  "duration_ms": 8000,
+  "attack_speed": 1.25,
+  "move_speed": 1.2,
+  "damage": 1.2,
+  "damage_taken": 1.3,
+  "source": "Frenzy level info columns are not decoded yet; trial effect values kept from the previous adaptation."
+ },
+ "keys": {
+  "upper": "Z",
+  "draw": "A",
+  "triple": "S",
+  "rage_slash": "D",
+  "buff": "F"
+ },
+ "moves": {
+  "attack1": {
+   "ani": "attack1",
+   "atk": "character/swordman/attackinfo/attack1.atk",
+   "hits": [
+    {
+     "borrow": "character/swordman/effect/animation/shortswordmastery/shortattack1dodge.ani"
+    }
+   ],
+   "swing": 0,
+   "voice": "swing1",
+   "next": "attack2"
   },
-  "reaction":{
-    "stun_base_ms":260,
-    "stun_reference_recovery":500,
-    "push_speed_per_unit":2.0,
-    "push_decay_ms":250,
-    "lift_speed_per_unit":1.0,
-    "monster_gravity":900,
-    "down_hold_ms":400,
-    "getup_ms":500,
-    "bounce_min_speed":240,
-    "bounce_speed":140,
-    "source":"Units of ATK push aside / lift up and of hit recovery are not documented by the data; these scales make attack3 (push 40, lift 300) launch about 50 px high."
+  "attack2": {
+   "ani": "attack2",
+   "atk": "character/swordman/attackinfo/attack2.atk",
+   "hits": [
+    {
+     "borrow": "character/swordman/effect/animation/shortswordmastery/shortattack2dodge.ani"
+    }
+   ],
+   "swing": 0,
+   "voice": "swing2",
+   "next": "attack3"
   },
-  "hitstop":{"hit_ms":60,"down_ms":85,"received_ms":45,"source":"No ATK in scope carries [stuck]; per-reaction defaults."},
-  "combo_window_ms":1500,
-  "monster_base":{"hp":160,"attack":20,"boss_hp_scale":3.5,"boss_attack_scale":1.6,"source":"Monster level tables are absent; MOB [ability category] percentages multiply these bases."},
-  "buff":{"duration_ms":8000,"attack_speed":1.25,"move_speed":1.2,"damage":1.2,"damage_taken":1.3,"source":"Frenzy level info columns are not decoded yet; trial effect values kept from the previous adaptation."},
-  "keys":{"upper":"Z","draw":"A","triple":"S","rage_slash":"D","buff":"F"},
-  "moves":{
-    "attack1":{"ani":"attack1","atk":"character/swordman/attackinfo/attack1.atk","hits":[{"borrow":"character/swordman/effect/animation/shortswordmastery/shortattack1dodge.ani"}],"swing":0,"voice":"swing1","next":"attack2"},
-    "attack2":{"ani":"attack2","atk":"character/swordman/attackinfo/attack2.atk","hits":[{"borrow":"character/swordman/effect/animation/shortswordmastery/shortattack2dodge.ani"}],"swing":0,"voice":"swing2","next":"attack3"},
-    "attack3":{"ani":"attack3","atk":"character/swordman/attackinfo/attack3.atk","hits":[{"body":true}],"swing":1,"voice":"swing3"},
-    "dash_attack":{"ani":"dashattack","atk":"character/swordman/attackinfo/dashattack.atk","hits":[{"body":true}],"swing":1,"voice":"swing2"},
-    "air_attack":{"ani":"jumpattack","atk":"character/swordman/attackinfo/jumpattack.atk","hits":[{"body":true}],"swing":0,"voice":"jump_attack","air":true},
-    "upper":{"ani":"hitback","skill":"skill/swordman/upperslash.skl","atk":"character/swordman/attackinfo/upperslash.atk",
-      "hits":[{"derived":"upper1","window":[150,300],"percent_col":0,"lift_col":1}],
-      "fx":[{"key":"upper1","at":150},{"key":"upper2","at":200}],"voice":"upper","sounds":[{"key":"UPPER_SLASH_01","at":150}],"name":"上挑",
-      "source":"Motion = CHR [etc motion] #2 hitback.ani (sm_body 51-59: low guard, rising swing, sword overhead); the oldest etc slots are guard / hardattack (鬼斩) / upper slash (E-INFER). upperslashafter.ani reuses the 裂波斩 vaneslashtry poses 199-203 and is not the 1-level skill. Effects upperslash1/2.ani line up with the swing at 150/200 ms; box = their pixel extent; UPPER_SLASH_01 = sounds/char/swordman/effect/upper_slash_01.ogg."},
-    "draw":{"ani":"momentaryslash","skill":"skill/swordman/momentaryslash.skl",
-      "hits":[{"object":"passiveobject/character/swordman/momentaryslashwave.obj","at":550,"active_ms":50,"percent_col":0}],
-      "fx":[{"key":"draw","at":0}],"voice":"draw_ready","sounds":[{"key":"draw","at":550}],"name":"拔刀斩"},
-    "triple":{"skill":"skill/swordman/tripleslash.skl","name":"三段斩",
-      "stages":[
-        {"ani":"tripleslash1","atk":"character/swordman/attackinfo/tripleslash1.atk","hits":[{"derived":"triple1","window":[70,210],"percent_col":0}],"fx":[{"key":"triple1","at":0}],"voice":"triple1"},
-        {"ani":"tripleslash2","atk":"character/swordman/attackinfo/tripleslash2.atk","hits":[{"derived":"triple2","window":[70,210],"percent_col":1}],"fx":[{"key":"triple2","at":0}],"voice":"triple2"},
-        {"ani":"tripleslash3","atk":"character/swordman/attackinfo/tripleslash3.atk","hits":[{"derived":"triple3","window":[70,210],"percent_col":2}],"fx":[{"key":"triple3","at":0}],"voice":"triple3"}],
-      "dash":{"speed_static":0,"accel_static":1},
-      "source":"Slash bodies carry no attack boxes; boxes are the original slash effect extents. SKL static_data [600, -1000] read as slide start speed px/s and deceleration px/s² (E-INFER): each stage slides 180 px, easing to a stop at 600 ms."},
-    "rage_slash":{"ani":"gorecross","skill":"skill/swordman/gorecross.skl","name":"十字斩",
-      "hits":[{"derived":"gore_slash1","window":[100,300],"atk":"character/swordman/attackinfo/gorecross1.atk","percent_col":0},
-        {"derived":"gore_slash2","window":[300,500],"atk":"character/swordman/attackinfo/gorecross2.atk","percent_col":1},
-        {"object":"passiveobject/character/swordman/gorecross.obj","at":960,"percent_col":10}],
-      "fx":[{"key":"gore_slash1","at":0},{"key":"gore_slash2","at":300}],"voice":"gorecross",
-      "source":"Slash windows follow the body pose groups (frames 0-5, 6-9); the crescent object starts at frame 14 (GORECROSS_ATK3) on the caster's own anchor (composite of gorecross.ani + gorecross1.ani lines up without offset)."},
-    "buff":{"ani":"summon2","skill":"skill/swordman/frenzy.skl","name":"暴走","cast_fx":"frenzy_cast","aura_fx":"frenzy_buff"}
+  "attack3": {
+   "ani": "attack3",
+   "atk": "character/swordman/attackinfo/attack3.atk",
+   "hits": [
+    {
+     "body": true
+    }
+   ],
+   "swing": 1,
+   "voice": "swing3"
   },
-  "backstep":{"cancels":["attack1","attack2","attack3","dash_attack"],"duration_ms":470,"speed":150,"lift":220,"invuln_ms":110,
-    "source":"Down + jump. Original back step has no motion file of its own (CHR [back motion] points at attack3.ani); the jump.ani rise/fall poses are used (E-ADAPT). Only normal attacks can be cancelled for now (user 2026-10-23); a cancel leaves a fading afterimage of the cancelled pose (engine-drawn in the original, E-ADAPT)."},
-  "monsters":{
-    "goblin":{"mob":"monster/goblin/goblin.mob","bank":"goblin","name":"哥布林"},
-    "goblin_thrower":{"mob":"monster/goblin/goblinthrower.mob","bank":"goblin_thrower","keep_distance":150,"name":"哥布林投掷手"},
-    "tau_army":{"mob":"monster/tau/tauarmy.mob","bank":"tau_army","name":"牛头兵"},
-    "tau_beast":{"mob":"monster/tau/taubeast.mob","bank":"tau_beast","name":"牛头巨兽"},
-    "lugaru":{"mob":"monster/lugaru/lugaru.mob","bank":"lugaru","name":"猫妖"},
-    "kurogaru":{"mob":"monster/lugaru/kurogaru.mob","bank":"kurogaru","name":"暗咒猫妖"},
-    "goblin_ice":{"mob":"monster/goblin/seagab.mob","bank":"goblin_ice","name":"青哥布林","keep_distance":150},
-    "goblin_fire":{"mob":"monster/goblin/hillgab.mob","bank":"goblin_fire","name":"赤哥布林","keep_distance":150},
-    "goblin_taskmaster":{"mob":"monster/goblin/goblintaskmaster.mob","bank":"goblin_taskmaster","name":"哥布林十夫长"},
-    "goblin_thrower_taskmaster":{"mob":"monster/goblin/goblinthrowertaskmaster.mob","bank":"goblin_thrower_taskmaster","name":"投掷哥布林十夫长","keep_distance":150,"attack_template":"goblin_thrower","adaptation":"E-ADAPT missing archived attack definition; existing stone projectile; full AI not restored"}
+  "dash_attack": {
+   "ani": "dashattack",
+   "atk": "character/swordman/attackinfo/dashattack.atk",
+   "hits": [
+    {
+     "body": true
+    }
+   ],
+   "swing": 1,
+   "voice": "swing2"
   },
-  "boss_hp_lines":3,
-  "map_export":"res://assets_local/native_maps/lorien/map_export.json",
-  "rooms":[
-    {"name":"洛兰","placement":"1_0:s3","next":"left"},
-    {"name":"洛兰","placement":"0_0:s2","next":"down"},
-    {"name":"洛兰","placement":"0_1:8","next":"right"},
-    {"name":"洛兰","placement":"1_1:9","next":"down"},
-    {"name":"洛兰","placement":"1_2:b3","next":"","boss":true}
+  "air_attack": {
+   "ani": "jumpattack",
+   "atk": "character/swordman/attackinfo/jumpattack.atk",
+   "hits": [
+    {
+     "body": true
+    }
+   ],
+   "swing": 0,
+   "voice": "jump_attack",
+   "air": true
+  },
+  "upper": {
+   "ani": "hitback",
+   "skill": "skill/swordman/upperslash.skl",
+   "atk": "character/swordman/attackinfo/upperslash.atk",
+   "hits": [
+    {
+     "derived": "upper1",
+     "window": [
+      150,
+      300
+     ],
+     "percent_col": 0,
+     "lift_col": 1
+    }
+   ],
+   "fx": [
+    {
+     "key": "upper1",
+     "at": 150
+    },
+    {
+     "key": "upper2",
+     "at": 200
+    }
+   ],
+   "voice": "upper",
+   "sounds": [
+    {
+     "key": "UPPER_SLASH_01",
+     "at": 150
+    }
+   ],
+   "name": "上挑",
+   "source": "Motion = CHR [etc motion] #2 hitback.ani (sm_body 51-59: low guard, rising swing, sword overhead); the oldest etc slots are guard / hardattack (鬼斩) / upper slash (E-INFER). upperslashafter.ani reuses the 裂波斩 vaneslashtry poses 199-203 and is not the 1-level skill. Effects upperslash1/2.ani line up with the swing at 150/200 ms; box = their pixel extent; UPPER_SLASH_01 = sounds/char/swordman/effect/upper_slash_01.ogg."
+  },
+  "draw": {
+   "ani": "momentaryslash",
+   "skill": "skill/swordman/momentaryslash.skl",
+   "hits": [
+    {
+     "object": "passiveobject/character/swordman/momentaryslashwave.obj",
+     "at": 550,
+     "active_ms": 50,
+     "percent_col": 0
+    }
+   ],
+   "fx": [
+    {
+     "key": "draw",
+     "at": 0
+    }
+   ],
+   "voice": "draw_ready",
+   "sounds": [
+    {
+     "key": "draw",
+     "at": 550
+    }
+   ],
+   "name": "拔刀斩"
+  },
+  "triple": {
+   "skill": "skill/swordman/tripleslash.skl",
+   "name": "三段斩",
+   "stages": [
+    {
+     "ani": "tripleslash1",
+     "atk": "character/swordman/attackinfo/tripleslash1.atk",
+     "hits": [
+      {
+       "derived": "triple1",
+       "window": [
+        70,
+        210
+       ],
+       "percent_col": 0
+      }
+     ],
+     "fx": [
+      {
+       "key": "triple1",
+       "at": 0
+      }
+     ],
+     "voice": "triple1"
+    },
+    {
+     "ani": "tripleslash2",
+     "atk": "character/swordman/attackinfo/tripleslash2.atk",
+     "hits": [
+      {
+       "derived": "triple2",
+       "window": [
+        70,
+        210
+       ],
+       "percent_col": 1
+      }
+     ],
+     "fx": [
+      {
+       "key": "triple2",
+       "at": 0
+      }
+     ],
+     "voice": "triple2"
+    },
+    {
+     "ani": "tripleslash3",
+     "atk": "character/swordman/attackinfo/tripleslash3.atk",
+     "hits": [
+      {
+       "derived": "triple3",
+       "window": [
+        70,
+        210
+       ],
+       "percent_col": 2
+      }
+     ],
+     "fx": [
+      {
+       "key": "triple3",
+       "at": 0
+      }
+     ],
+     "voice": "triple3"
+    }
+   ],
+   "dash": {
+    "speed_static": 0,
+    "accel_static": 1
+   },
+   "source": "Slash bodies carry no attack boxes; boxes are the original slash effect extents. SKL static_data [600, -1000] read as slide start speed px/s and deceleration px/s² (E-INFER): each stage slides 180 px, easing to a stop at 600 ms."
+  },
+  "rage_slash": {
+   "ani": "gorecross",
+   "skill": "skill/swordman/gorecross.skl",
+   "name": "十字斩",
+   "hits": [
+    {
+     "derived": "gore_slash1",
+     "window": [
+      100,
+      300
+     ],
+     "atk": "character/swordman/attackinfo/gorecross1.atk",
+     "percent_col": 0
+    },
+    {
+     "derived": "gore_slash2",
+     "window": [
+      300,
+      500
+     ],
+     "atk": "character/swordman/attackinfo/gorecross2.atk",
+     "percent_col": 1
+    },
+    {
+     "object": "passiveobject/character/swordman/gorecross.obj",
+     "at": 960,
+     "percent_col": 10
+    }
+   ],
+   "fx": [
+    {
+     "key": "gore_slash1",
+     "at": 0
+    },
+    {
+     "key": "gore_slash2",
+     "at": 300
+    }
+   ],
+   "voice": "gorecross",
+   "source": "Slash windows follow the body pose groups (frames 0-5, 6-9); the crescent object starts at frame 14 (GORECROSS_ATK3) on the caster's own anchor (composite of gorecross.ani + gorecross1.ani lines up without offset)."
+  },
+  "buff": {
+   "ani": "summon2",
+   "skill": "skill/swordman/frenzy.skl",
+   "name": "暴走",
+   "cast_fx": "frenzy_cast",
+   "aura_fx": "frenzy_buff"
+  }
+ },
+ "backstep": {
+  "cancels": [
+   "attack1",
+   "attack2",
+   "attack3",
+   "dash_attack"
   ],
-  "rooms_source":"Original lorien.dgn grid (2x3). Start (1,0) is a listed start candidate; boss (1,2) a listed boss cell; each step uses a door both neighbours own. Map per cell picked from its candidates (start/normal/boss role). Monster names are the CN client names typed in (the archive only has Korean strings), E-ADAPT."
+  "duration_ms": 470,
+  "speed": 150,
+  "lift": 220,
+  "invuln_ms": 110,
+  "source": "Down + jump. Original back step has no motion file of its own (CHR [back motion] points at attack3.ani); the jump.ani rise/fall poses are used (E-ADAPT). Only normal attacks can be cancelled for now (user 2026-10-23); a cancel leaves a fading afterimage of the cancelled pose (engine-drawn in the original, E-ADAPT)."
+ },
+ "monsters": {
+  "goblin": {
+   "mob": "monster/goblin/goblin.mob",
+   "bank": "goblin",
+   "name": "哥布林"
+  },
+  "goblin_thrower": {
+   "mob": "monster/goblin/goblinthrower.mob",
+   "bank": "goblin_thrower",
+   "keep_distance": 150,
+   "name": "哥布林投掷手"
+  },
+  "tau_army": {
+   "mob": "monster/tau/tauarmy.mob",
+   "bank": "tau_army",
+   "name": "牛头兵"
+  },
+  "tau_beast": {
+   "mob": "monster/tau/taubeast.mob",
+   "bank": "tau_beast",
+   "name": "牛头巨兽"
+  },
+  "lugaru": {
+   "mob": "monster/lugaru/lugaru.mob",
+   "bank": "lugaru",
+   "name": "猫妖"
+  },
+  "kurogaru": {
+   "mob": "monster/lugaru/kurogaru.mob",
+   "bank": "kurogaru",
+   "name": "暗咒猫妖"
+  },
+  "goblin_ice": {
+   "mob": "monster/goblin/seagab.mob",
+   "bank": "goblin_ice",
+   "name": "青哥布林",
+   "keep_distance": 150
+  },
+  "goblin_fire": {
+   "mob": "monster/goblin/hillgab.mob",
+   "bank": "goblin_fire",
+   "name": "赤哥布林",
+   "keep_distance": 150
+  },
+  "goblin_taskmaster": {
+   "mob": "monster/goblin/goblintaskmaster.mob",
+   "bank": "goblin_taskmaster",
+   "name": "哥布林十夫长"
+  },
+  "goblin_thrower_taskmaster": {
+   "mob": "monster/goblin/goblinthrowertaskmaster.mob",
+   "bank": "goblin_thrower_taskmaster",
+   "name": "投掷哥布林十夫长",
+   "keep_distance": 150,
+   "attack_template": "goblin_thrower",
+   "adaptation": "E-ADAPT missing archived attack definition; existing stone projectile; full AI not restored"
+  },
+  "characterstatue_fighterstatue": {
+   "mob": "monster/characterstatue/fighterstatue.mob",
+   "bank": "characterstatue_fighterstatue",
+   "name": "fighterstatue"
+  },
+  "characterstatue_gunnerstatue": {
+   "mob": "monster/characterstatue/gunnerstatue.mob",
+   "bank": "characterstatue_gunnerstatue",
+   "name": "gunnerstatue"
+  },
+  "characterstatue_magicianstatue": {
+   "mob": "monster/characterstatue/magicianstatue.mob",
+   "bank": "characterstatue_magicianstatue",
+   "name": "magicianstatue"
+  },
+  "characterstatue_prieststatue": {
+   "mob": "monster/characterstatue/prieststatue.mob",
+   "bank": "characterstatue_prieststatue",
+   "name": "prieststatue"
+  },
+  "characterstatue_swordmanstatue": {
+   "mob": "monster/characterstatue/swordmanstatue.mob",
+   "bank": "characterstatue_swordmanstatue",
+   "name": "swordmanstatue"
+  },
+  "dollmaster_claymaster": {
+   "mob": "monster/dollmaster/claymaster.mob",
+   "bank": "dollmaster_claymaster",
+   "name": "claymaster"
+  },
+  "dollmaster_golemmaster": {
+   "mob": "monster/dollmaster/golemmaster.mob",
+   "bank": "dollmaster_golemmaster",
+   "name": "golemmaster"
+  },
+  "dollmaster_icedoll_sharedo": {
+   "mob": "monster/dollmaster/icedoll_sharedo.mob",
+   "bank": "dollmaster_icedoll_sharedo",
+   "name": "icedoll_sharedo"
+  },
+  "dollmaster_masterdogri": {
+   "mob": "monster/dollmaster/masterdogri.mob",
+   "bank": "dollmaster_masterdogri",
+   "name": "masterdogri"
+  },
+  "dollmaster_steelmaster": {
+   "mob": "monster/dollmaster/steelmaster.mob",
+   "bank": "dollmaster_steelmaster",
+   "name": "steelmaster"
+  },
+  "dollmaster_stonemaster": {
+   "mob": "monster/dollmaster/stonemaster.mob",
+   "bank": "dollmaster_stonemaster",
+   "name": "stonemaster"
+  },
+  "draconian_aurahunter_sius": {
+   "mob": "monster/draconian/aurahunter_sius.mob",
+   "bank": "draconian_aurahunter_sius",
+   "name": "aurahunter_sius"
+  },
+  "draconian_lakius": {
+   "mob": "monster/draconian/lakius.mob",
+   "bank": "draconian_lakius",
+   "name": "lakius"
+  },
+  "draconian_minius": {
+   "mob": "monster/draconian/minius.mob",
+   "bank": "draconian_minius",
+   "name": "minius"
+  },
+  "draconian_mirkius": {
+   "mob": "monster/draconian/mirkius.mob",
+   "bank": "draconian_mirkius",
+   "name": "mirkius"
+  },
+  "evileye_levileye": {
+   "mob": "monster/evileye/levileye.mob",
+   "bank": "evileye_levileye",
+   "name": "levileye"
+  },
+  "evileye_revileye": {
+   "mob": "monster/evileye/revileye.mob",
+   "bank": "evileye_revileye",
+   "name": "revileye"
+  },
+  "flydragon_harseseri": {
+   "mob": "monster/flydragon/harseseri.mob",
+   "bank": "flydragon_harseseri",
+   "name": "harseseri"
+  },
+  "flydragon_looseseri": {
+   "mob": "monster/flydragon/looseseri.mob",
+   "bank": "flydragon_looseseri",
+   "name": "looseseri"
+  },
+  "flydragon_selion": {
+   "mob": "monster/flydragon/selion.mob",
+   "bank": "flydragon_selion",
+   "name": "selion"
+  },
+  "flydragon_summon_serimalion": {
+   "mob": "monster/flydragon/summon_serimalion.mob",
+   "bank": "flydragon_summon_serimalion",
+   "name": "summon_serimalion"
+  },
+  "goblin_bombkagel": {
+   "mob": "monster/goblin/bombkagel.mob",
+   "bank": "goblin_bombkagel",
+   "name": "bombkagel"
+  },
+  "goblin_bombkagelland": {
+   "mob": "monster/goblin/bombkagelland.mob",
+   "bank": "goblin_bombkagelland",
+   "name": "bombkagelland"
+  },
+  "goblin_bullseye": {
+   "mob": "monster/goblin/bullseye.mob",
+   "bank": "goblin_bullseye",
+   "name": "bullseye"
+  },
+  "goblin_bunkerworker": {
+   "mob": "monster/goblin/bunkerworker.mob",
+   "bank": "goblin_bunkerworker",
+   "name": "bunkerworker"
+  },
+  "goblin_cowardgoblin": {
+   "mob": "monster/goblin/cowardgoblin.mob",
+   "bank": "goblin_cowardgoblin",
+   "name": "cowardgoblin"
+  },
+  "goblin_flaghillgab": {
+   "mob": "monster/goblin/flaghillgab.mob",
+   "bank": "goblin_flaghillgab",
+   "name": "flaghillgab"
+  },
+  "goblin_flagseagab": {
+   "mob": "monster/goblin/flagseagab.mob",
+   "bank": "goblin_flagseagab",
+   "name": "flagseagab"
+  },
+  "goblin_kinol": {
+   "mob": "monster/goblin/kinol.mob",
+   "bank": "goblin_kinol",
+   "name": "kinol"
+  },
+  "goblin_nightvisionkagel": {
+   "mob": "monster/goblin/nightvisionkagel.mob",
+   "bank": "goblin_nightvisionkagel",
+   "name": "nightvisionkagel"
+  },
+  "goblin_prag": {
+   "mob": "monster/goblin/prag.mob",
+   "bank": "goblin_prag",
+   "name": "prag"
+  },
+  "goblin_surikenkagel": {
+   "mob": "monster/goblin/surikenkagel.mob",
+   "bank": "goblin_surikenkagel",
+   "name": "surikenkagel"
+  },
+  "goblin_surikenkagelland": {
+   "mob": "monster/goblin/surikenkagelland.mob",
+   "bank": "goblin_surikenkagelland",
+   "name": "surikenkagelland"
+  },
+  "lordoflight_lordoflight": {
+   "mob": "monster/lordoflight/lordoflight.mob",
+   "bank": "lordoflight_lordoflight",
+   "name": "lordoflight"
+  },
+  "lugaru_gardener_ral": {
+   "mob": "monster/lugaru/gardener_ral.mob",
+   "bank": "lugaru_gardener_ral",
+   "name": "gardener_ral"
+  },
+  "lugaru_penril": {
+   "mob": "monster/lugaru/penril.mob",
+   "bank": "lugaru_penril",
+   "name": "penril"
+  },
+  "lugaru_sirogaru": {
+   "mob": "monster/lugaru/sirogaru.mob",
+   "bank": "lugaru_sirogaru",
+   "name": "sirogaru"
+  },
+  "new_golem_biggolem": {
+   "mob": "monster/new_golem/biggolem.mob",
+   "bank": "new_golem_biggolem",
+   "name": "biggolem"
+  },
+  "new_golem_bronzegolem": {
+   "mob": "monster/new_golem/bronzegolem.mob",
+   "bank": "new_golem_bronzegolem",
+   "name": "bronzegolem"
+  },
+  "new_golem_claygolem": {
+   "mob": "monster/new_golem/claygolem.mob",
+   "bank": "new_golem_claygolem",
+   "name": "claygolem"
+  },
+  "new_golem_greatgoleml": {
+   "mob": "monster/new_golem/greatgoleml.mob",
+   "bank": "new_golem_greatgoleml",
+   "name": "greatgoleml"
+  },
+  "new_golem_greatgolemr": {
+   "mob": "monster/new_golem/greatgolemr.mob",
+   "bank": "new_golem_greatgolemr",
+   "name": "greatgolemr"
+  },
+  "new_golem_platany": {
+   "mob": "monster/new_golem/platany.mob",
+   "bank": "new_golem_platany",
+   "name": "platany"
+  },
+  "new_golem_spiritofgolem": {
+   "mob": "monster/new_golem/spiritofgolem.mob",
+   "bank": "new_golem_spiritofgolem",
+   "name": "spiritofgolem"
+  },
+  "new_golem_stoneblade_razor": {
+   "mob": "monster/new_golem/stoneblade_razor.mob",
+   "bank": "new_golem_stoneblade_razor",
+   "name": "stoneblade_razor"
+  },
+  "soceress_flamesoceress": {
+   "mob": "monster/soceress/flamesoceress.mob",
+   "bank": "soceress_flamesoceress",
+   "name": "flamesoceress"
+  },
+  "soceress_icesoceress": {
+   "mob": "monster/soceress/icesoceress.mob",
+   "bank": "soceress_icesoceress",
+   "name": "icesoceress"
+  },
+  "soceress_keraha": {
+   "mob": "monster/soceress/keraha.mob",
+   "bank": "soceress_keraha",
+   "name": "keraha"
+  },
+  "soceress_vinoshu": {
+   "mob": "monster/soceress/vinoshu.mob",
+   "bank": "soceress_vinoshu",
+   "name": "vinoshu"
+  },
+  "soceress_vinoshu_quest": {
+   "mob": "monster/soceress/vinoshu_quest.mob",
+   "bank": "soceress_vinoshu_quest",
+   "name": "vinoshu_quest"
+  },
+  "soldier_axeexpeller": {
+   "mob": "monster/soldier/axeexpeller.mob",
+   "bank": "soldier_axeexpeller",
+   "name": "axeexpeller"
+  },
+  "soldier_axionexpeller": {
+   "mob": "monster/soldier/axionexpeller.mob",
+   "bank": "soldier_axionexpeller",
+   "name": "axionexpeller"
+  },
+  "soldier_expeller": {
+   "mob": "monster/soldier/expeller.mob",
+   "bank": "soldier_expeller",
+   "name": "expeller"
+  },
+  "soldier_heavenexpeller": {
+   "mob": "monster/soldier/heavenexpeller.mob",
+   "bank": "soldier_heavenexpeller",
+   "name": "heavenexpeller"
+  },
+  "soldier_legionexpeller": {
+   "mob": "monster/soldier/legionexpeller.mob",
+   "bank": "soldier_legionexpeller",
+   "name": "legionexpeller"
+  },
+  "soldier_tinswordmanexpeller": {
+   "mob": "monster/soldier/tinswordmanexpeller.mob",
+   "bank": "soldier_tinswordmanexpeller",
+   "name": "tinswordmanexpeller"
+  },
+  "spirit_firespirit": {
+   "mob": "monster/spirit/firespirit.mob",
+   "bank": "spirit_firespirit",
+   "name": "firespirit"
+  },
+  "spirit_waterspirit": {
+   "mob": "monster/spirit/waterspirit.mob",
+   "bank": "spirit_waterspirit",
+   "name": "waterspirit"
+  },
+  "tau_tauassaulter": {
+   "mob": "monster/tau/tauassaulter.mob",
+   "bank": "tau_tauassaulter",
+   "name": "tauassaulter"
+  },
+  "tau_tauguard": {
+   "mob": "monster/tau/tauguard.mob",
+   "bank": "tau_tauguard",
+   "name": "tauguard"
+  },
+  "zombie_kalkazak": {
+   "mob": "monster/zombie/kalkazak.mob",
+   "bank": "zombie_kalkazak",
+   "name": "kalkazak"
+  },
+  "zombie_zombieghoulgwish": {
+   "mob": "monster/zombie/zombieghoulgwish.mob",
+   "bank": "zombie_zombieghoulgwish",
+   "name": "zombieghoulgwish"
+  },
+  "zombie_zombieholloweye": {
+   "mob": "monster/zombie/zombieholloweye.mob",
+   "bank": "zombie_zombieholloweye",
+   "name": "zombieholloweye"
+  },
+  "zombie_zombiezombie": {
+   "mob": "monster/zombie/zombiezombie.mob",
+   "bank": "zombie_zombiezombie",
+   "name": "zombiezombie"
+  }
+ },
+ "boss_hp_lines": 3,
+ "map_export": "res://assets_local/native_maps/lorien/map_export.json",
+ "rooms": [
+  {
+   "name": "洛兰",
+   "placement": "1_0:s3",
+   "next": "left"
+  },
+  {
+   "name": "洛兰",
+   "placement": "0_0:s2",
+   "next": "down"
+  },
+  {
+   "name": "洛兰",
+   "placement": "0_1:8",
+   "next": "right"
+  },
+  {
+   "name": "洛兰",
+   "placement": "1_1:9",
+   "next": "down"
+  },
+  {
+   "name": "洛兰",
+   "placement": "1_2:b3",
+   "next": "",
+   "boss": true
+  }
+ ],
+ "rooms_source": "Original lorien.dgn grid (2x3). Start (1,0) is a listed start candidate; boss (1,2) a listed boss cell; each step uses a door both neighbours own. Map per cell picked from its candidates (start/normal/boss role). Monster names are the CN client names typed in (the archive only has Korean strings), E-ADAPT."
 }
