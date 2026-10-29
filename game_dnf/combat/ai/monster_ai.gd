@@ -20,7 +20,7 @@ static func reach(m: Dictionary) -> Vector2:
 static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: float) -> Dictionary:
 	var offset: Vector2 = target-Vector2(enemy["pos"])
 	var face := 1 if offset.x >= 0 else -1
-	var out := {"move":Vector2.ZERO,"face":face,"attack":false}
+	var out := {"move":Vector2.ZERO,"face":face,"attack":false,"move_index":-1}
 	if offset.length() > float(m["sight"]):return out
 	var ready := float(enemy["cooldown_ms"]) <= 0 and target_z < 40
 	if m.has("throw"):
@@ -32,6 +32,30 @@ static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: f
 		var want_x := -face*keep
 		var dx := (Vector2(enemy["pos"]).x-target.x)-want_x
 		out["move"] = Vector2(-signf(dx) if absf(dx) > 12 else 0.0,signf(offset.y) if absf(offset.y) > 3 else 0.0)
+		return out
+	# 多套招式（BOSS）：按「当前距离落在哪一招的判定范围」选招。
+	# 范围来自该招 ANI 的 damage 判定盒，不是写死的模板。
+	if m.has("moves"):
+		var gap_x := absf(offset.x)
+		var same_lane := absf(offset.y) <= 8
+		if ready and same_lane:
+			for index in (m["moves"] as Array).size():
+				var candidate: Dictionary = m["moves"][index]
+				var span: Array = candidate.get("reach", [])
+				if span.size() < 2:continue
+				if gap_x >= float(span[0]) - 4 and gap_x <= float(span[1]) - 6:
+					out["attack"] = true
+					out["move_index"] = index
+					return out
+		# 没有能命中的招：朝最近一招的有效距离走过去。
+		var nearest := INF
+		for candidate: Dictionary in m["moves"]:
+			var span: Array = candidate.get("reach", [])
+			if span.size() < 2:continue
+			nearest = minf(nearest, clampf(gap_x, float(span[0]), float(span[1])))
+		var approach := gap_x - nearest
+		out["move"] = Vector2(face*signf(approach) if absf(approach) > 4 else 0.0,
+			signf(offset.y) if absf(offset.y) > 3 else 0.0)
 		return out
 	var band := reach(m)
 	var ideal := (band.x+band.y)*0.5

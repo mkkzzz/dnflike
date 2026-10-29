@@ -911,6 +911,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			enemy["clock"] = 0.0
 			enemy["hits"] = {}
 			enemy["thrown"] = false
+			enemy["move_index"] = int(intent.get("move_index", -1))
 		elif Vector2(intent["move"]).length_squared() > 0:
 			var dir: Vector2 = intent["move"]
 			enemy["pos"] = move_in_world(enemy["pos"],Vector2(dir.x,dir.y*float(rules["units"]["depth_speed_ratio"]))*float(m["speed"])*dt*(float(enemy["numeric"].values["move_speed"]) if enemy.has("numeric") else 1.0))
@@ -924,6 +925,15 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 	var m: Dictionary = enemy["def"]
 	var old_t := float(enemy["clock"])-ms
 	var t := float(enemy["clock"])
+	# 这一刀用哪一招：BOSS 多招时由 AI 按距离选中（move_index），单招怪退回默认。
+	var move: Dictionary = {}
+	var moves: Array = m.get("moves", [])
+	var pick := int(enemy.get("move_index", -1))
+	if pick >= 0 and pick < moves.size():move = moves[pick]
+	var move_timeline: Array = move.get("timeline", m.get("attack_timeline", []))
+	var move_segments: Array = move.get("segments", m.get("attack_segments", []))
+	var move_atk: Dictionary = move.get("atk", m.get("atk", {}))
+	var move_atk_path := String(move.get("atk_path", ""))
 	if m.has("throw"):
 		var throw: Dictionary = m["throw"]
 		var tl: Array = m["attack_timeline"]
@@ -938,16 +948,18 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 			spawn_object(hit,"monster",enemy["pos"],float(enemy["z"]),facing,float(enemy["attack"]),enemy)
 			if String(throw["sound"]) != "":play_sound(String(throw["sound"]))
 	else:
-		for s in m["attack_segments"].size():
+		for s in move_segments.size():
 			if enemy["hits"].has(s):continue
-			var boxes: Array = Kernel.Timeline.segment_boxes(m["attack_segments"][s],old_t,t)
+			var boxes: Array = Kernel.Timeline.segment_boxes(move_segments[s],old_t,t)
 			if boxes.is_empty():continue
 			var world: Array = Kernel.HitJudge.world_boxes(boxes,Kernel.HitJudge.anchor(enemy["pos"],float(enemy["z"])),int(enemy["facing"]))
 			var c: Dictionary = Kernel.HitJudge.contact(world,player_damage_boxes())
 			if c.is_empty():continue
 			enemy["hits"][s] = true
-			land_hit(enemy,player,{"atk":m["atk"],"percent":100.0+float(m["atk"].get("damage_bonus",0)),"lift":-1.0},c["point"],int(enemy["facing"]),float(enemy["attack"]))
-	if t >= Kernel.Timeline.duration(m["attack_timeline"]):
+			land_hit(enemy,player,{"atk":move_atk,"atk_path":move_atk_path,
+				"percent":100.0+float(move_atk.get("damage_bonus",0)),"lift":-1.0},
+				c["point"],int(enemy["facing"]),float(enemy["attack"]))
+	if t >= Kernel.Timeline.duration(move_timeline):
 		enemy["state"] = "idle"
 		enemy["clock"] = 0.0
 		enemy["cooldown_ms"] = float(m["attack_delay"])
@@ -1215,7 +1227,12 @@ func enemy_ani(enemy: Dictionary) -> Array:
 	var rp: Dictionary = rules["reaction"]
 	match String(enemy["state"]):
 		"move":return ["move",float(enemy["clock"])]
-		"attack":return ["attack",float(enemy["clock"])]
+		"attack":
+			# BOSS 多招：播放这一刀选中的招式 ANI（stem 来自 .mob 的 [attack motion]）。
+			var moves: Array = m.get("moves", [])
+			var pick := int(enemy.get("move_index", -1))
+			if pick >= 0 and pick < moves.size():return [String(moves[pick]["stem"]).to_lower(), float(enemy["clock"])]
+			return ["attack",float(enemy["clock"])]
 		"hurt":return [String(enemy["hit_motion"]),0.0]
 		"air":return ["overturn",0.0]
 		"down":return ["down",Kernel.Reaction.down_clock(enemy,rp,table.monster_timeline(m,"down"))]

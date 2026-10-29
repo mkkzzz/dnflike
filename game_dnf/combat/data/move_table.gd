@@ -262,6 +262,24 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 	m["attack_segments"] = Timeline.attack_segments(m["attack_timeline"])
 	var attack_infos: Array = mob.get("attack_infos", [])
 	m["atk"] = atk(String(attack_infos[0])) if not attack_infos.is_empty() else {}
+	# 多套招式：原版 [attack motion] 多值时每招有独立 ANI 与 .atk，
+	# AI 按「玩家距离落在哪招的判定范围」选招（tools/build_dnf_boss_moves.py 同源）。
+	var motions_all: Array = mob.get("attack_motions", []) if mob.get("attack_motions") is Array else []
+	if motions_all.size() > 1:
+		var moves: Array = []
+		for index in motions_all.size():
+			var stem := _stem([motions_all[index]])
+			if stem == "":continue
+			var move_timeline := timeline(String(motion_dir).path_join(stem + ".ani"))
+			var move := {"stem":stem, "timeline":move_timeline,
+				"segments":Timeline.attack_segments(move_timeline), "reach":reach_of(move_timeline)}
+			if index < attack_infos.size():
+				var atk_path := String(attack_infos[index]).to_lower()
+				if atk_path != "":
+					move["atk"] = atk(atk_path)
+					move["atk_path"] = atk_path
+			moves.append(move)
+		if not moves.is_empty():m["moves"] = moves
 	var throw: Dictionary = mob.get("throw_attack",{}) if mob.get("throw_attack") is Dictionary else {}
 	if not throw.is_empty():
 		var objects_index: Dictionary = db.index("passive_objects")
@@ -286,6 +304,20 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 			m["atk"]=template["atk"].duplicate(true)
 		else:problems.append("monster attack template unavailable: "+key)
 	return m
+
+## 一招能覆盖的水平区间（相对锚点，含朝向翻转前的正值侧）。
+func reach_of(tl: Array) -> Array:
+	var low := INF
+	var high := -INF
+	for f: Dictionary in tl:
+		for box in f.get("attack_boxes", []):
+			if not box is Array or box.size() < 4:continue
+			var x := float(box[0])
+			var w := float(box[3])
+			low = minf(low, x)
+			high = maxf(high, x + w)
+	if low == INF:return []
+	return [low, high]
 
 func monster_timeline(m: Dictionary, motion: String) -> Array:
 	var stem := String(m["motions"].get(motion,motion))

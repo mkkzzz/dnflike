@@ -400,12 +400,17 @@ def compile_scope(lib: Library) -> dict:
             continue
         monster_index[str(index)] = p
         md = mob['decoded']
+        def located(name: str) -> str:
+            """mob 里的引用有两种写法：完整的库路径，或相对 mob 目录的路径。"""
+            candidate = str(name).replace('\\', '/').lower()
+            return candidate if lib.exists(candidate) else resolve(p, name)
+
         for p2 in md.get('attack_infos') or []:
-            if p2:add(p2, 'atk', p)
+            if p2:add(located(p2), 'atk', p)
         for key, value in md.items():
             if 'motion' in key:
                 for p2 in value or []:
-                    if isinstance(p2, str) and p2.endswith('.ani'):add(p2, 'ani', p)
+                    if isinstance(p2, str) and p2.endswith('.ani'):add(located(p2), 'ani', p)
         throw = md.get('throw_attack') or {}
         if throw.get('passive_object_filename'):
             name = str(throw['passive_object_filename'])

@@ -1,0 +1,1497 @@
+{
+ "schema": "dnf_boss_moves/1",
+ "evidence": "attack motion 取 ANI 的 damage 判定盒算 reach；攻击参数取 .atk（E-PARSE）",
+ "bosses": {
+  "monster/dollmaster/masterdogri.mob": {
+   "mob": "monster/dollmaster/masterdogri.mob",
+   "name": "masterdogri",
+   "dungeons": [
+    "hallofdoll"
+   ],
+   "level": [
+    19,
+    20
+   ],
+   "sight": 500,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "DogriAnimation/Attack.ani",
+     "ani": "monster/dollmaster/dogrianimation/attack.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -17,
+      16
+     ],
+     "hit_at_ms": [
+      75,
+      150,
+      225,
+      300,
+      375,
+      450,
+      525,
+      545,
+      565,
+      585,
+      605,
+      625,
+      645
+     ],
+     "duration_ms": 645,
+     "atk": "monster/dollmaster/attackinfo/dogriattackpunch.atk",
+     "damage_bonus": 10,
+     "push": 200,
+     "lift": 50,
+     "knock_back": null,
+     "hit_wav": "STONE_DMG"
+    },
+    {
+     "index": 1,
+     "motion": "DogriAnimation/Attack.ani",
+     "ani": "monster/dollmaster/dogrianimation/attack.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -17,
+      16
+     ],
+     "hit_at_ms": [
+      75,
+      150,
+      225,
+      300,
+      375,
+      450,
+      525,
+      545,
+      565,
+      585,
+      605,
+      625,
+      645
+     ],
+     "duration_ms": 645,
+     "atk": "monster/dollmaster/attackinfo/dogriattackgem.atk",
+     "damage_bonus": null,
+     "push": 100,
+     "lift": 50,
+     "knock_back": null,
+     "hit_wav": "JEWEL_HIT"
+    },
+    {
+     "index": 2,
+     "motion": "DogriAnimation/Cast2.ani",
+     "ani": "monster/dollmaster/dogrianimation/cast2.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -17,
+      16
+     ],
+     "hit_at_ms": [
+      100,
+      200,
+      300,
+      400
+     ],
+     "duration_ms": 400,
+     "atk": "monster/dollmaster/attackinfo/dogriconfusecontrol.atk",
+     "damage_bonus": null,
+     "push": 100,
+     "lift": 50,
+     "knock_back": null,
+     "hit_wav": "JEWEL_HIT"
+    }
+   ]
+  },
+  "monster/draconian/lakius.mob": {
+   "mob": "monster/draconian/lakius.mob",
+   "name": "lakius",
+   "dungeons": [
+    "draconiantower"
+   ],
+   "level": [
+    24,
+    25
+   ],
+   "sight": 500,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "DLAni/Attack.ani",
+     "ani": "monster/draconian/dlani/attack.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -30,
+      64
+     ],
+     "hit_at_ms": [
+      80,
+      180,
+      330,
+      410
+     ],
+     "duration_ms": 410,
+     "atk": "monster/draconian/dlattackinfo/attack.atk",
+     "damage_bonus": 0,
+     "push": 200,
+     "lift": 50,
+     "knock_back": null,
+     "hit_wav": "KNIFE_HIT"
+    },
+    {
+     "index": 1,
+     "motion": "DLAni/AttackHeart.ani",
+     "ani": "monster/draconian/dlani/attackheart.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -30,
+      24
+     ],
+     "hit_at_ms": [
+      850,
+      1050,
+      1100
+     ],
+     "duration_ms": 1100,
+     "atk": "monster/draconian/dlattackinfo/attackheart.atk",
+     "damage_bonus": 100,
+     "push": 50,
+     "lift": 100,
+     "knock_back": null,
+     "hit_wav": "SLASH_HIT_03"
+    },
+    {
+     "index": 2,
+     "motion": "DLAni/AttackLong.ani",
+     "ani": "monster/draconian/dlani/attacklong.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -31,
+      86
+     ],
+     "hit_at_ms": [
+      50,
+      130,
+      210,
+      290,
+      370,
+      490,
+      540
+     ],
+     "duration_ms": 540,
+     "atk": "monster/draconian/dlattackinfo/attacklong.atk",
+     "damage_bonus": 50,
+     "push": 400,
+     "lift": 200,
+     "knock_back": 1,
+     "hit_wav": "SPEAR_HIT"
+    },
+    {
+     "index": 3,
+     "motion": "DLAni/AttackSpark.ani",
+     "ani": "monster/draconian/dlani/attackspark.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -18,
+      36
+     ],
+     "hit_at_ms": [
+      160,
+      320,
+      480,
+      640,
+      800,
+      960
+     ],
+     "duration_ms": 960,
+     "atk": "monster/draconian/dlattackinfo/attackspark.atk",
+     "damage_bonus": -30,
+     "push": 50,
+     "lift": 100,
+     "knock_back": null,
+     "hit_wav": null
+    },
+    {
+     "index": 4,
+     "motion": "DLAni/SummonCage.ani",
+     "ani": "monster/draconian/dlani/summoncage.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -10,
+      56
+     ],
+     "hit_at_ms": [
+      500,
+      550
+     ],
+     "duration_ms": 550,
+     "atk": "monster/draconian/dlattackinfo/summoncage.atk",
+     "damage_bonus": null,
+     "push": null,
+     "lift": null,
+     "knock_back": null,
+     "hit_wav": null
+    }
+   ]
+  },
+  "monster/evileye/levileye.mob": {
+   "mob": "monster/evileye/levileye.mob",
+   "name": "levileye",
+   "dungeons": [
+    "floatingcastle"
+   ],
+   "level": [
+    22,
+    29
+   ],
+   "sight": 1000,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "EvilEyeAni/LaserReady.ani",
+     "ani": "monster/evileye/evileyeani/laserready.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -7,
+      80
+     ],
+     "hit_at_ms": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000
+     ],
+     "duration_ms": 1000
+    },
+    {
+     "index": 1,
+     "motion": "EvilEyeAni/LaserReady.ani",
+     "ani": "monster/evileye/evileyeani/laserready.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -7,
+      80
+     ],
+     "hit_at_ms": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000
+     ],
+     "duration_ms": 1000
+    },
+    {
+     "index": 2,
+     "motion": "EvilEyeAni/EyeMissileStart.ani",
+     "ani": "monster/evileye/evileyeani/eyemissilestart.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -7,
+      80
+     ],
+     "hit_at_ms": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000
+     ],
+     "duration_ms": 1000
+    },
+    {
+     "index": 3,
+     "motion": "EvilEyeAni/EyeSmallLaser.ani",
+     "ani": "monster/evileye/evileyeani/eyesmalllaser.ani",
+     "attack_delay": 1200
+    }
+   ]
+  },
+  "monster/evileye/revileye.mob": {
+   "mob": "monster/evileye/revileye.mob",
+   "name": "revileye",
+   "dungeons": [
+    "floatingcastle"
+   ],
+   "level": [
+    22,
+    29
+   ],
+   "sight": 1000,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "EvilEyeAni/LaserReady.ani",
+     "ani": "monster/evileye/evileyeani/laserready.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -7,
+      80
+     ],
+     "hit_at_ms": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000
+     ],
+     "duration_ms": 1000
+    },
+    {
+     "index": 1,
+     "motion": "EvilEyeAni/LaserReady.ani",
+     "ani": "monster/evileye/evileyeani/laserready.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -7,
+      80
+     ],
+     "hit_at_ms": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000
+     ],
+     "duration_ms": 1000
+    },
+    {
+     "index": 2,
+     "motion": "EvilEyeAni/EyeMissileStart.ani",
+     "ani": "monster/evileye/evileyeani/eyemissilestart.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -7,
+      80
+     ],
+     "hit_at_ms": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000
+     ],
+     "duration_ms": 1000
+    },
+    {
+     "index": 3,
+     "motion": "EvilEyeAni/EyeSmallLaser.ani",
+     "ani": "monster/evileye/evileyeani/eyesmalllaser.ani",
+     "attack_delay": 1200
+    }
+   ]
+  },
+  "monster/flydragon/selion.mob": {
+   "mob": "monster/flydragon/selion.mob",
+   "name": "selion",
+   "dungeons": [
+    "draconiantower_amonlow"
+   ],
+   "level": [
+    17,
+    28
+   ],
+   "sight": 450,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "SelionAnimation/Bite.ani",
+     "ani": "monster/flydragon/selionanimation/bite.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -46,
+      42
+     ],
+     "hit_at_ms": [
+      50,
+      350,
+      450,
+      600
+     ],
+     "duration_ms": 600
+    },
+    {
+     "index": 1,
+     "motion": "SelionAnimation/FireBreath.ani",
+     "ani": "monster/flydragon/selionanimation/firebreath.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -45,
+      42
+     ],
+     "hit_at_ms": [
+      270,
+      570,
+      1070
+     ],
+     "duration_ms": 1070
+    },
+    {
+     "index": 2,
+     "motion": "SelionAnimation/FireBreathCrazy.ani",
+     "ani": "monster/flydragon/selionanimation/firebreathcrazy.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -65,
+      35
+     ],
+     "hit_at_ms": [
+      80,
+      160,
+      240,
+      320,
+      400,
+      480,
+      560
+     ],
+     "duration_ms": 560
+    }
+   ]
+  },
+  "monster/goblin/goblinthrower.mob": {
+   "mob": "monster/goblin/goblinthrower.mob",
+   "name": "goblinthrower",
+   "dungeons": [
+    "lorien"
+   ],
+   "level": [
+    2,
+    6
+   ],
+   "sight": 300,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "Animation_Thrower/Throw.ani",
+     "ani": "monster/goblin/animation_thrower/throw.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -23,
+      38
+     ],
+     "hit_at_ms": [
+      80,
+      160,
+      240,
+      320,
+      520
+     ],
+     "duration_ms": 520
+    }
+   ]
+  },
+  "monster/goblin/kinol.mob": {
+   "mob": "monster/goblin/kinol.mob",
+   "name": "kinol",
+   "dungeons": [
+    "sunderland"
+   ],
+   "level": [
+    11,
+    15
+   ],
+   "sight": 450,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "Animation_LightningKinol2/Attack1.ani",
+     "ani": "monster/goblin/animation_lightningkinol2/attack1.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -21,
+      43
+     ],
+     "hit_at_ms": [
+      80,
+      160,
+      240,
+      320,
+      520
+     ],
+     "duration_ms": 520,
+     "atk": "monster/goblin/attackinfo/lightningkinol.atk",
+     "damage_bonus": 0,
+     "push": 100,
+     "lift": 300,
+     "knock_back": null,
+     "hit_wav": "R_STICK_HIT"
+    },
+    {
+     "index": 1,
+     "motion": "Animation_LightningKinol2/SerialLightning.ani",
+     "ani": "monster/goblin/animation_lightningkinol2/seriallightning.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -21,
+      43
+     ],
+     "hit_at_ms": [
+      90,
+      180,
+      270,
+      360,
+      450,
+      540,
+      630,
+      720,
+      920
+     ],
+     "duration_ms": 920
+    },
+    {
+     "index": 2,
+     "motion": "Animation_LightningKinol2/AroundLightning.ani",
+     "ani": "monster/goblin/animation_lightningkinol2/aroundlightning.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -21,
+      43
+     ],
+     "hit_at_ms": [
+      90,
+      180,
+      270,
+      360,
+      450,
+      540,
+      630,
+      720,
+      810,
+      900,
+      990,
+      1080,
+      1170,
+      1260,
+      1460
+     ],
+     "duration_ms": 1460
+    }
+   ]
+  },
+  "monster/lordoflight/lordoflight.mob": {
+   "mob": "monster/lordoflight/lordoflight.mob",
+   "name": "lordoflight",
+   "dungeons": [
+    "palaceofload"
+   ],
+   "level": [
+    27,
+    30
+   ],
+   "sight": 500,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "LOL/Attack.ani",
+     "ani": "monster/lordoflight/lol/attack.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -40,
+      25
+     ],
+     "hit_at_ms": [
+      120,
+      440,
+      760,
+      880,
+      950,
+      1020,
+      1090,
+      1160,
+      1230,
+      1300,
+      1370
+     ],
+     "duration_ms": 1370,
+     "atk": "monster/lordoflight/lolattack/attack.atk",
+     "damage_bonus": 30,
+     "push": 400,
+     "lift": 300,
+     "knock_back": null,
+     "hit_wav": "ZIEG_HIT"
+    },
+    {
+     "index": 1,
+     "motion": "LOL/Cast.ani",
+     "ani": "monster/lordoflight/lol/cast.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -22,
+      75
+     ],
+     "hit_at_ms": [
+      100,
+      200,
+      350,
+      500,
+      650,
+      800,
+      900,
+      1900
+     ],
+     "duration_ms": 1900,
+     "atk": "monster/lordoflight/lolattack/laser.atk",
+     "damage_bonus": null,
+     "push": null,
+     "lift": null,
+     "knock_back": null,
+     "hit_wav": null
+    },
+    {
+     "index": 2,
+     "motion": "LOL/DoNova.ani",
+     "ani": "monster/lordoflight/lol/donova.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -21,
+      22
+     ],
+     "hit_at_ms": [
+      200,
+      600,
+      1000,
+      1080,
+      1160,
+      1240,
+      1320,
+      1520
+     ],
+     "duration_ms": 1520,
+     "atk": "monster/lordoflight/lolattack/nova.atk",
+     "damage_bonus": 80,
+     "push": 400,
+     "lift": 300,
+     "knock_back": null,
+     "hit_wav": null
+    }
+   ]
+  },
+  "monster/lugaru/kurogaru.mob": {
+   "mob": "monster/lugaru/kurogaru.mob",
+   "name": "kurogaru",
+   "dungeons": [
+    "mirkwood_deep"
+   ],
+   "level": [
+    8,
+    19
+   ],
+   "sight": 300,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "Animation_BlackLugaru/Attack.ani",
+     "ani": "monster/lugaru/animation_blacklugaru/attack.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -45,
+      32
+     ],
+     "hit_at_ms": [
+      200,
+      300,
+      400,
+      500,
+      600,
+      700
+     ],
+     "duration_ms": 700,
+     "atk": "monster/lugaru/attackinfo/attack_curse.atk",
+     "damage_bonus": -30,
+     "push": 200,
+     "lift": 200,
+     "knock_back": null,
+     "hit_wav": "FOX_ATK_HIT"
+    },
+    {
+     "index": 1,
+     "motion": "Animation_BlackLugaru/JumpAttack1.ani",
+     "ani": "monster/lugaru/animation_blacklugaru/jumpattack1.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -46,
+      64
+     ],
+     "hit_at_ms": [
+      200,
+      300,
+      400,
+      700,
+      1100,
+      1200,
+      1300,
+      1400,
+      11400,
+      11600
+     ],
+     "duration_ms": 11600,
+     "atk": "monster/lugaru/attackinfo/jumpattack1_curse.atk",
+     "damage_bonus": null,
+     "push": 200,
+     "lift": 200,
+     "knock_back": null,
+     "hit_wav": null
+    },
+    {
+     "index": 2,
+     "motion": "Animation_BlackLugaru/JumpAttack2.ani",
+     "ani": "monster/lugaru/animation_blacklugaru/jumpattack2.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -46,
+      66
+     ],
+     "hit_at_ms": [
+      200,
+      300,
+      400,
+      700,
+      900,
+      980,
+      1060,
+      1180,
+      11180,
+      11380
+     ],
+     "duration_ms": 11380,
+     "atk": "monster/lugaru/attackinfo/jumpattack2_curse.atk",
+     "damage_bonus": 10,
+     "push": 200,
+     "lift": 200,
+     "knock_back": null,
+     "hit_wav": null
+    },
+    {
+     "index": 3,
+     "motion": "Animation_BlackLugaru/TryBite.ani",
+     "ani": "monster/lugaru/animation_blacklugaru/trybite.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -46,
+      64
+     ],
+     "hit_at_ms": [
+      200,
+      300,
+      400,
+      700,
+      10700,
+      10780
+     ],
+     "duration_ms": 10780,
+     "atk": "monster/lugaru/attackinfo/trybite.atk",
+     "damage_bonus": null,
+     "push": 0,
+     "lift": 0,
+     "knock_back": null,
+     "hit_wav": null
+    }
+   ]
+  },
+  "monster/new_golem/platany.mob": {
+   "mob": "monster/new_golem/platany.mob",
+   "name": "platany",
+   "dungeons": [
+    "golemtower"
+   ],
+   "level": [
+    22,
+    25
+   ],
+   "sight": 300,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "Animation_Platany/Attack.ani",
+     "ani": "monster/new_golem/animation_platany/attack.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -63,
+      58
+     ],
+     "hit_at_ms": [
+      120,
+      1020,
+      1070,
+      1120,
+      1170,
+      1220,
+      1420,
+      1620
+     ],
+     "duration_ms": 1620,
+     "atk": "monster/new_golem/attackinfo/gdattack.atk",
+     "damage_bonus": 20,
+     "push": 300,
+     "lift": 100,
+     "knock_back": null,
+     "hit_wav": "IRON_HIT"
+    },
+    {
+     "index": 1,
+     "motion": "Animation_Platany/TackleReady.ani",
+     "ani": "monster/new_golem/animation_platany/tackleready.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -75,
+      19
+     ],
+     "hit_at_ms": [
+      150,
+      400,
+      650,
+      900,
+      1150,
+      1310,
+      1960
+     ],
+     "duration_ms": 1960
+    },
+    {
+     "index": 2,
+     "motion": "Animation_Platany/Throw.ani",
+     "ani": "monster/new_golem/animation_platany/throw.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -70,
+      46
+     ],
+     "hit_at_ms": [
+      200,
+      600,
+      800,
+      1000,
+      1200,
+      1400,
+      1600,
+      1800,
+      2000
+     ],
+     "duration_ms": 2000
+    },
+    {
+     "index": 3,
+     "motion": "Animation_Platany/Throw.ani",
+     "ani": "monster/new_golem/animation_platany/throw.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -70,
+      46
+     ],
+     "hit_at_ms": [
+      200,
+      600,
+      800,
+      1000,
+      1200,
+      1400,
+      1600,
+      1800,
+      2000
+     ],
+     "duration_ms": 2000
+    },
+    {
+     "index": 4,
+     "motion": "Animation_Platany/Tackle.ani",
+     "ani": "monster/new_golem/animation_platany/tackle.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -63,
+      58
+     ],
+     "hit_at_ms": [
+      50,
+      100,
+      150,
+      200,
+      250,
+      300,
+      350,
+      400,
+      450,
+      500,
+      550,
+      600,
+      650,
+      700,
+      750,
+      800,
+      850,
+      900,
+      950,
+      1000,
+      1200
+     ],
+     "duration_ms": 1200,
+     "atk": "monster/new_golem/attackinfo/gdbluntattack.atk",
+     "damage_bonus": 60,
+     "push": 800,
+     "lift": 200,
+     "knock_back": null,
+     "hit_wav": "GOLEM_HARD_HIT"
+    }
+   ]
+  },
+  "monster/soceress/keraha.mob": {
+   "mob": "monster/soceress/keraha.mob",
+   "name": "keraha",
+   "dungeons": [
+    "mirkwood_frost"
+   ],
+   "level": [
+    10,
+    13
+   ],
+   "sight": 550,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "Animation_Keraha/Attack.ani",
+     "ani": "monster/soceress/animation_keraha/attack.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -50,
+      47
+     ],
+     "hit_at_ms": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000
+     ],
+     "duration_ms": 1000,
+     "atk": "monster/soceress/attackinfo/attack.atk",
+     "damage_bonus": 10,
+     "push": 200,
+     "lift": 200,
+     "knock_back": null,
+     "hit_wav": "STAFF_HIT"
+    },
+    {
+     "index": 1,
+     "motion": "Animation_Keraha/Cast.ani",
+     "ani": "monster/soceress/animation_keraha/cast.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -31,
+      42
+     ],
+     "hit_at_ms": [
+      80,
+      160,
+      240,
+      320,
+      400,
+      480,
+      560,
+      640,
+      720,
+      800,
+      880
+     ],
+     "duration_ms": 880
+    },
+    {
+     "index": 2,
+     "motion": "Animation_Keraha/Cast.ani",
+     "ani": "monster/soceress/animation_keraha/cast.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -31,
+      42
+     ],
+     "hit_at_ms": [
+      80,
+      160,
+      240,
+      320,
+      400,
+      480,
+      560,
+      640,
+      720,
+      800,
+      880
+     ],
+     "duration_ms": 880
+    }
+   ]
+  },
+  "monster/soceress/vinoshu.mob": {
+   "mob": "monster/soceress/vinoshu.mob",
+   "name": "vinoshu",
+   "dungeons": [
+    "grakkarak_burning"
+   ],
+   "level": [
+    14,
+    19
+   ],
+   "sight": 550,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "Animation_Vinoshu/Attack.ani",
+     "ani": "monster/soceress/animation_vinoshu/attack.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -50,
+      47
+     ],
+     "hit_at_ms": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000
+     ],
+     "duration_ms": 1000,
+     "atk": "monster/soceress/attackinfo/attack.atk",
+     "damage_bonus": 10,
+     "push": 200,
+     "lift": 200,
+     "knock_back": null,
+     "hit_wav": "STAFF_HIT"
+    }
+   ]
+  },
+  "monster/soceress/vinoshu_quest.mob": {
+   "mob": "monster/soceress/vinoshu_quest.mob",
+   "name": "vinoshu_quest",
+   "dungeons": [
+    "grakkarak_burning"
+   ],
+   "level": [
+    14,
+    19
+   ],
+   "sight": 550,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "Animation_Vinoshu/Attack.ani",
+     "ani": "monster/soceress/animation_vinoshu/attack.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -50,
+      47
+     ],
+     "hit_at_ms": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000
+     ],
+     "duration_ms": 1000,
+     "atk": "monster/soceress/attackinfo/attack.atk",
+     "damage_bonus": 10,
+     "push": 200,
+     "lift": 200,
+     "knock_back": null,
+     "hit_wav": "STAFF_HIT"
+    }
+   ]
+  },
+  "monster/soldier/heavenexpeller.mob": {
+   "mob": "monster/soldier/heavenexpeller.mob",
+   "name": "heavenexpeller",
+   "dungeons": [
+    "darkentrance"
+   ],
+   "level": [
+    22,
+    29
+   ],
+   "sight": 500,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "AnimationHeavenExpeller/Attack.ani",
+     "ani": "monster/soldier/animationheavenexpeller/attack.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -32,
+      21
+     ],
+     "hit_at_ms": [
+      80,
+      160,
+      240,
+      320,
+      400
+     ],
+     "duration_ms": 400,
+     "atk": "monster/soldier/attackinfo/heavenexpellerattack.atk",
+     "damage_bonus": 20,
+     "push": 300,
+     "lift": 100,
+     "knock_back": null,
+     "hit_wav": "IRON_HIT"
+    },
+    {
+     "index": 1,
+     "motion": "AnimationHeavenExpeller/Pierce.ani",
+     "ani": "monster/soldier/animationheavenexpeller/pierce.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -18,
+      64
+     ],
+     "hit_at_ms": [
+      250,
+      270,
+      290,
+      310,
+      330,
+      530
+     ],
+     "duration_ms": 530,
+     "atk": "monster/soldier/attackinfo/heavenexpellerpierce.atk",
+     "damage_bonus": 10,
+     "push": 300,
+     "lift": 100,
+     "knock_back": null,
+     "hit_wav": "IRON_HIT"
+    },
+    {
+     "index": 2,
+     "motion": "AnimationHeavenExpeller/AttackDoubleDash.ani",
+     "ani": "monster/soldier/animationheavenexpeller/attackdoubledash.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -32,
+      21
+     ],
+     "hit_at_ms": [
+      80,
+      160,
+      240,
+      320,
+      400,
+      480,
+      560,
+      640,
+      720,
+      800
+     ],
+     "duration_ms": 800,
+     "atk": "monster/soldier/attackinfo/heavenexpellerattackdoubledash.atk",
+     "damage_bonus": 20,
+     "push": 300,
+     "lift": 100,
+     "knock_back": null,
+     "hit_wav": "IRON_HIT"
+    },
+    {
+     "index": 3,
+     "motion": "AnimationHeavenExpeller/ThunderBolt.ani",
+     "ani": "monster/soldier/animationheavenexpeller/thunderbolt.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -32,
+      21
+     ],
+     "hit_at_ms": [
+      150,
+      190,
+      230,
+      270,
+      310,
+      350,
+      390,
+      690
+     ],
+     "duration_ms": 690,
+     "atk": "monster/soldier/attackinfo/heavenexpellerthunderbolt.atk",
+     "damage_bonus": 20,
+     "push": 300,
+     "lift": 100,
+     "knock_back": null,
+     "hit_wav": "IRON_HIT"
+    }
+   ]
+  },
+  "monster/tau/tauarmy.mob": {
+   "mob": "monster/tau/tauarmy.mob",
+   "name": "tauarmy",
+   "dungeons": [
+    "lorien_inside"
+   ],
+   "level": [
+    4,
+    9
+   ],
+   "sight": null,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "ArmyAnimation/Attack1.ani",
+     "ani": "monster/tau/armyanimation/attack1.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -67,
+      109
+     ],
+     "hit_at_ms": [
+      70,
+      140,
+      490,
+      560,
+      610,
+      1030,
+      1100
+     ],
+     "duration_ms": 1100,
+     "atk": "monster/tau/attackinfo/attack1.atk",
+     "damage_bonus": 20,
+     "push": 200,
+     "lift": 300,
+     "knock_back": 0,
+     "hit_wav": "AXE_DMG"
+    },
+    {
+     "index": 1,
+     "motion": "ArmyAnimation/Attack2.ani",
+     "ani": "monster/tau/armyanimation/attack2.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -69,
+      99
+     ],
+     "hit_at_ms": [
+      250,
+      500,
+      790,
+      1190,
+      1270,
+      1470
+     ],
+     "duration_ms": 1470,
+     "atk": "monster/tau/attackinfo/heading.atk",
+     "damage_bonus": 30,
+     "push": null,
+     "lift": null,
+     "knock_back": null,
+     "hit_wav": "LOWKICK_HIT_01"
+    }
+   ]
+  },
+  "monster/tau/taubeast.mob": {
+   "mob": "monster/tau/taubeast.mob",
+   "name": "taubeast",
+   "dungeons": [
+    "mirkwood"
+   ],
+   "level": [
+    4,
+    20
+   ],
+   "sight": 500,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "BeastAnimation/Attack1.ani",
+     "ani": "monster/tau/beastanimation/attack1.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -67,
+      109
+     ],
+     "hit_at_ms": [
+      70,
+      140,
+      740,
+      810,
+      1060,
+      1130,
+      1200
+     ],
+     "duration_ms": 1200,
+     "atk": "monster/tau/attackinfo/beast.atk",
+     "damage_bonus": 100,
+     "push": 200,
+     "lift": 200,
+     "knock_back": null,
+     "hit_wav": "R_CROSS_HIT"
+    },
+    {
+     "index": 1,
+     "motion": "BeastAnimation/TackleReady.ani",
+     "ani": "monster/tau/beastanimation/tackleready.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -73,
+      101
+     ],
+     "hit_at_ms": [
+      120,
+      520
+     ],
+     "duration_ms": 520,
+     "atk": "monster/tau/attackinfo/tackle.atk",
+     "damage_bonus": 40,
+     "push": 200,
+     "lift": 400,
+     "knock_back": null,
+     "hit_wav": "R_SLASH_HIT"
+    },
+    {
+     "index": 2,
+     "motion": "BeastAnimation/Roar.ani",
+     "ani": "monster/tau/beastanimation/roar.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -74,
+      81
+     ],
+     "hit_at_ms": [
+      150,
+      220,
+      250,
+      280,
+      310,
+      340,
+      370,
+      400,
+      430,
+      460,
+      490,
+      520
+     ],
+     "duration_ms": 520,
+     "atk": "monster/tau/attackinfo/roar.atk",
+     "damage_bonus": null,
+     "push": null,
+     "lift": null,
+     "knock_back": 30,
+     "hit_wav": null
+    }
+   ]
+  },
+  "monster/zombie/zombieghoulgwish.mob": {
+   "mob": "monster/zombie/zombieghoulgwish.mob",
+   "name": "zombieghoulgwish",
+   "dungeons": [
+    "sunderland_dark"
+   ],
+   "level": [
+    20,
+    20
+   ],
+   "sight": 500,
+   "attack_delay": 1200,
+   "moves": [
+    {
+     "index": 0,
+     "motion": "ZGAnimation/Attack.ani",
+     "ani": "monster/zombie/zganimation/attack.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -15,
+      56
+     ],
+     "hit_at_ms": [
+      80,
+      160,
+      240,
+      320
+     ],
+     "duration_ms": 320,
+     "atk": "monster/zombie/zgattackinfo/attack.atk",
+     "damage_bonus": 10,
+     "push": 200,
+     "lift": 200,
+     "knock_back": null,
+     "hit_wav": "KICK_AX_HIT"
+    },
+    {
+     "index": 1,
+     "motion": "ZGAnimation/TryBite.ani",
+     "ani": "monster/zombie/zganimation/trybite.ani",
+     "attack_delay": 1200,
+     "reach": [
+      -16,
+      40
+     ],
+     "hit_at_ms": [
+      120,
+      240,
+      360
+     ],
+     "duration_ms": 360,
+     "atk": "monster/zombie/zgattackinfo/trybite.atk",
+     "damage_bonus": -40,
+     "push": 0,
+     "lift": 0,
+     "knock_back": null,
+     "hit_wav": null
+    }
+   ]
+  }
+ }
+}

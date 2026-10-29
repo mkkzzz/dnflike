@@ -368,10 +368,18 @@ def catalog_monster_specs() -> dict:
             pose = POSE_MAP.get(slot)
             if pose is None or not values:
                 continue
-            motions[pose] = (mob['folder'] + '/' + str(values[0])).lower()
-            # 远程怪的投掷动作用攻击槽里的第二个 ANI（原版 [attack motion] 多值）。
-            if pose == 'attack' and len(values) > 1:
-                motions['throw'] = (mob['folder'] + '/' + str(values[1])).lower()
+            # 攻击槽多值 = 多套招式（BOSS）。每招用 ANI 文件名（小写）当 clip 名，
+            # 与运行时 enemy_ani 选的 stem 一致；第一招再额外挂 "attack" 兜底。
+            for index, value in enumerate(values):
+                full = (mob['folder'] + '/' + str(value)).lower()
+                if pose != 'attack':
+                    if index == 0:
+                        motions[pose] = full
+                    continue
+                stem = PurePosixPath(str(value)).stem.lower()
+                motions[stem] = full
+                if index == 0:
+                    motions['attack'] = full
         if not motions:
             continue
         out[path.replace('monster/', '', 1).replace('.mob', '').replace('/', '_')] = {'mob': path, 'motions': motions}
