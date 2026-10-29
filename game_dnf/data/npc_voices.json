@@ -6,9 +6,19 @@
    "id": "danjin",
    "local_id": "danjin",
    "town": "elvengard",
-   "amb": [],
-   "talk": [],
-   "farewell": [],
+   "amb": [
+    "npc_voice/danjin/amb_01.ogg",
+    "npc_voice/danjin/amb_02.ogg"
+   ],
+   "talk": [
+    "npc_voice/danjin/talk_01.ogg",
+    "npc_voice/danjin/talk_02.ogg",
+    "npc_voice/danjin/talk_03.ogg"
+   ],
+   "farewell": [
+    "npc_voice/danjin/farewell_01.ogg",
+    "npc_voice/danjin/farewell_02.ogg"
+   ],
    "faces": {
     "small": "npc_voice/danjin/face_small.png",
     "big": "npc_voice/danjin/face_big.png",
@@ -28,9 +38,20 @@
    "id": "linus",
    "local_id": "linus",
    "town": "elvengard",
-   "amb": [],
-   "talk": [],
-   "farewell": [],
+   "amb": [
+    "npc_voice/linus/amb_01.ogg",
+    "npc_voice/linus/amb_02.ogg"
+   ],
+   "talk": [
+    "npc_voice/linus/talk_01.ogg",
+    "npc_voice/linus/talk_02.ogg",
+    "npc_voice/linus/talk_03.ogg"
+   ],
+   "farewell": [
+    "npc_voice/linus/farewell_01.ogg",
+    "npc_voice/linus/farewell_02.ogg",
+    "npc_voice/linus/farewell_03.ogg"
+   ],
    "faces": {
     "small": "npc_voice/linus/face_small.png",
     "big": "npc_voice/linus/face_big.png",
@@ -51,8 +72,15 @@
    "local_id": "seria",
    "town": "seria_room",
    "amb": [],
-   "talk": [],
-   "farewell": [],
+   "talk": [
+    "npc_voice/seria/talk_01.ogg",
+    "npc_voice/seria/talk_02.ogg",
+    "npc_voice/seria/talk_03.ogg"
+   ],
+   "farewell": [
+    "npc_voice/seria/farewell_01.ogg",
+    "npc_voice/seria/farewell_02.ogg"
+   ],
    "faces": {
     "small": "npc_voice/seria/face_small.png",
     "big": "npc_voice/seria/face_big.png",
@@ -70,9 +98,22 @@
    "id": "grandis",
    "local_id": "grandis",
    "town": "hendon_city",
-   "amb": [],
-   "talk": [],
-   "farewell": [],
+   "amb": [
+    "npc_voice/grandis/amb_01.ogg",
+    "npc_voice/grandis/amb_02.ogg",
+    "npc_voice/grandis/amb_03.ogg"
+   ],
+   "talk": [
+    "npc_voice/grandis/talk_01.ogg",
+    "npc_voice/grandis/talk_02.ogg",
+    "npc_voice/grandis/talk_03.ogg"
+   ],
+   "farewell": [
+    "npc_voice/grandis/farewell_01.ogg",
+    "npc_voice/grandis/farewell_02.ogg",
+    "npc_voice/grandis/farewell_03.ogg",
+    "npc_voice/grandis/farewell_04.ogg"
+   ],
    "faces": {
     "small": "npc_voice/grandis/face_small.png",
     "big": "npc_voice/grandis/face_big.png",
@@ -131,9 +172,19 @@
    "id": "rothon",
    "local_id": "norton",
    "town": "hendon_city",
-   "amb": [],
-   "talk": [],
-   "farewell": [],
+   "amb": [
+    "npc_voice/norton/amb_01.ogg"
+   ],
+   "talk": [
+    "npc_voice/norton/talk_01.ogg",
+    "npc_voice/norton/talk_02.ogg",
+    "npc_voice/norton/talk_03.ogg"
+   ],
+   "farewell": [
+    "npc_voice/norton/farewell_01.ogg",
+    "npc_voice/norton/farewell_02.ogg",
+    "npc_voice/norton/farewell_03.ogg"
+   ],
    "faces": {
     "small": "npc_voice/norton/face_small.png",
     "big": "npc_voice/norton/face_big.png",
@@ -153,9 +204,18 @@
    "id": "poongjin",
    "local_id": "pungjin",
    "town": "hendon_main",
-   "amb": [],
-   "talk": [],
-   "farewell": [],
+   "amb": [
+    "npc_voice/pungjin/amb_01.ogg",
+    "npc_voice/pungjin/amb_02.ogg"
+   ],
+   "talk": [
+    "npc_voice/pungjin/talk_01.ogg",
+    "npc_voice/pungjin/talk_02.ogg"
+   ],
+   "farewell": [
+    "npc_voice/pungjin/farewell_01.ogg",
+    "npc_voice/pungjin/farewell_02.ogg"
+   ],
    "faces": {
     "small": "npc_voice/pungjin/face_small.png",
     "big": "npc_voice/pungjin/face_big.png",
@@ -219,9 +279,18 @@
    "id": "kanna",
    "local_id": "kanna",
    "town": "hendon_main",
-   "amb": [],
-   "talk": [],
-   "farewell": [],
+   "amb": [
+    "npc_voice/kanna/amb_01.ogg",
+    "npc_voice/kanna/amb_02.ogg"
+   ],
+   "talk": [
+    "npc_voice/kanna/talk_01.ogg",
+    "npc_voice/kanna/talk_02.ogg"
+   ],
+   "farewell": [
+    "npc_voice/kanna/farewell_01.ogg",
+    "npc_voice/kanna/farewell_02.ogg"
+   ],
    "faces": {
     "small": "npc_voice/kanna/face_small.png",
     "big": "npc_voice/kanna/face_big.png",
@@ -242,7 +311,8 @@
    "local_id": "gsd",
    "town": "hendon_auction",
    "amb": [
-    "npc_voice/gsd/amb_01.ogg"
+    "npc_voice/gsd/amb_01.ogg",
+    "npc_voice/gsd/amb_02.ogg"
    ],
    "talk": [
     "npc_voice/gsd/talk_01.ogg",
@@ -273,9 +343,19 @@
    "id": "sinda",
    "local_id": "sinda",
    "town": "hendon_auction",
-   "amb": [],
-   "talk": [],
-   "farewell": [],
+   "amb": [
+    "npc_voice/sinda/amb_01.ogg",
+    "npc_voice/sinda/amb_02.ogg"
+   ],
+   "talk": [
+    "npc_voice/sinda/talk_01.ogg",
+    "npc_voice/sinda/talk_02.ogg",
+    "npc_voice/sinda/talk_03.ogg"
+   ],
+   "farewell": [
+    "npc_voice/sinda/farewell_01.ogg",
+    "npc_voice/sinda/farewell_02.ogg"
+   ],
    "faces": {
     "small": "npc_voice/sinda/face_small.png",
     "big": "npc_voice/sinda/face_big.png",
@@ -295,9 +375,19 @@
    "id": "shylock",
    "local_id": "shylock",
    "town": "hendon_alley",
-   "amb": [],
-   "talk": [],
-   "farewell": [],
+   "amb": [
+    "npc_voice/shylock/amb_01.ogg",
+    "npc_voice/shylock/amb_02.ogg"
+   ],
+   "talk": [
+    "npc_voice/shylock/talk_01.ogg",
+    "npc_voice/shylock/talk_02.ogg",
+    "npc_voice/shylock/talk_03.ogg"
+   ],
+   "farewell": [
+    "npc_voice/shylock/farewell_01.ogg",
+    "npc_voice/shylock/farewell_02.ogg"
+   ],
    "faces": {
     "small": "npc_voice/shylock/face_small.png",
     "big": "npc_voice/shylock/face_big.png",

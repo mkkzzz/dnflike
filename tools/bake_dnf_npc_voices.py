@@ -35,6 +35,21 @@ KIND = {'AMB_LOOP': ('amb', 'amb'), 'TALK': ('talk', 'tk'), 'FAREWELL': ('farewe
 KEY_RE = re.compile(r'^R_NPC_(.+?)_(AMB_LOOP|TALK|FAREWELL)$')
 
 
+def load_audio_index(src) -> dict[str, str]:
+    """解析原版 `audio.xml`：`<EFFECT ID="NPC_RINUS_AMB_01" FILE="sounds\\npc\\rn_amb_01.ogg">`。
+
+    这是 sound key 与文件的唯一权威映射；文件名多为缩写（rinus→rn、kanna→kn、jar→dj）。
+    """
+    row = src.cat.execute("select local_path from assets where lower(original_path)='audio.xml' limit 1").fetchone()
+    if row is None:
+        return {}
+    text = (src.root / row['local_path']).read_text(encoding='utf-8', errors='replace')
+    index: dict[str, str] = {}
+    for match in re.finditer(r'<EFFECT[^>]*ID="([^"]+)"[^>]*FILE="([^"]+)"', text, re.I):
+        index[match.group(1).upper()] = match.group(2).replace('\\', '/')
+    return index
+
+
 def parse_key(key: str) -> tuple[str, str, str] | None:
     """返回 (key 里的名字, 输出类别, 文件名后缀)。音频文件按 key 里的名字命名。"""
     match = KEY_RE.match(key.strip().upper())
@@ -56,6 +71,7 @@ def main() -> int:
     result: dict[str, dict] = {}
     copied = 0
     missing: list[str] = []
+    audio_index: dict[str, str] = {}
     try:
         for town_id, town in data['towns'].items():
             for npc in town['npcs']:
@@ -71,15 +87,21 @@ def main() -> int:
                     if parsed is None:
                         continue
                     key_name, kind, suffix = parsed
-                    candidates = [key_name, name, npc['id'].lower().replace('npc_', '').replace('cc_', '')]
+                    if not audio_index:
+                        audio_index = load_audio_index(src)
+                    raw = str(key).strip().upper()
+                    if raw.startswith('R_'):
+                        raw = raw[2:]
+                    prefix = raw.replace('_AMB_LOOP', '_AMB')
                     rows = []
-                    for candidate in candidates:
-                        rows = cat.execute(
-                            "select local_path, sha256, original_path from assets where kind='audio' "
-                            "and lower(original_path) like ? order by original_path",
-                            ('sounds/npc/%s_%s_%%' % (candidate, suffix),)).fetchall()
-                        if rows:
-                            break
+                    for sound_id, file in sorted(audio_index.items()):
+                        if not sound_id.startswith(prefix):
+                            continue
+                        row = cat.execute(
+                            "select local_path, sha256, original_path from assets where kind='audio' and lower(original_path)=?",
+                            (file.lower(),)).fetchone()
+                        if row is not None:
+                            rows.append(row)
                     if not rows:
                         missing.append('%s:%s' % (name, key))
                         continue
