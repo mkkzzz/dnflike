@@ -342,7 +342,10 @@ def referenced_breakable_objects() -> list[str]:
         for room in (data.get('dungeon', {}).get('rooms') or {}).values():
             for obj in room.get('objects') or []:
                 target = str(obj.get('obj', '')).lower()
-                if 'breakableobject/' in target and target.endswith('.obj'):
+                if not target.endswith('.obj'):
+                    continue
+                # 可破坏物 + 陷阱机关（trap/* 带 [attack info]，会伤害玩家）。
+                if 'breakableobject/' in target or '/trap/' in target:
                     found.add(target)
     return sorted(found)
 
@@ -378,10 +381,16 @@ def compile_scope(lib: Library) -> dict:
         p = ('skill/' + rel).lower()
         if add(p, 'skl', 'skill/swordmanskill.lst'):
             skill_index[str(index)] = p
-    # 地图上的可破坏物（breakableobject/*.obj）：血量/破坏粒子/音效都在 .obj 里，
-    # 不编进内容包运行时只能当静态美术画着，打不碎。
+    # 地图上的可破坏物与陷阱机关：血量/破坏粒子/音效都在 .obj 里，
+    # 不编进内容包运行时只能当静态美术画着（打不碎、也不会伤人）。
     for path in referenced_breakable_objects():
-        add(path, 'obj', 'map [passive object]')
+        obj = add(path, 'obj', 'map [passive object]')
+        # 陷阱的伤害走 [attack info] → .atk；obj 不会像 mob 那样自动递归，这里手动补。
+        # 注意 decode 阶段 paths 字段已经解析成绝对路径，不能再 resolve 一次。
+        if obj:
+            for rel in obj['decoded'].get('attack_infos') or []:
+                if rel:
+                    add(str(rel), 'atk', path)
     monsters = lib.listing('monster/monster.lst')
     monster_index = {}
     object_paths: list[str] = list(SKILL_OBJECTS)

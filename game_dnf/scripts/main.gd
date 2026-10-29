@@ -433,6 +433,7 @@ func step_game(ms: float) -> void:
 		step_player(ms,move)
 	for enemy: Dictionary in monsters:update_enemy(enemy,ms)
 	step_objects(ms)
+	step_hazards(ms)
 	for prop: Dictionary in props:
 		if prop.get("broken",false):prop["broken_ms"] = float(prop.get("broken_ms",0))+ms
 	var all_dead := true
@@ -1089,10 +1090,15 @@ func build_props(room: Dictionary) -> Array:
 	for object_index in objects.size():
 		var item: Dictionary = objects[object_index]
 		var path := String(item.get("obj", "")).to_lower()
-		if not path.contains("breakableobject/"):
+		# 两类场景物件：可破坏物（打碎）与陷阱（trap/* 里有 [attack info] 的会伤害玩家）。
+		var breakable := path.contains("breakableobject/")
+		var hazard := path.contains("/trap/")
+		if not breakable and not hazard:
 			continue
 		var def: Dictionary = table.object(path)
 		if def.is_empty():
+			continue
+		if hazard and not breakable and array_of(def.get("attack_infos")).is_empty():
 			continue
 		var anchor: Array = array_of(item.get("anchor"))
 		if anchor.size() < 2:
@@ -1105,11 +1111,15 @@ func build_props(room: Dictionary) -> Array:
 		var hits := int(data[1]) if data.size() > 1 else 1
 		var pos := Vector2(float(anchor[0]), float(anchor[1]))
 		var size := Vector2(float(width[0]), float(width[1]))
+		var attack_infos: Array = array_of(def.get("attack_infos"))
+		var damage_atk: Dictionary = table.atk(String(attack_infos[0])) if not attack_infos.is_empty() else {}
 		out.append({
 			"id": "%s#%d" % [path, out.size()],
 			"pos": pos, "z": float(anchor[2]) if anchor.size() > 2 else 0.0,
 			"collision": Rect2(pos.x - size.x * 0.5, pos.y - size.y, size.x, size.y),
-			"breakable": true, "broken": false, "broken_ms": 0.0,
+			"breakable": breakable, "broken": false, "broken_ms": 0.0,
+			# 陷阱：玩家走进判定范围就按 .atk 结算一次伤害（trap/* 的 [attack info]）。
+			"hazard": hazard and not breakable, "damage_atk": damage_atk, "hazard_ms": 0.0,
 			"hp": maxi(1, hits), "def": def,
 			"break_sound": String(strings[5]) if strings.size() > 5 else "",
 			"hit_sound": String(strings[4]) if strings.size() > 4 else "",
@@ -1117,6 +1127,28 @@ func build_props(room: Dictionary) -> Array:
 			"node": object_index,
 		})
 	return out
+
+## 陷阱的伤害间隔：原版 .obj 的 [int data] 里有一位像冷却（cryplant 为 2000），
+## 语义未完全确定，先统一按 2 秒（E-INFER）。
+const HAZARD_INTERVAL_MS := 2000.0
+
+## 玩家站在陷阱判定范围内时按周期受伤。攻击者用 id=-2 的虚拟环境体，
+## 伤害走与怪物相同的 land_hit 流程（.atk 的击退/浮空/命中音都会生效）。
+func step_hazards(ms: float) -> void:
+	if props.is_empty():return
+	var body: Array = player_damage_boxes()
+	for prop: Dictionary in props:
+		if not bool(prop.get("hazard", false)) or bool(prop.get("broken", false)):continue
+		prop["hazard_ms"] = maxf(0.0, float(prop.get("hazard_ms", 0.0)) - ms)
+		if float(prop["hazard_ms"]) > 0.0:continue
+		var box: AABB = Kernel.HitJudge.prop_box(prop["collision"])
+		if Kernel.HitJudge.contact([box], body).is_empty():continue
+		prop["hazard_ms"] = HAZARD_INTERVAL_MS
+		var atk: Dictionary = prop.get("damage_atk", {})
+		var env := {"id": -2, "pos": prop["pos"], "z": 0.0, "numeric": null,
+			"facing": 1, "state": "idle", "hits": {}}
+		land_hit(env, player, {"atk": atk, "percent": 100.0 + float(atk.get("damage_bonus", 0)), "lift": -1.0},
+			Vector3(float(prop["pos"].x), float(prop["pos"].y), 0.0), 1, float(player["attack"]))
 
 func room_placement(index: int) -> Dictionary:
 	var id := String(rules["rooms"][index]["placement"])
