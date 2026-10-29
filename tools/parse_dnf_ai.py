@@ -30,8 +30,9 @@ import dnf_pvf as P
 ROOT = Path(__file__).resolve().parent.parent
 GAME = ROOT / 'game_dnf'
 OUT = GAME / 'data/ai_program.json'
-MAGIC = b'\xb0\xd0\x05\xfc'
-HEADER = 3
+# `.ai` 与 `.act` 同一格式：3 字节魔数 + 4 字节基址（.ai 常见 508，.act 常见 852）+ 5 字节定长指令。
+MAGIC = b'\xb0\xd0\x05'
+HEADER = 4
 STRIDE = 5
 INT_OPS = {0x02}
 FLOAT_OPS = {0x04}
@@ -103,15 +104,19 @@ def blocks(instructions: list[dict]) -> list[dict]:
     return result
 
 
-def ai_files(lib, keyword: str = '') -> list[str]:
-    if keyword:
-        rows = [r[0] for r in lib.db.execute(
-            "select path from files where path like ? and path like '%.ai' order by path",
-            ('%' + keyword + '%',))]
-    else:
-        rows = [r[0] for r in lib.db.execute(
-            "select path from files where path like 'monster/%' and path like '%.ai' order by path")]
-    return rows
+def ai_files(lib, keyword: str = '', kinds=('ai',)) -> list[str]:
+    """列出脚本文件；kinds 可含 'act'（动作脚本，同字节码格式）。"""
+    rows: list[str] = []
+    for kind in kinds:
+        if keyword:
+            rows.extend(r[0] for r in lib.db.execute(
+                "select path from files where path like ? and path like ? order by path",
+                ('%' + keyword + '%', '%%.' + kind)))
+        else:
+            rows.extend(r[0] for r in lib.db.execute(
+                "select path from files where path like 'monster/%' and path like ? order by path",
+                ('%%.' + kind,)))
+    return sorted(set(rows))
 
 
 def main() -> int:
@@ -120,11 +125,13 @@ def main() -> int:
     parser.add_argument('--mob', default='')
     parser.add_argument('--list', action='store_true')
     parser.add_argument('--dump-all', action='store_true')
+    parser.add_argument('--act', action='store_true', help='同时反汇编 .act 动作脚本')
     parser.add_argument('--limit', type=int, default=0)
     args = parser.parse_args()
     lib = P.open_library(args.library)
     try:
-        targets = ai_files(lib, args.mob)
+        kinds = ('ai', 'act') if args.act else ('ai',)
+        targets = ai_files(lib, args.mob, kinds)
         if args.list:
             owners = Counter(path.split('/animal')[0].rsplit('/ai/', 1)[0] for path in targets)
             print('[AI] 共 %d 个 .ai，涉及 %d 个怪' % (len(targets), len(owners)))
