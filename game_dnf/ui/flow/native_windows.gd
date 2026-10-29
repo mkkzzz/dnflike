@@ -34,17 +34,26 @@ func board(parent: Node, title: String, rect: Rect2) -> Control:
 	skin.close_button(node, Vector2(rect.size.x - 25, 12), func(): game.show_overlay(""))
 	return node
 
-func dialogue() -> void:
+const NPC_NAMES := {"linus": "林纳斯", "danjin": "土罐", "seria": "赛丽亚", "grandis": "歌兰蒂斯",
+	"albert": "阿尔伯特", "norton": "诺顿", "pungjin": "风振", "kiri": "凯丽", "kanna": "卡妮娜",
+	"gsd": "G.S.D", "sinda": "辛达", "shylock": "夏洛克"}
+
+func dialogue(npc := "linus") -> void:
 	# Original dialogue board is 718x165. Portrait floats above its left edge.
 	var node = container(game.modal, Vector2(41, 343), Vector2(718, 165))
 	skin.image(node, skin.texture("dialog"), Vector2.ZERO)
-	var portrait: TextureRect = skin.image(node, skin.texture("dialog_face"), Vector2(8, -61))
-	portrait.name = "linus_dialogue_illustration"
-	skin.label(node, "林纳斯", Vector2(215, 18), 16, Color("f0d18a"))
+	var face: Texture2D = game.town.npc_face(npc) if game.town != null else null
+	var portrait: TextureRect = skin.image(node, face if face != null else skin.texture("dialog_face"), Vector2(8, -61))
+	portrait.name = npc + "_dialogue_illustration"
+	if face == null:portrait.size = skin.texture("dialog_face").get_size()
+	game.town.play_npc_voice(npc, "talk")
+	skin.label(node, NPC_NAMES.get(npc, npc), Vector2(215, 18), 16, Color("f0d18a"))
 	skin.label(node, "武器是冒险者的伙伴，出发前可别忘了检查。\n森林里的哥布林越来越多，能帮我去调查一下吗？", Vector2(215, 51), 13)
 	skin.button(node, "委托任务", Vector2(215, 120), func(): game.show_overlay("quest"))
 	skin.button(node, "购买物品", Vector2(325, 120), func(): game.show_overlay("shop"))
-	skin.button(node, "结束对话", Vector2(600, 120), func(): game.show_overlay(""))
+	skin.button(node, "结束对话", Vector2(600, 120), func():
+		game.town.play_npc_voice(npc, "farewell")
+		game.show_overlay(""))
 	skin.close_button(node, Vector2(686, 13), func(): game.show_overlay(""))
 
 func quests() -> void:

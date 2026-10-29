@@ -1,0 +1,6789 @@
+{
+ "schema": "dnf_native_map/1",
+ "revision": 1,
+ "source": {
+  "asset_version": "dnf-native-assets-v1-20261022",
+  "config_role": "111Script.pvf backup in shared library; effective runtime PVF unconfirmed",
+  "config_db_sha256": "74d5681b9afd0816b50d46e1150afebd10e66fe196de14bf0fa5bf56124a2799",
+  "catalog_db_sha256": "f49b8fa387e8b6c6bb72ca384a8c9aea712ff0b4085bd62eaadeaa38ca4a12ae",
+  "exporter": "tools/export_dnf_map.py"
+ },
+ "coordinates": {
+  "map_x": {
+   "unit": "pixel",
+   "claim": "Map x equals screen pixels; each [tile] column is 224 wide.",
+   "evidence": "E-PARSE: tile IMG canvas 224 wide; right pathgate x is width-15±3 in all lorien maps."
+  },
+  "map_y": {
+   "unit": "ground depth unit",
+   "claim": "screen_y = map_y + 120 - z",
+   "evidence": "E-INFER: pass grid 30 rows x 12 = 360 aligns with the bottom of the 480 tile canvas; up/down pathgate y lands exactly on walkable grid edges in 298/471 of 2488 maps."
+  },
+  "pass_grid": {
+   "claim": "14x30 per tile column, cell 16x12 map units, 0=walkable, 2=blocked",
+   "evidence": "E-INFER: 92% of 19582 monster spawn points fall on 0 cells; other values unknown."
+  },
+  "background_y": {
+   "claim": "Background and tile images use screen space (anchor y=0); dgn [background pos] kept raw.",
+   "evidence": "E-UNKNOWN: effect of [background pos] needs original screenshots."
+  },
+  "layers": {
+   "claim": "distantback < middleback < bottom < closeback < normal < close; normal is sorted by ground y",
+   "evidence": "E-INFER from tag names; draw order needs original footage."
+  },
+  "scroll": {
+   "claim": "distantback/middleback/close scroll at far/middle/near sight scroll percent and repeat horizontally",
+   "evidence": "E-INFER from tag names; repeat behaviour unknown."
+  },
+  "greed": {
+   "claim": "Dungeon cell letter minus \"A\" is a door mask: right=1 up=2 left=4 down=8",
+   "evidence": "E-INFER: all lorien neighbours are reciprocal; best of 24 bit orders across 328 dgn files."
+  },
+  "gate_images": {
+   "claim": "%d%d in gate IMG templates is filled with the two digits of the second [int data] value; first value is state 0=always 1=closed 2=open",
+   "evidence": "E-INFER: produces existing files (normal 01, boss 05/02); state matches Close/Open names."
+  }
+ },
+ "constants": {
+  "tile_width": 224,
+  "tile_height": 480,
+  "grid_cols": 14,
+  "grid_rows": 30,
+  "cell_width": 16,
+  "cell_height": 12,
+  "screen_y_offset": 120,
+  "viewport": [
+   640,
+   480
+  ],
+  "layers": [
+   "distantback",
+   "middleback",
+   "bottom",
+   "closeback",
+   "normal",
+   "close"
+  ]
+ },
+ "dungeon": {
+  "path": "dungeon/act2/sepahigh.dgn",
+  "sha256": "b40c113d28c490964fe2ef2f0b4abe3539b136b4f1ff21303efb8305554ea3b8",
+  "crc_ok": true,
+  "index": null,
+  "raw": [
+   {
+    "tag": "[background pos]",
+    "offset": 2,
+    "values": [
+     [
+      2,
+      "50000000",
+      80
+     ]
+    ]
+   },
+   {
+    "tag": "[basis level]",
+    "offset": 12,
+    "values": [
+     [
+      2,
+      "17000000",
+      23
+     ]
+    ]
+   },
+   {
+    "tag": "[minimum required level]",
+    "offset": 22,
+    "values": [
+     [
+      2,
+      "12000000",
+      18
+     ]
+    ]
+   },
+   {
+    "tag": "[experience increasing point]",
+    "offset": 32,
+    "values": [
+     [
+      4,
+      "00004040",
+      3.0
+     ]
+    ]
+   },
+   {
+    "tag": "[entering title]",
+    "offset": 42,
+    "values": [
+     [
+      7,
+      "1f420000",
+      "Title/SepaHigh.ani"
+     ]
+    ]
+   },
+   {
+    "tag": "[cutscene image]",
+    "offset": 52,
+    "values": [
+     [
+      7,
+      "ee410000",
+      "Map/CutScene/SkyCastle.img"
+     ],
+     [
+      2,
+      "00000000",
+      0
+     ]
+    ]
+   },
+   {
+    "tag": "[minimap image]",
+    "offset": 67,
+    "values": [
+     [
+      7,
+      "ef410000",
+      "Map/MiniMap/Act2.img"
+     ]
+    ]
+   },
+   {
+    "tag": "[champion]",
+    "offset": 77,
+    "values": [
+     [
+      2,
+      "06000000",
+      6
+     ],
+     [
+      2,
+      "0c000000",
+      12
+     ],
+     [
+      2,
+      "12000000",
+      18
+     ],
+     [
+      2,
+      "18000000",
+      24
+     ],
+     [
+      2,
+      "1a000000",
+      26
+     ]
+    ]
+   },
+   {
+    "tag": "[worldmap pattern info]",
+    "offset": 107,
+    "values": [
+     [
+      2,
+      "02000000",
+      2
+     ],
+     [
+      2,
+      "01000000",
+      1
+     ],
+     [
+      7,
+      "6dcf0600",
+      "WorldMap/SelectdungeonSlot/2skycastle.img"
+     ],
+     [
+      2,
+      "03000000",
+      3
+     ]
+    ]
+   },
+   {
+    "tag": "[pathgate object]",
+    "offset": 132,
+    "values": [
+     [
+      2,
+      "9b010000",
+      411
+     ],
+     [
+      2,
+      "9c010000",
+      412
+     ],
+     [
+      2,
+      "9d010000",
+      413
+     ],
+     [
+      2,
+      "9e010000",
+      414
+     ],
+     [
+      2,
+      "9f010000",
+      415
+     ],
+     [
+      2,
+      "a0010000",
+      416
+     ],
+     [
+      2,
+      "a1010000",
+      417
+     ],
+     [
+      2,
+      "a2010000",
+      418
+     ],
+     [
+      2,
+      "a3010000",
+      419
+     ],
+     [
+      2,
+      "a4010000",
+      420
+     ]
+    ]
+   },
+   {
+    "tag": "[maze info]",
+    "offset": 187,
+    "values": []
+   },
+   {
+    "tag": "[size]",
+    "offset": 192,
+    "values": [
+     [
+      2,
+      "05000000",
+      5
+     ],
+     [
+      2,
+      "05000000",
+      5
+     ]
+    ]
+   },
+   {
+    "tag": "[greed]",
+    "offset": 207,
+    "values": [
+     [
+      7,
+      "21420000",
+      "AAAAAAAAII\r\n JJEEIIJJOO\r\n DDNNHHOOCC\r\n AAKKAADDEE\r\n AACCAAAAAA"
+     ]
+    ]
+   },
+   {
+    "tag": "[start map]",
+    "offset": 217,
+    "values": [
+     [
+      2,
+      "02000000",
+      2
+     ],
+     [
+      2,
+      "01000000",
+      1
+     ],
+     [
+      2,
+      "04000000",
+      4
+     ],
+     [
+      2,
+      "03000000",
+      3
+     ]
+    ]
+   },
+   {
+    "tag": "[/start map]",
+    "offset": 242,
+    "values": []
+   },
+   {
+    "tag": "[boss map]",
+    "offset": 247,
+    "values": [
+     [
+      2,
+      "04000000",
+      4
+     ],
+     [
+      2,
+      "00000000",
+      0
+     ],
+     [
+      2,
+      "01000000",
+      1
+     ],
+     [
+      2,
+      "04000000",
+      4
+     ],
+     [
+      2,
+      "01000000",
+      1
+     ],
+     [
+      2,
+      "01000000",
+      1
+     ]
+    ]
+   },
+   {
+    "tag": "[/boss map]",
+    "offset": 282,
+    "values": []
+   },
+   {
+    "tag": "[special passive object item]",
+    "offset": 287,
+    "values": [
+     [
+      2,
+      "00000000",
+      0
+     ],
+     [
+      2,
+      "ffffffff",
+      -1
+     ],
+     [
+      2,
+      "03000000",
+      3
+     ],
+     [
+      2,
+      "18040000",
+      1048
+     ],
+     [
+      2,
+      "e8030000",
+      1000
+     ],
+     [
+      2,
+      "19040000",
+      1049
+     ],
+     [
+      2,
+      "dc050000",
+      1500
+     ],
+     [
+      2,
+      "cb0b0000",
+      3019
+     ],
+     [
+      2,
+      "64000000",
+      100
+     ],
+     [
+      2,
+      "01000000",
+      1
+     ],
+     [
+      2,
+      "ffffffff",
+      -1
+     ],
+     [
+      2,
+      "03000000",
+      3
+     ],
+     [
+      2,
+      "330c0000",
+      3123
+     ],
+     [
+      2,
+      "e8030000",
+      1000
+     ],
+     [
+      2,
+      "340c0000",
+      3124
+     ],
+     [
+      2,
+      "e8030000",
+      1000
+     ],
+     [
+      2,
+      "350c0000",
+      3125
+     ],
+     [
+      2,
+      "e8030000",
+      1000
+     ],
+     [
+      2,
+      "02000000",
+      2
+     ],
+     [
+      2,
+      "ffffffff",
+      -1
+     ],
+     [
+      2,
+      "01000000",
+      1
+     ],
+     [
+      2,
+      "380c0000",
+      3128
+     ],
+     [
+      2,
+      "f4010000",
+      500
+     ],
+     [
+      2,
+      "03000000",
+      3
+     ],
+     [
+      2,
+      "ffffffff",
+      -1
+     ],
+     [
+      2,
+      "00000000",
+      0
+     ],
+     [
+      2,
+      "04000000",
+      4
+     ],
+     [
+      2,
+      "19000000",
+      25
+     ],
+     [
+      2,
+      "00000000",
+      0
+     ]
+    ]
+   },
+   {
+    "tag": "[/special passive object item]",
+    "offset": 437,
+    "values": []
+   },
+   {
+    "tag": "[seal door map index]",
+    "offset": 442,
+    "values": [
+     [
+      2,
+      "63ea0000",
+      60003
+     ]
+    ]
+   },
+   {
+    "tag": "[seal door pos]",
+    "offset": 452,
+    "values": [
+     [
+      2,
+      "02000000",
+      2
+     ],
+     [
+      2,
+      "02000000",
+      2
+     ]
+    ]
+   },
+   {
+    "tag": "[hit count]",
+    "offset": 467,
+    "values": [
+     [
+      2,
+      "32000000",
+      50
+     ],
+     [
+      2,
+      "32000000",
+      50
+     ],
+     [
+      2,
+      "32000000",
+      50
+     ],
+     [
+      2,
+      "32000000",
+      50
+     ],
+     [
+      2,
+      "32000000",
+      50
+     ]
+    ]
+   },
+   {
+    "tag": "[seal door appear rate]",
+    "offset": 497,
+    "values": [
+     [
+      2,
+      "0a000000",
+      10
+     ]
+    ]
+   },
+   {
+    "tag": "[hell dungeon]",
+    "offset": 507,
+    "values": [
+     [
+      2,
+      "01000000",
+      1
+     ]
+    ]
+   },
+   {
+    "tag": "[name]",
+    "offset": 517,
+    "values": [
+     [
+      7,
+      "70cf0600",
+      "�@ß첫띱쨁펔"
+     ]
+    ]
+   },
+   {
+    "tag": "[explain]",
+    "offset": 527,
+    "values": [
+     [
+      7,
+      "71cf0600",
+      "    О탇쨁ㅡづㄷグ┱ㄳ�_쬥짵ず�_픇췢�揭MО�驍爭o㉶┱앝ㅶずㅡづㄷグず춝땄�瞼A 쿽놓앝ㅶ�]픰짩�擊벤X�{�굽{짦톝ず㎧�괌C"
+     ]
+    ]
+   }
+  ],
+  "size": [
+   5,
+   5
+  ],
+  "cells": [
+   {
+    "x": 0,
+    "y": 0,
+    "code": "AA",
+    "mask": 0,
+    "doors": [],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 1,
+    "y": 0,
+    "code": "AA",
+    "mask": 0,
+    "doors": [],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 2,
+    "y": 0,
+    "code": "AA",
+    "mask": 0,
+    "doors": [],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 3,
+    "y": 0,
+    "code": "AA",
+    "mask": 0,
+    "doors": [],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 4,
+    "y": 0,
+    "code": "II",
+    "mask": 8,
+    "doors": [
+     "down"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": true
+   },
+   {
+    "x": 0,
+    "y": 1,
+    "code": "JJ",
+    "mask": 9,
+    "doors": [
+     "right",
+     "down"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 1,
+    "y": 1,
+    "code": "EE",
+    "mask": 4,
+    "doors": [
+     "left"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": true
+   },
+   {
+    "x": 2,
+    "y": 1,
+    "code": "II",
+    "mask": 8,
+    "doors": [
+     "down"
+    ],
+    "map_candidates": [],
+    "start_candidate": true,
+    "boss_candidate": false
+   },
+   {
+    "x": 3,
+    "y": 1,
+    "code": "JJ",
+    "mask": 9,
+    "doors": [
+     "right",
+     "down"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 4,
+    "y": 1,
+    "code": "OO",
+    "mask": 14,
+    "doors": [
+     "left",
+     "up",
+     "down"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 0,
+    "y": 2,
+    "code": "DD",
+    "mask": 3,
+    "doors": [
+     "right",
+     "up"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 1,
+    "y": 2,
+    "code": "NN",
+    "mask": 13,
+    "doors": [
+     "left",
+     "right",
+     "down"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 2,
+    "y": 2,
+    "code": "HH",
+    "mask": 7,
+    "doors": [
+     "left",
+     "right",
+     "up"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 3,
+    "y": 2,
+    "code": "OO",
+    "mask": 14,
+    "doors": [
+     "left",
+     "up",
+     "down"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 4,
+    "y": 2,
+    "code": "CC",
+    "mask": 2,
+    "doors": [
+     "up"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 0,
+    "y": 3,
+    "code": "AA",
+    "mask": 0,
+    "doors": [],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 1,
+    "y": 3,
+    "code": "KK",
+    "mask": 10,
+    "doors": [
+     "up",
+     "down"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 2,
+    "y": 3,
+    "code": "AA",
+    "mask": 0,
+    "doors": [],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 3,
+    "y": 3,
+    "code": "DD",
+    "mask": 3,
+    "doors": [
+     "right",
+     "up"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 4,
+    "y": 3,
+    "code": "EE",
+    "mask": 4,
+    "doors": [
+     "left"
+    ],
+    "map_candidates": [],
+    "start_candidate": true,
+    "boss_candidate": false
+   },
+   {
+    "x": 0,
+    "y": 4,
+    "code": "AA",
+    "mask": 0,
+    "doors": [],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 1,
+    "y": 4,
+    "code": "CC",
+    "mask": 2,
+    "doors": [
+     "up"
+    ],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": true
+   },
+   {
+    "x": 2,
+    "y": 4,
+    "code": "AA",
+    "mask": 0,
+    "doors": [],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 3,
+    "y": 4,
+    "code": "AA",
+    "mask": 0,
+    "doors": [],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   },
+   {
+    "x": 4,
+    "y": 4,
+    "code": "AA",
+    "mask": 0,
+    "doors": [],
+    "map_candidates": [],
+    "start_candidate": false,
+    "boss_candidate": false
+   }
+  ],
+  "start_map_raw": [
+   2,
+   1,
+   4,
+   3
+  ],
+  "boss_map_raw": [
+   4,
+   0,
+   1,
+   4,
+   1,
+   1
+  ],
+  "start_boss_interpretation": "E-INFER: value pairs are candidate cells (x,y); random choice unverified",
+  "background_pos_raw": [
+   80
+  ],
+  "pathgate_slots": {
+   "left_normal": 411,
+   "left_boss": 412,
+   "left_wall": 413,
+   "right_normal": 414,
+   "right_boss": 415,
+   "right_wall": 416,
+   "up_normal": 417,
+   "up_boss": 418,
+   "down_normal": 419,
+   "down_boss": 420
+  },
+  "gate_objects": {
+   "411": {
+    "id": 411,
+    "obj": "passiveobject/mapobject/pathgate/act2/dollleftnormal.obj",
+    "sha256": "f77aa15a8ab9d2cb84069ed2d9ef8ef23e3fd47d13926ed2772dd30afbe03999",
+    "raw": [
+     {
+      "tag": "[layer]",
+      "offset": 2,
+      "values": [
+       [
+        7,
+        "1d060000",
+        "[normal]"
+       ]
+      ]
+     },
+     {
+      "tag": "[string data]",
+      "offset": 12,
+      "values": [
+       [
+        7,
+        "925b0500",
+        "Animation/02LeftLadder.ani"
+       ],
+       [
+        7,
+        "935b0500",
+        "Animation/02LeftGate.ani"
+       ],
+       [
+        7,
+        "945b0500",
+        "Animation/02LeftCloseDoor.ani"
+       ],
+       [
+        7,
+        "955b0500",
+        "Animation/02LeftOpenDoor.ani"
+       ],
+       [
+        7,
+        "965b0500",
+        "Animation/02LeftLightL.ani"
+       ],
+       [
+        7,
+        "975b0500",
+        "Animation/02LeftLightR.ani"
+       ],
+       [
+        7,
+        "985b0500",
+        "Animation/02LeftO.ani"
+       ],
+       [
+        7,
+        "1e200500",
+        "Tile/LeftDoor.til"
+       ]
+      ]
+     },
+     {
+      "tag": "[/string data]",
+      "offset": 57,
+      "values": []
+     },
+     {
+      "tag": "[int data]",
+      "offset": 62,
+      "values": [
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "14000000",
+        20
+       ]
+      ]
+     },
+     {
+      "tag": "[/int data]",
+      "offset": 147,
+      "values": []
+     },
+     {
+      "tag": "[name]",
+      "offset": 152,
+      "values": [
+       [
+        9,
+        "09000000",
+        null
+       ],
+       [
+        10,
+        "9a5b0500",
+        null
+       ]
+      ]
+     }
+    ],
+    "layer": "normal",
+    "parts": [
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       2
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftladder.ani",
+       "ani_sha256": "1f25a3cecf57bf50ad6f129534a7acc3b6ea887589aacb0d36dfcdb3944053fe",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "9a1a6fe8ee2b_3",
+         "offset": [
+          -19,
+          -20
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       2
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftgate.ani",
+       "ani_sha256": "a8ec5ee6a1c113c0ca9ee5c9efe02f09486dc04960eda30e40f227dd1dd6b040",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "9a1a6fe8ee2b_0",
+         "offset": [
+          -9,
+          -161
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_closed",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       2
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftclosedoor.ani",
+       "ani_sha256": "619bbc7a96767ce03a3a417b4ac23655ab05b488780d97d0b56edb34a7a50d34",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "9a1a6fe8ee2b_1",
+         "offset": [
+          18,
+          -173
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_open",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftopendoor.ani",
+       "ani_sha256": "4b8efc96903304aeae5b0731dc9cc762e6cfd9e2578421c656878a985041d0d2",
+       "loop_flag": 0,
+       "duration_ms": 1100,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "12": 500
+         },
+         "image": "9a1a6fe8ee2b_1",
+         "offset": [
+          18,
+          -173
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 600,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "12": 600
+         },
+         "image": "9a1a6fe8ee2b_1",
+         "offset": [
+          18,
+          -173
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       1
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftlightl.ani",
+       "ani_sha256": "2b7deafe2a375b3d3da47dbff24244d76cfc64bcf895dffd5d384fa85c4391a5",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          -46,
+          -186
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          -46,
+          -186
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       1
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftlightr.ani",
+       "ani_sha256": "27039ef590f0bf08ec921f195e5960108ac14ff35295a7a304df9194fa41773d",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          47,
+          -148
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          47,
+          -148
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       2
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02lefto.ani",
+       "ani_sha256": "6aae55b021709167a1b13d6e2ab78d0a380de0176db9ab226f6de65a026032a4",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ca5f94ea2d39_0",
+         "offset": [
+          116,
+          -61
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     }
+    ],
+    "door_tile": {
+     "til": "passiveobject/mapobject/pathgate/act2/tile/leftdoor.til",
+     "raw_pair": [
+      0,
+      20
+     ],
+     "note": "E-UNKNOWN: pass overlay semantics not applied"
+    }
+   },
+   "412": {
+    "id": 412,
+    "obj": "passiveobject/mapobject/pathgate/act2/dollleftboss.obj",
+    "sha256": "e60a1e883d8c10702fafea2d0c43b310ae5fd9734ba54be53a1ae4b2838a8aae",
+    "raw": [
+     {
+      "tag": "[layer]",
+      "offset": 2,
+      "values": [
+       [
+        7,
+        "1d060000",
+        "[normal]"
+       ]
+      ]
+     },
+     {
+      "tag": "[string data]",
+      "offset": 12,
+      "values": [
+       [
+        7,
+        "925b0500",
+        "Animation/02LeftLadder.ani"
+       ],
+       [
+        7,
+        "935b0500",
+        "Animation/02LeftGate.ani"
+       ],
+       [
+        7,
+        "945b0500",
+        "Animation/02LeftCloseDoor.ani"
+       ],
+       [
+        7,
+        "955b0500",
+        "Animation/02LeftOpenDoor.ani"
+       ],
+       [
+        7,
+        "965b0500",
+        "Animation/02LeftLightL.ani"
+       ],
+       [
+        7,
+        "975b0500",
+        "Animation/02LeftLightR.ani"
+       ],
+       [
+        7,
+        "985b0500",
+        "Animation/02LeftO.ani"
+       ],
+       [
+        7,
+        "1e200500",
+        "Tile/LeftDoor.til"
+       ]
+      ]
+     },
+     {
+      "tag": "[/string data]",
+      "offset": 57,
+      "values": []
+     },
+     {
+      "tag": "[int data]",
+      "offset": 62,
+      "values": [
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "14000000",
+        20
+       ]
+      ]
+     },
+     {
+      "tag": "[/int data]",
+      "offset": 147,
+      "values": []
+     },
+     {
+      "tag": "[name]",
+      "offset": 152,
+      "values": [
+       [
+        9,
+        "09000000",
+        null
+       ],
+       [
+        10,
+        "995b0500",
+        null
+       ]
+      ]
+     }
+    ],
+    "layer": "normal",
+    "parts": [
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       5
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftladder.ani",
+       "ani_sha256": "1f25a3cecf57bf50ad6f129534a7acc3b6ea887589aacb0d36dfcdb3944053fe",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "008b17b0c806_3",
+         "offset": [
+          -19,
+          -20
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       5
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftgate.ani",
+       "ani_sha256": "a8ec5ee6a1c113c0ca9ee5c9efe02f09486dc04960eda30e40f227dd1dd6b040",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "008b17b0c806_0",
+         "offset": [
+          -9,
+          -161
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_closed",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       5
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftclosedoor.ani",
+       "ani_sha256": "619bbc7a96767ce03a3a417b4ac23655ab05b488780d97d0b56edb34a7a50d34",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "008b17b0c806_1",
+         "offset": [
+          18,
+          -173
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_open",
+      "state": "open",
+      "raw_pair": [
+       2,
+       5
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftopendoor.ani",
+       "ani_sha256": "4b8efc96903304aeae5b0731dc9cc762e6cfd9e2578421c656878a985041d0d2",
+       "loop_flag": 0,
+       "duration_ms": 1100,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "12": 500
+         },
+         "image": "008b17b0c806_1",
+         "offset": [
+          18,
+          -173
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 600,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "12": 600
+         },
+         "image": "008b17b0c806_1",
+         "offset": [
+          18,
+          -173
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftlightl.ani",
+       "ani_sha256": "2b7deafe2a375b3d3da47dbff24244d76cfc64bcf895dffd5d384fa85c4391a5",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          -46,
+          -186
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          -46,
+          -186
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftlightr.ani",
+       "ani_sha256": "27039ef590f0bf08ec921f195e5960108ac14ff35295a7a304df9194fa41773d",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          47,
+          -148
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          47,
+          -148
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       5
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02lefto.ani",
+       "ani_sha256": "6aae55b021709167a1b13d6e2ab78d0a380de0176db9ab226f6de65a026032a4",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ae9adc6a8d9d_0",
+         "offset": [
+          116,
+          -61
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     }
+    ],
+    "door_tile": {
+     "til": "passiveobject/mapobject/pathgate/act2/tile/leftdoor.til",
+     "raw_pair": [
+      0,
+      20
+     ],
+     "note": "E-UNKNOWN: pass overlay semantics not applied"
+    }
+   },
+   "413": {
+    "id": 413,
+    "obj": "passiveobject/mapobject/pathgate/act2/dollleftwall.obj",
+    "sha256": "4e577d0588f013eeae06d788ff4f62668133aa50a919c967cc1dc273e3a86a27",
+    "raw": [
+     {
+      "tag": "[layer]",
+      "offset": 2,
+      "values": [
+       [
+        7,
+        "1d060000",
+        "[normal]"
+       ]
+      ]
+     },
+     {
+      "tag": "[string data]",
+      "offset": 12,
+      "values": []
+     },
+     {
+      "tag": "[/string data]",
+      "offset": 17,
+      "values": []
+     },
+     {
+      "tag": "[int data]",
+      "offset": 22,
+      "values": []
+     },
+     {
+      "tag": "[/int data]",
+      "offset": 27,
+      "values": []
+     },
+     {
+      "tag": "[name]",
+      "offset": 32,
+      "values": [
+       [
+        9,
+        "09000000",
+        null
+       ],
+       [
+        10,
+        "9b5b0500",
+        null
+       ]
+      ]
+     }
+    ],
+    "layer": "normal",
+    "parts": [],
+    "door_tile": null
+   },
+   "414": {
+    "id": 414,
+    "obj": "passiveobject/mapobject/pathgate/act2/dollrightnormal.obj",
+    "sha256": "6242cf40d39aeffa974ff25d73d941e1ad31dea73045218f5ee9db352568d1c0",
+    "raw": [
+     {
+      "tag": "[layer]",
+      "offset": 2,
+      "values": [
+       [
+        7,
+        "7d200000",
+        "[bottom]"
+       ]
+      ]
+     },
+     {
+      "tag": "[string data]",
+      "offset": 12,
+      "values": [
+       [
+        7,
+        "9c5b0500",
+        "Animation/02RightU.ani"
+       ],
+       [
+        7,
+        "9d5b0500",
+        "Animation/02RightLadder.ani"
+       ],
+       [
+        7,
+        "9e5b0500",
+        "Animation/02RightGate.ani"
+       ],
+       [
+        7,
+        "9f5b0500",
+        "Animation/02RightCloseDoor.ani"
+       ],
+       [
+        7,
+        "a05b0500",
+        "Animation/02RightOpenDoor.ani"
+       ],
+       [
+        7,
+        "a15b0500",
+        "Animation/02RightLightL.ani"
+       ],
+       [
+        7,
+        "a25b0500",
+        "Animation/02RightLightR.ani"
+       ],
+       [
+        7,
+        "a35b0500",
+        "Animation/02RightO.ani"
+       ],
+       [
+        7,
+        "7e5b0500",
+        "Tile/RightDoor.til"
+       ]
+      ]
+     },
+     {
+      "tag": "[/string data]",
+      "offset": 62,
+      "values": []
+     },
+     {
+      "tag": "[int data]",
+      "offset": 67,
+      "values": [
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "0d000000",
+        13
+       ],
+       [
+        2,
+        "15000000",
+        21
+       ]
+      ]
+     },
+     {
+      "tag": "[/int data]",
+      "offset": 162,
+      "values": []
+     },
+     {
+      "tag": "[name]",
+      "offset": 167,
+      "values": [
+       [
+        9,
+        "09000000",
+        null
+       ],
+       [
+        10,
+        "a55b0500",
+        null
+       ]
+      ]
+     }
+    ],
+    "layer": "bottom",
+    "parts": [
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       2
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightu.ani",
+       "ani_sha256": "ba760f047b9de698fd0062f3c57f5eb6d23f5b506a34568a0c078f10a54df6ba",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ca5f94ea2d39_0",
+         "offset": [
+          -171,
+          -158
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       2
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightladder.ani",
+       "ani_sha256": "f20d1a27fb113ac72022a02467d835efcd2e3f89b95ed932f040ade87dc500a6",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "9a1a6fe8ee2b_2",
+         "offset": [
+          -66,
+          -118
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       2
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightgate.ani",
+       "ani_sha256": "8b0ce69cf5a8854d6b225f3996d64ac345f818d8fbe09e55ffee94ad8054da65",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "9a1a6fe8ee2b_0",
+         "offset": [
+          -109,
+          -161
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_closed",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       2
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightclosedoor.ani",
+       "ani_sha256": "4bfe01188306ab39a3e115896dd0d92adf5678941fc4dfdc22619b99666b5b2b",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "9a1a6fe8ee2b_1",
+         "offset": [
+          -82,
+          -173
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_open",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightopendoor.ani",
+       "ani_sha256": "d83df9a8f2cba9db08ea95692da6260ccdc57e340e22125f236f66a2b0aa7fde",
+       "loop_flag": 0,
+       "duration_ms": 1100,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "12": 500
+         },
+         "image": "9a1a6fe8ee2b_1",
+         "offset": [
+          -82,
+          -173
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 600,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "12": 600
+         },
+         "image": "9a1a6fe8ee2b_1",
+         "offset": [
+          -82,
+          -173
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       1
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightlightl.ani",
+       "ani_sha256": "d8712f1bb9ee269105a42e0d8147a36131149aae297e313408058999e867195e",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          -146,
+          -186
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          -146,
+          -186
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       1
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightlightr.ani",
+       "ani_sha256": "6005fe0291c3535f59e9fb119abdffc5c72e9c487b627a050118539942cddacc",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          -53,
+          -149
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          -53,
+          -149
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       2
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02righto.ani",
+       "ani_sha256": "484e9e37666e8f78d52a7f4440c7eadda0a90d07dcf2963f328b17aee3d2b0cb",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ca5f94ea2d39_0",
+         "offset": [
+          12,
+          -66
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     }
+    ],
+    "door_tile": {
+     "til": "passiveobject/mapobject/pathgate/act2/tile/rightdoor.til",
+     "raw_pair": [
+      13,
+      21
+     ],
+     "note": "E-UNKNOWN: pass overlay semantics not applied"
+    }
+   },
+   "415": {
+    "id": 415,
+    "obj": "passiveobject/mapobject/pathgate/act2/dollrightboss.obj",
+    "sha256": "06053a4a5141d0044b5955b4b8cf178848776d5500402715bcd44775f12abb04",
+    "raw": [
+     {
+      "tag": "[layer]",
+      "offset": 2,
+      "values": [
+       [
+        7,
+        "7d200000",
+        "[bottom]"
+       ]
+      ]
+     },
+     {
+      "tag": "[string data]",
+      "offset": 12,
+      "values": [
+       [
+        7,
+        "9c5b0500",
+        "Animation/02RightU.ani"
+       ],
+       [
+        7,
+        "9d5b0500",
+        "Animation/02RightLadder.ani"
+       ],
+       [
+        7,
+        "9e5b0500",
+        "Animation/02RightGate.ani"
+       ],
+       [
+        7,
+        "9f5b0500",
+        "Animation/02RightCloseDoor.ani"
+       ],
+       [
+        7,
+        "a05b0500",
+        "Animation/02RightOpenDoor.ani"
+       ],
+       [
+        7,
+        "a15b0500",
+        "Animation/02RightLightL.ani"
+       ],
+       [
+        7,
+        "a25b0500",
+        "Animation/02RightLightR.ani"
+       ],
+       [
+        7,
+        "a35b0500",
+        "Animation/02RightO.ani"
+       ],
+       [
+        7,
+        "7e5b0500",
+        "Tile/RightDoor.til"
+       ]
+      ]
+     },
+     {
+      "tag": "[/string data]",
+      "offset": 62,
+      "values": []
+     },
+     {
+      "tag": "[int data]",
+      "offset": 67,
+      "values": [
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "0d000000",
+        13
+       ],
+       [
+        2,
+        "15000000",
+        21
+       ]
+      ]
+     },
+     {
+      "tag": "[/int data]",
+      "offset": 162,
+      "values": []
+     },
+     {
+      "tag": "[name]",
+      "offset": 167,
+      "values": [
+       [
+        9,
+        "09000000",
+        null
+       ],
+       [
+        10,
+        "a45b0500",
+        null
+       ]
+      ]
+     }
+    ],
+    "layer": "bottom",
+    "parts": [
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       5
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightu.ani",
+       "ani_sha256": "ba760f047b9de698fd0062f3c57f5eb6d23f5b506a34568a0c078f10a54df6ba",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ae9adc6a8d9d_0",
+         "offset": [
+          -171,
+          -158
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       5
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightladder.ani",
+       "ani_sha256": "f20d1a27fb113ac72022a02467d835efcd2e3f89b95ed932f040ade87dc500a6",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "008b17b0c806_2",
+         "offset": [
+          -66,
+          -118
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       5
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightgate.ani",
+       "ani_sha256": "8b0ce69cf5a8854d6b225f3996d64ac345f818d8fbe09e55ffee94ad8054da65",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "008b17b0c806_0",
+         "offset": [
+          -109,
+          -161
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_closed",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       5
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightclosedoor.ani",
+       "ani_sha256": "4bfe01188306ab39a3e115896dd0d92adf5678941fc4dfdc22619b99666b5b2b",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "008b17b0c806_1",
+         "offset": [
+          -82,
+          -173
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_open",
+      "state": "open",
+      "raw_pair": [
+       2,
+       5
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightopendoor.ani",
+       "ani_sha256": "d83df9a8f2cba9db08ea95692da6260ccdc57e340e22125f236f66a2b0aa7fde",
+       "loop_flag": 0,
+       "duration_ms": 1100,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "12": 500
+         },
+         "image": "008b17b0c806_1",
+         "offset": [
+          -82,
+          -173
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 600,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "12": 600
+         },
+         "image": "008b17b0c806_1",
+         "offset": [
+          -82,
+          -173
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightlightl.ani",
+       "ani_sha256": "d8712f1bb9ee269105a42e0d8147a36131149aae297e313408058999e867195e",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          -146,
+          -186
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          -146,
+          -186
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightlightr.ani",
+       "ani_sha256": "6005fe0291c3535f59e9fb119abdffc5c72e9c487b627a050118539942cddacc",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          -53,
+          -149
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          -53,
+          -149
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       5
+      ],
+      "layer": "bottom",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02righto.ani",
+       "ani_sha256": "484e9e37666e8f78d52a7f4440c7eadda0a90d07dcf2963f328b17aee3d2b0cb",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ae9adc6a8d9d_0",
+         "offset": [
+          12,
+          -66
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     }
+    ],
+    "door_tile": {
+     "til": "passiveobject/mapobject/pathgate/act2/tile/rightdoor.til",
+     "raw_pair": [
+      13,
+      21
+     ],
+     "note": "E-UNKNOWN: pass overlay semantics not applied"
+    }
+   },
+   "416": {
+    "id": 416,
+    "obj": "passiveobject/mapobject/pathgate/act2/dollrightwall.obj",
+    "sha256": "8acf92ab0552f752e8dc97210508a0d515e1b975cf4a0356b425f6e716c5d4cd",
+    "raw": [
+     {
+      "tag": "[layer]",
+      "offset": 2,
+      "values": [
+       [
+        7,
+        "7d200000",
+        "[bottom]"
+       ]
+      ]
+     },
+     {
+      "tag": "[string data]",
+      "offset": 12,
+      "values": []
+     },
+     {
+      "tag": "[/string data]",
+      "offset": 17,
+      "values": []
+     },
+     {
+      "tag": "[int data]",
+      "offset": 22,
+      "values": []
+     },
+     {
+      "tag": "[/int data]",
+      "offset": 27,
+      "values": []
+     },
+     {
+      "tag": "[name]",
+      "offset": 32,
+      "values": [
+       [
+        9,
+        "09000000",
+        null
+       ],
+       [
+        10,
+        "a65b0500",
+        null
+       ]
+      ]
+     }
+    ],
+    "layer": "bottom",
+    "parts": [],
+    "door_tile": null
+   },
+   "417": {
+    "id": 417,
+    "obj": "passiveobject/mapobject/pathgate/act2/dollupnormal.obj",
+    "sha256": "6b7f28f74c0d61b499acb6f1b82fa15361d63415a3405ed31b29171a5ca33bbc",
+    "raw": [
+     {
+      "tag": "[layer]",
+      "offset": 2,
+      "values": [
+       [
+        7,
+        "66690400",
+        "[closeback]"
+       ]
+      ]
+     },
+     {
+      "tag": "[string data]",
+      "offset": 12,
+      "values": [
+       [
+        7,
+        "c95b0500",
+        "Animation/02UpLadder5.ani"
+       ],
+       [
+        7,
+        "ca5b0500",
+        "Animation/02UpLadder5m.ani"
+       ],
+       [
+        7,
+        "a95b0500",
+        "Animation/02UpLadder4.ani"
+       ],
+       [
+        7,
+        "aa5b0500",
+        "Animation/02UpLadder4m.ani"
+       ],
+       [
+        7,
+        "a75b0500",
+        "Animation/02UpLadder3.ani"
+       ],
+       [
+        7,
+        "a85b0500",
+        "Animation/02UpLadder3m.ani"
+       ],
+       [
+        7,
+        "ab5b0500",
+        "Animation/02UpLadder2.ani"
+       ],
+       [
+        7,
+        "ac5b0500",
+        "Animation/02UpLadder2m.ani"
+       ],
+       [
+        7,
+        "cb5b0500",
+        "Animation/02UpLadder6.ani"
+       ],
+       [
+        7,
+        "cc5b0500",
+        "Animation/02UpLadder6m.ani"
+       ],
+       [
+        7,
+        "ad5b0500",
+        "Animation/02UpLadder1.ani"
+       ],
+       [
+        7,
+        "ae5b0500",
+        "Animation/02UpGate.ani"
+       ],
+       [
+        7,
+        "af5b0500",
+        "Animation/02UpCloseDoor.ani"
+       ],
+       [
+        7,
+        "b05b0500",
+        "Animation/02UpOpenDoor.ani"
+       ],
+       [
+        7,
+        "b15b0500",
+        "Animation/02UpLightL.ani"
+       ],
+       [
+        7,
+        "b25b0500",
+        "Animation/02UpLightR.ani"
+       ]
+      ]
+     },
+     {
+      "tag": "[/string data]",
+      "offset": 97,
+      "values": []
+     },
+     {
+      "tag": "[int data]",
+      "offset": 102,
+      "values": [
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ]
+      ]
+     },
+     {
+      "tag": "[/int data]",
+      "offset": 267,
+      "values": []
+     },
+     {
+      "tag": "[name]",
+      "offset": 272,
+      "values": [
+       [
+        9,
+        "09000000",
+        null
+       ],
+       [
+        10,
+        "b45b0500",
+        null
+       ]
+      ]
+     }
+    ],
+    "layer": "closeback",
+    "parts": [
+     {
+      "role": "frame",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder5.ani",
+       "ani_sha256": "2c9a3196fd450ddec4af1c4859f24d81b9ff95d87a27bfd88fd5518d41011aee",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ffce749117a7_6",
+         "offset": [
+          -46,
+          -324
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder5m.ani",
+       "ani_sha256": "20ccf1c81a1effba26e006189c86a83f02173454b7bd08672b76dbd19dd1ee54",
+       "loop_flag": 0,
+       "duration_ms": 5200,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 1300,
+         "items": {
+          "10": 1,
+          "12": 1300
+         },
+         "image": "ffce749117a7_6",
+         "offset": [
+          -46,
+          -324
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 2600,
+         "items": {
+          "10": 1,
+          "12": 2600
+         },
+         "image": "ffce749117a7_6",
+         "offset": [
+          -50,
+          -324
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 1300,
+         "items": {
+          "10": 1,
+          "12": 1300
+         },
+         "image": "ffce749117a7_6",
+         "offset": [
+          -42,
+          -324
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder4.ani",
+       "ani_sha256": "42f1be9bcd736e417c3e856f8c0b192ffe93345e71c805eda62cbd3eab6c90cf",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ffce749117a7_5",
+         "offset": [
+          -136,
+          -301
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder4m.ani",
+       "ani_sha256": "c65ca34f2e5797382ef32b6f548b7cfcd1ecb29cb93687a076459f27b07f9a7c",
+       "loop_flag": 0,
+       "duration_ms": 5400,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 1400,
+         "items": {
+          "10": 1,
+          "12": 1400
+         },
+         "image": "ffce749117a7_5",
+         "offset": [
+          -136,
+          -301
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 2800,
+         "items": {
+          "10": 1,
+          "12": 2800
+         },
+         "image": "ffce749117a7_5",
+         "offset": [
+          -136,
+          -305
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 1200,
+         "items": {
+          "10": 1,
+          "12": 1200
+         },
+         "image": "ffce749117a7_5",
+         "offset": [
+          -136,
+          -297
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder3.ani",
+       "ani_sha256": "a72b0b6f986938e7a9898f909dac04474992016037db28b1f0c6bbdcb864fd88",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ffce749117a7_4",
+         "offset": [
+          -228,
+          -198
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder3m.ani",
+       "ani_sha256": "77217e7e23e5c54f890c88edb2ebaf1be9400d157075f4a944efcaa112eaf1c3",
+       "loop_flag": 0,
+       "duration_ms": 5200,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 1300,
+         "items": {
+          "10": 1,
+          "12": 1300
+         },
+         "image": "ffce749117a7_4",
+         "offset": [
+          -228,
+          -198
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 2600,
+         "items": {
+          "10": 1,
+          "12": 2600
+         },
+         "image": "ffce749117a7_4",
+         "offset": [
+          -232,
+          -198
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 1300,
+         "items": {
+          "10": 1,
+          "12": 1300
+         },
+         "image": "ffce749117a7_4",
+         "offset": [
+          -224,
+          -198
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder2.ani",
+       "ani_sha256": "663161e71898bfdca8ccd886950a0d26a6782603dd7679edae748a808932b1d9",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ffce749117a7_3",
+         "offset": [
+          -143,
+          -161
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder2m.ani",
+       "ani_sha256": "c5ad174b5a61d98dc86d9541072cf3434dc74c47d56de6039b1608b8dc7bba02",
+       "loop_flag": 0,
+       "duration_ms": 5400,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 1400,
+         "items": {
+          "10": 1,
+          "12": 1400
+         },
+         "image": "ffce749117a7_3",
+         "offset": [
+          -143,
+          -161
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 2800,
+         "items": {
+          "10": 1,
+          "12": 2800
+         },
+         "image": "ffce749117a7_3",
+         "offset": [
+          -143,
+          -165
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 1200,
+         "items": {
+          "10": 1,
+          "12": 1200
+         },
+         "image": "ffce749117a7_3",
+         "offset": [
+          -143,
+          -157
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder6.ani",
+       "ani_sha256": "004efdb49d1d14e8b94eb1a50ce9b3520303d284f04f7da13eb5d1a8b581e7f5",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ffce749117a7_7",
+         "offset": [
+          54,
+          -442
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder6m.ani",
+       "ani_sha256": "8d6db41c39e6354a472c49399d0c6eb9c1152d727cabc5ec7b6bef141c7c701d",
+       "loop_flag": 0,
+       "duration_ms": 6000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 1500,
+         "items": {
+          "10": 1,
+          "12": 1500
+         },
+         "image": "ffce749117a7_7",
+         "offset": [
+          54,
+          -442
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 3000,
+         "items": {
+          "10": 1,
+          "12": 3000
+         },
+         "image": "ffce749117a7_7",
+         "offset": [
+          54,
+          -446
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 1500,
+         "items": {
+          "10": 1,
+          "12": 1500
+         },
+         "image": "ffce749117a7_7",
+         "offset": [
+          54,
+          -438
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder1.ani",
+       "ani_sha256": "be4b3860f9fcb4878d990dac101806c34832e7de33d95db16fa4d50f0353d129",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ffce749117a7_2",
+         "offset": [
+          -19,
+          -72
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upgate.ani",
+       "ani_sha256": "d2440aad01358db8253d56d972e65b8f0a301f8822eb904c96de806163daf6de",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ffce749117a7_0",
+         "offset": [
+          -77,
+          -133
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_closed",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upclosedoor.ani",
+       "ani_sha256": "8d5902430123c4cf926de0801f5f798a14cc6cfaf277b0417b1128c5c3f238b3",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "ffce749117a7_1",
+         "offset": [
+          -46,
+          -170
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_open",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upopendoor.ani",
+       "ani_sha256": "6a8736695f56c48c623249ba3635a42e71f323270cc8a29f1c2c9de4f199ec3d",
+       "loop_flag": 0,
+       "duration_ms": 1100,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "12": 500
+         },
+         "image": "ffce749117a7_1",
+         "offset": [
+          -46,
+          -170
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 600,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "12": 600
+         },
+         "image": "ffce749117a7_1",
+         "offset": [
+          -46,
+          -170
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       1
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02uplightl.ani",
+       "ani_sha256": "a0dff0f4cc389fbcde557750710bc3ef21a4d33134786cd884c8ab9fa52f33ac",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          -115,
+          -158
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          -115,
+          -158
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       1
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02uplightr.ani",
+       "ani_sha256": "5efb17450b840fa69adfa651ffb4d90d7f574d54a27c7777a4f8072c6fe44cc6",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          15,
+          -158
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          15,
+          -158
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     }
+    ],
+    "door_tile": null
+   },
+   "418": {
+    "id": 418,
+    "obj": "passiveobject/mapobject/pathgate/act2/dollupboss.obj",
+    "sha256": "f563a1c9e1e7c7b816982de07128cbdc8ef2a046287b2d528d377db008627bd0",
+    "raw": [
+     {
+      "tag": "[layer]",
+      "offset": 2,
+      "values": [
+       [
+        7,
+        "66690400",
+        "[closeback]"
+       ]
+      ]
+     },
+     {
+      "tag": "[string data]",
+      "offset": 12,
+      "values": [
+       [
+        7,
+        "a75b0500",
+        "Animation/02UpLadder3.ani"
+       ],
+       [
+        7,
+        "a85b0500",
+        "Animation/02UpLadder3m.ani"
+       ],
+       [
+        7,
+        "a95b0500",
+        "Animation/02UpLadder4.ani"
+       ],
+       [
+        7,
+        "aa5b0500",
+        "Animation/02UpLadder4m.ani"
+       ],
+       [
+        7,
+        "ab5b0500",
+        "Animation/02UpLadder2.ani"
+       ],
+       [
+        7,
+        "ac5b0500",
+        "Animation/02UpLadder2m.ani"
+       ],
+       [
+        7,
+        "c95b0500",
+        "Animation/02UpLadder5.ani"
+       ],
+       [
+        7,
+        "ca5b0500",
+        "Animation/02UpLadder5m.ani"
+       ],
+       [
+        7,
+        "cb5b0500",
+        "Animation/02UpLadder6.ani"
+       ],
+       [
+        7,
+        "cc5b0500",
+        "Animation/02UpLadder6m.ani"
+       ],
+       [
+        7,
+        "ad5b0500",
+        "Animation/02UpLadder1.ani"
+       ],
+       [
+        7,
+        "ae5b0500",
+        "Animation/02UpGate.ani"
+       ],
+       [
+        7,
+        "af5b0500",
+        "Animation/02UpCloseDoor.ani"
+       ],
+       [
+        7,
+        "b05b0500",
+        "Animation/02UpOpenDoor.ani"
+       ],
+       [
+        7,
+        "b15b0500",
+        "Animation/02UpLightL.ani"
+       ],
+       [
+        7,
+        "b25b0500",
+        "Animation/02UpLightR.ani"
+       ]
+      ]
+     },
+     {
+      "tag": "[/string data]",
+      "offset": 97,
+      "values": []
+     },
+     {
+      "tag": "[int data]",
+      "offset": 102,
+      "values": [
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ]
+      ]
+     },
+     {
+      "tag": "[/int data]",
+      "offset": 267,
+      "values": []
+     },
+     {
+      "tag": "[name]",
+      "offset": 272,
+      "values": [
+       [
+        9,
+        "09000000",
+        null
+       ],
+       [
+        10,
+        "b35b0500",
+        null
+       ]
+      ]
+     }
+    ],
+    "layer": "closeback",
+    "parts": [
+     {
+      "role": "frame",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder3.ani",
+       "ani_sha256": "a72b0b6f986938e7a9898f909dac04474992016037db28b1f0c6bbdcb864fd88",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "086585c2cf34_4",
+         "offset": [
+          -228,
+          -198
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "open",
+      "raw_pair": [
+       2,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder3m.ani",
+       "ani_sha256": "77217e7e23e5c54f890c88edb2ebaf1be9400d157075f4a944efcaa112eaf1c3",
+       "loop_flag": 0,
+       "duration_ms": 5200,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 1300,
+         "items": {
+          "10": 1,
+          "12": 1300
+         },
+         "image": "086585c2cf34_4",
+         "offset": [
+          -228,
+          -198
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 2600,
+         "items": {
+          "10": 1,
+          "12": 2600
+         },
+         "image": "086585c2cf34_4",
+         "offset": [
+          -232,
+          -198
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 1300,
+         "items": {
+          "10": 1,
+          "12": 1300
+         },
+         "image": "086585c2cf34_4",
+         "offset": [
+          -224,
+          -198
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder4.ani",
+       "ani_sha256": "42f1be9bcd736e417c3e856f8c0b192ffe93345e71c805eda62cbd3eab6c90cf",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "086585c2cf34_5",
+         "offset": [
+          -136,
+          -301
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "open",
+      "raw_pair": [
+       2,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder4m.ani",
+       "ani_sha256": "c65ca34f2e5797382ef32b6f548b7cfcd1ecb29cb93687a076459f27b07f9a7c",
+       "loop_flag": 0,
+       "duration_ms": 5400,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 1400,
+         "items": {
+          "10": 1,
+          "12": 1400
+         },
+         "image": "086585c2cf34_5",
+         "offset": [
+          -136,
+          -301
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 2800,
+         "items": {
+          "10": 1,
+          "12": 2800
+         },
+         "image": "086585c2cf34_5",
+         "offset": [
+          -136,
+          -305
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 1200,
+         "items": {
+          "10": 1,
+          "12": 1200
+         },
+         "image": "086585c2cf34_5",
+         "offset": [
+          -136,
+          -297
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder2.ani",
+       "ani_sha256": "663161e71898bfdca8ccd886950a0d26a6782603dd7679edae748a808932b1d9",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "086585c2cf34_3",
+         "offset": [
+          -143,
+          -161
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "open",
+      "raw_pair": [
+       2,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder2m.ani",
+       "ani_sha256": "c5ad174b5a61d98dc86d9541072cf3434dc74c47d56de6039b1608b8dc7bba02",
+       "loop_flag": 0,
+       "duration_ms": 5400,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 1400,
+         "items": {
+          "10": 1,
+          "12": 1400
+         },
+         "image": "086585c2cf34_3",
+         "offset": [
+          -143,
+          -161
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 2800,
+         "items": {
+          "10": 1,
+          "12": 2800
+         },
+         "image": "086585c2cf34_3",
+         "offset": [
+          -143,
+          -165
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 1200,
+         "items": {
+          "10": 1,
+          "12": 1200
+         },
+         "image": "086585c2cf34_3",
+         "offset": [
+          -143,
+          -157
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder5.ani",
+       "ani_sha256": "2c9a3196fd450ddec4af1c4859f24d81b9ff95d87a27bfd88fd5518d41011aee",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "086585c2cf34_6",
+         "offset": [
+          -46,
+          -324
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "open",
+      "raw_pair": [
+       2,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder5m.ani",
+       "ani_sha256": "20ccf1c81a1effba26e006189c86a83f02173454b7bd08672b76dbd19dd1ee54",
+       "loop_flag": 0,
+       "duration_ms": 5200,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 1300,
+         "items": {
+          "10": 1,
+          "12": 1300
+         },
+         "image": "086585c2cf34_6",
+         "offset": [
+          -46,
+          -324
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 2600,
+         "items": {
+          "10": 1,
+          "12": 2600
+         },
+         "image": "086585c2cf34_6",
+         "offset": [
+          -50,
+          -324
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 1300,
+         "items": {
+          "10": 1,
+          "12": 1300
+         },
+         "image": "086585c2cf34_6",
+         "offset": [
+          -42,
+          -324
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder6.ani",
+       "ani_sha256": "004efdb49d1d14e8b94eb1a50ce9b3520303d284f04f7da13eb5d1a8b581e7f5",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "086585c2cf34_7",
+         "offset": [
+          54,
+          -442
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "open",
+      "raw_pair": [
+       2,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder6m.ani",
+       "ani_sha256": "8d6db41c39e6354a472c49399d0c6eb9c1152d727cabc5ec7b6bef141c7c701d",
+       "loop_flag": 0,
+       "duration_ms": 6000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 1500,
+         "items": {
+          "10": 1,
+          "12": 1500
+         },
+         "image": "086585c2cf34_7",
+         "offset": [
+          54,
+          -442
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 3000,
+         "items": {
+          "10": 1,
+          "12": 3000
+         },
+         "image": "086585c2cf34_7",
+         "offset": [
+          54,
+          -446
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 1500,
+         "items": {
+          "10": 1,
+          "12": 1500
+         },
+         "image": "086585c2cf34_7",
+         "offset": [
+          54,
+          -438
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder1.ani",
+       "ani_sha256": "be4b3860f9fcb4878d990dac101806c34832e7de33d95db16fa4d50f0353d129",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "086585c2cf34_2",
+         "offset": [
+          -19,
+          -72
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upgate.ani",
+       "ani_sha256": "d2440aad01358db8253d56d972e65b8f0a301f8822eb904c96de806163daf6de",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "086585c2cf34_0",
+         "offset": [
+          -77,
+          -133
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_closed",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upclosedoor.ani",
+       "ani_sha256": "8d5902430123c4cf926de0801f5f798a14cc6cfaf277b0417b1128c5c3f238b3",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "086585c2cf34_1",
+         "offset": [
+          -46,
+          -170
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_open",
+      "state": "open",
+      "raw_pair": [
+       2,
+       5
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02upopendoor.ani",
+       "ani_sha256": "6a8736695f56c48c623249ba3635a42e71f323270cc8a29f1c2c9de4f199ec3d",
+       "loop_flag": 0,
+       "duration_ms": 1100,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "12": 500
+         },
+         "image": "086585c2cf34_1",
+         "offset": [
+          -46,
+          -170
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 600,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "12": 600
+         },
+         "image": "086585c2cf34_1",
+         "offset": [
+          -46,
+          -170
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02uplightl.ani",
+       "ani_sha256": "a0dff0f4cc389fbcde557750710bc3ef21a4d33134786cd884c8ab9fa52f33ac",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          -115,
+          -158
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          -115,
+          -158
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "closeback",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02uplightr.ani",
+       "ani_sha256": "5efb17450b840fa69adfa651ffb4d90d7f574d54a27c7777a4f8072c6fe44cc6",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          15,
+          -158
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          15,
+          -158
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     }
+    ],
+    "door_tile": null
+   },
+   "419": {
+    "id": 419,
+    "obj": "passiveobject/mapobject/pathgate/act2/dolldownnormal.obj",
+    "sha256": "cade125f0742b831ca2e12244657397c96c48d8a50209895c747b5b12d32c1bd",
+    "raw": [
+     {
+      "tag": "[layer]",
+      "offset": 2,
+      "values": [
+       [
+        7,
+        "1d060000",
+        "[normal]"
+       ]
+      ]
+     },
+     {
+      "tag": "[string data]",
+      "offset": 12,
+      "values": [
+       [
+        7,
+        "8b5b0500",
+        "Animation/02DownGate.ani"
+       ],
+       [
+        7,
+        "8c5b0500",
+        "Animation/02DownCloseDoor.ani"
+       ],
+       [
+        7,
+        "8d5b0500",
+        "Animation/02DownOpenDoor.ani"
+       ],
+       [
+        7,
+        "8e5b0500",
+        "Animation/02DownLightL.ani"
+       ],
+       [
+        7,
+        "8f5b0500",
+        "Animation/02DownLightR.ani"
+       ]
+      ]
+     },
+     {
+      "tag": "[/string data]",
+      "offset": 42,
+      "values": []
+     },
+     {
+      "tag": "[int data]",
+      "offset": 47,
+      "values": [
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ]
+      ]
+     },
+     {
+      "tag": "[/int data]",
+      "offset": 102,
+      "values": []
+     },
+     {
+      "tag": "[name]",
+      "offset": 107,
+      "values": [
+       [
+        9,
+        "09000000",
+        null
+       ],
+       [
+        10,
+        "915b0500",
+        null
+       ]
+      ]
+     }
+    ],
+    "layer": "normal",
+    "parts": [
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       1
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02downgate.ani",
+       "ani_sha256": "43ad225b2c0fa3dbe569084184455c75f00a6bb19428aaf8f87ad6daf46c3d1e",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "91cd149bb315_0",
+         "offset": [
+          -102,
+          -91
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_closed",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       1
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02downclosedoor.ani",
+       "ani_sha256": "8a05f10d72733d5687f472940157d2500b5ec61d946764f432ef6ab155036426",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "91cd149bb315_1",
+         "offset": [
+          -57,
+          -128
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_open",
+      "state": "open",
+      "raw_pair": [
+       2,
+       1
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02downopendoor.ani",
+       "ani_sha256": "ac646fe5806e18c37d36806d9158833b57a7a0fd0d20408cdac9536279af2657",
+       "loop_flag": 0,
+       "duration_ms": 1100,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "12": 500
+         },
+         "image": "91cd149bb315_1",
+         "offset": [
+          -57,
+          -128
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 600,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "12": 600
+         },
+         "image": "91cd149bb315_1",
+         "offset": [
+          -57,
+          -128
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       1
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02downlightl.ani",
+       "ani_sha256": "af90a6a3d00feb6e86039fa10029bcf316efed7a50a0bebc8f0a0ca7e56b1e71",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          -136,
+          -114
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          -136,
+          -114
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       1
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02downlightr.ani",
+       "ani_sha256": "1000a32e28d75236890ae38ef9f4c1e692116dbbc2e84ea14216278079c1294c",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          29,
+          -114
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "cfeb59e6bab7_0",
+         "offset": [
+          29,
+          -114
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     }
+    ],
+    "door_tile": null
+   },
+   "420": {
+    "id": 420,
+    "obj": "passiveobject/mapobject/pathgate/act2/dolldownboss.obj",
+    "sha256": "194d3709a9e4a196514c2fc85902eefb34e1c3eb4779cc4485754038e8e08a5e",
+    "raw": [
+     {
+      "tag": "[layer]",
+      "offset": 2,
+      "values": [
+       [
+        7,
+        "1d060000",
+        "[normal]"
+       ]
+      ]
+     },
+     {
+      "tag": "[string data]",
+      "offset": 12,
+      "values": [
+       [
+        7,
+        "8b5b0500",
+        "Animation/02DownGate.ani"
+       ],
+       [
+        7,
+        "8c5b0500",
+        "Animation/02DownCloseDoor.ani"
+       ],
+       [
+        7,
+        "8d5b0500",
+        "Animation/02DownOpenDoor.ani"
+       ],
+       [
+        7,
+        "8e5b0500",
+        "Animation/02DownLightL.ani"
+       ],
+       [
+        7,
+        "8f5b0500",
+        "Animation/02DownLightR.ani"
+       ]
+      ]
+     },
+     {
+      "tag": "[/string data]",
+      "offset": 42,
+      "values": []
+     },
+     {
+      "tag": "[int data]",
+      "offset": 47,
+      "values": [
+       [
+        2,
+        "00000000",
+        0
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "01000000",
+        1
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "05000000",
+        5
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ],
+       [
+        2,
+        "02000000",
+        2
+       ]
+      ]
+     },
+     {
+      "tag": "[/int data]",
+      "offset": 102,
+      "values": []
+     },
+     {
+      "tag": "[name]",
+      "offset": 107,
+      "values": [
+       [
+        9,
+        "09000000",
+        null
+       ],
+       [
+        10,
+        "905b0500",
+        null
+       ]
+      ]
+     }
+    ],
+    "layer": "normal",
+    "parts": [
+     {
+      "role": "frame",
+      "state": "always",
+      "raw_pair": [
+       0,
+       5
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02downgate.ani",
+       "ani_sha256": "43ad225b2c0fa3dbe569084184455c75f00a6bb19428aaf8f87ad6daf46c3d1e",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "5deebdc4e6b9_0",
+         "offset": [
+          -102,
+          -91
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_closed",
+      "state": "closed",
+      "raw_pair": [
+       1,
+       5
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02downclosedoor.ani",
+       "ani_sha256": "8a05f10d72733d5687f472940157d2500b5ec61d946764f432ef6ab155036426",
+       "loop_flag": 0,
+       "duration_ms": 600,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 600,
+         "items": {
+          "12": 600
+         },
+         "image": "5deebdc4e6b9_1",
+         "offset": [
+          -57,
+          -128
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "door_open",
+      "state": "open",
+      "raw_pair": [
+       2,
+       5
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02downopendoor.ani",
+       "ani_sha256": "ac646fe5806e18c37d36806d9158833b57a7a0fd0d20408cdac9536279af2657",
+       "loop_flag": 0,
+       "duration_ms": 1100,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "12": 500
+         },
+         "image": "5deebdc4e6b9_1",
+         "offset": [
+          -57,
+          -128
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 600,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "12": 600
+         },
+         "image": "5deebdc4e6b9_1",
+         "offset": [
+          -57,
+          -128
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02downlightl.ani",
+       "ani_sha256": "af90a6a3d00feb6e86039fa10029bcf316efed7a50a0bebc8f0a0ca7e56b1e71",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          -136,
+          -114
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          -136,
+          -114
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     },
+     {
+      "role": "light",
+      "state": "open",
+      "raw_pair": [
+       2,
+       2
+      ],
+      "layer": "normal",
+      "sprite": {
+       "ani": "passiveobject/mapobject/pathgate/act2/animation/02downlightr.ani",
+       "ani_sha256": "1000a32e28d75236890ae38ef9f4c1e692116dbbc2e84ea14216278079c1294c",
+       "loop_flag": 0,
+       "duration_ms": 1000,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 500,
+         "items": {
+          "9": [
+           255,
+           255,
+           255,
+           0
+          ],
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          29,
+          -114
+         ],
+         "flip_x": false,
+         "color": [
+          255,
+          255,
+          255,
+          0
+         ],
+         "additive": true
+        },
+        {
+         "frame": 1,
+         "delay_ms": 500,
+         "items": {
+          "10": 1,
+          "11": {
+           "type": 2
+          },
+          "12": 500
+         },
+         "image": "3d11a9e750de_0",
+         "offset": [
+          29,
+          -114
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": true
+        }
+       ]
+      }
+     }
+    ],
+    "door_tile": null
+   }
+  },
+  "rooms": {},
+  "placements": [],
+  "cell_map_rule": "E-INFER: a map is a candidate when its [dungeon] lists this dungeon and its [greed] contains the cell letter"
+ },
+ "images": {
+  "9a1a6fe8ee2b_3": {
+   "file": "img/9a1a6fe8ee2b_3.png",
+   "source_path": "sprite/map/pathgate/act2/02exitside02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "9a1a6fe8ee2b28c681a9cb038f33af6ba8b1a20f2d519547b557cd6bd325ea74",
+   "frame": 3,
+   "size": [
+    100,
+    56
+   ],
+   "canvas_offset": [
+    0,
+    365
+   ],
+   "variants": 1
+  },
+  "9a1a6fe8ee2b_0": {
+   "file": "img/9a1a6fe8ee2b_0.png",
+   "source_path": "sprite/map/pathgate/act2/02exitside02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "9a1a6fe8ee2b28c681a9cb038f33af6ba8b1a20f2d519547b557cd6bd325ea74",
+   "frame": 0,
+   "size": [
+    123,
+    190
+   ],
+   "canvas_offset": [
+    18,
+    228
+   ],
+   "variants": 1
+  },
+  "9a1a6fe8ee2b_1": {
+   "file": "img/9a1a6fe8ee2b_1.png",
+   "source_path": "sprite/map/pathgate/act2/02exitside02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "9a1a6fe8ee2b28c681a9cb038f33af6ba8b1a20f2d519547b557cd6bd325ea74",
+   "frame": 1,
+   "size": [
+    66,
+    189
+   ],
+   "canvas_offset": [
+    45,
+    216
+   ],
+   "variants": 1
+  },
+  "cfeb59e6bab7_0": {
+   "file": "img/cfeb59e6bab7_0.png",
+   "source_path": "sprite/map/pathgate/act2/02light01.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "cfeb59e6bab77e379f6d11964a672681b532dde09d5714f18b20ab81ec947429",
+   "frame": 0,
+   "size": [
+    103,
+    106
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "ca5f94ea2d39_0": {
+   "file": "img/ca5f94ea2d39_0.png",
+   "source_path": "sprite/map/pathgate/act2/02hurdle02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "ca5f94ea2d39bf390bbdec2cf45af5dc34295519580de70d441ed100a50fc222",
+   "frame": 0,
+   "size": [
+    63,
+    130
+   ],
+   "canvas_offset": [
+    12,
+    315
+   ],
+   "variants": 1
+  },
+  "008b17b0c806_3": {
+   "file": "img/008b17b0c806_3.png",
+   "source_path": "sprite/map/pathgate/act2/02exitside05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "008b17b0c806196917c5ced687d32f000608d442adbc8b3099b34f4db6b4dbaa",
+   "frame": 3,
+   "size": [
+    100,
+    56
+   ],
+   "canvas_offset": [
+    0,
+    365
+   ],
+   "variants": 1
+  },
+  "008b17b0c806_0": {
+   "file": "img/008b17b0c806_0.png",
+   "source_path": "sprite/map/pathgate/act2/02exitside05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "008b17b0c806196917c5ced687d32f000608d442adbc8b3099b34f4db6b4dbaa",
+   "frame": 0,
+   "size": [
+    123,
+    190
+   ],
+   "canvas_offset": [
+    18,
+    228
+   ],
+   "variants": 1
+  },
+  "008b17b0c806_1": {
+   "file": "img/008b17b0c806_1.png",
+   "source_path": "sprite/map/pathgate/act2/02exitside05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "008b17b0c806196917c5ced687d32f000608d442adbc8b3099b34f4db6b4dbaa",
+   "frame": 1,
+   "size": [
+    66,
+    189
+   ],
+   "canvas_offset": [
+    45,
+    216
+   ],
+   "variants": 1
+  },
+  "3d11a9e750de_0": {
+   "file": "img/3d11a9e750de_0.png",
+   "source_path": "sprite/map/pathgate/act2/02light02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "3d11a9e750dee1c570666ca3b29011f8cdd50d7486570f42371a0b94c29f9ece",
+   "frame": 0,
+   "size": [
+    98,
+    99
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "ae9adc6a8d9d_0": {
+   "file": "img/ae9adc6a8d9d_0.png",
+   "source_path": "sprite/map/pathgate/act2/02hurdle05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "ae9adc6a8d9df1ec80dad76aa6f6a4d167ffecc7068367d93b80c5cf45c5eaaa",
+   "frame": 0,
+   "size": [
+    63,
+    130
+   ],
+   "canvas_offset": [
+    12,
+    315
+   ],
+   "variants": 1
+  },
+  "9a1a6fe8ee2b_2": {
+   "file": "img/9a1a6fe8ee2b_2.png",
+   "source_path": "sprite/map/pathgate/act2/02exitside02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "9a1a6fe8ee2b28c681a9cb038f33af6ba8b1a20f2d519547b557cd6bd325ea74",
+   "frame": 2,
+   "size": [
+    119,
+    114
+   ],
+   "canvas_offset": [
+    70,
+    268
+   ],
+   "variants": 1
+  },
+  "008b17b0c806_2": {
+   "file": "img/008b17b0c806_2.png",
+   "source_path": "sprite/map/pathgate/act2/02exitside05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "008b17b0c806196917c5ced687d32f000608d442adbc8b3099b34f4db6b4dbaa",
+   "frame": 2,
+   "size": [
+    119,
+    114
+   ],
+   "canvas_offset": [
+    70,
+    268
+   ],
+   "variants": 1
+  },
+  "ffce749117a7_6": {
+   "file": "img/ffce749117a7_6.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "ffce749117a7d56756d00913bad617ade8b74f4ae5b9b44b1227926ee195168c",
+   "frame": 6,
+   "size": [
+    133,
+    29
+   ],
+   "canvas_offset": [
+    190,
+    123
+   ],
+   "variants": 1
+  },
+  "ffce749117a7_5": {
+   "file": "img/ffce749117a7_5.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "ffce749117a7d56756d00913bad617ade8b74f4ae5b9b44b1227926ee195168c",
+   "frame": 5,
+   "size": [
+    122,
+    119
+   ],
+   "canvas_offset": [
+    100,
+    146
+   ],
+   "variants": 1
+  },
+  "ffce749117a7_4": {
+   "file": "img/ffce749117a7_4.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "ffce749117a7d56756d00913bad617ade8b74f4ae5b9b44b1227926ee195168c",
+   "frame": 4,
+   "size": [
+    150,
+    40
+   ],
+   "canvas_offset": [
+    8,
+    249
+   ],
+   "variants": 1
+  },
+  "ffce749117a7_3": {
+   "file": "img/ffce749117a7_3.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "ffce749117a7d56756d00913bad617ade8b74f4ae5b9b44b1227926ee195168c",
+   "frame": 3,
+   "size": [
+    163,
+    108
+   ],
+   "canvas_offset": [
+    93,
+    286
+   ],
+   "variants": 1
+  },
+  "ffce749117a7_7": {
+   "file": "img/ffce749117a7_7.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "ffce749117a7d56756d00913bad617ade8b74f4ae5b9b44b1227926ee195168c",
+   "frame": 7,
+   "size": [
+    227,
+    137
+   ],
+   "canvas_offset": [
+    290,
+    5
+   ],
+   "variants": 1
+  },
+  "ffce749117a7_2": {
+   "file": "img/ffce749117a7_2.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "ffce749117a7d56756d00913bad617ade8b74f4ae5b9b44b1227926ee195168c",
+   "frame": 2,
+   "size": [
+    127,
+    73
+   ],
+   "canvas_offset": [
+    217,
+    375
+   ],
+   "variants": 1
+  },
+  "ffce749117a7_0": {
+   "file": "img/ffce749117a7_0.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "ffce749117a7d56756d00913bad617ade8b74f4ae5b9b44b1227926ee195168c",
+   "frame": 0,
+   "size": [
+    158,
+    141
+   ],
+   "canvas_offset": [
+    173,
+    314
+   ],
+   "variants": 1
+  },
+  "ffce749117a7_1": {
+   "file": "img/ffce749117a7_1.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup02.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "ffce749117a7d56756d00913bad617ade8b74f4ae5b9b44b1227926ee195168c",
+   "frame": 1,
+   "size": [
+    93,
+    174
+   ],
+   "canvas_offset": [
+    204,
+    277
+   ],
+   "variants": 1
+  },
+  "086585c2cf34_4": {
+   "file": "img/086585c2cf34_4.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "086585c2cf3461ce813cd1f74b9c7cc05d990b658691430312647f3f4bc40ff7",
+   "frame": 4,
+   "size": [
+    150,
+    40
+   ],
+   "canvas_offset": [
+    8,
+    249
+   ],
+   "variants": 1
+  },
+  "086585c2cf34_5": {
+   "file": "img/086585c2cf34_5.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "086585c2cf3461ce813cd1f74b9c7cc05d990b658691430312647f3f4bc40ff7",
+   "frame": 5,
+   "size": [
+    122,
+    119
+   ],
+   "canvas_offset": [
+    100,
+    146
+   ],
+   "variants": 1
+  },
+  "086585c2cf34_3": {
+   "file": "img/086585c2cf34_3.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "086585c2cf3461ce813cd1f74b9c7cc05d990b658691430312647f3f4bc40ff7",
+   "frame": 3,
+   "size": [
+    163,
+    108
+   ],
+   "canvas_offset": [
+    93,
+    286
+   ],
+   "variants": 1
+  },
+  "086585c2cf34_6": {
+   "file": "img/086585c2cf34_6.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "086585c2cf3461ce813cd1f74b9c7cc05d990b658691430312647f3f4bc40ff7",
+   "frame": 6,
+   "size": [
+    133,
+    29
+   ],
+   "canvas_offset": [
+    190,
+    123
+   ],
+   "variants": 1
+  },
+  "086585c2cf34_7": {
+   "file": "img/086585c2cf34_7.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "086585c2cf3461ce813cd1f74b9c7cc05d990b658691430312647f3f4bc40ff7",
+   "frame": 7,
+   "size": [
+    227,
+    137
+   ],
+   "canvas_offset": [
+    290,
+    5
+   ],
+   "variants": 1
+  },
+  "086585c2cf34_2": {
+   "file": "img/086585c2cf34_2.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "086585c2cf3461ce813cd1f74b9c7cc05d990b658691430312647f3f4bc40ff7",
+   "frame": 2,
+   "size": [
+    127,
+    73
+   ],
+   "canvas_offset": [
+    217,
+    375
+   ],
+   "variants": 1
+  },
+  "086585c2cf34_0": {
+   "file": "img/086585c2cf34_0.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "086585c2cf3461ce813cd1f74b9c7cc05d990b658691430312647f3f4bc40ff7",
+   "frame": 0,
+   "size": [
+    158,
+    141
+   ],
+   "canvas_offset": [
+    173,
+    314
+   ],
+   "variants": 1
+  },
+  "086585c2cf34_1": {
+   "file": "img/086585c2cf34_1.png",
+   "source_path": "sprite/map/pathgate/act2/02exitup05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "086585c2cf3461ce813cd1f74b9c7cc05d990b658691430312647f3f4bc40ff7",
+   "frame": 1,
+   "size": [
+    93,
+    174
+   ],
+   "canvas_offset": [
+    204,
+    277
+   ],
+   "variants": 1
+  },
+  "91cd149bb315_0": {
+   "file": "img/91cd149bb315_0.png",
+   "source_path": "sprite/map/pathgate/act2/02exitdown01.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "91cd149bb315ee4eec5e06d37321e3849b45c205fb7ee0162ebf87347589bfdb",
+   "frame": 0,
+   "size": [
+    199,
+    131
+   ],
+   "canvas_offset": [
+    36,
+    51
+   ],
+   "variants": 1
+  },
+  "91cd149bb315_1": {
+   "file": "img/91cd149bb315_1.png",
+   "source_path": "sprite/map/pathgate/act2/02exitdown01.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "91cd149bb315ee4eec5e06d37321e3849b45c205fb7ee0162ebf87347589bfdb",
+   "frame": 1,
+   "size": [
+    114,
+    164
+   ],
+   "canvas_offset": [
+    81,
+    14
+   ],
+   "variants": 1
+  },
+  "5deebdc4e6b9_0": {
+   "file": "img/5deebdc4e6b9_0.png",
+   "source_path": "sprite/map/pathgate/act2/02exitdown05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "5deebdc4e6b968ec1b085b23fce0a06f5da91fbbed2e90a28035af6de0dd4b69",
+   "frame": 0,
+   "size": [
+    199,
+    131
+   ],
+   "canvas_offset": [
+    36,
+    51
+   ],
+   "variants": 1
+  },
+  "5deebdc4e6b9_1": {
+   "file": "img/5deebdc4e6b9_1.png",
+   "source_path": "sprite/map/pathgate/act2/02exitdown05.img",
+   "source_npk": "ImagePacks2/sprite_map_pathgate_act2.NPK",
+   "img_sha256": "5deebdc4e6b968ec1b085b23fce0a06f5da91fbbed2e90a28035af6de0dd4b69",
+   "frame": 1,
+   "size": [
+    114,
+    164
+   ],
+   "canvas_offset": [
+    81,
+    14
+   ],
+   "variants": 1
+  }
+ },
+ "diagnostics": [
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 0,0 code AA"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 1,0 code AA"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 2,0 code AA"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 3,0 code AA"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 4,0 code II"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 0,1 code JJ"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 1,1 code EE"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 2,1 code II"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 3,1 code JJ"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 4,1 code OO"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 0,2 code DD"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 1,2 code NN"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 2,2 code HH"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 3,2 code OO"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 4,2 code CC"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 0,3 code AA"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 1,3 code KK"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 2,3 code AA"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 3,3 code DD"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 4,3 code EE"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 0,4 code AA"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 1,4 code CC"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 2,4 code AA"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 3,4 code AA"
+  },
+  {
+   "level": "warning",
+   "code": "cell_without_map",
+   "path": "dungeon/act2/sepahigh.dgn",
+   "detail": "cell 4,4 code AA"
+  }
+ ]
+}

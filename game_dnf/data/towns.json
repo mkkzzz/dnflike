@@ -22,6 +22,10 @@
         "linus": [
           445,
           186
+        ],
+        "danjin": [
+          1335,
+          173
         ]
       },
       "labels": [
@@ -659,6 +663,13 @@
     }
   },
   "npcs": {
+    "danjin": {
+      "name": "土罐",
+      "services": [
+        "shop"
+      ],
+      "dialogue": "要不要来点罐子？艾尔文的罐子最结实。"
+    },
     "linus": {
       "name": "林纳斯",
       "services": [

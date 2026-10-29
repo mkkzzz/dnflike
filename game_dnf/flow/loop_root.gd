@@ -517,7 +517,7 @@ func title_panel(title: String, rect := Rect2(103, 93, 434, 250)) -> Control:
 	return panel
 
 func npc_panel() -> void:
-	if selected_dungeon=="forest_trial" and town.nearest()=="linus":windows.dialogue()
+	if selected_dungeon=="forest_trial" and town.nearest()!="":windows.dialogue(town.nearest())
 	else:quest_windows.dialogue()
 
 func quest_panel() -> void:

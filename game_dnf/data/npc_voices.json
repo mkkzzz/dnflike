@@ -1,0 +1,317 @@
+{
+ "schema": "dnf_npc_voices/1",
+ "evidence": "sound key 与 face 引用取自 .npc，音频/立绘为原版字节（E-PARSE）",
+ "npcs": {
+  "danjin": {
+   "id": "danjin",
+   "local_id": "danjin",
+   "town": "elvengard",
+   "amb": [],
+   "talk": [],
+   "farewell": [],
+   "faces": {
+    "small": "npc_voice/danjin/face_small.png",
+    "big": "npc_voice/danjin/face_big.png",
+    "popup": "npc_voice/danjin/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_JAR_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_JAR_TALK",
+     "R_NPC_JAR_FAREWELL"
+    ]
+   }
+  },
+  "linus": {
+   "id": "linus",
+   "local_id": "linus",
+   "town": "elvengard",
+   "amb": [],
+   "talk": [],
+   "farewell": [],
+   "faces": {
+    "small": "npc_voice/linus/face_small.png",
+    "big": "npc_voice/linus/face_big.png",
+    "popup": "npc_voice/linus/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_RINUS_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_RINUS_TALK",
+     "R_NPC_RUNUS_FAREWELL"
+    ]
+   }
+  },
+  "seria": {
+   "id": "questnpc_seria",
+   "local_id": "seria",
+   "town": "seria_room",
+   "amb": [],
+   "talk": [],
+   "farewell": [],
+   "faces": {
+    "small": "npc_voice/seria/face_small.png",
+    "big": "npc_voice/seria/face_big.png",
+    "popup": "npc_voice/seria/face_popup.png"
+   },
+   "keys": {
+    "field": [],
+    "popup": [
+     "R_NPC_SERIA_TALK",
+     "R_NPC_SERIA_FAREWELL"
+    ]
+   }
+  },
+  "grandis": {
+   "id": "grandis",
+   "local_id": "grandis",
+   "town": "hendon_city",
+   "amb": [],
+   "talk": [],
+   "farewell": [],
+   "faces": {
+    "small": "npc_voice/grandis/face_small.png",
+    "big": "npc_voice/grandis/face_big.png",
+    "popup": "npc_voice/grandis/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_GRASIA_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_GRASIA_TALK",
+     "R_NPC_GRASIA_FAREWELL"
+    ]
+   }
+  },
+  "albert": {
+   "id": "albert",
+   "local_id": "albert",
+   "town": "hendon_city",
+   "amb": [
+    "npc_voice/albert/amb_01.ogg",
+    "npc_voice/albert/amb_02.ogg",
+    "npc_voice/albert/amb_03.ogg",
+    "npc_voice/albert/amb_04.ogg",
+    "npc_voice/albert/amb_05.ogg"
+   ],
+   "talk": [
+    "npc_voice/albert/talk_01.ogg",
+    "npc_voice/albert/talk_02.ogg",
+    "npc_voice/albert/talk_03.ogg",
+    "npc_voice/albert/talk_04.ogg",
+    "npc_voice/albert/talk_05.ogg"
+   ],
+   "farewell": [
+    "npc_voice/albert/farewell_01.ogg",
+    "npc_voice/albert/farewell_02.ogg",
+    "npc_voice/albert/farewell_03.ogg",
+    "npc_voice/albert/farewell_04.ogg"
+   ],
+   "faces": {
+    "small": "npc_voice/albert/face_small.png",
+    "big": "npc_voice/albert/face_big.png",
+    "popup": "npc_voice/albert/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_ALBERT_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_ALBERT_TALK",
+     "R_NPC_ALBERT_FAREWELL"
+    ]
+   }
+  },
+  "norton": {
+   "id": "rothon",
+   "local_id": "norton",
+   "town": "hendon_city",
+   "amb": [],
+   "talk": [],
+   "farewell": [],
+   "faces": {
+    "small": "npc_voice/norton/face_small.png",
+    "big": "npc_voice/norton/face_big.png",
+    "popup": "npc_voice/norton/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_ROTONM_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_ROTONM_TALK",
+     "R_NPC_ROTONM_FAREWELL"
+    ]
+   }
+  },
+  "pungjin": {
+   "id": "poongjin",
+   "local_id": "pungjin",
+   "town": "hendon_main",
+   "amb": [],
+   "talk": [],
+   "farewell": [],
+   "faces": {
+    "small": "npc_voice/pungjin/face_small.png",
+    "big": "npc_voice/pungjin/face_big.png",
+    "popup": "npc_voice/pungjin/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_PUNGJIN_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_PUNGJIN_TALK",
+     "R_NPC_PUNGJIN_FAREWELL"
+    ]
+   }
+  },
+  "kiri": {
+   "id": "kiri",
+   "local_id": "kiri",
+   "town": "hendon_main",
+   "amb": [
+    "npc_voice/kiri/amb_01.ogg",
+    "npc_voice/kiri/amb_02.ogg",
+    "npc_voice/kiri/amb_03.ogg",
+    "npc_voice/kiri/amb_04.ogg"
+   ],
+   "talk": [
+    "npc_voice/kiri/talk_01.ogg",
+    "npc_voice/kiri/talk_02.ogg",
+    "npc_voice/kiri/talk_03.ogg",
+    "npc_voice/kiri/talk_04.ogg",
+    "npc_voice/kiri/talk_05.ogg",
+    "npc_voice/kiri/talk_06.ogg",
+    "npc_voice/kiri/talk_07.ogg"
+   ],
+   "farewell": [
+    "npc_voice/kiri/farewell_01.ogg",
+    "npc_voice/kiri/farewell_02.ogg",
+    "npc_voice/kiri/farewell_03.ogg",
+    "npc_voice/kiri/farewell_04.ogg",
+    "npc_voice/kiri/farewell_05.ogg",
+    "npc_voice/kiri/farewell_06.ogg",
+    "npc_voice/kiri/farewell_07.ogg",
+    "npc_voice/kiri/farewell_08.ogg"
+   ],
+   "faces": {
+    "small": "npc_voice/kiri/face_small.png",
+    "big": "npc_voice/kiri/face_big.png",
+    "popup": "npc_voice/kiri/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_KIRI_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_KIRI_TALK",
+     "R_NPC_KIRI_FAREWELL"
+    ]
+   }
+  },
+  "kanna": {
+   "id": "kanna",
+   "local_id": "kanna",
+   "town": "hendon_main",
+   "amb": [],
+   "talk": [],
+   "farewell": [],
+   "faces": {
+    "small": "npc_voice/kanna/face_small.png",
+    "big": "npc_voice/kanna/face_big.png",
+    "popup": "npc_voice/kanna/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_KANNA_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_KANNA_TALK",
+     "R_NPC_KANNA_FAREWELL"
+    ]
+   }
+  },
+  "gsd": {
+   "id": "cc_gsd",
+   "local_id": "gsd",
+   "town": "hendon_auction",
+   "amb": [
+    "npc_voice/gsd/amb_01.ogg"
+   ],
+   "talk": [
+    "npc_voice/gsd/talk_01.ogg",
+    "npc_voice/gsd/talk_02.ogg",
+    "npc_voice/gsd/talk_03.ogg"
+   ],
+   "farewell": [
+    "npc_voice/gsd/farewell_01.ogg",
+    "npc_voice/gsd/farewell_02.ogg",
+    "npc_voice/gsd/farewell_03.ogg"
+   ],
+   "faces": {
+    "small": "npc_voice/gsd/face_small.png",
+    "big": "npc_voice/gsd/face_big.png",
+    "popup": "npc_voice/gsd/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_GSD_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_GSD_TALK",
+     "R_NPC_GSD_FAREWELL"
+    ]
+   }
+  },
+  "sinda": {
+   "id": "sinda",
+   "local_id": "sinda",
+   "town": "hendon_auction",
+   "amb": [],
+   "talk": [],
+   "farewell": [],
+   "faces": {
+    "small": "npc_voice/sinda/face_small.png",
+    "big": "npc_voice/sinda/face_big.png",
+    "popup": "npc_voice/sinda/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_SINDA_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_SINDA_TALK",
+     "R_NPC_SINDA_FAREWELL"
+    ]
+   }
+  },
+  "shylock": {
+   "id": "shylock",
+   "local_id": "shylock",
+   "town": "hendon_alley",
+   "amb": [],
+   "talk": [],
+   "farewell": [],
+   "faces": {
+    "small": "npc_voice/shylock/face_small.png",
+    "big": "npc_voice/shylock/face_big.png",
+    "popup": "npc_voice/shylock/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_GOBLIND_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_GOBLIND_TALK",
+     "R_NPC_GOBLIND_FAREWELL"
+    ]
+   }
+  }
+ }
+}

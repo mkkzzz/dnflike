@@ -46,6 +46,11 @@ var entry_latch:=""
 ## 城镇也显示手上的武器。默认用带武器的合成动作包（运行时清单 players + player/stay|move|dash），
 ## 武器类型来自 numbers.json 的 equipment.<id>.weapon；清单缺失时回退到原来的无武器分层包。
 var weapon_shape:="katana"
+## NPC 语音（data/npc_voices.json 的 amb 循环）与立绘，按距离触发，靠近才响。
+var npc_voices: Dictionary={}
+var npc_players: Dictionary={}
+const NPC_HEAR_RANGE := 150.0
+const NPC_VOICE_DB := -16.0
 
 func _ready() -> void:
 	loader.load_export("res://assets_local/flow_v1/manifest.json")
@@ -65,6 +70,65 @@ func _ready() -> void:
 	labels.draw.connect(_draw_names)
 	ensure_location("seria_room")
 	set_location("elvengard",ground)
+	_load_npc_voices()
+
+## 读 NPC 语音表：每个 NPC 一个循环播放器，靠近时播放（原版 sounds/npc/*_amb_*）。
+func _load_npc_voices() -> void:
+	if not FileAccess.file_exists("res://data/npc_voices.json"):return
+	var doc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/npc_voices.json"))
+	for name: String in doc.get("npcs", {}):
+		var entry: Dictionary = doc["npcs"][name]
+		var amb: Array = entry.get("amb", [])
+		if amb.is_empty():continue
+		var path := "res://assets_local/" + String(amb[0])
+		if not ResourceLoader.exists(path):continue
+		var stream = load(path)
+		if stream is AudioStreamOggVorbis:stream.loop = true
+		var player := AudioStreamPlayer.new()
+		player.stream = stream
+		player.volume_db = NPC_VOICE_DB
+		add_child(player)
+		npc_players[name] = player
+		npc_voices[name] = entry
+
+## 只有玩家走到 NPC 身边才响起，离开即停，避免全城同时播放。
+func _update_npc_voices() -> void:
+	if npc_players.is_empty():return
+	var npcs: Dictionary = world.scene(location).get("npcs", {})
+	for name: String in npc_players:
+		if not npcs.has(name):
+			continue
+		var at := World.vec(npcs[name])
+		var near := ground.distance_to(at) <= NPC_HEAR_RANGE
+		var player: AudioStreamPlayer = npc_players[name]
+		if near and not player.playing:player.play()
+		elif not near and player.playing:player.stop()
+	for name: String in npc_players:
+		if not npcs.has(name) and npc_players[name].playing:npc_players[name].stop()
+
+## 对话/告别语音：随机取一条一次性播放（原版 sounds/npc/*_tk_*、*_fw_*）。
+func play_npc_voice(name: String, kind := "talk") -> void:
+	var entry: Dictionary = npc_voices.get(name, {})
+	var list: Array = entry.get(kind, [])
+	if list.is_empty():return
+	var path := "res://assets_local/" + String(list[randi() % list.size()])
+	if not ResourceLoader.exists(path):return
+	var player := AudioStreamPlayer.new()
+	player.stream = load(path)
+	player.volume_db = NPC_VOICE_DB
+	add_child(player)
+	player.finished.connect(player.queue_free)
+	player.play()
+
+## 对话立绘：优先 big face，其次 popup/small（原版 .npc 的三张脸）。
+func npc_face(name: String) -> Texture2D:
+	var entry: Dictionary = npc_voices.get(name, {})
+	for slot in ["big", "popup", "small"]:
+		var rel := String((entry.get("faces", {}) as Dictionary).get(slot, ""))
+		if rel == "":continue
+		var path := "res://assets_local/" + rel
+		if ResourceLoader.exists(path):return load(path)
+	return null
 
 ## 城镇角色的绘制包：优先带武器的合成帧，缺武器时回退到无武器分层帧。
 func setup_actor() -> void:
@@ -193,6 +257,7 @@ func _process(delta: float) -> void:
 	running=direction.x!=0 and int(signf(direction.x))==run_direction
 	ground=constrain_ground(ground+direction*delta*(285 if running else 155))
 	update_camera()
+	_update_npc_voices()
 	actor.present("dash" if running else "move" if moving else "stay",clock_ms,facing,0,0)
 	for node in animated:
 		var total:=0.0
