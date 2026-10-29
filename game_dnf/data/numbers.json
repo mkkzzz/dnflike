@@ -1,717 +1,717 @@
 {
-  "schema": "dnf_numbers/1",
-  "revision": 1,
-  "evidence": "E-ADAPT: configurable functional baseline, not verified original balance. Original skill rows remain in the content pack.",
-  "progression": {
-    "level_cap": 60,
-    "xp_per_level": [
-      100,
-      200,
-      300,
-      400,
-      500
-    ],
-    "xp_fallback_per_level": 100,
-    "sp_initial": 0,
-    "sp_per_level": 20,
-    "level_up_vitals": "preserve",
-    "job_change_level": 18,
-    "enforce_skill_requirements": true,
-    "clear_xp": 120,
-    "kill_xp": 0
+ "schema": "dnf_numbers/1",
+ "revision": 1,
+ "evidence": "E-ADAPT: configurable functional baseline, not verified original balance. Original skill rows remain in the content pack.",
+ "progression": {
+  "level_cap": 60,
+  "xp_per_level": [
+   100,
+   200,
+   300,
+   400,
+   500
+  ],
+  "xp_fallback_per_level": 100,
+  "sp_initial": 0,
+  "sp_per_level": 20,
+  "level_up_vitals": "preserve",
+  "job_change_level": 18,
+  "enforce_skill_requirements": true,
+  "clear_xp": 120,
+  "kill_xp": 0
+ },
+ "formula": {
+  "main_stat_divisor": 250,
+  "vitality_divisor": 250,
+  "spirit_divisor": 250,
+  "defense_base": 200,
+  "defense_per_attacker_level": 20,
+  "element_divisor": 220,
+  "element_min": 0.1,
+  "critical_multiplier": 1.5,
+  "minimum_damage": 1,
+  "hit_base": 1.0,
+  "hit_min": 0.0,
+  "hit_max": 1.0,
+  "counter_multiplier": 1.25,
+  "back_multiplier": 1.0,
+  "reinforce_attack_per_level": 2,
+  "quality_min_scale": 0.9,
+  "quality_max_scale": 1.1,
+  "defense_per_vitality": 1,
+  "defense_per_spirit": 1
+ },
+ "base": {
+  "hp_max": 500,
+  "mp_max": 180,
+  "strength": 0,
+  "intelligence": 0,
+  "vitality": 0,
+  "spirit": 0,
+  "physical_attack": 20,
+  "magical_attack": 20,
+  "independent_attack": 100,
+  "physical_defense": 0,
+  "magical_defense": 0,
+  "hit": 0,
+  "evasion": 0,
+  "physical_crit": 0,
+  "magical_crit": 0,
+  "attack_speed": 1,
+  "move_speed": 1,
+  "cast_speed": 1,
+  "cooldown_rate": 1,
+  "mp_cost_rate": 1,
+  "damage_rate": 1,
+  "taken_rate": 1,
+  "skill_rate": 1,
+  "hp_regen": 0,
+  "mp_regen": 2.2,
+  "hit_recovery": 600,
+  "jump_power": 430,
+  "fire_attack": 0,
+  "water_attack": 0,
+  "light_attack": 0,
+  "dark_attack": 0,
+  "fire_resist": 0,
+  "water_resist": 0,
+  "light_resist": 0,
+  "dark_resist": 0,
+  "status_resist": 0,
+  "physical_independent_attack": 0,
+  "magical_independent_attack": 0,
+  "carry_capacity": 50
+ },
+ "growth": {
+  "hp_max": 25,
+  "mp_max": 3,
+  "strength": 2,
+  "intelligence": 1,
+  "vitality": 1,
+  "spirit": 1
+ },
+ "growtypes": {
+  "swordman": {},
+  "weaponmaster": {
+   "strength": 1
   },
-  "formula": {
-    "main_stat_divisor": 250,
-    "vitality_divisor": 250,
-    "spirit_divisor": 250,
-    "defense_base": 200,
-    "defense_per_attacker_level": 20,
-    "element_divisor": 220,
-    "element_min": 0.1,
-    "critical_multiplier": 1.5,
-    "minimum_damage": 1,
-    "hit_base": 1.0,
-    "hit_min": 0.0,
-    "hit_max": 1.0,
-    "counter_multiplier": 1.25,
-    "back_multiplier": 1.0,
-    "reinforce_attack_per_level": 2,
-    "quality_min_scale": 0.9,
-    "quality_max_scale": 1.1,
-    "defense_per_vitality": 1,
-    "defense_per_spirit": 1
+  "berserker": {
+   "hp_max": 5,
+   "strength": 1
+  }
+ },
+ "limits": {
+  "attack_speed": [
+   0.1,
+   5
+  ],
+  "move_speed": [
+   0.1,
+   5
+  ],
+  "cast_speed": [
+   0.1,
+   5
+  ],
+  "cooldown_rate": [
+   0.05,
+   5
+  ],
+  "mp_cost_rate": [
+   0,
+   5
+  ],
+  "damage_rate": [
+   0,
+   100
+  ],
+  "taken_rate": [
+   0,
+   100
+  ],
+  "skill_rate": [
+   0,
+   100
+  ],
+  "physical_crit": [
+   0,
+   1
+  ],
+  "magical_crit": [
+   0,
+   1
+  ],
+  "evasion": [
+   0,
+   1
+  ],
+  "hp_max": [
+   1,
+   1000000000
+  ],
+  "mp_max": [
+   0,
+   1000000000
+  ],
+  "physical_defense": [
+   0,
+   1000000000.0
+  ],
+  "magical_defense": [
+   0,
+   1000000000.0
+  ],
+  "status_resist": [
+   0,
+   1
+  ]
+ },
+ "equipment": {
+  "iron_sword": {
+   "name": "练习太刀",
+   "slot": "weapon",
+   "weapon": "katana",
+   "required_level": 1,
+   "stats": {
+    "physical_attack": 5,
+    "magical_attack": 4
+   }
   },
-  "base": {
-    "hp_max": 500,
-    "mp_max": 180,
-    "strength": 0,
-    "intelligence": 0,
-    "vitality": 0,
-    "spirit": 0,
-    "physical_attack": 20,
-    "magical_attack": 20,
-    "independent_attack": 100,
-    "physical_defense": 0,
-    "magical_defense": 0,
-    "hit": 0,
-    "evasion": 0,
-    "physical_crit": 0,
-    "magical_crit": 0,
-    "attack_speed": 1,
-    "move_speed": 1,
-    "cast_speed": 1,
-    "cooldown_rate": 1,
-    "mp_cost_rate": 1,
-    "damage_rate": 1,
-    "taken_rate": 1,
-    "skill_rate": 1,
-    "hp_regen": 0,
-    "mp_regen": 2.2,
-    "hit_recovery": 600,
-    "jump_power": 430,
-    "fire_attack": 0,
-    "water_attack": 0,
-    "light_attack": 0,
-    "dark_attack": 0,
-    "fire_resist": 0,
-    "water_resist": 0,
-    "light_resist": 0,
-    "dark_resist": 0,
-    "status_resist": 0,
-    "physical_independent_attack": 0,
-    "magical_independent_attack": 0,
-    "carry_capacity": 50
+  "forest_sword": {
+   "name": "林间太刀",
+   "slot": "weapon",
+   "weapon": "katana",
+   "required_level": 1,
+   "stats": {
+    "physical_attack": 10,
+    "magical_attack": 7
+   }
   },
-  "growth": {
-    "hp_max": 25,
-    "mp_max": 3,
-    "strength": 2,
-    "intelligence": 1,
-    "vitality": 1,
-    "spirit": 1
+  "training_coat": {
+   "name": "训练上衣",
+   "slot": "coat",
+   "required_level": 1,
+   "stats": {
+    "physical_defense": 25,
+    "hp_max": 30
+   }
   },
-  "growtypes": {
-    "swordman": {},
-    "weaponmaster": {
-      "strength": 1
-    },
-    "berserker": {
-      "hp_max": 5,
-      "strength": 1
-    }
+  "training_necklace": {
+   "name": "训练项链",
+   "slot": "necklace",
+   "required_level": 1,
+   "stats": {
+    "magical_defense": 25,
+    "mp_max": 20
+   }
   },
-  "limits": {
-    "attack_speed": [
-      0.1,
-      5
-    ],
-    "move_speed": [
-      0.1,
-      5
-    ],
-    "cast_speed": [
-      0.1,
-      5
-    ],
-    "cooldown_rate": [
-      0.05,
-      5
-    ],
-    "mp_cost_rate": [
-      0,
-      5
-    ],
-    "damage_rate": [
-      0,
-      100
-    ],
-    "taken_rate": [
-      0,
-      100
-    ],
-    "skill_rate": [
-      0,
-      100
-    ],
-    "physical_crit": [
-      0,
-      1
-    ],
-    "magical_crit": [
-      0,
-      1
-    ],
-    "evasion": [
-      0,
-      1
-    ],
+  "original_10580": {
+   "name": "磨损的冒险者胸甲",
+   "slot": "coat",
+   "required_level": 4,
+   "stats": {
+    "hp_max": 25.0,
+    "physical_defense": 48.0
+   },
+   "stat_ranges": {
     "hp_max": [
-      1,
-      1000000000
-    ],
-    "mp_max": [
-      0,
-      1000000000
+     25.0,
+     25.0
     ],
     "physical_defense": [
-      0,
-      1000000000.0
+     48.0,
+     48.0
+    ]
+   },
+   "source": {
+    "id": 10580,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/jacket/leather/coat_10580.equ",
+    "sha256": "556ff974c6cef1d9448603965a82533e80037538dc765df22fb8d28fab0317fd"
+   },
+   "durability": 28,
+   "usable_jobs": [
+    "[all]"
+   ]
+  },
+  "original_16400": {
+   "name": "残破的牛皮腰带",
+   "slot": "belt",
+   "required_level": 1,
+   "stats": {
+    "physical_defense": 7.0,
+    "carry_capacity": 3.0
+   },
+   "stat_ranges": {
+    "physical_defense": [
+     7.0,
+     7.0
+    ],
+    "carry_capacity": [
+     3.0,
+     3.0
+    ]
+   },
+   "source": {
+    "id": 16400,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/belt/leather/str_crleather.equ",
+    "sha256": "574fea8329149dd47ffb6450f9e472fabbce2719e6a121c0234868fa10af2c9e"
+   },
+   "durability": 20,
+   "usable_jobs": [
+    "[all]"
+   ]
+  },
+  "original_16403": {
+   "name": "牛皮腰带",
+   "slot": "belt",
+   "required_level": 5,
+   "stats": {
+    "strength": 1.0,
+    "intelligence": 1.0,
+    "spirit": 1.0,
+    "physical_defense": 40.0,
+    "carry_capacity": 3.0
+   },
+   "stat_ranges": {
+    "strength": [
+     1.0,
+     1.0
+    ],
+    "intelligence": [
+     1.0,
+     1.0
+    ],
+    "spirit": [
+     1.0,
+     1.0
+    ],
+    "physical_defense": [
+     40.0,
+     40.0
+    ],
+    "carry_capacity": [
+     3.0,
+     3.0
+    ]
+   },
+   "source": {
+    "id": 16403,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/belt/leather/str_leather.equ",
+    "sha256": "7186d6bfd2e9bf9a61c9de4929e7c40ab2616cb2acc34b374d81190adfa4e3b3"
+   },
+   "durability": 20,
+   "usable_jobs": [
+    "[all]"
+   ]
+  },
+  "original_20006": {
+   "name": "强韧的稻草项链",
+   "slot": "necklace",
+   "required_level": 8,
+   "stats": {
+    "intelligence": 4.0,
+    "spirit": 8.0,
+    "magical_defense": 640.0
+   },
+   "stat_ranges": {
+    "intelligence": [
+     4.0,
+     4.0
+    ],
+    "spirit": [
+     8.0,
+     8.0
     ],
     "magical_defense": [
-      0,
-      1000000000.0
-    ],
-    "status_resist": [
-      0,
-      1
+     640.0,
+     640.0
     ]
+   },
+   "source": {
+    "id": 20006,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/amulet/neck_cstraw.equ",
+    "sha256": "58c9d47760c08a518178da7d3bd8f6b22e1759dcfe6d6dcf7f2b26f0519bfe55"
+   },
+   "durability": 40,
+   "usable_jobs": [
+    "[all]"
+   ]
   },
-  "equipment": {
-    "iron_sword": {
-      "name": "练习太刀",
-      "slot": "weapon",
-      "weapon": "katana",
-      "required_level": 1,
-      "stats": {
-        "physical_attack": 5,
-        "magical_attack": 4
-      }
-    },
-    "forest_sword": {
-      "name": "林间太刀",
-      "slot": "weapon",
-      "weapon": "katana",
-      "required_level": 1,
-      "stats": {
-        "physical_attack": 10,
-        "magical_attack": 7
-      }
-    },
-    "training_coat": {
-      "name": "训练上衣",
-      "slot": "coat",
-      "required_level": 1,
-      "stats": {
-        "physical_defense": 25,
-        "hp_max": 30
-      }
-    },
-    "training_necklace": {
-      "name": "训练项链",
-      "slot": "necklace",
-      "required_level": 1,
-      "stats": {
-        "magical_defense": 25,
-        "mp_max": 20
-      }
-    },
-    "original_10580": {
-      "name": "磨损的冒险者胸甲",
-      "slot": "coat",
-      "required_level": 4,
-      "stats": {
-        "hp_max": 25.0,
-        "physical_defense": 48.0
-      },
-      "stat_ranges": {
-        "hp_max": [
-          25.0,
-          25.0
-        ],
-        "physical_defense": [
-          48.0,
-          48.0
-        ]
-      },
-      "source": {
-        "id": 10580,
-        "list": "equipment/equipment.lst",
-        "path": "equipment/character/common/jacket/leather/coat_10580.equ",
-        "sha256": "556ff974c6cef1d9448603965a82533e80037538dc765df22fb8d28fab0317fd"
-      },
-      "durability": 28,
-      "usable_jobs": [
-        "[all]"
-      ]
-    },
-    "original_16400": {
-      "name": "残破的牛皮腰带",
-      "slot": "belt",
-      "required_level": 1,
-      "stats": {
-        "physical_defense": 7.0,
-        "carry_capacity": 3.0
-      },
-      "stat_ranges": {
-        "physical_defense": [
-          7.0,
-          7.0
-        ],
-        "carry_capacity": [
-          3.0,
-          3.0
-        ]
-      },
-      "source": {
-        "id": 16400,
-        "list": "equipment/equipment.lst",
-        "path": "equipment/character/common/belt/leather/str_crleather.equ",
-        "sha256": "574fea8329149dd47ffb6450f9e472fabbce2719e6a121c0234868fa10af2c9e"
-      },
-      "durability": 20,
-      "usable_jobs": [
-        "[all]"
-      ]
-    },
-    "original_16403": {
-      "name": "牛皮腰带",
-      "slot": "belt",
-      "required_level": 5,
-      "stats": {
-        "strength": 1.0,
-        "intelligence": 1.0,
-        "spirit": 1.0,
-        "physical_defense": 40.0,
-        "carry_capacity": 3.0
-      },
-      "stat_ranges": {
-        "strength": [
-          1.0,
-          1.0
-        ],
-        "intelligence": [
-          1.0,
-          1.0
-        ],
-        "spirit": [
-          1.0,
-          1.0
-        ],
-        "physical_defense": [
-          40.0,
-          40.0
-        ],
-        "carry_capacity": [
-          3.0,
-          3.0
-        ]
-      },
-      "source": {
-        "id": 16403,
-        "list": "equipment/equipment.lst",
-        "path": "equipment/character/common/belt/leather/str_leather.equ",
-        "sha256": "7186d6bfd2e9bf9a61c9de4929e7c40ab2616cb2acc34b374d81190adfa4e3b3"
-      },
-      "durability": 20,
-      "usable_jobs": [
-        "[all]"
-      ]
-    },
-    "original_20006": {
-      "name": "强韧的稻草项链",
-      "slot": "necklace",
-      "required_level": 8,
-      "stats": {
-        "intelligence": 4.0,
-        "spirit": 8.0,
-        "magical_defense": 640.0
-      },
-      "stat_ranges": {
-        "intelligence": [
-          4.0,
-          4.0
-        ],
-        "spirit": [
-          8.0,
-          8.0
-        ],
-        "magical_defense": [
-          640.0,
-          640.0
-        ]
-      },
-      "source": {
-        "id": 20006,
-        "list": "equipment/equipment.lst",
-        "path": "equipment/character/common/amulet/neck_cstraw.equ",
-        "sha256": "58c9d47760c08a518178da7d3bd8f6b22e1759dcfe6d6dcf7f2b26f0519bfe55"
-      },
-      "durability": 40,
-      "usable_jobs": [
-        "[all]"
-      ]
-    },
-    "original_22001": {
-      "name": "破旧的棉布护腕",
-      "slot": "bracelet",
-      "required_level": 4,
-      "stats": {
-        "magical_defense": 144.0
-      },
-      "stat_ranges": {
-        "magical_defense": [
-          144.0,
-          144.0
-        ]
-      },
-      "source": {
-        "id": 22001,
-        "list": "equipment/equipment.lst",
-        "path": "equipment/character/common/wrist/wrist_ucloth.equ",
-        "sha256": "3911b235428429b449978ef4330c7d156b0176901cb737414de4a8a4b0200963"
-      },
-      "durability": 40,
-      "usable_jobs": [
-        "[all]"
-      ]
-    },
-    "original_24116": {
-      "name": "避雷指环",
-      "slot": "ring",
-      "required_level": 6,
-      "stats": {
-        "strength": 4.0,
-        "intelligence": 4.0,
-        "magical_defense": 192.0,
-        "light_resist": 5.0
-      },
-      "stat_ranges": {
-        "strength": [
-          4.0,
-          4.0
-        ],
-        "intelligence": [
-          4.0,
-          4.0
-        ],
-        "magical_defense": [
-          192.0,
-          192.0
-        ],
-        "light_resist": [
-          5.0,
-          5.0
-        ]
-      },
-      "source": {
-        "id": 24116,
-        "list": "equipment/equipment.lst",
-        "path": "equipment/character/common/ring/ring_thunderprotect.equ",
-        "sha256": "4832a81e340bb8161347efcb4449b98cf555edfc0582f3f57308b8e5c7982c42"
-      },
-      "durability": 40,
-      "usable_jobs": [
-        "[all]"
-      ]
-    },
-    "original_27601": {
-      "name": "生锈的武士刀",
-      "slot": "weapon",
-      "required_level": 3,
-      "stats": {
-        "physical_attack": 27.0,
-        "magical_attack": 29.0,
-        "attack_speed": 0.08,
-        "cast_speed": 0.04,
-        "physical_crit": 0.02,
-        "hit": -0.01,
-        "physical_independent_attack": 26.0,
-        "magical_independent_attack": 14.0
-      },
-      "stat_ranges": {
-        "physical_attack": [
-          27.0,
-          27.0
-        ],
-        "magical_attack": [
-          29.0,
-          29.0
-        ],
-        "attack_speed": [
-          0.08,
-          0.08
-        ],
-        "cast_speed": [
-          0.04,
-          0.04
-        ],
-        "physical_crit": [
-          0.02,
-          0.02
-        ],
-        "hit": [
-          -0.01,
-          -0.01
-        ],
-        "physical_independent_attack": [
-          26.0,
-          26.0
-        ],
-        "magical_independent_attack": [
-          14.0,
-          14.0
-        ]
-      },
-      "source": {
-        "id": 27601,
-        "list": "equipment/equipment.lst",
-        "path": "equipment/character/swordman/weapon/katana/kat_worn.equ",
-        "sha256": "fb8d74d46b2409a4e93fd89599efed0853ff83a87636fa01dee21724526765ad"
-      },
-      "durability": 35,
-      "usable_jobs": [
-        "[swordman]"
-      ],
-      "weapon": "katana"
-    },
-    "original_27800": {
-      "name": "佩刀",
-      "slot": "weapon",
-      "required_level": 5,
-      "stats": {
-        "strength": 6.0,
-        "intelligence": 9.0,
-        "physical_attack": 42.0,
-        "magical_attack": 46.0,
-        "attack_speed": 0.08,
-        "cast_speed": 0.04,
-        "physical_crit": 0.02,
-        "hit": -0.01,
-        "physical_independent_attack": 31.0,
-        "magical_independent_attack": 18.0
-      },
-      "stat_ranges": {
-        "strength": [
-          6.0,
-          6.0
-        ],
-        "intelligence": [
-          9.0,
-          9.0
-        ],
-        "physical_attack": [
-          42.0,
-          42.0
-        ],
-        "magical_attack": [
-          46.0,
-          46.0
-        ],
-        "attack_speed": [
-          0.08,
-          0.08
-        ],
-        "cast_speed": [
-          0.04,
-          0.04
-        ],
-        "physical_crit": [
-          0.02,
-          0.02
-        ],
-        "hit": [
-          -0.01,
-          -0.01
-        ],
-        "physical_independent_attack": [
-          31.0,
-          31.0
-        ],
-        "magical_independent_attack": [
-          18.0,
-          18.0
-        ]
-      },
-      "source": {
-        "id": 27800,
-        "list": "equipment/equipment.lst",
-        "path": "equipment/character/swordman/weapon/katana/bazirang.equ",
-        "sha256": "c95c12432aa3554d2790dec27975edbd0ecb95afa1b106824dd33b87e8a0ba0d"
-      },
-      "durability": 35,
-      "usable_jobs": [
-        "[swordman]"
-      ],
-      "weapon": "katana"
-    }
+  "original_22001": {
+   "name": "破旧的棉布护腕",
+   "slot": "bracelet",
+   "required_level": 4,
+   "stats": {
+    "magical_defense": 144.0
+   },
+   "stat_ranges": {
+    "magical_defense": [
+     144.0,
+     144.0
+    ]
+   },
+   "source": {
+    "id": 22001,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/wrist/wrist_ucloth.equ",
+    "sha256": "3911b235428429b449978ef4330c7d156b0176901cb737414de4a8a4b0200963"
+   },
+   "durability": 40,
+   "usable_jobs": [
+    "[all]"
+   ]
   },
-  "equipment_slots": [
-    "weapon",
-    "coat",
-    "pants",
-    "shoulder",
-    "belt",
-    "shoes",
-    "bracelet",
-    "necklace",
-    "ring"
-  ],
-  "skill_defaults": {
-    "upper": 1,
-    "draw": 1,
-    "triple": 1,
-    "rage_slash": 1,
-    "buff": 1,
-    "guard": 1,
-    "physical_mastery": 0
+  "original_24116": {
+   "name": "避雷指环",
+   "slot": "ring",
+   "required_level": 6,
+   "stats": {
+    "strength": 4.0,
+    "intelligence": 4.0,
+    "magical_defense": 192.0,
+    "light_resist": 5.0
+   },
+   "stat_ranges": {
+    "strength": [
+     4.0,
+     4.0
+    ],
+    "intelligence": [
+     4.0,
+     4.0
+    ],
+    "magical_defense": [
+     192.0,
+     192.0
+    ],
+    "light_resist": [
+     5.0,
+     5.0
+    ]
+   },
+   "source": {
+    "id": 24116,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/ring/ring_thunderprotect.equ",
+    "sha256": "4832a81e340bb8161347efcb4449b98cf555edfc0582f3f57308b8e5c7982c42"
+   },
+   "durability": 40,
+   "usable_jobs": [
+    "[all]"
+   ]
   },
-  "skills": {
-    "upper": {
-      "name": "上挑",
-      "path": "skill/swordman/upperslash.skl",
-      "max_level": 10,
-      "cost": 20,
-      "speed": "attack"
-    },
-    "draw": {
-      "name": "拔刀斩",
-      "path": "skill/swordman/momentaryslash.skl",
-      "max_level": 50,
-      "cost": 40,
-      "speed": "attack"
-    },
-    "triple": {
-      "name": "三段斩",
-      "path": "skill/swordman/tripleslash.skl",
-      "max_level": 50,
-      "cost": 15,
-      "speed": "attack"
-    },
-    "rage_slash": {
-      "name": "十字斩",
-      "path": "skill/swordman/gorecross.skl",
-      "max_level": 50,
-      "cost": 15,
-      "speed": "attack",
-      "on_hit": [
-        {
-          "id": "bleed",
-          "chance": 0.2
-        }
-      ]
-    },
-    "buff": {
-      "name": "暴走",
-      "path": "skill/swordman/frenzy.skl",
-      "max_level": 20,
-      "cost": 25,
-      "speed": "cast"
-    },
-    "guard": {
-      "name": "格挡",
-      "max_level": 5,
-      "cost": 20,
-      "speed": "attack",
-      "guard_factor": 0.2,
-      "guard_per_level": 0.02
-    },
-    "physical_mastery": {
-      "name": "基础力量精通",
-      "max_level": 10,
-      "cost": 20,
-      "passive": [
-        {
-          "stat": "strength",
-          "op": "add",
-          "value": 5
-        }
-      ]
-    }
+  "original_27601": {
+   "name": "生锈的武士刀",
+   "slot": "weapon",
+   "required_level": 3,
+   "stats": {
+    "physical_attack": 27.0,
+    "magical_attack": 29.0,
+    "attack_speed": 0.08,
+    "cast_speed": 0.04,
+    "physical_crit": 0.02,
+    "hit": -0.01,
+    "physical_independent_attack": 26.0,
+    "magical_independent_attack": 14.0
+   },
+   "stat_ranges": {
+    "physical_attack": [
+     27.0,
+     27.0
+    ],
+    "magical_attack": [
+     29.0,
+     29.0
+    ],
+    "attack_speed": [
+     0.08,
+     0.08
+    ],
+    "cast_speed": [
+     0.04,
+     0.04
+    ],
+    "physical_crit": [
+     0.02,
+     0.02
+    ],
+    "hit": [
+     -0.01,
+     -0.01
+    ],
+    "physical_independent_attack": [
+     26.0,
+     26.0
+    ],
+    "magical_independent_attack": [
+     14.0,
+     14.0
+    ]
+   },
+   "source": {
+    "id": 27601,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/swordman/weapon/katana/kat_worn.equ",
+    "sha256": "fb8d74d46b2409a4e93fd89599efed0853ff83a87636fa01dee21724526765ad"
+   },
+   "durability": 35,
+   "usable_jobs": [
+    "[swordman]"
+   ],
+   "weapon": "katana"
   },
-  "effects": {
-    "frenzy": {
-      "name": "暴走",
-      "duration_ms": 8000,
-      "stacking": "refresh",
-      "max_stacks": 1,
-      "modifiers": [
-        {
-          "stat": "attack_speed",
-          "op": "mul",
-          "value": 1.25
-        },
-        {
-          "stat": "move_speed",
-          "op": "mul",
-          "value": 1.2
-        },
-        {
-          "stat": "damage_rate",
-          "op": "mul",
-          "value": 1.2,
-          "per_level": 0.02
-        },
-        {
-          "stat": "taken_rate",
-          "op": "mul",
-          "value": 1.3
-        }
-      ],
-      "super_armor": true
-    },
-    "strength_potion": {
-      "name": "力量增益",
-      "duration_ms": 30000,
-      "stacking": "refresh",
-      "max_stacks": 1,
-      "modifiers": [
-        {
-          "stat": "strength",
-          "op": "add",
-          "value": 25
-        }
-      ]
-    },
-    "bleed": {
-      "name": "出血",
-      "duration_ms": 5000,
-      "stacking": "stack",
-      "max_stacks": 3,
-      "interval_ms": 1000,
-      "tick_damage": 5,
-      "damage_type": "physical"
-    },
-    "stun": {
-      "name": "眩晕",
-      "duration_ms": 1500,
-      "stacking": "refresh",
-      "max_stacks": 1,
-      "control": "stun"
-    },
-    "freeze": {
-      "name": "冰冻",
-      "duration_ms": 1500,
-      "stacking": "refresh",
-      "max_stacks": 1,
-      "control": "freeze"
-    },
-    "fire_weapon": {
-      "name": "火属性攻击",
-      "duration_ms": 30000,
-      "stacking": "refresh",
-      "max_stacks": 1,
-      "element": "fire"
-    }
-  },
-  "monsters": {
-    "hp_per_level": 0.15,
-    "attack_per_level": 0.1,
-    "defense_per_level": 2,
-    "difficulty": {
-      "normal": 1,
-      "adventure": 1.3,
-      "king": 1.6
-    }
-  },
-  "skill_index": {
-    "46": "upper",
-    "9": "draw",
-    "8": "triple",
-    "64": "rage_slash"
-  },
-  "growtype_index": {
-    "swordman": 0,
-    "weaponmaster": 1,
-    "berserker": 3
+  "original_27800": {
+   "name": "佩刀",
+   "slot": "weapon",
+   "required_level": 5,
+   "stats": {
+    "strength": 6.0,
+    "intelligence": 9.0,
+    "physical_attack": 42.0,
+    "magical_attack": 46.0,
+    "attack_speed": 0.08,
+    "cast_speed": 0.04,
+    "physical_crit": 0.02,
+    "hit": -0.01,
+    "physical_independent_attack": 31.0,
+    "magical_independent_attack": 18.0
+   },
+   "stat_ranges": {
+    "strength": [
+     6.0,
+     6.0
+    ],
+    "intelligence": [
+     9.0,
+     9.0
+    ],
+    "physical_attack": [
+     42.0,
+     42.0
+    ],
+    "magical_attack": [
+     46.0,
+     46.0
+    ],
+    "attack_speed": [
+     0.08,
+     0.08
+    ],
+    "cast_speed": [
+     0.04,
+     0.04
+    ],
+    "physical_crit": [
+     0.02,
+     0.02
+    ],
+    "hit": [
+     -0.01,
+     -0.01
+    ],
+    "physical_independent_attack": [
+     31.0,
+     31.0
+    ],
+    "magical_independent_attack": [
+     18.0,
+     18.0
+    ]
+   },
+   "source": {
+    "id": 27800,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/swordman/weapon/katana/bazirang.equ",
+    "sha256": "c95c12432aa3554d2790dec27975edbd0ecb95afa1b106824dd33b87e8a0ba0d"
+   },
+   "durability": 35,
+   "usable_jobs": [
+    "[swordman]"
+   ],
+   "weapon": "katana"
   }
+ },
+ "equipment_slots": [
+  "weapon",
+  "coat",
+  "pants",
+  "shoulder",
+  "belt",
+  "shoes",
+  "bracelet",
+  "necklace",
+  "ring"
+ ],
+ "skill_defaults": {
+  "upper": 1,
+  "draw": 1,
+  "triple": 1,
+  "rage_slash": 1,
+  "buff": 1,
+  "guard": 1,
+  "physical_mastery": 0
+ },
+ "skills": {
+  "upper": {
+   "name": "上挑",
+   "path": "skill/swordman/upperslash.skl",
+   "max_level": 10,
+   "cost": 20,
+   "speed": "attack"
+  },
+  "draw": {
+   "name": "拔刀斩",
+   "path": "skill/swordman/momentaryslash.skl",
+   "max_level": 50,
+   "cost": 40,
+   "speed": "attack"
+  },
+  "triple": {
+   "name": "三段斩",
+   "path": "skill/swordman/tripleslash.skl",
+   "max_level": 50,
+   "cost": 15,
+   "speed": "attack"
+  },
+  "rage_slash": {
+   "name": "十字斩",
+   "path": "skill/swordman/gorecross.skl",
+   "max_level": 50,
+   "cost": 15,
+   "speed": "attack",
+   "on_hit": [
+    {
+     "id": "bleed",
+     "chance": 0.2
+    }
+   ]
+  },
+  "buff": {
+   "name": "暴走",
+   "path": "skill/swordman/frenzy.skl",
+   "max_level": 20,
+   "cost": 25,
+   "speed": "cast"
+  },
+  "guard": {
+   "name": "格挡",
+   "max_level": 5,
+   "cost": 20,
+   "speed": "attack",
+   "guard_factor": 0.2,
+   "guard_per_level": 0.02
+  },
+  "physical_mastery": {
+   "name": "基础力量精通",
+   "max_level": 10,
+   "cost": 20,
+   "passive": [
+    {
+     "stat": "strength",
+     "op": "add",
+     "value": 5
+    }
+   ]
+  }
+ },
+ "effects": {
+  "frenzy": {
+   "name": "暴走",
+   "duration_ms": 8000,
+   "stacking": "refresh",
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "stat": "attack_speed",
+     "op": "mul",
+     "value": 1.25
+    },
+    {
+     "stat": "move_speed",
+     "op": "mul",
+     "value": 1.2
+    },
+    {
+     "stat": "damage_rate",
+     "op": "mul",
+     "value": 1.2,
+     "per_level": 0.02
+    },
+    {
+     "stat": "taken_rate",
+     "op": "mul",
+     "value": 1.3
+    }
+   ],
+   "super_armor": true
+  },
+  "strength_potion": {
+   "name": "力量增益",
+   "duration_ms": 30000,
+   "stacking": "refresh",
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "stat": "strength",
+     "op": "add",
+     "value": 25
+    }
+   ]
+  },
+  "bleed": {
+   "name": "出血",
+   "duration_ms": 5000,
+   "stacking": "stack",
+   "max_stacks": 3,
+   "interval_ms": 1000,
+   "tick_damage": 5,
+   "damage_type": "physical"
+  },
+  "stun": {
+   "name": "眩晕",
+   "duration_ms": 1500,
+   "stacking": "refresh",
+   "max_stacks": 1,
+   "control": "stun"
+  },
+  "freeze": {
+   "name": "冰冻",
+   "duration_ms": 1500,
+   "stacking": "refresh",
+   "max_stacks": 1,
+   "control": "freeze"
+  },
+  "fire_weapon": {
+   "name": "火属性攻击",
+   "duration_ms": 30000,
+   "stacking": "refresh",
+   "max_stacks": 1,
+   "element": "fire"
+  }
+ },
+ "monsters": {
+  "hp_per_level": 0.15,
+  "attack_per_level": 0.1,
+  "defense_per_level": 2,
+  "difficulty": {
+   "normal": 1.0,
+   "adventure": 1.25,
+   "king": 1.75
+  }
+ },
+ "skill_index": {
+  "46": "upper",
+  "9": "draw",
+  "8": "triple",
+  "64": "rage_slash"
+ },
+ "growtype_index": {
+  "swordman": 0,
+  "weaponmaster": 1,
+  "berserker": 3
+ }
 }
