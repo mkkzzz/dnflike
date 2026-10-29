@@ -84,7 +84,7 @@
  "effects": 24,
  "digits": 61,
  "audio_keys": 190,
- "unresolved": 20,
+ "unresolved": 21,
  "unresolved_items": [
   {
    "kind": "monster_equipment",
@@ -181,6 +181,14 @@
    "monster": "monster/new_golem/bronzegolem.mob",
    "path": "monster/Golem/Light/BR_Light.equ",
    "note": "Referenced .equ absent from archive; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/dollmaster/masterdogri.mob",
+   "images": [
+    "Monster/DollMaster/MasterDogri.img",
+    "Monster/DollMaster/MasterDogri_Plus.img"
+   ]
   },
   {
    "kind": "monster_equipment",

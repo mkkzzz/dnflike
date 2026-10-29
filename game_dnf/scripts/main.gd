@@ -962,7 +962,9 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 	if t >= Kernel.Timeline.duration(move_timeline):
 		enemy["state"] = "idle"
 		enemy["clock"] = 0.0
-		enemy["cooldown_ms"] = float(m["attack_delay"])
+		# 血量低于 40% 出手更频（狂暴阶段，E-ADAPT 同上）。
+		var rage := float(enemy["hp"]) / maxf(1.0, float(enemy["max_hp"])) < 0.4
+		enemy["cooldown_ms"] = float(m["attack_delay"]) * (0.7 if rage else 1.0)
 
 ## Player takes a monster hit. Returns the reaction kind, or "blocked" if nothing applied.
 func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) -> String:

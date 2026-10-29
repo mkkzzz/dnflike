@@ -39,14 +39,21 @@ static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: f
 		var gap_x := absf(offset.x)
 		var same_lane := absf(offset.y) <= 8
 		if ready and same_lane:
+			var picks: Array = []
 			for index in (m["moves"] as Array).size():
 				var candidate: Dictionary = m["moves"][index]
 				var span: Array = candidate.get("reach", [])
 				if span.size() < 2:continue
 				if gap_x >= float(span[0]) - 4 and gap_x <= float(span[1]) - 6:
-					out["attack"] = true
-					out["move_index"] = index
-					return out
+					picks.append([index, float((candidate.get("atk", {}) as Dictionary).get("damage_bonus", 0))])
+			if not picks.is_empty():
+				# 血量低于 40% 进入狂暴：优先高伤害招（E-ADAPT：原版阶段切换写在 .ai 字节码里，
+				# opcode 语义尚未解出，这里用招式自带的 damage_bonus 排序，不用写死招式名）。
+				if float(enemy["hp"]) / maxf(1.0, float(enemy["max_hp"])) < 0.4:
+					picks.sort_custom(func(a, b): return a[1] > b[1])
+				out["attack"] = true
+				out["move_index"] = int(picks[0][0])
+				return out
 		# 没有能命中的招：朝最近一招的有效距离走过去。
 		var nearest := INF
 		for candidate: Dictionary in m["moves"]:
