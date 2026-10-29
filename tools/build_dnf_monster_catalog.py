@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path, PurePosixPath
 
@@ -37,6 +38,16 @@ def one(spans: dict, tag: str, default=None):
         return default
     values = item[0]
     return values[0] if values else default
+
+
+# 覆盖三种韩文字符：音节（AC00-D7AF）、字母（1100-11FF）、兼容字母（3130-318F）。
+KOREAN = re.compile(r'[\uac00-\ud7af\u1100-\u11ff\u3130-\u318f]')
+
+
+def safe(value) -> str:
+    """游戏内不允许韩文；含韩文的字段留空（多为原版内部台词原文）。"""
+    text = str(value)
+    return '' if KOREAN.search(text) else text
 
 
 def many(spans: dict, tag: str) -> list:
@@ -110,6 +121,13 @@ def main() -> int:
                 'motions': {},
                 'attacks': [],
                 'drops': drops(spans),
+                # 死亡表现：原版 [die effect] = [0, N, M]，N 每怪不同（goblin 1、tau 9、
+                # mirkius 4、steelmaster 17）；[speech on situation] 是台词/音效的字符串 ID。
+                'die_effect': many(spans, '[die effect]'),
+                # 台词 key 与音效 tag 里可能混入韩文原文，游戏内不允许韩文，过滤掉。
+                'speech': [text for text in (safe(v) for v in many(spans, '[speech on situation]')) if text][:12],
+                'sounds': {tag: [text for text in (safe(v) for v in many(spans, tag)) if text][:6]
+                           for tag in ('[hit wav]', '[die wav]', '[attack wav]', '[field wav]') if tag in spans},
             }
             for tag, key in MOTIONS.items():
                 values = [str(v) for v in many(spans, tag) if isinstance(v, str) and v.lower().endswith('.ani')]
