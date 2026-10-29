@@ -176,6 +176,7 @@ OBJ_FIELDS = {
     '[destroy particle]': ('destroy_particle', 'paths', 'E-PARSE', ''),
     '[object destroy condition]': ('destroy_condition', 'list', 'E-PARSE', ''),
     '[int data]': ('int_data', 'list', 'E-PARSE', ''),
+    '[string data]': ('string_data', 'list', 'E-PARSE', '破坏粒子路径与受击/破坏音效 key'),
     '[name]': ('name', 'list', 'E-PARSE', ''),
 }
 PTL_FIELDS = {
@@ -320,6 +321,32 @@ def referenced_mob_paths() -> set[str]:
     return out
 
 
+def referenced_breakable_objects() -> list[str]:
+    """扫副本地图的 [passive object]，收集可破坏物（breakableobject/）的 .obj 路径。"""
+    dungeons_path = ROOT / 'game_dnf/data/dungeons.json'
+    if not dungeons_path.is_file():
+        return []
+    found: set[str] = set()
+    dungeons = json.loads(dungeons_path.read_text(encoding='utf-8'))['dungeons']
+    for spec in dungeons.values():
+        export = spec.get('map_export', '')
+        if not export:
+            continue
+        path = ROOT / 'game_dnf' / export.replace('res://', '')
+        if not path.is_file():
+            continue
+        try:
+            data = json.loads(path.read_text(encoding='utf-8'))
+        except Exception:
+            continue
+        for room in (data.get('dungeon', {}).get('rooms') or {}).values():
+            for obj in room.get('objects') or []:
+                target = str(obj.get('obj', '')).lower()
+                if 'breakableobject/' in target and target.endswith('.obj'):
+                    found.add(target)
+    return sorted(found)
+
+
 def compile_scope(lib: Library) -> dict:
     records: dict[str, dict] = {}
     missing: list[dict] = []
@@ -351,6 +378,10 @@ def compile_scope(lib: Library) -> dict:
         p = ('skill/' + rel).lower()
         if add(p, 'skl', 'skill/swordmanskill.lst'):
             skill_index[str(index)] = p
+    # 地图上的可破坏物（breakableobject/*.obj）：血量/破坏粒子/音效都在 .obj 里，
+    # 不编进内容包运行时只能当静态美术画着，打不碎。
+    for path in referenced_breakable_objects():
+        add(path, 'obj', 'map [passive object]')
     monsters = lib.listing('monster/monster.lst')
     monster_index = {}
     object_paths: list[str] = list(SKILL_OBJECTS)

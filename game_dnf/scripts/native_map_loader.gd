@@ -162,11 +162,19 @@ func build(placement: Dictionary) -> Node2D:
 	# 地图数据里的 monsters[] 是怪物刷新锚点，不是背景装饰——以前把它也画出来，
 	# 结果同一只哥布林既有"画上去的一份（打不到）"又有战斗系统生成的一份（能打），
 	# 房间里就出现打不动的哥布林贴图。怪物一律由战斗系统生成。
-	for list_key in ["animations", "objects"]:
-		for item: Dictionary in room_data[list_key]:
-			if item.get("sprite") == null:continue
-			var layer := String(item.get("layer", "normal"))
-			placed += int(_place(root, item["sprite"], item["anchor"], layer) != null)
+	for item: Dictionary in room_data["animations"]:
+		if item.get("sprite") == null:continue
+		var layer := String(item.get("layer", "normal"))
+		placed += int(_place(root, item["sprite"], item["anchor"], layer) != null)
+	# objects 额外记下标：战斗侧打碎可破坏物时按 prop_node 隐藏对应节点。
+	for object_index in room_data["objects"].size():
+		var item: Dictionary = room_data["objects"][object_index]
+		if item.get("sprite") == null:continue
+		var layer := String(item.get("layer", "normal"))
+		var node := _place(root, item["sprite"], item["anchor"], layer)
+		if node != null:
+			node.set_meta("prop_node", object_index)
+			placed += 1
 	var gates: Array = []
 	for gate: Dictionary in placement["gates"]:
 		var obj: Dictionary = data["dungeon"]["gate_objects"].get(String(gate["object"]), {})

@@ -747,9 +747,16 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				if not prop.get("breakable",false) or prop.get("broken",false):continue
 				for b: AABB in world:
 					if b.intersects(Kernel.HitJudge.prop_box(prop["collision"])):
-						prop["broken"] = true
-						prop["broken_ms"] = 0.0
-						spawn_effect("hit_cut_s1",prop["pos"]-Vector2(0,18),facing)
+						prop["hp"] = int(prop.get("hp", 1)) - 1
+						if int(prop["hp"]) > 0:
+							spawn_effect("hit_cut_s1", prop["pos"] - Vector2(0, 18), facing)
+							if String(prop.get("hit_sound", "")) != "":play_sound(String(prop["hit_sound"]))
+						else:
+							prop["broken"] = true
+							prop["broken_ms"] = 0.0
+							spawn_effect("hit_cut_s1", prop["pos"] - Vector2(0, 18), facing)
+							if String(prop.get("break_sound", "")) != "":play_sound(String(prop["break_sound"]))
+							bus.emit("combat.prop_broken", {"node": int(prop.get("node", -1))})
 						break
 
 ## One landed hit, attacker -> target. Damage, reaction, local hitstop, events and cues.
@@ -1040,6 +1047,47 @@ func step_objects(ms: float) -> void:
 # Rooms are original Lorien maps (data/combat.json "rooms" -> map export placement). Ground
 # positions are map coordinates (x pixels, y ground depth); walkability is the map's pass grid.
 
+## 地图里的可破坏物（`[passive object]` → breakableobject/*.obj）。
+## 血量与破坏音效写在 .obj 的 `[int data]` / `[string data]` 里；
+## `[int data][1]` 推断为可承受的击打次数（原版语义未完全解出，E-INFER）。
+func array_of(source: Variant) -> Array:
+	# GDScript 的 `or` 返回 bool（与 Python 不同），这里显式判类型。
+	return source if source is Array else []
+
+func build_props(room: Dictionary) -> Array:
+	var out: Array = []
+	var objects: Array = array_of(room.get("objects"))
+	for object_index in objects.size():
+		var item: Dictionary = objects[object_index]
+		var path := String(item.get("obj", "")).to_lower()
+		if not path.contains("breakableobject/"):
+			continue
+		var def: Dictionary = table.object(path)
+		if def.is_empty():
+			continue
+		var anchor: Array = array_of(item.get("anchor"))
+		if anchor.size() < 2:
+			continue
+		var width: Array = array_of(def.get("width"))
+		if width.size() < 2:
+			width = [40, 20]
+		var data: Array = array_of(def.get("int_data"))
+		var strings: Array = array_of(def.get("string_data"))
+		var hits := int(data[1]) if data.size() > 1 else 1
+		var pos := Vector2(float(anchor[0]), float(anchor[1]))
+		var size := Vector2(float(width[0]), float(width[1]))
+		out.append({
+			"id": "%s#%d" % [path, out.size()],
+			"pos": pos, "z": float(anchor[2]) if anchor.size() > 2 else 0.0,
+			"collision": Rect2(pos.x - size.x * 0.5, pos.y - size.y, size.x, size.y),
+			"breakable": true, "broken": false, "broken_ms": 0.0,
+			"hp": maxi(1, hits), "def": def,
+			"break_sound": String(strings[5]) if strings.size() > 5 else "",
+			"hit_sound": String(strings[4]) if strings.size() > 4 else "",
+			"node": object_index,
+		})
+	return out
+
 func room_placement(index: int) -> Dictionary:
 	var id := String(rules["rooms"][index]["placement"])
 	for p: Dictionary in map_loader.placements():
@@ -1086,8 +1134,10 @@ func load_room(index: int, from_side: String) -> void:
 		var next_side: String = entry["next"]
 		doors.append({"side":next_side,"to":index+1,"pos":door_point(next_side)})
 	room_cleared = bool(room_snapshots.get(index,{}).get("cleared",false))
-	props = []
-	bus.emit("combat.room_loaded",{"room_index":index,"room_id":room_id,"placement":String(placement["id"]),"props":props.duplicate(true)})
+	props = build_props(room_map)
+	# props 由地图静态美术承载（native_map_loader 已画），这里不再交给视图二次渲染；
+	# 破坏时用 combat.prop_broken 按 prop_node 下标隐藏对应节点。
+	bus.emit("combat.room_loaded",{"room_index":index,"room_id":room_id,"placement":String(placement["id"]),"props":[]})
 	# Dungeon entry: centre of the map's own [dungeon start area]; doors spawn beside the paired gate.
 	var spawn := Vector2(room_width-160,250)
 	var area = room_map.get("start_area")

@@ -74,8 +74,18 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 	bus.subscribe("combat.room_loaded", _on_room_loaded)
 	bus.subscribe("combat.entity_spawned", _on_entity_spawned)
 	bus.subscribe("combat.entity_removed", _on_entity_removed)
+	bus.subscribe("combat.prop_broken", _on_prop_broken)
 	bus.subscribe("combat.appearance_changed", func(e: Dictionary):
 		if int(e["entity_id"])==0 and String(e["weapon"])!=_weapon:_set_weapon(String(e["weapon"])))
+
+## 可破坏物被打碎：地图里对应节点按 loader 打好的 prop_node 下标隐藏。
+func _on_prop_broken(event: Dictionary) -> void:
+	var index := int(event.get("node", -1))
+	if index < 0 or stage == null or stage.root == null:return
+	for node in stage.root.get_children():
+		if int(node.get_meta("prop_node", -1)) == index:
+			node.visible = false
+			return
 
 func set_debug_collision(enabled: bool) -> void:
 	stage.debug_collision = enabled
