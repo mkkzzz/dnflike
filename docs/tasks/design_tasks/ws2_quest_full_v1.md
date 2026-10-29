@@ -1,63 +1,48 @@
-# ws2 任务：任务系统全套实装（全量）
+# ws2 任务：任务数据与物品表实装
 
-> 移交方：ws1（2026-10-28）。负责人：ws2（只有该机有原版客户端环境）。
-> 关联数据与工具：`game_dnf/data/quest_catalog.json`、`tools/build_dnf_quest_catalog.py`、`tools/check_dnf_quests.py`。
-> 运行侧现状：`game_dnf/data/quests.json` 已实装 12 条（11 条有原版源文件），流程与回归（`QUEST_TEST` 45 项）已由 ws2 自己交付，可直接复用。
+> 移交方：ws1（2026-10-28）；接收/执行方：ws2。用户2026-10-29确认当前重点为任务数据实装＋物品表实装。
+> 最新取证：[本地可复用数据核查](../../reports/ws2/2026-10/2026-10-29_本地客户端任务物品可复用数据.md)。任务进度以 `tools/check_dnf_quests.py` 为准，全量总账不等于实装。
 
-## 一、背景与现状
+## 一、已具备的数据与工具
 
-ws1 已把原版 **3716 个 `.qst`** 全量解析成总账 `data/quest_catalog.json`（解析失败 0），每条含：路径、目录、品级、等级区间、目标类型、发布/交付 NPC 索引、职业限制、奖励、名称引用、是否已实装。
-
-| 维度 | 现状 |
+| 数据 | 入口与用途 |
 |---|---|
-| 总量 | 3716 |
-| 剧情主线 `[epic]` | 941（**当前已实装 11**） |
-| 其他品级 | urgent 1276、achievement 510、common unique 420、title 180、daily 140、training 125、normaly repeat 117 |
-| 目标类型 | seeking 1176、condition under clear 944、hunt enemy 697、meet npc 447、hunt monster 172、clear map 71… |
-| 已实装分布 | elvengard 4、handonmyre 4、common 3（都在 epic_1~epic_5 那条主线上） |
-| 待中文化引用 | **1397** 个唯一 `name_ref`（`string:<下标>`） |
+| 任务总账 | `game_dnf/data/quest_catalog.json`、`tools/build_dnf_quest_catalog.py`，结构字段及实装标记 |
+| 物品总账 | `game_dnf/data/item_catalog.json`、`tools/build_dnf_item_catalog.py`，部分属性及图标引用 |
+| 原版数字ID | PVF的quest.lst、equipment.lst、stackable.lst；索引归属与路径均保留 |
+| 中文正文 | 111备份STR与直接字串可读CP950繁体；本机DNF1031客户端PVF另有GB18030简体正文 |
+| 核查与导出 | `tools/audit_dnf_reusable_data.py`、`tools/dnf_pvf_archive.py`，只读源文件，生成至temp |
+| 运行时入口 | `game_dnf/data/quests.json`、`game_dnf/quests/catalog.gd`、`game_dnf/quests/service.gd`、`game_dnf/items/catalog.gd` |
 
-## 二、阻塞项：任务文本没有中文源
+## 二、中文源阻塞更正与版本契约
 
-当前资源库的 `pvf_config.sqlite` 由 **相邻 `111Script.pvf` 备份**建立，其中 `stringtable.bin` 是**键名表**：`[name]` 解出来是 `name_25144` 这种键，不是文本。实测抽样 858 条：中文 0、韩文 9、其余为路径/键名。
+旧任务包“串表只有键名，必须另找中文串表”和后续交接“111没有中文”的判断不成立。type-9表ID＋type-10键下标经n_string.lst可找到中文正文；直接字串须读取原字节按对应编码解码，不能把cp949乱码当加密。
 
-T0 凭证（`docs/design/26_DNF原版拆解_证据与版本.md`）记录了四份 PVF，只有 111 备份建过库：
+现有111结构可立即使用本版本繁体正文，不再将“无中文源”列为阻塞。简体客户端是独立版本，身份及覆盖统计见取证报告；它不是已确认实际加载版本，也不是已经筛好的60级内容包。
 
-| 角色 | 字节数 | SHA256 前段 | 建库 |
-|---|---|---|---|
-| 客户端根目录 `Script.pvf` | 183,230,422 | `3c0e8050…` | 否 |
-| `ImagePacks2/Script.pvf` | 202,396,005 | `3893d5d1…` | 否 |
-| `Video/Script.pvf` | 182,490,884 | `cfea184b…` | 否 |
-| 相邻 `111Script.pvf` | 202,404,709 | `f4885045…` | 是（当前库） |
+- 保留原PVF/数据库SHA256、路径、数字ID、原表/键/行号或直接字串索引。
+- 跨版本按ID＋路径＋字段语义核对后复用文本，不能跨PVF按字符串下标直接join。
+- 保留当前结构基线；来源冲突、未索引文件和不支持规则须隔离，不静默覆盖。
+- 60级白名单需排除后期、活动和历史候选；低等级、文件名或索引存在不足以单独证明应启用。
 
-客户端实际加载哪一份尚未锁定；中文串表最可能在**根目录那份**（客户端正常启动读取的）。
+## 三、执行顺序
 
-## 三、要做的事
-
-1. **取中文串表**：在客户端环境导出根目录 `Script.pvf` 的 `stringtable.bin`（约 15 MB，也可直接发布整份 pvf），上传到资源 Release 并在交接日志登记哈希。
-2. **出中文文本表**：按下标 join `quest_catalog.json` 的 `name_ref`，产出 `data/quest_text_zh.json`（`string:25144 → 中文名/描述`）；同一张表同时解决技能名、道具名、NPC 名。
-3. **校验语言源**：用已实装的 12 条对照——`epic_1_lorien_1` 应为“林纳斯大叔”、`epic_1_lorien_2` 应为“冒险开始”、`epic_1_lorien_3` 应为“噪音公害”。对不上就改试 `ImagePacks2` 与 `Video` 那两份。
-4. **按章节接入**：优先 `[epic]` 941 条，按 `epic_<章>_<区域>_<序号>` 顺序推进；每章接入后跑 `python tools/check_dnf_quests.py` 确认进度上升、无回退。
-5. **NPC 与地图前置**：qst 里的 `[npc index]` / `[complete npc index]` 是数字索引，接入前要映射到 `quests.json` 的 NPC 名；缺失的 NPC 与地图同步补齐。
-6. **其他品级**：`urgent`（1331，重复/紧急）、`title`（228，称号）、`job`/`epicjob`（243，转职）属独立子系统，需单独设计，不并入主线批次。
+1. 补完整数据编译：任务前置/目标/职业条件奖励/正文；物品恢复效果、堆叠、冷却组、完整属性范围及图标来源。旧总账不是完整运行时定义。
+2. 先接任务依赖物品：现有章节原奖励、HP/MP药剂、任务材料；原ID稳定映射，保留旧存档/样板ID兼容。
+3. 接Inventory、装备属性、消耗品、商店/掉落/任务发奖和图标；索引归属优先于后缀，配方不能当可穿戴装备。
+4. 任务先接108/4302及格兰后续，再按前置图推进主线；章节展示顺序与前置分开。缺NPC/地图/怪物映射或目标处理器时不开放相应任务。
+5. 紧急、称号、日常和转职等其他品级分批设计，保留源类型，不改成普通击杀任务凑实装数。
 
 ## 四、交付与验收
 
-- 每次批次交付：`data/quests.json` 新增任务 + `data/quest_catalog.json` 的 `implemented` 同步 + `check_dnf_quests.py` 进度数字。
-- 验收：`tools/run_dnf_loop.ps1 -Test` 全绿（当前基线 348 项），且 `check_dnf_quests.py` 报告 `总账与已实装任务一致`。
-- 进度口径：以 `check_dnf_quests.py` 打印的 `epic x / 941` 与各目录实装数作为唯一进度来源。
+- 每批任务更新运行时定义及总账implemented标记，运行 `python tools/check_dnf_quests.py`，要求一致且无回退。
+- 物品保留源ID、字段、资产映射，验证堆叠/消耗/装备属性/选奖与失败回滚；预览与实装使用同一导出包。
+- 跑相关模块与 `tools/run_dnf_loop.ps1 -Test`，验证真实接取、累计、交付和存读档；文本解析通过不代表运行时实装。
+- 原始目标/奖励参数、恢复语义、重量单位等按批确认，不能因为能读取就声称完整原版还原。
 
-## 五、ws1 已提供
+## 五、剩余缺口
 
-| 文件 | 作用 |
-|---|---|
-| `game_dnf/data/quest_catalog.json` | 3716 条总账（grade/等级/类型/NPC/奖励/name_ref/已实装标记） |
-| `tools/build_dnf_quest_catalog.py` | 重跑总账（换库或加新 pvf 后执行） |
-| `tools/check_dnf_quests.py` | 一致性校验 + 进度打印 |
-| `game_dnf/data/quests.json` | 已实装 12 条，格式可直接扩写 |
-
-## 六、风险
-
-- 若根目录那份 pvf 也不是中文，需回到客户端逐份验证（不要仅凭文件名判定，见 26 文档）。
-- 任务描述文本（`condition message` / `solve message`）与名称同源，必须一起解决，否则任务详情页会是空或键名。
-- 全量接入会显著放大 `quests.json` 体积与加载时间，接入前先确认运行时按章节分片加载。
+- 111部分正文缺键/解码失败及异常EQU；缺图、越界帧、同路径多版本候选分别登记。
+- 情怀客户端根目录/Video为本次读取器不支持的头格式，ImagePacks2目录CRC未通过；不猜测有效版本、不绕过检查。
+- 现行全局堆叠、药效/冷却、四类任务目标的表达能力有限，须扩展契约后再批量接入。
+- 实际客户端加载PVF的运行证据仍未完成，本次静态取证不关闭T0等待项。

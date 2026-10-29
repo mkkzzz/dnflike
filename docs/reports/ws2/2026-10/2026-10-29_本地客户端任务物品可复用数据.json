@@ -1,0 +1,1191 @@
+{
+  "schema": "dnf_local_reuse_evidence/1",
+  "scope": "static source audit; no runtime-loaded PVF or 60-level activation whitelist established",
+  "backup": {
+    "schema": "dnf_reusable_text_audit/1",
+    "scope": "source_file_evidence_not_verified_runtime_or_60_level_whitelist",
+    "summary": {
+      "equ": {
+        "total": 74475,
+        "indexed": 71321,
+        "crc_failed": 0,
+        "name_resolved": 57331,
+        "name_needs_review": 0,
+        "condition_resolved": 0,
+        "solve_resolved": 0,
+        "explain_resolved": 7059,
+        "missing_text_links": 0,
+        "text_decode_errors": 0
+      },
+      "qst": {
+        "total": 3716,
+        "indexed": 2824,
+        "crc_failed": 0,
+        "name_resolved": 3521,
+        "name_needs_review": 0,
+        "condition_resolved": 3701,
+        "solve_resolved": 3514,
+        "explain_resolved": 0,
+        "missing_text_links": 66,
+        "text_decode_errors": 0
+      },
+      "stk": {
+        "total": 10491,
+        "indexed": 10360,
+        "crc_failed": 0,
+        "name_resolved": 8861,
+        "name_needs_review": 0,
+        "condition_resolved": 0,
+        "solve_resolved": 0,
+        "explain_resolved": 3217,
+        "missing_text_links": 174,
+        "text_decode_errors": 79
+      }
+    },
+    "indices": {
+      "n_quest/quest.lst": {
+        "ids": 2824,
+        "missing_files": 0
+      },
+      "equipment/equipment.lst": {
+        "ids": 67184,
+        "missing_files": 0
+      },
+      "stackable/stackable.lst": {
+        "ids": 14499,
+        "missing_files": 0
+      }
+    },
+    "text_sources": {
+      "passiveobject/passiveobject.kor.str": {
+        "sha256": "e0201320dbe03661ac36ec26d10929d5c3c2555e97544e847b75c2169d8a8828",
+        "encoding": "cp950",
+        "round_trip": true,
+        "entries": 174904,
+        "duplicate_keys": []
+      },
+      "n_quest/quest.kor.str": {
+        "sha256": "385eb7755e9005086c341a7d794a53e10e3fc9d37ef9841a7120079c10703d4c",
+        "encoding": "cp950",
+        "round_trip": true,
+        "entries": 13703,
+        "duplicate_keys": []
+      },
+      "stackable/stackable.kor.str": {
+        "sha256": "dd321af970e949e6d0262cc3d175965e108d47175c9326bf4132cbaf6473af75",
+        "encoding": "cp950",
+        "round_trip": true,
+        "entries": 38438,
+        "duplicate_keys": []
+      }
+    },
+    "failures": [
+      {
+        "path": "equipment/character/mage/at_avatar/cap/ahat_2080001.equ",
+        "error": "Not an aligned B0D0 script"
+      }
+    ],
+    "source": {
+      "name": "pvf_config.sqlite",
+      "sha256": "74d5681b9afd0816b50d46e1150afebd10e66fe196de14bf0fa5bf56124a2799",
+      "kind": "extraction_database",
+      "encoding": "cp950"
+    }
+  },
+  "client1031": {
+    "schema": "dnf_reusable_text_audit/1",
+    "scope": "source_file_evidence_not_verified_runtime_or_60_level_whitelist",
+    "summary": {
+      "equ": {
+        "total": 65246,
+        "indexed": 64670,
+        "crc_failed": 0,
+        "name_resolved": 53336,
+        "name_needs_review": 0,
+        "condition_resolved": 0,
+        "solve_resolved": 0,
+        "explain_resolved": 7810,
+        "missing_text_links": 0,
+        "text_decode_errors": 0
+      },
+      "qst": {
+        "total": 3233,
+        "indexed": 3026,
+        "crc_failed": 0,
+        "name_resolved": 3049,
+        "name_needs_review": 0,
+        "condition_resolved": 3231,
+        "solve_resolved": 3057,
+        "explain_resolved": 0,
+        "missing_text_links": 0,
+        "text_decode_errors": 0
+      },
+      "stk": {
+        "total": 10233,
+        "indexed": 9817,
+        "crc_failed": 0,
+        "name_resolved": 9769,
+        "name_needs_review": 0,
+        "condition_resolved": 0,
+        "solve_resolved": 0,
+        "explain_resolved": 4222,
+        "missing_text_links": 0,
+        "text_decode_errors": 0
+      }
+    },
+    "indices": {
+      "n_quest/quest.lst": {
+        "ids": 3026,
+        "missing_files": 0
+      },
+      "equipment/equipment.lst": {
+        "ids": 60536,
+        "missing_files": 0
+      },
+      "stackable/stackable.lst": {
+        "ids": 13951,
+        "missing_files": 0
+      }
+    },
+    "text_sources": {
+      "equipment/equipment.kor.str": {
+        "sha256": "de0780672ff23d18edad400a8509ed64cc56e4339e3df50287c57077eb08387a",
+        "encoding": "gb18030",
+        "round_trip": true,
+        "entries": 153357,
+        "duplicate_keys": []
+      },
+      "stackable/stackable.kor.str": {
+        "sha256": "8247e4bcfc24464e97a0413d7c0b24a40cd7a598996914e09563ac5845ebad6a",
+        "encoding": "gb18030",
+        "round_trip": true,
+        "entries": 36932,
+        "duplicate_keys": []
+      }
+    },
+    "failures": [],
+    "source": {
+      "name": "Script.pvf",
+      "sha256": "f761f58f5c913a1119f7661e266f2e85129bcf6b8230068e30b6dd21ae073c29",
+      "kind": "pvf",
+      "encoding": "gb18030"
+    }
+  },
+  "checks": {
+    "reader_vs_extraction": {
+      "stringtable.bin": true,
+      "n_string.lst": true,
+      "n_quest/quest.kor.str": true,
+      "n_quest/quest.lst": true,
+      "equipment/equipment.lst": true,
+      "stackable/stackable.lst": true,
+      "n_quest/elvengard/lorien/epic_1_lorien_1.qst": true,
+      "stackable/ptn_hplowest.stk": true
+    },
+    "indices_comparison": {
+      "n_quest/quest.lst": {
+        "shared_ids": 2626,
+        "same_path": 2621,
+        "different_path": 5,
+        "backup_only": 198,
+        "client1031_only": 400
+      },
+      "equipment/equipment.lst": {
+        "shared_ids": 57209,
+        "same_path": 57207,
+        "different_path": 2,
+        "backup_only": 9975,
+        "client1031_only": 3327
+      },
+      "stackable/stackable.lst": {
+        "shared_ids": 12715,
+        "same_path": 12484,
+        "different_path": 231,
+        "backup_only": 1784,
+        "client1031_only": 1236
+      }
+    },
+    "simplified_samples": {
+      "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_5.qst": {
+        "[name]": [
+          {
+            "text": "落雷凯诺的传说",
+            "string_index": 457783,
+            "encoding": "gb18030",
+            "needs_review": false
+          }
+        ],
+        "[depend message]": [
+          {
+            "text": "你说能呼唤闪电的哥布林？ 确实有这样的传说。\r\n哥布林部族每一百年会因染色体突变出现一个白色皮肤， 能自由操纵闪电的哥布林……不过我一直以为那只是传说……\r\n你要去找它？ 我劝你还是打消这个念头吧！ 虽然哥布林是低等生物， 但既然是传说， 就一定会有特别的地方。",
+            "string_index": 457784,
+            "encoding": "gb18030",
+            "needs_review": false
+          }
+        ],
+        "[condition message]": [
+          {
+            "text": "前往格兰之森的『雷鸣废墟』， 击败领主落雷凯诺。",
+            "string_index": 457785,
+            "encoding": "gb18030",
+            "needs_review": false
+          }
+        ],
+        "[solve message]": [
+          {
+            "text": "你找到它了？ 真不敢相信！ 它一定是个可怕的怪物吧？\r\n你把它除掉了？ 嘿嘿， 那些哥布林应该陷入混乱了……不过他们应该还没有死心~\r\n这是我从哥布林部落逃走时拿的戒指， 现在赠送给你这样的勇士， 请你不要拒绝！",
+            "string_index": 457786,
+            "encoding": "gb18030",
+            "needs_review": false
+          }
+        ],
+        "[dialog]": [
+          {
+            "text": "<monster::9>啊！竟然是侵入者…难道他不怕我的闪电吗？\r\n嗯，这是试验我的闪电之力的好机会！喂！你给我过来~",
+            "string_index": 457787,
+            "encoding": "gb18030",
+            "needs_review": false
+          }
+        ]
+      },
+      "stackable/ptn_hplowest.stk": {
+        "[name]": [
+          {
+            "text": "诺顿的新手HP药剂",
+            "table": "stackable/stackable.kor.str",
+            "table_id": 13,
+            "key": "name_1106",
+            "line": 5647,
+            "missing": false,
+            "needs_review": false
+          }
+        ],
+        "[explain]": [
+          {
+            "text": "可以向诺顿、 赛丽亚、 林纳斯或罗莉安购买。",
+            "table": "stackable/stackable.kor.str",
+            "table_id": 13,
+            "key": "explain_1106",
+            "line": 5649,
+            "missing": false,
+            "needs_review": false
+          }
+        ],
+        "[flavor text]": [
+          {
+            "text": "专为首次访问阿拉德大陆的冒险家准备的实用药剂， 可以补充HP。",
+            "table": "stackable/stackable.kor.str",
+            "table_id": 13,
+            "key": "flavor_text_1106",
+            "line": 5650,
+            "missing": false,
+            "needs_review": false
+          }
+        ]
+      },
+      "stackable/ptn_mplowest.stk": {
+        "[name]": [
+          {
+            "text": "罗莉安的新手MP药剂",
+            "table": "stackable/stackable.kor.str",
+            "table_id": 13,
+            "key": "name_1112",
+            "line": 5671,
+            "missing": false,
+            "needs_review": false
+          }
+        ],
+        "[explain]": [
+          {
+            "text": "可以向诺顿、 赛丽亚、 林纳斯或罗莉安购买。",
+            "table": "stackable/stackable.kor.str",
+            "table_id": 13,
+            "key": "explain_1113",
+            "line": 5678,
+            "missing": false,
+            "needs_review": false
+          }
+        ],
+        "[flavor text]": [
+          {
+            "text": "专为阿拉德大陆的冒险家准备的特效药剂， 可以补充MP。",
+            "table": "stackable/stackable.kor.str",
+            "table_id": 13,
+            "key": "flavor_text_1113",
+            "line": 5679,
+            "missing": false,
+            "needs_review": false
+          }
+        ]
+      },
+      "equipment/character/common/jacket/cloth/vest_owool.equ": {
+        "[name]": [
+          {
+            "text": "(旧) 古老的羊毛背心",
+            "table": "equipment/equipment.kor.str",
+            "table_id": 3,
+            "key": "name_10018",
+            "line": 49885,
+            "missing": false,
+            "needs_review": false
+          }
+        ]
+      }
+    },
+    "icon_reference_coverage": {
+      "has_candidate_with_valid_frame": 82709,
+      "missing_image": 1374,
+      "multiple_image_versions": 18770,
+      "no_icon": 1392,
+      "frame_out_of_range": 58
+    },
+    "level_metadata": {
+      "above_60": 13442,
+      "at_most_60": 58557,
+      "no_level": 13534
+    },
+    "code_lists": {
+      "装备": {
+        "rows": 56101,
+        "unique_ids": 56101,
+        "mapped_rows": 56100,
+        "duplicate_ids": [],
+        "sha256": "23170964f5be84bc09d7cb8236041384e49c5a953422bc77afc60a1b8ca9595e"
+      },
+      "物品": {
+        "rows": 13967,
+        "unique_ids": 13965,
+        "mapped_rows": 13967,
+        "duplicate_ids": [
+          "4151",
+          "4152"
+        ],
+        "sha256": "6cfd987961a474b6a3b9009a6c6e6edbf1539c79ab3629608db1163874fa860c"
+      }
+    }
+  },
+  "pvf_files": [
+    {
+      "relative_path": "111Script.pvf",
+      "bytes": 202404709,
+      "sha256": "f48850456b7dc0107278fb3f3a74fd68ee404889b95880f3204ce10fbd179be0",
+      "role": "existing extraction source"
+    },
+    {
+      "relative_path": "情怀60复古/Script.pvf",
+      "bytes": 183230422,
+      "sha256": "3c0e8050082ddf922abe0fe9643f3550cf42ab14576caf2ba6b1aeb3881bcea4",
+      "error": "Nonstandard header; standard GUID reader not applicable"
+    },
+    {
+      "relative_path": "新建文件夹/DNF1031客户端/Script.pvf",
+      "bytes": 181767661,
+      "sha256": "f761f58f5c913a1119f7661e266f2e85129bcf6b8230068e30b6dd21ae073c29",
+      "files": 342647,
+      "version": 66282,
+      "tree_crc_ok": true,
+      "comparison": {
+        "n_string.lst": {
+          "present": true,
+          "matches_backup": false
+        },
+        "stringtable.bin": {
+          "present": true,
+          "matches_backup": false
+        },
+        "n_quest/quest.kor.str": {
+          "present": true,
+          "matches_backup": false
+        },
+        "equipment/equipment.lst": {
+          "present": true,
+          "matches_backup": false
+        },
+        "stackable/stackable.lst": {
+          "present": true,
+          "matches_backup": false
+        },
+        "n_quest/quest.lst": {
+          "present": true,
+          "matches_backup": false
+        },
+        "stackable/stackable.kor.str": {
+          "present": true,
+          "matches_backup": false
+        },
+        "n_quest/elvengard/lorien/epic_1_lorien_1.qst": {
+          "present": true,
+          "matches_backup": false
+        },
+        "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_5.qst": {
+          "present": true,
+          "matches_backup": false
+        },
+        "stackable/ptn_hplowest.stk": {
+          "present": true,
+          "matches_backup": false
+        },
+        "equipment/character/common/jacket/cloth/vest_owool.equ": {
+          "present": true,
+          "matches_backup": false
+        }
+      },
+      "encoding_probe": {
+        "n_quest/quest.kor.str": {
+          "cp950": {
+            "strict_decode": false
+          },
+          "gb18030": {
+            "round_trip": true,
+            "sample": "铁匠林纳斯"
+          },
+          "cp949": {
+            "strict_decode": false
+          },
+          "utf-8": {
+            "strict_decode": false
+          }
+        },
+        "stackable/stackable.kor.str": {
+          "cp950": {
+            "strict_decode": false
+          },
+          "gb18030": {
+            "round_trip": true,
+            "sample": "诺顿的新手HP药剂"
+          },
+          "cp949": {
+            "strict_decode": false
+          },
+          "utf-8": {
+            "strict_decode": false
+          }
+        }
+      },
+      "samples": {
+        "n_quest/elvengard/lorien/epic_1_lorien_1.qst": {
+          "[name]": [
+            {
+              "text": "沺蔔輿馨佴",
+              "string_index": 456395,
+              "encoding": "cp950",
+              "needs_review": false
+            }
+          ],
+          "[depend message]": [
+            {
+              "text": "",
+              "string_index": 456396,
+              "error": "'cp950' codec can't decode byte 0xc8 in position 26: illegal multibyte sequence",
+              "needs_review": false
+            }
+          ],
+          "[condition message]": [
+            {
+              "text": "ヶ厘鬲嫌恅滅盄問溼沺蔔輿馨佴﹝",
+              "string_index": 456397,
+              "encoding": "cp950",
+              "needs_review": false
+            }
+          ],
+          "[solve message]": [
+            {
+              "text": "",
+              "string_index": 456398,
+              "error": "'cp950' codec can't decode byte 0xc8 in position 6: illegal multibyte sequence",
+              "needs_review": false
+            }
+          ]
+        },
+        "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_5.qst": {
+          "[name]": [
+            {
+              "text": "邈濘翮霾腔換佽",
+              "string_index": 457783,
+              "encoding": "cp950",
+              "needs_review": false
+            }
+          ],
+          "[depend message]": [
+            {
+              "text": "",
+              "string_index": 457784,
+              "error": "'cp950' codec can't decode byte 0xc8 in position 25: illegal multibyte sequence",
+              "needs_review": false
+            }
+          ],
+          "[condition message]": [
+            {
+              "text": "ヶ厘跡擘眳伬腔◇濘霪煙剡◆ㄛ 僻啖鍰翋邈濘翮霾﹝",
+              "string_index": 457785,
+              "encoding": "cp950",
+              "needs_review": false
+            }
+          ],
+          "[solve message]": [
+            {
+              "text": "",
+              "string_index": 457786,
+              "error": "'cp950' codec can't decode byte 0xc8 in position 90: illegal multibyte sequence",
+              "needs_review": false
+            }
+          ],
+          "[dialog]": [
+            {
+              "text": "",
+              "string_index": 457787,
+              "error": "'cp950' codec can't decode byte 0xc8 in position 18: illegal multibyte sequence",
+              "needs_review": false
+            }
+          ]
+        },
+        "stackable/ptn_hplowest.stk": {
+          "error": "'cp950' codec can't decode byte 0xc8 in position 808: illegal multibyte sequence"
+        },
+        "equipment/character/common/jacket/cloth/vest_owool.equ": {
+          "error": "'cp950' codec can't decode byte 0xc8 in position 1081: illegal multibyte sequence"
+        }
+      }
+    },
+    {
+      "relative_path": "新建文件夹/DNF1031客户端/DNF1031客户端/Script.pvf",
+      "bytes": 181767661,
+      "sha256": "f761f58f5c913a1119f7661e266f2e85129bcf6b8230068e30b6dd21ae073c29",
+      "files": 342647,
+      "version": 66282,
+      "tree_crc_ok": true,
+      "comparison": {
+        "n_string.lst": {
+          "present": true,
+          "matches_backup": false
+        },
+        "stringtable.bin": {
+          "present": true,
+          "matches_backup": false
+        },
+        "n_quest/quest.kor.str": {
+          "present": true,
+          "matches_backup": false
+        },
+        "equipment/equipment.lst": {
+          "present": true,
+          "matches_backup": false
+        },
+        "stackable/stackable.lst": {
+          "present": true,
+          "matches_backup": false
+        },
+        "n_quest/quest.lst": {
+          "present": true,
+          "matches_backup": false
+        },
+        "stackable/stackable.kor.str": {
+          "present": true,
+          "matches_backup": false
+        },
+        "n_quest/elvengard/lorien/epic_1_lorien_1.qst": {
+          "present": true,
+          "matches_backup": false
+        },
+        "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_5.qst": {
+          "present": true,
+          "matches_backup": false
+        },
+        "stackable/ptn_hplowest.stk": {
+          "present": true,
+          "matches_backup": false
+        },
+        "equipment/character/common/jacket/cloth/vest_owool.equ": {
+          "present": true,
+          "matches_backup": false
+        }
+      },
+      "encoding_probe": {
+        "n_quest/quest.kor.str": {
+          "cp950": {
+            "strict_decode": false
+          },
+          "gb18030": {
+            "round_trip": true,
+            "sample": "铁匠林纳斯"
+          },
+          "cp949": {
+            "strict_decode": false
+          },
+          "utf-8": {
+            "strict_decode": false
+          }
+        },
+        "stackable/stackable.kor.str": {
+          "cp950": {
+            "strict_decode": false
+          },
+          "gb18030": {
+            "round_trip": true,
+            "sample": "诺顿的新手HP药剂"
+          },
+          "cp949": {
+            "strict_decode": false
+          },
+          "utf-8": {
+            "strict_decode": false
+          }
+        }
+      },
+      "samples": {
+        "n_quest/elvengard/lorien/epic_1_lorien_1.qst": {
+          "[name]": [
+            {
+              "text": "沺蔔輿馨佴",
+              "string_index": 456395,
+              "encoding": "cp950",
+              "needs_review": false
+            }
+          ],
+          "[depend message]": [
+            {
+              "text": "",
+              "string_index": 456396,
+              "error": "'cp950' codec can't decode byte 0xc8 in position 26: illegal multibyte sequence",
+              "needs_review": false
+            }
+          ],
+          "[condition message]": [
+            {
+              "text": "ヶ厘鬲嫌恅滅盄問溼沺蔔輿馨佴﹝",
+              "string_index": 456397,
+              "encoding": "cp950",
+              "needs_review": false
+            }
+          ],
+          "[solve message]": [
+            {
+              "text": "",
+              "string_index": 456398,
+              "error": "'cp950' codec can't decode byte 0xc8 in position 6: illegal multibyte sequence",
+              "needs_review": false
+            }
+          ]
+        },
+        "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_5.qst": {
+          "[name]": [
+            {
+              "text": "邈濘翮霾腔換佽",
+              "string_index": 457783,
+              "encoding": "cp950",
+              "needs_review": false
+            }
+          ],
+          "[depend message]": [
+            {
+              "text": "",
+              "string_index": 457784,
+              "error": "'cp950' codec can't decode byte 0xc8 in position 25: illegal multibyte sequence",
+              "needs_review": false
+            }
+          ],
+          "[condition message]": [
+            {
+              "text": "ヶ厘跡擘眳伬腔◇濘霪煙剡◆ㄛ 僻啖鍰翋邈濘翮霾﹝",
+              "string_index": 457785,
+              "encoding": "cp950",
+              "needs_review": false
+            }
+          ],
+          "[solve message]": [
+            {
+              "text": "",
+              "string_index": 457786,
+              "error": "'cp950' codec can't decode byte 0xc8 in position 90: illegal multibyte sequence",
+              "needs_review": false
+            }
+          ],
+          "[dialog]": [
+            {
+              "text": "",
+              "string_index": 457787,
+              "error": "'cp950' codec can't decode byte 0xc8 in position 18: illegal multibyte sequence",
+              "needs_review": false
+            }
+          ]
+        },
+        "stackable/ptn_hplowest.stk": {
+          "error": "'cp950' codec can't decode byte 0xc8 in position 808: illegal multibyte sequence"
+        },
+        "equipment/character/common/jacket/cloth/vest_owool.equ": {
+          "error": "'cp950' codec can't decode byte 0xc8 in position 1081: illegal multibyte sequence"
+        }
+      }
+    },
+    {
+      "relative_path": "情怀60复古/ImagePacks2/Script.pvf",
+      "bytes": 202396005,
+      "sha256": "3893d5d1506bcc332ca4b6438f6f884d128481641483bee9478cad8d0221fe01",
+      "error": "Directory CRC mismatch"
+    },
+    {
+      "relative_path": "情怀60复古/Video/Script.pvf",
+      "bytes": 182490884,
+      "sha256": "cfea184b6a26252e41fd419765eadd07fb748c5e0759f04d937d21cce7a99542",
+      "error": "Nonstandard header; standard GUID reader not applicable"
+    }
+  ],
+  "samples": {
+    "backup": [
+      {
+        "path": "equipment/character/common/jacket/cloth/vest_owool.equ",
+        "source_ids": [
+          {
+            "list": "equipment/equipment.lst",
+            "id": 10018
+          }
+        ],
+        "sha256": "34284eeada1841f3f9520f113476b6b8ef92048a62127f69b9ff32d62c10c34c",
+        "crc_ok": true,
+        "fields": {
+          "[name]": [
+            {
+              "text": "古老的羊毛背心",
+              "string_index": 239217,
+              "encoding": "cp950",
+              "needs_review": false
+            }
+          ]
+        }
+      },
+      {
+        "path": "n_quest/elvengard/lorien/epic_1_lorien_1.qst",
+        "source_ids": [
+          {
+            "list": "n_quest/quest.lst",
+            "id": 101
+          }
+        ],
+        "sha256": "1ae5f9738c8ed588310fa89fe15c6cfdf6612890b302a44d35238e11ba3adcc8",
+        "crc_ok": true,
+        "fields": {
+          "[name]": [
+            {
+              "text": "林納斯大叔",
+              "table": "n_quest/quest.kor.str",
+              "table_id": 11,
+              "key": "name_20080",
+              "line": 2848,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[depend message]": [
+            {
+              "text": "鐵匠林納斯大叔在艾爾文防線。 \\n以后如果要去冒險的話，就去找林納斯大叔吧， \\n我想他應該會樂意幫助你的。",
+              "table": "n_quest/quest.kor.str",
+              "table_id": 11,
+              "key": "depend_message_20085",
+              "line": 2849,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[condition message]": [
+            {
+              "text": "前往艾爾文防線拜訪鐵匠林納斯。",
+              "table": "n_quest/quest.kor.str",
+              "table_id": 11,
+              "key": "condition_message_20090",
+              "line": 2850,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[solve message]": [
+            {
+              "text": "你就是賽莉亞的救命恩人？",
+              "table": "n_quest/quest.kor.str",
+              "table_id": 11,
+              "key": "solve_message_20095",
+              "line": 2851,
+              "missing": false,
+              "needs_review": false
+            }
+          ]
+        }
+      },
+      {
+        "path": "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_5.qst",
+        "source_ids": [
+          {
+            "list": "n_quest/quest.lst",
+            "id": 108
+          }
+        ],
+        "sha256": "e64bd802369e77a346e679d7fbb9e9389f32c1d1096ca3fcc2d6c8af6156c450",
+        "crc_ok": true,
+        "fields": {
+          "[name]": [
+            {
+              "text": "凱諾哥布林的傳說",
+              "table": "n_quest/quest.kor.str",
+              "table_id": 11,
+              "key": "name_20220",
+              "line": 2876,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[depend message]": [
+            {
+              "text": "你說能呼喚閃電的哥布林… 應該沒有這種事… \\n如果人們說的是真的，那么在哥布林社會流傳像傳說一樣的白色哥布林，好像真的出現了。  \\n哥布林部族每一百年會因染色體突變出現一個白色皮膚，\\n能自由操縱閃電的哥布林……不過我一直以為那只是傳說…… \\n如果今天沒有從客人那裡聽到這件事的話，連我都不會相信的… \\n 難道說… 你要去找它？ \\n我勸你還是打消這個念頭吧！ 雖然哥布林是低等生物，但既然是傳說，就一定會有特別的地方。",
+              "table": "n_quest/quest.kor.str",
+              "table_id": 11,
+              "key": "depend_message_20225",
+              "line": 2877,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[condition message]": [
+            {
+              "text": "前往格蘭之森的雷鳴廢墟，擊敗領主凱諾。",
+              "table": "n_quest/quest.kor.str",
+              "table_id": 11,
+              "key": "condition_message_20230",
+              "line": 2878,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[solve message]": [
+            {
+              "text": "你是之前詢問白色哥布林的人吧？\\n呃…你已經找到白色哥布林並擊退他了？姆…一時之間受到驚嚇啊…\\n可是呢，哥布林囂張子也不會太長久了。\\n這是我從哥布林部落逃走時，偷偷拿的武器和戒指。有了這些就不怕被哥布林襲擊了！",
+              "table": "n_quest/quest.kor.str",
+              "table_id": 11,
+              "key": "solve_message_20235",
+              "line": 2879,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[dialog]": [
+            {
+              "text": "<monster::9>啊！竟然是侵入者…難道他不怕我的閃電嗎？ \\n 嗯，這是試驗我的閃電之力的好機會！喂！你給我過來~",
+              "table": "n_quest/quest.kor.str",
+              "table_id": 11,
+              "key": "house_event_10",
+              "line": 7697,
+              "missing": false,
+              "needs_review": false
+            }
+          ]
+        }
+      },
+      {
+        "path": "stackable/ptn_hplowest.stk",
+        "source_ids": [
+          {
+            "list": "stackable/stackable.lst",
+            "id": 1106
+          }
+        ],
+        "sha256": "646662267b868dac2fec409781fccd405754d6b67dbc64c042b0c935346bbef7",
+        "crc_ok": true,
+        "fields": {
+          "[name]": [
+            {
+              "text": "諾頓的新手HP藥劑",
+              "table": "stackable/stackable.kor.str",
+              "table_id": 13,
+              "key": "name_1106",
+              "line": 5493,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[explain]": [
+            {
+              "text": "可以向諾頓、 賽麗亞、 林納斯或羅莉安購買。",
+              "table": "stackable/stackable.kor.str",
+              "table_id": 13,
+              "key": "explain_1106",
+              "line": 5494,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[flavor text]": [
+            {
+              "text": "為初次造訪阿拉德冒險家的昂貴 HP藥水",
+              "table": "stackable/stackable.kor.str",
+              "table_id": 13,
+              "key": "flavor_text_1106",
+              "line": 5495,
+              "missing": false,
+              "needs_review": false
+            }
+          ]
+        }
+      },
+      {
+        "path": "stackable/ptn_mplowest.stk",
+        "source_ids": [
+          {
+            "list": "stackable/stackable.lst",
+            "id": 1112
+          }
+        ],
+        "sha256": "de867e61cbe79a7a3ee9789af3a4786b2dcca076836ca071ac805fe1402e2b04",
+        "crc_ok": true,
+        "fields": {
+          "[name]": [
+            {
+              "text": "羅莉安的新手MP藥劑",
+              "table": "stackable/stackable.kor.str",
+              "table_id": 13,
+              "key": "name_1112",
+              "line": 5511,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[explain]": [
+            {
+              "text": "可以向諾頓、 賽麗亞、 林納斯或羅莉安購買。",
+              "table": "stackable/stackable.kor.str",
+              "table_id": 13,
+              "key": "explain_1113",
+              "line": 5516,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[flavor text]": [
+            {
+              "text": "專為有收集愛好的冒險家準備的珍貴藥劑， 可以補充HP。",
+              "table": "stackable/stackable.kor.str",
+              "table_id": 13,
+              "key": "flavor_text_1113",
+              "line": 5517,
+              "missing": false,
+              "needs_review": false
+            }
+          ]
+        }
+      }
+    ],
+    "client1031": [
+      {
+        "path": "equipment/character/common/jacket/cloth/vest_owool.equ",
+        "source_ids": [
+          {
+            "list": "equipment/equipment.lst",
+            "id": 10018
+          }
+        ],
+        "sha256": "114d119badd8f1b1edd3f9d49c3969ef4410aba14f643e38025d6ca31541ab67",
+        "crc_ok": true,
+        "fields": {
+          "[name]": [
+            {
+              "text": "(旧) 古老的羊毛背心",
+              "table": "equipment/equipment.kor.str",
+              "table_id": 3,
+              "key": "name_10018",
+              "line": 49885,
+              "missing": false,
+              "needs_review": false
+            }
+          ]
+        }
+      },
+      {
+        "path": "n_quest/elvengard/lorien/epic_1_lorien_1.qst",
+        "source_ids": [
+          {
+            "list": "n_quest/quest.lst",
+            "id": 101
+          }
+        ],
+        "sha256": "2e5873b9dc92f75a2c983444eba65a772ebf8c5fad97aa4c6fa65ca4f94072d0",
+        "crc_ok": true,
+        "fields": {
+          "[name]": [
+            {
+              "text": "铁匠林纳斯",
+              "string_index": 456395,
+              "encoding": "gb18030",
+              "needs_review": false
+            }
+          ],
+          "[depend message]": [
+            {
+              "text": "那些胆小的哥布林为什幺会突然变得这幺狂暴……而且阿拉德大陆最近常常出现这种奇怪的现象……难道……？\r\n啊！ 对不起， 我只顾想事情……您说要去冒险啊？ 但您好像还不太熟悉周边的环境啊， 很多冒险家都是先熟悉周边环境再去冒险的。\r\n嗯……您就先去艾尔文防线找林纳斯大叔吧， 他是一位手艺超级棒的铁匠， 而且很喜欢和冒险家来往， 他一定会帮助您的。",
+              "string_index": 456396,
+              "encoding": "gb18030",
+              "needs_review": false
+            }
+          ],
+          "[condition message]": [
+            {
+              "text": "前往艾尔文防线拜访铁匠林纳斯。",
+              "string_index": 456397,
+              "encoding": "gb18030",
+              "needs_review": false
+            }
+          ],
+          "[solve message]": [
+            {
+              "text": "你就是赛丽亚的救命恩人？ 嗯， 看你的样子不太像啊。 不过既然你能从哥布林手里救出赛丽亚， 我就暂且当你是个不错的人吧！",
+              "string_index": 456398,
+              "encoding": "gb18030",
+              "needs_review": false
+            }
+          ]
+        }
+      },
+      {
+        "path": "n_quest/handonmyre/sunderland/epic_5_sunderland_mutant_5.qst",
+        "source_ids": [
+          {
+            "list": "n_quest/quest.lst",
+            "id": 108
+          }
+        ],
+        "sha256": "13f1c2ef9d2bc561c852b7ee99612fc3a7ec642c468465e3ebc6d7b5c6484bc0",
+        "crc_ok": true,
+        "fields": {
+          "[name]": [
+            {
+              "text": "落雷凯诺的传说",
+              "string_index": 457783,
+              "encoding": "gb18030",
+              "needs_review": false
+            }
+          ],
+          "[depend message]": [
+            {
+              "text": "你说能呼唤闪电的哥布林？ 确实有这样的传说。\r\n哥布林部族每一百年会因染色体突变出现一个白色皮肤， 能自由操纵闪电的哥布林……不过我一直以为那只是传说……\r\n你要去找它？ 我劝你还是打消这个念头吧！ 虽然哥布林是低等生物， 但既然是传说， 就一定会有特别的地方。",
+              "string_index": 457784,
+              "encoding": "gb18030",
+              "needs_review": false
+            }
+          ],
+          "[condition message]": [
+            {
+              "text": "前往格兰之森的『雷鸣废墟』， 击败领主落雷凯诺。",
+              "string_index": 457785,
+              "encoding": "gb18030",
+              "needs_review": false
+            }
+          ],
+          "[solve message]": [
+            {
+              "text": "你找到它了？ 真不敢相信！ 它一定是个可怕的怪物吧？\r\n你把它除掉了？ 嘿嘿， 那些哥布林应该陷入混乱了……不过他们应该还没有死心~\r\n这是我从哥布林部落逃走时拿的戒指， 现在赠送给你这样的勇士， 请你不要拒绝！",
+              "string_index": 457786,
+              "encoding": "gb18030",
+              "needs_review": false
+            }
+          ],
+          "[dialog]": [
+            {
+              "text": "<monster::9>啊！竟然是侵入者…难道他不怕我的闪电吗？\r\n嗯，这是试验我的闪电之力的好机会！喂！你给我过来~",
+              "string_index": 457787,
+              "encoding": "gb18030",
+              "needs_review": false
+            }
+          ]
+        }
+      },
+      {
+        "path": "stackable/ptn_hplowest.stk",
+        "source_ids": [
+          {
+            "list": "stackable/stackable.lst",
+            "id": 1106
+          }
+        ],
+        "sha256": "9f6c7a444508c986890dfd52be942357c41b660c9017b25b01b1c2dedc5f6390",
+        "crc_ok": true,
+        "fields": {
+          "[name]": [
+            {
+              "text": "诺顿的新手HP药剂",
+              "table": "stackable/stackable.kor.str",
+              "table_id": 13,
+              "key": "name_1106",
+              "line": 5647,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[explain]": [
+            {
+              "text": "可以向诺顿、 赛丽亚、 林纳斯或罗莉安购买。",
+              "table": "stackable/stackable.kor.str",
+              "table_id": 13,
+              "key": "explain_1106",
+              "line": 5649,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[flavor text]": [
+            {
+              "text": "专为首次访问阿拉德大陆的冒险家准备的实用药剂， 可以补充HP。",
+              "table": "stackable/stackable.kor.str",
+              "table_id": 13,
+              "key": "flavor_text_1106",
+              "line": 5650,
+              "missing": false,
+              "needs_review": false
+            }
+          ]
+        }
+      },
+      {
+        "path": "stackable/ptn_mplowest.stk",
+        "source_ids": [
+          {
+            "list": "stackable/stackable.lst",
+            "id": 1112
+          }
+        ],
+        "sha256": "3216e7c84c549e5613ce97cc84af1a78b1d50bdcc6b385bc1baf9b234671e2a8",
+        "crc_ok": true,
+        "fields": {
+          "[name]": [
+            {
+              "text": "罗莉安的新手MP药剂",
+              "table": "stackable/stackable.kor.str",
+              "table_id": 13,
+              "key": "name_1112",
+              "line": 5671,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[explain]": [
+            {
+              "text": "可以向诺顿、 赛丽亚、 林纳斯或罗莉安购买。",
+              "table": "stackable/stackable.kor.str",
+              "table_id": 13,
+              "key": "explain_1113",
+              "line": 5678,
+              "missing": false,
+              "needs_review": false
+            }
+          ],
+          "[flavor text]": [
+            {
+              "text": "专为阿拉德大陆的冒险家准备的特效药剂， 可以补充MP。",
+              "table": "stackable/stackable.kor.str",
+              "table_id": 13,
+              "key": "flavor_text_1113",
+              "line": 5679,
+              "missing": false,
+              "needs_review": false
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
