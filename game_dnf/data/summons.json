@@ -1,0 +1,5416 @@
+{
+ "schema": "dnf_summons/1",
+ "evidence": ".act 的 [SUMMON MONSTER] [INDEX] 是 monster.lst 键，可直接反查路径",
+ "count": 234,
+ "unresolved": 1,
+ "summons": {
+  "monster/act8/blackscalemoussambani/action/procsummon.act": [
+   {
+    "monster": "monster/act8/crokhan_spearman/crokhan_spearman.mob",
+    "index": 62106,
+    "level": 0,
+    "pos": [
+     600,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/crokhan_spearman/crokhan_spearman.mob",
+    "index": 62106,
+    "level": 0,
+    "pos": [
+     -600,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/act8/blackscalemoussambani/action/summoncroco.act": [
+   {
+    "monster": "monster/act8/crokhan_spearman/crokhan_spearman.mob",
+    "index": 62106,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/act8/blackscalemoussambani/action/summonplover2.act": [
+   {
+    "monster": "monster/act8/plover/heroplover_l.mob",
+    "index": 62115,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/act8/botticelli/action/summon.act": [
+   {
+    "monster": "monster/act8/burnbotti/burnbotti.mob",
+    "index": 61231,
+    "level": 0,
+    "pos": [
+     150,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/act8/chiefmong/action/attack_1.act": [
+   {
+    "monster": "monster/act8/chiefmongghost/chiefmongghost.mob",
+    "index": 59001,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/act8/chiefmongghost/action/die.act": [
+   {
+    "monster": "monster/act8/chiefmongghost_2nd/chiefmongghost_2nd.mob",
+    "index": 59002,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/chiefmongghost_2nd/chiefmongghost_2nd.mob",
+    "index": 59002,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/chiefmongghost_2nd/chiefmongghost_2nd.mob",
+    "index": 59002,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/act8/chiefmongghost_2nd/action/die.act": [
+   {
+    "monster": "monster/act8/chiefmongghost_3rd/chiefmongghost_3rd.mob",
+    "index": 59003,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/chiefmongghost_3rd/chiefmongghost_3rd.mob",
+    "index": 59003,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/act8/masaccio/action/proc.act": [
+   {
+    "monster": "monster/act8/masaccio/masacciob.mob",
+    "index": 61224,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/act8/masaccio/action/proc1.act": [
+   {
+    "monster": "monster/act8/masaccio/masacciojb.mob",
+    "index": 61225,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/act8/oneeyedmermaid/action/horn.act": [
+   {
+    "monster": "monster/act8/mermadia_warrior/mermadia_warrior.mob",
+    "index": 61187,
+    "level": 0,
+    "pos": [
+     70,
+     -30,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/mermadia_warrior/mermadia_warrior.mob",
+    "index": 61187,
+    "level": 0,
+    "pos": [
+     70,
+     30,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/mermadia_warrior/mermadia_warrior.mob",
+    "index": 61187,
+    "level": 0,
+    "pos": [
+     -100,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/act8/wooden_doll_l/action/casting1.act": [
+   {
+    "monster": "monster/act8/wooden_doll_l/wooden_doll_l_shadow.mob",
+    "index": 61490,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/wooden_doll_l/wooden_doll_l_shadow.mob",
+    "index": 61490,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/wooden_doll_l/wooden_doll_l_shadow.mob",
+    "index": 61490,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/wooden_doll_l/wooden_doll_l_shadow.mob",
+    "index": 61490,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/wooden_doll_l/wooden_doll_l_shadow.mob",
+    "index": 61490,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/wooden_doll_l/wooden_doll_l_shadow.mob",
+    "index": 61490,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/act8/wooden_doll_l/action/die.act": [
+   {
+    "monster": "monster/fighter/nenflowerex.mob",
+    "index": 61535,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/agarum/action/victimsummon.act": [
+   {
+    "monster": "monster/event/bluemarble/firevictim/firevictim.mob",
+    "index": 62740,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/astray_alsor/action/cry.act": [
+   {
+    "monster": "monster/event/bluemarble/astray_gbl_devotee/astray_gbl_devotee.mob",
+    "index": 62630,
+    "level": -5,
+    "pos": [
+     60,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/astray_gbl_devotee/astray_gbl_devotee.mob",
+    "index": 62630,
+    "level": -5,
+    "pos": [
+     60,
+     90,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/astray_gbl_devotee/astray_gbl_devotee.mob",
+    "index": 62630,
+    "level": -5,
+    "pos": [
+     60,
+     -40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/astray_gbl_devotee/astray_gbl_devotee.mob",
+    "index": 62630,
+    "level": -5,
+    "pos": [
+     60,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/astray_gbl_devotee/astray_gbl_devotee.mob",
+    "index": 62630,
+    "level": -5,
+    "pos": [
+     60,
+     90,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/astray_gbl_devotee/astray_gbl_devotee.mob",
+    "index": 62630,
+    "level": -5,
+    "pos": [
+     60,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/biker/action/die.act": [
+   {
+    "monster": "monster/event/bluemarble/biker2/biker2.mob",
+    "index": 62757,
+    "level": 65,
+    "pos": [
+     0,
+     0,
+     50
+    ]
+   }
+  ],
+  "monster/event/bluemarble/blackscalemoussambani/action/summoncroco.act": [
+   {
+    "monster": "monster/event/bluemarble/crokhan_spearman/crokhan_spearman.mob",
+    "index": 62751,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/blackscalemoussambani/action/summonplover2.act": [
+   {
+    "monster": "monster/act8/plover/heroplover_l.mob",
+    "index": 62115,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/botticelli/action/summon.act": [
+   {
+    "monster": "monster/event/bluemarble/burnbotti/burnbotti.mob",
+    "index": 62755,
+    "level": 0,
+    "pos": [
+     150,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/captainshured/action/destroyyou.act": [
+   {
+    "monster": "monster/gunner/robot/rx78.mob",
+    "index": 60002,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/gunner/robot/rx78.mob",
+    "index": 60002,
+    "level": 0,
+    "pos": [
+     -20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/gunner/robot/rx78.mob",
+    "index": 60002,
+    "level": 0,
+    "pos": [
+     20,
+     30,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/chainbiker2/action/die.act": [
+   {
+    "monster": "monster/event/bluemarble/chainbiker/chainbiker.mob",
+    "index": 62761,
+    "level": 65,
+    "pos": [
+     0,
+     0,
+     50
+    ]
+   }
+  ],
+  "monster/event/bluemarble/isadora/action/summonice.act": [
+   {
+    "monster": "monster/event/bluemarble/waterspirit/waterspirit_0.mob",
+    "index": 62667,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/isadora/action/summonice2.act": [
+   {
+    "monster": "monster/event/bluemarble/lightspirit/lightspirit_0.mob",
+    "index": 62668,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/isadora_grim/action/summonice.act": [
+   {
+    "monster": "monster/event/bluemarble/waterspirit/waterspirit.mob",
+    "index": 62620,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/isadora_grim/action/summonice2.act": [
+   {
+    "monster": "monster/event/bluemarble/lightspirit/lightspirit.mob",
+    "index": 62621,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/mechanicgiselle/action/proc.act": [
+   {
+    "monster": "monster/event/bluemarble/engineerg/engineerg.mob",
+    "index": 62722,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/mechanicgiselle/action/substay.act": [
+   {
+    "monster": "monster/event/bluemarble/zx_99/zx_99.mob",
+    "index": 62733,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/event/bluemarble/mechanicgiselle/action/summon_landboar.act": [
+   {
+    "monster": "monster/event/bluemarble/zx_9/zx_9.mob",
+    "index": 62732,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     150
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/zx_9/zx_9.mob",
+    "index": 62732,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     150
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/zx_9/zx_9.mob",
+    "index": 62732,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     150
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/zx_9/zx_9.mob",
+    "index": 62732,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     150
+    ]
+   }
+  ],
+  "monster/event/bluemarble/mechanicgiselle/action/timeattack.act": [
+   {
+    "monster": "monster/event/bluemarble/timerunner/timerunner.mob",
+    "index": 62723,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/mosqueen/action/summon.act": [
+   {
+    "monster": "monster/event/bluemarble/larva/larva.mob",
+    "index": 57010,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/larva/larva.mob",
+    "index": 57010,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/larva/larva.mob",
+    "index": 57010,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/larva/larva.mob",
+    "index": 57010,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/oneeyedmermaid/action/horn.act": [
+   {
+    "monster": "monster/event/bluemarble/mermadia_warrior/mermadia_warrior.mob",
+    "index": 62742,
+    "level": 0,
+    "pos": [
+     70,
+     -30,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/mermadia_warrior/mermadia_warrior.mob",
+    "index": 62742,
+    "level": 0,
+    "pos": [
+     70,
+     30,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/mermadia_warrior/mermadia_warrior.mob",
+    "index": 62742,
+    "level": 0,
+    "pos": [
+     -100,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/peltshu/action/jump_summon.act": [
+   {
+    "monster": "monster/event/bluemarble/silverclown_jugglingacrobat2/silverclown_jugglingacrobat2.mob",
+    "index": 62718,
+    "level": 0,
+    "pos": [
+     696,
+     118,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/silverclown_jugglingacrobat2/silverclown_jugglingacrobat2.mob",
+    "index": 62718,
+    "level": 0,
+    "pos": [
+     794,
+     170,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/silverclown_jugglingacrobat2/silverclown_jugglingacrobat2.mob",
+    "index": 62718,
+    "level": 0,
+    "pos": [
+     800,
+     246,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/silverclown_jugglingacrobat2/silverclown_jugglingacrobat2.mob",
+    "index": 62718,
+    "level": 0,
+    "pos": [
+     804,
+     331,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/silverclown_jugglingacrobat2/silverclown_jugglingacrobat2.mob",
+    "index": 62718,
+    "level": 0,
+    "pos": [
+     804,
+     331,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/silverclown_jugglingacrobat2/silverclown_jugglingacrobat2.mob",
+    "index": 62718,
+    "level": 0,
+    "pos": [
+     804,
+     331,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/silverclown_jugglingacrobat2/silverclown_jugglingacrobat2.mob",
+    "index": 62718,
+    "level": 0,
+    "pos": [
+     804,
+     331,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/silverclown_jugglingacrobat2/silverclown_jugglingacrobat2.mob",
+    "index": 62718,
+    "level": 0,
+    "pos": [
+     804,
+     331,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/ricu/action/summon.act": [
+   {
+    "monster": "monster/event/bluemarble/ricubaby/ricubaby.mob",
+    "index": 57006,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/sasquatch/action/sommon.act": [
+   {
+    "monster": "monster/event/bluemarble/snowman/snowman.mob",
+    "index": 62633,
+    "level": 0,
+    "pos": [
+     8,
+     0,
+     40
+    ]
+   }
+  ],
+  "monster/event/bluemarble/scasa/action/stay.act": [
+   {
+    "monster": "monster/event/bluemarble/dummymonster/dummymonster.mob",
+    "index": 62690,
+    "level": 0,
+    "pos": [
+     209,
+     292,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/silkhat/action/jump_summon.act": [
+   {
+    "monster": "monster/event/bluemarble/silverclown_jugglingacrobat2/silverclown_jugglingacrobat2.mob",
+    "index": 62718,
+    "level": 0,
+    "pos": [
+     145,
+     170,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/silverclown_jugglingacrobat2/silverclown_jugglingacrobat2.mob",
+    "index": 62718,
+    "level": 0,
+    "pos": [
+     145,
+     240,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/silverclown_jugglingacrobat2/silverclown_jugglingacrobat2.mob",
+    "index": 62718,
+    "level": 0,
+    "pos": [
+     145,
+     320,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/silkhat/action/jump_summon2.act": [
+   {
+    "monster": "monster/event/bluemarble/silverclown_ballacrobat2/silverclown_ballacrobat2.mob",
+    "index": 62729,
+    "level": 0,
+    "pos": [
+     145,
+     170,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/silverclown_ballacrobat2/silverclown_ballacrobat2.mob",
+    "index": 62729,
+    "level": 0,
+    "pos": [
+     145,
+     240,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/silverclown_ballacrobat2/silverclown_ballacrobat2.mob",
+    "index": 62729,
+    "level": 0,
+    "pos": [
+     145,
+     320,
+     0
+    ]
+   }
+  ],
+  "monster/event/bluemarble/zx_5_1/action/union.act": [
+   {
+    "monster": "monster/event/bluemarble/zx_5_gamma/zx_5_gamma.mob",
+    "index": 57009,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/event/bluemarble/zx_5_2/action/union.act": [
+   {
+    "monster": "monster/event/bluemarble/zx_5_gamma/zx_5_gamma.mob",
+    "index": 57009,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/event/bluemarble/zx_5_3/action/union.act": [
+   {
+    "monster": "monster/event/bluemarble/zx_5_gamma/zx_5_gamma.mob",
+    "index": 57009,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/event/bluemarble/zx_5_4/action/union.act": [
+   {
+    "monster": "monster/event/bluemarble/zx_5_gamma/zx_5_gamma.mob",
+    "index": 57009,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/event/bluemarble/zx_5_gamma/action/casting.act": [
+   {
+    "monster": "monster/event/bluemarble/zx_5_1/zx_5_1.mob",
+    "index": 62724,
+    "level": 0,
+    "pos": [
+     -20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/zx_5_2/zx_5_2.mob",
+    "index": 62725,
+    "level": 0,
+    "pos": [
+     0,
+     10,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/zx_5_3/zx_5_3.mob",
+    "index": 62726,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/event/bluemarble/zx_5_4/zx_5_4.mob",
+    "index": 62731,
+    "level": 0,
+    "pos": [
+     0,
+     -10,
+     0
+    ]
+   }
+  ],
+  "monster/goblin/action_goblin/summon.act": [
+   {
+    "monster": "monster/golem/stonegolem.mob",
+    "index": 31,
+    "level": 10,
+    "pos": [
+     20,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/kcontents3/abaddonimprisoned_2/named/japa/action/wish1.act": [
+   {
+    "monster": "monster/kcontents3/abaddonimprisoned_2/named/japa_genie/genie_green.mob",
+    "index": 109010250,
+    "level": -1,
+    "pos": [
+     120,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/kcontents3/abaddonimprisoned_2/named/japa/action/wish2.act": [
+   {
+    "monster": "monster/kcontents3/abaddonimprisoned_2/named/japa_genie/genie_blue.mob",
+    "index": 109010251,
+    "level": -1,
+    "pos": [
+     120,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/kcontents3/abaddonimprisoned_2/named/japa/action/wish3.act": [
+   {
+    "monster": "monster/kcontents3/abaddonimprisoned_2/named/japa_genie/genie_red.mob",
+    "index": 109010249,
+    "level": -1,
+    "pos": [
+     120,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/mj/action/call_zombie.act": [
+   {
+    "monster": "monster/zombie/nicol_zombie_for_apc.mob",
+    "index": 61533,
+    "level": 0,
+    "pos": [
+     70,
+     -20,
+     0
+    ]
+   },
+   {
+    "monster": "monster/zombie/nicol_zombie_for_apc.mob",
+    "index": 61533,
+    "level": 0,
+    "pos": [
+     -70,
+     -20,
+     0
+    ]
+   },
+   {
+    "monster": "monster/zombie/nicol_zombie_for_apc.mob",
+    "index": 61533,
+    "level": 0,
+    "pos": [
+     30,
+     -40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/zombie/nicol_zombie_for_apc.mob",
+    "index": 61533,
+    "level": 0,
+    "pos": [
+     -30,
+     -40,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/advanceatlar/enemy/goblin_chariot/action/proc.act": [
+   {
+    "monster": "monster/newmonsters/advanceatlar/enemy/goblintaskmaster/goblintaskmaster.mob",
+    "index": 64615,
+    "level": 0,
+    "pos": [
+     -70,
+     -30,
+     60
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/advanceatlar/enemy/goblintaskmaster/goblintaskmaster.mob",
+    "index": 64615,
+    "level": 0,
+    "pos": [
+     -70,
+     -10,
+     40
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/advanceatlar/enemy/bloodlugaru/bloodlugaru.mob",
+    "index": 64620,
+    "level": 1,
+    "pos": [
+     10,
+     30,
+     40
+    ]
+   }
+  ],
+  "monster/newmonsters/advanceatlar/enemy/headrlessknight/action/attack_3.act": [
+   {
+    "monster": "monster/newmonsters/advanceatlar/enemy/wraith/wraith.mob",
+    "index": 64601,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/advanceatlar/enemy/zetes/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/advanceatlar/enemy/expeller_axion/expeller_axion.mob",
+    "index": 64626,
+    "level": 1,
+    "pos": [
+     120,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/advanceatlar/enemy/expeller_axion/expeller_axion.mob",
+    "index": 64626,
+    "level": 1,
+    "pos": [
+     80,
+     -40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/advanceatlar/enemy/expeller_axion/expeller_axion.mob",
+    "index": 64626,
+    "level": 1,
+    "pos": [
+     80,
+     40,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/advanceatlar/tower/goblin_propeller/action/lv1_die.act": [
+   {
+    "monster": "monster/newmonsters/blood_an/goblin_propeller/diegoblin_propeller.mob",
+    "index": 61160,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     180
+    ]
+   }
+  ],
+  "monster/newmonsters/advanceatlar/tower/goblin_propeller/action/lv2_die.act": [
+   {
+    "monster": "monster/newmonsters/blood_an/goblin_propeller/diegoblin_propeller.mob",
+    "index": 61160,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     180
+    ]
+   }
+  ],
+  "monster/newmonsters/advanceatlar/tower/goblin_propeller/action/lv3_die.act": [
+   {
+    "monster": "monster/newmonsters/blood_an/goblin_propeller/diegoblin_propeller.mob",
+    "index": 61160,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     180
+    ]
+   }
+  ],
+  "monster/newmonsters/advanceatlar/tower/goblin_propeller/action/lv4_die.act": [
+   {
+    "monster": "monster/newmonsters/blood_an/goblin_propeller/diegoblin_propeller.mob",
+    "index": 61160,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     180
+    ]
+   }
+  ],
+  "monster/newmonsters/ancient/infected_ghoula/action/cross.act": [
+   {
+    "monster": "monster/newmonsters/ancient/infected_ghoulc/infected_ghoulc.mob",
+    "index": 56409,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/ancient/noir_dimension_gate/action/proc.act": [
+   {
+    "monster": "monster/newmonsters/disguiser/disease_spirit/disease_spirit.mob",
+    "index": 61422,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/ancient/noir_dimension_gate/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/disguiser/disease_spirit/disease_spirit.mob",
+    "index": 61422,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/ancient/noir_dimension_gate/action/summon2.act": [
+   {
+    "monster": "monster/newmonsters/disguiser/disease_spirit/disease_spirit.mob",
+    "index": 61422,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/disguiser/disease_spirit/disease_spirit.mob",
+    "index": 61422,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/ancient/noir_dimension_gate/action/summon_special.act": [
+   {
+    "monster": "monster/newmonsters/disguiser/disease_spirit/disease_spirit.mob",
+    "index": 61422,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/disguiser/disease_spirit/disease_spirit.mob",
+    "index": 61422,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/aradman/grim_crazy/action/shadow.act": [
+   {
+    "monster": "monster/newmonsters/aradman/grim_crazy_ghost/grim_crazy_ghost.mob",
+    "index": 56412,
+    "level": 0,
+    "pos": [
+     94,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/aradman/grim_crazy_b/action/casting.act": [
+   {
+    "monster": "monster/newmonsters/aradman/grim_aradman/grim_aradman.mob",
+    "index": 61400,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/aradman/grim_crazy_b/action/casting1.act": [
+   {
+    "monster": "monster/newmonsters/aradwoman/grim_aradwoma/grim_aradwoman.mob",
+    "index": 61401,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/bantu/_rabbitmedusa/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/snake/medusasnake/medusasnake.mob",
+    "index": 61330,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/bantu/emeldir/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/bantu/bantuwoman/bantuamazones.mob",
+    "index": 61701,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/bantu/rabbitwoman/action/throw.act": [
+   {
+    "monster": "monster/newmonsters/snake/ice_snake/ice_snake.mob",
+    "index": 61452,
+    "level": 0,
+    "pos": [
+     8,
+     0,
+     40
+    ]
+   }
+  ],
+  "monster/newmonsters/bantu/rabbitwoman/action/throw1.act": [
+   {
+    "monster": "monster/newmonsters/bantu/rabbit/rabbit.mob",
+    "index": 61242,
+    "level": 0,
+    "pos": [
+     8,
+     0,
+     40
+    ]
+   }
+  ],
+  "monster/newmonsters/blood_an/agaress/action/summon.act": [
+   {
+    "monster": "monster/ghoul/infernalghoul.mob",
+    "index": 61173,
+    "level": 0,
+    "pos": [
+     150,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/ghoul/infernalghoul.mob",
+    "index": 61173,
+    "level": 0,
+    "pos": [
+     -150,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/ghoul/infernalghoul.mob",
+    "index": 61173,
+    "level": 0,
+    "pos": [
+     0,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/ghoul/infernalghoul.mob",
+    "index": 61173,
+    "level": 0,
+    "pos": [
+     0,
+     -50,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/blood_an/goblin_chariot/action/proc.act": [
+   {
+    "monster": "monster/newmonsters/blood_an/spear_goblin/spear_goblin.mob",
+    "index": 61162,
+    "level": 0,
+    "pos": [
+     -50,
+     0,
+     60
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/blood_an/bow_goblin/bow_goblin.mob",
+    "index": 61163,
+    "level": 0,
+    "pos": [
+     -10,
+     0,
+     60
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/blood_an/morningstar_goblin/morningstar_goblin.mob",
+    "index": 61164,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/blood_an/goblin_chariot2/action/proc.act": [
+   {
+    "monster": "monster/newmonsters/blood_an/goblin_fanatic1/goblin_fanatic1.mob",
+    "index": 61158,
+    "level": 0,
+    "pos": [
+     -70,
+     -30,
+     60
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/blood_an/goblin_fanatic2/goblin_fanatic2.mob",
+    "index": 61159,
+    "level": 0,
+    "pos": [
+     20,
+     30,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/blood_an/goblin_propeller/action/die.act": [
+   {
+    "monster": "monster/newmonsters/blood_an/goblin_propeller/diegoblin_propeller.mob",
+    "index": 61160,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     180
+    ]
+   }
+  ],
+  "monster/newmonsters/bloodbutterfly/mosqueen/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/bloodbutterfly/larva/larva.mob",
+    "index": 56141,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/bloodbutterfly/larva/larva.mob",
+    "index": 56141,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/bloodbutterfly/larva/larva.mob",
+    "index": 56141,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/bloodbutterfly/larva/larva.mob",
+    "index": 56141,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/bloodmoon/zetes/action/summon.act": [
+   {
+    "monster": "monster/soldier/tinswordmanexpeller.mob",
+    "index": 705,
+    "level": 0,
+    "pos": [
+     60,
+     40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/soldier/tinswordmanexpeller.mob",
+    "index": 705,
+    "level": 0,
+    "pos": [
+     60,
+     -40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/soldier/tinswordmanexpeller.mob",
+    "index": 705,
+    "level": 0,
+    "pos": [
+     -60,
+     40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/soldier/tinswordmanexpeller.mob",
+    "index": 705,
+    "level": 0,
+    "pos": [
+     -60,
+     -40,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/bloodmoon/zetes/action/summon1_2.act": [
+   {
+    "monster": "monster/soldier/tinswordmanexpeller.mob",
+    "index": 705,
+    "level": 0,
+    "pos": [
+     60,
+     40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/soldier/tinswordmanexpeller.mob",
+    "index": 705,
+    "level": 0,
+    "pos": [
+     60,
+     -40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/soldier/tinswordmanexpeller.mob",
+    "index": 705,
+    "level": 0,
+    "pos": [
+     -60,
+     40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/soldier/tinswordmanexpeller.mob",
+    "index": 705,
+    "level": 0,
+    "pos": [
+     -60,
+     -40,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/bloodmoon/zetes/action/summon2_2.act": [
+   {
+    "monster": "monster/soldier/tinswordmanexpeller.mob",
+    "index": 705,
+    "level": 0,
+    "pos": [
+     60,
+     40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/soldier/tinswordmanexpeller.mob",
+    "index": 705,
+    "level": 0,
+    "pos": [
+     60,
+     -40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/soldier/tinswordmanexpeller.mob",
+    "index": 705,
+    "level": 0,
+    "pos": [
+     -60,
+     40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/soldier/tinswordmanexpeller.mob",
+    "index": 705,
+    "level": 0,
+    "pos": [
+     -60,
+     -40,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/cartel/peltshu/action/jump_summon.act": [
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat2.mob",
+    "index": 61460,
+    "level": 0,
+    "pos": [
+     696,
+     118,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat2.mob",
+    "index": 61460,
+    "level": 0,
+    "pos": [
+     794,
+     170,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat2.mob",
+    "index": 61460,
+    "level": 0,
+    "pos": [
+     800,
+     246,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat2.mob",
+    "index": 61460,
+    "level": 0,
+    "pos": [
+     804,
+     331,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat2.mob",
+    "index": 61460,
+    "level": 0,
+    "pos": [
+     804,
+     331,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat2.mob",
+    "index": 61460,
+    "level": 0,
+    "pos": [
+     804,
+     331,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat2.mob",
+    "index": 61460,
+    "level": 0,
+    "pos": [
+     804,
+     331,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat2.mob",
+    "index": 61460,
+    "level": 0,
+    "pos": [
+     804,
+     331,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/cartel/silkhat/action/jump_summon.act": [
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat2.mob",
+    "index": 61460,
+    "level": 0,
+    "pos": [
+     145,
+     170,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat2.mob",
+    "index": 61460,
+    "level": 0,
+    "pos": [
+     145,
+     240,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat2.mob",
+    "index": 61460,
+    "level": 0,
+    "pos": [
+     145,
+     320,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/cartel/silkhat/action/jump_summon2.act": [
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_ballacrobat/silverclown_ballacrobat2.mob",
+    "index": 61461,
+    "level": 0,
+    "pos": [
+     145,
+     170,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_ballacrobat/silverclown_ballacrobat2.mob",
+    "index": 61461,
+    "level": 0,
+    "pos": [
+     145,
+     240,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_ballacrobat/silverclown_ballacrobat2.mob",
+    "index": 61461,
+    "level": 0,
+    "pos": [
+     145,
+     320,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/cartel/westcoast/trashcan/action/summon.act": [
+   {
+    "monster": "monster/goblin/goblin.mob",
+    "index": 1,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     80
+    ]
+   }
+  ],
+  "monster/newmonsters/cartelcommand/ranjerus/action/call.act": [
+   {
+    "monster": "monster/newmonsters/cartelcommand/at_walker/at_walker.mob",
+    "index": 61279,
+    "level": 10,
+    "pos": [
+     1100,
+     240,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/dimensiongate/bakal/gold_dragon_main/action/attack2.act": [
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/gold_dragon_shadow/gold_dragon1.mob",
+    "index": 56447,
+    "level": 0,
+    "pos": [
+     531,
+     279,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/gold_dragon_shadow/gold_dragon1.mob",
+    "index": 56447,
+    "level": 0,
+    "pos": [
+     781,
+     278,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/gold_dragon_shadow/gold_dragon1.mob",
+    "index": 56447,
+    "level": 0,
+    "pos": [
+     293,
+     275,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/dimensiongate/bakal/gold_dragon_main/action/attack3.act": [
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/gold_dragon_shadow/gold_dragon1.mob",
+    "index": 56447,
+    "level": 0,
+    "pos": [
+     531,
+     279,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/gold_dragon_shadow/gold_dragon1.mob",
+    "index": 56447,
+    "level": 0,
+    "pos": [
+     781,
+     278,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/gold_dragon_shadow/gold_dragon1.mob",
+    "index": 56447,
+    "level": 0,
+    "pos": [
+     293,
+     275,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/dimensiongate/bakal/red_dragon_ashcore/action/fire.act": [
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/shelder/shelder.mob",
+    "index": 62135,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/shelder/shelder2.mob",
+    "index": 62136,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/shelder/shelder3.mob",
+    "index": 62137,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/shelder/shelder4.mob",
+    "index": 62138,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/shelder/shelder5.mob",
+    "index": 62139,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/dimensiongate/cosmofiend/insent/action/proc.act": [
+   {
+    "monster": "monster/newmonsters/dimensiongate/cosmofiend/light/lightspirit_heal.mob",
+    "index": 56723,
+    "level": 0,
+    "pos": [
+     740,
+     220,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/cosmofiend/light/lightspirit_poison.mob",
+    "index": 56724,
+    "level": 0,
+    "pos": [
+     240,
+     340,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/cosmofiend/light/lightspirit_heal.mob",
+    "index": 56723,
+    "level": 0,
+    "pos": [
+     240,
+     220,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/cosmofiend/light/lightspirit_poison.mob",
+    "index": 56724,
+    "level": 0,
+    "pos": [
+     740,
+     350,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/dimensiongate/cosmofiend/insent/action/shadow.act": [
+   {
+    "monster": "monster/newmonsters/event/seria/seria_1.mob",
+    "index": 61739,
+    "level": 70,
+    "pos": [
+     522,
+     280,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/event/seria/seria_2.mob",
+    "index": 61740,
+    "level": 70,
+    "pos": [
+     4000,
+     270,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/direzie/action/hideandsummon25.act": [
+   {
+    "monster": "monster/newmonsters/direzie/direzie_sub.mob",
+    "index": 61002,
+    "level": 0,
+    "pos": [
+     100,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/direzie/direzie_sub.mob",
+    "index": 61002,
+    "level": 0,
+    "pos": [
+     100,
+     -50,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/direzie/action/hideandsummon50.act": [
+   {
+    "monster": "monster/newmonsters/direzie/direzie_sub.mob",
+    "index": 61002,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/direzie/action/hideandsummon75.act": [
+   {
+    "monster": "monster/newmonsters/direzie/direzie_sub.mob",
+    "index": 61002,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/disguiser/mummy_ghost_start/action/stay.act": [
+   {
+    "monster": "monster/newmonsters/disguiser/mummy_ghost/mummy_ghost.mob",
+    "index": 56408,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/draconian/magneus/action/hallucination.act": [
+   {
+    "monster": "monster/newmonsters/draconian/magneus/magneus_sub.mob",
+    "index": 61812,
+    "level": 0,
+    "pos": [
+     50,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/draconian/magneus/action/teleport_start.act": [
+   {
+    "monster": "monster/newmonsters/draconian/magneus/magneus_sub.mob",
+    "index": 61812,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/dragon/scasa/action/stay.act": [
+   {
+    "monster": "monster/newmonsters/dragon/dummymonster/dummymonster.mob",
+    "index": 61457,
+    "level": 0,
+    "pos": [
+     209,
+     292,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/event/2012_thxgiving/darkcrow/action/tornadostart.act": [
+   {
+    "monster": "monster/newmonsters/event/2012_thxgiving/sparrow/plover.mob",
+    "index": 65101,
+    "level": 1,
+    "pos": [
+     10,
+     1,
+     30
+    ]
+   }
+  ],
+  "monster/newmonsters/gbl/cocoon/action/cast5.act": [
+   {
+    "monster": "monster/newmonsters/gbl/thrower/thrower.mob",
+    "index": 61100,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/gbl/gblcolossus/action/summoninvader.act": [
+   {
+    "monster": "monster/starfish/starfishdevourer.mob",
+    "index": 253,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/gbl/gbltentacle/action/summon1.act": [
+   {
+    "monster": "monster/starfish/starfish.mob",
+    "index": 250,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/gbl/gbltentacle/action/summon2.act": [
+   {
+    "monster": "monster/starfish/starfishdevourer.mob",
+    "index": 253,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/gbl/gbltentaclenamed/action/summon1.act": [
+   {
+    "monster": "monster/starfish/starfishdevourer.mob",
+    "index": 253,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/gbl/gbltentaclenamed/action/summon2.act": [
+   {
+    "monster": "monster/starfish/starfishdevourer.mob",
+    "index": 253,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/gbl/isadora/action/summonice.act": [
+   {
+    "monster": "monster/spirit/waterspirit.mob",
+    "index": 600,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/gbl/isadora/action/summonice2.act": [
+   {
+    "monster": "monster/spirit/lightspirit.mob",
+    "index": 603,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/gbl_goddess_temple/astray_alsor/action/cry.act": [
+   {
+    "monster": "monster/newmonsters/gbl_goddess_temple/astray_gbl_devotee/astray_gbl_devotee.mob",
+    "index": 63022,
+    "level": -5,
+    "pos": [
+     60,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/gbl_goddess_temple/astray_gbl_devotee/astray_gbl_devotee.mob",
+    "index": 63022,
+    "level": -5,
+    "pos": [
+     60,
+     90,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/gbl_goddess_temple/astray_gbl_devotee/astray_gbl_devotee.mob",
+    "index": 63022,
+    "level": -5,
+    "pos": [
+     60,
+     -40,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/gbl_goddess_temple/astray_gbl_devotee/astray_gbl_devotee.mob",
+    "index": 63022,
+    "level": -5,
+    "pos": [
+     60,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/gbl_goddess_temple/astray_gbl_devotee/astray_gbl_devotee.mob",
+    "index": 63022,
+    "level": -5,
+    "pos": [
+     60,
+     90,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/gbl_goddess_temple/astray_gbl_devotee/astray_gbl_devotee.mob",
+    "index": 63022,
+    "level": -5,
+    "pos": [
+     60,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/gbl_goddess_temple/zookeeper/action/cast1.act": [
+   {
+    "monster": "monster/lugaru/kurogaru.mob",
+    "index": 5002,
+    "level": 0,
+    "pos": [
+     60,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/lugaru/sirogaru.mob",
+    "index": 5003,
+    "level": 0,
+    "pos": [
+     60,
+     90,
+     0
+    ]
+   },
+   {
+    "monster": "monster/lugaru/kurogaru.mob",
+    "index": 5002,
+    "level": 0,
+    "pos": [
+     60,
+     -90,
+     0
+    ]
+   },
+   {
+    "monster": "monster/lugaru/kurogaru.mob",
+    "index": 5002,
+    "level": 0,
+    "pos": [
+     60,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/goblin/throwgoblin/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/goblin/summon_goblin/summon_goblin.mob",
+    "index": 61702,
+    "level": 0,
+    "pos": [
+     -50,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/goblinkingdom/golgo/action/chair_dance.act": [
+   {
+    "monster": "monster/newmonsters/goblinkingdom/golgoserver/golgoserver.mob",
+    "index": 61810,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/goblinkingdom/golgo/action/nochair_summon.act": [
+   {
+    "monster": "monster/newmonsters/goblinkingdom/golgoserver/golgoserver.mob",
+    "index": 61810,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/golem/ricu/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/golem/ricubaby/ricubaby.mob",
+    "index": 56711,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/grim/cosmosummon/action/proc.act": [
+   {
+    "monster": "monster/cosmofiend/overgrowth.mob",
+    "index": 1052,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/cosmofiend/darksteel.mob",
+    "index": 1053,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/cosmofiend/vapor.mob",
+    "index": 1051,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/cosmofiend/braze.mob",
+    "index": 1050,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/haze/biker/action/die.act": [
+   {
+    "monster": "monster/newmonsters/haze/biker2/biker2.mob",
+    "index": 61268,
+    "level": 60,
+    "pos": [
+     0,
+     0,
+     50
+    ]
+   }
+  ],
+  "monster/newmonsters/haze/chainbiker2/action/die.act": [
+   {
+    "monster": "monster/newmonsters/haze/chainbiker/chainbiker.mob",
+    "index": 61247,
+    "level": 60,
+    "pos": [
+     0,
+     0,
+     50
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/captainshured/action/destroyyou.act": [
+   {
+    "monster": "monster/gunner/robot/rx78.mob",
+    "index": 60002,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/gunner/robot/rx78.mob",
+    "index": 60002,
+    "level": 0,
+    "pos": [
+     -20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/gunner/robot/rx78.mob",
+    "index": 60002,
+    "level": 0,
+    "pos": [
+     20,
+     30,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/doctorgiselle/action/order.act": [
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_5_gamma/zx_5_gamma.mob",
+    "index": 56133,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/majorcamoka/action/attack2.act": [
+   {
+    "monster": "monster/newmonsters/heaven/shadow/shadow.mob",
+    "index": 61185,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/shadow/shadow.mob",
+    "index": 61185,
+    "level": 0,
+    "pos": [
+     200,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/shadow/shadow.mob",
+    "index": 61185,
+    "level": 0,
+    "pos": [
+     -100,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/majorcamoka/action/attack4.act": [
+   {
+    "monster": "monster/newmonsters/heaven/shadow/shadow.mob",
+    "index": 61185,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/shadow/shadow.mob",
+    "index": 61185,
+    "level": 0,
+    "pos": [
+     200,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/shadow/shadow.mob",
+    "index": 61185,
+    "level": 0,
+    "pos": [
+     -100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/shadow/shadow.mob",
+    "index": 61185,
+    "level": 0,
+    "pos": [
+     -200,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/shadow/shadow.mob",
+    "index": 61185,
+    "level": 0,
+    "pos": [
+     400,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/shadow/shadow.mob",
+    "index": 61185,
+    "level": 0,
+    "pos": [
+     -400,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/proc.act": [
+   {
+    "monster": "monster/newmonsters/cartel/engineer/engineerg.mob",
+    "index": 61181,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/substay.act": [
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_99/zx_99.mob",
+    "index": 61203,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/summon_landboar.act": [
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_9/zx_9.mob",
+    "index": 61204,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     150
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_9/zx_9.mob",
+    "index": 61204,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     150
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_9/zx_9.mob",
+    "index": 61204,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     150
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_9/zx_9.mob",
+    "index": 61204,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     150
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/timeattack.act": [
+   {
+    "monster": "monster/newmonsters/heaven/timerunner/timerunner.mob",
+    "index": 61155,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/mechanicgiselle/zx_5_1/action/union.act": [
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_5_gamma/zx_5_gamma.mob",
+    "index": 56133,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/mechanicgiselle/zx_5_2/action/union.act": [
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_5_gamma/zx_5_gamma.mob",
+    "index": 56133,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/mechanicgiselle/zx_5_3/action/union.act": [
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_5_gamma/zx_5_gamma.mob",
+    "index": 56133,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/mechanicgiselle/zx_5_4/action/union.act": [
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_5_gamma/zx_5_gamma.mob",
+    "index": 56133,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/mechanicgiselle/zx_5_gamma/action/casting.act": [
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_5_1/zx_5_1.mob",
+    "index": 61208,
+    "level": 0,
+    "pos": [
+     -20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_5_2/zx_5_2.mob",
+    "index": 61209,
+    "level": 0,
+    "pos": [
+     0,
+     10,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_5_3/zx_5_3.mob",
+    "index": 61210,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_5_4/zx_5_4.mob",
+    "index": 61211,
+    "level": 0,
+    "pos": [
+     0,
+     -10,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/heaven/sergeant/action/sleep6.act": [
+   {
+    "monster": "monster/newmonsters/heaven/quartermaster/quartermaster.mob",
+    "index": 56136,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/leshphon/divol/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/leshphon/divol/divol1.mob",
+    "index": 62119,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/leshphon/divol/divol2.mob",
+    "index": 62120,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/pathogens/pathogens.mob",
+    "index": 62121,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/primary_infectee/primary_infectee.mob",
+    "index": 62122,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/melted_residents/melted_residents.mob",
+    "index": 62123,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/leshphon/the_wicked_disease_direzie/action/screw_attack_big.act": [
+   {
+    "monster": "monster/newmonsters/leshphon/particle/particle.mob",
+    "index": 62127,
+    "level": 0,
+    "pos": [
+     80,
+     0,
+     230
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/leshphon/particle/particle.mob",
+    "index": 62127,
+    "level": 0,
+    "pos": [
+     80,
+     0,
+     230
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/leshphon/particle/particle.mob",
+    "index": 62127,
+    "level": 0,
+    "pos": [
+     -70,
+     0,
+     230
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/leshphon/particle/particle.mob",
+    "index": 62127,
+    "level": 0,
+    "pos": [
+     -70,
+     0,
+     230
+    ]
+   }
+  ],
+  "monster/newmonsters/medeia/action/kiss.act": [
+   {
+    "monster": "monster/characterstatue/swordmanstatue.mob",
+    "index": 84,
+    "level": 0,
+    "pos": [
+     50,
+     30,
+     0
+    ]
+   },
+   {
+    "monster": "monster/characterstatue/magicianstatue.mob",
+    "index": 82,
+    "level": 0,
+    "pos": [
+     50,
+     -30,
+     0
+    ]
+   },
+   {
+    "monster": "monster/characterstatue/prieststatue.mob",
+    "index": 83,
+    "level": 0,
+    "pos": [
+     -50,
+     30,
+     0
+    ]
+   },
+   {
+    "monster": "monster/characterstatue/gunnerstatue.mob",
+    "index": 81,
+    "level": 0,
+    "pos": [
+     -50,
+     -30,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/militiaman/militiamanboss/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/militiaman/militiaman/militiaman.mob",
+    "index": 61003,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/militiaman/militiaman/militiaman.mob",
+    "index": 61003,
+    "level": 0,
+    "pos": [
+     -100,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/dual_face/action/l1_landrunner_summon.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/tank_landrunner/tank_landrunner.mob",
+    "index": 61642,
+    "level": 1,
+    "pos": [
+     55,
+     -1,
+     20
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/dual_face/action/l2_landrunner_summon.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/tank_landrunner/tank_landrunner.mob",
+    "index": 61642,
+    "level": 1,
+    "pos": [
+     55,
+     -1,
+     20
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/dual_face2/action/landrunner_summon.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/tank_landrunner/tank_landrunner.mob",
+    "index": 61642,
+    "level": 1,
+    "pos": [
+     5,
+     -1,
+     5
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/zx_5_1/action/union.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/zx_5_gamma/zx_5_gamma.mob",
+    "index": 56477,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/zx_5_2/action/union.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/zx_5_gamma/zx_5_gamma.mob",
+    "index": 56477,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/zx_5_3/action/union.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/zx_5_gamma/zx_5_gamma.mob",
+    "index": 56477,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/zx_5_4/action/union.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/zx_5_gamma/zx_5_gamma.mob",
+    "index": 56477,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/zx_5_gamma/action/casting.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/zx_5_1/zx_5_1.mob",
+    "index": 61636,
+    "level": 0,
+    "pos": [
+     -20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/new_event/dual/zx_5_2/zx_5_2.mob",
+    "index": 61637,
+    "level": 0,
+    "pos": [
+     0,
+     10,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/new_event/dual/zx_5_3/zx_5_3.mob",
+    "index": 61638,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/new_event/dual/zx_5_4/zx_5_4.mob",
+    "index": 61639,
+    "level": 0,
+    "pos": [
+     0,
+     -10,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/zx_69/action/_attack1.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/tank_landrunner/tank_landrunner.mob",
+    "index": 61642,
+    "level": 1,
+    "pos": [
+     10,
+     1,
+     30
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/zx_69/action/_attack2.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/zx_99/zx_99.mob",
+    "index": 61640,
+    "level": 1,
+    "pos": [
+     10,
+     1,
+     30
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/zx_69/action/_attack3.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/zx_5_1/zx_5.mob",
+    "index": 61647,
+    "level": 1,
+    "pos": [
+     10,
+     1,
+     30
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/zx_69/action/attack1.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/tank_landrunner/tank_landrunner1.mob",
+    "index": 61651,
+    "level": 1,
+    "pos": [
+     10,
+     1,
+     30
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/zx_69/action/attack2.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/zx_99/zx_99_1.mob",
+    "index": 61648,
+    "level": 1,
+    "pos": [
+     10,
+     1,
+     30
+    ]
+   }
+  ],
+  "monster/newmonsters/new_event/dual/zx_69/action/attack3.act": [
+   {
+    "monster": "monster/newmonsters/new_event/dual/zx_5_1/_zx_5.mob",
+    "index": 61652,
+    "level": 1,
+    "pos": [
+     10,
+     1,
+     30
+    ]
+   }
+  ],
+  "monster/newmonsters/powerstation/fuhrman/action/summon_named1.act": [
+   {
+    "monster": "monster/newmonsters/powerstation/rockslotor/rockslotor.mob",
+    "index": 61273,
+    "level": 0,
+    "pos": [
+     246,
+     250,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/rockslotor/rockslotor.mob",
+    "index": 61273,
+    "level": 0,
+    "pos": [
+     305,
+     369,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/rockslotor/rockslotor.mob",
+    "index": 61273,
+    "level": 0,
+    "pos": [
+     465,
+     246,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/rockslotor/rockslotor.mob",
+    "index": 61273,
+    "level": 0,
+    "pos": [
+     551,
+     309,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/rockslotor/rockslotor.mob",
+    "index": 61273,
+    "level": 0,
+    "pos": [
+     526,
+     368,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/rockslotor/rockslotor.mob",
+    "index": 61273,
+    "level": 0,
+    "pos": [
+     905,
+     230,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/rockslotor/rockslotor.mob",
+    "index": 61273,
+    "level": 0,
+    "pos": [
+     941,
+     383,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/powerstation/fuhrman/action/summon_named2.act": [
+   {
+    "monster": "monster/newmonsters/powerstation/trombe/granite_b/granite_b.mob",
+    "index": 64016,
+    "level": 0,
+    "pos": [
+     380,
+     262,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/trombe/granite_b/granite_b.mob",
+    "index": 64016,
+    "level": 0,
+    "pos": [
+     402,
+     367,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/trombe/granite_b/granite_b.mob",
+    "index": 64016,
+    "level": 0,
+    "pos": [
+     554,
+     233,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/trombe/granite_b/granite_b.mob",
+    "index": 64016,
+    "level": 0,
+    "pos": [
+     541,
+     317,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/trombe/granite_b/granite_b.mob",
+    "index": 64016,
+    "level": 0,
+    "pos": [
+     616,
+     393,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/trombe/granite_b/granite_b.mob",
+    "index": 64016,
+    "level": 0,
+    "pos": [
+     759,
+     216,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/trombe/granite_b/granite_b.mob",
+    "index": 64016,
+    "level": 0,
+    "pos": [
+     837,
+     412,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/powerstation/fuhrman/action/summon_named3.act": [
+   {
+    "monster": "monster/newmonsters/powerstation/fruz_station/granite_fly_b/granite_fly_b.mob",
+    "index": 61634,
+    "level": 0,
+    "pos": [
+     465,
+     246,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/fruz_station/granite_fly_b/granite_fly_b.mob",
+    "index": 61634,
+    "level": 0,
+    "pos": [
+     551,
+     309,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/fruz_station/granite_fly_b/granite_fly_b.mob",
+    "index": 61634,
+    "level": 0,
+    "pos": [
+     526,
+     368,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/fruz_station/granite_fly_b/granite_fly_b.mob",
+    "index": 61634,
+    "level": 0,
+    "pos": [
+     905,
+     230,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/fruz_station/granite_fly_b/granite_fly_b.mob",
+    "index": 61634,
+    "level": 0,
+    "pos": [
+     941,
+     383,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/powerstation/kohlepowerstation/fire_slime_big/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/powerstation/kohlepowerstation/fire_slime/fire_slime.mob",
+    "index": 63048,
+    "level": 0,
+    "pos": [
+     150,
+     10,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/kohlepowerstation/fire_slime/fire_slime.mob",
+    "index": 63048,
+    "level": 0,
+    "pos": [
+     200,
+     -5,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/powerstation/kohlepowerstation/fitz/action/casting02.act": [
+   {
+    "monster": "monster/newmonsters/powerstation/kohlepowerstation/fitz_warrior/fitz_warrior.mob",
+    "index": 63046,
+    "level": 0,
+    "pos": [
+     0,
+     20,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/powerstation/kohlepowerstation/fitz_archer/fitz_archer.mob",
+    "index": 63047,
+    "level": 0,
+    "pos": [
+     0,
+     -20,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/powerstation/trombe/paris/action/attack_1_0_1.act": [
+   {
+    "monster": "monster/newmonsters/powerstation/trombe/river/river.mob",
+    "index": 64018,
+    "level": 0,
+    "pos": [
+     0,
+     5,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/queen_rosi/action/proc.act": [
+   {
+    "monster": "monster/newmonsters/bantu/mohini/mohini.mob",
+    "index": 56703,
+    "level": 50,
+    "pos": [
+     280,
+     -100,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/ranjerus/bitbusty/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/ranjerus/assaulting/assaulting.mob",
+    "index": 61525,
+    "level": 0,
+    "pos": [
+     -100,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/ranjerus/assaulting/assaulting.mob",
+    "index": 61525,
+    "level": 0,
+    "pos": [
+     -100,
+     -50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/ranjerus/minesoldier/minesoldier.mob",
+    "index": 61526,
+    "level": 0,
+    "pos": [
+     -200,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/ranjerus/gashengrigun/action/crisisrx78.act": [
+   {
+    "monster": "monster/gunner/robot/rx78.mob",
+    "index": 60002,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/ranjerus/gashengrigun/action/order2.act": [
+   {
+    "monster": "monster/newmonsters/ranjerus/g3/g3.mob",
+    "index": 61134,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     100
+    ]
+   }
+  ],
+  "monster/newmonsters/ranjerus/gashengrigun/action/order3.act": [
+   {
+    "monster": "monster/newmonsters/ranjerus/rx78/rx78.mob",
+    "index": 61529,
+    "level": 0,
+    "pos": [
+     270,
+     170,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/ranjerus/rx78/rx78.mob",
+    "index": 61529,
+    "level": 0,
+    "pos": [
+     270,
+     330,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/ranjerus/rx78/rx78.mob",
+    "index": 61529,
+    "level": 0,
+    "pos": [
+     920,
+     330,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/ranjerus/rx78/rx78.mob",
+    "index": 61529,
+    "level": 0,
+    "pos": [
+     920,
+     170,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/ranjerus/rx78/action/boom.act": [
+   {
+    "monster": "monster/newmonsters/ranjerus/tempester/tempester.mob",
+    "index": 61528,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/realsky/mirkius/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/realsky/minius/minius.mob",
+    "index": 61523,
+    "level": 0,
+    "pos": [
+     -300,
+     100,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/realsky/minius/minius.mob",
+    "index": 61523,
+    "level": 0,
+    "pos": [
+     -100,
+     100,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/realsky/minius/minius.mob",
+    "index": 61523,
+    "level": 0,
+    "pos": [
+     100,
+     100,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/realsky/minius/minius.mob",
+    "index": 61523,
+    "level": 0,
+    "pos": [
+     300,
+     100,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/realsky/minius/minius.mob",
+    "index": 61523,
+    "level": 0,
+    "pos": [
+     -300,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/realsky/minius/minius.mob",
+    "index": 61523,
+    "level": 0,
+    "pos": [
+     300,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/realsky/minius/minius.mob",
+    "index": 61523,
+    "level": 0,
+    "pos": [
+     -300,
+     -100,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/riding/antitankgun/action/die.act": [
+   {
+    "monster": "monster/newmonsters/riding/antitankgun/antitankgun.mob",
+    "index": 61270,
+    "level": 80,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/riding/antitankgun/action/die1.act": [
+   {
+    "monster": "monster/newmonsters/riding/antitankgun/antitankgun1.mob",
+    "index": 61283,
+    "level": 80,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/riding/antitankgun/action/die2.act": [
+   {
+    "monster": "monster/newmonsters/riding/antitankgun/antitankgun2.mob",
+    "index": 61284,
+    "level": 80,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/riding/antitankgun/action/die3.act": [
+   {
+    "monster": "monster/newmonsters/riding/antitankgun/antitankgun3.mob",
+    "index": 61285,
+    "level": 80,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/riding/kartana/action/cast3.act": [
+   {
+    "monster": "monster/act8/chiefsars_crow/radilng_chiefsars_crow.mob",
+    "index": 61487,
+    "level": 0,
+    "pos": [
+     205,
+     50,
+     100
+    ]
+   },
+   {
+    "monster": "monster/act8/chiefsars_crow/radilng_chiefsars_crow.mob",
+    "index": 61487,
+    "level": 0,
+    "pos": [
+     205,
+     0,
+     100
+    ]
+   },
+   {
+    "monster": "monster/act8/chiefsars_crow/radilng_chiefsars_crow.mob",
+    "index": 61487,
+    "level": 0,
+    "pos": [
+     205,
+     -50,
+     100
+    ]
+   }
+  ],
+  "monster/newmonsters/riding/masaccio/action/proc1.act": [
+   {
+    "monster": "monster/act8/masaccio/masacciojb.mob",
+    "index": 61225,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/riding/masaccio_quest/action/proc1.act": [
+   {
+    "monster": "monster/act8/masaccio/masacciojb.mob",
+    "index": 61225,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/riding/metacow/action/buff2.act": [
+   {
+    "monster": "monster/tau/taucaptain.mob",
+    "index": 50071,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/tau/taucaptain.mob",
+    "index": 50071,
+    "level": 0,
+    "pos": [
+     0,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/tau/taucaptain.mob",
+    "index": 50071,
+    "level": 0,
+    "pos": [
+     0,
+     -50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/goblin/goblinkrazyivancaptain.mob",
+    "index": 50070,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/goblin/goblinkrazyivancaptain.mob",
+    "index": 50070,
+    "level": 0,
+    "pos": [
+     0,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/goblin/goblinkrazyivancaptain.mob",
+    "index": 50070,
+    "level": 0,
+    "pos": [
+     0,
+     -50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/lugaru/bloodlugaru.mob",
+    "index": 5005,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/lugaru/bloodlugaru.mob",
+    "index": 5005,
+    "level": 0,
+    "pos": [
+     0,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/lugaru/bloodlugaru.mob",
+    "index": 5005,
+    "level": 0,
+    "pos": [
+     0,
+     -50,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/riding/riding_turtle/action/summon.act": [
+   {
+    "monster": "monster/act8/burnbotti/burnbotti.mob",
+    "index": 61231,
+    "level": 0,
+    "pos": [
+     150,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/cartelcommand/antitankgun/action/die.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/cartelcommand/antitankgun/antitankgun.mob",
+    "index": 61772,
+    "level": 80,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/cartelcommand/antitankgun1/action/die1.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/cartelcommand/antitankgun1/antitankgun1.mob",
+    "index": 61776,
+    "level": 80,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/cartelcommand/antitankgun2/action/die2.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/cartelcommand/antitankgun2/antitankgun2.mob",
+    "index": 61777,
+    "level": 80,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/cartelcommand/antitankgun3/action/die3.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/cartelcommand/antitankgun3/antitankgun3.mob",
+    "index": 61779,
+    "level": 80,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/cartelcommand/ranjerus/action/call.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/cartelcommand/at_walker/at_walker.mob",
+    "index": 61783,
+    "level": 10,
+    "pos": [
+     1100,
+     240,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/ghosttrain/chiefmong0/action/attack_1.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/chiefmongghost0/chiefmongghost.mob",
+    "index": 56756,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/ghosttrain/chiefmongghost0/action/die.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/chiefmongghost_2nd0/chiefmongghost_2nd.mob",
+    "index": 56758,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/chiefmongghost_2nd0/chiefmongghost_2nd.mob",
+    "index": 56758,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/chiefmongghost_2nd0/chiefmongghost_2nd.mob",
+    "index": 56758,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/ghosttrain/chiefmongghost_2nd0/action/die.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/chiefmongghost_3rd0/chiefmongghost_3rd.mob",
+    "index": 56761,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/chiefmongghost_3rd0/chiefmongghost_3rd.mob",
+    "index": 56761,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/ghosttrain/wooden_doll_l1/action/casting1.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/wooden_doll_l_shadow1/wooden_doll_l_shadow.mob",
+    "index": 61773,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/wooden_doll_l_shadow1/wooden_doll_l_shadow.mob",
+    "index": 61773,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/wooden_doll_l_shadow1/wooden_doll_l_shadow.mob",
+    "index": 61773,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/wooden_doll_l_shadow1/wooden_doll_l_shadow.mob",
+    "index": 61773,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/wooden_doll_l_shadow1/wooden_doll_l_shadow.mob",
+    "index": 61773,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/wooden_doll_l_shadow1/wooden_doll_l_shadow.mob",
+    "index": 61773,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/ghosttrain/wooden_doll_l1/action/die.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/ghosttrain/nenflowerex1/nenflowerex.mob",
+    "index": 61774,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/leshphon/the_wicked_disease_direzie/action/screw_attack_big.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/leshphon/particle/particle.mob",
+    "index": 62255,
+    "level": 0,
+    "pos": [
+     80,
+     0,
+     230
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/leshphon/particle/particle.mob",
+    "index": 62255,
+    "level": 0,
+    "pos": [
+     80,
+     0,
+     230
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/leshphon/particle/particle.mob",
+    "index": 62255,
+    "level": 0,
+    "pos": [
+     -70,
+     0,
+     230
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/leshphon/particle/particle.mob",
+    "index": 62255,
+    "level": 0,
+    "pos": [
+     -70,
+     0,
+     230
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/noirpera/direzie/action/hideandsummon25.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/direzie_sub/direzie_sub.mob",
+    "index": 61749,
+    "level": 0,
+    "pos": [
+     100,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/direzie_sub/direzie_sub.mob",
+    "index": 61749,
+    "level": 0,
+    "pos": [
+     100,
+     -50,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/noirpera/direzie/action/hideandsummon50.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/direzie_sub/direzie_sub.mob",
+    "index": 61749,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/noirpera/direzie/action/hideandsummon75.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/direzie_sub/direzie_sub.mob",
+    "index": 61749,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/noirpera/infected_ghoula/action/cross.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/infected_ghoulc/infected_ghoulc.mob",
+    "index": 56757,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/noirpera/militiamanboss/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/militiaman/militiaman.mob",
+    "index": 61798,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/militiaman/militiaman.mob",
+    "index": 61798,
+    "level": 0,
+    "pos": [
+     -100,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/noirpera/mummy_ghost_start/action/stay.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/mummy_ghost/mummy_ghost.mob",
+    "index": 56749,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/noirpera/noir_dimension_gate/action/proc.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/disease_spirit/disease_spirit.mob",
+    "index": 61754,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/noirpera/noir_dimension_gate/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/disease_spirit/disease_spirit.mob",
+    "index": 61754,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/noirpera/noir_dimension_gate/action/summon2.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/disease_spirit/disease_spirit.mob",
+    "index": 61754,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/disease_spirit/disease_spirit.mob",
+    "index": 61754,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/noirpera/noir_dimension_gate/action/summon_special.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/disease_spirit/disease_spirit.mob",
+    "index": 61754,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/noirpera/disease_spirit/disease_spirit.mob",
+    "index": 61754,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/screamingcave/babynugol/action/metamotphosis.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/nugol/nugol.mob",
+    "index": 61756,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/screamingcave/bloodystormhardy/action/move.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61745,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61745,
+    "level": 0,
+    "pos": [
+     -100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61745,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61745,
+    "level": 0,
+    "pos": [
+     100,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61745,
+    "level": 0,
+    "pos": [
+     100,
+     -50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61745,
+    "level": 0,
+    "pos": [
+     -100,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61745,
+    "level": 0,
+    "pos": [
+     -100,
+     -50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61745,
+    "level": 0,
+    "pos": [
+     0,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61745,
+    "level": 0,
+    "pos": [
+     0,
+     -50,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/screamingcave/eviledge1/action/cast2.act": [
+   {
+    "monster": "monster/goblin/goblin.mob",
+    "index": 1,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/screamingcave/eviledge1/action/cast2_0.act": [
+   {
+    "monster": "monster/goblin/goblin.mob",
+    "index": 1,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/screamingcave/eviledge2/action/cast2.act": [
+   {
+    "monster": "monster/goblin/goblin.mob",
+    "index": 1,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/screamingcave/kingnugol/action/proc.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/babynugol2/babynugol2.mob",
+    "index": 61758,
+    "level": 0,
+    "pos": [
+     200,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/babynugol2/babynugol2.mob",
+    "index": 61758,
+    "level": 0,
+    "pos": [
+     200,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/risk_dungeon/screamingcave/kingnugol/action/spit.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/babynugol2/babynugol2.mob",
+    "index": 61758,
+    "level": 0,
+    "pos": [
+     120,
+     0,
+     100
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/babynugol2/babynugol2.mob",
+    "index": 61758,
+    "level": 0,
+    "pos": [
+     120,
+     0,
+     100
+    ]
+   }
+  ],
+  "monster/newmonsters/screamingcave/babynugol/action/metamotphosis.act": [
+   {
+    "monster": "monster/newmonsters/screamingcave/nugol/nugol.mob",
+    "index": 61146,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/screamingcave/bloodystormhardy/action/move.act": [
+   {
+    "monster": "monster/newmonsters/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61148,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61148,
+    "level": 0,
+    "pos": [
+     -100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61148,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61148,
+    "level": 0,
+    "pos": [
+     100,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61148,
+    "level": 0,
+    "pos": [
+     100,
+     -50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61148,
+    "level": 0,
+    "pos": [
+     -100,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61148,
+    "level": 0,
+    "pos": [
+     -100,
+     -50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61148,
+    "level": 0,
+    "pos": [
+     0,
+     50,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/screamingcave/hardystorm/hardystorm.mob",
+    "index": 61148,
+    "level": 0,
+    "pos": [
+     0,
+     -50,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/screamingcave/eviledge/action/cast2.act": [
+   {
+    "monster": "monster/goblin/goblin.mob",
+    "index": 1,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/screamingcave/eviledge1/action/cast2.act": [
+   {
+    "monster": "monster/goblin/goblin.mob",
+    "index": 1,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/screamingcave/eviledge2/action/cast2.act": [
+   {
+    "monster": "monster/goblin/goblin.mob",
+    "index": 1,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/screamingcave/kingnugol/action/proc.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/babynugol2/babynugol2.mob",
+    "index": 61758,
+    "level": 0,
+    "pos": [
+     200,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/babynugol2/babynugol2.mob",
+    "index": 61758,
+    "level": 0,
+    "pos": [
+     200,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/screamingcave/kingnugol/action/spit.act": [
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/babynugol2/babynugol2.mob",
+    "index": 61758,
+    "level": 0,
+    "pos": [
+     120,
+     0,
+     100
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/risk_dungeon/screamingcave/babynugol2/babynugol2.mob",
+    "index": 61758,
+    "level": 0,
+    "pos": [
+     120,
+     0,
+     100
+    ]
+   }
+  ],
+  "monster/newmonsters/screamingcave/nugol/action/spit.act": [
+   {
+    "monster": "monster/newmonsters/screamingcave/babynugol/babynugol.mob",
+    "index": 61147,
+    "level": 0,
+    "pos": [
+     120,
+     0,
+     100
+    ]
+   }
+  ],
+  "monster/newmonsters/shonan/biwoong/action/mirrorimage.act": [
+   {
+    "monster": "monster/newmonsters/shonan/biwoong_mirror/biwoong_mirror.mob",
+    "index": 59025,
+    "level": 0,
+    "pos": [
+     10,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/shonan/biwoong_mirror/action/mirrorimage.act": [
+   {
+    "monster": "monster/newmonsters/shonan/kaizen/kaizen.mob",
+    "index": 59023,
+    "level": 0,
+    "pos": [
+     10,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/silverspoon/silversmallmanc/action/whistle.act": [
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat.mob",
+    "index": 61443,
+    "level": 0,
+    "pos": [
+     50,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_jugglingacrobat/silverclown_jugglingacrobat.mob",
+    "index": 61443,
+    "level": 0,
+    "pos": [
+     -50,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_crutches/silverclown_crutches.mob",
+    "index": 61437,
+    "level": 0,
+    "pos": [
+     50,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_crutches/silverclown_crutches.mob",
+    "index": 61437,
+    "level": 0,
+    "pos": [
+     -50,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/silverspoon/silverclown_crutches/silverclown_crutches.mob",
+    "index": 61437,
+    "level": 0,
+    "pos": [
+     0,
+     -50,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/slime/slime_king/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/slime/slime_red/slime_red.mob",
+    "index": 61010,
+    "level": 0,
+    "pos": [
+     10,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/slime/slime_red/slime_red.mob",
+    "index": 61010,
+    "level": 0,
+    "pos": [
+     -10,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/slime/slime_firm/slime_firm.mob",
+    "index": 61011,
+    "level": 0,
+    "pos": [
+     0,
+     10,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/slime/slime_firm/slime_firm.mob",
+    "index": 61011,
+    "level": 0,
+    "pos": [
+     0,
+     -10,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/slime/slime_frantic/slime_frantic.mob",
+    "index": 61012,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/slime/slime_frantic/slime_frantic.mob",
+    "index": 61012,
+    "level": 0,
+    "pos": [
+     -20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/slime/slime_mini/slime_mini.mob",
+    "index": 61015,
+    "level": 0,
+    "pos": [
+     0,
+     20,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/slime/slime_mini/slime_mini.mob",
+    "index": 61015,
+    "level": 0,
+    "pos": [
+     0,
+     -20,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/slime/slime_mini/action/bomb.act": [
+   {
+    "monster": "monster/newmonsters/slime/slime_king/slime_king_1.mob",
+    "index": 61016,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/snowman/sasquatch/action/sommon.act": [
+   {
+    "monster": "monster/newmonsters/snowman/snowman/snowman.mob",
+    "index": 61453,
+    "level": 0,
+    "pos": [
+     8,
+     0,
+     40
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/beginning/fire_dragon/action/fire.act": [
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/shelder/shelder.mob",
+    "index": 62135,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/shelder/shelder2.mob",
+    "index": 62136,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/shelder/shelder3.mob",
+    "index": 62137,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/shelder/shelder4.mob",
+    "index": 62138,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/dimensiongate/bakal/shelder/shelder5.mob",
+    "index": 62139,
+    "level": 70,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/black_church/ozma/action/summun.act": [
+   {
+    "monster": "monster/newmonsters/timegate/black_church/skewer/skewer_n.mob",
+    "index": 61617,
+    "level": 1,
+    "pos": [
+     839,
+     233,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/black_church/pincers/pincers_n.mob",
+    "index": 61618,
+    "level": 1,
+    "pos": [
+     839,
+     302,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/black_church/sawtooth/sawtooth_n.mob",
+    "index": 61619,
+    "level": 1,
+    "pos": [
+     839,
+     364,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/black_church/scissors/scissors_n.mob",
+    "index": 61620,
+    "level": 1,
+    "pos": [
+     839,
+     233,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/black_church/sawtooth/sawtooth_n.mob",
+    "index": 61619,
+    "level": 1,
+    "pos": [
+     839,
+     302,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/black_church/pincers/pincers_n.mob",
+    "index": 61618,
+    "level": 1,
+    "pos": [
+     839,
+     364,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/black_church/skewer/skewer_n.mob",
+    "index": 61617,
+    "level": 1,
+    "pos": [
+     839,
+     233,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/black_church/scissors/scissors_n.mob",
+    "index": 61620,
+    "level": 1,
+    "pos": [
+     839,
+     302,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/black_church/pincers/pincers_n.mob",
+    "index": 61618,
+    "level": 1,
+    "pos": [
+     839,
+     364,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/conflagration/redeyes_sinua/action/response.act": [
+   {
+    "monster": "monster/newmonsters/timegate/conflagration/forest_oak/forest_oak.mob",
+    "index": 63039,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/conflagration/warrior_oak/warrior_oak.mob",
+    "index": 63040,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/conflagration/umtara/action/shout.act": [
+   {
+    "monster": "monster/newmonsters/timegate/conflagration/forest_oak/forest_oak.mob",
+    "index": 63039,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/conflagration/forest_oak/forest_oak.mob",
+    "index": 63039,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/conflagration/warrior_oak/warrior_oak.mob",
+    "index": 63040,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/consciousness/doll_fighter/action/casting1.act": [
+   {
+    "monster": "monster/act8/wooden_doll_l/wooden_doll_l_shadow.mob",
+    "index": 61490,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/wooden_doll_l/wooden_doll_l_shadow.mob",
+    "index": 61490,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/wooden_doll_l/wooden_doll_l_shadow.mob",
+    "index": 61490,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/wooden_doll_l/wooden_doll_l_shadow.mob",
+    "index": 61490,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/wooden_doll_l/wooden_doll_l_shadow.mob",
+    "index": 61490,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/act8/wooden_doll_l/wooden_doll_l_shadow.mob",
+    "index": 61490,
+    "level": 67,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/epidemic/hogas/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/darkelf_ghoul/darkelf_ghoul.mob",
+    "index": 62513,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/darkelf_ghoul/darkelf_ghoul.mob",
+    "index": 62513,
+    "level": 0,
+    "pos": [
+     -100,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/epidemic/kah_divol/action/summon.act": [
+   {
+    "monster": "monster/newmonsters/leshphon/divol/divol1.mob",
+    "index": 62119,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/leshphon/divol/divol2.mob",
+    "index": 62120,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/pathogens/pathogens.mob",
+    "index": 62121,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/primary_infectee/primary_infectee.mob",
+    "index": 62122,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/melted_residents/melted_residents.mob",
+    "index": 62123,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/epidemic/skull_knight/action/summon_ghoul.act": [
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/skeleton/skeleton.mob",
+    "index": 63032,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/skeleton/skeleton.mob",
+    "index": 63032,
+    "level": 0,
+    "pos": [
+     120,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/skeleton/skeleton.mob",
+    "index": 63032,
+    "level": 0,
+    "pos": [
+     20,
+     20,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/skeleton/skeleton.mob",
+    "index": 63032,
+    "level": 0,
+    "pos": [
+     20,
+     60,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/epidemic/skeleton/skeleton.mob",
+    "index": 63032,
+    "level": 0,
+    "pos": [
+     120,
+     -60,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/formacartel/7shards_giselle/action/substay.act": [
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_99/zx_99.mob",
+    "index": 61203,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     60
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/formacartel/7shards_giselle/action/summon_landboar.act": [
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_9/zx_9.mob",
+    "index": 61204,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     150
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_9/zx_9.mob",
+    "index": 61204,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     150
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_9/zx_9.mob",
+    "index": 61204,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     150
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/heaven/mechanicgiselle/zx_9/zx_9.mob",
+    "index": 61204,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     150
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/formacartel/7shards_giselle/action/timeattack.act": [
+   {
+    "monster": "monster/newmonsters/heaven/timerunner/timerunner.mob",
+    "index": 61155,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/iris/action/casting_fly2_2.act": [
+   {
+    "monster": "monster/newmonsters/timegate/consciousness/fire_doll/fire_doll1.mob",
+    "index": 62510,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/consciousness/fire_doll/fire_doll2.mob",
+    "index": 62511,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/consciousness/fire_doll/fire_doll3.mob",
+    "index": 62512,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/iris/action/ice_fly2.act": [
+   {
+    "monster": "monster/newmonsters/timegate/consciousness/mareritt2/mareritt2.mob",
+    "index": 62521,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/iris/action/light_fly2.act": [
+   {
+    "monster": "monster/newmonsters/timegate/consciousness/mareritt/mareritt.mob",
+    "index": 62108,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/oldscreamingcave/insectmagician/action/attack_1.act": [
+   {
+    "monster": "monster/newmonsters/timegate/oldscreamingcave/bee/bee.mob",
+    "index": 61631,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/oldscreamingcave/insectmagician/action/attack_2.act": [
+   {
+    "monster": "monster/newmonsters/timegate/oldscreamingcave/bloodbutterfly/bloodbutterfly.mob",
+    "index": 61630,
+    "level": 0,
+    "pos": [
+     100,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/timelord/andres/action/attack_10.act": [
+   {
+    "monster": "monster/newmonsters/timegate/timelord/basten_l/basten_l.mob",
+    "index": 64008,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/timelord/basten_r/basten_r.mob",
+    "index": 64009,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/timelord/andres/action/stay.act": [
+   {
+    "monster": "monster/newmonsters/timegate/timelord/andres_l/andres_l.mob",
+    "index": 64014,
+    "level": 1,
+    "pos": [
+     0,
+     70,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/timelord/andres_r/andres_r.mob",
+    "index": 64015,
+    "level": 1,
+    "pos": [
+     0,
+     -70,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/timelord/basten/action/attack_10.act": [
+   {
+    "monster": "monster/newmonsters/timegate/timelord/basten_l/basten_l.mob",
+    "index": 64008,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/timelord/basten_r/basten_r.mob",
+    "index": 64009,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/timelord/basten/action/stay.act": [
+   {
+    "monster": "monster/newmonsters/timegate/timelord/basten_l/basten_l.mob",
+    "index": 64008,
+    "level": 0,
+    "pos": [
+     0,
+     70,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/timelord/basten_r/basten_r.mob",
+    "index": 64009,
+    "level": 0,
+    "pos": [
+     0,
+     -70,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/timelord/neymar/action/attack_10.act": [
+   {
+    "monster": "monster/newmonsters/timegate/timelord/basten_l/basten_l.mob",
+    "index": 64008,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/timelord/basten_r/basten_r.mob",
+    "index": 64009,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/timegate/timelord/neymar/action/stay.act": [
+   {
+    "monster": "monster/newmonsters/timegate/timelord/neymar_l/neymar_l.mob",
+    "index": 64011,
+    "level": 0,
+    "pos": [
+     0,
+     70,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/timegate/timelord/neymar_r/neymar_r.mob",
+    "index": 64012,
+    "level": 0,
+    "pos": [
+     0,
+     -70,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/towerofdespair/claris/action/cast2.act": [
+   {
+    "monster": "monster/goblin/goblin.mob",
+    "index": 1,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/towerofdespair/rodem/action/casting.act": [
+   {
+    "monster": "monster/newmonsters/towerofdespair/rodem/rodem_summon.mob",
+    "index": 61542,
+    "level": 0,
+    "pos": [
+     180,
+     80,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/towerofdespair/rodem/rodem_summon.mob",
+    "index": 61542,
+    "level": 0,
+    "pos": [
+     200,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/towerofdespair/rodem/rodem_summon.mob",
+    "index": 61542,
+    "level": 0,
+    "pos": [
+     160,
+     -30,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/towerofultimate/limit_ladyzealot/action/suicide.act": [
+   {
+    "monster": "monster/newmonsters/towerofultimate/limit_ladyzealot_fire/limit_ladyzealot_fire.mob",
+    "index": 56440,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/towerofultimate/limit_ladyzealot_dark/limit_ladyzealot_dark.mob",
+    "index": 56441,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "monster": "monster/newmonsters/towerofultimate/limit_ladyzealot_ice/limit_ladyzealot_ice.mob",
+    "index": 56442,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/towerofultimate/mummy_dark/action/die.act": [
+   {
+    "monster": "monster/newmonsters/towerofultimate/mummy_dark/mummy_dark_sub2.mob",
+    "index": 61489,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/towerofultimate/mummy_light/action/die.act": [
+   {
+    "monster": "monster/newmonsters/towerofultimate/mummy_dark/mummy_dark_sub2.mob",
+    "index": 61489,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/newmonsters/witch/agarum/action/victimsummon.act": [
+   {
+    "monster": "monster/newmonsters/witch/victim/firevictim.mob",
+    "index": 62111,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/poongjintrainingroom/act8/blackscalemoussambani/action/summoncroco.act": [
+   {
+    "monster": "monster/act8/crokhan_spearman/crokhan_spearman.mob",
+    "index": 62106,
+    "level": 0,
+    "pos": [
+     20,
+     0,
+     0
+    ]
+   }
+  ],
+  "monster/poongjintrainingroom/act8/blackscalemoussambani/action/summonplover2.act": [
+   {
+    "monster": "monster/act8/plover/heroplover_l.mob",
+    "index": 62115,
+    "level": 0,
+    "pos": [
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ }
+}
