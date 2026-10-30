@@ -21,8 +21,10 @@ var problems: Array = []
 var _timelines: Dictionary = {}
 ## 原版 HP 基准表（monster/monsterbaseparameter.tbl，每 5 级一档）。
 var base_table: Array = []
-## 原版 BOSS 选招规则（由 .ai 反编译提取，按怪物名索引）。
+## 原版选招规则（由 .ai 反编译提取）：按怪物名精确索引 + 按族目录索引。
+## 原版 AI 是**族共享**的（monster/goblin/ai/ 覆盖全族），所以族索引是主用的一层。
 var boss_rules: Dictionary = {}
+var rules_by_family: Dictionary = {}
 ## 原版召唤表（.act 的 [SUMMON MONSTER]），按动作 ANI 路径索引；含 BOSS 死亡变身。
 var summons_by_ani: Dictionary = {}
 
@@ -51,7 +53,9 @@ func _load_base_table() -> void:
 	# 同一份数据里也有 BOSS 选招规则（由 .ai 反编译提取）。
 	if FileAccess.file_exists("res://data/boss_rules.json"):
 		var rules_doc = JSON.parse_string(FileAccess.get_file_as_string("res://data/boss_rules.json"))
-		if rules_doc is Dictionary:boss_rules = rules_doc.get("index", {})
+		if rules_doc is Dictionary:
+			boss_rules = rules_doc.get("index", {})
+			rules_by_family = rules_doc.get("by_family", {})
 	if FileAccess.file_exists("res://data/summons.json"):
 		var summon_doc = JSON.parse_string(FileAccess.get_file_as_string("res://data/summons.json"))
 		if summon_doc is Dictionary:summons_by_ani = summon_doc.get("by_ani", {})
@@ -323,6 +327,9 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 	var mob_stem := String(path).get_file().get_basename().to_lower()
 	if boss_rules.has(mob_stem):
 		m["rules"] = boss_rules[mob_stem]
+	elif rules_by_family.has(String(path).get_base_dir()):
+		# 族共享的 AI（原版绝大多数就是这一层）：同族的怪共用一套选招规则。
+		m["rules"] = rules_by_family[String(path).get_base_dir()]
 	# 召唤：动作 ANI 命中 .act 的 [SUMMON MONSTER] 时挂到该招上；
 	# die 动作的召唤就是原版的“死亡变身”（如 chiefmongghost → chiefmongghost_2nd）。
 	if not summons_by_ani.is_empty():

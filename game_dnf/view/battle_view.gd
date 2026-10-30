@@ -46,8 +46,12 @@ var _player_z := 0.0
 ## 由 loot/bridge.gd 在拾取成功时调用 request_pickup_pose()。
 var pickup_pose_until_ms := 0
 
+## 剩余帧数：用帧计数而不是墙上时钟，截图/掉帧时不会整段跳过（原版 sit 约 0.8s ≈ 48 帧）。
+var pickup_pose_frames := 0
+
 func request_pickup_pose(duration_ms := 900.0) -> void:
 	pickup_pose_until_ms = Time.get_ticks_msec() + int(duration_ms)
+	pickup_pose_frames = int(maxf(8.0, duration_ms / 16.0))
 
 func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictionary, bus, weapon: String, map_loader) -> void:
 	_assets = assets
@@ -116,9 +120,10 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	# 拾取瞬间播放下蹲（原版 sit 帧），其余时间完全按模拟给的动作。
 	var pose := String(p["ani"])
 	var pose_clock := float(p["clock"])
-	if Time.get_ticks_msec() < pickup_pose_until_ms:
+	if pickup_pose_frames > 0:
 		pose = "sit"
 		pose_clock = 30.0
+		pickup_pose_frames -= 1
 	player_actor.present(pose,pose_clock,p["facing"],p["z"],1.0 if p["flash"] else 0.0)
 	_present_aura(String(p.get("aura","")),p,sim_ms)
 	for e: Dictionary in s["enemies"]:
