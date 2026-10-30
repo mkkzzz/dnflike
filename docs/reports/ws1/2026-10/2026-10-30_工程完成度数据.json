@@ -1,0 +1,266 @@
+{
+  "schema": "dnf_progress_snapshot/1",
+  "policy": {
+    "aggregate_percentage": false,
+    "reason": "源记录、运行时定义、功能支持与实机验收的分母不同；本快照只给出各维度独立覆盖，不合成总完成率。"
+  },
+  "world": {
+    "towns": 11,
+    "town_npcs": 12,
+    "town_dungeon_entries": 3,
+    "dungeon_entries": 18,
+    "playable_routes": 17,
+    "selectable_routes": 16,
+    "hidden_routes": 1,
+    "legacy_routes": 1,
+    "rooms": 112,
+    "regions": {
+      "act8": 1,
+      "granfloris": 7,
+      "lorien": 2,
+      "skytower": 7
+    },
+    "level_bands": {
+      "1-16": 14,
+      "17-30": 0,
+      "31-45": 0,
+      "46-57": 0,
+      "58-60": 1
+    },
+    "level_unknown": [
+      "lorien",
+      "lorien_inside"
+    ],
+    "hidden_names": [
+      "arden"
+    ],
+    "legacy_names": [
+      "forest_trial"
+    ]
+  },
+  "quests": {
+    "source_total": 3716,
+    "source_failed": 0,
+    "catalog_implemented": 43,
+    "runtime_total": 43,
+    "runtime_percent_of_source": 1.16,
+    "epic_total": 941,
+    "epic_runtime": 41,
+    "indexed_blocked": 2781,
+    "grades": [
+      {
+        "grade": "[urgent]",
+        "total": 1276,
+        "runtime": 0
+      },
+      {
+        "grade": "[epic]",
+        "total": 941,
+        "runtime": 41
+      },
+      {
+        "grade": "[achievement]",
+        "total": 510,
+        "runtime": 0
+      },
+      {
+        "grade": "[common unique]",
+        "total": 420,
+        "runtime": 2
+      },
+      {
+        "grade": "[title]",
+        "total": 180,
+        "runtime": 0
+      },
+      {
+        "grade": "[daily]",
+        "total": 140,
+        "runtime": 0
+      },
+      {
+        "grade": "[training]",
+        "total": 125,
+        "runtime": 0
+      },
+      {
+        "grade": "[normaly repeat]",
+        "total": 117,
+        "runtime": 0
+      },
+      {
+        "grade": "[daily random]",
+        "total": 7,
+        "runtime": 0
+      }
+    ],
+    "top_blockers": [
+      {
+        "reason": "npc_not_in_town",
+        "count": 2364
+      },
+      {
+        "reason": "prerequisite_not_executable",
+        "count": 2023
+      },
+      {
+        "reason": "quest_grade:[urgent]",
+        "count": 1114
+      },
+      {
+        "reason": "field:[enemy reward item]",
+        "count": 286
+      },
+      {
+        "reason": "difficulty_not_implemented:2",
+        "count": 253
+      },
+      {
+        "reason": "target_npc_not_in_town",
+        "count": 232
+      },
+      {
+        "reason": "field:[job change quest]",
+        "count": 184
+      },
+      {
+        "reason": "field:[substitutive names]",
+        "count": 178
+      },
+      {
+        "reason": "missing_chinese_text",
+        "count": 178
+      },
+      {
+        "reason": "quest_grade:[title]",
+        "count": 175
+      },
+      {
+        "reason": "field:[relation quest]",
+        "count": 164
+      },
+      {
+        "reason": "field:[monster reward item]",
+        "count": 161
+      },
+      {
+        "reason": "field:[exposed by npc]",
+        "count": 151
+      },
+      {
+        "reason": "objective:[condition under clear]:sub=11:width=3",
+        "count": 150
+      },
+      {
+        "reason": "field:[exception quest]",
+        "count": 133
+      }
+    ]
+  },
+  "items": {
+    "source_library_files": 89274,
+    "source_item_files": 84966,
+    "source_by_extension": {
+      ".equ": 74475,
+      ".etc": 592,
+      ".qst": 3716,
+      ".stk": 10491,
+      "unindexed_files": 4769
+    },
+    "source_retained_raw": 19,
+    "runtime_total": 3729,
+    "runtime_by_kind": {
+      "consumable": 76,
+      "material": 396,
+      "profession": 33,
+      "quest": 763,
+      "weapon": 2461
+    },
+    "top_support_gaps": [
+      {
+        "reason": "field:[avatar select ability]",
+        "count": 37816
+      },
+      {
+        "reason": "field:[avatar type select]",
+        "count": 37676
+      },
+      {
+        "reason": "field:[part set index]",
+        "count": 30273
+      },
+      {
+        "reason": "field:[enable dye]",
+        "count": 20792
+      },
+      {
+        "reason": "missing_chinese_name",
+        "count": 18412
+      },
+      {
+        "reason": "field:[anti evil]",
+        "count": 15427
+      },
+      {
+        "reason": "field:[skill data up]",
+        "count": 12738
+      },
+      {
+        "reason": "field:[avatar func filter]",
+        "count": 11834
+      },
+      {
+        "reason": "field:[MP regen speed]",
+        "count": 9893
+      },
+      {
+        "reason": "field:[hit recovery]",
+        "count": 9447
+      },
+      {
+        "reason": "field:[int data]",
+        "count": 8282
+      },
+      {
+        "reason": "field:[string data]",
+        "count": 7803
+      },
+      {
+        "reason": "item_type:[recipe]",
+        "count": 6957
+      },
+      {
+        "reason": "weapon_family",
+        "count": 6765
+      },
+      {
+        "reason": "field:[emancipate explain]",
+        "count": 6336
+      }
+    ]
+  },
+  "skills": {
+    "panel_total": 175,
+    "runtime_total": 7,
+    "runtime_percent": 4.0,
+    "runtime_names": [
+      "上挑",
+      "拔刀斩",
+      "三段斩",
+      "十字斩",
+      "暴走",
+      "格挡",
+      "基础力量精通"
+    ]
+  },
+  "monsters": {
+    "catalog_total": 1937,
+    "catalog_failed": 0,
+    "catalog_missing_atk": 30,
+    "runtime_mappings": 85,
+    "boss_rule_scripts": 855,
+    "boss_rule_index": 678,
+    "boss_rule_families": 853,
+    "boss_rooms": 17
+  }
+}
