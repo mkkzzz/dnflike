@@ -20,6 +20,7 @@ description: 排查与修复本仓库 game_dnf 的输入、动作、命中、怪
 - 架构检查：`python tools/check_dnf_deps.py`；中文扫描：`python tools/check_game_chinese.py`，原图文字仍要看截图。
 - 表现回归使用 `tools/trace_dnf.ps1 -Label <标记>` 与 `-Compare <基线标记>`。先读脚本：它使用工程主入口；与独立战斗入口不一致时明确场景条件，不直接比较不同入口的轨迹。只有表现预期不变的改动才要求轨迹相同。
 - 可用 `godot-dnf` MCP 时，先 `check_project` 核对路径和版本，再检查当前会话。诊断使用 `run_project`、`get_debug_output`、`take_screenshot`、`get_ui_elements`、`run_script`、`simulate_input`。先读取节点/属性再构造输入；监视脚点、动作、冷却、AI 状态、命中计数。临时诊断通过现有 debug API，生产调用仍遵循模块 API 边界。
+- 本用户要求自动操作全程后台：规则测试用 headless；MCP 渲染通过 `tools/start_dnf_mcp_background.py` 在 Windows 独立隐藏桌面运行，不直接启动原包、编辑器或仅以 `background` 参数替代桌面隔离。截图由 MCP 获取，输入由 MCP 注入；不切换到隐藏桌面。暂停先读取状态，必要时通过输入恢复。
 - MCP 运行会临时注入 autoload，截图/桥接位于工程 `.mcp` 目录。按当前工具 schema 调用，测试结束 `stop_project`，确认 autoload 清理、工程配置恢复且无桥接文件被 stage。显式释放跨调用持有的输入。
 - MCP 输入/截图、普通回归和用户试玩分别记录。输入注入并不证明操作系统真实输入；视觉与手感认可仍由用户确认。
 
