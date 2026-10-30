@@ -804,12 +804,13 @@
      "boss": true
     }
    ],
-   "monster_level": 71,
+   "monster_level": 58,
    "source": {
     "path": "dungeon/act8/arden.dgn",
     "sha256": "9a4906b12d7b7945e55cffd4203039baeeb4dad899ede8cf32beb45785433765",
     "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
-   }
+   },
+   "hidden": true
   }
  }
 }

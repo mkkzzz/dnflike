@@ -5,8 +5,8 @@
   "game_dnf/data/native_runtime.json": "8654057479896be618ac6273fe2294b0da6f47eb74f021a487ec02eb0ed38974",
   "game_dnf/data/runtime_items.json": "e0e3ce46d6b39aae805808a1bce7110c55aa9265606ce7f671534543690ae2ae",
   "game_dnf/data/monster_catalog.json": "4c202c3d5ea2089a1f5c78971ce742ad2a77b0ef56d197a35ca87a75e83c7b3b",
-  "game_dnf/data/combat.json": "8fe42d5efb1d32066a72f31ddc84bf3603537cfb9599250258bae5b9f3828cbb",
-  "game_dnf/data/dungeons.json": "c7e31fe7ee3397f5a27151f0019ecfa27f44b2601344e3949c49354dc916b174",
+  "game_dnf/data/combat.json": "7bd7d1ed6b6e7feb2596dcc60f725d046fe611c2ab0548096287a40bd674d0f4",
+  "game_dnf/data/dungeons.json": "6c0073bdad61603960e36ef8b0883aefb36caf6c1abe5aecbc76c8d68393a3d3",
   "game_dnf/data/towns.json": "3c8e8f52d519086851ef6688256324cb951a9920d2eb0b1728c71be9dc570447",
   "game_dnf/assets_local/native_data_v1/manifest.json": "6b7fef19eba9b5bc8ffd85f1eacae9cc6d9715092f18eecbee214e3418114090",
   "game_dnf/assets_local/native_maps/lorien/map_export.json": "30c6ee2286644245b4e7b620ccacd0096c80ec27b6395a98b6037ef9d8280d4c",
@@ -24,7 +24,8 @@
   "game_dnf/assets_local/flow_v1/skytower_v1/darkentrance/map_export.json": "aa00ebda4c230fd07da51701540a586911fcbc628daac6e1154c9fba4574b16b",
   "game_dnf/assets_local/flow_v1/skytower_v1/hallofdoll/map_export.json": "b04d3f70d1299e4996d3fda3680346a51169d12afd9e2918ad5ca5a9e8796319",
   "game_dnf/assets_local/flow_v1/skytower_v1/draconiantower_amonlow/map_export.json": "e2a135a73be8727df0d5d2f29c5b3765db56c3d6f2a08a526a4fbd9185fb8f30",
-  "game_dnf/assets_local/flow_v1/gran_v1/sunderland_poison/map_export.json": "e8a086beab3286d68dc0310b406aa97b92f755488e443db49371c7bf9f99ee8c"
+  "game_dnf/assets_local/flow_v1/gran_v1/sunderland_poison/map_export.json": "e8a086beab3286d68dc0310b406aa97b92f755488e443db49371c7bf9f99ee8c",
+  "game_dnf/assets_local/flow_v1/gran_v1/arden/map_export.json": "86fa30937d6fcd4f29239d77fc164fa04a94b20e3abf517ea96e70832e649223"
  },
  "input_hash_policy": "SHA256 canonical UTF-8 JSON, sort_keys=true, compact separators; source record SHA remains the original raw bytes",
  "calendar": {
@@ -48,7 +49,8 @@
   "darkentrance": "幽暗回廊",
   "hallofdoll": "人偶之塔",
   "draconiantower_amonlow": "龙人之塔·亚蒙下层",
-  "sunderland_poison": "猛毒雷鸣废墟"
+  "sunderland_poison": "猛毒雷鸣废墟",
+  "arden": "阿登高地"
  },
  "quests": [
   {
@@ -601,5 +603,5 @@
   "blocked": 2781
  },
  "status_file": "res://data/native_quest_status_v2.json.gz",
- "status_sha256": "11342a232a2a1b5b551ab9253f64e572b94b25aeefaf5677ab67f98a22d0cc8d"
+ "status_sha256": "144c0531bc274bc8683daa256491d7ab679adeeb3ae61837ec109f2cb483207e"
 }

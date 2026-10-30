@@ -50,6 +50,10 @@
    "normal": "sunderland",
    "boss": "sunderland_boss"
   },
+  "sunderland_poison": {
+   "normal": "sunderland",
+   "boss": "sunderland_boss"
+  },
   "sunderland_dark": {
    "normal": "sunderland",
    "boss": "sunderland_boss"
@@ -82,9 +86,9 @@
    "normal": "skycastle",
    "boss": "skycastle_boss"
   },
-  "sunderland_poison": {
-   "normal": "sunderland",
-   "boss": "sunderland_boss"
+  "arden": {
+   "normal": "skycastle",
+   "boss": "skycastle_boss"
   }
  },
  "ambience": {

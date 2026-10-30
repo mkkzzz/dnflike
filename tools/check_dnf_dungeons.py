@@ -136,7 +136,12 @@ def main() -> int:
         if spec.get('legacy'):
             continue
         if not covered.get(name):
-            fails.append('%s 没有任何城镇入口能选到它' % name)
+            # hidden=true 表示“数据已接入但暂不展示”（如需先铺怪物数据、后配城镇入口时），
+            # 这类副本允许没有入口，只提示不阻断。
+            if spec.get('hidden'):
+                warnings.append('%s 暂不展示（hidden），未配城镇入口' % name)
+            else:
+                fails.append('%s 没有任何城镇入口能选到它' % name)
 
     print('\n[DUNGEONS] 可玩副本 %d 个、房间 %d 间' % (playable, rooms_total))
     if fails:

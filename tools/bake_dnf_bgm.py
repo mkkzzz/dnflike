@@ -59,6 +59,9 @@ DUNGEONS = {
     'palaceofload': {'normal': 'music/palace_of_load.ogg', 'boss': 'music/palace_of_load_boss.ogg'},
     'hallofdoll': {'normal': 'music/hall_of_doll.ogg', 'boss': 'music/hall_of_doll_boss.ogg'},
     'darkentrance': {'normal': 'music/skycastle.ogg', 'boss': 'music/skycastle_boss.ogg'},
+    # act8 阿登高地（无法地带主题）：act8 原生曲未在 music/ 下找到，
+    # 暂借 skycastle 系（E-ADAPT，待确认 act8 曲目后替换）。
+    'arden': {'normal': 'music/skycastle.ogg', 'boss': 'music/skycastle_boss.ogg'},
 }
 # 环境音：与 BGM 叠加的低音量底噪（原版 sounds/amb）
 AMBIENCE = {
