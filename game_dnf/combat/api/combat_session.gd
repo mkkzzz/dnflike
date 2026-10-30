@@ -43,7 +43,7 @@ func attach(existing: Node) -> void:
 func start_room(spec: Dictionary) -> bool:
 	if not _alive() or game.missing_assets:return false
 	var player_spec: Dictionary=spec.get("player",{})
-	if not preload("res://content/weapon_appearance.gd").valid_spec(player_spec):return false
+	if not preload("res://content/api/weapon_appearance.gd").valid_spec(player_spec):return false
 	var route: Dictionary=spec.get("route",{})
 	if route.has("map_export"):
 		# Validate the complete route before changing the live map/table. Unknown
@@ -135,7 +135,7 @@ func apply_effect(effect: Dictionary) -> bool:
 
 func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
 	if not _alive():return false
-	if not preload("res://content/weapon_appearance.gd").valid_spec(spec):return false
+	if not preload("res://content/api/weapon_appearance.gd").valid_spec(spec):return false
 	if not game.update_numbers(spec,vitals_policy):return false
 	if spec.has("weapon_item"):return game.view.set_equipped_weapon(String(spec["weapon_item"]))
 	return true

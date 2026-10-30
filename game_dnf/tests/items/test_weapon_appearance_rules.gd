@@ -1,5 +1,5 @@
 extends SceneTree
-const Appearance=preload("res://content/weapon_appearance.gd")
+const Appearance=preload("res://content/api/weapon_appearance.gd")
 const Actor=preload("res://view/actor_view.gd")
 const Session=preload("res://flow/session.gd")
 var checks:=0

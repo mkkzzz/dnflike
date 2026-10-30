@@ -31,7 +31,7 @@ func _initialize() -> void:
 
 func run() -> void:
 	var s=Session.new()
-	check(s.CATALOG.ITEMS.size()==21+preload("res://content/native_catalog.gd").runtime()["items"].size() and s.CATALOG.ITEMS.original_1106.name=="诺顿的新手HP药剂","original Simplified Chinese definitions load beside compatible legacy IDs")
+	check(s.CATALOG.ITEMS.size()==21+preload("res://content/api/native_catalog.gd").runtime()["items"].size() and s.CATALOG.ITEMS.original_1106.name=="诺顿的新手HP药剂","original Simplified Chinese definitions load beside compatible legacy IDs")
 	check(Items.give(s.profile,"original_1106",1001).ok,"original source stack accepts more than the legacy limit")
 	var bag: Array=s.profile.item_state.bags.consumable
 	var stacks: Array=bag.filter(func(uid):return uid!="" and Items.definition(s.profile,uid)=="original_1106")

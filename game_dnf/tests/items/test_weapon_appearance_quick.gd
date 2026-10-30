@@ -1,5 +1,5 @@
 extends "res://tests/town/test_hendon.gd"
-const Appearance=preload("res://content/weapon_appearance.gd")
+const Appearance=preload("res://content/api/weapon_appearance.gd")
 ## Equipment and presentation QA. One room only; no dungeon-completion requirement.
 func run() -> void:
 	await ticks(4)

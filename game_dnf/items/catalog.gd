@@ -14,8 +14,8 @@ static func load_items() -> Dictionary:
 	var result: Dictionary = LEGACY_ITEMS.duplicate(true)
 	var data = JSON.parse_string(FileAccess.get_file_as_string("res://data/runtime_items.json"))
 	if data is Dictionary and data.get("schema") == "dnf_runtime_items/1":result.merge(data.get("items",{}),false)
-	result.merge(preload("res://content/native_catalog.gd").runtime().get("items",{}),false)
-	var appearances=preload("res://content/weapon_appearance.gd")
+	result.merge(preload("res://content/api/native_catalog.gd").runtime().get("items",{}),false)
+	var appearances=preload("res://content/api/weapon_appearance.gd")
 	var ids: Array=appearances.data().get("items",{}).keys()
 	ids.append_array(appearances.data().get("legacy_aliases",{}).keys())
 	for id: String in ids:

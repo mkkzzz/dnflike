@@ -1,5 +1,5 @@
 extends SceneTree
-const Native=preload("res://content/native_catalog.gd")
+const Native=preload("res://content/api/native_catalog.gd")
 const Session=preload("res://flow/session.gd")
 const Inventory=preload("res://items/inventory.gd")
 const Restore=preload("res://combat/item_restoration.gd")

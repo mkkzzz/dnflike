@@ -6,7 +6,7 @@ static var _config: Dictionary={}
 static func config() -> Dictionary:
 	if _config.is_empty():
 		_config=JSON.parse_string(FileAccess.get_file_as_string("res://data/recovery.json"))
-		_config["consumables"].merge(preload("res://content/native_catalog.gd").runtime().get("consumables",{}),false)
+		_config["consumables"].merge(preload("res://content/api/native_catalog.gd").runtime().get("consumables",{}),false)
 	return _config
 static func initialize(run: Dictionary) -> void:
 	if not run.has("consumables"):run["consumables"]={"items":{},"groups":{},"transactions":{}}

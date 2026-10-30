@@ -111,7 +111,7 @@ func stats() -> Dictionary:
 	return result
 
 func xp_needed() -> int:
-	return Numbers.Growth.need(int(profile["level"]),Numbers.config()["progression"])
+	return Numbers.Growth.need(int(profile["level"]),Numbers.shared_config()["progression"])
 
 func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 	Numbers.normalize(profile)

@@ -1,6 +1,6 @@
 extends RefCounted
 ## Read-only access to the complete migrated original database from the GM panel.
-const Native = preload("res://content/native_catalog.gd")
+const Native = preload("res://content/api/native_catalog.gd")
 
 static func execute(args: PackedStringArray) -> Dictionary:
 	if args.is_empty():

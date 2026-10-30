@@ -162,7 +162,7 @@ func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
 	if vitals_policy not in ["preserve","refill"]:return false
 	if numeric_player == null:numeric_player = ActorNumbers.new()
 	numeric_player.configure(spec)
-	skill_levels = spec.get("skills",Numbers.config()["skill_defaults"]).duplicate(true)
+	skill_levels = spec.get("skills",Numbers.shared_config()["skill_defaults"]).duplicate(true)
 	table.configure_skills(skill_levels)
 	max_hp = float(numeric_player.values["hp_max"])
 	max_mp = float(numeric_player.values["mp_max"])
@@ -173,8 +173,8 @@ func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
 	return true
 
 func configure_monster_numbers(level: int, difficulty: String) -> bool:
-	if numeric_player == null or level<1 or level>int(Numbers.config()["progression"]["level_cap"]):return false
-	if not Numbers.config()["monsters"]["difficulty"].has(difficulty):return false
+	if numeric_player == null or level<1 or level>int(Numbers.shared_config()["progression"]["level_cap"]):return false
+	if not Numbers.shared_config()["monsters"]["difficulty"].has(difficulty):return false
 	numeric_monster_level = level
 	numeric_difficulty = difficulty
 	for enemy: Dictionary in monsters:configure_enemy_numbers(enemy)
@@ -205,7 +205,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 			bus.emit("combat.status",{"target":body["id"],"id":event["id"],"change":"removed"})
 			continue
 		if int(body["id"])==PLAYER_ID and god_mode:continue
-		var amount := Numbers.Damage.resolve({"independent_attack":100,"level":numeric_monster_level},actor.values,{"percent":0,"fixed":event["damage"],"damage_type":event["damage_type"]},[0.0,1.0],Numbers.config()["formula"])
+		var amount := Numbers.Damage.resolve({"independent_attack":100,"level":numeric_monster_level},actor.values,{"percent":0,"fixed":event["damage"],"damage_type":event["damage_type"]},[0.0,1.0],Numbers.shared_config()["formula"])
 		body["hp"] = maxf(0,float(body["hp"])-int(amount["amount"]))
 		bus.emit("combat.damage",{"target":body["id"],"amount":amount["amount"],"critical":false,"category":event["damage_type"],"victim":"player" if body["id"]==PLAYER_ID else "monster","reaction":"none","point":Vector3(body["pos"].x,body["pos"].y,float(body["z"]))})
 		if body["id"]==PLAYER_ID:
@@ -536,7 +536,7 @@ func step_action(ms: float, move: Vector2) -> void:
 	var old_clock := float(player["clock"])
 	var speed: float = float(rules["buff"]["attack_speed"]) if float(player["buff_ms"])>0 and name != "buff" else 1.0
 	if numeric_player != null:
-		var speed_kind: String = Numbers.config()["skills"].get(name,{}).get("speed","attack")
+		var speed_kind: String = Numbers.shared_config()["skills"].get(name,{}).get("speed","attack")
 		speed = float(numeric_player.values["cast_speed" if speed_kind=="cast" else "attack_speed"])
 	var clock := old_clock+ms*speed
 	player["clock"] = clock
@@ -777,7 +777,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if by_player and String(context.get("element","none")) not in ["fire","water","light","dark"]:context["element"] = numeric_player.effective_element()
 		context["counter"] = String(target["state"]) in ["attack","action"]
 		context["back"] = int(target["facing"])==facing
-		resolved = Numbers.Damage.resolve(source_stats,target_stats,context,[rng.next_float(),rng.next_float()],Numbers.config()["formula"])
+		resolved = Numbers.Damage.resolve(source_stats,target_stats,context,[rng.next_float(),rng.next_float()],Numbers.shared_config()["formula"])
 		last_damage = resolved.duplicate(true)
 		amount = int(resolved["amount"])
 		if amount<=0:
@@ -814,7 +814,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		var effect_list: Array = hit.get("effects",[]).duplicate(true)
 		if by_player:
 			var skill_id := String(hit.get("skill_id",player["action"]))
-			effect_list.append_array(Numbers.config()["skills"].get(skill_id,{}).get("on_hit",[]))
+			effect_list.append_array(Numbers.shared_config()["skills"].get(skill_id,{}).get("on_hit",[]))
 		for effect: Dictionary in effect_list:
 			if rng.chance(float(effect.get("chance",1))):apply_effect({"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(skill_levels.get(String(hit.get("skill_id",player["action"])),1))})
 	if not target_is_player:
@@ -899,9 +899,11 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 	var m: Dictionary = enemy["def"]
 	enemy["cooldown_ms"] = maxf(0,float(enemy["cooldown_ms"])-ms)
 	# 每招独立冷却（原版 [is the skill in cooltime() N] 是按招算的）。
+	# 注意：GDScript 里遍历 Dictionary 时不能直接改它（迭代器会失效），先取 keys。
 	var skill_cd: Dictionary = enemy.get("skill_cd", {})
-	for skill: int in skill_cd:
-		skill_cd[skill] = maxf(0.0, float(skill_cd[skill]) - ms)
+	if not skill_cd.is_empty():
+		for skill in skill_cd.keys():
+			skill_cd[skill] = maxf(0.0, float(skill_cd[skill]) - ms)
 	var state: String = enemy["state"]
 	var advance := ms
 	if state=="attack" and enemy.has("numeric"):advance *= float(enemy["numeric"].values["attack_speed"])
@@ -986,7 +988,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 	if guarded:
 		var guard_factor := float(rules["player"]["guard_factor"])
 		if numeric_player != null:
-			var definition: Dictionary = Numbers.config()["skills"]["guard"]
+			var definition: Dictionary = Numbers.shared_config()["skills"]["guard"]
 			guard_factor = maxf(0,float(definition["guard_factor"])-(int(skill_levels.get("guard",1))-1)*float(definition["guard_per_level"]))
 		taken *= guard_factor
 	elif numeric_player == null and float(player["buff_ms"])>0:taken *= float(rules["buff"]["damage_taken"])
@@ -1072,6 +1074,16 @@ func step_objects(ms: float) -> void:
 # ---------------------------------------------------------------- world
 # Rooms are original Lorien maps (data/combat.json "rooms" -> map export placement). Ground
 # positions are map coordinates (x pixels, y ground depth); walkability is the map's pass grid.
+
+## 快照里的 props 只暴露视图用得到的少数字段。
+## 之前这里是 props.duplicate(true)：每个 prop 都带整份 obj 定义（动画/音效/掉落表），
+## 每帧深拷贝一次，物件多的房间（如洛兰 BOSS 房 10 个）会把主循环拖慢一个数量级。
+func props_view() -> Array:
+	var out: Array = []
+	for prop: Dictionary in props:
+		out.append({"id": String(prop.get("id", "")), "pos": Vector2(prop.get("pos", Vector2.ZERO)),
+			"broken": bool(prop.get("broken", false)), "hazard": bool(prop.get("hazard", false))})
+	return out
 
 ## 地图里的可破坏物（`[passive object]` → breakableobject/*.obj）。
 ## 血量与破坏音效写在 .obj 的 `[int data]` / `[string data]` 里；
@@ -1350,7 +1362,7 @@ func view_snapshot() -> Dictionary:
 		"player":{"pos":Vector2(player["pos"]),"z":float(player["z"]),"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],
 			"flash":float(player["flash_ms"])>0,"buff":float(player["buff_ms"])>0,"weapon":weapon,
 			"aura":String(move_def("buff").get("aura_fx","")) if float(player["buff_ms"])>0 else ""},
-		"enemies":enemies,"objects":objs,"props":props.duplicate(true),
+		"enemies":enemies,"objects":objs,"props":props_view(),
 		"stage":{"room_index":room_index,"placement":String(rules["rooms"][room_index]["placement"]),
 			"cleared":room_cleared and not boss_room,"doors":doors.duplicate(true)},
 		"hud":{"room_name":String(rules["rooms"][room_index]["name"]),"alive":alive,"room_cleared":room_cleared,

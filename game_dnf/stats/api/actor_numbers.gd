@@ -6,7 +6,7 @@ var seed: Dictionary = {}
 var values: Dictionary = {}
 var sources: Dictionary = {}
 var effects = Numbers.Effects.new()
-var config: Dictionary = Numbers.config()
+var config: Dictionary = Numbers.shared_config()
 var element := "none"
 
 func configure(spec: Dictionary) -> void:
@@ -16,7 +16,7 @@ func configure(spec: Dictionary) -> void:
 	recalculate()
 
 func recalculate() -> void:
-	var cfg := config.duplicate(true)
+	var cfg := config.duplicate()
 	var mods: Array = effects.modifiers()
 	var level := int(base.get("level",1))
 	var growtype := "swordman"

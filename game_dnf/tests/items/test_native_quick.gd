@@ -1,5 +1,5 @@
 extends "res://tests/town/test_hendon.gd"
-const Native=preload("res://content/native_catalog.gd")
+const Native=preload("res://content/api/native_catalog.gd")
 ## Town/UI/item quick test only. No dungeon traversal or monster behavior test.
 func run() -> void:
 	await ticks(4)

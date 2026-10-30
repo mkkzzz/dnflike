@@ -11,13 +11,17 @@ static var _config: Dictionary = {}
 static var _content_db
 
 static func config() -> Dictionary:
+	return shared_config().duplicate(true)
+
+## 只读共享引用，调用方不得修改。config() 的深拷贝含全量原版装备表，不能放在每帧路径上。
+static func shared_config() -> Dictionary:
 	ensure_config()
-	return _config.duplicate(true)
+	return _config
 
 static func ensure_config() -> void:
 	if _config.is_empty():
 		_config = JSON.parse_string(FileAccess.get_file_as_string("res://data/numbers.json"))
-		_config["equipment"].merge(preload("res://content/native_catalog.gd").runtime().get("equipment",{}),false)
+		_config["equipment"].merge(preload("res://content/api/native_catalog.gd").runtime().get("equipment",{}),false)
 
 static func is_equipment(id: String) -> bool:
 	ensure_config()
@@ -31,7 +35,7 @@ static func record(id: String) -> Dictionary:
 	return Dictionary(_content_db.record(path).get("decoded",{})).duplicate(true)
 
 static func normalize(profile: Dictionary) -> void:
-	var cfg := config()
+	var cfg := shared_config()
 	if not profile.has("numbers_revision"):
 		profile.merge({"numbers_revision":1,"growtype":"swordman","sp_bonus":0,"skills":cfg["skill_defaults"].duplicate(true),"skill_purchases":{},"xp_transactions":{},"gear":{},"next_gear":1,"equipment":{},"stat_modifiers":[],"attack_element":"none"},false)
 	if not profile.has("attack_element"):profile["attack_element"] = "none"
@@ -52,7 +56,7 @@ static func canonicalize(profile: Dictionary) -> void:
 	for mod: Dictionary in profile["stat_modifiers"]:mod["value"] = float(mod["value"])
 
 static func profile_stats(profile: Dictionary, extra: Array = []) -> Dictionary:
-	var cfg := config()
+	var cfg := shared_config()
 	var mods: Array = Equipment.modifiers(profile,cfg)
 	mods.append_array(profile.get("stat_modifiers",[]))
 	for id: String in profile["skills"]:
@@ -82,9 +86,9 @@ static func combat_spec(profile: Dictionary) -> Dictionary:
 	var result := profile_stats(profile)
 	var weapon := "katana"
 	var uid: String = profile["equipment"].get("weapon","")
-	if uid != "":weapon = String(config()["equipment"][profile["gear"][uid]["definition"]].get("weapon",weapon))
+	if uid != "":weapon = String(shared_config()["equipment"][profile["gear"][uid]["definition"]].get("weapon",weapon))
 	var element: String = profile.get("attack_element","none")
-	if uid!="":element = config()["equipment"][profile["gear"][uid]["definition"]].get("element",element)
+	if uid!="":element = shared_config()["equipment"][profile["gear"][uid]["definition"]].get("element",element)
 	return {"numbers":result["values"],"number_sources":result["sources"],"number_seed":{"level":profile["level"],"growtype":profile["growtype"],"modifiers":result["modifiers"]},"skills":profile["skills"].duplicate(true),"weapon":weapon,"weapon_item":String(profile["gear"][uid]["definition"]) if uid!="" else "","element":element,"hp_max":result["values"]["hp_max"],"mp_max":result["values"]["mp_max"]}
 
 static func monster(base: Dictionary, level: int, chief: bool, difficulty: String, cfg: Dictionary = {}) -> Dictionary:

@@ -36,7 +36,7 @@ func run() -> void:
 	var commands=preload("res://debug/native_commands.gd")
 	check(commands.execute(PackedStringArray(["quests","217"])).message.contains("admitted"),"GM original-ID lookup reports the current compiler instead of stale migration status")
 	check(commands.execute(PackedStringArray()).message.contains("当前原任务可执行 "+str(plain.quests.catalog.definitions.size()-1)),"GM summary distinguishes current executable quests from source-only counts")
-	for q: Dictionary in preload("res://content/native_catalog.gd").quest_rules().quests:
+	for q: Dictionary in preload("res://content/api/native_catalog.gd").quest_rules().quests:
 		var s=Session.new();s.profile.level=int(q.min_level)
 		s.profile.job_index=0 if -1 in q.eligibility.jobs else int(q.eligibility.jobs[0])
 		for required: String in q.requires:completed(s,required)

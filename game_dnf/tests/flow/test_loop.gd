@@ -478,11 +478,15 @@ func run() -> void:
 		await ticks(1)
 	# Real combat autopilot: read copied snapshot and send normal physical input.
 	# No god mode, HP edits, enemy removal, forged finish signal or teleportation.
+	# 单房推进超时保护：4000 帧（约 67 秒模拟）没换房就明确失败，
+	# 不要一直跑到 18000 帧上限（那会让一次回归多花十几分钟才报错）。
+	var room_stall := 0
 	for i in 18000:
 		if game.session.state != "battle":break
 		var snap: Dictionary = game.combat.read_view()
 		if int(snap["room"]) != previous_room:
 			previous_room = int(snap["room"])
+			room_stall = 0
 			print("[LOOP_TEST] ACTUAL ROOM ", previous_room)
 			if previous_room > 1:
 				await frame("08_room_%d" % previous_room)
@@ -498,6 +502,18 @@ func run() -> void:
 				if float(enemy["pos"].x) < 40.0 or float(enemy["pos"].x) > room_width - 40.0:
 					outside.append("%d@%.0f" % [int(enemy["id"]), float(enemy["pos"].x)])
 			check(outside.is_empty() and room_width > 0.0, "room %d enemies stand inside the walkable width %.0f (outside: %s)" % [previous_room, room_width, str(outside)])
+			room_stall = 0
+		else:
+			room_stall += 1
+			if room_stall > 4000:
+				var alive: Array = []
+				for enemy: Dictionary in snap["enemies"]:
+					alive.append("%s@%.0fx%.0f hp=%.0f state=%s" % [String(enemy.get("kind", "")),
+						float(enemy["pos"].x), float(enemy["pos"].y), float(enemy.get("hp", 0)),
+						String(enemy.get("state", ""))])
+				check(false, "room %d not cleared in 4000 frames; alive=%s player_hp=%.0f/%.0f" % [
+					previous_room, ", ".join(alive), float(snap["hp"]), float(snap["hp_max"])])
+				break
 		var pos: Vector2 = snap["pos"]
 		var target := pos
 		var enemy_near := false

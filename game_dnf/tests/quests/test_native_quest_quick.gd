@@ -1,7 +1,7 @@
 extends "res://tests/town/test_hendon.gd"
 ## Original NPC/service/clear integration; combat is skipped with GM win.
 ## Repeat/daily UI fixtures are explicitly synthetic, not admitted original content.
-const Native=preload("res://content/native_catalog.gd")
+const Native=preload("res://content/api/native_catalog.gd")
 
 func visit(npc: String) -> void:
 	game.show_overlay("")

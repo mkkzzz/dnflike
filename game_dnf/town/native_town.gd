@@ -140,7 +140,7 @@ func setup_actor() -> void:
 	if item_appearance_enabled:
 		var motions: Dictionary={}
 		for pose: String in ["stay","move","dash"]:motions[pose]=clips["player/"+pose]
-		if preload("res://content/weapon_appearance.gd").apply(actor,weapon_item,motions):return
+		if preload("res://content/api/weapon_appearance.gd").apply(actor,weapon_item,motions):return
 	if players.has(weapon_shape) and clips.has("player/stay") and clips.has("player/move") and clips.has("player/dash"):
 		actor.setup(players[weapon_shape], {
 			"stay":clips["player/stay"],
@@ -160,7 +160,7 @@ func set_weapon(shape: String) -> void:
 	setup_actor()
 
 func set_equipped_weapon(item: String, shape: String) -> bool:
-	if not preload("res://content/weapon_appearance.gd").can_display(item):return false
+	if not preload("res://content/api/weapon_appearance.gd").can_display(item):return false
 	if item_appearance_enabled and weapon_item==item and weapon_shape==shape:return true
 	weapon_item=item;weapon_shape=shape;item_appearance_enabled=true
 	setup_actor()

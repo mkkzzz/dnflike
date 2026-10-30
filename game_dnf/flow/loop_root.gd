@@ -379,7 +379,7 @@ func item_action(kind: String, payload: Dictionary) -> bool:
 	candidate.state=session.state;candidate.result=session.result.duplicate(true)
 	var response: Dictionary=candidate.command(kind,payload)
 	if not response.get("ok",false):notice(response.get("message","物品操作失败"));return false
-	if not preload("res://content/weapon_appearance.gd").can_display(equipped_weapon_item(candidate.profile)):
+	if not preload("res://content/api/weapon_appearance.gd").can_display(equipped_weapon_item(candidate.profile)):
 		notice("武器外观资源未就绪，换装未提交");return false
 	if not store.write(candidate):save_failed=true;notice(("技能加点" if kind=="numbers.skill" else "物品变更")+"未提交：存档写入失败，请重试");return false
 	session=candidate;save_failed=false;sync_number_changes(kind)
@@ -655,7 +655,7 @@ func enter_character(path: String) -> bool:
 	candidate.path = path
 	var next_session = Session.new()
 	if not candidate.read_into(next_session):return false
-	if not preload("res://content/weapon_appearance.gd").can_display(equipped_weapon_item(next_session.profile)):return false
+	if not preload("res://content/api/weapon_appearance.gd").can_display(equipped_weapon_item(next_session.profile)):return false
 	store = candidate
 	active_character_path = path
 	session = next_session

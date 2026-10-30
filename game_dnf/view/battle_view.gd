@@ -11,7 +11,7 @@ const MapStage = preload("res://view/map_stage.gd")
 const Frame = preload("res://view/world_frame.gd")
 const CombatHud = preload("res://ui/combat/combat_hud.gd")
 const PropView = preload("res://scripts/native_prop.gd")
-const WeaponAppearance = preload("res://content/weapon_appearance.gd")
+const WeaponAppearance = preload("res://content/api/weapon_appearance.gd")
 ## Afterimage of a cancelled pose (E-ADAPT: engine-drawn in the original, no data file).
 const GHOST_MS := 320.0
 const GHOST_TINT := Color(0.62,0.78,1.0,0.6)
