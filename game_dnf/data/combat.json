@@ -698,6 +698,61 @@
    "mob": "monster/zombie/zombiezombie.mob",
    "bank": "zombie_zombiezombie",
    "name": "zombiezombie"
+  },
+  "newmonsters_haze_axeoutlaw_axeoutlaw": {
+   "mob": "monster/newmonsters/haze/axeoutlaw/axeoutlaw.mob",
+   "bank": "newmonsters_haze_axeoutlaw_axeoutlaw",
+   "name": "axeoutlaw"
+  },
+  "newmonsters_haze_chainbiker_chainbiker": {
+   "mob": "monster/newmonsters/haze/chainbiker/chainbiker.mob",
+   "bank": "newmonsters_haze_chainbiker_chainbiker",
+   "name": "chainbiker"
+  },
+  "newmonsters_haze_chainbiker2_chainbiker2": {
+   "mob": "monster/newmonsters/haze/chainbiker2/chainbiker2.mob",
+   "bank": "newmonsters_haze_chainbiker2_chainbiker2",
+   "name": "chainbiker2"
+  },
+  "newmonsters_haze_death_squad_death_squad": {
+   "mob": "monster/newmonsters/haze/death_squad/death_squad.mob",
+   "bank": "newmonsters_haze_death_squad_death_squad",
+   "name": "death_squad"
+  },
+  "newmonsters_haze_enjosipho_enjosipho": {
+   "mob": "monster/newmonsters/haze/enjosipho/enjosipho.mob",
+   "bank": "newmonsters_haze_enjosipho_enjosipho",
+   "name": "enjosipho"
+  },
+  "newmonsters_haze_enjosipho_enjosipho_quest": {
+   "mob": "monster/newmonsters/haze/enjosipho/enjosipho_quest.mob",
+   "bank": "newmonsters_haze_enjosipho_enjosipho_quest",
+   "name": "enjosipho_quest"
+  },
+  "newmonsters_haze_hass_hass": {
+   "mob": "monster/newmonsters/haze/hass/hass.mob",
+   "bank": "newmonsters_haze_hass_hass",
+   "name": "hass"
+  },
+  "newmonsters_haze_humanhunter_humanhunter": {
+   "mob": "monster/newmonsters/haze/humanhunter/humanhunter.mob",
+   "bank": "newmonsters_haze_humanhunter_humanhunter",
+   "name": "humanhunter"
+  },
+  "newmonsters_haze_outlaw_outlaw": {
+   "mob": "monster/newmonsters/haze/outlaw/outlaw.mob",
+   "bank": "newmonsters_haze_outlaw_outlaw",
+   "name": "outlaw"
+  },
+  "newmonsters_haze_poena_poena": {
+   "mob": "monster/newmonsters/haze/poena/poena.mob",
+   "bank": "newmonsters_haze_poena_poena",
+   "name": "poena"
+  },
+  "newmonsters_haze_tretri_tretri": {
+   "mob": "monster/newmonsters/haze/tretri/tretri.mob",
+   "bank": "newmonsters_haze_tretri_tretri",
+   "name": "tretri"
   }
  },
  "boss_hp_lines": 3,

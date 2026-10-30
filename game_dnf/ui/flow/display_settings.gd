@@ -23,7 +23,7 @@ func setup(target: Window, testing: bool) -> void:
 	var area := DisplayServer.screen_get_usable_rect(window.current_screen)
 	# Capture launches deliberately live offscreen. Re-centering them steals
 	# focus from the editor, which correctly pauses the managed battle.
-	if not testing:window.position = area.position + Vector2i(maxi(0, (area.size.x - OUTPUT.x) / 2), maxi(0, (area.size.y - OUTPUT.y) / 2))
+	if not testing and OS.get_environment("MCP_BACKGROUND") != "1":window.position = area.position + Vector2i(maxi(0, (area.size.x - OUTPUT.x) / 2), maxi(0, (area.size.y - OUTPUT.y) / 2))
 	window_position = window.position
 
 func content_transform() -> Transform2D:

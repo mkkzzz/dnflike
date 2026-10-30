@@ -5,8 +5,8 @@
 | 字段 | 内容 |
 |---|---|
 | 使用者 | rainmk |
-| 状态 | 等用户试玩 |
-| 正在做 | 2026-10-30 已由 Codex 接续原 CodeBuddy 的 ws1 工作，沿用原工作区身份与分工。最近推进怪物原版数据、动作与 AI 边界核查（[48 边界](../../design/48_副本BOSS的AI数据边界.md)）；族级规则索引与拾取下蹲帧计数仍为本地未提交改动，待验证。优先待办是[普通哥布林命中回归](../../reports/ws2/2026-10/2026-10-29_ws1多招式接收回归差异.md)，尚未关闭；[场景基准](../../design/41_场景画面基准.md)及[战斗第二轮试玩](../../design/29_新版工程框架_战斗内核实装.md)继续等用户确认 |
+| 状态 | 进行中 |
+| 正在做 | 2026-10-30 按用户授权配置 Codex：创建项目战斗排查、原版数据审计、协作交接 skill，并接入 Godot MCP 验证运行诊断。沿用 ws1 身份与[28 分工](../../design/28_工作区分工与原版资料共享.md)；族级 AI 索引与拾取下蹲帧计数已在 `7a00f659` 提交，完整回归仍待验证。[普通哥布林命中回归](../../reports/ws2/2026-10/2026-10-29_ws1多招式接收回归差异.md)尚未关闭；场景基准与第二轮战斗试玩继续等用户确认 |
 | 产出位置 | `game_dnf/core/`、`game_dnf/content/api/`、`game_dnf/combat/`（action/hit/resolve/ai/data/api/fields）、`game_dnf/data/combat.json`、`game_dnf/view/`、`game_dnf/ui/combat/`、`game_dnf/debug/`、`tools/dnf_pvf.py`、`tools/compile_dnf_content.py`、`tools/build_dnf_combat_assets.py`、`tools/ensure_dnf_combat.ps1`、`tools/check_dnf_deps.py`、`tools/trace_dnf.ps1` |
 
 ## 最近完成
@@ -19,6 +19,5 @@
 
 ## 接续时的未完成工作
 
-- `game_dnf/combat/data/move_table.gd`、`tools/build_dnf_boss_rules.py` 与 `game_dnf/data/boss_rules.json`：本地增加族目录索引及运行时回退查询，尚未提交或验证。
-- `game_dnf/view/battle_view.gd`：本地将拾取下蹲改为帧计数，尚未提交或验证。
+- `7a00f659` 已提交族级 AI 目录索引、运行时回退查询和拾取下蹲帧计数；接续时“未提交”的记载已纠正，未将提交视作回归或试玩通过。
 - [ws2 多招式接收诊断](../../reports/ws2/2026-10/2026-10-29_ws1多招式接收回归差异.md)：当前 AI 仍使用不同的攻击区间与停靠区间；接续未修复，等待项保留。

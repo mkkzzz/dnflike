@@ -1,0 +1,4 @@
+interface:
+  display_name: "DNF 工作区接续与交接"
+  short_description: "执行开工收工与工具迁移接续，核对代码状态、待办和跨区交接"
+  default_prompt: "使用 $dnf-workspace-handoff 按当前仓库规范接续本区工作并核对状态。"

@@ -88,8 +88,10 @@ def monster_side(with_content: bool = True) -> None:
 def dungeon_side(dgn: str, dungeon_id: str, name: str, region: str, level: int) -> None:
     output = GAME / 'assets_local/flow_v1' / ('skytower_v1' if region == 'skytower' else 'gran_v1') / dungeon_id
     run('导出地图 %s' % dungeon_id, [tool('export_dnf_map.py'), '--dungeon', dgn, '--output', str(output)])
+    # --export 要的是 map_export.json 这个文件，不是导出目录。
+    export_file = output / 'map_export.json'
     run('生成路线入表', [tool('build_dnf_dungeon_route.py'), '--write', '--id', dungeon_id, '--name', name,
-                        '--export', 'res://' + str(output.relative_to(GAME)).replace('\\', '/'),
+                         '--export', 'res://' + str(export_file.relative_to(GAME)).replace('\\', '/'),
                         '--region', region, '--monster-level', str(level)])
     # 新副本的怪可能没进过内容包/图集，必须重走怪物侧
     monster_side(with_content=True)

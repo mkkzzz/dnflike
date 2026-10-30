@@ -1,0 +1,4 @@
+interface:
+  display_name: "DNF 战斗排查"
+  short_description: "沿输入、动作、AI与判定定位战斗故障，验证回归和实机证据"
+  default_prompt: "使用 $dnf-combat-debug 排查当前战斗问题，复现后修复并给出验证证据。"

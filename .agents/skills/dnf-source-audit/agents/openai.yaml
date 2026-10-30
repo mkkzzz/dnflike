@@ -1,0 +1,4 @@
+interface:
+  display_name: "DNF 原版数据审计"
+  short_description: "追踪PVF与动作AI来源和依赖，核对原值、适配及运行接入证据"
+  default_prompt: "使用 $dnf-source-audit 调查这项原版数据的来源、依赖及当前接入缺口。"

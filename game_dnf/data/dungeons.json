@@ -746,6 +746,70 @@
     "sha256": "c3c9a35364fcdcc125424524eee56a5e58137a0f10c60be95b243f5e99ff7a53",
     "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
    }
+  },
+  "arden": {
+   "name": "阿登高地",
+   "region": "act8",
+   "map_export": "res://assets_local/flow_v1/gran_v1/arden/map_export.json",
+   "rooms": [
+    {
+     "name": "阿登高地",
+     "placement": "0_0:15253(0.0)start",
+     "next": "right"
+    },
+    {
+     "name": "阿登高地",
+     "placement": "1_0:15255(1.0)normal",
+     "next": "down"
+    },
+    {
+     "name": "阿登高地",
+     "placement": "1_1:15256(1.1)normal",
+     "next": "right"
+    },
+    {
+     "name": "阿登高地",
+     "placement": "2_1:15260(2.1)named",
+     "next": "down"
+    },
+    {
+     "name": "阿登高地",
+     "placement": "2_2:15261(2.2)normal",
+     "next": "down"
+    },
+    {
+     "name": "阿登高地",
+     "placement": "2_3:15262(2.3)named",
+     "next": "left"
+    },
+    {
+     "name": "阿登高地",
+     "placement": "1_3:15255(1.0)normal",
+     "next": "down"
+    },
+    {
+     "name": "阿登高地",
+     "placement": "1_4:15256(1.1)normal",
+     "next": "right"
+    },
+    {
+     "name": "阿登高地",
+     "placement": "2_4:15263(2.4)named",
+     "next": "right"
+    },
+    {
+     "name": "阿登高地",
+     "placement": "3_4:15259(2.0)normal",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 71,
+   "source": {
+    "path": "dungeon/act8/arden.dgn",
+    "sha256": "9a4906b12d7b7945e55cffd4203039baeeb4dad899ede8cf32beb45785433765",
+    "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
+   }
   }
  }
 }

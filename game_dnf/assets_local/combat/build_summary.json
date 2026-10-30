@@ -73,7 +73,18 @@
   "goblin_bullseye",
   "soldier_axionexpeller",
   "dollmaster_golemmaster",
-  "soceress_vinoshu_quest"
+  "newmonsters_haze_tretri_tretri",
+  "newmonsters_haze_poena_poena",
+  "newmonsters_haze_hass_hass",
+  "newmonsters_haze_axeoutlaw_axeoutlaw",
+  "newmonsters_haze_outlaw_outlaw",
+  "newmonsters_haze_humanhunter_humanhunter",
+  "newmonsters_haze_chainbiker_chainbiker",
+  "newmonsters_haze_chainbiker2_chainbiker2",
+  "newmonsters_haze_enjosipho_enjosipho",
+  "newmonsters_haze_enjosipho_enjosipho_quest",
+  "soceress_vinoshu_quest",
+  "newmonsters_haze_death_squad_death_squad"
  ],
  "objects": [
   "gorecross",
@@ -84,7 +95,7 @@
  "effects": 102,
  "digits": 61,
  "audio_keys": 190,
- "unresolved": 6,
+ "unresolved": 17,
  "unresolved_items": [
   {
    "kind": "monster_equipment",
@@ -123,6 +134,50 @@
    "monster": "monster/new_golem/greatgolemr.mob",
    "path": "equipment/monster/new_golem/greatarm.equ",
    "note": "equipment file absent; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/tretri/tretri.mob"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/poena/poena.mob"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/hass/hass.mob"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/axeoutlaw/axeoutlaw.mob"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/outlaw/outlaw.mob"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/humanhunter/humanhunter.mob"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/chainbiker/chainbiker.mob"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/chainbiker2/chainbiker2.mob"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/enjosipho/enjosipho.mob"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/enjosipho/enjosipho_quest.mob"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/death_squad/death_squad.mob"
   }
  ]
 }
