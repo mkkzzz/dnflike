@@ -46,7 +46,7 @@ var _player_z := 0.0
 ## 由 loot/bridge.gd 在拾取成功时调用 request_pickup_pose()。
 var pickup_pose_until_ms := 0
 
-func request_pickup_pose(duration_ms := 420.0) -> void:
+func request_pickup_pose(duration_ms := 900.0) -> void:
 	pickup_pose_until_ms = Time.get_ticks_msec() + int(duration_ms)
 
 func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictionary, bus, weapon: String, map_loader) -> void:

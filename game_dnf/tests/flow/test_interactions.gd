@@ -174,8 +174,13 @@ func run() -> void:
 	game.show_overlay("")
 	game.town.ground = Vector2(540, 230)
 	await ticks()
+	# 轮询到走过 65 像素为止（上限 90 帧）：固定等 30 帧在掉帧时会走不够，
+	# 这条断言原本就因此偶发失败。
 	host.key(KEY_RIGHT, true)
-	await ticks(30)
+	for attempt in 90:
+		await ticks(1)
+		if game.town.ground.x - 540.0 > 65.0:
+			break
 	host.key(KEY_RIGHT, false)
 	var walk: float = game.town.ground.x - 540
 	await ticks(20)
@@ -185,7 +190,10 @@ func run() -> void:
 	host.key(KEY_RIGHT, false)
 	await ticks(1)
 	host.key(KEY_RIGHT, true)
-	await ticks(30)
+	for attempt in 120:
+		await ticks(1)
+		if game.town.ground.x - 540.0 > walk * 1.5:
+			break
 	host.key(KEY_RIGHT, false)
 	var run_distance: float = game.town.ground.x - 540
 	host.check(walk > 65 and run_distance > walk * 1.5, "actual town keyboard walk is faster and double-tap runs")

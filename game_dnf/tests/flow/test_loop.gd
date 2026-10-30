@@ -438,8 +438,14 @@ func run() -> void:
 		check(battle_view != null and battle_view.pickup_pose_until_ms > 0, "pickup requests the crouch pose")
 		if battle_view != null:
 			check(battle_view.player_actor.clips.has("sit"), "player clips carry the original sit (crouch) frames")
-			await ticks(2)
-			check(String(battle_view.player_actor.pose) == "sit", "player actually plays the crouch pose while picking up (%s)" % str(battle_view.player_actor.pose))
+			# 轮询等 sit 出现：固定等 2 帧在负载波动时会误判（拾取动作可能第 3 帧才切过去）。
+			var sitting := false
+			for attempt in 16:
+				await ticks(1)
+				if String(battle_view.player_actor.pose) == "sit":
+					sitting = true
+					break
+			check(sitting, "player actually plays the crouch pose while picking up (%s)" % str(battle_view.player_actor.pose))
 			await frame("07c_pickup")
 		check(game.loot_bridge._pickup_streams.size() > 0, "original pickup sounds are loaded")
 		check(game.loot_bridge._pickup_audio != null and game.loot_bridge._pickup_audio.stream != null, "pickup sound actually started")
