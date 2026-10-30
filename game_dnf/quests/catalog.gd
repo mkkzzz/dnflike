@@ -1,6 +1,6 @@
 extends RefCounted
 ## Versioned definitions, never player progress. Reject unsupported content at load.
-const TYPES := ["meet_npc", "kill_monster", "clear_dungeon", "collect_item", "learn_skill", "disassemble_item"]
+const TYPES := ["meet_npc", "kill_monster", "clear_dungeon", "collect_item", "learn_skill", "disassemble_item", "clear_map"]
 var config: Dictionary = {}
 var definitions: Dictionary = {}
 var errors: Array[String] = []
@@ -13,9 +13,21 @@ func _init(data: Dictionary = {}) -> void:
 			return
 		data = decoded
 		data["quests"].append_array(preload("res://content/api/native_catalog.gd").runtime().get("quests",[]))
-		data["quests"].append_array(preload("res://content/api/native_catalog.gd").quest_rules().get("quests",[]))
-		data["dungeons"].merge(preload("res://content/api/native_catalog.gd").quest_rules().get("dungeons",{}),false)
-		data["calendar"]=preload("res://content/api/native_catalog.gd").quest_rules().get("calendar",{})
+		var rules: Dictionary=preload("res://content/api/native_catalog.gd").quest_rules()
+		data["quests"].append_array(rules.get("quests",[]))
+		data["dungeons"].merge(rules.get("dungeons",{}),false)
+		data["calendar"]=rules.get("calendar",{})
+		var automatic: Dictionary={}
+		for source_id in rules.get("auto_quest_ids",[]):automatic[int(source_id)]=true
+		for quest in data["quests"]:
+			var source: Variant=quest.get("source")
+			var source_id: Variant=source.get("id") if source is Dictionary else null
+			if not source_id is int and not source_id is float:
+				quest.erase("auto_accept")
+				quest.erase("auto_complete")
+			elif not automatic.has(int(source_id)):
+				quest.erase("auto_accept")
+				quest.erase("auto_complete")
 	config = data.duplicate(true)
 	for key in ["npcs", "dungeons", "limits"]:
 		if not config.get(key) is Dictionary:
@@ -59,6 +71,8 @@ func validate_definition(q: Dictionary) -> void:
 		if not q.get(key) is String or q[key].is_empty():errors.append("任务字段无效：" + id + "/" + key)
 	for key in ["enabled", "abandonable"]:
 		if not q.get(key) is bool:errors.append("任务开关无效：" + id)
+	for key in ["auto_accept", "auto_complete"]:
+		if q.has(key) and not q[key] is bool:errors.append("任务自动流转无效：" + id)
 	if not whole(q.get("min_level"), 1, 999) or not q.get("requires") is Array:errors.append("任务前置配置无效：" + id)
 	if not config.get("npcs", {}).has(q.get("giver")) or not config.get("npcs", {}).has(q.get("receiver")):errors.append("任务人物不存在：" + id)
 	var objectives = q.get("objectives", [])
@@ -83,10 +97,18 @@ func validate_definition(q: Dictionary) -> void:
 		if o.has("difficulty") and (not o["difficulty"] is Array or o["difficulty"].is_empty()):errors.append("任务难度范围无效：" + id)
 		elif o.has("difficulty"):
 			for mode in o["difficulty"]:
-				if mode not in ["normal","adventure","king"]:errors.append("任务难度不支持："+id)
+				if mode not in ["normal","adventure","expert","king"]:errors.append("任务难度不支持："+id)
 		if o.get("type")=="learn_skill" and o.get("target")!="any":errors.append("技能学习目标不支持："+id)
 		if o.get("type") == "meet_npc" and not config.get("npcs", {}).has(o["target"]):errors.append("目标人物不存在：" + id)
 		if o.get("type") == "clear_dungeon" and not config.get("dungeons", {}).has(o["target"]) and not (o["target"]=="any" and o.has("allowed_dungeons")):errors.append("目标地下城不存在：" + id)
+		if o.get("type") == "clear_map":
+			if not config["dungeons"].has(o.get("dungeon","")) or not o.get("cell") is Array or o["cell"].size()!=2 or not whole(o["cell"][0],0,9999) or not whole(o["cell"][1],0,9999):
+				errors.append("任务地图目标无效："+id)
+	var grants=q.get("grant_items",{})
+	if not grants is Dictionary:errors.append("任务发放物品无效："+id)
+	else:
+		for item in grants:
+			if not item is String or not preload("res://items/catalog.gd").ITEMS.has(item) or not whole(grants[item],1,999999):errors.append("任务发放物品无效："+id)
 	var reward = q.get("reward", {})
 	var drops=q.get("drops",[])
 	if not drops is Array:errors.append("任务掉落表无效："+id)
@@ -99,7 +121,18 @@ func validate_definition(q: Dictionary) -> void:
 			if not rule.get("difficulty") is Array or rule["difficulty"].is_empty():errors.append("任务掉落难度无效："+id)
 			else:
 				for mode in rule["difficulty"]:
-					if mode not in ["normal","adventure","king"]:errors.append("任务掉落难度不支持："+id)
+					if mode not in ["normal","adventure","expert","king"]:errors.append("任务掉落难度不支持："+id)
+	var clears=q.get("clear_items",[])
+	if not clears is Array:errors.append("任务通关物品表无效："+id)
+	else:
+		for rule in clears:
+			if not rule is Dictionary or not rule.get("item") is String or not preload("res://items/catalog.gd").ITEMS.has(rule.get("item","")):
+				errors.append("任务通关物品无效："+id);continue
+			if not whole(rule.get("amount"),1,9999) or not whole(rule.get("limit"),1,9999) or not rule.get("difficulty") is Array or rule["difficulty"].is_empty():
+				errors.append("任务通关物品数量无效："+id)
+			else:
+				for mode in rule["difficulty"]:
+					if mode not in ["normal","adventure","expert","king"]:errors.append("任务通关物品难度不支持："+id)
 	if not reward is Dictionary:
 		errors.append("任务奖励无效：" + id)
 		return

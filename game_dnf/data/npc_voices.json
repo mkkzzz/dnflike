@@ -402,6 +402,104 @@
      "R_NPC_GOBLIND_FAREWELL"
     ]
    }
+  },
+  "shusia": {
+   "id": "shusia",
+   "local_id": "shusia",
+   "town": "hendon_pub",
+   "amb": [
+    "npc_voice/shusia/amb_01.ogg",
+    "npc_voice/shusia/amb_02.ogg",
+    "npc_voice/shusia/amb_03.ogg"
+   ],
+   "talk": [
+    "npc_voice/shusia/talk_01.ogg",
+    "npc_voice/shusia/talk_02.ogg",
+    "npc_voice/shusia/talk_03.ogg"
+   ],
+   "farewell": [
+    "npc_voice/shusia/farewell_01.ogg",
+    "npc_voice/shusia/farewell_02.ogg"
+   ],
+   "faces": {
+    "small": "npc_voice/shusia/face_small.png",
+    "big": "npc_voice/shusia/face_big.png",
+    "popup": "npc_voice/shusia/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_SUSIA_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_SUSIA_TALK",
+     "R_NPC_SUSIA_FAREWELL"
+    ]
+   }
+  },
+  "lorian": {
+   "id": "lorian",
+   "local_id": "lorian",
+   "town": "westcoast",
+   "amb": [
+    "npc_voice/lorian/amb_01.ogg",
+    "npc_voice/lorian/amb_02.ogg",
+    "npc_voice/lorian/amb_03.ogg"
+   ],
+   "talk": [
+    "npc_voice/lorian/talk_01.ogg",
+    "npc_voice/lorian/talk_02.ogg",
+    "npc_voice/lorian/talk_03.ogg"
+   ],
+   "farewell": [
+    "npc_voice/lorian/farewell_01.ogg",
+    "npc_voice/lorian/farewell_02.ogg"
+   ],
+   "faces": {
+    "small": "npc_voice/lorian/face_small.png",
+    "big": "npc_voice/lorian/face_big.png",
+    "popup": "npc_voice/lorian/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_LORIAN_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_LORIAN_TALK",
+     "R_NPC_LORIAN_FAREWELL"
+    ]
+   }
+  },
+  "sharan": {
+   "id": "sharan",
+   "local_id": "sharan",
+   "town": "westcoast_magic",
+   "amb": [
+    "npc_voice/sharan/amb_01.ogg",
+    "npc_voice/sharan/amb_02.ogg"
+   ],
+   "talk": [
+    "npc_voice/sharan/talk_01.ogg",
+    "npc_voice/sharan/talk_02.ogg"
+   ],
+   "farewell": [
+    "npc_voice/sharan/farewell_01.ogg",
+    "npc_voice/sharan/farewell_02.ogg",
+    "npc_voice/sharan/farewell_03.ogg"
+   ],
+   "faces": {
+    "small": "npc_voice/sharan/face_small.png",
+    "big": "npc_voice/sharan/face_big.png",
+    "popup": "npc_voice/sharan/face_popup.png"
+   },
+   "keys": {
+    "field": [
+     "R_NPC_SHARAN_AMB_LOOP"
+    ],
+    "popup": [
+     "R_NPC_SHARAN_TALK",
+     "R_NPC_SHARAN_FAREWELL"
+    ]
+   }
   }
  }
 }

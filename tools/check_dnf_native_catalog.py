@@ -53,7 +53,7 @@ def validate():
     old_items = json.loads((ROOT / 'game_dnf/data/runtime_items.json').read_text(encoding='utf8'))['items']
     all_items = {**runtime['items'], **old_items}
     if set(runtime['items']) & set(old_items):errors.append('curated_item_overwrite')
-    atlas = json.loads((ROOT / 'game_dnf/assets_local/items_native_v1/manifest.json').read_text(encoding='utf8'))
+    atlas = json.loads((ROOT / 'game_dnf/assets_local/items_native_v2/manifest.json').read_text(encoding='utf8'))
     for key, item in runtime['items'].items():
         if BAD.search(item['name'] + item['description']) or not item['name']:errors.append('display_text:' + key)
         if item['kind'] not in ['weapon','material','profession','quest','consumable']:errors.append('item_kind:' + key)

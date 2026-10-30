@@ -3,7 +3,7 @@
  "evidence": "原版 .qst 结构化字段 E-PARSE；总账保留名称/描述字符串引用，完整简体正文见 native_data_v1，启用名称取运行定义",
  "summary": {
   "total": 3716,
-  "implemented": 43,
+  "implemented": 120,
   "failed": 0,
   "pending_name_refs": 1383,
   "groups": {
@@ -6365,9 +6365,9 @@
     1
    ],
    "name_ref": "string:35949",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1531",
+   "local_name": "魔法研究 - 光属性篇"
   },
   {
    "path": "n_quest/common/behimos/normal_30_behimos_sinda_defend.qst",
@@ -6417,9 +6417,9 @@
     2
    ],
    "name_ref": "string:322738",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1471",
+   "local_name": "美食家 - 夏洛克"
   },
   {
    "path": "n_quest/common/behimos/repeat_27_behimos_octopus.qst",
@@ -6439,9 +6439,9 @@
     3
    ],
    "name_ref": "string:322742",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1064",
+   "local_name": "新菜单 - 特烤章鱼烧"
   },
   {
    "path": "n_quest/common/behimos/repeat_32_behimos_tentakle_shylock.qst",
@@ -6461,9 +6461,9 @@
     20
    ],
    "name_ref": "string:322746",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1473",
+   "local_name": "美味的章鱼触须"
   },
   {
    "path": "n_quest/common/blackhall/achievement_60_blackhall_as_9_1_2nd.qst",
@@ -10043,9 +10043,9 @@
     500
    ],
    "name_ref": "string:322903",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.7646",
+   "local_name": "格斗家之路 - 风震"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_hanadonmyre_break_at_pungjin_5.qst",
@@ -10373,9 +10373,9 @@
     500
    ],
    "name_ref": "string:322963",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.516",
+   "local_name": "格斗家之路 - 风震"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_mujin_pungjin_5.qst",
@@ -10483,9 +10483,9 @@
     500
    ],
    "name_ref": "string:322982",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.526",
+   "local_name": "神枪之路 - 凯莉"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_one_shot_kiri_5.qst",
@@ -10593,9 +10593,9 @@
     500
    ],
    "name_ref": "string:322982",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.624",
+   "local_name": "神枪之路 - 凯莉"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_royal_garden_at_kiri_5.qst",
@@ -10703,9 +10703,9 @@
     500
    ],
    "name_ref": "string:323002",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.546",
+   "local_name": "圣职者之路 - 歌兰蒂斯"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_handonmyre_saint_road_grancia_5.qst",
@@ -10923,9 +10923,9 @@
     500
    ],
    "name_ref": "string:323031",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.536",
+   "local_name": "魔法师之路 - 莎兰"
   },
   {
    "path": "n_quest/common/handonmyre/epic_3_westcost_magical_sharan_5.qst",
@@ -11258,9 +11258,9 @@
     200
    ],
    "name_ref": "string:323081",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4469",
+   "local_name": "第二个时间碎片"
   },
   {
    "path": "n_quest/common/handonmyre/time_character02.qst",
@@ -11280,9 +11280,9 @@
     300
    ],
    "name_ref": "string:323085",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4470",
+   "local_name": "寻找时间碎片1"
   },
   {
    "path": "n_quest/common/handonmyre/time_character03.qst",
@@ -11304,9 +11304,9 @@
     1
    ],
    "name_ref": "string:323089",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4471",
+   "local_name": "寻找时间碎片2"
   },
   {
    "path": "n_quest/common/handonmyre/time_character07.qst",
@@ -11328,9 +11328,9 @@
     1
    ],
    "name_ref": "string:323093",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4475",
+   "local_name": "一定要更强"
   },
   {
    "path": "n_quest/common/handonmyre/time_character08.qst",
@@ -11818,9 +11818,9 @@
     100
    ],
    "name_ref": "string:323177",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4440",
+   "local_name": "灰色结晶和赛莉亚"
   },
   {
    "path": "n_quest/common/skycastle/epic_20_skycastle_crystal_2.qst",
@@ -11886,9 +11886,9 @@
     30000
    ],
    "name_ref": "string:323189",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.360",
+   "local_name": "未被修复的魔法阵"
   },
   {
    "path": "n_quest/common/skycastle/repeat_16_skycastle_elven_drake.qst",
@@ -11930,9 +11930,9 @@
     10
    ],
    "name_ref": "string:37199",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1207",
+   "local_name": "魔力提取 - 龙人之眼"
   },
   {
    "path": "n_quest/common/skycastle/repeat_17_skycastle_plolight.qst",
@@ -11952,9 +11952,9 @@
     10
    ],
    "name_ref": "string:17554",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1109",
+   "local_name": "魔力提取 - 萤石"
   },
   {
    "path": "n_quest/common/skycastle/repeat_17_skycastle_spinel.qst",
@@ -11974,9 +11974,9 @@
     10
    ],
    "name_ref": "string:35317",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1167",
+   "local_name": "魔力提取 - 尖晶石"
   },
   {
    "path": "n_quest/common/skycastle/repeat_17_skycastle_zircon.qst",
@@ -11996,9 +11996,9 @@
     10
    ],
    "name_ref": "string:323206",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1225",
+   "local_name": "魔力提取 - 锆石"
   },
   {
    "path": "n_quest/common/skycastle/repeat_21_skycastle_lorian_silk.qst",
@@ -12015,9 +12015,9 @@
    "reward_type": "[item]",
    "reward": [],
    "name_ref": "string:323210",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1493",
+   "local_name": "最好的丝绸"
   },
   {
    "path": "n_quest/common/stormpass/normal_40_stormpass_tiger.qst",
@@ -12443,9 +12443,9 @@
     1
    ],
    "name_ref": "string:323276",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.5826",
+   "local_name": "虚空魔石"
   },
   {
    "path": "n_quest/common/westcost/repeat_60_sharan_empty_stone.qst",
@@ -12465,9 +12465,9 @@
     1
    ],
    "name_ref": "",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.5827",
+   "local_name": "虚空魔石 (重复)"
   },
   {
    "path": "n_quest/elvengard/lorien/epic_1_lorien_1.qst",
@@ -24531,9 +24531,9 @@
     1
    ],
    "name_ref": "string:325304",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.111",
+   "local_name": "牛头王萨乌塔"
   },
   {
    "path": "n_quest/handonmyre/grakkarak/normal_10_grakkarak_honor.qst",
@@ -24553,9 +24553,9 @@
     100
    ],
    "name_ref": "string:325309",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1083",
+   "local_name": "种族的荣耀"
   },
   {
    "path": "n_quest/handonmyre/grakkarak/normal_10_grakkarak_manjin_5.qst",
@@ -24601,9 +24601,9 @@
     4
    ],
    "name_ref": "string:39135",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1219",
+   "local_name": "牛头的炼金术考察"
   },
   {
    "path": "n_quest/handonmyre/grakkarakburning/epic_12_grakkarak_royal_garden_7.qst",
@@ -24803,9 +24803,9 @@
     1
    ],
    "name_ref": "string:325328",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.113",
+   "local_name": "灰色结晶碎片"
   },
   {
    "path": "n_quest/handonmyre/grakkarakburning/epic_12_grakkarakburning_vinoshu_4.qst",
@@ -24825,9 +24825,9 @@
     100
    ],
    "name_ref": "string:325333",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.114",
+   "local_name": "邪恶气息的来历"
   },
   {
    "path": "n_quest/handonmyre/grakkarakburning/epic_12_grakkarakburning_vinoshu_5.qst",
@@ -24847,9 +24847,9 @@
     1
    ],
    "name_ref": "string:325337",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.7",
+   "local_name": "前往天空之城"
   },
   {
    "path": "n_quest/handonmyre/grakkarakburning/normal_12_grakkarakburning_6.qst",
@@ -25603,9 +25603,9 @@
     1
    ],
    "name_ref": "string:325417",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.116",
+   "local_name": "疯掉的魔法师克拉赫"
   },
   {
    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_2.qst",
@@ -25625,9 +25625,9 @@
     100
    ],
    "name_ref": "string:325422",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.112",
+   "local_name": "邪恶气息的前兆"
   },
   {
    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_3.qst",
@@ -25649,9 +25649,9 @@
     1
    ],
    "name_ref": "string:325426",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.504",
+   "local_name": "G.S.D的试验"
   },
   {
    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_3_at_mg.qst",
@@ -25863,9 +25863,9 @@
     500
    ],
    "name_ref": "string:325430",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.505",
+   "local_name": "新武器的威力"
   },
   {
    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_at_mg.qst",
@@ -25907,9 +25907,9 @@
     500
    ],
    "name_ref": "string:325430",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.515",
+   "local_name": "新武器的威力"
   },
   {
    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_ft_at.qst",
@@ -25929,9 +25929,9 @@
     500
    ],
    "name_ref": "string:325430",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.7645",
+   "local_name": "新武器的威力"
   },
   {
    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_gn.qst",
@@ -25951,9 +25951,9 @@
     500
    ],
    "name_ref": "string:325430",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.525",
+   "local_name": "新武器的威力"
   },
   {
    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_gn_at.qst",
@@ -25973,9 +25973,9 @@
     500
    ],
    "name_ref": "string:325430",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.623",
+   "local_name": "新武器的威力"
   },
   {
    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_mg.qst",
@@ -25995,9 +25995,9 @@
     500
    ],
    "name_ref": "string:325430",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.535",
+   "local_name": "新武器的威力"
   },
   {
    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_pr.qst",
@@ -26017,9 +26017,9 @@
     500
    ],
    "name_ref": "string:325430",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.545",
+   "local_name": "新武器的威力"
   },
   {
    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_th.qst",
@@ -26039,9 +26039,9 @@
     500
    ],
    "name_ref": "string:325430",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.635",
+   "local_name": "新武器的威力"
   },
   {
    "path": "n_quest/handonmyre/mirkwoodfrost/time_character05.qst",
@@ -26071,9 +26071,9 @@
     1
    ],
    "name_ref": "string:325434",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4473",
+   "local_name": "强化的时间碎片 1"
   },
   {
    "path": "n_quest/handonmyre/mirkwoodfrost/time_character06.qst",
@@ -26093,9 +26093,9 @@
     500
    ],
    "name_ref": "string:325438",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4474",
+   "local_name": "强化的时间碎片 2"
   },
   {
    "path": "n_quest/handonmyre/moonlightpub/epic_49_moonlightpub_jangsamrang_1.qst",
@@ -26115,9 +26115,9 @@
     100
    ],
    "name_ref": "string:325442",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4101",
+   "local_name": "灰衣剑士"
   },
   {
    "path": "n_quest/handonmyre/moonlightpub/epic_49_moonlightpub_jangsamrang_2.qst",
@@ -26912,9 +26912,9 @@
     1500
    ],
    "name_ref": "string:45183",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.201",
+   "local_name": "辛达遗失的槌子"
   },
   {
    "path": "n_quest/handonmyre/sunderlanddark/epic_14_sunderlanddark_gul_2.qst",
@@ -26936,9 +26936,9 @@
     1
    ],
    "name_ref": "string:45342",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.202",
+   "local_name": "奇怪石头"
   },
   {
    "path": "n_quest/handonmyre/sunderlanddark/epic_14_sunderlanddark_gul_3.qst",
@@ -26958,9 +26958,9 @@
     2000
    ],
    "name_ref": "string:16871",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.203",
+   "local_name": "暗黑雷鸣废墟"
   },
   {
    "path": "n_quest/handonmyre/sunderlanddark/epic_14_sunderlanddark_gul_4.qst",
@@ -26980,9 +26980,9 @@
     5000
    ],
    "name_ref": "string:325575",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.95",
+   "local_name": "亡者们"
   },
   {
    "path": "n_quest/handonmyre/sunderlanddark/epic_14_sunderlanddark_gul_5.qst",
@@ -27008,9 +27008,9 @@
     21
    ],
    "name_ref": "string:325579",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.96",
+   "local_name": "黑暗的记忆"
   },
   {
    "path": "n_quest/handonmyre/sunderlanddark/epic_14_sunderlanddark_gul_6.qst",
@@ -27032,9 +27032,9 @@
     5
    ],
    "name_ref": "string:325583",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.97",
+   "local_name": "毁灭的痕迹"
   },
   {
    "path": "n_quest/handonmyre/sunderlanddark/normal_14_sunderlanddark_prag.qst",
@@ -27691,9 +27691,9 @@
     400
    ],
    "name_ref": "string:325636",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4472",
+   "local_name": "脆弱的时间碎片"
   },
   {
    "path": "n_quest/hell/hell_area2-1.qst",
@@ -27973,9 +27973,9 @@
     1
    ],
    "name_ref": "",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.2618",
+   "local_name": "交换火焰之破魔石"
   },
   {
    "path": "n_quest/hell/hell_heaven1.qst",
@@ -28247,9 +28247,9 @@
     1
    ],
    "name_ref": "",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.2616",
+   "local_name": "交换燃烧恶魔的挑战书"
   },
   {
    "path": "n_quest/hell/hell_up2.qst",
@@ -28269,9 +28269,9 @@
     1
    ],
    "name_ref": "",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.2617",
+   "local_name": "交换燃烧恶魔的请帖"
   },
   {
    "path": "n_quest/jishaqiongqi0.qst",
@@ -44063,9 +44063,9 @@
     200
    ],
    "name_ref": "string:331224",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4465",
+   "local_name": "第一个时间碎片 - 洛蓝"
   },
   {
    "path": "n_quest/time_piece/noir_1.qst",
@@ -44151,9 +44151,9 @@
     200
    ],
    "name_ref": "string:331241",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4478",
+   "local_name": "时间碎片 - 第一个时间碎片"
   },
   {
    "path": "n_quest/time_piece/snowm_1.qst",
@@ -50171,9 +50171,9 @@
     1
    ],
    "name_ref": "",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.20915",
+   "local_name": "比尔马克帝国试验场（门票）"
   },
   {
    "path": "n_quest/towers/repeat_45_sharan_diabolic_stone.qst",
@@ -50193,9 +50193,9 @@
     1
    ],
    "name_ref": "",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.3611",
+   "local_name": "混沌魔石碎片 (重复)"
   },
   {
    "path": "n_quest/towers/repeat_65_towerofultimate_test_ultimate.qst",
@@ -80710,9 +80710,9 @@
     300
    ],
    "name_ref": "string:332105",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.361",
+   "local_name": "变强的天空之城气息"
   },
   {
    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_f_castle_3.qst",
@@ -80732,9 +80732,9 @@
     100
    ],
    "name_ref": "string:332109",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.362",
+   "local_name": "悬空城的存在"
   },
   {
    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_sky_gsd_7.qst",
@@ -80776,9 +80776,9 @@
     1000
    ],
    "name_ref": "string:332113",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.125",
+   "local_name": "城的存在"
   },
   {
    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_skycastle_11.qst",
@@ -80798,9 +80798,9 @@
     5000
    ],
    "name_ref": "string:332117",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.126",
+   "local_name": "光之城主的宫殿"
   },
   {
    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_skycastle_12.qst",
@@ -80820,9 +80820,9 @@
     100
    ],
    "name_ref": "string:332121",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4315",
+   "local_name": "光之军队"
   },
   {
    "path": "n_quest/westcost/darkentrance/normal_22_darkentrance_arin_4.qst",
@@ -80888,9 +80888,9 @@
     100
    ],
    "name_ref": "string:332154",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4305",
+   "local_name": "鬼手的反应"
   },
   {
    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_sky_gsd_2.qst",
@@ -80954,9 +80954,9 @@
     100
    ],
    "name_ref": "string:332137",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.8",
+   "local_name": "精灵的魔法阵"
   },
   {
    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_skycastle_2.qst",
@@ -80976,9 +80976,9 @@
     1000
    ],
    "name_ref": "string:332141",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.117",
+   "local_name": "调查力量减弱的魔法阵"
   },
   {
    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_skycastle_3.qst",
@@ -80998,9 +80998,9 @@
     100
    ],
    "name_ref": "string:332146",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4601",
+   "local_name": "行踪不明的罗莉安"
   },
   {
    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_skycastle_4.qst",
@@ -81020,9 +81020,9 @@
     1000
    ],
    "name_ref": "string:332150",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.119",
+   "local_name": "水落石出"
   },
   {
    "path": "n_quest/westcost/draconiantower/normal_16_draconiantower_arin_1.qst",
@@ -81223,9 +81223,9 @@
     20
    ],
    "name_ref": "string:37419",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4318",
+   "local_name": "悬空城的无重力碎片 1"
   },
   {
    "path": "n_quest/westcost/floatingcastle/normal_24_floatingcastle_zero_gravity_2.qst",
@@ -81249,9 +81249,9 @@
     20
    ],
    "name_ref": "string:37645",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4319",
+   "local_name": "悬空城的无重力碎片 2"
   },
   {
    "path": "n_quest/westcost/golemtower/epic_20_golemtower_sky_gsd_6.qst",
@@ -81293,9 +81293,9 @@
     1000
    ],
    "name_ref": "string:332203",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.121",
+   "local_name": "石巨人塔"
   },
   {
    "path": "n_quest/westcost/golemtower/epic_20_golemtower_skycastle_7.qst",
@@ -81315,9 +81315,9 @@
     200
    ],
    "name_ref": "string:332207",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.122",
+   "local_name": "黄金石巨人"
   },
   {
    "path": "n_quest/westcost/golemtower/epic_20_golemtower_skycastle_8.qst",
@@ -81337,9 +81337,9 @@
     7000
    ],
    "name_ref": "string:332211",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.123",
+   "local_name": "研究石巨人"
   },
   {
    "path": "n_quest/westcost/golemtower/epic_20_golemtower_skycastle_9.qst",
@@ -81356,9 +81356,9 @@
    "reward_type": "[item]",
    "reward": [],
    "name_ref": "string:332215",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.124",
+   "local_name": "除掉普拉塔尼的方法"
   },
   {
    "path": "n_quest/westcost/golemtower/normal_20_golemtower_arin_3.qst",
@@ -81402,9 +81402,9 @@
     100
    ],
    "name_ref": "string:332226",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.1556",
+   "local_name": "操纵石巨人"
   },
   {
    "path": "n_quest/westcost/golemtower/normal_20_golemtower_stone.qst",
@@ -81668,9 +81668,9 @@
     100
    ],
    "name_ref": "string:332268",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.120",
+   "local_name": "人偶之王道格里"
   },
   {
    "path": "n_quest/westcost/hallofdoll/normal_18_hallofdoll_arin_f_2.qst",
@@ -82136,9 +82136,9 @@
     100
    ],
    "name_ref": "string:332342",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.16",
+   "local_name": "光之城主 - 赛格哈特"
   },
   {
    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_2.qst",
@@ -82158,9 +82158,9 @@
     100
    ],
    "name_ref": "string:332347",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.17",
+   "local_name": "不灭的赛格哈特"
   },
   {
    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_3.qst",

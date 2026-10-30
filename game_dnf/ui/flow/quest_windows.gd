@@ -173,6 +173,7 @@ func objective_line(o: Dictionary) -> String:
 		"collect_item":label=String(game.Catalog.ITEMS.get(o["target"],{}).get("name",o["target"]))
 		"learn_skill":label="学习任意技能一级"
 		"disassemble_item":label="在"+game.session.quests.npc_name(o["npc"])+"处分解一件装备"
+		"clear_map":label=String(game.session.quests.catalog.config["dungeons"].get(o.get("dungeon",""),"目标地图"))+" · 特殊地图目标"
 	var rules: Dictionary=o.get("conditions",{})
 	if rules.has("max_elapsed_ms"):label+=" · 限时 %g 秒" % (float(rules["max_elapsed_ms"])/1000.0)
 	if rules.has("max_hits_taken"):label+=" · 被击不超过 %d 次" % int(rules["max_hits_taken"])
@@ -180,7 +181,7 @@ func objective_line(o: Dictionary) -> String:
 	if rules.has("min_party_size"):label+=" · 至少 %d 人" % int(rules["min_party_size"])
 	if o.has("difficulty"):
 		var names: Array=[]
-		for mode: String in o["difficulty"]:names.append({"normal":"普通级","adventure":"冒险级","king":"王者级"}.get(mode,"未知难度"))
+		for mode: String in o["difficulty"]:names.append({"normal":"普通级","adventure":"冒险级","expert":"勇士级","king":"王者级"}.get(mode,"未知难度"))
 		label+="（"+"、".join(names)+"）"
 	return "%s  %d / %d" % [label,int(o["current"]),int(o["amount"])]
 

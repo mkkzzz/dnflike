@@ -16,8 +16,9 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--version', default='v1')
     args = parser.parse_args()
-    output = ROOT / 'game_dnf/assets_local/items_native_v1'
+    output = ROOT / ('game_dnf/assets_local/items_native_' + args.version)
     manifest = output / 'manifest.json'
     if args.check:
         data = json.loads(manifest.read_text(encoding='utf8'))

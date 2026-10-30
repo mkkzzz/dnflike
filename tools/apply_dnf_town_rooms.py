@@ -25,7 +25,24 @@ PLAN = {
     # 西海岸在城市区西侧：入口放城市区最左端，落点在西海岸最右端（与艾尔文端对称）。
     'westcoast': ('西海岸', [2800, 320], 'hendon_city', [13, 219, 20, 117], '← 西海岸',
                   [60, 300], '赫顿玛尔城市区'),
+    'westcoast_magic': ('西海岸 · 魔法师公馆', [1500, 320], 'westcoast', [2400, 300, 100, 40],
+                        '魔法师公馆 →', [2500, 340], '西海岸'),
 }
+
+
+def merge_location(existing: dict, key: str, name: str, spawn: list, walk: list, residents: dict) -> dict:
+    location = existing.copy()
+    location.update({
+        'name': name,
+        'asset': 'res://assets_local/flow_v1/rooms/%s/manifest.json' % key,
+        'placement': key,
+        'spawn': spawn,
+        'walk': walk,
+        'npcs': residents or existing.get('npcs', {}),
+        'labels': existing.get('labels', []),
+        'camera_y': existing.get('camera_y', 0),
+    })
+    return location
 
 
 def main() -> int:
@@ -37,16 +54,15 @@ def main() -> int:
             print('[ROOMS] %s 尚未导出，跳过' % key)
             continue
         walk = json.loads(walk_file.read_text(encoding='utf-8'))['walk']
-        doc['locations'][key] = {
-            'name': name,
-            'asset': 'res://assets_local/flow_v1/rooms/%s/manifest.json' % key,
-            'placement': key,
-            'spawn': spawn,
-            'walk': walk,
-            'npcs': {},
-            'labels': [],
-            'camera_y': 0,
+        manifest_path = ROOMS / key / 'manifest.json'
+        manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+        residents = {
+            npc['id']: npc['anchor'][:2]
+            for npc in manifest.get('npcs', [])
+            if npc.get('id') and isinstance(npc.get('anchor'), list)
         }
+        existing = doc['locations'].get(key, {})
+        doc['locations'][key] = merge_location(existing, key, name, spawn, walk, residents)
         doc['portals']['%s_to_%s' % (parent, key)] = {
             'from': parent, 'rect': rect, 'to': key, 'spawn': spawn, 'label': label,
             'reciprocal': '%s_exit' % key,

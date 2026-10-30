@@ -36,6 +36,10 @@ func quest_command(kind: String, payload: Dictionary, context: Dictionary) -> Di
 	context = context.duplicate()
 	context["in_town"] = state == "town"
 	var response: Dictionary=quests.command(profile,kind,payload,context,grant_quest_reward)
+	if response.get("ok",false):
+		var automatic:=advance_auto_quests()
+		if not automatic.get("ok",false):return automatic
+		response["auto_changed"]=automatic.get("changed",[])
 	if response.get("ok",false) and payload.get("id")=="legacy.trial":
 		profile["quest"]={"active":"active","ready":"ready","completed":"done","available":"available"}.get(quests.status(profile,"legacy.trial"),"available")
 	return response
@@ -48,8 +52,25 @@ func service_command(kind: String, payload: Dictionary, context: Dictionary) -> 
 	var item: String=Inventory.definition(profile,String(payload.get("uid",""))) if kind=="services.disassemble" else ""
 	var response: Dictionary=Services.command(profile,kind,payload)
 	if response.get("ok",false) and kind=="services.disassemble":
-		quests.ingest(profile,{"type":"item.disassembled","event_id":"service:"+String(payload["transaction"]),"item":item,"npc":npc})
+		var changed=ingest_quest_event({"type":"item.disassembled","event_id":"service:"+String(payload["transaction"]),"item":item,"npc":npc})
+		response["quest_changed"]=changed
 	return response
+
+func advance_auto_quests() -> Dictionary:
+	return quests.advance_auto(profile,grant_quest_reward)
+
+func ingest_quest_event(event: Dictionary) -> bool:
+	var outcome:=quests.ingest(profile,event)
+	if not outcome.get("ok",false):return false
+	var changed: bool=not outcome.get("changed",[]).is_empty() if outcome.get("changed") is Array else false
+	var automatic:=advance_auto_quests()
+	if automatic.get("ok",false) and automatic.get("changed") is Array and not automatic["changed"].is_empty():
+		changed=true
+	return changed
+
+func npc_met(npc: String) -> Dictionary:
+	var changed=ingest_quest_event({"type":"npc.met","event_id":"visit:"+str(Time.get_ticks_usec()),"npc":npc})
+	return {"ok":true,"changed":changed}
 
 func mirror_legacy() -> void:
 	if profile["quest"] not in ["active","ready","done"]:return
@@ -186,7 +207,7 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 			if not Layout.move(profile, CATALOG.ITEMS, source, payload.get("target", {})):return reject("这里不能放置该物品或技能")
 			Numbers.normalize(profile)
 		"flow.difficulty":
-			if state != "town" or payload.get("id") not in ["normal", "adventure", "king"]:return reject("难度无效")
+			if state != "town" or payload.get("id") not in ["normal", "adventure", "expert", "king"]:return reject("难度无效")
 			profile["difficulty"] = payload["id"]
 		"flow.depart":
 			if state != "town":return reject("已有进行中的冒险")
@@ -248,8 +269,7 @@ func combat_event(event: Dictionary) -> Dictionary:
 				quest_event["event_id"] = String(run["id"])+":"+String(event.get("room_id",""))+":"+str(event["event_id"])
 				quest_event["dungeon"] = run["dungeon"]
 				quest_event["difficulty"] = run["difficulty"]
-				var outcome: Dictionary=quests.ingest(profile,quest_event)
-				quest_changed=outcome.get("ok",false) and not outcome["changed"].is_empty()
+				quest_changed=ingest_quest_event(quest_event)
 			var amount := int(Numbers.config()["progression"]["kill_xp"])
 			if amount>0:
 				var reward: Dictionary=Numbers.Growth.grant(profile,amount,"kill:"+String(run["id"])+":"+str(event.get("event_id",event.get("entity_id",-1))),Numbers.config()["progression"])
@@ -258,7 +278,22 @@ func combat_event(event: Dictionary) -> Dictionary:
 				return reward
 			return {"ok":true,"quest_changed":quest_changed,"loot_changed":loot_changed}
 		"combat.room_combat_finished":
-			if bool(event.get("final_room", false)):return finish_run(true, event.get("stats", {}))
+			var map_changed:=false
+			var room_index=int(event.get("room_index",-1))
+			var rooms:Array=dungeons.get(run.get("dungeon",""),{}).get("rooms",[])
+			if room_index>=0 and room_index<rooms.size():
+				var placement=String(rooms[room_index].get("placement",""))
+				var cell_text=placement.split(":")[0]
+				var cell_parts=cell_text.split("_")
+				if cell_parts.size()==2:
+					var cell=[int(cell_parts[0]),int(cell_parts[1])]
+					map_changed=ingest_quest_event({"type":"map.cleared","event_id":"map:"+String(run["id"])+":"+str(room_index),
+						"dungeon":run["dungeon"],"cell":cell,"victory":true})
+			if bool(event.get("final_room", false)):
+				var finished=finish_run(true,event.get("stats",{}))
+				finished["quest_changed"]=map_changed or bool(finished.get("quest_changed",false))
+				return finished
+			return {"ok":true,"quest_changed":map_changed}
 	return {"ok": true}
 
 func observe_damage(event: Dictionary) -> void:
@@ -271,8 +306,12 @@ func finish_run(won: bool, details: Dictionary) -> Dictionary:
 	profile["settled"][id] = true
 	result = {"run_id": id, "victory": won, "gold": 0, "xp": 0, "potion": 0, "stats": details.duplicate(true)}
 	if won:
-		quests.ingest(profile,{"type":"dungeon.cleared","event_id":"clear:"+id,"dungeon":run["dungeon"],"difficulty":run["difficulty"],"victory":true,"facts":QuestConditions.facts(run,details)})
+		var quest_changed=ingest_quest_event({"type":"dungeon.cleared","event_id":"clear:"+id,"dungeon":run["dungeon"],"difficulty":run["difficulty"],"victory":true,"facts":QuestConditions.facts(run,details)})
+		quest_changed=award_clear_items() or quest_changed
+		var automatic:=advance_auto_quests()
+		if automatic.get("ok",false) and automatic.get("changed") is Array and not automatic["changed"].is_empty():quest_changed=true
 		result.merge({"gold": 150, "xp": int(Numbers.config()["progression"]["clear_xp"]), "potion": 1}, true)
+		result["quest_changed"]=quest_changed
 		var damage := int(details.get("damage_taken", 0))
 		result["rank"] = "S" if damage <= 50 else "A" if damage <= 250 else "B"
 		profile["gold"] += 150
@@ -282,6 +321,20 @@ func finish_run(won: bool, details: Dictionary) -> Dictionary:
 		if profile["quest"] == "active" and run["dungeon"]=="forest_trial":profile["quest"] = "ready";mirror_legacy()
 	state = "result"
 	return {"ok": true}
+
+func award_clear_items() -> bool:
+	var changed:=false
+	for id:String in quests.catalog.definitions:
+		var quest:Dictionary=quests.catalog.definitions[id]
+		if profile.get("quest_state",{}).get("entries",{}).get(id,{}).get("state")!="active":continue
+		for rule:Dictionary in quest.get("clear_items",[]):
+			if run.get("difficulty") not in rule["difficulty"]:continue
+			var owned:=Inventory.stock(profile,rule["item"])
+			var count:=mini(int(rule["amount"]),int(rule["limit"])-owned)
+			if count<=0:continue
+			var given:=Inventory.give(profile,rule["item"],count,50,true)
+			if given.get("ok",false):changed=true
+	return changed
 
 func serialize() -> Dictionary:
 	return {"schema": "dnf_loop_save/5", "profile": profile.duplicate(true), "state": state,

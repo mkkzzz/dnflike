@@ -38,6 +38,7 @@ TOWNS = {
     'hendon_inn': 'music/sera_shop_new.ogg',
     'alfhlyra': 'music/alfhlyra_new.ogg',
     'westcoast': 'music/westcoast_new.ogg',
+    'westcoast_magic': 'music/westcoast_new.ogg',
 }
 # 副本（key 与 data/dungeons.json 的 id 对应）。
 # 洛兰原版没有独立 BOSS 曲，用森林深处曲代用（E-ADAPT）；其余都有各自的 normal/boss。
@@ -48,6 +49,7 @@ DUNGEONS = {
     'mirkwood': {'normal': 'music/mirkwood.ogg', 'boss': 'music/mirkwood_boss.ogg'},
     'mirkwood_deep': {'normal': 'music/mirkwood.ogg', 'boss': 'music/mirkwood_boss.ogg'},
     'mirkwood_frost': {'normal': 'music/mirkwood.ogg', 'boss': 'music/mirkwood_boss.ogg'},
+    'grakkarak': {'normal': 'music/grakkarak_new.ogg', 'boss': 'music/grakkarak_new_boss.ogg'},
     'grakkarak_burning': {'normal': 'music/grakkarak_new.ogg', 'boss': 'music/grakkarak_new_boss.ogg'},
     'sunderland': {'normal': 'music/sunderland.ogg', 'boss': 'music/sunderland_boss.ogg'},
     'sunderland_poison': {'normal': 'music/sunderland.ogg', 'boss': 'music/sunderland_boss.ogg'},

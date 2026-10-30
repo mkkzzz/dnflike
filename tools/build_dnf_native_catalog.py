@@ -43,12 +43,21 @@ RATE_STATS = {'[attack speed]': ('attack_speed', 1000), '[cast speed]': ('cast_s
               '[magical critical hit]': ('magical_crit', 100), '[stuck]': ('hit', -100),
               '[inventory limit]': ('carry_capacity', 1000)}
 RESIST = {'[' + x + ' resistance]': x + '_resist' for x in ['fire', 'water', 'light', 'dark']}
-NPCS = {1: 'linus', 2: 'seria', 3: 'kanna', 4: 'sinda', 6: 'pungjin',
-        7: 'gsd', 8: 'danjin', 9: 'shylock', 13: 'norton', 17: 'kiri', 27: 'albert', 45: 'grandis'}
+NPCS = {1: 'linus', 2: 'seria', 3: 'kanna', 4: 'sinda', 5: 'shusia',
+        6: 'pungjin', 7: 'gsd', 8: 'danjin', 9: 'shylock', 10: 'lorian',
+        12: 'sharan', 13: 'norton', 17: 'kiri', 27: 'albert', 45: 'grandis',
+        127: 'the_last_mehmet'}
 # IDs independently present in the existing dungeon source definitions.
 DUNGEONS = {1: 'lorien', 2: 'lorien_inside', 3: 'mirkwood', 4: 'mirkwood_deep',
             5: 'sunderland', 6: 'sunderland_poison'}
 QUEST_META = {'[' + x + ']' for x in 'name|grade|difficulty|gold multiple|npc index|complete npc index|job|grow type|level|pre required quest|type|sub type|int data|reward type|reward int data|reward selection int data|condition message|depend message|solve message|dialog|dungeon info|ignore quest level 4 exp|cant giveup'.split('|')}
+QUEST_METADATA = {
+    '[effect after clear quest]', '[relation quest]', '[quest piece]',
+    '[job message]', '[target character]', '[appear map]', '[delete npc index]',
+}
+QUEST_BEHAVIOR = {
+    '[depend give item]', '[clear reward item]', '[monster reward item]',
+}
 
 
 def dumps(value):
@@ -180,6 +189,17 @@ def compile_item(number, listing, path, sha, fields, words):
                 for stat, value in zip(['physical_independent_attack', 'magical_independent_attack'], values):
                     stats[stat] = value;ranges[stat] = [value, value]
         consumed.add('[separate attack]')
+        if '[all elemental resistance]' in fields:
+            values = fields['[all elemental resistance]']
+            if len(values) not in [1, 2] or not all(type(v) in [int, float] for v in values):
+                reasons.append('stat_grammar:[all elemental resistance]')
+            else:
+                value = sum(values) / len(values)
+                for element in ['fire', 'water', 'light', 'dark']:
+                    stat = element + '_resist'
+                    stats[stat] = value
+                    ranges[stat] = [value, value]
+            consumed.add('[all elemental resistance]')
         equipment = {'name': name, 'slot': slot, 'stats': stats, 'stat_ranges': ranges,
                      'required_level': item['level'], 'durability': max(1, scalar(fields, '[durability]', 40)),
                      'usable_jobs': fields.get('[usable job]', ['[all]']), 'source': item['source']}
@@ -188,7 +208,12 @@ def compile_item(number, listing, path, sha, fields, words):
             if not weapon:reasons.append('weapon_family')
             else:equipment['weapon'] = weapon
     elif kind in ['material', 'profession', 'quest']:
-        pass # Ownership, splitting, storage and quest consumption are the behavior.
+        # The field is ownership/reference metadata for crafting inputs. It does
+        # not change the item's own inventory behavior, but is kept for recipes.
+        if '[need material]' in fields:
+            item['source_fields'] = {'[need material]': fields['[need material]']}
+            item['adaptations'] = ['Source material requirements retained for the recipe processor']
+            consumed.add('[need material]')
     elif typ == '[waste]':
         hp = mp = duration = hp_percent = mp_percent = 0
         durations = set()
@@ -250,15 +275,31 @@ def quest_plan(fields):
         return [{'type':'disassemble_item','target':'any','npc':13,'amount':1}], []
     if kind == '[custom quest]' and sub == 0 and values == [1, 0, 1]:
         return [{'type': 'learn_skill', 'target': 'any', 'amount': 1}], []
+    if kind == '[clear map]' and ((sub == -1 and len(values) == 1) or (sub == 0 and len(values) == 2)):
+        return [{'type': 'clear_map', 'map': values[0], 'source_extra': values[1:], 'amount': 1}], []
     return [], ['objective:' + str(kind) + ':sub=' + str(sub) + ':width=' + str(len(values))]
 
 
-def compile_quest(number, path, sha, fields, words, existing, items, monster_index, *, custom_events=None, dungeon_index=None, npc_index=None):
+def quest_difficulty_modes(value):
+    return {-1: ['normal', 'adventure', 'expert', 'king'], 0: ['normal'], 1: ['adventure'], 2: ['expert'], 3: ['king']}.get(value)
+
+
+def pair_items(values):
+    if len(values) % 2:return None
+    result={}
+    for index in range(0,len(values),2):
+        item,amount=values[index:index+2]
+        if type(item) is not int or item<=0 or type(amount) is not int or amount<1:return None
+        result['original_%d' % item]=amount
+    return result
+
+
+def compile_quest(number, path, sha, fields, words, existing, items, monster_index, *, custom_events=None, dungeon_index=None, npc_index=None, map_index=None):
     plan, reasons = quest_plan(fields)
     if number is None:reasons.append('unindexed')
     if not words.get('[name]') or not words.get('[condition message]'):reasons.append('missing_chinese_text')
     if any(BAD.search(v) for v in words.values()):reasons.append('invalid_display_text')
-    reasons.extend('field:' + k for k in fields if k not in QUEST_META)
+    reasons.extend('field:' + k for k in fields if k not in QUEST_META | QUEST_METADATA | QUEST_BEHAVIOR)
     if scalar(fields, '[grade]') not in ['[epic]', '[achievement]', '[common unique]', '[training]', '[normaly repeat]', '[daily]']:
         reasons.append('quest_grade:' + str(scalar(fields, '[grade]')))
     npc_registry=NPCS if npc_index is None else npc_index
@@ -287,6 +328,24 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
         elif p['type']=='disassemble_item':
             o['target']=p['target'];o['npc']=npc_registry.get(p['npc'],'')
             if not o['npc']:reasons.append('target_npc_not_in_town')
+        elif p['type']=='clear_map':
+            target=(map_index or {}).get(str(p['map']))
+            if not target:
+                reasons.append('clear_map_unavailable:'+str(p['map']))
+            else:
+                dungeon=target.get('dungeon','')
+                cell=target.get('cell',[])
+                dungeon_values=set((dungeon_index or {}).values())
+                valid_dungeon=isinstance(dungeon,str) and dungeon in dungeon_values
+                valid_cell=isinstance(cell,list) and len(cell)==2 and all(type(value) is int for value in cell)
+                if not valid_dungeon or not valid_cell:
+                    reasons.append('clear_map_target_invalid:%s:%s:%s' % (p['map'],dungeon,cell))
+                else:
+                    o['target']='%s:%d_%d' % (dungeon,int(cell[0]),int(cell[1]))
+                    o['dungeon']=dungeon
+                    o['cell']=[int(cell[0]),int(cell[1])]
+                    o['source_map_id']=int(p['map'])
+                    if p.get('source_extra'):o['source_extra']=p['source_extra']
         else:
             dungeon = (DUNGEONS if dungeon_index is None else dungeon_index).get(p['dungeon'])
             if p['dungeon']==-1 and dungeon_index is not None:
@@ -298,8 +357,8 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
                 o['dungeon'] = dungeon or ''
                 if not o['target']:reasons.append('monster_unavailable:' + str(p['monster']))
             if p['difficulty'] != -1:
-                if p['difficulty'] not in [0, 1, 3]:reasons.append('difficulty_not_implemented:' + str(p['difficulty']))
-                else:o['difficulty'] = [{0: 'normal', 1: 'adventure', 3: 'king'}[p['difficulty']]]
+                if p['difficulty'] not in [0, 1, 2, 3]:reasons.append('difficulty_not_implemented:' + str(p['difficulty']))
+                else:o['difficulty'] = [{0: 'normal', 1: 'adventure', 2: 'expert', 3: 'king'}[p['difficulty']]]
         objectives.append(o)
         if p.get('conditions'):o['conditions']=p['conditions']
         if p.get('conditions',{}).get('min_party_size',1)>1:reasons.append('multiplayer_not_implemented')
@@ -309,10 +368,63 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
         choice_gold, choices, conditional = reward_rows(fields.get('[reward selection int data]', []))
         if choice_gold or conditional:raise ValueError('conditional choice')
         reward['choices'] = [{'id': k, 'item': k, 'amount': n} for k, n in choices.items()]
-        for item in set(reward['items']) | set(choices) | {r['item'] for r in reward['conditional_items']}:
+        required_rewards = set(reward['items']) | set(choices)
+        required_rewards.update(
+            row['item'] for row in reward['conditional_items']
+            if -1 in row['jobs'] or 0 in row['jobs']
+        )
+        for item in required_rewards:
             if item not in items:reasons.append('reward_item_unavailable:' + item)
         if scalar(fields, '[reward type]', '[item]') != '[item]':reasons.append('reward_type')
     except ValueError as exc:reasons.append('reward_grammar:' + str(exc))
+    target_characters=[value for value in fields.get('[target character]',[]) if isinstance(value,str)]
+    if target_characters and '[demonic swordman]' not in target_characters:
+        reasons.append('character_target_unsupported')
+    grant_items=pair_items(fields.get('[depend give item]',[]))
+    if '[depend give item]' in fields and grant_items is None:
+        reasons.append('depend_give_item_grammar')
+    if grant_items:
+        for item in grant_items:
+            if item not in items:reasons.append('grant_item_unavailable:'+item)
+    drops=[]
+    raw_drops=fields.get('[monster reward item]',[])
+    if raw_drops:
+        if len(raw_drops)%7:
+            reasons.append('monster_reward_item_grammar')
+        else:
+            for index in range(0,len(raw_drops),7):
+                monster,dungeon,difficulty,item,amount,chance,limit=raw_drops[index:index+7]
+                if not all(type(value) is int for value in raw_drops[index:index+7]):
+                    reasons.append('monster_reward_item_grammar');continue
+                modes=quest_difficulty_modes(difficulty)
+                monster_path=monster_index.get(monster,'')
+                dungeon_id=(dungeon_index or {}).get(dungeon,'')
+                item_id='original_%d' % item
+                if modes is None:reasons.append('difficulty_not_implemented:'+str(difficulty))
+                if not monster_path:reasons.append('monster_unavailable:'+str(monster))
+                if not dungeon_id:reasons.append('dungeon_unavailable:'+str(dungeon))
+                if item_id not in items:reasons.append('item_unavailable:'+item_id)
+                if not 1<=amount<=9999 or not 1<=chance<=100 or not 1<=limit<=9999:
+                    reasons.append('monster_reward_item_quantity')
+                if modes and monster_path and dungeon_id and item_id in items:
+                    drops.append({'monster':monster_path,'dungeon':dungeon_id,'difficulty':modes,
+                                  'item':item_id,'amount':amount,'chance':chance,'limit':limit})
+    clear_items=[]
+    raw_clear=fields.get('[clear reward item]',[])
+    if raw_clear:
+        if len(raw_clear)%6:
+            reasons.append('clear_reward_item_grammar')
+        else:
+            for index in range(0,len(raw_clear),6):
+                probability,difficulty,item,amount,chance,limit=raw_clear[index:index+6]
+                modes=quest_difficulty_modes(difficulty)
+                item_id='original_%d' % item
+                if probability!=1000 or modes is None or item_id not in items or amount<1 or chance!=100 or limit<1:
+                    reasons.append('clear_reward_item_unsupported')
+                else:
+                    clear_items.append({'difficulty':modes,'item':item_id,'amount':amount,'limit':limit})
+    giver_key=giver or ''
+    receiver_key=receiver or ''
     q = {'id': existing.get(number, 'original.quest.%s' % number),
          'source': {'id': number, 'path': path, 'sha256': sha, 'raw_type': fields.get('[type]', []),
                     'raw_int_data': fields.get('[int data]', []), 'xp_adaptation': 'No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented'},
@@ -324,7 +436,16 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
          'requires': [existing.get(i, 'original.quest.%d' % i) for i in prerequisites],
          'eligibility': {'jobs': [JOBS.get(j, -999) for j in jobs], 'grow_types': fields.get('[grow type]', [-1])},
          'giver': giver or '', 'receiver': receiver or '', 'objectives': objectives,
-         'reward': reward, 'consume': consume, 'enabled': True, 'abandonable': '[cant giveup]' not in fields}
+         'reward': reward, 'consume': consume, 'enabled': True, 'abandonable': '[cant giveup]' not in fields,
+         'source_metadata': {
+             tag: fields[tag] for tag in sorted(QUEST_METADATA | QUEST_BEHAVIOR) if tag in fields
+         }}
+    if grant_items:q['grant_items']=grant_items
+    if drops:q['drops']=drops
+    if clear_items:q['clear_items']=clear_items
+    if target_characters:q['target_characters']=target_characters
+    q['auto_accept']=giver_key=='the_last_mehmet'
+    q['auto_complete']=receiver_key=='the_last_mehmet'
     if scalar(fields,'[grade]') in ['[normaly repeat]','[daily]']:
         q['lifecycle']='daily' if scalar(fields,'[grade]')=='[daily]' else 'repeat'
     return q, plan, sorted(set(reasons))
@@ -346,8 +467,10 @@ def main():
     lib = open_library(args.library)
     # Derive and verify mapping identities from this archive, not guessed NPC IDs.
     npc_index = lib.listing('npc/npc.lst')
-    expected_npcs = {'linus':'linus','seria':'seria','kanna':'kanna','sinda':'sinda','pungjin':'poongjin',
-                     'gsd':'gsd','danjin':'danjin','shylock':'shylock','norton':'rothon','kiri':'kiri','albert':'albert','grandis':'grandis'}
+    expected_npcs = {'linus':'linus','seria':'seria','kanna':'kanna','sinda':'sinda','shusia':'shusia',
+                     'pungjin':'poongjin','gsd':'gsd','danjin':'danjin','shylock':'shylock',
+                     'lorian':'lorian','sharan':'sharan','norton':'rothon','kiri':'kiri',
+                     'albert':'albert','grandis':'grandis','the_last_mehmet':'the_last_mehmet'}
     for number, target in NPCS.items():
         if Path(npc_index[number].replace('\\','/')).stem.lower() != expected_npcs[target]:raise ValueError('NPC identity mismatch')
     resolver = TextResolver(lib)

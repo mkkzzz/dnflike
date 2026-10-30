@@ -433,7 +433,12 @@
           12
         ]
       ],
-      "npcs": {},
+      "npcs": {
+        "shusia": [
+          1001,
+          156
+        ]
+      },
       "labels": [],
       "camera_y": 0
     },
@@ -949,7 +954,12 @@
           12
         ]
       ],
-      "npcs": {},
+      "npcs": {
+        "lorian": [
+          1206,
+          206
+        ]
+      },
       "labels": [],
       "camera_y": 0,
       "dungeon_region": "skytower",
@@ -959,6 +969,127 @@
         120,
         50
       ]
+    },
+    "westcoast_magic": {
+      "name": "西海岸 · 魔法师公馆",
+      "asset": "res://assets_local/flow_v1/rooms/westcoast_magic/manifest.json",
+      "placement": "westcoast_magic",
+      "spawn": [
+        1500,
+        320
+      ],
+      "walk": [
+        [
+          0,
+          144,
+          1792,
+          12
+        ],
+        [
+          0,
+          156,
+          1792,
+          12
+        ],
+        [
+          0,
+          168,
+          1792,
+          12
+        ],
+        [
+          0,
+          180,
+          1792,
+          12
+        ],
+        [
+          0,
+          192,
+          1792,
+          12
+        ],
+        [
+          0,
+          204,
+          1792,
+          12
+        ],
+        [
+          0,
+          216,
+          1792,
+          12
+        ],
+        [
+          0,
+          228,
+          1792,
+          12
+        ],
+        [
+          0,
+          240,
+          1792,
+          12
+        ],
+        [
+          0,
+          252,
+          1792,
+          12
+        ],
+        [
+          0,
+          264,
+          1792,
+          12
+        ],
+        [
+          0,
+          276,
+          1792,
+          12
+        ],
+        [
+          0,
+          288,
+          1792,
+          12
+        ],
+        [
+          0,
+          300,
+          1792,
+          12
+        ],
+        [
+          0,
+          312,
+          1792,
+          12
+        ],
+        [
+          0,
+          324,
+          1792,
+          12
+        ],
+        [
+          0,
+          336,
+          1792,
+          12
+        ]
+      ],
+      "npcs": {
+        "sharan": [
+          630,
+          209
+        ]
+      },
+      "labels": [],
+      "camera_y": 0
     }
   },
   "portals": {
@@ -1439,6 +1570,38 @@
       ],
       "label": "赫顿玛尔城市区",
       "reciprocal": "hendon_city_to_westcoast"
+    },
+    "westcoast_to_westcoast_magic": {
+      "from": "westcoast",
+      "rect": [
+        2400,
+        300,
+        100,
+        40
+      ],
+      "to": "westcoast_magic",
+      "spawn": [
+        1500,
+        320
+      ],
+      "label": "魔法师公馆 →",
+      "reciprocal": "westcoast_magic_exit"
+    },
+    "westcoast_magic_exit": {
+      "from": "westcoast_magic",
+      "rect": [
+        1400,
+        280,
+        200,
+        60
+      ],
+      "to": "westcoast",
+      "spawn": [
+        2500,
+        340
+      ],
+      "label": "西海岸",
+      "reciprocal": "westcoast_to_westcoast_magic"
     }
   },
   "npcs": {
@@ -1521,6 +1684,21 @@
       "name": "夏洛克",
       "services": [],
       "dialogue": "我是夏洛克，赫顿玛尔的哥布林商人。你想打听格兰之森？先说清楚来意，我可不喜欢被当成森林里的那些家伙。"
+  },
+  "shusia": {
+   "name": "索西雅",
+   "services": [],
+   "dialogue": "酒馆里总能听到不少冒险消息。准备好了，再去更远的地方吧。"
+  },
+  "lorian": {
+   "name": "罗莉安",
+   "services": [],
+   "dialogue": "西海岸的魔法气息越来越强了。若在天空之城附近看到异常，请务必回来告诉我。"
+  },
+  "sharan": {
+   "name": "莎兰",
+   "services": [],
+   "dialogue": "天空之城的魔力正在躁动。要追查源头，就得先穿过龙人之塔。"
     }
   },
   "source": {

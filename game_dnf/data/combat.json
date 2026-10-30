@@ -753,6 +753,11 @@
    "mob": "monster/newmonsters/haze/tretri/tretri.mob",
    "bank": "newmonsters_haze_tretri_tretri",
    "name": "tretri"
+  },
+  "tau_shauta": {
+   "mob": "monster/tau/shauta.mob",
+   "bank": "tau_shauta",
+   "name": "shauta"
   }
  },
  "boss_hp_lines": 3,

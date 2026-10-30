@@ -278,6 +278,8 @@ func claim(id: String, view: Dictionary, cleared: bool) -> bool:
 	candidate.state=game.session.state;candidate.result=game.session.result.duplicate(true)
 	var response:=Loot.claim(candidate.profile,candidate.run,id,String(view["room_id"]),Vector2(view["pos"]),cleared and bool(view["room_cleared"]))
 	if not response["ok"]:game.notice(response["message"]);return false
+	var automatic:Dictionary=candidate.advance_auto_quests()
+	if not automatic.get("ok",false):game.notice(automatic.get("message","任务自动流转失败"));return false
 	if not game.store.write(candidate):
 		game.save_failed=true;game.notice("拾取未提交：存档写入失败，请重试");return false
 	game.session=candidate;game.save_failed=false

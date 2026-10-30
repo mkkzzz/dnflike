@@ -166,7 +166,7 @@ func run() -> void:
 	scroll.value = 0
 	game.show_overlay("dungeon")
 	await ticks()
-	for expected in ["adventure", "king", "normal"]:
+	for expected in ["adventure", "expert", "king", "normal"]:
 		host.click_control(game.modal.find_child("difficulty_next", true, false))
 		await ticks()
 		host.check(game.session.profile["difficulty"] == expected, "native difficulty selector: " + expected)

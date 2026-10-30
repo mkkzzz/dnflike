@@ -3342,6 +3342,99 @@
         }
        ]
       }
+     },
+     {
+      "layer": "normal",
+      "anchor": [
+       1001,
+       156,
+       0
+      ],
+      "space": "map",
+      "sprite": {
+       "ani": "npc/animation/npc_su.ani",
+       "ani_sha256": "a4232777e644e1d44212a0cdcb462c78e0284adcd9e723d2590788406b0711e0",
+       "loop_flag": null,
+       "duration_ms": 720,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 180,
+         "items": {
+          "7": [
+           -1.0,
+           1.0
+          ],
+          "12": 180
+         },
+         "image": "d598302668f9_0",
+         "offset": [
+          -25,
+          -126
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 180,
+         "items": {
+          "7": [
+           -1.0,
+           1.0
+          ],
+          "12": 180
+         },
+         "image": "d598302668f9_1",
+         "offset": [
+          -25,
+          -126
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 180,
+         "items": {
+          "7": [
+           -1.0,
+           1.0
+          ],
+          "12": 180
+         },
+         "image": "d598302668f9_2",
+         "offset": [
+          -25,
+          -126
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 3,
+         "delay_ms": 180,
+         "items": {
+          "7": [
+           -1.0,
+           1.0
+          ],
+          "12": 180
+         },
+         "image": "d598302668f9_3",
+         "offset": [
+          -25,
+          -126
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
      }
     ],
     "objects": [],
@@ -5966,6 +6059,21 @@
    }
   ]
  },
+ "npcs": [
+  {
+   "id": "shusia",
+   "source_id": 5,
+   "name": "索西雅",
+   "anchor": [
+    1001,
+    156,
+    0
+   ],
+   "source": "npc/shusia.npc",
+   "sha256": "81b5a72984a2a2f5eeb9df3308a3cb0209278322b14f4ac7de91bfd69cfd6189",
+   "ani": "npc/animation/npc_su.ani"
+  }
+ ],
  "images": {
   "06c58cb34dcf_0": {
    "file": "img/06c58cb34dcf_0.png",
@@ -6108,6 +6216,70 @@
    "canvas_offset": [
     93,
     71
+   ],
+   "variants": 1
+  },
+  "d598302668f9_0": {
+   "file": "img/d598302668f9_0.png",
+   "source_path": "sprite/map/npc/npc_su.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "d598302668f994c7da3583dd13dcea29016bfda377ce36807ca317d19067c3ce",
+   "frame": 0,
+   "size": [
+    48,
+    135
+   ],
+   "canvas_offset": [
+    23,
+    30
+   ],
+   "variants": 1
+  },
+  "d598302668f9_1": {
+   "file": "img/d598302668f9_1.png",
+   "source_path": "sprite/map/npc/npc_su.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "d598302668f994c7da3583dd13dcea29016bfda377ce36807ca317d19067c3ce",
+   "frame": 1,
+   "size": [
+    48,
+    135
+   ],
+   "canvas_offset": [
+    23,
+    30
+   ],
+   "variants": 1
+  },
+  "d598302668f9_2": {
+   "file": "img/d598302668f9_2.png",
+   "source_path": "sprite/map/npc/npc_su.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "d598302668f994c7da3583dd13dcea29016bfda377ce36807ca317d19067c3ce",
+   "frame": 2,
+   "size": [
+    48,
+    135
+   ],
+   "canvas_offset": [
+    23,
+    30
+   ],
+   "variants": 1
+  },
+  "d598302668f9_3": {
+   "file": "img/d598302668f9_3.png",
+   "source_path": "sprite/map/npc/npc_su.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "d598302668f994c7da3583dd13dcea29016bfda377ce36807ca317d19067c3ce",
+   "frame": 3,
+   "size": [
+    48,
+    135
+   ],
+   "canvas_offset": [
+    23,
+    30
    ],
    "variants": 1
   }

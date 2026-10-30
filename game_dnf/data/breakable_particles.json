@@ -35,6 +35,10 @@
    "ptl_actiontreeparticle1",
    "ptl_actiontreeparticle2"
   ],
+  "passiveobject/mapobject/breakableobject/actiontree2grakkarak.obj": [
+   "ptl_actiontreeparticle1",
+   "ptl_actiontreeparticle2"
+  ],
   "passiveobject/mapobject/breakableobject/actiontree2lorien.obj": [
    "ptl_actiontreeparticle1",
    "ptl_actiontreeparticle2"
@@ -96,6 +100,18 @@
    "ptl_questcagedest05",
    "ptl_questcagedest06",
    "ptl_questcagedest07"
+  ],
+  "passiveobject/mapobject/breakableobject/largegrassgrakkarak.obj": [
+   "ptl_grassparticle01",
+   "ptl_grassparticle02",
+   "ptl_grassparticle03",
+   "ptl_grassparticle04",
+   "ptl_grassparticle05",
+   "ptl_grassparticle06",
+   "ptl_grassparticle07",
+   "ptl_grassparticle08",
+   "ptl_grassparticle09",
+   "ptl_grassparticle10"
   ],
   "passiveobject/mapobject/breakableobject/largegrasslorien.obj": [
    "ptl_grassparticle01",
@@ -166,6 +182,18 @@
    "ptl_skc_sqboxdest02",
    "ptl_skc_sqboxdest03",
    "ptl_skc_sqboxdest04"
+  ],
+  "passiveobject/mapobject/breakableobject/smallgrassgrakkarak.obj": [
+   "ptl_grassparticle01",
+   "ptl_grassparticle02",
+   "ptl_grassparticle03",
+   "ptl_grassparticle04",
+   "ptl_grassparticle05",
+   "ptl_grassparticle06",
+   "ptl_grassparticle07",
+   "ptl_grassparticle08",
+   "ptl_grassparticle09",
+   "ptl_grassparticle10"
   ],
   "passiveobject/mapobject/breakableobject/smallgrasslorien.obj": [
    "ptl_grassparticle01",

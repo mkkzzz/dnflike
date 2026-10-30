@@ -170,6 +170,9 @@
    "name": "幽暗密林冰霜",
    "region": "granfloris",
    "map_export": "res://assets_local/flow_v1/gran_v1/mirkwood_frost/map_export.json",
+   "requires": [
+    "gran.stronger_enemy"
+   ],
    "rooms": [
     {
      "name": "幽暗密林冰霜",
@@ -209,6 +212,9 @@
    "name": "燃烧的格拉卡",
    "region": "granfloris",
    "map_export": "res://assets_local/flow_v1/gran_v1/grakkarak_burning/map_export.json",
+   "requires": [
+    "original.quest.112"
+   ],
    "rooms": [
     {
      "name": "燃烧的格拉卡",
@@ -306,6 +312,9 @@
    "name": "黑暗桑德兰",
    "region": "granfloris",
    "map_export": "res://assets_local/flow_v1/gran_v1/sunderland_dark/map_export.json",
+   "requires": [
+    "original.quest.202"
+   ],
    "rooms": [
     {
      "name": "黑暗桑德兰",
@@ -350,6 +359,9 @@
    "name": "龙人之塔",
    "region": "skytower",
    "map_export": "res://assets_local/flow_v1/skytower_v1/draconiantower/map_export.json",
+   "requires": [
+    "original.quest.8"
+   ],
    "rooms": [
     {
      "name": "龙人之塔",
@@ -811,6 +823,48 @@
     "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
    },
    "hidden": true
+  },
+  "grakkarak": {
+   "name": "格拉卡",
+   "region": "granfloris",
+   "map_export": "res://assets_local/flow_v1/gran_v1/grakkarak/map_export.json",
+   "requires": [
+    "original.quest.4474"
+   ],
+   "rooms": [
+    {
+     "name": "格拉卡",
+     "placement": "1_0:s1001",
+     "next": "right"
+    },
+    {
+     "name": "格拉卡",
+     "placement": "2_0:1005",
+     "next": "right"
+    },
+    {
+     "name": "格拉卡",
+     "placement": "3_0:1005",
+     "next": "down"
+    },
+    {
+     "name": "格拉卡",
+     "placement": "3_1:1019",
+     "next": "down"
+    },
+    {
+     "name": "格拉卡",
+     "placement": "3_2:b1002",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "monster_level": 8,
+   "source": {
+    "path": "dungeon/act1/grakkarak.dgn",
+    "sha256": "f7bdf1dc94b047058b35cef9d6227c03624c8e4d7165b8532282c1fb52a7cece",
+    "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+   }
   }
  }
 }

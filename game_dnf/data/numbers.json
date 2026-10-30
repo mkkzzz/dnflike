@@ -700,6 +700,7 @@
   "difficulty": {
    "normal": 1.0,
    "adventure": 1.25,
+   "expert": 1.5,
    "king": 1.75
   }
  },

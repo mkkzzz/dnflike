@@ -5,23 +5,23 @@
     "reason": "源记录、运行时定义、功能支持与实机验收的分母不同；本快照只给出各维度独立覆盖，不合成总完成率。"
   },
   "world": {
-    "towns": 11,
-    "town_npcs": 12,
+    "towns": 12,
+    "town_npcs": 15,
     "town_dungeon_entries": 3,
-    "dungeon_entries": 18,
-    "playable_routes": 17,
-    "selectable_routes": 16,
+    "dungeon_entries": 19,
+    "playable_routes": 18,
+    "selectable_routes": 17,
     "hidden_routes": 1,
     "legacy_routes": 1,
-    "rooms": 112,
+    "rooms": 117,
     "regions": {
       "act8": 1,
-      "granfloris": 7,
+      "granfloris": 8,
       "lorien": 2,
       "skytower": 7
     },
     "level_bands": {
-      "1-16": 14,
+      "1-16": 15,
       "17-30": 0,
       "31-45": 0,
       "46-57": 0,
@@ -41,12 +41,12 @@
   "quests": {
     "source_total": 3716,
     "source_failed": 0,
-    "catalog_implemented": 43,
-    "runtime_total": 43,
-    "runtime_percent_of_source": 1.16,
+    "catalog_implemented": 120,
+    "runtime_total": 120,
+    "runtime_percent_of_source": 3.23,
     "epic_total": 941,
-    "epic_runtime": 41,
-    "indexed_blocked": 2781,
+    "epic_runtime": 97,
+    "indexed_blocked": 2704,
     "grades": [
       {
         "grade": "[urgent]",
@@ -56,7 +56,7 @@
       {
         "grade": "[epic]",
         "total": 941,
-        "runtime": 41
+        "runtime": 97
       },
       {
         "grade": "[achievement]",
@@ -66,7 +66,7 @@
       {
         "grade": "[common unique]",
         "total": 420,
-        "runtime": 2
+        "runtime": 10
       },
       {
         "grade": "[title]",
@@ -86,7 +86,7 @@
       {
         "grade": "[normaly repeat]",
         "total": 117,
-        "runtime": 0
+        "runtime": 13
       },
       {
         "grade": "[daily random]",
@@ -97,11 +97,11 @@
     "top_blockers": [
       {
         "reason": "npc_not_in_town",
-        "count": 2364
+        "count": 2218
       },
       {
         "reason": "prerequisite_not_executable",
-        "count": 2023
+        "count": 1828
       },
       {
         "reason": "quest_grade:[urgent]",
@@ -112,12 +112,8 @@
         "count": 286
       },
       {
-        "reason": "difficulty_not_implemented:2",
-        "count": 253
-      },
-      {
         "reason": "target_npc_not_in_town",
-        "count": 232
+        "count": 205
       },
       {
         "reason": "field:[job change quest]",
@@ -136,14 +132,6 @@
         "count": 175
       },
       {
-        "reason": "field:[relation quest]",
-        "count": 164
-      },
-      {
-        "reason": "field:[monster reward item]",
-        "count": 161
-      },
-      {
         "reason": "field:[exposed by npc]",
         "count": 151
       },
@@ -154,8 +142,27 @@
       {
         "reason": "field:[exception quest]",
         "count": 133
+      },
+      {
+        "reason": "reward_grammar:Malformed fixed reward",
+        "count": 83
+      },
+      {
+        "reason": "field:[first exposed by npc]",
+        "count": 78
+      },
+      {
+        "reason": "hunt_enemy_nonmonster",
+        "count": 70
       }
     ]
+  },
+  "campaign": {
+    "id": "campaign_1_16",
+    "target_level": 16,
+    "required": 41,
+    "executable": 41,
+    "missing": 0
   },
   "items": {
     "source_library_files": 89274,
@@ -168,13 +175,13 @@
       "unindexed_files": 4769
     },
     "source_retained_raw": 19,
-    "runtime_total": 3729,
+    "runtime_total": 3792,
     "runtime_by_kind": {
       "consumable": 76,
-      "material": 396,
+      "material": 438,
       "profession": 33,
-      "quest": 763,
-      "weapon": 2461
+      "quest": 775,
+      "weapon": 2470
     },
     "top_support_gaps": [
       {
@@ -257,10 +264,10 @@
     "catalog_total": 1937,
     "catalog_failed": 0,
     "catalog_missing_atk": 30,
-    "runtime_mappings": 85,
+    "runtime_mappings": 86,
     "boss_rule_scripts": 855,
     "boss_rule_index": 678,
     "boss_rule_families": 853,
-    "boss_rooms": 17
+    "boss_rooms": 18
   }
 }

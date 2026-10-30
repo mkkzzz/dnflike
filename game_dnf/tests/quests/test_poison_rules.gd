@@ -15,7 +15,15 @@ func fixture():
 	for id: String in s.quests.catalog.definitions:
 		if id in ["gran.poison_scent","legacy.trial"]:continue
 		var entry: Dictionary=s.quests.new_entry(s.quests.catalog.definitions[id]);entry.state="completed"
-		s.profile.quest_state.entries[id]=entry;s.profile.quest_state.transactions[s.Quests.transaction_id(id)]=true
+		s.profile.quest_state.entries[id]=entry
+		if s.quests.catalog.definitions[id].get("lifecycle","once") in ["repeat","daily"]:
+			if not s.profile.quest_state.has("cycles"):s.profile.quest_state["cycles"]={}
+			entry["cycle"]=1
+			s.profile.quest_state["cycles"][id]={"next":2,"completions":1,"last_day":0}
+			s.profile.quest_state["calendar_day"]=0
+			s.profile.quest_state.transactions["quest:"+id+":cycle:1"]=true
+		else:
+			s.profile.quest_state.transactions[s.Quests.transaction_id(id)]=true
 	return s
 
 func death(s, entity:=1, mob:="monster/lugaru/penril.mob") -> Dictionary:
@@ -40,7 +48,8 @@ func run() -> void:
 	check(s.Loot.pending(s.run,"poison:boss").is_empty(),"killing source boss without accepting task cannot generate its quest item")
 	s=fixture();begin(s)
 	var event:=death(s)
-	check(Drops.entries(s.profile,s.run,event,s.quests.catalog.definitions).size()==1,"accepted exact source boss and dungeon produce one eligible rule")
+	var eligible_rules: Array=Drops.entries(s.profile,s.run,event,s.quests.catalog.definitions)
+	check(eligible_rules.size()==1,"accepted exact source boss and dungeon produce one eligible rule "+JSON.stringify(eligible_rules))
 	var wrong:=event.duplicate();wrong.run_id="stale"
 	check(Drops.entries(s.profile,s.run,wrong,s.quests.catalog.definitions).is_empty(),"stale run cannot generate quest loot")
 	wrong=event.duplicate();wrong.monster_id="monster/goblin/kinol.mob"

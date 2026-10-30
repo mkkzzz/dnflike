@@ -1,14 +1,15 @@
 {
  "schema": "dnf_native_quest_rules/2",
  "source_inputs": {
-  "game_dnf/data/quests.json": "d220cce533b7513813fceef1d6b135c9eba51965052de2b8e221603a7e545e0c",
-  "game_dnf/data/native_runtime.json": "8654057479896be618ac6273fe2294b0da6f47eb74f021a487ec02eb0ed38974",
+  "game_dnf/data/quests.json": "94f8cc3ec86175b4d85c45445fc1ecb99a089d5eff9114a6dbbc6d5e71d37e32",
+  "game_dnf/data/native_runtime.json": "f52ea5c18d394e40b316a8230c0507b97feb8c77ca0f514a124500d99d39178b",
   "game_dnf/data/runtime_items.json": "e0e3ce46d6b39aae805808a1bce7110c55aa9265606ce7f671534543690ae2ae",
   "game_dnf/data/monster_catalog.json": "4c202c3d5ea2089a1f5c78971ce742ad2a77b0ef56d197a35ca87a75e83c7b3b",
-  "game_dnf/data/combat.json": "7bd7d1ed6b6e7feb2596dcc60f725d046fe611c2ab0548096287a40bd674d0f4",
-  "game_dnf/data/dungeons.json": "6c0073bdad61603960e36ef8b0883aefb36caf6c1abe5aecbc76c8d68393a3d3",
-  "game_dnf/data/towns.json": "3c8e8f52d519086851ef6688256324cb951a9920d2eb0b1728c71be9dc570447",
-  "game_dnf/assets_local/native_data_v1/manifest.json": "6b7fef19eba9b5bc8ffd85f1eacae9cc6d9715092f18eecbee214e3418114090",
+  "game_dnf/data/combat.json": "89e6a97b2c82e9bbb2137964fcf01400d22be48647b4c92ebfef825a4bc576b8",
+  "game_dnf/data/dungeons.json": "8a4c325e764d1ff453f31bda4d0479071e2418ccae17c2d07905ea306a5a5cfb",
+  "game_dnf/data/towns.json": "9ad3908636807b646cee1e1ad8a31cefd457834c1841eb4136808debf81d8075",
+  "game_dnf/data/campaign_1_16.json": "976058418137f7de23e97d0d0c70d58201e4386b6751ea737bb361a151ced221",
+  "game_dnf/assets_local/native_data_v1/manifest.json": "718fa1df14706167c793f9883cb135bd17b0c315a76d233f37838e3ce3492aac",
   "game_dnf/assets_local/native_maps/lorien/map_export.json": "30c6ee2286644245b4e7b620ccacd0096c80ec27b6395a98b6037ef9d8280d4c",
   "game_dnf/assets_local/flow_v1/early_quests/lorien_inside/map_export.json": "7150a101161eb75505f6751823a1815378c2227e2c7fd6a3da10a4cb3ed4aa68",
   "game_dnf/assets_local/flow_v1/gran_v1/mirkwood/map_export.json": "2918a26ef05a48f52bd5002f5634f08a6bcf941bd7b42e85e1479fccf9cbf357",
@@ -25,7 +26,8 @@
   "game_dnf/assets_local/flow_v1/skytower_v1/hallofdoll/map_export.json": "b04d3f70d1299e4996d3fda3680346a51169d12afd9e2918ad5ca5a9e8796319",
   "game_dnf/assets_local/flow_v1/skytower_v1/draconiantower_amonlow/map_export.json": "e2a135a73be8727df0d5d2f29c5b3765db56c3d6f2a08a526a4fbd9185fb8f30",
   "game_dnf/assets_local/flow_v1/gran_v1/sunderland_poison/map_export.json": "e8a086beab3286d68dc0310b406aa97b92f755488e443db49371c7bf9f99ee8c",
-  "game_dnf/assets_local/flow_v1/gran_v1/arden/map_export.json": "86fa30937d6fcd4f29239d77fc164fa04a94b20e3abf517ea96e70832e649223"
+  "game_dnf/assets_local/flow_v1/gran_v1/arden/map_export.json": "86fa30937d6fcd4f29239d77fc164fa04a94b20e3abf517ea96e70832e649223",
+  "game_dnf/assets_local/flow_v1/gran_v1/grakkarak/map_export.json": "af92a4ff8715b3c58e37f6920c272549d01a245c3380741824d8abfc201ae30a"
  },
  "input_hash_policy": "SHA256 canonical UTF-8 JSON, sort_keys=true, compact separators; source record SHA remains the original raw bytes",
  "calendar": {
@@ -50,7 +52,8 @@
   "hallofdoll": "人偶之塔",
   "draconiantower_amonlow": "龙人之塔·亚蒙下层",
   "sunderland_poison": "猛毒雷鸣废墟",
-  "arden": "阿登高地"
+  "arden": "阿登高地",
+  "grakkarak": "格拉卡"
  },
  "quests": [
   {
@@ -110,34 +113,33 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {}
   },
   {
-   "id": "original.quest.217",
+   "id": "original.quest.1556",
    "source": {
-    "id": 217,
-    "path": "n_quest/common/handonmyre/epic_10_handonmyre_kagon_love_7.qst",
-    "sha256": "ba59fdcb3fea357889c1f5bd6d90f1110f20537888917b867b901281cfb69e37",
+    "id": 1556,
+    "path": "n_quest/westcost/golemtower/normal_20_golemtower_controller.qst",
+    "sha256": "07e17fcfc6e2c1faf48778837c29a729e0646317e41bda62cc1ee8328da5c186",
     "raw_type": [
-     "[disjoint item]"
+     "[seeking]"
     ],
     "raw_int_data": [
-     -2,
-     -1,
-     -1,
-     13
+     4201,
+     10
     ],
     "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
    },
-   "name": "获得无色小晶块碎片",
-   "description": "利用诺顿的装备分解机解除装备。",
+   "name": "操纵石巨人",
+   "description": "前往天空之城的石巨人塔，从石巨人操纵师身上收集10个[石巨人操纵器]。",
    "dialogue": {
-    "accept": "你有听过无色小晶块吗？我之后再跟你说明。如果你有不用的装备，将它放入分解机内。只能放入不使用的装备 ！",
-    "complete": "按照约定跟你说明。无色晶体是之后使用高级技能或强化装备道具时必备的材料，\n什么？你问该怎么取得吗？回想一下刚刚你做过的吧！"
+    "accept": "冒险家，你上次带来的研究材料让我弄明白了古代石巨人的制造原理，不过不知道为什么我制作的石巨人就是动不了。\n所以我想，石巨人的制造者--人偶师一定知道操纵它们的方法，你能去帮我调查下吗？",
+    "complete": "很好， 也就是说用这个就可以让石巨人动起来了？ 嘿嘿嘿嘿……来吧， 动起来吧， 我可爱的石巨人啊！\n(石巨人动了)……你……不是主人……你……是丑八怪……你……是大骗子……\n轰！！(石巨人自爆了)\n……你这个……你你你说什么？！ 你这个丑八怪？ 石巨人啊啊啊！！"
    },
-   "category": "main",
-   "chapter": "common",
-   "min_level": 14,
+   "category": "side",
+   "chapter": "westcost",
+   "min_level": 20,
    "max_level": 99,
    "requires": [],
    "eligibility": {
@@ -153,51 +155,539 @@
    "objectives": [
     {
      "id": "objective_0",
-     "type": "disassemble_item",
-     "amount": 1,
-     "target": "any",
-     "npc": "norton"
+     "type": "collect_item",
+     "amount": 10,
+     "target": "original_4201"
     }
    ],
    "reward": {
-    "gold": 1300,
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": [
+     {
+      "id": "original_14057",
+      "item": "original_14057",
+      "amount": 1
+     },
+     {
+      "id": "original_14450",
+      "item": "original_14450",
+      "amount": 1
+     },
+     {
+      "id": "original_14849",
+      "item": "original_14849",
+      "amount": 1
+     },
+     {
+      "id": "original_15249",
+      "item": "original_15249",
+      "amount": 1
+     },
+     {
+      "id": "original_15602",
+      "item": "original_15602",
+      "amount": 1
+     }
+    ]
+   },
+   "consume": {
+    "original_4201": 10
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[monster reward item]": [
+     50094,
+     13,
+     -1,
+     4201,
+     1,
+     50,
+     10
+    ]
+   },
+   "drops": [
+    {
+     "monster": "monster/dollmaster/golemmaster.mob",
+     "dungeon": "golemtower",
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_4201",
+     "amount": 1,
+     "chance": 50,
+     "limit": 10
+    }
+   ]
+  },
+  {
+   "id": "original.quest.4465",
+   "source": {
+    "id": 4465,
+    "path": "n_quest/time_piece/lorien_1.qst",
+    "sha256": "4e4ccbb479fe5eef3c6147d3cb146f41427ac0b2e2189bbea8fdbef16d8e3c73",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     4799,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "第一个时间碎片 - 洛蓝",
+   "description": "去洛蓝内部寻找时间碎片。",
+   "dialogue": {
+    "accept": "洛蓝森林深处可以感受得到时间碎片的气息。只要从那里取得时间碎片的话，我就会帮你找回时间的力量。",
+    "complete": "时间的力量恢复一部份了…… 不过还差远了。\n为了找到所有的时间碎片，要适应这里。和称为冒险家的一群人一起进行冒险后，自然而然就会发现时间碎片。"
+   },
+   "category": "main",
+   "chapter": "time_piece",
+   "min_level": 2,
+   "max_level": 99,
+   "requires": [
+    "lorien.first_clear"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "the_last_mehmet",
+   "receiver": "the_last_mehmet",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_4799"
+    }
+   ],
+   "reward": {
+    "gold": 200,
     "xp": 0,
     "items": {},
     "conditional_items": [],
     "choices": []
    },
-   "consume": {},
+   "consume": {
+    "original_4799": 1
+   },
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {
+    "[job message]": [
+     1
+    ],
+    "[monster reward item]": [
+     11,
+     2,
+     -1,
+     4799,
+     1,
+     100,
+     1
+    ],
+    "[quest piece]": [
+     1
+    ],
+    "[target character]": [
+     "[demonic swordman]",
+     -1,
+     -1,
+     "[creator mage]",
+     -1,
+     -1
+    ]
+   },
+   "drops": [
+    {
+     "monster": "monster/tau/tauarmy.mob",
+     "dungeon": "lorien_inside",
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_4799",
+     "amount": 1,
+     "chance": 100,
+     "limit": 1
+    }
+   ],
+   "target_characters": [
+    "[demonic swordman]",
+    "[creator mage]"
+   ],
+   "auto_accept": true,
+   "auto_complete": true
   },
   {
-   "id": "original.quest.513",
+   "id": "original.quest.4471",
    "source": {
-    "id": 513,
-    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_ft.qst",
-    "sha256": "14c9bdf42d2ee8292d6de96dd7b06e4240dd856f1c18977ca5c559e93fdc30d4",
+    "id": 4471,
+    "path": "n_quest/common/handonmyre/time_character03.qst",
+    "sha256": "f0839d3249ca4594557508e745ce8e7412aa6cabeb8136230072886b42fda166",
     "raw_type": [
-     "[condition under clear]"
+     "[seeking]"
     ],
     "raw_int_data": [
-     6,
+     4186,
      1
     ],
     "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
    },
-   "name": "更强的敌人",
-   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "name": "寻找时间碎片2",
+   "description": "在猛毒雷鸣废墟收集潘里尔的心脏交给辛达",
    "dialogue": {
-    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
-    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+    "accept": "我的确捡到一个闪亮的碎片它让我非常满意……。所以我也舍不得就这样交给你……。这样如何？\n只要帮我一个忙，就把当时捡到的闪光的碎片交给你。\n本来去猛毒雷鸣废墟也是为了寻找毒猫王的心脏采取的。如果你帮我收集潘里尔的心脏我就把这碎片交给你吧。",
+    "complete": "嗯~太好了。就把这碎片交给你噜。"
    },
    "category": "main",
-   "chapter": "handonmyre",
+   "chapter": "common",
    "min_level": 7,
    "max_level": 99,
    "requires": [
-    "gran.poison_scent"
+    "original.quest.4470"
    ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sinda",
+   "receiver": "sinda",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_4186"
+    }
+   ],
+   "reward": {
+    "gold": 200,
+    "xp": 0,
+    "items": {
+     "original_4808": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_4186": 1
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[monster reward item]": [
+     5004,
+     6,
+     -1,
+     4186,
+     1,
+     100,
+     1
+    ],
+    "[target character]": [
+     "[demonic swordman]",
+     -1,
+     -1,
+     "[creator mage]",
+     -1,
+     -1
+    ]
+   },
+   "drops": [
+    {
+     "monster": "monster/lugaru/penril.mob",
+     "dungeon": "sunderland_poison",
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_4186",
+     "amount": 1,
+     "chance": 100,
+     "limit": 1
+    }
+   ],
+   "target_characters": [
+    "[demonic swordman]",
+    "[creator mage]"
+   ],
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.4478",
+   "source": {
+    "id": 4478,
+    "path": "n_quest/time_piece/skyca_1.qst",
+    "sha256": "65618010641beefe9b645e22d6b2cea64e53f9a3ae0ce26896916bb46fd0015f",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     4796,
+     10
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "时间碎片 - 第一个时间碎片",
+   "description": "击天空之城地区的头目，收集时间碎片交给最后的先知者",
+   "dialogue": {
+    "accept": "天空之城地区散发一股强烈的时间的力量。在天空之城好像也有时间碎片。\n除掉那里的首领，就能获得时间碎片。大概是吸收了天空之城的力量。\n 收集好之后交给我吧……",
+    "complete": "这样就找回部分的时间力量了……但是现在还差得远。"
+   },
+   "category": "main",
+   "chapter": "time_piece",
+   "min_level": 16,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "the_last_mehmet",
+   "receiver": "the_last_mehmet",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 10,
+     "target": "original_4796"
+    }
+   ],
+   "reward": {
+    "gold": 200,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_4796": 10
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[job message]": [
+     1
+    ],
+    "[monster reward item]": [
+     71,
+     11,
+     -1,
+     4796,
+     1,
+     100,
+     10,
+     40,
+     12,
+     -1,
+     4796,
+     1,
+     100,
+     10,
+     3001,
+     13,
+     -1,
+     4796,
+     1,
+     100,
+     10,
+     702,
+     14,
+     -1,
+     4796,
+     1,
+     100,
+     10,
+     3000,
+     15,
+     -1,
+     4796,
+     1,
+     100,
+     10,
+     751,
+     17,
+     -1,
+     4796,
+     1,
+     60,
+     10,
+     752,
+     17,
+     -1,
+     4796,
+     1,
+     60,
+     10
+    ],
+    "[quest piece]": [
+     1
+    ],
+    "[target character]": [
+     "[demonic swordman]",
+     -1,
+     -1,
+     "[creator mage]",
+     -1,
+     -1
+    ]
+   },
+   "drops": [
+    {
+     "monster": "monster/draconian/lakius.mob",
+     "dungeon": "draconiantower",
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_4796",
+     "amount": 1,
+     "chance": 100,
+     "limit": 10
+    },
+    {
+     "monster": "monster/dollmaster/masterdogri.mob",
+     "dungeon": "hallofdoll",
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_4796",
+     "amount": 1,
+     "chance": 100,
+     "limit": 10
+    },
+    {
+     "monster": "monster/new_golem/platany.mob",
+     "dungeon": "golemtower",
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_4796",
+     "amount": 1,
+     "chance": 100,
+     "limit": 10
+    },
+    {
+     "monster": "monster/soldier/heavenexpeller.mob",
+     "dungeon": "darkentrance",
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_4796",
+     "amount": 1,
+     "chance": 100,
+     "limit": 10
+    },
+    {
+     "monster": "monster/lordoflight/lordoflight.mob",
+     "dungeon": "palaceofload",
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_4796",
+     "amount": 1,
+     "chance": 100,
+     "limit": 10
+    },
+    {
+     "monster": "monster/evileye/revileye.mob",
+     "dungeon": "floatingcastle",
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_4796",
+     "amount": 1,
+     "chance": 60,
+     "limit": 10
+    },
+    {
+     "monster": "monster/evileye/levileye.mob",
+     "dungeon": "floatingcastle",
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_4796",
+     "amount": 1,
+     "chance": 60,
+     "limit": 10
+    }
+   ],
+   "target_characters": [
+    "[demonic swordman]",
+    "[creator mage]"
+   ]
+  },
+  {
+   "id": "original.quest.515",
+   "source": {
+    "id": 515,
+    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_ft.qst",
+    "sha256": "57a0c7be3e22dca58f8bf944f69f9e46046cc471800fb4b2e0d3ab026885abc3",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     9,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "新武器的威力",
+   "description": "再次完成冰霜幽暗密林的中等难度(Medium)难度",
+   "dialogue": {
+    "accept": "你仔细看看这个武器。它和你过去使用的武器不同，可以提升你的基本能力。\n而且攻击力也会变得更强。你去感觉一下这武器的威力吧。",
+    "complete": "如何，有感受到强度提升了吗？好的武器必须在会操作的人手中才能发挥。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 8,
+   "max_level": 99,
+   "requires": [],
    "eligibility": {
     "jobs": [
      1
@@ -213,14 +703,14 @@
      "id": "objective_0",
      "type": "clear_dungeon",
      "amount": 1,
-     "target": "sunderland_poison",
+     "target": "mirkwood_frost",
      "difficulty": [
       "adventure"
      ]
     }
    ],
    "reward": {
-    "gold": 400,
+    "gold": 500,
     "xp": 0,
     "items": {},
     "conditional_items": [],
@@ -228,36 +718,90 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {}
   },
   {
-   "id": "original.quest.523",
+   "id": "original.quest.516",
    "source": {
-    "id": 523,
-    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_gn.qst",
-    "sha256": "116d71c536d8d64d7ba41419abd52e69870964754672dd2485551c40d9ed3463",
+    "id": 516,
+    "path": "n_quest/common/handonmyre/epic_3_handonmyre_mujin_pungjin_4.qst",
+    "sha256": "f09965d8a9f25b27c51d70a33a7319c57a61ce35a3a6cdadf6f0b9154726ed68",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     6
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "格斗家之路 - 风震",
+   "description": "与风拳流师傅风震对话",
+   "dialogue": {
+    "accept": "你要选择行走方向的时机已经迫在眉梢了。现在你要去寻找比我能教导你更多的人物。去找风震吧。\n风震虽然是一位沉默寡言的人，但相信他会以风拳流的师范给予相当多的指导。",
+    "complete": "是辛达介绍你来的吧…… 这段时间我也注意到你。你的表现足以引来他人的注目。\n不过，再去多冒险一下吧。当我认为你已经准备好的时候我会通知你。"
+   },
+   "category": "main",
+   "chapter": "common",
+   "min_level": 13,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sinda",
+   "receiver": "pungjin",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "pungjin"
+    }
+   ],
+   "reward": {
+    "gold": 500,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.525",
+   "source": {
+    "id": 525,
+    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_gn.qst",
+    "sha256": "d6030a204876bedf76e888e2f01d1d2e5282d077e8fe8d1dc67a972f3946b2ee",
     "raw_type": [
      "[condition under clear]"
     ],
     "raw_int_data": [
-     6,
+     9,
      1
     ],
     "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
    },
-   "name": "更强的敌人",
-   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "name": "新武器的威力",
+   "description": "再次完成冰霜幽暗密林的中等难度(Medium)难度",
    "dialogue": {
-    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
-    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+    "accept": "你仔细看看这个武器。它和你过去使用的武器不同，可以提升你的基本能力。\n而且攻击力也会变得更强。你去感觉一下这武器的威力吧。",
+    "complete": "如何，有感受到强度提升了吗？好的武器必须在会操作的人手中才能发挥。"
    },
    "category": "main",
    "chapter": "handonmyre",
-   "min_level": 7,
+   "min_level": 8,
    "max_level": 99,
-   "requires": [
-    "gran.poison_scent"
-   ],
+   "requires": [],
    "eligibility": {
     "jobs": [
      2
@@ -273,14 +817,14 @@
      "id": "objective_0",
      "type": "clear_dungeon",
      "amount": 1,
-     "target": "sunderland_poison",
+     "target": "mirkwood_frost",
      "difficulty": [
       "adventure"
      ]
     }
    ],
    "reward": {
-    "gold": 400,
+    "gold": 500,
     "xp": 0,
     "items": {},
     "conditional_items": [],
@@ -288,36 +832,90 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {}
   },
   {
-   "id": "original.quest.533",
+   "id": "original.quest.526",
    "source": {
-    "id": 533,
-    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_mg.qst",
-    "sha256": "483ae1265ae4a54f94fbefe3d6a0c66c5f19361947daac185dc54f4e140ac2e8",
+    "id": 526,
+    "path": "n_quest/common/handonmyre/epic_3_handonmyre_one_shot_kiri_4.qst",
+    "sha256": "0785b5c5ec09dbb358a0686dd29120d4790629ea7c79fc121824fb451124ce12",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     17
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "神枪之路 - 凯莉",
+   "description": "与来自天界的凯莉对话",
+   "dialogue": {
+    "accept": "你要选择行走方向的时机已经迫在眉梢了。现在你要去寻找比我能教导你更多的人物。你去找凯莉看看吧。\n凯莉和你一样是来自天界。他会给你很多帮助。",
+    "complete": "辛达介绍的啊…… 这段时间我也注意到你。你的表现足以引来他人的注目。\n过，再去多冒险一下吧。当我认为你已经准备好的时候我会通知你。"
+   },
+   "category": "main",
+   "chapter": "common",
+   "min_level": 13,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     2
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sinda",
+   "receiver": "kiri",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "kiri"
+    }
+   ],
+   "reward": {
+    "gold": 500,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.535",
+   "source": {
+    "id": 535,
+    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_mg.qst",
+    "sha256": "e1c425f36083c982d4f678d8fe82c700bd8218db784e05e45f1de6a76b2c6085",
     "raw_type": [
      "[condition under clear]"
     ],
     "raw_int_data": [
-     6,
+     9,
      1
     ],
     "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
    },
-   "name": "更强的敌人",
-   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "name": "新武器的威力",
+   "description": "再次完成冰霜幽暗密林的中等难度(Medium)难度",
    "dialogue": {
-    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
-    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+    "accept": "你仔细看看这个武器。它和你过去使用的武器不同，可以提升你的基本能力。\n而且攻击力也会变得更强。你去感觉一下这武器的威力吧。",
+    "complete": "如何，有感受到强度提升了吗？好的武器必须在会操作的人手中才能发挥。"
    },
    "category": "main",
    "chapter": "handonmyre",
-   "min_level": 7,
+   "min_level": 8,
    "max_level": 99,
-   "requires": [
-    "gran.poison_scent"
-   ],
+   "requires": [],
    "eligibility": {
     "jobs": [
      3
@@ -333,14 +931,14 @@
      "id": "objective_0",
      "type": "clear_dungeon",
      "amount": 1,
-     "target": "sunderland_poison",
+     "target": "mirkwood_frost",
      "difficulty": [
       "adventure"
      ]
     }
    ],
    "reward": {
-    "gold": 400,
+    "gold": 500,
     "xp": 0,
     "items": {},
     "conditional_items": [],
@@ -348,36 +946,90 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {}
   },
   {
-   "id": "original.quest.543",
+   "id": "original.quest.536",
    "source": {
-    "id": 543,
-    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_pr.qst",
-    "sha256": "e85a74b565407167b33c7f2a08cb1de5ef718437ed6b78eda79a95a4a9461747",
+    "id": 536,
+    "path": "n_quest/common/handonmyre/epic_3_westcost_magical_sharan_4.qst",
+    "sha256": "5e69bab9f483c6bda3a98471555eea6a457a2836e42015e82938e510a14c0ac0",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     12
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "魔法师之路 - 莎兰",
+   "description": "与暗精灵魔法师莎兰对话",
+   "dialogue": {
+    "accept": "你要选择行走方向的时机已经迫在眉梢了。现在你要去寻找比我能教导你更多的人物。去找经营魔法学校的莎兰看看吧。\n她会给予你相当多帮助的。",
+    "complete": "辛达介绍你来的喔?…… 这段时间我也注意到你。你的表现足以引来他人的注目。\n不过，再去多冒险一下吧。当我认为准备好的时候会马上通知你。"
+   },
+   "category": "main",
+   "chapter": "common",
+   "min_level": 13,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     3
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sinda",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "sharan"
+    }
+   ],
+   "reward": {
+    "gold": 500,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.545",
+   "source": {
+    "id": 545,
+    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_pr.qst",
+    "sha256": "b4d4c4b65b3486867ee3660e4bb184273c0994cdb672a2c6980fc20df6e34104",
     "raw_type": [
      "[condition under clear]"
     ],
     "raw_int_data": [
-     6,
+     9,
      1
     ],
     "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
    },
-   "name": "更强的敌人",
-   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "name": "新武器的威力",
+   "description": "再次完成冰霜幽暗密林的中等难度(Medium)难度",
    "dialogue": {
-    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
-    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+    "accept": "你仔细看看这个武器。它和你过去使用的武器不同，可以提升你的基本能力。\n而且攻击力也会变得更强。你去感觉一下这武器的威力吧。",
+    "complete": "如何，有感受到强度提升了吗？好的武器必须在会操作的人手中才能发挥。"
    },
    "category": "main",
    "chapter": "handonmyre",
-   "min_level": 7,
+   "min_level": 8,
    "max_level": 99,
-   "requires": [
-    "gran.poison_scent"
-   ],
+   "requires": [],
    "eligibility": {
     "jobs": [
      4
@@ -393,14 +1045,14 @@
      "id": "objective_0",
      "type": "clear_dungeon",
      "amount": 1,
-     "target": "sunderland_poison",
+     "target": "mirkwood_frost",
      "difficulty": [
       "adventure"
      ]
     }
    ],
    "reward": {
-    "gold": 400,
+    "gold": 500,
     "xp": 0,
     "items": {},
     "conditional_items": [],
@@ -408,36 +1060,90 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {}
   },
   {
-   "id": "original.quest.621",
+   "id": "original.quest.546",
    "source": {
-    "id": 621,
-    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_gn_at.qst",
-    "sha256": "732aced8eac41dc1cc859be44b7a20b2b1f4369e8188ad1da70b7b82f6671354",
+    "id": 546,
+    "path": "n_quest/common/handonmyre/epic_3_handonmyre_saint_road_grancia_4.qst",
+    "sha256": "0735d694eed2c03d8c47b101fab6fa7981447a068a5b1358692639b736f5b5f8",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     45
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "圣职者之路 - 歌兰蒂斯",
+   "description": "与歌兰蒂斯·格拉西亚对话",
+   "dialogue": {
+    "accept": "你要选择行走方向的时机已经迫在眉梢了。现在你要去寻找比我能教导你更多的人物。去找歌兰蒂斯·格拉西亚看看吧。\n他是圣职者教育负责人，对你会有相当大的帮助。",
+    "complete": "是辛达介绍你来的吧…… 这段时间我也注意到祭司。祭司的非常出色，引来了他人的注目。\n不过你需要继续冒险。当我认为祭司已经准备好的时候我会通知你。"
+   },
+   "category": "main",
+   "chapter": "common",
+   "min_level": 13,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     4
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sinda",
+   "receiver": "grandis",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "grandis"
+    }
+   ],
+   "reward": {
+    "gold": 500,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.623",
+   "source": {
+    "id": 623,
+    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_gn_at.qst",
+    "sha256": "209c2576725a26e1f546532ab882975a7fe3b2930eb0682c53369a44e9a7eb7a",
     "raw_type": [
      "[condition under clear]"
     ],
     "raw_int_data": [
-     6,
+     9,
      1
     ],
     "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
    },
-   "name": "更强的敌人",
-   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "name": "新武器的威力",
+   "description": "再次完成冰霜幽暗密林的中等难度(Medium)难度",
    "dialogue": {
-    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
-    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+    "accept": "你仔细看看这个武器。它和你过去使用的武器不同，可以提升你的基本能力。\n而且攻击力也会变得更强。你去感觉一下这武器的威力吧。",
+    "complete": "如何，有感受到强度提升了吗？好的武器必须在会操作的人手中才能发挥。"
    },
    "category": "main",
    "chapter": "handonmyre",
-   "min_level": 7,
+   "min_level": 8,
    "max_level": 99,
-   "requires": [
-    "gran.poison_scent"
-   ],
+   "requires": [],
    "eligibility": {
     "jobs": [
      5
@@ -453,14 +1159,14 @@
      "id": "objective_0",
      "type": "clear_dungeon",
      "amount": 1,
-     "target": "sunderland_poison",
+     "target": "mirkwood_frost",
      "difficulty": [
       "adventure"
      ]
     }
    ],
    "reward": {
-    "gold": 400,
+    "gold": 500,
     "xp": 0,
     "items": {},
     "conditional_items": [],
@@ -468,36 +1174,90 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {}
   },
   {
-   "id": "original.quest.633",
+   "id": "original.quest.624",
    "source": {
-    "id": 633,
-    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_th.qst",
-    "sha256": "a29b16be900fb8f8e095604f2d9e0787969ac7a9638dc56ed19085abeaa159b6",
+    "id": 624,
+    "path": "n_quest/common/handonmyre/epic_3_handonmyre_royal_garden_at_kiri_4.qst",
+    "sha256": "4d81a221f8354c253fd92ba7156b6eb436eae4046c30dfd98bbfb4c2b724c903",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     17
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "神枪之路 - 凯莉",
+   "description": "与来自天界的凯莉对话",
+   "dialogue": {
+    "accept": "你要选择行走方向的时机已经迫在眉梢了。现在你要去寻找比我能教导你更多的人物。你去找凯莉看看吧。\n凯莉和你一样是来自天界。他会给你很多帮助。",
+    "complete": "辛达介绍的啊…… 这段时间我也注意到你。你的表现足以引来他人的注目。\n过，再去多冒险一下吧。当我认为你已经准备好的时候我会通知你。"
+   },
+   "category": "main",
+   "chapter": "common",
+   "min_level": 13,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     5
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sinda",
+   "receiver": "kiri",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "kiri"
+    }
+   ],
+   "reward": {
+    "gold": 500,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.635",
+   "source": {
+    "id": 635,
+    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_th.qst",
+    "sha256": "b988b29fdc9dfddead2626650d0ac7068d323bf8c293e940f77ea2c88ba6740f",
     "raw_type": [
      "[condition under clear]"
     ],
     "raw_int_data": [
-     6,
+     9,
      1
     ],
     "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
    },
-   "name": "更强的敌人",
-   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "name": "新武器的威力",
+   "description": "再次完成冰霜幽暗密林的中等难度(Medium)难度",
    "dialogue": {
-    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
-    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+    "accept": "你仔细看看这个武器。它和你过去使用的武器不同，可以提升你的基本能力。\n而且攻击力也会变得更强。你去感觉一下这武器的威力吧。",
+    "complete": "如何，有感受到强度提升了吗？好的武器必须在会操作的人手中才能发挥。"
    },
    "category": "main",
    "chapter": "handonmyre",
-   "min_level": 7,
+   "min_level": 8,
    "max_level": 99,
-   "requires": [
-    "gran.poison_scent"
-   ],
+   "requires": [],
    "eligibility": {
     "jobs": [
      6
@@ -513,14 +1273,14 @@
      "id": "objective_0",
      "type": "clear_dungeon",
      "amount": 1,
-     "target": "sunderland_poison",
+     "target": "mirkwood_frost",
      "difficulty": [
       "adventure"
      ]
     }
    ],
    "reward": {
-    "gold": 400,
+    "gold": 500,
     "xp": 0,
     "items": {},
     "conditional_items": [],
@@ -528,36 +1288,35 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {}
   },
   {
-   "id": "original.quest.7643",
+   "id": "original.quest.7645",
    "source": {
-    "id": 7643,
-    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_ft_at.qst",
-    "sha256": "79d1d7d20da49f8e909e8655abfaa44e8717bad28050e0cda9fc61d90305a8ae",
+    "id": 7645,
+    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4_ft_at.qst",
+    "sha256": "5bf2168d19e76deaa74d0273c6392f61e479dd4894ec33a081835509249c40f5",
     "raw_type": [
      "[condition under clear]"
     ],
     "raw_int_data": [
-     6,
+     9,
      1
     ],
     "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
    },
-   "name": "更强的敌人",
-   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "name": "新武器的威力",
+   "description": "再次完成冰霜幽暗密林的中等难度(Medium)难度",
    "dialogue": {
-    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
-    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+    "accept": "你仔细看看这个武器。它和你过去使用的武器不同，可以提升你的基本能力。\n而且攻击力也会变得更强。你去感觉一下这武器的威力吧。",
+    "complete": "如何，有感受到强度提升了吗？好的武器必须在会操作的人手中才能发挥。"
    },
    "category": "main",
    "chapter": "handonmyre",
-   "min_level": 7,
+   "min_level": 8,
    "max_level": 99,
-   "requires": [
-    "gran.poison_scent"
-   ],
+   "requires": [],
    "eligibility": {
     "jobs": [
      7
@@ -573,10 +1332,261 @@
      "id": "objective_0",
      "type": "clear_dungeon",
      "amount": 1,
-     "target": "sunderland_poison",
+     "target": "mirkwood_frost",
      "difficulty": [
       "adventure"
      ]
+    }
+   ],
+   "reward": {
+    "gold": 500,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.7646",
+   "source": {
+    "id": 7646,
+    "path": "n_quest/common/handonmyre/epic_3_hanadonmyre_break_at_pungjin_4.qst",
+    "sha256": "8098b2d71542ed4af061b331cbf35cd0b73a91d84b6e405ac0c766dc18eb0a90",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     6
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "格斗家之路 - 风震",
+   "description": "与风拳流师傅风震对话",
+   "dialogue": {
+    "accept": "你要选择行走方向的时机已经迫在眉梢了。现在你要去寻找比我能教导你更多的人物。去找风震吧。\n风震虽然是一位沉默寡言的人，但相信他会以风拳流的师范给予相当多的指导。",
+    "complete": "是辛达介绍你来的吧…… 这段时间我也注意到你。你的表现足以引来他人的注目。\n不过，再去多冒险一下吧。当我认为你已经准备好的时候我会通知你。"
+   },
+   "category": "main",
+   "chapter": "common",
+   "min_level": 13,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     7
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sinda",
+   "receiver": "pungjin",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "pungjin"
+    }
+   ],
+   "reward": {
+    "gold": 500,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.95",
+   "source": {
+    "id": 95,
+    "path": "n_quest/handonmyre/sunderlanddark/epic_14_sunderlanddark_gul_4.qst",
+    "sha256": "e928ae07cea7cbaf89c19a59a36f8c339fb5ffa8a915a1b0df24d16639d35b45",
+    "raw_type": [
+     "[hunt monster]"
+    ],
+    "raw_int_data": [
+     1000,
+     -1,
+     210,
+     15,
+     1000,
+     -1,
+     211,
+     15
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "亡者们",
+   "description": "前往格兰之森的暗黑雷鸣废墟，除掉15只丛林僵屍和15只饥饿僵屍。",
+   "dialogue": {
+    "accept": "你提过的那个辛达发现的奇怪空间， 我们炼金术师决定把它名为「暗黑雷鸣废墟」。 \n不过那个神秘的空间很可能是和现实空间完全不同的另一种「死后空间」。 当然投身科学事业的我们不会轻易去相信一些毫无根据的内容…… \n所以我希望你前往那个空间仔细观察一下，然后向我详细描述那里的情况，怎么样？ 愿意帮忙吗？",
+    "complete": "嗯……事情办完回来了吗？简直是地狱的写照。 好了， 我知道了， 我再研究研究……"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 14,
+   "max_level": 99,
+   "requires": [
+    "original.quest.203"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "norton",
+   "receiver": "norton",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "kill_monster",
+     "amount": 15,
+     "target": "monster/zombie/zombiezombie.mob",
+     "dungeon": "sunderland_dark"
+    },
+    {
+     "id": "objective_1",
+     "type": "kill_monster",
+     "amount": 15,
+     "target": "monster/zombie/zombieholloweye.mob",
+     "dungeon": "sunderland_dark"
+    }
+   ],
+   "reward": {
+    "gold": 5000,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.116",
+   "source": {
+    "id": 116,
+    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_1.qst",
+    "sha256": "665ceb51fcc8dd678494a8c3282b656d56c34af954044f667c185dd85aa4d7ca",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     9,
+     -1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "疯掉的魔法师克拉赫",
+   "description": "通过格兰之森的冰霜幽暗密林。",
+   "dialogue": {
+    "accept": "你来赫顿玛尔没多久吧？ 有没有听说魔法师姐妹的事？  \n赫顿玛尔的居民应该很害怕她们吧，尤其是妹妹 - 克拉赫，听说她残害了不少居民呢。 \n既然你想做一名出色的冒险家，就帮这里的居民除掉克拉赫吧，怎么样？",
+    "complete": "你比外表看起来还要厉害啊！"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 8,
+   "max_level": 99,
+   "requires": [
+    "gran.stronger_enemy",
+    "original.quest.4471"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "mirkwood_frost"
+    }
+   ],
+   "reward": {
+    "gold": 1500,
+    "xp": 0,
+    "items": {
+     "original_1065": 3,
+     "original_18406": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[effect after clear quest]": [
+     1
+    ]
+   }
+  },
+  {
+   "id": "original.quest.4472",
+   "source": {
+    "id": 4472,
+    "path": "n_quest/handonmyre/sunderlandpoison/time_character04.qst",
+    "sha256": "5cd154089de22dd48593fb40774b6347a6a2bd0cd8d5073fed0fb76ae6692b60",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     4808,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "脆弱的时间碎片",
+   "description": "将时间碎片，交给最后的先知者",
+   "dialogue": {
+    "accept": "你的实力很不错 。以后若有事情需要委托就找你吧。\n不过… 那个碎片到底是什么？",
+    "complete": "嗯…这是时间碎片没有错，但是力量太弱了。若用它根本无法填满碎片。无论如何得找到更强的碎片，才能恢复你的力量。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 7,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4471"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sinda",
+   "receiver": "the_last_mehmet",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_4808"
     }
    ],
    "reward": {
@@ -586,22 +1596,2924 @@
     "conditional_items": [],
     "choices": []
    },
+   "consume": {
+    "original_4808": 1
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[target character]": [
+     "[demonic swordman]",
+     -1,
+     -1,
+     "[creator mage]",
+     -1,
+     -1
+    ]
+   },
+   "target_characters": [
+    "[demonic swordman]",
+    "[creator mage]"
+   ],
+   "auto_accept": false,
+   "auto_complete": true
+  },
+  {
+   "id": "original.quest.96",
+   "source": {
+    "id": 96,
+    "path": "n_quest/handonmyre/sunderlanddark/epic_14_sunderlanddark_gul_5.qst",
+    "sha256": "a4077aa64d953db20a8b6510e44267ec3e1b1af6385b282ac004b08fc839f4df",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     4180,
+     5
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "黑暗的记忆",
+   "description": "前往格兰之森的暗黑雷鸣废墟，除掉僵屍后收集5个[毁灭记忆]交给诺顿，要求地下城难度为中等难度(Medium)以上。",
+   "dialogue": {
+    "accept": "根据我的研究，那些僵屍并不是一般的怪物。呵呵，这就不懂了吧？   有很多证据表明它们很可能是人类或一种类似於人类的物种。 \n虽然我还没有找到确切的证据，不过我总觉得真相应该和这个差不多。 因为对我们科学家而言，一个看起来并不怎么严谨的预感也会成为研究的重要指引。 \n所以我又要拜托你了，请你前往暗黑雷鸣废墟，收集它们的记忆吧。 放心，我已经在你的黑色项圈里加入了新的功能，谁也不知道它们的记忆里藏有什么 你的收集工作不会太难的。 \n说不定我们能发现一个惊天秘密呢！",
+    "complete": "哦哦， 取来了？ 好呀， 谢谢你， 让我看看…… 嗯？ 怎么会……不可能吧？ 不会的， 绝对不会的……\n等等， 这可不是件小事， 你先答应我， 要暂时保密， 不要到处乱说。 好了， 现在什么都别问， 马上离开吧。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 14,
+   "max_level": 99,
+   "requires": [
+    "original.quest.95"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "norton",
+   "receiver": "norton",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 5,
+     "target": "original_4180"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3035": 21,
+     "original_3034": 21,
+     "original_3036": 21,
+     "original_3033": 21
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_4180": 5
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[monster reward item]": [
+     210,
+     1000,
+     1,
+     4180,
+     1,
+     25,
+     10,
+     211,
+     1000,
+     1,
+     4180,
+     1,
+     25,
+     10,
+     210,
+     1000,
+     2,
+     4180,
+     1,
+     25,
+     10,
+     211,
+     1000,
+     2,
+     4180,
+     1,
+     25,
+     10
+    ]
+   },
+   "drops": [
+    {
+     "monster": "monster/zombie/zombiezombie.mob",
+     "dungeon": "sunderland_dark",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_4180",
+     "amount": 1,
+     "chance": 25,
+     "limit": 10
+    },
+    {
+     "monster": "monster/zombie/zombieholloweye.mob",
+     "dungeon": "sunderland_dark",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_4180",
+     "amount": 1,
+     "chance": 25,
+     "limit": 10
+    },
+    {
+     "monster": "monster/zombie/zombiezombie.mob",
+     "dungeon": "sunderland_dark",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_4180",
+     "amount": 1,
+     "chance": 25,
+     "limit": 10
+    },
+    {
+     "monster": "monster/zombie/zombieholloweye.mob",
+     "dungeon": "sunderland_dark",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_4180",
+     "amount": 1,
+     "chance": 25,
+     "limit": 10
+    }
+   ]
+  },
+  {
+   "id": "original.quest.112",
+   "source": {
+    "id": 112,
+    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_2.qst",
+    "sha256": "deb8dc94889ba0d83697c583898787f5bb5535418153e32b18e8a636ed2147ab",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3077,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "邪恶气息的前兆",
+   "description": "把[灰色结晶]拿给赫顿玛尔月光酒馆的索西雅看看。",
+   "dialogue": {
+    "accept": "嘘…… 安静点，不要动， \n你身上有种奇怪的气息。 \n(拾起掉落的结晶)这……这是什么？ \n你也不知道？ 难道是萨乌塔和牛头兵掉的… \n这东西的气息太不寻常了… \n去找找知道这东西的人， \n你找月光酒馆的索西雅问问是怎么回事吧。",
+    "complete": "哎呀！ 赶紧拿开！这邪恶的气息是什么啊？很抱歉，客人，你不能进来我们酒馆！"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 12,
+   "max_level": 99,
+   "requires": [
+    "original.quest.116"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "shusia",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3077"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3077": 1
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[depend give item]": [
+     3077,
+     1
+    ]
+   },
+   "grant_items": {
+    "original_3077": 1
+   }
+  },
+  {
+   "id": "original.quest.4473",
+   "source": {
+    "id": 4473,
+    "path": "n_quest/handonmyre/mirkwoodfrost/time_character05.qst",
+    "sha256": "e448d903c65698f715bbeb108f5ed18b53ea034a8e10e7e0d7f63f0005ffb41f",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     9,
+     -1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "强化的时间碎片 1",
+   "description": "请在冰霜幽暗密林寻找时间碎片",
+   "dialogue": {
+    "accept": "我想强化的时间碎片，只有到格兰之森才能找到。\n 积满了雪的森林… 在冰霜幽暗密林感觉到了气息！",
+    "complete": "没有找到吗？重新再挑战一次吧。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 8,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4472"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "the_last_mehmet",
+   "receiver": "the_last_mehmet",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "mirkwood_frost"
+    }
+   ],
+   "reward": {
+    "gold": 500,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [
+     {
+      "item": "original_27602",
+      "amount": 1,
+      "jobs": [
+       9
+      ],
+      "grow_types": [
+       -1
+      ]
+     },
+     {
+      "item": "original_106040041",
+      "amount": 1,
+      "jobs": [
+       10
+      ],
+      "grow_types": [
+       -1
+      ]
+     }
+    ],
+    "choices": []
+   },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {
+    "[target character]": [
+     "[demonic swordman]",
+     -1,
+     -1,
+     "[creator mage]",
+     -1,
+     -1
+    ]
+   },
+   "target_characters": [
+    "[demonic swordman]",
+    "[creator mage]"
+   ],
+   "auto_accept": true,
+   "auto_complete": true
+  },
+  {
+   "id": "original.quest.504",
+   "source": {
+    "id": 504,
+    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_3.qst",
+    "sha256": "7a6568c4ac2c10d6aa19afa08c76d2ea7d0752fc0f26a7915d932c09c9c67c04",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     9,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "G.S.D的试验",
+   "description": "完成冰霜幽暗密林中等难度(Medium)难度",
+   "dialogue": {
+    "accept": "我想稍微再测试一下你的能力。请完成冰霜幽暗密林的中等难度(Medium)难度。这次若能成功你就会得到有用的武器。",
+    "complete": "很好。按照约定送你有用的武器吧。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 8,
+   "max_level": 99,
+   "requires": [
+    "original.quest.116"
+   ],
+   "eligibility": {
+    "jobs": [
+     0
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "mirkwood_frost",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 500,
+    "xp": 0,
+    "items": {
+     "original_27606": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[effect after clear quest]": [
+     1
+    ]
+   }
+  },
+  {
+   "id": "original.quest.97",
+   "source": {
+    "id": 97,
+    "path": "n_quest/handonmyre/sunderlanddark/epic_14_sunderlanddark_gul_6.qst",
+    "sha256": "d65edaaf1781fcb302a1c0dd31786f0ca1249bb02340caf76a3c642f9c5d15d0",
+    "raw_type": [
+     "[hunt monster]"
+    ],
+    "raw_int_data": [
+     1000,
+     1,
+     212,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "毁灭的痕迹",
+   "description": "前往格兰之森的暗黑雷鸣废墟，除掉领主盗屍者骨狱息，要求地下城难度为中等难度(Medium)以上。",
+   "dialogue": {
+    "accept": "…\n 根据你收集的材料和我的研究结果，我终於确立了一个结论。  到现在为止，这个结论还没有第2个人知道， \n记得我之前跟你说过那些僵屍很可能是人类或者类似於人类的物种吧？ 我现在可以肯定那个推测是正确的。 \n因为根据我的研究，暗黑雷鸣废墟的那些僵屍其实就是生活在格兰之森并在大火灾后莫名失踪的精灵！ \n更令人担忧的是，研究结果表明，暗黑雷鸣废墟的范围正在逐日增加。  照这样下去，整个格兰之森迟早会被它吞噬。 \n虽然现在只是推测，但是我相信只有除掉那些僵屍的头领，才能阻止暗黑雷鸣废墟扩张。 \n冒险家，时间紧迫，你快去暗黑雷鸣废墟除掉那群僵屍的头领吧， 我要立刻把这些研究结果和推论向贝尔玛尔公国汇报！",
+    "complete": "真不敢相信， 难道公国……不， 帝国早就知道这事了吗？ 我向公国汇报研究结果后， 就有帝国的人突然闯进我的炼金术师协会， 他们拿走了所有的研究材料， 他们真是一群混蛋。\n虽然已经没有证据能证明我的推论是正确的， 但是我更能确定暗黑雷鸣废墟里徘徊的那些僵屍就是阿拉德大陆曾经最优秀的种族--精灵， 而帝国肯定和这些事有牵连！\n呼……这事就作为我们两个人的秘密吧， 毕竟是无法证明的事， 多说无益。 而且帝国方面的强硬态度也很让人担心……\n不过我还是很高兴， 虽然真相无法公布於众， 但是我曾站在离真相最近的地方……"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 15,
+   "max_level": 99,
+   "requires": [
+    "original.quest.96"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "norton",
+   "receiver": "norton",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "kill_monster",
+     "amount": 1,
+     "target": "monster/zombie/zombieghoulgwish.mob",
+     "dungeon": "sunderland_dark",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 10000,
+    "xp": 0,
+    "items": {
+     "original_1033": 5
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.113",
+   "source": {
+    "id": 113,
+    "path": "n_quest/handonmyre/grakkarakburning/epic_12_grakkarakburning_vinoshu_3.qst",
+    "sha256": "db56cd71466572f2c6deca888b47d9d61496c24ee6432682c1fd29541a8d6d4c",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3078,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "灰色结晶碎片",
+   "description": "前往格兰之森的烈焰格拉卡，从领主烈焰彼诺修身上找到[灰色结晶碎片]。",
+   "dialogue": {
+    "accept": "啊… 原来是这样啊， \n没想到这么小的结晶竟然有这么强的邪恶气息。  \n嗯，也许能通过它找到精灵圣地被毁的真相。 \n 好，那么就来做个检证吧。 \n很久以前，赫顿玛尔有两个很喜欢魔法的姐妹；她们经常进入格兰之森修练魔法，但有一天她们突然疯了。 \n我在想，也许这个结晶和她们有着某种联系。 \n如果你去烈焰格拉卡，就帮我找到彼诺修并弄来这样的灰色结晶碎片吧。 \n请你一定要小心阿 烈焰格拉卡可是格兰之森最危险的地方！",
+    "complete": "啊…彼诺修身上也有出像这样的物质？ 看来这个结晶就是原因。一定是这个结晶进入格兰之森动物的体内，造成牠们狂暴。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 12,
+   "max_level": 99,
+   "requires": [
+    "original.quest.112"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "shusia",
+   "receiver": "shusia",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3078"
+    }
+   ],
+   "reward": {
+    "gold": 1000,
+    "xp": 0,
+    "items": {
+     "original_20012": 1,
+     "original_14410": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3078": 1
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[monster reward item]": [
+     22,
+     8,
+     -1,
+     3078,
+     1,
+     100,
+     1
+    ]
+   },
+   "drops": [
+    {
+     "monster": "monster/soceress/vinoshu.mob",
+     "dungeon": "grakkarak_burning",
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_3078",
+     "amount": 1,
+     "chance": 100,
+     "limit": 1
+    }
+   ]
+  },
+  {
+   "id": "original.quest.4474",
+   "source": {
+    "id": 4474,
+    "path": "n_quest/handonmyre/mirkwoodfrost/time_character06.qst",
+    "sha256": "0a9f6a696e2c11088bd0220e5694c71b3afaf3bfe02ab01f4b0034911909ce07",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     4807,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "强化的时间碎片 2",
+   "description": "请在冰霜幽暗密林寻找时间碎片",
+   "dialogue": {
+    "accept": "明明是从名叫克拉赫的女子身上感觉到了强化的时间碎片。\n这次一定要找到时间碎片。",
+    "complete": "终於找到了…。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 8,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4473"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "the_last_mehmet",
+   "receiver": "the_last_mehmet",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_4807"
+    }
+   ],
+   "reward": {
+    "gold": 500,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_4807": 1
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[monster reward item]": [
+     21,
+     9,
+     -1,
+     4807,
+     1,
+     100,
+     1
+    ],
+    "[target character]": [
+     "[demonic swordman]",
+     -1,
+     -1,
+     "[creator mage]",
+     -1,
+     -1
+    ]
+   },
+   "drops": [
+    {
+     "monster": "monster/soceress/keraha.mob",
+     "dungeon": "mirkwood_frost",
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_4807",
+     "amount": 1,
+     "chance": 100,
+     "limit": 1
+    }
+   ],
+   "target_characters": [
+    "[demonic swordman]",
+    "[creator mage]"
+   ],
+   "auto_accept": true,
+   "auto_complete": true
+  },
+  {
+   "id": "original.quest.505",
+   "source": {
+    "id": 505,
+    "path": "n_quest/handonmyre/mirkwoodfrost/epic_8_mirkwoodfrost_vinoshu_4.qst",
+    "sha256": "e71a393799e81342dd6a0551a51c937ad87d70b10868bd7c79a1be6ddcff8f15",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     9,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "新武器的威力",
+   "description": "再次完成冰霜幽暗密林的中等难度(Medium)难度",
+   "dialogue": {
+    "accept": "你仔细看看这个武器。它和你过去使用的武器不同，可以提升你的基本能力。\n而且攻击力也会变得更强。你去感觉一下这武器的威力吧。",
+    "complete": "如何，有感受到强度提升了吗？好的武器必须在会操作的人手中才能发挥。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 8,
+   "max_level": 99,
+   "requires": [
+    "original.quest.504"
+   ],
+   "eligibility": {
+    "jobs": [
+     0
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "mirkwood_frost",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 500,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[effect after clear quest]": [
+     1
+    ]
+   }
+  },
+  {
+   "id": "original.quest.111",
+   "source": {
+    "id": 111,
+    "path": "n_quest/handonmyre/grakkarak/epic_10_grakkarak_shauta_3.qst",
+    "sha256": "7e8fd93435e46e04ba94d4a1b4e9fdc7637933c386d2972fd2c81e5afc034866",
+    "raw_type": [
+     "[hunt monster]"
+    ],
+    "raw_int_data": [
+     7,
+     -1,
+     15,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "牛头王萨乌塔",
+   "description": "前往格兰之森的格拉卡，击败领主牛头王萨乌塔。",
+   "dialogue": {
+    "accept": "嗯… 明白了，我了解。 \n我会满足你的好奇心的。 \n既然这样，好吧， 我把我的一个使命交给你吧。 \n最近，格兰之森的牛头兵越来越狂暴， \n特别是它们的首领牛头王萨乌塔。 \n我本来想亲自去除掉它的，但那里的丛林很诡异，会不停的流动。我的眼睛又看不见，所以凭感知根本找不到入口， \n你能代替我在萨乌塔更疯狂之前除掉它吗？",
+    "complete": "噢， 是你。对了，你找到萨乌塔了吧？"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 10,
+   "max_level": 99,
+   "requires": [
+    "original.quest.505",
+    "original.quest.4474"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "kill_monster",
+     "amount": 1,
+     "target": "monster/tau/shauta.mob",
+     "dungeon": "grakkarak"
+    }
+   ],
+   "reward": {
+    "gold": 600,
+    "xp": 0,
+    "items": {
+     "original_22006": 1,
+     "original_18407": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.114",
+   "source": {
+    "id": 114,
+    "path": "n_quest/handonmyre/grakkarakburning/epic_12_grakkarakburning_vinoshu_4.qst",
+    "sha256": "8554f8570581f1623a45af6090adc4a2ebfc3b40ecca0915e69d8b52ea52d106",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     2
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "邪恶气息的来历",
+   "description": "去找赛莉亚",
+   "dialogue": {
+    "accept": "但是… \n这结晶的气息太强烈了，我一时还真感觉不出来，不过这气息有点熟悉…… \n对了！ 它和天空之城附近的气息是一样的！ \n呃…？ 天空之城的关系让你吓一大跳吗？ \n你还不知道吧，传说中的天空之城再次出现了！ \n冒险家们正赶去那里呢，他们说要像先辈那样登上天空之城，进入天界… \n如果你也想了解天空之城，就去问赛莉亚吧。",
+    "complete": "您好啊， 冒险家， 需要我帮忙吗？"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 12,
+   "max_level": 99,
+   "requires": [
+    "original.quest.113"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "shusia",
+   "receiver": "seria",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "seria"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.4475",
+   "source": {
+    "id": 4475,
+    "path": "n_quest/common/handonmyre/time_character07.qst",
+    "sha256": "6408e13ea4aa69fa83588fcc172283099c7850d4e53df2df8a1da462411c1dca",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     1000,
+     -1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "一定要更强",
+   "description": "完成暗黑雷鸣废墟（达成14LV才能进入暗黑雷鸣废墟。）",
+   "dialogue": {
+    "accept": "无论如何目前提升时间之力似乎有点勉强。必须达到15LV 以上才能拥有正常的力量。\n那个时间碎片我先保管吧。等你更强之后再把你的力量还给你。",
+    "complete": "时间终於到了……。"
+   },
+   "category": "main",
+   "chapter": "common",
+   "min_level": 8,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4474"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "the_last_mehmet",
+   "receiver": "the_last_mehmet",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "sunderland_dark"
+    }
+   ],
+   "reward": {
+    "gold": 500,
+    "xp": 0,
+    "items": {
+     "original_4807": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[target character]": [
+     "[demonic swordman]",
+     -1,
+     -1,
+     "[creator mage]",
+     -1,
+     -1
+    ]
+   },
+   "target_characters": [
+    "[demonic swordman]",
+    "[creator mage]"
+   ]
+  },
+  {
+   "id": "original.quest.1083",
+   "source": {
+    "id": 1083,
+    "path": "n_quest/handonmyre/grakkarak/normal_10_grakkarak_honor.qst",
+    "sha256": "ebe06d2c0e9c36a91feb65d102d7605dacdd4071aba4acdd1dd23d408f2a4fd3",
+    "raw_type": [
+     "[hunt monster]"
+    ],
+    "raw_int_data": [
+     7,
+     -1,
+     14,
+     3
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "种族的荣耀",
+   "description": "前往格兰之森的格拉卡，除掉3只牛头护卫。",
+   "dialogue": {
+    "accept": "虽然牛头兵的智商不高，但是它们是一个崇尚荣耀的种族。  在过去很长一段时间里，人类和牛头兵之间并没有发生太大的冲突…… \n但最近，牛头兵显得越来越凶残，它们甚至失去了昔日的荣耀之心。 \n更奇怪的是，连那些守候牛头兵王室的最忠诚的牛头护卫也变得凶残了。 \n以前拥有至高荣耀的牛头护卫绝不会对弱者动手，但它们的荣誉感早以被凶残和狂暴掩盖了。 \n冒险家，你是否有兴趣去见那些牛头护卫？ 不过… 如果它们对你动手，你千万不要犹豫，该出手时就出手吧！",
+    "complete": "真的太可惜了， 虽然那些牛头护卫是头脑简单的家伙， 但是我一直认为它们才是拥有人类失去的战士精神的存在。"
+   },
+   "category": "side",
+   "chapter": "handonmyre",
+   "min_level": 10,
+   "max_level": 99,
+   "requires": [
+    "original.quest.111"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "pungjin",
+   "receiver": "pungjin",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "kill_monster",
+     "amount": 3,
+     "target": "monster/tau/tauguard.mob",
+     "dungeon": "grakkarak"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.7",
+   "source": {
+    "id": 7,
+    "path": "n_quest/handonmyre/grakkarakburning/epic_12_grakkarakburning_vinoshu_5.qst",
+    "sha256": "ad84e9b96f40f4d48bc1ee8acc6b9f31ae084ccab0ebddc09ee008cf96ea4a47",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3079,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "前往天空之城",
+   "description": "前往格兰之森的烈焰格拉卡，从领主烈焰彼诺修身上找到[魔法结晶]，要求地下城难度为中等难度(Medium)以上。",
+   "dialogue": {
+    "accept": "啊~~为了天空之城来的吧? 为了阻止异变的怪物，精灵用特殊的魔法封印了天空之城，从此天空之城便从阿拉德大陆消失了……\n 虽然有些生物可以不受异变影响自由出入天空之城，但是它们身上的魔力一定会被吸走。\n  传言净化手镯能消除魔法阵的影响，不过想要获得它，就得先打败具有强大魔力的魔法师并找到魔法结晶才行。",
+    "complete": "希望这个净化手镯对你有帮助。听说天空之城里有个强大的光之魔法生命体，非常危险，你一定要小心呀。\n这个给你…希望我给你的东西能守护你， 愿精灵的力量陪伴你！"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 12,
+   "max_level": 99,
+   "requires": [
+    "original.quest.114"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "seria",
+   "receiver": "seria",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3079"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_22049": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3079": 1
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[effect after clear quest]": [
+     1
+    ],
+    "[monster reward item]": [
+     22,
+     8,
+     1,
+     3079,
+     1,
+     100,
+     1,
+     22,
+     8,
+     2,
+     3079,
+     1,
+     100,
+     1
+    ],
+    "[relation quest]": [
+     3
+    ]
+   },
+   "drops": [
+    {
+     "monster": "monster/soceress/vinoshu.mob",
+     "dungeon": "grakkarak_burning",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_3079",
+     "amount": 1,
+     "chance": 100,
+     "limit": 1
+    },
+    {
+     "monster": "monster/soceress/vinoshu.mob",
+     "dungeon": "grakkarak_burning",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_3079",
+     "amount": 1,
+     "chance": 100,
+     "limit": 1
+    }
+   ]
+  },
+  {
+   "id": "original.quest.1219",
+   "source": {
+    "id": 1219,
+    "path": "n_quest/handonmyre/grakkarak/normal_10_grakkarak_rothon_tau.qst",
+    "sha256": "041ecb1f9eb6036a8badcaebf28a0135a6e666f4b252cec4ac1b69fbb98a959a",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     4171,
+     3
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "牛头的炼金术考察",
+   "description": "前往格兰之森的格拉卡，从各类牛头兵身上收集3个[牛头兵的脊骨]，要求地下城难度为中等难度(Medium)以上。",
+   "dialogue": {
+    "accept": "我听说牛头兵的筋非常强韧很。 \n 如果具有强大的弹性，是不是真的可以用牛头兵的筋制作出有用的物品呢？ \n 请你帮我收集重要研究所需的牛头兵的筋。",
+    "complete": "嗯， 确实是不错的研究材料， 谢谢你！"
+   },
+   "category": "side",
+   "chapter": "handonmyre",
+   "min_level": 10,
+   "max_level": 99,
+   "requires": [
+    "original.quest.1083"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "norton",
+   "receiver": "norton",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 3,
+     "target": "original_4171"
+    }
+   ],
+   "reward": {
+    "gold": 700,
+    "xp": 0,
+    "items": {
+     "original_1107": 4
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_4171": 3
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[monster reward item]": [
+     11,
+     7,
+     1,
+     4171,
+     1,
+     50,
+     3,
+     12,
+     7,
+     1,
+     4171,
+     1,
+     50,
+     3,
+     13,
+     7,
+     1,
+     4171,
+     1,
+     50,
+     3,
+     14,
+     7,
+     1,
+     4171,
+     1,
+     50,
+     3,
+     15,
+     7,
+     1,
+     4171,
+     1,
+     50,
+     3,
+     11,
+     7,
+     2,
+     4171,
+     1,
+     50,
+     3,
+     12,
+     7,
+     2,
+     4171,
+     1,
+     50,
+     3,
+     13,
+     7,
+     2,
+     4171,
+     1,
+     50,
+     3,
+     14,
+     7,
+     2,
+     4171,
+     1,
+     50,
+     3,
+     15,
+     7,
+     2,
+     4171,
+     1,
+     50,
+     3
+    ]
+   },
+   "drops": [
+    {
+     "monster": "monster/tau/tauarmy.mob",
+     "dungeon": "grakkarak",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_4171",
+     "amount": 1,
+     "chance": 50,
+     "limit": 3
+    },
+    {
+     "monster": "monster/tau/taubeast.mob",
+     "dungeon": "grakkarak",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_4171",
+     "amount": 1,
+     "chance": 50,
+     "limit": 3
+    },
+    {
+     "monster": "monster/tau/tauassaulter.mob",
+     "dungeon": "grakkarak",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_4171",
+     "amount": 1,
+     "chance": 50,
+     "limit": 3
+    },
+    {
+     "monster": "monster/tau/tauguard.mob",
+     "dungeon": "grakkarak",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_4171",
+     "amount": 1,
+     "chance": 50,
+     "limit": 3
+    },
+    {
+     "monster": "monster/tau/shauta.mob",
+     "dungeon": "grakkarak",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_4171",
+     "amount": 1,
+     "chance": 50,
+     "limit": 3
+    },
+    {
+     "monster": "monster/tau/tauarmy.mob",
+     "dungeon": "grakkarak",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_4171",
+     "amount": 1,
+     "chance": 50,
+     "limit": 3
+    },
+    {
+     "monster": "monster/tau/taubeast.mob",
+     "dungeon": "grakkarak",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_4171",
+     "amount": 1,
+     "chance": 50,
+     "limit": 3
+    },
+    {
+     "monster": "monster/tau/tauassaulter.mob",
+     "dungeon": "grakkarak",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_4171",
+     "amount": 1,
+     "chance": 50,
+     "limit": 3
+    },
+    {
+     "monster": "monster/tau/tauguard.mob",
+     "dungeon": "grakkarak",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_4171",
+     "amount": 1,
+     "chance": 50,
+     "limit": 3
+    },
+    {
+     "monster": "monster/tau/shauta.mob",
+     "dungeon": "grakkarak",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_4171",
+     "amount": 1,
+     "chance": 50,
+     "limit": 3
+    }
+   ]
+  },
+  {
+   "id": "original.quest.4440",
+   "source": {
+    "id": 4440,
+    "path": "n_quest/common/skycastle/epic_20_skycastle_crystal_1.qst",
+    "sha256": "eeec557ee6d4f70a0a7abcb80fee7fcd72a24a80e49830b8bef6e84ccaca659c",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     12
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "灰色结晶和赛莉亚",
+   "description": "为了解决赛莉亚的烦恼，找莎兰谈谈。",
+   "dialogue": {
+    "accept": "冒险家， 还记得上次你拿给莎兰看的灰色结晶吗？\n天空之城里也出现了和灰色结晶相似的气息， 我不知道……我怎么了， 我觉得那种气息很熟悉， 而且对我来说那气息让我心情感觉很轻松……\n怎么说呢， 我觉得……那些灰色结晶……应该是因为格兰之森的动植物异变才出现的……\n嗯， 而且我……好像知道这种气息是从哪来的……",
+    "complete": "原来是您啊， 这次……是因为什么事情呢?"
+   },
+   "category": "main",
+   "chapter": "common",
+   "min_level": 20,
+   "max_level": 99,
+   "requires": [
+    "original.quest.7"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "seria",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "sharan"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.8",
+   "source": {
+    "id": 8,
+    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_skycastle_1.qst",
+    "sha256": "18ca07fc704ba57077dee8d219486dbf2328ea95a04a670c3f898e2307b19b8c",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     12
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "精灵的魔法阵",
+   "description": "去找莎兰",
+   "dialogue": {
+    "accept": "冒险家，你感觉到气息了吗？ 天空之城的魔法阵力量正在快速减弱。\n我们现在之所以能用肉眼看见天空之城，就是因为魔法阵的力量在逐渐流失。不过这速度太不正常了 。 \n魔法阵的损耗这么明显，绝不是自然发生的。 而且这样下去，天空之城的魔法结界就会坍塌，巨大的天空之城就会坠毁在西海岸……后果太恐怖了！  \n冒险家，你赶紧去西海岸一趟吧，向莎兰打听下这是怎么回事。",
+    "complete": "你也感觉到魔法的力量在流失吧？"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 16,
+   "max_level": 99,
+   "requires": [
+    "original.quest.7"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "seria",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "sharan"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.117",
+   "source": {
+    "id": 117,
+    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_skycastle_2.qst",
+    "sha256": "222f4b0a8b8f45578dca15721ada284a228ddbc686e34ce42c17a1bc7a062441",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     11,
+     -1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "调查力量减弱的魔法阵",
+   "description": "通过天空之城的龙人之塔。",
+   "dialogue": {
+    "accept": "你也发现围绕天空之城的魔法阵力量正在减弱？ 我也是刚察觉到的，现在正在调查呢。不过那地方太危险了，以我一个人的力量去调查有些困难。\n嗯，冒险家，如果你能从那里的周边环境以及生物身上收集一些相关的资料给我，一定会对我的调查很有帮助的。",
+    "complete": "谢谢你的调查……嗯， 你看见罗莉安了吗？"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 16,
+   "max_level": 99,
+   "requires": [
+    "original.quest.8"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "draconiantower"
+    }
+   ],
+   "reward": {
+    "gold": 1000,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[relation quest]": [
+     4
+    ]
+   }
+  },
+  {
+   "id": "original.quest.4305",
+   "source": {
+    "id": 4305,
+    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_sky_gsd_1.qst",
+    "sha256": "45064f3b1319aac0b1d466a8288898edbe6fe4f042e5f40d392cae6fdef9c421",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     7
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "鬼手的反应",
+   "description": "找G.S.D谈谈。",
+   "dialogue": {
+    "accept": "嗯， 天空之城最近散发出的气息很不一样， 感觉很强大， 而且我的鬼手也对那些气息起了反应， 好像想暗示我一些什么东西。\n听说你最近正在挑战天空之城， 我想拜托你一件事情， 你能腾出点时间吗?",
+    "complete": "你来得正好， 我要委托你的事， 现在可以告诉你了。"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 16,
+   "max_level": 99,
+   "requires": [
+    "original.quest.117"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "gsd"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.4601",
+   "source": {
+    "id": 4601,
+    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_skycastle_3.qst",
+    "sha256": "167a4f268dbbfcb670e95da267cb91c662b7d58d5b4aa41f6b35079f8e11f45e",
+    "raw_type": [
+     "[clear map]"
+    ],
+    "raw_int_data": [
+     1614
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "行踪不明的罗莉安",
+   "description": "前往天空之城的龙人之塔，寻找罗莉安。",
+   "dialogue": {
+    "accept": "啊啊…… 这可如何是好， 我刚才就发现罗莉安不在旁边了，她很可能跑去天空之城了…… \n她一开始就喊丁卡斯失踪了，还到处找来着。 真是…… \n冒险家，拜托你 冒险家。 她从我到这儿后就一直陪在我的身边，对我来说就像亲人一样。 \n她应该不会走得太远，估计就在龙人之塔那……你一定要找到她啊！ 冒险家，拜托你。 冒险家。",
+    "complete": "我是去找丁卡斯才迷路的，这个小淘气……\n嗯， 顺便也谢谢你， 虽然以我的魔法能力， 能立刻离开那种地方…\n总之， 谢谢你救了我。\n…\n啊啊啊~你听得懂吧？"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 16,
+   "max_level": 99,
+   "requires": [
+    "original.quest.117"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "lorian",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_map",
+     "amount": 1,
+     "target": "draconiantower:2_1",
+     "dungeon": "draconiantower",
+     "cell": [
+      2,
+      1
+     ],
+     "source_map_id": 1614
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[appear map]": [
+     11,
+     -1,
+     1614,
+     100
+    ],
+    "[delete npc index]": [
+     10
+    ]
+   }
+  },
+  {
+   "id": "original.quest.119",
+   "source": {
+    "id": 119,
+    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_skycastle_4.qst",
+    "sha256": "e40df2f62af161f673cf2e45ab6110e499b3a3b231e9906a75b12f17fac4a9a0",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     12
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "水落石出",
+   "description": "去找莎兰",
+   "dialogue": {
+    "accept": "哦，对了，我被抓住时…… … 听到那些长着龙脑袋的家伙正在讨论奇怪的事… \n它们说什么人偶玄关的人偶之王把魔法阵怎么着了… \n这会不会就是让莎兰姐姐头疼的问题啊，要不你替我告诉莎兰姐姐吧？",
+    "complete": "啊！冒险家！谢谢你救了罗莉安， 什么？ 发现原因了？"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 18,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4601"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "lorian",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "sharan"
+    }
+   ],
+   "reward": {
+    "gold": 1000,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.120",
+   "source": {
+    "id": 120,
+    "path": "n_quest/westcost/hallofdoll/epic_18_hallofdoll_skycastle_5.qst",
+    "sha256": "9ae54215190dc4a3d0268463f1c2ccadf85d113df254c520c0d55d2f153d8172",
+    "raw_type": [
+     "[hunt monster]"
+    ],
+    "raw_int_data": [
+     12,
+     1,
+     40,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "人偶之王道格里",
+   "description": "击退天空之城人偶玄关－中等难度(Medium)以上的人偶之王道格里",
+   "dialogue": {
+    "accept": "原来如此啊…… 人形师…… \n嗯，「人偶师」是魔法师仆人的意思，它们擅长创造石巨人那样的魔法生命体。    \n我想它们原来的职责应该是帮助天空之城的那些建设者吧，它们为什么要对魔法阵下手呢？ \n不管怎样，如果真是它们破坏魔法阵，在它们引发大灾难前，我们必须派人去阻止它们…… 不小心的话 会引发大灾难的。",
+    "complete": "成功了吗？冒险家？"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 18,
+   "max_level": 99,
+   "requires": [
+    "original.quest.119"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "kill_monster",
+     "amount": 1,
+     "target": "monster/dollmaster/masterdogri.mob",
+     "dungeon": "hallofdoll",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.121",
+   "source": {
+    "id": 121,
+    "path": "n_quest/westcost/golemtower/epic_20_golemtower_skycastle_6.qst",
+    "sha256": "b1e496fd085cd72c94bbf11898462662f3fd649aca374bf38c9f9976e6273848",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     13,
+     -1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "石巨人塔",
+   "description": "通过天空之城的石巨人塔。",
+   "dialogue": {
+    "accept": "辛苦了。 辛苦了，天空之城崩塌的危机总算解除了，…  \n不过有很多疑点 难道它们是因为在漫长的岁月里没有主人才发疯的？ 真是奇怪！\n你还想去更高的地方冒险吧？ 据我所知，人偶师的上层就是魔法生命体「石巨人」的领地。 石巨人们会等待的 \n在巴卡尔统治时，石巨人主要负责搬运和警备， 人偶师主要负责制造石巨人，它们是孟不离焦的关系。\n所以你一定要多加小心啊！ 因为不管是一百年还是一千年，它们只会服从于主人下达的命令。 我想一定是‘消灭所有入侵者’吧…",
+    "complete": "你平安归来了！"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 20,
+   "max_level": 99,
+   "requires": [
+    "original.quest.120"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "golemtower"
+    }
+   ],
+   "reward": {
+    "gold": 1000,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.122",
+   "source": {
+    "id": 122,
+    "path": "n_quest/westcost/golemtower/epic_20_golemtower_skycastle_7.qst",
+    "sha256": "5469da85e8e78fb0743d50d730456075262a9d5e45ec4bf6faa11dd0a0fee43e",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     13
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "黄金石巨人",
+   "description": "找诺顿帮忙。",
+   "dialogue": {
+    "accept": "你说通往上层的入口被封死了，那里还有一个巨大的黄金石巨人？  \n嗯… 嗯……看来那黄金石巨人就是所有石巨人的头领， 因为黄金可是非常珍贵的魔法材料呢。 \n 也许通往上层的关键就在那个黄金石巨人身上！仔细调查的话可能会知道走进入口的方法， \n冒险家，你要不要先去请教诺顿呢？ 他可以帮助你对石巨人的构造更加了解。",
+    "complete": "欢迎！ 听说你有事找我？"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 20,
+   "max_level": 99,
+   "requires": [
+    "original.quest.121"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "norton",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "norton"
+    }
+   ],
+   "reward": {
+    "gold": 200,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.123",
+   "source": {
+    "id": 123,
+    "path": "n_quest/westcost/golemtower/epic_20_golemtower_skycastle_8.qst",
+    "sha256": "4b94d487685bf4d12989b52e64912b0346bd92481e4dcd38159a8b482661d74e",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3104,
+     3
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "研究石巨人",
+   "description": "前往天空之城的石巨人塔，收集3个[青铜石巨人的心脏]，要求地下城难度为中等难度(Medium)以上。(地下城的难度越高，越容易获得任务物品)",
+   "dialogue": {
+    "accept": "你说那里有个用黄金制作的石巨人?  \n那可真了不得啊！ 黄金可是魔法师很难弄到的珍贵魔法材料啊 \n我敢肯定那个用黄金制作的石巨人身上隐藏有某种玄机。 也许我们可以通过研究它找到通往上层的方法，冒险家，你知道这么庞大的石巨人是靠什么驱动笨重的身躯吗？ \n是靠它们身体内的心脏。 你能不能帮我取一些石巨人的心脏来？ 哦，对了，那些心脏必须是石巨人中堪称具有最精密构造的青铜石巨人的心脏才行啊！ 我希望通过研究它们得到一些参数。",
+    "complete": "喔喔？ 这就是青铜石巨人之核！"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 20,
+   "max_level": 99,
+   "requires": [
+    "original.quest.122"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "norton",
+   "receiver": "norton",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 3,
+     "target": "original_3104"
+    }
+   ],
+   "reward": {
+    "gold": 7000,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3104": 3
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[monster reward item]": [
+     34,
+     13,
+     1,
+     3104,
+     1,
+     20,
+     3,
+     34,
+     13,
+     2,
+     3104,
+     1,
+     30,
+     3
+    ]
+   },
+   "drops": [
+    {
+     "monster": "monster/new_golem/bronzegolem.mob",
+     "dungeon": "golemtower",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_3104",
+     "amount": 1,
+     "chance": 20,
+     "limit": 3
+    },
+    {
+     "monster": "monster/new_golem/bronzegolem.mob",
+     "dungeon": "golemtower",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_3104",
+     "amount": 1,
+     "chance": 30,
+     "limit": 3
+    }
+   ]
+  },
+  {
+   "id": "original.quest.124",
+   "source": {
+    "id": 124,
+    "path": "n_quest/westcost/golemtower/epic_20_golemtower_skycastle_9.qst",
+    "sha256": "bdba354289895ec32118ea996dd9103b6bfa1a5e2f3b78dd1b66dc3bd9885351",
+    "raw_type": [
+     "[hunt monster]"
+    ],
+    "raw_int_data": [
+     13,
+     1,
+     3001,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "除掉普拉塔尼的方法",
+   "description": "前往天空之城的石巨人塔，处置领主黄金巨人普拉塔尼，要求地下城难度为中等难度(Medium)以上。",
+   "dialogue": {
+    "accept": "冒险家，研究有结果了！\n根据我的研究，只要你能破坏那个黄金石巨人体内的动力核，你就可以通往上层了。 \n不过那黄金石巨人体内的动力核一定掩藏得很好，不容易找到。\n这样吧，你拿着这个探测器去吧，它会帮助你找到黄金石巨人的动力核的。",
+    "complete": "启动顺利吗？ 那可真是万幸啊。 实际上边打瞌睡边制造的东西只要不发生什么剧烈的爆炸就行……\n哦呵呵……呀， 你这人怎么连个小小的玩笑都开不起啊？ 嗯？ 你觉得不像是开玩笑？\n呵呵呵！(这家伙还真敏锐啊……噗通噗通……)"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 20,
+   "max_level": 99,
+   "requires": [
+    "original.quest.123"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "norton",
+   "receiver": "norton",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "kill_monster",
+     "amount": 1,
+     "target": "monster/new_golem/platany.mob",
+     "dungeon": "golemtower",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.125",
+   "source": {
+    "id": 125,
+    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_skycastle_10.qst",
+    "sha256": "a431cd03c46145e835e4762b0078a55c8c182a3277895bab3320b83ed3129412",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     17
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "城的存在",
+   "description": "找凯莉谈谈。",
+   "dialogue": {
+    "accept": "通往上层的门总算打开了，\n天空之海那有什么情况吗？  嗯？ 嗯？ 你看见一个宫殿？ \n天空之城里怎么会有宫殿……还真奇怪啊… 竟然还有我不知道的东西。\n嗯，慢着，在赫顿玛尔的月光酒馆旁边，有一位叫凯莉的女孩，听说她就是从天界来的，她应该会知道那是怎么回事？",
+    "complete": "嗯？ 你是谁啊？  什么？ 在天空之城里发现了一个城？"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 20,
+   "max_level": 99,
+   "requires": [
+    "original.quest.124"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "norton",
+   "receiver": "kiri",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "kiri"
+    }
+   ],
+   "reward": {
+    "gold": 1000,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.360",
+   "source": {
+    "id": 360,
+    "path": "n_quest/common/skycastle/epic_24_skycastle_f_castle_1.qst",
+    "sha256": "bf2b1fe2675a503e164362117407a1db762cf1075a930cd35c170344285926cd",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3123,
+     10,
+     3124,
+     10,
+     3125,
+     10
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "未被修复的魔法阵",
+   "description": "在天空之城找来尖晶石 10个、萤石 10个、锆石 10个",
+   "dialogue": {
+    "accept": "糟了，冒险家 。\n在人偶之王道格里消失后， 围绕天空之城的魔法阵力量还是没恢复。可能是天空之城本身散发的魔力发生了变异，恐怕造成支撑的妖精的魔法阵变弱了？\n如果要进行详细调查， 需要可从天空之城取得的尖晶石、 萤石和锆石。这些宝石都蕴含了魔力，我要详细调查当中蕴含的魔力。",
+    "complete": "辛苦了！ 不过还要麻烦你帮我把这些宝石放在一起！"
+   },
+   "category": "main",
+   "chapter": "common",
+   "min_level": 24,
+   "max_level": 99,
+   "requires": [
+    "original.quest.124"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 10,
+     "target": "original_3123"
+    },
+    {
+     "id": "objective_1",
+     "type": "collect_item",
+     "amount": 10,
+     "target": "original_3124"
+    },
+    {
+     "id": "objective_2",
+     "type": "collect_item",
+     "amount": 10,
+     "target": "original_3125"
+    }
+   ],
+   "reward": {
+    "gold": 30000,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3123": 10,
+    "original_3124": 10,
+    "original_3125": 10
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.126",
+   "source": {
+    "id": 126,
+    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_skycastle_11.qst",
+    "sha256": "bc2fd15e0d81d9933f0ea45d2c7575a5e19d73cbea7397b5c3b2bea3189da87e",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     14,
+     -1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "光之城主的宫殿",
+   "description": "通过天空之城的黑暗玄廊。",
+   "dialogue": {
+    "accept": "啊，我想起来了， 我很久以前听说过这事， \n那是很久很久以前的事了，那时的天界和阿拉德大陆正频繁的往来，但那该死的巴卡尔(磨牙~)出现了，他把天空之城给封死了……  \n后来，巴卡尔还在天空之城中建了宫殿，他下令自己的手下‘光之城主’和亲卫队天之驱逐者屠杀了所有试图通过那里的生灵… \n你看到的那个宫殿估计就是传说中的城主宫殿了。 如果你想通过那里，恐怕得先除掉那些天之驱逐者。",
+    "complete": "啊呀呀！ 你成功了呀！ 这么说我很可快就能回到我的故乡了？"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 22,
+   "max_level": 99,
+   "requires": [
+    "original.quest.125"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kiri",
+   "receiver": "kiri",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "darkentrance"
+    }
+   ],
+   "reward": {
+    "gold": 5000,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.361",
+   "source": {
+    "id": 361,
+    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_f_castle_2.qst",
+    "sha256": "481898987b5efb812826046c55ffd23e0fa2e8068456fe73ad4f73119d9e384d",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     17
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "变强的天空之城气息",
+   "description": "向凯莉打听天空之城气息变异的情况。",
+   "dialogue": {
+    "accept": "我敢肯定天空之城的魔法气息确实变异了， 不过这个气息和阿拉德大陆存在的那种气息不同。\n也许从天界来的凯莉知道其中的缘由。",
+    "complete": "原来是这样， 怪不得我最近总有种不安的感觉……"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 24,
+   "max_level": 99,
+   "requires": [
+    "original.quest.360"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "kiri",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "kiri"
+    }
+   ],
+   "reward": {
+    "gold": 300,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.16",
+   "source": {
+    "id": 16,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_1.qst",
+    "sha256": "85ea040e882f06667d67eb537ea9d53ed70a8bd18f64b60d3c79df298bb7c626",
+    "raw_type": [
+     "[hunt monster]"
+    ],
+    "raw_int_data": [
+     15,
+     -1,
+     3000,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "光之城主 - 赛格哈特",
+   "description": "前往天空之城的城主宫殿，打败领主光之城主赛格哈特。",
+   "dialogue": {
+    "accept": "接下来是光之城主赛格哈特……，你还不大了解他吧？ 呵呵。 这家伙最令人头疼了。 \n 他是暴龙王巴卡尔的忠仆，也是巴卡尔用来阻断天界和阿拉德大陆交流的重要棋子。 \n 虽然巴卡尔已经死了，但是他依然留守在天空之城并忠实地执行着昔日的任务…… \n 据我所知，天界和阿拉德大陆的交流中断后，天族多次尝试开启天界通向阿拉德大陆的大门，但都失败了，最后不得不放弃。 \n 但…是…呢， \n 身为冒险家，你肯定无法抑制内心的好奇吧？ 赛格哈特，他就在天空之城的城主宫殿里！ 请多留意自身安全，祝你能够成功～～",
+    "complete": "哦？ 你打败强大的光之城主了？ 但你的表情为什么这么奇怪啊？"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 25,
+   "max_level": 99,
+   "requires": [
+    "original.quest.126"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kiri",
+   "receiver": "kiri",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "kill_monster",
+     "amount": 1,
+     "target": "monster/lordoflight/lordoflight.mob",
+     "dungeon": "palaceofload"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {
+     "original_20066": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.362",
+   "source": {
+    "id": 362,
+    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_f_castle_3.qst",
+    "sha256": "56f16f4339f96adb355cc1f573815e54590fc13ddd1017ae94cc53f3153b4362",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     14,
+     2
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "悬空城的存在",
+   "description": "通过天空之城的黑暗玄廊，要求地下城难度为高等难度(Hard)。",
+   "dialogue": {
+    "accept": "嗯……如果我没猜错的话， 这不是一件小事！ \n巴卡尔统治天界时， 为了保护自己， 他建造了一些魔法城市并在那里训练军队。\n后来天界的机械革命来临， 巴卡尔被杀死。 他临死前的暴怒让天界诸城四分五裂， 崩散在各处； 同时也让巴卡尔建造的那些魔法城市从天界脱离， 悬浮在天空之上。\n天界偶尔可以用肉眼观察到那些漂浮在天空的魔法城市， 天界把它们称为悬空城， 并将它们当作那段历史的过往见证，不时提醒自己现在的生活来之不易……\n我对魔法一窍不通， 不过我觉得悬空城既然含有巴卡尔的强大魔力， 那么也许它才是影响天空之城魔力变异的真正原因！\n你可以去确认下悬空城有没有朝天空之城靠近，在天之驱逐者的根据地…如果黑暗玄廊附近可以观察到悬空城， 那么可以肯定天空之城就是受它影响了。\n你快去天空之城的黑暗玄廊确认吧， 当然， 你的夥伴越多， 你就会越安全。",
+    "complete": "悬空城果然离天空之城很近……嗯， 比我想像的更严重！"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 24,
+   "max_level": 99,
+   "requires": [
+    "original.quest.361"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kiri",
+   "receiver": "kiri",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "darkentrance",
+     "difficulty": [
+      "expert"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.4315",
+   "source": {
+    "id": 4315,
+    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_skycastle_12.qst",
+    "sha256": "16295d4769d2c5d3c2336948f133cedbd559c97120f7919372ca86f072bf0853",
+    "raw_type": [
+     "[hunt monster]"
+    ],
+    "raw_int_data": [
+     14,
+     1,
+     700,
+     50,
+     14,
+     1,
+     701,
+     50,
+     14,
+     1,
+     702,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "光之军队",
+   "description": "前往天空之城的黑暗玄廊，在中等难度(Medium)以上难度的地下城，消灭50名驱逐者与50名斧之驱逐者，以及消灭1名天之驱逐者。",
+   "dialogue": {
+    "accept": "啊……原来是这样。 由於光之军队的存在， 所以冒险家不能前进了。\n不过没关系！ 只要是挡住去路的， 你都可以把他除掉， 我相信你能办到。",
+    "complete": "果然！你跟我的心灵是相通的！！"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 22,
+   "max_level": 99,
+   "requires": [
+    "original.quest.126"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kiri",
+   "receiver": "kiri",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "kill_monster",
+     "amount": 50,
+     "target": "monster/soldier/expeller.mob",
+     "dungeon": "darkentrance",
+     "difficulty": [
+      "adventure"
+     ]
+    },
+    {
+     "id": "objective_1",
+     "type": "kill_monster",
+     "amount": 50,
+     "target": "monster/soldier/axeexpeller.mob",
+     "dungeon": "darkentrance",
+     "difficulty": [
+      "adventure"
+     ]
+    },
+    {
+     "id": "objective_2",
+     "type": "kill_monster",
+     "amount": 1,
+     "target": "monster/soldier/heavenexpeller.mob",
+     "dungeon": "darkentrance",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.17",
+   "source": {
+    "id": 17,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_2.qst",
+    "sha256": "8437bb49bf1dec63f0f40c914fd828b80d9dc12263fea0ee7f753b7d0139bdfe",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     2
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "不灭的赛格哈特",
+   "description": "找赛莉亚打听光之城主的消息。",
+   "dialogue": {
+    "accept": "光之城主不停的复活？ \n 啊… 果然 原来他不灭的原因是因为他可以不停地复活？！  不停地复活  嗯… 这种时候 该怎么做才好呢? \n 啊！ 或许赛莉亚知道点什么！ 那孩子有精灵时代的记忆，她知道不少神奇的事呢。",
+    "complete": "您好！ 需要我帮忙吗？"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 25,
+   "max_level": 99,
+   "requires": [
+    "original.quest.16"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kiri",
+   "receiver": "seria",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "seria"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.4318",
+   "source": {
+    "id": 4318,
+    "path": "n_quest/westcost/floatingcastle/normal_24_floatingcastle_zero_gravity_1.qst",
+    "sha256": "a2d19d89806e57934d53c47b82fc5fd428c05225ab214679bb88254e027f23d7",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3170,
+     10
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "悬空城的无重力碎片 1",
+   "description": "收集10个[无重力碎片]交给诺顿。",
+   "dialogue": {
+    "accept": "你听说过无重力碎片吗？ 那是一种具有使悬空城浮空的力量碎片。\n 我想知道究竟是何种力量，如果你有去悬空城，麻烦帮我收集一些无重力碎片吧。",
+    "complete": "真是名不虚传的神奇物品啊！  我又有新的东西可以研究啦！"
+   },
+   "category": "side",
+   "chapter": "westcost",
+   "min_level": 24,
+   "max_level": 99,
+   "requires": [
+    "original.quest.362"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "norton",
+   "receiver": "norton",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 10,
+     "target": "original_3170"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3037": 50,
+     "original_3035": 20,
+     "original_3036": 20
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3170": 10
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.4319",
+   "source": {
+    "id": 4319,
+    "path": "n_quest/westcost/floatingcastle/normal_24_floatingcastle_zero_gravity_2.qst",
+    "sha256": "a638170c03029a3e4d61629c1a1ee09ceed68d274ff46a27404d36602ed245a1",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3170,
+     10
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "悬空城的无重力碎片 2",
+   "description": "收集10个[无重力碎片]交给诺顿。",
+   "dialogue": {
+    "accept": "我说年轻人啊，你不能每次都空手来啊！ 你下次来就带些悬空城的无重力碎片给我吧。放心啦！ 我不会平白要你的东西，我会用白色和黑色两种小晶块和你交换的！",
+    "complete": "可以的话，可以帮我带一点吗？"
+   },
+   "category": "side",
+   "chapter": "westcost",
+   "min_level": 24,
+   "max_level": 99,
+   "requires": [
+    "original.quest.362"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "norton",
+   "receiver": "norton",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 10,
+     "target": "original_3170"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3037": 50,
+     "original_3034": 20,
+     "original_3033": 20
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3170": 10
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
   }
+ ],
+ "auto_quest_ids": [
+  4465,
+  4469,
+  4470,
+  4471,
+  4472,
+  4473,
+  4474
  ],
  "coverage": {
   "indexed_quests": 2824,
-  "existing": 34,
-  "new_executable": 9,
-  "total_executable": 43,
-  "objective_parsed": 2297,
+  "existing": 64,
+  "new_executable": 56,
+  "total_executable": 120,
+  "objective_parsed": 2359,
   "new_lifecycles": {
-   "once": 9
+   "once": 56
   },
-  "blocked": 2781
+  "blocked": 2704
+ },
+ "campaign": {
+  "id": "campaign_1_16",
+  "target_level": 16,
+  "required": 41,
+  "executable": 41,
+  "missing": 0,
+  "rows": [
+   {
+    "source_id": 101,
+    "id": "elvengard.meet_linus",
+    "state": "existing"
+   },
+   {
+    "source_id": 102,
+    "id": "lorien.first_clear",
+    "state": "existing"
+   },
+   {
+    "source_id": 103,
+    "id": "lorien.goblin_noise",
+    "state": "existing"
+   },
+   {
+    "source_id": 4301,
+    "id": "elvengard.seria_fate",
+    "state": "existing"
+   },
+   {
+    "source_id": 104,
+    "id": "hendon.meet_pungjin",
+    "state": "existing"
+   },
+   {
+    "source_id": 105,
+    "id": "gran.tau_rage",
+    "state": "existing"
+   },
+   {
+    "source_id": 106,
+    "id": "gran.cat_trouble",
+    "state": "existing"
+   },
+   {
+    "source_id": 107,
+    "id": "gran.meet_shylock",
+    "state": "existing"
+   },
+   {
+    "source_id": 108,
+    "id": "gran.kaino_legend",
+    "state": "existing"
+   },
+   {
+    "source_id": 4302,
+    "id": "gran.goblin_mutation",
+    "state": "existing"
+   },
+   {
+    "source_id": 1901,
+    "id": "hendon.swordman_start",
+    "state": "existing"
+   },
+   {
+    "source_id": 501,
+    "id": "hendon.meet_sinda",
+    "state": "existing"
+   },
+   {
+    "source_id": 502,
+    "id": "hendon.job_introduction",
+    "state": "existing"
+   },
+   {
+    "source_id": 503,
+    "id": "gran.stronger_enemy",
+    "state": "existing"
+   },
+   {
+    "source_id": 504,
+    "id": "original.quest.504",
+    "state": "admitted"
+   },
+   {
+    "source_id": 505,
+    "id": "original.quest.505",
+    "state": "admitted"
+   },
+   {
+    "source_id": 506,
+    "id": "original.quest.506",
+    "state": "existing"
+   },
+   {
+    "source_id": 109,
+    "id": "gran.meet_gsd",
+    "state": "existing"
+   },
+   {
+    "source_id": 110,
+    "id": "gran.poison_scent",
+    "state": "existing"
+   },
+   {
+    "source_id": 111,
+    "id": "original.quest.111",
+    "state": "admitted"
+   },
+   {
+    "source_id": 116,
+    "id": "original.quest.116",
+    "state": "admitted"
+   },
+   {
+    "source_id": 112,
+    "id": "original.quest.112",
+    "state": "admitted"
+   },
+   {
+    "source_id": 113,
+    "id": "original.quest.113",
+    "state": "admitted"
+   },
+   {
+    "source_id": 114,
+    "id": "original.quest.114",
+    "state": "admitted"
+   },
+   {
+    "source_id": 7,
+    "id": "original.quest.7",
+    "state": "admitted"
+   },
+   {
+    "source_id": 201,
+    "id": "original.quest.201",
+    "state": "existing"
+   },
+   {
+    "source_id": 202,
+    "id": "original.quest.202",
+    "state": "existing"
+   },
+   {
+    "source_id": 203,
+    "id": "original.quest.203",
+    "state": "existing"
+   },
+   {
+    "source_id": 95,
+    "id": "original.quest.95",
+    "state": "admitted"
+   },
+   {
+    "source_id": 96,
+    "id": "original.quest.96",
+    "state": "admitted"
+   },
+   {
+    "source_id": 97,
+    "id": "original.quest.97",
+    "state": "admitted"
+   },
+   {
+    "source_id": 8,
+    "id": "original.quest.8",
+    "state": "admitted"
+   },
+   {
+    "source_id": 117,
+    "id": "original.quest.117",
+    "state": "admitted"
+   },
+   {
+    "source_id": 4601,
+    "id": "original.quest.4601",
+    "state": "admitted"
+   },
+   {
+    "source_id": 4465,
+    "id": "original.quest.4465",
+    "state": "admitted"
+   },
+   {
+    "source_id": 4469,
+    "id": "original.quest.4469",
+    "state": "existing"
+   },
+   {
+    "source_id": 4470,
+    "id": "original.quest.4470",
+    "state": "existing"
+   },
+   {
+    "source_id": 4471,
+    "id": "original.quest.4471",
+    "state": "admitted"
+   },
+   {
+    "source_id": 4472,
+    "id": "original.quest.4472",
+    "state": "admitted"
+   },
+   {
+    "source_id": 4473,
+    "id": "original.quest.4473",
+    "state": "admitted"
+   },
+   {
+    "source_id": 4474,
+    "id": "original.quest.4474",
+    "state": "admitted"
+   }
+  ]
  },
  "status_file": "res://data/native_quest_status_v2.json.gz",
- "status_sha256": "144c0531bc274bc8683daa256491d7ab679adeeb3ae61837ec109f2cb483207e"
+ "status_sha256": "a3c05edc5b42fca131fe8dc36cff9469893ae3d884ec892aea69cfa9f6fe1285"
 }

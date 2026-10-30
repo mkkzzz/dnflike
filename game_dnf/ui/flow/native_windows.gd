@@ -118,13 +118,13 @@ func field_texture(id: String) -> Texture2D:
 	return original_texture(id,"field_images")
 
 func original_texture(id: String, kind: String) -> Texture2D:
-	if native_item_manifest.is_empty():native_item_manifest=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/items_native_v1/manifest.json"))
+	if native_item_manifest.is_empty():native_item_manifest=JSON.parse_string(FileAccess.get_file_as_string("res://assets_local/items_native_v2/manifest.json"))
 	if native_item_manifest.get(kind,{}).has(id):
 		var key: String=native_item_manifest[kind][id]
 		if not native_item_textures.has(key):
 			var info: Dictionary=native_item_manifest["images"][key]
 			var texture:=AtlasTexture.new()
-			texture.atlas=load("res://assets_local/items_native_v1/"+String(info["file"]))
+			texture.atlas=load("res://assets_local/items_native_v2/"+String(info["file"]))
 			var region: Array=info["region"]
 			texture.region=Rect2(region[0],region[1],region[2],region[3])
 			native_item_textures[key]=texture
@@ -459,14 +459,14 @@ func dungeon() -> void:
 	if choices.is_empty():
 		skin.label(node, "当前城镇没有可用的地下城", Vector2(300, 400), 12, Color("c86a5a"))
 	var difficulty: String = game.session.profile.get("difficulty", "normal")
-	var levels := ["normal", "adventure", "king"]
+	var levels := ["normal", "adventure", "expert", "king"]
 	var current := levels.find(difficulty)
 	var bar := container(node, difficulty_position, Vector2(118, 27))
 	bar.name = "difficulty_selector"
 	skin.image(bar, skin.texture("select", 2), Vector2.ZERO)
-	skin.image(bar, skin.texture("select", {"normal":11,"adventure":12,"king":14}[difficulty]), Vector2(36, 4))
+	skin.image(bar, skin.texture("select", {"normal":11,"adventure":12,"expert":13,"king":14}[difficulty]), Vector2(36, 4))
 	for entry in [[-1, Vector2(0, 4), [3,4,5]], [1, Vector2(98, 4), [7,8,9]]]:
-		var next: String = levels[posmod(current + entry[0], 3)]
+		var next: String = levels[posmod(current + entry[0], levels.size())]
 		var button: TextureButton = skin.sprite_button(bar, "select", entry[2], entry[1], func():
 			if game.act("flow.difficulty", {"id":next}):game.show_overlay("dungeon"))
 		button.name = "difficulty_previous" if entry[0] == -1 else "difficulty_next"
@@ -492,7 +492,7 @@ func result() -> void:
 	skin.image(node, skin.texture("reward", 33), Vector2.ZERO)
 	skin.image(node, skin.texture("reward", 35), Vector2(138, 28))
 	skin.label(node, "通关结算" if won else "冒险结束", Vector2(163, 43), 26, Color("f0d18a"))
-	skin.label(node, String(game.session.dungeons.get(game.session.run.get("dungeon","forest_trial"),{}).get("name","冒险"))+"  ·  " + {"normal":"普通级", "adventure":"冒险级", "king":"王者级"}.get(game.session.run.get("difficulty", "normal"), "普通级"), Vector2(166, 91), 14)
+	skin.label(node, String(game.session.dungeons.get(game.session.run.get("dungeon","forest_trial"),{}).get("name","冒险"))+"  ·  " + {"normal":"普通级", "adventure":"冒险级", "expert":"勇士级", "king":"王者级"}.get(game.session.run.get("difficulty", "normal"), "普通级"), Vector2(166, 91), 14)
 	var stats: Dictionary = r.get("stats", {})
 	skin.label(node, "通关时间    %.1f 秒\n承受伤害    %d\n获得金币    %d\n获得经验    %d" % [float(stats.get("time_ms", 0)) / 1000, int(stats.get("damage_taken", 0)), int(r.get("gold", 0)), int(r.get("xp", 0))], Vector2(166, 125), 14)
 	if won:skin.image(node, skin.texture("result", {"S": 3, "A": 6, "B": 7}[r.get("rank", "B")]), Vector2(490, 85))

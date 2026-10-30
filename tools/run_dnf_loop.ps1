@@ -83,6 +83,18 @@ if ($importExit -ne 0 -or ($importOutput -match '(?m)^(SCRIPT ERROR|ERROR:)')) {
     throw "Loop project import failed."
 }
 if ($Test) {
+    # 流水线加固：原子发布、路线合并与城镇房间重应用必须独立于手动调用。
+    $pipelineTests=@(
+        "test_build_dnf_combat_assets.py",
+        "test_build_dnf_dungeon_route.py",
+        "test_apply_dnf_town_rooms.py"
+    )
+    foreach ($testName in $pipelineTests) {
+        $testOutput=& python (Join-Path $PSScriptRoot $testName)
+        $testExit=$LASTEXITCODE
+        $testOutput | Write-Output
+        if ($testExit -ne 0) {throw "Pipeline hardening test failed: $testName"}
+    }
     & python (Join-Path $PSScriptRoot "check_dnf_native_catalog.py")
     if ($LASTEXITCODE -ne 0) {throw "Complete native quest/item package is inconsistent."}
     & python (Join-Path $PSScriptRoot "build_dnf_quest_rules.py") --check
@@ -90,6 +102,9 @@ if ($Test) {
     $questRules=& $GodotPath --headless --path $gamePath --script res://tests/quests/test_native_quest_rules.gd 2>&1
     $questRules | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($questRules -match 'SCRIPT ERROR|ERROR:') -or -not ($questRules -match '\[QUEST_RULES\] COMPLETE checks=\d+ failures=0')) {throw "Native quest rules regression failed."}
+    $campaign=& $GodotPath --headless --path $gamePath --script res://tests/quests/test_campaign_1_16.gd 2>&1
+    $campaign | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($campaign -match 'SCRIPT ERROR|ERROR:') -or -not ($campaign -match '\[CAMPAIGN\] COMPLETE checks=\d+ failures=0')) {throw "Curated 1-16 campaign regression failed."}
     $weaponOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_weapon_appearance_rules.gd 2>&1
     $weaponOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($weaponOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($weaponOutput -match '\[WEAPON_RULES\] COMPLETE checks=\d+ failures=0')) {throw "Item-specific weapon appearance regression failed."}

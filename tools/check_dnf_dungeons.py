@@ -26,7 +26,10 @@ DIRECTIONS = {'left', 'right', 'up', 'down'}
 def main() -> int:
     dungeons = json.loads((GAME / 'data/dungeons.json').read_text(encoding='utf-8'))['dungeons']
     towns = json.loads((GAME / 'data/towns.json').read_text(encoding='utf-8'))['locations']
-    quests = {q['id'] for q in json.loads((GAME / 'data/quests.json').read_text(encoding='utf-8'))['quests']}
+    quest_rows = list(json.loads((GAME / 'data/quests.json').read_text(encoding='utf-8'))['quests'])
+    quest_rows += json.loads((GAME / 'data/native_runtime.json').read_text(encoding='utf-8'))['quests']
+    quest_rows += json.loads((GAME / 'data/native_quest_rules_v2.json').read_text(encoding='utf-8'))['quests']
+    quests = {q['id'] for q in quest_rows}
     level_cap = int(json.loads((GAME / 'data/numbers.json').read_text(encoding='utf-8'))['progression']['level_cap'])
     fails: list[str] = []
     warnings: list[str] = []

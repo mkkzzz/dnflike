@@ -80,6 +80,7 @@ def collect_snapshot(root: Path = ROOT) -> dict[str, Any]:
     monster_catalog = load_json(game / "data/monster_catalog.json")
     boss_rules = load_json(game / "data/boss_rules.json")
     quest_catalog = load_json(game / "data/quest_catalog.json")
+    quest_rules = load_json(game / "data/native_quest_rules_v2.json")
     native_runtime = load_json(game / "data/native_runtime.json")
     native_manifest = load_json(
         game / "assets_local/native_data_v1/manifest.json"
@@ -220,6 +221,19 @@ def collect_snapshot(root: Path = ROOT) -> dict[str, Any]:
             ],
             "top_blockers": blockers,
         },
+        "campaign": {
+            "id": str((quest_rules.get("campaign") or {}).get("id", "")),
+            "target_level": int(
+                (quest_rules.get("campaign") or {}).get("target_level", 0)
+            ),
+            "required": int(
+                (quest_rules.get("campaign") or {}).get("required", 0)
+            ),
+            "executable": int(
+                (quest_rules.get("campaign") or {}).get("executable", 0)
+            ),
+            "missing": int((quest_rules.get("campaign") or {}).get("missing", 0)),
+        },
         "items": {
             "source_library_files": int(native_manifest["summary"]["files"]),
             "source_item_files": source_item_files,
@@ -274,6 +288,7 @@ def render_markdown(snapshot: dict[str, Any]) -> str:
     items = snapshot["items"]
     skills = snapshot["skills"]
     monsters = snapshot["monsters"]
+    campaign = snapshot["campaign"]
 
     level_rows = [
         [label, world["level_bands"][label]]
@@ -335,6 +350,7 @@ def render_markdown(snapshot: dict[str, Any]) -> str:
                     f"{quests['source_total']} 条源总账",
                     f"{quests['runtime_total']} 条 ({quests['runtime_percent_of_source']:.2f}%)",
                     f"史诗 {quests['epic_runtime']} / {quests['epic_total']}；"
+                    f"1-16 主线 {campaign['executable']} / {campaign['required']}；"
                     f"索引任务阻塞 {quests['indexed_blocked']} 条",
                 ],
                 [
@@ -430,6 +446,19 @@ def render_markdown(snapshot: dict[str, Any]) -> str:
             ["任务类型/品质", "源记录", "运行时已启用"],
             grade_rows,
         )
+    )
+    lines.extend(
+        [
+            "",
+            "当前 `%s`：**%d / %d** 可执行，目标等级 **%d**，缺失 **%d**。"
+            % (
+                campaign["id"],
+                campaign["executable"],
+                campaign["required"],
+                campaign["target_level"],
+                campaign["missing"],
+            ),
+        ]
     )
     if blocker_rows:
         lines.extend(

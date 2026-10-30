@@ -1,0 +1,70 @@
+{
+  "schema": "dnf_campaign/1",
+  "id": "campaign_1_16",
+  "title": "格兰之森与天空之城开端",
+  "target_level": 16,
+  "character_targets": [
+    "[demonic swordman]"
+  ],
+  "scope": "共通主线、鬼剑士职业线与到达 16 级所需的时空碎片桥接；独立教学/居民委托和 G.S.D 陪战分支暂不混入关键路径。",
+  "episodes": [
+    {
+      "episode": "1",
+      "source_ids": [101, 102, 103, 4301, 104, 105, 106, 107, 108, 4302]
+    },
+    {
+      "episode": "2",
+      "source_ids": [1901, 501, 502, 503, 504, 505, 506]
+    },
+    {
+      "episode": "3",
+      "source_ids": [109, 110, 111]
+    },
+    {
+      "episode": "4",
+      "source_ids": [116, 112, 113, 114, 7]
+    },
+    {
+      "episode": "6",
+      "source_ids": [201, 202, 203, 95, 96, 97]
+    },
+    {
+      "episode": "7-start",
+      "source_ids": [8, 117, 4601]
+    },
+    {
+      "episode": "time-piece-bridge",
+      "source_ids": [4465, 4469, 4470, 4471, 4472, 4473, 4474]
+    }
+  ],
+  "required_source_ids": [
+    101, 102, 103, 4301, 104, 105, 106, 107, 108, 4302,
+    1901, 501, 502, 503, 504, 505, 506,
+    109, 110, 111,
+    116, 112, 113, 114, 7,
+    201, 202, 203, 95, 96, 97,
+    8, 117, 4601,
+    4465, 4469, 4470, 4471, 4472, 4473, 4474
+  ],
+  "auto_source_ids": [4465, 4469, 4470, 4471, 4472, 4473, 4474],
+  "excluded_branches": {
+    "optional_quests": [212, 213, 214, 215, 216, 217, 218, 219],
+    "gsd_companion": [4305, 4306, 4307, 4308, 4309, 4310, 4311, 4312, 4313],
+    "after_level_16": [119, 120, 507],
+    "other_time_piece": [4475, 4476, 4477, 4478]
+  },
+  "map_targets": {
+    "1614": {
+      "path": "draconiantower/(2,1)q1808.map",
+      "dungeon": "draconiantower",
+      "cell": [2, 1],
+      "adaptation": "固定路线使用同格 n1808 地图；clear-map 以该格的房间清除事件完成，q1808 专用 NPC 演出尚未接入。"
+    }
+  },
+  "evidence": {
+    "task_order": "111 backup n_quest/epicquest.lst episodes 1-4,6,7; source predecessor fields checked independently",
+    "time_piece_bridge": "111 backup QST pre-required-quest chain required by source 111/116",
+    "map_1614": "111 backup map/map.lst -> draconiantower/(2,1)q1808.map",
+    "known_adaptation": "the_last_mehmet is an automatic quest-piece giver/receiver because it is not a placed town NPC"
+  }
+}

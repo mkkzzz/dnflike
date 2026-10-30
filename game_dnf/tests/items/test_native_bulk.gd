@@ -47,15 +47,38 @@ func run() -> void:
 			var entry: Dictionary=session.quests.new_entry(session.quests.catalog.definitions[required]);entry.state="completed"
 			session.profile.quest_state.entries[required]=entry
 			session.profile.quest_state.transactions[session.quests.transaction_id(required)]=true
-		check(session.quest_command("quest.accept",{"id":q.id},{"npc":q.giver,"nearby":true}).ok,"bulk source quest accepts: "+q.id)
+		if q.get("auto_accept",false):
+			var automatic: Dictionary=session.advance_auto_quests()
+			check(automatic.get("ok",false) and session.profile.quest_state.entries.has(q.id),"bulk automatic source quest starts: "+q.id)
+		else:
+			check(session.quest_command("quest.accept",{"id":q.id},{"npc":q.giver,"nearby":true}).ok,"bulk source quest accepts: "+q.id)
 		for o: Dictionary in q.objectives:
 			if o.type=="collect_item":Inventory.give(session.profile,o.target,int(o.amount))
 			elif o.type=="meet_npc":session.quests.ingest(session.profile,{"type":"npc.met","event_id":"native:"+q.id+o.id,"npc":o.target})
 			elif o.type=="clear_dungeon":session.quests.ingest(session.profile,{"type":"dungeon.cleared","event_id":"native:"+q.id+o.id,"dungeon":o.target,"victory":true,"difficulty":o.get("difficulty",["normal"])[0]})
-		check(session.quests.status(session.profile,q.id)=="ready","bulk source objectives complete through service events or real inventory: "+q.id)
-		check(session.quest_command("quest.claim",{"id":q.id},{"npc":q.receiver,"nearby":true}).ok,"bulk source reward and consume transaction: "+q.id)
+			elif o.type=="kill_monster":
+				for index in int(o.amount):
+					session.quests.ingest(session.profile,{"type":"combat.monster_defeated","event_id":"native:"+q.id+o.id+":"+str(index),"monster_id":o.target,"dungeon":o.get("dungeon",""),"difficulty":o.get("difficulty",["normal"])[0]})
+			elif o.type=="clear_map":
+				session.quests.ingest(session.profile,{"type":"map.cleared","event_id":"native:"+q.id+o.id,"dungeon":o.dungeon,"cell":o.cell})
+			elif o.type=="learn_skill":
+				session.quests.ingest(session.profile,{"type":"skill.learned","event_id":"native:"+q.id+o.id,"skill":"upper","levels":1})
+			elif o.type=="disassemble_item":
+				var given: Dictionary=session.command("numbers.gear_give",{"id":"iron_sword"})
+				var quote: Dictionary=session.Services.quote(session.profile,"services.disassemble",{"uid":given.uid})
+				check(session.service_command("services.disassemble",{"uid":given.uid,"signature":quote.signature,"transaction":"native:"+q.id}, {"npc":"norton","nearby":true}).ok,"bulk source objective uses real disassembly: "+q.id)
+		session.advance_auto_quests()
+		if q.get("auto_complete",false):
+			check(session.quests.status(session.profile,q.id)=="completed","bulk automatic source objective and reward complete: "+q.id)
+		else:
+			check(session.quests.status(session.profile,q.id)=="ready","bulk source objectives complete through service events or real inventory: "+q.id)
+			var claim: Dictionary={"id":q.id}
+			if not q.reward.choices.is_empty():claim["choice"]=q.reward.choices[0].id
+			check(session.quest_command("quest.claim",claim,{"npc":q.receiver,"nearby":true}).ok,"bulk source reward and consume transaction: "+q.id)
 		var restored=Session.new()
-		check(restored.restore(JSON.parse_string(JSON.stringify(session.serialize()))) and restored.quests.status(restored.profile,q.id)=="completed","bulk source completion survives real save restoration: "+q.id)
+		var restore_ok:=restored.restore(JSON.parse_string(JSON.stringify(session.serialize())))
+		var restored_status: String=restored.quests.status(restored.profile,q.id)
+		check(restore_ok and (restored_status=="completed" or q.get("lifecycle","once")=="repeat" and restored_status=="available"),"bulk source completion survives real save restoration: "+q.id)
 	var food:=""
 	for id: String in runtime.consumables:
 		if float(runtime.consumables[id].effect.get("hp_percent",0))>0:food=id;break

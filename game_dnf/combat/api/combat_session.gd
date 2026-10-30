@@ -102,7 +102,7 @@ func configure_trial(movement_scale: float, difficulty: String) -> void:
 	if game.numeric_player != null:
 		game.configure_monster_numbers(game.numeric_monster_level,difficulty)
 		return
-	var factor: float = {"normal":1.0, "adventure":1.3, "king":1.6}.get(difficulty, 1.0)
+	var factor: float = {"normal":1.0, "adventure":1.25, "expert":1.5, "king":1.75}.get(difficulty, 1.0)
 	game.table.monsters = game.table.monsters.duplicate(true)
 	for monster: Dictionary in game.table.monsters.values():
 		monster["hp"] *= factor

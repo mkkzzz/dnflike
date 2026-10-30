@@ -4933,6 +4933,7 @@
    }
   ]
  },
+ "npcs": [],
  "images": {
   "06c58cb34dcf_0": {
    "file": "img/06c58cb34dcf_0.png",
@@ -5075,6 +5076,70 @@
    "canvas_offset": [
     93,
     71
+   ],
+   "variants": 1
+  },
+  "d598302668f9_0": {
+   "file": "img/d598302668f9_0.png",
+   "source_path": "sprite/map/npc/npc_su.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "d598302668f994c7da3583dd13dcea29016bfda377ce36807ca317d19067c3ce",
+   "frame": 0,
+   "size": [
+    48,
+    135
+   ],
+   "canvas_offset": [
+    23,
+    30
+   ],
+   "variants": 1
+  },
+  "d598302668f9_1": {
+   "file": "img/d598302668f9_1.png",
+   "source_path": "sprite/map/npc/npc_su.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "d598302668f994c7da3583dd13dcea29016bfda377ce36807ca317d19067c3ce",
+   "frame": 1,
+   "size": [
+    48,
+    135
+   ],
+   "canvas_offset": [
+    23,
+    30
+   ],
+   "variants": 1
+  },
+  "d598302668f9_2": {
+   "file": "img/d598302668f9_2.png",
+   "source_path": "sprite/map/npc/npc_su.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "d598302668f994c7da3583dd13dcea29016bfda377ce36807ca317d19067c3ce",
+   "frame": 2,
+   "size": [
+    48,
+    135
+   ],
+   "canvas_offset": [
+    23,
+    30
+   ],
+   "variants": 1
+  },
+  "d598302668f9_3": {
+   "file": "img/d598302668f9_3.png",
+   "source_path": "sprite/map/npc/npc_su.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "d598302668f994c7da3583dd13dcea29016bfda377ce36807ca317d19067c3ce",
+   "frame": 3,
+   "size": [
+    48,
+    135
+   ],
+   "canvas_offset": [
+    23,
+    30
    ],
    "variants": 1
   },

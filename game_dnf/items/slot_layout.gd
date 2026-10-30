@@ -30,7 +30,7 @@ static func available(p: Dictionary, id: String) -> int:
 	return int(p["inventory"].get(id, 0)) - (1 if p["equipped"] == id else 0)
 
 static func valid(p: Dictionary, catalog: Dictionary) -> bool:
-	if p.has("difficulty") and p["difficulty"] not in ["normal", "adventure", "king"]:return false
+	if p.has("difficulty") and p["difficulty"] not in ["normal", "adventure", "expert", "king"]:return false
 	if p.has("bag_layout"):
 		if not p["bag_layout"] is Dictionary:return false
 		for key in p["bag_layout"]:

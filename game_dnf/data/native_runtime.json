@@ -1153,6 +1153,38 @@
     "Repair-per-point retains the existing project conversion of source repair price divided by durability; original disassembly is not fabricated"
    ]
   },
+  "original_20071": {
+   "name": "神鬼战士项坠",
+   "kind": "weapon",
+   "rarity": 3,
+   "level": 30,
+   "weight": 0.4,
+   "price": 40800,
+   "stack_limit": 1,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/IconAcc.img",
+    43
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    6
+   ],
+   "source": {
+    "id": 20071,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/amulet/n_neck_gladios.equ",
+    "sha256": "9fcdf05c53bd6b2d5ace7877c03804d34541a6ef2b40a7cda1568d2c0f39640d"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "adaptations": [
+    "Town-only equipment changes; source cooldown retained, combat swapping disabled",
+    "Weapon appearance uses the existing three supported families; source variation retained in native record",
+    "Repair-per-point retains the existing project conversion of source repair price divided by durability; original disassembly is not fabricated"
+   ]
+  },
   "original_20069": {
    "name": "白金项链",
    "kind": "weapon",
@@ -1176,6 +1208,38 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/amulet/n_neck_gold.equ",
     "sha256": "97c589b6629abdb117727e98d0587d666e89fa3b3f82ebabab7b286284480061"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "adaptations": [
+    "Town-only equipment changes; source cooldown retained, combat swapping disabled",
+    "Weapon appearance uses the existing three supported families; source variation retained in native record",
+    "Repair-per-point retains the existing project conversion of source repair price divided by durability; original disassembly is not fabricated"
+   ]
+  },
+  "original_20093": {
+   "name": "王者之星",
+   "kind": "weapon",
+   "rarity": 3,
+   "level": 50,
+   "weight": 0.4,
+   "price": 67200,
+   "stack_limit": 1,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/common/necklace.img",
+    3
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    6
+   ],
+   "source": {
+    "id": 20093,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/amulet/n_neck_king.equ",
+    "sha256": "7041d6e1a5424191e6a70a13fead0a8190edfd533b0a0cbe3b2ece4101b47804"
    },
    "purchasable": false,
    "sellable": true,
@@ -2104,6 +2168,38 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/amulet/neck_gigicross.equ",
     "sha256": "1a21017d5badc299344211691434807d0e2b5424ebdceda71366c44d39a83e4b"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "adaptations": [
+    "Town-only equipment changes; source cooldown retained, combat swapping disabled",
+    "Weapon appearance uses the existing three supported families; source variation retained in native record",
+    "Repair-per-point retains the existing project conversion of source repair price divided by durability; original disassembly is not fabricated"
+   ]
+  },
+  "original_20034": {
+   "name": "神鬼战士项坠",
+   "kind": "weapon",
+   "rarity": 3,
+   "level": 29,
+   "weight": 0.4,
+   "price": 39600,
+   "stack_limit": 1,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/IconAcc.img",
+    43
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    6
+   ],
+   "source": {
+    "id": 20034,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/amulet/neck_gladios.equ",
+    "sha256": "da24ca52b3efe0862fb18048698e67aca8891bc4747a10109b2a39b6d71eb1f4"
    },
    "purchasable": false,
    "sellable": true,
@@ -6872,6 +6968,38 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/belt/harmor/belt_ha_gent3.equ",
     "sha256": "ef7c0e40235300d75496b646ab2c4549199684ae5732afba6f77ef22fc2b0cb0"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "adaptations": [
+    "Town-only equipment changes; source cooldown retained, combat swapping disabled",
+    "Weapon appearance uses the existing three supported families; source variation retained in native record",
+    "Repair-per-point retains the existing project conversion of source repair price divided by durability; original disassembly is not fabricated"
+   ]
+  },
+  "original_17242": {
+   "name": "守护腰带",
+   "kind": "weapon",
+   "rarity": 2,
+   "level": 5,
+   "weight": 1.4,
+   "price": 4200,
+   "stack_limit": 1,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/common/belt.img",
+    18
+   ],
+   "field_image": [
+    "Item/field_equip.img",
+    13
+   ],
+   "source": {
+    "id": 17242,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/belt/harmor/belt_protection.equ",
+    "sha256": "fdd96f926ab322157782692d90424efb98b01c96a685fd44c8a2a470700ae591"
    },
    "purchasable": false,
    "sellable": true,
@@ -29665,6 +29793,38 @@
     "Repair-per-point retains the existing project conversion of source repair price divided by durability; original disassembly is not fabricated"
    ]
   },
+  "original_12024": {
+   "name": "精灵凯恩之裤",
+   "kind": "weapon",
+   "rarity": 2,
+   "level": 24,
+   "weight": 1.1,
+   "price": 15600,
+   "stack_limit": 1,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/common/pants.img",
+    9
+   ],
+   "field_image": [
+    "Item/field_equip.img",
+    1
+   ],
+   "source": {
+    "id": 12024,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/pants/cloth/kain_elven.equ",
+    "sha256": "322fb5ab91f252978b258d4f59517bc15c9c88228df9c5ccdfacd11913931c8a"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "adaptations": [
+    "Town-only equipment changes; source cooldown retained, combat swapping disabled",
+    "Weapon appearance uses the existing three supported families; source variation retained in native record",
+    "Repair-per-point retains the existing project conversion of source repair price divided by durability; original disassembly is not fabricated"
+   ]
+  },
   "original_12077": {
    "name": "破古老的绫罗绑腿",
    "kind": "weapon",
@@ -29912,6 +30072,38 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/pants/cloth/n_grv_wool.equ",
     "sha256": "82a176f7fd932e94873f60421e06eeef6b6442ab870457e6b75d5f20581c508d"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "adaptations": [
+    "Town-only equipment changes; source cooldown retained, combat swapping disabled",
+    "Weapon appearance uses the existing three supported families; source variation retained in native record",
+    "Repair-per-point retains the existing project conversion of source repair price divided by durability; original disassembly is not fabricated"
+   ]
+  },
+  "original_12064": {
+   "name": "精灵凯恩之裤",
+   "kind": "weapon",
+   "rarity": 2,
+   "level": 25,
+   "weight": 1.1,
+   "price": 16200,
+   "stack_limit": 1,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/common/pants.img",
+    9
+   ],
+   "field_image": [
+    "Item/field_equip.img",
+    1
+   ],
+   "source": {
+    "id": 12064,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/pants/cloth/n_kain_elven.equ",
+    "sha256": "5b3d0e7c28e7eadd940e8828862e8ff113e1df0f9bc8a97291bb2b4631ae28b6"
    },
    "purchasable": false,
    "sellable": true,
@@ -34360,6 +34552,38 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/pants/harmor/n_leg_sbchain.equ",
     "sha256": "9739e131d29d8d7af55c97c5a835b2f9ad5b8b48379199909ebcafb80056978f"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "adaptations": [
+    "Town-only equipment changes; source cooldown retained, combat swapping disabled",
+    "Weapon appearance uses the existing three supported families; source variation retained in native record",
+    "Repair-per-point retains the existing project conversion of source repair price divided by durability; original disassembly is not fabricated"
+   ]
+  },
+  "original_13244": {
+   "name": "易鲁曼拓断刃绑腿",
+   "kind": "weapon",
+   "rarity": 2,
+   "level": 11,
+   "weight": 2.9,
+   "price": 10800,
+   "stack_limit": 1,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/common/pants.img",
+    26
+   ],
+   "field_image": [
+    "Item/field_equip.img",
+    11
+   ],
+   "source": {
+    "id": 13244,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/pants/harmor/pant_illumental.equ",
+    "sha256": "738bbef9a169b0d11cb895d16ef097b6b4360a60fb724d40918e94730c8b149b"
    },
    "purchasable": false,
    "sellable": true,
@@ -43864,6 +44088,38 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/ring/ring_femerald.equ",
     "sha256": "c2b971498c624b6ca62aec4e20a95d228a24816f8baa9ca6442ea06544bf1a9d"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "adaptations": [
+    "Town-only equipment changes; source cooldown retained, combat swapping disabled",
+    "Weapon appearance uses the existing three supported families; source variation retained in native record",
+    "Repair-per-point retains the existing project conversion of source repair price divided by durability; original disassembly is not fabricated"
+   ]
+  },
+  "original_24130": {
+   "name": "史莫克将军的银戒",
+   "kind": "weapon",
+   "rarity": 2,
+   "level": 52,
+   "weight": 0.3,
+   "price": 55000,
+   "stack_limit": 1,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/common/ring.img",
+    20
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    5
+   ],
+   "source": {
+    "id": 24130,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/ring/ring_generalsmoke.equ",
+    "sha256": "5bf2c2fc72be6dcec013950441f481bd22ca721daa02d69b2961084f6274cbf6"
    },
    "purchasable": false,
    "sellable": true,
@@ -72449,6 +72705,38 @@
     "Repair-per-point retains the existing project conversion of source repair price divided by durability; original disassembly is not fabricated"
    ]
   },
+  "original_22049": {
+   "name": "净化手镯",
+   "kind": "weapon",
+   "rarity": 0,
+   "level": 15,
+   "weight": 0.25,
+   "price": 12000,
+   "stack_limit": 1,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/IconAcc.img",
+    16
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    7
+   ],
+   "source": {
+    "id": 22049,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/wrist/brac_purification.equ",
+    "sha256": "fb84bb0b7714499a0b6d0d85c1a2dbbf74f958ce27ff0031436799f65ffc06af"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "adaptations": [
+    "Town-only equipment changes; source cooldown retained, combat swapping disabled",
+    "Weapon appearance uses the existing three supported families; source variation retained in native record",
+    "Repair-per-point retains the existing project conversion of source repair price divided by durability; original disassembly is not fabricated"
+   ]
+  },
   "original_22015": {
    "name": "耐热玻璃手镯",
    "kind": "weapon",
@@ -79158,6 +79446,42 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_2660547": {
+   "name": "夹娃娃小游戏纸牌",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以进行起夹娃娃小游戏的纸牌",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    92
+   ],
+   "field_image": [
+    "Item/stackable/material.img",
+    92
+   ],
+   "source": {
+    "id": 2660547,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/ect/crane_label.stk",
+    "sha256": "4432566d8c768af67a64a2cac3caee059fe530902d969c1bf824a52681e6f218"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3170,
+     1
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_7693": {
    "name": "袖珍罐仓库钥匙",
    "kind": "material",
@@ -80238,6 +80562,42 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_8050": {
+   "name": "装备强化保护权",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.001,
+   "price": 100,
+   "stack_limit": 99,
+   "description": "在凯莉处强化时,若装备强化失败被破坏时自动消耗背包内强化保护权1个且被保护的装备归零,可用等级15以下包括15,且不适用与增幅装备!",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    349
+   ],
+   "field_image": [
+    "Item/stackable/material.img",
+    349
+   ],
+   "source": {
+    "id": 8050,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/event/common/event_8050.stk",
+    "sha256": "5b898835d7c2f9ea78527ba918008df9fd82cc19614e2947be49218fef4537f7"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "source_fields": {
+    "[need material]": [
+     8387035,
+     6
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_7573": {
    "name": "神奇红果酱",
    "kind": "consumable",
@@ -80372,6 +80732,42 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_8272": {
+   "name": "黄金之破魔石",
+   "kind": "material",
+   "rarity": 4,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以用它挑战任何地区的深渊模式",
+   "multiplier": 1.0,
+   "icon": [
+    "item/stackable/quest.img",
+    332
+   ],
+   "field_image": [
+    "item/stackable/quest.img",
+    332
+   ],
+   "source": {
+    "id": 8272,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/event/halloween/event_8272.stk",
+    "sha256": "c510f59850476ab4e0e0177be1d12e20e50a96f5d90e237b039b0a10ad4410da"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3331,
+     20
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_7108": {
    "name": "弯月型南瓜",
@@ -81911,6 +82307,42 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_7908": {
+   "name": "5周年自动贩卖机token",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 100,
+   "description": "在8月20天0时删除道具。 \n    可以在5周年活动贩卖机上使用。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    357
+   ],
+   "field_image": [
+    "Item/stackable/material.img",
+    357
+   ],
+   "source": {
+    "id": 7908,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/event/vendingmachine/event_7908.stk",
+    "sha256": "81856af2c41714d588d2a9a2197b3402185597ea0e4185442ad20a5e9d65fc2b"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     7909,
+     10
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_7909": {
    "name": "5周年自动贩卖机点券",
@@ -83937,6 +84369,42 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_3255": {
+   "name": "威严恶魔的挑战书",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "收集后， 可以换取挑战天界深渊地下城时需要的残酷之破魔石。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    268
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 3255,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/challenge_seriousdevil.stk",
+    "sha256": "c874f77c11418cabe0c851ef6f13204126c21b18c0649c129364363db5fc7726"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3260,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_3117": {
    "name": "次品晶片",
    "kind": "material",
@@ -84234,6 +84702,42 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_3242": {
+   "name": "矛盾的结晶体",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "对已净化的装备进行增幅时必备的材料。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    222
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    24
+   ],
+   "source": {
+    "id": 3242,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/crystal_contradictory.stk",
+    "sha256": "2c16d6f40d6e9df2818df12609c64182b7650e604bf8f84e94d58e88645d8ef1"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3305,
+     5
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_3115": {
    "name": "耀眼的结晶",
    "kind": "material",
@@ -84395,6 +84899,42 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_3245": {
+   "name": "浓缩的异界精髓",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "对蕴含有异界气息的装备进行净化时必备的材料。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    225
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    24
+   ],
+   "source": {
+    "id": 3245,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/crystal_purifying.stk",
+    "sha256": "39de950fb81603ca6b98cd876639bc60de0598fcaebdf5c2eba81cecd5f4047a"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     8388,
+     93
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_3078": {
    "name": "灰色结晶碎片",
@@ -84612,6 +85152,114 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_3038": {
+   "name": "黑色大晶体",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 2000,
+   "stack_limit": 99,
+   "description": "异变的空间里特有的神奇石头， 蕴含有神秘的魔法力量。 听说任何状态下， 它都能保持方块形状。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/IconMaterial.img",
+    14
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    30
+   ],
+   "source": {
+    "id": 3038,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/cube_black.stk",
+    "sha256": "d09510a8685ad11c2a0a1791b1a573f7816027c05994cf39cc0b697268d31069"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "source_fields": {
+    "[need material]": [
+     3033,
+     100
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3041": {
+   "name": "蓝色大晶体",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 2000,
+   "stack_limit": 99,
+   "description": "异变的空间里特有的神奇石头， 蕴含有神秘的魔法力量。 听说任何状态下， 它都能保持方块形状。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/IconMaterial.img",
+    17
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    30
+   ],
+   "source": {
+    "id": 3041,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/cube_blue.stk",
+    "sha256": "25d6b2bf97d75880b3e44481ec439ec967f5e296fd333f35bf165f808c7ed062"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "source_fields": {
+    "[need material]": [
+     3036,
+     100
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3042": {
+   "name": "无色大晶体",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 2000,
+   "stack_limit": 99,
+   "description": "异变的空间里特有的神奇石头， 蕴含有神秘的魔法力量。 听说任何状态下， 它都能保持方块形状。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/IconMaterial.img",
+    18
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    30
+   ],
+   "source": {
+    "id": 3042,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/cube_clear.stk",
+    "sha256": "29fd2e94b8f97903a7dce22ae9dd5ad9d59180c13e5dbb818d758de9845db539"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "source_fields": {
+    "[need material]": [
+     3037,
+     100
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_3165": {
    "name": "五彩晶体",
    "kind": "material",
@@ -84638,6 +85286,186 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_3263": {
+   "name": "金色大晶体",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 2000,
+   "stack_limit": 99,
+   "description": "异变的空间里特有的神奇石头， 蕴含有神秘的魔法力量。 听说任何状态下， 它都能保持方块形状。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    292
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    30
+   ],
+   "source": {
+    "id": 3263,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/cube_gold.stk",
+    "sha256": "05484091353ee7820f546ecb73d12558d96b796c95ab77701566e35109cbed78"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "source_fields": {
+    "[need material]": [
+     3262,
+     100
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3040": {
+   "name": "红色大晶体",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 2000,
+   "stack_limit": 99,
+   "description": "异变的空间里特有的神奇石头， 蕴含有神秘的魔法力量。 听说任何状态下， 它都能保持方块形状。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/IconMaterial.img",
+    16
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    30
+   ],
+   "source": {
+    "id": 3040,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/cube_red.stk",
+    "sha256": "b2a8b83cbbef03a59f3efefd128cecb66e861e719b82213bbbd759300e5ed877"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "source_fields": {
+    "[need material]": [
+     3035,
+     100
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3039": {
+   "name": "白色大晶体",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 2000,
+   "stack_limit": 99,
+   "description": "异变的空间里特有的神奇石头， 蕴含有神秘的魔法力量。 听说任何状态下， 它都能保持方块形状。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/IconMaterial.img",
+    15
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    30
+   ],
+   "source": {
+    "id": 3039,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/cube_white.stk",
+    "sha256": "b1899bf25484f52b1bcb50ae3a2c593e48b935157b0a820c1b294d0da818dc87"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "source_fields": {
+    "[need material]": [
+     3034,
+     100
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3033": {
+   "name": "黑色小晶块",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.0,
+   "price": 10,
+   "stack_limit": 99,
+   "description": "异变的空间里特有的神奇石头， 蕴含有神秘的魔法力量。 听说任何状态下， 它都能保持方块形状。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/IconMaterial.img",
+    9
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    30
+   ],
+   "source": {
+    "id": 3033,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/cubepiece_black.stk",
+    "sha256": "7b7d6d369680837bce0a5faa406262a8571f02be3691bd0fbbf023c1aa3a24af"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "source_fields": {
+    "[need material]": [
+     3037,
+     5
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3036": {
+   "name": "蓝色小晶块",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.0,
+   "price": 10,
+   "stack_limit": 99,
+   "description": "异变的空间里特有的神奇石头， 蕴含有神秘的魔法力量。 听说任何状态下， 它都能保持方块形状。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/IconMaterial.img",
+    12
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    30
+   ],
+   "source": {
+    "id": 3036,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/cubepiece_blue.stk",
+    "sha256": "18524810be4cfd593e25ce00e47f90e2edea3cca28098c6810bf975b13f98fa3"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "source_fields": {
+    "[need material]": [
+     3037,
+     5
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_3037": {
    "name": "无色小晶块",
@@ -84692,6 +85520,78 @@
    },
    "purchasable": false,
    "sellable": true
+  },
+  "original_3035": {
+   "name": "红色小晶块",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.0,
+   "price": 10,
+   "stack_limit": 99,
+   "description": "异变的空间里特有的神奇石头， 蕴含有神秘的魔法力量。 听说任何状态下， 它都能保持方块形状。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/IconMaterial.img",
+    11
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    30
+   ],
+   "source": {
+    "id": 3035,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/cubepiece_red.stk",
+    "sha256": "6960f5515c9a46bfdf109703544e6b69688b0c572ae71d74bc28bb87027e26d3"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "source_fields": {
+    "[need material]": [
+     3037,
+     5
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3034": {
+   "name": "白色小晶块",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.0,
+   "price": 10,
+   "stack_limit": 99,
+   "description": "异变的空间里特有的神奇石头， 蕴含有神秘的魔法力量。 听说任何状态下， 它都能保持方块形状。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/IconMaterial.img",
+    10
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    30
+   ],
+   "source": {
+    "id": 3034,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/cubepiece_white.stk",
+    "sha256": "ff3b5d598d3d8b07c12475f8a2368a631774cbba9ccb90a4061bd25cf8166784"
+   },
+   "purchasable": false,
+   "sellable": true,
+   "source_fields": {
+    "[need material]": [
+     3037,
+     5
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_3118": {
    "name": "小型钻石",
@@ -85800,6 +86700,186 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_3214": {
+   "name": "蓝冰恶魔的邀请函",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "深渊怪物的邀请函。 收集此邀请函后， 可以通过兑换破蒸汽之魔石进入天空之城地区、 天帷巨兽区域深渊地下城。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    148
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 3214,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/invitation_bluedevil.stk",
+    "sha256": "da047a49d66809b284476f2b72ddc805736e49174d8c7ed037fd6bd058bae787"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     4329,
+     1
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3213": {
+   "name": "燃烧恶魔的邀请函",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "深渊怪物的邀请函。 收集此邀请函后， 可以通过兑换火焰之破魔石进入天空之城深渊地下城。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    147
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 3213,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/invitation_burningdevil.stk",
+    "sha256": "679251a12140a4af723cf20c0848292dc36fb2544c3661439b6c40c3dc899c14"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     4328,
+     1
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3215": {
+   "name": "狂乱恶魔的邀请函",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "深渊怪物的邀请函。 收集此邀请函后， 可以通过兑换野生之破魔石进入挑战阿法利亚地区、 万年雪山地区深渊地下城。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    149
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 3215,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/invitation_fiercedevil.stk",
+    "sha256": "fa9585bf3c672d12cdacf276ed4f2b2573c5f2e349e0343478fe8626e8788592"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     4330,
+     1
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3256": {
+   "name": "威严恶魔的邀请函",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "收集后， 可以换取挑战天界深渊地下城时需要的残酷之破魔石。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    269
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 3256,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/invitation_seriousdevil.stk",
+    "sha256": "136d7c347d1d76bb56bc00e9273b143d2b0d10cc736169920dc6585b1b93c0b0"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3255,
+     1
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3219": {
+   "name": "强韧恶魔的邀请函",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "深渊怪物的邀请函。 收集此邀请函后， 可以通过兑换钢铁之破魔石进入挑战月光酒馆、 比尔马克帝国试验场、 悲鸣洞穴深渊地下城。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    156
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 3219,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/invitation_strongdevil.stk",
+    "sha256": "e27f313b9e259a909ff3bc5aefc7e65e583142ca3249b62f119f935c7102de80"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     4331,
+     1
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_3265": {
    "name": "作战指令书 BJ108K",
    "kind": "material",
@@ -86799,6 +87879,222 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_3280": {
+   "name": "扭曲恶魔的邀请函",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "深渊怪物的邀请函。 收集此邀请函后， 可以通过兑换幻影之破魔石进入诺斯玛尔深渊地下城。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    319
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 3280,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/material_3280.stk",
+    "sha256": "23d3a2f737d07a8b4c9fe7e93a69118c6cfd602a6ccd318eccdfd6d173a1887d"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3281,
+     1
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3281": {
+   "name": "扭曲恶魔的挑战书",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 1000,
+   "description": "深渊怪物的挑战书。 收集此挑战书后， 可以兑换扭曲恶魔的邀请函用于兑换幻影之破魔石。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    320
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 3281,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/material_3281.stk",
+    "sha256": "89085185b6ead6743fc3a2192e0251602c3acd4c228d83f6a54b9a7e64b7ecd9"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3260,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3282": {
+   "name": "震撼恶魔的邀请函",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "收集后， 可以换取挑战海上列车地区深渊地下城时需要的震动之破魔石。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    321
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 3282,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/material_3282.stk",
+    "sha256": "d1d57d254f9d549b21b586ef2335f97929420de98e21352c54d09e299e9de87d"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3331,
+     1
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3283": {
+   "name": "震撼恶魔的挑战书",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "收集后， 可以换取挑战海上列车地区深渊地下城时需要的震动之破魔石。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    322
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 3283,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/material_3283.stk",
+    "sha256": "ed6e1422f2f6625a80789b25991efee3f6c693c8794a1a192b7deb1974c00cc6"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3260,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3284": {
+   "name": "耀眼的宇宙灵魂",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "兑换史诗装备的材料，可以换成挑战书也可以兑换成耀眼的宇宙灵魂。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    347
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    24
+   ],
+   "source": {
+    "id": 3284,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/material_3284.stk",
+    "sha256": "c67c637df703fe68c1a94b72bd1cf097ab3a96bf5c225570c4474b65569b3104"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3260,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3285": {
+   "name": "透明的宇宙灵魂",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "制作史诗级装备不可缺少的材料。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    348
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    24
+   ],
+   "source": {
+    "id": 3285,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/material_3285.stk",
+    "sha256": "05d3b46a5eaff660ee6eca92a6cb173a09a516276a4e4a4893a0ee1d0a8dc2f8"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3284,
+     3
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_3286": {
    "name": "觉醒之核",
    "kind": "material",
@@ -86933,6 +88229,42 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_3291": {
+   "name": "渴望之魔石",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "兑换第2期编年史装备改造券必备的材料。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    327
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    24
+   ],
+   "source": {
+    "id": 3291,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/material_3291.stk",
+    "sha256": "87cfcec274002f594059a74c97b802e596bd97fe68619881d56b9c33287b4419"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3240,
+     3
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_3292": {
    "name": "渴望之魔石碎片",
@@ -87771,6 +89103,42 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_3323": {
+   "name": "华丽的曲玉",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    396
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    30
+   ],
+   "source": {
+    "id": 3323,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/material_3323.stk",
+    "sha256": "7fece15a77616382c2331adb0ccc7f17a93b192d4aaf4b0a3f59b8f3abb3bf7c"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3329,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_3324": {
    "name": "卡勒特徽章",
    "kind": "material",
@@ -87825,6 +89193,42 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_3326": {
+   "name": "强烈气息",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 10,
+   "stack_limit": 99,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    398
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    24
+   ],
+   "source": {
+    "id": 3326,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/material_3326.stk",
+    "sha256": "34d61f451babe34be06a9898c66f6e6bcc4c5a0a765bbcbc0be858ad4552f0d9"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     36,
+     20
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_3327": {
    "name": "皇家贵族指环",
    "kind": "material",
@@ -87851,6 +89255,42 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_3329": {
+   "name": "黯淡的曲玉",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    403
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    30
+   ],
+   "source": {
+    "id": 3329,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/material_3329.stk",
+    "sha256": "11b593c201571ad477f3c80f4e7e12560ed3e7db9d0941916e5c48280b43c117"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3323,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_3334": {
    "name": "卡勒特军需品卡片",
@@ -88986,6 +90426,42 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_3171": {
+   "name": "炉岩炭",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.01,
+   "price": 10,
+   "stack_limit": 99,
+   "description": "天界的炉岩沙漠里特有的燃料， 听说它能产生很强的能量， 可以启动装备强化机器。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    48
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    24
+   ],
+   "source": {
+    "id": 3171,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/ryan_cokes.stk",
+    "sha256": "6e35307cf3ef400f86e319bfacd0a00d17a181347079821d189b7fd98070269f"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3037,
+     20
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_3121": {
    "name": "燃烧的龙鳞",
    "kind": "material",
@@ -89688,6 +91164,150 @@
    "purchasable": false,
    "sellable": true
   },
+  "original_3258": {
+   "name": "闪亮的宇宙灵魂",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以换成挑战书也可以兑换成华丽的宇宙灵魂。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    271
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    24
+   ],
+   "source": {
+    "id": 3258,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/soul_cosmobright.stk",
+    "sha256": "a728eab4cb119ac0dabcb5e8cfa5535cd299248321449c441d69ad5d031a8f83"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3257,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3257": {
+   "name": "黯淡的宇宙灵魂",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以换成挑战书也可以兑换成闪亮的宇宙灵魂。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    270
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    24
+   ],
+   "source": {
+    "id": 3257,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/soul_cosmodim.stk",
+    "sha256": "c4d8cb7d96305bacaf3ed60e5774e18da9eb6a843c0a887621b993ec5a578e9e"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3216,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3260": {
+   "name": "灿烂的宇宙灵魂",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以换成挑战书也可以兑换成耀眼的宇宙灵魂。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    273
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    24
+   ],
+   "source": {
+    "id": 3260,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/soul_cosmoglittering.stk",
+    "sha256": "f2b85606ae786868553fc002f4bbc33447bc7501e32d2b49825d5680bf89312c"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3259,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_3259": {
+   "name": "华丽的宇宙灵魂",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以换成挑战书也可以兑换成灿烂的宇宙灵魂。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    272
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    24
+   ],
+   "source": {
+    "id": 3259,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/soul_cosmosplendid.stk",
+    "sha256": "eaf3d21f69a743219a2a8073802a07204005aa4ec9a0ab519801f3e59eb98944"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3258,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_3187": {
    "name": "灵魂晶石",
    "kind": "material",
@@ -90362,6 +91982,42 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_3220": {
+   "name": "精炼的泰拉石",
+   "kind": "material",
+   "rarity": 1,
+   "level": 1,
+   "weight": 0.001,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/material.img",
+    158
+   ],
+   "field_image": [
+    "Item/stackable/material.img",
+    158
+   ],
+   "source": {
+    "id": 3220,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/material/teranite_refined.stk",
+    "sha256": "959063ecc03d27f68c19bbbf10dec32ff05f28d33bb9346db0ac19a36c744886"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     8388,
+     37
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_3111": {
    "name": "锋利的尖刺",
@@ -92901,6 +94557,114 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_4329": {
+   "name": "蓝冰恶魔的挑战书",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 1000,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    141
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 4329,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/challenge_bluedevil.stk",
+    "sha256": "734cedf89e68a6e95ea36a280247f8c89ff7b19b48660edfdd425a0c8b905387"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3260,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_4328": {
+   "name": "燃烧恶魔的挑战书",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 1000,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    140
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 4328,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/challenge_burningdevil.stk",
+    "sha256": "1ab0cf1ee0645ccfaa6dac0e0d31ceb02e3c57ec8ad9cba161d62c48c15cb56e"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3260,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_4330": {
+   "name": "狂乱恶魔的挑战书",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 1000,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    142
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 4330,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/challenge_fiercedevil.stk",
+    "sha256": "281ac5fffccd223f02fae1b4cd0f5adadc51c38c98718f0083c492ceeb135575"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3260,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_4295": {
    "name": "麦瑟·莫纳亨的挑战书",
    "kind": "quest",
@@ -92927,6 +94691,42 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_4331": {
+   "name": "强韧恶魔的挑战书",
+   "kind": "material",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 1000,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    144
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    28
+   ],
+   "source": {
+    "id": 4331,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/challenge_strongdevil.stk",
+    "sha256": "4606202a00efca8bce5f8bc1191193060a8bd4e6a9459aebccf25607ac9c46ed"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3260,
+     2
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_4083": {
    "name": "宁神符咒",
@@ -95115,6 +96915,42 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_4150": {
+   "name": "火焰之破魔石",
+   "kind": "quest",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以挑战天空之城地区的深渊地下城。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    97
+   ],
+   "field_image": [
+    "Item/stackable/quest.img",
+    97
+   ],
+   "source": {
+    "id": 4150,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/flamest_destroyghost.stk",
+    "sha256": "d503aed98848de966acf01483833db36d0b9369625f26963aef500cdf5baa4fa"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3213,
+     10
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_4303": {
    "name": "坚固药水",
    "kind": "quest",
@@ -96059,6 +97895,42 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_4349": {
+   "name": "哥拉西亚家族的纹章",
+   "kind": "quest",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    112
+   ],
+   "field_image": [
+    "Item/stackable/quest.img",
+    112
+   ],
+   "source": {
+    "id": 4349,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/insignia_graciafamily.stk",
+    "sha256": "780fec0bdadb3c6597de1565cc2816de7fc491c06044112885fdca5ccb176165"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     8388,
+     19
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_4348": {
    "name": "席克的纹章",
@@ -97302,6 +99174,42 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_4356": {
+   "name": "残酷之破魔石",
+   "kind": "quest",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以挑战天界的深渊地下城。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    145
+   ],
+   "field_image": [
+    "Item/stackable/quest.img",
+    145
+   ],
+   "source": {
+    "id": 4356,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/oppressive_destroyghost.stk",
+    "sha256": "96b92f85fa3d5e1221b894d1d0125310381c04da54c50dc34bc199819e461de4"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3256,
+     18
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_4119": {
    "name": "红色羊皮纸",
    "kind": "quest",
@@ -98517,6 +100425,78 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_4393": {
+   "name": "幻影之破魔石",
+   "kind": "quest",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以挑战诺斯玛尔地区的深渊地下城。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    164
+   ],
+   "field_image": [
+    "Item/stackable/quest.img",
+    164
+   ],
+   "source": {
+    "id": 4393,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/quest_4393.stk",
+    "sha256": "e3691a4ce5808b3c3adf0972e7eaddae96160d1a82676f032c26986045f39ec8"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3280,
+     16
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_4394": {
+   "name": "震动之破魔石",
+   "kind": "quest",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "挑战海上列车地区的深渊地下城时需要的物品。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    165
+   ],
+   "field_image": [
+    "Item/stackable/quest.img",
+    165
+   ],
+   "source": {
+    "id": 4394,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/quest_4394.stk",
+    "sha256": "eaf390720f250ba92fe58d822b24c06de792e42e2aa1f566ba90002ef5f68cc1"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3331,
+     20
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_4395": {
    "name": "洛贝利的瑜伽书籍",
    "kind": "quest",
@@ -99435,6 +101415,78 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_4429": {
+   "name": "远古宝藏的线索",
+   "kind": "quest",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以在贝伦·博内哥特处兑换神器装备。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    198
+   ],
+   "field_image": [
+    "Item/stackable/quest.img",
+    198
+   ],
+   "source": {
+    "id": 4429,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/quest_4429.stk",
+    "sha256": "83c7912ca109afc19f96cfc2970c3e56427fcc58d64806c2c6f3f438c53a3db5"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     8388,
+     186
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
+  "original_4430": {
+   "name": "赫尔德的庇佑",
+   "kind": "quest",
+   "rarity": 3,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "得到赫尔德庇佑的人， 可以自由出入痛苦之村列瑟芬。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    187
+   ],
+   "field_image": [
+    "Item/stackable/quest.img",
+    187
+   ],
+   "source": {
+    "id": 4430,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/quest_4430.stk",
+    "sha256": "064bc867ed7fa7e5aa33a4bc15b31256b90e21c17818a9d56cd9e2fa1904d1e8"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3187,
+     10
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_4431": {
    "name": "痛苦的滋味",
    "kind": "quest",
@@ -99623,6 +101675,42 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_4438": {
+   "name": "暗黑疫苗",
+   "kind": "quest",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以在米内特处兑换神器装备。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    194
+   ],
+   "field_image": [
+    "Item/stackable/quest.img",
+    194
+   ],
+   "source": {
+    "id": 4438,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/quest_4438.stk",
+    "sha256": "501cd7f615a27268202af7fae6e56b58eb96e7ddc3e2ebd95cae780643bd3e5a"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     8388,
+     186
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_4439": {
    "name": "幽灵宝珠",
@@ -107346,6 +109434,42 @@
    "purchasable": false,
    "sellable": false
   },
+  "original_4151": {
+   "name": "蒸汽之破魔石",
+   "kind": "quest",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以挑战天空之城地区、 天帷巨兽神殿的深渊地下城。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    98
+   ],
+   "field_image": [
+    "Item/stackable/quest.img",
+    98
+   ],
+   "source": {
+    "id": 4151,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/steamst_destroyghost.stk",
+    "sha256": "7c4c0ee2974a7681cf766d05239493b0782d1b0cab52b55a3b724847993ff4cc"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3214,
+     12
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
+  },
   "original_4060": {
    "name": "远古精灵的木杖",
    "kind": "quest",
@@ -107399,6 +109523,42 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_4158": {
+   "name": "钢铁之破魔石",
+   "kind": "quest",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以挑战月光酒馆、 海岸三番街地区、 比尔马克帝国试验场、 悲鸣洞穴的深渊地下城。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    104
+   ],
+   "field_image": [
+    "Item/stackable/quest.img",
+    104
+   ],
+   "source": {
+    "id": 4158,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/stst_destryghost.stk",
+    "sha256": "d20ac146b49fb6ecc8b2a2cff8e39dcd05b2cca0b9a32e11b0eb0ed5600cd1f4"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3219,
+     19
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_4350": {
    "name": "无法忘却的噩梦",
@@ -107480,6 +109640,42 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_4351": {
+   "name": "朦胧记忆中的故事",
+   "kind": "quest",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    114
+   ],
+   "field_image": [
+    "Item/stackable/quest.img",
+    114
+   ],
+   "source": {
+    "id": 4351,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/tale_dimmemory.stk",
+    "sha256": "62ec21ff8b073c4bd3a22f8178e50e91863f33e98e8cdd03cb2c89cf0ffa0c79"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     8388,
+     186
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_4112": {
    "name": "邪龙的利爪",
@@ -110720,6 +112916,42 @@
    },
    "purchasable": false,
    "sellable": false
+  },
+  "original_4152": {
+   "name": "野生之破魔石",
+   "kind": "quest",
+   "rarity": 2,
+   "level": 1,
+   "weight": 0.0,
+   "price": 0,
+   "stack_limit": 99,
+   "description": "可以挑战阿法利亚地区、 万年雪山地区的深渊地下城。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/quest.img",
+    99
+   ],
+   "field_image": [
+    "Item/stackable/quest.img",
+    99
+   ],
+   "source": {
+    "id": 4152,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/quest/wildst_destroyghost.stk",
+    "sha256": "af7d3452e763552f31f8f03f51dcfb62a459739d08cd03bbece67f41c9bdd38d"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[need material]": [
+     3215,
+     19
+    ]
+   },
+   "adaptations": [
+    "Source material requirements retained for the recipe processor"
+   ]
   },
   "original_4027": {
    "name": "极品谷酒",
@@ -114105,6 +116337,65 @@
     "sha256": "510be253886d9989360470bde95aaf877c6a59d43203f13c4d6bcb1c3607d9c1"
    }
   },
+  "original_20071": {
+   "name": "神鬼战士项坠",
+   "slot": "necklace",
+   "stats": {
+    "intelligence": 19.0,
+    "spirit": 46.0,
+    "physical_defense": 182.5,
+    "magical_defense": 3080.0,
+    "fire_resist": 8.0,
+    "water_resist": 8.0,
+    "light_resist": 8.0,
+    "dark_resist": 8.0
+   },
+   "stat_ranges": {
+    "intelligence": [
+     19,
+     19
+    ],
+    "spirit": [
+     46,
+     46
+    ],
+    "physical_defense": [
+     165,
+     200
+    ],
+    "magical_defense": [
+     2880,
+     3280
+    ],
+    "fire_resist": [
+     8.0,
+     8.0
+    ],
+    "water_resist": [
+     8.0,
+     8.0
+    ],
+    "light_resist": [
+     8.0,
+     8.0
+    ],
+    "dark_resist": [
+     8.0,
+     8.0
+    ]
+   },
+   "required_level": 30,
+   "durability": 40,
+   "usable_jobs": [
+    "[all]"
+   ],
+   "source": {
+    "id": 20071,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/amulet/n_neck_gladios.equ",
+    "sha256": "9fcdf05c53bd6b2d5ace7877c03804d34541a6ef2b40a7cda1568d2c0f39640d"
+   }
+  },
   "original_20069": {
    "name": "白金项链",
    "slot": "necklace",
@@ -114137,6 +116428,70 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/amulet/n_neck_gold.equ",
     "sha256": "97c589b6629abdb117727e98d0587d666e89fa3b3f82ebabab7b286284480061"
+   }
+  },
+  "original_20093": {
+   "name": "王者之星",
+   "slot": "necklace",
+   "stats": {
+    "intelligence": 24.0,
+    "spirit": 60.0,
+    "magical_defense": 4840.0,
+    "attack_speed": 0.02,
+    "move_speed": 0.02,
+    "fire_resist": 12.0,
+    "water_resist": 12.0,
+    "light_resist": 12.0,
+    "dark_resist": 12.0
+   },
+   "stat_ranges": {
+    "intelligence": [
+     24,
+     24
+    ],
+    "spirit": [
+     60,
+     60
+    ],
+    "magical_defense": [
+     4640,
+     5040
+    ],
+    "attack_speed": [
+     0.02,
+     0.02
+    ],
+    "move_speed": [
+     0.02,
+     0.02
+    ],
+    "fire_resist": [
+     12.0,
+     12.0
+    ],
+    "water_resist": [
+     12.0,
+     12.0
+    ],
+    "light_resist": [
+     12.0,
+     12.0
+    ],
+    "dark_resist": [
+     12.0,
+     12.0
+    ]
+   },
+   "required_level": 50,
+   "durability": 40,
+   "usable_jobs": [
+    "[all]"
+   ],
+   "source": {
+    "id": 20093,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/amulet/n_neck_king.equ",
+    "sha256": "7041d6e1a5424191e6a70a13fead0a8190edfd533b0a0cbe3b2ece4101b47804"
    }
   },
   "original_20081": {
@@ -115098,6 +117453,65 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/amulet/neck_gigicross.equ",
     "sha256": "1a21017d5badc299344211691434807d0e2b5424ebdceda71366c44d39a83e4b"
+   }
+  },
+  "original_20034": {
+   "name": "神鬼战士项坠",
+   "slot": "necklace",
+   "stats": {
+    "intelligence": 15.0,
+    "spirit": 37.0,
+    "physical_defense": 182.5,
+    "magical_defense": 3000.0,
+    "fire_resist": 8.0,
+    "water_resist": 8.0,
+    "light_resist": 8.0,
+    "dark_resist": 8.0
+   },
+   "stat_ranges": {
+    "intelligence": [
+     15,
+     15
+    ],
+    "spirit": [
+     37,
+     37
+    ],
+    "physical_defense": [
+     165,
+     200
+    ],
+    "magical_defense": [
+     2800,
+     3200
+    ],
+    "fire_resist": [
+     8.0,
+     8.0
+    ],
+    "water_resist": [
+     8.0,
+     8.0
+    ],
+    "light_resist": [
+     8.0,
+     8.0
+    ],
+    "dark_resist": [
+     8.0,
+     8.0
+    ]
+   },
+   "required_level": 29,
+   "durability": 40,
+   "usable_jobs": [
+    "[all]"
+   ],
+   "source": {
+    "id": 20034,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/amulet/neck_gladios.equ",
+    "sha256": "da24ca52b3efe0862fb18048698e67aca8891bc4747a10109b2a39b6d71eb1f4"
    }
   },
   "original_20026": {
@@ -120644,6 +123058,80 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/belt/harmor/belt_ha_gent3.equ",
     "sha256": "ef7c0e40235300d75496b646ab2c4549199684ae5732afba6f77ef22fc2b0cb0"
+   }
+  },
+  "original_17242": {
+   "name": "守护腰带",
+   "slot": "belt",
+   "stats": {
+    "hp_max": 15.0,
+    "mp_max": 10.0,
+    "strength": 2.0,
+    "intelligence": 2.0,
+    "vitality": 2.0,
+    "physical_defense": 128.0,
+    "carry_capacity": 3.0,
+    "fire_resist": 5.0,
+    "water_resist": 5.0,
+    "light_resist": 5.0,
+    "dark_resist": 5.0
+   },
+   "stat_ranges": {
+    "hp_max": [
+     15,
+     15
+    ],
+    "mp_max": [
+     10,
+     10
+    ],
+    "strength": [
+     2,
+     2
+    ],
+    "intelligence": [
+     2,
+     2
+    ],
+    "vitality": [
+     2,
+     2
+    ],
+    "physical_defense": [
+     112,
+     144
+    ],
+    "carry_capacity": [
+     3.0,
+     3.0
+    ],
+    "fire_resist": [
+     5.0,
+     5.0
+    ],
+    "water_resist": [
+     5.0,
+     5.0
+    ],
+    "light_resist": [
+     5.0,
+     5.0
+    ],
+    "dark_resist": [
+     5.0,
+     5.0
+    ]
+   },
+   "required_level": 5,
+   "durability": 26,
+   "usable_jobs": [
+    "[all]"
+   ],
+   "source": {
+    "id": 17242,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/belt/harmor/belt_protection.equ",
+    "sha256": "fdd96f926ab322157782692d90424efb98b01c96a685fd44c8a2a470700ae591"
    }
   },
   "original_17215": {
@@ -145522,6 +148010,65 @@
     "sha256": "6c10f933d3dda16817f0141c64d4da947d90ea3b924d94626e84ea5e4425d7a5"
    }
   },
+  "original_12024": {
+   "name": "精灵凯恩之裤",
+   "slot": "pants",
+   "stats": {
+    "mp_max": 50.0,
+    "intelligence": 13.0,
+    "spirit": 13.0,
+    "physical_defense": 280.0,
+    "fire_resist": 5.0,
+    "water_resist": 5.0,
+    "light_resist": 5.0,
+    "dark_resist": 5.0
+   },
+   "stat_ranges": {
+    "mp_max": [
+     50,
+     50
+    ],
+    "intelligence": [
+     13,
+     13
+    ],
+    "spirit": [
+     13,
+     13
+    ],
+    "physical_defense": [
+     270,
+     290
+    ],
+    "fire_resist": [
+     5.0,
+     5.0
+    ],
+    "water_resist": [
+     5.0,
+     5.0
+    ],
+    "light_resist": [
+     5.0,
+     5.0
+    ],
+    "dark_resist": [
+     5.0,
+     5.0
+    ]
+   },
+   "required_level": 24,
+   "durability": 24,
+   "usable_jobs": [
+    "[all]"
+   ],
+   "source": {
+    "id": 12024,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/pants/cloth/kain_elven.equ",
+    "sha256": "322fb5ab91f252978b258d4f59517bc15c9c88228df9c5ccdfacd11913931c8a"
+   }
+  },
   "original_12077": {
    "name": "破古老的绫罗绑腿",
    "slot": "pants",
@@ -145752,6 +148299,65 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/pants/cloth/n_grv_wool.equ",
     "sha256": "82a176f7fd932e94873f60421e06eeef6b6442ab870457e6b75d5f20581c508d"
+   }
+  },
+  "original_12064": {
+   "name": "精灵凯恩之裤",
+   "slot": "pants",
+   "stats": {
+    "mp_max": 50.0,
+    "intelligence": 14.0,
+    "spirit": 14.0,
+    "physical_defense": 290.0,
+    "fire_resist": 5.0,
+    "water_resist": 5.0,
+    "light_resist": 5.0,
+    "dark_resist": 5.0
+   },
+   "stat_ranges": {
+    "mp_max": [
+     50,
+     50
+    ],
+    "intelligence": [
+     14,
+     14
+    ],
+    "spirit": [
+     14,
+     14
+    ],
+    "physical_defense": [
+     280,
+     300
+    ],
+    "fire_resist": [
+     5.0,
+     5.0
+    ],
+    "water_resist": [
+     5.0,
+     5.0
+    ],
+    "light_resist": [
+     5.0,
+     5.0
+    ],
+    "dark_resist": [
+     5.0,
+     5.0
+    ]
+   },
+   "required_level": 25,
+   "durability": 24,
+   "usable_jobs": [
+    "[all]"
+   ],
+   "source": {
+    "id": 12064,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/pants/cloth/n_kain_elven.equ",
+    "sha256": "5b3d0e7c28e7eadd940e8828862e8ff113e1df0f9bc8a97291bb2b4631ae28b6"
    }
   },
   "original_12082": {
@@ -150358,6 +152964,65 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/pants/harmor/n_leg_sbchain.equ",
     "sha256": "9739e131d29d8d7af55c97c5a835b2f9ad5b8b48379199909ebcafb80056978f"
+   }
+  },
+  "original_13244": {
+   "name": "易鲁曼拓断刃绑腿",
+   "slot": "pants",
+   "stats": {
+    "strength": 7.0,
+    "intelligence": 5.0,
+    "vitality": 6.0,
+    "physical_defense": 560.0,
+    "fire_resist": 5.0,
+    "water_resist": 5.0,
+    "light_resist": 5.0,
+    "dark_resist": 5.0
+   },
+   "stat_ranges": {
+    "strength": [
+     7,
+     7
+    ],
+    "intelligence": [
+     5,
+     5
+    ],
+    "vitality": [
+     6,
+     6
+    ],
+    "physical_defense": [
+     520,
+     600
+    ],
+    "fire_resist": [
+     5.0,
+     5.0
+    ],
+    "water_resist": [
+     5.0,
+     5.0
+    ],
+    "light_resist": [
+     5.0,
+     5.0
+    ],
+    "dark_resist": [
+     5.0,
+     5.0
+    ]
+   },
+   "required_level": 11,
+   "durability": 34,
+   "usable_jobs": [
+    "[all]"
+   ],
+   "source": {
+    "id": 13244,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/pants/harmor/pant_illumental.equ",
+    "sha256": "738bbef9a169b0d11cb895d16ef097b6b4360a60fb724d40918e94730c8b149b"
    }
   },
   "original_100120005": {
@@ -160189,6 +162854,60 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/ring/ring_femerald.equ",
     "sha256": "c2b971498c624b6ca62aec4e20a95d228a24816f8baa9ca6442ea06544bf1a9d"
+   }
+  },
+  "original_24130": {
+   "name": "史莫克将军的银戒",
+   "slot": "ring",
+   "stats": {
+    "strength": 32.0,
+    "intelligence": 32.0,
+    "magical_defense": 1831.5,
+    "fire_resist": -5.0,
+    "water_resist": -5.0,
+    "light_resist": -5.0,
+    "dark_resist": -5.0
+   },
+   "stat_ranges": {
+    "strength": [
+     32,
+     32
+    ],
+    "intelligence": [
+     32,
+     32
+    ],
+    "magical_defense": [
+     1781,
+     1882
+    ],
+    "fire_resist": [
+     -5.0,
+     -5.0
+    ],
+    "water_resist": [
+     -5.0,
+     -5.0
+    ],
+    "light_resist": [
+     -5.0,
+     -5.0
+    ],
+    "dark_resist": [
+     -5.0,
+     -5.0
+    ]
+   },
+   "required_level": 52,
+   "durability": 40,
+   "usable_jobs": [
+    "[all]"
+   ],
+   "source": {
+    "id": 24130,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/ring/ring_generalsmoke.equ",
+    "sha256": "5bf2c2fc72be6dcec013950441f481bd22ca721daa02d69b2961084f6274cbf6"
    }
   },
   "original_24047": {
@@ -191638,6 +194357,50 @@
     "sha256": "efaf4733414ec59dbe9f945e5720cb8c982c15c15cb96172ff498c58c0b3a9a8"
    }
   },
+  "original_22049": {
+   "name": "净化手镯",
+   "slot": "bracelet",
+   "stats": {
+    "magical_defense": 672.0,
+    "fire_resist": 2.0,
+    "water_resist": 2.0,
+    "light_resist": 2.0,
+    "dark_resist": 2.0
+   },
+   "stat_ranges": {
+    "magical_defense": [
+     672,
+     672
+    ],
+    "fire_resist": [
+     2.0,
+     2.0
+    ],
+    "water_resist": [
+     2.0,
+     2.0
+    ],
+    "light_resist": [
+     2.0,
+     2.0
+    ],
+    "dark_resist": [
+     2.0,
+     2.0
+    ]
+   },
+   "required_level": 15,
+   "durability": 40,
+   "usable_jobs": [
+    "[all]"
+   ],
+   "source": {
+    "id": 22049,
+    "list": "equipment/equipment.lst",
+    "path": "equipment/character/common/wrist/brac_purification.equ",
+    "sha256": "fb84bb0b7714499a0b6d0d85c1a2dbbf74f958ce27ff0031436799f65ffc06af"
+   }
+  },
   "original_22015": {
    "name": "耐热玻璃手镯",
    "slot": "bracelet",
@@ -203321,9 +206084,17 @@
    "sell": 20000,
    "repair_point": 840
   },
+  "original_20071": {
+   "sell": 10000,
+   "repair_point": 816
+  },
   "original_20069": {
    "sell": 17280,
    "repair_point": 480
+  },
+  "original_20093": {
+   "sell": 10000,
+   "repair_point": 1344
   },
   "original_20081": {
    "sell": 10000,
@@ -203440,6 +206211,10 @@
   "original_20043": {
    "sell": 29600,
    "repair_point": 740
+  },
+  "original_20034": {
+   "sell": 31680,
+   "repair_point": 792
   },
   "original_20026": {
    "sell": 13824,
@@ -204036,6 +206811,10 @@
   "original_17327": {
    "sell": 31500,
    "repair_point": 1353
+  },
+  "original_17242": {
+   "sell": 10000,
+   "repair_point": 129
   },
   "original_17215": {
    "sell": 4896,
@@ -206885,6 +209664,10 @@
    "sell": 9360,
    "repair_point": 433
   },
+  "original_12024": {
+   "sell": 12480,
+   "repair_point": 520
+  },
   "original_12077": {
    "sell": 8887,
    "repair_point": 496
@@ -206916,6 +209699,10 @@
   "original_12066": {
    "sell": 10800,
    "repair_point": 500
+  },
+  "original_12064": {
+   "sell": 10000,
+   "repair_point": 540
   },
   "original_12082": {
    "sell": 10412,
@@ -207472,6 +210259,10 @@
   "original_13262": {
    "sell": 17774,
    "repair_point": 700
+  },
+  "original_13244": {
+   "sell": 10000,
+   "repair_point": 254
   },
   "original_100120005": {
    "sell": 28800,
@@ -208660,6 +211451,10 @@
   "original_24043": {
    "sell": 15019,
    "repair_point": 417
+  },
+  "original_24130": {
+   "sell": 44000,
+   "repair_point": 1100
   },
   "original_24047": {
    "sell": 20887,
@@ -212233,6 +215028,10 @@
    "sell": 8640,
    "repair_point": 240
   },
+  "original_22049": {
+   "sell": 8640,
+   "repair_point": 240
+  },
   "original_22015": {
    "sell": 9792,
    "repair_point": 272
@@ -213066,6 +215865,9 @@
   "original_1002": {
    "sell": 0
   },
+  "original_2660547": {
+   "sell": 0
+  },
   "original_7693": {
    "sell": 0
   },
@@ -213186,6 +215988,9 @@
   "original_7820": {
    "sell": 0
   },
+  "original_8050": {
+   "sell": 750
+  },
   "original_7573": {
    "sell": 0
   },
@@ -213199,6 +216004,9 @@
    "sell": 0
   },
   "original_7725": {
+   "sell": 0
+  },
+  "original_8272": {
    "sell": 0
   },
   "original_7108": {
@@ -213370,6 +216178,9 @@
    "sell": 0
   },
   "original_7183": {
+   "sell": 0
+  },
+  "original_7908": {
    "sell": 0
   },
   "original_7909": {
@@ -213597,6 +216408,9 @@
   "original_3082": {
    "sell": 0
   },
+  "original_3255": {
+   "sell": 0
+  },
   "original_3117": {
    "sell": 0
   },
@@ -213630,6 +216444,9 @@
   "original_3072": {
    "sell": 0
   },
+  "original_3242": {
+   "sell": 0
+  },
   "original_3115": {
    "sell": 750
   },
@@ -213646,6 +216463,9 @@
    "sell": 0
   },
   "original_3244": {
+   "sell": 0
+  },
+  "original_3245": {
    "sell": 0
   },
   "original_3078": {
@@ -213672,14 +216492,44 @@
   "original_3247": {
    "sell": 0
   },
+  "original_3038": {
+   "sell": 500
+  },
+  "original_3041": {
+   "sell": 500
+  },
+  "original_3042": {
+   "sell": 400
+  },
   "original_3165": {
    "sell": 0
+  },
+  "original_3263": {
+   "sell": 320
+  },
+  "original_3040": {
+   "sell": 500
+  },
+  "original_3039": {
+   "sell": 500
+  },
+  "original_3033": {
+   "sell": 40
+  },
+  "original_3036": {
+   "sell": 40
   },
   "original_3037": {
    "sell": 2
   },
   "original_3262": {
    "sell": 320
+  },
+  "original_3035": {
+   "sell": 40
+  },
+  "original_3034": {
+   "sell": 40
   },
   "original_3118": {
    "sell": 0
@@ -213804,6 +216654,21 @@
   "original_3180": {
    "sell": 0
   },
+  "original_3214": {
+   "sell": 0
+  },
+  "original_3213": {
+   "sell": 0
+  },
+  "original_3215": {
+   "sell": 0
+  },
+  "original_3256": {
+   "sell": 0
+  },
+  "original_3219": {
+   "sell": 0
+  },
   "original_3265": {
    "sell": 0
   },
@@ -213915,6 +216780,24 @@
   "original_3279": {
    "sell": 0
   },
+  "original_3280": {
+   "sell": 0
+  },
+  "original_3281": {
+   "sell": 0
+  },
+  "original_3282": {
+   "sell": 0
+  },
+  "original_3283": {
+   "sell": 0
+  },
+  "original_3284": {
+   "sell": 0
+  },
+  "original_3285": {
+   "sell": 0
+  },
   "original_3286": {
    "sell": 0
   },
@@ -213928,6 +216811,9 @@
    "sell": 0
   },
   "original_3290": {
+   "sell": 0
+  },
+  "original_3291": {
    "sell": 0
   },
   "original_3292": {
@@ -214023,13 +216909,22 @@
   "original_3322": {
    "sell": 0
   },
+  "original_3323": {
+   "sell": 0
+  },
   "original_3324": {
    "sell": 0
   },
   "original_3325": {
    "sell": 0
   },
+  "original_3326": {
+   "sell": 0
+  },
   "original_3327": {
+   "sell": 0
+  },
+  "original_3329": {
    "sell": 0
   },
   "original_3334": {
@@ -214158,6 +217053,9 @@
   "original_3160": {
    "sell": 0
   },
+  "original_3171": {
+   "sell": 0
+  },
   "original_3121": {
    "sell": 0
   },
@@ -214236,6 +217134,18 @@
   "original_3227": {
    "sell": 500
   },
+  "original_3258": {
+   "sell": 0
+  },
+  "original_3257": {
+   "sell": 0
+  },
+  "original_3260": {
+   "sell": 0
+  },
+  "original_3259": {
+   "sell": 0
+  },
   "original_3187": {
    "sell": 750
   },
@@ -214309,6 +217219,9 @@
    "sell": 750
   },
   "original_3205": {
+   "sell": 0
+  },
+  "original_3220": {
    "sell": 0
   },
   "original_3111": {
@@ -214593,7 +217506,19 @@
   "original_4313": {
    "sell": 0
   },
+  "original_4329": {
+   "sell": 0
+  },
+  "original_4328": {
+   "sell": 0
+  },
+  "original_4330": {
+   "sell": 0
+  },
   "original_4295": {
+   "sell": 0
+  },
+  "original_4331": {
    "sell": 0
   },
   "original_4083": {
@@ -214839,6 +217764,9 @@
   "original_4104": {
    "sell": 0
   },
+  "original_4150": {
+   "sell": 0
+  },
   "original_4303": {
    "sell": 0
   },
@@ -214942,6 +217870,9 @@
    "sell": 0
   },
   "original_4038": {
+   "sell": 0
+  },
+  "original_4349": {
    "sell": 0
   },
   "original_4348": {
@@ -215082,6 +218013,9 @@
   "original_4305": {
    "sell": 0
   },
+  "original_4356": {
+   "sell": 0
+  },
   "original_4119": {
    "sell": 0
   },
@@ -215217,6 +218151,12 @@
   "original_4392": {
    "sell": 0
   },
+  "original_4393": {
+   "sell": 0
+  },
+  "original_4394": {
+   "sell": 0
+  },
   "original_4395": {
    "sell": 0
   },
@@ -215319,6 +218259,12 @@
   "original_4428": {
    "sell": 0
   },
+  "original_4429": {
+   "sell": 0
+  },
+  "original_4430": {
+   "sell": 0
+  },
   "original_4431": {
    "sell": 0
   },
@@ -215338,6 +218284,9 @@
    "sell": 0
   },
   "original_4437": {
+   "sell": 0
+  },
+  "original_4438": {
    "sell": 0
   },
   "original_4439": {
@@ -216198,10 +219147,16 @@
   "original_4270": {
    "sell": 0
   },
+  "original_4151": {
+   "sell": 0
+  },
   "original_4060": {
    "sell": 0
   },
   "original_4121": {
+   "sell": 0
+  },
+  "original_4158": {
    "sell": 0
   },
   "original_4350": {
@@ -216211,6 +219166,9 @@
    "sell": 0
   },
   "original_4207": {
+   "sell": 0
+  },
+  "original_4351": {
    "sell": 0
   },
   "original_4112": {
@@ -216573,6 +219531,9 @@
   "original_4077": {
    "sell": 0
   },
+  "original_4152": {
+   "sell": 0
+  },
   "original_4027": {
    "sell": 0
   },
@@ -216828,6 +219789,70 @@
  },
  "quests": [
   {
+   "id": "original.quest.1531",
+   "source": {
+    "id": 1531,
+    "path": "n_quest/common/behimos/normal_30_behimos_light.qst",
+    "sha256": "2e019da344f8a7eb9f7a1edb31d3749d5742351a632ae2222bce6c933c3d756d",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3115,
+     15
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "魔法研究 - 光属性篇",
+   "description": "收集15个[耀眼的结晶]。",
+   "dialogue": {
+    "accept": "最近我在研究光属性魔法， 你能帮我找些耀眼的结晶来吗？ \n我听说耀眼的结晶藏在天帷巨兽神殿的雷沃斯身上。",
+    "complete": "我的魔法研究越来越有成效了， 谢谢你！"
+   },
+   "category": "side",
+   "chapter": "common",
+   "min_level": 30,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 15,
+     "target": "original_3115"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {
+     "original_1075": 10,
+     "original_1076": 20,
+     "original_24069": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3115": 15
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
    "id": "original.quest.4605",
    "source": {
     "id": 4605,
@@ -216882,7 +219907,200 @@
     "original_3112": 30
    },
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.1471",
+   "source": {
+    "id": 1471,
+    "path": "n_quest/common/behimos/normal_32_behimos_tentakle_shylock.qst",
+    "sha256": "cce9fbda00957b8e6ef28558c28b7f383b8ca88a1cf91ec74015b23d61117c0c",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3108,
+     30
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "美食家 - 夏洛克",
+   "description": "收集30个[坚韧的触须]。 (可以从天帷巨兽神殿的章鱼类怪物获得)",
+   "dialogue": {
+    "accept": "你好啊！ 冒险家！你问我自认是个美食家吗？我是个美食家。\n 听说最近出现了一种超级美味的食物， 材料好像是用坚韧的触须做的。我也想吃吃看。可以帮我取得坚韧的触须吗？",
+    "complete": "哇！ 你弄来了！ 看来我也有机会品尝最美味的食物了， 谢谢你！"
+   },
+   "category": "side",
+   "chapter": "common",
+   "min_level": 32,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "shylock",
+   "receiver": "shylock",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 30,
+     "target": "original_3108"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3033": 20,
+     "original_3034": 20,
+     "original_3035": 20,
+     "original_3036": 20,
+     "original_3042": 2
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3108": 30
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.1064",
+   "source": {
+    "id": 1064,
+    "path": "n_quest/common/behimos/repeat_27_behimos_octopus.qst",
+    "sha256": "1ed68b8c54097b57244d818be459b4e3df3b9227b7cc57c0cf0db7973682c513",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3108,
+     12
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "新菜单 - 特烤章鱼烧",
+   "description": "收集12个[坚韧的触须]。 坚韧的触须能从天帷巨兽神殿的章鱼怪类中获得。",
+   "dialogue": {
+    "accept": "好喝的酒和适合的下酒菜真的很棒。 最近冒险家总喜欢把章鱼触角当作礼物送给我。 我就试着料理…\n 我特别制作的酱料和有嚼劲的肉简直是绝配，可以制作成适合当下酒菜的料理。 如果能多取得一点材料，就会有很大的帮助。",
+    "complete": "来！ 尝尝看！"
+   },
+   "category": "side",
+   "chapter": "common",
+   "min_level": 27,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "shusia",
+   "receiver": "shusia",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 12,
+     "target": "original_3108"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_1078": 3
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3108": 12
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
+  },
+  {
+   "id": "original.quest.217",
+   "source": {
+    "id": 217,
+    "path": "n_quest/common/handonmyre/epic_10_handonmyre_kagon_love_7.qst",
+    "sha256": "ba59fdcb3fea357889c1f5bd6d90f1110f20537888917b867b901281cfb69e37",
+    "raw_type": [
+     "[disjoint item]"
+    ],
+    "raw_int_data": [
+     -2,
+     -1,
+     -1,
+     13
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "获得无色小晶块碎片",
+   "description": "利用诺顿的装备分解机解除装备。",
+   "dialogue": {
+    "accept": "你有听过无色小晶块吗？我之后再跟你说明。如果你有不用的装备，将它放入分解机内。只能放入不使用的装备 ！",
+    "complete": "按照约定跟你说明。无色晶体是之后使用高级技能或强化装备道具时必备的材料，\n什么？你问该怎么取得吗？回想一下刚刚你做过的吧！"
+   },
+   "category": "main",
+   "chapter": "common",
+   "min_level": 14,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "norton",
+   "receiver": "norton",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "disassemble_item",
+     "amount": 1,
+     "target": "any",
+     "npc": "norton"
+    }
+   ],
+   "reward": {
+    "gold": 1300,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.7640",
@@ -216938,7 +220156,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.506",
@@ -216994,7 +220215,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.1917",
@@ -217050,7 +220274,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.1902",
@@ -217106,7 +220333,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.1903",
@@ -217162,7 +220392,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.1916",
@@ -217218,7 +220451,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.1905",
@@ -217274,7 +220510,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.1904",
@@ -217330,7 +220569,1423 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.4469",
+   "source": {
+    "id": 4469,
+    "path": "n_quest/common/handonmyre/time_character01.qst",
+    "sha256": "7a580268f7b6cd58b90a36748c69d2e7173696df0eb0eb770eca2669e0ba93b5",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     6
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "第二个时间碎片",
+   "description": "询问风震关於时间碎片",
+   "dialogue": {
+    "accept": "时间碎片似乎散落在这世界的各个角落。在格兰之森的地方，也感觉到了时间气息\n找来那些碎片，还我力量吧！这样才能回到最后的时间…\n但是目前用你的力量无法探险时间碎片所在的地方。只能慢慢训练…\n那个叫 风震的人非常了解这个地方，去找他帮忙也不错。",
+    "complete": "时间碎片吗……我第一次听到。但是不久钱很多人都说目击到格兰之森方向有某种光芒掉落。\n可能就是那个时间碎片。"
+   },
+   "category": "main",
+   "chapter": "common",
+   "min_level": 3,
+   "max_level": 99,
+   "requires": [
+    "hendon.meet_pungjin"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "the_last_mehmet",
+   "receiver": "pungjin",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "pungjin"
+    }
+   ],
+   "reward": {
+    "gold": 200,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[target character]": [
+     "[demonic swordman]",
+     -1,
+     -1,
+     "[creator mage]",
+     -1,
+     -1
+    ]
+   },
+   "target_characters": [
+    "[demonic swordman]",
+    "[creator mage]"
+   ],
+   "auto_accept": true,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.1207",
+   "source": {
+    "id": 1207,
+    "path": "n_quest/common/skycastle/repeat_17_skycastle_draconian_eye.qst",
+    "sha256": "71c08b5532143c22cb9dc4f323e3cec7af070c858ab07dd46bd3e8fa1e196d4b",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3128,
+     8
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "魔力提取 - 龙人之眼",
+   "description": "请在天空之城收集8个[龙人之眼]。",
+   "dialogue": {
+    "accept": "天空之城的龙人拥有光的力量。 眼睛含有最多光的力量。\n 虽然很危险，不过如果你能帮我取得龙人的眼睛，对我的研究会有极大的帮助。",
+    "complete": "这个就是龙人之眼？ 嗯， 好像真的藏有很强的魔力啊……"
+   },
+   "category": "side",
+   "chapter": "common",
+   "min_level": 17,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 8,
+     "target": "original_3128"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3034": 10
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3128": 8
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
+  },
+  {
+   "id": "original.quest.1109",
+   "source": {
+    "id": 1109,
+    "path": "n_quest/common/skycastle/repeat_17_skycastle_plolight.qst",
+    "sha256": "ddfa10f83757e618e9ec422c18936814b796d001c8b4976a04a97d0740d78300",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3124,
+     8
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "魔力提取 - 萤石",
+   "description": "收集8个[萤石]。 萤石能从天空之城获得。",
+   "dialogue": {
+    "accept": "我听说萤石里含有黑暗魔力，如果真是这样，我的魔法研究就有材料了……嗯，我想试试看，你能帮我收集些萤石吗？",
+    "complete": "拿来了吗？ 如果你还有发现，不管有多少请拿来给我。"
+   },
+   "category": "side",
+   "chapter": "common",
+   "min_level": 17,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 8,
+     "target": "original_3124"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3033": 10
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3124": 8
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
+  },
+  {
+   "id": "original.quest.1167",
+   "source": {
+    "id": 1167,
+    "path": "n_quest/common/skycastle/repeat_17_skycastle_spinel.qst",
+    "sha256": "6a3d75acc26f4c034f0583adc4cf0dbfde481902a415e33a2d92a0dbaffcf805",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3123,
+     8
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "魔力提取 - 尖晶石",
+   "description": "收集8个[尖晶石]。 尖晶石可以在天空之城获得。",
+   "dialogue": {
+    "accept": "在过去，我听说所有宝石都蕴含魔力。 利用从宝石萃取的魔力制作小晶块，就会需要魔法..\n 我头脑那么聪明，如果不好好修练魔法，那不过是个美丽的少女罢了？\n 我要努力成为聪明和美貌兼具的魔法师。 如果你能帮助我的魔法修行那就太棒了。",
+    "complete": "辛苦了， 以后还请你多关照哦！"
+   },
+   "category": "side",
+   "chapter": "common",
+   "min_level": 17,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "lorian",
+   "receiver": "lorian",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 8,
+     "target": "original_3123"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3035": 10
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3123": 8
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
+  },
+  {
+   "id": "original.quest.1225",
+   "source": {
+    "id": 1225,
+    "path": "n_quest/common/skycastle/repeat_17_skycastle_zircon.qst",
+    "sha256": "bf4ac34cb4e0fba6772755daff9174d1909f8fe010f2bcd77d6ac8594ca9f567",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3125,
+     8
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "魔力提取 - 锆石",
+   "description": "收集8个[锆石]。 锆石可以在天空之城获得。",
+   "dialogue": {
+    "accept": "冒险家，我的魔法修行需要一些辅助材料，就是那种带有水之气息的锆石，你见过吧？呵呵，既然你知道，那就麻烦你帮我收集一些材料吧。",
+    "complete": "以后我还会有其他的事拜托你， 所以你就多收集一些吧。"
+   },
+   "category": "side",
+   "chapter": "common",
+   "min_level": 17,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "lorian",
+   "receiver": "lorian",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 8,
+     "target": "original_3125"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3036": 10
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3125": 8
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
+  },
+  {
+   "id": "original.quest.1493",
+   "source": {
+    "id": 1493,
+    "path": "n_quest/common/skycastle/repeat_21_skycastle_lorian_silk.qst",
+    "sha256": "03ab33018e824f21a181d60f93277ba113a34d7dbab0edec130584216fdd581a",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3122,
+     10
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "最好的丝绸",
+   "description": "前往天空之城的地下城，从各类人偶师身上收集10个[圣痕丝绸]。",
+   "dialogue": {
+    "accept": "知道这世界上最好的丝绸是什么吗?  我告诉你， 那就是天空之城里的圣痕丝绸。 啊~ 也只有我罗莉安才能穿戴那样高级的丝绸啊……\n冒险家， 在那些丑八怪把高级丝绸弄成衣服前， 你去帮我收集一些圣痕丝绸吧。",
+    "complete": "是的！ 多么细腻的质感呀！ 我本来就是衣架子， 穿什么都很漂亮~对吧？"
+   },
+   "category": "side",
+   "chapter": "common",
+   "min_level": 21,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "lorian",
+   "receiver": "lorian",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 10,
+     "target": "original_3122"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": [
+     {
+      "id": "original_1108",
+      "item": "original_1108",
+      "amount": 3
+     },
+     {
+      "id": "original_1114",
+      "item": "original_1114",
+      "amount": 3
+     }
+    ]
+   },
+   "consume": {
+    "original_3122": 10
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
+  },
+  {
+   "id": "original.quest.5826",
+   "source": {
+    "id": 5826,
+    "path": "n_quest/common/westcost/normal_60_sharan_empty_stone.qst",
+    "sha256": "126a5834323c8084d9a6ce7f3f79a59c7b83a7de4c73ae026dcf00c738d3feb7",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3300,
+     10
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "虚空魔石",
+   "description": "收集10个[虚空魔石碎片]。",
+   "dialogue": {
+    "accept": "我们发现最近出现的怪物越来越强了，而且还发现了不同于混沌魔石的另一种魔石--虚空魔石。 \n这种魔石蕴含着强大的力量，如果能提取出这种力量，应该会对你有很大的帮助。 \n只是虚空魔石很少以完整的形态存在，如果你能收集到一些碎片回来，我就可以用魔法将它们合成一块完整的虚空魔石。",
+    "complete": "这就是完整的虚空魔石！"
+   },
+   "category": "side",
+   "chapter": "common",
+   "min_level": 60,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 10,
+     "target": "original_3300"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3299": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3300": 10
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.4101",
+   "source": {
+    "id": 4101,
+    "path": "n_quest/handonmyre/moonlightpub/epic_49_moonlightpub_jangsamrang_1.qst",
+    "sha256": "d9dcad76a28dc7ae7b7e14fe407dfaaa75418d0bddb08d3d535a19e002a2c303",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     5
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "灰衣剑士",
+   "description": "向索西雅打听灰衣剑士的事。",
+   "dialogue": {
+    "accept": "虽然不知道你是为何而来，不过非常欢迎你来我们的月光酒馆。 先喝一杯啤酒吧，驱逐一下旅途的疲劳。",
+    "complete": "灰衣剑士…. 这个嘛… 虽然在这酒馆进出的冒险家很多… 但是这年头能把衣服保持得乾乾净净的冒险家是少之又少。  \n大多数的冒险家要不是穿着灰色衣服，就是衣服脏得让人看不出颜色。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 49,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "shusia",
+   "receiver": "shusia",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "shusia"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.201",
+   "source": {
+    "id": 201,
+    "path": "n_quest/handonmyre/sunderlanddark/epic_14_sunderlanddark_gul_1.qst",
+    "sha256": "54f2cfe3d121c147099ed0b4cc60b781a4eacdbbd284b75bcfec69fe4403bb21",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3080,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "辛达遗失的槌子",
+   "description": "把奇怪石头拿给诺顿。",
+   "dialogue": {
+    "accept": "哎呦！ 我把师父传给我的铁匠锤弄丢了， 怎么办？ 要是师父知道了， 他肯定会死不瞑目的！\n冒险家， 你能帮我把它找回来吗？ 锤子是我去格兰之森寻找新矿石时弄丢的。\n记得那天我刚发现一种新奇的矿石， 我兴奋的跑了过去， 没想到好多屍体从地里爬出来， 我吓呆了， 拿着这块石头转身就跑。\n后来我按原路回去寻找却再也找不到我的锤子了， 你帮我把这石头拿给诺顿看看吧， 说不定他能找到一些线索。",
+    "complete": "快进来，你找炼金术师诺顿有什么事吗？"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 14,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sinda",
+   "receiver": "norton",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3080"
+    }
+   ],
+   "reward": {
+    "gold": 1500,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3080": 1
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[depend give item]": [
+     3080,
+     1
+    ]
+   },
+   "grant_items": {
+    "original_3080": 1
+   },
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.513",
+   "source": {
+    "id": 513,
+    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_ft.qst",
+    "sha256": "14c9bdf42d2ee8292d6de96dd7b06e4240dd856f1c18977ca5c559e93fdc30d4",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     6,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "更强的敌人",
+   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "dialogue": {
+    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
+    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 7,
+   "max_level": 99,
+   "requires": [
+    "gran.poison_scent"
+   ],
+   "eligibility": {
+    "jobs": [
+     1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "sunderland_poison",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 400,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.7643",
+   "source": {
+    "id": 7643,
+    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_ft_at.qst",
+    "sha256": "79d1d7d20da49f8e909e8655abfaa44e8717bad28050e0cda9fc61d90305a8ae",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     6,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "更强的敌人",
+   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "dialogue": {
+    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
+    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 7,
+   "max_level": 99,
+   "requires": [
+    "gran.poison_scent"
+   ],
+   "eligibility": {
+    "jobs": [
+     7
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "sunderland_poison",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 400,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.523",
+   "source": {
+    "id": 523,
+    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_gn.qst",
+    "sha256": "116d71c536d8d64d7ba41419abd52e69870964754672dd2485551c40d9ed3463",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     6,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "更强的敌人",
+   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "dialogue": {
+    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
+    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 7,
+   "max_level": 99,
+   "requires": [
+    "gran.poison_scent"
+   ],
+   "eligibility": {
+    "jobs": [
+     2
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "sunderland_poison",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 400,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.621",
+   "source": {
+    "id": 621,
+    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_gn_at.qst",
+    "sha256": "732aced8eac41dc1cc859be44b7a20b2b1f4369e8188ad1da70b7b82f6671354",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     6,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "更强的敌人",
+   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "dialogue": {
+    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
+    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 7,
+   "max_level": 99,
+   "requires": [
+    "gran.poison_scent"
+   ],
+   "eligibility": {
+    "jobs": [
+     5
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "sunderland_poison",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 400,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.533",
+   "source": {
+    "id": 533,
+    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_mg.qst",
+    "sha256": "483ae1265ae4a54f94fbefe3d6a0c66c5f19361947daac185dc54f4e140ac2e8",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     6,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "更强的敌人",
+   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "dialogue": {
+    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
+    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 7,
+   "max_level": 99,
+   "requires": [
+    "gran.poison_scent"
+   ],
+   "eligibility": {
+    "jobs": [
+     3
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "sunderland_poison",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 400,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.543",
+   "source": {
+    "id": 543,
+    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_pr.qst",
+    "sha256": "e85a74b565407167b33c7f2a08cb1de5ef718437ed6b78eda79a95a4a9461747",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     6,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "更强的敌人",
+   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "dialogue": {
+    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
+    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 7,
+   "max_level": 99,
+   "requires": [
+    "gran.poison_scent"
+   ],
+   "eligibility": {
+    "jobs": [
+     4
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "sunderland_poison",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 400,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.633",
+   "source": {
+    "id": 633,
+    "path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_3_th.qst",
+    "sha256": "a29b16be900fb8f8e095604f2d9e0787969ac7a9638dc56ed19085abeaa159b6",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     6,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "更强的敌人",
+   "description": "通过猛毒雷鸣废墟中等难度(Medium)\n（中等难度(Medium)只要点击地下城选择画面的地下城栏下端右边的箭头就可以选择。）",
+   "dialogue": {
+    "accept": "想要遇到更强的敌手吗？好，那就挑战猛毒雷鸣废墟中等难度吧。\n中等难度会出现比一般难度更强、更耐打的敌人。",
+    "complete": "虽然你活着回来，但似乎有受伤呢。这将是一次很好的经验。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 7,
+   "max_level": 99,
+   "requires": [
+    "gran.poison_scent"
+   ],
+   "eligibility": {
+    "jobs": [
+     6
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "sunderland_poison",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 400,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.2618",
+   "source": {
+    "id": 2618,
+    "path": "n_quest/hell/hell_exch.qst",
+    "sha256": "dc8263a120bbde534e90b18f666f71c4139df946a8d3e24d3de1d361be07814c",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     4150,
+     2
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "交换火焰之破魔石",
+   "description": "收集2个[火焰之破魔石]。",
+   "dialogue": {
+    "accept": "让我用蒸汽之破魔石交换你的火焰之破魔石。",
+    "complete": "你肩负着我们全部人的希望，一定要保重啊。"
+   },
+   "category": "side",
+   "chapter": "hell",
+   "min_level": 20,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "grandis",
+   "receiver": "grandis",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 2,
+     "target": "original_4150"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_4151": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_4150": 2
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
+  },
+  {
+   "id": "original.quest.2616",
+   "source": {
+    "id": 2616,
+    "path": "n_quest/hell/hell_up1.qst",
+    "sha256": "98ef265a12f7d40eb0e6772f2a5f00b995d64ca1e5451d83990cefe3fdc9ac68",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     4328,
+     2
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "交换燃烧恶魔的挑战书",
+   "description": "收集2张[燃烧恶魔的挑战书]。",
+   "dialogue": {
+    "accept": "由于出现了深渊派对， 你之前收集的燃烧恶魔的邀请函已经用不上了， 让我帮你换成蓝色恶魔的邀请函吧。",
+    "complete": "嗯， 深渊派对比之前的深渊怪物更危险， 你可要小心了。"
+   },
+   "category": "side",
+   "chapter": "hell",
+   "min_level": 30,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "grandis",
+   "receiver": "grandis",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 2,
+     "target": "original_4328"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_4329": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_4328": 2
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
+  },
+  {
+   "id": "original.quest.2617",
+   "source": {
+    "id": 2617,
+    "path": "n_quest/hell/hell_up2.qst",
+    "sha256": "56123473f172ca8f34cd013dfaa1013aa2c8aefad7a93bd01c33c4b2c24188b1",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3213,
+     2
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "交换燃烧恶魔的请帖",
+   "description": "收集2张[燃烧恶魔的邀请函]。",
+   "dialogue": {
+    "accept": "让我用蓝冰恶魔的邀请函交换您剩下的燃烧恶魔的邀请函吧。",
+    "complete": "祝你一路顺风。"
+   },
+   "category": "side",
+   "chapter": "hell",
+   "min_level": 30,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "grandis",
+   "receiver": "grandis",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 2,
+     "target": "original_3213"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3214": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3213": 2
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
+  },
+  {
+   "id": "original.quest.20915",
+   "source": {
+    "id": 20915,
+    "path": "n_quest/towers/repeat_45_sharan_diabolic_menpiao.qst",
+    "sha256": "8ab8bd05094b1fd847146d3db182b43f1d99ba94989c89fdbefb3807c70c5f73",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3033,
+     30,
+     3187,
+     10
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "比尔马克帝国试验场（门票）",
+   "description": "收集10个[灵魂晶石]和30个[黑色小晶块]。",
+   "dialogue": {
+    "accept": "只要有材料， 你要多少， 我就可以给你制作多少",
+    "complete": "这个就是你要的胶囊， 拿去吧！ 如果你下次还有这方面的需求， 随时来找我啊！"
+   },
+   "category": "side",
+   "chapter": "towers",
+   "min_level": 45,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 30,
+     "target": "original_3033"
+    },
+    {
+     "id": "objective_1",
+     "type": "collect_item",
+     "amount": 10,
+     "target": "original_3187"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3209": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3033": 30,
+    "original_3187": 10
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
+  },
+  {
+   "id": "original.quest.3611",
+   "source": {
+    "id": 3611,
+    "path": "n_quest/towers/repeat_45_sharan_diabolic_stone.qst",
+    "sha256": "ea54c78c0d3d6ea5a0239919094676ee4e9fdcf0c8623f43c50f510bde534ff4",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3229,
+     10
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "混沌魔石碎片 (重复)",
+   "description": "收集10个[混沌魔石碎片]交给莎兰。",
+   "dialogue": {
+    "accept": "据我所知，混沌魔石主要出现在高等级地下城或死亡之塔中，\n而且只有很小的几率出现完整的混沌魔石…… 如果你能带来10个混沌魔石的碎片，我可以帮你把它们合成一个完整的混沌魔石。",
+    "complete": "这是混沌魔石。只要只要你能找到混沌魔石碎片， 我就能制作成完整的型态。"
+   },
+   "category": "side",
+   "chapter": "towers",
+   "min_level": 45,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 10,
+     "target": "original_3229"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3228": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3229": 10
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
+  },
+  {
+   "id": "original.quest.1473",
+   "source": {
+    "id": 1473,
+    "path": "n_quest/common/behimos/repeat_32_behimos_tentakle_shylock.qst",
+    "sha256": "bf58c66ef4d8e9e7798be58223aaf6036c62f5510e420661b3ed1d613445fab3",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3108,
+     20
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "美味的章鱼触须",
+   "description": "取得坚韧的触须20个",
+   "dialogue": {
+    "accept": "啊… 充满弹性的触须， 吃过一次就不会忘记那可口的美味。 如果你有吃剩的，就分点给我吧。\n嗯？ 不会吃触须是吗？ …嘿嘿… 那么可以得到的话，就分些给我……",
+    "complete": "啊！ 是触须啊！ 今天又能吃到丰盛的晚餐！"
+   },
+   "category": "side",
+   "chapter": "common",
+   "min_level": 32,
+   "max_level": 99,
+   "requires": [
+    "original.quest.1471"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "shylock",
+   "receiver": "shylock",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 20,
+     "target": "original_3108"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3034": 20
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3108": 20
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
   },
   {
    "id": "original.quest.7641",
@@ -217386,7 +222041,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.631",
@@ -217442,7 +222100,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.511",
@@ -217498,7 +222159,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.521",
@@ -217554,7 +222218,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.619",
@@ -217610,7 +222277,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.541",
@@ -217666,7 +222336,10 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
   },
   {
    "id": "original.quest.531",
@@ -217722,13 +222395,301 @@
    },
    "consume": {},
    "enabled": true,
-   "abandonable": true
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.4470",
+   "source": {
+    "id": 4470,
+    "path": "n_quest/common/handonmyre/time_character02.qst",
+    "sha256": "c5d995ee6c408b069a1233c0d49a2f28844a8f7e7dfb377c8fa1e70b0baad681",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     4
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "寻找时间碎片1",
+   "description": "去找赫顿玛尔的辛达",
+   "dialogue": {
+    "accept": "不久前听说辛达在格兰之森的猛毒雷鸣废墟捡到某种碎片……难道那就是时间碎片吗？\n辛达在赫顿玛尔可是个出了名的铁匠。 要找到辛达并不难。",
+    "complete": "你就是听说最近突然出现的那位冒险家吗？有趣……。"
+   },
+   "category": "main",
+   "chapter": "common",
+   "min_level": 4,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4469"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "pungjin",
+   "receiver": "sinda",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "sinda"
+    }
+   ],
+   "reward": {
+    "gold": 300,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[target character]": [
+     "[demonic swordman]",
+     -1,
+     -1,
+     "[creator mage]",
+     -1,
+     -1
+    ]
+   },
+   "target_characters": [
+    "[demonic swordman]",
+    "[creator mage]"
+   ],
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.5827",
+   "source": {
+    "id": 5827,
+    "path": "n_quest/common/westcost/repeat_60_sharan_empty_stone.qst",
+    "sha256": "fc22f712d1d2ac11b074800c5ef065a8982459eca7f89ea05fb1b1dd961ac542",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3229,
+     10
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "虚空魔石 (重复)",
+   "description": "收集10个[虚空魔石碎片]。",
+   "dialogue": {
+    "accept": "只要你能找到虚空魔石碎片，都可以来这里找我合成虚空魔石。",
+    "complete": "我说话一向算数，这个给你。"
+   },
+   "category": "side",
+   "chapter": "common",
+   "min_level": 60,
+   "max_level": 99,
+   "requires": [
+    "original.quest.5826"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 10,
+     "target": "original_3229"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {
+     "original_3299": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3229": 10
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false,
+   "lifecycle": "repeat"
+  },
+  {
+   "id": "original.quest.202",
+   "source": {
+    "id": 202,
+    "path": "n_quest/handonmyre/sunderlanddark/epic_14_sunderlanddark_gul_2.qst",
+    "sha256": "2df696acacb2a632f08ea8259769c3bb323603f84cc67b7585be90110fb7eb04",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     13
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "奇怪石头",
+   "description": "与诺顿对话。",
+   "dialogue": {
+    "accept": "咦？ 这石头好像在哪里见过？它是古代遗迹里发现的稀有的石头。\n 就我所知，这种石头是只会出现在黑暗气息非常强地方的魔石。称之为魔晶石，并不是代表可以用在任何魔法的工具，只是蕴含黑暗气息的石头。\n根据研究纪录，通常无法轻易前往这种石头的所在地。这个地方会因为时空扭曲而让人类的肉眼很难发现。虽然有一定的时间周期能让人类看见，但是这种事相当罕见。\n 辛达只是幸运碰巧看见了。人类看不到这个地方，即使在眼前也看不见。\n  我现在帮你制作可以看见那个地方的工具， 你稍等一下……",
+    "complete": "好了， 这个暗夜项坠。可以帮助你看到那个奇怪的空间， 而且还可以让你抵抗黑暗气息的侵袭， 你进入那个空间前一定要记得佩戴它啊。\n哦， 对了！ 我已经尽力帮你了， 如果你在那空间发现了有趣的东西， 一定要记得告诉我啊， 拜托你了！"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 14,
+   "max_level": 99,
+   "requires": [
+    "original.quest.201"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "norton",
+   "receiver": "norton",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "norton"
+    }
+   ],
+   "reward": {
+    "gold": 1500,
+    "xp": 0,
+    "items": {
+     "original_20052": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {},
+   "auto_accept": false,
+   "auto_complete": false
+  },
+  {
+   "id": "original.quest.203",
+   "source": {
+    "id": 203,
+    "path": "n_quest/handonmyre/sunderlanddark/epic_14_sunderlanddark_gul_3.qst",
+    "sha256": "64cf68765f6cd6ca48aa83407790c1aa91373f25d0f26fcb1f01af0b3e5a25d4",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3081,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "暗黑雷鸣废墟",
+   "description": "通过格兰之森的暗黑雷鸣废墟，将[卡露亚的铁匠锤]交给辛达。",
+   "dialogue": {
+    "accept": "真没想到诺顿会愿意帮我， 我得好好谢谢他！ 那么就拜托你了， 请你一定要找到它， 这个锤子关系就如同我的生命……",
+    "complete": "太感谢了！ 不晓得该怎么表示我的感激……师父， 锤子找回来了， 请您原谅我的漫不经心。"
+   },
+   "category": "main",
+   "chapter": "handonmyre",
+   "min_level": 14,
+   "max_level": 99,
+   "requires": [
+    "original.quest.202"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sinda",
+   "receiver": "sinda",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3081"
+    }
+   ],
+   "reward": {
+    "gold": 2000,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3081": 1
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[clear reward item]": [
+     1000,
+     -1,
+     3081,
+     1,
+     100,
+     1
+    ],
+    "[effect after clear quest]": [
+     1
+    ]
+   },
+   "clear_items": [
+    {
+     "difficulty": [
+      "normal",
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "item": "original_3081",
+     "amount": 1,
+     "limit": 1
+    }
+   ],
+   "auto_accept": false,
+   "auto_complete": false
   }
  ],
  "coverage": {
-  "new_items": 3729,
-  "new_equipment": 2461,
+  "new_items": 3792,
+  "new_equipment": 2470,
   "new_consumables": 76,
-  "new_quests": 16
+  "new_quests": 46
  }
 }

@@ -457,8 +457,44 @@
   },
   "hendon_pub": {
    "placement": "hendon_pub",
-   "declared": [],
-   "npcs": []
+   "declared": [
+    "shusia"
+   ],
+   "npcs": [
+    {
+     "id": "shusia",
+     "local_id": "shusia",
+     "anchor": [
+      1001,
+      156,
+      0
+     ],
+     "layer": "normal",
+     "implemented": true,
+     "field_wav": [
+      "R_NPC_SUSIA_AMB_LOOP"
+     ],
+     "popup_wav": [
+      "R_NPC_SUSIA_TALK",
+      "R_NPC_SUSIA_FAREWELL"
+     ],
+     "faces": {
+      "small": [
+       "Map/Npc/NpcFace02.img",
+       16
+      ],
+      "big": [
+       "Map/Npc/NpcFace02.img",
+       15
+      ],
+      "popup": [
+       "Map/Npc/NpcFace02.img",
+       17
+      ]
+     },
+     "field_animation": "npc/animation/npc_su.ani"
+    }
+   ]
   },
   "hendon_inn": {
    "placement": "hendon_inn",
@@ -472,8 +508,85 @@
   },
   "westcoast": {
    "placement": "westcoast",
-   "declared": [],
-   "npcs": []
+   "declared": [
+    "lorian"
+   ],
+   "npcs": [
+    {
+     "id": "lorian",
+     "local_id": "lorian",
+     "anchor": [
+      1206,
+      206,
+      0
+     ],
+     "layer": "normal",
+     "implemented": true,
+     "field_wav": [
+      "R_NPC_LORIAN_AMB_LOOP"
+     ],
+     "popup_wav": [
+      "R_NPC_LORIAN_TALK",
+      "R_NPC_LORIAN_FAREWELL"
+     ],
+     "faces": {
+      "small": [
+       "Map/Npc/NpcFace01.img",
+       12
+      ],
+      "big": [
+       "Map/Npc/NpcFace01.img",
+       11
+      ],
+      "popup": [
+       "Map/Npc/NpcFace01.img",
+       13
+      ]
+     },
+     "field_animation": "npc/animation/npc_lo.ani"
+    }
+   ]
+  },
+  "westcoast_magic": {
+   "placement": "westcoast_magic",
+   "declared": [
+    "sharan"
+   ],
+   "npcs": [
+    {
+     "id": "sharan",
+     "local_id": "sharan",
+     "anchor": [
+      630,
+      209,
+      0
+     ],
+     "layer": "normal",
+     "implemented": true,
+     "field_wav": [
+      "R_NPC_SHARAN_AMB_LOOP"
+     ],
+     "popup_wav": [
+      "R_NPC_SHARAN_TALK",
+      "R_NPC_SHARAN_FAREWELL"
+     ],
+     "faces": {
+      "small": [
+       "Map/Npc/NpcFace01.img",
+       21
+      ],
+      "big": [
+       "Map/Npc/NpcFace01.img",
+       20
+      ],
+      "popup": [
+       "Map/Npc/NpcFace01.img",
+       22
+      ]
+     },
+     "field_animation": "npc/animation/npc_sr.ani"
+    }
+   ]
   }
  }
 }

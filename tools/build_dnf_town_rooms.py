@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from export_dnf_map import Library, export_map, CELL_W, CELL_H
+from export_dnf_map import Library, export_map, resolve, span_values, CELL_W, CELL_H
 
 ROOT = Path(__file__).resolve().parent.parent
 GAME = ROOT / 'game_dnf'
@@ -30,6 +30,13 @@ ROOMS = {
     'alfhlyra': 'map/elvengard/elven2alfh.map',
     # 西海岸：赫顿玛尔西侧的海岸城镇，(r) 版与 hendon_main 的取法一致。
     'westcoast': 'map/hendonmyre/(r)westcoast.map',
+    'westcoast_magic': 'map/hendonmyre/(r)westcoast_magic.map',
+}
+
+NPCS = {
+    5: ('shusia', '索西雅'),
+    10: ('lorian', '罗莉安'),
+    12: ('sharan', '莎兰'),
 }
 
 
@@ -97,6 +104,36 @@ def main() -> int:
             folder = OUTPUT / key
             folder.mkdir(parents=True, exist_ok=True)
             walk = rects_from_grid(room.get('walk_grid') or [])
+            npc_listing = lib.listing('npc/npc.lst')
+            residents = []
+            npc_rows = span_values(lib.script(path)['spans'], '[NPC]')
+            for index in range(0, len(npc_rows), 5):
+                row = npc_rows[index:index + 5]
+                if len(row) != 5 or row[0] not in NPCS:
+                    continue
+                npc_id, direction, x, y, z = row
+                npc_key, name = NPCS[npc_id]
+                npc_path = 'npc/' + npc_listing[npc_id].lower()
+                script = lib.script(npc_path)
+                ani = resolve(npc_path, span_values(script['spans'], '[field animation]')[0])
+                sprite = lib.sprite(ani, npc_path)
+                if not sprite:
+                    raise ValueError('Required original NPC missing: ' + npc_path)
+                if direction == '[right]':
+                    for frame in sprite['frames']:
+                        frame['flip_x'] = not frame.get('flip_x', False)
+                room.setdefault('animations', []).append(
+                    {'layer': 'normal', 'anchor': [x, y, z], 'space': 'map', 'sprite': sprite}
+                )
+                residents.append({
+                    'id': npc_key,
+                    'source_id': npc_id,
+                    'name': name,
+                    'anchor': [x, y, z],
+                    'source': npc_path,
+                    'sha256': script['sha256'],
+                    'ani': ani,
+                })
             manifest = {
                 'schema': 'dnf_native_map/1',
                 'source': {'path': path, 'evidence': 'E-PARSE 原版房间地图，原生像素不缩放'},
@@ -106,6 +143,7 @@ def main() -> int:
                 },
                 'dungeon': {'rooms': {path: room},
                             'placements': [{'id': key, 'map': path, 'gates': []}]},
+                'npcs': residents,
                 'images': dict(lib.images),
                 'walk': walk,
             }

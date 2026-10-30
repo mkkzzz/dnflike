@@ -127,16 +127,26 @@ func command(profile: Dictionary, kind: String, payload: Dictionary, context: Di
 	var state := status(profile, id)
 	var candidate := profile.duplicate(true)
 	var ledger: Dictionary = candidate["quest_state"]
-	if kind != "quest.track" and not context.get("in_town", false):return fail("请回城后处理任务")
+	var auto_request: bool=bool(context.get("auto",false))
+	if kind != "quest.track" and not context.get("in_town", false) and not auto_request:return fail("请回城后处理任务")
 	match kind:
 		"quest.accept":
 			if state != "available":return fail("任务尚不可接受")
-			if not context.get("nearby", false) or context.get("npc") != q["giver"]:return fail("请到" + npc_name(q["giver"]) + "身旁接受任务")
+			if not auto_request and (not context.get("nearby", false) or context.get("npc") != q["giver"]):return fail("请到" + npc_name(q["giver"]) + "身旁接受任务")
 			if active_count(profile) >= int(catalog.config["limits"]["active"]):return fail("进行中的任务已满")
 			var fresh:=new_entry(q)
 			Cycle.begin(ledger,q,fresh,today(candidate))
 			ledger["entries"][id] = fresh
 			if ledger["tracked"].size() < int(catalog.config["limits"]["tracked"]):ledger["tracked"].append(id)
+			if not q.get("grant_items",{}).is_empty():
+				if not grant.is_valid():return fail("任务发放物品服务未接入")
+				var grant_tx: String="accept:"+id+":"+str(int(fresh.get("cycle",0)))
+				if not ledger["transactions"].has(grant_tx):
+					var initial_reward: Dictionary={"gold":0,"xp":0,"items":q["grant_items"].duplicate(true),"conditional_items":[],"choices":[]}
+					var granted = grant.call(candidate,initial_reward,grant_tx)
+					if not granted is Dictionary or not granted.get("ok",false):return fail(granted.get("message","任务物品发放失败") if granted is Dictionary else "任务物品发放失败")
+					ledger=candidate["quest_state"]
+					ledger["transactions"][grant_tx]=true
 		"quest.track":
 			if state not in ["active", "ready"]:return fail("只能追踪进行中的任务")
 			if id in ledger["tracked"]:ledger["tracked"].erase(id)
@@ -148,7 +158,7 @@ func command(profile: Dictionary, kind: String, payload: Dictionary, context: Di
 			ledger["tracked"].erase(id)
 		"quest.claim":
 			if state != "ready":return fail("任务尚未完成或已交付")
-			if not context.get("nearby", false) or context.get("npc") != q["receiver"]:return fail("请到" + npc_name(q["receiver"]) + "身旁交付任务")
+			if not auto_request and (not context.get("nearby", false) or context.get("npc") != q["receiver"]):return fail("请到" + npc_name(q["receiver"]) + "身旁交付任务")
 			if not Cycle.can_claim(ledger,q,today(candidate)):return fail("今日已完成，请在每日刷新后再来")
 			var tx := Cycle.tx(id,ledger["entries"][id])
 			if ledger["transactions"].has(tx):return fail("任务奖励已经领取")
@@ -175,7 +185,7 @@ func command(profile: Dictionary, kind: String, payload: Dictionary, context: Di
 
 func ingest(profile: Dictionary, event: Dictionary) -> Dictionary:
 	if not valid(profile):return fail("任务存档无效")
-	if event.get("type") not in ["npc.met", "combat.monster_defeated", "dungeon.cleared", "skill.learned", "item.disassembled"] or not event.get("event_id") is String or event["event_id"].is_empty():return fail("任务事件无效")
+	if event.get("type") not in ["npc.met", "combat.monster_defeated", "dungeon.cleared", "map.cleared", "skill.learned", "item.disassembled"] or not event.get("event_id") is String or event["event_id"].is_empty():return fail("任务事件无效")
 	if event.get("type")=="skill.learned" and (not event.get("skill") is String or event["skill"].is_empty() or not Catalog.whole(event.get("levels"),1,100)):return fail("技能学习事件无效")
 	var changed: Array[String] = []
 	for id: String in profile["quest_state"]["entries"]:
@@ -185,9 +195,13 @@ func ingest(profile: Dictionary, event: Dictionary) -> Dictionary:
 		if entry["state"] != "active" or not q["enabled"] or not eligible(profile,q):continue
 		for o: Dictionary in q["objectives"]:
 			if o["type"] == "collect_item" or objective_count(profile, o, entry) >= int(o["amount"]):continue
+			var cell_matches:=false
+			if event.get("cell") is Array and o.get("cell") is Array and event["cell"].size()==2 and o["cell"].size()==2:
+				cell_matches=int(event["cell"][0])==int(o["cell"][0]) and int(event["cell"][1])==int(o["cell"][1])
 			var matches: bool = (o["type"] == "meet_npc" and event["type"] == "npc.met" and event.get("npc") == o["target"]) or (o["type"] == "kill_monster" and event["type"] == "combat.monster_defeated" and event.get("monster_id") == o["target"]) or (o["type"] == "clear_dungeon" and event["type"] == "dungeon.cleared" and (event.get("dungeon") == o["target"] or o["target"]=="any") and event.get("victory", false))
 			matches = matches or (o["type"]=="learn_skill" and event["type"]=="skill.learned" and o["target"]=="any")
 			matches = matches or (o["type"]=="disassemble_item" and event["type"]=="item.disassembled" and event.get("npc")==o.get("npc") and event.get("item") is String and not event["item"].is_empty() and (o["target"]=="any" or o["target"]==event["item"]))
+			matches = matches or (o["type"]=="clear_map" and event["type"]=="map.cleared" and event.get("dungeon")==o.get("dungeon") and cell_matches)
 			if not matches or (o.has("dungeon") and o["dungeon"]!="any" and event.get("dungeon") != o["dungeon"]) or (o.has("difficulty") and event.get("difficulty") not in o["difficulty"]):continue
 			if o.has("allowed_dungeons") and event.get("dungeon") not in o["allowed_dungeons"]:continue
 			if not Conditions.matches(o.get("conditions",{}),event.get("facts",{})):continue
@@ -198,6 +212,28 @@ func ingest(profile: Dictionary, event: Dictionary) -> Dictionary:
 			entry["progress"][o["id"]] = int(entry["progress"].get(o["id"], 0)) + 1
 			if id not in changed:changed.append(id)
 	return {"ok":true, "changed":changed}
+
+func advance_auto(profile: Dictionary, grant := Callable()) -> Dictionary:
+	if not valid(profile):return fail("任务存档无效")
+	var changed: Array[String]=[]
+	var ids: Array=catalog.definitions.keys()
+	ids.sort()
+	for _step in range(catalog.definitions.size()*2+1):
+		var acted:=false
+		for id: String in ids:
+			var q: Dictionary=catalog.definitions[id]
+			var state:=status(profile,id)
+			var response: Dictionary={}
+			if q.get("auto_accept",false) and state=="available":
+				response=command(profile,"quest.accept",{"id":id},{"in_town":true,"nearby":true,"npc":q["giver"],"auto":true},grant)
+			elif q.get("auto_complete",false) and state=="ready":
+				response=command(profile,"quest.claim",{"id":id},{"in_town":true,"nearby":true,"npc":q["receiver"],"auto":true},grant)
+			if response.get("ok",false):
+				if id not in changed:changed.append(id)
+				acted=true
+				break
+		if not acted:break
+	return {"ok":true,"changed":changed}
 
 func active_count(profile: Dictionary) -> int:
 	return list(profile, ["active", "ready"]).size()

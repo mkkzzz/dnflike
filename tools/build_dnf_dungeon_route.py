@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from collections import deque
 from pathlib import Path
@@ -118,6 +119,23 @@ def build(export: dict, start_cell=None, boss_cell=None) -> list[dict]:
     return rooms
 
 
+def merge_route(existing: dict | None, generated: dict, *, refresh: bool) -> dict:
+    """Preserve authored runtime gates unless a route refresh was requested."""
+    if existing is None:
+        return generated
+    if not refresh:
+        return existing
+    merged = existing.copy()
+    merged.update(generated)
+    return merged
+
+
+def write_dungeons(doc: dict) -> None:
+    temporary = DUNGEONS.with_suffix('.json.tmp')
+    temporary.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+    os.replace(temporary, DUNGEONS)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
@@ -130,6 +148,7 @@ def main() -> int:
     parser.add_argument('--monster-level', type=int, default=0)
     parser.add_argument('--status', action='store_true', help='列出待入表副本的导出进度')
     parser.add_argument('--apply-all', action='store_true', help='把已导出的待入表副本批量写入 dungeons.json')
+    parser.add_argument('--refresh-existing', action='store_true', help='显式刷新已有路线，并保留运行时手工字段')
     args = parser.parse_args()
     doc = json.loads(DUNGEONS.read_text(encoding='utf-8'))
     dungeons = doc['dungeons']
@@ -158,16 +177,24 @@ def main() -> int:
             for room in rooms:
                 room['name'] = name
             origin = export_doc.get('dungeon') or export_doc.get('source', {})
-            dungeons[dungeon_id] = {
+            generated = {
                 'name': name, 'region': region, 'map_export': 'res://' + folder + '/map_export.json',
                 'rooms': rooms, 'monster_level': level,
                 'source': {'path': origin.get('path', ''),
                            'sha256': origin.get('sha256', ''),
                            'evidence': '由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成'}}
+            if dungeon_id in dungeons and not args.refresh_existing:
+                print('  [KEEP] %-24s 已有运行配置，保留入口/等级/前置/隐藏状态' % dungeon_id)
+                continue
+            dungeons[dungeon_id] = merge_route(
+                dungeons.get(dungeon_id),
+                generated,
+                refresh=args.refresh_existing,
+            )
             applied += 1
             print('  [OK] %-24s rooms=%d' % (dungeon_id, len(rooms)))
         if applied:
-            DUNGEONS.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+            write_dungeons(doc)
         print('\n[APPLY] 写入 %d 个；仍待导出 %d 个 %s' % (applied, len(waiting), waiting))
         return 0
     if not args.write:
@@ -210,9 +237,17 @@ def main() -> int:
     spec['source'] = {'path': origin.get('path', ''),
                       'sha256': origin.get('sha256', ''),
                       'evidence': '由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线'}
-    dungeons[args.id] = spec
-    DUNGEONS.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
-    print('[ROUTE] %s rooms=%d 写入 data/dungeons.json' % (args.id, len(rooms)))
+    if args.id in dungeons and not args.refresh_existing:
+        print('[ROUTE] %s 已有运行配置，未刷新；需要更新路线请加 --refresh-existing' % args.id)
+        return 0
+    dungeons[args.id] = merge_route(
+        dungeons.get(args.id),
+        spec,
+        refresh=args.refresh_existing,
+    )
+    write_dungeons(doc)
+    print('[ROUTE] %s rooms=%d 写入 data/dungeons.json%s'
+          % (args.id, len(rooms), '（保留既有运行字段）' if args.refresh_existing else ''))
     return 0
 
 

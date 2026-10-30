@@ -48,6 +48,13 @@ class DnfProgressReportTest(unittest.TestCase):
         self.assertGreater(skills["panel_total"], 0)
         self.assertLessEqual(skills["runtime_total"], skills["panel_total"])
 
+    def test_level_1_16_campaign_is_complete(self):
+        campaign = self.snapshot["campaign"]
+        self.assertEqual(campaign["id"], "campaign_1_16")
+        self.assertGreater(campaign["required"], 0)
+        self.assertEqual(campaign["executable"], campaign["required"])
+        self.assertEqual(campaign["missing"], 0)
+
     def test_markdown_has_separate_layers_and_sources(self):
         markdown = render_markdown(self.snapshot)
         for heading in (

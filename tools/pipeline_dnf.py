@@ -58,6 +58,7 @@ def verify() -> int:
         ('BGM 覆盖', [tool('check_dnf_bgm.py')]),
         ('走区一致', [tool('check_dnf_walk.py')]),
         ('任务进度', [tool('check_dnf_quests.py')]),
+        ('1-16 主线', [tool('check_dnf_campaign.py')]),
     ]
     failed = []
     for label, args in checks:
@@ -85,14 +86,24 @@ def monster_side(with_content: bool = True) -> None:
     run('怪物映射 (mob→kind)', [tool('sync_dnf_monster_mapping.py')])
 
 
-def dungeon_side(dgn: str, dungeon_id: str, name: str, region: str, level: int) -> None:
+def dungeon_side(
+    dgn: str,
+    dungeon_id: str,
+    name: str,
+    region: str,
+    level: int,
+    refresh_existing: bool = False,
+) -> None:
     output = GAME / 'assets_local/flow_v1' / ('skytower_v1' if region == 'skytower' else 'gran_v1') / dungeon_id
     run('导出地图 %s' % dungeon_id, [tool('export_dnf_map.py'), '--dungeon', dgn, '--output', str(output)])
     # --export 要的是 map_export.json 这个文件，不是导出目录。
     export_file = output / 'map_export.json'
-    run('生成路线入表', [tool('build_dnf_dungeon_route.py'), '--write', '--id', dungeon_id, '--name', name,
-                         '--export', 'res://' + str(export_file.relative_to(GAME)).replace('\\', '/'),
-                        '--region', region, '--monster-level', str(level)])
+    route_args = [tool('build_dnf_dungeon_route.py'), '--write', '--id', dungeon_id, '--name', name,
+                  '--export', 'res://' + str(export_file.relative_to(GAME)).replace('\\', '/'),
+                  '--region', region, '--monster-level', str(level)]
+    if refresh_existing:
+        route_args.append('--refresh-existing')
+    run('生成路线入表', route_args)
     # 新副本的怪可能没进过内容包/图集，必须重走怪物侧
     monster_side(with_content=True)
     run('BGM 映射', [tool('bake_dnf_bgm.py')], required=False)
@@ -108,6 +119,8 @@ def main() -> int:
     dungeon.add_argument('--name', required=True)
     dungeon.add_argument('--region', default='granfloris')
     dungeon.add_argument('--level', type=int, default=10)
+    dungeon.add_argument('--refresh-existing', action='store_true',
+                         help='显式刷新已有路线，并保留入口、前置、等级与隐藏状态')
 
     sub.add_parser('monsters', help='怪物侧全链路（副本引用变化后跑）')
     sub.add_parser('verify', help='只跑全部检查')
@@ -118,7 +131,14 @@ def main() -> int:
     if args.command == 'monsters':
         monster_side()
         return verify()
-    dungeon_side(args.dgn, args.id, args.name, args.region, args.level)
+    dungeon_side(
+        args.dgn,
+        args.id,
+        args.name,
+        args.region,
+        args.level,
+        args.refresh_existing,
+    )
     return verify()
 
 

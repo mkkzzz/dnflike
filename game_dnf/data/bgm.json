@@ -15,7 +15,8 @@
   "hendon_pub": "tavern",
   "hendon_inn": "sera_shop_new",
   "alfhlyra": "alfhlyra_new",
-  "westcoast": "westcoast_new"
+  "westcoast": "westcoast_new",
+  "westcoast_magic": "westcoast_new"
  },
  "dungeons": {
   "lorien": {
@@ -41,6 +42,10 @@
   "mirkwood_frost": {
    "normal": "mirkwood",
    "boss": "mirkwood_boss"
+  },
+  "grakkarak": {
+   "normal": "grakkarak_new",
+   "boss": "grakkarak_new_boss"
   },
   "grakkarak_burning": {
    "normal": "grakkarak_new",

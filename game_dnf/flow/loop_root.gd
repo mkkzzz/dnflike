@@ -422,8 +422,8 @@ func quest_action(kind: String, payload: Dictionary = {}) -> bool:
 
 func record_npc_visit(npc: String) -> void:
 	if session.state!="town" or town.nearest()!=npc:return
-	var outcome: Dictionary=session.quests.ingest(session.profile,{"type":"npc.met","event_id":"visit:"+str(Time.get_ticks_usec()),"npc":npc})
-	if outcome.get("ok",false) and not outcome["changed"].is_empty():save_profile()
+	var outcome: Dictionary=session.npc_met(npc)
+	if outcome.get("ok",false) and outcome.get("changed",false):save_profile()
 
 func interact_town(target: String) -> void:
 	if not character_active or transitioning or session.state!="town":return
@@ -589,6 +589,8 @@ func on_combat_event(event: Dictionary) -> void:
 	var response: Dictionary = session.combat_event(event)
 	if response["ok"] and event.get("type")=="combat.monster_defeated" and (int(response.get("amount",0))>0 or response.get("quest_changed",false) or response.get("loot_changed",false)):
 		if int(session.profile["level"])>before_level:sync_number_changes("numbers.xp")
+		save_profile()
+	elif response["ok"] and response.get("quest_changed",false) and session.state!="result":
 		save_profile()
 	if response["ok"] and session.state == "result":
 		save_profile()

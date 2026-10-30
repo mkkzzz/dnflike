@@ -34,24 +34,50 @@ func run() -> void:
 	var plain=Session.new()
 	check(plain.quests.catalog.errors.is_empty(),"all old and additive native definitions validate")
 	var commands=preload("res://debug/native_commands.gd")
-	check(commands.execute(PackedStringArray(["quests","217"])).message.contains("admitted"),"GM original-ID lookup reports the current compiler instead of stale migration status")
+	var quest217: String=commands.execute(PackedStringArray(["quests","217"])).message
+	check(quest217.contains("admitted") or quest217.contains("existing"),"GM original-ID lookup reports the current compiler instead of stale migration status")
 	check(commands.execute(PackedStringArray()).message.contains("当前原任务可执行 "+str(plain.quests.catalog.definitions.size()-1)),"GM summary distinguishes current executable quests from source-only counts")
 	for q: Dictionary in preload("res://content/api/native_catalog.gd").quest_rules().quests:
 		var s=Session.new();s.profile.level=int(q.min_level)
 		s.profile.job_index=0 if -1 in q.eligibility.jobs else int(q.eligibility.jobs[0])
 		for required: String in q.requires:completed(s,required)
-		check(s.quest_command("quest.accept",{"id":q.id},npc(q.giver)).ok,"every admitted original node accepts with original class/prerequisites: "+q.id)
+		if q.get("auto_accept",false):
+			var accepted: Dictionary=s.advance_auto_quests()
+			check(accepted.get("ok",false) and s.profile.quest_state.entries.has(q.id),"every automatic original node starts with its prerequisites: "+q.id)
+		else:
+			check(s.quest_command("quest.accept",{"id":q.id},npc(q.giver)).ok,"every admitted original node accepts with original class/prerequisites: "+q.id)
 		for o: Dictionary in q.objectives:
 			if o.type=="clear_dungeon":
 				s.quests.ingest(s.profile,{"type":"dungeon.cleared","event_id":"native:"+q.id,"dungeon":o.target,"victory":true,"difficulty":o.get("difficulty",["normal"])[0],"facts":{"elapsed_ms":0,"hits_taken":0,"revives":0,"party_size":1}})
+			elif o.type=="kill_monster":
+				for index in int(o.amount):
+					s.quests.ingest(s.profile,{"type":"combat.monster_defeated","event_id":"kill:"+q.id+":"+str(index),"monster_id":o.target,"dungeon":o.get("dungeon",""),"difficulty":o.get("difficulty",["normal"])[0]})
+			elif o.type=="meet_npc":
+				for index in int(o.amount):
+					s.quests.ingest(s.profile,{"type":"npc.met","event_id":"meet:"+q.id+":"+str(index),"npc":o.target})
+			elif o.type=="collect_item":
+				var missing:=int(o.amount)-preload("res://items/inventory.gd").stock(s.profile,o.target)
+				if missing>0:check(preload("res://items/inventory.gd").give(s.profile,o.target,missing)["ok"],"source collection fixture is obtainable: "+q.id)
+			elif o.type=="clear_map":
+				s.quests.ingest(s.profile,{"type":"map.cleared","event_id":"map:"+q.id,"dungeon":o.dungeon,"cell":o.cell})
+			elif o.type=="learn_skill":
+				s.quests.ingest(s.profile,{"type":"skill.learned","event_id":"skill:"+q.id,"skill":"upper","levels":1})
 			elif o.type=="disassemble_item":
 				var given: Dictionary=s.command("numbers.gear_give",{"id":"iron_sword"})
 				var quote: Dictionary=s.Services.quote(s.profile,"services.disassemble",{"uid":given.uid})
 				check(s.service_command("services.disassemble",{"uid":given.uid,"signature":quote.signature,"transaction":"native-disassemble"},npc("norton")).ok,"actual supported equipment disassembles through NPC service")
-		check(s.quests.status(s.profile,q.id)=="ready","every new source objective reaches ready through its real service event: "+q.id)
-		check(s.quest_command("quest.claim",{"id":q.id},npc(q.receiver)).ok,"every new source reward hands in: "+q.id)
+		s.advance_auto_quests()
+		if q.get("auto_complete",false):
+			check(s.quests.status(s.profile,q.id)=="completed","every automatic source reward hands in after its real event: "+q.id)
+		else:
+			check(s.quests.status(s.profile,q.id)=="ready","every new source objective reaches ready through its real service event: "+q.id)
+			var claim: Dictionary={"id":q.id}
+			if not q.reward.choices.is_empty():claim["choice"]=q.reward.choices[0].id
+			check(s.quest_command("quest.claim",claim,npc(q.receiver)).ok,"every new source reward hands in: "+q.id)
 		var loaded=Session.new()
-		check(loaded.restore(JSON.parse_string(JSON.stringify(s.serialize()))) and loaded.quests.status(loaded.profile,q.id)=="completed","all admitted completions survive JSON restore: "+q.id)
+		var restore_ok:=loaded.restore(JSON.parse_string(JSON.stringify(s.serialize())))
+		var restored_status: String=loaded.quests.status(loaded.profile,q.id)
+		check(restore_ok and (restored_status=="completed" or q.get("lifecycle","once")=="repeat" and restored_status=="available"),"all admitted completions survive JSON restore: "+q.id)
 	for field: String in Conditions.LIMITS:
 		var rules={field:2};var fact: String=Conditions.LIMITS[field][0]
 		check(not Conditions.matches(rules,{}),"missing authoritative metric never defaults to success: "+field)
