@@ -300,7 +300,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 			"damage1":_stem(mob.get("damage_motion_1")),"damage2":_stem(mob.get("damage_motion_2")),
 			"down":_stem(mob.get("down_motion")),"overturn":_stem(mob.get("overturn_motion")),
 			"sit":_stem(mob.get("sit_motion")),"attack":_stem(mob.get("attack_motions"))}}
-	m["attack_timeline"] = timeline(motion_dir.path_join(m["motions"]["attack"] + ".ani")) if motion_dir != "" else {"frames": [], "duration_ms": 0}
+	m["attack_timeline"] = timeline(motion_dir.path_join(m["motions"]["attack"] + ".ani")) if motion_dir != "" else []
 	m["attack_segments"] = Timeline.attack_segments(m["attack_timeline"])
 	var attack_infos: Array = mob.get("attack_infos", [])
 	m["atk"] = atk(String(attack_infos[0])) if not attack_infos.is_empty() else {}

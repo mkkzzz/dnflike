@@ -134,7 +134,7 @@ func check_kernel_tables() -> void:
 	check(api.move("draw")["cool_ms"]==15000 and api.move("draw")["hits"][0]["kind"]=="object","draw slash hits through its original wave passive object")
 	check(api.move("rage_slash")["hits"][2]["kind"]=="object" and String(api.move("rage_slash")["hits"][2]["object"]).ends_with("gorecross.obj"),"gore cross ends with its original cross passive object")
 	var goblin: Dictionary = t.monsters["goblin"]
-	check(is_equal_approx(float(goblin["hp"]),112) and goblin["attack_delay"]==1200 and String(goblin["motions"]["stay"])=="stay" and String(goblin["dir"]).ends_with("animation_goblin2"),"goblin stats and motions come from goblin.mob (HP 70%, attack delay, Animation_Goblin2)")
+	check(is_equal_approx(float(goblin["hp"]),105) and goblin["attack_delay"]==1200 and String(goblin["motions"]["stay"])=="stay" and String(goblin["dir"]).ends_with("animation_goblin2"),"goblin stats and motions come from goblin.mob and the original level table (150 HP x 70%, attack delay, Animation_Goblin2)")
 	check(t.monsters["goblin_thrower"].has("throw") and int(t.monsters["goblin_thrower"]["throw"]["frame"])==2 and is_equal_approx(float(t.monsters["goblin_thrower"]["throw"]["speed"]),250),"goblin thrower throws its original stone object on throw frame 2 at the particle speed")
 	check(is_equal_approx(float(t.player["jump_power"]),430) and float(t.player["hp_max"])==180,"player jump power and default HP come from the CHR initial values")
 

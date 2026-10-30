@@ -16,6 +16,14 @@ static func reach(m: Dictionary) -> Vector2:
 	if lo == INF:return Vector2(0,40)
 	return Vector2(lo,hi)
 
+## Attack selection and movement use the same allowed distance band. The small
+## margins account for the target's damage box starting near its anchor.
+static func attack_band(span: Array) -> Vector2:
+	if span.size() < 2:return Vector2.ZERO
+	var lo := float(span[0]) - 4.0
+	var hi := float(span[1]) - 6.0
+	return Vector2(minf(lo, hi), maxf(lo, hi))
+
 ## Returns {"move": Vector2 direction, "face": int, "attack": bool}.
 static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: float) -> Dictionary:
 	var offset: Vector2 = target-Vector2(enemy["pos"])
@@ -69,8 +77,9 @@ static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: f
 			for index in (m["moves"] as Array).size():
 				var candidate: Dictionary = m["moves"][index]
 				var span: Array = candidate.get("reach", [])
-				if span.size() < 2:continue
-				if gap_x >= float(span[0]) - 4 and gap_x <= float(span[1]) - 6:
+				var band := attack_band(span)
+				if span.size() < 2 or (candidate.get("segments", []) as Array).is_empty():continue
+				if gap_x >= band.x and gap_x <= band.y:
 					picks.append([index, float((candidate.get("atk", {}) as Dictionary).get("damage_bonus", 0))])
 			if not picks.is_empty():
 				# 多招都打得到时，按 .mob 里的招式顺序取第一个（原版顺序，不额外加权）。
@@ -81,10 +90,12 @@ static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: f
 		var nearest := INF
 		for candidate: Dictionary in m["moves"]:
 			var span: Array = candidate.get("reach", [])
-			if span.size() < 2:continue
-			nearest = minf(nearest, clampf(gap_x, float(span[0]), float(span[1])))
+			var band := attack_band(span)
+			if span.size() < 2 or (candidate.get("segments", []) as Array).is_empty():continue
+			nearest = minf(nearest, clampf(gap_x, band.x, band.y))
+		if nearest == INF:return out
 		var approach := gap_x - nearest
-		out["move"] = Vector2(face*signf(approach) if absf(approach) > 4 else 0.0,
+		out["move"] = Vector2(face*signf(approach) if absf(approach) > 0.01 else 0.0,
 			signf(offset.y) if absf(offset.y) > 3 else 0.0)
 		return out
 	var band := reach(m)
