@@ -631,6 +631,28 @@ func run_rooms() -> void:
 	api.damage_player(100,Vector2(api.p("pos"))+Vector2(30,0))
 	check(api.finished() and not api.victory(),"player death enters defeat result")
 	check(bus.events_of("combat.player_defeated").size()==defeats_before+1,"player defeat is reported once to the flow side")
+	var enemy_state := []
+	for enemy: Dictionary in game.monsters:enemy_state.append([enemy["id"],enemy["hp"],enemy["max_hp"]])
+	var revive_player: Dictionary={"hp_max":game.max_hp,"mp_max":game.max_mp,"weapon":game.weapon}
+	if game.numeric_player != null:
+		revive_player.merge({"numbers":game.numeric_player.base.duplicate(true),"number_seed":game.numeric_player.seed.duplicate(true),
+			"skills":game.skill_levels.duplicate(true),"element":game.numeric_player.element},true)
+	var revive_spec: Dictionary={
+		"run_id":game.run_id,"room_id":game.room_id,"death_id":game.last_defeat_id,
+		"hp_percent":50,"mp_percent":50,"invulnerable_ms":3000,
+		"player":revive_player}
+	var stale_spec:=revive_spec.duplicate(true);stale_spec["death_id"]=0
+	check(not game.can_revive(stale_spec),"stale death identity cannot revive the live battle")
+	check(game.revive_player(revive_spec),"correct death identity revives the live battle")
+	check(not game.finished and float(game.player["hp"])==game.max_hp*0.5 and float(game.player["mp"])==game.max_mp*0.5 and float(game.player["invuln_ms"])==3000,"revive restores configured HP, MP and protection")
+	check(game.view.revive_fx_count==1,"revive plays the original use-coin effect once")
+	var after_state := []
+	for enemy: Dictionary in game.monsters:after_state.append([enemy["id"],enemy["hp"],enemy["max_hp"]])
+	check(enemy_state==after_state,"revive keeps every enemy and its health")
+	game.set_input_paused(false)
+	game.player["hp"]=1.0;game.player["invuln_ms"]=0.0
+	game.damage_player(100,Vector2(game.player["pos"])+Vector2(30,0))
+	await ticks(1)
 	await tap(KEY_R)
 	api.set_god(true)
 	await tap(KEY_ESCAPE)

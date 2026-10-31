@@ -21,6 +21,7 @@ var result: Dictionary = {}
 
 func _init() -> void:
 	profile = {"schema": 1, "name": "冒险家", "level": 1, "xp": 0, "gold": 300,
+		"resurrection_coins": 3,
 		"inventory": {"iron_sword": 1, "potion": 3}, "equipped": "iron_sword",
 		"quest": "available", "clears": 0, "next_run": 1, "settled": {}}
 	Layout.normalize(profile, CATALOG.ITEMS)
@@ -343,6 +344,7 @@ func serialize() -> Dictionary:
 func restore(data: Dictionary) -> bool:
 	if data.get("schema") not in ["dnf_loop_save/1","dnf_loop_save/2","dnf_loop_save/3","dnf_loop_save/4","dnf_loop_save/5"] or not data.get("profile") is Dictionary:return false
 	var p: Dictionary = data["profile"].duplicate(true)
+	if not p.has("resurrection_coins"):p["resurrection_coins"] = 3
 	var legacy := not p.has("numbers_revision")
 	for k: String in profile:
 		if k in ["quest_state", "town_location", "item_state", "town_position", "inn_return", "services"]:continue
@@ -354,7 +356,7 @@ func restore(data: Dictionary) -> bool:
 	if not Layout.valid(p, CATALOG.ITEMS):return false
 	for id in p["inventory"]:
 		if not CATALOG.ITEMS.has(id) or not (p["inventory"][id] is float or p["inventory"][id] is int) or float(p["inventory"][id]) < 0 or float(p["inventory"][id]) != floorf(float(p["inventory"][id])):return false
-	for key in ["level", "gold", "xp", "clears", "next_run"]:
+	for key in ["level", "gold", "resurrection_coins", "xp", "clears", "next_run"]:
 		if float(p[key]) < (1 if key in ["level", "next_run"] else 0) or float(p[key]) != floorf(float(p[key])):return false
 	if p["equipped"] != "" and int(p["inventory"].get(p["equipped"], 0)) < 1:return false
 	if not data.get("run", {}) is Dictionary or not data.get("result", {}) is Dictionary:return false
@@ -391,7 +393,7 @@ func restore(data: Dictionary) -> bool:
 	Numbers.canonicalize(p)
 	profile = p.duplicate(true)
 	Layout.normalize(profile, CATALOG.ITEMS)
-	for key in ["schema", "level", "gold", "xp", "clears", "next_run"]:profile[key] = int(profile[key])
+	for key in ["schema", "level", "gold", "resurrection_coins", "xp", "clears", "next_run"]:profile[key] = int(profile[key])
 	for id in profile["inventory"]:profile["inventory"][id] = int(profile["inventory"][id])
 	state = "result" if data.get("state") == "result" else "town"
 	run = data.get("run", {}).duplicate(true) if state == "result" else {}

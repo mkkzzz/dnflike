@@ -95,6 +95,8 @@ if ($Test) {
         $testOutput | Write-Output
         if ($testExit -ne 0) {throw "Pipeline hardening test failed: $testName"}
     }
+    & python (Join-Path $PSScriptRoot "bake_dnf_revive_assets.py") --check
+    if ($LASTEXITCODE -ne 0) {throw "Revival asset package is stale."}
     & python (Join-Path $PSScriptRoot "check_dnf_native_catalog.py")
     if ($LASTEXITCODE -ne 0) {throw "Complete native quest/item package is inconsistent."}
     & python (Join-Path $PSScriptRoot "build_dnf_quest_rules.py") --check

@@ -1,6 +1,6 @@
 {
   "revision": 1,
-  "note": "E-ADAPT functional defaults; gold revival is not original DNF coin economy",
+  "note": "E-ADAPT starter balance and per-run limit; revival consumes one original coin item",
   "consumables": {
     "potion": {
       "level": 1,
@@ -87,8 +87,7 @@
   },
   "revival": {
     "limit": 3,
-    "gold": 100,
-    "gold_increment": 100,
+    "coin_cost": 1,
     "hp_percent": 50,
     "mp_percent": 50,
     "invulnerable_ms": 3000

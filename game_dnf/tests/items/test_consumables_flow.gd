@@ -4,6 +4,7 @@ var weapon: String
 var death_enemies: Array=[]
 var death_position:=Vector2.ZERO
 var death_loot: Array=[]
+var death_coins:=0
 func hold_near_enemy() -> void:
 	var snap: Dictionary=game.combat.read_view()
 	if snap.enemies.is_empty():release_all();return
@@ -62,15 +63,28 @@ func run() -> void:
 	check(not game.save_profile() and not game.recovery_bridge.pending_death.is_empty() and game.session.profile.gear[weapon].durability==durability,"manual save cannot bypass the pending death transaction")
 	await frame("recovery_03_death_save_retry")
 	game.store.path=path;check(click_text("重试保存"),"death window offers real retry-save button");await ticks(3)
-	check(game.session.state=="defeated" and game.session.profile.gear[weapon].durability==durability-3 and game.session.profile.gold==1000,"retry saves one death penalty and no revival fee")
+	check(game.session.state=="defeated" and game.session.profile.gear[weapon].durability==durability-3 and game.session.profile.gold==1000 and game.session.profile.resurrection_coins==3,"retry saves one death penalty without charging a revival coin")
 	check(game.session.result.is_empty() and not game.session.profile.settled.has(game.session.run.id),"pending death does not prematurely settle the adventure")
 	death_enemies=game.combat.read_view().enemies.duplicate(true);death_position=game.combat.read_view().pos
 	death_loot=game.Session.Loot.pending(game.session.run,String(dead.room_id)).duplicate(true)
 	await frame("recovery_04_death_choice")
+	death_coins=int(game.session.profile.resurrection_coins)
+	await tap(KEY_X)
+	var revived: Dictionary=game.combat.read_view()
+	check(game.session.state=="battle" and game.session.profile.resurrection_coins==death_coins-1 and game.session.profile.gold==1000,"X consumes one revival coin and returns to the same battle")
+	check(revived.hp>0 and revived.invulnerable_ms>0 and int(revived.death_id)>0,"revive restores live HP and grants the source protection window")
+	check(revived.room_id==dead.room_id and revived.pos==death_position and JSON.stringify(revived.enemies)==JSON.stringify(death_enemies),"revive keeps the room, player position and every enemy")
+	check(game.session.run.recovery.revives==1 and int(revived.revive_fx_count)==1,"revive commits once and plays one original coin effect")
+	await frame("recovery_05_revived")
+	for i in 7200:
+		if game.session.state=="defeated":break
+		hold_near_enemy();await ticks(1)
+	release_all();await ticks(3)
+	check(game.session.state=="defeated" and game.session.profile.resurrection_coins==death_coins-1,"second real death keeps the coin balance until the player chooses")
 	await after_death()
 func after_death() -> void:
-	check(click_text("放弃回城"),"death window has actual abandon-and-return button");await ticks(5)
-	check(game.session.state=="town" and not is_instance_valid(game.battle) and game.session.profile.gold==1000 and game.session.profile.inventory.potion==5,"abandon returns to town without clear rewards or extra cost")
+	check(click_text("返回城镇"),"death window has actual return-to-town button");await ticks(5)
+	check(game.session.state=="town" and not is_instance_valid(game.battle) and game.session.profile.gold==1000 and game.session.profile.inventory.potion==5 and game.session.profile.resurrection_coins==death_coins-1,"return to town keeps the single paid coin and grants no clear reward")
 	var loaded=game.Session.new()
 	check(game.store.read_into(loaded) and loaded.profile==game.session.profile,"consumed item and single death penalty survive disk reload")
 	complete()

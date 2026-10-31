@@ -1,0 +1,1094 @@
+{
+ "schema": "dnf_revive_assets/1",
+ "source": {
+  "asset_version": "dnf-native-assets-v1-20261022",
+  "config_role": "111Script backup; effective original runtime unconfirmed",
+  "prompt_ui": "ui/usecoin/usecoinwindow.ui"
+ },
+ "pixel_policy": "IMG native RGBA, no resize or substitute images",
+ "ui": {
+  "coin_icon": {
+   "file": "coin_icon.png",
+   "source": "sprite/Item/IconStackable.img",
+   "img_frame": 5,
+   "offset": [
+    0,
+    0
+   ],
+   "sha256": "7968b3cf7fd9afcb9efd7b9607963a2b30f91a2e9ce6daa3400e5844d2fa1ab6"
+  }
+ },
+ "effects": {
+  "coin": {
+   "atlas": {
+    "texture": "res://assets_local/revive_v1/coin.png",
+    "items": {
+     "0": {
+      "rect": [
+       2,
+       2,
+       34,
+       34
+      ],
+      "offset": [
+       -18,
+       -16
+      ]
+     },
+     "1": {
+      "rect": [
+       40,
+       2,
+       28,
+       34
+      ],
+      "offset": [
+       -17,
+       -16
+      ]
+     },
+     "2": {
+      "rect": [
+       72,
+       2,
+       25,
+       34
+      ],
+      "offset": [
+       -15,
+       -16
+      ]
+     },
+     "3": {
+      "rect": [
+       101,
+       2,
+       7,
+       34
+      ],
+      "offset": [
+       -5,
+       -16
+      ]
+     },
+     "4": {
+      "rect": [
+       112,
+       2,
+       25,
+       34
+      ],
+      "offset": [
+       -15,
+       -16
+      ]
+     },
+     "5": {
+      "rect": [
+       141,
+       2,
+       28,
+       34
+      ],
+      "offset": [
+       -16,
+       -16
+      ]
+     },
+     "6": {
+      "rect": [
+       173,
+       2,
+       34,
+       34
+      ],
+      "offset": [
+       -18,
+       -16
+      ]
+     },
+     "7": {
+      "rect": [
+       211,
+       2,
+       28,
+       34
+      ],
+      "offset": [
+       -17,
+       -16
+      ]
+     },
+     "8": {
+      "rect": [
+       243,
+       2,
+       25,
+       34
+      ],
+      "offset": [
+       -15,
+       -16
+      ]
+     },
+     "9": {
+      "rect": [
+       272,
+       2,
+       7,
+       34
+      ],
+      "offset": [
+       -5,
+       -16
+      ]
+     },
+     "10": {
+      "rect": [
+       283,
+       2,
+       25,
+       34
+      ],
+      "offset": [
+       -15,
+       -16
+      ]
+     },
+     "11": {
+      "rect": [
+       312,
+       2,
+       28,
+       34
+      ],
+      "offset": [
+       -16,
+       -16
+      ]
+     },
+     "12": {
+      "rect": [
+       344,
+       2,
+       34,
+       34
+      ],
+      "offset": [
+       -18,
+       -16
+      ]
+     },
+     "13": {
+      "rect": [
+       382,
+       2,
+       28,
+       34
+      ],
+      "offset": [
+       -17,
+       -16
+      ]
+     },
+     "14": {
+      "rect": [
+       414,
+       2,
+       25,
+       34
+      ],
+      "offset": [
+       -15,
+       -16
+      ]
+     },
+     "15": {
+      "rect": [
+       443,
+       2,
+       7,
+       34
+      ],
+      "offset": [
+       -5,
+       -16
+      ]
+     },
+     "16": {
+      "rect": [
+       454,
+       2,
+       25,
+       34
+      ],
+      "offset": [
+       -15,
+       -16
+      ]
+     },
+     "17": {
+      "rect": [
+       483,
+       2,
+       28,
+       34
+      ],
+      "offset": [
+       -16,
+       -16
+      ]
+     },
+     "18": {
+      "rect": [
+       515,
+       2,
+       34,
+       34
+      ],
+      "offset": [
+       -18,
+       -16
+      ]
+     },
+     "19": {
+      "rect": [
+       553,
+       2,
+       28,
+       34
+      ],
+      "offset": [
+       -17,
+       -16
+      ]
+     },
+     "20": {
+      "rect": [
+       585,
+       2,
+       25,
+       34
+      ],
+      "offset": [
+       -15,
+       -16
+      ]
+     },
+     "21": {
+      "rect": [
+       614,
+       2,
+       7,
+       34
+      ],
+      "offset": [
+       -5,
+       -16
+      ]
+     },
+     "22": {
+      "rect": [
+       625,
+       2,
+       25,
+       34
+      ],
+      "offset": [
+       -15,
+       -16
+      ]
+     },
+     "23": {
+      "rect": [
+       654,
+       2,
+       28,
+       34
+      ],
+      "offset": [
+       -16,
+       -16
+      ]
+     },
+     "24": {
+      "rect": [
+       686,
+       2,
+       28,
+       34
+      ],
+      "offset": [
+       -16,
+       -16
+      ]
+     }
+    }
+   },
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 0,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "0"
+    },
+    {
+     "frame": 1,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 1,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "1"
+    },
+    {
+     "frame": 2,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 2,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "2"
+    },
+    {
+     "frame": 3,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 3,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "3"
+    },
+    {
+     "frame": 4,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 4,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "4"
+    },
+    {
+     "frame": 5,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 5,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "5"
+    },
+    {
+     "frame": 6,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 0,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "6"
+    },
+    {
+     "frame": 7,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 1,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "7"
+    },
+    {
+     "frame": 8,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 2,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "8"
+    },
+    {
+     "frame": 9,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 3,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "9"
+    },
+    {
+     "frame": 10,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 4,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "10"
+    },
+    {
+     "frame": 11,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 5,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "11"
+    },
+    {
+     "frame": 12,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 0,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       252
+      ],
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "12"
+    },
+    {
+     "frame": 13,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 1,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       231
+      ],
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "13"
+    },
+    {
+     "frame": 14,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 2,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       210
+      ],
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "14"
+    },
+    {
+     "frame": 15,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 3,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       189
+      ],
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "15"
+    },
+    {
+     "frame": 16,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 4,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       168
+      ],
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "16"
+    },
+    {
+     "frame": 17,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 5,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       147
+      ],
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "17"
+    },
+    {
+     "frame": 18,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 0,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       126
+      ],
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "18"
+    },
+    {
+     "frame": 19,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 1,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       105
+      ],
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "19"
+    },
+    {
+     "frame": 20,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 2,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       84
+      ],
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "20"
+    },
+    {
+     "frame": 21,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 3,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       63
+      ],
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "21"
+    },
+    {
+     "frame": 22,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 4,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       42
+      ],
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "22"
+    },
+    {
+     "frame": 23,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 5,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       21
+      ],
+      "10": 1,
+      "12": 45
+     },
+     "delay_ms": 45,
+     "sprite": "23"
+    },
+    {
+     "frame": 24,
+     "img": "Common/Etc/UseCoin.img",
+     "img_frame": 5,
+     "pos": [
+      -35,
+      -37
+     ],
+     "boxes": [],
+     "items": {
+      "9": [
+       255,
+       255,
+       255,
+       0
+      ]
+     },
+     "sprite": "24"
+    }
+   ],
+   "duration_ms": 1080,
+   "source": "common/etc/animation/usecoin.ani"
+  },
+  "spark": {
+   "atlas": {
+    "texture": "res://assets_local/revive_v1/spark.png",
+    "items": {
+     "0": {
+      "rect": [
+       2,
+       2,
+       19,
+       19
+      ],
+      "offset": [
+       -9,
+       -9
+      ]
+     },
+     "1": {
+      "rect": [
+       25,
+       2,
+       17,
+       17
+      ],
+      "offset": [
+       -8,
+       -8
+      ]
+     },
+     "2": {
+      "rect": [
+       46,
+       2,
+       11,
+       11
+      ],
+      "offset": [
+       -5,
+       -5
+      ]
+     },
+     "3": {
+      "rect": [
+       61,
+       2,
+       11,
+       11
+      ],
+      "offset": [
+       -5,
+       -5
+      ]
+     },
+     "4": {
+      "rect": [
+       76,
+       2,
+       7,
+       7
+      ],
+      "offset": [
+       -3,
+       -3
+      ]
+     },
+     "5": {
+      "rect": [
+       87,
+       2,
+       9,
+       9
+      ],
+      "offset": [
+       -4,
+       -4
+      ]
+     },
+     "6": {
+      "rect": [
+       100,
+       2,
+       5,
+       5
+      ],
+      "offset": [
+       -2,
+       -2
+      ]
+     },
+     "7": {
+      "rect": [
+       109,
+       2,
+       5,
+       5
+      ],
+      "offset": [
+       -2,
+       -2
+      ]
+     },
+     "8": {
+      "rect": [
+       118,
+       2,
+       1,
+       1
+      ],
+      "offset": [
+       0,
+       0
+      ]
+     }
+    }
+   },
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Common/Etc/UseCoinParticle.img",
+     "img_frame": 0,
+     "pos": [
+      -9,
+      -9
+     ],
+     "boxes": [],
+     "items": {
+      "11": {
+       "type": 2
+      },
+      "12": 70
+     },
+     "delay_ms": 70,
+     "sprite": "0"
+    },
+    {
+     "frame": 1,
+     "img": "Common/Etc/UseCoinParticle.img",
+     "img_frame": 1,
+     "pos": [
+      -9,
+      -9
+     ],
+     "boxes": [],
+     "items": {
+      "11": {
+       "type": 2
+      },
+      "12": 70
+     },
+     "delay_ms": 70,
+     "sprite": "1"
+    },
+    {
+     "frame": 2,
+     "img": "Common/Etc/UseCoinParticle.img",
+     "img_frame": 2,
+     "pos": [
+      -9,
+      -9
+     ],
+     "boxes": [],
+     "items": {
+      "11": {
+       "type": 2
+      },
+      "12": 70
+     },
+     "delay_ms": 70,
+     "sprite": "2"
+    },
+    {
+     "frame": 3,
+     "img": "Common/Etc/UseCoinParticle.img",
+     "img_frame": 3,
+     "pos": [
+      -9,
+      -9
+     ],
+     "boxes": [],
+     "items": {
+      "11": {
+       "type": 2
+      },
+      "12": 70
+     },
+     "delay_ms": 70,
+     "sprite": "3"
+    },
+    {
+     "frame": 4,
+     "img": "Common/Etc/UseCoinParticle.img",
+     "img_frame": 4,
+     "pos": [
+      -9,
+      -9
+     ],
+     "boxes": [],
+     "items": {
+      "11": {
+       "type": 2
+      },
+      "12": 70
+     },
+     "delay_ms": 70,
+     "sprite": "4"
+    },
+    {
+     "frame": 5,
+     "img": "Common/Etc/UseCoinParticle.img",
+     "img_frame": 5,
+     "pos": [
+      -9,
+      -9
+     ],
+     "boxes": [],
+     "items": {
+      "11": {
+       "type": 2
+      },
+      "12": 70
+     },
+     "delay_ms": 70,
+     "sprite": "5"
+    },
+    {
+     "frame": 6,
+     "img": "Common/Etc/UseCoinParticle.img",
+     "img_frame": 6,
+     "pos": [
+      -9,
+      -9
+     ],
+     "boxes": [],
+     "items": {
+      "11": {
+       "type": 2
+      },
+      "12": 70
+     },
+     "delay_ms": 70,
+     "sprite": "6"
+    },
+    {
+     "frame": 7,
+     "img": "Common/Etc/UseCoinParticle.img",
+     "img_frame": 7,
+     "pos": [
+      -9,
+      -9
+     ],
+     "boxes": [],
+     "items": {
+      "11": {
+       "type": 2
+      },
+      "12": 70
+     },
+     "delay_ms": 70,
+     "sprite": "7"
+    },
+    {
+     "frame": 8,
+     "img": "Common/Etc/UseCoinParticle.img",
+     "img_frame": 8,
+     "pos": [
+      -9,
+      -9
+     ],
+     "boxes": [],
+     "items": {
+      "11": {
+       "type": 2
+      },
+      "12": 70
+     },
+     "delay_ms": 70,
+     "sprite": "8"
+    }
+   ],
+   "duration_ms": 630,
+   "source": "common/etc/animation/usecoinparticle.ani"
+  }
+ },
+ "audio": {
+  "coin_in": {
+   "file": "coin_in.ogg",
+   "source": "sounds/ui/coin_in.ogg",
+   "source_sha256": "6b01571834cf7b97695e06f53c8ff9e11b99fc8094f58d964b4210f7b3939db8",
+   "sha256": "6b01571834cf7b97695e06f53c8ff9e11b99fc8094f58d964b4210f7b3939db8"
+  }
+ },
+ "sources": {
+  "common/etc/animation/usecoin.ani": "8fd6e31cc0506ed5012ebcf770bc5ac6c99ce3cf8e59192a949fe88b6d0e3394",
+  "common/etc/animation/usecoinparticle.ani": "9671f3e1f711653d8e6a9d2784e289f561c888d0137e1057f58dddb9bad00935",
+  "sprite/common/etc/usecoin.img": "64a29e30ca01e8fd24d6286ca2719a2116550fe8ec9e32f7f49bd88a9d6fe9e7",
+  "sprite/common/etc/usecoinparticle.img": "fb3ee772d7a14674c4a8af6272f2fafb7059fcf65dea48160fa030125a8f4a02",
+  "sprite/item/iconstackable.img": "bb28efe25e6d01aeb0ff21eae62c0eab275868720e07cd0c6cf0a853ac041172"
+ }
+}

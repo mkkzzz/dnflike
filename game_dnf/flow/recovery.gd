@@ -19,8 +19,10 @@ static func quote(p: Dictionary, run: Dictionary) -> Dictionary:
 	if state.get("pending",{}).is_empty():return Items.fail("当前没有待处理的死亡")
 	var cfg: Dictionary=Consumables.config()["revival"]
 	if int(state["revives"])>=int(cfg["limit"]):return Items.fail("本次冒险的复活次数已用完")
-	var result: Dictionary={"ok":true,"run_id":run["id"],"room_id":state["pending"]["room_id"],"death_id":int(state["pending"]["death_id"]),"price":int(cfg["gold"])+int(state["revives"])*int(cfg["gold_increment"]),"used":int(state["revives"]),"limit":int(cfg["limit"]),"hp_percent":int(cfg["hp_percent"]),"mp_percent":int(cfg["mp_percent"]),"invulnerable_ms":int(cfg["invulnerable_ms"]),"player":Numbers.combat_spec(p)}
-	result["signature"]=JSON.stringify([result,state["pending"],p["gear"]]).sha256_text()
+	var cost:=int(cfg["coin_cost"])
+	var coins:=int(p.get("resurrection_coins",0))
+	var result: Dictionary={"ok":true,"run_id":run["id"],"room_id":state["pending"]["room_id"],"death_id":int(state["pending"]["death_id"]),"coin_cost":cost,"coins":coins,"affordable":coins>=cost,"used":int(state["revives"]),"limit":int(cfg["limit"]),"hp_percent":int(cfg["hp_percent"]),"mp_percent":int(cfg["mp_percent"]),"invulnerable_ms":int(cfg["invulnerable_ms"]),"player":Numbers.combat_spec(p)}
+	result["signature"]=JSON.stringify([result,state["pending"],p["gear"],coins]).sha256_text()
 	return result
 static func revive(p: Dictionary, run: Dictionary, payload: Dictionary) -> Dictionary:
 	var tx=payload.get("transaction","")
@@ -29,8 +31,8 @@ static func revive(p: Dictionary, run: Dictionary, payload: Dictionary) -> Dicti
 	var q:=quote(p,run)
 	if not q["ok"]:return q
 	if payload.get("signature")!=q["signature"]:return Items.fail("复活条件已变化，请重新确认")
-	if int(p["gold"])<int(q["price"]):return Items.fail("金币不足，无法复活")
-	p["gold"]-=int(q["price"])
+	if not bool(q["affordable"]):return Items.fail("复活币不足，无法原地复活")
+	p["resurrection_coins"]=int(p["resurrection_coins"])-int(q["coin_cost"])
 	var state: Dictionary=run["recovery"]
 	state["revives"]=int(state["revives"])+1;state["pending"]={};state["transactions"][tx]=true
 	return {"ok":true,"quote":q}

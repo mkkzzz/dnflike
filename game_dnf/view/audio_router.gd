@@ -28,6 +28,12 @@ func setup(audio_assets: Dictionary, combat_audio := {}) -> void:
 	music.volume_db = -28
 	add_child(music)
 
+## Optional one-shot outside the compiled combat bank, still backed by an original file.
+func register(key: String, path: String) -> void:
+	if not ResourceLoader.exists(path):return
+	var stream = load(path)
+	if stream is AudioStream:sound_streams[key] = stream
+
 func start_music(volume_db := -28.0) -> void:
 	if music.playing:return
 	play_music("forest01", volume_db)

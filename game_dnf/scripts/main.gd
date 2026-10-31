@@ -73,6 +73,7 @@ var combo_ms := 0.0
 var paused := false
 var finished := false
 var victory := false
+var last_defeat_id := 0
 var help_visible := false
 var show_collision := false
 var god_mode := false
@@ -134,6 +135,7 @@ func _setup_display() -> void:
 	settings.setup(get_window(), false)
 	view.transform = settings.content_transform()
 	if view.hud_layer != null:view.hud_layer.transform = settings.content_transform()
+	if view.revive_layer != null:view.revive_layer.transform = settings.content_transform()
 	if "--review" in OS.get_cmdline_user_args():paused = true
 
 func _fail(reason: String) -> void:
@@ -170,6 +172,48 @@ func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
 	player["mp"] = max_mp if vitals_policy=="refill" else clampf(float(player["mp"]),0,max_mp)
 	if spec.has("weapon") and assets["players"].has(spec["weapon"]):weapon = spec["weapon"]
 	bus.emit("combat.attributes_changed",{"target":PLAYER_ID,"numbers":numeric_player.values.duplicate(true)})
+	return true
+
+## The flow commits the revival transaction before calling this bridge. The room,
+## enemies, drops, elapsed time and skill cooldowns stay on the live battle.
+func can_revive(spec: Dictionary) -> bool:
+	if player.is_empty() or not finished or victory or float(player["hp"])>0:return false
+	if spec.get("run_id")!=run_id or spec.get("room_id")!=room_id or spec.get("death_id")!=last_defeat_id or last_defeat_id<=0:return false
+	for field in ["hp_percent","mp_percent","invulnerable_ms"]:
+		if not Numbers.whole(spec.get(field),1 if field=="hp_percent" else 0,30000 if field=="invulnerable_ms" else 100):return false
+	var actor=spec.get("player")
+	if not actor is Dictionary:return false
+	if numeric_player != null:
+		if not actor.get("numbers") is Dictionary or not actor.get("number_seed") is Dictionary or not actor.get("skills") is Dictionary:return false
+		for field in ["hp_max","mp_max"]:
+			var value=actor["numbers"].get(field)
+			if not (value is int or value is float) or not is_finite(float(value)) or value<(1 if field=="hp_max" else 0):return false
+		var seed: Dictionary=actor["number_seed"];var cfg:=Numbers.shared_config()
+		if not Numbers.whole(seed.get("level"),1,int(cfg["progression"]["level_cap"])) or not cfg["growtypes"].has(seed.get("growtype","")) or not seed.get("modifiers") is Array:return false
+		for modifier in seed["modifiers"]:
+			if not Numbers.valid_modifier(modifier,cfg):return false
+		for id in actor["skills"]:
+			if not cfg["skills"].has(id) or not Numbers.whole(actor["skills"][id],0,int(cfg["skills"][id]["max_level"])):return false
+	return true
+
+func revive_player(spec: Dictionary) -> bool:
+	if not can_revive(spec):return false
+	var point: Vector2=player["pos"];var facing: int=int(player["facing"])
+	var cooldowns: Dictionary=Dictionary(player["cooldowns"]).duplicate(true)
+	var had_numeric:=numeric_player!=null
+	end_action_fx()
+	player=new_player()
+	player["pos"]=point;player["facing"]=facing;player["cooldowns"]=cooldowns
+	if had_numeric:
+		numeric_player=ActorNumbers.new()
+		if not update_numbers(spec["player"],"refill"):return false
+	player["hp"]=maxf(1,max_hp*int(spec["hp_percent"])/100.0)
+	player["mp"]=max_mp*int(spec["mp_percent"])/100.0
+	player["invuln_ms"]=float(spec["invulnerable_ms"])
+	finished=false;victory=false;paused=true
+	held.clear();requests.clear();taps.clear();last_direction_tap.clear();last_direction_release.clear();run_direction=0
+	view.play_revive_effect(point,float(player["z"]))
+	bus.emit("combat.player_revived",flow_payload({"death_id":last_defeat_id,"invulnerable_ms":int(spec["invulnerable_ms"])}))
 	return true
 
 func configure_monster_numbers(level: int, difficulty: String) -> bool:
@@ -215,7 +259,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 				finished = true
 				victory = false
 				item_restorations.clear()
-				bus.emit("combat.player_defeated",flow_payload())
+				emit_player_defeated()
 		elif float(body["hp"])<=0:
 			body["state"] = "dead"
 			body["death_ms"] = 0.0
@@ -254,6 +298,7 @@ func begin_room(spec: Dictionary) -> void:
 	finished = false
 	item_restorations.clear()
 	victory = false
+	last_defeat_id = 0
 	paused = false
 	elapsed_ms = 0
 	damage_taken = 0
@@ -271,6 +316,10 @@ func new_player() -> Dictionary:
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
 		"invuln_ms":0.0,"flash_ms":0.0,"landing_ms":0.0,"buff_ms":0.0,"cooldowns":{},"hits":{},
 		"queued_combo":false,"queued_skill":"","queued_jump":false,"queued_backstep":false,"fx_tag":""}
+
+func emit_player_defeated() -> void:
+	var event: Dictionary=bus.emit("combat.player_defeated",flow_payload())
+	last_defeat_id=int(event.get("event_id",0))
 
 ## Keys owned by the flow side when externally managed: restart, pause/menu, character and debug switches.
 const FLOW_OWNED_KEYS := [KEY_R,KEY_TAB,KEY_1,KEY_2,KEY_3,KEY_ESCAPE,KEY_F2,KEY_F3]
@@ -1011,7 +1060,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 		victory = false
 		play_sound("die")
 		item_restorations.clear()
-		bus.emit("combat.player_defeated",flow_payload())
+		emit_player_defeated()
 	return reaction
 
 ## Direct damage entry kept for tests and flow-side hazards: a plain frontal monster hit.

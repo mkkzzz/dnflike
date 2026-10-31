@@ -133,6 +133,12 @@ func can_apply_effect(effect: Dictionary) -> bool:
 func apply_effect(effect: Dictionary) -> bool:
 	return _alive() and game.apply_effect(effect)
 
+func can_revive(spec: Dictionary) -> bool:
+	return _alive() and game.can_revive(spec)
+
+func revive(spec: Dictionary) -> bool:
+	return _alive() and game.revive_player(spec)
+
 func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
 	if not _alive():return false
 	if not preload("res://content/api/weapon_appearance.gd").valid_spec(spec):return false
@@ -161,7 +167,8 @@ func read_view() -> Dictionary:
 	var exit_target := Vector2.ZERO
 	if game.room_cleared and not game.finished:exit_target = game.door_point(String(rooms[game.room_index]["next"]))
 	return {"run_id":game.run_id,"room_id":game.room_id,"room_index":game.room_index,
-		"time_ms":game.elapsed_ms,
+		"time_ms":game.elapsed_ms,"death_id":game.last_defeat_id,"invulnerable_ms":float(p["invuln_ms"]),
+		"revive_fx_count":game.view.revive_fx_count,
 		"room":game.room_index+1,"room_count":rooms.size(),"room_name":String(rooms[game.room_index]["name"]),
 		"hp":float(p["hp"]),"hp_max":game.max_hp,"mp":float(p["mp"]),"mp_max":game.max_mp,
 		"pos":Vector2(p["pos"]),"camera_x":roundf(game.view.camera_x),"facing":int(p["facing"]),"job":game.job,"weapon":game.weapon,"weapon_item":String(game.view._weapon_item) if game.view._item_appearance_enabled else "",

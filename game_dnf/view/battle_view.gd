@@ -12,6 +12,7 @@ const Frame = preload("res://view/world_frame.gd")
 const CombatHud = preload("res://ui/combat/combat_hud.gd")
 const PropView = preload("res://scripts/native_prop.gd")
 const WeaponAppearance = preload("res://content/api/weapon_appearance.gd")
+const REVIVE_ASSETS := "res://assets_local/revive_v1/manifest.json"
 ## Afterimage of a cancelled pose (E-ADAPT: engine-drawn in the original, no data file).
 const GHOST_MS := 320.0
 const GHOST_TINT := Color(0.62,0.78,1.0,0.6)
@@ -24,8 +25,10 @@ var hud
 ## flow root that scales its own canvas (the loop) must scale this layer explicitly, or the
 ## HUD draws at half size while the world is scaled.
 var hud_layer
+var revive_layer
 var audio
 var effects: Array = []
+var revive_effects: Array = []
 var numbers: Array = []
 var prop_views: Array = []
 var enemy_actors: Dictionary = {}
@@ -42,6 +45,8 @@ var _weapon_item := ""
 var _item_appearance_enabled := false
 var _player_pos := Vector2.ZERO
 var _player_z := 0.0
+var revive_assets: Dictionary = {}
+var revive_fx_count := 0
 ## 拾取下蹲：这段时间内把玩家姿势临时换成 sit（原版下蹲帧），到点自动回到模拟姿势。
 ## 由 loot/bridge.gd 在拾取成功时调用 request_pickup_pose()。
 var pickup_pose_until_ms := 0
@@ -73,9 +78,13 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 	hud = CombatHud.new()
 	layer.add_child(hud)
 	hud.setup(assets["ui"],combat_assets.get("digits",{}),combat_assets.get("monster_hp",{}))
+	revive_layer=CanvasLayer.new()
+	revive_layer.layer=2
+	add_child(revive_layer)
 	audio = AudioRouter.new()
 	add_child(audio)
 	audio.setup(assets["audio"],combat_assets.get("audio",{}))
+	_load_revive_assets()
 	bus.subscribe("combat.cue", _on_cue)
 	bus.subscribe("combat.damage", _on_damage)
 	bus.subscribe("combat.room_loaded", _on_room_loaded)
@@ -84,6 +93,34 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 	bus.subscribe("combat.prop_broken", _on_prop_broken)
 	bus.subscribe("combat.appearance_changed", func(e: Dictionary):
 		if int(e["entity_id"])==0 and String(e["weapon"])!=_weapon:_set_weapon(String(e["weapon"])))
+
+func _load_revive_assets() -> void:
+	if not FileAccess.file_exists(REVIVE_ASSETS):return
+	var parsed=JSON.parse_string(FileAccess.get_file_as_string(REVIVE_ASSETS))
+	if not parsed is Dictionary or parsed.get("schema")!="dnf_revive_assets/1":return
+	revive_assets=parsed
+	var audio_info: Dictionary=revive_assets.get("audio",{}).get("coin_in",{})
+	if not audio_info.is_empty():
+		audio.register("revive_coin","res://assets_local/revive_v1/"+String(audio_info.get("file","")))
+
+## Original use-coin animation plus the particle sprite around the revived player.
+func play_revive_effect(pos: Vector2, z: float) -> void:
+	if revive_assets.is_empty() or not revive_assets.get("effects",{}).has("coin"):return
+	# Screen-space layer keeps the native coin above the 508..600 HUD band.
+	var center_offset := Vector2(0,-52)
+	var coin := FxView.new()
+	revive_layer.add_child(coin)
+	coin.setup(revive_assets["effects"]["coin"],1)
+	revive_effects.append({"node":coin,"offset":center_offset})
+	var points := [Vector2(-25,-8),Vector2(24,-10),Vector2(-17,-27),Vector2(18,-23),Vector2(0,-35),Vector2(0,-4)]
+	for i in points.size():
+		var spark := FxView.new()
+		revive_layer.add_child(spark)
+		spark.setup(revive_assets["effects"]["spark"],1)
+		spark.seek(float(i)*70.0)
+		revive_effects.append({"node":spark,"offset":center_offset+points[i]})
+	audio.play("revive_coin")
+	revive_fx_count+=1
 
 ## 可破坏物被打碎：地图里对应节点按 loader 打好的 prop_node 下标隐藏。
 func _on_prop_broken(event: Dictionary) -> void:
@@ -149,6 +186,14 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	camera_x = stage.camera_for(_player_pos.x)
 	world.position = Vector2(-roundf(camera_x),0)
 	stage.apply_camera(roundf(camera_x))
+	var revive_anchor := _canvas(_player_pos,_player_z) + world.position
+	var revive_ms := minf(sim_ms,50.0)
+	for entry: Dictionary in revive_effects:
+		var node=entry["node"]
+		if is_instance_valid(node):
+			node.position=revive_anchor+Vector2(entry["offset"])
+			node.advance(revive_ms)
+	revive_effects=revive_effects.filter(func(entry: Dictionary):return is_instance_valid(entry["node"]) and not entry["node"].is_queued_for_deletion())
 	for i in range(numbers.size()-1,-1,-1):
 		numbers[i]["ms"] = float(numbers[i]["ms"])+frame_ms
 		if float(numbers[i]["ms"])>650:numbers.remove_at(i)

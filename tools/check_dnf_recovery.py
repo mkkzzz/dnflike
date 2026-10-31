@@ -40,7 +40,7 @@ def validate(cfg, catalog):
     if not isinstance(revival, dict):
         errors.append('missing revival')
     else:
-        for field, low, high in [('limit', 0, 100), ('gold', 0, 1000000), ('gold_increment', 0, 1000000),
+        for field, low, high in [('limit', 0, 100), ('coin_cost', 1, 100),
                                  ('hp_percent', 1, 100), ('mp_percent', 0, 100), ('invulnerable_ms', 0, 30000)]:
             if not whole(revival.get(field), low, high):
                 errors.append('invalid revival ' + field)

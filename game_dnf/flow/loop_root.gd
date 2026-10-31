@@ -262,6 +262,10 @@ func _input(event: InputEvent) -> void:
 	if not event is InputEventKey:return
 	var key := int(event.physical_keycode if event.physical_keycode else event.keycode)
 	if not character_active and key != KEY_F11:return
+	if overlay=="death":
+		if event.is_pressed() and not event.is_echo() and key==KEY_X:recovery_windows.revive_now()
+		get_viewport().set_input_as_handled()
+		return
 	if key == KEY_SHIFT:windows.update_skill_detail(event.pressed)
 	if key not in [KEY_P, KEY_ESCAPE, KEY_F3, KEY_F11]:
 		if session.state == "battle" and overlay == "" and not debug_is_open():
@@ -560,6 +564,7 @@ func depart() -> void:
 	# mount() 返回的是战斗场景根（main.gd），渲染视图在它的 view 属性上。
 	if battle.get("view") != null:
 		battle.view.hud_layer.transform = display_settings.content_transform()
+		battle.view.revive_layer.transform = display_settings.content_transform()
 	combat.room_combat_finished.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
 	combat.player_defeated.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
 	combat.monster_defeated.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
