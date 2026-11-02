@@ -6,10 +6,12 @@
 |---|---|
 | 使用者 | rainmk |
 | 状态 | 已发布 |
-| 正在做 | 技能大弹窗与 QWERTY/ASDFGH 双排快捷栏已发布，等待用户画面与实机手感验收；act8 只作怪物逻辑测试床，等待 ws2 补 `Monster/haze/*.img` 后做原版图集 |
-| 产出位置 | `game_dnf/core/`、`game_dnf/content/api/`、`game_dnf/combat/`（action/hit/resolve/ai/data/api/fields）、`game_dnf/quests/`、`game_dnf/data/`（含 `campaign_1_16.json`）、`game_dnf/view/`、`game_dnf/ui/combat/`、`game_dnf/debug/`、`game_dnf/tests/`（含 `act8/`）、`tools/`、`docs/reports/ws1/2026-10/`、`docs/reports/ws1/2026-11/` |
+| 正在做 | 单机 60 级一致基线已发布，等待三项目标决策：固定来源、职业范围、组队条件内容处理。冻结后进入剑魂 1～18 样板 |
+| 产出位置 | `game_dnf/core/`、`game_dnf/content/api/`、`game_dnf/combat/`（action/hit/resolve/ai/data/api/fields）、`game_dnf/quests/`、`game_dnf/data/`（含 `campaign_1_16.json`、60 级基线 JSON）、`game_dnf/view/`、`game_dnf/ui/combat/`、`game_dnf/debug/`、`game_dnf/tests/`（含 `act8/`）、`tools/`、`docs/design/49_单机60级一致基线.md`、`docs/reports/ws1/2026-10/`、`docs/reports/ws1/2026-11/` |
 
 ## 最近完成
+
+- 2026-11-02 发布[60级单机一致基线](../../reports/ws1/2026-11/2026-11-02_60级单机一致基线.md)：新增目标内容白名单生成器、本地权威规则清单和分层对账矩阵；明确不做更新器/联网服务端/社交/PVP，但服务端逻辑本地化。首轮筛出 11 CHR、1,507 SKL、97 DGN、1,404 QST；运行库 309 件 60 级以上装备被排除，隐藏阿登源数据为 68/71 级而非现标 58 级。`--check` 和 8 项单测通过。
 
 - 2026-11-02 发布[技能大弹窗与双排快捷栏](../../reports/ws1/2026-11/2026-11-02_技能大弹窗与双排快捷栏.md)：核对原 UI 控件引用和帧像素，772×490 大弹窗露出真实 HUD，QWERTY 上排＋ASDFGH 下排，技能树直接拖入槽位、跨排移动、旧六格存档追加空槽；任务改 J，战斗 E/R 冲突已处理。Headless 数值流程 **112项**、完整循环 **405项**、独立战斗 **162项**、交互 **141项**均 failures=0；全程无可见 Godot，离线预览不冒充实时截图。
 
@@ -18,8 +20,6 @@
 - 2026-11-02 发布[技能系统源数据与职业树](../../reports/ws1/2026-11/2026-11-02_技能系统源数据与职业树.md)：175/175 条剑士 SKL 名称与说明由本地化源解析，职业树按鬼剑士/剑魂/狂战士过滤；16 个节点接入学习/计算，新增鬼斩、月光斩、破军升龙击、三类武器精通、武器奥义、血气旺盛、物理暴击、生命之源与 A~H 动态技能槽。独立战斗 **156项**、完整循环 **393项**、交互 **141项**、数值流程 **78项** 均 failures=0。
 
 - 2026-11-02 发布[act8 怪物逻辑测试床](../../reports/ws1/2026-11/2026-11-02_act8怪物逻辑测试床.md)：解析 `.mob [* action] → .act [BASE ANI]`，按索引绑定 `[attack action]`/`[attack info]`/`[cooltime]`；隔离阿登 10 房、80 个生成点、9 种 newmonsters，覆盖移动/攻击/受击/选招/死亡，独立入口 **193项 failures=0**。共享库缺 9 种 haze IMG，当前 logic-only、无替身图集。
-
-- 2026-10-31 发布[原地复活与复活币提示](../../reports/ws1/2026-10/2026-10-31_原地复活与复活币提示.md)：死亡后中央提示，按 X 消耗 1 枚复活币同房复活或返回城镇；`can_revive`/`revive_player` 绑定 run/room/death_id，保留怪物、血量、掉落、时钟与技能冷却；原版复活币图标、`UseCoin` 旋转、粒子与 `coin_in` 音效接入。独立战斗 **148项**、真实流程 **28项**、纯规则 **53项** failures=0。
 
 ## 接续时的未完成工作
 

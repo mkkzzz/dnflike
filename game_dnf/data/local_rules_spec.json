@@ -1,0 +1,379 @@
+{
+ "rules": [
+  {
+   "blocks_target": false,
+   "current": "现有闭环为本地单机权威",
+   "domain": "scope",
+   "id": "scope.offline_single_player",
+   "next": "保持，不引入网络协议和账号登录",
+   "requirement": "离线单机运行，不启动联网服务端",
+   "source": "user_decision",
+   "status": "implemented"
+  },
+  {
+   "blocks_target": false,
+   "current": "按一个固定内容基线维护",
+   "domain": "scope",
+   "id": "scope.no_updater",
+   "next": "只冻结一次目标来源，不建更新链",
+   "requirement": "不做版本更新器、热更新和多版本兼容",
+   "source": "user_decision",
+   "status": "fixed_scope"
+  },
+  {
+   "blocks_target": true,
+   "current": "部分已有，部分仍为项目适配",
+   "domain": "scope",
+   "id": "scope.local_server_logic",
+   "next": "按本清单逐项恢复经验、掉落、任务、商店、强化、修理与限制",
+   "requirement": "原服务端负责的结算逻辑改为本地权威规则",
+   "source": "user_decision",
+   "status": "partial"
+  },
+  {
+   "blocks_target": false,
+   "current": "队伍人数固定为 1，只有 NPC 出售/回购",
+   "domain": "scope",
+   "id": "scope.party_pvp_social",
+   "next": "涉及多人条件的原条目单独列为排除或单机等价，不静默算完成",
+   "requirement": "不含组队、玩家交易、邮件、公会、拍卖与 PVP",
+   "source": "user_decision",
+   "status": "excluded"
+  },
+  {
+   "blocks_target": false,
+   "current": {
+    "level_cap": 60
+   },
+   "domain": "progression",
+   "id": "progression.level_cap",
+   "next": "保留",
+   "requirement": "角色等级上限 60",
+   "source": "E-ADAPT",
+   "status": "implemented"
+  },
+  {
+   "blocks_target": true,
+   "current": {
+    "fallback": 100,
+    "xp_per_level": [
+     100,
+     200,
+     300,
+     400,
+     500
+    ]
+   },
+   "domain": "progression",
+   "id": "progression.xp_curve",
+   "next": "从原客户端表现/表结构与可复核行为恢复；不在本地继续猜固定 100 增量",
+   "requirement": "1～60 原版逐级经验曲线和服务端升级规则",
+   "source": "server_logic_missing",
+   "status": "adapted"
+  },
+  {
+   "blocks_target": true,
+   "current": {
+    "clear_xp": 120,
+    "kill_xp": 0
+   },
+   "domain": "progression",
+   "id": "progression.clear_reward",
+   "next": "与副本难度、怪物、评价和翻牌一起恢复",
+   "requirement": "原版副本通关金币、经验、评价和奖励规则",
+   "source": "server_logic_missing",
+   "status": "adapted"
+  },
+  {
+   "blocks_target": true,
+   "current": "未实现",
+   "domain": "progression",
+   "id": "progression.fatigue",
+   "next": "先确认目标版本存在形式，再由本地 Run/Profile 服务执行",
+   "requirement": "原版疲劳值、扣除、恢复和入场限制",
+   "source": "server_logic_missing",
+   "status": "missing"
+  },
+  {
+   "blocks_target": true,
+   "current": {
+    "back_multiplier": 1.0,
+    "counter_multiplier": 1.25,
+    "critical_multiplier": 1.5,
+    "defense_base": 200,
+    "defense_per_attacker_level": 20,
+    "defense_per_spirit": 1,
+    "defense_per_vitality": 1,
+    "element_divisor": 220,
+    "element_min": 0.1,
+    "hit_base": 1.0,
+    "hit_max": 1.0,
+    "hit_min": 0.0,
+    "main_stat_divisor": 250,
+    "minimum_damage": 1,
+    "quality_max_scale": 1.1,
+    "quality_min_scale": 0.9,
+    "reinforce_attack_per_level": 2,
+    "spirit_divisor": 250,
+    "vitality_divisor": 250
+   },
+   "domain": "stats",
+   "id": "stats.attributes",
+   "next": "逐项替换公式常数和取整顺序，保留来源记录",
+   "requirement": "原版职业成长、基础属性、装备/被动汇总顺序",
+   "source": "partial_source",
+   "status": "adapted"
+  },
+  {
+   "blocks_target": false,
+   "current": {
+    "adventure": 1.25,
+    "expert": 1.5,
+    "king": 1.75,
+    "normal": 1.0
+   },
+   "domain": "stats",
+   "id": "stats.difficulty",
+   "next": "用同条件战斗继续核验作用范围和叠算顺序",
+   "requirement": "难度基础倍率",
+   "source": "E-PARSE",
+   "status": "implemented"
+  },
+  {
+   "blocks_target": true,
+   "current": {
+    "boss_entries": 3,
+    "enabled_dungeons": [
+     "lorien",
+     "lorien_inside",
+     "mirkwood",
+     "mirkwood_deep"
+    ],
+    "normal_entries": 3
+   },
+   "domain": "economy",
+   "id": "economy.loot",
+   "next": "先接怪物表已有掉落字段，再补服务端权重和数量规则",
+   "requirement": "原版怪物/副本/任务掉率、地面归属和拾取限制",
+   "source": "server_logic_missing",
+   "status": "adapted"
+  },
+  {
+   "blocks_target": true,
+   "current": "翻牌固定显示并发放 1 个恢复药剂",
+   "domain": "economy",
+   "id": "economy.card_reward",
+   "next": "建立按副本/难度选择卡池的本地奖励表",
+   "requirement": "原版通关翻牌卡池和随机结果",
+   "source": "server_logic_missing",
+   "status": "adapted"
+  },
+  {
+   "blocks_target": true,
+   "current": {
+    "buyback_limit": 20,
+    "configured_items": 21
+   },
+   "domain": "economy",
+   "id": "economy.shop",
+   "next": "从 NPC/任务/地图依赖形成目标商店清单",
+   "requirement": "NPC 商店库存、价格、回购和购买条件",
+   "source": "server_logic_missing",
+   "status": "adapted"
+  },
+  {
+   "blocks_target": true,
+   "current": {
+    "durability_max": 40,
+    "wear": {
+     "armor_hits": 10,
+     "death_loss": 3,
+     "weapon_hits": 20
+    }
+   },
+   "domain": "economy",
+   "id": "economy.repair_durability",
+   "next": "确认原版是否按攻击次数/受击/死亡损耗",
+   "requirement": "原版耐久损耗、修理价格和零耐久规则",
+   "source": "server_logic_missing",
+   "status": "adapted"
+  },
+  {
+   "blocks_target": true,
+   "current": {
+    "steps": 10
+   },
+   "domain": "economy",
+   "id": "economy.reinforce",
+   "next": "替换项目 10 级试玩曲线",
+   "requirement": "原版强化等级、概率、费用、失败结果与属性",
+   "source": "server_logic_missing",
+   "status": "adapted"
+  },
+  {
+   "blocks_target": true,
+   "current": {
+    "recipes": 3
+   },
+   "domain": "economy",
+   "id": "economy.enchant",
+   "next": "接原附魔宝珠/卡片/配方和失败结果",
+   "requirement": "原版附魔来源、部位限制、替换与清除",
+   "source": "server_logic_missing",
+   "status": "adapted"
+  },
+  {
+   "blocks_target": true,
+   "current": "未接入",
+   "domain": "items",
+   "id": "items.avatar",
+   "next": "按目标 60 白名单筛出 item_type 与时装槽",
+   "requirement": "原版时装、染色、徽章和纸娃娃外观",
+   "source": "source_fields_present",
+   "status": "missing"
+  },
+  {
+   "blocks_target": true,
+   "current": "运行框架可读简单 set，但原库 set item master 未迁入",
+   "domain": "items",
+   "id": "items.set_bonus",
+   "next": "先接装备 set 字段和阈值，再接技能/触发效果",
+   "requirement": "套装件数、触发条件和属性加成",
+   "source": "source_fields_present",
+   "status": "partial"
+  },
+  {
+   "blocks_target": true,
+   "current": "未接入",
+   "domain": "items",
+   "id": "items.recipe_package",
+   "next": "以 item_type 和 input/output 字段为入口批次",
+   "requirement": "配方、制作、礼包、魔盒和开出结果",
+   "source": "source_fields_present",
+   "status": "missing"
+  },
+  {
+   "blocks_target": true,
+   "current": "120 条运行，周期框架已接但大量目标/职业依赖未启用",
+   "domain": "quests",
+   "id": "quests.lifecycle",
+   "next": "按目标类型与前置图批量补齐，不用少量章节代替全量",
+   "requirement": "原版前置、职业条件、目标、奖励、重复/每日和历史",
+   "source": "partial_source",
+   "status": "partial"
+  },
+  {
+   "blocks_target": true,
+   "current": "18 级技能页简化转职",
+   "domain": "quests",
+   "id": "quests.job_change",
+   "next": "选一条职业链先贯通，再扩其余职业",
+   "requirement": "原版转职任务、职业资格和技能点重置",
+   "source": "source_present",
+   "status": "missing"
+  },
+  {
+   "blocks_target": false,
+   "current": "候选快照、原子写盘和备份恢复已接",
+   "domain": "save",
+   "id": "save.transactions",
+   "next": "新规则一律走现有事务入口，不新增旁路写档",
+   "requirement": "奖励、消费、掉落和任务状态单事务提交",
+   "source": "local_design",
+   "status": "implemented"
+  },
+  {
+   "blocks_target": true,
+   "current": "鬼剑士基础子集已接，部分判定由特效范围补",
+   "domain": "combat",
+   "id": "combat.player_actions",
+   "next": "以 1～18 样板先行补齐，再按等级段扩",
+   "requirement": "目标职业完整基础动作、输入优先级、取消和武器差异",
+   "source": "partial_source",
+   "status": "partial"
+  },
+  {
+   "blocks_target": true,
+   "current": "剑士 17 个运行时节点，其中 16 条有源路径、1 条为无源遗留；其他职业 0",
+   "domain": "combat",
+   "id": "combat.skills",
+   "next": "以剑魂 1～60 为第一条完整技能线",
+   "requirement": "目标职业技能的 SKL/ACT/ATK/ANI/被动物完整执行",
+   "source": "partial_source",
+   "status": "partial"
+  },
+  {
+   "blocks_target": true,
+   "current": "通用距离/冷却 AI，部分 BOSS 阶段为项目适配",
+   "domain": "combat",
+   "id": "combat.monster_ai",
+   "next": "区分无脚本引擎内置行为和有脚本可恢复行为",
+   "requirement": "目标怪物选招、移动、阶段、召唤和特殊机制",
+   "source": "partial_source",
+   "status": "partial"
+  },
+  {
+   "blocks_target": true,
+   "current": "17 条 60 级内运行路线，另有 1 条 68/71 级隐藏测试床；共 117 房，随机迷宫未恢复",
+   "domain": "world",
+   "id": "world.dungeon_routes",
+   "next": "先用 DGN/地图依赖生成本地目标副本表，再恢复路线规则",
+   "requirement": "目标地下城的房间生成、门、刷怪、机关和返回",
+   "source": "partial_source",
+   "status": "partial"
+  },
+  {
+   "blocks_target": true,
+   "current": "多项原图已接，但全屏幕/全事件矩阵未完成",
+   "domain": "presentation",
+   "id": "ui.audio_presentation",
+   "next": "以 pilot 等级段的同条件原版/Godot 对照收口",
+   "requirement": "目标版本的完整 UI、字体、音效、动作和结算表现",
+   "source": "partial_source",
+   "status": "partial"
+  },
+  {
+   "blocks_target": true,
+   "current": {
+    "coin_cost": 1,
+    "revival_limit": 3
+   },
+   "domain": "recovery",
+   "id": "recovery.revive",
+   "next": "补原版复活币来源、消耗和次数规则",
+   "requirement": "原版死亡恢复、复活币和返回城镇",
+   "source": "source_present",
+   "status": "partial"
+  }
+ ],
+ "schema": "dnf_local_rules_spec/1",
+ "scope": {
+  "goal": "offline_single_player_level_60_pve_parity",
+  "level_cap": 60,
+  "local_authority_required": true,
+  "network": "excluded",
+  "party_pvp_social": "excluded",
+  "server_process": "excluded",
+  "updater": "excluded"
+ },
+ "status_meanings": {
+  "adapted": "当前使用项目适配值或规则，必须替换",
+  "excluded": "用户明确排除的非目标范围",
+  "fixed_scope": "范围约束，不需要运行时实现",
+  "implemented": "现有本地实现可承担目标范围",
+  "missing": "尚无实现",
+  "partial": "有真实实现，但目标范围未闭合"
+ },
+ "summary": {
+  "blocking": 22,
+  "by_status": {
+   "adapted": 9,
+   "excluded": 1,
+   "fixed_scope": 1,
+   "implemented": 4,
+   "missing": 4,
+   "partial": 9
+  },
+  "total": 28
+ }
+}

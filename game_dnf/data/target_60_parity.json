@@ -1,0 +1,138 @@
+{
+ "categories": {
+  "characters": {
+   "accepted": 0,
+   "mapped_not_runtime": 0,
+   "parsed_not_runtime": 10,
+   "post_60_excluded": 0,
+   "runtime": 1,
+   "runtime_post_60_excluded": 0,
+   "target_candidates": 11,
+   "unknown_level": 0,
+   "unresolved": 0
+  },
+  "dungeons": {
+   "accepted": 0,
+   "mapped_not_runtime": 0,
+   "parsed_not_runtime": 80,
+   "post_60_excluded": 197,
+   "runtime": 17,
+   "runtime_post_60_excluded": 1,
+   "target_candidates": 97,
+   "unknown_level": 0,
+   "unresolved": 0
+  },
+  "items": {
+   "accepted": 0,
+   "mapped_not_runtime": 0,
+   "parsed_not_runtime": 55074,
+   "post_60_excluded": 13442,
+   "runtime": 3483,
+   "runtime_post_60_excluded": 309,
+   "target_candidates": 58557,
+   "unknown_level": 13534,
+   "unresolved": 0
+  },
+  "monsters": {
+   "accepted": 0,
+   "mapped_not_runtime": 0,
+   "parsed_not_runtime": 1354,
+   "post_60_excluded": 508,
+   "runtime": 75,
+   "runtime_post_60_excluded": 11,
+   "target_candidates": 1429,
+   "unknown_level": 0,
+   "unresolved": 0
+  },
+  "quests": {
+   "accepted": 0,
+   "mapped_not_runtime": 0,
+   "parsed_not_runtime": 1284,
+   "post_60_excluded": 2306,
+   "runtime": 120,
+   "runtime_post_60_excluded": 0,
+   "target_candidates": 1404,
+   "unknown_level": 6,
+   "unresolved": 0
+  },
+  "skills": {
+   "accepted": 0,
+   "mapped_not_runtime": 61,
+   "parsed_not_runtime": 1430,
+   "post_60_excluded": 203,
+   "runtime": 16,
+   "runtime_post_60_excluded": 0,
+   "target_candidates": 1507,
+   "unknown_level": 24,
+   "unresolved": 0
+  },
+  "towns_npcs": {
+   "npc_files_source": 180,
+   "npc_index_source": 161,
+   "npc_runtime_placed": 15,
+   "scope": "level_60_whitelist_required",
+   "towns_runtime": 12,
+   "towns_source": 16
+  }
+ },
+ "decisions": [
+  {
+   "current_default": "暂以 111 备份建立候选基线",
+   "id": "source_baseline",
+   "impact": "决定 CHR/SKL/DGN/QST/物品目标和后续同条件对照的参照",
+   "question": "是否把 111Script.pvf 备份固定为本项目目标来源？",
+   "status": "pending_user"
+  },
+  {
+   "current_default": "全部 11 个 CHR 先列为候选，只有 swordman 计运行",
+   "id": "class_roster",
+   "impact": "直接决定技能、转职、装备限制和任务分母",
+   "question": "目标 60 版本包含哪些基础职业和特殊 CHR（含 Thief、AT*、Creator、DemonicSwordman 吗）？",
+   "status": "pending_user"
+  },
+  {
+   "current_default": "记为排除或待适配，不静默计入完成",
+   "id": "party_only_content",
+   "impact": "影响全内容白名单和任务可达性",
+   "question": "原版要求组队的任务/副本，是排除还是改写为单机等价？",
+   "status": "pending_user"
+  },
+  {
+   "current_default": "只从 60 基线视图中排除，不删除原始档案",
+   "id": "post_60_runtime",
+   "impact": "避免 70～85 级内容混入 60 级完成度",
+   "question": "现有运行库中的 309 件 60 级以上装备是否从目标视图中隐藏？",
+   "status": "recommended_yes"
+  },
+  {
+   "current_default": "保持 unknown，不进入目标完成分子",
+   "id": "unknown_item_levels",
+   "impact": "决定物品白名单最终分母",
+   "question": "13534 件无等级物品需要按索引/任务/商店依赖继续分类",
+   "status": "technical_task"
+  }
+ ],
+ "policy": {
+  "aggregate_percentage": false,
+  "reason": "目标候选、运行定义、规则一致和用户验收分母不同"
+ },
+ "rules": {
+  "blocking": 22,
+  "by_status": {
+   "adapted": 9,
+   "excluded": 1,
+   "fixed_scope": 1,
+   "implemented": 4,
+   "missing": 4,
+   "partial": 9
+  },
+  "total": 28
+ },
+ "schema": "dnf_60_parity_matrix/1",
+ "source_baseline": {
+  "asset_version": "dnf-native-assets-v1-20261022",
+  "config_role": "111Script.pvf backup in the shared library; runtime-effective PVF unconfirmed",
+  "provisional": true,
+  "pvf_sha256": "f48850456b7dc0107278fb3f3a74fd68ee404889b95880f3204ce10fbd179be0"
+ }
+}
