@@ -21,6 +21,16 @@
    "status": "fixed_scope"
   },
   {
+   "blocks_target": false,
+   "current": "超 60 内容继续保留在源库与运行库，仅不计入当前 60 内容分母",
+   "domain": "scope",
+   "id": "scope.above_60_future",
+   "next": "后续扩展开关或内容批次再逐项验收",
+   "requirement": "60 级以上内容保留为后续拓展，不删除、不要求隐藏",
+   "source": "user_decision",
+   "status": "fixed_scope"
+  },
+  {
    "blocks_target": true,
    "current": "部分已有，部分仍为项目适配",
    "domain": "scope",
@@ -348,6 +358,7 @@
  ],
  "schema": "dnf_local_rules_spec/1",
  "scope": {
+  "above_level_60": "retained_future_extension",
   "goal": "offline_single_player_level_60_pve_parity",
   "level_cap": 60,
   "local_authority_required": true,
@@ -369,11 +380,11 @@
   "by_status": {
    "adapted": 9,
    "excluded": 1,
-   "fixed_scope": 1,
+   "fixed_scope": 2,
    "implemented": 4,
    "missing": 4,
    "partial": 9
   },
-  "total": 28
+  "total": 29
  }
 }

@@ -547,6 +547,16 @@ def rule_spec(numbers: dict[str, Any], services: dict[str, Any],
             "next": "只冻结一次目标来源，不建更新链",
         },
         {
+            "id": "scope.above_60_future",
+            "domain": "scope",
+            "requirement": "60 级以上内容保留为后续拓展，不删除、不要求隐藏",
+            "source": "user_decision",
+            "current": "超 60 内容继续保留在源库与运行库，仅不计入当前 60 内容分母",
+            "status": "fixed_scope",
+            "blocks_target": False,
+            "next": "后续扩展开关或内容批次再逐项验收",
+        },
+        {
             "id": "scope.local_server_logic",
             "domain": "scope",
             "requirement": "原服务端负责的结算逻辑改为本地权威规则",
@@ -836,6 +846,7 @@ def rule_spec(numbers: dict[str, Any], services: dict[str, Any],
         "scope": {
             "goal": "offline_single_player_level_60_pve_parity",
             "level_cap": LEVEL_CAP,
+            "above_level_60": "retained_future_extension",
             "server_process": "excluded",
             "network": "excluded",
             "updater": "excluded",
@@ -925,15 +936,6 @@ def build_baseline(library: Path | None = None) -> tuple[dict[str, Any], dict[st
                 "status": "pending_user",
             },
             {
-                "id": "post_60_runtime",
-                "question": "现有运行库中的 {} 件 60 级以上装备是否从目标视图中隐藏？".format(
-                    items["runtime_post_60"]
-                ),
-                "current_default": "只从 60 基线视图中排除，不删除原始档案",
-                "impact": "避免 70～85 级内容混入 60 级完成度",
-                "status": "recommended_yes",
-            },
-            {
                 "id": "unknown_item_levels",
                 "question": "{} 件无等级物品需要按索引/任务/商店依赖继续分类".format(
                     items["unknown_level"]
@@ -948,6 +950,7 @@ def build_baseline(library: Path | None = None) -> tuple[dict[str, Any], dict[st
             "scope": {
                 "goal": "offline_single_player_level_60_pve_parity",
                 "level_cap": LEVEL_CAP,
+                "above_level_60": "retained_future_extension",
                 "server_process": "excluded",
                 "network": "excluded",
                 "updater": "excluded",
@@ -960,7 +963,7 @@ def build_baseline(library: Path | None = None) -> tuple[dict[str, Any], dict[st
                 "provisional": True,
             },
             "candidate_rules": {
-                "known_level": "level <= 60 进入目标候选；>60 进入 post_60",
+                "known_level": "level <= 60 进入当前内容候选；>60 保留为后续拓展",
                 "unknown_level": "保留为 unknown，不进入已完成分子",
                 "runtime": "有当前运行定义，不代表规则已完全一致",
                 "accepted": "必须有用户实机同条件验收记录",
@@ -1025,7 +1028,7 @@ def build_parity(
             "parsed_not_runtime": max(0, target - runtime - mapped - unresolved),
             "unresolved": unresolved,
             "accepted": int(summary.get("accepted", 0)),
-            "post_60_excluded": int(summary.get("post_60", 0)),
+            "above_60_future": int(summary.get("post_60", 0)),
             "runtime_post_60_excluded": int(summary.get("runtime_post_60", 0)),
             "unknown_level": int(summary.get("unknown_level", 0)),
         }
@@ -1060,6 +1063,7 @@ def render_report(
         "| 约束 | 当前基线 |",
         "|---|---|",
         "| 等级上限 | 60 |",
+        "| 60 级以上内容 | 保留为后续拓展，不计入当前 60 内容分母 |",
         "| 服务端进程 | 不实现；服务端规则本地化 |",
         "| 更新器/热更新 | 不实现 |",
         "| 社交/PVP | 不实现；多人条件内容单列 |",
@@ -1067,7 +1071,7 @@ def render_report(
         "",
         "## 二、内容候选快照",
         "",
-        "| 类别 | 目标候选 | 已解析未运行 | 当前运行 | 已验收 | 60 级以上排除 | 等级未知 |",
+        "| 类别 | 当前 60 内容候选 | 已解析未运行 | 当前运行 | 已验收 | 60 级以上后续 | 等级未知 |",
         "|---|---:|---:|---:|---:|---:|---:|",
     ]
     labels = {
@@ -1082,7 +1086,7 @@ def render_report(
         row = parity["categories"][key]
         lines.append(
             "| {label} | {target_candidates} | {parsed_not_runtime} | {runtime} | "
-            "{accepted} | {post_60_excluded} | {unknown_level} |".format(
+            "{accepted} | {above_60_future} | {unknown_level} |".format(
                 label=label, **row
             )
         )
@@ -1107,11 +1111,11 @@ def render_report(
             "- 另有 {} 条项目遗留技能没有源路径，同样不计入原版技能覆盖。".format(
                 skill_summary.get("legacy_runtime_without_path", 0)
             ),
-            "- 物品：运行库中有 {} 件 60 级以上装备，已从目标视图排除；{} 件原物品等级未知，未计入已完成分子。".format(
+            "- 物品：运行库中有 {} 件 60 级以上装备，保留为后续拓展，不计入当前 60 内容分子；{} 件原物品等级未知，同样不计入已完成分子。".format(
                 item_summary_data.get("runtime_post_60", 0),
                 item_summary_data.get("unknown_level", 0),
             ),
-            "- 地下城：{} 条当前运行路线被源等级排除；其中隐藏阿登源数据最低 68、基准 71，现有 58 级标注不能作为原版事实。".format(
+            "- 地下城：{} 条当前运行路线属于 60 级以上拓展；其中隐藏阿登源数据最低 68、基准 71，现有 58 级标注不能作为原版事实，但内容本身保留。".format(
                 dungeon_summary.get("runtime_post_60", 0)
             ),
             "",
@@ -1216,7 +1220,7 @@ def main(argv: list[str] | None = None) -> int:
         summary = manifest["summary"][key]
         print(
             f"  {key}: target={summary.get('target')} runtime={summary.get('runtime')} "
-            f"post_60={summary.get('post_60')} unknown={summary.get('unknown_level')}"
+            f"above_60_future={summary.get('post_60')} unknown={summary.get('unknown_level')}"
         )
     print("rules: " + json.dumps(rules["summary"], ensure_ascii=False, sort_keys=True))
     print("parity categories: " + str(len(parity["categories"])))

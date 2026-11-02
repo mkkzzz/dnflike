@@ -1,10 +1,10 @@
 {
  "categories": {
   "characters": {
+   "above_60_future": 0,
    "accepted": 0,
    "mapped_not_runtime": 0,
    "parsed_not_runtime": 10,
-   "post_60_excluded": 0,
    "runtime": 1,
    "runtime_post_60_excluded": 0,
    "target_candidates": 11,
@@ -12,10 +12,10 @@
    "unresolved": 0
   },
   "dungeons": {
+   "above_60_future": 197,
    "accepted": 0,
    "mapped_not_runtime": 0,
    "parsed_not_runtime": 80,
-   "post_60_excluded": 197,
    "runtime": 17,
    "runtime_post_60_excluded": 1,
    "target_candidates": 97,
@@ -23,10 +23,10 @@
    "unresolved": 0
   },
   "items": {
+   "above_60_future": 13442,
    "accepted": 0,
    "mapped_not_runtime": 0,
    "parsed_not_runtime": 55074,
-   "post_60_excluded": 13442,
    "runtime": 3483,
    "runtime_post_60_excluded": 309,
    "target_candidates": 58557,
@@ -34,10 +34,10 @@
    "unresolved": 0
   },
   "monsters": {
+   "above_60_future": 508,
    "accepted": 0,
    "mapped_not_runtime": 0,
    "parsed_not_runtime": 1354,
-   "post_60_excluded": 508,
    "runtime": 75,
    "runtime_post_60_excluded": 11,
    "target_candidates": 1429,
@@ -45,10 +45,10 @@
    "unresolved": 0
   },
   "quests": {
+   "above_60_future": 2306,
    "accepted": 0,
    "mapped_not_runtime": 0,
    "parsed_not_runtime": 1284,
-   "post_60_excluded": 2306,
    "runtime": 120,
    "runtime_post_60_excluded": 0,
    "target_candidates": 1404,
@@ -56,10 +56,10 @@
    "unresolved": 0
   },
   "skills": {
+   "above_60_future": 203,
    "accepted": 0,
-   "mapped_not_runtime": 61,
-   "parsed_not_runtime": 1430,
-   "post_60_excluded": 203,
+   "mapped_not_runtime": 132,
+   "parsed_not_runtime": 1359,
    "runtime": 16,
    "runtime_post_60_excluded": 0,
    "target_candidates": 1507,
@@ -98,13 +98,6 @@
    "status": "pending_user"
   },
   {
-   "current_default": "只从 60 基线视图中排除，不删除原始档案",
-   "id": "post_60_runtime",
-   "impact": "避免 70～85 级内容混入 60 级完成度",
-   "question": "现有运行库中的 309 件 60 级以上装备是否从目标视图中隐藏？",
-   "status": "recommended_yes"
-  },
-  {
    "current_default": "保持 unknown，不进入目标完成分子",
    "id": "unknown_item_levels",
    "impact": "决定物品白名单最终分母",
@@ -121,12 +114,12 @@
   "by_status": {
    "adapted": 9,
    "excluded": 1,
-   "fixed_scope": 1,
+   "fixed_scope": 2,
    "implemented": 4,
    "missing": 4,
    "partial": 9
   },
-  "total": 28
+  "total": 29
  },
  "schema": "dnf_60_parity_matrix/1",
  "source_baseline": {

@@ -61,6 +61,7 @@ class Dnf60BaselineTest(unittest.TestCase):
         by_id = {row["id"]: row for row in self.rules["rules"]}
         self.assertEqual(by_id["scope.offline_single_player"]["status"], "implemented")
         self.assertEqual(by_id["scope.no_updater"]["status"], "fixed_scope")
+        self.assertEqual(by_id["scope.above_60_future"]["status"], "fixed_scope")
         self.assertEqual(by_id["progression.fatigue"]["status"], "missing")
         self.assertTrue(by_id["progression.fatigue"]["blocks_target"])
         self.assertEqual(by_id["scope.party_pvp_social"]["status"], "excluded")
@@ -82,6 +83,7 @@ class Dnf60BaselineTest(unittest.TestCase):
             self.assertIn(heading, report)
         self.assertIn("不做更新器", report)
         self.assertIn("服务端规则本地化", report)
+        self.assertIn("保留为后续拓展", report)
 
 
 if __name__ == "__main__":

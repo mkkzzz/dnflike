@@ -1,7 +1,7 @@
 {
  "candidate_rules": {
   "accepted": "必须有用户实机同条件验收记录",
-  "known_level": "level <= 60 进入目标候选；>60 进入 post_60",
+  "known_level": "level <= 60 进入当前内容候选；>60 保留为后续拓展",
   "runtime": "有当前运行定义，不代表规则已完全一致",
   "unknown_level": "保留为 unknown，不进入已完成分子"
  },
@@ -26,13 +26,6 @@
    "impact": "影响全内容白名单和任务可达性",
    "question": "原版要求组队的任务/副本，是排除还是改写为单机等价？",
    "status": "pending_user"
-  },
-  {
-   "current_default": "只从 60 基线视图中排除，不删除原始档案",
-   "id": "post_60_runtime",
-   "impact": "避免 70～85 级内容混入 60 级完成度",
-   "question": "现有运行库中的 309 件 60 级以上装备是否从目标视图中隐藏？",
-   "status": "recommended_yes"
   },
   {
    "current_default": "保持 unknown，不进入目标完成分子",
@@ -39579,8 +39572,8 @@
     "max_level": 50,
     "path": "skill/swordman/sacrifice.skl",
     "required_level": 35,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "sacrifice",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -39719,8 +39712,8 @@
     "max_level": 5,
     "path": "skill/swordman/disjointitemdark.skl",
     "required_level": 22,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "disjointitemdark",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -39729,8 +39722,8 @@
     "max_level": 1,
     "path": "skill/swordman/jumpattackhighfast.skl",
     "required_level": 14,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "jumpattackhighfast",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40149,8 +40142,8 @@
     "max_level": 50,
     "path": "skill/swordman/sayaex.skl",
     "required_level": 60,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "sayaex",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40159,8 +40152,8 @@
     "max_level": 50,
     "path": "skill/swordman/chargecrashex.skl",
     "required_level": 60,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "chargecrashex",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40169,8 +40162,8 @@
     "max_level": 50,
     "path": "skill/swordman/icewaveex.skl",
     "required_level": 60,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "icewaveex",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40179,8 +40172,8 @@
     "max_level": 50,
     "path": "skill/swordman/grabblastbloodex.skl",
     "required_level": 60,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "grabblastbloodex",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40189,8 +40182,8 @@
     "max_level": 50,
     "path": "skill/swordman/bloodsword.skl",
     "required_level": 40,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "bloodsword",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40199,8 +40192,8 @@
     "max_level": 1,
     "path": "skill/swordman/flowmind.skl",
     "required_level": 20,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "flowmind",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40209,8 +40202,8 @@
     "max_level": 70,
     "path": "skill/swordman/flowmindone.skl",
     "required_level": 20,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "flowmindone",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40219,8 +40212,8 @@
     "max_level": 70,
     "path": "skill/swordman/flowmindtwo.skl",
     "required_level": 25,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "flowmindtwo",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40229,8 +40222,8 @@
     "max_level": 70,
     "path": "skill/swordman/flowmindthree.skl",
     "required_level": 30,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "flowmindthree",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40239,8 +40232,8 @@
     "max_level": 50,
     "path": "skill/swordman/flowmindpowerup.skl",
     "required_level": 30,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "flowmindpowerup",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40249,8 +40242,8 @@
     "max_level": 70,
     "path": "skill/swordman/ghostsidewind.skl",
     "required_level": 30,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "ghostsidewind",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40259,8 +40252,8 @@
     "max_level": 70,
     "path": "skill/swordman/triplestab.skl",
     "required_level": 35,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "triplestab",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40269,8 +40262,8 @@
     "max_level": 10,
     "path": "skill/swordman/ghostsidewindex.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "ghostsidewindex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40279,8 +40272,8 @@
     "max_level": 10,
     "path": "skill/swordman/triplestabex.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "triplestabex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40289,8 +40282,8 @@
     "max_level": 1,
     "path": "skill/swordman/pinchpowerupex.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "pinchpowerupex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40299,8 +40292,8 @@
     "max_level": 10,
     "path": "skill/swordman/normalwaveex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "normalwaveex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40309,8 +40302,8 @@
     "max_level": 10,
     "path": "skill/swordman/gorecrossex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "gorecrossex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40319,8 +40312,8 @@
     "max_level": 10,
     "path": "skill/swordman/hardattackex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "hardattackex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40329,8 +40322,8 @@
     "max_level": 10,
     "path": "skill/swordman/tripleslashex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "tripleslashex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40339,8 +40332,8 @@
     "max_level": 10,
     "path": "skill/swordman/hitbackex.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "hitbackex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40349,8 +40342,8 @@
     "max_level": 10,
     "path": "skill/swordman/bremenex.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "bremenex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40359,8 +40352,8 @@
     "max_level": 10,
     "path": "skill/swordman/diehardex.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "diehardex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40369,8 +40362,8 @@
     "max_level": 10,
     "path": "skill/swordman/dotareaex.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "dotareaex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40379,8 +40372,8 @@
     "max_level": 10,
     "path": "skill/swordman/ashenforkex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "ashenforkex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40389,8 +40382,8 @@
     "max_level": 10,
     "path": "skill/swordman/moonlightslashex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "moonlightslashex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40399,8 +40392,8 @@
     "max_level": 10,
     "path": "skill/swordman/hopsmashex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "hopsmashex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40409,8 +40402,8 @@
     "max_level": 5,
     "path": "skill/swordman/vaneslashex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "vaneslashex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40419,8 +40412,8 @@
     "max_level": 5,
     "path": "skill/swordman/basicattackupex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "basicattackupex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40429,8 +40422,8 @@
     "max_level": 10,
     "path": "skill/swordman/dashattackmultihitex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "dashattackmultihitex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40439,8 +40432,8 @@
     "max_level": 3,
     "path": "skill/swordman/guardex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "guardex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40449,8 +40442,8 @@
     "max_level": 10,
     "path": "skill/swordman/khazanex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "khazanex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40459,8 +40452,8 @@
     "max_level": 10,
     "path": "skill/swordman/grabblastbloodexp.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "grabblastbloodexp",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40469,8 +40462,8 @@
     "max_level": 1,
     "path": "skill/swordman/backstep.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "backstep",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40479,8 +40472,8 @@
     "max_level": 1,
     "path": "skill/swordman/armormasterylight.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "armormasterylight",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40489,8 +40482,8 @@
     "max_level": 1,
     "path": "skill/swordman/armormasteryheavy.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "armormasteryheavy",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40499,8 +40492,8 @@
     "max_level": 100,
     "path": "skill/swordman/basicattackup.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "basicattackup",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40509,8 +40502,8 @@
     "max_level": 20,
     "path": "skill/swordman/jumppowerup.skl",
     "required_level": 10,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "jumppowerup",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40519,8 +40512,8 @@
     "max_level": 20,
     "path": "skill/swordman/magicalattackup.skl",
     "required_level": 15,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "magicalattackup",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40529,8 +40522,8 @@
     "max_level": 20,
     "path": "skill/swordman/throwmastery.skl",
     "required_level": 10,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "throwmastery",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40539,8 +40532,8 @@
     "max_level": 20,
     "path": "skill/swordman/physicalbackattackcritical.skl",
     "required_level": 20,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "physicalbackattackcritical",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40549,8 +40542,8 @@
     "max_level": 10,
     "path": "skill/swordman/disjointitem.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "disjointitem",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40559,8 +40552,8 @@
     "max_level": 20,
     "path": "skill/swordman/superarmoroncast.skl",
     "required_level": 15,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "superarmoroncast",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40569,8 +40562,8 @@
     "max_level": 10,
     "path": "skill/swordman/compoundcraft.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "compoundcraft",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40579,8 +40572,8 @@
     "max_level": 10,
     "path": "skill/swordman/compoundweaving.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "compoundweaving",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40589,8 +40582,8 @@
     "max_level": 10,
     "path": "skill/swordman/compoundmachine.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "compoundmachine",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40599,8 +40592,8 @@
     "max_level": 10,
     "path": "skill/swordman/compoundchemistry.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "compoundchemistry",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40609,8 +40602,8 @@
     "max_level": 1,
     "path": "skill/swordman/armormasteryleather.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "armormasteryleather",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40629,8 +40622,8 @@
     "max_level": 1,
     "path": "skill/swordman/armormasterycloth.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "armormasterycloth",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40639,8 +40632,8 @@
     "max_level": 20,
     "path": "skill/swordman/magicalcriticalhitup.skl",
     "required_level": 20,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "magicalcriticalhitup",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40649,8 +40642,8 @@
     "max_level": 20,
     "path": "skill/swordman/magicalbackattackcritical.skl",
     "required_level": 20,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "magicalbackattackcritical",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40659,8 +40652,8 @@
     "max_level": 20,
     "path": "skill/swordman/quickstanding.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "quickstanding",
+    "state": "mapped",
     "type": "[active]"
    },
    {
@@ -40669,8 +40662,8 @@
     "max_level": 20,
     "path": "skill/swordman/enchant.skl",
     "required_level": 20,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "enchant",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40679,8 +40672,8 @@
     "max_level": 20,
     "path": "skill/swordman/dollmaking.skl",
     "required_level": 20,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "dollmaking",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40689,8 +40682,8 @@
     "max_level": 20,
     "path": "skill/swordman/alchemy.skl",
     "required_level": 20,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "alchemy",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40699,8 +40692,8 @@
     "max_level": 20,
     "path": "skill/swordman/opendisjointshop.skl",
     "required_level": 20,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "opendisjointshop",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40719,8 +40712,8 @@
     "max_level": 1,
     "path": "skill/swordman/armormasteryplate.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "armormasteryplate",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40729,8 +40722,8 @@
     "max_level": 1,
     "path": "skill/swordman/conversion.skl",
     "required_level": 20,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "conversion",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40739,8 +40732,8 @@
     "max_level": 20,
     "path": "skill/swordman/statusup.skl",
     "required_level": 2,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "statusup",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40749,8 +40742,8 @@
     "max_level": 20,
     "path": "skill/swordman/experienceup.skl",
     "required_level": 1,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "experienceup",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40759,8 +40752,8 @@
     "max_level": 10,
     "path": "skill/swordman/releasewaveex.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "releasewaveex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40769,8 +40762,8 @@
     "max_level": 10,
     "path": "skill/swordman/grandwaveex.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "grandwaveex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40779,8 +40772,8 @@
     "max_level": 10,
     "path": "skill/swordman/upperslashex.skl",
     "required_level": 50,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "upperslashex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40789,8 +40782,8 @@
     "max_level": 3,
     "path": "skill/swordman/icewaveexp.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "icewaveexp",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40799,8 +40792,8 @@
     "max_level": 10,
     "path": "skill/swordman/chargecrashexp.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "chargecrashexp",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40809,8 +40802,8 @@
     "max_level": 10,
     "path": "skill/swordman/flowmindoneex.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "flowmindoneex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40819,8 +40812,8 @@
     "max_level": 10,
     "path": "skill/swordman/flowmindtwoex.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "flowmindtwoex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40829,8 +40822,8 @@
     "max_level": 10,
     "path": "skill/swordman/flowmindthreeex.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "flowmindthreeex",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -40839,8 +40832,8 @@
     "max_level": 5,
     "path": "skill/swordman/reflectguardexp.skl",
     "required_level": 55,
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "reflectguardexp",
+    "state": "mapped",
     "type": "[passive]"
    },
    {
@@ -41927,6 +41920,7 @@
  },
  "schema": "dnf_60_target_manifest/1",
  "scope": {
+  "above_level_60": "retained_future_extension",
   "goal": "offline_single_player_level_60_pve_parity",
   "level_cap": 60,
   "network": "excluded",
@@ -42062,7 +42056,7 @@
     "thief": 108
    },
    "legacy_runtime_without_path": 1,
-   "mapped_not_runtime": 61,
+   "mapped_not_runtime": 132,
    "orphan_runtime_paths": [],
    "post_60": 203,
    "runtime": 16,
