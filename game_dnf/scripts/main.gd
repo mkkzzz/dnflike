@@ -20,7 +20,7 @@ const Numbers = preload("res://stats/api/numbers.gd")
 const ActorNumbers = preload("res://stats/api/actor_numbers.gd")
 var numeric_player
 var skill_levels: Dictionary = {}
-var skill_slots: Array = ["", "", "", "", "", ""]
+var skill_slots: Array = ["", "", "", "", "", "", "", "", "", "", "", ""]
 var numeric_monster_level := 1
 var numeric_difficulty := "normal"
 var last_damage: Dictionary = {}
@@ -336,16 +336,19 @@ func emit_player_defeated() -> void:
 	var event: Dictionary=bus.emit("combat.player_defeated",flow_payload())
 	last_defeat_id=int(event.get("event_id",0))
 
-## Keys owned by the flow side when externally managed: restart, pause/menu, character and debug switches.
-const FLOW_OWNED_KEYS := [KEY_R,KEY_TAB,KEY_1,KEY_2,KEY_3,KEY_ESCAPE,KEY_F2,KEY_F3]
-const SKILL_SLOT_KEYS := [KEY_A,KEY_S,KEY_D,KEY_F,KEY_G,KEY_H]
+## Keys owned by the flow side when externally managed: pause/menu, character and debug switches.
+const FLOW_OWNED_KEYS := [KEY_TAB,KEY_1,KEY_2,KEY_3,KEY_ESCAPE,KEY_F2,KEY_F3]
+const SkillSlots = preload("res://stats/api/skill_slots.gd")
+const SKILL_SLOT_KEYS := SkillSlots.KEYS
 
 func skill_slot_index(code: int) -> int:
 	return SKILL_SLOT_KEYS.find(code)
 
 func configure_skill_slots(slots: Array) -> void:
-	skill_slots = ["", "", "", "", "", ""]
-	for index in mini(6,slots.size()):
+	skill_slots = []
+	skill_slots.resize(SkillSlots.COUNT)
+	skill_slots.fill("")
+	for index in mini(SkillSlots.COUNT,slots.size()):
 		var id := String(slots[index])
 		if id != "" and move_def(id).size() > 0 and (skill_levels.is_empty() or int(skill_levels.get(id,0)) > 0):
 			skill_slots[index] = id
@@ -375,6 +378,7 @@ func _input(event: InputEvent) -> void:
 		KEY_ESCAPE:paused = not paused
 		KEY_R:
 			if finished and not external_mode:restart()
+			elif not paused and not finished:requests.append(code)
 		KEY_F2:
 			show_collision = not show_collision
 			view.set_debug_collision(show_collision)
@@ -539,7 +543,7 @@ func step_game(ms: float) -> void:
 			var offset := Vector2(player["pos"]) - Vector2(door["pos"])
 			var side := String(door.get("side",""))
 			var inside := absf(offset.y) < 28.0 and absf(offset.x) < 48.0 if side in ["up","down"] else absf(offset.x) < 28.0 and absf(offset.y) < 48.0
-			if inside and (move.length()>0 or offset.length()<14 or taps.get(KEY_E,false)):
+			if inside and (move.length()>0 or offset.length()<14 or taps.get(KEY_ENTER,false)):
 				load_room(int(door["to"]),side)
 				break
 

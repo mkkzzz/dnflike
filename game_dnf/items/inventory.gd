@@ -158,7 +158,7 @@ static func move_inside(p: Dictionary, source: Dictionary, target: Dictionary) -
 	var from: String=source.get("place","");var to: String=target.get("place","")
 	var index:=int(target.get("index",-1));var old:=int(source.get("index",-1))
 	var id: String=source.get("id","")
-	if from=="skill" and to=="skill" and old in range(6) and index in range(6) and p["skill_slots"][old]==id:
+	if from=="skill" and to=="skill" and old in range(p["skill_slots"].size()) and index in range(p["skill_slots"].size()) and p["skill_slots"][old]==id:
 		p["skill_slots"][old]=p["skill_slots"][index];p["skill_slots"][index]=id;return true
 	if not Catalog.ITEMS.has(id):return false
 	var uid: String=source.get("uid","")

@@ -34,7 +34,8 @@ var selected_dungeon := "lorien"
 var dungeon_page := 0
 var transitioning := false
 var number_windows
-const SKILL_KEYS := [KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H]
+const SkillSlots = preload("res://stats/api/skill_slots.gd")
+const SKILL_KEYS := SkillSlots.KEYS
 var session = Session.new()
 var store = Store.new()
 var town
@@ -165,11 +166,12 @@ func build_hud() -> void:
 	# Source ui/hud/hud.ui controls are relative to the bottom board.
 	skin.sprite_button(hud, "hud", [5, 6, 7], Vector2(273, 560), func(): hud_action("numbers"), "角色属性 O")
 	skin.sprite_button(hud, "hud", [8, 9, 10], Vector2(299, 560), func(): hud_action("inventory"), "背包 I")
-	skin.sprite_button(hud, "hud", [11, 12, 13], Vector2(325, 560), func(): hud_action("quest"), "任务 Q")
+	skin.sprite_button(hud, "hud", [11, 12, 13], Vector2(325, 560), func(): hud_action("quest"), "任务 J")
 	skin.sprite_button(hud, "hud", [68, 69, 70], Vector2(451, 560), func(): hud_action("menu"), "菜单 Esc")
 	for i in 6:
 		skin.label(hud, str(i + 1), Vector2(87 + i * 30, 574), 9).z_index = 2
-		var hotkey: Label = skin.label(hud, ["A", "S", "D", "F", "G", "H"][i], Vector2(540 + i * 30, 574), 9)
+	for i in SkillSlots.COUNT:
+		var hotkey: Label = skin.label(hud, SkillSlots.LABELS[i], SkillSlots.position(i) + Vector2(2, 16), 9)
 		hotkey.set_meta("skill_hotkey", true)
 		hotkey.z_index = 2
 	build_hotbars()
@@ -315,7 +317,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_K:
 			number_windows.tab = 1
 			show_overlay("numbers")
-		KEY_Q:hud_action("quest")
+		KEY_J:hud_action("quest")
 		KEY_D:
 			if session.state == "town":hud_action("dungeon")
 		KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6:
@@ -777,8 +779,15 @@ func build_hotbars() -> void:
 		var item_counter: Label=skin.label(cell,"",Vector2(2,3),10,Color.WHITE);item_counter.name="item_cooldown";item_counter.z_index=3
 		cell.name = "hud_potion" if i == 0 else "hud_item_" + str(i)
 		quick_views.append(cell)
+	# Repeat the actual native HUD's six-cell row above ASDFGH, without scaling it.
+	var upper_row := hud.get_node_or_null("skill_upper_row")
+	if upper_row == null:
+		upper_row = skin.image_region(hud, skin.texture("hud"), Rect2(534, 46, 184, 32), Vector2(534, 522))
+		upper_row.name = "skill_upper_row"
+	for i in SkillSlots.COUNT:
 		var id: String = session.profile["skill_slots"][i]
-		var skill = make_slot(hud, {"place":"skill", "index":i, "id":id}, Vector2(538 + i * 30, 558))
+		var skill = make_slot(hud, {"place":"skill", "index":i, "id":id}, SkillSlots.position(i))
+		skill.name = "hud_skill_slot_%d" % i
 		var counter: Label = skin.label(hud, "", skill.position + Vector2(6, 5), 12)
 		if id != "":skill_views[id] = {"view":skill, "counter":counter}
 		else:skill_views["empty_" + str(i)] = {"view":skill, "counter":counter}

@@ -72,7 +72,7 @@ PARTS = {
     'button_wide_hot': (31, '宽按钮高亮 180×30'),
     'plus': (22, '加号 19×19'),
     'minus': (23, '减号 19×19'),
-    'sp_icon': (15, 'SP 图标 19×19'),
+    'sp_icon': (15, 'SP 数值底条 181×18'),
     'arrow_down': (33, '下拉箭头 17×10'),
     'icon_frame': (45, '技能图标框 107×40'),
     'icon_big': (57, '说明图标框 74×48'),
@@ -80,8 +80,8 @@ PARTS = {
     'node_slot': (120, '技能树节点底框 38×38'),
     'node_selected': (147, '技能树节点选中蓝框 38×38'),
     'node_locked': (32, '技能树节点不可用暗红罩 28×28'),
-    'scroll_track': (123, '技能树竖向滚动条轨 36×270'),
-    'scroll_grabber': (124, '技能树竖向滚动条滑块 36×270'),
+    'scroll_track': (123, '旧导出保留；不是 SP 页 stick-vscroll 的已证实引用，不用于树'),
+    'scroll_grabber': (124, '旧导出保留；不是 SP 页 stick-vscroll 的已证实引用，不用于树'),
     'detail_separator': (107, '说明板分隔条 179×37'),
     'tree_footer': (134, '技能窗底栏 800×32'),
 }
@@ -245,11 +245,11 @@ def build_detail_board(src: B.Source) -> Image.Image:
         frames[index] = image.convert('RGBA')
     width, height = 199, 438
     board = Image.new('RGBA', (width, height), (0, 0, 0, 0))
-    board.paste(frames[217].resize((width - 24, height - 24), Image.Resampling.NEAREST), (12, 12))
+    board.paste(frames[217].resize((width - 24, height - 25), Image.Resampling.NEAREST), (12, 13))
     for x in range(12, width - 12, 2):
         board.paste(frames[214], (x, 0))
         board.paste(frames[220], (x, height - 12))
-    for y in range(12, height - 12, 2):
+    for y in range(13, height - 12, 2):
         board.paste(frames[216], (0, y))
         board.paste(frames[218], (width - 12, y))
     for frame, at in [
@@ -260,6 +260,80 @@ def build_detail_board(src: B.Source) -> Image.Image:
     ]:
         board.paste(frames[frame], at)
     return board
+
+
+def ui_control(src: B.Source, path: str, control_id: str) -> list:
+    """Read a specific source control instead of guessing from IMG contact sheets."""
+    script = src.lib.script(path)
+    if script is None:
+        raise FileNotFoundError(path)
+
+    def walk(nodes):
+        for node in nodes:
+            values = node.get('values', [])
+            if node['tag'] == '[ui controls]' and len(values) > 1 and values[1] == control_id:
+                return values
+            found = walk(node.get('children', []))
+            if found:
+                return found
+        return None
+
+    values = walk(script['fields'])
+    if values is None:
+        raise ValueError('Missing UI control: %s #%s' % (path, control_id))
+    return values
+
+
+def build_ui_revision(src: B.Source, parts: dict) -> dict:
+    """Export immutable v2 parts with the exact owning UI references attached."""
+    output = OUT / 'v2'
+    output.mkdir(parents=True, exist_ok=True)
+    references = {
+        'dim': (SKILL_WINDOW_UI, '10'),
+        'sp_icon': (SKILL_WINDOW_UI, '24'),
+        'tree_footer': (SKILL_WINDOW_UI, '8999'),
+        'title': (SKILL_EXPLAIN_UI, '22'),
+        'detail_art': (SKILL_EXPLAIN_UI, '23'),
+        'detail_separator': (SKILL_EXPLAIN_UI, '6000'),
+    }
+    for key, (path, control_id) in references.items():
+        values = ui_control(src, path, control_id)
+        if values[0] != '[image]' or values[5].lower() != PANEL_BANK.lower():
+            raise ValueError('Unexpected source image control: %s #%s' % (path, control_id))
+        frame = int(values[7])
+        image, meta = src.frame(PANEL_BANK, frame)
+        parts[key] = {
+            'file': parts[key]['file'], 'size': list(image.size), 'frame': frame,
+            'note': PARTS[key][1], 'offset': [meta['x'], meta['y']],
+            'ui_reference': {'path': path, 'control': control_id, 'position': values[2:4]},
+        }
+    values = ui_control(src, SKILL_WINDOW_UI, '20')
+    if values[0] != '[board image]' or values[7:9] != [199, 438] or values[9:18] != list(range(213, 222)):
+        raise ValueError('SkillShopWindow detail board reference changed')
+    board = build_detail_board(src)
+    board.save(output / 'detail_board.png')
+    parts['detail_board'] = {
+        'file': 'v2/detail_board.png', 'size': list(board.size),
+        'frames': values[9:18], 'note': '原版九宫格：顶边高13，底边高12，左右宽12',
+        'ui_reference': {'path': SKILL_WINDOW_UI, 'control': '20', 'position': values[2:4]},
+    }
+    body = ui_control(src, SKILL_EXPLAIN_UI, '4013')
+    return {
+        'evidence': 'UI references parsed from this archived PVF; runtime placement adapters are explicit',
+        'detail_body': {'position': body[2:4], 'size': body[6:8], 'line_height': 14,
+                        'ui_path': SKILL_EXPLAIN_UI, 'control': '4013'},
+        'tree_inset': [24, 8],
+        'popup': {'position': [14, 12], 'size': [772, 490],
+                  'tree_position': [10, 88], 'tree_size': [540, 342],
+                  'detail_position': [562, 35], 'detail_size': [199, 402],
+                  'body_size': [179, 214]},
+        'adapters': ['tree inset prevents clipping the x=0 slot border',
+                     'Chinese system font and scrollable full skill description',
+                     'existing common scrollbar; Skillshop frames 123/124 are not the SP stick-vscroll',
+                     'user-requested large popup leaves the two live HUD rows visible; no in-panel shortcut editor',
+                     'crop the UI-referenced frame 14 at native pixel size; retain the existing native window border',
+                     'Chinese footer commands; ASDFGH legacy indices plus QWERTY in the live HUD'],
+    }
 
 
 def tree_source_info(src: B.Source) -> dict:
@@ -299,14 +373,7 @@ def main() -> int:
         image, meta = src.frame(PANEL_BANK, frame)
         image.save(OUT / 'parts' / (key + '.png'))
         parts[key] = {'file': 'parts/%s.png' % key, 'size': list(image.size), 'frame': frame, 'note': note}
-    detail_board = build_detail_board(src)
-    detail_board.save(OUT / 'parts/detail_board.png')
-    parts['detail_board'] = {
-        'file': 'parts/detail_board.png',
-        'size': list(detail_board.size),
-        'frames': list(range(213, 222)),
-        'note': 'SkillShopExplain 199×438 说明板，WindowCommon 原版九宫格拼合',
-    }
+    ui_layout = build_ui_revision(src, parts)
 
     skills = []
     missing_icon = []
@@ -385,6 +452,7 @@ def main() -> int:
                    'tree_sources': tree_source_info(src),
                    'exporter': 'tools/build_dnf_skill_panel.py'},
         'parts': parts,
+        'ui_layout': ui_layout,
         'icons': len(skills) - len(missing_icon),
         'missing_icons': missing_icon,
         'tree_counts': {branch['source_branch']: len(branch['nodes']) for branch in trees['sp']},

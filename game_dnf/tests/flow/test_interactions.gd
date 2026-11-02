@@ -205,7 +205,7 @@ func run() -> void:
 	var legacy: Dictionary = game.session.serialize()
 	legacy["profile"].erase("item_state")
 	for key in ["bag_layout", "quick_items", "skill_slots", "difficulty"]:legacy["profile"].erase(key)
-	var expected_skill_slots := ["", "", "", "", "", ""]
+	var expected_skill_slots := ["", "", "", "", "", "", "", "", "", "", "", ""]
 	var cursor := 0
 	for skill_id: String in game.session.Layout.DEFAULT_SKILLS:
 		if int(legacy["profile"]["skills"].get(skill_id,0)) > 0 and cursor < 6:

@@ -377,6 +377,16 @@ func run_skill_system() -> void:
 	await tap(KEY_D)
 	await ticks(28)
 	check(api.p("action")=="charge_crash" and int(api.p("stage"))==1,"charge crash advances from dash to its original rising attack")
+	for code in [KEY_Q,KEY_W,KEY_E,KEY_R,KEY_T,KEY_Y]:
+		api.restart()
+		var slots:Array=["","","","","","","","","","","",""]
+		slots[6+[KEY_Q,KEY_W,KEY_E,KEY_R,KEY_T,KEY_Y].find(code)]="hardattack"
+		api.set_skill_slots(slots)
+		api.set_god(true)
+		api.set_p("pos",Vector2(125,250))
+		await tap(code)
+		await ticks(2)
+		check(api.p("action")=="hardattack","upper-row %s dispatches its configured skill" % OS.get_keycode_string(code))
 
 ## F3~F5 kernel behaviour: box judgement, ATK reactions, local hitstop, cues, objects, AI.
 func run_kernel() -> void:

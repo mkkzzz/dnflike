@@ -18,8 +18,10 @@ func run() -> void:
 	var content:Control=game.modal.find_child("skill_tree_content",true,false)
 	var base_upper:Control=game.modal.find_child("skill_node_46",true,false)
 	var detail:Control=game.modal.find_child("skill_detail",true,false)
-	host.check(viewport != null and viewport.size==Vector2(580,400),"skill panel uses the original 580x400 scrollable tree viewport")
-	host.check(detail != null and detail.position==Vector2(598,35) and detail.size==Vector2(199,438),"skill detail keeps the original 199x438 right board at x598")
+	var popup:Control=viewport.get_parent()
+	host.check(viewport != null and viewport.size==Vector2(540,342),"large skill popup keeps a scrollable source-coordinate tree")
+	host.check(popup.get_global_rect().end.y < game.hud.find_child("hud_skill_slot_6",true,false).get_global_rect().position.y,"large skill popup leaves both live HUD shortcut rows uncovered")
+	host.check(detail != null and detail.position==Vector2(562,35) and detail.size==Vector2(199,402),"popup keeps native-width explanation board with enough space above the HUD")
 	host.check(base_upper != null and base_upper.get_meta("tree_x",-1)==235 and base_upper.get_meta("tree_y",-1)==0,"skill node uses the measured Swordman_Sp.co coordinate")
 	host.check(skill_panel.tree_nodes("none").size()==17 and skill_panel.tree_edges("weaponmaster").size()==4,"all source job branches and prerequisite edges are loaded")
 	var original_job:String=game.session.profile["growtype"]
@@ -30,6 +32,26 @@ func run() -> void:
 	viewport=game.modal.find_child("skill_tree_viewport",true,false)
 	content=game.modal.find_child("skill_tree_content",true,false)
 	host.check(edge != null and edge.points.size()==2,"weaponmaster draws the original guard-to-autoguard prerequisite edge")
+	var left_node:Control=game.modal.find_child("skill_node_94",true,false)
+	host.check(left_node != null and left_node.position.x >= 0 and left_node.position.y >= 0,"leftmost and first-row skill borders stay inside the clipped viewport")
+	var detail_icon:TextureRect=game.modal.find_child("skill_detail_icon",true,false)
+	host.check(detail_icon != null and detail_icon.size==Vector2(28,28) and detail_icon.scale==Vector2.ONE,"detail icon retains its native pixels without enlargement")
+	var read_only:Control=game.modal.find_child("skill_node_17",true,false)
+	var read_only_frame:TextureRect=read_only.get_child(0)
+	var original_tint:=read_only_frame.modulate
+	read_only.mouse_entered.emit()
+	read_only.mouse_exited.emit()
+	host.check(read_only_frame.modulate==original_tint,"hover restores the read-only node tint instead of making it look available")
+	skill_panel.selected="illusionslash"
+	game.show_overlay("numbers")
+	await host.ticks(3)
+	var body:RichTextLabel=game.modal.find_child("skill_detail_body",true,false)
+	host.check(body != null and body.position==Vector2(9,176) and body.size==Vector2(179,214) and body.scroll_active,"popup explanation retains source origin and scrolls within the adapted height")
+	body.get_v_scroll_bar().value=1000
+	host.check(body.get_v_scroll_bar().value>0,"a long original skill explanation can scroll beyond its first page")
+	host.check(game.modal.find_child("skill_panel_slot_5",true,false)==null and game.hud.find_child("hud_skill_slot_11",true,false)!=null,"popup has no duplicate shortcut controls and live HUD exposes twelve drop targets")
+	viewport=game.modal.find_child("skill_tree_viewport",true,false)
+	content=game.modal.find_child("skill_tree_content",true,false)
 	var wheel:=InputEventMouseButton.new()
 	wheel.position=viewport.get_global_transform_with_canvas()*Vector2(280,200)
 	wheel.button_index=MOUSE_BUTTON_WHEEL_DOWN
@@ -38,6 +60,15 @@ func run() -> void:
 	await host.ticks(3)
 	var scroll:VScrollBar=game.modal.find_child("skill_tree_scroll",true,false)
 	host.check(scroll != null and scroll.value>0 and content.position.y==-scroll.value,"mouse wheel scrolls the original-height skill tree and its content together")
+	skill_panel.tree_scroll=0
+	game.show_overlay("numbers")
+	await host.ticks(3)
+	await drag_skill(game.modal.find_child("skill_node_5",true,false),game.hud.find_child("hud_skill_slot_6",true,false))
+	host.check(game.session.profile["skill_slots"][6]=="hardattack" and game.session.profile["skill_slots"].count("hardattack")==1,"tree drag reaches the uncovered Q slot and persists one learned binding")
+	await drag_skill(game.hud.find_child("hud_skill_slot_6",true,false),game.hud.find_child("hud_skill_slot_11",true,false))
+	host.check(game.session.profile["skill_slots"][11]=="hardattack" and game.session.profile["skill_slots"][6]=="","live upper shortcut row moves from Q to Y without duplication")
+	await drag_skill(game.hud.find_child("hud_skill_slot_11",true,false),game.hud.find_child("hud_skill_slot_5",true,false))
+	host.check(game.session.profile["skill_slots"][5]=="hardattack" and game.session.profile["skill_slots"][11]=="","shortcut can move between the QWERTY and ASDFGH rows while the popup is open")
 	game.session.profile["growtype"]=original_job
 	skill_panel.selected="upperslash"
 	game.show_overlay("numbers")
@@ -66,6 +97,16 @@ func run() -> void:
 	if not game.combat.is_running():return
 	var api = RuntimeAPI.new(game.battle)
 	api.set_god(true)
+	for index in range(6,12):
+		host.check(game.act("slots.move",{"source":{"place":"skill_catalog","id":"hardattack"},"target":{"place":"skill","index":index}}),"live battle accepts an upper-row binding")
+		api.set_p("state","idle")
+		api.set_p("action","")
+		api.set_p("cooldowns",{})
+		api.set_p("stuck_ms",0.0)
+		host.key(game.SKILL_KEYS[index],true)
+		await host.ticks(2)
+		host.key(game.SKILL_KEYS[index],false)
+		host.check(api.p("action")=="hardattack" and game.overlay=="","live %s casts its bound skill without opening another window" % game.SkillSlots.LABELS[index])
 	game.set_debug_open(true)
 	var old: Dictionary = game.combat.read_view()
 	host.check(not old["numbers"].is_empty() and float(old["numbers"]["physical_defense"])==float(game.session.stats()["numbers"]["physical_defense"]),"combat consumes full profile including equipment defense")
@@ -148,3 +189,38 @@ func run() -> void:
 	var snapshot: Dictionary = game.session.serialize()
 	var restored = game.Session.new()
 	host.check(restored.restore(JSON.parse_string(JSON.stringify(snapshot))) and restored.profile["skills"]["draw"]==2,"new progression and equipment survive real flow save")
+
+func drag_skill(source: Control, target: Control) -> void:
+	var viewport:Viewport=game.get_viewport()
+	var start:=source.get_global_transform_with_canvas()*(source.size/2)
+	var finish:=target.get_global_transform_with_canvas()*(target.size/2)
+	var motion:=InputEventMouseMotion.new()
+	motion.position=start
+	viewport.push_input(motion,true)
+	await host.ticks(2)
+	var button:=InputEventMouseButton.new()
+	button.position=start
+	button.button_index=MOUSE_BUTTON_LEFT
+	button.button_mask=MOUSE_BUTTON_MASK_LEFT
+	button.pressed=true
+	viewport.push_input(button,true)
+	await host.ticks(2)
+	motion=motion.duplicate()
+	motion.position=start+Vector2(22,0)
+	motion.relative=Vector2(22,0)
+	motion.button_mask=MOUSE_BUTTON_MASK_LEFT
+	viewport.push_input(motion,true)
+	await host.ticks(2)
+	host.check(viewport.gui_is_dragging(),"viewport mouse motion starts the skill drag")
+	motion=motion.duplicate()
+	motion.position=finish
+	motion.relative=finish-start-Vector2(22,0)
+	viewport.push_input(motion,true)
+	await host.ticks(2)
+	button=button.duplicate()
+	button.position=finish
+	button.button_mask=0
+	button.pressed=false
+	viewport.push_input(button,true)
+	await host.ticks(4)
+	host.check(not viewport.gui_is_dragging(),"viewport mouse release completes the skill drag")

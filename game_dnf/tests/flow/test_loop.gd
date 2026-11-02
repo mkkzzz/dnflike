@@ -259,7 +259,7 @@ func run() -> void:
 		if label.get_meta("skill_hotkey", false):
 			hotkeys.append(label.text)
 			check(label.z_index > 0, "skill key stays above its icon: " + label.text)
-	check(hotkeys == ["A", "S", "D", "F", "G", "H"], "HUD shows ASDFGH without basic ZXC actions")
+	check(hotkeys == game.SkillSlots.LABELS, "HUD shows ASDFGH and QWERTY without basic ZXC actions")
 	check(not game.skill_views.has("upper"), "basic upper attack is absent from skill slots")
 	check(game.get_window().content_scale_mode == Window.CONTENT_SCALE_MODE_VIEWPORT and game.get_window().content_scale_size == game.display_settings.OUTPUT, "fixed output keeps the original layout transform")
 	var percentages := false
@@ -269,7 +269,8 @@ func run() -> void:
 	check(game.hud.get_node("hud_potion").get_rect() == Rect2(85, 558, 28, 28), "HUD item icon fits the native cavity")
 	for id: String in game.skill_views:
 		var view: Control = game.skill_views[id]["view"]
-		check(view.size == Vector2(28, 28) and view.position.y == 558 and int(view.position.x - 538) % 30 == 0, "HUD skill stays inside native rim: " + id)
+		var index:int=view.cell["index"]
+		check(view.size == Vector2(28, 28) and view.position == game.SkillSlots.position(index), "HUD skill stays inside its native row rim: " + id)
 	await frame("01_town")
 	if capture:
 		var shot: Image = get_viewport().get_texture().get_image()

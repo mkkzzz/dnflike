@@ -4,6 +4,7 @@ const BAG_CAPACITY := 48
 const KINDS := ["weapon", "consumable", "material", "profession", "quest"]
 const DEFAULT_SKILLS := ["hardattack", "draw", "triple", "rage_slash", "buff", "guard", "moonlight", "charge_crash"]
 const Inventory = preload("res://items/inventory.gd")
+const SkillSlots = preload("res://stats/api/skill_slots.gd")
 static func normalize(profile: Dictionary, catalog: Dictionary) -> void:
 	if not profile.has("bag_layout"):profile["bag_layout"] = {}
 	if not profile.has("quick_items"):profile["quick_items"] = ["potion", "", "", "", "", ""]
@@ -15,8 +16,12 @@ static func normalize(profile: Dictionary, catalog: Dictionary) -> void:
 			if int(learned.get(id,0)) > 0 and cursor < 6:
 				profile["skill_slots"][cursor] = id
 				cursor += 1
+	var slots: Array = profile["skill_slots"]
+	slots.resize(SkillSlots.COUNT)
+	for index in slots.size():
+		if not slots[index] is String:slots[index] = ""
 	var skill_seen := {}
-	for index in 6:
+	for index in SkillSlots.COUNT:
 		var id := String(profile["skill_slots"][index])
 		if id != "" and (not id in DEFAULT_SKILLS or int(profile.get("skills",{}).get(id,0)) < 1 or skill_seen.has(id)):
 			profile["skill_slots"][index] = ""
@@ -53,7 +58,9 @@ static func valid(p: Dictionary, catalog: Dictionary) -> bool:
 				if not id is String or (id != "" and (not catalog.has(id) or catalog[id]["kind"] != key)):return false
 	for key in ["quick_items", "skill_slots"]:
 		if not p.has(key):continue
-		if not p[key] is Array or p[key].size() != 6:return false
+		if not p[key] is Array:return false
+		if key == "quick_items" and p[key].size() != 6:return false
+		if key == "skill_slots" and p[key].size() not in [6, SkillSlots.COUNT]:return false
 		var seen := {}
 		for id in p[key]:
 			if not id is String:return false
@@ -72,18 +79,18 @@ static func move(p: Dictionary, catalog: Dictionary, source: Dictionary, target:
 	# 技能面板拖入：只接受可入槽的主动技能，且必须已学会；同技能不重复占槽。
 	# 放在 item_state 分支之前——它只改 skill_slots，与物品系统无关。
 	if from == "skill_catalog":
-		if to != "skill" or index < 0 or index >= 6:return false
+		if to != "skill" or index < 0 or index >= SkillSlots.COUNT:return false
 		if not id in DEFAULT_SKILLS:return false
 		if int(p.get("skills", {}).get(id, 0)) < 1:return false
-		for i in 6:
+		for i in SkillSlots.COUNT:
 			if p["skill_slots"][i] == id:p["skill_slots"][i] = ""
 		p["skill_slots"][index] = id
 		return true
 	if p.has("item_state"):return Inventory.move(p,source,target)
 	if from not in ["bag", "quick", "equipment", "skill"]:return false
-	if from == "skill" and to == "skill" and index >= 0 and index < 6:
+	if from == "skill" and to == "skill" and index >= 0 and index < SkillSlots.COUNT:
 		var old := int(source.get("index", -1))
-		if old < 0 or old >= 6 or p["skill_slots"][old] != id:return false
+		if old < 0 or old >= SkillSlots.COUNT or p["skill_slots"][old] != id:return false
 		p["skill_slots"][old] = p["skill_slots"][index]
 		p["skill_slots"][index] = id
 		return true

@@ -26,7 +26,19 @@
     600
    ],
    "frame": 14,
-   "note": "全屏暗化背景 800×600"
+   "note": "全屏暗化背景 800×600",
+   "offset": [
+    0,
+    0
+   ],
+   "ui_reference": {
+    "path": "ui/skill/skillshopwindow.ui",
+    "control": "10",
+    "position": [
+     0,
+     0
+    ]
+   }
   },
   "title": {
    "file": "parts/title.png",
@@ -35,7 +47,19 @@
     30
    ],
    "frame": 3,
-   "note": "标题条 237×30"
+   "note": "标题条 237×30",
+   "offset": [
+    0,
+    0
+   ],
+   "ui_reference": {
+    "path": "ui/skill/skillshopexplain.ui",
+    "control": "22",
+    "position": [
+     -20,
+     3
+    ]
+   }
   },
   "cell": {
    "file": "parts/cell.png",
@@ -134,7 +158,19 @@
     18
    ],
    "frame": 15,
-   "note": "SP 图标 19×19"
+   "note": "SP 数值底条 181×18",
+   "offset": [
+    -339,
+    -8
+   ],
+   "ui_reference": {
+    "path": "ui/skill/skillshopwindow.ui",
+    "control": "24",
+    "position": [
+     342,
+     41
+    ]
+   }
   },
   "arrow_down": {
    "file": "parts/arrow_down.png",
@@ -170,7 +206,19 @@
     100
    ],
    "frame": 4,
-   "note": "说明板技能图框 166×100"
+   "note": "说明板技能图框 166×100",
+   "offset": [
+    0,
+    0
+   ],
+   "ui_reference": {
+    "path": "ui/skill/skillshopexplain.ui",
+    "control": "23",
+    "position": [
+     19,
+     33
+    ]
+   }
   },
   "node_slot": {
    "file": "parts/node_slot.png",
@@ -206,7 +254,7 @@
     270
    ],
    "frame": 123,
-   "note": "技能树竖向滚动条轨 36×270"
+   "note": "旧导出保留；不是 SP 页 stick-vscroll 的已证实引用，不用于树"
   },
   "scroll_grabber": {
    "file": "parts/scroll_grabber.png",
@@ -215,7 +263,7 @@
     270
    ],
    "frame": 124,
-   "note": "技能树竖向滚动条滑块 36×270"
+   "note": "旧导出保留；不是 SP 页 stick-vscroll 的已证实引用，不用于树"
   },
   "detail_separator": {
    "file": "parts/detail_separator.png",
@@ -224,7 +272,19 @@
     37
    ],
    "frame": 107,
-   "note": "说明板分隔条 179×37"
+   "note": "说明板分隔条 179×37",
+   "offset": [
+    0,
+    0
+   ],
+   "ui_reference": {
+    "path": "ui/skill/skillshopexplain.ui",
+    "control": "6000",
+    "position": [
+     8,
+     134
+    ]
+   }
   },
   "tree_footer": {
    "file": "parts/tree_footer.png",
@@ -233,10 +293,22 @@
     32
    ],
    "frame": 134,
-   "note": "技能窗底栏 800×32"
+   "note": "技能窗底栏 800×32",
+   "offset": [
+    0,
+    0
+   ],
+   "ui_reference": {
+    "path": "ui/skill/skillshopwindow.ui",
+    "control": "8999",
+    "position": [
+     0,
+     568
+    ]
+   }
   },
   "detail_board": {
-   "file": "parts/detail_board.png",
+   "file": "v2/detail_board.png",
    "size": [
     199,
     438
@@ -252,8 +324,74 @@
     220,
     221
    ],
-   "note": "SkillShopExplain 199×438 说明板，WindowCommon 原版九宫格拼合"
+   "note": "原版九宫格：顶边高13，底边高12，左右宽12",
+   "ui_reference": {
+    "path": "ui/skill/skillshopwindow.ui",
+    "control": "20",
+    "position": [
+     598,
+     35
+    ]
+   }
   }
+ },
+ "ui_layout": {
+  "evidence": "UI references parsed from this archived PVF; runtime placement adapters are explicit",
+  "detail_body": {
+   "position": [
+    9,
+    176
+   ],
+   "size": [
+    179,
+    260
+   ],
+   "line_height": 14,
+   "ui_path": "ui/skill/skillshopexplain.ui",
+   "control": "4013"
+  },
+  "tree_inset": [
+   24,
+   8
+  ],
+  "popup": {
+   "position": [
+    14,
+    12
+   ],
+   "size": [
+    772,
+    490
+   ],
+   "tree_position": [
+    10,
+    88
+   ],
+   "tree_size": [
+    540,
+    342
+   ],
+   "detail_position": [
+    562,
+    35
+   ],
+   "detail_size": [
+    199,
+    402
+   ],
+   "body_size": [
+    179,
+    214
+   ]
+  },
+  "adapters": [
+   "tree inset prevents clipping the x=0 slot border",
+   "Chinese system font and scrollable full skill description",
+   "existing common scrollbar; Skillshop frames 123/124 are not the SP stick-vscroll",
+   "user-requested large popup leaves the two live HUD rows visible; no in-panel shortcut editor",
+   "crop the UI-referenced frame 14 at native pixel size; retain the existing native window border",
+   "Chinese footer commands; ASDFGH legacy indices plus QWERTY in the live HUD"
+  ]
  },
  "icons": 174,
  "missing_icons": [

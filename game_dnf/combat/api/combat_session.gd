@@ -14,6 +14,7 @@ signal player_defeated(event: Dictionary)
 
 const SCENE := "res://scenes/main.tscn"
 const FLOW_EVENTS := ["combat.monster_defeated", "combat.room_combat_finished", "combat.player_defeated"]
+const SkillSlots = preload("res://stats/api/skill_slots.gd")
 
 var game: Node
 
@@ -96,8 +97,8 @@ func submit_key(code: int, pressed: bool, echo := false) -> void:
 ## The flow owns drag-and-drop slot order; submit by slot rather than translating
 ## the skill back to its historical canonical key.
 func submit_skill(index: int, pressed: bool, echo := false) -> void:
-	if index < 0 or index >= 6:return
-	submit_key([KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H][index], pressed, echo)
+	if index < 0 or index >= SkillSlots.COUNT:return
+	submit_key(SkillSlots.KEYS[index], pressed, echo)
 
 func configure_trial(movement_scale: float, difficulty: String) -> void:
 	if not _alive():return

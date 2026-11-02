@@ -4,8 +4,11 @@ extends RefCounted
 const Numbers = preload("res://stats/api/numbers.gd")
 const CATALOG := "res://data/skill_catalog.json"
 const MANIFEST := "res://assets_local/skill_panel/manifest.json"
-const TREE_ORIGIN := Vector2(3, 98)
-const TREE_SIZE := Vector2(580, 400)
+const WINDOW_ORIGIN := Vector2(14, 12)
+const WINDOW_SIZE := Vector2(772, 490)
+const TREE_ORIGIN := Vector2(10, 88)
+const TREE_SIZE := Vector2(540, 342)
+const TREE_INSET := Vector2(24, 8)
 const NODE_SLOT := 38
 const NODE_CENTER := 19
 const JOB_NAMES := {
@@ -128,18 +131,19 @@ func show_window(parent: Control) -> void:
 
 	var root := Control.new()
 	root.name = "number_window"
-	root.position = Vector2.ZERO
-	root.size = Vector2(800, 600)
+	root.position = WINDOW_ORIGIN
+	root.size = WINDOW_SIZE
+	root.clip_contents = true
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	parent.add_child(root)
-	skin.image(root, _part("dim"), Vector2.ZERO)
-	skin.image(root, _part("tree_footer"), Vector2(0, 568))
+	skin.panel(root, Rect2(Vector2.ZERO, WINDOW_SIZE))
+	skin.image_region(root, _part("dim"), Rect2(8, 8, WINDOW_SIZE.x - 16, WINDOW_SIZE.y - 16), Vector2(8, 8))
 	_navigation(root)
 	_header(root)
 	_tree(root, branch)
 	_detail(root)
 	_job_advancement(root)
-	skin.close_button(root, Vector2(764, 8), func(): game.show_overlay(""))
+	skin.close_button(root, Vector2(748, 8), func(): game.show_overlay(""))
 
 func _navigation(root: Control) -> void:
 	var skin = game.skin
@@ -150,7 +154,7 @@ func _navigation(root: Control) -> void:
 			func(): game.number_windows.tab = tab; game.show_overlay("numbers"), false)
 		button.size = Vector2(56, 23)
 		button.disabled = tab == 1
-	skin.label(root, "技能树", Vector2(218, 13), 16, Color("f0d18a"))
+	skin.label(root, "技能学习", Vector2(218, 11), 14, Color("f0d18a"))
 
 func _header(root: Control) -> void:
 	var skin = game.skin
@@ -159,20 +163,22 @@ func _header(root: Control) -> void:
 	var sp := Numbers.Skills.available(profile, Numbers.config())
 	var sp_bar := _part("sp_icon")
 	if sp_bar != null:
-		skin.image(root, sp_bar, Vector2(342, 12))
-	skin.label(root, str(sp), Vector2(404, 11), 13, Color("f0d18a"))
+		var bar: TextureRect = skin.image(root, sp_bar, Vector2(342, 41))
+		bar.name = "skill_sp_bar"
+	var sp_label: Label = skin.label(root, str(sp), Vector2(364, 43), 12, Color("f0d18a"))
+	sp_label.size = Vector2(44, 16)
+	sp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	skin.label(root, "%s  Lv.%d" % [JOB_NAMES.get(job, job), int(profile["level"])],
-		Vector2(342, 42), 11, Color("a7dd74"))
-	skin.label(root, "%s技能树" % JOB_NAMES.get(job, job), Vector2(16, 61), 13, Color("e8ddb9"))
-	skin.label(root, "%d / %d 节点" % [_array(branch_data().get("nodes", [])).size(),
-		_array(branch_data().get("edges", [])).size()], Vector2(480, 62), 10, Color("8f8877"))
+		Vector2(20, 49), 12, Color("a7dd74"))
+	skin.label(root, "SP 技能", Vector2(20, 77), 11, Color("e8ddb9"))
+	skin.label(root, "剩余 SP", Vector2(342, 25), 10, Color("c9c0a8"))
 
 func _tree(root: Control, branch: Dictionary) -> void:
 	var skin = game.skin
 	var nodes: Array = _array(branch.get("nodes", []))
 	var content_height := TREE_SIZE.y
 	for node: Dictionary in nodes:
-		content_height = maxf(content_height, float(node.get("y", 0)) + NODE_SLOT + 24.0)
+		content_height = maxf(content_height, float(node.get("y", 0)) + TREE_INSET.y + NODE_SLOT + 18.0)
 	var viewport := Control.new()
 	viewport.name = "skill_tree_viewport"
 	viewport.position = TREE_ORIGIN
@@ -196,11 +202,19 @@ func _tree(root: Control, branch: Dictionary) -> void:
 		var line := Line2D.new()
 		line.name = "skill_edge_%d_%d" % [int(edge["from"]), int(edge["to"])]
 		line.points = PackedVector2Array(_edge_points(source_node, target_node))
-		line.width = 1.5
+		line.width = 1.0
 		var selected_id := _selected_id()
 		line.default_color = Color("c39a54") if selected_id in [int(edge["from"]), int(edge["to"])] else Color("315f91")
 		line.z_index = -1
 		content.add_child(line)
+		var points := _edge_points(source_node, target_node)
+		var direction: Vector2 = (points[1] - points[0]).normalized()
+		var normal := Vector2(-direction.y, direction.x)
+		var arrow := Line2D.new()
+		arrow.points = PackedVector2Array([points[1] - direction * 5 + normal * 3, points[1], points[1] - direction * 5 - normal * 3])
+		arrow.width = 1.0
+		arrow.default_color = line.default_color
+		content.add_child(arrow)
 
 	var ordered := nodes.duplicate()
 	ordered.sort_custom(func(a, b):
@@ -214,7 +228,7 @@ func _tree(root: Control, branch: Dictionary) -> void:
 
 	var scroll := VScrollBar.new()
 	scroll.name = "skill_tree_scroll"
-	scroll.position = TREE_ORIGIN + Vector2(TREE_SIZE.x - 10, 0)
+	scroll.position = TREE_ORIGIN + Vector2(TREE_SIZE.x + 2, 0)
 	scroll.size = Vector2(14, TREE_SIZE.y)
 	scroll.min_value = 0
 	scroll.max_value = content_height
@@ -238,28 +252,26 @@ func _tree(root: Control, branch: Dictionary) -> void:
 				viewport.accept_event())
 
 func _style_scroll(scroll: VScrollBar) -> void:
+	# The SP page names stick-vscroll but does not specify its IMG skin.
+	var skin = game.skin
 	var track := StyleBoxTexture.new()
-	track.texture = _part("scroll_track")
-	track.texture_margin_left = 3
-	track.texture_margin_right = 3
-	track.texture_margin_top = 5
-	track.texture_margin_bottom = 5
+	track.texture = skin.texture("shop", 13)
 	scroll.add_theme_stylebox_override("scroll", track)
 	for state in ["grabber", "grabber_highlight", "grabber_pressed"]:
 		var grabber := StyleBoxTexture.new()
-		grabber.texture = _part("scroll_grabber")
-		grabber.texture_margin_left = 3
-		grabber.texture_margin_right = 3
-		grabber.texture_margin_top = 5
-		grabber.texture_margin_bottom = 5
+		grabber.texture = skin.texture("shop", 8)
+		grabber.texture_margin_top = 3
+		grabber.texture_margin_bottom = 3
 		scroll.add_theme_stylebox_override(state, grabber)
+	for pair in [["increment", 12], ["increment_highlight", 12], ["increment_pressed", 12], ["decrement", 9], ["decrement_highlight", 9], ["decrement_pressed", 9]]:
+		scroll.add_theme_icon_override(pair[0], skin.texture("shop", pair[1]))
 
 func _tree_node(parent: Control, node: Dictionary, skill: Dictionary) -> void:
 	var skin = game.skin
 	var key := String(skill["key"])
 	var local := String(skill["local_id"])
 	var chosen := key == selected
-	var at := Vector2(int(node.get("x", 0)) - 5, int(node.get("y", 0)) - 5)
+	var at := TREE_INSET + Vector2(int(node.get("x", 0)), int(node.get("y", 0)))
 	var hit := Button.new()
 	hit.name = "skill_node_%d" % int(skill["id"])
 	hit.position = at
@@ -284,33 +296,27 @@ func _tree_node(parent: Control, node: Dictionary, skill: Dictionary) -> void:
 			base.modulate = Color(0.58, 0.58, 0.58, 0.8)
 		if icon_view != null:
 			icon_view.modulate = Color(0.48, 0.48, 0.48, 0.72)
-		var locked := _part("node_locked")
-		if locked != null:
-			var lock_view: TextureRect = skin.image(hit, locked, Vector2(5, 5))
-			lock_view.modulate = Color(1.0, 1.0, 1.0, 0.62)
 	elif not bool(state["ok"]):
 		if icon_view != null:
 			icon_view.modulate = Color(0.7, 0.7, 0.7, 0.9)
-	if local != "":
-		var rank := int(game.session.profile["skills"].get(local, 0))
-		var text := str(rank)
-		if rank < 10:
-			text = " " + text
-		var rank_label: Label = skin.label(hit, text, Vector2(19, 20), 8, Color("f3df9b"))
-		rank_label.size = Vector2(14, 12)
-		rank_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	var rank := int(game.session.profile["skills"].get(local, 0)) if local != "" else 0
+	var rank_label: Label = skin.label(hit, "%d" % rank, Vector2(0, 37), 10,
+		Color("f3df9b") if rank > 0 else Color("938e82"))
+	rank_label.size = Vector2(NODE_SLOT, 15)
+	rank_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hit.pressed.connect(func():
 		selected = key
 		game.show_overlay("numbers"))
+	var base_color: Color = base.modulate
 	hit.mouse_entered.connect(func():
 		if not chosen and is_instance_valid(base):
 			base.modulate = Color(1.25, 1.25, 1.25, 1.0))
 	hit.mouse_exited.connect(func():
 		if not chosen and is_instance_valid(base):
-			base.modulate = Color.WHITE)
+			base.modulate = base_color)
 	var drag_icon := icon
-	hit.set_drag_forwarding(func():
-		if not active_skill(local):
+	hit.set_drag_forwarding(func(_at: Vector2):
+		if not active_skill(local) or int(game.session.profile["skills"].get(local, 0)) <= 0:
 			return null
 		if drag_icon != null:
 			var preview := TextureRect.new()
@@ -329,8 +335,8 @@ func _find_node(nodes: Array, id: int) -> Dictionary:
 	return {}
 
 func _edge_points(source: Dictionary, target: Dictionary) -> Array[Vector2]:
-	var start := Vector2(int(source.get("x", 0)) + NODE_CENTER, int(source.get("y", 0)) + NODE_CENTER)
-	var finish := Vector2(int(target.get("x", 0)) + NODE_CENTER, int(target.get("y", 0)) + NODE_CENTER)
+	var start := TREE_INSET + Vector2(int(source.get("x", 0)) + NODE_CENTER, int(source.get("y", 0)) + NODE_CENTER)
+	var finish := TREE_INSET + Vector2(int(target.get("x", 0)) + NODE_CENTER, int(target.get("y", 0)) + NODE_CENTER)
 	var direction := (finish - start).normalized()
 	return [start + direction * NODE_CENTER, finish - direction * NODE_CENTER]
 
@@ -344,11 +350,22 @@ func _detail(root: Control) -> void:
 		return
 	var panel := Control.new()
 	panel.name = "skill_detail"
-	panel.position = Vector2(598, 35)
-	panel.size = Vector2(199, 438)
+	panel.position = Vector2(562, 35)
+	panel.size = Vector2(199, 402)
 	panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	panel.clip_contents = true
 	root.add_child(panel)
-	skin.image(panel, _part("detail_board"), Vector2.ZERO)
+	var board := NinePatchRect.new()
+	board.texture = _part("detail_board")
+	board.size = panel.size
+	board.patch_margin_left = 12
+	board.patch_margin_right = 12
+	board.patch_margin_top = 13
+	board.patch_margin_bottom = 12
+	board.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_TILE
+	board.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_TILE
+	board.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(board)
 	skin.image(panel, _part("title"), Vector2(-20, 3))
 	var title_label: Label = skin.label(panel, String(skill["name"]), Vector2(15, 8), 13, Color("f0d18a"))
 	title_label.size = Vector2(173, 18)
@@ -361,83 +378,96 @@ func _detail(root: Control) -> void:
 	if icon == null:
 		icon = _tex(String(skill.get("icon", "")))
 	if icon != null:
-		var icon_view: TextureRect = skin.image(panel, icon, Vector2(74, 52))
-		icon_view.scale = Vector2(2, 2)
-		var state := _state(skill)
-		if String(skill["local_id"]) == "" or not class_allowed(skill):
-			icon_view.modulate = Color(0.45, 0.45, 0.45, 0.72)
-		elif not bool(state["ok"]):
-			icon_view.modulate = Color(0.7, 0.7, 0.7, 0.9)
+		var icon_view: TextureRect = skin.image(panel, icon, Vector2(88, 57))
+		icon_view.name = "skill_detail_icon"
 	var separator := _part("detail_separator")
 	if separator != null:
-		skin.image(panel, separator, Vector2(8, 131))
+		skin.image(panel, separator, Vector2(8, 134))
 	var local := String(skill["local_id"])
 	var rank := int(game.session.profile["skills"].get(local, 0)) if local != "" else 0
 	var limit := runtime_max_level(skill)
 	var level_text := "等级  %d / %d" % [rank, limit] if local != "" else "状态  未实装"
-	skin.label(panel, level_text, Vector2(16, 104), 9, Color("e8ddb9"))
+	var level_label: Label = skin.label(panel, level_text, Vector2(30, 104), 11, Color("e8ddb9"))
+	level_label.size = Vector2(140, 17)
+	level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 	var description := String(skill.get("explain", ""))
 	if description == "":
 		description = String(skill.get("basic_explain", ""))
-	var body: Label = skin.label(panel, description, Vector2(16, 143), 9, Color("c9c0a8"))
-	body.size = Vector2(169, 133)
-	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	body.clip_text = true
-	body.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-
 	var cost := _number(skill.get("purchase_cost"))
-	skin.label(panel, "每级 SP  %d" % cost, Vector2(16, 284), 9, Color("c9c0a8"))
-	var meta: Array[String] = []
-	meta.append("%s · 编号 %d" % [_type_name(String(skill["type"])), int(skill["id"])])
-	meta.append("角色等级  %d" % int(skill.get("required_level", 0)))
-	var jobs := _jobs(skill)
-	if jobs != "":
-		meta.append("职业  " + jobs)
+	skin.label(panel, "消耗 SP：%d" % cost, Vector2(16, 137), 11, Color("68d5ed"))
+	skin.label(panel, "技能等级  %d" % rank, Vector2(16, 154), 10, Color("ddd0b2"))
+	var learn := _rank_button(panel, "加点", Vector2(146, 153), "+", func(): change(selected, 1))
+	learn.disabled = not bool(_state(skill)["ok"])
+	learn.get_child(0).modulate.a = 0.35 if learn.disabled else 1.0
+	var refund := _rank_button(panel, "退点", Vector2(166, 153), "-", func(): change(selected, -1))
+	refund.disabled = rank <= 0
+	refund.get_child(0).modulate.a = 0.35 if refund.disabled else 1.0
+	var meta: Array[String] = ["技能类型：" + _type_name(String(skill["type"]))]
+	var need := int(skill.get("required_level", 0)) + rank * _number(skill.get("required_level_range"))
+	meta.append("学习等级：%d" % need)
 	var requires := _requires(skill)
 	if requires != "":
-		meta.append("前置  " + requires)
+		meta.append("前置技能：" + requires)
 	if local != "":
 		var values: Dictionary = game.skill_catalog.get_skill(local, maxi(1, rank))
-		meta.append("MP %d · CD %.1fs" % [int(values.get("mp", 0)), float(values.get("cooldown", 0))])
+		meta.append("MP：%d    冷却：%.1f秒" % [int(values.get("mp", 0)), float(values.get("cooldown", 0))])
 		var percentages: Array = values.get("damage_percent", [])
 		if not percentages.is_empty():
-			meta.append("伤害  %d%%" % int(percentages[0]))
-	for index in meta.size():
-		var meta_label: Label = skin.label(panel, meta[index], Vector2(16, 300 + index * 12), 8, Color("b8af9c"))
-		meta_label.size = Vector2(169, 12)
-		meta_label.clip_text = true
-		meta_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-
+			meta.append("攻击力：%d%%" % int(percentages[0]))
+	var body := RichTextLabel.new()
+	body.name = "skill_detail_body"
+	body.position = Vector2(9, 176)
+	body.size = Vector2(179, 214)
+	body.add_theme_font_override("normal_font", skin.font)
+	body.add_theme_font_size_override("normal_font_size", 11)
+	body.add_theme_color_override("default_color", Color("ddc58d"))
+	body.add_theme_constant_override("line_separation", 3)
+	body.text = description + "\n\n" + "\n".join(meta)
+	body.scroll_active = true
+	body.mouse_filter = Control.MOUSE_FILTER_STOP
+	panel.add_child(body)
+	_style_scroll(body.get_v_scroll_bar())
 	var state := _state(skill)
-	var tip := "可学习 / 可加点" if bool(state["ok"]) else String(state["reason"])
-	var tip_label: Label = skin.label(panel, tip, Vector2(16, 374), 9,
+	var tip := "可以学习" if bool(state["ok"]) else String(state["reason"])
+	var tip_label: Label = skin.label(root, tip, Vector2(20, 440), 11,
 		Color("a7dd74") if bool(state["ok"]) else Color("c86a5a"))
-	tip_label.size = Vector2(169, 14)
+	tip_label.size = Vector2(535, 18)
 	tip_label.clip_text = true
 	tip_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	var learn: Button = skin.button(panel, "加点", Vector2(9, 399),
-		func(): change(selected, 1))
-	learn.size = Vector2(56, 23)
-	learn.disabled = not bool(state["ok"])
-	var refund: Button = skin.button(panel, "退点", Vector2(69, 399),
-		func(): change(selected, -1))
-	refund.size = Vector2(56, 23)
-	refund.disabled = rank <= 0
-	var reset: Button = skin.button(panel, "重置", Vector2(129, 399),
+	var reset: Button = skin.button(root, "重置", Vector2(232, 461),
 		func(): game.act("numbers.skill_reset"); game.show_overlay("numbers"))
-	reset.size = Vector2(56, 23)
+	reset.size = Vector2(68, 23)
+	var close: Button = skin.button(root, "关闭", Vector2(306, 461), func(): game.show_overlay(""))
+	close.size = Vector2(68, 23)
+
+func _rank_button(parent: Control, title: String, at: Vector2, symbol: String, action: Callable) -> Button:
+	var hit := Button.new()
+	hit.position = at
+	hit.size = Vector2(18, 16)
+	hit.focus_mode = Control.FOCUS_NONE
+	hit.tooltip_text = title
+	hit.set_meta("action_label", title)
+	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
+		hit.add_theme_stylebox_override(state, StyleBoxEmpty.new())
+	var label: Label = game.skin.label(hit, symbol, Vector2.ZERO, 12, Color("e8ddb9"))
+	label.size = hit.size
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	hit.pressed.connect(action)
+	parent.add_child(hit)
+	return hit
 
 func _job_advancement(root: Control) -> void:
 	var profile: Dictionary = game.session.profile
 	if String(profile.get("growtype", "swordman")) != "swordman":
 		return
 	var ready := int(profile.get("level", 1)) >= int(Numbers.config()["progression"].get("job_change_level", 18))
-	var first: Button = game.skin.button(root, "转职剑魂", Vector2(16, 526),
+	var first: Button = game.skin.button(root, "转职剑魂", Vector2(16, 461),
 		func(): job_change("weaponmaster"), false)
 	first.size = Vector2(80, 23)
 	first.disabled = not ready
-	var second: Button = game.skin.button(root, "转职狂战士", Vector2(102, 526),
+	var second: Button = game.skin.button(root, "转职狂战士", Vector2(102, 461),
 		func(): job_change("berserker"), false)
 	second.size = Vector2(92, 23)
 	second.disabled = not ready

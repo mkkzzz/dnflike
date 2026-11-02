@@ -65,5 +65,44 @@ class SkillCatalogTest(unittest.TestCase):
         self.assertTrue({(47, 2), (52, 57), (52, 62), (52, 88)} <= edges['asura'])
 
 
+class SkillPanelSourceTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from tools import build_dnf_skill_panel as build
+        cls.build = build
+        try:
+            cls.source = build.B.Source(None)
+        except FileNotFoundError as error:
+            raise unittest.SkipTest(str(error))
+        cls.manifest = json.loads((ROOT / 'game_dnf/assets_local/skill_panel/manifest.json').read_text(encoding='utf-8'))
+
+    def test_runtime_parts_match_the_owning_original_ui_references(self):
+        from PIL import Image
+        parts = self.manifest['parts']
+        for key in ['dim', 'title', 'sp_icon', 'detail_art', 'detail_separator', 'tree_footer']:
+            with self.subTest(key=key):
+                part = parts[key]
+                reference = part['ui_reference']
+                values = self.build.ui_control(self.source, reference['path'], reference['control'])
+                self.assertEqual(values[7], part['frame'])
+                self.assertEqual(values[2:4], reference['position'])
+                image, _ = self.source.frame(values[5], part['frame'])
+                exported = Image.open(ROOT / 'game_dnf/assets_local/skill_panel' / part['file']).convert('RGBA')
+                self.assertEqual(exported.size, image.size)
+                self.assertEqual(exported.tobytes(), image.convert('RGBA').tobytes())
+        self.assertEqual(parts['dim']['frame'], 14)
+        self.assertEqual(self.source.lib.raw(self.build.SKILL_WINDOW_UI)[1], self.manifest['source']['tree_sources'][self.build.SKILL_WINDOW_UI])
+        self.assertEqual(self.source.sources['sprite/' + self.build.PANEL_BANK.lower()], self.manifest['source']['bank_sha256'])
+
+    def test_detail_board_preserves_the_thirteen_pixel_source_top_edge(self):
+        from PIL import Image
+        part = self.manifest['parts']['detail_board']
+        board = Image.open(ROOT / 'game_dnf/assets_local/skill_panel' / part['file']).convert('RGBA')
+        top_left, _ = self.source.frame(self.build.WINDOW_BANK, 213)
+        self.assertEqual(top_left.size, (12, 13))
+        self.assertEqual(board.crop((0, 0, 12, 13)).tobytes(), top_left.convert('RGBA').tobytes())
+        self.assertEqual(self.manifest['ui_layout']['detail_body']['size'], [179, 260])
+
+
 if __name__ == '__main__':
     unittest.main()
