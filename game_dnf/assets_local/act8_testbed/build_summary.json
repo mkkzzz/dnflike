@@ -1,0 +1,154 @@
+{
+ "schema": "dnf_act8_testbed_build/1",
+ "base_ref": "HEAD",
+ "dungeon": "arden",
+ "rooms": 10,
+ "route_mobs": [
+  "monster/newmonsters/haze/axeoutlaw/axeoutlaw.mob",
+  "monster/newmonsters/haze/chainbiker2/chainbiker2.mob",
+  "monster/newmonsters/haze/humanhunter/humanhunter.mob",
+  "monster/newmonsters/haze/chainbiker/chainbiker.mob",
+  "monster/newmonsters/haze/death_squad/death_squad.mob",
+  "monster/newmonsters/haze/poena/poena.mob",
+  "monster/newmonsters/haze/outlaw/outlaw.mob",
+  "monster/newmonsters/haze/hass/hass.mob",
+  "monster/newmonsters/haze/tretri/tretri.mob"
+ ],
+ "mob_count": 9,
+ "clips": {
+  "newmonsters_haze_axeoutlaw_axeoutlaw": {
+   "clips": [],
+   "status": "missing_source_image"
+  },
+  "newmonsters_haze_chainbiker2_chainbiker2": {
+   "clips": [],
+   "status": "missing_source_image"
+  },
+  "newmonsters_haze_humanhunter_humanhunter": {
+   "clips": [],
+   "status": "missing_source_image"
+  },
+  "newmonsters_haze_chainbiker_chainbiker": {
+   "clips": [],
+   "status": "missing_source_image"
+  },
+  "newmonsters_haze_death_squad_death_squad": {
+   "clips": [],
+   "status": "missing_source_image"
+  },
+  "newmonsters_haze_poena_poena": {
+   "clips": [],
+   "status": "missing_source_image"
+  },
+  "newmonsters_haze_outlaw_outlaw": {
+   "clips": [],
+   "status": "missing_source_image"
+  },
+  "newmonsters_haze_hass_hass": {
+   "clips": [],
+   "status": "missing_source_image"
+  },
+  "newmonsters_haze_tretri_tretri": {
+   "clips": [],
+   "status": "missing_source_image"
+  }
+ },
+ "unresolved": [
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/axeoutlaw/axeoutlaw.mob",
+   "path": "Monster/haze/axeoutlaw.img"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/axeoutlaw/axeoutlaw.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/chainbiker2/chainbiker2.mob",
+   "path": "Monster/haze/biker2_bike.img"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/chainbiker2/chainbiker2.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/humanhunter/humanhunter.mob",
+   "path": "Monster/haze/humanhunter.img"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/humanhunter/humanhunter.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/chainbiker/chainbiker.mob",
+   "path": "Monster/haze/biker2.img"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/chainbiker/chainbiker.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/death_squad/death_squad.mob",
+   "path": "Monster/haze/death_squad.img"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/death_squad/death_squad.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/poena/poena.mob",
+   "path": "Monster/haze/poena.img"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/poena/poena.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/outlaw/outlaw.mob",
+   "path": "Monster/haze/outlaw.img"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/outlaw/outlaw.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/hass/hass.mob",
+   "path": "Monster/haze/hass.img"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/hass/hass.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/tretri/tretri.mob",
+   "path": "Monster/haze/tretri.img"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/newmonsters/haze/tretri/tretri.mob"
+  }
+ ],
+ "atlas_status": "logic_only_missing_source_image",
+ "missing_atlas_kinds": [
+  "newmonsters_haze_axeoutlaw_axeoutlaw",
+  "newmonsters_haze_chainbiker2_chainbiker2",
+  "newmonsters_haze_humanhunter_humanhunter",
+  "newmonsters_haze_chainbiker_chainbiker",
+  "newmonsters_haze_death_squad_death_squad",
+  "newmonsters_haze_poena_poena",
+  "newmonsters_haze_outlaw_outlaw",
+  "newmonsters_haze_hass_hass",
+  "newmonsters_haze_tretri_tretri"
+ ],
+ "missing_pngs": [],
+ "content_sha256": "043eb3fdcc4a44d4ee7cc4cf6b2bf5e18a39b8fe9b620b416dd989fbc502965a",
+ "content_records": 1739
+}

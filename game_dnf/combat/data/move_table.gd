@@ -279,6 +279,19 @@ func _stem(paths) -> String:
 	if not paths is Array or paths.is_empty() or String(paths[0]) == "":return ""
 	return String(paths[0]).get_file().get_basename()
 
+func _first_path(paths) -> String:
+	if not paths is Array or paths.is_empty():return ""
+	return String(paths[0]).to_lower()
+
+## Newmonsters .mob action slots point to .act files; [BASE ANI] is the source motion.
+func _action_ani(act_path: String) -> String:
+	if act_path == "":return ""
+	var rec: Dictionary = db.record(act_path)
+	if rec.is_empty():
+		problems.append("ACT not found: "+act_path)
+		return ""
+	return String(rec.get("decoded",{}).get("base_ani","")).to_lower()
+
 func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 	var path := String(spec["mob"])
 	var mob: Dictionary = db.record(path).get("decoded",{})
@@ -289,39 +302,99 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 	# 部分怪（雕像、机关类）没有 waiting motion 或 attack info，空数组直接取 [0] 会崩。
 	var waiting: Array = mob.get("waiting_motion", [])
 	var motion_dir := String(waiting[0]).get_base_dir() if not waiting.is_empty() else ""
+	var motions := {"stay":_stem(mob.get("waiting_motion")),"move":_stem(mob.get("move_motion")),
+		"damage1":_stem(mob.get("damage_motion_1")),"damage2":_stem(mob.get("damage_motion_2")),
+		"down":_stem(mob.get("down_motion")),"overturn":_stem(mob.get("overturn_motion")),
+		"sit":_stem(mob.get("sit_motion")),"attack":_stem(mob.get("attack_motions"))}
+	var ani_paths: Dictionary = {}
+	var old_motions := {
+		"stay":mob.get("waiting_motion",[]), "move":mob.get("move_motion",[]),
+		"damage1":mob.get("damage_motion_1",[]), "damage2":mob.get("damage_motion_2",[]),
+		"down":mob.get("down_motion",[]), "overturn":mob.get("overturn_motion",[]),
+		"sit":mob.get("sit_motion",[])}
+	for pose: String in old_motions:
+		var stem := String(motions[pose])
+		if stem != "" and motion_dir != "":
+			var ani_path := String(motion_dir).path_join(stem+".ani").to_lower()
+			ani_paths[pose] = ani_path
+			ani_paths[stem] = ani_path
+	# Newmonsters: [waiting action] ... [last action] resolve through .act.
+	var action_slots := {
+		"stay":"waiting_actions", "move":"move_actions", "sit":"sit_actions",
+		"damage1":"damage_actions_1", "damage2":"damage_actions_2",
+		"down":"down_actions", "overturn":"overturn_actions", "die":"last_actions",
+		"jump":"jump_actions"}
+	for pose: String in action_slots:
+		var act_path := _first_path(mob.get(action_slots[pose],[]))
+		var ani_path := _action_ani(act_path)
+		if act_path == "" or ani_path == "":continue
+		var clip := act_path.get_file().get_basename()
+		motions[pose] = clip
+		ani_paths[pose] = ani_path
+		ani_paths[clip] = ani_path
 	var m := {"key":key,"mob":path,"bank":String(spec.get("bank",key)),"dir":motion_dir,
 		"name":String(spec.get("name",key)),"level":int(mob.get("level",[1])[0]),
 		"hp":monster_base_hp(mob)*_ability(mob,"[HP MAX]")/100.0,
 		"attack":float(base["attack"])*_ability(mob,"[EQUIPMENT_PHYSICAL_ATTACK]")/100.0,
-		"speed":move_px(float(mob.get("move_speed",[300])[0])),"sight":float(mob.get("sight",300)),
-		"attack_delay":float(mob.get("attack_delay",1200)),"hit_recovery":float(mob.get("hit_recovery",[500])[0]),
-		"keep_distance":float(spec.get("keep_distance",0)),
-		"motions":{"stay":_stem(mob.get("waiting_motion")),"move":_stem(mob.get("move_motion")),
-			"damage1":_stem(mob.get("damage_motion_1")),"damage2":_stem(mob.get("damage_motion_2")),
-			"down":_stem(mob.get("down_motion")),"overturn":_stem(mob.get("overturn_motion")),
-			"sit":_stem(mob.get("sit_motion")),"attack":_stem(mob.get("attack_motions"))}}
-	m["attack_timeline"] = timeline(motion_dir.path_join(m["motions"]["attack"] + ".ani")) if motion_dir != "" else []
-	m["attack_segments"] = Timeline.attack_segments(m["attack_timeline"])
+		"speed":move_px(float(mob.get("move_speed",[300])[0])),"sight":float(mob.get("vision",mob.get("sight",300))),
+		"attack_delay":float(mob.get("attack_delay",mob.get("think_term",1200))),
+		"hit_recovery":float(mob.get("hit_recovery",[500])[0]),
+		"keep_distance":float(spec.get("keep_distance",mob.get("keep_distance",0))),
+		"motions":motions, "ani_paths":ani_paths}
 	var attack_infos: Array = mob.get("attack_infos", [])
-	m["atk"] = atk(String(attack_infos[0])) if not attack_infos.is_empty() else {}
-	# 多套招式：原版 [attack motion] 多值时每招有独立 ANI 与 .atk，
-	# AI 按「玩家距离落在哪招的判定范围」选招（tools/build_dnf_boss_moves.py 同源）。
+	var cooltimes: Array = mob.get("cooltimes", mob.get("cooltime", []))
+	var moves: Array = []
+	# Newmonsters: [attack action] aligns by index with [attack info] and [cooltime].
+	var attack_actions: Array = mob.get("attack_actions", [])
+	for index in attack_actions.size():
+		var act_path := String(attack_actions[index]).to_lower()
+		var ani_path := _action_ani(act_path)
+		if act_path == "" or ani_path == "":continue
+		var stem := act_path.get_file().get_basename()
+		var move_timeline := timeline(ani_path)
+		var move := {"stem":stem, "act":act_path, "ani":ani_path, "timeline":move_timeline,
+			"segments":Timeline.attack_segments(move_timeline), "reach":reach_of(move_timeline)}
+		ani_paths[stem] = ani_path
+		if index < attack_infos.size():
+			var atk_path := String(attack_infos[index]).to_lower()
+			if atk_path != "":
+				move["atk"] = atk(atk_path)
+				move["atk_path"] = atk_path
+		if index < cooltimes.size():
+			move["cool_ms"] = float(cooltimes[index])
+		moves.append(move)
+	# Some newmonsters index locomotion as an attack action rather than a dedicated
+	# [move action] (chainbiker2 slots 3-5 are move/move_up/move_down).
+	if String(motions.get("move","")) == "" and ani_paths.has("move"):
+		motions["move"] = "move"
+	# 老架构多套招式：每招有独立 ANI 与 .atk。
 	var motions_all: Array = mob.get("attack_motions", []) if mob.get("attack_motions") is Array else []
-	if motions_all.size() > 1:
-		var moves: Array = []
+	if moves.is_empty() and motions_all.size() > 1:
 		for index in motions_all.size():
 			var stem := _stem([motions_all[index]])
 			if stem == "":continue
 			var move_timeline := timeline(String(motion_dir).path_join(stem + ".ani"))
-			var move := {"stem":stem, "timeline":move_timeline,
-				"segments":Timeline.attack_segments(move_timeline), "reach":reach_of(move_timeline)}
+			var move := {"stem":stem, "ani":String(motion_dir).path_join(stem + ".ani").to_lower(),
+				"timeline":move_timeline,"segments":Timeline.attack_segments(move_timeline), "reach":reach_of(move_timeline)}
+			ani_paths[stem] = move["ani"]
 			if index < attack_infos.size():
 				var atk_path := String(attack_infos[index]).to_lower()
 				if atk_path != "":
 					move["atk"] = atk(atk_path)
 					move["atk_path"] = atk_path
+			if index < cooltimes.size():move["cool_ms"] = float(cooltimes[index])
 			moves.append(move)
-		if not moves.is_empty():m["moves"] = moves
+	if not moves.is_empty():m["moves"] = moves
+	var first_attack: Dictionary = moves[0] if not moves.is_empty() else {}
+	if not first_attack.is_empty():
+		motions["attack"] = String(first_attack["stem"])
+		m["attack_timeline"] = first_attack["timeline"]
+	else:
+		var old_attack_path := String(motion_dir).path_join(String(motions["attack"])+".ani").to_lower() if motion_dir != "" and String(motions["attack"]) != "" else ""
+		m["attack_timeline"] = timeline(old_attack_path) if old_attack_path != "" else []
+		if old_attack_path != "":ani_paths[String(motions["attack"])] = old_attack_path
+	m["attack_segments"] = Timeline.attack_segments(m["attack_timeline"])
+	m["atk"] = first_attack.get("atk",atk(String(attack_infos[0])) if not attack_infos.is_empty() else {})
 	# 原版选招规则：按 .mob 文件名（不含扩展名）在反编译出的规则表里查。
 	# 规则形如 [{skill, area, cooldown_checked}]，area 为空的是无条件分支（多为大招）。
 	var mob_stem := String(path).get_file().get_basename().to_lower()
@@ -337,11 +410,9 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 			var ani_path := String(move.get("ani", "")).to_lower()
 			if summons_by_ani.has(ani_path):
 				move["summons"] = summons_by_ani[ani_path]
-		var die_stem := String((m.get("motions", {}) as Dictionary).get("die", ""))
-		if die_stem != "" and motion_dir != "":
-			var die_path := (motion_dir + "/" + die_stem + ".ani").to_lower()
-			if summons_by_ani.has(die_path):
-				m["die_summons"] = summons_by_ani[die_path]
+		var die_path := String((m.get("ani_paths", {}) as Dictionary).get("die", ""))
+		if die_path != "" and summons_by_ani.has(die_path):
+			m["die_summons"] = summons_by_ani[die_path]
 	var throw: Dictionary = mob.get("throw_attack",{}) if mob.get("throw_attack") is Dictionary else {}
 	if not throw.is_empty():
 		var objects_index: Dictionary = db.index("passive_objects")
@@ -382,6 +453,8 @@ func reach_of(tl: Array) -> Array:
 	return [low, high]
 
 func monster_timeline(m: Dictionary, motion: String) -> Array:
+	var direct := String((m.get("ani_paths", {}) as Dictionary).get(motion, ""))
+	if direct != "":return timeline(direct)
 	var stem := String(m["motions"].get(motion,motion))
 	return timeline(String(m["dir"]).path_join(stem+".ani"))
 

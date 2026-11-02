@@ -29,6 +29,18 @@ MOTIONS = {
     '[down motion]': 'down', '[overturn motion]': 'overturn', '[attack motion]': 'attack',
     '[die motion]': 'die', '[jump motion]': 'jump',
 }
+ACTIONS = {
+    '[waiting action]': 'waiting', '[move action]': 'move', '[sit action]': 'sit',
+    '[damage action 1]': 'damage1', '[damage action 2]': 'damage2',
+    '[down action]': 'down', '[overturn action]': 'overturn',
+    '[attack action]': 'attack', '[last action]': 'last',
+    '[jump action]': 'jump', '[dash action]': 'dash',
+}
+ACTION_MOTION_SLOTS = {
+    'waiting': 'waiting', 'move': 'move', 'sit': 'sit', 'damage1': 'damage1',
+    'damage2': 'damage2', 'down': 'down', 'overturn': 'overturn',
+    'attack': 'attack', 'last': 'die', 'jump': 'jump',
+}
 SPEEDS = {'[move speed]': 'move', '[attack speed]': 'attack', '[cast speed]': 'cast', '[hit recovery]': 'hit_recovery'}
 
 # 新版（newmonsters）把动作挪到 `<mob 目录>/action/*.act`，文件名即动作名。
@@ -84,6 +96,26 @@ def motions_from_acts(lib, folder: str) -> dict:
         relative = resolved[len(folder) + 1:] if resolved.startswith(folder + '/') else Path(resolved).name
         result.setdefault(slot, []).append(relative)
     return {slot: sorted(set(names)) for slot, names in result.items()}
+
+
+def nested_first(nodes: list, tag: str):
+    for node in nodes:
+        if node.get('tag') == tag and node.get('values'):
+            return node['values'][0]
+        value = nested_first(node.get('children', []), tag)
+        if value is not None:
+            return value
+    return None
+
+
+def action_ani(lib, act_path: str) -> str:
+    doc = lib.script(act_path, 'act')
+    if not doc:
+        return ''
+    relative = nested_first(doc.get('fields') or [], '[BASE ANI]')
+    if not isinstance(relative, str) or not relative.lower().endswith('.ani'):
+        return ''
+    return P.resolve(act_path, relative)
 
 
 def one(spans: dict, tag: str, default=None):
@@ -187,6 +219,28 @@ def main() -> int:
                 values = [str(v) for v in many(spans, tag) if isinstance(v, str) and v.lower().endswith('.ani')]
                 if values:
                     entry['motions'][key] = values
+            action_files: dict[str, list[str]] = {}
+            action_anis: dict[str, list[str]] = {}
+            for tag, key in ACTIONS.items():
+                for value in many(spans, tag):
+                    if not isinstance(value, str) or not value.lower().endswith('.act'):
+                        continue
+                    candidate = value.replace('\\', '/').lower()
+                    act_path = candidate if lib.exists(candidate) else P.resolve(path, value)
+                    action_files.setdefault(key, []).append(act_path)
+                    ani_path = action_ani(lib, act_path)
+                    action_anis.setdefault(key, []).append(ani_path)
+            if action_files:
+                entry['actions'] = action_files
+                entry['action_anis'] = action_anis
+                for action_slot, motion_slot in ACTION_MOTION_SLOTS.items():
+                    paths = action_anis.get(action_slot, [])
+                    if not paths:
+                        continue
+                    relative = [p[len(folder) + 1:] if p.startswith(folder + '/') else p for p in paths]
+                    entry['motions'].setdefault(motion_slot, []).extend(relative)
+                if entry['action_anis']:
+                    entry['motion_source'] = '.mob [* action] -> .act [BASE ANI]'
             # 新版架构：动作不在 mob 里，而在 <目录>/action/*.act 的 [BASE ANI]。
             if not entry['motions']:
                 entry['motions'] = motions_from_acts(lib, folder)
@@ -210,6 +264,15 @@ def main() -> int:
                 entry['attacks'].append(info)
             # 同名 mob 在不同目录下有多份（如 3 个 tauarmy.mob），key 必须带目录。
             entry['name'] = stem
+            for key in ('think term', 'vision', 'keep distance with target'):
+                values = many(spans, f'[{key}]')
+                if values:
+                    entry[key.replace(' ', '_').replace('-', '_')] = values[0]
+            cooltimes = many(spans, '[cooltime]')
+            if cooltimes:
+                entry['cooltime'] = cooltimes
+            if entry.get('sight') is None and entry.get('vision') is not None:
+                entry['sight'] = entry['vision']
             catalog[folder.replace('monster/', '', 1) + '/' + stem] = entry
             # 投掷型远程怪用 [throw attack] 而不是 [attack info]，单列出来。
             throw = many(spans, '[throw attack]')

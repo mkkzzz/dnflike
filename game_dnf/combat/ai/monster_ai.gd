@@ -46,8 +46,10 @@ static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: f
 	# 每条规则检查**自己那一招**的冷却，与原版 [is the skill in cooltime() N] 一致。
 	if m.has("rules"):
 		var cd: Dictionary = enemy.get("skill_cd", {})
+		var moves: Array = m.get("moves", [])
 		for rule: Dictionary in m["rules"]:
 			var skill := int(rule["skill"])
+			if skill < 0 or skill >= moves.size():continue
 			if float(cd.get(skill, 0.0)) > 0:continue
 			var area: Array = rule.get("area", [])
 			if area.is_empty():
@@ -59,14 +61,16 @@ static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: f
 				out["move_index"] = skill
 				return out
 		# 没有规则可用：靠近到最小范围那一招
-		if not (m["rules"] as Array).is_empty():
-			var first: Dictionary = m["rules"][m["rules"].size() - 1]
-			var span: Array = first.get("area", [])
-			if not span.is_empty():
-				var gap := absf(offset.x) - float(span[0])
-				out["move"] = Vector2(face*signf(gap) if absf(gap) > 8 else 0.0,
-					signf(offset.y) if absf(offset.y) > 3 else 0.0)
-				return out
+		for rule_index in range((m["rules"] as Array).size() - 1, -1, -1):
+			var fallback: Dictionary = m["rules"][rule_index]
+			var fallback_skill := int(fallback["skill"])
+			if fallback_skill < 0 or fallback_skill >= moves.size():continue
+			var span: Array = fallback.get("area", [])
+			if span.is_empty():continue
+			var gap := absf(offset.x) - float(span[0])
+			out["move"] = Vector2(face*signf(gap) if absf(gap) > 8 else 0.0,
+				signf(offset.y) if absf(offset.y) > 3 else 0.0)
+			return out
 	# 多套招式（BOSS）：按「当前距离落在哪一招的判定范围」选招。
 	# 范围来自该招 ANI 的 damage 判定盒，不是写死的模板。
 	if m.has("moves"):

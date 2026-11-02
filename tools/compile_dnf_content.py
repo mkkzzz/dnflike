@@ -155,6 +155,21 @@ MOB_FIELDS = {
     '[stuckbonus on damage]': ('stuck_bonus_on_damage', 'list', 'E-PARSE', 'Hit-stop related; meaning unknown'),
     '[int data]': ('int_data', 'list', 'E-PARSE', 'Monster-specific constants'),
     '[throw attack]': ('throw_attack', 'tagged', 'E-PARSE', 'Inline [key] value pairs; passive object by index'),
+    '[waiting action]': ('waiting_actions', 'paths', 'E-PARSE', 'Newmonsters action file'),
+    '[move action]': ('move_actions', 'paths', 'E-PARSE', 'Newmonsters action file'),
+    '[sit action]': ('sit_actions', 'paths', 'E-PARSE', 'Newmonsters action file'),
+    '[damage action 1]': ('damage_actions_1', 'paths', 'E-PARSE', 'Newmonsters action file'),
+    '[damage action 2]': ('damage_actions_2', 'paths', 'E-PARSE', 'Newmonsters action file'),
+    '[down action]': ('down_actions', 'paths', 'E-PARSE', 'Newmonsters action file'),
+    '[overturn action]': ('overturn_actions', 'paths', 'E-PARSE', 'Newmonsters action file'),
+    '[attack action]': ('attack_actions', 'paths', 'E-PARSE', 'Aligned with [attack info] and [cooltime]'),
+    '[last action]': ('last_actions', 'paths', 'E-PARSE', 'Newmonsters death action'),
+    '[jump action]': ('jump_actions', 'paths', 'E-PARSE', 'Newmonsters action file'),
+    '[dash action]': ('dash_actions', 'paths', 'E-PARSE', 'Newmonsters action file'),
+    '[cooltime]': ('cooltimes', 'list', 'E-PARSE', 'Per-[attack action] cooldown, milliseconds (E-INFER)'),
+    '[think term]': ('think_term', 'int', 'E-PARSE', 'AI think interval, milliseconds (E-INFER)'),
+    '[vision]': ('vision', 'int', 'E-PARSE', 'Newmonsters sight range'),
+    '[keep distance with target]': ('keep_distance', 'int', 'E-PARSE', 'Newmonsters preferred range'),
 }
 for res in ['fire', 'water', 'dark', 'light', 'freeze', 'slow', 'stun', 'stone', 'hold', 'poison', 'bleeding',
             'burn', 'lightning', 'curse', 'blind', 'confuse', 'sleep']:
@@ -186,7 +201,16 @@ PTL_FIELDS = {
     '[life time]': ('life_time', 'int', 'E-PARSE', 'Milliseconds (E-INFER)'),
     '[landing type]': ('landing_type', 'str', 'E-PARSE', ''),
 }
-FIELD_TABLES = {'atk': ATK_FIELDS, 'skl': SKL_FIELDS, 'chr': CHR_FIELDS, 'mob': MOB_FIELDS, 'obj': OBJ_FIELDS, 'ptl': PTL_FIELDS}
+ACT_FIELDS = {
+    '[BASE ANI]': ('base_ani', 'path', 'E-PARSE', 'Motion ANI, relative to the .act file'),
+    '[SUB ANI]': ('sub_ani', 'path', 'E-PARSE', 'Secondary layered ANI'),
+    '[SOUND]': ('sound_keys', 'list', 'E-PARSE', 'Alternating sound key/frame values'),
+}
+FIELD_TABLES = {'atk': ATK_FIELDS, 'skl': SKL_FIELDS, 'chr': CHR_FIELDS, 'mob': MOB_FIELDS,
+                'obj': OBJ_FIELDS, 'ptl': PTL_FIELDS, 'act': ACT_FIELDS}
+ACTION_KEYS = ('waiting_actions', 'move_actions', 'sit_actions', 'damage_actions_1',
+               'damage_actions_2', 'down_actions', 'overturn_actions', 'attack_actions',
+               'last_actions', 'jump_actions', 'dash_actions')
 # Passive objects spawned by the trial skills (engine code links them, not a script field).
 SKILL_OBJECTS = ['passiveobject/character/swordman/gorecross.obj', 'passiveobject/character/swordman/momentaryslashwave.obj']
 
@@ -202,6 +226,9 @@ def decode_value(node: dict, shape: str, base_path: str):
         return first(node)
     if shape == 'paths':
         return [resolve(base_path, v) if isinstance(v, str) and v else v for v in node['values']]
+    if shape == 'path':
+        value = first(node)
+        return resolve(base_path, value) if isinstance(value, str) and value else value
     if shape == 'pairs':
         v = node['values']
         return [[v[i], v[i + 1]] for i in range(0, len(v) - 1, 2)]
@@ -219,9 +246,20 @@ def decode_value(node: dict, shape: str, base_path: str):
     return node['values']
 
 
+def flatten_nodes(nodes: list):
+    for node in nodes:
+        yield node
+        yield from flatten_nodes(node.get('children', []))
+
+
 def decode_fields(kind: str, fields: list, path: str) -> tuple[dict, dict, list]:
     table = FIELD_TABLES[kind]
     decoded, evidence, unsupported = {}, {}, []
+    if kind == 'act':
+        # .act nests semantic fields under [MOTION]/[TRIGGER]/[BEHAVIOR]. Only the
+        # stable action-asset fields needed by the runtime are decoded here; the
+        # original nested tree remains available in `raw`.
+        fields = list(flatten_nodes(fields))
     i = 0
     while i < len(fields):
         node = fields[i]
@@ -242,6 +280,9 @@ def decode_fields(kind: str, fields: list, path: str) -> tuple[dict, dict, list]
             i += 1
             continue
         if tag not in table:
+            if kind == 'act':
+                i += 1
+                continue
             unsupported.append({'tag': node['tag'], 'offset': node['offset'], 'reason': 'no decoder'})
             i += 1
             continue
@@ -447,9 +488,21 @@ def compile_scope(lib: Library) -> dict:
             if 'motion' in key:
                 for p2 in value or []:
                     if isinstance(p2, str) and p2.endswith('.ani'):add(located(p2), 'ani', p)
-        # 新版 mob（newmonsters）的动作不在 mob 字段里，而在 <目录>/action/*.act；
-        # 这些 ANI 已由 monster_catalog 的 motions_from_acts 反推出来，这里按同一份数据补编译。
-        if not any('motion' in key for key in md):
+        action_paths: list[str] = []
+        for key in ACTION_KEYS:
+            for action_path in md.get(key) or []:
+                if not action_path:
+                    continue
+                act = add(located(action_path), 'act', p)
+                if not act:
+                    continue
+                action_paths.append(str(act['id']))
+                base_ani = str(act['decoded'].get('base_ani', ''))
+                if base_ani:
+                    add(base_ani, 'ani', act['id'])
+        # 新版 mob 的动作在 [* action] 指向的 .act；若旧文件没有该字段，
+        # 再从 catalog 的 [BASE ANI] 反推结果补一次，兼容更早的 newmonsters 变体。
+        if not action_paths and not any('motion' in key for key in md):
             for rel in catalog_motions(p):
                 add(rel, 'ani', p)
         throw = md.get('throw_attack') or {}

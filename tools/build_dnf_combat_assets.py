@@ -178,8 +178,10 @@ class Source:
 
 
 class Atlas:
-    def __init__(self, name: str):
+    def __init__(self, name: str, texture_root: str = 'res://assets_local/combat/', output_dir: Path | None = None):
         self.name, self.items, self.images = name, {}, []
+        self.texture_root = texture_root.rstrip('/') + '/'
+        self.output_dir = output_dir or ACTIVE_OUT
         self.x = self.y = 2
         self.row_h = 0
 
@@ -196,8 +198,9 @@ class Atlas:
         canvas = Image.new('RGBA', (2048, self.y + self.row_h + 2))
         for image, x, y in self.images:
             canvas.paste(image, (x, y))
-        canvas.save(ACTIVE_OUT / (self.name + '.png'))
-        return {'texture': 'res://assets_local/combat/' + self.name + '.png', 'items': self.items}
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        canvas.save(self.output_dir / (self.name + '.png'))
+        return {'texture': self.texture_root + self.name + '.png', 'items': self.items}
 
 
 def cropped(image: Image.Image, meta: dict):
@@ -236,15 +239,17 @@ def effect_bank(src: Source, key: str, ani_path: str, unresolved: list) -> dict:
     return bank
 
 
-def monster_bank(src: Source, key: str, mob: str, clip_dir: str, unresolved: list, extra=(), motion_map=None) -> dict:
+def monster_bank(src: Source, key: str, mob: str, clip_dir: str, unresolved: list, extra=(), motion_map=None,
+                 *, atlas_root: str = 'res://assets_local/combat/', output_dir: Path | None = None) -> dict:
     """烘焙一只怪的动作图集。
 
     有 motion_map（pose → 完整 ANI 路径）时直接按 .mob 的动作表逐帧取图：
     帧可以来自不同 IMG，atlas 内统一重编号，clips 的 img_frame 同步改写。
     没有 motion_map 时沿用旧的 clip_dir + MONSTER_CLIPS 约定。
     """
-    atlas = Atlas('mob_' + key)
+    atlas = Atlas('mob_' + key, atlas_root, output_dir)
     clips, images, index = {}, set(), 0
+    missing_images = set()
     specs = list(motion_map.items()) if motion_map else [(n, f'{clip_dir}/{n}.ani') for n in MONSTER_CLIPS + list(extra)]
     for name, path in specs:
         try:
@@ -258,7 +263,12 @@ def monster_bank(src: Source, key: str, mob: str, clip_dir: str, unresolved: lis
                 continue
             try:
                 image, meta = src.frame(str(frame['img']), int(frame['img_frame']))
-            except Exception:
+            except KeyError:
+                missing_images.add(str(frame['img']))
+                continue
+            except Exception as error:
+                unresolved.append({'kind': 'monster_frame_error', 'monster': mob,
+                                   'path': str(frame['img']), 'error': str(error)})
                 continue
             image, offset = cropped(image, meta)
             atlas.add(index, image, offset)
@@ -270,6 +280,8 @@ def monster_bank(src: Source, key: str, mob: str, clip_dir: str, unresolved: lis
             clips[name] = {'frames': frames, 'duration_ms': ani.get('duration_ms', 0), 'images': ani['images']}
     if len(images) > 1:
         unresolved.append({'kind': 'monster_layers', 'monster': mob, 'images': sorted(images)})
+    for image_path in sorted(missing_images):
+        unresolved.append({'kind': 'monster_image', 'monster': mob, 'path': image_path})
     # 运行时播的 pose 是 "attack"；旧 clip 目录约定叫 "attack1"，缺了就别名过去，
     # 否则攻击时视图回落成 stay（站着挨打）。
     if 'attack' not in clips and 'attack1' in clips:

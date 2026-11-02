@@ -88,6 +88,11 @@ var door_lock_ms := 0.0
 var test_drive
 var _capture := false
 var _frame := 0
+## Isolated testbed bootstrap; set by a harness before add_child(). Empty keeps production paths.
+var test_content_pack := ""
+var test_adapt_path := ""
+var test_combat_assets_path := ""
+var test_dungeon_id := ""
 var _muted := false:
 	set(value):
 		_muted = value
@@ -95,13 +100,16 @@ var _muted := false:
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	if not content.load_files("res://assets_local/manifest.json","res://data/combat.json","res://data/override"):
+	if test_content_pack != "":content.pack_path = test_content_pack
+	var adapt_path := test_adapt_path if test_adapt_path != "" else "res://data/combat.json"
+	if not content.load_files("res://assets_local/manifest.json",adapt_path,"res://data/override"):
 		return _fail("Local DNF assets are missing. Run tools/run_dnf.ps1 (asset store sync).")
-	if not FileAccess.file_exists(COMBAT_ASSETS):
+	var combat_assets_path := test_combat_assets_path if test_combat_assets_path != "" else COMBAT_ASSETS
+	if not FileAccess.file_exists(combat_assets_path):
 		return _fail("Combat assets missing. Run python tools/build_dnf_combat_assets.py (needs sync --full).")
 	assets = content.runtime
 	rules = content.rules()
-	combat_assets = JSON.parse_string(FileAccess.get_file_as_string(COMBAT_ASSETS))
+	combat_assets = JSON.parse_string(FileAccess.get_file_as_string(combat_assets_path))
 	if not table.build(content,rules,combat_assets):
 		return _fail("Combat tables incomplete: "+", ".join(table.problems.slice(0,3)))
 	if not map_loader.load_export(String(rules["map_export"])):
@@ -118,6 +126,7 @@ func _ready() -> void:
 	if not external_mode:
 		session = CombatSession.new()
 		session.attach(self)
+		if test_dungeon_id != "":dungeon_id = test_dungeon_id
 		restart()
 	_capture = "--capture" in OS.get_cmdline_user_args()
 	if "--test" in OS.get_cmdline_user_args():
@@ -151,7 +160,7 @@ func _notification(what: int) -> void:
 		if not finished:paused = true
 
 func restart() -> void:
-	begin_room({"run_id":"standalone","room_index":0,"from":"start"})
+	begin_room({"run_id":"standalone","dungeon":dungeon_id,"room_index":0,"from":"start"})
 	notice("洛兰 · 清除怪物，继续深入")
 
 ## Physical attack power before skill percentages (E-ADAPT until equipment/stats exist).
@@ -1026,7 +1035,7 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 		var used := int(enemy.get("move_index", -1))
 		if used >= 0:
 			var cds: Dictionary = enemy.get("skill_cd", {})
-			cds[used] = float(m["attack_delay"])
+			cds[used] = float(move.get("cool_ms",m["attack_delay"]))
 			enemy["skill_cd"] = cds
 
 ## Player takes a monster hit. Returns the reaction kind, or "blocked" if nothing applied.
@@ -1358,6 +1367,8 @@ func enemy_ani(enemy: Dictionary) -> Array:
 		"air":return ["overturn",0.0]
 		"down":return ["down",Kernel.Reaction.down_clock(enemy,rp,table.monster_timeline(m,"down"))]
 		"dead":
+			if String((m.get("motions", {}) as Dictionary).get("die", "")) != "":
+				return ["die", float(enemy["death_ms"])]
 			var tl: Array = table.monster_timeline(m,"down")
 			if float(enemy["z"])>0:return ["overturn",0.0]
 			return ["down",(float(tl[2]["start_ms"]) if tl.size()>2 else 0.0)+minf(float(enemy["death_ms"]),1.0)]

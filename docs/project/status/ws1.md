@@ -6,10 +6,12 @@
 |---|---|
 | 使用者 | rainmk |
 | 状态 | 已发布 |
-| 正在做 | 原地复活与复活币提示已发布；act8 只作怪物逻辑测试床，等待 1～16 与复活实机反馈 |
-| 产出位置 | `game_dnf/core/`、`game_dnf/content/api/`、`game_dnf/combat/`（action/hit/resolve/ai/data/api/fields）、`game_dnf/quests/`、`game_dnf/data/`（含 `campaign_1_16.json`）、`game_dnf/view/`、`game_dnf/ui/combat/`、`game_dnf/debug/`、`game_dnf/tests/`、`tools/`、`docs/reports/ws1/2026-10/` |
+| 正在做 | act8 怪物逻辑测试床已发布；等待 ws2 补 `Monster/haze/*.img` 后做原版图集，主线/复活实机反馈继续优先 |
+| 产出位置 | `game_dnf/core/`、`game_dnf/content/api/`、`game_dnf/combat/`（action/hit/resolve/ai/data/api/fields）、`game_dnf/quests/`、`game_dnf/data/`（含 `campaign_1_16.json`）、`game_dnf/view/`、`game_dnf/ui/combat/`、`game_dnf/debug/`、`game_dnf/tests/`（含 `act8/`）、`tools/`、`docs/reports/ws1/2026-10/`、`docs/reports/ws1/2026-11/` |
 
 ## 最近完成
+
+- 2026-11-02 发布[act8 怪物逻辑测试床](../../reports/ws1/2026-11/2026-11-02_act8怪物逻辑测试床.md)：解析 `.mob [* action] → .act [BASE ANI]`，按索引绑定 `[attack action]`/`[attack info]`/`[cooltime]`；隔离阿登 10 房、80 个生成点、9 种 newmonsters，覆盖移动/攻击/受击/选招/死亡，独立入口 **193项 failures=0**。共享库缺 9 种 haze IMG，当前 logic-only、无替身图集。
 
 - 2026-10-31 发布[原地复活与复活币提示](../../reports/ws1/2026-10/2026-10-31_原地复活与复活币提示.md)：死亡后中央提示，按 X 消耗 1 枚复活币同房复活或返回城镇；`can_revive`/`revive_player` 绑定 run/room/death_id，保留怪物、血量、掉落、时钟与技能冷却；原版复活币图标、`UseCoin` 旋转、粒子与 `coin_in` 音效接入。独立战斗 **148项**、真实流程 **28项**、纯规则 **53项** failures=0。
 
@@ -19,8 +21,6 @@
 
 - 2026-10-30 修复[普通哥布林多招式停靠回归](../../reports/ws1/2026-10/2026-10-30_普通哥布林多招式停靠回归修复.md)：选招与靠近统一攻击距离带、消除停靠死区、过滤空攻击段；独立战斗 **143项 failures=0**，待 ws2 接收复核。
 
-- 2026-10-30 完成[Codex 技能与 Godot 后台 MCP](../../reports/ws1/2026-10/2026-10-30_Codex技能与Godot后台MCP接入.md)：三个项目 skill、固定版 MCP、本机配置与隐藏桌面隔离；技术验证通过，战斗场景现存标签/贴图加载错误另列，未计完整回归或用户验收。
-
 ## 接续时的未完成工作
 
 - `7a00f659` 已提交族级 AI 目录索引、运行时回退查询和拾取下蹲帧计数；接续时“未提交”的记载已纠正，未将提交视作回归或试玩通过。
@@ -29,4 +29,5 @@
 - 最近标准入口复跑为 `run_dnf` 148 项、`run_dnf_loop` 389 项，均 `failures=0`；复活真实流程 28 项、纯规则 53 项、1～16 主线事务 132 项、任务规则 288 项、原生批量 7,780 项通过，依赖门禁 `violations=0`。
 - 1～16 主线仍待 rainmk 从建角开始用真实输入玩到 16 级并反馈节奏/画面/经济卡点；自动化验证按任务等级抬级，不算真人通关。
 - act8 仅作怪物逻辑测试床：验证攻击/受击/选招/移动/死亡和内容包/图集即可，不做城镇入口、主线接入或内容验收。
+- act8 逻辑测试床已跑通；9 种 haze IMG 缺失，待 ws2 补同来源原图后再烘焙图集和做画面验收。
 - 复活提示布局、原版币旋转/粒子/音效、3 秒保护与复活手感待 rainmk 实机确认；复活币获取节奏仍为 E-ADAPT。
