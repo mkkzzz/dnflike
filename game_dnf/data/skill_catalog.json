@@ -1,6 +1,1623 @@
 {
- "schema": "dnf_skill_catalog/2",
- "note": "names/explains from SKL localization references; requirements from SKL fields",
+ "schema": "dnf_skill_catalog/3",
+ "note": "names/explains from SKL localization references; requirements and edges from SKL fields; node coordinates from SkillTree/Swordman_Sp.co",
+ "trees": {
+  "sp": [
+   {
+    "job": "swordman",
+    "source_branch": "none",
+    "nodes": [
+     {
+      "id": 5,
+      "x": 141,
+      "y": 0,
+      "grid_x": 3,
+      "grid_y": 0,
+      "order": 0,
+      "next_skill": []
+     },
+     {
+      "id": 46,
+      "x": 235,
+      "y": 0,
+      "grid_x": 5,
+      "grid_y": 0,
+      "order": 1,
+      "next_skill": []
+     },
+     {
+      "id": 25,
+      "x": 282,
+      "y": 67,
+      "grid_x": 6,
+      "grid_y": 1,
+      "order": 2,
+      "next_skill": []
+     },
+     {
+      "id": 1,
+      "x": 376,
+      "y": 67,
+      "grid_x": 8,
+      "grid_y": 1,
+      "order": 3,
+      "next_skill": []
+     },
+     {
+      "id": 11,
+      "x": 188,
+      "y": 67,
+      "grid_x": 4,
+      "grid_y": 1,
+      "order": 4,
+      "next_skill": []
+     },
+     {
+      "id": 16,
+      "x": 94,
+      "y": 67,
+      "grid_x": 2,
+      "grid_y": 1,
+      "order": 5,
+      "next_skill": []
+     },
+     {
+      "id": 58,
+      "x": 235,
+      "y": 134,
+      "grid_x": 5,
+      "grid_y": 2,
+      "order": 6,
+      "next_skill": []
+     },
+     {
+      "id": 17,
+      "x": 470,
+      "y": 67,
+      "grid_x": 10,
+      "grid_y": 1,
+      "order": 7,
+      "next_skill": []
+     },
+     {
+      "id": 65,
+      "x": 141,
+      "y": 134,
+      "grid_x": 3,
+      "grid_y": 2,
+      "order": 8,
+      "next_skill": []
+     },
+     {
+      "id": 12,
+      "x": 0,
+      "y": 134,
+      "grid_x": 0,
+      "grid_y": 2,
+      "order": 9,
+      "next_skill": []
+     },
+     {
+      "id": 13,
+      "x": 47,
+      "y": 134,
+      "grid_x": 1,
+      "grid_y": 2,
+      "order": 10,
+      "next_skill": []
+     },
+     {
+      "id": 14,
+      "x": 0,
+      "y": 201,
+      "grid_x": 0,
+      "grid_y": 3,
+      "order": 11,
+      "next_skill": []
+     },
+     {
+      "id": 15,
+      "x": 47,
+      "y": 201,
+      "grid_x": 1,
+      "grid_y": 3,
+      "order": 12,
+      "next_skill": []
+     },
+     {
+      "id": 8,
+      "x": 141,
+      "y": 201,
+      "grid_x": 3,
+      "grid_y": 3,
+      "order": 13,
+      "next_skill": []
+     },
+     {
+      "id": 64,
+      "x": 235,
+      "y": 201,
+      "grid_x": 5,
+      "grid_y": 3,
+      "order": 14,
+      "next_skill": []
+     },
+     {
+      "id": 77,
+      "x": 329,
+      "y": 201,
+      "grid_x": 7,
+      "grid_y": 3,
+      "order": 15,
+      "next_skill": []
+     },
+     {
+      "id": 20,
+      "x": 423,
+      "y": 201,
+      "grid_x": 9,
+      "grid_y": 3,
+      "order": 16,
+      "next_skill": []
+     }
+    ],
+    "edges": [],
+    "missing_edges": []
+   },
+   {
+    "job": "weaponmaster",
+    "source_branch": "weaponmaster",
+    "nodes": [
+     {
+      "id": 94,
+      "x": 0,
+      "y": 0,
+      "grid_x": 0,
+      "grid_y": 0,
+      "order": 0,
+      "next_skill": []
+     },
+     {
+      "id": 5,
+      "x": 141,
+      "y": 0,
+      "grid_x": 3,
+      "grid_y": 0,
+      "order": 1,
+      "next_skill": []
+     },
+     {
+      "id": 46,
+      "x": 235,
+      "y": 0,
+      "grid_x": 5,
+      "grid_y": 0,
+      "order": 2,
+      "next_skill": []
+     },
+     {
+      "id": 25,
+      "x": 282,
+      "y": 67,
+      "grid_x": 6,
+      "grid_y": 1,
+      "order": 3,
+      "next_skill": []
+     },
+     {
+      "id": 1,
+      "x": 376,
+      "y": 67,
+      "grid_x": 8,
+      "grid_y": 1,
+      "order": 4,
+      "next_skill": [
+       3
+      ]
+     },
+     {
+      "id": 11,
+      "x": 188,
+      "y": 67,
+      "grid_x": 4,
+      "grid_y": 1,
+      "order": 5,
+      "next_skill": []
+     },
+     {
+      "id": 16,
+      "x": 94,
+      "y": 67,
+      "grid_x": 2,
+      "grid_y": 1,
+      "order": 6,
+      "next_skill": []
+     },
+     {
+      "id": 8,
+      "x": 141,
+      "y": 201,
+      "grid_x": 3,
+      "grid_y": 3,
+      "order": 7,
+      "next_skill": [
+       72
+      ]
+     },
+     {
+      "id": 58,
+      "x": 235,
+      "y": 134,
+      "grid_x": 5,
+      "grid_y": 2,
+      "order": 8,
+      "next_skill": []
+     },
+     {
+      "id": 17,
+      "x": 470,
+      "y": 67,
+      "grid_x": 10,
+      "grid_y": 1,
+      "order": 9,
+      "next_skill": []
+     },
+     {
+      "id": 65,
+      "x": 141,
+      "y": 134,
+      "grid_x": 3,
+      "grid_y": 2,
+      "order": 10,
+      "next_skill": []
+     },
+     {
+      "id": 27,
+      "x": 94,
+      "y": 201,
+      "grid_x": 2,
+      "grid_y": 3,
+      "order": 11,
+      "next_skill": []
+     },
+     {
+      "id": 39,
+      "x": 94,
+      "y": 268,
+      "grid_x": 2,
+      "grid_y": 4,
+      "order": 12,
+      "next_skill": []
+     },
+     {
+      "id": 33,
+      "x": 423,
+      "y": 134,
+      "grid_x": 9,
+      "grid_y": 2,
+      "order": 13,
+      "next_skill": []
+     },
+     {
+      "id": 37,
+      "x": 470,
+      "y": 134,
+      "grid_x": 10,
+      "grid_y": 2,
+      "order": 14,
+      "next_skill": []
+     },
+     {
+      "id": 38,
+      "x": 94,
+      "y": 335,
+      "grid_x": 2,
+      "grid_y": 5,
+      "order": 15,
+      "next_skill": []
+     },
+     {
+      "id": 3,
+      "x": 376,
+      "y": 335,
+      "grid_x": 8,
+      "grid_y": 5,
+      "order": 16,
+      "next_skill": []
+     },
+     {
+      "id": 49,
+      "x": 235,
+      "y": 201,
+      "grid_x": 5,
+      "grid_y": 3,
+      "order": 17,
+      "next_skill": []
+     },
+     {
+      "id": 68,
+      "x": 188,
+      "y": 402,
+      "grid_x": 4,
+      "grid_y": 6,
+      "order": 18,
+      "next_skill": [
+       72
+      ]
+     },
+     {
+      "id": 7,
+      "x": 94,
+      "y": 402,
+      "grid_x": 2,
+      "grid_y": 6,
+      "order": 19,
+      "next_skill": []
+     },
+     {
+      "id": 9,
+      "x": 235,
+      "y": 469,
+      "grid_x": 5,
+      "grid_y": 7,
+      "order": 20,
+      "next_skill": [
+       73
+      ]
+     },
+     {
+      "id": 72,
+      "x": 141,
+      "y": 536,
+      "grid_x": 3,
+      "grid_y": 8,
+      "order": 21,
+      "next_skill": []
+     },
+     {
+      "id": 73,
+      "x": 282,
+      "y": 603,
+      "grid_x": 6,
+      "grid_y": 9,
+      "order": 22,
+      "next_skill": []
+     },
+     {
+      "id": 91,
+      "x": 188,
+      "y": 670,
+      "grid_x": 4,
+      "grid_y": 10,
+      "order": 23,
+      "next_skill": []
+     },
+     {
+      "id": 86,
+      "x": 282,
+      "y": 670,
+      "grid_x": 6,
+      "grid_y": 10,
+      "order": 24,
+      "next_skill": []
+     },
+     {
+      "id": 67,
+      "x": 188,
+      "y": 201,
+      "grid_x": 4,
+      "grid_y": 3,
+      "order": 25,
+      "next_skill": []
+     },
+     {
+      "id": 12,
+      "x": 0,
+      "y": 134,
+      "grid_x": 0,
+      "grid_y": 2,
+      "order": 26,
+      "next_skill": []
+     },
+     {
+      "id": 13,
+      "x": 47,
+      "y": 134,
+      "grid_x": 1,
+      "grid_y": 2,
+      "order": 27,
+      "next_skill": []
+     },
+     {
+      "id": 14,
+      "x": 0,
+      "y": 201,
+      "grid_x": 0,
+      "grid_y": 3,
+      "order": 28,
+      "next_skill": []
+     },
+     {
+      "id": 15,
+      "x": 47,
+      "y": 201,
+      "grid_x": 1,
+      "grid_y": 3,
+      "order": 29,
+      "next_skill": []
+     },
+     {
+      "id": 4,
+      "x": 0,
+      "y": 268,
+      "grid_x": 0,
+      "grid_y": 4,
+      "order": 30,
+      "next_skill": []
+     },
+     {
+      "id": 64,
+      "x": 329,
+      "y": 201,
+      "grid_x": 7,
+      "grid_y": 3,
+      "order": 31,
+      "next_skill": []
+     },
+     {
+      "id": 77,
+      "x": 423,
+      "y": 201,
+      "grid_x": 9,
+      "grid_y": 3,
+      "order": 32,
+      "next_skill": []
+     },
+     {
+      "id": 20,
+      "x": 470,
+      "y": 201,
+      "grid_x": 10,
+      "grid_y": 3,
+      "order": 33,
+      "next_skill": []
+     }
+    ],
+    "edges": [
+     {
+      "from": 1,
+      "to": 3,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 8,
+      "to": 72,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 68,
+      "to": 72,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 9,
+      "to": 73,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     }
+    ],
+    "missing_edges": []
+   },
+   {
+    "job": "soulbringer",
+    "source_branch": "soulbringer",
+    "nodes": [
+     {
+      "id": 93,
+      "x": 0,
+      "y": 0,
+      "grid_x": 0,
+      "grid_y": 0,
+      "order": 0,
+      "next_skill": []
+     },
+     {
+      "id": 5,
+      "x": 141,
+      "y": 0,
+      "grid_x": 3,
+      "grid_y": 0,
+      "order": 1,
+      "next_skill": [
+       6
+      ]
+     },
+     {
+      "id": 46,
+      "x": 235,
+      "y": 0,
+      "grid_x": 5,
+      "grid_y": 0,
+      "order": 2,
+      "next_skill": []
+     },
+     {
+      "id": 25,
+      "x": 282,
+      "y": 67,
+      "grid_x": 6,
+      "grid_y": 1,
+      "order": 3,
+      "next_skill": [
+       41
+      ]
+     },
+     {
+      "id": 1,
+      "x": 376,
+      "y": 67,
+      "grid_x": 8,
+      "grid_y": 1,
+      "order": 4,
+      "next_skill": []
+     },
+     {
+      "id": 11,
+      "x": 188,
+      "y": 67,
+      "grid_x": 4,
+      "grid_y": 1,
+      "order": 5,
+      "next_skill": []
+     },
+     {
+      "id": 16,
+      "x": 94,
+      "y": 67,
+      "grid_x": 2,
+      "grid_y": 1,
+      "order": 6,
+      "next_skill": []
+     },
+     {
+      "id": 58,
+      "x": 329,
+      "y": 134,
+      "grid_x": 7,
+      "grid_y": 2,
+      "order": 7,
+      "next_skill": []
+     },
+     {
+      "id": 77,
+      "x": 188,
+      "y": 201,
+      "grid_x": 4,
+      "grid_y": 3,
+      "order": 8,
+      "next_skill": [
+       80
+      ]
+     },
+     {
+      "id": 17,
+      "x": 470,
+      "y": 67,
+      "grid_x": 10,
+      "grid_y": 1,
+      "order": 9,
+      "next_skill": []
+     },
+     {
+      "id": 65,
+      "x": 188,
+      "y": 134,
+      "grid_x": 4,
+      "grid_y": 2,
+      "order": 10,
+      "next_skill": []
+     },
+     {
+      "id": 12,
+      "x": 0,
+      "y": 134,
+      "grid_x": 0,
+      "grid_y": 2,
+      "order": 11,
+      "next_skill": []
+     },
+     {
+      "id": 13,
+      "x": 47,
+      "y": 134,
+      "grid_x": 1,
+      "grid_y": 2,
+      "order": 12,
+      "next_skill": []
+     },
+     {
+      "id": 14,
+      "x": 0,
+      "y": 201,
+      "grid_x": 0,
+      "grid_y": 3,
+      "order": 13,
+      "next_skill": []
+     },
+     {
+      "id": 15,
+      "x": 47,
+      "y": 201,
+      "grid_x": 1,
+      "grid_y": 3,
+      "order": 14,
+      "next_skill": []
+     },
+     {
+      "id": 84,
+      "x": 94,
+      "y": 268,
+      "grid_x": 2,
+      "grid_y": 4,
+      "order": 15,
+      "next_skill": []
+     },
+     {
+      "id": 35,
+      "x": 94,
+      "y": 201,
+      "grid_x": 2,
+      "grid_y": 3,
+      "order": 16,
+      "next_skill": []
+     },
+     {
+      "id": 29,
+      "x": 329,
+      "y": 201,
+      "grid_x": 7,
+      "grid_y": 3,
+      "order": 17,
+      "next_skill": []
+     },
+     {
+      "id": 30,
+      "x": 235,
+      "y": 201,
+      "grid_x": 5,
+      "grid_y": 3,
+      "order": 18,
+      "next_skill": []
+     },
+     {
+      "id": 41,
+      "x": 282,
+      "y": 201,
+      "grid_x": 6,
+      "grid_y": 3,
+      "order": 19,
+      "next_skill": [
+       18,
+       36
+      ]
+     },
+     {
+      "id": 80,
+      "x": 188,
+      "y": 268,
+      "grid_x": 4,
+      "grid_y": 4,
+      "order": 20,
+      "next_skill": []
+     },
+     {
+      "id": 6,
+      "x": 141,
+      "y": 335,
+      "grid_x": 3,
+      "grid_y": 5,
+      "order": 21,
+      "next_skill": []
+     },
+     {
+      "id": 36,
+      "x": 282,
+      "y": 402,
+      "grid_x": 6,
+      "grid_y": 6,
+      "order": 22,
+      "next_skill": [
+       75
+      ]
+     },
+     {
+      "id": 18,
+      "x": 235,
+      "y": 268,
+      "grid_x": 5,
+      "grid_y": 4,
+      "order": 23,
+      "next_skill": [
+       60
+      ]
+     },
+     {
+      "id": 44,
+      "x": 188,
+      "y": 469,
+      "grid_x": 4,
+      "grid_y": 7,
+      "order": 24,
+      "next_skill": []
+     },
+     {
+      "id": 75,
+      "x": 329,
+      "y": 469,
+      "grid_x": 7,
+      "grid_y": 7,
+      "order": 25,
+      "next_skill": [
+       82
+      ]
+     },
+     {
+      "id": 60,
+      "x": 235,
+      "y": 536,
+      "grid_x": 5,
+      "grid_y": 8,
+      "order": 26,
+      "next_skill": []
+     },
+     {
+      "id": 82,
+      "x": 329,
+      "y": 603,
+      "grid_x": 7,
+      "grid_y": 9,
+      "order": 27,
+      "next_skill": [
+       87
+      ]
+     },
+     {
+      "id": 89,
+      "x": 141,
+      "y": 670,
+      "grid_x": 3,
+      "grid_y": 10,
+      "order": 28,
+      "next_skill": []
+     },
+     {
+      "id": 87,
+      "x": 329,
+      "y": 670,
+      "grid_x": 7,
+      "grid_y": 10,
+      "order": 29,
+      "next_skill": []
+     },
+     {
+      "id": 8,
+      "x": 376,
+      "y": 201,
+      "grid_x": 8,
+      "grid_y": 3,
+      "order": 30,
+      "next_skill": []
+     },
+     {
+      "id": 64,
+      "x": 423,
+      "y": 201,
+      "grid_x": 9,
+      "grid_y": 3,
+      "order": 31,
+      "next_skill": []
+     },
+     {
+      "id": 20,
+      "x": 470,
+      "y": 201,
+      "grid_x": 10,
+      "grid_y": 3,
+      "order": 32,
+      "next_skill": []
+     }
+    ],
+    "edges": [
+     {
+      "from": 5,
+      "to": 6,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 25,
+      "to": 41,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 77,
+      "to": 80,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 41,
+      "to": 18,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 41,
+      "to": 36,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 36,
+      "to": 75,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 18,
+      "to": 60,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 75,
+      "to": 82,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 82,
+      "to": 87,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     }
+    ],
+    "missing_edges": []
+   },
+   {
+    "job": "berserker",
+    "source_branch": "berserker",
+    "nodes": [
+     {
+      "id": 56,
+      "x": 0,
+      "y": 0,
+      "grid_x": 0,
+      "grid_y": 0,
+      "order": 0,
+      "next_skill": []
+     },
+     {
+      "id": 5,
+      "x": 141,
+      "y": 0,
+      "grid_x": 3,
+      "grid_y": 0,
+      "order": 1,
+      "next_skill": []
+     },
+     {
+      "id": 46,
+      "x": 235,
+      "y": 0,
+      "grid_x": 5,
+      "grid_y": 0,
+      "order": 2,
+      "next_skill": []
+     },
+     {
+      "id": 25,
+      "x": 282,
+      "y": 67,
+      "grid_x": 6,
+      "grid_y": 1,
+      "order": 3,
+      "next_skill": []
+     },
+     {
+      "id": 1,
+      "x": 376,
+      "y": 67,
+      "grid_x": 8,
+      "grid_y": 1,
+      "order": 4,
+      "next_skill": []
+     },
+     {
+      "id": 11,
+      "x": 188,
+      "y": 67,
+      "grid_x": 4,
+      "grid_y": 1,
+      "order": 5,
+      "next_skill": []
+     },
+     {
+      "id": 16,
+      "x": 94,
+      "y": 67,
+      "grid_x": 2,
+      "grid_y": 1,
+      "order": 6,
+      "next_skill": []
+     },
+     {
+      "id": 58,
+      "x": 235,
+      "y": 134,
+      "grid_x": 5,
+      "grid_y": 2,
+      "order": 7,
+      "next_skill": []
+     },
+     {
+      "id": 17,
+      "x": 470,
+      "y": 67,
+      "grid_x": 10,
+      "grid_y": 1,
+      "order": 8,
+      "next_skill": []
+     },
+     {
+      "id": 65,
+      "x": 141,
+      "y": 134,
+      "grid_x": 3,
+      "grid_y": 2,
+      "order": 9,
+      "next_skill": []
+     },
+     {
+      "id": 64,
+      "x": 188,
+      "y": 201,
+      "grid_x": 4,
+      "grid_y": 3,
+      "order": 10,
+      "next_skill": []
+     },
+     {
+      "id": 12,
+      "x": 0,
+      "y": 134,
+      "grid_x": 0,
+      "grid_y": 2,
+      "order": 11,
+      "next_skill": []
+     },
+     {
+      "id": 13,
+      "x": 47,
+      "y": 134,
+      "grid_x": 1,
+      "grid_y": 2,
+      "order": 12,
+      "next_skill": []
+     },
+     {
+      "id": 14,
+      "x": 0,
+      "y": 201,
+      "grid_x": 0,
+      "grid_y": 3,
+      "order": 13,
+      "next_skill": []
+     },
+     {
+      "id": 15,
+      "x": 47,
+      "y": 201,
+      "grid_x": 1,
+      "grid_y": 3,
+      "order": 14,
+      "next_skill": []
+     },
+     {
+      "id": 76,
+      "x": 188,
+      "y": 268,
+      "grid_x": 4,
+      "grid_y": 4,
+      "order": 15,
+      "next_skill": [
+       24
+      ]
+     },
+     {
+      "id": 34,
+      "x": 282,
+      "y": 268,
+      "grid_x": 6,
+      "grid_y": 4,
+      "order": 16,
+      "next_skill": []
+     },
+     {
+      "id": 63,
+      "x": 282,
+      "y": 201,
+      "grid_x": 6,
+      "grid_y": 3,
+      "order": 17,
+      "next_skill": []
+     },
+     {
+      "id": 19,
+      "x": 329,
+      "y": 201,
+      "grid_x": 7,
+      "grid_y": 3,
+      "order": 18,
+      "next_skill": []
+     },
+     {
+      "id": 31,
+      "x": 235,
+      "y": 335,
+      "grid_x": 5,
+      "grid_y": 5,
+      "order": 19,
+      "next_skill": []
+     },
+     {
+      "id": 40,
+      "x": 282,
+      "y": 335,
+      "grid_x": 6,
+      "grid_y": 5,
+      "order": 20,
+      "next_skill": []
+     },
+     {
+      "id": 24,
+      "x": 188,
+      "y": 402,
+      "grid_x": 4,
+      "grid_y": 6,
+      "order": 21,
+      "next_skill": [
+       81,
+       79
+      ]
+     },
+     {
+      "id": 79,
+      "x": 235,
+      "y": 469,
+      "grid_x": 5,
+      "grid_y": 7,
+      "order": 22,
+      "next_skill": []
+     },
+     {
+      "id": 81,
+      "x": 141,
+      "y": 469,
+      "grid_x": 3,
+      "grid_y": 7,
+      "order": 23,
+      "next_skill": [
+       85
+      ]
+     },
+     {
+      "id": 85,
+      "x": 141,
+      "y": 536,
+      "grid_x": 3,
+      "grid_y": 8,
+      "order": 24,
+      "next_skill": []
+     },
+     {
+      "id": 90,
+      "x": 282,
+      "y": 670,
+      "grid_x": 6,
+      "grid_y": 10,
+      "order": 25,
+      "next_skill": []
+     },
+     {
+      "id": 8,
+      "x": 376,
+      "y": 201,
+      "grid_x": 8,
+      "grid_y": 3,
+      "order": 26,
+      "next_skill": []
+     },
+     {
+      "id": 77,
+      "x": 423,
+      "y": 201,
+      "grid_x": 9,
+      "grid_y": 3,
+      "order": 27,
+      "next_skill": []
+     },
+     {
+      "id": 20,
+      "x": 470,
+      "y": 201,
+      "grid_x": 10,
+      "grid_y": 3,
+      "order": 28,
+      "next_skill": []
+     }
+    ],
+    "edges": [
+     {
+      "from": 76,
+      "to": 24,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 24,
+      "to": 81,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 24,
+      "to": 79,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 81,
+      "to": 85,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     }
+    ],
+    "missing_edges": []
+   },
+   {
+    "job": "asura",
+    "source_branch": "asura",
+    "nodes": [
+     {
+      "id": 61,
+      "x": 0,
+      "y": 0,
+      "grid_x": 0,
+      "grid_y": 0,
+      "order": 0,
+      "next_skill": []
+     },
+     {
+      "id": 5,
+      "x": 141,
+      "y": 0,
+      "grid_x": 3,
+      "grid_y": 0,
+      "order": 1,
+      "next_skill": []
+     },
+     {
+      "id": 46,
+      "x": 235,
+      "y": 0,
+      "grid_x": 5,
+      "grid_y": 0,
+      "order": 2,
+      "next_skill": []
+     },
+     {
+      "id": 25,
+      "x": 282,
+      "y": 67,
+      "grid_x": 6,
+      "grid_y": 1,
+      "order": 3,
+      "next_skill": []
+     },
+     {
+      "id": 1,
+      "x": 376,
+      "y": 67,
+      "grid_x": 8,
+      "grid_y": 1,
+      "order": 4,
+      "next_skill": []
+     },
+     {
+      "id": 11,
+      "x": 188,
+      "y": 67,
+      "grid_x": 4,
+      "grid_y": 1,
+      "order": 5,
+      "next_skill": []
+     },
+     {
+      "id": 20,
+      "x": 188,
+      "y": 201,
+      "grid_x": 4,
+      "grid_y": 3,
+      "order": 6,
+      "next_skill": []
+     },
+     {
+      "id": 16,
+      "x": 94,
+      "y": 67,
+      "grid_x": 2,
+      "grid_y": 1,
+      "order": 7,
+      "next_skill": []
+     },
+     {
+      "id": 58,
+      "x": 235,
+      "y": 134,
+      "grid_x": 5,
+      "grid_y": 2,
+      "order": 8,
+      "next_skill": []
+     },
+     {
+      "id": 17,
+      "x": 470,
+      "y": 67,
+      "grid_x": 10,
+      "grid_y": 1,
+      "order": 9,
+      "next_skill": []
+     },
+     {
+      "id": 65,
+      "x": 141,
+      "y": 134,
+      "grid_x": 3,
+      "grid_y": 2,
+      "order": 10,
+      "next_skill": []
+     },
+     {
+      "id": 12,
+      "x": 0,
+      "y": 134,
+      "grid_x": 0,
+      "grid_y": 2,
+      "order": 11,
+      "next_skill": []
+     },
+     {
+      "id": 13,
+      "x": 47,
+      "y": 134,
+      "grid_x": 1,
+      "grid_y": 2,
+      "order": 12,
+      "next_skill": []
+     },
+     {
+      "id": 14,
+      "x": 0,
+      "y": 201,
+      "grid_x": 0,
+      "grid_y": 3,
+      "order": 13,
+      "next_skill": []
+     },
+     {
+      "id": 15,
+      "x": 47,
+      "y": 201,
+      "grid_x": 1,
+      "grid_y": 3,
+      "order": 14,
+      "next_skill": []
+     },
+     {
+      "id": 2,
+      "x": 141,
+      "y": 268,
+      "grid_x": 3,
+      "grid_y": 4,
+      "order": 15,
+      "next_skill": [
+       74
+      ]
+     },
+     {
+      "id": 55,
+      "x": 282,
+      "y": 201,
+      "grid_x": 6,
+      "grid_y": 3,
+      "order": 16,
+      "next_skill": []
+     },
+     {
+      "id": 47,
+      "x": 141,
+      "y": 201,
+      "grid_x": 3,
+      "grid_y": 3,
+      "order": 17,
+      "next_skill": [
+       2
+      ]
+     },
+     {
+      "id": 50,
+      "x": 235,
+      "y": 268,
+      "grid_x": 5,
+      "grid_y": 4,
+      "order": 18,
+      "next_skill": [
+       51
+      ]
+     },
+     {
+      "id": 51,
+      "x": 235,
+      "y": 335,
+      "grid_x": 5,
+      "grid_y": 5,
+      "order": 19,
+      "next_skill": []
+     },
+     {
+      "id": 32,
+      "x": 94,
+      "y": 335,
+      "grid_x": 2,
+      "grid_y": 5,
+      "order": 20,
+      "next_skill": []
+     },
+     {
+      "id": 53,
+      "x": 282,
+      "y": 335,
+      "grid_x": 6,
+      "grid_y": 5,
+      "order": 21,
+      "next_skill": [
+       52
+      ]
+     },
+     {
+      "id": 21,
+      "x": 188,
+      "y": 402,
+      "grid_x": 4,
+      "grid_y": 6,
+      "order": 22,
+      "next_skill": [
+       22
+      ]
+     },
+     {
+      "id": 52,
+      "x": 282,
+      "y": 402,
+      "grid_x": 6,
+      "grid_y": 6,
+      "order": 23,
+      "next_skill": [
+       57,
+       62,
+       88
+      ]
+     },
+     {
+      "id": 22,
+      "x": 188,
+      "y": 469,
+      "grid_x": 4,
+      "grid_y": 7,
+      "order": 24,
+      "next_skill": []
+     },
+     {
+      "id": 62,
+      "x": 329,
+      "y": 469,
+      "grid_x": 7,
+      "grid_y": 7,
+      "order": 25,
+      "next_skill": []
+     },
+     {
+      "id": 57,
+      "x": 235,
+      "y": 536,
+      "grid_x": 5,
+      "grid_y": 8,
+      "order": 26,
+      "next_skill": []
+     },
+     {
+      "id": 74,
+      "x": 141,
+      "y": 603,
+      "grid_x": 3,
+      "grid_y": 9,
+      "order": 27,
+      "next_skill": []
+     },
+     {
+      "id": 92,
+      "x": 329,
+      "y": 670,
+      "grid_x": 7,
+      "grid_y": 10,
+      "order": 28,
+      "next_skill": []
+     },
+     {
+      "id": 88,
+      "x": 282,
+      "y": 670,
+      "grid_x": 6,
+      "grid_y": 10,
+      "order": 29,
+      "next_skill": []
+     },
+     {
+      "id": 8,
+      "x": 376,
+      "y": 201,
+      "grid_x": 8,
+      "grid_y": 3,
+      "order": 30,
+      "next_skill": []
+     },
+     {
+      "id": 64,
+      "x": 423,
+      "y": 201,
+      "grid_x": 9,
+      "grid_y": 3,
+      "order": 31,
+      "next_skill": []
+     },
+     {
+      "id": 77,
+      "x": 470,
+      "y": 201,
+      "grid_x": 10,
+      "grid_y": 3,
+      "order": 32,
+      "next_skill": []
+     }
+    ],
+    "edges": [
+     {
+      "from": 2,
+      "to": 74,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 47,
+      "to": 2,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 50,
+      "to": 51,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 53,
+      "to": 52,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 21,
+      "to": 22,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 52,
+      "to": 57,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 52,
+      "to": 62,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     },
+     {
+      "from": 52,
+      "to": 88,
+      "sources": [
+       "next",
+       "pre"
+      ]
+     }
+    ],
+    "missing_edges": []
+   }
+  ],
+  "tp": [
+   {
+    "job": "swordman",
+    "source_branch": "none",
+    "nodes": [],
+    "edges": [],
+    "missing_edges": []
+   }
+  ]
+ },
  "skills": [
   {
    "id": 1,

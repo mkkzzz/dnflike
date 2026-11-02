@@ -1,9 +1,21 @@
 {
- "schema": "dnf_skill_panel/1",
+ "schema": "dnf_skill_panel/2",
  "source": {
   "bank": "Interface2/UI/SkillShop/Skillshop.img",
   "pack": "assets_local/content/combat_content.json",
   "icon_field": "SKL [icon]",
+  "tree": "clientonly/skilltree/swordman_sp.co",
+  "tree_sha256": "1a9a1e320e2c9b1d6cc6933495a66a872bdc744737b72bf44366fc0a2e0b098e",
+  "bank_sha256": "4ef9156b82df7bbb0bb20d5ec3633cc0d50e95be49a766eac97c733ae3d9247b",
+  "window_bank_sha256": "8e75e1ec8514ff61edbae6baf833300c50e941ec0f0bb2ea29cb2dbcd62448d0",
+  "tree_sources": {
+   "clientonly/skilltree/swordman_sp.co": "1a9a1e320e2c9b1d6cc6933495a66a872bdc744737b72bf44366fc0a2e0b098e",
+   "clientonly/skilltree/swordman_tp.co": "cb842813e1e497cb85fe33d1a6559c68b9e0f6a1ecf316fefad0dcbe4c3b001d",
+   "clientonly/skillshoptreespindex.co": "edc501ad814df5f1906623ceb292f3580233d6cde5780c590b638dfbbba12ae1",
+   "ui/skill/skillshopwindow.ui": "46dfca561082f0bdcf329c75f9c8871a4cbd89b5f5cb42685848fd70a9e9c535",
+   "ui/skill/skillshopsppage.ui": "2fd3b6c46a41d2016f90c187620a5cb5f9b37041437868d1236a0b080156a8c3",
+   "ui/skill/skillshopexplain.ui": "a896394f830cb3201f05ef9db7c21efcc382bf12f03b896b8fc5c16ca67ec61b"
+  },
   "exporter": "tools/build_dnf_skill_panel.py"
  },
  "parts": {
@@ -150,10 +162,115 @@
    ],
    "frame": 57,
    "note": "说明图标框 74×48"
+  },
+  "detail_art": {
+   "file": "parts/detail_art.png",
+   "size": [
+    166,
+    100
+   ],
+   "frame": 4,
+   "note": "说明板技能图框 166×100"
+  },
+  "node_slot": {
+   "file": "parts/node_slot.png",
+   "size": [
+    38,
+    38
+   ],
+   "frame": 120,
+   "note": "技能树节点底框 38×38"
+  },
+  "node_selected": {
+   "file": "parts/node_selected.png",
+   "size": [
+    38,
+    38
+   ],
+   "frame": 147,
+   "note": "技能树节点选中蓝框 38×38"
+  },
+  "node_locked": {
+   "file": "parts/node_locked.png",
+   "size": [
+    28,
+    28
+   ],
+   "frame": 32,
+   "note": "技能树节点不可用暗红罩 28×28"
+  },
+  "scroll_track": {
+   "file": "parts/scroll_track.png",
+   "size": [
+    36,
+    270
+   ],
+   "frame": 123,
+   "note": "技能树竖向滚动条轨 36×270"
+  },
+  "scroll_grabber": {
+   "file": "parts/scroll_grabber.png",
+   "size": [
+    36,
+    270
+   ],
+   "frame": 124,
+   "note": "技能树竖向滚动条滑块 36×270"
+  },
+  "detail_separator": {
+   "file": "parts/detail_separator.png",
+   "size": [
+    179,
+    37
+   ],
+   "frame": 107,
+   "note": "说明板分隔条 179×37"
+  },
+  "tree_footer": {
+   "file": "parts/tree_footer.png",
+   "size": [
+    800,
+    32
+   ],
+   "frame": 134,
+   "note": "技能窗底栏 800×32"
+  },
+  "detail_board": {
+   "file": "parts/detail_board.png",
+   "size": [
+    199,
+    438
+   ],
+   "frames": [
+    213,
+    214,
+    215,
+    216,
+    217,
+    218,
+    219,
+    220,
+    221
+   ],
+   "note": "SkillShopExplain 199×438 说明板，WindowCommon 原版九宫格拼合"
   }
  },
  "icons": 174,
  "missing_icons": [
   "basichpmaxup"
- ]
+ ],
+ "tree_counts": {
+  "none": 17,
+  "weaponmaster": 34,
+  "soulbringer": 33,
+  "berserker": 29,
+  "asura": 33
+ },
+ "tree_edges": {
+  "none": 0,
+  "weaponmaster": 4,
+  "soulbringer": 9,
+  "berserker": 4,
+  "asura": 8
+ }
 }

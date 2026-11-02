@@ -15,6 +15,9 @@ func _init(target) -> void:
 	skill_panel = SkillPanel.new(target)
 
 func show_window() -> void:
+	if tab == 1:
+		skill_panel.show_window(game.modal)
+		return
 	var skin = game.skin
 	var node = game.windows.board(game.modal,"角色成长",Rect2(28,38,744,458))
 	node.name = "number_window"
@@ -22,9 +25,8 @@ func show_window() -> void:
 		var value := index
 		skin.button(node,["角色属性","技能加点","装备管理"][index],Vector2(18+index*115,40),func(): tab=value; page=0; game.show_overlay("numbers"))
 	if tab == 0:attributes(node)
-	elif tab == 1:skill_panel.show_window(node)
 	else:equipment(node)
-	if tab != 1:skin.label(node,"O 角色成长   K 技能加点   Esc 关闭",Vector2(20,428),11,Color("a59c88"))
+	skin.label(node,"O 角色成长   K 技能加点   Esc 关闭",Vector2(20,428),11,Color("a59c88"))
 
 func live_stats() -> Dictionary:
 	if game.session.state=="battle" and is_instance_valid(game.battle):

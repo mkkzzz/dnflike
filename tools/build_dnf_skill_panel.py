@@ -1,12 +1,14 @@
-"""生成技能面板的数据与素材：175 条技能目录 + 原版技能图标 + 面板零件。
+"""生成技能面板的数据与素材：175 条技能目录 + 原版技能树 + 面板零件。
 
 数据来源（只读原版库，不改原内容包）：
   assets_local/content/combat_content.json 的 swordman_skills 索引与 SKL 记录
+  clientonly/skilltree/swordman_sp.co      原版五分支节点坐标与 [next skill]
   Interface2/UI/SkillShop/Skillshop.img    面板零件（标题条、技能格、按钮、说明框、暗化背景）
+  Interface/WindowCommon.img               右侧说明板原版九宫格
   SKL 自带 icon 字段                       每个技能的 未选中/选中 两帧图标
 
 输出：
-  game_dnf/data/skill_catalog.json              175 条：名称、类型、等级/职业/前置要求、成本、图标键
+  game_dnf/data/skill_catalog.json              175 条技能 + SP/TP 五职业树布局与前置边
   game_dnf/assets_local/skill_panel/icons/*.png 技能图标（原生像素，不缩放）
   game_dnf/assets_local/skill_panel/parts/*.png 面板零件
   game_dnf/assets_local/skill_panel/manifest.json
@@ -26,6 +28,8 @@ import json
 import sys
 from pathlib import Path
 
+from PIL import Image
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_dnf_combat_assets as B
 from audit_dnf_reusable_data import TextResolver
@@ -38,6 +42,22 @@ CATALOG = GAME / 'data/skill_catalog.json'
 PACK = GAME / 'assets_local/content/combat_content.json'
 
 PANEL_BANK = 'Interface2/UI/SkillShop/Skillshop.img'
+WINDOW_BANK = 'Interface/WindowCommon.img'
+TREE_SP_PATH = 'clientonly/skilltree/swordman_sp.co'
+TREE_TP_PATH = 'clientonly/skilltree/swordman_tp.co'
+TREE_INDEX_PATH = 'clientonly/skillshoptreespindex.co'
+SKILL_WINDOW_UI = 'ui/skill/skillshopwindow.ui'
+SKILL_SP_PAGE_UI = 'ui/skill/skillshopsppage.ui'
+SKILL_EXPLAIN_UI = 'ui/skill/skillshopexplain.ui'
+GRID_X = [0, 47, 94, 141, 188, 235, 282, 329, 376, 423, 470]
+GRID_Y = [0, 67, 134, 201, 268, 335, 402, 469, 536, 603, 670]
+BRANCH_JOB = {
+    'none': 'swordman',
+    'weaponmaster': 'weaponmaster',
+    'soulbringer': 'soulbringer',
+    'berserker': 'berserker',
+    'asura': 'asura',
+}
 # 面板零件（帧号来自 Skillshop.img 实测帧表；用途为看图确认，见报告）
 PARTS = {
     'dim': (14, '全屏暗化背景 800×600'),
@@ -56,6 +76,14 @@ PARTS = {
     'arrow_down': (33, '下拉箭头 17×10'),
     'icon_frame': (45, '技能图标框 107×40'),
     'icon_big': (57, '说明图标框 74×48'),
+    'detail_art': (4, '说明板技能图框 166×100'),
+    'node_slot': (120, '技能树节点底框 38×38'),
+    'node_selected': (147, '技能树节点选中蓝框 38×38'),
+    'node_locked': (32, '技能树节点不可用暗红罩 28×28'),
+    'scroll_track': (123, '技能树竖向滚动条轨 36×270'),
+    'scroll_grabber': (124, '技能树竖向滚动条滑块 36×270'),
+    'detail_separator': (107, '说明板分隔条 179×37'),
+    'tree_footer': (134, '技能窗底栏 800×32'),
 }
 
 # 技能文件名 → 中文名（E-ADAPT：原版本地化文本缺失，按语义整理，待使用者校对）
@@ -143,6 +171,108 @@ def chinese_name(key: str, sid: int) -> str:
     return '未开放技能 %d' % sid
 
 
+def parse_branch(section: dict, skills_by_id: dict[int, dict]) -> dict:
+    """Decode one [character job] section and join SKL prerequisites to its nodes."""
+    raw_branch = str(section['values'][1])
+    job = BRANCH_JOB.get(raw_branch, raw_branch)
+    nodes = []
+    by_id = {}
+    next_edges = []
+    for order, node in enumerate(section.get('children', [])):
+        fields = {}
+        next_skills = []
+        for field in node.get('children', []):
+            if field['tag'] == '[next skill]':
+                next_skills.extend(int(value) for value in field.get('values', []))
+            else:
+                fields[field['tag']] = field.get('values', [])
+        sid = int(fields['[index]'][0])
+        x, y = (int(value) for value in fields['[icon pos]'][:2])
+        if x not in GRID_X or y not in GRID_Y:
+            raise ValueError('skill tree node is outside the measured grid: %s %s %s' % (raw_branch, sid, (x, y)))
+        entry = {
+            'id': sid,
+            'x': x,
+            'y': y,
+            'grid_x': GRID_X.index(x),
+            'grid_y': GRID_Y.index(y),
+            'order': order,
+            'next_skill': next_skills,
+        }
+        nodes.append(entry)
+        by_id[sid] = entry
+        for target in next_skills:
+            next_edges.append((sid, target, 'next'))
+
+    edges = []
+    seen = set()
+    missing = []
+    for source, target, relation in next_edges:
+        if source not in by_id or target not in by_id:
+            missing.append({'from': source, 'to': target, 'relation': relation})
+            continue
+        if (source, target) not in seen:
+            seen.add((source, target))
+            edges.append({'from': source, 'to': target, 'sources': [relation]})
+    for sid in by_id:
+        for requirement in skills_by_id[sid].get('pre_required_skill', []):
+            source = int(requirement['id'])
+            target = sid
+            if source not in by_id:
+                missing.append({'from': source, 'to': target, 'relation': 'pre_required_skill'})
+                continue
+            if (source, target) in seen:
+                edge = next(item for item in edges if item['from'] == source and item['to'] == target)
+                if 'pre' not in edge['sources']:
+                    edge['sources'].append('pre')
+            else:
+                seen.add((source, target))
+                edges.append({'from': source, 'to': target, 'sources': ['pre']})
+    return {
+        'job': job,
+        'source_branch': raw_branch,
+        'nodes': nodes,
+        'edges': edges,
+        'missing_edges': missing,
+    }
+
+
+def build_detail_board(src: B.Source) -> Image.Image:
+    """Tile the source 3x3 WindowCommon board to the SkillShopExplain 199x438 area."""
+    frames = {}
+    for index in range(213, 222):
+        image, _ = src.frame(WINDOW_BANK, index)
+        frames[index] = image.convert('RGBA')
+    width, height = 199, 438
+    board = Image.new('RGBA', (width, height), (0, 0, 0, 0))
+    board.paste(frames[217].resize((width - 24, height - 24), Image.Resampling.NEAREST), (12, 12))
+    for x in range(12, width - 12, 2):
+        board.paste(frames[214], (x, 0))
+        board.paste(frames[220], (x, height - 12))
+    for y in range(12, height - 12, 2):
+        board.paste(frames[216], (0, y))
+        board.paste(frames[218], (width - 12, y))
+    for frame, at in [
+        (213, (0, 0)),
+        (215, (width - 12, 0)),
+        (219, (0, height - 12)),
+        (221, (width - 12, height - 12)),
+    ]:
+        board.paste(frames[frame], at)
+    return board
+
+
+def tree_source_info(src: B.Source) -> dict:
+    result = {}
+    for path in [TREE_SP_PATH, TREE_TP_PATH, TREE_INDEX_PATH, SKILL_WINDOW_UI,
+                 SKILL_SP_PAGE_UI, SKILL_EXPLAIN_UI]:
+        found = src.lib.raw(path)
+        if found is None:
+            raise FileNotFoundError('Required skill tree source missing: ' + path)
+        result[path] = found[1]
+    return result
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--library', type=Path, default=None)
@@ -169,6 +299,14 @@ def main() -> int:
         image, meta = src.frame(PANEL_BANK, frame)
         image.save(OUT / 'parts' / (key + '.png'))
         parts[key] = {'file': 'parts/%s.png' % key, 'size': list(image.size), 'frame': frame, 'note': note}
+    detail_board = build_detail_board(src)
+    detail_board.save(OUT / 'parts/detail_board.png')
+    parts['detail_board'] = {
+        'file': 'parts/detail_board.png',
+        'size': list(detail_board.size),
+        'frames': list(range(213, 222)),
+        'note': 'SkillShopExplain 199×438 说明板，WindowCommon 原版九宫格拼合',
+    }
 
     skills = []
     missing_icon = []
@@ -226,20 +364,40 @@ def main() -> int:
                          'SKL decoded E-PARSE; localization entry missing, name fallback is E-ADAPT'),
             'localization': localization_refs,
         })
+    skills_by_id = {skill['id']: skill for skill in skills}
+    sp_tree = src.lib.script(TREE_SP_PATH)
+    tp_tree = src.lib.script(TREE_TP_PATH)
+    if sp_tree is None or tp_tree is None:
+        raise FileNotFoundError('Required swordman skill tree script missing')
+    trees = {
+        'sp': [parse_branch(section, skills_by_id) for section in sp_tree['fields']],
+        'tp': [parse_branch(section, skills_by_id) for section in tp_tree['fields']],
+    }
     total = sum(len((pack['records'][p.lower()]['decoded'].get('level_info') or [])) for p in index.values()
                 if pack['records'].get(p.lower()))
     manifest = {
-        'schema': 'dnf_skill_panel/1',
+        'schema': 'dnf_skill_panel/2',
         'source': {'bank': PANEL_BANK, 'pack': 'assets_local/content/combat_content.json',
-                   'icon_field': 'SKL [icon]', 'exporter': 'tools/build_dnf_skill_panel.py'},
+                   'icon_field': 'SKL [icon]', 'tree': TREE_SP_PATH,
+                   'tree_sha256': src.lib.raw(TREE_SP_PATH)[1],
+                   'bank_sha256': src.sources.get('sprite/' + PANEL_BANK.lower()),
+                   'window_bank_sha256': src.sources.get('sprite/' + WINDOW_BANK.lower()),
+                   'tree_sources': tree_source_info(src),
+                   'exporter': 'tools/build_dnf_skill_panel.py'},
         'parts': parts,
         'icons': len(skills) - len(missing_icon),
         'missing_icons': missing_icon,
+        'tree_counts': {branch['source_branch']: len(branch['nodes']) for branch in trees['sp']},
+        'tree_edges': {branch['source_branch']: len(branch['edges']) for branch in trees['sp']},
     }
     (OUT / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
-    CATALOG.write_text(json.dumps({'schema': 'dnf_skill_catalog/2',
-                                   'note': 'names/explains from SKL localization references; requirements from SKL fields',
-                                   'skills': skills}, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+    CATALOG.write_text(json.dumps({
+        'schema': 'dnf_skill_catalog/3',
+        'note': ('names/explains from SKL localization references; requirements and edges from SKL fields; '
+                 'node coordinates from SkillTree/Swordman_Sp.co'),
+        'trees': trees,
+        'skills': skills,
+    }, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     runtime_descriptions = {}
     for skill in skills:
         local_id = skill['local_id']
@@ -262,9 +420,11 @@ def main() -> int:
         + "\n"
     )
     (GAME / 'items/skill_descriptions.gd').write_text(descriptions, encoding='utf-8')
-    print('[SKILL_PANEL] skills=%d localized=%d parts=%d icons=%d missing=%d level_rows=%d'
+    print('[SKILL_PANEL] skills=%d localized=%d parts=%d icons=%d missing=%d level_rows=%d '
+          'tree_nodes=%s tree_edges=%s'
           % (len(skills), sum(bool(s['localization'].get('name')) for s in skills),
-             len(parts), manifest['icons'], len(missing_icon), total))
+             len(parts), manifest['icons'], len(missing_icon), total,
+             manifest['tree_counts'], manifest['tree_edges']))
     return 0
 
 

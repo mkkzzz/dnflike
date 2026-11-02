@@ -13,6 +13,35 @@ func run() -> void:
 	game.show_overlay("numbers")
 	await host.ticks(3)
 	await host.frame("61_number_skills")
+	var skill_panel=game.number_windows.skill_panel
+	var viewport:Control=game.modal.find_child("skill_tree_viewport",true,false)
+	var content:Control=game.modal.find_child("skill_tree_content",true,false)
+	var base_upper:Control=game.modal.find_child("skill_node_46",true,false)
+	var detail:Control=game.modal.find_child("skill_detail",true,false)
+	host.check(viewport != null and viewport.size==Vector2(580,400),"skill panel uses the original 580x400 scrollable tree viewport")
+	host.check(detail != null and detail.position==Vector2(598,35) and detail.size==Vector2(199,438),"skill detail keeps the original 199x438 right board at x598")
+	host.check(base_upper != null and base_upper.get_meta("tree_x",-1)==235 and base_upper.get_meta("tree_y",-1)==0,"skill node uses the measured Swordman_Sp.co coordinate")
+	host.check(skill_panel.tree_nodes("none").size()==17 and skill_panel.tree_edges("weaponmaster").size()==4,"all source job branches and prerequisite edges are loaded")
+	var original_job:String=game.session.profile["growtype"]
+	game.session.profile["growtype"]="weaponmaster"
+	game.show_overlay("numbers")
+	await host.ticks(3)
+	var edge:Line2D=game.modal.find_child("skill_edge_1_3",true,false)
+	viewport=game.modal.find_child("skill_tree_viewport",true,false)
+	content=game.modal.find_child("skill_tree_content",true,false)
+	host.check(edge != null and edge.points.size()==2,"weaponmaster draws the original guard-to-autoguard prerequisite edge")
+	var wheel:=InputEventMouseButton.new()
+	wheel.position=viewport.get_global_transform_with_canvas()*Vector2(280,200)
+	wheel.button_index=MOUSE_BUTTON_WHEEL_DOWN
+	wheel.pressed=true
+	game.get_viewport().push_input(wheel,true)
+	await host.ticks(3)
+	var scroll:VScrollBar=game.modal.find_child("skill_tree_scroll",true,false)
+	host.check(scroll != null and scroll.value>0 and content.position.y==-scroll.value,"mouse wheel scrolls the original-height skill tree and its content together")
+	game.session.profile["growtype"]=original_job
+	skill_panel.selected="upperslash"
+	game.show_overlay("numbers")
+	await host.ticks(3)
 	host.check(game.debug_panel.commands.execute("sp 100")["ok"],"GM grants SP through numeric transaction")
 	host.check(game.debug_panel.commands.execute("level 4")["ok"],"GM raises the character to the next original skill-rank threshold")
 	var initial_sp := Numbers.Skills.available(game.session.profile,Numbers.config())
