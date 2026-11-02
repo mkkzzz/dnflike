@@ -86,6 +86,8 @@ var weapon := "shortsword":
 var missing_assets := false
 var missing_reason := ""
 var door_lock_ms := 0.0
+var _dynamic_refresh_ms := 0.0
+var _aura_pulse_ms := 0.0
 var test_drive
 var _capture := false
 var _frame := 0
@@ -175,7 +177,16 @@ func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
 	if numeric_player == null:numeric_player = ActorNumbers.new()
 	numeric_player.configure(spec)
 	skill_levels = spec.get("skills",Numbers.shared_config()["skill_defaults"]).duplicate(true)
-	table.configure_skills(skill_levels)
+	for passive_id: String in skill_levels:
+		var passive_rank := int(skill_levels[passive_id])
+		if passive_rank <= 0:continue
+		var bonuses: Dictionary = Numbers.shared_config()["skills"].get(passive_id,{}).get("skill_level_bonus",{})
+		for target_id: String in bonuses:
+			skill_levels[target_id] = int(skill_levels.get(target_id,0))+int(bonuses[target_id])*passive_rank
+	var seed: Dictionary = spec.get("number_seed", {})
+	if seed.has("growtype"):
+		job = String(seed["growtype"])
+	table.configure_skills(skill_levels, job, weapon)
 	configure_skill_slots(spec.get("skill_slots",skill_slots))
 	max_hp = float(numeric_player.values["hp_max"])
 	max_mp = float(numeric_player.values["mp_max"])
@@ -289,7 +300,7 @@ func begin_room(spec: Dictionary) -> void:
 	last_damage = {}
 	numeric_monster_level = 1
 	numeric_difficulty = "normal"
-	table.configure_skills({})
+	table.configure_skills({}, job, weapon)
 	max_hp = float(snapshot.get("hp_max",table.player["hp_max"]))
 	max_mp = float(snapshot.get("mp_max",table.player["mp_max"]))
 	damage_scale = float(snapshot.get("damage_multiplier",1.0))
@@ -404,6 +415,8 @@ func _physics_process(delta: float) -> void:
 	if test_drive != null:test_drive.before_tick()
 	var ms := delta*1000
 	toast_ms = maxf(0,toast_ms-ms)
+	_dynamic_refresh_ms = maxf(0,_dynamic_refresh_ms-ms)
+	_aura_pulse_ms = maxf(0,_aura_pulse_ms-ms)
 	bus.tick = _frame
 	bus.time_ms = elapsed_ms
 	var sim_ms := 0.0
@@ -422,6 +435,124 @@ func _physics_process(delta: float) -> void:
 func move_def(name: String) -> Dictionary:
 	return table.moves.get(name,{})
 
+func active_effect(id: String) -> Dictionary:
+	if numeric_player == null:return {}
+	return numeric_player.effects.active.get(id,{})
+
+func effect_form(form: String) -> bool:
+	if numeric_player == null:return false
+	for effect: Dictionary in numeric_player.effects.active.values():
+		if String(effect.get("definition",{}).get("form","")) == form:return true
+	return false
+
+func primary_normal_attack() -> String:
+	if effect_form("dual_wield"):return "frenzy1"
+	if effect_form("ghost_step"):return "ghoststep_attack1"
+	if effect_form("kalla"):return "kalla_attack1"
+	if effect_form("wave_eye"):return "waveeye_attack1"
+	return "attack1"
+
+func skill_damage_multiplier(skill_id: String) -> float:
+	if numeric_player == null:return 1.0
+	var result := 1.0
+	for effect: Dictionary in numeric_player.effects.active.values():
+		var definition: Dictionary = effect.get("definition",{})
+		var bonuses: Dictionary = definition.get("skill_damage",{})
+		if bonuses.has(skill_id):
+			result *= 1.0+float(bonuses[skill_id])
+	return result
+
+func skill_cooldown_multiplier(skill_id: String) -> float:
+	if numeric_player == null:return 1.0
+	var result := 1.0
+	for effect: Dictionary in numeric_player.effects.active.values():
+		var rates: Dictionary = effect.get("definition",{}).get("skill_cooldown_rate",{})
+		if rates.has(skill_id):result *= float(rates[skill_id])
+	return result
+
+func refresh_dynamic_modifiers(force := false) -> void:
+	if numeric_player == null:return
+	if not force and _dynamic_refresh_ms > 0:return
+	_dynamic_refresh_ms = 100.0
+	var mods: Array = []
+	var hp_ratio := float(player["hp"])/maxf(1.0,float(max_hp))
+	var pinch_rank := int(skill_levels.get("pinchpowerup",0))
+	if pinch_rank > 0 and hp_ratio < 0.4:
+		var sample: Dictionary = Numbers.Skills.sample(Numbers.record("pinchpowerup"),pinch_rank)
+		var row: Array = sample.get("level_row",[])
+		var strength := (float(row[0])+float(row[1]))/2.0 if row.size()>1 else 0.0
+		var evasion := (float(row[2])+float(row[3]))/100.0 if row.size()>3 else 0.0
+		var haste := (float(row[4])+float(row[5]))/100.0 if row.size()>5 else 0.0
+		var factor := clampf((0.4-hp_ratio)/0.4,0.0,1.0)
+		mods.append({"source":"血气唤醒","stat":"strength","op":"add","value":strength*factor})
+		mods.append({"source":"血气唤醒","stat":"evasion","op":"add","value":evasion*factor})
+		mods.append({"source":"血气唤醒","stat":"attack_speed","op":"mul","value":1.0+haste*factor})
+		mods.append({"source":"血气唤醒","stat":"move_speed","op":"mul","value":1.0+haste*factor})
+	var bleed_rank := int(skill_levels.get("bleedingmastery",0))
+	if bleed_rank > 0:
+		var bleeding := 0
+		var radius := 800.0
+		var record: Dictionary = Numbers.record("bleedingmastery")
+		var static_data: Array = record.get("dungeon",record).get("static_data",[])
+		if not static_data.is_empty():radius = float(static_data[0])
+		for enemy: Dictionary in monsters:
+			if float(enemy["hp"])<=0 or not enemy.has("numeric"):continue
+			if enemy["numeric"].effects.active.has("bleed") and Vector2(enemy["pos"]).distance_to(Vector2(player["pos"])) <= radius:
+				bleeding += 1
+		var stacks := mini(bleeding,int(static_data[1]) if static_data.size()>1 else 5)
+		if stacks > 0:
+			var sample: Dictionary = Numbers.Skills.sample(record,bleed_rank)
+			var row: Array = sample.get("level_row",[])
+			var strength := float(row[1])*stacks if row.size()>1 else 0.0
+			var hit := float(row[2])*stacks/100.0 if row.size()>2 else 0.0
+			mods.append({"source":"鲜血之忆","stat":"strength","op":"add","value":strength})
+			mods.append({"source":"鲜血之忆","stat":"hit","op":"add","value":hit})
+	numeric_player.set_runtime_modifiers(mods)
+
+func pulse_passive_auras() -> void:
+	var rank := int(skill_levels.get("darkaura",0))
+	if rank > 0:
+		var record: Dictionary = Numbers.record("darkaura")
+		var sample: Dictionary = Numbers.Skills.sample(record,rank)
+		var row: Array = sample.get("level_row",[])
+		var radius := float(row[0]) if not row.is_empty() else 550.0
+		for enemy: Dictionary in monsters:
+			if float(enemy["hp"])<=0:continue
+			if Vector2(enemy["pos"]).distance_to(Vector2(player["pos"])) <= radius:
+				apply_effect({"kind":"effect","id":"dark_aura","target":enemy["id"],"rank":rank})
+	if not active_effect("dotarea").is_empty():
+		var dot_rank := int(skill_levels.get("dotarea",1))
+		var dot_record: Dictionary = Numbers.record("dotarea")
+		var dot_sample: Dictionary = Numbers.Skills.sample(dot_record,dot_rank)
+		var dot_row: Array = dot_sample.get("level_row",[])
+		var percent := float(dot_row[0]) if not dot_row.is_empty() else 18.0
+		for enemy: Dictionary in monsters:
+			if float(enemy["hp"])<=0:continue
+			if Vector2(enemy["pos"]).distance_to(Vector2(player["pos"])) <= 260.0:
+				land_hit(player,enemy,{"atk":{},"atk_path":"","percent":percent,"skill_id":"dotarea","damage_type":"magical","element":"none","lift":-1.0},Vector3(enemy["pos"].x,enemy["pos"].y,float(enemy["z"])),int(player["facing"]),attack_power())
+	for aura_entry in [
+		["khazan_aura","khazan",31.0,"none",{}],
+		["saya_aura","saya",80.0,"water",{"id":"freeze","chance":0.12}],
+		["bremen_aura","bremen",0.0,"dark",{"id":"bremen_debuff","chance":1.0}],
+		["epidemic_aura","epidemicrasa",40.0,"dark",{"id":"slow","chance":0.4}],
+	]:
+		var effect_id := String(aura_entry[0])
+		if active_effect(effect_id).is_empty():continue
+		var definition: Dictionary = active_effect(effect_id).get("definition",{})
+		var aura: Dictionary = definition.get("aura",{})
+		var radius := float(aura.get("radius",260))
+		var percent := float(aura.get("damage_percent",aura_entry[2]))
+		for enemy: Dictionary in monsters:
+			if float(enemy["hp"])<=0:continue
+			if Vector2(enemy["pos"]).distance_to(Vector2(player["pos"])) > radius:continue
+			var hit_effects: Array = []
+			if aura_entry[4] is Dictionary and not (aura_entry[4] as Dictionary).is_empty():
+				var status: Dictionary = (aura_entry[4] as Dictionary).duplicate(true)
+				if status.get("id","") == "bremen_debuff":apply_effect({"kind":"effect","id":"bremen_debuff","target":enemy["id"],"rank":1})
+				else:hit_effects.append(status)
+			if percent > 0:
+				land_hit(player,enemy,{"atk":{},"atk_path":"","percent":percent,"skill_id":String(aura_entry[1]),"damage_type":"magical","element":String(aura_entry[3]),"lift":-1.0,"effects":hit_effects},Vector3(enemy["pos"].x,enemy["pos"].y,float(enemy["z"])),int(player["facing"]),attack_power())
+
 ## Current stage of the running action (three-stage skills keep one move with stages).
 func action_def() -> Dictionary:
 	var m := move_def(String(player["action"]))
@@ -435,7 +566,7 @@ func action_duration(action: String) -> float:
 
 func buffering(code: int) -> void:
 	if code in [KEY_C,KEY_SPACE] and held.get(KEY_DOWN,false) and backstep_allowed():player["queued_backstep"] = true
-	elif code == KEY_X and String(player["action"]).begins_with("attack"):player["queued_combo"] = true
+	elif code == KEY_X and String(player["action"]) in ["attack1","attack2","attack3","frenzy1","frenzy2","frenzy3","frenzy4","ghoststep_attack1","ghoststep_attack2","kalla_attack1","kalla_attack2","kalla_attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]:player["queued_combo"] = true
 	elif code == KEY_Z:player["queued_skill"] = "upper"
 	elif skill_slot_index(code) >= 0:
 		var id := String(skill_slots[skill_slot_index(code)])
@@ -491,6 +622,9 @@ func step_game(ms: float) -> void:
 		max_mp = float(numeric_player.values["mp_max"])
 		player["hp"] = minf(max_hp,float(player["hp"])+float(numeric_player.values["hp_regen"])*dt)
 		player["mp"] = minf(max_mp,float(player["mp"])+float(numeric_player.values["mp_regen"])*dt)
+		refresh_dynamic_modifiers()
+		max_hp = float(numeric_player.values["hp_max"])
+		max_mp = float(numeric_player.values["mp_max"])
 	player["invuln_ms"] = maxf(0,float(player["invuln_ms"])-ms)
 	player["flash_ms"] = maxf(0,float(player["flash_ms"])-ms)
 	if numeric_player == null:player["buff_ms"] = maxf(0,float(player["buff_ms"])-ms)
@@ -516,6 +650,9 @@ func step_game(ms: float) -> void:
 		step_player(ms,move)
 	for enemy: Dictionary in monsters:update_enemy(enemy,ms)
 	step_objects(ms)
+	if _aura_pulse_ms <= 0:
+		_aura_pulse_ms = 1000.0
+		pulse_passive_auras()
 	step_hazards(ms)
 	for prop: Dictionary in props:
 		if prop.get("broken",false):prop["broken_ms"] = float(prop.get("broken_ms",0))+ms
@@ -571,7 +708,7 @@ func step_player(ms: float, move: Vector2) -> void:
 			elif float(player["z"])>0 or float(player["vz"])>0:start_action("air_attack")
 			# Dash attack only out of an actual run (double-tapped direction, still moving).
 			elif state == "move" and run_direction != 0 and int(move.x) == run_direction:start_action("dash_attack")
-			else:start_action("attack1")
+			else:start_action(primary_normal_attack())
 		elif code == KEY_Z:
 			if String(player["state"]) == "action":buffering(code)
 			else:start_action("upper")
@@ -739,6 +876,13 @@ func start_action(name: String, cancel := false) -> bool:
 	if airborne != bool(m.get("air",false)):return reject_action(name,"state")
 	if not cancel and String(player["state"]) in ["hurt","air","down","dead","backstep","action"]:return reject_action(name,"state")
 	if float(player["cooldowns"].get(name,0))>0:return reject_action(name,"cooldown")
+	var hp_cost := 0.0
+	if m.has("hp_cost_row"):
+		var sample: Dictionary = table._skill_row(String(m.get("skill","")))
+		var row: Array = sample.get("level_row",[])
+		var column := int(m["hp_cost_row"])
+		if column >= 0 and column < row.size():hp_cost = float(row[column])
+	if hp_cost > 0 and float(player["hp"]) <= hp_cost:return reject_action(name,"hp")
 	var mp_cost := float(m["mp"])*(float(numeric_player.values["mp_cost_rate"]) if numeric_player != null else 1.0)
 	if name == "rage_slash" and int(skill_levels.get("bloody_vigorous",0)) > 0:
 		if float(player["hp"]) <= mp_cost:return reject_action(name,"hp")
@@ -746,7 +890,8 @@ func start_action(name: String, cancel := false) -> bool:
 	else:
 		if float(player["mp"])<mp_cost:return reject_action(name,"mp")
 		player["mp"] = float(player["mp"])-mp_cost
-	if float(m["cool_ms"]) > 0:player["cooldowns"][name] = float(m["cool_ms"])/1000.0*(float(numeric_player.values["cooldown_rate"]) if numeric_player != null else 1.0)
+	if hp_cost > 0:player["hp"] = float(player["hp"])-hp_cost
+	if float(m["cool_ms"]) > 0:player["cooldowns"][name] = float(m["cool_ms"])/1000.0*(float(numeric_player.values["cooldown_rate"]) if numeric_player != null else 1.0)*skill_cooldown_multiplier(name)
 	end_action_fx()
 	player["state"] = "action"
 	player["action"] = name
@@ -765,6 +910,11 @@ func start_action(name: String, cancel := false) -> bool:
 		return true
 	player["fx_tag"] = "act:%d" % (action_seq+1)
 	start_stage(0)
+	match name:
+		"khazan":apply_effect({"kind":"effect","id":"khazan_aura","rank":int(skill_levels.get(name,1))})
+		"saya":apply_effect({"kind":"effect","id":"saya_aura","rank":int(skill_levels.get(name,1))})
+		"bremen":apply_effect({"kind":"effect","id":"bremen_aura","rank":int(skill_levels.get(name,1))})
+		"epidemicrasa":apply_effect({"kind":"effect","id":"epidemic_aura","rank":int(skill_levels.get(name,1))})
 	return true
 
 func start_stage(index: int) -> void:
@@ -861,13 +1011,15 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: Vector3, facing: int, power: float) -> void:
 	var atk: Dictionary = hit["atk"]
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
-	var percent := float(hit["percent"])
+	var hit_skill_id := String(hit.get("skill_id",player["action"]))
+	var percent := float(hit["percent"])*skill_damage_multiplier(hit_skill_id)
 	var amount := Kernel.Reaction.damage(power*(float(rules["buff"]["damage"]) if by_player and float(player["buff_ms"])>0 else 1.0),percent)
 	var resolved := {"critical":false,"category":"physical","missed":false}
 	if numeric_player != null:
 		var source_stats: Dictionary = numeric_player.values if by_player else attacker.get("numeric").values if attacker.get("numeric") != null else {"physical_attack":power,"magical_attack":power,"level":numeric_monster_level}
 		var target_stats: Dictionary = numeric_player.values if int(target["id"])==PLAYER_ID else target["numeric"].values
 		var context := hit.duplicate(true)
+		context["percent"] = percent
 		if by_player and String(context.get("element","none")) not in ["fire","water","light","dark"]:context["element"] = numeric_player.effective_element()
 		context["counter"] = String(target["state"]) in ["attack","action"]
 		context["back"] = int(target["facing"])==facing
@@ -907,14 +1059,16 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	if numeric_player != null and not target_is_player and float(target["hp"])>0:
 		var effect_list: Array = hit.get("effects",[]).duplicate(true)
 		if by_player:
-			var skill_id := String(hit.get("skill_id",player["action"]))
-			effect_list.append_array(Numbers.shared_config()["skills"].get(skill_id,{}).get("on_hit",[]))
+			effect_list.append_array(Numbers.shared_config()["skills"].get(hit_skill_id,{}).get("on_hit",[]))
+			if hit_skill_id == "hopsmash" and int(skill_levels.get("bloody_vigorous",0)) > 0:
+				effect_list.append({"id":"bleed","chance":0.4})
 		for effect: Dictionary in effect_list:
 			var chance := float(effect.get("chance",1))
-			var skill_id := String(hit.get("skill_id",player["action"]))
-			if effect.get("id","") == "bleed" and skill_id == "rage_slash" and int(skill_levels.get("bloody_vigorous",0)) > 0:
-				chance = maxf(chance,float(Numbers.shared_config()["skills"].get("bloody_vigorous",{}).get("gorecross_bleed_chance",chance)))
-			if rng.chance(chance):apply_effect({"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(skill_levels.get(skill_id,1))})
+			if effect.get("id","") == "bleed" and hit_skill_id in ["rage_slash","hopsmash"] and int(skill_levels.get("bloody_vigorous",0)) > 0:
+				chance = minf(1.0,chance+0.4)
+			if rng.chance(chance):apply_effect({"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(skill_levels.get(hit_skill_id,1))})
+		if bool(resolved.get("critical",false)) and int(skill_levels.get("defensedownoncritical",0)) > 0:
+			apply_effect({"kind":"effect","id":"defense_down","target":target["id"],"rank":int(skill_levels["defensedownoncritical"])})
 	if not target_is_player:
 		# 按怪物种类播受击/死亡音（bake_dnf_monster_sounds.py 生成 mon_<key>_<event>）；
 		# 该类怪没有独立音效时退回通用的哥布林音，避免完全无声。
@@ -1081,7 +1235,16 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 ## Player takes a monster hit. Returns the reaction kind, or "blocked" if nothing applied.
 func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) -> String:
 	if god_mode or float(player["invuln_ms"])>0 or finished:return "blocked"
-	var guarded: bool = String(player["state"])=="guard" and (Vector2(source["pos"]).x-Vector2(player["pos"]).x)*int(player["facing"])>=0
+	var was_action := String(player["state"]) == "action"
+	var front_hit := (Vector2(source["pos"]).x-Vector2(player["pos"]).x)*int(player["facing"])>=0
+	var guarded: bool = String(player["state"])=="guard" and front_hit
+	var auto_guard: Dictionary = active_effect("autoguard")
+	if not guarded and not auto_guard.is_empty() and front_hit:
+		var auto_rank := int(auto_guard.get("rank",1))
+		var sample: Dictionary = Numbers.Skills.sample(Numbers.record("autoguard"),auto_rank)
+		var row: Array = sample.get("level_row",[])
+		var chance := float(row[0])/100.0 if not row.is_empty() else 0.05
+		guarded = rng.chance(chance)
 	var taken := float(amount)
 	if guarded:
 		var guard_factor := float(rules["player"]["guard_factor"])
@@ -1090,6 +1253,11 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 			guard_factor = maxf(0,float(definition["guard_factor"])-(int(skill_levels.get("guard",1))-1)*float(definition["guard_per_level"]))
 		taken *= guard_factor
 	elif numeric_player == null and float(player["buff_ms"])>0:taken *= float(rules["buff"]["damage_taken"])
+	var keiga: Dictionary = active_effect("keiga")
+	if taken > 0 and not keiga.is_empty() and int(keiga.get("absorb_remaining",0)) > 0:
+		keiga["absorb_remaining"] = int(keiga["absorb_remaining"])-1
+		taken = 0.0
+		if int(keiga["absorb_remaining"]) <= 0 and numeric_player != null:numeric_player.remove_effect("keiga")
 	player["hp"] = maxf(0,float(player["hp"])-taken)
 	damage_taken += int(taken)
 	player["flash_ms"] = 65.0
@@ -1103,6 +1271,11 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 		reaction = Kernel.Reaction.apply(player,atk,facing,rules["reaction"],float(numeric_player.values["hit_recovery"]) if numeric_player != null else float(table.player["hit_recovery"]))
 		if reaction == "none":player["state"] = "idle"
 	play_sound("hurt")
+	var mindflash_rank := int(skill_levels.get("mindflash",0))
+	if mindflash_rank > 0:
+		apply_effect({"kind":"effect","id":"mindflash","target":PLAYER_ID,"rank":mindflash_rank})
+	if was_action and int(skill_levels.get("stuckuponcounter",0)) > 0:
+		apply_effect({"kind":"effect","id":"counter_evasion","target":PLAYER_ID,"rank":int(skill_levels["stuckuponcounter"])})
 	if float(player["hp"])<=0:
 		player["state"] = "dead"
 		finished = true

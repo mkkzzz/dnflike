@@ -29,7 +29,13 @@ class SkillCatalogTest(unittest.TestCase):
     def test_runtime_ids_are_unique_and_match_generated_descriptions(self):
         runtime = [skill for skill in self.skills if skill['local_id']]
         ids = [skill['local_id'] for skill in runtime]
-        self.assertEqual(len(ids), 16)
+        tree_ids = {
+            int(node['id'])
+            for branch in self.data['trees']['sp']
+            for node in branch['nodes']
+        }
+        self.assertEqual(len(ids), len(self.skills))
+        self.assertEqual(len(ids), 175)
         self.assertEqual(len(ids), len(set(ids)))
         text = DESCRIPTIONS.read_text(encoding='utf-8')
         for skill in runtime:

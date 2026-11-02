@@ -10,12 +10,52 @@ const SKILLS := {
   "source_path": "skill/swordman/guard.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  },
+ "reflectguard": {
+  "name": "鬼印珠",
+  "brief": "把波动印转化成鬼印珠向敌人发射， 波动印的数量越多， 鬼印珠的攻击力、 大小、 多段攻击次数等的数值就越大。",
+  "detail": "把波动印转化成鬼印珠向敌人发射， 波动印的数量越多， 鬼印珠的攻击力、 大小、 多段攻击次数等的数值就越大。\n    鬼印珠形成多段攻击时， 会降低鬼印珠和被命中敌人的移动速度；\n 鬼印珠消失时， 会产生爆炸并给予周围敌人一定伤害。",
+  "source_id": 2,
+  "source_path": "skill/swordman/reflectguard.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "autoguard": {
+  "name": "自动格挡",
+  "brief": "在自身被击中的前一秒以剑士的本能进行格挡， 效果持续一定时间。",
+  "detail": "一定的时间内，被击中之前会以剑士的本能进行格档。\n进行格档时，会发动目前学会的技能格档，在地下城时，一定时间内会呈现霸体状态。\n无法进行取消操作。",
+  "source_id": 3,
+  "source_path": "skill/swordman/autoguard.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "lightswordmastery": {
+  "name": "光剑精通",
+  "brief": "使用光剑系武器攻击敌人时， 可以增加光剑的物攻、 魔攻和物理命中率。\n    剑魂若学[光剑精通]达到一定Lv以上， 则会出现附加效果。",
+  "detail": "使用光剑系武器攻击敌人时， 可以增加光剑的物攻、 魔攻和物理命中率。\n    若技能达到Lv3以上， 使用[连突刺]则可以出现光剑气；\n 使用[里 · 鬼剑术]和光剑气攻击时， 追加感电状态。\n    若技能达到Lv5以上， 使用[三段斩]则可以进行5次斩击， 且最后一击还可以浮空敌人。\n    若技能达到Lv7以上， 使用[拔刀斩]可以追加一个物理攻击， 并有一定几率使敌人进入感电状态；\n 使用[幻影剑舞]可以增加斩击速度。\n    若技能达到Lv9以上， 使用[猛龙断空斩]还可以追加感电状态。",
+  "source_id": 4,
+  "source_path": "skill/swordman/lightswordmastery.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
  "hardattack": {
   "name": "鬼斩",
   "brief": "把鬼神召唤到武器上， 并向前方敌人发出强威力的斩击。",
   "detail": "把鬼神召唤到武器上， 并向前方敌人发出强威力的暗属性斩击。",
   "source_id": 5,
   "source_path": "skill/swordman/hardattack.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "hardattackcharge": {
+  "name": "噬灵鬼斩",
+  "brief": "通过蓄气使[鬼斩]的攻击力大幅度增加；\n 当蓄气达最大值时， 可以向前推进斩击敌人并喷射出鬼神冲波。",
+  "detail": "通过蓄气使[鬼斩]的攻击力大幅度增加， 当蓄气达最大值时， 可以向前推进斩击敌人并喷射出鬼神冲波。\n    鬼神冲波为卡赞、 萨亚、 普戾蒙三者中最後召唤出的鬼神；\n 若未召唤过任何鬼神， 则鬼神冲波默认为卡赞。\n    不同的鬼神可以附加不同的状态效果。\n    按前方向键或不按方向键， 自身和鬼神一起向前推进；\n 按後方向键， 只有鬼神向前推进。",
+  "source_id": 6,
+  "source_path": "skill/swordman/hardattackcharge.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "hitback": {
+  "name": "逆转反击",
+  "brief": "自身背后遭受攻击时， 可以进行反击。",
+  "detail": "自身背后遭受攻击时， 可以进行反击；\n 但作出反击时不会减少伤害。",
+  "source_id": 7,
+  "source_path": "skill/swordman/hitback.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  },
  "triple": {
@@ -34,7 +74,15 @@ const SKILLS := {
   "source_path": "skill/swordman/momentaryslash.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  },
- "short_sword_mastery": {
+ "dashattackmultihit": {
+  "name": "连突刺",
+  "brief": "在前冲攻击时按攻击键， 则额外追加一个突刺攻击。",
+  "detail": "在前冲攻击时按攻击键， 则额外追加一个突刺攻击。\n    突刺攻击时可以增加命中率， 并能击退敌人。",
+  "source_id": 11,
+  "source_path": "skill/swordman/dashattackmultihit.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "shortswordmastery": {
   "name": "短剑精通",
   "brief": "使用短剑系武器攻击敌人时， 可以增加短剑的物攻、 魔攻和物理命中率。\n    剑魂若学[短剑精通]达到一定Lv以上， 则会出现附加效果。",
   "detail": "使用短剑系武器攻击敌人时， 可以增加短剑的物攻、 魔攻和物理命中率。\n    剑魂若学Lv3以上的[短剑精通]， 则使用[上挑]后可以追加一个物理攻击；\n 使用普通攻击、 [里 · 鬼剑术]、 [上挑]时会出现剑气， 并增加物理独立攻击力；\n 而使用[破军升龙击]、 [流心 : 刺]、 [三段斩]则不会出现剑气， 但会增加物理独立攻击力。\n    若技能达到Lv5以上， 则使用[格挡]可以生成冲击波攻击敌人， 并有一定几率使其进入眩晕状态。\n    若技能达到Lv7以上， 则使用[猛龙断空斩]后还可以追加2次物理攻击， 而施放[拔刀斩]时则会出现剑气。",
@@ -42,7 +90,7 @@ const SKILLS := {
   "source_path": "skill/swordman/shortswordmastery.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  },
- "blade_mastery": {
+ "blademastery": {
   "name": "太刀精通",
   "brief": "使用太刀系武器攻击敌人时， 可以增加太刀的物攻、 魔攻和物理命中率。\n    剑魂若学[太刀精通]达到一定Lv以上， 则会出现附加效果。",
   "detail": "使用太刀系武器攻击敌人时， 可以增加太刀的物攻、 魔攻和物理命中率。\n    剑魂若学Lv3以上的[太刀精通]， 会使受到攻击的敌人进入出血状态；\n 使用[空中连斩]时攻击出血状态的敌人可以增加攻击力， 并且进行多段攻击。\n    若技能达到Lv5以上， 使用[三段斩]则可以进行5次斩击， 最後一击还可以浮空敌人。\n    若技能达到Lv7以上， 使用[拔刀斩]还可以追加一个物理攻击， 并有一定几率使敌人进入出血状态；\n 使用[幻影剑舞]则可以增加斩击速度。",
@@ -50,12 +98,100 @@ const SKILLS := {
   "source_path": "skill/swordman/blademastery.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  },
- "heavy_sword_mastery": {
+ "heavyswordmastery": {
   "name": "巨剑精通",
   "brief": "使用巨剑系武器攻击敌人时， 可以增加巨剑的物攻、 魔攻和物理命中率。\n    剑魂若学[巨剑精通]达到一定Lv以上， 则会出现附加效果。",
   "detail": "使用巨剑系武器攻击敌人时， 可以增加巨剑的物攻、 魔攻和物理命中率。\n    剑魂若学Lv3以上的[巨剑精通]， 则使用[银光落刃]时可以使自身进入霸体状态， 并对敌人进行多段攻击；\n 使用[里 · 鬼剑术]时， 第1次斩击会出现飓风， 按住技能键可以蓄气进行第2次斩击；\n 使用[拔刀斩]时， 按住技能键可以进行蓄气攻击。\n    若技能达到Lv5以上， 使用[格挡]则可以生成冲击波攻击敌人， 并有一定几率使敌人进入眩晕状态。\n    若技能达到Lv7以上， 使用[破军升龙击]后还可以追加蓄气型捶击攻击， 并生成冲击波。",
   "source_id": 14,
   "source_path": "skill/swordman/heavyswordmastery.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "bluntmastery": {
+  "name": "钝器精通",
+  "brief": "使用钝器系武器攻击敌人时， 可以增加钝器的物攻、 魔攻和物理命中率。\n    剑魂若学[钝器精通]达到一定Lv以上， 则会出现附加效果。",
+  "detail": "使用钝器系武器攻击敌人时， 可以增加钝器的物攻、 魔攻和物理命中率。\n    剑魂若学Lv3以上的[钝器精通]， 则使用[后跳斩]时可以生成物理冲击波使敌人浮空；\n 使用[里 · 鬼剑术]时， 对眩晕状态下的敌人追加攻击力；\n 而使用[银光落刃]时， 则增加冲击波范围。\n    若技能达到Lv5以上， 进行跳跃攻击并命中敌人时可以生成物理冲击波(空中连击时不适用)。\n    若技能达到Lv7以上， 使用[破军升龙击]后还可以追加蓄气型捶击攻击， 并生成冲击波；\n 使用[幻影剑舞]时， 最后一击不会出现剑气， 而是生成冲击波。",
+  "source_id": 15,
+  "source_path": "skill/swordman/bluntmastery.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "ashenfork": {
+  "name": "银光落刃",
+  "brief": "跳跃状态中向下方敌人发出强力刺击， 可以出现冲击波。",
+  "detail": "跳跃状态中向下方敌人发出强力刺击；\n 跳跃的高度越高， 攻击力就越强。 若达到一定高度后施放， 则还会出现冲击波。\n    若剑魂职业已学Lv3以上的[巨剑精通]， 则可以对敌人进行多段攻击。",
+  "source_id": 16,
+  "source_path": "skill/swordman/ashenfork.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "jumpattackmulti": {
+  "name": "空中连斩",
+  "brief": "在空中向敌人发出强威力的连续斩击。",
+  "detail": "在空中向敌人发出强威力的连续斩击， 但需从第二斩击开始， 才能适用空中连斩技能的攻击力。",
+  "source_id": 17,
+  "source_path": "skill/swordman/jumpattackmulti.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "ghoststep": {
+  "name": "鬼影步",
+  "brief": "借鬼神之力增加自身的移动速度， 效果持续一定时间， 且前冲的一定时间段内会进入无敌状态；\n 普通攻击和前冲攻击会转换成暗属性魔法攻击。",
+  "detail": "借鬼神之力增加自身的移动速度， 效果持续一定时间， 且前冲的一定时间段内会进入无敌状态；\n 普通攻击和前冲攻击会转换成暗属性魔法攻击。\n    [鬼影步]状态下， 使用[冥炎之卡洛]可以增加普通攻击和前冲攻击的攻击力。",
+  "source_id": 18,
+  "source_path": "skill/swordman/ghoststep.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "pinchpowerup": {
+  "name": "血气唤醒",
+  "brief": "当自身HP下降到极低时， 可以增加自身的力量、 回避率、 攻击速度和移动速度。",
+  "detail": "当自身HP下降到40%%以下时， 可以增加自身的力量、 回避率、 攻击速度和移动速度；\n HP越低增加的值越大。",
+  "source_id": 19,
+  "source_path": "skill/swordman/pinchpowerup.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "normalwave": {
+  "name": "地裂 · 波动剑",
+  "brief": "向前方敌人快速施放无属性的波动剑， 可以将敌人击退并使其倒地。\n    转职成为阿修罗时， 才可以强制中断普通攻击动作， 并立即施放该技能。",
+  "detail": "向前方敌人快速施放无属性的波动剑， 可以将敌人击退并使其倒地。\n    波动剑大小随技能Lv增加而增大。\n    转职成为阿修罗时， 才可以强制中断普通攻击动作， 并立即施放该技能。",
+  "source_id": 20,
+  "source_path": "skill/swordman/normalwave.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "icewave": {
+  "name": "冰刃 · 波动剑",
+  "brief": "向敌人发射冰属性小冰柱， 小冰柱沿地面移动并给予敌人一定伤害， 而且有一定几率使命中的敌人进入冰冻状态。",
+  "detail": "向敌人发射冰属性小冰柱， 小冰柱沿地面移动并给予敌人一定伤害， 而且有一定几率使命中的敌人进入冰冻状态。\n    虽然发射速度缓慢且小冰柱的移动距离短， 但是可以对敌人进行多段攻击。",
+  "source_id": 21,
+  "source_path": "skill/swordman/icewave.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "firewave": {
+  "name": "爆炎 · 波动剑",
+  "brief": "可发动火焰爆炸并引发连锁反应， 给敌人造成伤害。",
+  "detail": "可发动火焰爆炸并引发连锁反应， 给敌人造成伤害；\n 被火焰爆炸命中的敌人会受到火属性魔法伤害；\n 爆炸所处的位置还会生成火焰地带。\n    [爆炎 · 波动剑]命中异常状态下的敌人时， 可以使其进入灼伤状态。",
+  "source_id": 22,
+  "source_path": "skill/swordman/firewave.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "sacrifice": {
+  "name": "嗜血",
+  "brief": "为获得强大的力量， 爆发自身的血气， 使自身提高对血的敏感程度。 因施放时爆发了血气， 会出现消减大量HP的副作用。\n    在技能持续时间内， 施放者对出血状态下敌人使用血气系列技能时， 将大幅度提升效果。\n    蓄气后使用， 可以提高技能效果。",
+  "detail": "在[嗜血]状态下， 施放者对出血状态下敌人使用血气系列技能时， 将大幅度提升效果。\n    施放[嗜魂之手]、 [灭魂之手]时， 使敌人进入出血状态， 并增加攻击次数。\n    蓄气后使用[嗜血]技能， 可以增加力量和物理攻击力， 并使敌人进入出血状态。",
+  "source_id": 23,
+  "source_path": "skill/swordman/sacrifice.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "bloodblast": {
+  "name": "怒气爆发",
+  "brief": "向自身周围的敌人爆发怒气， 使周围的敌人受到一定的物理伤害并浮空。",
+  "detail": "向自身周围的敌人爆发怒气， 使周围的敌人受到一定的物理伤害并浮空。\n    怒气爆发后， 可以生成冲击波给予周围敌人4段攻击伤害， 而且在爆发中心的敌人还将受到8段攻击伤害。",
+  "source_id": 24,
+  "source_path": "skill/swordman/bloodblast.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "khazan": {
+  "name": "刀魂之卡赞",
+  "brief": "召唤出刀魂卡赞， 使在召唤领域内的我方队员增加力量和智力， 效果持续一定时间。\n    刀魂卡赞存在的状态下， 再次施放此技能， 则原有的会消失， 并且重新在前方召唤出新的卡赞。",
+  "detail": "召唤出刀魂卡赞， 使在召唤领域内的我方队员增加力量和智力， 效果持续一定时间。\n    刀魂卡赞存在的状态下， 再次施放此技能， 则原有的会消失， 并且重新在前方召唤出新的卡赞。",
+  "source_id": 25,
+  "source_path": "skill/swordman/khazan.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  },
  "weapon_mastery_up": {
@@ -66,12 +202,244 @@ const SKILLS := {
   "source_path": "skill/swordman/weaponmasteryup.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  },
+ "darkfriendship": {
+  "name": "暗之亲和",
+  "brief": "增加自身的暗属性抗性， 并减少光属性抗性。",
+  "detail": "增加自身20点暗属性抗性， 并减少10点光属性抗性。",
+  "source_id": 29,
+  "source_path": "skill/swordman/darkfriendship.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "darktoleranceup": {
+  "name": "暗月降临",
+  "brief": "增加自身及周围队员的暗属性抗性， 并减少周围敌人的暗属性抗性， 效果持续一定时间。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "detail": "增加自身及周围队员的暗属性抗性， 并减少周围敌人的暗属性抗性， 效果持续一定时间。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "source_id": 30,
+  "source_path": "skill/swordman/darktoleranceup.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "grabblastblood": {
+  "name": "嗜魂之手",
+  "brief": "抓取前方一名敌人并吸进其血气后再把吸进的血气喷发， 可以对敌人造成物理伤害并使施放者增加力量。\n    对出血状态的敌人施放时， 可以增加物理伤害并延长增加力量的持续时间。",
+  "detail": "抓取前方一名敌人并吸进其血气， 把吸进的血气喷发后， 可以对敌人造成物理伤害并使施放者增加力量。\n    对出血状态的敌人施放时， 可以增加物理伤害并延长增加力量的持续时间。\n    抓取判定 : 可以抓取霸体和防御状态的敌人， 但对少数敌人无效。\n    在[嗜血]状态下， 可增加吸血次数。",
+  "source_id": 31,
+  "source_path": "skill/swordman/grabblastblood.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "releasewave": {
+  "name": "波动爆发",
+  "brief": "将体内凝聚的波动之力瞬间爆发， 可以使周围的敌人朝施放者的正前方飞出。",
+  "detail": "将体内凝聚的波动之力瞬间爆发， 可以使周围的敌人朝施放者的正前方飞出。\n    受到攻击时， 该技能仍可瞬发并产生波动印。",
+  "source_id": 32,
+  "source_path": "skill/swordman/releasewave.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "equiplightsword": {
+  "name": "光剑掌握",
+  "brief": "可以使用光剑系武器攻击敌人。",
+  "detail": "可以使用光剑系武器攻击敌人。",
+  "source_id": 33,
+  "source_path": "skill/swordman/equiplightsword.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "diehard": {
+  "name": "死亡抗拒",
+  "brief": "缓慢恢复自身一定量的HP并增加物防和硬直， 效果持续一定时间， 但只能在自身HP极低时施放。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "detail": "缓慢恢复自身一定量的HP并增加物防和硬直， 效果持续一定时间， 但只能在自身HP极低时施放。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "source_id": 34,
+  "source_path": "skill/swordman/diehard.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "ghostpowerup": {
+  "name": "封印解除",
+  "brief": "解除鬼泣左臂封印， 释放压制的鬼神力量， 使[刀魂之卡赞]、 [冰霜之萨亚]、 [侵蚀之普戾蒙]、 [瘟疫之罗刹]、 [冥炎之卡洛]、 [鬼斩]技能各增加Lv1。\n    [刀魂之卡赞]和[侵蚀之普戾蒙]的攻击力会增加。",
+  "detail": "解除鬼泣左臂封印， 释放压制的鬼神力量， 使[刀魂之卡赞]、 [冰霜之萨亚]、 [侵蚀之普戾蒙]、 [瘟疫之罗刹]、 [冥炎之卡洛]、 [鬼斩]技能各增加Lv1。\n    [刀魂之卡赞]和[侵蚀之普戾蒙]的攻击力会增加。 若把[封印解除]设置为off状态， 则会消除[刀魂之卡赞]、[侵蚀之普戾蒙]对敌人的伤害能力。",
+  "source_id": 35,
+  "source_path": "skill/swordman/ghostpowerup.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "saya": {
+  "name": "冰霜之萨亚",
+  "brief": "召唤出萨亚， 使其以一定的时间间隔给予召唤领域内的敌人冰属性魔法伤害， 并有一定几率使敌人进入冰冻状态， 效果持续一定时间。",
+  "detail": "召唤出萨亚， 使其以一定的时间间隔给予召唤领域内的敌人冰属性魔法伤害， 并有一定几率使敌人进入冰冻状态， 效果持续一定时间。",
+  "source_id": 36,
+  "source_path": "skill/swordman/saya.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "fastequip": {
+  "name": "疾影手",
+  "brief": "剑魂特有技能， 可以迅速切换武器， 并且在切换其它系列武器时， 可以增加武器的攻击力和暴击率， 效果持续一定时间。",
+  "detail": "剑魂特有技能， 可以迅速切换武器， 并且在切换其它系列武器时， 可以增加武器的攻击力和暴击率， 效果持续一定时间。\n    切换同系列武器时， 只减少切换武器的冷却时间。",
+  "source_id": 37,
+  "source_path": "skill/swordman/fastequip.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "overdrive": {
+  "name": "破极兵刃",
+  "brief": "使武器突破耐久极限并持续一定时间， 可以增加武器攻击力和物理暴击率， 但会加快武器耐久度的消耗。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "detail": "使武器突破耐久极限并持续一定时间， 可以增加武器攻击力和物理暴击率， 但会加快武器耐久度的消耗。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "source_id": 38,
+  "source_path": "skill/swordman/overdrive.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "durabilityup": {
+  "name": "武器节制",
+  "brief": "掌握武器耐久度的极限点， 可以减缓武器耐久度的下降速度， 在[破极兵刃]已施放状态下亦有效。",
+  "detail": "掌握武器耐久度的极限点， 可以减缓武器耐久度的下降速度， 在[破极兵刃]已施放状态下亦有效。",
+  "source_id": 39,
+  "source_path": "skill/swordman/durabilityup.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "reckless": {
+  "name": "暴走",
+  "brief": "使自身进入暴走状态， 可以增加力量、 移动速度、 攻击速度和异常状态抗性， 效果持续一定时间；\n 但自身的智力、 物防、 魔防将减少。\n    被攻击时， 追加增加力量的效果， 该效果最多重叠5次。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "detail": "使自身进入暴走状态， 可以增加力量、 移动速度、 攻击速度和异常状态抗性， 效果持续一定时间；\n 但自身的智力、 物防、 魔防将减少。\n    被攻击时， 追加增加力量的效果， 该效果最多重叠5次。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "source_id": 40,
+  "source_path": "skill/swordman/reckless.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "bremen": {
+  "name": "侵蚀之普戾蒙",
+  "brief": "召唤出普戾蒙， 使召唤领域内的敌人减少异常状态抗性和魔防， 效果持续一定时间。\n    普戾蒙存在的状态下， 再次施放此技能， 则原有的会消失， 并且重新在前方召唤出新的普戾蒙。",
+  "detail": "召唤出普戾蒙， 使召唤领域内的敌人减少异常状态抗性和魔防， 效果持续一定时间。\n    普戾蒙存在的状态下， 再次施放此技能， 则原有的会消失， 并且重新在前方召唤出新的普戾蒙。",
+  "source_id": 41,
+  "source_path": "skill/swordman/bremen.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "disjointitemdark": {
+  "name": "((不使用",
+  "brief": "((不使用",
+  "detail": "((不使用",
+  "source_id": 42,
+  "source_path": "skill/swordman/disjointitemdark.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "jumpattackhighfast": {
+  "name": "((不使用",
+  "brief": "((不使用",
+  "detail": "((不使用",
+  "source_id": 43,
+  "source_path": "skill/swordman/jumpattackhighfast.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "tombstonerain": {
+  "name": "死亡墓碑",
+  "brief": "在自身周围一定区域内落下墓碑攻击敌人， 有一定几率使被击中的敌人进入诅咒状态。",
+  "detail": "在自身周围一定区域内落下墓碑攻击敌人， 有一定几率使被击中的敌人进入诅咒状态。\n    墓碑掉落时， 自身会进入霸体状态并无法移动， 按跳跃键可以中断技能。",
+  "source_id": 44,
+  "source_path": "skill/swordman/tombstonerain.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
  "upper": {
   "name": "上挑",
   "brief": "向敌人发出从下段往上挑的攻击， 可以浮空敌人；\n 攻击时有霸体判定。",
   "detail": "向敌人发出从下段往上挑的攻击， 可以浮空敌人；\n 攻击时有霸体判定。",
   "source_id": 46,
   "source_path": "skill/swordman/upperslash.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "wavemark": {
+  "name": "波动刻印",
+  "brief": "以一定的时间间隔生成波动印， 可以增加自身的智力和施放速度， 且波动印数量越多增加的幅度越大。\n    使用普通攻击和[上挑]时， 会产生波动剑气。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "detail": "以一定的时间间隔生成波动印， 可以增加自身的智力和施放速度， 且波动印数量越多增加的幅度越大。\n    首次施放时会生成一个波动印， 之後每隔一定时间可以追加一个。\n    使用普通攻击和[上挑]时， 会产生波动剑气。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "source_id": 47,
+  "source_path": "skill/swordman/wavemark.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "backstepcutter": {
+  "name": "后跳斩",
+  "brief": "施放[后跳]的同时向敌人发出斩击。",
+  "detail": "施放[后跳]的同时向敌人发出斩击， 但无法使用[空中连斩]。",
+  "source_id": 49,
+  "source_path": "skill/swordman/backstepcutter.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "grandwave": {
+  "name": "邪光斩",
+  "brief": "挥剑向前方敌人发出巨大的剑气攻击， 可以给予命中的敌人多段攻击。",
+  "detail": "挥剑向前方敌人发出巨大的剑气攻击， 可以给予命中的敌人多段攻击。",
+  "source_id": 50,
+  "source_path": "skill/swordman/grandwave.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "grandwavecharge": {
+  "name": "修罗邪光斩",
+  "brief": "凝聚自身力量， 将[邪光斩]升级为[修罗邪光斩]。",
+  "detail": "凝聚自身力量， 将[邪光斩]升级为[修罗邪光斩]；\n 若蓄气后发射， 则可以增加邪光斩的攻击力、 发射速度和射程。\n    当蓄气达最大值时， 可以击退命中的敌人；\n 此时若已学[波动刻印]， 则可以出现1个波动印。",
+  "source_id": 51,
+  "source_path": "skill/swordman/grandwavecharge.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "dotarea": {
+  "name": "杀意波动",
+  "brief": "向敌人喷射强烈杀意的波动， 使周围敌人受到持续的无视防御伤害， 并增加自身及周围队员的物理暴击率和魔法暴击率。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "detail": "向敌人喷射强烈杀意的波动， 使周围敌人受到持续的无视防御伤害， 并增加自身及周围队员的物理暴击率和魔法暴击率。\n    技能施放後会持续消耗MP， 若MP不足或再次施放， 则可以中断技能。\n    此技能对处於过高位置的敌人无效；\n 若对方是玩家角色， 则只能造成25%%的伤害。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "source_id": 52,
+  "source_path": "skill/swordman/dotarea.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "mindflash": {
+  "name": "挫折意志",
+  "brief": "受敌人攻击後可以暂时增加智力， 若增加的智力达最大重叠後再次受到攻击， 则可以增加MP恢复量。",
+  "detail": "受敌人攻击後可以暂时增加智力， 若持续时间内再次受到攻击， 则智力增加效果会重叠。\n    若增加的智力达最大重叠後再次受到攻击， 则一定时间内会增加MP恢复量， 但智力增加效果不会重叠。",
+  "source_id": 53,
+  "source_path": "skill/swordman/mindflash.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "senseviolenttemper": {
+  "name": "杀气感知",
+  "brief": "可以在眼睛失明的状态下感知敌人的杀气， 增加自身的失明抗性和背击回避率。",
+  "detail": "可以在眼睛失明的状态下感知敌人的杀气， 增加自身100%%失明抗性和3%%背击回避率，  并减少防具耐久度的下降率。",
+  "source_id": 55,
+  "source_path": "skill/swordman/senseviolenttemper.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "armormasteryheavybk": {
+  "name": "狂战士重甲专精",
+  "brief": "装备重甲系防具时， 可以增加力量、 精神、 MP恢复速度、 MP最大值、 HP最大值和物防；\n 且MP恢复速度、 施放速度和攻击速度的惩罚效果会消失。",
+  "detail": "装备重甲系防具时， 可以增加力量、 精神、 MP恢复速度、 MP最大值、 HP最大值和物防；\n 且MP恢复速度、 施放速度和攻击速度的惩罚效果会消失。\n    效果随装备的重甲数量增加而增大。",
+  "source_id": 56,
+  "source_path": "skill/swordman/armormasteryheavybk.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "shockwavearea": {
+  "name": "邪光波动阵",
+  "brief": "捶击地面後生成圆形波动阵攻击敌人， 可以使波动阵内的所有敌人受到多段攻击伤害和邪光伤害。",
+  "detail": "捶击地面後生成圆形波动阵攻击敌人， 可以使波动阵内的所有敌人受到多段攻击伤害和邪光伤害并使其向後击飞。\n    还可以对受邪光伤害的敌人周围的敌人造成扩散型魔法伤害。",
+  "source_id": 57,
+  "source_path": "skill/swordman/shockwavearea.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "vaneslash": {
+  "name": "裂波斩",
+  "brief": "用强威力的上斩攻击前方敌人并施放裂波， 裂波将给予周围敌人多段攻击并击飞敌人， 上斩时有抓取判定。",
+  "detail": "用强威力的上斩攻击前方敌人并施放裂波， 裂波将给予周围敌人多段攻击并击飞敌人。\n    上斩和下斩只能对被抓取的敌人造成伤害， 而裂波则可以对被抓取的敌人以及周围的敌人造成伤害。\n    抓取判定 : 可以抓取霸体和防御状态的敌人， 但对少数敌人无效。\n    若已学[波动刻印]， 则施放裂波斩时可以生成1个波动印。",
+  "source_id": 58,
+  "source_path": "skill/swordman/vaneslash.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "ghoststepslash": {
+  "name": "鬼影闪",
+  "brief": "以极快的速度向前移动一段距离并斩击敌人， 但只能在[鬼影步]使用前冲後进入无敌状态时施放。\n    被斩击的敌人在一定时间内会进入禁锢状态， 状态结束时会附加敌人暗属性伤害。",
+  "detail": "以极快的速度向前移动一段距离并斩击敌人， 但只能在[鬼影步]使用前冲後进入无敌状态时施放。\n    被斩击的敌人在一定时间内会进入禁锢状态， 状态结束时会附加敌人暗属性伤害。",
+  "source_id": 60,
+  "source_path": "skill/swordman/ghoststepslash.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "armormasteryplatewave": {
+  "name": "阿修罗板甲专精",
+  "brief": "装备板甲系防具时， 可以增加智力、 精神、 MP恢复速度、 MP最大值、 HP最大值和施放速度；\n 且MP恢复速度、 施放速度和攻击速度的惩罚效果会消失。",
+  "detail": "装备板甲系防具时， 可以增加智力、 精神、 MP恢复速度、 MP最大值、 HP最大值和施放速度；\n 且MP恢复速度、 施放速度和攻击速度的惩罚效果会消失。\n    效果随装备的板甲数量增加而增大。",
+  "source_id": 61,
+  "source_path": "skill/swordman/armormasteryplatewave.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "standalonewave": {
+  "name": "无双波",
+  "brief": "在自身周围生成强力的吸附波吸附周围的敌人；\n  可在施放[杀意波动]後， 并且处於[挫折意志]状态下使用；\n 未处在[挫折意志]状态时， 可通过消耗波动刻印来使用该技能。\n    若在施放後按下操作键， 可发动最後一击， 同时还可以强制中断当前动作并施放[不动明王阵]。\n    技能施放中的被击次数不计入评分统计。",
+  "detail": "在自身周围生成强力的吸附波吸附周围的敌人；\n 可在施放[杀意波动]後， 并且处於[挫折意志]状态下使用；\n 未处在[挫折意志]状态时， 可通过消耗波动刻印来使用该技能。\n    若在施放後按下操作键， 可发动最後一击， 同时还可以强制中断当前动作并施放[不动明王阵]；\n 最後斩击命中敌人时， 会出现冲击波， 蓄气时间越长， 冲击波越大。\n    施放过程中， 会使自身所受伤害减少50%%， 并增加防御；\n 同时吸附的敌人数量越多， 则攻击力和冲击波的范围就越大。\n    若吸附的是领主、 稀有、 精英、 深渊类敌人， 则给予敌人的伤害会更大。",
+  "source_id": 62,
+  "source_path": "skill/swordman/standalonewave.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  },
  "bloody_vigorous": {
@@ -90,12 +458,60 @@ const SKILLS := {
   "source_path": "skill/swordman/gorecross.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  },
+ "hopsmash": {
+  "name": "崩山击",
+  "brief": "向前低跃并用武器砸击地面， 有多段攻击判定， 最后一击可以使敌人倒地。\n    转职成为狂战士时， 才可以强制中断普通攻击动作， 并立即施放该技能。",
+  "detail": "向前低跃并用武器砸击地面， 有多段攻击判定， 最后一击可以使敌人倒地。\n    若已学狂战士职业特有的[血气旺盛]技能， 则会发出冲击波并使敌人进入出血状态。\n    跳跃距离和冲击波范围会随施放技能时的指令键按放间隔长短而改变。\n    转职成为狂战士时， 才可以强制中断普通攻击动作， 并立即施放该技能。",
+  "source_id": 65,
+  "source_path": "skill/swordman/hopsmash.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "weaponcombo": {
+  "name": "里 · 鬼剑术",
+  "brief": "剑魂特有的鬼剑术， 使用的武器不同， 出现的攻击效果也不同。",
+  "detail": "剑魂特有的鬼剑术；\n 使用的武器不同， 出现的攻击效果也不同。\n    可以与普通攻击形成连击， 但最后一击后无法连接普通攻击或[里 · 鬼剑术]。\n    可强制中断[里·鬼剑术]， 并施放其它的转职技能。",
+  "source_id": 67,
+  "source_path": "skill/swordman/weaponcombo.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
  "charge_crash": {
   "name": "破军升龙击",
   "brief": "以冲撞击退敌人的同时向敌人发出单手上斩， 可以使敌人浮空。",
   "detail": "以冲撞击退敌人的同时向敌人发出单手上斩， 可以使敌人浮空。\n    若已学一定Lv以上的[巨剑精通]或[钝器精通]并使用巨剑或钝器系武器， 则可以追加一个蓄气型下捶击。",
   "source_id": 68,
   "source_path": "skill/swordman/chargecrash.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "rapidmoveslash": {
+  "name": "猛龙断空斩",
+  "brief": "向前方快速移动并斩击敌人， 可以上下左右移动着斩击敌人。",
+  "detail": "向前方快速移动并斩击敌人， 可以上下左右移动着斩击敌人。\n    起始斩击后可以通过追加操作指定后续的攻击方向， 最后一击为可以使敌人浮空的单手上斩。\n    若已学一定Lv以上的[光剑精通]并使用光剑系武器， 则可以使敌人进入感电状态。",
+  "source_id": 72,
+  "source_path": "skill/swordman/rapidmoveslash.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "illusionslash": {
+  "name": "幻影剑舞",
+  "brief": "在原地向敌人发出迅猛的连续斩击， 且最后一击可以发出凌厉的剑气给予敌人多重伤害。\n    附加效果会因使用的武器种类不同而出现差异。",
+  "detail": "在原地向敌人发出迅猛的连续斩击， 且最后一击可以发出凌厉的剑气给予敌人多重伤害。\n    斩击次数、 速度和最后一击的效果， 会因穿戴的武器和武器精通技能的不同而出现差异。\n    使用短剑、 太刀、 巨剑、 光剑系武器时， 最后一击可以发出凌厉的剑气给予敌人多重伤害。\n    可以按上下方向键控制剑气的方向， 若连续按攻击键， 则可以增加斩击次数和剑气威力。\n    短剑系武器的剑气多段攻击间隔较短， 但是持续时间长。\n    钝器系武器的最后一击不会发出剑气， 但会生成冲击波。\n    若相应的武器精通技能达到Lv7以上， 则使用光剑和太刀系武器时， 可以增加斩击次数和攻击速度， 但攻击力会减少。",
+  "source_id": 73,
+  "source_path": "skill/swordman/illusionslash.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "wavespinarea": {
+  "name": "不动明王阵",
+  "brief": "生成可以使敌人浮空的不动明王阵， 并释放出旋转於波动阵周边的焰珠攻击敌人；\n 但只有在波动印出现後才能施放此技能。",
+  "detail": "生成可以使敌人浮空的不动明王阵， 并释放出旋转於波动阵周边的焰珠攻击敌人；\n 但只有在波动印出现後才能施放此技能。\n    若连续按攻击键， 则可以提高焰珠的旋转速度， 但焰珠旋转一定次数後会消失并引发魔法爆炸。\n    波动印数量越多， 出现的焰珠就越多；\n 在施放技能的时间段内， 施放者不会被敌人抓取。",
+  "source_id": 74,
+  "source_path": "skill/swordman/wavespinarea.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "epidemicrasa": {
+  "name": "瘟疫之罗刹",
+  "brief": "召唤出瘟疫鬼神附到敌人身上， 使敌人减少各属性值并附加异常状态效果。",
+  "detail": "召唤出瘟疫鬼神附到敌人身上， 减少其攻击速度、 物防和硬直， 并附加中毒、 失明、 出血状态中的任意一种异常状态。\n    对单个敌人最多可以同时附3个鬼神。\n    [瘟疫之罗刹]可以使范围内的敌人减速。",
+  "source_id": 75,
+  "source_path": "skill/swordman/epidemicrasa.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  },
  "buff": {
@@ -114,7 +530,631 @@ const SKILLS := {
   "source_path": "skill/swordman/moonlightslash.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  },
- "physical_crit_up": {
+ "bloodyrave": {
+  "name": "嗜魂封魔斩",
+  "brief": "把前方敌人吸附到自身的近身处， 并用血气之剑对其进行斩击， 只能在[血之狂暴]已施放的状态下使用。",
+  "detail": "把前方敌人吸附到自身的近身处， 并用血气之剑对其进行斩击， 只能在[血之狂暴]已施放的状态下使用。\n    可以按住技能键持续吸附敌人， 但每秒会消减自身一定量的HP。\n    吸附结束后可以用血气之剑斩击前方敌人， 吸附的敌人越多， 斩击时造成的伤害就越大。\n    若吸附的是领主、 稀有、 精英、 深渊类敌人， 则敌人受到的伤害会更大。",
+  "source_id": 79,
+  "source_path": "skill/swordman/bloodyrave.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "moonlightslashfull": {
+  "name": "满月斩",
+  "brief": "使月光斩的单手上斩后追加一个带有暗属性伤害的双手上斩。",
+  "detail": "使月光斩的单手上斩后追加一个带有暗属性伤害的双手上斩。",
+  "source_id": 80,
+  "source_path": "skill/swordman/moonlightslashfull.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "outragebreak": {
+  "name": "崩山裂地斩",
+  "brief": "召唤出血气之剑并猛力捶击地面， 使敌人浮空的同时还会喷出炙热的岩浆攻击周围的敌人， 只能在[血之狂暴]已施放的状态下使用。",
+  "detail": "召唤出血气之剑并猛力捶击地面， 使地面出现大范围的冲击波攻击敌人并使其浮空， 而且地面喷出的炙热岩浆还可以攻击周围浮空的敌人。\n    只能在[血之狂暴]已施放的状态下使用， 召唤时会消减一定量的HP。",
+  "source_id": 81,
+  "source_path": "skill/swordman/outragebreak.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "kalla": {
+  "name": "冥炎之卡洛",
+  "brief": "召唤出卡洛附身到自身身上， 并向敌人发射卡洛的分身。 若再按指令键， 则卡洛会变成冥炎剑并对敌人发出二刀流的三连击。\n    [鬼影步]状态下， 卡洛的气息会附加在武器上， 并增加普通攻击和前冲攻击的攻击力。",
+  "detail": "召唤出卡洛附身到自身身上， 并向敌人发射卡洛的分身。\n    [鬼影步]状态下， 卡洛的气息会附加在武器上， 并增加普通攻击和前冲攻击的攻击力。\n    被卡洛分身或剑命中的敌人， 会受到暗属性伤害并被冥炎附身。\n    单个敌人可以被3个冥炎附身， 且每隔一定时间会受到无视防御的魔法伤害。\n    若再按指令键， 则卡洛将变成冥炎剑并进入二刀流模式， 且向敌人发出包含右斩击、 左斩击和上斩击的3连击。\n    冥炎还可以附身到被冥炎剑命中的敌人身上。",
+  "source_id": 82,
+  "source_path": "skill/swordman/kalla.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "keiga": {
+  "name": "残影之凯贾",
+  "brief": "召唤出凯贾环绕在自身周围， 可以减少自身受到的物理伤害和魔法伤害， 并增加回避率；\n 效果持续一定时间。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "detail": "召唤出凯贾环绕在自身周围， 可以减少自身受到的物理伤害和魔法伤害， 并增加回避率；\n 效果持续一定时间。\n    技能效果持续期间， 增加[鬼影闪]伤害。\n   凯贾吸收一定次数的伤害或经过一定时间就会消失。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "source_id": 84,
+  "source_path": "skill/swordman/keiga.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "hellbenter": {
+  "name": "魔狱血刹",
+  "brief": "施放[魔狱血刹]後， 会吸收敌人的血气并释放累积的血气力量， 使敌人受到无属性的爆炸伤害。\n    Lv3、 Lv6、 Lv9时， 技能效果将有所增强。",
+  "detail": "施放[魔狱血刹]後， 会吸收敌人的血气并释放累积的血气力量， 使敌人受到无属性的爆炸伤害。\n    技能施放状态下， 可以增加自身的攻击速度和移动速度。 攻击敌人时， 会吸收敌人的血气并进一步增加攻自身的攻击速度和移动速度， 而且还能增加[血气之刃]的体积。 当累积的血气达到最大值後， 可以向敌人发出最强威力的攻击。\n    吸收敌人的血气时， [血之狂暴]普通攻击将有100%%的几率使敌人进入特殊出血状态。\n    若最後一击命中特殊出血状态下的敌人， 则会强化特殊出血效果， 且强化特殊出血效果的重叠数与爆炸时的多段攻击次数一致。\n    Lv3 : 血气达到最大值时， 进一步增加自身的攻击速度和移动速度。\n    Lv6 : 增加吸收敌人血气的持续时间。\n    Lv9 : 增加特殊出血状态的攻击力。",
+  "source_id": 85,
+  "source_path": "skill/swordman/hellbenter.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "hundredsword": {
+  "name": "极 · 鬼剑术 (暴风式)",
+  "brief": "向空中同时抛出24把剑， 使其中12把浮空， 另外12把插入地面形成剑阵， 并给予敌人高僵直的物理伤害；\n 施放者用这24把剑攻击周围敌人， 在剑阵中受到伤害的敌人会被吸进剑阵中心。 所有的剑全部消失后， 向敌人发出上斩一击作为终结， 并给予敌人巨大伤害。\n    Lv3、 Lv6、 Lv9时， 技能效果将有所增强。",
+  "detail": "向空中同时抛出24把剑， 使其中12把浮空， 另外12把插入地面形成剑阵， 并给予敌人高僵直的物理伤害；\n 施放者用这24把剑攻击周围敌人， 在剑阵中受到伤害的敌人会被吸进剑阵中心。 所有的剑全部消失后， 向敌人发出上斩一击作为终结， 并给予敌人巨大伤害。\n    Lv3、 Lv6、 Lv9时， 技能效果将有所增强。\n    Lv3 : 施放后， 使自身进入无敌状态。\n    Lv6 : 施放时， 增加暴击几率。\n    Lv9 : 增加[极 · 鬼剑术 (斩铁式)]的Lv， 效果持续10秒。",
+  "source_id": 86,
+  "source_path": "skill/swordman/hundredsword.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "blache": {
+  "name": "第7鬼神 : 邪神之怖拉修",
+  "brief": "召唤出邪神之怖拉修协助自身战斗。\n    技能施放后， 会出现范围缓缓变大的怖拉修沼泽， 当沼泽面积达到最大时， 怖拉修会出现并攻击敌人。\n    若被吞噬的鬼神数量越多、 品级越高， 则怖拉修的出场速度就越快、 攻击力就越强。\n    可以吞噬的鬼神 : 卡赞、 普戾蒙、 萨亚、 罗刹、 鬼影、 卡洛。\n    Lv3、 Lv6、 Lv9时， 技能效果将有所增强。",
+  "detail": "召唤出邪神之怖拉修协助自身战斗， 但施放时， 周围必须存在一定数量的鬼神才能成功召唤。\n    技能施放后， 会出现范围缓缓变大的怖拉修沼泽， 沼泽中的敌人会降低移动速度和命中率。 当沼泽面积达到最大时， 怖拉修会出现并攻击敌人。\n    怖拉修出现时， 会引发冲击波并使敌人受到暗属性伤害；\n 当他合上大颚时， 还会使敌人受到第2次暗属性伤害并增加召唤者的智力。 若此时杀死的敌人越多， 则召唤者增加的智力值越高。\n    怖拉修还会吞噬已召唤出的鬼神增加其自身的攻击力和出场速度， 若被吞噬的鬼神数量越多、 品级越高， 则怖拉修的出场速度就越快、 攻击力越强。\n    可以吞噬的鬼神 : 卡赞、 普戾蒙、 萨亚、 罗刹、 鬼影、 卡洛。\n    被怖拉修吞噬的鬼神会立即初始化冷却时间。\n    Lv3 : 提升每杀死一个敌人所增加的智力；\n 进一步降低敌人的命中率和移动速度。\n    Lv6 : 技能结束后， 根据怖拉修吞噬的鬼神， 可以获得相应的Buff。\n    Lv9 : 增加每个鬼神可转换的攻击力。",
+  "source_id": 87,
+  "source_path": "skill/swordman/blache.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "waveeye": {
+  "name": "暗天波动眼",
+  "brief": "在一定时间内开启波动之眼， 使其生成一个属於自身的暗黑领域；\n 可以降低暗黑领域内敌人的命中率和攻击速度， 而且自身的基本攻击会变成魔法攻击、 原有的波动剑技能会发生变异；\n 暗黑领域内的天眼会发生爆炸并给予敌人巨大的无属性魔法伤害。\n    Lv3、 Lv6、 Lv9时， 技能效果将有所增强。\n    只能在[杀意波动]状态下使用。",
+  "detail": "在一定时间内开启波动之眼， 使其生成一个属於自身的暗黑领域， 可以强化自身的能力和弱化敌人。\n    在暗黑领域内的敌人会降低命中率和攻击速度， 而且自身的基本攻击会变成魔法攻击、 已学的波动剑技能会发生变异。\n    只能在[杀意波动]状态下使用。\n波动眼 · 天照 : [冰刃 · 波动剑]的变异技能， 从前方地面生出一根魔法地刺对敌人进行无属性魔法攻击并把敌人拉向自身。\n波动剑 · 光翼 : [地裂 · 波动剑]的变异技能， 向敌人发出交叉的光翼攻击， 使上下大范围内的敌人受到无属性魔法伤害。\n波动剑 · 闪枪 : [爆炎 · 波动剑]的变异技能， 在敌人背後生成一定数量的长枪并使其极速穿刺前方敌人， 使敌人受到无属性魔法伤害。\n波动剑 · 刺轮 : 在[普通攻击的最後一击]发射一个刺轮向前移动， 使敌人受到无属性魔法伤害。\n    最後， 暗黑领域内会生成无数天眼并引发天眼的巨大爆炸， 可以使敌人受到巨大的无属性魔法伤害。\n    Lv3 : 减少敌人的命中率和攻击速度， 并增加此效果范围。\n    Lv6 : 增加第1、 2、 3次攻击的魔法攻击力， 减少光翼的冷却时间。\n    Lv9 : 增加所有技能的攻击力， 减少效果持续时间。",
+  "source_id": 88,
+  "source_path": "skill/swordman/waveeye.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "darkaura": {
+  "name": "恐惧光环",
+  "brief": "散发可以使周围敌人恐惧的黑暗光环， 可以降低周围敌人的暗属性抗性和攻击速度。",
+  "detail": "散发可以使周围敌人恐惧的黑暗光环， 可以降低周围敌人的暗属性抗性和攻击速度。",
+  "source_id": 89,
+  "source_path": "skill/swordman/darkaura.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "bleedingmastery": {
+  "name": "鲜血之忆",
+  "brief": "提高血气系列技能的出血Lv， 若周围一定范围内存在处于出血状态的敌人或友军， 则可以增加自身的力量和命中率。 使用可引发出血状态的技能攻击敌人时， 将减少敌人的出血状态抗性。",
+  "detail": "提高血气系列技能的出血Lv， 若周围一定范围内存在处于出血状态的敌人或友军， 则可以增加自身的力量和命中率。\n    周围处于出血状态的敌人越多， 自身提升的力量和命中率就越大。 用可引发出血状态的技能攻击敌人时， 将减少敌人的出血状态抗性。",
+  "source_id": 90,
+  "source_path": "skill/swordman/bleedingmastery.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "defensedownoncritical": {
+  "name": "极 · 鬼剑术 (斩铁式)",
+  "brief": "将鬼剑术修炼至极致， 使敌人受到暴击伤害时降低其自身的物理防御力， 效果持续一定时间；\n 此效果可以重叠。",
+  "detail": "将鬼剑术修炼至极致， 使敌人受到暴击伤害时降低其自身的物理防御力， 效果持续一定时间；\n 此效果可以重叠。",
+  "source_id": 91,
+  "source_path": "skill/swordman/defensedownoncritical.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "stuckuponcounter": {
+  "name": "心眼",
+  "brief": "用心神洞察万物， 被破招攻击时， 可以增加自身的回避率， 使自身不易被敌人击中。",
+  "detail": "用心神洞察万物， 被破招攻击时， 可以增加自身的回避率， 使自身不易被敌人击中。",
+  "source_id": 92,
+  "source_path": "skill/swordman/stuckuponcounter.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "armormasteryclothsb": {
+  "name": "鬼泣布甲专精",
+  "brief": "装备布甲系防具时， 可以增加MP最大值、 HP最大值 、 MP恢复速度、 移动速度、 施放速度和智力。",
+  "detail": "装备布甲系防具时， 可以增加MP最大值、 HP最大值 、 MP恢复速度、 移动速度、 施放速度和智力。\n    效果随装备的布甲数量增加而增大， 且增加的MP最大值、 施放速度和智力比[布甲精通]更高。",
+  "source_id": 93,
+  "source_path": "skill/swordman/armormasteryclothsb.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "armormasterylightwm": {
+  "name": "剑魂轻甲专精",
+  "brief": "装备轻甲系防具时， 可以增加力量、 体力、 精神、 MP恢复速度、 MP最大值、 HP最大值和硬直。",
+  "detail": "装备轻甲系防具时， 可以增加力量、 体力、 精神、 MP恢复速度、 MP最大值、 HP最大值和硬直。\n    效果随装备的轻甲数量增加而增大， 且增加的力量比[轻甲精通]更高。",
+  "source_id": 94,
+  "source_path": "skill/swordman/armormasterylightwm.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "tombstonerainex": {
+  "name": "墓碑三绝阵",
+  "brief": "在自身周围一定区域内落下墓碑攻击敌人， 并有一定几率使被击中的敌人进入诅咒状态。\n    墓碑掉落时， 墓碑周围会生成降低敌人暗属性抗性并使我方攻击转换为暗属性的光环。\n    经过一段时间或再次按技能键， 墓碑周围会发生暗属性爆炸， 同时墓碑消失。",
+  "detail": "在自身周围一定区域内落下墓碑攻击敌人， 并有一定几率使被击中的敌人进入诅咒状态。\n    墓碑掉落时， 墓碑周围会生成降低敌人暗属性抗性并使我方攻击转换为暗属性的光环。\n    经过一段时间或再次按技能键， 墓碑周围会发生暗属性爆炸， 同时墓碑消失。",
+  "source_id": 95,
+  "source_path": "skill/swordman/tombstonerainex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "sayaex": {
+  "name": "冰晶之萨亚",
+  "brief": "召唤出萨亚， 使其以一定的时间间隔给予召唤领域内的敌人冰属性魔法伤害， 且有一定几率使敌人进入冰冻状态， 并会生成冰之结晶攻击敌人， 效果持续一定时间。",
+  "detail": "召唤出萨亚， 使其以一定的时间间隔给予召唤领域内的敌人冰属性魔法伤害， 且有一定几率使敌人进入冰冻状态， 并会生成冰之结晶攻击敌人， 效果持续一定时间。",
+  "source_id": 96,
+  "source_path": "skill/swordman/sayaex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "momentaryslashex": {
+  "name": "破空拔刀斩",
+  "brief": "拔刀并快速向周围敌人发出强威力的斩击， 可以攻击大范围的敌人， 并向前方敌人发动剑气攻击。",
+  "detail": "拔刀并快速向周围敌人发出强威力的斩击， 可以攻击大范围的敌人， 并向前方敌人发动剑气攻击。\n    蓄气后， 可以增加拔刀斩和剑气的攻击力， 并增加剑气攻击的范围。",
+  "source_id": 97,
+  "source_path": "skill/swordman/momentaryslashex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "chargecrashex": {
+  "name": "破军斩龙击",
+  "brief": "以冲撞击退敌人后使敌人浮空， 并使其进入眩晕状态。\n    使敌人浮空后， 施放者还会快速转身并用剑刺敌人， 且将刺中的敌人聚在一处后发出上挑攻击， 使敌人浮空",
+  "detail": "以冲撞击退敌人后使敌人浮空， 并使其进入眩晕状态。\n    使敌人浮空后， 施放者还会快速转身并用剑刺敌人， 且将刺中的敌人聚在一处后发出上挑攻击， 使敌人浮空。",
+  "source_id": 98,
+  "source_path": "skill/swordman/chargecrashex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "firewaveex": {
+  "name": "极炎 · 裂波剑",
+  "brief": "向前方敌人发射烈焰波并使其受到火属性伤害， 被命中的敌人会被击退一定距离；\n 当烈焰波接触地面时， 还会出现爆炸， 且爆炸位置会生成火焰地带。",
+  "detail": "向前方敌人发射烈焰波并使其受到火属性伤害， 被命中的敌人会被击退一定距离。\n    当烈焰波接触地面时， 会出现爆炸， 且爆炸位置会生成火焰地带。\n    此外， 火焰地带中的敌人会受到持续伤害， 并有一定几率进入灼伤状态。",
+  "source_id": 99,
+  "source_path": "skill/swordman/firewaveex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "icewaveex": {
+  "name": "极冰 · 裂波剑",
+  "brief": "向敌人发射冰属性小冰柱， 小冰柱沿地面移动并给予敌人一定伤害， 而且有一定几率使命中的敌人进入冰冻状态。",
+  "detail": "向敌人发射冰属性小冰柱， 小冰柱沿地面移动并给予敌人一定伤害， 而且有一定几率使命中的敌人进入冰冻状态。\n    小冰柱移动速度快而且移动距离远， 可以对敌人进行多段攻击。",
+  "source_id": 100,
+  "source_path": "skill/swordman/icewaveex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "bloodblastex": {
+  "name": "血气爆发",
+  "brief": "向自身周围的敌人爆发血气， 使周围的敌人受到一定的物理伤害并浮空。\n    按住技能键可以持续喷射血气， 松开技能键或持续时间达到上限， 则会停止喷射。",
+  "detail": "向自身周围的敌人爆发血气， 使周围的敌人受到一定的物理伤害并浮空。\n    按住技能键可以持续喷射血气， 松开技能键或持续时间达到上限， 则会停止喷射。\n    若使用[嗜血]后再施放[血气爆发]， 则不按住技能键， 也可以在一定时间内持续喷射。\n    在喷射位置， [血之狂暴]吸收的HP量将会增加， 效果将持续一定时间。",
+  "source_id": 101,
+  "source_path": "skill/swordman/bloodblastex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "grabblastbloodex": {
+  "name": "灭魂之手",
+  "brief": "抓取前方一名敌人并吸进其血气后， 再把吸进的血气喷发， 可以对敌人造成物理伤害并使施放者增加力量。\n    对出血状态的敌人施放时， 可以增加物理伤害并延长增加力量的持续时间。",
+  "detail": "抓取前方一名敌人并吸进其血气后， 再把吸进的血气喷发， 可以对敌人造成物理伤害。\n    喷发血气时， 还可以对后方的敌人造成伤害， 并使其受到多段攻击伤害。 施放成功时， 可以获得增加力量的Buff， 效果持续一定时间。\n    抓取判定 : 可以抓取一定距离内的敌人；\n 可以抓取霸体和防御状态的敌人， 但对少数敌人无效。\n    对出血状态的敌人施放时， 可以增加物理伤害并延长增加力量的持续时间。\n    在[嗜血]状态下， 可增加吸血次数。",
+  "source_id": 102,
+  "source_path": "skill/swordman/grabblastbloodex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "bloodsword": {
+  "name": "血气之刃",
+  "brief": "向前方喷射血气生成血气之刃， 然后抓取血刃对敌人发出强威力刺击；\n 血刃刺进敌人身体后， 会产生爆炸。\n    施放技能时， 按后方向键， 可以原地刺击敌人。",
+  "detail": "向前方喷射血气生成血气之刃， 然后抓取血刃对敌人发出强威力刺击；\n 血刃刺进敌人身体后， 会产生爆炸。\n    施放技能时， 按后方向键， 可以原地刺击敌人。",
+  "source_id": 103,
+  "source_path": "skill/swordman/bloodsword.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "flowmind": {
+  "name": "流心",
+  "brief": "属于剑魂的独有技能；\n 施放[流心]技能后， 可使该类技能的攻击力发挥100%%的威力。\n    [流心 : 狂]只能在施放[流心]技能后才能使用。",
+  "detail": "属于剑魂的独有技能；\n 施放[流心]技能后， 可使该类技能的攻击力发挥100%%的威力。",
+  "source_id": 105,
+  "source_path": "skill/swordman/flowmind.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "flowmindone": {
+  "name": "流心 : 刺",
+  "brief": "在施放[流心]技能后使用该技能， 可发挥100%%的威力；\n 对前方敌人发动强威力的突刺， 突刺的附加攻击效果受武器类型影响；\n 对异常状态的敌人可以追加攻击力。",
+  "detail": "在施放[流心]技能后使用该技能， 可发挥100%%的威力；\n 蓄力后对前方敌人发动强威力的突刺， 突刺的附加攻击效果会受武器类型的影响。\n    装备钝器时， 可以附加眩晕的效果；\n 装备太刀和光剑时， 可以增加多段攻击次数；\n 装备巨剑和短剑时， 按Z键可以追加一次下斩攻击。\n    若已学习[强制 - 流心]技能， 则使用[流心 : 刺]后， 可以立即施放[连突刺]或[三段斩]；\n 同时对异常状态的敌人追加攻击力。\n    未施放[流心]技能时， 也可使用该技能；\n 但相对的攻击力会减少。",
+  "source_id": 107,
+  "source_path": "skill/swordman/flowmindone.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "flowmindtwo": {
+  "name": "流心 : 跃",
+  "brief": "在施放[流心]技能后使用该技能， 可发挥100%%的威力；\n 向前轻轻跳跃， 在跳跃状态下可通过追加操作向敌人发出砍击；\n 使用方向键可以进行Y轴移动。",
+  "detail": "在施放[流心]技能后使用该技能， 可发挥100%%的威力；\n 向前轻轻跳跃， 在跳跃状态下可通过追加操作向敌人发出砍击；\n 使用方向键可以进行Y轴移动。\n    如果不进行追加操作， 则跳跃后会回到[流心]技能初始状态。\n    装备钝器攻击敌人时， 可以产生冲击波。\n    装备太刀和短剑攻击敌人时， 可以施放范围更广的横向砍击。\n    未施放[流心]技能时， 也可使用该技能；\n 但相对的攻击力会减少。",
+  "source_id": 108,
+  "source_path": "skill/swordman/flowmindtwo.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "flowmindthree": {
+  "name": "流心 : 升",
+  "brief": "在施放[流心]技能后使用该技能， 可发挥100%%的威力；\n 向上跳跃的同时对敌人发出上挑攻击；\n 若击中的是浮空的敌人， 则可增加攻击力。",
+  "detail": "在施放[流心]技能后使用该技能， 可发挥100%%的威力；\n 向上跳跃的同时对敌人发出上挑攻击；\n 若击中的是浮空的敌人， 则可增加攻击力。\n    装备光剑和太刀时， 可以进行2次多段攻击；\n 装备钝器、 短剑和巨剑时， 击中浮空的敌人可以增加攻击力；\n 但装备巨剑， 会减少攻击时的跳跃力。\n    未施放[流心]技能时， 也可使用该技能；\n 但相对的攻击力会减少。",
+  "source_id": 109,
+  "source_path": "skill/swordman/flowmindthree.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "flowmindpowerup": {
+  "name": "流心 : 狂",
+  "brief": "该技能只能在施放[流心]技能后使用；\n 蓄气后使用[流心 : 刺]、 [流心 : 跃]、 [流心 : 升]， 可以增加这些技能的攻击力和物理暴击率。",
+  "detail": "该技能只能在施放[流心]技能后使用；\n 蓄气后使用[流心 : 刺]、 [流心 : 跃]、 [流心 : 升]， 可以增加这些技能的攻击力和物理暴击率， 效果持续一定时间。",
+  "source_id": 110,
+  "source_path": "skill/swordman/flowmindpowerup.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "ghostsidewind": {
+  "name": "鬼影鞭",
+  "brief": "像挥鞭子一样挥舞手中的武器， 并且可以把远距离的敌人拉到身前。",
+  "detail": "像挥鞭子一样挥舞手中的武器， 并把远距离的敌人拉到身前。",
+  "source_id": 111,
+  "source_path": "skill/swordman/ghostsidewind.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "triplestab": {
+  "name": "鬼影三击剑",
+  "brief": "迅速向下、 上、 中三个方向发出刺击， 并击退敌人。 只能在[鬼影步]已施放的状态下使用。",
+  "detail": "迅速向下、 上、 中三个方向发出刺击， 并击退敌人。 只能在[鬼影步]已施放的状态下使用。",
+  "source_id": 112,
+  "source_path": "skill/swordman/triplestab.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "ghostsidewindex": {
+  "name": "强化 - 鬼影鞭",
+  "brief": "像挥鞭子一样挥舞手中的武器， 并且可以把远距离的敌人拉到身前。",
+  "detail": "像挥鞭子一样挥舞手中的武器， 并把远距离的敌人拉到身前。",
+  "source_id": 115,
+  "source_path": "skill/swordman/ghostsidewindex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "triplestabex": {
+  "name": "强化 - 鬼影三击剑",
+  "brief": "迅速向下、 上、 中三个方向发出刺击， 并击退敌人。 只能在[鬼影步]已施放的状态下使用。",
+  "detail": "迅速向下、 上、 中三个方向发出刺击， 并击退敌人。 只能在[鬼影步]已施放的状态下使用。",
+  "source_id": 116,
+  "source_path": "skill/swordman/triplestabex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "pinchpowerupex": {
+  "name": "强化 - 血气唤醒",
+  "brief": "当自身HP下降到极低时， 可以增加自身的力量、 回避率、 攻击速度和移动速度。",
+  "detail": "当自身HP下降到60%以下时， 可以增加自身的力量、 回避率、 攻击速度和移动速度；\n HP越低增加的值越大。",
+  "source_id": 139,
+  "source_path": "skill/swordman/pinchpowerupex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "normalwaveex": {
+  "name": "强化 - 地裂 · 波动剑",
+  "brief": "向前方敌人快速施放无属性的地裂 · 波动剑， 可以将敌人击退并使其倒地。",
+  "detail": "向前方敌人快速施放无属性的地裂 · 波动剑， 可以将敌人击退并使其倒地。\n    地裂 · 波动剑的大小随技能Lv增加而增大。",
+  "source_id": 140,
+  "source_path": "skill/swordman/normalwaveex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "gorecrossex": {
+  "name": "强化 - 十字斩",
+  "brief": "挥动武器向敌人发出十字斩击， 并召唤出能使敌人出血的血十字攻击敌人， 有一定几率使敌人进入出血状态。\n    狂战士或狱血魔神使用该技能时， 若在召唤血十字的瞬间按技能键， 则可以发动可击退敌人的强力追击。",
+  "detail": "挥动武器向敌人发出十字斩击， 并召唤出血十字攻击敌人， 有一定几率使敌人进入出血状态。\n    狂战士或狱血魔神使用该技能时， 若在召唤血十字的瞬间按技能键， 则可以发动可击退敌人的强力追击。\n    若已学习[血气旺盛]， 则使用技能时可以用HP的消减来代替MP消减。",
+  "source_id": 141,
+  "source_path": "skill/swordman/gorecrossex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "hardattackex": {
+  "name": "强化 - 鬼斩",
+  "brief": "把鬼神召唤到武器上， 并向前方敌人发出强威力的斩击。",
+  "detail": "把鬼神召唤到武器上， 并向前方敌人发出强威力的暗属性斩击。",
+  "source_id": 142,
+  "source_path": "skill/swordman/hardattackex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "tripleslashex": {
+  "name": "强化 - 三段斩",
+  "brief": "滑动的同时向前方敌人发出5连斩攻击。",
+  "detail": "滑动的同时向前方敌人发出5连斩攻击， 中断或结束连斩后开始计算冷却时间。\n    若剑魂职业已学Lv5以上的[太刀精通]或[光剑精通]， 则可以形成7连斩攻击敌人。",
+  "source_id": 143,
+  "source_path": "skill/swordman/tripleslashex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "hitbackex": {
+  "name": "强化 - 逆转反击",
+  "brief": "自身背后遭受攻击时， 每30秒可以受到一次保护， 且可以进行反击。",
+  "detail": "自身背后遭受攻击时， 每30秒可以受到一次保护， 且可以进行反击。\n    反击时不会受到伤害， 但需要消耗一定量MP。",
+  "source_id": 144,
+  "source_path": "skill/swordman/hitbackex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "autoguardex": {
+  "name": "强化 - 自动格挡",
+  "brief": "在自身被击中的前一秒以剑士的本能进行格挡， 效果持续一定时间。\n    格挡后可以进行使敌人浮空的反击。",
+  "detail": "在自身被击中的前一瞬间以剑士的本能进行格挡。\n    在地下城时， 还可以使自身进入霸体状态， 效果持续一定时间。",
+  "source_id": 145,
+  "source_path": "skill/swordman/autoguardex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "bremenex": {
+  "name": "强化 - 侵蚀之普戾蒙",
+  "brief": "召唤出普戾蒙， 使召唤领域内的敌人减少异常状态抗性、 物防和魔防， 效果持续一定时间。\n    普戾蒙存在的状态下， 再次施放此技能， 则原有的会消失， 并且重新在前方召唤出新的普戾蒙。",
+  "detail": "召唤出普戾蒙， 使召唤领域内的敌人减少异常状态抗性、 物防和魔防， 效果持续一定时间。\n    普戾蒙存在的状态下， 再次施放此技能， 则原有的会消失， 并且重新在前方召唤出新的普戾蒙。",
+  "source_id": 146,
+  "source_path": "skill/swordman/bremenex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "ghoststepex": {
+  "name": "强化 - 鬼影步",
+  "brief": "借鬼神之力增加自身的移动速度， 效果持续一定时间， 且前冲的一定时间段内会进入无敌状态；\n 普通攻击和前冲攻击会转换成暗属性魔法攻击。",
+  "detail": "借鬼神之力增加自身的移动速度， 效果持续一定时间， 且前冲的一定时间段内会进入无敌状态；\n 普通攻击和前冲攻击会转换成暗属性魔法攻击。\n    [鬼影步]状态下， 被击时有一定几率进入无敌状态。\n    [鬼影步]状态下， 使用[冥炎之卡洛]会增加普通攻击和前冲攻击的攻击力。",
+  "source_id": 147,
+  "source_path": "skill/swordman/ghoststepex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "diehardex": {
+  "name": "强化 - 死亡抗拒",
+  "brief": "缓慢恢复自身一定量的HP并增加力量、 物防和硬直， 效果持续一定时间， 但只能在自身HP极低时施放。",
+  "detail": "缓慢恢复自身一定量的HP并增加力量、 物防和硬直， 效果持续一定时间， 但只能在自身HP极低时施放。",
+  "source_id": 148,
+  "source_path": "skill/swordman/diehardex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "recklessex": {
+  "name": "强化 - 暴走",
+  "brief": "使自身进入暴走状态， 可以增加力量、 移动速度、 攻击速度和异常状态抗性；\n 被击时， 还可以追加增加力量(最多可重叠5次)， 效果持续一定时间；\n 但自身的智力、 物防、 魔防将减少。\n    攻击时， 有一定几率使敌人进入出血状态。",
+  "detail": "使自身进入暴走状态， 可以增加力量、 移动速度、 攻击速度和异常状态抗性；\n 被击时， 还可以追加增加力量(最多可重叠5次)， 效果持续一定时间；\n 但自身的智力、 物防、 魔防将减少。\n    攻击时， 有一定几率使敌人进入出血状态。",
+  "source_id": 149,
+  "source_path": "skill/swordman/recklessex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "dotareaex": {
+  "name": "强化 - 杀意波动",
+  "brief": "向敌人喷射强烈杀意的波动， 使周围敌人受到持续的无视防御伤害， 并减少敌人的攻击力；\n 同时还可以增加自身及周围队员的物理暴击率和魔法暴击率。",
+  "detail": "向敌人喷射强烈杀意的波动， 使周围敌人受到持续的无视防御伤害， 并减少敌人的攻击力；\n 同时还可以增加自身及周围队员的物理暴击率和魔法暴击率。\n    技能施放后会持续消耗MP， 若MP不足或再次施放， 则可以中断技能。\n    此技能对处于过高位置的敌人无效；\n 若对方是玩家角色， 则只能造成25%%的伤害。",
+  "source_id": 150,
+  "source_path": "skill/swordman/dotareaex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "wavemarkex": {
+  "name": "强化 - 波动刻印",
+  "brief": "以一定的时间间隔生成波动印， 波动印可以增加自身的智力和施放速度， 且波动印数量越多增加的幅度越大。\n    使用普通攻击和[上挑]时， 会产生波动剑气。",
+  "detail": "以一定的时间间隔生成波动印， 波动印可以增加自身的智力和施放速度， 且波动印数量越多增加的幅度越大。\n    首次施放时会生成一个波动印， 之后每隔一段时间可以追加一个。\n    使用普通攻击和[上挑]时， 会产生波动剑气。",
+  "source_id": 151,
+  "source_path": "skill/swordman/wavemarkex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "rapidmoveslashex": {
+  "name": "强化 - 猛龙断空斩",
+  "brief": "向前方快速移动并斩击敌人， 可以上下左右移动着斩击敌人。",
+  "detail": "向前方快速移动并斩击敌人， 可以上下左右移动着斩击敌人。\n    起始斩击后可以通过追加操作指定后续的攻击方向， 最后一击为可以使敌人浮空的单手上斩。\n    若已学一定Lv以上的[光剑精通]并使用光剑系武器， 则可以使敌人进入感电状态。",
+  "source_id": 152,
+  "source_path": "skill/swordman/rapidmoveslashex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "ashenforkex": {
+  "name": "强化 - 银光落刃",
+  "brief": "跳跃状态中向下方敌人发出强力刺击， 可以出现冲击波。",
+  "detail": "跳跃状态中向下方敌人发出强力刺击；\n 跳跃的高度越高， 攻击力就越强。 若达到一定高度后施放， 则还会出现冲击波。\n    若剑魂职业已学Lv3以上的[巨剑精通]， 则可以对敌人进行多段攻击。",
+  "source_id": 153,
+  "source_path": "skill/swordman/ashenforkex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "momentaryslashexp": {
+  "name": "强化 - 拔刀斩",
+  "brief": "拔刀并快速向周围敌人发出强威力的斩击， 可以攻击大范围的敌人， 但准备动作时间稍长。\n    斩击的敌人越少， 攻击力越大。",
+  "detail": "拔刀并快速向周围敌人发出强威力的斩击， 可以攻击大范围的敌人， 但准备动作时间稍长。\n    若已学一定Lv以上的[太刀精通]或[光剑精通]并使用太刀或光剑系武器， 则可以追加一个拔刀追击。\n    斩击的敌人越少， 攻击力越大。",
+  "source_id": 154,
+  "source_path": "skill/swordman/momentaryslashexp.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "moonlightslashex": {
+  "name": "强化 - 月光斩",
+  "brief": "向前方敌人发出暗属性伤害的月形斩击， 并追加一个单手上斩。",
+  "detail": "向前方敌人发出暗属性伤害的月形斩击， 并追加一个单手上斩， 可以按左右方向键来控制移动距离。\n    若已学[满月斩]， 则单手上斩后可以再追加一个双手上斩。",
+  "source_id": 155,
+  "source_path": "skill/swordman/moonlightslashex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "epidemicrasaex": {
+  "name": "强化 - 瘟疫之罗刹",
+  "brief": "召唤出瘟疫鬼神附到敌人身上， 使敌人减少各属性值并附加异常状态效果。",
+  "detail": "召唤出瘟疫鬼神附到敌人身上， 减少其攻击速度、 物防和硬直， 并附加中毒、 失明、 出血状态中的任意一种异常状态。\n    对单个敌人最多可以同时附3个鬼神。\n    [瘟疫之罗刹]可以使范围内的敌人减速。",
+  "source_id": 156,
+  "source_path": "skill/swordman/epidemicrasaex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "hopsmashex": {
+  "name": "强化 - 崩山击",
+  "brief": "向前低跃并用武器砸击地面， 有多段攻击判定， 最后一击可以使敌人倒地。\n    跳跃距离和冲击波范围会随施放技能时的指令键按放间隔长短而改变。",
+  "detail": "向前低跃并用武器砸击地面， 有多段攻击判定， 最后一击可以使敌人倒地。\n    若已学狂战士职业特有的[血气旺盛]技能， 则会发出冲击波并使敌人进入出血状态。\n    跳跃距离和冲击波范围会随施放技能时的指令键按放间隔长短而改变。",
+  "source_id": 157,
+  "source_path": "skill/swordman/hopsmashex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "bloodyraveex": {
+  "name": "强化 - 嗜魂封魔斩",
+  "brief": "把前方敌人吸附到自身的近身处， 并用血气之剑对其进行斩击， 只能在[血之狂暴]已施放的状态下使用。",
+  "detail": "把前方敌人吸附到自身的近身处， 并用血气之剑对其进行斩击， 只能在[血之狂暴]已施放的状态下使用。\n    可以按住技能键持续吸附敌人， 但每秒会消减自身一定量的HP。\n    吸附结束后可以用血气之剑斩击前方敌人， 吸附的敌人越多， 斩击时造成的伤害就越大。\n    若吸附的是领主、 稀有、 精英、 深渊类敌人， 则敌人受到的伤害会更大。",
+  "source_id": 158,
+  "source_path": "skill/swordman/bloodyraveex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "vaneslashex": {
+  "name": "强化 - 裂波斩",
+  "brief": "用强威力的上斩攻击前方敌人并施放裂波， 裂波将给予周围敌人多段攻击并击飞敌人， 上斩时有抓取判定。",
+  "detail": "用强威力的上斩攻击前方敌人并施放裂波， 裂波将给予周围敌人多段攻击并击飞敌人。\n    上斩和下斩只能对被抓取的敌人造成伤害， 而裂波则可以对被抓取的敌人以及周围的敌人造成伤害。\n    抓取判定 : 可以抓取霸体和防御状态的敌人， 但对少数敌人无效。\n    若已学[波动刻印]， 则施放裂波斩时可以生成1个波动印。",
+  "source_id": 159,
+  "source_path": "skill/swordman/vaneslashex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "reflectguardex": {
+  "name": "强化 - 鬼印珠",
+  "brief": "把波动印转化成鬼印珠向敌人发射， 波动印的数量越多， 鬼印珠的攻击力、 大小、 多段攻击次数等的数值就越大。",
+  "detail": "把波动印转化成鬼印珠向敌人发射， 波动印的数量越多， 鬼印珠的攻击力、 大小、 多段攻击次数等的数值就越大。\n    鬼印珠形成多段攻击时， 会降低鬼印珠和被命中敌人的移动速度；\n 鬼印珠消失时， 会产生爆炸并给予周围敌人一定伤害。",
+  "source_id": 160,
+  "source_path": "skill/swordman/reflectguardex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "basicattackupex": {
+  "name": "强化 - 基础精通",
+  "brief": "增加基本攻击、 前冲攻击、 跳跃攻击的攻击力。",
+  "detail": "增加基本攻击、 前冲攻击、 跳跃攻击的攻击力。",
+  "source_id": 161,
+  "source_path": "skill/swordman/basicattackupex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "dashattackmultihitex": {
+  "name": "强化 - 连突刺",
+  "brief": "在前冲攻击时按攻击键， 则额外追加一个突刺攻击。",
+  "detail": "在前冲攻击时按攻击键， 则额外追加一个突刺攻击。\n    突刺攻击时可以增加命中率， 并能击退敌人。",
+  "source_id": 162,
+  "source_path": "skill/swordman/dashattackmultihitex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "guardex": {
+  "name": "强化 - 格挡",
+  "brief": "吸收来自前方的攻击伤害。",
+  "detail": "吸收来自前方的攻击伤害， [格挡]施放状态下被攻击， 会被击退一定距离， 并且持续一定时间。\n    按住技能键可以持续[格挡]动作， 且MP只在[格挡]开始时消耗一次。",
+  "source_id": 163,
+  "source_path": "skill/swordman/guardex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "khazanex": {
+  "name": "强化 - 刀魂之卡赞",
+  "brief": "召唤出刀魂卡赞， 使在召唤领域内的我方队员增加力量和智力， 效果持续一定时间。\n    刀魂卡赞存在的状态下， 再次施放此技能， 则原有的会消失， 并且重新在前方召唤出新的卡赞。",
+  "detail": "召唤出刀魂卡赞， 使在召唤领域内的我方队员增加力量和智力， 效果持续一定时间。\n    刀魂卡赞存在的状态下， 再次施放此技能， 则原有的会消失， 并且重新在前方召唤出新的卡赞。",
+  "source_id": 164,
+  "source_path": "skill/swordman/khazanex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "grabblastbloodexp": {
+  "name": "强化 - 嗜魂之手",
+  "brief": "抓取前方一名敌人并吸进其血气后再把吸进的血气喷发， 可以对敌人造成物理伤害并使施放者增加力量。\n    对出血状态的敌人施放时， 可以增加物理伤害并延长增加力量的持续时间。",
+  "detail": "抓取前方一名敌人并吸进其血气后， 再把吸进的血气喷发， 可以对敌人造成物理伤害。\n    喷发血气时， 还可以对后方的敌人造成伤害， 并使其受到多段攻击伤害。 施放成功时， 可以获得增加力量的Buff， 效果持续一定时间。\n    抓取判定 : 可以抓取一定距离内的敌人；\n 可以抓取霸体和防御状态的敌人， 但对少数敌人无效。\n    对出血状态的敌人施放时， 可以增加物理伤害并延长增加力量的持续时间。\n    在[嗜血]状态下， 可增加吸血次数。",
+  "source_id": 165,
+  "source_path": "skill/swordman/grabblastbloodexp.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "bloodblastexp": {
+  "name": "强化 - 怒气爆发",
+  "brief": "向自身周围的敌人爆发怒气， 使周围的敌人受到一定的物理伤害并浮空。",
+  "detail": "向自身周围的敌人爆发怒气， 使周围的敌人受到一定的物理伤害并浮空。\n    怒气爆发后， 可以生成冲击波给予周围敌人5段攻击伤害， 而且在爆发中心的敌人还将受到10段攻击伤害。",
+  "source_id": 166,
+  "source_path": "skill/swordman/bloodblastexp.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "outragebreakex": {
+  "name": "强化 - 崩山裂地斩",
+  "brief": "召唤出血气之剑并猛力捶击地面， 使敌人浮空的同时还会喷出炙热的岩浆攻击周围的敌人， 只能在[血之狂暴]已施放的状态下使用。",
+  "detail": "召唤出血气之剑并猛力捶击地面， 使地面出现大范围的冲击波攻击敌人并使其浮空， 而且地面喷出的炙热岩浆还可以攻击周围浮空的敌人。\n    只能在[血之狂暴]已施放的状态下使用， 召唤时会消减一定量的HP。",
+  "source_id": 167,
+  "source_path": "skill/swordman/outragebreakex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "bloodswordex": {
+  "name": "强化 - 血气之刃",
+  "brief": "向前方喷射血气生成血气之刃， 然后抓取血刃对敌人发出强威力刺击；\n 血刃刺进敌人身体后， 会产生爆炸。\n    施放技能时， 按后方向键， 可以原地刺击敌人。",
+  "detail": "向前方喷射血气生成血气之刃， 然后抓取血刃对敌人发出强威力刺击；\n 血刃刺进敌人身体后， 会产生爆炸。\n    施放技能时， 按后方向键， 可以原地刺击敌人。",
+  "source_id": 168,
+  "source_path": "skill/swordman/bloodswordex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "backstep": {
+  "name": "后跳",
+  "brief": "使自身向后方小跳并避开敌人的攻击。",
+  "detail": "使自身向后方小跳并避开敌人的攻击。",
+  "source_id": 169,
+  "source_path": "skill/swordman/backstep.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "armormasterylight": {
+  "name": "轻甲精通",
+  "brief": "装备轻甲系防具时， 可以增加力量、 MP恢复速度、 MP最大值和硬直。",
+  "detail": "装备轻甲系防具时， 可以增加力量、 MP恢复速度、 MP最大值和硬直。\n    效果随装备的轻甲数量增加而增大。",
+  "source_id": 172,
+  "source_path": "skill/swordman/armormasterylight.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "armormasteryheavy": {
+  "name": "重甲精通",
+  "brief": "装备重甲系防具时， 可以增加力量、 精神、 物理防御力、 MP恢复速度、 HP最大值和MP最大值。",
+  "detail": "装备重甲系防具时， 可以增加力量、 精神、 物理防御力、 MP恢复速度、 HP最大值和MP最大值。\n    效果随装备的重甲数量增加而增大。",
+  "source_id": 173,
+  "source_path": "skill/swordman/armormasteryheavy.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "basicattackup": {
+  "name": "基础精通",
+  "brief": "增加基本攻击、 前冲攻击、 跳跃攻击的攻击力。",
+  "detail": "增加基本攻击、 前冲攻击、 跳跃攻击的攻击力。",
+  "source_id": 174,
+  "source_path": "skill/swordman/basicattackup.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "jumppowerup": {
+  "name": "跃翔",
+  "brief": "增加自身的跳跃力， 效果持续一定时间。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "detail": "增加自身20%%的跳跃力， 效果持续一定时间。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "source_id": 175,
+  "source_path": "skill/swordman/jumppowerup.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "magicalattackup": {
+  "name": "远古记忆",
+  "brief": "增加自身的智力， 效果持续一定时间。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "detail": "增加自身的智力， 效果持续一定时间。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "source_id": 176,
+  "source_path": "skill/swordman/magicalattackup.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "throwmastery": {
+  "name": "投掷精通",
+  "brief": "投掷时可以增加投掷道具的攻击力。",
+  "detail": "投掷时可以增加投掷道具的攻击力， 但能造成2次伤害的投掷道具(如燃烧瓶等)， 将不增加第2次伤害的攻击力。\n    每次投掷时会消耗一定量的MP。",
+  "source_id": 177,
+  "source_path": "skill/swordman/throwmastery.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "physicalbackattackcritical": {
+  "name": "物理背击",
+  "brief": "从背后攻击敌人时， 可以增加物理暴击率。",
+  "detail": "从背后攻击敌人时， 可以增加物理暴击率。",
+  "source_id": 178,
+  "source_path": "skill/swordman/physicalbackattackcritical.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "disjointitem": {
+  "name": "物品分解",
+  "brief": "进行物品分解时使用的技能。",
+  "detail": "进行物品分解时使用的技能。",
+  "source_id": 179,
+  "source_path": "skill/swordman/disjointitem.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "superarmoroncast": {
+  "name": "不屈意志",
+  "brief": "在一定时间内， 若施放技能时遭受敌人攻击， 则有一定几率不会中断施放动作。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "detail": "在一定时间内， 若施放技能时遭受敌人攻击， 则有一定几率不会中断施放动作。\n    使用该技能时， 无法强制中断当前进行的普通攻击动作。",
+  "source_id": 180,
+  "source_path": "skill/swordman/superarmoroncast.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "compoundcraft": {
+  "name": "精工",
+  "brief": "进行物品合成时使用的技能。",
+  "detail": "进行物品合成时使用的技能。",
+  "source_id": 181,
+  "source_path": "skill/swordman/compoundcraft.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "compoundweaving": {
+  "name": "纺织",
+  "brief": "进行物品合成时使用的技能。",
+  "detail": "进行物品合成时使用的技能。",
+  "source_id": 182,
+  "source_path": "skill/swordman/compoundweaving.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "compoundmachine": {
+  "name": "机械",
+  "brief": "进行机械组装时使用的技能。",
+  "detail": "进行机械组装时使用的技能。",
+  "source_id": 183,
+  "source_path": "skill/swordman/compoundmachine.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "compoundchemistry": {
+  "name": "炼金",
+  "brief": "进行物品合成时使用的技能。",
+  "detail": "进行物品合成时使用的技能。",
+  "source_id": 184,
+  "source_path": "skill/swordman/compoundchemistry.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "armormasteryleather": {
+  "name": "皮甲精通",
+  "brief": "装备皮甲系防具时， 可以增加MP最大值、 HP最大值 、 攻击速度、 物理暴击率、 力量和MP恢复速度。",
+  "detail": "装备皮甲系防具时，  可以增加MP最大值、 HP最大值 、 攻击速度、 物理暴击率、 力量和MP恢复速度。\n    效果随装备的皮甲数量增加而增大。",
+  "source_id": 185,
+  "source_path": "skill/swordman/armormasteryleather.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "physicalcriticalhitup": {
   "name": "物理暴击",
   "brief": "攻击敌人时， 可以增加自身的物理暴击率。",
   "detail": "攻击敌人时， 可以增加自身的物理暴击率。",
@@ -122,12 +1162,244 @@ const SKILLS := {
   "source_path": "skill/swordman/physicalcriticalhitup.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  },
- "hp_source": {
+ "armormasterycloth": {
+  "name": "布甲精通",
+  "brief": "装备布甲系防具时， 可以增加MP最大值、 HP最大值、 MP恢复速度、 施放速度和智力。",
+  "detail": "装备布甲系防具时， 可以增加MP最大值、 HP最大值 、 MP恢复速度、 施放速度和智力。\n    效果随装备的布甲数量增加而增大。",
+  "source_id": 187,
+  "source_path": "skill/swordman/armormasterycloth.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "magicalcriticalhitup": {
+  "name": "魔法暴击",
+  "brief": "攻击敌人时， 可以增加自身的魔法暴击率。",
+  "detail": "攻击敌人时， 可以增加自身的魔法暴击率。",
+  "source_id": 188,
+  "source_path": "skill/swordman/magicalcriticalhitup.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "magicalbackattackcritical": {
+  "name": "魔法背击",
+  "brief": "从背后攻击敌人时， 可以增加魔法暴击率。",
+  "detail": "从背后攻击敌人时， 可以增加魔法暴击率。",
+  "source_id": 189,
+  "source_path": "skill/swordman/magicalbackattackcritical.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "quickstanding": {
+  "name": "受身蹲伏",
+  "brief": "使自身在倒地状态下迅速起身并采取蹲伏姿势；\n 蹲伏状态下， 自身会进入无敌状态， 效果持续一定时间。",
+  "detail": "使自身在倒地状态下迅速起身并采取蹲伏姿势；\n 蹲伏状态下， 自身会进入无敌状态， 效果持续一定时间， 通常用于为自己寻找反击机会。",
+  "source_id": 190,
+  "source_path": "skill/swordman/quickstanding.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "enchant": {
+  "name": "附魔",
+  "brief": "给装备附加魔法力量， 使装备产生新的属性。",
+  "detail": "给装备附加魔法力量， 使装备产生新的属性。 附魔的效果永久生效， 但若再次附魔， 则原有的附魔效果会消失并附加新的附魔属性。\n    附魔的熟练度可以提升附魔Lv， 附魔Lv越高， 附魔成功率越高， 而且还可以增加附魔的种类。",
+  "source_id": 191,
+  "source_path": "skill/swordman/enchant.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "dollmaking": {
+  "name": "制作召唤人偶",
+  "brief": "可以制作召唤人偶。 召唤人偶只能在地下城中使用， 且召唤人偶的存在时间为15分钟。",
+  "detail": "可以制作召唤人偶。 召唤人偶只能在地下城中使用， 且召唤人偶的存在时间为15分钟。\n    一个队伍只能召唤一个人偶， 召唤人偶属于消耗品。\n    随着制作召唤人偶的熟练度提升， 可以制作出更高能力的召唤人偶。",
+  "source_id": 192,
+  "source_path": "skill/swordman/dollmaking.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "alchemy": {
+  "name": "炼金术",
+  "brief": "可以制作具有恢复或Buff效果的药水， 还可以制作具有特殊效果的道具。",
+  "detail": "可以制作具有恢复或Buff效果的药水， 还可以制作具有特殊效果的道具。\n    随着炼金术的熟练度提升， 可以制作出更多种类的道具。",
+  "source_id": 193,
+  "source_path": "skill/swordman/alchemy.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "opendisjointshop": {
+  "name": "开启分解商店",
+  "brief": "可以开启分解商店， 分解商店为其他玩家提供分解服务并使分解师得到一定的手续费， 同时也能分解自身的装备。",
+  "detail": "可以开启分解商店， 分解商店为其他玩家提供分解服务并使分解师得到一定的手续费， 同时也能分解自身的装备。\n    熟练度上升到一定程度后， 可以通过诺顿升级分解机。 当分解机的耐久度为0时， 需要找诺顿修理才能继续使用。\n    分解师的分解机不同与诺顿的分解机， 有些道具只能在分解师的分解机中获得。",
+  "source_id": 194,
+  "source_path": "skill/swordman/opendisjointshop.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "basichpmaxup": {
   "name": "生命之源",
   "brief": "增加HP最大值。",
   "detail": "增加HP最大值。",
   "source_id": 195,
   "source_path": "skill/swordman/basichpmaxup.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "armormasteryplate": {
+  "name": "板甲精通",
+  "brief": "装备板甲系防具时， 可以增加智力、 精神、 MP恢复速度、 MP最大值、 HP最大值和施放速度。",
+  "detail": "装备板甲系防具时， 可以增加智力、 精神、 MP恢复速度、 MP最大值、 HP最大值、 施放速度。\n    效果随装备的板甲数量增加而增大。",
+  "source_id": 196,
+  "source_path": "skill/swordman/armormasteryplate.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "conversion": {
+  "name": "攻击类型转换",
+  "brief": "可以把特定技能的攻击类型转换成物理攻击或魔法攻击。\n    鼠标右键点击技能图标即可进行转换。 (不适用于Buff技能；\n 并且在决斗场中无效)",
+  "detail": "可以把特定技能的攻击类型转换成物理攻击或魔法攻击。 (不适用于Buff技能；\n 并且在决斗场中无效)\n适用的技能有 : [鬼斩]、 [上挑]、 [连突刺]、 [地裂 · 波动剑]、 [银光落刃]、 [三段斩]、 [十字斩]、 [裂波斩]、 [月光斩]、 [崩山击]、 [空中连斩]",
+  "source_id": 197,
+  "source_path": "skill/swordman/conversion.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "statusup": {
+  "name": "公会 : 增加角色属性",
+  "brief": "增加公会成员的力量、 体力、 智力和精神， 只适用于普通以上的公会成员。",
+  "detail": "增加公会成员的力量、 体力、 智力和精神， 只适用于普通以上的公会成员。",
+  "source_id": 200,
+  "source_path": "skill/swordman/statusup.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "experienceup": {
+  "name": "极速成长",
+  "brief": "可以增加公会成员的经验获得量， 只适用于普通以上的公会成员。",
+  "detail": "可以增加公会成员的经验获得量， 只适用于普通以上的公会成员。",
+  "source_id": 201,
+  "source_path": "skill/swordman/experienceup.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "releasewaveex": {
+  "name": "强化 - 波动爆发",
+  "brief": "将体内凝聚的波动之力瞬间爆发， 可以使周围的敌人朝施放者的正前方飞出。",
+  "detail": "将体内凝聚的波动之力瞬间爆发， 可以使周围的敌人朝施放者的正前方飞出。\n    受到攻击时， 该技能仍可瞬发并产生波动印。",
+  "source_id": 210,
+  "source_path": "skill/swordman/releasewaveex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "grandwaveex": {
+  "name": "强化 - 邪光斩",
+  "brief": "挥剑向前方敌人发出巨大的剑气攻击。",
+  "detail": "挥剑向前方敌人发出巨大的剑气攻击， 可以给予命中的敌人多段攻击。",
+  "source_id": 211,
+  "source_path": "skill/swordman/grandwaveex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "firewaveexp": {
+  "name": "强化 - 爆炎 · 波动剑",
+  "brief": "可发动火焰爆炸并引发连锁反应， 给敌人造成伤害。",
+  "detail": "可发动火焰爆炸并引发连锁反应， 给敌人造成伤害；\n 被火焰爆炸命中的敌人会受到火属性魔法伤害；\n 爆炸所处的位置还会生成火焰地带。\n    [爆炎 · 波动剑]命中异常状态下的敌人时， 可以使其进入灼伤状态。",
+  "source_id": 212,
+  "source_path": "skill/swordman/firewaveexp.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "standalonewaveex": {
+  "name": "强化 - 无双波",
+  "brief": "在自身周围生成强力的吸附波吸附周围的敌人；\n 可在施放[杀意波动]后， 并且处于[挫折意志]状态下使用；\n 未处在[挫折意志]状态时， 可通过消耗波动刻印来使用该技能。\n    若在施放后按下操作键， 可发动最后一击， 同时还可以强制中断当前动作并施放[不动明王阵]。\n    技能施放中的被击次数不计入评分统计。",
+  "detail": "在自身周围生成强力的吸附波吸附周围的敌人；\n 可在施放[杀意波动]后， 并且处于[挫折意志]状态下使用；\n 未处在[挫折意志]状态时， 可通过消耗波动刻印来使用该技能。\n    若在施放后按下操作键， 可发动最后一击， 同时还可以强制中断当前动作并施放[不动明王阵]；\n 最后斩击命中敌人时， 会出现冲击波， 蓄气时间越长， 冲击波越大。\n    施放过程中， 会使自身所受伤害减少50%%， 并增加防御；\n 同时吸附的敌人数量越多， 则攻击力和冲击波的范围就越大。\n    若吸附的是领主、 稀有、 精英、 深渊类敌人， 则给予敌人的伤害会更大。",
+  "source_id": 213,
+  "source_path": "skill/swordman/standalonewaveex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "wavespinareaex": {
+  "name": "强化 - 不动明王阵",
+  "brief": "生成可以使敌人浮空的不动明王阵， 并释放出旋转于波动阵周边的焰珠攻击敌人；\n 但只有在波动印出现后才能施放此技能。",
+  "detail": "生成可以使敌人浮空的不动明王阵， 并释放出旋转于波动阵周边的焰珠攻击敌人；\n 但只有在波动印出现后才能施放此技能。\n    若连续按攻击键， 则可以提高焰珠的旋转速度， 但焰珠旋转一定次数后会消失并引发魔法爆炸。\n    波动印数量越多， 出现的焰珠就越多；\n 在施放技能的时间段内， 施放者不会被敌人抓取。",
+  "source_id": 214,
+  "source_path": "skill/swordman/wavespinareaex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "upperslashex": {
+  "name": "强化 - 上挑",
+  "brief": "向敌人发出从下段往上挑的攻击， 可以浮空敌人。",
+  "detail": "向敌人发出从下段往上挑的攻击， 可以浮空敌人；\n 攻击时有霸体判定。",
+  "source_id": 215,
+  "source_path": "skill/swordman/upperslashex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "icewaveexp": {
+  "name": "强化 - 冰刃 · 波动剑",
+  "brief": "向敌人发射冰属性小冰柱， 小冰柱沿地面移动并给予敌人一定伤害， 而且有一定几率使命中的敌人进入冰冻状态。",
+  "detail": "向敌人发射冰属性小冰柱， 小冰柱沿地面移动并给予敌人一定伤害， 而且有一定几率使命中的敌人进入冰冻状态。\n    虽然发射速度缓慢且小冰柱的移动距离短， 但是可以对敌人进行多段攻击。",
+  "source_id": 216,
+  "source_path": "skill/swordman/icewaveexp.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "illusionslashexp": {
+  "name": "强化 - 幻影剑舞",
+  "brief": "在原地向敌人发出迅猛的连续斩击， 且最后一击可以发出凌厉的剑气并给予敌人多重伤害。\n    附加效果会因使用的武器种类不同而出现差异。",
+  "detail": "在原地向敌人发出迅猛的连续斩击， 且最后一击可以发出凌厉的剑气并给予敌人多重伤害。\n    斩击次数、 速度和最后一击的效果， 会因使用的武器以及武器精通技能的不同而出现差异。\n    使用短剑、 太刀、 巨剑、 光剑系武器时， 最后一击可以发出凌厉的剑气并给予敌人多重伤害。\n    可以按上下方向键控制剑气的方向， 若连续按攻击键， 则可以增加斩击次数和剑气威力。\n    短剑系武器的剑气多段攻击间隔较短， 但是持续时间长。\n    钝器系武器的最后一击不会发出剑气， 但会生成冲击波。\n    若相应的武器精通技能达到Lv7以上， 则使用光剑和太刀系武器时， 可以增加斩击次数和攻击速度， 但攻击力会减少。",
+  "source_id": 217,
+  "source_path": "skill/swordman/illusionslashexp.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "chargecrashexp": {
+  "name": "强化 - 破军升龙击",
+  "brief": "以冲撞击退敌人的同时向敌人发出单手上斩， 可以使敌人浮空。",
+  "detail": "以冲撞击退敌人的同时向敌人发出单手上斩， 可以使敌人浮空。\n    若已学一定Lv以上的[巨剑精通]或[钝器精通]并使用巨剑或钝器系武器， 则可以追加一个蓄气型下捶击。",
+  "source_id": 218,
+  "source_path": "skill/swordman/chargecrashexp.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "flowmindoneex": {
+  "name": "强化 - 流心 : 刺",
+  "brief": "在施放[流心]技能后使用该技能， 可发挥100%%的威力；\n 对前方敌人发动强威力的突刺， 突刺的附加攻击效果受武器类型影响。",
+  "detail": "在施放[流心]技能后使用该技能， 可发挥100%%的威力；\n 蓄力后对前方敌人发动强威力的突刺， 突刺的附加攻击效果会受武器类型的影响。\n    装备钝器时， 可以附加眩晕的效果；\n 装备太刀和光剑时， 可以增加多段攻击次数；\n 装备巨剑和短剑时， 按Z键可以追加一次下斩攻击。\n    若已学习[强制 - 流心]技能， 则使用[流心 : 刺]后， 可以立即施放[连突刺]或[三段斩]。\n    未施放[流心]技能时， 也可使用该技能；\n 但相对的攻击力会减少。",
+  "source_id": 219,
+  "source_path": "skill/swordman/flowmindoneex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "flowmindtwoex": {
+  "name": "强化 - 流心 : 跃",
+  "brief": "在施放[流心]技能后使用该技能， 可发挥100%%的威力；\n 向前轻轻跳跃， 在跳跃状态下可通过追加操作向敌人发出砍击；\n 使用方向键可以进行Y轴移动。",
+  "detail": "在施放[流心]技能后使用该技能， 可发挥100%%的威力；\n 向前轻轻跳跃， 在跳跃状态下可通过追加操作向敌人发出砍击；\n 使用方向键可以进行Y轴移动。\n    如果不进行追加操作， 则跳跃后会回到[流心]技能初始状态。\n    装备钝器攻击敌人时， 可以产生冲击波。\n    装备太刀和短剑攻击敌人时， 可以施放范围更广的横向砍击。\n    未施放[流心]技能时， 也可使用该技能；\n 但相对的攻击力会减少。",
+  "source_id": 220,
+  "source_path": "skill/swordman/flowmindtwoex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "flowmindthreeex": {
+  "name": "强化 - 流心 : 升",
+  "brief": "在施放[流心]技能后使用该技能， 可发挥100%%的威力；\n 向上跳跃的同时对敌人发出上挑攻击；\n 若击中的是浮空的敌人， 则可增加攻击力。",
+  "detail": "在施放[流心]技能后使用该技能， 可发挥100%%的威力；\n 向上跳跃的同时对敌人发出上挑攻击；\n 若击中的是浮空的敌人， 则可增加攻击力。\n    装备光剑和太刀时， 可以进行2次多段攻击；\n 装备钝器、 短剑和巨剑时， 击中浮空的敌人可以增加攻击力；\n 但装备巨剑， 会减少攻击时的跳跃力。\n    未施放[流心]技能时， 也可使用该技能；\n 但相对的攻击力会减少。",
+  "source_id": 221,
+  "source_path": "skill/swordman/flowmindthreeex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "sayaexp": {
+  "name": "强化 - 冰霜之萨亚",
+  "brief": "召唤出萨亚， 使其以一定的时间间隔给予召唤领域内的敌人冰属性魔法伤害， 并有一定几率使敌人进入冰冻状态， 效果持续一定时间。",
+  "detail": "召唤出萨亚， 使其以一定的时间间隔给予召唤领域内的敌人冰属性魔法伤害， 并有一定几率使敌人进入冰冻状态， 效果持续一定时间。",
+  "source_id": 224,
+  "source_path": "skill/swordman/sayaexp.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "tombstonerainexp": {
+  "name": "强化 - 死亡墓碑",
+  "brief": "在自身周围一定区域内落下墓碑攻击敌人， 有一定几率使被击中的敌人进入诅咒状态。",
+  "detail": "在自身周围一定区域内落下墓碑攻击敌人， 有一定几率使被击中的敌人进入诅咒状态。\n    墓碑掉落时， 自身会进入霸体状态并无法移动， 按跳跃键可以中断技能。",
+  "source_id": 225,
+  "source_path": "skill/swordman/tombstonerainexp.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "ghoststepslashex": {
+  "name": "强化 - 鬼影闪",
+  "brief": "以极快的速度向前移动一段距离并斩击敌人， 但只能在[鬼影步]使用前冲后进入无敌状态时施放。\n    被斩击的敌人在一定时间内会进入禁锢状态， 状态结束时会附加敌人暗属性伤害。",
+  "detail": "以极快的速度向前移动一段距离并斩击敌人， 但只能在[鬼影步]使用前冲后进入无敌状态时施放。\n    被斩击的敌人在一定时间内会进入禁锢状态， 状态结束时会附加敌人暗属性伤害。",
+  "source_id": 226,
+  "source_path": "skill/swordman/ghoststepslashex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "kallaex": {
+  "name": "强化 - 冥炎之卡洛",
+  "brief": "召唤出卡洛附身到自身身上， 并向敌人发射卡洛的分身。 若再按指令键， 则卡洛会变成冥炎剑并对敌人发出二刀流的三连击。\n    [鬼影步]状态下， 卡洛的气息会附加在武器上， 并增加普通攻击和前冲攻击的攻击力。",
+  "detail": "召唤出卡洛附身到自身身上， 并向敌人发射卡洛的分身。\n    [鬼影步]状态下， 卡洛的气息会附加在武器上， 并增加普通攻击和前冲攻击的攻击力。\n    被卡洛分身或剑命中的敌人， 会受到暗属性伤害并被冥炎附身。\n    单个敌人可以被3个冥炎附身， 且每隔一定时间会受到无视防御的魔法伤害。\n    若再按指令键， 则卡洛将变成冥炎剑并进入二刀流模式， 且向敌人发出包含右斩击、 左斩击和上斩击的3连击。\n    冥炎还可以附身到被冥炎剑命中的敌人身上。",
+  "source_id": 227,
+  "source_path": "skill/swordman/kallaex.skl",
+  "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
+ },
+ "reflectguardexp": {
+  "name": "强化 - 鬼印珠",
+  "brief": "把波动印转化成鬼印珠向敌人发射， 波动印的数量越多， 鬼印珠的攻击力、 大小、 多段攻击次数等的数值就越大。",
+  "detail": "把波动印转化成鬼印珠向敌人发射， 波动印的数量越多， 鬼印珠的攻击力、 大小、 多段攻击次数等的数值就越大。\n    鬼印珠形成多段攻击时， 会降低鬼印珠和被命中敌人的移动速度；\n 鬼印珠消失时， 会产生爆炸并给予周围敌人一定伤害。",
+  "source_id": 228,
+  "source_path": "skill/swordman/reflectguardexp.skl",
   "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str"
  }
 }

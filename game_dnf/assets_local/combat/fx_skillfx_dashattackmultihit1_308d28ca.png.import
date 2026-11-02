@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bly0itycbpib8"
-path="res://.godot/imported/fx_obj_goblin_fire.png-5c38da589072e65338cd49fb59ded6ac.ctex"
+uid="uid://b7le7nmhsdec0"
+path="res://.godot/imported/fx_skillfx_dashattackmultihit1_308d28ca.png-0ffb0048039f3edbdcd825cc7c37c610.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets_local/combat/fx_obj_goblin_fire.png"
-dest_files=["res://.godot/imported/fx_obj_goblin_fire.png-5c38da589072e65338cd49fb59ded6ac.ctex"]
+source_file="res://assets_local/combat/fx_skillfx_dashattackmultihit1_308d28ca.png"
+dest_files=["res://.godot/imported/fx_skillfx_dashattackmultihit1_308d28ca.png-0ffb0048039f3edbdcd825cc7c37c610.ctex"]
 
 [params]
 

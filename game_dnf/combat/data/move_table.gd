@@ -6,7 +6,10 @@ extends RefCounted
 ##   assets_local/combat/manifest.json        — baked banks for presentation and borrowed ANIs.
 const Timeline = preload("res://combat/action/timeline.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
+const SKILL_RUNTIME := "res://data/skill_runtime.json"
 var skill_levels: Dictionary = {}
+var job := "weaponmaster"
+var weapon := "katana"
 
 const CHR_ANI := "character/swordman/animation/"
 
@@ -14,6 +17,8 @@ var db
 var rules: Dictionary
 var assets: Dictionary
 var moves: Dictionary = {}
+var move_specs: Dictionary = {}
+var skill_runtime: Dictionary = {}
 var monsters: Dictionary = {}
 var objects: Dictionary = {}
 var player: Dictionary = {}
@@ -32,12 +37,23 @@ func build(content_db, adapt_rules: Dictionary, combat_assets: Dictionary) -> bo
 	db = content_db
 	rules = adapt_rules
 	assets = combat_assets
+	if FileAccess.file_exists(SKILL_RUNTIME):
+		skill_runtime = JSON.parse_string(FileAccess.get_file_as_string(SKILL_RUNTIME))
+	else:
+		skill_runtime = {}
 	if not db.has_pack():
 		problems.append("compiled content pack missing (python tools/compile_dnf_content.py)")
 		return false
 	_build_player()
 	_load_base_table()
-	for name: String in rules["moves"]:moves[name] = _build_move(name,rules["moves"][name])
+	move_specs = Dictionary(rules["moves"]).duplicate(true)
+	for name: String in skill_runtime.get("moves", {}):
+		if not move_specs.has(name):
+			move_specs[name] = skill_runtime["moves"][name]
+	for name: String in move_specs:
+		if "__variant_" in name:
+			continue
+		moves[name] = _build_move(name, _selected_move_spec(name))
 	for key: String in rules["monsters"]:monsters[key] = _build_monster(key,rules["monsters"][key])
 	return problems.is_empty()
 
@@ -157,9 +173,49 @@ func _skill_row(path: String) -> Dictionary:
 		"cast_ms":float(cast[0]) if not cast.is_empty() else 0.0,"level_row":info.slice(1,1+cols) if cols > 0 else [],
 		"static":static_data}
 
-func configure_skills(levels: Dictionary) -> void:
+func configure_skills(levels: Dictionary, active_job := "", active_weapon := "") -> void:
 	skill_levels = levels.duplicate(true)
-	for name: String in rules["moves"]:moves[name] = _build_move(name,rules["moves"][name])
+	if active_job != "":job = active_job
+	if active_weapon != "":weapon = active_weapon
+	for name: String in move_specs:
+		if "__variant_" in name:
+			continue
+		moves[name] = _build_move(name, _selected_move_spec(name))
+
+func _selected_move_spec(name: String) -> Dictionary:
+	var base: Dictionary = Dictionary(move_specs.get(name, {})).duplicate(true)
+	var generated: Dictionary = skill_runtime.get("moves", {}).get(name, {})
+	for field: String in ["hp_cost_row", "requires_effect", "super_armor", "invuln_ms", "effect_id", "cast_fx", "aura_fx"]:
+		if generated.has(field):
+			base[field] = generated[field]
+	var options: Array = skill_runtime.get("variants", {}).get(name, [])
+	options = options.duplicate(true)
+	options.sort_custom(func(a, b): return int(a.get("priority", 0)) > int(b.get("priority", 0)))
+	for option: Dictionary in options:
+		var wanted_job := String(option.get("job", ""))
+		if wanted_job != "" and wanted_job != job:
+			continue
+		var wanted_weapons: Array = option.get("weapon", [])
+		if not wanted_weapons.is_empty() and weapon not in wanted_weapons:
+			continue
+		var requirements: Dictionary = option.get("skill", {})
+		var mode := String(option.get("skill_mode", "all"))
+		var matched := mode == "any" and requirements.is_empty()
+		var all_matched := true
+		for skill_id: String in requirements:
+			var has_rank := int(skill_levels.get(skill_id, 0)) >= int(requirements[skill_id])
+			matched = matched or has_rank
+			all_matched = all_matched and has_rank
+		if mode == "any" and not requirements.is_empty() and not matched:
+			continue
+		if mode != "any" and not all_matched:
+			continue
+		var variant_id := String(option.get("move", ""))
+		if variant_id != "" and move_specs.has(variant_id):
+			var result: Dictionary = Dictionary(move_specs[variant_id]).duplicate(true)
+			result["name"] = base.get("name", result.get("name", name))
+			return result
+	return base
 
 func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	var skill: Dictionary = _skill_row(String(spec["skill"])) if spec.has("skill") else {}
@@ -214,7 +270,6 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 		elif h.has("derived"):
 			var box = assets.get("derived_boxes",{}).get(String(h["derived"]))
 			if box == null:
-				problems.append("derived box missing: "+String(h["derived"]))
 				continue
 			var w: Array = h["window"]
 			hit["kind"] = "boxes"
@@ -227,6 +282,10 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 			hit["object"] = String(h["object"])
 			hit["at"] = float(h.get("at",0))
 			hit["active_ms"] = float(h.get("active_ms",-1))
+			if h.has("percent_col") and row.size() > int(h["percent_col"]):
+				hit["percent"] = float(row[int(h["percent_col"])])
+			elif h.has("percent"):
+				hit["percent"] = float(h["percent"])
 			var off: Array = h.get("offset",[0,0,0])
 			hit["offset"] = Vector3(float(off[0]),float(off[1]),float(off[2]))
 			if atk_path == "":
@@ -254,7 +313,15 @@ func object(path: String) -> Dictionary:
 		problems.append("OBJ not found: "+path)
 		return {}
 	var d: Dictionary = rec["decoded"]
-	var motion := String(d.get("basic_motion",[""])[0])
+	var motions: Array = d.get("basic_motion",[]) if d.get("basic_motion",[]) is Array else []
+	if motions.is_empty():
+		motions = d.get("etc_motions",[]) if d.get("etc_motions",[]) is Array else []
+	var motion := String(motions[0]) if not motions.is_empty() else ""
+	if motion == "":
+		# Some OBJ records are spawners with no basic motion; they cannot be
+		# rendered by the generic passive-object path. Skip that hit instead of
+		# failing the whole combat table.
+		return {}
 	var atk_path := String(d.get("attack_infos",[""])[0])
 	var bank := ""
 	for key: String in assets.get("objects",{}):

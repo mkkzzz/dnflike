@@ -88,4 +88,7 @@ static func modifiers(profile: Dictionary, config: Dictionary) -> Array:
 
 static func usable(profile: Dictionary, definition: Dictionary) -> bool:
 	var jobs: Array=definition.get("usable_jobs",["[all]"])
-	return "[all]" in jobs or ("[swordman]" in jobs and int(profile.get("job_index",0))==0)
+	if not ("[all]" in jobs or ("[swordman]" in jobs and int(profile.get("job_index",0))==0)):return false
+	if definition.get("slot","") == "weapon" and String(definition.get("weapon","")) == "beamsword":
+		return int(profile.get("skills",{}).get("equiplightsword",0)) > 0
+	return true

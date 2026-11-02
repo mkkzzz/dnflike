@@ -213,6 +213,52 @@ ACTION_KEYS = ('waiting_actions', 'move_actions', 'sit_actions', 'damage_actions
                'last_actions', 'jump_actions', 'dash_actions')
 # Passive objects spawned by the trial skills (engine code links them, not a script field).
 SKILL_OBJECTS = ['passiveobject/character/swordman/gorecross.obj', 'passiveobject/character/swordman/momentaryslashwave.obj']
+SKILL_EXTRA_ANIMATIONS = ['passiveobject/actionobject/monster/wooden_doll/animation/tombstonerain.ani']
+
+
+def swordman_skill_asset_paths(lib: Library) -> dict[str, list[str]]:
+    """Return the player-skill dependency closure visible in the source archive.
+
+    SKL records do not carry an action graph: the client links skill IDs to CHR
+    motions and passive objects. Compile every Swordman-owned motion/effect bank
+    so the generated runtime adapter can reference those files without silently
+    depending on a hand-maintained 16-skill allowlist.
+    """
+    patterns = {
+        'ani': [
+            'character/swordman/animation/%',
+            'character/swordman/effect/animation/%',
+            'passiveobject/character/swordman/animation/%',
+        ],
+        'atk': [
+            'character/swordman/attackinfo/%',
+            'character/swordman/dsattackinfo/%',
+            'passiveobject/character/swordman/attackinfo/%',
+        ],
+        'ptl': [
+            'character/swordman/particle/%',
+            'character/swordman/effect/particle/%',
+            'passiveobject/character/swordman/particle/%',
+        ],
+        'obj': ['passiveobject/character/swordman/%'],
+    }
+    found: dict[str, list[str]] = {}
+    for extension, prefixes in patterns.items():
+        values = set(SKILL_OBJECTS) if extension == 'obj' else set()
+        for prefix in prefixes:
+            rows = lib.db.execute(
+                'select path from files where extension=? and lower(path) like ?',
+                ('.' + extension, prefix),
+            )
+            for (path,) in rows:
+                path = str(path).lower()
+                if '[pvp]' in path:
+                    continue
+                if extension == 'obj' and not path.endswith('.obj'):
+                    continue
+                values.add(path)
+        found[extension] = sorted(values)
+    return found
 
 
 def first(node: dict):
@@ -449,6 +495,30 @@ def compile_scope(lib: Library) -> dict:
         p = ('skill/' + rel).lower()
         if add(p, 'skl', 'skill/swordmanskill.lst'):
             skill_index[str(index)] = p
+    swordman_assets = swordman_skill_asset_paths(lib)
+    for extension in ['ani', 'atk', 'ptl']:
+        for value in swordman_assets[extension]:
+            add(value, extension, 'swordman skill dependency closure')
+    for value in SKILL_EXTRA_ANIMATIONS:
+        add(value, 'ani', 'swordman skill adapter')
+    for value in swordman_assets['obj']:
+        obj = add(value, 'obj', 'swordman skill dependency closure')
+        if not obj:
+            continue
+        od = obj['decoded']
+        for key in ['basic_motion', 'etc_motions', 'destroy_particle']:
+            for dependency in od.get(key) or []:
+                if not isinstance(dependency, str) or not dependency:
+                    continue
+                kind = 'ani' if dependency.endswith('.ani') else 'ptl'
+                add(dependency, kind, value)
+        for key in ['attack_infos', 'etc_attack_infos']:
+            for dependency in od.get(key) or []:
+                if dependency:
+                    add(str(dependency), 'atk', value)
+        effect = od.get('add_object_effect') or []
+        if effect and isinstance(effect[0], str):
+            add(resolve(value, effect[0]), 'ani', value)
     # 地图上的可破坏物与陷阱机关：血量/破坏粒子/音效都在 .obj 里，
     # 不编进内容包运行时只能当静态美术画着（打不碎、也不会伤人）。
     for path in referenced_breakable_objects():

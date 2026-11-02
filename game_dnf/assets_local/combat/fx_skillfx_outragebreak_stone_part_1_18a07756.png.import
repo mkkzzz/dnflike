@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cc5ocxxj5e6df"
-path="res://.godot/imported/fx_obj_goblin_ice.png-4b0442f1af45a38bed87a1f73af6f59c.ctex"
+uid="uid://c3d7gydevr5ey"
+path="res://.godot/imported/fx_skillfx_outragebreak_stone_part_1_18a07756.png-8b6f4c7cc1d703fd810ca402dd8d65b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets_local/combat/fx_obj_goblin_ice.png"
-dest_files=["res://.godot/imported/fx_obj_goblin_ice.png-4b0442f1af45a38bed87a1f73af6f59c.ctex"]
+source_file="res://assets_local/combat/fx_skillfx_outragebreak_stone_part_1_18a07756.png"
+dest_files=["res://.godot/imported/fx_skillfx_outragebreak_stone_part_1_18a07756.png-8b6f4c7cc1d703fd810ca402dd8d65b9.ctex"]
 
 [params]
 

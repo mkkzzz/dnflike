@@ -8,6 +8,7 @@ var sources: Dictionary = {}
 var effects = Numbers.Effects.new()
 var config: Dictionary = Numbers.shared_config()
 var element := "none"
+var runtime_modifiers: Array = []
 
 func configure(spec: Dictionary) -> void:
 	base = spec.get("numbers",{}).duplicate(true)
@@ -17,7 +18,7 @@ func configure(spec: Dictionary) -> void:
 
 func recalculate() -> void:
 	var cfg := config.duplicate()
-	var mods: Array = effects.modifiers()
+	var mods: Array = effects.modifiers()+runtime_modifiers.duplicate(true)
 	var level := int(base.get("level",1))
 	var growtype := "swordman"
 	if not seed.is_empty():
@@ -31,6 +32,17 @@ func recalculate() -> void:
 	var result := Numbers.Attributes.calculate(level,growtype,mods,cfg)
 	values = result["values"]
 	sources = result["sources"]
+	for effect: Dictionary in effects.active.values():
+		var bonus := float(effect.get("definition",{}).get("weapon_attack",0))
+		if bonus != 0:
+			values["physical_attack"] = float(values["physical_attack"])+bonus
+			values["magical_attack"] = float(values["magical_attack"])+bonus
+			sources["physical_attack"].append({"source":effect["definition"].get("name","武器增益"),"op":"add","value":bonus})
+			sources["magical_attack"].append({"source":effect["definition"].get("name","武器增益"),"op":"add","value":bonus})
+
+func set_runtime_modifiers(value: Array) -> void:
+	runtime_modifiers = value.duplicate(true)
+	recalculate()
 
 func add_effect(id: String, rank := 1) -> bool:
 	if not config["effects"].has(id):return false

@@ -7,7 +7,9 @@ func add(id: String, definition: Dictionary, rank := 1) -> bool:
 	var old: Dictionary = active.get(id,{})
 	var stacks := 1
 	if definition.get("stacking","refresh") == "stack":stacks = mini(int(old.get("stacks",0))+1,int(definition.get("max_stacks",1)))
-	active[id] = {"id":id,"definition":definition.duplicate(true),"remaining_ms":float(definition.get("duration_ms",0)),"tick_ms":float(old.get("tick_ms",0)),"stacks":stacks,"rank":rank}
+	var entry := {"id":id,"definition":definition.duplicate(true),"remaining_ms":float(definition.get("duration_ms",0)),"tick_ms":float(old.get("tick_ms",0)),"stacks":stacks,"rank":rank}
+	if definition.has("absorb_hits"):entry["absorb_remaining"] = int(definition["absorb_hits"])
+	active[id] = entry
 	return true
 
 func remove(id: String) -> bool:

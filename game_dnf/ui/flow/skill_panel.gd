@@ -471,6 +471,14 @@ func _job_advancement(root: Control) -> void:
 		func(): job_change("berserker"), false)
 	second.size = Vector2(92, 23)
 	second.disabled = not ready
+	var third: Button = game.skin.button(root, "转职鬼泣", Vector2(200, 461),
+		func(): job_change("soulbringer"), false)
+	third.size = Vector2(84, 23)
+	third.disabled = not ready
+	var fourth: Button = game.skin.button(root, "转职阿修罗", Vector2(290, 461),
+		func(): job_change("asura"), false)
+	fourth.size = Vector2(92, 23)
+	fourth.disabled = not ready
 
 func _type_name(raw: String) -> String:
 	if raw.contains("passive"):

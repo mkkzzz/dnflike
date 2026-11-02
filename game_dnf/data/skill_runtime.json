@@ -1,0 +1,8896 @@
+{
+ "active_count": 74,
+ "assets": {
+  "effect_anims": {
+   "skillfx_add_e433feca": "character/swordman/effect/animation/wavemark/add.ani",
+   "skillfx_appear1_9bb8086c": "character/swordman/effect/animation/keiga/appear1.ani",
+   "skillfx_area_3363e3fd": "character/swordman/effect/animation/shockwavearea/area.ani",
+   "skillfx_autoguard_ldodge_cd812bbd": "character/swordman/effect/animation/autoguard_ldodge.ani",
+   "skillfx_ballhead_bb847343": "character/swordman/effect/animation/blache/ballhead.ani",
+   "skillfx_balltail1_fe1b6b78": "character/swordman/effect/animation/blache/balltail1.ani",
+   "skillfx_blast1_08fc54d5": "character/swordman/effect/animation/standalonewave/blast1.ani",
+   "skillfx_blast2_13b8f710": "character/swordman/effect/animation/standalonewave/blast2.ani",
+   "skillfx_bremen1_73d2043e": "passiveobject/character/swordman/animation/bremen1.ani",
+   "skillfx_charge1_522d5c86": "character/swordman/effect/animation/standalonewave/charge1.ani",
+   "skillfx_charge_623ff08a": "character/swordman/effect/animation/chargecrash/charge.ani",
+   "skillfx_charge_b82745b0": "character/swordman/effect/animation/reflectguard/charge.ani",
+   "skillfx_charge_dodge_48d97524": "character/swordman/effect/animation/flowmindpowerup/charge_dodge.ani",
+   "skillfx_circle_c83df7ec": "character/swordman/effect/animation/wavespinarea/circle.ani",
+   "skillfx_dash_e40d6dac": "character/swordman/effect/animation/chargecrash/dash.ani",
+   "skillfx_dashattackmultihit1_308d28ca": "character/swordman/effect/animation/dashattackmultihit1.ani",
+   "skillfx_dotareadamage_9130facc": "character/swordman/effect/animation/dotareadamage.ani",
+   "skillfx_down_slash_f79b50a7": "character/swordman/effect/animation/chargecrash/down-slash.ani",
+   "skillfx_dust_2e1015db": "character/swordman/effect/animation/guard/dust.ani",
+   "skillfx_exp1_99b066d8": "character/swordman/effect/animation/kalla/exp1.ani",
+   "skillfx_finishflash_7520151b": "character/swordman/effect/animation/hundredsword/finishflash.ani",
+   "skillfx_jumpchainattackslash1_katana_under_0e0a4d92": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash1_katana_under.ani",
+   "skillfx_jumpchainattackslash2_katana_under_3fe65613": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash2_katana_under.ani",
+   "skillfx_khazan_down_45a97897": "passiveobject/character/swordman/animation/hardattackcharge/khazan-down.ani",
+   "skillfx_lightmove1_1_847fea3b": "character/swordman/effect/animation/rapidmoveslash/lightmove1-1.ani",
+   "skillfx_lightmove1_2_b2a9b7bc": "character/swordman/effect/animation/rapidmoveslash/lightmove1-2.ani",
+   "skillfx_lightmove2_1_7a67e3a5": "character/swordman/effect/animation/rapidmoveslash/lightmove2-1.ani",
+   "skillfx_moonlightslash1_d0608d59": "character/swordman/effect/animation/moonlightslash1.ani",
+   "skillfx_moonlightslash2_574395d9": "character/swordman/effect/animation/moonlightslash2.ani",
+   "skillfx_moonlightslashfull_3d8e1047": "character/swordman/effect/animation/moonlightslashfull.ani",
+   "skillfx_outragebreak_stone_part_1_18a07756": "character/swordman/effect/animation/outragebreak/particle/outragebreak_stone_part_1.ani",
+   "skillfx_outragebreak_stone_part_2_376e63de": "character/swordman/effect/animation/outragebreak/particle/outragebreak_stone_part_2.ani",
+   "skillfx_saya_down_ced86275": "passiveobject/character/swordman/animation/hardattackcharge/saya-down.ani",
+   "skillfx_slash1_06aaa5c5": "character/swordman/effect/animation/ghoststepslash/slash1.ani",
+   "skillfx_slash2_0ba3d5ec": "character/swordman/effect/animation/ghoststepslash/slash2.ani",
+   "skillfx_slashmove1_afe914cf": "character/swordman/effect/animation/ghoststep/slashmove1.ani",
+   "skillfx_smash_c789bbe3": "character/swordman/effect/animation/illusionslash/smash.ani",
+   "skillfx_tn_balltail1_246e0c4a": "character/swordman/effect/animation/hellbenter/(tn)balltail1.ani",
+   "skillfx_tombstonerain_7396cb89": "passiveobject/actionobject/monster/wooden_doll/animation/tombstonerain.ani",
+   "skillfx_upper_4c1c9ad1": "character/swordman/effect/animation/illusionslash/upper.ani",
+   "skillfx_upperslash1_65c825d8": "character/swordman/effect/animation/upperslash1.ani",
+   "skillfx_vaneslash_2607eaf7": "passiveobject/character/swordman/animation/vaneslash.ani"
+  },
+  "objects": {
+   "passiveobject/character/swordman/ashenforksub.obj": "passiveobject/character/swordman/ashenforksub.obj",
+   "passiveobject/character/swordman/bloodyrave.obj": "passiveobject/character/swordman/bloodyrave.obj",
+   "passiveobject/character/swordman/bremen.obj": "passiveobject/character/swordman/bremen.obj",
+   "passiveobject/character/swordman/epidemicrasa.obj": "passiveobject/character/swordman/epidemicrasa.obj",
+   "passiveobject/character/swordman/firewavebig.obj": "passiveobject/character/swordman/firewavebig.obj",
+   "passiveobject/character/swordman/grabblastblood.obj": "passiveobject/character/swordman/grabblastblood.obj",
+   "passiveobject/character/swordman/grabblastbloodbig.obj": "passiveobject/character/swordman/grabblastbloodbig.obj",
+   "passiveobject/character/swordman/grandwave.obj": "passiveobject/character/swordman/grandwave.obj",
+   "passiveobject/character/swordman/grandwavefullcharge.obj": "passiveobject/character/swordman/grandwavefullcharge.obj",
+   "passiveobject/character/swordman/guardwave.obj": "passiveobject/character/swordman/guardwave.obj",
+   "passiveobject/character/swordman/hardattackchargeafter.obj": "passiveobject/character/swordman/hardattackchargeafter.obj",
+   "passiveobject/character/swordman/hopsmashsub.obj": "passiveobject/character/swordman/hopsmashsub.obj",
+   "passiveobject/character/swordman/hundredswordhit.obj": "passiveobject/character/swordman/hundredswordhit.obj",
+   "passiveobject/character/swordman/illusionslashwave.obj": "passiveobject/character/swordman/illusionslashwave.obj",
+   "passiveobject/character/swordman/khazan.obj": "passiveobject/character/swordman/khazan.obj",
+   "passiveobject/character/swordman/momentaryslashwave.obj": "passiveobject/character/swordman/momentaryslashwave.obj",
+   "passiveobject/character/swordman/normalwave.obj": "passiveobject/character/swordman/normalwave.obj",
+   "passiveobject/character/swordman/outragebreakfloor.obj": "passiveobject/character/swordman/outragebreakfloor.obj",
+   "passiveobject/character/swordman/reflectguardbead.obj": "passiveobject/character/swordman/reflectguardbead.obj",
+   "passiveobject/character/swordman/saya.obj": "passiveobject/character/swordman/saya.obj",
+   "passiveobject/character/swordman/wavespinarea.obj": "passiveobject/character/swordman/wavespinarea.obj"
+  },
+  "player_anims": {
+   "attack1": "character/swordman/animation/attack1.ani",
+   "attack2": "character/swordman/animation/attack2.ani",
+   "attack3": "character/swordman/animation/attack3.ani",
+   "blachecast": "character/swordman/animation/blachecast.ani",
+   "blachesmash": "character/swordman/animation/blachesmash.ani",
+   "bloodyraveinhale": "character/swordman/animation/bloodyraveinhale.ani",
+   "bloodyraveslash": "character/swordman/animation/bloodyraveslash.ani",
+   "chargecrashdash": "character/swordman/animation/chargecrashdash.ani",
+   "chargecrashfinish": "character/swordman/animation/chargecrashfinish.ani",
+   "chargecrashupper": "character/swordman/animation/chargecrashupper.ani",
+   "dashattackmultihit": "character/swordman/animation/dashattackmultihit.ani",
+   "frenzy1": "character/swordman/animation/frenzy1.ani",
+   "frenzy2": "character/swordman/animation/frenzy2.ani",
+   "frenzy3": "character/swordman/animation/frenzy3.ani",
+   "frenzy4": "character/swordman/animation/frenzy4.ani",
+   "ghoststepslashmove": "character/swordman/animation/ghoststepslashmove.ani",
+   "ghoststepslashready": "character/swordman/animation/ghoststepslashready.ani",
+   "gorecross": "character/swordman/animation/gorecross.ani",
+   "guard": "character/swordman/animation/guard.ani",
+   "hardattack": "character/swordman/animation/hardattack.ani",
+   "hitback": "character/swordman/animation/hitback.ani",
+   "hopsmash": "character/swordman/animation/hopsmash.ani",
+   "hopsmashready": "character/swordman/animation/hopsmashready.ani",
+   "hundredswordfinish": "character/swordman/animation/hundredswordfinish.ani",
+   "hundredswordmoveslash1": "character/swordman/animation/hundredswordmoveslash1.ani",
+   "hundredswordmoveslash2": "character/swordman/animation/hundredswordmoveslash2.ani",
+   "hundredswordmoveslash3": "character/swordman/animation/hundredswordmoveslash3.ani",
+   "hundredswordmoveslash4": "character/swordman/animation/hundredswordmoveslash4.ani",
+   "hundredswordmoveslash5": "character/swordman/animation/hundredswordmoveslash5.ani",
+   "hundredswordready": "character/swordman/animation/hundredswordready.ani",
+   "illusionslash1": "character/swordman/animation/illusionslash1.ani",
+   "illusionslash2": "character/swordman/animation/illusionslash2.ani",
+   "illusionslash3": "character/swordman/animation/illusionslash3.ani",
+   "illusionslash4": "character/swordman/animation/illusionslash4.ani",
+   "illusionslashfinal": "character/swordman/animation/illusionslashfinal.ani",
+   "jumpattackmultislash1": "character/swordman/animation/jumpattackmultislash1.ani",
+   "jumpattackmultislash2": "character/swordman/animation/jumpattackmultislash2.ani",
+   "kallafinish1": "character/swordman/animation/kallafinish1.ani",
+   "kallafinish2": "character/swordman/animation/kallafinish2.ani",
+   "kallafinish3": "character/swordman/animation/kallafinish3.ani",
+   "momentaryslash": "character/swordman/animation/momentaryslash.ani",
+   "moonlightslash1": "character/swordman/animation/moonlightslash1.ani",
+   "moonlightslash2": "character/swordman/animation/moonlightslash2.ani",
+   "moonlightslashfull": "character/swordman/animation/moonlightslashfull.ani",
+   "outragebreakready": "character/swordman/animation/outragebreakready.ani",
+   "outragebreakslash": "character/swordman/animation/outragebreakslash.ani",
+   "rapidmoveslashmove1": "character/swordman/animation/rapidmoveslashmove1.ani",
+   "rapidmoveslashmove2": "character/swordman/animation/rapidmoveslashmove2.ani",
+   "rapidmoveslashready1": "character/swordman/animation/rapidmoveslashready1.ani",
+   "rapidmoveslashready2": "character/swordman/animation/rapidmoveslashready2.ani",
+   "reflectguard": "character/swordman/animation/reflectguard.ani",
+   "shockwaveareacast": "character/swordman/animation/shockwaveareacast.ani",
+   "shockwaveareasmash": "character/swordman/animation/shockwaveareasmash.ani",
+   "standalonewavebasic": "character/swordman/animation/standalonewavebasic.ani",
+   "standalonewaveready": "character/swordman/animation/standalonewaveready.ani",
+   "standalonewavestrong": "character/swordman/animation/standalonewavestrong.ani",
+   "summon2": "character/swordman/animation/summon2.ani",
+   "tripleslash1": "character/swordman/animation/tripleslash1.ani",
+   "tripleslash2": "character/swordman/animation/tripleslash2.ani",
+   "tripleslash3": "character/swordman/animation/tripleslash3.ani",
+   "tripleslash4": "character/swordman/animation/tripleslash4.ani",
+   "tripleslash5": "character/swordman/animation/tripleslash5.ani",
+   "vaneslash": "character/swordman/animation/vaneslash.ani",
+   "vaneslashtry": "character/swordman/animation/vaneslashtry.ani",
+   "waveeyeattack1": "character/swordman/animation/waveeyeattack1.ani",
+   "waveeyeattack2": "character/swordman/animation/waveeyeattack2.ani",
+   "waveeyeattack3": "character/swordman/animation/waveeyeattack3.ani",
+   "weaponcomboblade1": "character/swordman/animation/weaponcomboblade1.ani",
+   "weaponcomboblade2": "character/swordman/animation/weaponcomboblade2.ani",
+   "weaponcomboblade3": "character/swordman/animation/weaponcomboblade3.ani",
+   "weaponcomboblade4": "character/swordman/animation/weaponcomboblade4.ani",
+   "weaponcomboblunt1": "character/swordman/animation/weaponcomboblunt1.ani",
+   "weaponcomboblunt2": "character/swordman/animation/weaponcomboblunt2.ani",
+   "weaponcomboblunt3": "character/swordman/animation/weaponcomboblunt3.ani",
+   "weaponcomboheavy1": "character/swordman/animation/weaponcomboheavy1.ani",
+   "weaponcomboheavy2": "character/swordman/animation/weaponcomboheavy2.ani",
+   "weaponcombolight1": "character/swordman/animation/weaponcombolight1.ani",
+   "weaponcombolight2": "character/swordman/animation/weaponcombolight2.ani",
+   "weaponcombolight3": "character/swordman/animation/weaponcombolight3.ani"
+  }
+ },
+ "effects": {
+  "autoguard": {
+   "auto_guard": true,
+   "duration_ms": 120000,
+   "max_stacks": 1,
+   "name": "自动格挡",
+   "stacking": "refresh",
+   "super_armor": true
+  },
+  "backstep_utility": {
+   "duration_ms": 1,
+   "max_stacks": 1,
+   "name": "后跳",
+   "stacking": "refresh"
+  },
+  "bremen_aura": {
+   "aura": {
+    "enemy_effect": "bremen_debuff",
+    "radius": 300
+   },
+   "duration_ms": 25000,
+   "max_stacks": 1,
+   "name": "侵蚀之普戾蒙",
+   "stacking": "refresh"
+  },
+  "bremen_debuff": {
+   "duration_ms": 1000,
+   "harmful": true,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "mul",
+     "stat": "physical_defense",
+     "value": 0.85
+    },
+    {
+     "op": "mul",
+     "stat": "magical_defense",
+     "value": 0.85
+    },
+    {
+     "op": "mul",
+     "stat": "move_speed",
+     "value": 0.9
+    }
+   ],
+   "name": "侵蚀之普戾蒙",
+   "stacking": "refresh"
+  },
+  "burn": {
+   "damage_type": "magical",
+   "duration_ms": 5000,
+   "element": "fire",
+   "harmful": true,
+   "interval_ms": 1000,
+   "max_stacks": 3,
+   "name": "灼伤",
+   "stacking": "stack",
+   "tick_damage": 8
+  },
+  "counter_evasion": {
+   "duration_ms": 10000,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "add",
+     "stat": "evasion",
+     "value": 0.06
+    }
+   ],
+   "name": "心眼",
+   "stacking": "refresh"
+  },
+  "dark_aura": {
+   "duration_ms": 1000,
+   "harmful": true,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "add",
+     "stat": "dark_resist",
+     "value": -40
+    },
+    {
+     "op": "mul",
+     "stat": "attack_speed",
+     "value": 0.95
+    }
+   ],
+   "name": "恐惧光环",
+   "stacking": "refresh"
+  },
+  "dark_tolerance": {
+   "aura": {
+    "enemy": {
+     "dark_resist": -3
+    },
+    "radius": 250
+   },
+   "duration_ms": 20000,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "add",
+     "stat": "dark_resist",
+     "value": 3
+    }
+   ],
+   "name": "暗月降临",
+   "stacking": "refresh"
+  },
+  "defense_down": {
+   "duration_ms": 10000,
+   "harmful": true,
+   "max_stacks": 10,
+   "modifiers": [
+    {
+     "op": "mul",
+     "stat": "physical_defense",
+     "value": 0.97
+    }
+   ],
+   "name": "物理防御降低",
+   "stacking": "stack"
+  },
+  "diehard": {
+   "duration_ms": 10000,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "add",
+     "stat": "hp_regen",
+     "value": 20
+    },
+    {
+     "op": "mul",
+     "stat": "physical_defense",
+     "value": 1.15
+    }
+   ],
+   "name": "死亡抗拒",
+   "stacking": "refresh"
+  },
+  "dotarea": {
+   "aura": {
+    "damage_type": "magical",
+    "radius": 260,
+    "tick_damage": 18
+   },
+   "duration_ms": 120000,
+   "form": "murderous_wave",
+   "max_stacks": 1,
+   "name": "杀意波动",
+   "stacking": "refresh"
+  },
+  "epidemic_aura": {
+   "aura": {
+    "damage_percent": 40,
+    "enemy_effect": "slow",
+    "radius": 280
+   },
+   "duration_ms": 12000,
+   "max_stacks": 1,
+   "name": "瘟疫之罗刹",
+   "stacking": "refresh"
+  },
+  "flowmind": {
+   "duration_ms": 120000,
+   "form": "flowmind",
+   "max_stacks": 1,
+   "name": "流心",
+   "stacking": "refresh"
+  },
+  "flowmind_powerup": {
+   "duration_ms": 120000,
+   "max_stacks": 1,
+   "name": "流心 · 狂",
+   "skill_damage": {
+    "flowmindone": 0.1,
+    "flowmindthree": 0.1,
+    "flowmindtwo": 0.1
+   },
+   "stacking": "refresh"
+  },
+  "frenzy": {
+   "duration_ms": 8000,
+   "form": "dual_wield",
+   "interval_ms": 10000,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "mul",
+     "stat": "attack_speed",
+     "value": 1.25
+    },
+    {
+     "op": "mul",
+     "stat": "move_speed",
+     "value": 1.2
+    },
+    {
+     "op": "mul",
+     "stat": "damage_rate",
+     "value": 1.2
+    },
+    {
+     "op": "mul",
+     "stat": "taken_rate",
+     "value": 1.3
+    },
+    {
+     "op": "add",
+     "stat": "hit",
+     "value": 0.1
+    }
+   ],
+   "name": "血之狂暴",
+   "skill_cooldown_rate": {
+    "bloodblast": 0.85,
+    "grabblastblood": 0.85,
+    "rage_slash": 0.85
+   },
+   "skill_damage": {
+    "bloodblast": 0.1,
+    "grabblastblood": 0.1,
+    "rage_slash": 0.1
+   },
+   "stacking": "refresh",
+   "super_armor": true,
+   "tick_damage": 75
+  },
+  "ghoststep": {
+   "duration_ms": 120000,
+   "form": "ghost_step",
+   "invuln_ms": 1000,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "mul",
+     "stat": "move_speed",
+     "value": 1.1
+    }
+   ],
+   "name": "鬼影步",
+   "stacking": "refresh"
+  },
+  "hellbenter": {
+   "duration_ms": 60000,
+   "form": "hellbenter",
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "mul",
+     "stat": "attack_speed",
+     "value": 1.1
+    },
+    {
+     "op": "mul",
+     "stat": "move_speed",
+     "value": 1.08
+    }
+   ],
+   "name": "魔狱血刹",
+   "stacking": "refresh"
+  },
+  "jump_power_up": {
+   "duration_ms": 20000,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "add",
+     "stat": "jump_power",
+     "value": 120
+    }
+   ],
+   "name": "跃翔",
+   "stacking": "refresh"
+  },
+  "kalla": {
+   "duration_ms": 39000,
+   "form": "kalla",
+   "max_stacks": 1,
+   "name": "冥炎之卡洛",
+   "stacking": "refresh"
+  },
+  "keiga": {
+   "absorb_hits": 20,
+   "duration_ms": 156000,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "mul",
+     "stat": "taken_rate",
+     "value": 0.8
+    },
+    {
+     "op": "add",
+     "stat": "evasion",
+     "value": 0.07
+    }
+   ],
+   "name": "残影之凯贾",
+   "stacking": "refresh"
+  },
+  "khazan_aura": {
+   "aura": {
+    "damage_percent": 31,
+    "radius": 250
+   },
+   "duration_ms": 25000,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "add",
+     "stat": "strength",
+     "value": 31
+    },
+    {
+     "op": "add",
+     "stat": "intelligence",
+     "value": 31
+    }
+   ],
+   "name": "刀魂之卡赞",
+   "stacking": "refresh"
+  },
+  "magical_memory": {
+   "duration_ms": 20000,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "add",
+     "stat": "intelligence",
+     "value": 150
+    },
+    {
+     "op": "percent",
+     "stat": "magical_attack",
+     "value": 0.1
+    }
+   ],
+   "name": "远古记忆",
+   "stacking": "refresh"
+  },
+  "mindflash": {
+   "duration_ms": 23000,
+   "max_stacks": 5,
+   "modifiers": [
+    {
+     "op": "add",
+     "stat": "intelligence",
+     "value": 6
+    },
+    {
+     "op": "add",
+     "stat": "mp_regen",
+     "value": 0.5
+    }
+   ],
+   "name": "挫折意志",
+   "stacking": "stack"
+  },
+  "overdrive": {
+   "durability_rate": 3.0,
+   "duration_ms": 120000,
+   "max_stacks": 1,
+   "name": "破极兵刃",
+   "stacking": "refresh",
+   "weapon_attack": 30
+  },
+  "quick_standing": {
+   "duration_ms": 1,
+   "max_stacks": 1,
+   "name": "受身蹲伏",
+   "stacking": "refresh"
+  },
+  "reckless": {
+   "duration_ms": 40080,
+   "form": "reckless",
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "mul",
+     "stat": "attack_speed",
+     "value": 1.1
+    },
+    {
+     "op": "mul",
+     "stat": "move_speed",
+     "value": 1.08
+    },
+    {
+     "op": "add",
+     "stat": "strength",
+     "value": 50
+    },
+    {
+     "op": "add",
+     "stat": "physical_crit",
+     "value": 0.08
+    },
+    {
+     "op": "mul",
+     "stat": "taken_rate",
+     "value": 1.1
+    }
+   ],
+   "name": "暴走",
+   "stacking": "refresh"
+  },
+  "saya_aura": {
+   "aura": {
+    "chance": 0.12,
+    "damage_percent": 80,
+    "effect": "freeze",
+    "radius": 300
+   },
+   "duration_ms": 25000,
+   "max_stacks": 1,
+   "name": "冰霜之萨亚",
+   "stacking": "refresh"
+  },
+  "shock": {
+   "damage_type": "magical",
+   "duration_ms": 4000,
+   "element": "light",
+   "harmful": true,
+   "interval_ms": 1000,
+   "max_stacks": 3,
+   "name": "感电",
+   "stacking": "stack",
+   "tick_damage": 10
+  },
+  "slow": {
+   "duration_ms": 4000,
+   "harmful": true,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "op": "mul",
+     "stat": "move_speed",
+     "value": 0.75
+    }
+   ],
+   "name": "减速",
+   "stacking": "refresh"
+  },
+  "super_armor_cast": {
+   "duration_ms": 8000,
+   "max_stacks": 1,
+   "name": "不屈意志",
+   "stacking": "refresh",
+   "super_armor": true
+  },
+  "waveeye": {
+   "duration_ms": 40000,
+   "form": "wave_eye",
+   "max_stacks": 1,
+   "name": "暗天波动眼",
+   "stacking": "refresh"
+  },
+  "wavemark": {
+   "duration_ms": 120000,
+   "form": "wave_mark",
+   "max_stacks": 1,
+   "name": "波动刻印",
+   "stacking": "refresh",
+   "wave_mark_interval_ms": 3000
+  }
+ },
+ "moves": {
+  "ashenfork": {
+   "name": "银光落刃",
+   "skill": "skill/swordman/ashenfork.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/ashenfork.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "ashenfork__variant_1": {
+   "name": "银光落刃",
+   "skill": "skill/swordman/ashenfork.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/ashenfork.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "atk": "",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        240
+       ]
+      },
+      {
+       "atk": "",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        240
+       ]
+      },
+      {
+       "at": 220,
+       "life_ms": 1200,
+       "object": "passiveobject/character/swordman/ashenforksub.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "autoguard": {
+   "effect_id": "autoguard",
+   "name": "自动格挡",
+   "skill": "skill/swordman/autoguard.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_autoguard_ldodge_cd812bbd"
+      }
+     ],
+     "hits": []
+    }
+   ]
+  },
+  "backstep": {
+   "effect_id": "backstep_utility",
+   "name": "后跳",
+   "skill": "skill/swordman/backstep.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "hits": []
+    }
+   ]
+  },
+  "backstepcutter": {
+   "name": "后跳斩",
+   "skill": "skill/swordman/backstepcutter.skl",
+   "stages": [
+    {
+     "ani": "hitback",
+     "atk": "character/swordman/attackinfo/upperslash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/upperslash.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "blache": {
+   "name": "第7鬼神 : 邪神之怖拉修",
+   "skill": "skill/swordman/blache.skl",
+   "stages": [
+    {
+     "ani": "blachecast",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_ballhead_bb847343"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_ballhead_bb847343",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        1200.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "blachesmash",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_balltail1_fe1b6b78"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_balltail1_fe1b6b78",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0.0,
+        100.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "bloodblast": {
+   "name": "怒气爆发",
+   "skill": "skill/swordman/bloodblast.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 280,
+       "effects": [],
+       "life_ms": 1700,
+       "object": "passiveobject/character/swordman/grabblastbloodbig.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "bloodblastex": {
+   "name": "血气爆发",
+   "skill": "skill/swordman/bloodblastex.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 280,
+       "effects": [],
+       "life_ms": 1700,
+       "object": "passiveobject/character/swordman/grabblastbloodbig.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "bloodsword": {
+   "name": "血气之刃",
+   "skill": "skill/swordman/bloodsword.skl",
+   "stages": [
+    {
+     "ani": "gorecross",
+     "atk": "passiveobject/character/swordman/attackinfo/gorecross.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/gorecross.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [
+        {
+         "chance": 0.2,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "bloodyrave": {
+   "name": "嗜魂封魔斩",
+   "requires_effect": "frenzy",
+   "skill": "skill/swordman/bloodyrave.skl",
+   "stages": [
+    {
+     "ani": "bloodyraveinhale",
+     "atk": "",
+     "hits": [
+      {
+       "atk": "",
+       "body": true,
+       "effects": [
+        {
+         "chance": 0.3,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 0
+      }
+     ]
+    },
+    {
+     "ani": "bloodyraveslash",
+     "atk": "",
+     "hits": [
+      {
+       "at": 980,
+       "life_ms": 1600,
+       "object": "passiveobject/character/swordman/bloodyrave.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "bremen": {
+   "name": "侵蚀之普戾蒙",
+   "skill": "skill/swordman/bremen.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_bremen1_73d2043e"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_bremen1_73d2043e",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        880.0
+       ]
+      },
+      {
+       "at": 420,
+       "effects": [],
+       "life_ms": 25000,
+       "object": "passiveobject/character/swordman/bremen.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "buff": {
+   "effect_id": "frenzy",
+   "hp_cost_row": 0,
+   "name": "血之狂暴",
+   "skill": "skill/swordman/frenzy.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": ""
+      }
+     ],
+     "hits": []
+    }
+   ]
+  },
+  "charge_crash": {
+   "name": "破军升龙击",
+   "skill": "skill/swordman/chargecrash.skl",
+   "stages": [
+    {
+     "ani": "chargecrashdash",
+     "atk": "character/swordman/attackinfo/chargecrashdash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_charge_623ff08a"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/chargecrashdash.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 0
+      }
+     ]
+    },
+    {
+     "ani": "chargecrashupper",
+     "atk": "character/swordman/attackinfo/chargecrashupper.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_dash_e40d6dac"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/chargecrashupper.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 1
+      }
+     ]
+    }
+   ]
+  },
+  "charge_crash__variant_1": {
+   "name": "破军升龙击",
+   "skill": "skill/swordman/chargecrash.skl",
+   "stages": [
+    {
+     "ani": "chargecrashdash",
+     "atk": "character/swordman/attackinfo/chargecrashdash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_charge_623ff08a"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/chargecrashdash.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 0
+      }
+     ]
+    },
+    {
+     "ani": "chargecrashupper",
+     "atk": "character/swordman/attackinfo/chargecrashupper.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_dash_e40d6dac"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/chargecrashupper.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 1
+      }
+     ]
+    },
+    {
+     "ani": "chargecrashfinish",
+     "atk": "character/swordman/attackinfo/chargecrashfinish.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_down_slash_f79b50a7"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/chargecrashfinish.atk",
+       "derived": "skillfx_down_slash_f79b50a7",
+       "effects": [],
+       "percent_col": 2,
+       "window": [
+        0.0,
+        500.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "chargecrashex": {
+   "name": "破军斩龙击",
+   "skill": "skill/swordman/chargecrashex.skl",
+   "stages": [
+    {
+     "ani": "chargecrashdash",
+     "atk": "character/swordman/attackinfo/chargecrashdash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_charge_623ff08a"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/chargecrashdash.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 0
+      }
+     ]
+    },
+    {
+     "ani": "chargecrashupper",
+     "atk": "character/swordman/attackinfo/chargecrashupper.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_dash_e40d6dac"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/chargecrashupper.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 1
+      }
+     ]
+    }
+   ]
+  },
+  "chargecrashexp": {
+   "name": "强化 - 破军升龙击",
+   "skill": "skill/swordman/chargecrashexp.skl",
+   "stages": [
+    {
+     "ani": "chargecrashdash",
+     "atk": "character/swordman/attackinfo/chargecrashdash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_charge_623ff08a"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/chargecrashdash.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 0
+      }
+     ]
+    },
+    {
+     "ani": "chargecrashupper",
+     "atk": "character/swordman/attackinfo/chargecrashupper.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_dash_e40d6dac"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/chargecrashupper.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 1
+      }
+     ]
+    }
+   ]
+  },
+  "darktoleranceup": {
+   "effect_id": "dark_tolerance",
+   "name": "暗月降临",
+   "skill": "skill/swordman/darktoleranceup.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "hits": []
+    }
+   ]
+  },
+  "dashattackmultihit": {
+   "name": "连突刺",
+   "skill": "skill/swordman/dashattackmultihit.skl",
+   "stages": [
+    {
+     "ani": "dashattackmultihit",
+     "atk": "character/swordman/attackinfo/dashattackmultihit.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_dashattackmultihit1_308d28ca"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/dashattackmultihit.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 0
+      }
+     ]
+    }
+   ]
+  },
+  "diehard": {
+   "effect_id": "diehard",
+   "name": "死亡抗拒",
+   "skill": "skill/swordman/diehard.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "hits": []
+    }
+   ]
+  },
+  "dotarea": {
+   "effect_id": "dotarea",
+   "name": "杀意波动",
+   "skill": "skill/swordman/dotarea.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_dotareadamage_9130facc"
+      }
+     ],
+     "hits": []
+    }
+   ]
+  },
+  "draw": {
+   "name": "拔刀斩",
+   "skill": "skill/swordman/momentaryslash.skl",
+   "stages": [
+    {
+     "ani": "momentaryslash",
+     "atk": "character/swordman/attackinfo/momentaryslash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/momentaryslash.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "draw__variant_1": {
+   "name": "拔刀斩",
+   "skill": "skill/swordman/momentaryslash.skl",
+   "stages": [
+    {
+     "ani": "momentaryslash",
+     "atk": "character/swordman/attackinfo/momentaryslash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/momentaryslash.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "draw__variant_2": {
+   "name": "拔刀斩",
+   "skill": "skill/swordman/momentaryslash.skl",
+   "stages": [
+    {
+     "ani": "momentaryslash",
+     "atk": "character/swordman/attackinfo/momentaryslash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/momentaryslash.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 220,
+       "life_ms": 1200,
+       "object": "passiveobject/character/swordman/momentaryslashwave.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "epidemicrasa": {
+   "name": "瘟疫之罗刹",
+   "skill": "skill/swordman/epidemicrasa.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/epidemicrasa.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 360,
+       "effects": [],
+       "life_ms": 12000,
+       "object": "passiveobject/character/swordman/epidemicrasa.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "firewave": {
+   "name": "爆炎 · 波动剑",
+   "skill": "skill/swordman/firewave.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [
+        {
+         "chance": 0.25,
+         "id": "burn"
+        }
+       ],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 420,
+       "effects": [
+        {
+         "chance": 0.25,
+         "id": "burn"
+        }
+       ],
+       "life_ms": 1800,
+       "object": "passiveobject/character/swordman/firewavebig.obj",
+       "percent_col": 0,
+       "speed": 360.0
+      }
+     ]
+    }
+   ]
+  },
+  "firewaveex": {
+   "name": "极炎 · 裂波剑",
+   "skill": "skill/swordman/firewaveex.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [
+        {
+         "chance": 0.25,
+         "id": "burn"
+        }
+       ],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 420,
+       "effects": [
+        {
+         "chance": 0.25,
+         "id": "burn"
+        }
+       ],
+       "life_ms": 1800,
+       "object": "passiveobject/character/swordman/firewavebig.obj",
+       "percent_col": 0,
+       "speed": 360.0
+      }
+     ]
+    }
+   ]
+  },
+  "flowmind": {
+   "effect_id": "flowmind",
+   "name": "流心",
+   "skill": "skill/swordman/flowmind.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "hits": []
+    }
+   ]
+  },
+  "flowmindone": {
+   "name": "流心 : 刺",
+   "skill": "skill/swordman/flowmindone.skl",
+   "stages": [
+    {
+     "ani": "weaponcomboblade1",
+     "atk": "character/swordman/attackinfo/weaponcomboblade1.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblade2",
+     "atk": "character/swordman/attackinfo/weaponcomboblade2.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblade3",
+     "atk": "character/swordman/attackinfo/weaponcomboblade3.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblade4",
+     "atk": "character/swordman/attackinfo/weaponcomboblade4.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "flowmindpowerup": {
+   "effect_id": "flowmind_powerup",
+   "name": "流心 : 狂",
+   "skill": "skill/swordman/flowmindpowerup.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_charge_dodge_48d97524"
+      }
+     ],
+     "hits": []
+    }
+   ]
+  },
+  "flowmindthree": {
+   "name": "流心 : 升",
+   "skill": "skill/swordman/flowmindthree.skl",
+   "stages": [
+    {
+     "ani": "weaponcomboblade1",
+     "atk": "character/swordman/attackinfo/weaponcomboblade1.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblade2",
+     "atk": "character/swordman/attackinfo/weaponcomboblade2.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblade3",
+     "atk": "character/swordman/attackinfo/weaponcomboblade3.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblade4",
+     "atk": "character/swordman/attackinfo/weaponcomboblade4.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "flowmindtwo": {
+   "name": "流心 : 跃",
+   "skill": "skill/swordman/flowmindtwo.skl",
+   "stages": [
+    {
+     "ani": "weaponcomboblade1",
+     "atk": "character/swordman/attackinfo/weaponcomboblade1.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblade2",
+     "atk": "character/swordman/attackinfo/weaponcomboblade2.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblade3",
+     "atk": "character/swordman/attackinfo/weaponcomboblade3.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblade4",
+     "atk": "character/swordman/attackinfo/weaponcomboblade4.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "frenzy1": {
+   "name": "血之狂暴 · 双刀普攻",
+   "next": "frenzy2",
+   "skill": "skill/swordman/frenzy.skl",
+   "stages": [
+    {
+     "ani": "frenzy1",
+     "atk": "character/swordman/attackinfo/frenzy1.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/frenzy1.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [
+        {
+         "chance": 1.0,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 0,
+       "window": [
+        0,
+        700.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "frenzy2": {
+   "name": "血之狂暴 · 双刀普攻",
+   "next": "frenzy3",
+   "skill": "skill/swordman/frenzy.skl",
+   "stages": [
+    {
+     "ani": "frenzy2",
+     "atk": "character/swordman/attackinfo/frenzy2.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/frenzy2.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [
+        {
+         "chance": 1.0,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 1,
+       "window": [
+        0,
+        640.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "frenzy3": {
+   "name": "血之狂暴 · 双刀普攻",
+   "next": "frenzy4",
+   "skill": "skill/swordman/frenzy.skl",
+   "stages": [
+    {
+     "ani": "frenzy3",
+     "atk": "character/swordman/attackinfo/frenzy3.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/frenzy3.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [
+        {
+         "chance": 1.0,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 2,
+       "window": [
+        0,
+        640.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "frenzy4": {
+   "name": "血之狂暴 · 双刀普攻",
+   "next": "frenzy1",
+   "skill": "skill/swordman/frenzy.skl",
+   "stages": [
+    {
+     "ani": "frenzy4",
+     "atk": "character/swordman/attackinfo/frenzy4.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/frenzy4.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [
+        {
+         "chance": 1.0,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 3,
+       "window": [
+        0,
+        600.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "ghostsidewind": {
+   "name": "鬼影鞭",
+   "skill": "skill/swordman/ghostsidewind.skl",
+   "stages": [
+    {
+     "ani": "ghoststepslashready",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_slash1_06aaa5c5"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_slash1_06aaa5c5",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        200.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "ghoststepslashmove",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_slash2_0ba3d5ec"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_slash2_0ba3d5ec",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0.0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "ghoststep": {
+   "effect_id": "ghoststep",
+   "name": "鬼影步",
+   "skill": "skill/swordman/ghoststep.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_slashmove1_afe914cf"
+      }
+     ],
+     "hits": []
+    }
+   ]
+  },
+  "ghoststep_attack1": {
+   "name": "鬼影步 · 暗属性普攻",
+   "next": "ghoststep_attack2",
+   "skill": "skill/swordman/ghoststep.skl",
+   "stages": [
+    {
+     "ani": "attack1",
+     "atk": "character/swordman/attackinfo/attack1.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/attack1.atk",
+       "damage_type": "magical",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "element": "dark",
+       "percent_col": 0,
+       "window": [
+        0,
+        600.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "ghoststep_attack2": {
+   "name": "鬼影步 · 暗属性普攻",
+   "next": "ghoststep_attack3",
+   "skill": "skill/swordman/ghoststep.skl",
+   "stages": [
+    {
+     "ani": "attack2",
+     "atk": "character/swordman/attackinfo/attack2.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/attack2.atk",
+       "damage_type": "magical",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "element": "dark",
+       "percent_col": 1,
+       "window": [
+        0,
+        650.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "ghoststep_attack3": {
+   "name": "鬼影步 · 暗属性普攻",
+   "skill": "skill/swordman/ghoststep.skl",
+   "stages": [
+    {
+     "ani": "attack3",
+     "atk": "character/swordman/attackinfo/attack3.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/attack3.atk",
+       "body": true,
+       "damage_type": "magical",
+       "effects": [],
+       "element": "dark",
+       "percent_col": 2
+      }
+     ]
+    }
+   ]
+  },
+  "ghoststepslash": {
+   "name": "鬼影闪",
+   "skill": "skill/swordman/ghoststepslash.skl",
+   "stages": [
+    {
+     "ani": "ghoststepslashready",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_slash1_06aaa5c5"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_slash1_06aaa5c5",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        200.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "ghoststepslashmove",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_slash2_0ba3d5ec"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_slash2_0ba3d5ec",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0.0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "grabblastblood": {
+   "name": "嗜魂之手",
+   "skill": "skill/swordman/grabblastblood.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/grabblastblood.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 320,
+       "effects": [],
+       "life_ms": 1200,
+       "object": "passiveobject/character/swordman/grabblastblood.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "grabblastbloodex": {
+   "name": "灭魂之手",
+   "skill": "skill/swordman/grabblastbloodex.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/grabblastblood.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 320,
+       "effects": [],
+       "life_ms": 1200,
+       "object": "passiveobject/character/swordman/grabblastblood.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "grandwave": {
+   "name": "邪光斩",
+   "skill": "skill/swordman/grandwave.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/grandwave.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 420,
+       "effects": [],
+       "life_ms": 1800,
+       "object": "passiveobject/character/swordman/grandwave.obj",
+       "percent_col": 0,
+       "speed": 520.0
+      }
+     ]
+    }
+   ]
+  },
+  "grandwave__variant_1": {
+   "name": "邪光斩",
+   "skill": "skill/swordman/grandwave.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/grandwave.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 420,
+       "effects": [],
+       "life_ms": 1800,
+       "object": "passiveobject/character/swordman/grandwave.obj",
+       "percent_col": 0,
+       "speed": 520.0
+      },
+      {
+       "at": 220,
+       "life_ms": 1200,
+       "object": "passiveobject/character/swordman/grandwavefullcharge.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "grandwaveex": {
+   "name": "强化 - 邪光斩",
+   "skill": "skill/swordman/grandwaveex.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/grandwave.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 420,
+       "effects": [],
+       "life_ms": 1800,
+       "object": "passiveobject/character/swordman/grandwave.obj",
+       "percent_col": 0,
+       "speed": 520.0
+      }
+     ]
+    }
+   ]
+  },
+  "guard": {
+   "name": "格挡",
+   "skill": "skill/swordman/guard.skl",
+   "stages": [
+    {
+     "ani": "guard",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_dust_2e1015db"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_dust_2e1015db",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        210.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "guard__variant_1": {
+   "name": "格挡",
+   "skill": "skill/swordman/guard.skl",
+   "stages": [
+    {
+     "ani": "guard",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_dust_2e1015db"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_dust_2e1015db",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        210.0
+       ]
+      },
+      {
+       "at": 220,
+       "life_ms": 1200,
+       "object": "passiveobject/character/swordman/guardwave.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "hardattack": {
+   "name": "鬼斩",
+   "skill": "skill/swordman/hardattack.skl",
+   "stages": [
+    {
+     "ani": "hardattack",
+     "atk": "character/swordman/attackinfo/hardattack.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/hardattack.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "hardattack__variant_1": {
+   "name": "鬼斩",
+   "skill": "skill/swordman/hardattack.skl",
+   "stages": [
+    {
+     "ani": "hardattack",
+     "atk": "character/swordman/attackinfo/hardattack.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/hardattack.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 220,
+       "life_ms": 1200,
+       "object": "passiveobject/character/swordman/hardattackchargeafter.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "hellbenter": {
+   "effect_id": "hellbenter",
+   "name": "魔狱血刹",
+   "skill": "skill/swordman/hellbenter.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_tn_balltail1_246e0c4a"
+      }
+     ],
+     "hits": []
+    }
+   ]
+  },
+  "hitback": {
+   "name": "逆转反击",
+   "skill": "skill/swordman/hitback.skl",
+   "stages": [
+    {
+     "ani": "hitback",
+     "atk": "character/swordman/attackinfo/hitback.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/hitback.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "hopsmash": {
+   "name": "崩山击",
+   "skill": "skill/swordman/hopsmash.skl",
+   "stages": [
+    {
+     "ani": "hopsmashready",
+     "atk": "",
+     "hits": []
+    },
+    {
+     "ani": "hopsmash",
+     "atk": "character/swordman/attackinfo/hopsmash.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/hopsmash.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 1
+      },
+      {
+       "at": 260,
+       "life_ms": 1300,
+       "object": "passiveobject/character/swordman/hopsmashsub.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "hopsmash__variant_1": {
+   "name": "崩山击",
+   "skill": "skill/swordman/hopsmash.skl",
+   "stages": [
+    {
+     "ani": "hopsmashready",
+     "atk": "",
+     "hits": []
+    },
+    {
+     "ani": "hopsmash",
+     "atk": "character/swordman/attackinfo/hopsmash.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/hopsmash.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 1
+      },
+      {
+       "at": 260,
+       "life_ms": 1300,
+       "object": "passiveobject/character/swordman/hopsmashsub.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      },
+      {
+       "atk": "character/swordman/attackinfo/hopsmash.atk",
+       "derived": "",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0,
+        240
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "hundredsword": {
+   "name": "极 · 鬼剑术 (暴风式)",
+   "skill": "skill/swordman/hundredsword.skl",
+   "stages": [
+    {
+     "ani": "hundredswordready",
+     "atk": "",
+     "hits": []
+    },
+    {
+     "ani": "hundredswordmoveslash1",
+     "atk": "",
+     "hits": []
+    },
+    {
+     "ani": "hundredswordmoveslash2",
+     "atk": "",
+     "hits": []
+    },
+    {
+     "ani": "hundredswordmoveslash3",
+     "atk": "",
+     "hits": []
+    },
+    {
+     "ani": "hundredswordmoveslash4",
+     "atk": "",
+     "hits": []
+    },
+    {
+     "ani": "hundredswordmoveslash5",
+     "atk": "",
+     "hits": []
+    },
+    {
+     "ani": "hundredswordfinish",
+     "atk": "character/swordman/attackinfo/hundredswordfinish.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_finishflash_7520151b"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/hundredswordfinish.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 6
+      },
+      {
+       "at": 780,
+       "life_ms": 3000,
+       "object": "passiveobject/character/swordman/hundredswordhit.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "icewave": {
+   "name": "冰刃 · 波动剑",
+   "skill": "skill/swordman/icewave.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/icewave.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [
+        {
+         "chance": 0.12,
+         "id": "freeze"
+        }
+       ],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "icewaveex": {
+   "name": "极冰 · 裂波剑",
+   "skill": "skill/swordman/icewaveex.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/icewave.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [
+        {
+         "chance": 0.12,
+         "id": "freeze"
+        }
+       ],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "illusionslash": {
+   "name": "幻影剑舞",
+   "skill": "skill/swordman/illusionslash.skl",
+   "stages": [
+    {
+     "ani": "illusionslash1",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_smash_c789bbe3"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_smash_c789bbe3",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        160.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "illusionslash2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upper_4c1c9ad1"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upper_4c1c9ad1",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0.0,
+        150.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "illusionslash3",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upper_4c1c9ad1"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upper_4c1c9ad1",
+       "effects": [],
+       "percent_col": 2,
+       "window": [
+        0.0,
+        150.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "illusionslash4",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upper_4c1c9ad1"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upper_4c1c9ad1",
+       "effects": [],
+       "percent_col": 3,
+       "window": [
+        0.0,
+        150.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "illusionslashfinal",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upper_4c1c9ad1"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upper_4c1c9ad1",
+       "effects": [],
+       "percent_col": 4,
+       "window": [
+        0.0,
+        150.0
+       ]
+      },
+      {
+       "at": 900,
+       "life_ms": 1600,
+       "object": "passiveobject/character/swordman/illusionslashwave.obj",
+       "percent_col": 0,
+       "speed": 520.0
+      }
+     ]
+    }
+   ]
+  },
+  "illusionslashexp": {
+   "name": "强化 - 幻影剑舞",
+   "skill": "skill/swordman/illusionslashexp.skl",
+   "stages": [
+    {
+     "ani": "illusionslash1",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_smash_c789bbe3"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_smash_c789bbe3",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        160.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "illusionslash2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upper_4c1c9ad1"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upper_4c1c9ad1",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0.0,
+        150.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "illusionslash3",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upper_4c1c9ad1"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upper_4c1c9ad1",
+       "effects": [],
+       "percent_col": 2,
+       "window": [
+        0.0,
+        150.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "illusionslash4",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upper_4c1c9ad1"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upper_4c1c9ad1",
+       "effects": [],
+       "percent_col": 3,
+       "window": [
+        0.0,
+        150.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "illusionslashfinal",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upper_4c1c9ad1"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upper_4c1c9ad1",
+       "effects": [],
+       "percent_col": 4,
+       "window": [
+        0.0,
+        150.0
+       ]
+      },
+      {
+       "at": 900,
+       "life_ms": 1600,
+       "object": "passiveobject/character/swordman/illusionslashwave.obj",
+       "percent_col": 0,
+       "speed": 520.0
+      }
+     ]
+    }
+   ]
+  },
+  "jumpattackmulti": {
+   "name": "空中连斩",
+   "skill": "skill/swordman/jumpattackmulti.skl",
+   "stages": [
+    {
+     "ani": "jumpattackmultislash1",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_jumpchainattackslash1_katana_under_0e0a4d92"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_jumpchainattackslash1_katana_under_0e0a4d92",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        370.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "jumpattackmultislash2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_jumpchainattackslash2_katana_under_3fe65613"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_jumpchainattackslash2_katana_under_3fe65613",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0.0,
+        370.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "jumppowerup": {
+   "effect_id": "jump_power_up",
+   "name": "跃翔",
+   "skill": "skill/swordman/jumppowerup.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "hits": []
+    }
+   ]
+  },
+  "kalla": {
+   "effect_id": "kalla",
+   "name": "冥炎之卡洛",
+   "skill": "skill/swordman/kalla.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": ""
+      }
+     ],
+     "hits": []
+    }
+   ]
+  },
+  "kalla_attack1": {
+   "name": "冥炎剑 · 三连击",
+   "next": "kalla_attack2",
+   "skill": "skill/swordman/kalla.skl",
+   "stages": [
+    {
+     "ani": "kallafinish1",
+     "atk": "character/swordman/attackinfo/kallafinish1.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/kallafinish1.atk",
+       "body": true,
+       "damage_type": "magical",
+       "effects": [],
+       "element": "dark",
+       "percent_col": 0
+      }
+     ]
+    }
+   ]
+  },
+  "kalla_attack2": {
+   "name": "冥炎剑 · 三连击",
+   "next": "kalla_attack3",
+   "skill": "skill/swordman/kalla.skl",
+   "stages": [
+    {
+     "ani": "kallafinish2",
+     "atk": "character/swordman/attackinfo/kallafinish2.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/kallafinish2.atk",
+       "body": true,
+       "damage_type": "magical",
+       "effects": [],
+       "element": "dark",
+       "percent_col": 1
+      }
+     ]
+    }
+   ]
+  },
+  "kalla_attack3": {
+   "name": "冥炎剑 · 三连击",
+   "skill": "skill/swordman/kalla.skl",
+   "stages": [
+    {
+     "ani": "kallafinish3",
+     "atk": "character/swordman/attackinfo/kallafinish3.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_exp1_99b066d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/kallafinish3.atk",
+       "body": true,
+       "damage_type": "magical",
+       "effects": [],
+       "element": "dark",
+       "percent_col": 2
+      }
+     ]
+    }
+   ]
+  },
+  "keiga": {
+   "effect_id": "keiga",
+   "name": "残影之凯贾",
+   "skill": "skill/swordman/keiga.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_appear1_9bb8086c"
+      }
+     ],
+     "hits": []
+    }
+   ]
+  },
+  "khazan": {
+   "name": "刀魂之卡赞",
+   "skill": "skill/swordman/khazan.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_khazan_down_45a97897"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_khazan_down_45a97897",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        425.0
+       ]
+      },
+      {
+       "at": 320,
+       "effects": [],
+       "life_ms": 25000,
+       "object": "passiveobject/character/swordman/khazan.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "magicalattackup": {
+   "effect_id": "magical_memory",
+   "name": "远古记忆",
+   "skill": "skill/swordman/magicalattackup.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "hits": []
+    }
+   ]
+  },
+  "momentaryslashex": {
+   "name": "破空拔刀斩",
+   "skill": "skill/swordman/momentaryslashex.skl",
+   "stages": [
+    {
+     "ani": "momentaryslash",
+     "atk": "character/swordman/attackinfo/momentaryslash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/momentaryslash.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "moonlight": {
+   "name": "月光斩",
+   "skill": "skill/swordman/moonlightslash.skl",
+   "stages": [
+    {
+     "ani": "moonlightslash1",
+     "atk": "character/swordman/attackinfo/moonlightslash1.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_moonlightslash1_d0608d59"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/moonlightslash1.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 0
+      }
+     ]
+    },
+    {
+     "ani": "moonlightslash2",
+     "atk": "character/swordman/attackinfo/moonlightslash2.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_moonlightslash2_574395d9"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/moonlightslash2.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 1
+      }
+     ]
+    }
+   ]
+  },
+  "moonlight__variant_1": {
+   "name": "月光斩",
+   "skill": "skill/swordman/moonlightslash.skl",
+   "stages": [
+    {
+     "ani": "moonlightslash1",
+     "atk": "character/swordman/attackinfo/moonlightslash1.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_moonlightslash1_d0608d59"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/moonlightslash1.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 0
+      }
+     ]
+    },
+    {
+     "ani": "moonlightslash2",
+     "atk": "character/swordman/attackinfo/moonlightslash2.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_moonlightslash2_574395d9"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/moonlightslash2.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 1
+      }
+     ]
+    },
+    {
+     "ani": "moonlightslashfull",
+     "atk": "character/swordman/attackinfo/moonlightslashfull.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_moonlightslashfull_3d8e1047"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/moonlightslashfull.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 2
+      }
+     ]
+    }
+   ]
+  },
+  "normalwave": {
+   "name": "地裂 · 波动剑",
+   "skill": "skill/swordman/normalwave.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/normalwave.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "at": 340,
+       "effects": [],
+       "life_ms": 1500,
+       "object": "passiveobject/character/swordman/normalwave.obj",
+       "percent_col": 0,
+       "speed": 520.0
+      }
+     ]
+    }
+   ]
+  },
+  "outragebreak": {
+   "hp_cost_row": 0,
+   "name": "崩山裂地斩",
+   "requires_effect": "frenzy",
+   "skill": "skill/swordman/outragebreak.skl",
+   "stages": [
+    {
+     "ani": "outragebreakready",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_outragebreak_stone_part_1_18a07756"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_outragebreak_stone_part_1_18a07756",
+       "effects": [
+        {
+         "chance": 0.3,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        2800.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "outragebreakslash",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_outragebreak_stone_part_2_376e63de"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "body": true,
+       "effects": [
+        {
+         "chance": 0.3,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 1
+      },
+      {
+       "atk": "",
+       "body": true,
+       "effects": [
+        {
+         "chance": 0.3,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 1
+      },
+      {
+       "atk": "",
+       "body": true,
+       "effects": [
+        {
+         "chance": 0.3,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 1
+      },
+      {
+       "at": 440,
+       "life_ms": 2400,
+       "object": "passiveobject/character/swordman/outragebreakfloor.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "overdrive": {
+   "effect_id": "overdrive",
+   "name": "破极兵刃",
+   "skill": "skill/swordman/overdrive.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "hits": []
+    }
+   ]
+  },
+  "quickstanding": {
+   "effect_id": "quick_standing",
+   "name": "受身蹲伏",
+   "skill": "skill/swordman/quickstanding.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "hits": []
+    }
+   ]
+  },
+  "rage_slash": {
+   "name": "十字斩",
+   "skill": "skill/swordman/gorecross.skl",
+   "stages": [
+    {
+     "ani": "gorecross",
+     "atk": "passiveobject/character/swordman/attackinfo/gorecross.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/gorecross.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [
+        {
+         "chance": 0.2,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "rage_slash__variant_1": {
+   "name": "十字斩",
+   "skill": "skill/swordman/gorecross.skl",
+   "stages": [
+    {
+     "ani": "gorecross",
+     "atk": "passiveobject/character/swordman/attackinfo/gorecross.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/gorecross.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [
+        {
+         "chance": 0.2,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      },
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/gorecross.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [
+        {
+         "chance": 0.4,
+         "id": "bleed"
+        }
+       ],
+       "percent_col": 0,
+       "window": [
+        0,
+        240
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "rapidmoveslash": {
+   "name": "猛龙断空斩",
+   "skill": "skill/swordman/rapidmoveslash.skl",
+   "stages": [
+    {
+     "ani": "rapidmoveslashready1",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_lightmove1_1_847fea3b"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_lightmove1_1_847fea3b",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        500.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "rapidmoveslashmove1",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_lightmove2_1_7a67e3a5"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_lightmove2_1_7a67e3a5",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0.0,
+        500.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "rapidmoveslashready2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_lightmove1_2_b2a9b7bc"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_lightmove1_2_b2a9b7bc",
+       "effects": [],
+       "percent_col": 2,
+       "window": [
+        0.0,
+        500.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "rapidmoveslashmove2",
+     "atk": "",
+     "hits": []
+    }
+   ]
+  },
+  "rapidmoveslash__variant_1": {
+   "name": "猛龙断空斩",
+   "skill": "skill/swordman/rapidmoveslash.skl",
+   "stages": [
+    {
+     "ani": "rapidmoveslashready1",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_lightmove1_1_847fea3b"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_lightmove1_1_847fea3b",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        500.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "rapidmoveslashmove1",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_lightmove2_1_7a67e3a5"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_lightmove2_1_7a67e3a5",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0.0,
+        500.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "rapidmoveslashready2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_lightmove1_2_b2a9b7bc"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_lightmove1_2_b2a9b7bc",
+       "effects": [],
+       "percent_col": 2,
+       "window": [
+        0.0,
+        500.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "rapidmoveslashmove2",
+     "atk": "",
+     "hits": []
+    }
+   ]
+  },
+  "reckless": {
+   "effect_id": "reckless",
+   "name": "暴走",
+   "skill": "skill/swordman/reckless.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "hits": []
+    }
+   ]
+  },
+  "reflectguard": {
+   "name": "鬼印珠",
+   "skill": "skill/swordman/reflectguard.skl",
+   "stages": [
+    {
+     "ani": "reflectguard",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_charge_b82745b0"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_charge_b82745b0",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        240.0
+       ]
+      },
+      {
+       "at": 300,
+       "effects": [],
+       "life_ms": 1600,
+       "object": "passiveobject/character/swordman/reflectguardbead.obj",
+       "percent_col": 0,
+       "speed": 540.0
+      }
+     ]
+    }
+   ]
+  },
+  "releasewave": {
+   "name": "波动爆发",
+   "skill": "skill/swordman/releasewave.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/releasewave.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "releasewaveex": {
+   "name": "强化 - 波动爆发",
+   "skill": "skill/swordman/releasewaveex.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/releasewave.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "sacrifice": {
+   "name": "嗜血",
+   "skill": "skill/swordman/sacrifice.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "saya": {
+   "name": "冰霜之萨亚",
+   "skill": "skill/swordman/saya.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_saya_down_ced86275"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_saya_down_ced86275",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        425.0
+       ]
+      },
+      {
+       "at": 420,
+       "effects": [],
+       "life_ms": 25000,
+       "object": "passiveobject/character/swordman/saya.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "sayaex": {
+   "name": "冰晶之萨亚",
+   "skill": "skill/swordman/sayaex.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_saya_down_ced86275"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_saya_down_ced86275",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        425.0
+       ]
+      },
+      {
+       "at": 420,
+       "effects": [],
+       "life_ms": 25000,
+       "object": "passiveobject/character/swordman/saya.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "shockwavearea": {
+   "name": "邪光波动阵",
+   "skill": "skill/swordman/shockwavearea.skl",
+   "stages": [
+    {
+     "ani": "shockwaveareacast",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_area_3363e3fd"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_area_3363e3fd",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        425.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "shockwaveareasmash",
+     "atk": "",
+     "hits": [
+      {
+       "atk": "",
+       "body": true,
+       "effects": [],
+       "percent_col": 1
+      },
+      {
+       "atk": "",
+       "body": true,
+       "effects": [],
+       "percent_col": 1
+      },
+      {
+       "atk": "",
+       "body": true,
+       "effects": [],
+       "percent_col": 1
+      }
+     ]
+    }
+   ]
+  },
+  "standalonewave": {
+   "name": "无双波",
+   "skill": "skill/swordman/standalonewave.skl",
+   "stages": [
+    {
+     "ani": "standalonewaveready",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_blast1_08fc54d5"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_blast1_08fc54d5",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        360.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "standalonewavebasic",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_blast2_13b8f710"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_blast2_13b8f710",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0.0,
+        810.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "standalonewavestrong",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_charge1_522d5c86"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_charge1_522d5c86",
+       "effects": [],
+       "percent_col": 2,
+       "window": [
+        0.0,
+        540.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "standalonewaveex": {
+   "name": "强化 - 无双波",
+   "skill": "skill/swordman/standalonewaveex.skl",
+   "stages": [
+    {
+     "ani": "standalonewaveready",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_blast1_08fc54d5"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_blast1_08fc54d5",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        360.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "standalonewavebasic",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_blast2_13b8f710"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_blast2_13b8f710",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0.0,
+        810.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "standalonewavestrong",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_charge1_522d5c86"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_charge1_522d5c86",
+       "effects": [],
+       "percent_col": 2,
+       "window": [
+        0.0,
+        540.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "superarmoroncast": {
+   "effect_id": "super_armor_cast",
+   "name": "不屈意志",
+   "skill": "skill/swordman/superarmoroncast.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "hits": []
+    }
+   ]
+  },
+  "tombstonerain": {
+   "name": "死亡墓碑",
+   "skill": "skill/swordman/tombstonerain.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_tombstonerain_7396cb89"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_tombstonerain_7396cb89",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        4000.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "tombstonerainex": {
+   "name": "墓碑三绝阵",
+   "skill": "skill/swordman/tombstonerainex.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_tombstonerain_7396cb89"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_tombstonerain_7396cb89",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        4000.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "triple": {
+   "name": "三段斩",
+   "skill": "skill/swordman/tripleslash.skl",
+   "stages": [
+    {
+     "ani": "tripleslash1",
+     "atk": "character/swordman/attackinfo/tripleslash1.atk",
+     "hits": []
+    },
+    {
+     "ani": "tripleslash2",
+     "atk": "character/swordman/attackinfo/tripleslash2.atk",
+     "hits": []
+    },
+    {
+     "ani": "tripleslash3",
+     "atk": "character/swordman/attackinfo/tripleslash3.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "triple__variant_1": {
+   "name": "三段斩",
+   "skill": "skill/swordman/tripleslash.skl",
+   "stages": [
+    {
+     "ani": "tripleslash1",
+     "atk": "character/swordman/attackinfo/tripleslash1.atk",
+     "hits": []
+    },
+    {
+     "ani": "tripleslash2",
+     "atk": "character/swordman/attackinfo/tripleslash2.atk",
+     "hits": []
+    },
+    {
+     "ani": "tripleslash3",
+     "atk": "character/swordman/attackinfo/tripleslash3.atk",
+     "hits": []
+    },
+    {
+     "ani": "tripleslash4",
+     "atk": "character/swordman/attackinfo/tripleslash4.atk",
+     "hits": []
+    },
+    {
+     "ani": "tripleslash5",
+     "atk": "character/swordman/attackinfo/tripleslash5.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/tripleslash5.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "percent_col": 0,
+       "window": [
+        0,
+        240
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "triplestab": {
+   "name": "鬼影三击剑",
+   "skill": "skill/swordman/triplestab.skl",
+   "stages": [
+    {
+     "ani": "ghoststepslashready",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_slash1_06aaa5c5"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_slash1_06aaa5c5",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        200.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "ghoststepslashmove",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_slash2_0ba3d5ec"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_slash2_0ba3d5ec",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0.0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "upper": {
+   "name": "上挑",
+   "skill": "skill/swordman/upperslash.skl",
+   "stages": [
+    {
+     "ani": "hitback",
+     "atk": "character/swordman/attackinfo/upperslash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/upperslash.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "upper__variant_1": {
+   "name": "上挑",
+   "skill": "skill/swordman/upperslash.skl",
+   "stages": [
+    {
+     "ani": "hitback",
+     "atk": "character/swordman/attackinfo/upperslash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/upperslash.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "upperslashex": {
+   "name": "强化 - 上挑",
+   "skill": "skill/swordman/upperslashex.skl",
+   "stages": [
+    {
+     "ani": "hitback",
+     "atk": "character/swordman/attackinfo/upperslash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/upperslash.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "vaneslash": {
+   "name": "裂波斩",
+   "skill": "skill/swordman/vaneslash.skl",
+   "stages": [
+    {
+     "ani": "vaneslashtry",
+     "atk": "character/swordman/attackinfo/vaneslashtry.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/vaneslashtry.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 0
+      }
+     ]
+    },
+    {
+     "ani": "vaneslash",
+     "atk": "passiveobject/character/swordman/attackinfo/vaneslash.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_vaneslash_2607eaf7"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "passiveobject/character/swordman/attackinfo/vaneslash.atk",
+       "derived": "skillfx_vaneslash_2607eaf7",
+       "effects": [],
+       "percent_col": 1,
+       "window": [
+        0.0,
+        11330.0
+       ]
+      }
+     ]
+    },
+    {
+     "ani": "vaneslashtry",
+     "atk": "character/swordman/attackinfo/vaneslashtry.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/vaneslashtry.atk",
+       "body": true,
+       "effects": [],
+       "percent_col": 2
+      }
+     ]
+    }
+   ]
+  },
+  "waveeye": {
+   "effect_id": "waveeye",
+   "name": "暗天波动眼",
+   "skill": "skill/swordman/waveeye.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": ""
+      }
+     ],
+     "hits": []
+    }
+   ]
+  },
+  "waveeye_attack1": {
+   "name": "暗天波动眼 · 波动普攻",
+   "next": "waveeye_attack2",
+   "skill": "skill/swordman/waveeye.skl",
+   "stages": [
+    {
+     "ani": "waveeyeattack1",
+     "atk": "character/swordman/attackinfo/waveeyeattack1.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/waveeyeattack1.atk",
+       "body": true,
+       "damage_type": "magical",
+       "effects": [],
+       "element": "none",
+       "percent_col": 0
+      }
+     ]
+    }
+   ]
+  },
+  "waveeye_attack2": {
+   "name": "暗天波动眼 · 波动普攻",
+   "next": "waveeye_attack3",
+   "skill": "skill/swordman/waveeye.skl",
+   "stages": [
+    {
+     "ani": "waveeyeattack2",
+     "atk": "character/swordman/attackinfo/waveeyeattack2.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/waveeyeattack2.atk",
+       "body": true,
+       "damage_type": "magical",
+       "effects": [],
+       "element": "none",
+       "percent_col": 1
+      }
+     ]
+    }
+   ]
+  },
+  "waveeye_attack3": {
+   "name": "暗天波动眼 · 波动普攻",
+   "skill": "skill/swordman/waveeye.skl",
+   "stages": [
+    {
+     "ani": "waveeyeattack3",
+     "atk": "character/swordman/attackinfo/waveeyeattack3.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/waveeyeattack3.atk",
+       "body": true,
+       "damage_type": "magical",
+       "effects": [],
+       "element": "none",
+       "percent_col": 2
+      }
+     ]
+    }
+   ]
+  },
+  "wavemark": {
+   "effect_id": "wavemark",
+   "name": "波动刻印",
+   "skill": "skill/swordman/wavemark.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_add_e433feca"
+      }
+     ],
+     "hits": []
+    }
+   ]
+  },
+  "wavespinarea": {
+   "name": "不动明王阵",
+   "skill": "skill/swordman/wavespinarea.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_circle_c83df7ec"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_circle_c83df7ec",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        80.0
+       ]
+      },
+      {
+       "atk": "",
+       "derived": "skillfx_circle_c83df7ec",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        160.0,
+        80.0
+       ]
+      },
+      {
+       "atk": "",
+       "derived": "skillfx_circle_c83df7ec",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        320.0,
+        80.0
+       ]
+      },
+      {
+       "atk": "",
+       "derived": "skillfx_circle_c83df7ec",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        480.0,
+        80.0
+       ]
+      },
+      {
+       "atk": "",
+       "derived": "skillfx_circle_c83df7ec",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        640.0,
+        80.0
+       ]
+      },
+      {
+       "atk": "",
+       "derived": "skillfx_circle_c83df7ec",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        800.0,
+        80.0
+       ]
+      },
+      {
+       "at": 420,
+       "life_ms": 5000,
+       "object": "passiveobject/character/swordman/wavespinarea.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "wavespinareaex": {
+   "name": "强化 - 不动明王阵",
+   "skill": "skill/swordman/wavespinareaex.skl",
+   "stages": [
+    {
+     "ani": "summon2",
+     "atk": "",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_circle_c83df7ec"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_circle_c83df7ec",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0.0,
+        80.0
+       ]
+      },
+      {
+       "atk": "",
+       "derived": "skillfx_circle_c83df7ec",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        160.0,
+        80.0
+       ]
+      },
+      {
+       "atk": "",
+       "derived": "skillfx_circle_c83df7ec",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        320.0,
+        80.0
+       ]
+      },
+      {
+       "atk": "",
+       "derived": "skillfx_circle_c83df7ec",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        480.0,
+        80.0
+       ]
+      },
+      {
+       "atk": "",
+       "derived": "skillfx_circle_c83df7ec",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        640.0,
+        80.0
+       ]
+      },
+      {
+       "atk": "",
+       "derived": "skillfx_circle_c83df7ec",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        800.0,
+        80.0
+       ]
+      },
+      {
+       "at": 420,
+       "life_ms": 5000,
+       "object": "passiveobject/character/swordman/wavespinarea.obj",
+       "percent_col": 0,
+       "speed": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  "weaponcombo": {
+   "name": "里 · 鬼剑术",
+   "skill": "skill/swordman/weaponcombo.skl",
+   "stages": [
+    {
+     "ani": "weaponcomboblade1",
+     "atk": "character/swordman/attackinfo/weaponcomboblade1.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblade2",
+     "atk": "character/swordman/attackinfo/weaponcomboblade2.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblade3",
+     "atk": "character/swordman/attackinfo/weaponcomboblade3.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblade4",
+     "atk": "character/swordman/attackinfo/weaponcomboblade4.atk",
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_upperslash1_65c825d8"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "effects": [],
+       "percent_col": 0,
+       "window": [
+        0,
+        200.0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "weaponcombo__variant_1": {
+   "name": "里 · 鬼剑术",
+   "skill": "skill/swordman/weaponcombo.skl",
+   "stages": [
+    {
+     "ani": "weaponcombolight1",
+     "atk": "character/swordman/attackinfo/weaponcombolight1.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcombolight2",
+     "atk": "character/swordman/attackinfo/weaponcombolight2.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcombolight3",
+     "atk": "character/swordman/attackinfo/weaponcombolight3.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/weaponcombolight3.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "percent_col": 0,
+       "window": [
+        0,
+        240
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "weaponcombo__variant_2": {
+   "name": "里 · 鬼剑术",
+   "skill": "skill/swordman/weaponcombo.skl",
+   "stages": [
+    {
+     "ani": "weaponcomboheavy1",
+     "atk": "character/swordman/attackinfo/weaponcomboheavy1.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboheavy2",
+     "atk": "character/swordman/attackinfo/weaponcomboheavy2.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/weaponcomboheavy2.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "percent_col": 0,
+       "window": [
+        0,
+        240
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "weaponcombo__variant_3": {
+   "name": "里 · 鬼剑术",
+   "skill": "skill/swordman/weaponcombo.skl",
+   "stages": [
+    {
+     "ani": "weaponcomboblunt1",
+     "atk": "character/swordman/attackinfo/weaponcomboblunt1.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblunt2",
+     "atk": "character/swordman/attackinfo/weaponcomboblunt2.atk",
+     "hits": []
+    },
+    {
+     "ani": "weaponcomboblunt3",
+     "atk": "character/swordman/attackinfo/weaponcomboblunt3.atk",
+     "hits": [
+      {
+       "atk": "character/swordman/attackinfo/weaponcomboblunt3.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "percent_col": 0,
+       "window": [
+        0,
+        240
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "passive_count": 101,
+ "schema": "dnf_skill_runtime/1",
+ "skill_count": 175,
+ "skills": {
+  "alchemy": {
+   "active": false,
+   "cost": 0,
+   "effect_domain": "alchemy",
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 20,
+   "name": "炼金术",
+   "path": "skill/swordman/alchemy.skl",
+   "runtime_hook": "declarative_passive",
+   "source_id": 193,
+   "source_path": "skill/swordman/alchemy.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "armormasterycloth": {
+   "active": false,
+   "armor_mastery": {
+    "modifiers": [
+     {
+      "op": "add",
+      "stat": "physical_defense",
+      "value": 20
+     },
+     {
+      "op": "add",
+      "stat": "magical_defense",
+      "value": 20
+     },
+     {
+      "op": "percent",
+      "stat": "hp_max",
+      "value": 0.03
+     }
+    ],
+    "preset": "generic",
+    "type": "cloth"
+   },
+   "cost": 0,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "max_level": 1,
+   "name": "布甲精通",
+   "path": "skill/swordman/armormasterycloth.skl",
+   "source_id": 187,
+   "source_path": "skill/swordman/armormasterycloth.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "armormasteryclothsb": {
+   "active": false,
+   "armor_mastery": {
+    "modifiers": [
+     {
+      "op": "percent",
+      "stat": "mp_max",
+      "value": 0.06
+     },
+     {
+      "op": "percent",
+      "stat": "hp_max",
+      "value": 0.15
+     },
+     {
+      "op": "percent",
+      "stat": "mp_regen",
+      "value": 0.24
+     },
+     {
+      "op": "percent",
+      "stat": "move_speed",
+      "value": 0.02
+     },
+     {
+      "op": "percent",
+      "stat": "cast_speed",
+      "value": 0.03
+     },
+     {
+      "op": "add",
+      "stat": "intelligence",
+      "value": 12
+     }
+    ],
+    "preset": "soulbringer",
+    "type": "cloth"
+   },
+   "cost": 0,
+   "growtype_max_level": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "max_level": 1,
+   "name": "鬼泣布甲专精",
+   "path": "skill/swordman/armormasteryclothsb.skl",
+   "source_id": 93,
+   "source_path": "skill/swordman/armormasteryclothsb.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "armormasteryheavy": {
+   "active": false,
+   "armor_mastery": {
+    "modifiers": [
+     {
+      "op": "add",
+      "stat": "physical_defense",
+      "value": 20
+     },
+     {
+      "op": "add",
+      "stat": "magical_defense",
+      "value": 20
+     },
+     {
+      "op": "percent",
+      "stat": "hp_max",
+      "value": 0.03
+     }
+    ],
+    "preset": "generic",
+    "type": "heavy"
+   },
+   "cost": 0,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "max_level": 1,
+   "name": "重甲精通",
+   "path": "skill/swordman/armormasteryheavy.skl",
+   "source_id": 173,
+   "source_path": "skill/swordman/armormasteryheavy.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "armormasteryheavybk": {
+   "active": false,
+   "armor_mastery": {
+    "modifiers": [
+     {
+      "op": "add",
+      "stat": "strength",
+      "value": 20
+     },
+     {
+      "op": "add",
+      "stat": "spirit",
+      "value": 10
+     },
+     {
+      "op": "percent",
+      "stat": "mp_max",
+      "value": 0.06
+     },
+     {
+      "op": "percent",
+      "stat": "hp_max",
+      "value": 0.15
+     },
+     {
+      "op": "add",
+      "stat": "physical_defense",
+      "value": 200
+     }
+    ],
+    "preset": "berserker",
+    "type": "heavy"
+   },
+   "cost": 0,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    1,
+    0,
+    1
+   ],
+   "max_level": 1,
+   "name": "狂战士重甲专精",
+   "path": "skill/swordman/armormasteryheavybk.skl",
+   "source_id": 56,
+   "source_path": "skill/swordman/armormasteryheavybk.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "armormasteryleather": {
+   "active": false,
+   "armor_mastery": {
+    "modifiers": [
+     {
+      "op": "add",
+      "stat": "physical_defense",
+      "value": 20
+     },
+     {
+      "op": "add",
+      "stat": "magical_defense",
+      "value": 20
+     },
+     {
+      "op": "percent",
+      "stat": "hp_max",
+      "value": 0.03
+     }
+    ],
+    "preset": "generic",
+    "type": "leather"
+   },
+   "cost": 0,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "max_level": 1,
+   "name": "皮甲精通",
+   "path": "skill/swordman/armormasteryleather.skl",
+   "source_id": 185,
+   "source_path": "skill/swordman/armormasteryleather.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "armormasterylight": {
+   "active": false,
+   "armor_mastery": {
+    "modifiers": [
+     {
+      "op": "add",
+      "stat": "physical_defense",
+      "value": 20
+     },
+     {
+      "op": "add",
+      "stat": "magical_defense",
+      "value": 20
+     },
+     {
+      "op": "percent",
+      "stat": "hp_max",
+      "value": 0.03
+     }
+    ],
+    "preset": "generic",
+    "type": "light"
+   },
+   "cost": 0,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "max_level": 1,
+   "name": "轻甲精通",
+   "path": "skill/swordman/armormasterylight.skl",
+   "source_id": 172,
+   "source_path": "skill/swordman/armormasterylight.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "armormasterylightwm": {
+   "active": false,
+   "armor_mastery": {
+    "modifiers": [
+     {
+      "op": "add",
+      "stat": "strength",
+      "value": 4
+     },
+     {
+      "op": "add",
+      "stat": "vitality",
+      "value": 10
+     },
+     {
+      "op": "add",
+      "stat": "spirit",
+      "value": 10
+     },
+     {
+      "op": "percent",
+      "stat": "mp_max",
+      "value": 0.04
+     },
+     {
+      "op": "percent",
+      "stat": "hp_max",
+      "value": 0.2
+     },
+     {
+      "op": "percent",
+      "stat": "mp_regen",
+      "value": 0.18
+     },
+     {
+      "op": "add",
+      "stat": "hit_recovery",
+      "value": 100
+     }
+    ],
+    "preset": "weaponmaster",
+    "type": "light"
+   },
+   "cost": 0,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    1
+   ],
+   "max_level": 1,
+   "name": "剑魂轻甲专精",
+   "path": "skill/swordman/armormasterylightwm.skl",
+   "source_id": 94,
+   "source_path": "skill/swordman/armormasterylightwm.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "armormasteryplate": {
+   "active": false,
+   "armor_mastery": {
+    "modifiers": [
+     {
+      "op": "add",
+      "stat": "physical_defense",
+      "value": 20
+     },
+     {
+      "op": "add",
+      "stat": "magical_defense",
+      "value": 20
+     },
+     {
+      "op": "percent",
+      "stat": "hp_max",
+      "value": 0.03
+     }
+    ],
+    "preset": "generic",
+    "type": "plate"
+   },
+   "cost": 0,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 1,
+   "name": "板甲精通",
+   "path": "skill/swordman/armormasteryplate.skl",
+   "source_id": 196,
+   "source_path": "skill/swordman/armormasteryplate.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "armormasteryplatewave": {
+   "active": false,
+   "armor_mastery": {
+    "modifiers": [
+     {
+      "op": "add",
+      "stat": "intelligence",
+      "value": 20
+     },
+     {
+      "op": "add",
+      "stat": "spirit",
+      "value": 10
+     },
+     {
+      "op": "percent",
+      "stat": "mp_max",
+      "value": 0.08
+     },
+     {
+      "op": "percent",
+      "stat": "hp_max",
+      "value": 0.2
+     },
+     {
+      "op": "percent",
+      "stat": "cast_speed",
+      "value": 0.1
+     }
+    ],
+    "preset": "asura",
+    "type": "plate"
+   },
+   "cost": 0,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "max_level": 1,
+   "name": "阿修罗板甲专精",
+   "path": "skill/swordman/armormasteryplatewave.skl",
+   "source_id": 61,
+   "source_path": "skill/swordman/armormasteryplatewave.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "ashenfork": {
+   "active": true,
+   "cost": 15,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "max_level": 70,
+   "move": "ashenfork",
+   "name": "银光落刃",
+   "path": "skill/swordman/ashenfork.skl",
+   "source_id": 16,
+   "source_path": "skill/swordman/ashenfork.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "ashenforkex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "ashenfork",
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 银光落刃",
+   "path": "skill/swordman/ashenforkex.skl",
+   "source_id": 153,
+   "source_path": "skill/swordman/ashenforkex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "autoguard": {
+   "active": true,
+   "cost": 20,
+   "growtype_max_level": [
+    0,
+    10,
+    0,
+    0,
+    0,
+    10
+   ],
+   "max_level": 20,
+   "move": "autoguard",
+   "name": "自动格挡",
+   "path": "skill/swordman/autoguard.skl",
+   "source_id": 3,
+   "source_path": "skill/swordman/autoguard.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "autoguardex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "autoguard",
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 自动格挡",
+   "path": "skill/swordman/autoguardex.skl",
+   "source_id": 145,
+   "source_path": "skill/swordman/autoguardex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "backstep": {
+   "active": true,
+   "cost": 30,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "max_level": 1,
+   "move": "backstep",
+   "name": "后跳",
+   "path": "skill/swordman/backstep.skl",
+   "source_id": 169,
+   "source_path": "skill/swordman/backstep.skl",
+   "speed": "cast",
+   "tree_visible": false
+  },
+  "backstepcutter": {
+   "active": true,
+   "cost": 50,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    1
+   ],
+   "max_level": 1,
+   "move": "backstepcutter",
+   "name": "后跳斩",
+   "path": "skill/swordman/backstepcutter.skl",
+   "source_id": 49,
+   "source_path": "skill/swordman/backstepcutter.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "basicattackup": {
+   "active": false,
+   "cost": 0,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "max_level": 100,
+   "name": "基础精通",
+   "passive": [
+    {
+     "level_row": 0,
+     "op": "percent",
+     "scale": 0.001,
+     "stat": "physical_attack"
+    }
+   ],
+   "path": "skill/swordman/basicattackup.skl",
+   "source_id": 174,
+   "source_path": "skill/swordman/basicattackup.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "basicattackupex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "basicattackup",
+   "growtype_max_level": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "max_level": 5,
+   "name": "强化 - 基础精通",
+   "path": "skill/swordman/basicattackupex.skl",
+   "source_id": 161,
+   "source_path": "skill/swordman/basicattackupex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "basichpmaxup": {
+   "active": false,
+   "cost": 0,
+   "growtype_max_level": [
+    20,
+    20,
+    20,
+    20,
+    20,
+    20
+   ],
+   "max_level": 30,
+   "name": "生命之源",
+   "passive": [
+    {
+     "level_row": 0,
+     "op": "add",
+     "scale": 1.0,
+     "stat": "hp_max"
+    }
+   ],
+   "path": "skill/swordman/basichpmaxup.skl",
+   "source_id": 195,
+   "source_path": "skill/swordman/basichpmaxup.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "blache": {
+   "active": true,
+   "cost": 200,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 70,
+   "move": "blache",
+   "name": "第7鬼神 : 邪神之怖拉修",
+   "path": "skill/swordman/blache.skl",
+   "source_id": 87,
+   "source_path": "skill/swordman/blache.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "blademastery": {
+   "active": false,
+   "cost": 20,
+   "growtype_max_level": [
+    30,
+    1,
+    30,
+    30,
+    30,
+    30
+   ],
+   "mastery": true,
+   "max_level": 50,
+   "name": "太刀精通",
+   "passive": [
+    {
+     "level_row": 0,
+     "op": "percent",
+     "scale": 0.001,
+     "stat": "physical_attack",
+     "weapon": "katana"
+    },
+    {
+     "level_row": 1,
+     "op": "percent",
+     "scale": 0.001,
+     "stat": "magical_attack",
+     "weapon": "katana"
+    },
+    {
+     "level_row": 2,
+     "op": "add",
+     "scale": 0.001,
+     "stat": "hit",
+     "weapon": "katana"
+    }
+   ],
+   "path": "skill/swordman/blademastery.skl",
+   "source_id": 13,
+   "source_path": "skill/swordman/blademastery.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "bleedingmastery": {
+   "active": false,
+   "cost": 45,
+   "dynamic": "bleeding_stacks",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "max_stacks": 5,
+   "name": "鲜血之忆",
+   "path": "skill/swordman/bleedingmastery.skl",
+   "source_id": 90,
+   "source_path": "skill/swordman/bleedingmastery.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "bloodblast": {
+   "active": true,
+   "cost": 40,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    50,
+    0,
+    50
+   ],
+   "max_level": 70,
+   "move": "bloodblast",
+   "name": "怒气爆发",
+   "path": "skill/swordman/bloodblast.skl",
+   "source_id": 24,
+   "source_path": "skill/swordman/bloodblast.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "bloodblastex": {
+   "active": true,
+   "cost": 70,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "bloodblastex",
+   "name": "血气爆发",
+   "path": "skill/swordman/bloodblastex.skl",
+   "source_id": 101,
+   "source_path": "skill/swordman/bloodblastex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "bloodblastexp": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "bloodblast",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 怒气爆发",
+   "path": "skill/swordman/bloodblastexp.skl",
+   "source_id": 166,
+   "source_path": "skill/swordman/bloodblastexp.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "bloodsword": {
+   "active": true,
+   "cost": 50,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    30,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "bloodsword",
+   "name": "血气之刃",
+   "path": "skill/swordman/bloodsword.skl",
+   "source_id": 103,
+   "source_path": "skill/swordman/bloodsword.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "bloodswordex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "bloodsword",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 血气之刃",
+   "path": "skill/swordman/bloodswordex.skl",
+   "source_id": 168,
+   "source_path": "skill/swordman/bloodswordex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "bloody_vigorous": {
+   "active": false,
+   "bleed_bonus": 0.4,
+   "cost": 20,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    1,
+    0,
+    0
+   ],
+   "max_level": 1,
+   "name": "血气旺盛",
+   "path": "skill/swordman/bloodyvigorous.skl",
+   "source_id": 63,
+   "source_path": "skill/swordman/bloodyvigorous.skl",
+   "speed": "attack",
+   "tree_visible": true,
+   "unlock": "gorecross_hp_cost"
+  },
+  "bloodyrave": {
+   "active": true,
+   "cost": 50,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    30,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "bloodyrave",
+   "name": "嗜魂封魔斩",
+   "path": "skill/swordman/bloodyrave.skl",
+   "source_id": 79,
+   "source_path": "skill/swordman/bloodyrave.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "bloodyraveex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "bloodyrave",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 嗜魂封魔斩",
+   "path": "skill/swordman/bloodyraveex.skl",
+   "source_id": 158,
+   "source_path": "skill/swordman/bloodyraveex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "bluntmastery": {
+   "active": false,
+   "cost": 20,
+   "growtype_max_level": [
+    30,
+    1,
+    30,
+    30,
+    30,
+    30
+   ],
+   "mastery": true,
+   "max_level": 50,
+   "name": "钝器精通",
+   "passive": [
+    {
+     "level_row": 0,
+     "op": "percent",
+     "scale": 0.001,
+     "stat": "physical_attack",
+     "weapon": "club"
+    },
+    {
+     "level_row": 1,
+     "op": "percent",
+     "scale": 0.001,
+     "stat": "magical_attack",
+     "weapon": "club"
+    },
+    {
+     "level_row": 2,
+     "op": "add",
+     "scale": 0.001,
+     "stat": "hit",
+     "weapon": "club"
+    }
+   ],
+   "path": "skill/swordman/bluntmastery.skl",
+   "source_id": 15,
+   "source_path": "skill/swordman/bluntmastery.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "bremen": {
+   "active": true,
+   "cost": 25,
+   "growtype_max_level": [
+    20,
+    10,
+    20,
+    10,
+    10,
+    10
+   ],
+   "max_level": 50,
+   "move": "bremen",
+   "name": "侵蚀之普戾蒙",
+   "path": "skill/swordman/bremen.skl",
+   "source_id": 41,
+   "source_path": "skill/swordman/bremen.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "bremenex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "bremen",
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 侵蚀之普戾蒙",
+   "path": "skill/swordman/bremenex.skl",
+   "source_id": 146,
+   "source_path": "skill/swordman/bremenex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "buff": {
+   "active": true,
+   "cost": 35,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    20,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "buff",
+   "name": "血之狂暴",
+   "path": "skill/swordman/frenzy.skl",
+   "source_id": 76,
+   "source_path": "skill/swordman/frenzy.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "charge_crash": {
+   "active": true,
+   "cost": 30,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    50
+   ],
+   "max_level": 70,
+   "move": "charge_crash",
+   "name": "破军升龙击",
+   "path": "skill/swordman/chargecrash.skl",
+   "source_id": 68,
+   "source_path": "skill/swordman/chargecrash.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "chargecrashex": {
+   "active": true,
+   "cost": 60,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "chargecrashex",
+   "name": "破军斩龙击",
+   "path": "skill/swordman/chargecrashex.skl",
+   "source_id": 98,
+   "source_path": "skill/swordman/chargecrashex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "chargecrashexp": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "charge_crash",
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 破军升龙击",
+   "path": "skill/swordman/chargecrashexp.skl",
+   "source_id": 218,
+   "source_path": "skill/swordman/chargecrashexp.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "compoundchemistry": {
+   "active": false,
+   "cost": 10,
+   "effect_domain": "compoundchemistry",
+   "growtype_max_level": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "max_level": 10,
+   "name": "炼金",
+   "path": "skill/swordman/compoundchemistry.skl",
+   "runtime_hook": "declarative_passive",
+   "source_id": 184,
+   "source_path": "skill/swordman/compoundchemistry.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "compoundcraft": {
+   "active": false,
+   "cost": 10,
+   "effect_domain": "compoundcraft",
+   "growtype_max_level": [
+    2,
+    4,
+    4,
+    2,
+    2,
+    2
+   ],
+   "max_level": 10,
+   "name": "精工",
+   "path": "skill/swordman/compoundcraft.skl",
+   "runtime_hook": "declarative_passive",
+   "source_id": 181,
+   "source_path": "skill/swordman/compoundcraft.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "compoundmachine": {
+   "active": false,
+   "cost": 10,
+   "effect_domain": "compoundmachine",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "机械",
+   "path": "skill/swordman/compoundmachine.skl",
+   "runtime_hook": "declarative_passive",
+   "source_id": 183,
+   "source_path": "skill/swordman/compoundmachine.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "compoundweaving": {
+   "active": false,
+   "cost": 10,
+   "effect_domain": "compoundweaving",
+   "growtype_max_level": [
+    2,
+    4,
+    4,
+    2,
+    2,
+    2
+   ],
+   "max_level": 10,
+   "name": "纺织",
+   "path": "skill/swordman/compoundweaving.skl",
+   "runtime_hook": "declarative_passive",
+   "source_id": 182,
+   "source_path": "skill/swordman/compoundweaving.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "conversion": {
+   "active": false,
+   "cost": 0,
+   "effect_domain": "conversion",
+   "growtype_max_level": [
+    0,
+    1,
+    1,
+    1,
+    1,
+    0
+   ],
+   "max_level": 1,
+   "name": "攻击类型转换",
+   "path": "skill/swordman/conversion.skl",
+   "runtime_hook": "declarative_passive",
+   "source_id": 197,
+   "source_path": "skill/swordman/conversion.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "darkaura": {
+   "active": false,
+   "aura": {
+    "enemy": {
+     "attack_speed": 0.95,
+     "dark_resist": -40
+    },
+    "radius_from_row": 0
+   },
+   "cost": 45,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "name": "恐惧光环",
+   "path": "skill/swordman/darkaura.skl",
+   "source_id": 89,
+   "source_path": "skill/swordman/darkaura.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "darkfriendship": {
+   "active": false,
+   "cost": 0,
+   "growtype_max_level": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "max_level": 1,
+   "name": "暗之亲和",
+   "passive": [
+    {
+     "op": "add",
+     "stat": "dark_resist",
+     "value": 20
+    },
+    {
+     "op": "add",
+     "stat": "light_resist",
+     "value": -10
+    }
+   ],
+   "path": "skill/swordman/darkfriendship.skl",
+   "source_id": 29,
+   "source_path": "skill/swordman/darkfriendship.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "darktoleranceup": {
+   "active": true,
+   "cost": 30,
+   "growtype_max_level": [
+    0,
+    0,
+    10,
+    0,
+    0,
+    0
+   ],
+   "max_level": 20,
+   "move": "darktoleranceup",
+   "name": "暗月降临",
+   "path": "skill/swordman/darktoleranceup.skl",
+   "source_id": 30,
+   "source_path": "skill/swordman/darktoleranceup.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "dashattackmultihit": {
+   "active": true,
+   "cost": 15,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "max_level": 70,
+   "move": "dashattackmultihit",
+   "name": "连突刺",
+   "path": "skill/swordman/dashattackmultihit.skl",
+   "source_id": 11,
+   "source_path": "skill/swordman/dashattackmultihit.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "dashattackmultihitex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "dashattackmultihit",
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "max_level": 10,
+   "name": "强化 - 连突刺",
+   "path": "skill/swordman/dashattackmultihitex.skl",
+   "source_id": 162,
+   "source_path": "skill/swordman/dashattackmultihitex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "defensedownoncritical": {
+   "active": false,
+   "cost": 45,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "name": "极 · 鬼剑术 (斩铁式)",
+   "on_critical": {
+    "duration_ms": 10000,
+    "effect": "defense_down",
+    "max_stacks": 10
+   },
+   "path": "skill/swordman/defensedownoncritical.skl",
+   "source_id": 91,
+   "source_path": "skill/swordman/defensedownoncritical.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "diehard": {
+   "active": true,
+   "cost": 20,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    20,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "diehard",
+   "name": "死亡抗拒",
+   "path": "skill/swordman/diehard.skl",
+   "source_id": 34,
+   "source_path": "skill/swordman/diehard.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "diehardex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "diehard",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 死亡抗拒",
+   "path": "skill/swordman/diehardex.skl",
+   "source_id": 148,
+   "source_path": "skill/swordman/diehardex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "disjointitem": {
+   "active": false,
+   "cost": 10,
+   "effect_domain": "disjointitem",
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 10,
+   "name": "物品分解",
+   "path": "skill/swordman/disjointitem.skl",
+   "runtime_hook": "declarative_passive",
+   "source_id": 179,
+   "source_path": "skill/swordman/disjointitem.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "disjointitemdark": {
+   "active": false,
+   "cost": 40,
+   "effect_domain": "disjointitemdark",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 5,
+   "name": "((不使用",
+   "path": "skill/swordman/disjointitemdark.skl",
+   "runtime_hook": "declarative_passive",
+   "source_id": 42,
+   "source_path": "skill/swordman/disjointitemdark.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "dollmaking": {
+   "active": false,
+   "cost": 0,
+   "effect_domain": "dollmaking",
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 20,
+   "name": "制作召唤人偶",
+   "path": "skill/swordman/dollmaking.skl",
+   "runtime_hook": "declarative_passive",
+   "source_id": 192,
+   "source_path": "skill/swordman/dollmaking.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "dotarea": {
+   "active": true,
+   "cost": 30,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "max_level": 70,
+   "move": "dotarea",
+   "name": "杀意波动",
+   "path": "skill/swordman/dotarea.skl",
+   "source_id": 52,
+   "source_path": "skill/swordman/dotarea.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "dotareaex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "dotarea",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 杀意波动",
+   "path": "skill/swordman/dotareaex.skl",
+   "source_id": 150,
+   "source_path": "skill/swordman/dotareaex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "draw": {
+   "active": true,
+   "cost": 40,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    50
+   ],
+   "max_level": 70,
+   "move": "draw",
+   "name": "拔刀斩",
+   "path": "skill/swordman/momentaryslash.skl",
+   "source_id": 9,
+   "source_path": "skill/swordman/momentaryslash.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "durabilityup": {
+   "active": false,
+   "cost": 20,
+   "durability_rate": 0.96,
+   "growtype_max_level": [
+    0,
+    10,
+    0,
+    0,
+    0,
+    10
+   ],
+   "max_level": 20,
+   "name": "武器节制",
+   "path": "skill/swordman/durabilityup.skl",
+   "source_id": 39,
+   "source_path": "skill/swordman/durabilityup.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "enchant": {
+   "active": false,
+   "cost": 0,
+   "effect_domain": "enchant",
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 20,
+   "name": "附魔",
+   "path": "skill/swordman/enchant.skl",
+   "runtime_hook": "declarative_passive",
+   "source_id": 191,
+   "source_path": "skill/swordman/enchant.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "epidemicrasa": {
+   "active": true,
+   "cost": 40,
+   "growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    0
+   ],
+   "max_level": 70,
+   "move": "epidemicrasa",
+   "name": "瘟疫之罗刹",
+   "path": "skill/swordman/epidemicrasa.skl",
+   "source_id": 75,
+   "source_path": "skill/swordman/epidemicrasa.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "epidemicrasaex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "epidemicrasa",
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 瘟疫之罗刹",
+   "path": "skill/swordman/epidemicrasaex.skl",
+   "source_id": 156,
+   "source_path": "skill/swordman/epidemicrasaex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "equiplightsword": {
+   "active": false,
+   "cost": 0,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    1
+   ],
+   "max_level": 1,
+   "name": "光剑掌握",
+   "path": "skill/swordman/equiplightsword.skl",
+   "source_id": 33,
+   "source_path": "skill/swordman/equiplightsword.skl",
+   "speed": "attack",
+   "tree_visible": true,
+   "unlock_weapon": "beamsword"
+  },
+  "experienceup": {
+   "active": false,
+   "cost": 0,
+   "growtype_max_level": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "max_level": 20,
+   "name": "极速成长",
+   "path": "skill/swordman/experienceup.skl",
+   "profile_bonus": {
+    "experience_rate": 0.1
+   },
+   "source_id": 201,
+   "source_path": "skill/swordman/experienceup.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "fastequip": {
+   "active": false,
+   "cost": 0,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    1
+   ],
+   "max_level": 1,
+   "name": "疾影手",
+   "path": "skill/swordman/fastequip.skl",
+   "source_id": 37,
+   "source_path": "skill/swordman/fastequip.skl",
+   "speed": "attack",
+   "tree_visible": true,
+   "weapon_switch_buff": {
+    "damage_rate": 0.1,
+    "duration_ms": 5000,
+    "physical_crit": 0.1
+   },
+   "weapon_switch_cooldown_rate": 0.5
+  },
+  "firewave": {
+   "active": true,
+   "cost": 40,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "max_level": 70,
+   "move": "firewave",
+   "name": "爆炎 · 波动剑",
+   "path": "skill/swordman/firewave.skl",
+   "source_id": 22,
+   "source_path": "skill/swordman/firewave.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "firewaveex": {
+   "active": true,
+   "cost": 70,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "firewaveex",
+   "name": "极炎 · 裂波剑",
+   "path": "skill/swordman/firewaveex.skl",
+   "source_id": 99,
+   "source_path": "skill/swordman/firewaveex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "firewaveexp": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "firewave",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 爆炎 · 波动剑",
+   "path": "skill/swordman/firewaveexp.skl",
+   "source_id": 212,
+   "source_path": "skill/swordman/firewaveexp.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "flowmind": {
+   "active": true,
+   "cost": 50,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 1,
+   "move": "flowmind",
+   "name": "流心",
+   "path": "skill/swordman/flowmind.skl",
+   "source_id": 105,
+   "source_path": "skill/swordman/flowmind.skl",
+   "speed": "cast",
+   "tree_visible": false
+  },
+  "flowmindone": {
+   "active": true,
+   "cost": 25,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 70,
+   "move": "flowmindone",
+   "name": "流心 : 刺",
+   "path": "skill/swordman/flowmindone.skl",
+   "source_id": 107,
+   "source_path": "skill/swordman/flowmindone.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "flowmindoneex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "flowmindone",
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 流心 : 刺",
+   "path": "skill/swordman/flowmindoneex.skl",
+   "source_id": 219,
+   "source_path": "skill/swordman/flowmindoneex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "flowmindpowerup": {
+   "active": true,
+   "cost": 30,
+   "growtype_max_level": [
+    0,
+    30,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "flowmindpowerup",
+   "name": "流心 : 狂",
+   "path": "skill/swordman/flowmindpowerup.skl",
+   "source_id": 110,
+   "source_path": "skill/swordman/flowmindpowerup.skl",
+   "speed": "cast",
+   "tree_visible": false
+  },
+  "flowmindthree": {
+   "active": true,
+   "cost": 30,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 70,
+   "move": "flowmindthree",
+   "name": "流心 : 升",
+   "path": "skill/swordman/flowmindthree.skl",
+   "source_id": 109,
+   "source_path": "skill/swordman/flowmindthree.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "flowmindthreeex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "flowmindthree",
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 流心 : 升",
+   "path": "skill/swordman/flowmindthreeex.skl",
+   "source_id": 221,
+   "source_path": "skill/swordman/flowmindthreeex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "flowmindtwo": {
+   "active": true,
+   "cost": 25,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 70,
+   "move": "flowmindtwo",
+   "name": "流心 : 跃",
+   "path": "skill/swordman/flowmindtwo.skl",
+   "source_id": 108,
+   "source_path": "skill/swordman/flowmindtwo.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "flowmindtwoex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "flowmindtwo",
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 流心 : 跃",
+   "path": "skill/swordman/flowmindtwoex.skl",
+   "source_id": 220,
+   "source_path": "skill/swordman/flowmindtwoex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "ghostpowerup": {
+   "active": false,
+   "cost": 0,
+   "growtype_max_level": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "max_level": 1,
+   "name": "封印解除",
+   "path": "skill/swordman/ghostpowerup.skl",
+   "skill_damage_bonus": {
+    "bremen": 0.1,
+    "khazan": 0.1
+   },
+   "skill_level_bonus": {
+    "bremen": 1,
+    "epidemicrasa": 1,
+    "hardattack": 1,
+    "kalla": 1,
+    "khazan": 1,
+    "saya": 1
+   },
+   "source_id": 35,
+   "source_path": "skill/swordman/ghostpowerup.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "ghostsidewind": {
+   "active": true,
+   "cost": 30,
+   "growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    0
+   ],
+   "max_level": 70,
+   "move": "ghostsidewind",
+   "name": "鬼影鞭",
+   "path": "skill/swordman/ghostsidewind.skl",
+   "source_id": 111,
+   "source_path": "skill/swordman/ghostsidewind.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "ghostsidewindex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "ghostsidewind",
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 鬼影鞭",
+   "path": "skill/swordman/ghostsidewindex.skl",
+   "source_id": 115,
+   "source_path": "skill/swordman/ghostsidewindex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "ghoststep": {
+   "active": true,
+   "cost": 30,
+   "growtype_max_level": [
+    0,
+    0,
+    30,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "ghoststep",
+   "name": "鬼影步",
+   "path": "skill/swordman/ghoststep.skl",
+   "source_id": 18,
+   "source_path": "skill/swordman/ghoststep.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "ghoststepex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "ghoststep",
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 鬼影步",
+   "path": "skill/swordman/ghoststepex.skl",
+   "source_id": 147,
+   "source_path": "skill/swordman/ghoststepex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "ghoststepslash": {
+   "active": true,
+   "cost": 50,
+   "growtype_max_level": [
+    0,
+    0,
+    30,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "ghoststepslash",
+   "name": "鬼影闪",
+   "path": "skill/swordman/ghoststepslash.skl",
+   "source_id": 60,
+   "source_path": "skill/swordman/ghoststepslash.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "ghoststepslashex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "ghoststepslash",
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 鬼影闪",
+   "path": "skill/swordman/ghoststepslashex.skl",
+   "source_id": 226,
+   "source_path": "skill/swordman/ghoststepslashex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "gorecrossex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "rage_slash",
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 十字斩",
+   "path": "skill/swordman/gorecrossex.skl",
+   "source_id": 141,
+   "source_path": "skill/swordman/gorecrossex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "grabblastblood": {
+   "active": true,
+   "cost": 25,
+   "growtype_max_level": [
+    50,
+    10,
+    10,
+    50,
+    10,
+    50
+   ],
+   "max_level": 70,
+   "move": "grabblastblood",
+   "name": "嗜魂之手",
+   "path": "skill/swordman/grabblastblood.skl",
+   "source_id": 31,
+   "source_path": "skill/swordman/grabblastblood.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "grabblastbloodex": {
+   "active": true,
+   "cost": 60,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "grabblastbloodex",
+   "name": "灭魂之手",
+   "path": "skill/swordman/grabblastbloodex.skl",
+   "source_id": 102,
+   "source_path": "skill/swordman/grabblastbloodex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "grabblastbloodexp": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "grabblastblood",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 嗜魂之手",
+   "path": "skill/swordman/grabblastbloodexp.skl",
+   "source_id": 165,
+   "source_path": "skill/swordman/grabblastbloodexp.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "grandwave": {
+   "active": true,
+   "cost": 25,
+   "growtype_max_level": [
+    50,
+    10,
+    10,
+    10,
+    50,
+    10
+   ],
+   "max_level": 70,
+   "move": "grandwave",
+   "name": "邪光斩",
+   "path": "skill/swordman/grandwave.skl",
+   "source_id": 50,
+   "source_path": "skill/swordman/grandwave.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "grandwavecharge": {
+   "active": false,
+   "cost": 50,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "max_level": 20,
+   "name": "修罗邪光斩",
+   "path": "skill/swordman/grandwavecharge.skl",
+   "source_id": 51,
+   "source_path": "skill/swordman/grandwavecharge.skl",
+   "speed": "attack",
+   "tree_visible": true,
+   "unlock": "grandwave_charge"
+  },
+  "grandwaveex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "grandwave",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 邪光斩",
+   "path": "skill/swordman/grandwaveex.skl",
+   "source_id": 211,
+   "source_path": "skill/swordman/grandwaveex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "guard": {
+   "active": true,
+   "cost": 20,
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "max_level": 50,
+   "move": "guard",
+   "name": "格挡",
+   "path": "skill/swordman/guard.skl",
+   "source_id": 1,
+   "source_path": "skill/swordman/guard.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "guardex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "guard",
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "max_level": 3,
+   "name": "强化 - 格挡",
+   "path": "skill/swordman/guardex.skl",
+   "source_id": 163,
+   "source_path": "skill/swordman/guardex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "hardattack": {
+   "active": true,
+   "cost": 15,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "max_level": 700,
+   "move": "hardattack",
+   "name": "鬼斩",
+   "path": "skill/swordman/hardattack.skl",
+   "source_id": 5,
+   "source_path": "skill/swordman/hardattack.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "hardattackcharge": {
+   "active": false,
+   "cost": 15,
+   "growtype_max_level": [
+    0,
+    0,
+    20,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "name": "噬灵鬼斩",
+   "path": "skill/swordman/hardattackcharge.skl",
+   "source_id": 6,
+   "source_path": "skill/swordman/hardattackcharge.skl",
+   "speed": "attack",
+   "tree_visible": true,
+   "unlock": "hardattack_charge"
+  },
+  "hardattackex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "hardattack",
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 鬼斩",
+   "path": "skill/swordman/hardattackex.skl",
+   "source_id": 142,
+   "source_path": "skill/swordman/hardattackex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "heavyswordmastery": {
+   "active": false,
+   "cost": 20,
+   "growtype_max_level": [
+    30,
+    1,
+    30,
+    30,
+    30,
+    30
+   ],
+   "mastery": true,
+   "max_level": 50,
+   "name": "巨剑精通",
+   "passive": [
+    {
+     "level_row": 0,
+     "op": "percent",
+     "scale": 0.001,
+     "stat": "physical_attack",
+     "weapon": "greatsword"
+    },
+    {
+     "level_row": 1,
+     "op": "percent",
+     "scale": 0.001,
+     "stat": "magical_attack",
+     "weapon": "greatsword"
+    },
+    {
+     "level_row": 2,
+     "op": "add",
+     "scale": 0.001,
+     "stat": "hit",
+     "weapon": "greatsword"
+    }
+   ],
+   "path": "skill/swordman/heavyswordmastery.skl",
+   "source_id": 14,
+   "source_path": "skill/swordman/heavyswordmastery.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "hellbenter": {
+   "active": true,
+   "cost": 200,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "hellbenter",
+   "name": "魔狱血刹",
+   "path": "skill/swordman/hellbenter.skl",
+   "source_id": 85,
+   "source_path": "skill/swordman/hellbenter.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "hitback": {
+   "active": true,
+   "cost": 20,
+   "growtype_max_level": [
+    20,
+    20,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 50,
+   "move": "hitback",
+   "name": "逆转反击",
+   "path": "skill/swordman/hitback.skl",
+   "source_id": 7,
+   "source_path": "skill/swordman/hitback.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "hitbackex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "hitback",
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 逆转反击",
+   "path": "skill/swordman/hitbackex.skl",
+   "source_id": 144,
+   "source_path": "skill/swordman/hitbackex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "hopsmash": {
+   "active": true,
+   "cost": 15,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "max_level": 70,
+   "move": "hopsmash",
+   "name": "崩山击",
+   "path": "skill/swordman/hopsmash.skl",
+   "source_id": 65,
+   "source_path": "skill/swordman/hopsmash.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "hopsmashex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "hopsmash",
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 崩山击",
+   "path": "skill/swordman/hopsmashex.skl",
+   "source_id": 157,
+   "source_path": "skill/swordman/hopsmashex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "hundredsword": {
+   "active": true,
+   "cost": 200,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 70,
+   "move": "hundredsword",
+   "name": "极 · 鬼剑术 (暴风式)",
+   "path": "skill/swordman/hundredsword.skl",
+   "source_id": 86,
+   "source_path": "skill/swordman/hundredsword.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "icewave": {
+   "active": true,
+   "cost": 25,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "max_level": 70,
+   "move": "icewave",
+   "name": "冰刃 · 波动剑",
+   "path": "skill/swordman/icewave.skl",
+   "source_id": 21,
+   "source_path": "skill/swordman/icewave.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "icewaveex": {
+   "active": true,
+   "cost": 60,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "icewaveex",
+   "name": "极冰 · 裂波剑",
+   "path": "skill/swordman/icewaveex.skl",
+   "source_id": 100,
+   "source_path": "skill/swordman/icewaveex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "icewaveexp": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "icewave",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "max_level": 3,
+   "name": "强化 - 冰刃 · 波动剑",
+   "path": "skill/swordman/icewaveexp.skl",
+   "source_id": 216,
+   "source_path": "skill/swordman/icewaveexp.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "illusionslash": {
+   "active": true,
+   "cost": 60,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    50
+   ],
+   "max_level": 70,
+   "move": "illusionslash",
+   "name": "幻影剑舞",
+   "path": "skill/swordman/illusionslash.skl",
+   "source_id": 73,
+   "source_path": "skill/swordman/illusionslash.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "illusionslashexp": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "illusionslash",
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 幻影剑舞",
+   "path": "skill/swordman/illusionslashexp.skl",
+   "source_id": 217,
+   "source_path": "skill/swordman/illusionslashexp.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "jumpattackhighfast": {
+   "active": false,
+   "cost": 20,
+   "effect_domain": "jumpattackhighfast",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 1,
+   "name": "((不使用",
+   "path": "skill/swordman/jumpattackhighfast.skl",
+   "runtime_hook": "declarative_passive",
+   "source_id": 43,
+   "source_path": "skill/swordman/jumpattackhighfast.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "jumpattackmulti": {
+   "active": true,
+   "cost": 50,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "max_level": 50,
+   "move": "jumpattackmulti",
+   "name": "空中连斩",
+   "path": "skill/swordman/jumpattackmulti.skl",
+   "source_id": 17,
+   "source_path": "skill/swordman/jumpattackmulti.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "jumppowerup": {
+   "active": true,
+   "cost": 20,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 20,
+   "move": "jumppowerup",
+   "name": "跃翔",
+   "path": "skill/swordman/jumppowerup.skl",
+   "source_id": 175,
+   "source_path": "skill/swordman/jumppowerup.skl",
+   "speed": "cast",
+   "tree_visible": false
+  },
+  "kalla": {
+   "active": true,
+   "cost": 60,
+   "growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    0
+   ],
+   "max_level": 70,
+   "move": "kalla",
+   "name": "冥炎之卡洛",
+   "path": "skill/swordman/kalla.skl",
+   "source_id": 82,
+   "source_path": "skill/swordman/kalla.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "kallaex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "kalla",
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 冥炎之卡洛",
+   "path": "skill/swordman/kallaex.skl",
+   "source_id": 227,
+   "source_path": "skill/swordman/kallaex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "keiga": {
+   "active": true,
+   "cost": 20,
+   "growtype_max_level": [
+    0,
+    0,
+    10,
+    0,
+    0,
+    10
+   ],
+   "max_level": 20,
+   "move": "keiga",
+   "name": "残影之凯贾",
+   "path": "skill/swordman/keiga.skl",
+   "source_id": 84,
+   "source_path": "skill/swordman/keiga.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "khazan": {
+   "active": true,
+   "cost": 20,
+   "growtype_max_level": [
+    10,
+    10,
+    20,
+    10,
+    10,
+    20
+   ],
+   "max_level": 50,
+   "move": "khazan",
+   "name": "刀魂之卡赞",
+   "path": "skill/swordman/khazan.skl",
+   "source_id": 25,
+   "source_path": "skill/swordman/khazan.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "khazanex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "khazan",
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 刀魂之卡赞",
+   "path": "skill/swordman/khazanex.skl",
+   "source_id": 164,
+   "source_path": "skill/swordman/khazanex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "lightswordmastery": {
+   "active": false,
+   "cost": 20,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    30
+   ],
+   "mastery": true,
+   "max_level": 50,
+   "name": "光剑精通",
+   "passive": [
+    {
+     "level_row": 0,
+     "op": "percent",
+     "scale": 0.001,
+     "stat": "physical_attack",
+     "weapon": "beamsword"
+    },
+    {
+     "level_row": 1,
+     "op": "percent",
+     "scale": 0.001,
+     "stat": "magical_attack",
+     "weapon": "beamsword"
+    },
+    {
+     "level_row": 2,
+     "op": "add",
+     "scale": 0.001,
+     "stat": "hit",
+     "weapon": "beamsword"
+    }
+   ],
+   "path": "skill/swordman/lightswordmastery.skl",
+   "source_id": 4,
+   "source_path": "skill/swordman/lightswordmastery.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "magicalattackup": {
+   "active": true,
+   "cost": 25,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 20,
+   "move": "magicalattackup",
+   "name": "远古记忆",
+   "path": "skill/swordman/magicalattackup.skl",
+   "source_id": 176,
+   "source_path": "skill/swordman/magicalattackup.skl",
+   "speed": "cast",
+   "tree_visible": false
+  },
+  "magicalbackattackcritical": {
+   "active": false,
+   "cost": 20,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 20,
+   "name": "魔法背击",
+   "passive": [
+    {
+     "op": "add",
+     "stat": "magical_crit",
+     "value": 0.03
+    }
+   ],
+   "path": "skill/swordman/magicalbackattackcritical.skl",
+   "source_id": 189,
+   "source_path": "skill/swordman/magicalbackattackcritical.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "magicalcriticalhitup": {
+   "active": false,
+   "cost": 20,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 20,
+   "name": "魔法暴击",
+   "passive": [
+    {
+     "level_row": 0,
+     "op": "add",
+     "scale": 0.001,
+     "stat": "magical_crit"
+    }
+   ],
+   "path": "skill/swordman/magicalcriticalhitup.skl",
+   "source_id": 188,
+   "source_path": "skill/swordman/magicalcriticalhitup.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "mindflash": {
+   "active": false,
+   "cost": 20,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    30,
+    0
+   ],
+   "max_level": 50,
+   "name": "挫折意志",
+   "on_hurt": {
+    "effect": "mindflash",
+    "max_stacks": 5
+   },
+   "path": "skill/swordman/mindflash.skl",
+   "source_id": 53,
+   "source_path": "skill/swordman/mindflash.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "momentaryslashex": {
+   "active": true,
+   "cost": 70,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "momentaryslashex",
+   "name": "破空拔刀斩",
+   "path": "skill/swordman/momentaryslashex.skl",
+   "source_id": 97,
+   "source_path": "skill/swordman/momentaryslashex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "momentaryslashexp": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "draw",
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 拔刀斩",
+   "path": "skill/swordman/momentaryslashexp.skl",
+   "source_id": 154,
+   "source_path": "skill/swordman/momentaryslashexp.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "moonlight": {
+   "active": true,
+   "cost": 20,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "max_level": 70,
+   "move": "moonlight",
+   "name": "月光斩",
+   "path": "skill/swordman/moonlightslash.skl",
+   "source_id": 77,
+   "source_path": "skill/swordman/moonlightslash.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "moonlightslashex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "moonlight",
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 月光斩",
+   "path": "skill/swordman/moonlightslashex.skl",
+   "source_id": 155,
+   "source_path": "skill/swordman/moonlightslashex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "moonlightslashfull": {
+   "active": false,
+   "cost": 100,
+   "growtype_max_level": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "max_level": 1,
+   "name": "满月斩",
+   "path": "skill/swordman/moonlightslashfull.skl",
+   "source_id": 80,
+   "source_path": "skill/swordman/moonlightslashfull.skl",
+   "speed": "attack",
+   "tree_visible": true,
+   "unlock": "moonlight_full"
+  },
+  "normalwave": {
+   "active": true,
+   "cost": 15,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "max_level": 70,
+   "move": "normalwave",
+   "name": "地裂 · 波动剑",
+   "path": "skill/swordman/normalwave.skl",
+   "source_id": 20,
+   "source_path": "skill/swordman/normalwave.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "normalwaveex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "normalwave",
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 地裂 · 波动剑",
+   "path": "skill/swordman/normalwaveex.skl",
+   "source_id": 140,
+   "source_path": "skill/swordman/normalwaveex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "opendisjointshop": {
+   "active": false,
+   "cost": 0,
+   "effect_domain": "opendisjointshop",
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 20,
+   "name": "开启分解商店",
+   "path": "skill/swordman/opendisjointshop.skl",
+   "runtime_hook": "declarative_passive",
+   "source_id": 194,
+   "source_path": "skill/swordman/opendisjointshop.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "outragebreak": {
+   "active": true,
+   "cost": 60,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    50,
+    0,
+    0
+   ],
+   "max_level": 70,
+   "move": "outragebreak",
+   "name": "崩山裂地斩",
+   "path": "skill/swordman/outragebreak.skl",
+   "source_id": 81,
+   "source_path": "skill/swordman/outragebreak.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "outragebreakex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "outragebreak",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 崩山裂地斩",
+   "path": "skill/swordman/outragebreakex.skl",
+   "source_id": 167,
+   "source_path": "skill/swordman/outragebreakex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "overdrive": {
+   "active": true,
+   "cost": 25,
+   "growtype_max_level": [
+    0,
+    20,
+    0,
+    0,
+    0,
+    20
+   ],
+   "max_level": 50,
+   "move": "overdrive",
+   "name": "破极兵刃",
+   "path": "skill/swordman/overdrive.skl",
+   "source_id": 38,
+   "source_path": "skill/swordman/overdrive.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "physicalbackattackcritical": {
+   "active": false,
+   "cost": 20,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 20,
+   "name": "物理背击",
+   "passive": [
+    {
+     "op": "add",
+     "stat": "physical_crit",
+     "value": 0.03
+    }
+   ],
+   "path": "skill/swordman/physicalbackattackcritical.skl",
+   "source_id": 178,
+   "source_path": "skill/swordman/physicalbackattackcritical.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "physicalcriticalhitup": {
+   "active": false,
+   "cost": 20,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 20,
+   "name": "物理暴击",
+   "passive": [
+    {
+     "level_row": 0,
+     "op": "add",
+     "scale": 0.001,
+     "stat": "physical_crit"
+    }
+   ],
+   "path": "skill/swordman/physicalcriticalhitup.skl",
+   "source_id": 186,
+   "source_path": "skill/swordman/physicalcriticalhitup.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "pinchpowerup": {
+   "active": false,
+   "cost": 25,
+   "dynamic": "low_hp",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    20,
+    0,
+    20
+   ],
+   "max_level": 50,
+   "name": "血气唤醒",
+   "path": "skill/swordman/pinchpowerup.skl",
+   "rows": {
+    "attack_speed": [
+     4,
+     5
+    ],
+    "evasion": [
+     2,
+     3
+    ],
+    "move_speed": [
+     6,
+     7
+    ],
+    "strength": [
+     0,
+     1
+    ]
+   },
+   "source_id": 19,
+   "source_path": "skill/swordman/pinchpowerup.skl",
+   "speed": "attack",
+   "threshold": 0.4,
+   "tree_visible": true
+  },
+  "pinchpowerupex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "pinchpowerup",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    1,
+    0,
+    1
+   ],
+   "max_level": 1,
+   "name": "强化 - 血气唤醒",
+   "path": "skill/swordman/pinchpowerupex.skl",
+   "source_id": 139,
+   "source_path": "skill/swordman/pinchpowerupex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "quickstanding": {
+   "active": true,
+   "cost": 10,
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "max_level": 20,
+   "move": "quickstanding",
+   "name": "受身蹲伏",
+   "path": "skill/swordman/quickstanding.skl",
+   "source_id": 190,
+   "source_path": "skill/swordman/quickstanding.skl",
+   "speed": "cast",
+   "tree_visible": false
+  },
+  "rage_slash": {
+   "active": true,
+   "cost": 15,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "max_level": 70,
+   "move": "rage_slash",
+   "name": "十字斩",
+   "path": "skill/swordman/gorecross.skl",
+   "source_id": 64,
+   "source_path": "skill/swordman/gorecross.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "rapidmoveslash": {
+   "active": true,
+   "cost": 50,
+   "growtype_max_level": [
+    0,
+    50,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 70,
+   "move": "rapidmoveslash",
+   "name": "猛龙断空斩",
+   "path": "skill/swordman/rapidmoveslash.skl",
+   "source_id": 72,
+   "source_path": "skill/swordman/rapidmoveslash.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "rapidmoveslashex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "rapidmoveslash",
+   "growtype_max_level": [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 猛龙断空斩",
+   "path": "skill/swordman/rapidmoveslashex.skl",
+   "source_id": 152,
+   "source_path": "skill/swordman/rapidmoveslashex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "reckless": {
+   "active": true,
+   "cost": 25,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    20,
+    0,
+    20
+   ],
+   "max_level": 50,
+   "move": "reckless",
+   "name": "暴走",
+   "path": "skill/swordman/reckless.skl",
+   "source_id": 40,
+   "source_path": "skill/swordman/reckless.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "recklessex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "reckless",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    5,
+    0,
+    5
+   ],
+   "max_level": 5,
+   "name": "强化 - 暴走",
+   "path": "skill/swordman/recklessex.skl",
+   "source_id": 149,
+   "source_path": "skill/swordman/recklessex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "reflectguard": {
+   "active": true,
+   "cost": 25,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "max_level": 70,
+   "move": "reflectguard",
+   "name": "鬼印珠",
+   "path": "skill/swordman/reflectguard.skl",
+   "source_id": 2,
+   "source_path": "skill/swordman/reflectguard.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "reflectguardex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "reflectguard",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    2,
+    0
+   ],
+   "max_level": 5,
+   "name": "强化 - 鬼印珠",
+   "path": "skill/swordman/reflectguardex.skl",
+   "source_id": 160,
+   "source_path": "skill/swordman/reflectguardex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "reflectguardexp": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "reflectguard",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "max_level": 5,
+   "name": "强化 - 鬼印珠",
+   "path": "skill/swordman/reflectguardexp.skl",
+   "source_id": 228,
+   "source_path": "skill/swordman/reflectguardexp.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "releasewave": {
+   "active": true,
+   "cost": 20,
+   "growtype_max_level": [
+    0,
+    10,
+    10,
+    10,
+    30,
+    10
+   ],
+   "max_level": 50,
+   "move": "releasewave",
+   "name": "波动爆发",
+   "path": "skill/swordman/releasewave.skl",
+   "source_id": 32,
+   "source_path": "skill/swordman/releasewave.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "releasewaveex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "releasewave",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 波动爆发",
+   "path": "skill/swordman/releasewaveex.skl",
+   "source_id": 210,
+   "source_path": "skill/swordman/releasewaveex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "sacrifice": {
+   "active": true,
+   "cost": 30,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    20,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "sacrifice",
+   "name": "嗜血",
+   "path": "skill/swordman/sacrifice.skl",
+   "source_id": 23,
+   "source_path": "skill/swordman/sacrifice.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "saya": {
+   "active": true,
+   "cost": 40,
+   "growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    50
+   ],
+   "max_level": 70,
+   "move": "saya",
+   "name": "冰霜之萨亚",
+   "path": "skill/swordman/saya.skl",
+   "source_id": 36,
+   "source_path": "skill/swordman/saya.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "sayaex": {
+   "active": true,
+   "cost": 60,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "sayaex",
+   "name": "冰晶之萨亚",
+   "path": "skill/swordman/sayaex.skl",
+   "source_id": 96,
+   "source_path": "skill/swordman/sayaex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "sayaexp": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "saya",
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 冰霜之萨亚",
+   "path": "skill/swordman/sayaexp.skl",
+   "source_id": 224,
+   "source_path": "skill/swordman/sayaexp.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "senseviolenttemper": {
+   "active": false,
+   "cost": 0,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "max_level": 1,
+   "name": "杀气感知",
+   "passive": [
+    {
+     "op": "add",
+     "stat": "status_resist",
+     "value": 1.0
+    },
+    {
+     "op": "add",
+     "stat": "evasion",
+     "value": 0.03
+    }
+   ],
+   "path": "skill/swordman/senseviolenttemper.skl",
+   "source_id": 55,
+   "source_path": "skill/swordman/senseviolenttemper.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "shockwavearea": {
+   "active": true,
+   "cost": 50,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "max_level": 70,
+   "move": "shockwavearea",
+   "name": "邪光波动阵",
+   "path": "skill/swordman/shockwavearea.skl",
+   "source_id": 57,
+   "source_path": "skill/swordman/shockwavearea.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "shortswordmastery": {
+   "active": false,
+   "cost": 20,
+   "growtype_max_level": [
+    30,
+    1,
+    30,
+    30,
+    30,
+    30
+   ],
+   "mastery": true,
+   "max_level": 50,
+   "name": "短剑精通",
+   "passive": [
+    {
+     "level_row": 0,
+     "op": "percent",
+     "scale": 0.001,
+     "stat": "physical_attack",
+     "weapon": "shortsword"
+    },
+    {
+     "level_row": 1,
+     "op": "percent",
+     "scale": 0.001,
+     "stat": "magical_attack",
+     "weapon": "shortsword"
+    },
+    {
+     "level_row": 2,
+     "op": "add",
+     "scale": 0.001,
+     "stat": "hit",
+     "weapon": "shortsword"
+    }
+   ],
+   "path": "skill/swordman/shortswordmastery.skl",
+   "source_id": 12,
+   "source_path": "skill/swordman/shortswordmastery.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "standalonewave": {
+   "active": true,
+   "cost": 40,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "max_level": 70,
+   "move": "standalonewave",
+   "name": "无双波",
+   "path": "skill/swordman/standalonewave.skl",
+   "source_id": 62,
+   "source_path": "skill/swordman/standalonewave.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "standalonewaveex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "standalonewave",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 无双波",
+   "path": "skill/swordman/standalonewaveex.skl",
+   "source_id": 213,
+   "source_path": "skill/swordman/standalonewaveex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "statusup": {
+   "active": false,
+   "cost": 0,
+   "growtype_max_level": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "max_level": 20,
+   "name": "公会 : 增加角色属性",
+   "passive": [
+    {
+     "level_row": 0,
+     "op": "add",
+     "scale": 0.001,
+     "stat": "status_resist"
+    }
+   ],
+   "path": "skill/swordman/statusup.skl",
+   "source_id": 200,
+   "source_path": "skill/swordman/statusup.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "stuckuponcounter": {
+   "active": false,
+   "cost": 45,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "name": "心眼",
+   "on_counter_evasion": 0.6,
+   "path": "skill/swordman/stuckuponcounter.skl",
+   "source_id": 92,
+   "source_path": "skill/swordman/stuckuponcounter.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "superarmoroncast": {
+   "active": true,
+   "cost": 25,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 20,
+   "move": "superarmoroncast",
+   "name": "不屈意志",
+   "path": "skill/swordman/superarmoroncast.skl",
+   "source_id": 180,
+   "source_path": "skill/swordman/superarmoroncast.skl",
+   "speed": "cast",
+   "tree_visible": false
+  },
+  "throwmastery": {
+   "active": false,
+   "cost": 25,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 20,
+   "name": "投掷精通",
+   "passive": [
+    {
+     "level_row": 0,
+     "op": "add",
+     "scale": 1.0,
+     "stat": "physical_independent_attack"
+    }
+   ],
+   "path": "skill/swordman/throwmastery.skl",
+   "source_id": 177,
+   "source_path": "skill/swordman/throwmastery.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "tombstonerain": {
+   "active": true,
+   "cost": 40,
+   "growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    0
+   ],
+   "max_level": 70,
+   "move": "tombstonerain",
+   "name": "死亡墓碑",
+   "path": "skill/swordman/tombstonerain.skl",
+   "source_id": 44,
+   "source_path": "skill/swordman/tombstonerain.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "tombstonerainex": {
+   "active": true,
+   "cost": 70,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "tombstonerainex",
+   "name": "墓碑三绝阵",
+   "path": "skill/swordman/tombstonerainex.skl",
+   "source_id": 95,
+   "source_path": "skill/swordman/tombstonerainex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "tombstonerainexp": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "tombstonerain",
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "max_level": 5,
+   "name": "强化 - 死亡墓碑",
+   "path": "skill/swordman/tombstonerainexp.skl",
+   "source_id": 225,
+   "source_path": "skill/swordman/tombstonerainexp.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "triple": {
+   "active": true,
+   "cost": 15,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "max_level": 70,
+   "move": "triple",
+   "name": "三段斩",
+   "path": "skill/swordman/tripleslash.skl",
+   "source_id": 8,
+   "source_path": "skill/swordman/tripleslash.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "tripleslashex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "triple",
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 三段斩",
+   "path": "skill/swordman/tripleslashex.skl",
+   "source_id": 143,
+   "source_path": "skill/swordman/tripleslashex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "triplestab": {
+   "active": true,
+   "cost": 30,
+   "growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    0
+   ],
+   "max_level": 70,
+   "move": "triplestab",
+   "name": "鬼影三击剑",
+   "path": "skill/swordman/triplestab.skl",
+   "source_id": 112,
+   "source_path": "skill/swordman/triplestab.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "triplestabex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "triplestab",
+   "growtype_max_level": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 鬼影三击剑",
+   "path": "skill/swordman/triplestabex.skl",
+   "source_id": 116,
+   "source_path": "skill/swordman/triplestabex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "upper": {
+   "active": true,
+   "cost": 20,
+   "growtype_max_level": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "max_level": 50,
+   "move": "upper",
+   "name": "上挑",
+   "path": "skill/swordman/upperslash.skl",
+   "source_id": 46,
+   "source_path": "skill/swordman/upperslash.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "upperslashex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "upper",
+   "growtype_max_level": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "max_level": 10,
+   "name": "强化 - 上挑",
+   "path": "skill/swordman/upperslashex.skl",
+   "source_id": 215,
+   "source_path": "skill/swordman/upperslashex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "vaneslash": {
+   "active": true,
+   "cost": 15,
+   "growtype_max_level": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "max_level": 70,
+   "move": "vaneslash",
+   "name": "裂波斩",
+   "path": "skill/swordman/vaneslash.skl",
+   "source_id": 58,
+   "source_path": "skill/swordman/vaneslash.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "vaneslashex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "vaneslash",
+   "growtype_max_level": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "max_level": 5,
+   "name": "强化 - 裂波斩",
+   "path": "skill/swordman/vaneslashex.skl",
+   "source_id": 159,
+   "source_path": "skill/swordman/vaneslashex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "waveeye": {
+   "active": true,
+   "cost": 200,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "max_level": 50,
+   "move": "waveeye",
+   "name": "暗天波动眼",
+   "path": "skill/swordman/waveeye.skl",
+   "source_id": 88,
+   "source_path": "skill/swordman/waveeye.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "wavemark": {
+   "active": true,
+   "cost": 20,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    30,
+    0
+   ],
+   "max_level": 50,
+   "move": "wavemark",
+   "name": "波动刻印",
+   "path": "skill/swordman/wavemark.skl",
+   "source_id": 47,
+   "source_path": "skill/swordman/wavemark.skl",
+   "speed": "cast",
+   "tree_visible": true
+  },
+  "wavemarkex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "wavemark",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 波动刻印",
+   "path": "skill/swordman/wavemarkex.skl",
+   "source_id": 151,
+   "source_path": "skill/swordman/wavemarkex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "wavespinarea": {
+   "active": true,
+   "cost": 60,
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0
+   ],
+   "max_level": 70,
+   "move": "wavespinarea",
+   "name": "不动明王阵",
+   "path": "skill/swordman/wavespinarea.skl",
+   "source_id": 74,
+   "source_path": "skill/swordman/wavespinarea.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "wavespinareaex": {
+   "active": false,
+   "cost": 0,
+   "enhancement": "source_override",
+   "enhances": "wavespinarea",
+   "growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   "max_level": 10,
+   "name": "强化 - 不动明王阵",
+   "path": "skill/swordman/wavespinareaex.skl",
+   "source_id": 214,
+   "source_path": "skill/swordman/wavespinareaex.skl",
+   "speed": "attack",
+   "tree_visible": false
+  },
+  "weapon_mastery_up": {
+   "active": false,
+   "cost": 20,
+   "growtype_max_level": [
+    0,
+    30,
+    0,
+    0,
+    0,
+    0
+   ],
+   "mastery_bonus": true,
+   "mastery_fields": [
+    "shortswordmastery",
+    "heavyswordmastery",
+    "bluntmastery",
+    "blademastery"
+   ],
+   "mastery_levels_per_rank": 2,
+   "max_level": 50,
+   "name": "武器奥义",
+   "path": "skill/swordman/weaponmasteryup.skl",
+   "source_id": 27,
+   "source_path": "skill/swordman/weaponmasteryup.skl",
+   "speed": "attack",
+   "tree_visible": true
+  },
+  "weaponcombo": {
+   "active": true,
+   "cost": 50,
+   "growtype_max_level": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    1
+   ],
+   "max_level": 1,
+   "move": "weaponcombo",
+   "name": "里 · 鬼剑术",
+   "path": "skill/swordman/weaponcombo.skl",
+   "source_id": 67,
+   "source_path": "skill/swordman/weaponcombo.skl",
+   "speed": "attack",
+   "tree_visible": true
+  }
+ },
+ "source": {
+  "asset_version": "dnf-native-assets-v1-20261022",
+  "builder": "tools/build_dnf_skill_runtime.py",
+  "catalog": "game_dnf/data/skill_catalog.json",
+  "pack": "game_dnf/assets_local/content/combat_content.json",
+  "pack_sha256": "e553acac5662784c36d458d04c71a682f9e1b794c3f2a93cc79c84a0f18f40de"
+ },
+ "tree_active_count": 52,
+ "tree_passive_count": 26,
+ "tree_skill_count": 78,
+ "variants": {
+  "ashenfork": [
+   {
+    "append_hits": 2,
+    "append_object": "passiveobject/character/swordman/ashenforksub.obj",
+    "job": "weaponmaster",
+    "move": "ashenfork__variant_1",
+    "priority": 20,
+    "skill": {
+     "heavyswordmastery": 3
+    },
+    "weapon": [
+     "greatsword"
+    ]
+   }
+  ],
+  "charge_crash": [
+   {
+    "append_stage": "chargecrashfinish",
+    "job": "weaponmaster",
+    "move": "charge_crash__variant_1",
+    "priority": 20,
+    "skill": {
+     "bluntmastery": 7,
+     "heavyswordmastery": 7
+    },
+    "skill_mode": "any",
+    "weapon": [
+     "greatsword",
+     "club"
+    ]
+   }
+  ],
+  "draw": [
+   {
+    "append_effect": "momentaryslashwave.obj",
+    "append_stage": "momentaryslash",
+    "job": "weaponmaster",
+    "move": "draw__variant_1",
+    "priority": 20,
+    "skill": {
+     "blademastery": 7,
+     "lightswordmastery": 7
+    },
+    "skill_mode": "any",
+    "weapon": [
+     "beamsword",
+     "katana"
+    ]
+   },
+   {
+    "append_object": "passiveobject/character/swordman/momentaryslashwave.obj",
+    "append_stage": "momentaryslash",
+    "job": "weaponmaster",
+    "move": "draw__variant_2",
+    "priority": 15,
+    "skill": {
+     "shortswordmastery": 7
+    },
+    "weapon": [
+     "shortsword"
+    ]
+   }
+  ],
+  "grandwave": [
+   {
+    "append_object": "passiveobject/character/swordman/grandwavefullcharge.obj",
+    "job": "asura",
+    "move": "grandwave__variant_1",
+    "priority": 20,
+    "skill": {
+     "grandwavecharge": 1
+    }
+   }
+  ],
+  "guard": [
+   {
+    "append_object": "passiveobject/character/swordman/guardwave.obj",
+    "job": "weaponmaster",
+    "move": "guard__variant_1",
+    "priority": 20,
+    "skill": {
+     "bluntmastery": 5,
+     "heavyswordmastery": 5,
+     "shortswordmastery": 5
+    },
+    "skill_mode": "any",
+    "weapon": [
+     "shortsword",
+     "greatsword",
+     "club"
+    ]
+   }
+  ],
+  "hardattack": [
+   {
+    "append_object": "passiveobject/character/swordman/hardattackchargeafter.obj",
+    "append_stage": "hardattackchargeafter",
+    "job": "soulbringer",
+    "move": "hardattack__variant_1",
+    "priority": 25,
+    "skill": {
+     "hardattackcharge": 1
+    }
+   }
+  ],
+  "hopsmash": [
+   {
+    "append_hits": 1,
+    "job": "berserker",
+    "move": "hopsmash__variant_1",
+    "priority": 20
+   }
+  ],
+  "moonlight": [
+   {
+    "append_stage": "moonlightslashfull",
+    "job": "soulbringer",
+    "move": "moonlight__variant_1",
+    "priority": 20,
+    "skill": {
+     "moonlightslashfull": 1
+    }
+   }
+  ],
+  "rage_slash": [
+   {
+    "append_hits": 1,
+    "append_stage": "gorecross",
+    "append_status": {
+     "chance": 0.4,
+     "id": "bleed"
+    },
+    "job": "berserker",
+    "move": "rage_slash__variant_1",
+    "priority": 20
+   }
+  ],
+  "rapidmoveslash": [
+   {
+    "append_hits": 2,
+    "job": "weaponmaster",
+    "move": "rapidmoveslash__variant_1",
+    "priority": 20,
+    "skill": {
+     "shortswordmastery": 7
+    },
+    "weapon": [
+     "shortsword"
+    ]
+   }
+  ],
+  "triple": [
+   {
+    "final_lift": 350,
+    "job": "weaponmaster",
+    "move": "triple__variant_1",
+    "priority": 20,
+    "replace_stages": [
+     "tripleslash1",
+     "tripleslash2",
+     "tripleslash3",
+     "tripleslash4",
+     "tripleslash5"
+    ],
+    "skill": {
+     "blademastery": 5,
+     "lightswordmastery": 5
+    },
+    "skill_mode": "any",
+    "weapon": [
+     "beamsword",
+     "katana"
+    ]
+   }
+  ],
+  "upper": [
+   {
+    "append_stage": "upperslashafter",
+    "job": "weaponmaster",
+    "move": "upper__variant_1",
+    "priority": 20,
+    "skill": {
+     "shortswordmastery": 3
+    },
+    "weapon": [
+     "shortsword"
+    ]
+   }
+  ],
+  "weaponcombo": [
+   {
+    "move": "weaponcombo__variant_1",
+    "priority": 40,
+    "replace_stages": [
+     "weaponcombolight1",
+     "weaponcombolight2",
+     "weaponcombolight3"
+    ],
+    "weapon": [
+     "beamsword",
+     "katana",
+     "shortsword"
+    ]
+   },
+   {
+    "move": "weaponcombo__variant_2",
+    "priority": 35,
+    "replace_stages": [
+     "weaponcomboheavy1",
+     "weaponcomboheavy2"
+    ],
+    "weapon": [
+     "greatsword"
+    ]
+   },
+   {
+    "move": "weaponcombo__variant_3",
+    "priority": 35,
+    "replace_stages": [
+     "weaponcomboblunt1",
+     "weaponcomboblunt2",
+     "weaponcomboblunt3"
+    ],
+    "weapon": [
+     "club"
+    ]
+   }
+  ]
+ }
+}

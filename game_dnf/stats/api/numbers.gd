@@ -7,6 +7,7 @@ const Skills = preload("res://stats/skill_book.gd")
 const Effects = preload("res://stats/effects.gd")
 const Damage = preload("res://stats/damage.gd")
 const ContentDB = preload("res://content/api/content_db.gd")
+const SKILL_RUNTIME := "res://data/skill_runtime.json"
 static var _config: Dictionary = {}
 static var _content_db
 
@@ -21,6 +22,18 @@ static func shared_config() -> Dictionary:
 static func ensure_config() -> void:
 	if _config.is_empty():
 		_config = JSON.parse_string(FileAccess.get_file_as_string("res://data/numbers.json"))
+		if FileAccess.file_exists(SKILL_RUNTIME):
+			var runtime: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SKILL_RUNTIME))
+			var runtime_skills: Dictionary = runtime.get("skills", {})
+			for id: String in runtime_skills:
+				_config["skills"][id] = runtime_skills[id]
+				if not _config["skill_defaults"].has(id):
+					_config["skill_defaults"][id] = 0
+				var source_id := str(int(runtime_skills[id].get("source_id", 0)))
+				if source_id != "0":
+					_config["skill_index"][source_id] = id
+			for id: String in runtime.get("effects", {}):
+				_config["effects"][id] = runtime["effects"][id]
 		_config["equipment"].merge(preload("res://content/api/native_catalog.gd").runtime().get("equipment",{}),false)
 
 static func is_equipment(id: String) -> bool:
@@ -79,22 +92,44 @@ static func profile_stats(profile: Dictionary, extra: Array = []) -> Dictionary:
 		for raw_mod: Dictionary in definition.get("passive",[]):
 			if raw_mod.has("weapon") and String(raw_mod["weapon"]) != weapon:continue
 			var mod := raw_mod.duplicate(true)
+			var row_scaled := false
 			if mod.has("level_row"):
 				var row: Array = sample.get("level_row",[])
 				var column := int(mod["level_row"])
 				var row_value := float(row[column]) if column >= 0 and column < row.size() else 0.0
 				mod["value"] = float(mod.get("value",0))+row_value*float(mod.get("scale",1))
+				row_scaled = true
 				mod.erase("level_row")
 				mod.erase("scale")
 			if mod.has("weapon"):mod.erase("weapon")
 			var entry := mod.duplicate(true)
-			entry["value"] = float(mod["value"])*rank
+			entry["value"] = float(mod["value"]) if row_scaled else float(mod["value"])*rank
 			entry["source"] = definition["name"]
 			mods.append(entry)
+		var armor: Dictionary = definition.get("armor_mastery",{})
+		if not armor.is_empty():
+			var count := equipped_armor_count(profile,cfg,String(armor.get("type","")))
+			for raw_mod: Dictionary in armor.get("modifiers",[]):
+				var entry := raw_mod.duplicate(true)
+				entry["value"] = float(entry.get("value",0))*count
+				entry["source"] = definition["name"]
+				mods.append(entry)
 	mods.append_array(extra)
 	var result := Attributes.calculate(int(profile["level"]),String(profile["growtype"]),mods,cfg)
 	result["modifiers"] = mods
 	return result
+
+static func equipped_armor_count(profile: Dictionary, cfg: Dictionary, armor_type: String) -> int:
+	var count := 0
+	for slot: String in ["coat","pants","shoulder","belt","shoes"]:
+		var uid := String(profile.get("equipment",{}).get(slot,""))
+		if uid == "":continue
+		var instance: Dictionary = profile.get("gear",{}).get(uid,{})
+		var definition: Dictionary = cfg.get("equipment",{}).get(instance.get("definition",""),{})
+		var path := String(definition.get("source",{}).get("path",definition.get("path",""))).to_lower()
+		if path.contains("/" + armor_type + "/") or path.contains("_" + armor_type):
+			count += 1
+	return count
 
 static func gear_detail(profile: Dictionary, uid: String) -> Dictionary:
 	var cfg := config()

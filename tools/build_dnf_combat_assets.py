@@ -20,6 +20,7 @@ import hashlib
 import json
 import os
 from pathlib import Path, PurePosixPath
+import re
 import shutil
 import sqlite3
 import sys
@@ -30,13 +31,14 @@ from PIL import Image
 
 from dnf_asset_reader import decode, parse
 from dnf_asset_store import ROOT
-from dnf_pvf import open_library
+from dnf_pvf import open_library, resolve
 from dnf_locomotion import build as build_locomotion
 
 OUT = ROOT / 'game_dnf/assets_local/combat'
 ACTIVE_OUT = OUT
 SCHEMA = 'dnf_combat_assets/1'
-BUILD_VERSION = 5
+BUILD_VERSION = 6
+SKILL_RUNTIME = ROOT / 'game_dnf/data/skill_runtime.json'
 
 MONSTERS = {
     # key: (mob path, clip dir, extra clips)
@@ -142,10 +144,17 @@ def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def safe_atlas_key(prefix: str, value: str) -> str:
+    stem = re.sub(r'[^a-z0-9_]+', '_', Path(value).stem.lower()).strip('_')
+    return '%s_%s_%s' % (prefix, stem, hashlib.sha256(value.encode('utf-8')).hexdigest()[:8])
+
+
 class Source:
     def __init__(self, library: Path | None):
         self.lib = open_library(library)
         self.root = self.lib.path
+        pack_path = ROOT / 'game_dnf/assets_local/content/combat_content.json'
+        self.pack_records = json.loads(pack_path.read_text(encoding='utf-8'))['records'] if pack_path.is_file() else {}
         self.cat = sqlite3.connect(f'file:{self.root / "catalog.sqlite"}?mode=ro', uri=True)
         self.cat.row_factory = sqlite3.Row
         self._img = {}
@@ -181,6 +190,26 @@ class Source:
             raise KeyError('Missing parsed ANI: ' + path)
         self.sources[path] = found['sha256']
         return found['metadata']
+
+    def object_animation(self, path: str) -> str:
+        """Resolve OBJ [basic motion] to the ANI consumed by effect_bank."""
+        path = path.lower()
+        if not path.endswith('.obj'):
+            return path
+        compiled = self.pack_records.get(path, {}).get('decoded', {})
+        motions = compiled.get('basic_motion') or compiled.get('etc_motions') or []
+        if motions:
+            return str(motions[0])
+        script = self.lib.script(path, 'obj')
+        if script is None:
+            raise KeyError('Missing parsed OBJ: ' + path)
+        stack = list(script['fields'])
+        while stack:
+            node = stack.pop()
+            if node['tag'] == '[basic motion]' and node.get('values'):
+                return resolve(path, str(node['values'][0]))
+            stack.extend(node.get('children', []))
+        raise KeyError('OBJ has no [basic motion]: ' + path)
 
     def audio(self, path: str) -> Path | None:
         row = self.cat.execute("select * from assets where kind='audio' and lower(original_path)=? order by container limit 1",
@@ -561,13 +590,30 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     manifest = {'schema': SCHEMA, 'build_version': BUILD_VERSION, 'asset_version': src.lib.asset_version,
                 'monsters': {}, 'objects': {}, 'effects': {}, 'digits': {}, 'audio': {}, 'weapon_sounds': {},
                 'unresolved': unresolved}
+    runtime = json.loads(SKILL_RUNTIME.read_text(encoding='utf-8')) if SKILL_RUNTIME.is_file() else {}
+    if runtime:
+        manifest['skill_runtime_sha256'] = hashlib.sha256(SKILL_RUNTIME.read_bytes()).hexdigest()
+    runtime_assets = runtime.get('assets', {})
+    player_clips = dict(PLAYER_CLIPS)
+    player_clips.update(runtime_assets.get('player_anims', {}))
+    objects = dict(OBJECTS)
+    objects.update(runtime_assets.get('objects', {}))
+    effects = dict(EFFECTS)
+    effects.update(runtime_assets.get('effect_anims', {}))
     for key, spec in monster_specifications().items():
         manifest['monsters'][key] = monster_bank(src, key, spec['mob'], spec.get('clip_dir', ''), unresolved,
                                                   spec.get('extra', ()), spec.get('motions'))
-    for key, path in OBJECTS.items():
-        manifest['objects'][key] = effect_bank(src, 'obj_' + key, path, unresolved)
-        manifest['objects'][key]['clip'] = src.animation(path)
-    for key, path in EFFECTS.items():
+    for key, path in objects.items():
+        try:
+            animation_path = src.object_animation(path)
+            manifest['objects'][key] = effect_bank(
+                src, safe_atlas_key('obj', key), animation_path, unresolved
+            )
+            manifest['objects'][key]['clip'] = src.animation(animation_path)
+            manifest['objects'][key]['object'] = path if path.endswith('.obj') else ''
+        except KeyError as error:
+            unresolved.append({'kind': 'object_animation', 'path': path, 'error': str(error)})
+    for key, path in effects.items():
         try:
             manifest['effects'][key] = effect_bank(src, key, path, unresolved)
         except KeyError as error:
@@ -584,12 +630,15 @@ def build(library: Path | None, output: Path = OUT) -> dict:
         'evidence': '.obj 的 [destroy particle] → .ptl 的 [object] ANI 列表',
         'objects': breakable_mapping,
     }, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
-    manifest['derived_boxes'] = {k: manifest['effects'][k]['pixel_box'] for k in DERIVED_BOXES
-                                 if 'pixel_box' in manifest['effects'].get(k, {})}
-    manifest['player_clips'] = {k: src.animation(p) for k, p in PLAYER_CLIPS.items()}
+    manifest['derived_boxes'] = {
+        k: value['pixel_box']
+        for k, value in manifest['effects'].items()
+        if 'pixel_box' in value
+    }
+    manifest['player_clips'] = {k: src.animation(p) for k, p in player_clips.items()}
     manifest['borrowed'] = {p: src.animation(p) for p in BORROWED}
     # ANI frame sound events: event key -> original file, from the archive's own cross-reference.
-    used = [p for p in PLAYER_CLIPS.values()] + list(OBJECTS.values()) + \
+    used = [p for p in player_clips.values()] + list(objects.values()) + \
            [f'{d}/{n}.ani' for _, d, _ in MONSTERS.values() for n in MONSTER_CLIPS] + \
            ['character/swordman/animation/' + n + '.ani' for n in
             ['attack1', 'attack2', 'attack3', 'dashattack', 'jumpattack', 'upperslashafter', 'momentaryslash', 'gorecross', 'hitback']]

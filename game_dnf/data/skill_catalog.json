@@ -1657,7 +1657,7 @@
    "pre_required_skill": [],
    "icon": "icons/guard.png",
    "icon_selected": "icons/guard_on.png",
-   "implemented": "",
+   "implemented": "guard__variant_1",
    "local_id": "guard",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
@@ -1722,8 +1722,8 @@
    ],
    "icon": "icons/reflectguard.png",
    "icon_selected": "icons/reflectguard_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "reflectguard",
+   "local_id": "reflectguard",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -1785,8 +1785,8 @@
    ],
    "icon": "icons/autoguard.png",
    "icon_selected": "icons/autoguard_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "autoguard",
+   "local_id": "autoguard",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -1838,7 +1838,7 @@
    "icon": "icons/lightswordmastery.png",
    "icon_selected": "icons/lightswordmastery_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "lightswordmastery",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -1897,7 +1897,7 @@
    "pre_required_skill": [],
    "icon": "icons/hardattack.png",
    "icon_selected": "icons/hardattack_on.png",
-   "implemented": "hardattack",
+   "implemented": "hardattack__variant_1",
    "local_id": "hardattack",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
@@ -1955,7 +1955,7 @@
    "icon": "icons/hardattackcharge.png",
    "icon_selected": "icons/hardattackcharge_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "hardattackcharge",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2008,8 +2008,8 @@
    "pre_required_skill": [],
    "icon": "icons/hitback.png",
    "icon_selected": "icons/hitback_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "hitback",
+   "local_id": "hitback",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2068,7 +2068,7 @@
    "pre_required_skill": [],
    "icon": "icons/tripleslash.png",
    "icon_selected": "icons/tripleslash_on.png",
-   "implemented": "triple",
+   "implemented": "triple__variant_1",
    "local_id": "triple",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
@@ -2128,7 +2128,7 @@
    "pre_required_skill": [],
    "icon": "icons/momentaryslash.png",
    "icon_selected": "icons/momentaryslash_on.png",
-   "implemented": "draw",
+   "implemented": "draw__variant_2",
    "local_id": "draw",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
@@ -2186,8 +2186,8 @@
    "pre_required_skill": [],
    "icon": "icons/dashattackmultihit.png",
    "icon_selected": "icons/dashattackmultihit_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "dashattackmultihit",
+   "local_id": "dashattackmultihit",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2243,7 +2243,7 @@
    "icon": "icons/shortswordmastery.png",
    "icon_selected": "icons/shortswordmastery_on.png",
    "implemented": "",
-   "local_id": "short_sword_mastery",
+   "local_id": "shortswordmastery",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2299,7 +2299,7 @@
    "icon": "icons/blademastery.png",
    "icon_selected": "icons/blademastery_on.png",
    "implemented": "",
-   "local_id": "blade_mastery",
+   "local_id": "blademastery",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2355,7 +2355,7 @@
    "icon": "icons/heavyswordmastery.png",
    "icon_selected": "icons/heavyswordmastery_on.png",
    "implemented": "",
-   "local_id": "heavy_sword_mastery",
+   "local_id": "heavyswordmastery",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2411,7 +2411,7 @@
    "icon": "icons/bluntmastery.png",
    "icon_selected": "icons/bluntmastery_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "bluntmastery",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2468,8 +2468,8 @@
    "pre_required_skill": [],
    "icon": "icons/ashenfork.png",
    "icon_selected": "icons/ashenfork_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "ashenfork__variant_1",
+   "local_id": "ashenfork",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2526,8 +2526,8 @@
    "pre_required_skill": [],
    "icon": "icons/jumpattackmulti.png",
    "icon_selected": "icons/jumpattackmulti_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "jumpattackmulti",
+   "local_id": "jumpattackmulti",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2589,8 +2589,8 @@
    ],
    "icon": "icons/ghoststep.png",
    "icon_selected": "icons/ghoststep_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "ghoststep_attack3",
+   "local_id": "ghoststep",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2642,7 +2642,7 @@
    "icon": "icons/pinchpowerup.png",
    "icon_selected": "icons/pinchpowerup_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "pinchpowerup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2703,8 +2703,8 @@
    "pre_required_skill": [],
    "icon": "icons/normalwave.png",
    "icon_selected": "icons/normalwave_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "normalwave",
+   "local_id": "normalwave",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2763,8 +2763,8 @@
    "pre_required_skill": [],
    "icon": "icons/icewave.png",
    "icon_selected": "icons/icewave_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "icewave",
+   "local_id": "icewave",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2828,8 +2828,8 @@
    ],
    "icon": "icons/firewave.png",
    "icon_selected": "icons/firewave_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "firewave",
+   "local_id": "firewave",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2891,8 +2891,8 @@
    ],
    "icon": "icons/sacrifice.png",
    "icon_selected": "icons/sacrifice_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "sacrifice",
+   "local_id": "sacrifice",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -2954,8 +2954,8 @@
    ],
    "icon": "icons/bloodblast.png",
    "icon_selected": "icons/bloodblast_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "bloodblast",
+   "local_id": "bloodblast",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3014,8 +3014,8 @@
    "pre_required_skill": [],
    "icon": "icons/khazan.png",
    "icon_selected": "icons/khazan_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "khazan",
+   "local_id": "khazan",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3119,7 +3119,7 @@
    "icon": "icons/darkfriendship.png",
    "icon_selected": "icons/darkfriendship_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "darkfriendship",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3176,8 +3176,8 @@
    "pre_required_skill": [],
    "icon": "icons/darktoleranceup.png",
    "icon_selected": "icons/darktoleranceup_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "darktoleranceup",
+   "local_id": "darktoleranceup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3234,8 +3234,8 @@
    "pre_required_skill": [],
    "icon": "icons/grabblastblood.png",
    "icon_selected": "icons/grabblastblood_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "grabblastblood",
+   "local_id": "grabblastblood",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3292,8 +3292,8 @@
    "pre_required_skill": [],
    "icon": "icons/releasewave.png",
    "icon_selected": "icons/releasewave_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "releasewave",
+   "local_id": "releasewave",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3345,7 +3345,7 @@
    "icon": "icons/equiplightsword.png",
    "icon_selected": "icons/equiplightsword_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "equiplightsword",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3402,8 +3402,8 @@
    "pre_required_skill": [],
    "icon": "icons/diehard.png",
    "icon_selected": "icons/diehard_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "diehard",
+   "local_id": "diehard",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3455,7 +3455,7 @@
    "icon": "icons/ghostpowerup.png",
    "icon_selected": "icons/ghostpowerup_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "ghostpowerup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3517,8 +3517,8 @@
    ],
    "icon": "icons/saya.png",
    "icon_selected": "icons/saya_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "saya",
+   "local_id": "saya",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3570,7 +3570,7 @@
    "icon": "icons/fastequip.png",
    "icon_selected": "icons/fastequip_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "fastequip",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3627,8 +3627,8 @@
    "pre_required_skill": [],
    "icon": "icons/overdrive.png",
    "icon_selected": "icons/overdrive_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "overdrive",
+   "local_id": "overdrive",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3680,7 +3680,7 @@
    "icon": "icons/durabilityup.png",
    "icon_selected": "icons/durabilityup_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "durabilityup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3737,8 +3737,8 @@
    "pre_required_skill": [],
    "icon": "icons/reckless.png",
    "icon_selected": "icons/reckless_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "reckless",
+   "local_id": "reckless",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3800,8 +3800,8 @@
    ],
    "icon": "icons/bremen.png",
    "icon_selected": "icons/bremen_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "bremen",
+   "local_id": "bremen",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3857,7 +3857,7 @@
    "icon": "icons/disjointitemdark.png",
    "icon_selected": "icons/disjointitemdark_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "disjointitemdark",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3913,7 +3913,7 @@
    "icon": "icons/jumpattackhighfast.png",
    "icon_selected": "icons/jumpattackhighfast_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "jumpattackhighfast",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -3965,8 +3965,8 @@
    "pre_required_skill": [],
    "icon": "icons/tombstonerain.png",
    "icon_selected": "icons/tombstonerain_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "tombstonerain",
+   "local_id": "tombstonerain",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4023,7 +4023,7 @@
    "pre_required_skill": [],
    "icon": "icons/upperslash.png",
    "icon_selected": "icons/upperslash_on.png",
-   "implemented": "upper",
+   "implemented": "upper__variant_1",
    "local_id": "upper",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
@@ -4081,8 +4081,8 @@
    "pre_required_skill": [],
    "icon": "icons/wavemark.png",
    "icon_selected": "icons/wavemark_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "wavemark",
+   "local_id": "wavemark",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4135,8 +4135,8 @@
    "pre_required_skill": [],
    "icon": "icons/backstepcutter.png",
    "icon_selected": "icons/backstepcutter_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "backstepcutter",
+   "local_id": "backstepcutter",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4193,8 +4193,8 @@
    "pre_required_skill": [],
    "icon": "icons/grandwave.png",
    "icon_selected": "icons/grandwave_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "grandwave__variant_1",
+   "local_id": "grandwave",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4251,7 +4251,7 @@
    "icon": "icons/grandwavecharge.png",
    "icon_selected": "icons/grandwavecharge_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "grandwavecharge",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4313,8 +4313,8 @@
    ],
    "icon": "icons/dotarea.png",
    "icon_selected": "icons/dotarea_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "dotarea",
+   "local_id": "dotarea",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4366,7 +4366,7 @@
    "icon": "icons/mindflash.png",
    "icon_selected": "icons/mindflash_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "mindflash",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4418,7 +4418,7 @@
    "icon": "icons/senseviolenttemper.png",
    "icon_selected": "icons/senseviolenttemper_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "senseviolenttemper",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4470,7 +4470,7 @@
    "icon": "icons/armormasteryheavybk.png",
    "icon_selected": "icons/armormasteryheavybk_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "armormasteryheavybk",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4534,8 +4534,8 @@
    ],
    "icon": "icons/shockwavearea.png",
    "icon_selected": "icons/shockwavearea_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "shockwavearea",
+   "local_id": "shockwavearea",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4596,8 +4596,8 @@
    "pre_required_skill": [],
    "icon": "icons/vaneslash.png",
    "icon_selected": "icons/vaneslash_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "vaneslash",
+   "local_id": "vaneslash",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4661,8 +4661,8 @@
    ],
    "icon": "icons/ghoststepslash.png",
    "icon_selected": "icons/ghoststepslash_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "ghoststepslash",
+   "local_id": "ghoststepslash",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4714,7 +4714,7 @@
    "icon": "icons/armormasteryplatewave.png",
    "icon_selected": "icons/armormasteryplatewave_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "armormasteryplatewave",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4776,8 +4776,8 @@
    ],
    "icon": "icons/standalonewave.png",
    "icon_selected": "icons/standalonewave_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "standalonewave",
+   "local_id": "standalonewave",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -4890,7 +4890,7 @@
    "pre_required_skill": [],
    "icon": "icons/gorecross.png",
    "icon_selected": "icons/gorecross_on.png",
-   "implemented": "rage_slash",
+   "implemented": "rage_slash__variant_1",
    "local_id": "rage_slash",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
@@ -4952,8 +4952,8 @@
    "pre_required_skill": [],
    "icon": "icons/hopsmash.png",
    "icon_selected": "icons/hopsmash_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "hopsmash__variant_1",
+   "local_id": "hopsmash",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5004,8 +5004,8 @@
    "pre_required_skill": [],
    "icon": "icons/weaponcombo.png",
    "icon_selected": "icons/weaponcombo_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "weaponcombo__variant_3",
+   "local_id": "weaponcombo",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5064,7 +5064,7 @@
    "pre_required_skill": [],
    "icon": "icons/chargecrash.png",
    "icon_selected": "icons/chargecrash_on.png",
-   "implemented": "charge_crash",
+   "implemented": "charge_crash__variant_1",
    "local_id": "charge_crash",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
@@ -5133,8 +5133,8 @@
    ],
    "icon": "icons/rapidmoveslash.png",
    "icon_selected": "icons/rapidmoveslash_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "rapidmoveslash__variant_1",
+   "local_id": "rapidmoveslash",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5198,8 +5198,8 @@
    ],
    "icon": "icons/illusionslash.png",
    "icon_selected": "icons/illusionslash_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "illusionslash",
+   "local_id": "illusionslash",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5263,8 +5263,8 @@
    ],
    "icon": "icons/wavespinarea.png",
    "icon_selected": "icons/wavespinarea_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "wavespinarea",
+   "local_id": "wavespinarea",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5326,8 +5326,8 @@
    ],
    "icon": "icons/epidemicrasa.png",
    "icon_selected": "icons/epidemicrasa_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "epidemicrasa",
+   "local_id": "epidemicrasa",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5384,7 +5384,7 @@
    "pre_required_skill": [],
    "icon": "icons/frenzy.png",
    "icon_selected": "icons/frenzy_on.png",
-   "implemented": "buff",
+   "implemented": "frenzy4",
    "local_id": "buff",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
@@ -5446,7 +5446,7 @@
    "pre_required_skill": [],
    "icon": "icons/moonlightslash.png",
    "icon_selected": "icons/moonlightslash_on.png",
-   "implemented": "moonlight",
+   "implemented": "moonlight__variant_1",
    "local_id": "moonlight",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
@@ -5511,8 +5511,8 @@
    ],
    "icon": "icons/bloodyrave.png",
    "icon_selected": "icons/bloodyrave_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "bloodyrave",
+   "local_id": "bloodyrave",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5569,7 +5569,7 @@
    "icon": "icons/moonlightslashfull.png",
    "icon_selected": "icons/moonlightslashfull_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "moonlightslashfull",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5633,8 +5633,8 @@
    ],
    "icon": "icons/outragebreak.png",
    "icon_selected": "icons/outragebreak_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "outragebreak",
+   "local_id": "outragebreak",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5698,8 +5698,8 @@
    ],
    "icon": "icons/kalla.png",
    "icon_selected": "icons/kalla_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "kalla_attack3",
+   "local_id": "kalla",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5756,8 +5756,8 @@
    "pre_required_skill": [],
    "icon": "icons/keiga.png",
    "icon_selected": "icons/keiga_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "keiga",
+   "local_id": "keiga",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5821,8 +5821,8 @@
    ],
    "icon": "icons/hellbenter.png",
    "icon_selected": "icons/hellbenter_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "hellbenter",
+   "local_id": "hellbenter",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5881,8 +5881,8 @@
    "pre_required_skill": [],
    "icon": "icons/hundredsword.png",
    "icon_selected": "icons/hundredsword_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "hundredsword",
+   "local_id": "hundredsword",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -5946,8 +5946,8 @@
    ],
    "icon": "icons/blache.png",
    "icon_selected": "icons/blache_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "blache",
+   "local_id": "blache",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6011,8 +6011,8 @@
    ],
    "icon": "icons/waveeye.png",
    "icon_selected": "icons/waveeye_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "waveeye_attack3",
+   "local_id": "waveeye",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6062,7 +6062,7 @@
    "icon": "icons/darkaura.png",
    "icon_selected": "icons/darkaura_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "darkaura",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6112,7 +6112,7 @@
    "icon": "icons/bleedingmastery.png",
    "icon_selected": "icons/bleedingmastery_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "bleedingmastery",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6162,7 +6162,7 @@
    "icon": "icons/defensedownoncritical.png",
    "icon_selected": "icons/defensedownoncritical_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "defensedownoncritical",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6212,7 +6212,7 @@
    "icon": "icons/stuckuponcounter.png",
    "icon_selected": "icons/stuckuponcounter_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "stuckuponcounter",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6264,7 +6264,7 @@
    "icon": "icons/armormasteryclothsb.png",
    "icon_selected": "icons/armormasteryclothsb_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "armormasteryclothsb",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6316,7 +6316,7 @@
    "icon": "icons/armormasterylightwm.png",
    "icon_selected": "icons/armormasterylightwm_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "armormasterylightwm",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6380,8 +6380,8 @@
    ],
    "icon": "icons/tombstonerainex.png",
    "icon_selected": "icons/tombstonerainex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "tombstonerainex",
+   "local_id": "tombstonerainex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6445,8 +6445,8 @@
    ],
    "icon": "icons/sayaex.png",
    "icon_selected": "icons/sayaex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "sayaex",
+   "local_id": "sayaex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6510,8 +6510,8 @@
    ],
    "icon": "icons/momentaryslashex.png",
    "icon_selected": "icons/momentaryslashex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "momentaryslashex",
+   "local_id": "momentaryslashex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6575,8 +6575,8 @@
    ],
    "icon": "icons/chargecrashex.png",
    "icon_selected": "icons/chargecrashex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "chargecrashex",
+   "local_id": "chargecrashex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6640,8 +6640,8 @@
    ],
    "icon": "icons/firewaveex.png",
    "icon_selected": "icons/firewaveex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "firewaveex",
+   "local_id": "firewaveex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6705,8 +6705,8 @@
    ],
    "icon": "icons/icewaveex.png",
    "icon_selected": "icons/icewaveex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "icewaveex",
+   "local_id": "icewaveex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6770,8 +6770,8 @@
    ],
    "icon": "icons/bloodblastex.png",
    "icon_selected": "icons/bloodblastex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "bloodblastex",
+   "local_id": "bloodblastex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6835,8 +6835,8 @@
    ],
    "icon": "icons/grabblastbloodex.png",
    "icon_selected": "icons/grabblastbloodex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "grabblastbloodex",
+   "local_id": "grabblastbloodex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6900,8 +6900,8 @@
    ],
    "icon": "icons/bloodsword.png",
    "icon_selected": "icons/bloodsword_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "bloodsword",
+   "local_id": "bloodsword",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -6952,8 +6952,8 @@
    "pre_required_skill": [],
    "icon": "icons/flowmind.png",
    "icon_selected": "icons/flowmind_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "flowmind",
+   "local_id": "flowmind",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7011,8 +7011,8 @@
    ],
    "icon": "icons/flowmindone.png",
    "icon_selected": "icons/flowmindone_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "flowmindone",
+   "local_id": "flowmindone",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7070,8 +7070,8 @@
    ],
    "icon": "icons/flowmindtwo.png",
    "icon_selected": "icons/flowmindtwo_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "flowmindtwo",
+   "local_id": "flowmindtwo",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7129,8 +7129,8 @@
    ],
    "icon": "icons/flowmindthree.png",
    "icon_selected": "icons/flowmindthree_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "flowmindthree",
+   "local_id": "flowmindthree",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7188,8 +7188,8 @@
    ],
    "icon": "icons/flowmindpowerup.png",
    "icon_selected": "icons/flowmindpowerup_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "flowmindpowerup",
+   "local_id": "flowmindpowerup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7253,8 +7253,8 @@
    ],
    "icon": "icons/ghostsidewind.png",
    "icon_selected": "icons/ghostsidewind_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "ghostsidewind",
+   "local_id": "ghostsidewind",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7318,8 +7318,8 @@
    ],
    "icon": "icons/triplestab.png",
    "icon_selected": "icons/triplestab_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "triplestab",
+   "local_id": "triplestab",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7376,7 +7376,7 @@
    "icon": "icons/ghostsidewindex.png",
    "icon_selected": "icons/ghostsidewindex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "ghostsidewindex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7433,7 +7433,7 @@
    "icon": "icons/triplestabex.png",
    "icon_selected": "icons/triplestabex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "triplestabex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7490,7 +7490,7 @@
    "icon": "icons/pinchpowerupex.png",
    "icon_selected": "icons/pinchpowerupex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "pinchpowerupex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7551,7 +7551,7 @@
    "icon": "icons/normalwaveex.png",
    "icon_selected": "icons/normalwaveex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "normalwaveex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7612,7 +7612,7 @@
    "icon": "icons/gorecrossex.png",
    "icon_selected": "icons/gorecrossex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "gorecrossex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7673,7 +7673,7 @@
    "icon": "icons/hardattackex.png",
    "icon_selected": "icons/hardattackex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "hardattackex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7734,7 +7734,7 @@
    "icon": "icons/tripleslashex.png",
    "icon_selected": "icons/tripleslashex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "tripleslashex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7791,7 +7791,7 @@
    "icon": "icons/hitbackex.png",
    "icon_selected": "icons/hitbackex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "hitbackex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7848,7 +7848,7 @@
    "icon": "icons/autoguardex.png",
    "icon_selected": "icons/autoguardex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "autoguardex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7905,7 +7905,7 @@
    "icon": "icons/bremenex.png",
    "icon_selected": "icons/bremenex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "bremenex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -7962,7 +7962,7 @@
    "icon": "icons/ghoststepex.png",
    "icon_selected": "icons/ghoststepex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "ghoststepex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8019,7 +8019,7 @@
    "icon": "icons/diehardex.png",
    "icon_selected": "icons/diehardex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "diehardex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8076,7 +8076,7 @@
    "icon": "icons/recklessex.png",
    "icon_selected": "icons/recklessex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "recklessex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8133,7 +8133,7 @@
    "icon": "icons/dotareaex.png",
    "icon_selected": "icons/dotareaex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "dotareaex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8190,7 +8190,7 @@
    "icon": "icons/wavemarkex.png",
    "icon_selected": "icons/wavemarkex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "wavemarkex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8247,7 +8247,7 @@
    "icon": "icons/rapidmoveslashex.png",
    "icon_selected": "icons/rapidmoveslashex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "rapidmoveslashex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8310,7 +8310,7 @@
    "icon": "icons/ashenforkex.png",
    "icon_selected": "icons/ashenforkex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "ashenforkex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8367,7 +8367,7 @@
    "icon": "icons/momentaryslashexp.png",
    "icon_selected": "icons/momentaryslashexp_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "momentaryslashexp",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8428,7 +8428,7 @@
    "icon": "icons/moonlightslashex.png",
    "icon_selected": "icons/moonlightslashex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "moonlightslashex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8485,7 +8485,7 @@
    "icon": "icons/epidemicrasaex.png",
    "icon_selected": "icons/epidemicrasaex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "epidemicrasaex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8546,7 +8546,7 @@
    "icon": "icons/hopsmashex.png",
    "icon_selected": "icons/hopsmashex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "hopsmashex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8603,7 +8603,7 @@
    "icon": "icons/bloodyraveex.png",
    "icon_selected": "icons/bloodyraveex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "bloodyraveex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8664,7 +8664,7 @@
    "icon": "icons/vaneslashex.png",
    "icon_selected": "icons/vaneslashex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "vaneslashex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8721,7 +8721,7 @@
    "icon": "icons/reflectguardex.png",
    "icon_selected": "icons/reflectguardex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "reflectguardex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8777,7 +8777,7 @@
    "icon": "icons/basicattackupex.png",
    "icon_selected": "icons/basicattackupex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "basicattackupex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8840,7 +8840,7 @@
    "icon": "icons/dashattackmultihitex.png",
    "icon_selected": "icons/dashattackmultihitex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "dashattackmultihitex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8907,7 +8907,7 @@
    "icon": "icons/guardex.png",
    "icon_selected": "icons/guardex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "guardex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -8972,7 +8972,7 @@
    "icon": "icons/khazanex.png",
    "icon_selected": "icons/khazanex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "khazanex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9035,7 +9035,7 @@
    "icon": "icons/grabblastbloodexp.png",
    "icon_selected": "icons/grabblastbloodexp_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "grabblastbloodexp",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9098,7 +9098,7 @@
    "icon": "icons/bloodblastexp.png",
    "icon_selected": "icons/bloodblastexp_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "bloodblastexp",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9163,7 +9163,7 @@
    "icon": "icons/outragebreakex.png",
    "icon_selected": "icons/outragebreakex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "outragebreakex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9228,7 +9228,7 @@
    "icon": "icons/bloodswordex.png",
    "icon_selected": "icons/bloodswordex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "bloodswordex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9287,8 +9287,8 @@
    "pre_required_skill": [],
    "icon": "icons/backstep.png",
    "icon_selected": "icons/backstep_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "backstep",
+   "local_id": "backstep",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9344,7 +9344,7 @@
    "icon": "icons/armormasterylight.png",
    "icon_selected": "icons/armormasterylight_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "armormasterylight",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9396,7 +9396,7 @@
    "icon": "icons/armormasteryheavy.png",
    "icon_selected": "icons/armormasteryheavy_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "armormasteryheavy",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9452,7 +9452,7 @@
    "icon": "icons/basicattackup.png",
    "icon_selected": "icons/basicattackup_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "basicattackup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9511,8 +9511,8 @@
    "pre_required_skill": [],
    "icon": "icons/jumppowerup.png",
    "icon_selected": "icons/jumppowerup_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "jumppowerup",
+   "local_id": "jumppowerup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9569,8 +9569,8 @@
    "pre_required_skill": [],
    "icon": "icons/magicalattackup.png",
    "icon_selected": "icons/magicalattackup_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "magicalattackup",
+   "local_id": "magicalattackup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9626,7 +9626,7 @@
    "icon": "icons/throwmastery.png",
    "icon_selected": "icons/throwmastery_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "throwmastery",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9682,7 +9682,7 @@
    "icon": "icons/physicalbackattackcritical.png",
    "icon_selected": "icons/physicalbackattackcritical_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "physicalbackattackcritical",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9738,7 +9738,7 @@
    "icon": "icons/disjointitem.png",
    "icon_selected": "icons/disjointitem_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "disjointitem",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9797,8 +9797,8 @@
    "pre_required_skill": [],
    "icon": "icons/superarmoroncast.png",
    "icon_selected": "icons/superarmoroncast_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "superarmoroncast",
+   "local_id": "superarmoroncast",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9854,7 +9854,7 @@
    "icon": "icons/compoundcraft.png",
    "icon_selected": "icons/compoundcraft_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "compoundcraft",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9910,7 +9910,7 @@
    "icon": "icons/compoundweaving.png",
    "icon_selected": "icons/compoundweaving_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "compoundweaving",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -9966,7 +9966,7 @@
    "icon": "icons/compoundmachine.png",
    "icon_selected": "icons/compoundmachine_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "compoundmachine",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10022,7 +10022,7 @@
    "icon": "icons/compoundchemistry.png",
    "icon_selected": "icons/compoundchemistry_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "compoundchemistry",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10078,7 +10078,7 @@
    "icon": "icons/armormasteryleather.png",
    "icon_selected": "icons/armormasteryleather_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "armormasteryleather",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10134,7 +10134,7 @@
    "icon": "icons/physicalcriticalhitup.png",
    "icon_selected": "icons/physicalcriticalhitup_on.png",
    "implemented": "",
-   "local_id": "physical_crit_up",
+   "local_id": "physicalcriticalhitup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10186,7 +10186,7 @@
    "icon": "icons/armormasterycloth.png",
    "icon_selected": "icons/armormasterycloth_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "armormasterycloth",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10242,7 +10242,7 @@
    "icon": "icons/magicalcriticalhitup.png",
    "icon_selected": "icons/magicalcriticalhitup_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "magicalcriticalhitup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10298,7 +10298,7 @@
    "icon": "icons/magicalbackattackcritical.png",
    "icon_selected": "icons/magicalbackattackcritical_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "magicalbackattackcritical",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10355,8 +10355,8 @@
    "pre_required_skill": [],
    "icon": "icons/quickstanding.png",
    "icon_selected": "icons/quickstanding_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "quickstanding",
+   "local_id": "quickstanding",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10412,7 +10412,7 @@
    "icon": "icons/enchant.png",
    "icon_selected": "icons/enchant_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "enchant",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10468,7 +10468,7 @@
    "icon": "icons/dollmaking.png",
    "icon_selected": "icons/dollmaking_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "dollmaking",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10524,7 +10524,7 @@
    "icon": "icons/alchemy.png",
    "icon_selected": "icons/alchemy_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "alchemy",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10580,7 +10580,7 @@
    "icon": "icons/opendisjointshop.png",
    "icon_selected": "icons/opendisjointshop_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "opendisjointshop",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10636,7 +10636,7 @@
    "icon": "",
    "icon_selected": "",
    "implemented": "",
-   "local_id": "hp_source",
+   "local_id": "basichpmaxup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10692,7 +10692,7 @@
    "icon": "icons/armormasteryplate.png",
    "icon_selected": "icons/armormasteryplate_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "armormasteryplate",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10748,7 +10748,7 @@
    "icon": "icons/conversion.png",
    "icon_selected": "icons/conversion_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "conversion",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10804,7 +10804,7 @@
    "icon": "icons/statusup.png",
    "icon_selected": "icons/statusup_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "statusup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10860,7 +10860,7 @@
    "icon": "icons/experienceup.png",
    "icon_selected": "icons/experienceup_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "experienceup",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10922,8 +10922,8 @@
    ],
    "icon": "icons/releasewaveex.png",
    "icon_selected": "icons/releasewaveex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "releasewaveex",
+   "local_id": "releasewaveex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -10985,8 +10985,8 @@
    ],
    "icon": "icons/grandwaveex.png",
    "icon_selected": "icons/grandwaveex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "grandwaveex",
+   "local_id": "grandwaveex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11051,7 +11051,7 @@
    "icon": "icons/firewaveexp.png",
    "icon_selected": "icons/firewaveexp_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "firewaveexp",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11113,8 +11113,8 @@
    ],
    "icon": "icons/standalonewaveex.png",
    "icon_selected": "icons/standalonewaveex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "standalonewaveex",
+   "local_id": "standalonewaveex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11178,8 +11178,8 @@
    ],
    "icon": "icons/wavespinareaex.png",
    "icon_selected": "icons/wavespinareaex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "wavespinareaex",
+   "local_id": "wavespinareaex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11239,8 +11239,8 @@
    ],
    "icon": "icons/upperslashex.png",
    "icon_selected": "icons/upperslashex_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "upperslashex",
+   "local_id": "upperslashex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11297,7 +11297,7 @@
    "icon": "icons/icewaveexp.png",
    "icon_selected": "icons/icewaveexp_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "icewaveexp",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11353,8 +11353,8 @@
    ],
    "icon": "icons/illusionslashexp.png",
    "icon_selected": "icons/illusionslashexp_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "illusionslashexp",
+   "local_id": "illusionslashexp",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11410,8 +11410,8 @@
    ],
    "icon": "icons/chargecrashexp.png",
    "icon_selected": "icons/chargecrashexp_on.png",
-   "implemented": "",
-   "local_id": "",
+   "implemented": "chargecrashexp",
+   "local_id": "chargecrashexp",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11468,7 +11468,7 @@
    "icon": "icons/flowmindoneex.png",
    "icon_selected": "icons/flowmindoneex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "flowmindoneex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11525,7 +11525,7 @@
    "icon": "icons/flowmindtwoex.png",
    "icon_selected": "icons/flowmindtwoex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "flowmindtwoex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11582,7 +11582,7 @@
    "icon": "icons/flowmindthreeex.png",
    "icon_selected": "icons/flowmindthreeex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "flowmindthreeex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11639,7 +11639,7 @@
    "icon": "icons/sayaexp.png",
    "icon_selected": "icons/sayaexp_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "sayaexp",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11696,7 +11696,7 @@
    "icon": "icons/tombstonerainexp.png",
    "icon_selected": "icons/tombstonerainexp_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "tombstonerainexp",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11753,7 +11753,7 @@
    "icon": "icons/ghoststepslashex.png",
    "icon_selected": "icons/ghoststepslashex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "ghoststepslashex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11810,7 +11810,7 @@
    "icon": "icons/kallaex.png",
    "icon_selected": "icons/kallaex_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "kallaex",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {
@@ -11867,7 +11867,7 @@
    "icon": "icons/reflectguardexp.png",
    "icon_selected": "icons/reflectguardexp_on.png",
    "implemented": "",
-   "local_id": "",
+   "local_id": "reflectguardexp",
    "evidence": "SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str",
    "localization": {
     "name": {

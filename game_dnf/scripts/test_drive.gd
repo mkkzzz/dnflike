@@ -6,6 +6,7 @@ const Box6 = preload("res://core/box6.gd")
 const DetRng = preload("res://core/det_rng.gd")
 const ContentDB = preload("res://content/api/content_db.gd")
 const CombatSession = preload("res://combat/api/combat_session.gd")
+const Numbers = preload("res://stats/api/numbers.gd")
 
 var game
 var api
@@ -49,6 +50,7 @@ func run() -> void:
 	await ticks(3)
 	check_core()
 	check_content()
+	check_skill_runtime()
 	await run_combat()
 	await run_skill_system()
 	await run_kernel()
@@ -90,6 +92,57 @@ func check_core() -> void:
 	check(orders.size()==8 and orders==sorted,"combat HUD widgets are discovered from their folder in draw order")
 	var source := FileAccess.get_file_as_string("res://scripts/main.gd")
 	check(not source.contains("draw_texture") and not source.contains("draw_rect") and not source.contains("player_view.present") and not source.contains("AudioStreamPlayer.new"),"battle simulation no longer draws or owns presentation nodes")
+
+func check_skill_runtime() -> void:
+	var cfg: Dictionary = Numbers.shared_config()
+	var runtime: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/skill_runtime.json"))
+	var visible_skills := 0
+	for value: Dictionary in runtime.get("skills",{}).values():
+		if bool(value.get("tree_visible",false)):visible_skills += 1
+	check(runtime.get("tree_skill_count",0)==78 and visible_skills==78,"generated runtime covers all 78 unique SP tree nodes")
+	check(runtime.get("skill_count",0)==175 and cfg["skills"].size()>=175,"generated runtime covers the complete 175-skill Swordman catalog")
+	check(cfg["skills"].has("lightswordmastery") and cfg["skills"].has("equiplightsword"),"light sword mastery and equip gate are in the live skill config")
+	check(cfg["skills"]["lightswordmastery"].get("passive",[]).size()==3,"light sword mastery exposes physical, magical and hit modifiers")
+	var levels: Dictionary = cfg["skill_defaults"].duplicate(true)
+	levels["lightswordmastery"] = 5
+	levels["blademastery"] = 5
+	game.table.configure_skills(levels,"weaponmaster","katana")
+	check(game.table.moves["triple"].get("stages",[]).size()==5,"weapon-master katana mastery selects the five-stage triple slash")
+	levels["lightswordmastery"] = 1
+	levels["blademastery"] = 1
+	game.table.configure_skills(levels,"weaponmaster","katana")
+	check(game.table.moves["triple"].get("stages",[]).size()==3,"without mastery levels triple slash remains the original three hits")
+	check(runtime.get("effects",{}).get("frenzy",{}).get("form","")=="dual_wield","frenzy declares the dual-wield form")
+	check(game.table.moves.has("frenzy1") and game.table.moves.has("frenzy4"),"frenzy source four-swing normal chain is available")
+	check(game.table.moves.has("kalla_attack1") and game.table.moves.has("kalla_attack3"),"Kalla sword form exposes its three-hit chain")
+	var normalwave_has_object := false
+	for hit: Dictionary in game.table.moves["normalwave"]["stages"][0]["hits"]:normalwave_has_object = normalwave_has_object or hit.has("object")
+	check(game.table.moves.has("normalwave") and normalwave_has_object,"generated projectile skills spawn source passive objects")
+	var khazan_has_object := false
+	for hit: Dictionary in game.table.moves["khazan"]["stages"][0]["hits"]:khazan_has_object = khazan_has_object or hit.has("object")
+	check(game.table.moves.has("khazan") and khazan_has_object,"generated summon skills carry their source object timeline")
+	var missing_moves: Array = []
+	for id: String in runtime.get("skills",{}):
+		if bool(runtime["skills"][id].get("active",false)) and not game.table.moves.has(id):
+			missing_moves.append(id)
+	check(missing_moves.is_empty(),"all 74 active catalog skills resolve a runtime move")
+	var empty_moves: Array = []
+	for id: String in runtime.get("skills",{}):
+		if not bool(runtime["skills"][id].get("active",false)):continue
+		var built: Dictionary = game.table.moves.get(id,{})
+		var hit_count: int = built.get("hits",[]).size()
+		for stage: Dictionary in built.get("stages",[]):hit_count += stage.get("hits",[]).size()
+		if hit_count == 0 and String(built.get("effect_id","")) == "":empty_moves.append(id)
+	for id: String in empty_moves:
+		check(false,"active runtime move lost its last hit or timed effect: "+id)
+	check(empty_moves.is_empty(),"all active runtime moves retain a hit or timed effect after resource validation")
+	var sample_profile := {"level":40,"growtype":"weaponmaster","equipment":{},"gear":{},"skills":{"blademastery":5},"stat_modifiers":[]}
+	var mastered: Dictionary = Numbers.profile_stats(sample_profile)["values"]
+	var plain: Dictionary = Numbers.profile_stats({"level":40,"growtype":"weaponmaster","equipment":{},"gear":{},"skills":{},"stat_modifiers":[]})["values"]
+	check(float(mastered["magical_attack"])>float(plain["magical_attack"]),"weapon mastery modifies live equipment stats")
+	var light_sword := {"slot":"weapon","weapon":"beamsword","usable_jobs":["[swordman]"]}
+	check(not Numbers.Equipment.usable({"job_index":0,"skills":{}},light_sword) and Numbers.Equipment.usable({"job_index":0,"skills":{"equiplightsword":1}},light_sword),"light sword equip gate requires its passive")
+	game.table.configure_skills(game.skill_levels,game.job,game.weapon)
 
 func check_content() -> void:
 	check(api.manifest_schema()=="dnf_native_runtime/1","native local resource manifest loaded")

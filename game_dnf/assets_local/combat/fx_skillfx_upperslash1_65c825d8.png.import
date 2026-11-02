@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0fgkvosprb32"
-path="res://.godot/imported/fx_obj_throwstone.png-517858c4855328ca0577d9e027750b97.ctex"
+uid="uid://dxrrgavb1emnk"
+path="res://.godot/imported/fx_skillfx_upperslash1_65c825d8.png-7c4d2c7a2c8365361e38d0b3a6e8a067.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets_local/combat/fx_obj_throwstone.png"
-dest_files=["res://.godot/imported/fx_obj_throwstone.png-517858c4855328ca0577d9e027750b97.ctex"]
+source_file="res://assets_local/combat/fx_skillfx_upperslash1_65c825d8.png"
+dest_files=["res://.godot/imported/fx_skillfx_upperslash1_65c825d8.png-7c4d2c7a2c8365361e38d0b3a6e8a067.ctex"]
 
 [params]
 

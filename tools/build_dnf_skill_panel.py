@@ -40,6 +40,7 @@ GAME = ROOT / 'game_dnf'
 OUT = GAME / 'assets_local/skill_panel'
 CATALOG = GAME / 'data/skill_catalog.json'
 PACK = GAME / 'assets_local/content/combat_content.json'
+RUNTIME = GAME / 'data/skill_runtime.json'
 
 PANEL_BANK = 'Interface2/UI/SkillShop/Skillshop.img'
 WINDOW_BANK = 'Interface/WindowCommon.img'
@@ -352,17 +353,23 @@ def main() -> int:
     parser.add_argument('--library', type=Path, default=None)
     args = parser.parse_args()
     pack = json.loads(PACK.read_text(encoding='utf-8'))
-    numbers = json.loads((GAME / 'data/numbers.json').read_text(encoding='utf-8'))
+    runtime = json.loads(RUNTIME.read_text(encoding='utf-8'))
     combat = json.loads((GAME / 'data/combat.json').read_text(encoding='utf-8'))
     index = pack['indexes']['swordman_skills']
     implemented = {}          # 原版路径 → 本地招式 id
     for move_id, move in combat['moves'].items():
         if move.get('skill'):
             implemented[move['skill'].lower()] = move_id
-    local_ids = {v['path'].lower(): k for k, v in numbers['skills'].items() if v.get('path')}
-    for local, definition in numbers['skills'].items():
-        if not definition.get('path'):
-            local_ids.setdefault('skill/swordman/%s.skl' % local, local)
+    local_ids = {
+        str(definition['source_path']).lower(): local
+        for local, definition in runtime['skills'].items()
+        if definition.get('source_path', '')
+    }
+    implemented.update({
+        str(definition['skill']).lower(): local
+        for local, definition in runtime['moves'].items()
+        if definition.get('skill', '')
+    })
 
     src = B.Source(args.library)
     resolver = TextResolver(src.lib)
