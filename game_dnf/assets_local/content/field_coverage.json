@@ -1026,7 +1026,7 @@
    "runtime_handled_tags": 32
   },
   "mob": {
-   "decoded_tags": 50,
+   "decoded_tags": 65,
    "distinct_tags": 239,
    "enum_values": {},
    "fields": [
@@ -1183,8 +1183,8 @@
      "tag": "[hero]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "cooltimes",
+     "evidence": "E-PARSE",
      "files": 1373,
      "occurrences": 1374,
      "runtime": "none",
@@ -1199,24 +1199,24 @@
      "tag": "[ai pattern]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "think_term",
+     "evidence": "E-PARSE",
      "files": 1317,
      "occurrences": 1324,
      "runtime": "none",
      "tag": "[think term]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "waiting_actions",
+     "evidence": "E-PARSE",
      "files": 1280,
      "occurrences": 1280,
      "runtime": "none",
      "tag": "[waiting action]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "vision",
+     "evidence": "E-PARSE",
      "files": 1249,
      "occurrences": 1261,
      "runtime": "none",
@@ -1239,16 +1239,16 @@
      "tag": "[destination change term]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "move_actions",
+     "evidence": "E-PARSE",
      "files": 1219,
      "occurrences": 1219,
      "runtime": "none",
      "tag": "[move action]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "keep_distance",
+     "evidence": "E-PARSE",
      "files": 1182,
      "occurrences": 1202,
      "runtime": "none",
@@ -1279,24 +1279,24 @@
      "tag": "[die sound]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "attack_actions",
+     "evidence": "E-PARSE",
      "files": 1103,
      "occurrences": 1103,
      "runtime": "none",
      "tag": "[attack action]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "damage_actions_1",
+     "evidence": "E-PARSE",
      "files": 1099,
      "occurrences": 1100,
      "runtime": "none",
      "tag": "[damage action 1]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "damage_actions_2",
+     "evidence": "E-PARSE",
      "files": 1069,
      "occurrences": 1069,
      "runtime": "none",
@@ -1375,16 +1375,16 @@
      "tag": "[curse resistance]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "sit_actions",
+     "evidence": "E-PARSE",
      "files": 867,
      "occurrences": 867,
      "runtime": "none",
      "tag": "[sit action]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "overturn_actions",
+     "evidence": "E-PARSE",
      "files": 860,
      "occurrences": 860,
      "runtime": "none",
@@ -1407,8 +1407,8 @@
      "tag": "[stun resistance]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "down_actions",
+     "evidence": "E-PARSE",
      "files": 849,
      "occurrences": 849,
      "runtime": "none",
@@ -1695,8 +1695,8 @@
      "tag": "[proc action]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "last_actions",
+     "evidence": "E-PARSE",
      "files": 334,
      "occurrences": 334,
      "runtime": "none",
@@ -2031,8 +2031,8 @@
      "tag": "[etc sound]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "jump_actions",
+     "evidence": "E-PARSE",
      "files": 29,
      "occurrences": 29,
      "runtime": "none",
@@ -2223,8 +2223,8 @@
      "tag": "[damage time balance]"
     },
     {
-     "decoded_as": null,
-     "evidence": null,
+     "decoded_as": "dash_actions",
+     "evidence": "E-PARSE",
      "files": 13,
      "occurrences": 13,
      "runtime": "none",
