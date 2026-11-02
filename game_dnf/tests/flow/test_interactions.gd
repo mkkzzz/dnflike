@@ -106,9 +106,11 @@ func run() -> void:
 	host.key(KEY_SHIFT, false)
 	await ticks()
 	await drag(cell("skill", 0), cell("skill", 5), "skill into empty H")
-	host.check(game.session.profile["skill_slots"][5] == "draw" and game.session.profile["skill_slots"][0] == "", "skill moves to empty key and clears original")
+	host.check(game.session.profile["skill_slots"][5] == "hardattack" and game.session.profile["skill_slots"][0] == "", "skill moves to empty key and clears original")
+	host.check(game.debug_panel.commands.execute("skill triple 1")["ok"], "interaction fixture unlocks a second active skill")
+	host.check(game.act("slots.move", {"source":{"place":"skill_catalog","id":"triple"}, "target":{"place":"skill","index":1}}), "interaction fixture binds the second active skill")
 	await drag(cell("skill", 5), cell("skill", 1), "skill occupied swap")
-	host.check(game.session.profile["skill_slots"][1] == "draw" and game.session.profile["skill_slots"][5] == "triple", "occupied skill cells swap persisted bindings")
+	host.check(game.session.profile["skill_slots"][1] == "hardattack" and game.session.profile["skill_slots"][5] == "triple", "occupied skill cells swap persisted bindings")
 	game.session.add_item("forest_sword", 1)
 	game.show_overlay("inventory")
 	await ticks()
@@ -203,7 +205,16 @@ func run() -> void:
 	var legacy: Dictionary = game.session.serialize()
 	legacy["profile"].erase("item_state")
 	for key in ["bag_layout", "quick_items", "skill_slots", "difficulty"]:legacy["profile"].erase(key)
-	host.check(saved.restore(legacy) and saved.profile["skill_slots"] == game.session.Layout.DEFAULT_SKILLS, "old saves migrate to default layouts")
+	var expected_skill_slots := ["", "", "", "", "", ""]
+	var cursor := 0
+	for skill_id: String in game.session.Layout.DEFAULT_SKILLS:
+		if int(legacy["profile"]["skills"].get(skill_id,0)) > 0 and cursor < 6:
+			expected_skill_slots[cursor] = skill_id
+			cursor += 1
+	host.check(saved.restore(legacy) and saved.profile["skill_slots"] == expected_skill_slots, "old saves migrate to learned-skill default layouts")
+	host.check(game.debug_panel.commands.execute("skill draw 2")["ok"], "interaction fixture unlocks the key-remap skill")
+	host.check(game.act("slots.move", {"source":{"place":"skill_catalog","id":"draw"}, "target":{"place":"skill","index":1}}), "interaction fixture binds draw to the second key")
+	game.build_hotbars()
 	game.depart()
 	await ticks()
 	host.key(KEY_S, true)

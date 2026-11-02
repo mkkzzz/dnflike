@@ -38,6 +38,13 @@ static func normalize(profile: Dictionary) -> void:
 	var cfg := shared_config()
 	if not profile.has("numbers_revision"):
 		profile.merge({"numbers_revision":1,"growtype":"swordman","sp_bonus":0,"skills":cfg["skill_defaults"].duplicate(true),"skill_purchases":{},"xp_transactions":{},"gear":{},"next_gear":1,"equipment":{},"stat_modifiers":[],"attack_element":"none"},false)
+	# Additive skill-table migration: never discard a learned rank when new source
+	# skills are compiled. Deprecated training entries remain readable until reset.
+	for id: String in cfg["skills"]:
+		if not profile["skills"].has(id):profile["skills"][id] = int(cfg["skill_defaults"].get(id,0))
+		if not profile["skill_purchases"].has(id):profile["skill_purchases"][id] = []
+	if int(profile["numbers_revision"])<int(cfg["revision"]):
+		profile["numbers_revision"] = int(cfg["revision"])
 	if not profile.has("attack_element"):profile["attack_element"] = "none"
 	Equipment.normalize(profile,cfg["equipment"],profile["inventory"])
 	canonicalize(profile)
@@ -59,11 +66,30 @@ static func profile_stats(profile: Dictionary, extra: Array = []) -> Dictionary:
 	var cfg := shared_config()
 	var mods: Array = Equipment.modifiers(profile,cfg)
 	mods.append_array(profile.get("stat_modifiers",[]))
+	var weapon := "katana"
+	var weapon_uid := String(profile.get("equipment",{}).get("weapon",""))
+	if weapon_uid != "":
+		weapon = String(cfg["equipment"].get(profile.get("gear",{}).get(weapon_uid,{}).get("definition",""),{}).get("weapon",weapon))
 	for id: String in profile["skills"]:
-		for mod: Dictionary in cfg["skills"].get(id,{}).get("passive",[]):
+		var rank := int(profile["skills"][id])
+		if rank <= 0:continue
+		var definition: Dictionary = cfg["skills"].get(id,{})
+		var source := record(id) if definition.get("path","") != "" else {}
+		var sample := Skills.sample(source,rank) if not source.is_empty() else {}
+		for raw_mod: Dictionary in definition.get("passive",[]):
+			if raw_mod.has("weapon") and String(raw_mod["weapon"]) != weapon:continue
+			var mod := raw_mod.duplicate(true)
+			if mod.has("level_row"):
+				var row: Array = sample.get("level_row",[])
+				var column := int(mod["level_row"])
+				var row_value := float(row[column]) if column >= 0 and column < row.size() else 0.0
+				mod["value"] = float(mod.get("value",0))+row_value*float(mod.get("scale",1))
+				mod.erase("level_row")
+				mod.erase("scale")
+			if mod.has("weapon"):mod.erase("weapon")
 			var entry := mod.duplicate(true)
-			entry["value"] = float(mod["value"])*int(profile["skills"][id])
-			entry["source"] = cfg["skills"][id]["name"]
+			entry["value"] = float(mod["value"])*rank
+			entry["source"] = definition["name"]
 			mods.append(entry)
 	mods.append_array(extra)
 	var result := Attributes.calculate(int(profile["level"]),String(profile["growtype"]),mods,cfg)
@@ -89,7 +115,7 @@ static func combat_spec(profile: Dictionary) -> Dictionary:
 	if uid != "":weapon = String(shared_config()["equipment"][profile["gear"][uid]["definition"]].get("weapon",weapon))
 	var element: String = profile.get("attack_element","none")
 	if uid!="":element = shared_config()["equipment"][profile["gear"][uid]["definition"]].get("element",element)
-	return {"numbers":result["values"],"number_sources":result["sources"],"number_seed":{"level":profile["level"],"growtype":profile["growtype"],"modifiers":result["modifiers"]},"skills":profile["skills"].duplicate(true),"weapon":weapon,"weapon_item":String(profile["gear"][uid]["definition"]) if uid!="" else "","element":element,"hp_max":result["values"]["hp_max"],"mp_max":result["values"]["mp_max"]}
+	return {"numbers":result["values"],"number_sources":result["sources"],"number_seed":{"level":profile["level"],"growtype":profile["growtype"],"modifiers":result["modifiers"]},"skills":profile["skills"].duplicate(true),"skill_slots":profile.get("skill_slots",[]).duplicate(),"weapon":weapon,"weapon_item":String(profile["gear"][uid]["definition"]) if uid!="" else "","element":element,"hp_max":result["values"]["hp_max"],"mp_max":result["values"]["mp_max"]}
 
 static func monster(base: Dictionary, level: int, chief: bool, difficulty: String, cfg: Dictionary = {}) -> Dictionary:
 	if cfg.is_empty():cfg = config()
@@ -185,7 +211,7 @@ static func valid_modifier(mod, cfg: Dictionary) -> bool:
 
 static func valid(profile: Dictionary) -> bool:
 	var cfg := config()
-	if not whole(profile.get("numbers_revision"),1,1) or not cfg["growtypes"].has(profile.get("growtype","")):return false
+	if not whole(profile.get("numbers_revision"),int(cfg["revision"]),int(cfg["revision"])) or not cfg["growtypes"].has(profile.get("growtype","")):return false
 	if profile.get("attack_element","none") not in ["none","fire","water","light","dark"]:return false
 	if not whole(profile.get("level"),1,int(cfg["progression"]["level_cap"])) or not whole(profile.get("xp"),0,1000000000) or not whole(profile.get("sp_bonus"),0,1000000) or not whole(profile.get("next_gear"),1,1000000000):return false
 	for key in ["skills","skill_purchases","xp_transactions","gear","equipment"]:

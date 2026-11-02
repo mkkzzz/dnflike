@@ -93,6 +93,12 @@ func submit_key(code: int, pressed: bool, echo := false) -> void:
 	event.echo = echo
 	game._input(event)
 
+## The flow owns drag-and-drop slot order; submit by slot rather than translating
+## the skill back to its historical canonical key.
+func submit_skill(index: int, pressed: bool, echo := false) -> void:
+	if index < 0 or index >= 6:return
+	submit_key([KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H][index], pressed, echo)
+
 func configure_trial(movement_scale: float, difficulty: String) -> void:
 	if not _alive():return
 	# Per-session copy: increase player locomotion only, leaving MOB tables intact.

@@ -2,12 +2,26 @@ extends RefCounted
 ## Slot positions and shortcut bindings never duplicate item ownership counts.
 const BAG_CAPACITY := 48
 const KINDS := ["weapon", "consumable", "material", "profession", "quest"]
-const DEFAULT_SKILLS := ["draw", "triple", "rage_slash", "buff", "guard", ""]
+const DEFAULT_SKILLS := ["hardattack", "draw", "triple", "rage_slash", "buff", "guard", "moonlight", "charge_crash"]
 const Inventory = preload("res://items/inventory.gd")
 static func normalize(profile: Dictionary, catalog: Dictionary) -> void:
 	if not profile.has("bag_layout"):profile["bag_layout"] = {}
 	if not profile.has("quick_items"):profile["quick_items"] = ["potion", "", "", "", "", ""]
-	if not profile.has("skill_slots"):profile["skill_slots"] = DEFAULT_SKILLS.duplicate()
+	if not profile.has("skill_slots"):
+		profile["skill_slots"] = ["", "", "", "", "", ""]
+		var learned: Dictionary = profile.get("skills",{})
+		var cursor := 0
+		for id: String in DEFAULT_SKILLS:
+			if int(learned.get(id,0)) > 0 and cursor < 6:
+				profile["skill_slots"][cursor] = id
+				cursor += 1
+	var skill_seen := {}
+	for index in 6:
+		var id := String(profile["skill_slots"][index])
+		if id != "" and (not id in DEFAULT_SKILLS or int(profile.get("skills",{}).get(id,0)) < 1 or skill_seen.has(id)):
+			profile["skill_slots"][index] = ""
+		elif id != "":
+			skill_seen[id] = true
 	if not profile.has("difficulty"):profile["difficulty"] = "normal"
 	if profile.has("item_state"):
 		Inventory.sync(profile)
@@ -45,7 +59,7 @@ static func valid(p: Dictionary, catalog: Dictionary) -> bool:
 			if not id is String:return false
 			if id == "":continue
 			if key == "quick_items" and (not catalog.has(id) or catalog[id]["kind"] != "consumable"):return false
-			if key == "skill_slots" and (not id in DEFAULT_SKILLS or seen.has(id)):return false
+			if key == "skill_slots" and (not id in DEFAULT_SKILLS or seen.has(id) or int(p.get("skills",{}).get(id,0)) < 1):return false
 			seen[id] = true
 	return true
 

@@ -24,7 +24,12 @@ static func change(profile: Dictionary, id: String, delta: int, config: Dictiona
 		if config["progression"]["enforce_skill_requirements"] and not force:
 			var caps: Array = record.get("growtype_max_level",[])
 			var grow_index := int(config.get("growtype_index",{}).get(profile["growtype"],0))
-			if not caps.is_empty() and (grow_index>=caps.size() or rank>=int(caps[grow_index])):return {"ok":false,"message":"该职业无法继续学习此技能"}
+			var cap := int(caps[grow_index]) if grow_index < caps.size() else int(definition["max_level"])
+			if definition.get("mastery_bonus_applies",id in ["short_sword_mastery","blade_mastery","heavy_sword_mastery"]):
+				var per_rank := int(config["skills"].get("weapon_mastery_up",{}).get("mastery_levels_per_rank",0))
+				cap += int(profile["skills"].get("weapon_mastery_up",0))*per_rank
+			cap = mini(cap,int(definition["max_level"]))
+			if not caps.is_empty() and rank>=cap:return {"ok":false,"message":"该职业无法继续学习此技能"}
 			var required := int(record.get("required_level",1))+rank*int(record.get("required_level_range",1))
 			if int(profile["level"]) < required:return {"ok":false,"message":"角色等级不足"}
 			if definition.has("growtypes") and profile["growtype"] not in definition["growtypes"]:return {"ok":false,"message":"职业不符合学习要求"}

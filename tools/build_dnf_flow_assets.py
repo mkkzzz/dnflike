@@ -71,8 +71,11 @@ def build(library: Path, output: Path) -> dict:
               for name, (ref, frames) in refs.items()}
         skill_sources = {}
         ui['active_skills'] = {}
-        for key, filename in {'draw': 'momentaryslash', 'triple': 'tripleslash',
-                              'rage_slash': 'gorecross', 'buff': 'frenzy', 'guard': 'guard'}.items():
+        for key, filename in {'hardattack': 'hardattack', 'draw': 'momentaryslash',
+                              'triple': 'tripleslash', 'rage_slash': 'gorecross',
+                              'buff': 'frenzy', 'guard': 'guard',
+                              'moonlight': 'moonlightslash',
+                              'charge_crash': 'chargecrash'}.items():
             script = lib.script('skill/swordman/' + filename + '.skl')
             icon = span_values(script['spans'], '[icon]')
             ui['active_skills'][key] = lib.image(icon[0], icon[1], 'flow/active_skills')

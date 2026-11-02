@@ -14,6 +14,7 @@ func run() -> void:
 	await host.ticks(3)
 	await host.frame("61_number_skills")
 	host.check(game.debug_panel.commands.execute("sp 100")["ok"],"GM grants SP through numeric transaction")
+	host.check(game.debug_panel.commands.execute("level 4")["ok"],"GM raises the character to the next original skill-rank threshold")
 	var initial_sp := Numbers.Skills.available(game.session.profile,Numbers.config())
 	host.check(host.click_text("加点"),"actual skill learn button accepts mouse click")
 	await host.ticks(3)
@@ -27,7 +28,8 @@ func run() -> void:
 	var armor_uid := ""
 	for uid: String in game.session.profile["gear"]:
 		if game.session.profile["gear"][uid]["definition"]=="training_coat":armor_uid=uid
-	host.check(game.debug_panel.commands.execute("gear equip "+armor_uid)["ok"] and game.session.stats()["numbers"]["physical_defense"]==25,"equipped armor changes actual character defense")
+	var defense_before := float(game.session.stats()["numbers"]["physical_defense"])
+	host.check(game.debug_panel.commands.execute("gear equip "+armor_uid)["ok"] and is_equal_approx(float(game.session.stats()["numbers"]["physical_defense"]),defense_before+25),"equipped armor changes actual character defense")
 	game.show_overlay("")
 	game.depart()
 	await host.ticks(4)
@@ -37,7 +39,7 @@ func run() -> void:
 	api.set_god(true)
 	game.set_debug_open(true)
 	var old: Dictionary = game.combat.read_view()
-	host.check(not old["numbers"].is_empty() and old["numbers"]["physical_defense"]==25,"combat consumes full profile including equipment defense")
+	host.check(not old["numbers"].is_empty() and float(old["numbers"]["physical_defense"])==float(game.session.stats()["numbers"]["physical_defense"]),"combat consumes full profile including equipment defense")
 	host.check(api.move("draw")["hits"][0]["percent"]==1192,"actual combat move uses chosen second skill rank")
 	host.check(game.debug_panel.commands.execute("level 5")["ok"],"GM level updates running combat while paused")
 	var after: Dictionary = game.combat.read_view()

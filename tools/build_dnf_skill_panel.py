@@ -11,8 +11,9 @@
   game_dnf/assets_local/skill_panel/parts/*.png 面板零件
   game_dnf/assets_local/skill_panel/manifest.json
 
-名称来源：原版本地化文本不在备份库内（name_ref 只解到 name_17730 这类占位键），
-中文名按 SKL 文件名语义整理，标注 E-ADAPT；`*ex/*exp` 规则化为“<本体>·强化”。
+名称与说明：优先通过 n_string.lst 解析 `name_ref/basic_explain_ref/explain_ref`
+到 `skill/skill.kor.str`；少数 SKL 直接保存显示文本时按同源字节读取。只有
+两类来源都缺失时才使用文件名语义兜底。
 
 用法：python tools/build_dnf_skill_panel.py [--library DIR]
 """
@@ -27,6 +28,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_dnf_combat_assets as B
+from audit_dnf_reusable_data import TextResolver
+from build_dnf_progression_data import clean, simplify
 
 ROOT = Path(__file__).resolve().parent.parent
 GAME = ROOT / 'game_dnf'
@@ -98,6 +101,39 @@ NAMES = {
 }
 
 
+def resolve_source_text(lib, resolver: TextResolver, path: str) -> dict:
+    """Resolve SKL [name]/[basic explain]/[explain] through n_string.lst.
+
+    The localization file is named skill.kor.str but contains the Chinese client
+    text encoded as CP950.  Keep the resolved key/table/line provenance instead
+    of treating the name as an inferred translation.
+    """
+    found = lib.raw(path)
+    if found is None:
+        return {}
+    fields = resolver.fields(found[0])
+
+    def entry(tag: str) -> dict:
+        values = fields.get(tag) or []
+        if not values:
+            return {}
+        value = values[0]
+        text = clean(simplify(str(value.get("text", "")).replace("\r\n", "\n"))).strip()
+        return {
+            "text": text,
+            "table": value.get("table", ""),
+            "key": value.get("key", ""),
+            "line": value.get("line"),
+            "missing": bool(value.get("missing", False)),
+        }
+
+    return {
+        "name": entry("[name]"),
+        "basic_explain": entry("[basic explain]"),
+        "explain": entry("[explain]"),
+    }
+
+
 def chinese_name(key: str, sid: int) -> str:
     if key in NAMES:
         return NAMES[key]
@@ -125,6 +161,7 @@ def main() -> int:
             local_ids.setdefault('skill/swordman/%s.skl' % local, local)
 
     src = B.Source(args.library)
+    resolver = TextResolver(src.lib)
     (OUT / 'icons').mkdir(parents=True, exist_ok=True)
     (OUT / 'parts').mkdir(parents=True, exist_ok=True)
     parts = {}
@@ -141,6 +178,11 @@ def main() -> int:
             continue
         decoded = record['decoded']
         key = path.rsplit('/', 1)[-1].removesuffix('.skl')
+        localized = resolve_source_text(src.lib, resolver, path)
+        localized_name = str(localized.get("name", {}).get("text", ""))
+        basic_explain = str(localized.get("basic_explain", {}).get("text", ""))
+        explain = str(localized.get("explain", {}).get("text", ""))
+        name = localized_name or chinese_name(key, int(sid))
         icon = decoded.get('icon') or []
         normal = selected = ''
         if len(icon) >= 4:
@@ -160,8 +202,14 @@ def main() -> int:
         raw_pre = decoded.get('pre_required_skill') or []
         for i in range(0, len(raw_pre) - 1, 2):
             pre.append({'id': int(raw_pre[i]), 'level': int(raw_pre[i + 1])})
+        localization_refs = {
+            tag: {key: value for key, value in entry.items() if key != "text"}
+            for tag, entry in localized.items()
+        }
         skills.append({
-            'id': int(sid), 'key': key, 'path': path, 'name': chinese_name(key, int(sid)),
+            'id': int(sid), 'key': key, 'path': path, 'name': name,
+            'basic_explain': basic_explain, 'explain': explain,
+            'command': decoded.get('command') or [],
             'type': (decoded.get('type') or [''])[0], 'skill_class': decoded.get('skill_class'),
             'max_level': decoded.get('max_level'),
             'required_level': decoded.get('required_level'),
@@ -173,7 +221,10 @@ def main() -> int:
             'icon': normal, 'icon_selected': selected,
             'implemented': implemented.get(path.lower(), ''),
             'local_id': local_ids.get(path.lower(), ''),
-            'evidence': 'SKL decoded E-PARSE; 中文名为 E-ADAPT（原版本地化文本缺失）',
+            'evidence': ('SKL decoded E-PARSE; name/explain resolved through n_string.lst -> skill/skill.kor.str'
+                         if localized_name else
+                         'SKL decoded E-PARSE; localization entry missing, name fallback is E-ADAPT'),
+            'localization': localization_refs,
         })
     total = sum(len((pack['records'][p.lower()]['decoded'].get('level_info') or [])) for p in index.values()
                 if pack['records'].get(p.lower()))
@@ -186,10 +237,34 @@ def main() -> int:
         'missing_icons': missing_icon,
     }
     (OUT / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
-    CATALOG.write_text(json.dumps({'schema': 'dnf_skill_catalog/1', 'note': 'E-ADAPT 名称；原版要求数据 E-PARSE',
+    CATALOG.write_text(json.dumps({'schema': 'dnf_skill_catalog/2',
+                                   'note': 'names/explains from SKL localization references; requirements from SKL fields',
                                    'skills': skills}, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
-    print('[SKILL_PANEL] skills=%d parts=%d icons=%d missing=%d level_rows=%d'
-          % (len(skills), len(parts), manifest['icons'], len(missing_icon), total))
+    runtime_descriptions = {}
+    for skill in skills:
+        local_id = skill['local_id']
+        if not local_id:
+            continue
+        runtime_descriptions[local_id] = {
+            'name': skill['name'],
+            'brief': skill['basic_explain'] or skill['explain'] or '原版说明暂缺',
+            'detail': skill['explain'] or skill['basic_explain'] or '原版说明暂缺',
+            'source_id': skill['id'],
+            'source_path': skill['path'],
+            'evidence': skill['evidence'],
+        }
+    descriptions = (
+        "extends RefCounted\n"
+        "## Generated by tools/build_dnf_skill_panel.py from SKL localization records.\n"
+        "## Do not hand-edit names/descriptions here; regenerate from the source archive.\n"
+        "const SKILLS := "
+        + json.dumps(runtime_descriptions, ensure_ascii=False, indent=1)
+        + "\n"
+    )
+    (GAME / 'items/skill_descriptions.gd').write_text(descriptions, encoding='utf-8')
+    print('[SKILL_PANEL] skills=%d localized=%d parts=%d icons=%d missing=%d level_rows=%d'
+          % (len(skills), sum(bool(s['localization'].get('name')) for s in skills),
+             len(parts), manifest['icons'], len(missing_icon), total))
     return 0
 
 

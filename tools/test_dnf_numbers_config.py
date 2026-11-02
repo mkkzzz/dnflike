@@ -36,6 +36,18 @@ class NumericConfigTests(unittest.TestCase):
         self.data['skills']['rage_slash']['on_hit'][0]['id'] = 'unknown'
         self.assertTrue(validate(self.data))
 
+    def test_invalid_passive_weapon_condition_is_rejected(self):
+        self.data['skills']['blade_mastery']['passive'][0]['weapon'] = 'bow'
+        self.assertTrue(validate(self.data))
+
+    def test_invalid_passive_source_row_is_rejected(self):
+        self.data['skills']['physical_crit_up']['passive'][0]['level_row'] = -1
+        self.assertTrue(validate(self.data))
+
+    def test_invalid_mastery_bonus_is_rejected(self):
+        self.data['skills']['weapon_mastery_up']['mastery_levels_per_rank'] = 0
+        self.assertTrue(validate(self.data))
+
     def test_finite_only(self):
         self.data['base']['strength'] = float('nan')
         self.assertTrue(validate(self.data))

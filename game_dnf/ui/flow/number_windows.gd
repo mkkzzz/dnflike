@@ -24,7 +24,7 @@ func show_window() -> void:
 	if tab == 0:attributes(node)
 	elif tab == 1:skill_panel.show_window(node)
 	else:equipment(node)
-	skin.label(node,"O 角色成长   K 技能加点   Esc 关闭",Vector2(20,428),11,Color("a59c88"))
+	if tab != 1:skin.label(node,"O 角色成长   K 技能加点   Esc 关闭",Vector2(20,428),11,Color("a59c88"))
 
 func live_stats() -> Dictionary:
 	if game.session.state=="battle" and is_instance_valid(game.battle):

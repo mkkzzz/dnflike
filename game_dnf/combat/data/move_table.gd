@@ -166,7 +166,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	var move := {"name":name,"label":String(spec.get("name","")),"mp":float(skill.get("mp",0)),
 		"cool_ms":float(skill.get("cool_ms",0)),"cast_ms":float(skill.get("cast_ms",0)),"skill":String(spec.get("skill","")),
 		"air":bool(spec.get("air",false)),"next":String(spec.get("next","")),"swing":int(spec.get("swing",-1)),
-		"cast_fx":String(spec.get("cast_fx","")),"aura_fx":String(spec.get("aura_fx",""))}
+		"cast_fx":String(spec.get("cast_fx","")),"aura_fx":String(spec.get("aura_fx","")),
+		"effect_id":String(spec.get("effect_id","")),"requires_effect":String(spec.get("requires_effect","")),
+		"super_armor":bool(spec.get("super_armor",false)),"invuln_ms":float(spec.get("invuln_ms",0))}
 	if spec.has("stages"):
 		move["stages"] = []
 		for stage: Dictionary in spec["stages"]:move["stages"].append(_build_stage(stage,skill))

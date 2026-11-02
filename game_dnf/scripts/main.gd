@@ -20,6 +20,7 @@ const Numbers = preload("res://stats/api/numbers.gd")
 const ActorNumbers = preload("res://stats/api/actor_numbers.gd")
 var numeric_player
 var skill_levels: Dictionary = {}
+var skill_slots: Array = ["", "", "", "", "", ""]
 var numeric_monster_level := 1
 var numeric_difficulty := "normal"
 var last_damage: Dictionary = {}
@@ -175,6 +176,7 @@ func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
 	numeric_player.configure(spec)
 	skill_levels = spec.get("skills",Numbers.shared_config()["skill_defaults"]).duplicate(true)
 	table.configure_skills(skill_levels)
+	configure_skill_slots(spec.get("skill_slots",skill_slots))
 	max_hp = float(numeric_player.values["hp_max"])
 	max_mp = float(numeric_player.values["mp_max"])
 	player["hp"] = max_hp if vitals_policy=="refill" else clampf(float(player["hp"]),0,max_hp)
@@ -293,6 +295,10 @@ func begin_room(spec: Dictionary) -> void:
 	damage_scale = float(snapshot.get("damage_multiplier",1.0))
 	player = new_player()
 	if snapshot.has("numbers"):update_numbers(snapshot,"refill")
+	if String(spec.get("run_id","standalone")) == "standalone":
+		configure_skill_slots(["draw","triple","rage_slash","buff","guard",""])
+	else:
+		configure_skill_slots(snapshot.get("skill_slots",[]))
 	if snapshot.has("hp"):player["hp"] = clampf(float(snapshot["hp"]),1,max_hp)
 	if snapshot.has("mp"):player["mp"] = clampf(float(snapshot["mp"]),0,max_mp)
 	if snapshot.get("job","") in ["weaponmaster","berserker"]:job = String(snapshot["job"])
@@ -332,7 +338,17 @@ func emit_player_defeated() -> void:
 
 ## Keys owned by the flow side when externally managed: restart, pause/menu, character and debug switches.
 const FLOW_OWNED_KEYS := [KEY_R,KEY_TAB,KEY_1,KEY_2,KEY_3,KEY_ESCAPE,KEY_F2,KEY_F3]
-const SKILL_KEYS := {KEY_Z:"upper",KEY_A:"draw",KEY_S:"triple",KEY_D:"rage_slash",KEY_F:"buff"}
+const SKILL_SLOT_KEYS := [KEY_A,KEY_S,KEY_D,KEY_F,KEY_G,KEY_H]
+
+func skill_slot_index(code: int) -> int:
+	return SKILL_SLOT_KEYS.find(code)
+
+func configure_skill_slots(slots: Array) -> void:
+	skill_slots = ["", "", "", "", "", ""]
+	for index in mini(6,slots.size()):
+		var id := String(slots[index])
+		if id != "" and move_def(id).size() > 0 and (skill_levels.is_empty() or int(skill_levels.get(id,0)) > 0):
+			skill_slots[index] = id
 
 func _input(event: InputEvent) -> void:
 	if not event is InputEventKey:return
@@ -369,8 +385,10 @@ func _input(event: InputEvent) -> void:
 			view.audio.music.volume_db = -80 if _muted else -28
 		KEY_1,KEY_2,KEY_3:
 			weapon = ["shortsword","katana","greatsword"][code-KEY_1]
-		KEY_X,KEY_Z,KEY_A,KEY_S,KEY_D,KEY_F,KEY_C,KEY_SPACE:
+		KEY_X,KEY_Z,KEY_C,KEY_SPACE:
 			if not paused and not finished:requests.append(code)
+		_:
+			if code in SKILL_SLOT_KEYS and not paused and not finished:requests.append(code)
 
 func notice(message: String) -> void:
 	toast = message
@@ -408,13 +426,16 @@ func action_def() -> Dictionary:
 
 func action_duration(action: String) -> float:
 	var m := move_def(action)
-	if action == "buff":return maxf(float(m["cast_ms"]),1.0)
+	if float(m.get("cast_ms",0)) > 0:return maxf(float(m["cast_ms"]),1.0)
 	return float(m.get("duration",0))
 
 func buffering(code: int) -> void:
 	if code in [KEY_C,KEY_SPACE] and held.get(KEY_DOWN,false) and backstep_allowed():player["queued_backstep"] = true
 	elif code == KEY_X and String(player["action"]).begins_with("attack"):player["queued_combo"] = true
-	elif SKILL_KEYS.has(code):player["queued_skill"] = SKILL_KEYS[code]
+	elif code == KEY_Z:player["queued_skill"] = "upper"
+	elif skill_slot_index(code) >= 0:
+		var id := String(skill_slots[skill_slot_index(code)])
+		if id != "":player["queued_skill"] = id
 	elif code in [KEY_C,KEY_SPACE] and String(player["action"]) == "upper":player["queued_jump"] = true
 
 ## Back step (Down + jump): from free ground states, or cancelling the moves the adapt layer lists.
@@ -547,9 +568,14 @@ func step_player(ms: float, move: Vector2) -> void:
 			# Dash attack only out of an actual run (double-tapped direction, still moving).
 			elif state == "move" and run_direction != 0 and int(move.x) == run_direction:start_action("dash_attack")
 			else:start_action("attack1")
-		elif SKILL_KEYS.has(code):
+		elif code == KEY_Z:
 			if String(player["state"]) == "action":buffering(code)
-			else:start_action(SKILL_KEYS[code])
+			else:start_action("upper")
+		elif skill_slot_index(code) >= 0:
+			if String(player["state"]) == "action":buffering(code)
+			else:
+				var id := String(skill_slots[skill_slot_index(code)])
+				if id != "":start_action(id)
 	requests.clear()
 	state = player["state"]
 	if state == "action":
@@ -703,13 +729,19 @@ func start_action(name: String, cancel := false) -> bool:
 	var m := move_def(name)
 	if m.is_empty():return reject_action(name,"unknown")
 	if numeric_player != null and (numeric_player.effects.controlled() or skill_levels.has(name) and int(skill_levels[name])<=0):return reject_action(name,"unavailable")
+	var required_effect := String(m.get("requires_effect",""))
+	if required_effect != "" and (numeric_player == null or not numeric_player.effects.active.has(required_effect)):return reject_action(name,"effect")
 	var airborne := float(player["z"])>0 or float(player["vz"])>0
 	if airborne != bool(m.get("air",false)):return reject_action(name,"state")
 	if not cancel and String(player["state"]) in ["hurt","air","down","dead","backstep","action"]:return reject_action(name,"state")
 	if float(player["cooldowns"].get(name,0))>0:return reject_action(name,"cooldown")
 	var mp_cost := float(m["mp"])*(float(numeric_player.values["mp_cost_rate"]) if numeric_player != null else 1.0)
-	if float(player["mp"])<mp_cost:return reject_action(name,"mp")
-	player["mp"] = float(player["mp"])-mp_cost
+	if name == "rage_slash" and int(skill_levels.get("bloody_vigorous",0)) > 0:
+		if float(player["hp"]) <= mp_cost:return reject_action(name,"hp")
+		player["hp"] = float(player["hp"])-mp_cost
+	else:
+		if float(player["mp"])<mp_cost:return reject_action(name,"mp")
+		player["mp"] = float(player["mp"])-mp_cost
 	if float(m["cool_ms"]) > 0:player["cooldowns"][name] = float(m["cool_ms"])/1000.0*(float(numeric_player.values["cooldown_rate"]) if numeric_player != null else 1.0)
 	end_action_fx()
 	player["state"] = "action"
@@ -718,14 +750,14 @@ func start_action(name: String, cancel := false) -> bool:
 	player["queued_skill"] = ""
 	player["queued_jump"] = false
 	player["queued_backstep"] = false
-	if name == "buff":
+	if String(m.get("effect_id","")) != "":
 		player["stage"] = 0
 		player["clock"] = 0.0
 		player["hits"] = {}
 		action_seq += 1
 		bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"instance":action_seq})
 		if String(m["cast_fx"]) != "":spawn_effect(String(m["cast_fx"]),player["pos"],int(player["facing"]),float(player["z"]))
-		apply_buff()
+		apply_skill_effect(name,String(m["effect_id"]))
 		return true
 	player["fx_tag"] = "act:%d" % (action_seq+1)
 	start_stage(0)
@@ -752,14 +784,14 @@ func start_stage(index: int) -> void:
 	action_cues(stage,-1.0,0.0)
 	apply_player_hits(stage,-1.0,0.0)
 
-func apply_buff() -> void:
+func apply_skill_effect(skill_id: String, effect_id: String) -> void:
 	if numeric_player != null:
-		apply_effect({"kind":"effect","id":"frenzy","rank":int(skill_levels.get("buff",1))})
-		player["buff_ms"] = float(numeric_player.effects.active["frenzy"]["remaining_ms"])
-		notice(String(move_def("buff").get("label","")))
+		if apply_effect({"kind":"effect","id":effect_id,"rank":int(skill_levels.get(skill_id,1))}):
+			player["buff_ms"] = float(numeric_player.effects.active[effect_id]["remaining_ms"])
+			notice(String(move_def(skill_id).get("label","")))
 		return
 	player["buff_ms"] = float(rules["buff"]["duration_ms"])
-	notice(String(move_def("buff").get("label",""))+" · 攻击与移动加速")
+	notice(String(move_def(skill_id).get("label",""))+" · 攻击与移动加速")
 
 ## Timed effect/sound cues of the move plus the ANI's own frame sound events.
 ## Move effects are tagged with the running action and capped at the time it has left.
@@ -874,7 +906,11 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			var skill_id := String(hit.get("skill_id",player["action"]))
 			effect_list.append_array(Numbers.shared_config()["skills"].get(skill_id,{}).get("on_hit",[]))
 		for effect: Dictionary in effect_list:
-			if rng.chance(float(effect.get("chance",1))):apply_effect({"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(skill_levels.get(String(hit.get("skill_id",player["action"])),1))})
+			var chance := float(effect.get("chance",1))
+			var skill_id := String(hit.get("skill_id",player["action"]))
+			if effect.get("id","") == "bleed" and skill_id == "rage_slash" and int(skill_levels.get("bloody_vigorous",0)) > 0:
+				chance = maxf(chance,float(Numbers.shared_config()["skills"].get("bloody_vigorous",{}).get("gorecross_bleed_chance",chance)))
+			if rng.chance(chance):apply_effect({"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(skill_levels.get(skill_id,1))})
 	if not target_is_player:
 		# 按怪物种类播受击/死亡音（bake_dnf_monster_sounds.py 生成 mon_<key>_<event>）；
 		# 该类怪没有独立音效时退回通用的哥布林音，避免完全无声。
@@ -1339,7 +1375,7 @@ func player_ani() -> Array:
 	var state: String = player["state"]
 	var rp: Dictionary = rules["reaction"]
 	if state=="action":
-		if String(player["action"]) == "buff":return [String(move_def("buff")["ani"]),float(player["clock"])]
+		if String(move_def(String(player["action"])).get("effect_id","")) != "":return [String(move_def(String(player["action"]))["ani"]),float(player["clock"])]
 		return [String(action_def()["ani"]),float(player["clock"])]
 	if state=="dead":return ["down",float(table.player_timeline("down")[2]["start_ms"]) if table.player_timeline("down").size()>2 else 0.0]
 	if state=="hurt":return [String(player["hit_motion"]),0.0]
@@ -1376,8 +1412,8 @@ func enemy_ani(enemy: Dictionary) -> Array:
 
 func skill_bar() -> Array:
 	var out: Array = []
-	for code: int in SKILL_KEYS:
-		var name: String = SKILL_KEYS[code]
+	for code: int in SKILL_SLOT_KEYS:
+		var name: String = String(skill_slots[SKILL_SLOT_KEYS.find(code)])
 		out.append({"name":name,"label":String(move_def(name).get("label","")),"key":OS.get_keycode_string(code),
 			"cooldown":float(player["cooldowns"].get(name,0)),"mp":float(move_def(name).get("mp",0))})
 	return out

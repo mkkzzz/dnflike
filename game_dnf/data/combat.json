@@ -301,10 +301,124 @@
    "voice": "gorecross",
    "source": "Slash windows follow the body pose groups (frames 0-5, 6-9); the crescent object starts at frame 14 (GORECROSS_ATK3) on the caster's own anchor (composite of gorecross.ani + gorecross1.ani lines up without offset)."
   },
+  "hardattack": {
+   "ani": "hardattack",
+   "skill": "skill/swordman/hardattack.skl",
+   "atk": "character/swordman/attackinfo/hardattack.atk",
+   "name": "鬼斩",
+   "hits": [
+    {
+     "derived": "hardattack1",
+     "window": [
+      150,
+      420
+     ],
+     "percent_col": 0
+    }
+   ],
+   "fx": [
+    {
+     "key": "hardattack1",
+     "at": 150
+    },
+    {
+     "key": "hardattack2",
+     "at": 300
+    }
+   ],
+   "source": "Body hardAttack.ani carries no attack boxes; the opaque extent of original HardAttackBlade1.ani supplies the trial box window (E-ADAPT, DNF-D011). ATK is the original dark, magic, down reaction."
+  },
+  "moonlight": {
+   "skill": "skill/swordman/moonlightslash.skl",
+   "name": "月光斩",
+   "stages": [
+    {
+     "ani": "moonlightslash1",
+     "atk": "character/swordman/attackinfo/moonlightslash1.atk",
+     "hits": [
+      {
+       "body": true,
+       "percent_col": 0
+      }
+     ],
+     "fx": [
+      {
+       "key": "moonlight1",
+       "at": 0
+      }
+     ]
+    },
+    {
+     "ani": "moonlightslash2",
+     "atk": "character/swordman/attackinfo/moonlightslash2.atk",
+     "hits": [
+      {
+       "body": true,
+       "percent_col": 2
+      }
+     ],
+     "fx": [
+      {
+       "key": "moonlight2",
+       "at": 0
+      }
+     ]
+    }
+   ],
+   "dash": {
+    "speed_static": 0,
+    "accel_static": 1
+   },
+   "source": "Two original CHR motions/ATKs; body attack boxes and dark magic reaction are source fields. Level-row columns 0 and 2 are used for the two physical hits in this adaptation."
+  },
+  "charge_crash": {
+   "skill": "skill/swordman/chargecrash.skl",
+   "name": "破军升龙击",
+   "stages": [
+    {
+     "ani": "chargecrashdash",
+     "atk": "character/swordman/attackinfo/chargecrashdash.atk",
+     "hits": [
+      {
+       "body": true,
+       "percent_col": 0
+      }
+     ],
+     "fx": [
+      {
+       "key": "charge_dash",
+       "at": 0
+      }
+     ]
+    },
+    {
+     "ani": "chargecrashupper",
+     "atk": "character/swordman/attackinfo/chargecrashupper.atk",
+     "hits": [
+      {
+       "body": true,
+       "percent_col": 1
+      }
+     ],
+     "fx": [
+      {
+       "key": "charge_upper",
+       "at": 0
+      }
+     ]
+    }
+   ],
+   "dash": {
+    "speed_static": 0,
+    "accel_static": 1
+   },
+   "source": "Two original CHR motions/ATKs. SKL static_data supplies slide speed/deceleration; the weapon-mastery-only third finisher remains outside this playable subset."
+  },
   "buff": {
    "ani": "summon2",
    "skill": "skill/swordman/frenzy.skl",
-   "name": "暴走",
+   "name": "血之狂暴",
+   "effect_id": "frenzy",
    "cast_fx": "frenzy_cast",
    "aura_fx": "frenzy_buff"
   }

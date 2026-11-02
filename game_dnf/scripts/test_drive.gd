@@ -50,6 +50,7 @@ func run() -> void:
 	check_core()
 	check_content()
 	await run_combat()
+	await run_skill_system()
 	await run_kernel()
 	await run_rooms()
 	await run_session()
@@ -133,6 +134,12 @@ func check_kernel_tables() -> void:
 	check(triple["stages"].size()==3 and triple["cool_ms"]==6000 and String(triple["stages"][2]["ani"])=="tripleslash3","triple slash has three original stages and its SKL cooldown")
 	check(api.move("draw")["cool_ms"]==15000 and api.move("draw")["hits"][0]["kind"]=="object","draw slash hits through its original wave passive object")
 	check(api.move("rage_slash")["hits"][2]["kind"]=="object" and String(api.move("rage_slash")["hits"][2]["object"]).ends_with("gorecross.obj"),"gore cross ends with its original cross passive object")
+	var hardattack: Dictionary = api.move("hardattack")
+	check(String(hardattack["skill"])=="skill/swordman/hardattack.skl" and String(hardattack["hits"][0]["source"])=="derived:hardattack1","ghost slash uses its original SKL/ATK and a source-effect hit window")
+	var moonlight: Dictionary = api.move("moonlight")
+	check(moonlight["stages"].size()==2 and String(moonlight["stages"][1]["ani"])=="moonlightslash2","moonlight slash exposes both original body stages")
+	var chargecrash: Dictionary = api.move("charge_crash")
+	check(chargecrash["stages"].size()==2 and String(chargecrash["stages"][1]["hits"][0]["atk_path"]).ends_with("chargecrashupper.atk"),"charge crash exposes original dash and rising-attack stages")
 	var goblin: Dictionary = t.monsters["goblin"]
 	check(is_equal_approx(float(goblin["hp"]),105) and goblin["attack_delay"]==1200 and String(goblin["motions"]["stay"])=="stay" and String(goblin["dir"]).ends_with("animation_goblin2"),"goblin stats and motions come from goblin.mob and the original level table (150 HP x 70%, attack delay, Animation_Goblin2)")
 	check(t.monsters["goblin_thrower"].has("throw") and int(t.monsters["goblin_thrower"]["throw"]["frame"])==2 and is_equal_approx(float(t.monsters["goblin_thrower"]["throw"]["speed"]),250),"goblin thrower throws its original stone object on throw frame 2 at the particle speed")
@@ -334,6 +341,42 @@ func run_combat() -> void:
 	key(KEY_C,false)
 	key(KEY_X,false)
 	check(api.p("action")=="air_attack","same-tick jump and attack selects airborne source pose")
+
+## New source-backed skill nodes and slot-driven input, without borrowing the old fixed A/S/D/F table.
+func run_skill_system() -> void:
+	api.restart()
+	api.set_skill_slots(["hardattack","moonlight","charge_crash","","",""])
+	check(api.skill_slots().slice(0,3)==["hardattack","moonlight","charge_crash"],"slot order can bind the newly compiled skills")
+	api.set_god(true)
+	var enemy: Dictionary = api.spawn_dummy(Vector2(190,250))
+	api.set_p("pos",Vector2(125,250))
+	await tap(KEY_A)
+	await ticks(2)
+	check(api.p("action")=="hardattack" and api.player_ani()[0]=="hardattack","A dispatches the skill in slot zero")
+	await ticks(30)
+	check(float(api.e(enemy,"hp"))<5000,"ghost slash hits through its source-effect window")
+
+	api.restart()
+	api.set_skill_slots(["hardattack","moonlight","charge_crash","","",""])
+	api.set_god(true)
+	enemy = api.spawn_dummy(Vector2(190,250))
+	api.set_p("pos",Vector2(125,250))
+	await tap(KEY_S)
+	await ticks(2)
+	await tap(KEY_S)
+	await ticks(24)
+	check(api.p("action")=="moonlight" and int(api.p("stage"))==1,"moonlight slash advances to its second original stage")
+
+	api.restart()
+	api.set_skill_slots(["hardattack","moonlight","charge_crash","","",""])
+	api.set_god(true)
+	enemy = api.spawn_dummy(Vector2(190,250))
+	api.set_p("pos",Vector2(125,250))
+	await tap(KEY_D)
+	await ticks(2)
+	await tap(KEY_D)
+	await ticks(28)
+	check(api.p("action")=="charge_crash" and int(api.p("stage"))==1,"charge crash advances from dash to its original rising attack")
 
 ## F3~F5 kernel behaviour: box judgement, ATK reactions, local hitstop, cues, objects, AI.
 func run_kernel() -> void:

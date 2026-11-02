@@ -93,10 +93,10 @@
   "goblin_ice",
   "goblin_fire"
  ],
- "effects": 102,
+ "effects": 108,
  "digits": 61,
  "audio_keys": 190,
- "unresolved": 17,
+ "unresolved": 32,
  "unresolved_items": [
   {
    "kind": "monster_equipment",
@@ -137,44 +137,125 @@
    "note": "equipment file absent; appearance drawn from body IMG only"
   },
   {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/tretri/tretri.mob",
+   "path": "Monster/haze/tretri.img"
+  },
+  {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/tretri/tretri.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/poena/poena.mob",
+   "path": "Monster/haze/poena.img"
   },
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/poena/poena.mob"
   },
   {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/hass/hass.mob",
+   "path": "Monster/haze/hass.img"
+  },
+  {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/hass/hass.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/axeoutlaw/axeoutlaw.mob",
+   "path": "Monster/haze/axeoutlaw.img"
   },
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/axeoutlaw/axeoutlaw.mob"
   },
   {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/outlaw/outlaw.mob",
+   "path": "Monster/haze/outlaw.img"
+  },
+  {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/outlaw/outlaw.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/humanhunter/humanhunter.mob",
+   "path": "Monster/haze/humanhunter.img"
   },
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/humanhunter/humanhunter.mob"
   },
   {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/chainbiker/chainbiker.mob",
+   "path": "Monster/haze/biker2.img"
+  },
+  {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/chainbiker/chainbiker.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/chainbiker2/chainbiker2.mob",
+   "path": "Monster/haze/biker2_bike.img"
   },
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/chainbiker2/chainbiker2.mob"
   },
   {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/haze/enjosipho/enjosipho.mob",
+   "images": [
+    "Monster/haze/enjo.img",
+    "Monster/haze/enjo_robot.img"
+   ]
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/enjosipho/enjosipho.mob",
+   "path": "Monster/haze/enjo.img"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/enjosipho/enjosipho.mob",
+   "path": "Monster/haze/enjo_robot.img"
+  },
+  {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/enjosipho/enjosipho.mob"
   },
   {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/haze/enjosipho/enjosipho_quest.mob",
+   "images": [
+    "Monster/haze/enjo.img",
+    "Monster/haze/enjo_robot.img"
+   ]
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/enjosipho/enjosipho_quest.mob",
+   "path": "Monster/haze/enjo.img"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/enjosipho/enjosipho_quest.mob",
+   "path": "Monster/haze/enjo_robot.img"
+  },
+  {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/enjosipho/enjosipho_quest.mob"
+  },
+  {
+   "kind": "monster_image",
+   "monster": "monster/newmonsters/haze/death_squad/death_squad.mob",
+   "path": "Monster/haze/death_squad.img"
   },
   {
    "kind": "monster_no_clips",

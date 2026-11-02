@@ -228,11 +228,15 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 	skin.label(tip, data["name"], Vector2(16, 12), 16, Color("f0d18a"))
 	skin.label(tip, "技能等级 %d" % int(game.session.profile["skills"].get(id,1)), Vector2(16, 40), 11, Color("b9b1a0"))
 	skin.image(tip, game.slot_texture({"place":"skill", "id":id}), Vector2(254, 14))
-	skin.label(tip, data["brief"], Vector2(16, 69), 12)
-	skin.label(tip, "魔法消耗  %d     冷却  %.1f 秒" % [values["mp"], values["cooldown"]], Vector2(16, 99), 11, Color("a7dd74"))
+	var brief: Label = skin.label(tip, data["brief"], Vector2(16, 69), 12)
+	brief.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	brief.clip_text = true
+	brief.custom_minimum_size = Vector2.ZERO
+	brief.set_deferred("size", Vector2(268, 30))
+	skin.label(tip, "魔法消耗  %d     冷却  %.1f 秒" % [values["mp"], values["cooldown"]], Vector2(16, 103), 11, Color("a7dd74"))
 	var row := "伤害倍率  "
 	for value in values["damage_percent"]:row += "%d%%  " % int(value)
-	if not values["damage_percent"].is_empty():skin.label(tip, row, Vector2(16, 122), 11)
+	if not values["damage_percent"].is_empty():skin.label(tip, row, Vector2(16, 124), 11)
 	if detailed:
 		var detail: String = data["detail"]
 		if id == "buff":
@@ -246,10 +250,11 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 		if id == "guard":
 			var definition: Dictionary = game.session.Numbers.config()["skills"][id]
 			detail += "\n当前正面承伤 %.0f%%" % (maxf(0,float(definition["guard_factor"])-(int(game.session.profile["skills"][id])-1)*float(definition["guard_per_level"]))*100)
-		var text: Label = skin.label(tip, detail, Vector2(16, 154), 11)
+		var text: Label = skin.label(tip, detail, Vector2(16, 148), 11)
 		text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		text.clip_text = true
-		text.set_deferred("size", Vector2(268, 76))
+		text.custom_minimum_size = Vector2.ZERO
+		text.set_deferred("size", Vector2(268, 100))
 	else:skin.label(tip, "按住 Shift 查看详细说明", Vector2(16, 150), 10, Color("b9b1a0"))
 
 func update_skill_detail(detailed: bool) -> void:

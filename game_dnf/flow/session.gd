@@ -24,8 +24,8 @@ func _init() -> void:
 		"resurrection_coins": 3,
 		"inventory": {"iron_sword": 1, "potion": 3}, "equipped": "iron_sword",
 		"quest": "available", "clears": 0, "next_run": 1, "settled": {}}
-	Layout.normalize(profile, CATALOG.ITEMS)
 	Numbers.normalize(profile)
+	Layout.normalize(profile, CATALOG.ITEMS)
 	Inventory.initialize(profile)
 	Services.initialize(profile)
 	quests.initialize(profile)
@@ -353,9 +353,11 @@ func restore(data: Dictionary) -> bool:
 		if not p.has(k) or typeof(p[k]) != typeof(profile[k]) and not (p[k] is float and profile[k] is int):return false
 	if not p["inventory"] is Dictionary or not p["settled"] is Dictionary:return false
 	if p["quest"] not in ["available", "active", "ready", "done"] or (p["equipped"] != "" and not CATALOG.ITEMS.has(p["equipped"])):return false
-	if not Layout.valid(p, CATALOG.ITEMS):return false
 	for id in p["inventory"]:
 		if not CATALOG.ITEMS.has(id) or not (p["inventory"][id] is float or p["inventory"][id] is int) or float(p["inventory"][id]) < 0 or float(p["inventory"][id]) != floorf(float(p["inventory"][id])):return false
+	Numbers.normalize(p)
+	Layout.normalize(p, CATALOG.ITEMS)
+	if not Layout.valid(p, CATALOG.ITEMS):return false
 	for key in ["level", "gold", "resurrection_coins", "xp", "clears", "next_run"]:
 		if float(p[key]) < (1 if key in ["level", "next_run"] else 0) or float(p[key]) != floorf(float(p[key])):return false
 	if p["equipped"] != "" and int(p["inventory"].get(p["equipped"], 0)) < 1:return false
@@ -375,7 +377,6 @@ func restore(data: Dictionary) -> bool:
 		if not p["settled"].has(r["run_id"]) or data["run"].get("id") != r["run_id"]:return false
 		for key in ["gold", "xp", "potion"]:
 			if not (r.get(key) is int or r.get(key) is float) or float(r[key]) < 0:return false
-	if legacy:Numbers.normalize(p)
 	if not p.has("attack_element"):p["attack_element"] = "none"
 	if not Numbers.valid(p):return false
 	if not p.has("services"):Services.initialize(p)

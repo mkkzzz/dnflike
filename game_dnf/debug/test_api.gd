@@ -34,6 +34,9 @@ func p(key: String):return game.player[key]
 func set_p(key: String, value) -> void:game.player[key] = value
 func cooldown(name: String) -> float:return float(game.player["cooldowns"].get(name,0))
 func start_action(name: String, cancel := false) -> bool:return game.start_action(name,cancel)
+func set_skill_slots(slots: Array) -> void:game.configure_skill_slots(slots)
+func skill_slots() -> Array:return game.skill_slots.duplicate()
+func skill_slot_code(index: int) -> int:return game.SKILL_SLOT_KEYS[index]
 func damage_player(amount: float, source: Vector2) -> void:game.damage_player(amount,source)
 func job() -> String:return game.job
 func set_job(value: String) -> void:game.job = value

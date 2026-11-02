@@ -35,7 +35,6 @@ var dungeon_page := 0
 var transitioning := false
 var number_windows
 const SKILL_KEYS := [KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H]
-const SKILL_CODES := {"draw":KEY_A, "triple":KEY_S, "rage_slash":KEY_D, "buff":KEY_F, "guard":KEY_G}
 var session = Session.new()
 var store = Store.new()
 var town
@@ -71,6 +70,8 @@ var bgm_ambience: Dictionary = {}
 var _bgm_scene := ""
 var _bgm_ambience := ""
 var skill_catalog
+var _skill_panel_icons: Dictionary = {}
+var _skill_panel_textures: Dictionary = {}
 var quick_views: Array = []
 var characters = Characters.new()
 var character_screen
@@ -790,8 +791,26 @@ func make_slot(parent: Node, data: Dictionary, at: Vector2):
 	return cell
 
 func slot_texture(cell: Dictionary) -> Texture2D:
-	if cell["place"] == "skill":return town.loader.texture(town.loader.data["ui"]["active_skills"][cell["id"]])
+	if cell["place"] == "skill":
+		var active: Dictionary=town.loader.data["ui"].get("active_skills",{})
+		if active.has(cell["id"]):return town.loader.texture(active[cell["id"]])
+		return skill_panel_texture(String(cell["id"]))
 	return windows.item_texture(cell["id"])
+
+func skill_panel_texture(id: String) -> Texture2D:
+	if _skill_panel_textures.has(id):return _skill_panel_textures[id]
+	if _skill_panel_icons.is_empty():
+		var doc = JSON.parse_string(FileAccess.get_file_as_string("res://data/skill_catalog.json"))
+		for skill: Dictionary in doc.get("skills",[]):
+			var local_id := String(skill.get("local_id",""))
+			if local_id != "":_skill_panel_icons[local_id] = String(skill.get("icon",""))
+	var relative := String(_skill_panel_icons.get(id,""))
+	var texture: Texture2D = null
+	if relative != "":
+		var image := Image.load_from_file(ProjectSettings.globalize_path("res://assets_local/skill_panel/"+relative))
+		if image != null:texture = ImageTexture.create_from_image(image)
+	_skill_panel_textures[id] = texture
+	return texture
 
 func slot_hover(cell: Control) -> void:
 	if cell.cell.get("id", "") == "":return
@@ -857,7 +876,8 @@ func forward_battle_key(code: int, pressed: bool, echo := false) -> void:
 	if index >= 0:
 		var id: String = session.profile["skill_slots"][index]
 		if id == "":return
-		code = SKILL_CODES[id]
+		combat.submit_skill(index, pressed, echo)
+		return
 	combat.submit_key(code, pressed, echo)
 
 func use_potion() -> void:

@@ -1,6 +1,6 @@
 {
  "schema": "dnf_numbers/1",
- "revision": 1,
+ "revision": 2,
  "evidence": "E-ADAPT: configurable functional baseline, not verified original balance. Original skill rows remain in the content pack.",
  "progression": {
   "level_cap": 60,
@@ -548,11 +548,21 @@
  ],
  "skill_defaults": {
   "upper": 1,
-  "draw": 1,
-  "triple": 1,
-  "rage_slash": 1,
-  "buff": 1,
-  "guard": 1,
+  "hardattack": 1,
+  "draw": 0,
+  "triple": 0,
+  "rage_slash": 0,
+  "buff": 0,
+  "guard": 0,
+  "moonlight": 0,
+  "charge_crash": 0,
+  "physical_crit_up": 0,
+  "hp_source": 0,
+  "short_sword_mastery": 0,
+  "blade_mastery": 0,
+  "heavy_sword_mastery": 0,
+  "weapon_mastery_up": 0,
+  "bloody_vigorous": 0,
   "physical_mastery": 0
  },
  "skills": {
@@ -561,21 +571,32 @@
    "path": "skill/swordman/upperslash.skl",
    "max_level": 10,
    "cost": 20,
-   "speed": "attack"
+   "speed": "attack",
+   "active": false
+  },
+  "hardattack": {
+   "name": "鬼斩",
+   "path": "skill/swordman/hardattack.skl",
+   "max_level": 50,
+   "cost": 15,
+   "speed": "attack",
+   "active": true
   },
   "draw": {
    "name": "拔刀斩",
    "path": "skill/swordman/momentaryslash.skl",
    "max_level": 50,
    "cost": 40,
-   "speed": "attack"
+   "speed": "attack",
+   "active": true
   },
   "triple": {
    "name": "三段斩",
    "path": "skill/swordman/tripleslash.skl",
    "max_level": 50,
    "cost": 15,
-   "speed": "attack"
+   "speed": "attack",
+   "active": true
   },
   "rage_slash": {
    "name": "十字斩",
@@ -583,6 +604,7 @@
    "max_level": 50,
    "cost": 15,
    "speed": "attack",
+   "active": true,
    "on_hit": [
     {
      "id": "bleed",
@@ -591,24 +613,194 @@
    ]
   },
   "buff": {
-   "name": "暴走",
+   "name": "血之狂暴",
    "path": "skill/swordman/frenzy.skl",
    "max_level": 20,
    "cost": 25,
-   "speed": "cast"
+   "speed": "cast",
+   "active": true,
+   "effect_id": "frenzy"
   },
   "guard": {
    "name": "格挡",
+   "path": "skill/swordman/guard.skl",
    "max_level": 5,
    "cost": 20,
    "speed": "attack",
+   "active": true,
    "guard_factor": 0.2,
    "guard_per_level": 0.02
   },
-  "physical_mastery": {
-   "name": "基础力量精通",
+  "moonlight": {
+   "name": "月光斩",
+   "path": "skill/swordman/moonlightslash.skl",
+   "max_level": 50,
+   "cost": 20,
+   "speed": "attack",
+   "active": true
+  },
+  "charge_crash": {
+   "name": "破军升龙击",
+   "path": "skill/swordman/chargecrash.skl",
+   "max_level": 50,
+   "cost": 30,
+   "speed": "attack",
+   "active": true
+  },
+  "physical_crit_up": {
+   "name": "物理暴击",
+   "path": "skill/swordman/physicalcriticalhitup.skl",
    "max_level": 10,
    "cost": 20,
+   "active": false,
+   "passive": [
+    {
+     "stat": "physical_crit",
+     "op": "add",
+     "value": 0,
+     "level_row": 0,
+     "scale": 0.001
+    }
+   ]
+  },
+  "hp_source": {
+   "name": "生命之源",
+   "path": "skill/swordman/basichpmaxup.skl",
+   "max_level": 20,
+   "cost": 20,
+   "active": false,
+   "passive": [
+    {
+     "stat": "hp_max",
+     "op": "add",
+     "value": 0,
+     "level_row": 0,
+     "scale": 1.0
+    }
+   ]
+  },
+  "short_sword_mastery": {
+   "name": "短剑精通",
+   "path": "skill/swordman/shortswordmastery.skl",
+   "max_level": 30,
+   "cost": 20,
+   "active": false,
+   "passive": [
+    {
+     "stat": "physical_attack",
+     "op": "add",
+     "value": 0,
+     "level_row": 0,
+     "scale": 0.1,
+     "weapon": "shortsword"
+    },
+    {
+     "stat": "magical_attack",
+     "op": "add",
+     "value": 0,
+     "level_row": 0,
+     "scale": 0.1,
+     "weapon": "shortsword"
+    },
+    {
+     "stat": "hit",
+     "op": "add",
+     "value": 0,
+     "level_row": 1,
+     "scale": 0.001,
+     "weapon": "shortsword"
+    }
+   ]
+  },
+  "blade_mastery": {
+   "name": "太刀精通",
+   "path": "skill/swordman/blademastery.skl",
+   "max_level": 30,
+   "cost": 20,
+   "active": false,
+   "passive": [
+    {
+     "stat": "physical_attack",
+     "op": "add",
+     "value": 0,
+     "level_row": 0,
+     "scale": 0.1,
+     "weapon": "katana"
+    },
+    {
+     "stat": "magical_attack",
+     "op": "add",
+     "value": 0,
+     "level_row": 1,
+     "scale": 0.1,
+     "weapon": "katana"
+    },
+    {
+     "stat": "hit",
+     "op": "add",
+     "value": 0,
+     "level_row": 2,
+     "scale": 0.001,
+     "weapon": "katana"
+    }
+   ]
+  },
+  "heavy_sword_mastery": {
+   "name": "巨剑精通",
+   "path": "skill/swordman/heavyswordmastery.skl",
+   "max_level": 30,
+   "cost": 20,
+   "active": false,
+   "passive": [
+    {
+     "stat": "physical_attack",
+     "op": "add",
+     "value": 0,
+     "level_row": 0,
+     "scale": 0.1,
+     "weapon": "greatsword"
+    },
+    {
+     "stat": "magical_attack",
+     "op": "add",
+     "value": 0,
+     "level_row": 1,
+     "scale": 0.1,
+     "weapon": "greatsword"
+    },
+    {
+     "stat": "hit",
+     "op": "add",
+     "value": 0,
+     "level_row": 2,
+     "scale": 0.001,
+     "weapon": "greatsword"
+    }
+   ]
+  },
+  "weapon_mastery_up": {
+   "name": "武器奥义",
+   "path": "skill/swordman/weaponmasteryup.skl",
+   "max_level": 30,
+   "cost": 20,
+   "active": false,
+   "mastery_bonus": true,
+   "mastery_levels_per_rank": 4
+  },
+  "bloody_vigorous": {
+   "name": "血气旺盛",
+   "path": "skill/swordman/bloodyvigorous.skl",
+   "max_level": 1,
+   "cost": 20,
+   "active": false,
+   "gorecross_bleed_chance": 0.4
+  },
+  "physical_mastery": {
+   "name": "基础力量精通（兼容）",
+   "max_level": 10,
+   "cost": 20,
+   "active": false,
+   "legacy": true,
    "passive": [
     {
      "stat": "strength",
@@ -620,7 +812,7 @@
  },
  "effects": {
   "frenzy": {
-   "name": "暴走",
+   "name": "血之狂暴",
    "duration_ms": 8000,
    "stacking": "refresh",
    "max_stacks": 1,
@@ -705,10 +897,22 @@
   }
  },
  "skill_index": {
+  "1": "guard",
+  "5": "hardattack",
   "46": "upper",
   "9": "draw",
   "8": "triple",
-  "64": "rage_slash"
+  "64": "rage_slash",
+  "12": "short_sword_mastery",
+  "13": "blade_mastery",
+  "14": "heavy_sword_mastery",
+  "27": "weapon_mastery_up",
+  "63": "bloody_vigorous",
+  "68": "charge_crash",
+  "76": "buff",
+  "77": "moonlight",
+  "186": "physical_crit_up",
+  "195": "hp_source"
  },
  "growtype_index": {
   "swordman": 0,

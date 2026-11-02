@@ -61,6 +61,11 @@ OBJECTS = {
 # Player motions used by the trial skills that the runtime manifest does not carry yet.
 # Frames index the same 210-pose body/weapon atlases (all <= 209).
 PLAYER_CLIPS = {
+    'hardattack': 'character/swordman/animation/hardattack.ani',
+    'moonlightslash1': 'character/swordman/animation/moonlightslash1.ani',
+    'moonlightslash2': 'character/swordman/animation/moonlightslash2.ani',
+    'chargecrashdash': 'character/swordman/animation/chargecrashdash.ani',
+    'chargecrashupper': 'character/swordman/animation/chargecrashupper.ani',
     'tripleslash1': 'character/swordman/animation/tripleslash1.ani',
     'tripleslash2': 'character/swordman/animation/tripleslash2.ani',
     'tripleslash3': 'character/swordman/animation/tripleslash3.ani',
@@ -68,7 +73,7 @@ PLAYER_CLIPS = {
 }
 # Effects whose opaque pixel extent stands in for an attack box where the original motion has
 # none (DNF-D011). Depth is fixed to the common original box depth (y=-15, d=30). E-ADAPT.
-DERIVED_BOXES = ['upper1', 'triple1', 'triple2', 'triple3', 'gore_slash1', 'gore_slash2']
+DERIVED_BOXES = ['hardattack1', 'upper1', 'triple1', 'triple2', 'triple3', 'gore_slash1', 'gore_slash2']
 DERIVED_DEPTH = (-15, 30)
 # Original swordman ANIs whose attack boxes stand in for motions that carry none (DNF-D011):
 # the short-sword-mastery variants of the same normal attacks / upper slash. E-ADAPT.
@@ -76,6 +81,12 @@ BORROWED = ['character/swordman/effect/animation/shortswordmastery/shortattack1d
             'character/swordman/effect/animation/shortswordmastery/shortattack2dodge.ani',
             'character/swordman/effect/animation/shortswordmastery/shortweaponupperslashafter.ani']
 EFFECTS = {
+    'hardattack1': 'character/swordman/effect/animation/hardattack1.ani',
+    'hardattack2': 'character/swordman/effect/animation/hardattack2.ani',
+    'moonlight1': 'character/swordman/effect/animation/moonlightslash1.ani',
+    'moonlight2': 'character/swordman/effect/animation/moonlightslash2.ani',
+    'charge_dash': 'character/swordman/effect/animation/chargecrash/dash.ani',
+    'charge_upper': 'character/swordman/effect/animation/chargecrash/up-slash.ani',
     'upper1': 'character/swordman/effect/animation/upperslash1.ani',
     'upper2': 'character/swordman/effect/animation/upperslash2.ani',
     'triple1': 'character/swordman/effect/animation/tripleslash/slash1.ani',

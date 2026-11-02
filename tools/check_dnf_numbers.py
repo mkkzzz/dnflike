@@ -83,8 +83,14 @@ def validate(data: dict) -> list[str]:
             continue
         require(number(skill.get('max_level'), 1, 1000, True) and number(skill.get('cost', 0), 0, 10**6, True), f'skills.{key}: invalid rank or cost')
         require(number(data['skill_defaults'].get(key), 0, skill.get('max_level', 0), True), f'skill_defaults.{key}: invalid rank')
+        if skill.get('mastery_bonus'):
+            require(number(skill.get('mastery_levels_per_rank'), 1, 100, True), f'skills.{key}: invalid mastery bonus')
         for mod in skill.get('passive', []):
             modifier(mod, f'skills.{key}.passive')
+            if isinstance(mod, dict):
+                require(not mod.get('weapon') or mod.get('weapon') in ['shortsword', 'katana', 'greatsword'], f'skills.{key}.passive: invalid weapon condition')
+                require(not mod.get('level_row') or number(mod.get('level_row'), 0, 1000, True), f'skills.{key}.passive: invalid source row')
+                require(number(mod.get('scale', 1)), f'skills.{key}.passive: invalid source scale')
         for parent, rank in skill.get('requires', {}).items():
             require(parent in data['skills'] and number(rank, 1, integer=True), f'skills.{key}: invalid prerequisite')
         for effect in skill.get('on_hit', []):
@@ -105,6 +111,7 @@ def validate(data: dict) -> list[str]:
     for key in ['hp_per_level', 'attack_per_level', 'defense_per_level']:
         require(number(data['monsters'].get(key), 0), f'monsters.{key} must be non-negative')
     require(isinstance(data['monsters'].get('difficulty'), dict) and 'normal' in data['monsters']['difficulty'] and all(number(v, 0.000001) for v in data['monsters']['difficulty'].values()), 'monster difficulty factors must be positive')
+    require(isinstance(data.get('growtype_index'), dict) and data['growtype_index'].get('swordman') == 0, 'growtype_index must map swordman to source column zero')
     return errors
 
 
