@@ -24,6 +24,7 @@ import sys
 from pathlib import Path
 
 ART_DY, MAP_DY = 80, 200
+HUD_TOP = 508
 TOLERANCE = 2.0
 STEP = 8
 GATE_RECT = {
@@ -150,7 +151,8 @@ def walkable_at(room: dict, x: float, y: float, cell_w: float, cell_h: float) ->
 
 def gate_trigger_has_floor(room: dict, point: tuple[float, float], side: str,
                            cell_w: float, cell_h: float,
-                           allowed: set[tuple[int, int]] | None = None) -> bool:
+                           allowed: set[tuple[int, int]] | None = None,
+                           maximum_canvas_y: float | None = None) -> bool:
     grid = room['walk_grid']
     if not grid:
         return False
@@ -162,6 +164,8 @@ def gate_trigger_has_floor(room: dict, point: tuple[float, float], side: str,
     for row in range(min_row, max_row + 1):
         for col in range(min_col, min(max_col, len(grid[row]) - 1) + 1):
             if grid[row][col] != 0 or (allowed is not None and (col, row) not in allowed):
+                continue
+            if maximum_canvas_y is not None and (row + 0.5) * cell_h + MAP_DY >= maximum_canvas_y:
                 continue
             if inside_gate_trigger((col + 0.5) * cell_w - point[0],
                                    (row + 0.5) * cell_h - point[1], side):
@@ -239,6 +243,8 @@ def check_dungeon_routes(game: Path) -> list[str]:
         cell_h = float(manifest['constants']['cell_height'])
         door_count = 0
         adapted_count = 0
+        down_checked = 0
+        down_visible = 0
         for index, route_room in enumerate(rooms):
             side = route_room.get('next', '')
             if not side:
@@ -257,6 +263,14 @@ def check_dungeon_routes(game: Path) -> list[str]:
             if point is None or not gate_trigger_has_floor(room, point, side, cell_w, cell_h, main):
                 fails.append('%s room %d: %s gate has no reachable trigger area' % (name, index, side))
                 continue
+            if side == 'down':
+                down_checked += 1
+                if not gate_trigger_has_floor(
+                        room, point, side, cell_w, cell_h, main, HUD_TOP):
+                    fails.append('%s room %d: down gate has no reachable trigger above the HUD' %
+                                 (name, index))
+                else:
+                    down_visible += 1
             if adapted and not walkable_at(room, point[0], point[1], cell_w, cell_h):
                 fails.append('%s room %d: %s gate anchor %s is not on a pass cell' % (name, index, side, point))
             if index + 1 >= len(rooms):
@@ -280,11 +294,19 @@ def check_dungeon_routes(game: Path) -> list[str]:
                 fails.append('%s room %d: reciprocal %s gate has no reachable trigger area' %
                              (name, index + 1, back))
                 continue
+            if back == 'down':
+                down_checked += 1
+                if not gate_trigger_has_floor(
+                        next_room, back_point, back, cell_w, cell_h, next_main, HUD_TOP):
+                    fails.append('%s room %d: reciprocal down gate has no reachable trigger above the HUD' %
+                                 (name, index + 1))
+                else:
+                    down_visible += 1
             if back_adapted and not walkable_at(next_room, back_point[0], back_point[1], cell_w, cell_h):
                 fails.append('%s room %d: reciprocal %s gate anchor %s is not on a pass cell' %
                              (name, index + 1, back, back_point))
-        print('  %-24s rooms=%2d gates=%2d adapted=%2d' %
-              (name, len(rooms), door_count, adapted_count))
+        print('  %-24s rooms=%2d gates=%2d adapted=%2d down_visible=%d/%d' %
+              (name, len(rooms), door_count, adapted_count, down_visible, down_checked))
     return fails
 
 
