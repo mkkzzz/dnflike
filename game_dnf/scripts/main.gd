@@ -1540,12 +1540,17 @@ func main_walk_cells() -> Dictionary:
 	_walk_main_cells = best
 	return _walk_main_cells
 
-func door_trigger_half(side: String) -> Vector2:
-	return Vector2(48,28) if side in ["up","down"] else Vector2(28,48)
+## Vertical gates extend into the room by 72 px. A down gate at screen y=548 would
+## otherwise trigger at y=520, below the HUD top at 508, so the player cannot see
+## that they entered the doorway.
+func door_trigger_rect(side: String) -> Rect2:
+	match side:
+		"up":return Rect2(-48,-28,96,100)
+		"down":return Rect2(-48,-72,96,100)
+		_:return Rect2(-28,-48,56,96)
 
 func inside_door_trigger(offset: Vector2, side: String) -> bool:
-	var half := door_trigger_half(side)
-	return absf(offset.x) < half.x and absf(offset.y) < half.y
+	return door_trigger_rect(side).has_point(offset)
 
 ## Some source MAPs carry pathgate y values below the 30-row pass grid (e.g. 492/703).
 ## Their raw trigger rectangle is therefore unreachable. Keep valid source anchors, and
@@ -1556,11 +1561,11 @@ func gate_trigger_has_floor(point: Vector2, side: String) -> bool:
 	var constants: Dictionary = map_loader.constants()
 	var cw := float(constants["cell_width"])
 	var ch := float(constants["cell_height"])
-	var half := door_trigger_half(side)
-	var min_col := maxi(0,floori((point.x-half.x)/cw))
-	var max_col := mini((grid[0] as Array).size()-1,floori((point.x+half.x-0.001)/cw))
-	var min_row := maxi(0,floori((point.y-half.y)/ch))
-	var max_row := mini(grid.size()-1,floori((point.y+half.y-0.001)/ch))
+	var trigger := door_trigger_rect(side)
+	var min_col := maxi(0,floori((point.x+trigger.position.x)/cw))
+	var max_col := mini((grid[0] as Array).size()-1,floori((point.x+trigger.end.x-0.001)/cw))
+	var min_row := maxi(0,floori((point.y+trigger.position.y)/ch))
+	var max_row := mini(grid.size()-1,floori((point.y+trigger.end.y-0.001)/ch))
 	var main_cells := main_walk_cells()
 	for row in range(min_row,max_row+1):
 		var cells: Array = grid[row]

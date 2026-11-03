@@ -823,6 +823,32 @@ func run_rooms() -> void:
 	await tap(KEY_ESCAPE)
 	check(not api.paused(),"pause can be resumed")
 	await run_down_gate_fixture()
+	await run_lorien_down_gate_fixture()
+
+func run_lorien_down_gate_fixture() -> void:
+	for room_index: int in [1,3]:
+		api.load_room(room_index,"start")
+		game.room_cleared=true
+		game.door_lock_ms=0.0
+		game.clear_monsters()
+		var point: Vector2=game.door_point("down")
+		game.player["pos"]=Vector2(point.x,250)
+		game.player["state"]="idle"
+		game.player["action"]=""
+		game.player["z"]=0.0
+		game.player["vz"]=0.0
+		var entered_y := 250.0
+		key(KEY_DOWN,true)
+		for i in 90:
+			await ticks(1)
+			if game.room_index==room_index:entered_y=float(game.player["pos"].y)
+			if game.room_index!=room_index:break
+		key(KEY_DOWN,false)
+		await ticks(2)
+		check(game.room_index==room_index+1,"holding down reaches the Lorien lower gate in room %d"%room_index)
+		check(entered_y+200.0<508.0,"Lorien lower gate triggers while the player remains above the HUD in room %d (y=%.1f)"%[room_index,entered_y])
+	api.restart()
+	await ticks(2)
 
 func run_down_gate_fixture() -> void:
 	check(FileAccess.file_exists(DOWN_GATE_FIXTURE),"below-floor gate regression fixture exists")

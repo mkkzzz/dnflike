@@ -26,11 +26,12 @@ from pathlib import Path
 ART_DY, MAP_DY = 80, 200
 TOLERANCE = 2.0
 STEP = 8
-GATE_HALF = {
-    'left': (28.0, 48.0),
-    'right': (28.0, 48.0),
-    'up': (48.0, 28.0),
-    'down': (48.0, 28.0),
+GATE_RECT = {
+    'left': (-28.0, -48.0, 56.0, 96.0),
+    'right': (-28.0, -48.0, 56.0, 96.0),
+    # The room-facing side covers the visible doorway above the 508 px HUD band.
+    'up': (-48.0, -28.0, 96.0, 100.0),
+    'down': (-48.0, -72.0, 96.0, 100.0),
 }
 OPPOSITE = {'left': 'right', 'right': 'left', 'up': 'down', 'down': 'up'}
 ROOT = Path(__file__).resolve().parent.parent
@@ -137,8 +138,8 @@ def points_in(rect: list, points: set[tuple[int, int]]) -> list[tuple[int, int]]
 
 
 def inside_gate_trigger(offset_x: float, offset_y: float, side: str) -> bool:
-    half_x, half_y = GATE_HALF[side]
-    return abs(offset_x) < half_x and abs(offset_y) < half_y
+    x, y, width, height = GATE_RECT[side]
+    return x <= offset_x < x + width and y <= offset_y < y + height
 
 
 def walkable_at(room: dict, x: float, y: float, cell_w: float, cell_h: float) -> bool:
@@ -153,11 +154,11 @@ def gate_trigger_has_floor(room: dict, point: tuple[float, float], side: str,
     grid = room['walk_grid']
     if not grid:
         return False
-    half_x, half_y = GATE_HALF[side]
-    min_col = max(0, math.floor((point[0] - half_x) / cell_w))
-    max_col = min(len(grid[0]) - 1, math.floor((point[0] + half_x - 0.001) / cell_w))
-    min_row = max(0, math.floor((point[1] - half_y) / cell_h))
-    max_row = min(len(grid) - 1, math.floor((point[1] + half_y - 0.001) / cell_h))
+    x, y, width, height = GATE_RECT[side]
+    min_col = max(0, math.floor((point[0] + x) / cell_w))
+    max_col = min(len(grid[0]) - 1, math.floor((point[0] + x + width - 0.001) / cell_w))
+    min_row = max(0, math.floor((point[1] + y) / cell_h))
+    max_row = min(len(grid) - 1, math.floor((point[1] + y + height - 0.001) / cell_h))
     for row in range(min_row, max_row + 1):
         for col in range(min_col, min(max_col, len(grid[row]) - 1) + 1):
             if grid[row][col] != 0 or (allowed is not None and (col, row) not in allowed):
