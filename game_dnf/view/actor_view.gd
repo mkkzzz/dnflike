@@ -1,5 +1,8 @@
 extends Node2D
 ## The simulation supplies one absolute ANI clock. Presentation never advances it.
+const TextureCache = preload("res://view/texture_cache.gd")
+static var _flash_shader: Shader
+
 var bank: Dictionary
 var clips: Dictionary
 var atlas: Texture2D
@@ -21,12 +24,13 @@ func setup(atlas_bank: Dictionary, animation_clips: Dictionary, overrides: Dicti
 	clips = animation_clips
 	pose_banks = overrides
 	pose_atlases.clear()
-	for key: String in overrides:pose_atlases[key] = load(String(overrides[key]["texture"])) as Texture2D
-	atlas = load(String(bank["texture"])) as Texture2D
-	var shader := Shader.new()
-	shader.code = "shader_type canvas_item; uniform float hit_flash=0.0; void fragment(){ vec4 c=texture(TEXTURE,UV)*COLOR; c.rgb=mix(c.rgb,vec3(1.0),hit_flash); COLOR=c; }"
+	for key: String in overrides:pose_atlases[key] = TextureCache.load_texture(String(overrides[key].get("texture","")))
+	atlas = TextureCache.load_texture(String(bank.get("texture","")))
+	if _flash_shader == null:
+		_flash_shader = Shader.new()
+		_flash_shader.code = "shader_type canvas_item; uniform float hit_flash=0.0; void fragment(){ vec4 c=texture(TEXTURE,UV)*COLOR; c.rgb=mix(c.rgb,vec3(1.0),hit_flash); COLOR=c; }"
 	_flash_material = ShaderMaterial.new()
-	_flash_material.shader = shader
+	_flash_material.shader = _flash_shader
 	material = _flash_material
 	queue_redraw()
 
@@ -65,7 +69,8 @@ func present(next_pose: String, ms: float, direction: int, z: float, white: floa
 	height = z
 	flash = white
 	tint = color
-	_flash_material.set_shader_parameter("hit_flash", clampf(flash,0,1))
+	if _flash_material != null:
+		_flash_material.set_shader_parameter("hit_flash", clampf(flash,0,1))
 	for layer in equipment_layers:layer.present(next_pose,ms,direction,z,color)
 	queue_redraw()
 

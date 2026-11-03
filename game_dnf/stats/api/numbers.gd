@@ -10,6 +10,7 @@ const ContentDB = preload("res://content/api/content_db.gd")
 const SKILL_RUNTIME := "res://data/skill_runtime.json"
 static var _config: Dictionary = {}
 static var _content_db
+static var _records: Dictionary = {}
 
 static func config() -> Dictionary:
 	return shared_config().duplicate(true)
@@ -41,11 +42,15 @@ static func is_equipment(id: String) -> bool:
 	return _config["equipment"].has(id)
 
 static func record(id: String) -> Dictionary:
-	var cfg := config()
+	if _records.has(id):
+		return _records[id]
+	var cfg := shared_config()
 	var path: String = cfg["skills"].get(id,{}).get("path","")
 	if path == "":return {}
 	if _content_db == null:_content_db = ContentDB.new()
-	return Dictionary(_content_db.record(path).get("decoded",{})).duplicate(true)
+	var decoded := Dictionary(_content_db.record(path).get("decoded",{}))
+	_records[id] = decoded
+	return decoded
 
 static func normalize(profile: Dictionary) -> void:
 	var cfg := shared_config()

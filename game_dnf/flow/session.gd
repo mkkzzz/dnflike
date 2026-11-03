@@ -18,6 +18,7 @@ var profile: Dictionary = {}
 var state := "town"
 var run: Dictionary = {}
 var result: Dictionary = {}
+var _runtime_stats_cache: Dictionary = {}
 
 func _init() -> void:
 	profile = {"schema": 1, "name": "冒险家", "level": 1, "xp": 0, "gold": 300,
@@ -38,6 +39,7 @@ func quest_command(kind: String, payload: Dictionary, context: Dictionary) -> Di
 	context["in_town"] = state == "town"
 	var response: Dictionary=quests.command(profile,kind,payload,context,grant_quest_reward)
 	if response.get("ok",false):
+		invalidate_stats()
 		var automatic:=advance_auto_quests()
 		if not automatic.get("ok",false):return automatic
 		response["auto_changed"]=automatic.get("changed",[])
@@ -52,6 +54,7 @@ func service_command(kind: String, payload: Dictionary, context: Dictionary) -> 
 	if needed=="" or not context.get("nearby",false) or needed not in town_world.data["npcs"].get(npc,{}).get("services",[]):return reject("请走到提供该服务的NPC身旁")
 	var item: String=Inventory.definition(profile,String(payload.get("uid",""))) if kind=="services.disassemble" else ""
 	var response: Dictionary=Services.command(profile,kind,payload)
+	if response.get("ok",false):invalidate_stats()
 	if response.get("ok",false) and kind=="services.disassemble":
 		var changed=ingest_quest_event({"type":"item.disassembled","event_id":"service:"+String(payload["transaction"]),"item":item,"npc":npc})
 		response["quest_changed"]=changed
@@ -125,17 +128,27 @@ func snapshot() -> Dictionary:
 		"result": result.duplicate(true), "stats": stats()}
 
 func stats() -> Dictionary:
-	Numbers.normalize(profile)
-	var result: Dictionary = Numbers.combat_spec(profile)
-	result["hp"] = result["hp_max"]
-	result["mp"] = result["mp_max"]
-	result["damage_multiplier"] = float(CATALOG.ITEMS.get(profile["equipped"], {"multiplier":0.8})["multiplier"])
-	return result
+	return runtime_stats().duplicate(true)
+
+## Read-only cached snapshot for per-frame HUD consumers. Callers must not mutate it.
+func runtime_stats() -> Dictionary:
+	if _runtime_stats_cache.is_empty():
+		Numbers.normalize(profile)
+		var result: Dictionary = Numbers.combat_spec(profile)
+		result["hp"] = result["hp_max"]
+		result["mp"] = result["mp_max"]
+		result["damage_multiplier"] = float(CATALOG.ITEMS.get(profile["equipped"], {"multiplier":0.8})["multiplier"])
+		_runtime_stats_cache = result
+	return _runtime_stats_cache
+
+func invalidate_stats() -> void:
+	_runtime_stats_cache = {}
 
 func xp_needed() -> int:
 	return Numbers.Growth.need(int(profile["level"]),Numbers.shared_config()["progression"])
 
 func command(kind: String, payload: Dictionary = {}) -> Dictionary:
+	invalidate_stats()
 	Numbers.normalize(profile)
 	if kind in ["items.equip","items.unequip","items.split","items.sort","items.lock","items.deposit","items.withdraw","items.recover"]:
 		if state!="town" and kind in ["items.equip","items.unequip","items.deposit","items.withdraw","items.recover"]:return reject("请回城后操作")
@@ -245,7 +258,10 @@ func consume_potion(view: Dictionary={}, tx: String="") -> Dictionary:
 func revive_command(payload: Dictionary) -> Dictionary:
 	if state!="defeated":return reject("当前没有待处理的死亡")
 	var response:=Recovery.revive(profile,run,payload)
-	if response["ok"]:state="battle";run["stats"]=stats()
+	if response["ok"]:
+		state="battle"
+		invalidate_stats()
+		run["stats"]=stats()
 	return response
 
 func add_item(id: String, count: int) -> void:
@@ -253,6 +269,7 @@ func add_item(id: String, count: int) -> void:
 	Inventory.give(profile,id,count,50,true)
 
 func combat_event(event: Dictionary) -> Dictionary:
+	invalidate_stats()
 	if state != "battle" or event.get("run_id") != run.get("id"):return reject("忽略过期战斗事件")
 	match event.get("type", ""):
 		"combat.player_defeated":
@@ -262,6 +279,7 @@ func combat_event(event: Dictionary) -> Dictionary:
 			state="defeated";result={}
 			return {"ok":true}
 		"combat.monster_defeated":
+			var progression: Dictionary = Numbers.shared_config()["progression"]
 			var drops: Array=preload("res://quests/drops.gd").entries(profile,run,event,quests.catalog.definitions)
 			var loot_changed:=Loot.generate(run,event,drops)
 			var quest_changed := false
@@ -271,9 +289,9 @@ func combat_event(event: Dictionary) -> Dictionary:
 				quest_event["dungeon"] = run["dungeon"]
 				quest_event["difficulty"] = run["difficulty"]
 				quest_changed=ingest_quest_event(quest_event)
-			var amount := int(Numbers.config()["progression"]["kill_xp"])
+			var amount := int(progression["kill_xp"])
 			if amount>0:
-				var reward: Dictionary=Numbers.Growth.grant(profile,amount,"kill:"+String(run["id"])+":"+str(event.get("event_id",event.get("entity_id",-1))),Numbers.config()["progression"])
+				var reward: Dictionary=Numbers.Growth.grant(profile,amount,"kill:"+String(run["id"])+":"+str(event.get("event_id",event.get("entity_id",-1))),progression)
 				reward["quest_changed"]=quest_changed
 				reward["loot_changed"]=loot_changed
 				return reward
@@ -311,7 +329,7 @@ func finish_run(won: bool, details: Dictionary) -> Dictionary:
 		quest_changed=award_clear_items() or quest_changed
 		var automatic:=advance_auto_quests()
 		if automatic.get("ok",false) and automatic.get("changed") is Array and not automatic["changed"].is_empty():quest_changed=true
-		result.merge({"gold": 150, "xp": int(Numbers.config()["progression"]["clear_xp"]), "potion": 1}, true)
+		result.merge({"gold": 150, "xp": int(Numbers.shared_config()["progression"]["clear_xp"]), "potion": 1}, true)
 		result["quest_changed"]=quest_changed
 		var damage := int(details.get("damage_taken", 0))
 		result["rank"] = "S" if damage <= 50 else "A" if damage <= 250 else "B"
@@ -404,6 +422,7 @@ func restore(data: Dictionary) -> bool:
 		var details: Dictionary=run["recovery"]["pending"]["stats"].duplicate(true);details["reason"]="death"
 		finish_run(false,details) # No suspended world snapshot: reload ends this adventure without a second penalty.
 	# Interrupted battles return safely to town without reward; run serial is kept.
+	invalidate_stats()
 	return true
 
 static func reject(message: String) -> Dictionary:

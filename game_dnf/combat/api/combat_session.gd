@@ -188,6 +188,31 @@ func read_view() -> Dictionary:
 		"enemies":enemies,"alive_monsters":enemies.size(),"exit_target":exit_target,
 		"room_cleared":game.room_cleared,"finished":game.finished,"victory":game.victory,"paused":game.paused}
 
+## Lightweight per-frame view for HUD/loot consumers. It intentionally omits
+## full numeric sources, learned skills and effect values; those belong to the
+## inspection UI and must not be deep-copied every render tick.
+func read_runtime_view() -> Dictionary:
+	if not _alive() or game.player.is_empty():return {}
+	var p: Dictionary = game.player
+	var enemies: Array = []
+	for enemy: Dictionary in game.monsters:
+		if float(enemy["hp"]) <= 0:continue
+		enemies.append({"id":enemy["id"],"pos":Vector2(enemy["pos"]),"hp":float(enemy["hp"]),"chief":enemy["chief"]})
+	var rooms: Array = game.rules["rooms"]
+	var exit_target := Vector2.ZERO
+	if game.room_cleared and not game.finished:exit_target = game.door_point(String(rooms[game.room_index]["next"]))
+	return {"run_id":game.run_id,"room_id":game.room_id,"room_index":game.room_index,
+		"time_ms":game.elapsed_ms,"death_id":game.last_defeat_id,"invulnerable_ms":float(p["invuln_ms"]),
+		"revive_fx_count":game.view.revive_fx_count,
+		"room":game.room_index+1,"room_count":rooms.size(),"room_name":String(rooms[game.room_index]["name"]),
+		"hp":float(p["hp"]),"hp_max":game.max_hp,"mp":float(p["mp"]),"mp_max":game.max_mp,
+		"pos":Vector2(p["pos"]),"camera_x":roundf(game.view.camera_x),"facing":int(p["facing"]),
+		"player_state":String(p["state"]),"player_z":float(p["z"]),"player_vz":float(p["vz"]),
+		"job":game.job,"weapon":game.weapon,"weapon_item":String(game.view._weapon_item) if game.view._item_appearance_enabled else "",
+		"cooldowns":Dictionary(p["cooldowns"]).duplicate(),"buff_ms":float(p["buff_ms"]),
+		"enemies":enemies,"alive_monsters":enemies.size(),"exit_target":exit_target,
+		"room_cleared":game.room_cleared,"finished":game.finished,"victory":game.victory,"paused":game.paused}
+
 func events():
 	return game.bus if _alive() else null
 

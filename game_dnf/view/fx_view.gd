@@ -1,5 +1,8 @@
 extends Node2D
 ## Original effect timeline: frames, delays, per-frame colour/scale/rotation/blend items.
+const TextureCache = preload("res://view/texture_cache.gd")
+static var _materials: Dictionary = {}
+
 var data: Dictionary
 var atlas: Texture2D
 var clock_ms := 0.0
@@ -17,11 +20,13 @@ var max_ms := -1.0
 var follow := -1
 var fade := 1.0
 var _frame_local := 0.0
+var _blend_mode := -1
 
 func setup(info: Dictionary,direction: int) -> void:
 	data = info
 	facing = direction
-	atlas = load(String(info["atlas"]["texture"])) as Texture2D
+	atlas = TextureCache.load_texture(String(info["atlas"]["texture"]))
+	_blend_mode = -1
 
 func advance(ms: float) -> void:
 	seek(clock_ms+ms)
@@ -50,9 +55,13 @@ func seek(t: float) -> void:
 	if frame.is_empty() and not data["frames"].is_empty():frame = data["frames"][-1]
 	var blend: Dictionary = frame.get("items",{}).get("11",{})
 	var mode := int(blend.get("type",0))
-	var m := CanvasItemMaterial.new()
-	m.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD if mode in [1,2] else CanvasItemMaterial.BLEND_MODE_MIX
-	material = m
+	if mode != _blend_mode:
+		_blend_mode = mode
+		if not _materials.has(mode):
+			var material_for_mode := CanvasItemMaterial.new()
+			material_for_mode.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD if mode in [1,2] else CanvasItemMaterial.BLEND_MODE_MIX
+			_materials[mode] = material_for_mode
+		material = _materials[mode]
 	queue_redraw()
 
 func _draw() -> void:

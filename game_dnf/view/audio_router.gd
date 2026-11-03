@@ -9,8 +9,10 @@ var variants: Dictionary = {}
 var voice_pool: Array = []
 var music: AudioStreamPlayer
 var music_bank: Dictionary = {}
+var music_paths: Dictionary = {}
 var _last: Dictionary = {}
 var _cursor := 0
+const SAME_KEY_THROTTLE_MS := 50
 
 func setup(audio_assets: Dictionary, combat_audio := {}) -> void:
 	for i in 8:
@@ -40,22 +42,29 @@ func start_music(volume_db := -28.0) -> void:
 
 ## 按 data/bgm.json 的键播放原版曲目（曲目已随仓库分发，循环由流自身负责）。
 func play_music(key: String, volume_db := -28.0) -> void:
-	_load_music_bank()
-	if not music_bank.has(key):return
-	if music.stream == music_bank[key] and music.playing:return
+	_ensure_music_manifest()
+	var stream := _music_stream(key)
+	if stream == null:return
+	if music.stream == stream and music.playing:return
 	music.volume_db = volume_db
-	music.stream = music_bank[key]
+	music.stream = stream
 	music.play()
 
-func _load_music_bank() -> void:
-	if not music_bank.is_empty() or not FileAccess.file_exists("res://data/bgm.json"):return
+func _ensure_music_manifest() -> void:
+	if not music_paths.is_empty() or not FileAccess.file_exists("res://data/bgm.json"):return
 	var doc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/bgm.json"))
 	for key: String in doc.get("tracks", {}):
 		var path := "res://assets_local/" + String(doc["tracks"][key]["file"])
 		if not ResourceLoader.exists(path):continue
-		var stream = load(path)
-		if stream is AudioStreamOggVorbis:stream.loop = true
-		music_bank[key] = stream
+		music_paths[key] = path
+
+func _music_stream(key: String) -> AudioStream:
+	if music_bank.has(key):return music_bank[key]
+	if not music_paths.has(key):return null
+	var stream := load(String(music_paths[key])) as AudioStream
+	if stream is AudioStreamOggVorbis:(stream as AudioStreamOggVorbis).loop = true
+	music_bank[key] = stream
+	return stream
 
 ## Release streams before the node leaves so no Ogg playback outlives the scene.
 func _exit_tree() -> void:
@@ -66,6 +75,8 @@ func _exit_tree() -> void:
 		voice.stream = null
 	sound_streams.clear()
 	variants.clear()
+	music_bank.clear()
+	music_paths.clear()
 
 func on_cue(event: Dictionary) -> void:
 	if String(event.get("kind","")) == "sound":play(String(event["key"]))
@@ -77,10 +88,18 @@ func play(key: String) -> void:
 	elif sound_streams.has(key):stream = sound_streams[key]
 	if stream == null:return
 	var now := Time.get_ticks_msec()
-	if now-int(_last.get(key,-1000))<75:return
+	if now-int(_last.get(key,-1000))<SAME_KEY_THROTTLE_MS:return
 	_last[key] = now
-	var voice: AudioStreamPlayer = voice_pool[_cursor%voice_pool.size()]
-	_cursor += 1
+	var voice: AudioStreamPlayer = null
+	for i in voice_pool.size():
+		var candidate := voice_pool[(_cursor+i)%voice_pool.size()] as AudioStreamPlayer
+		if not candidate.playing:
+			voice = candidate
+			_cursor = (_cursor+i+1)%voice_pool.size()
+			break
+	if voice == null:
+		# Never cut a longer line just because the voice pool is momentarily busy.
+		return
 	voice.stream = stream
 	# Conservative peak budget, even before source PCM normalization:
 	# 8*10^(-21/20)+10^(-28/20)=0.753 < 0.86 (assuming peak <= 1).

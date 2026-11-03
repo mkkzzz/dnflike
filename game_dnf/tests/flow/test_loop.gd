@@ -400,6 +400,12 @@ func run() -> void:
 		var view0: Dictionary = game.combat.read_view()
 		var base: Vector2 = Vector2(view0["pos"])
 		var room0 := String(view0["room_id"])
+		var unsafe_view := view0.duplicate(true)
+		unsafe_view["room_cleared"] = false
+		unsafe_view["player_state"] = "idle"
+		unsafe_view["enemies"] = [{"id":999,"pos":Vector2(view0["pos"])+Vector2(30,0)}]
+		check(not game.loot_bridge._can_start_pickup(unsafe_view,true),"X does not get stolen by a drop while an enemy is in pickup reach")
+		check(game.loot_bridge._can_start_pickup(unsafe_view,false),"E remains available for an intentional pickup during combat")
 		var seeds := [["potion", 2], ["gold", 10], ["scrap_iron", 3]]
 		var injected: Array[String] = []
 		for index in seeds.size():

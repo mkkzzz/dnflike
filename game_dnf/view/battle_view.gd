@@ -6,6 +6,7 @@ extends Node2D
 ## exported original Lorien maps (assets_local/native_maps).
 const ActorView = preload("res://view/actor_view.gd")
 const FxView = preload("res://view/fx_view.gd")
+const TextureCache = preload("res://view/texture_cache.gd")
 const AudioRouter = preload("res://view/audio_router.gd")
 const MapStage = preload("res://view/map_stage.gd")
 const Frame = preload("res://view/world_frame.gd")
@@ -64,6 +65,7 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 	_player_clips = player_clips
 	_effects = assets.get("effects",{}).duplicate()
 	_effects.merge(combat_assets.get("effects",{}),true)
+	_warm_render_assets()
 	world = Node2D.new()
 	add_child(world)
 	stage = MapStage.new()
@@ -93,6 +95,27 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 	bus.subscribe("combat.prop_broken", _on_prop_broken)
 	bus.subscribe("combat.appearance_changed", func(e: Dictionary):
 		if int(e["entity_id"])==0 and String(e["weapon"])!=_weapon:_set_weapon(String(e["weapon"])))
+
+## Decode atlases before the first hit/room transition. This moves the one-time
+## cost to battle setup instead of leaving a 20ms stall on the first visual cue.
+func _warm_render_assets() -> void:
+	var paths := {}
+	for effect_info: Dictionary in _effects.values():
+		var atlas: Dictionary = effect_info.get("atlas",{})
+		if atlas.get("texture","") != "":paths[String(atlas["texture"])] = true
+	for bank: Dictionary in _combat.get("objects",{}).values():
+		var atlas: Dictionary = bank.get("atlas",{})
+		if atlas.get("texture","") != "":paths[String(atlas["texture"])] = true
+	for bank: Dictionary in _combat.get("monsters",{}).values():
+		var atlas: Dictionary = bank.get("atlas",{})
+		if atlas.get("texture","") != "":paths[String(atlas["texture"])] = true
+	for bank: Dictionary in _assets.get("players",{}).values():
+		if bank.get("texture","") != "":paths[String(bank["texture"])] = true
+	var locomotion: Dictionary = _combat.get("player_locomotion",{}).get("battle",{})
+	for clips: Dictionary in locomotion.values():
+		for override: Dictionary in clips.values():
+			if override.get("texture","") != "":paths[String(override["texture"])] = true
+	TextureCache.warm(paths.keys())
 
 func _load_revive_assets() -> void:
 	if not FileAccess.file_exists(REVIVE_ASSETS):return

@@ -1,6 +1,6 @@
 extends RefCounted
 ## Dungeon / room title and remaining monsters, under the top monster HP bar.
-## Placeholder G13 (system font).
+## Placeholder G13 (source font, procedurally positioned text).
 const ORDER := 10
 var chrome := true
 

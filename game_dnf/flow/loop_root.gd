@@ -65,6 +65,7 @@ var world_clip: Control
 var town_bgm: AudioStreamPlayer
 var town_amb: AudioStreamPlayer
 var bgm_tracks: Dictionary = {}
+var bgm_paths: Dictionary = {}
 var bgm_scenes: Dictionary = {}
 var bgm_screens: Dictionary = {}
 var bgm_ambience: Dictionary = {}
@@ -78,6 +79,8 @@ var characters = Characters.new()
 var character_screen
 var character_active := false
 var active_character_path := ""
+var _slow_ui_refresh_s := 0.0
+var _profile_save_queued := false
 
 func _ready() -> void:
 	test_mode = "--loop-test" in OS.get_cmdline_user_args()
@@ -208,15 +211,16 @@ func press_combat_key(code: int) -> void:
 
 func _process(delta: float) -> void:
 	var p: Dictionary = session.profile
-	var stat: Dictionary = session.stats()
-	var hp := float(stat["hp"])
-	var mp := float(stat["mp"])
-	var hp_max := hp
-	var mp_max := mp
+	var stat: Dictionary = {}
+	var snap: Dictionary = {}
+	var hp := 0.0
+	var mp := 0.0
+	var hp_max := 1.0
+	var mp_max := 1.0
 	var cooldowns: Dictionary = {}
 	var item_clock:=0.0
 	if is_instance_valid(battle):
-		var snap: Dictionary = combat.read_view()
+		snap = combat.read_runtime_view()
 		hp = float(snap["hp"])
 		mp = float(snap["mp"])
 		hp_max = float(snap["hp_max"])
@@ -224,7 +228,13 @@ func _process(delta: float) -> void:
 		cooldowns = snap.get("cooldowns", {})
 		item_clock=float(snap.get("time_ms",0))
 		status_text.text = skin.chinese("%s  %d / %d" % [snap["room_name"], snap["room"], snap["room_count"]])
-	else:status_text.text = "艾尔文防线  · 方向键移动  E 交谈  · 药剂 ×%d" % int(p["inventory"].get("potion", 0))
+	else:
+		stat = session.runtime_stats()
+		hp = float(stat["hp"])
+		mp = float(stat["mp"])
+		hp_max = hp
+		mp_max = mp
+		status_text.text = "艾尔文防线  · 方向键移动  E 交谈  · 药剂 ×%d" % int(p["inventory"].get("potion", 0))
 	if save_failed:status_text.text = "存档写入失败 · 请检查目录后重试保存"
 	hp_bar.value = hp * 100 / hp_max
 	mp_bar.value = mp * 100 / mp_max
@@ -233,8 +243,9 @@ func _process(delta: float) -> void:
 	windows.update_gauge_tip()
 	info_text.text = "Lv.%d" % int(p["level"])
 	var experience := hud.get_node("experience") as TextureProgressBar
-	experience.value = float(p["xp"]) * 100.0 / session.xp_needed() if session.xp_needed()>0 else 100
-	experience.set_meta("value_text", "经验  %d / %d" % [p["xp"], session.xp_needed()] if session.xp_needed()>0 else "已达等级上限")
+	var xp_needed := session.xp_needed()
+	experience.value = float(p["xp"]) * 100.0 / xp_needed if xp_needed>0 else 100
+	experience.set_meta("value_text", "经验  %d / %d" % [p["xp"], xp_needed] if xp_needed>0 else "已达等级上限")
 	for cell in quick_views:
 		if is_instance_valid(cell):
 			cell.refresh_quantity()
@@ -250,14 +261,17 @@ func _process(delta: float) -> void:
 		counter.text = "%.1f" % remaining if remaining > 0 else ""
 	town.enabled = not transitioning and overlay == "" and session.state == "town" and not debug_is_open()
 	update_bgm()
-	debug_panel.refresh_status()
-	quest_windows.refresh_tracker()
+	if debug_panel.visible:debug_panel.refresh_status()
+	_slow_ui_refresh_s = maxf(0.0,_slow_ui_refresh_s-delta)
+	if _slow_ui_refresh_s <= 0.0:
+		_slow_ui_refresh_s = 0.2
+		quest_windows.refresh_tracker()
 	if notification_seconds > 0:
 		notification_seconds -= delta
 		toast_text.text = skin.chinese(notification)
 		toast_panel.position.y = 4 if overlay=="numbers" else 43
 		toast_panel.visible = notification_seconds > 0 and overlay in ["","numbers","death"]
-	if is_instance_valid(battle) and overlay == "" and not debug_is_open() and combat.read_view()["paused"]:
+	if is_instance_valid(battle) and overlay == "" and not debug_is_open() and bool(snap.get("paused",false)):
 		show_overlay("menu")
 
 func _input(event: InputEvent) -> void:
@@ -342,6 +356,7 @@ func notice(message: String) -> void:
 	notification_seconds = 4
 
 func save_profile() -> bool:
+	_profile_save_queued = false
 	if not character_active:return false
 	if recovery_bridge!=null and not recovery_bridge.pending_death.is_empty():
 		var committed: bool=recovery_bridge.commit_death()
@@ -352,6 +367,22 @@ func save_profile() -> bool:
 	save_failed = not ok
 	notice("进度已保存" if ok else "保存失败，请检查存档目录")
 	return ok
+
+## Combat emits several facts in one frame (xp/loot/durability). Defer and
+## coalesce profile writes so a multi-kill cannot block the render thread N times.
+func request_profile_save() -> void:
+	if _profile_save_queued:return
+	_profile_save_queued = true
+	call_deferred("_flush_profile_save")
+
+func _flush_profile_save() -> void:
+	if not _profile_save_queued:return
+	# Let every deferred damage/durability callback from the triggering frame land
+	# before one final serialization.
+	await get_tree().process_frame
+	if not _profile_save_queued:return
+	_profile_save_queued = false
+	save_profile()
 
 func act(kind: String, payload: Dictionary = {}) -> bool:
 	if transitioning:return false
@@ -494,7 +525,8 @@ func transition_town(portal: String) -> bool:
 
 func sync_number_changes(kind := "numbers.update") -> void:
 	if is_instance_valid(battle) and session.state=="battle":
-		combat.update_numbers(session.stats(),String(session.Numbers.config()["progression"]["level_up_vitals"]) if kind in ["numbers.xp","numbers.level"] else "preserve")
+		session.invalidate_stats()
+		combat.update_numbers(session.runtime_stats(),String(session.Numbers.shared_config()["progression"]["level_up_vitals"]) if kind in ["numbers.xp","numbers.level"] else "preserve")
 	if is_instance_valid(town) and session.state=="town":town.set_equipped_weapon(equipped_weapon_item(),equipped_weapon_shape())
 	build_hotbars()
 
@@ -597,11 +629,11 @@ func on_combat_event(event: Dictionary) -> void:
 	var response: Dictionary = session.combat_event(event)
 	if response["ok"] and event.get("type")=="combat.monster_defeated" and (int(response.get("amount",0))>0 or response.get("quest_changed",false) or response.get("loot_changed",false)):
 		if int(session.profile["level"])>before_level:sync_number_changes("numbers.xp")
-		save_profile()
+		request_profile_save()
 	elif response["ok"] and response.get("quest_changed",false) and session.state!="result":
-		save_profile()
+		request_profile_save()
 	if response["ok"] and session.state == "result":
-		save_profile()
+		request_profile_save()
 		show_overlay("result")
 	if int(session.profile["level"])>before_level:notice("等级提升 · Lv.%d" % int(session.profile["level"]))
 
@@ -717,9 +749,15 @@ func _setup_bgm() -> void:
 	for key: String in doc.get("tracks", {}):
 		var path := "res://assets_local/" + String(doc["tracks"][key]["file"])
 		if not ResourceLoader.exists(path):continue
-		var stream = load(path)
-		if stream is AudioStreamOggVorbis:stream.loop = true
-		bgm_tracks[key] = stream
+		bgm_paths[key] = path
+
+func _music_stream(key: String) -> AudioStream:
+	if bgm_tracks.has(key):return bgm_tracks[key]
+	if not bgm_paths.has(key):return null
+	var stream := load(String(bgm_paths[key])) as AudioStream
+	if stream is AudioStreamOggVorbis:(stream as AudioStreamOggVorbis).loop = true
+	bgm_tracks[key] = stream
+	return stream
 
 ## 三态切换：选人界面用界面曲，城镇用城市场景曲，战斗交给战斗侧（含 BOSS 曲）。
 func update_bgm() -> void:
@@ -736,8 +774,9 @@ func update_bgm() -> void:
 			key = String(bgm_screens.get("select", ""))
 		elif scene != "":
 			key = String(bgm_scenes.get(scene, ""))
-		if key != "" and bgm_tracks.has(key):
-			town_bgm.stream = bgm_tracks[key]
+		var stream := _music_stream(key)
+		if stream != null:
+			town_bgm.stream = stream
 			town_bgm.play()
 		else:
 			town_bgm.stop()
@@ -748,8 +787,9 @@ func update_bgm() -> void:
 		_bgm_ambience = amb
 		var list: Array = bgm_ambience.get(amb, []) if amb != "" else []
 		var pick := String(list[0]) if list.size() > 0 else ""
-		if pick != "" and bgm_tracks.has(pick):
-			town_amb.stream = bgm_tracks[pick]
+		var stream := _music_stream(pick)
+		if stream != null:
+			town_amb.stream = stream
 			town_amb.play()
 		else:
 			town_amb.stop()

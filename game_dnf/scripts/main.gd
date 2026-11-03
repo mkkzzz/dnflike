@@ -16,6 +16,8 @@ const PLAYER_ID := 0
 const OPPOSITE := {"left":"right","right":"left","up":"down","down":"up"}
 ## Double tap window for running, measured from the release of the first tap.
 const RUN_TAP_MS := 240
+## Recovery input is kept briefly so a press during hitstun does not disappear.
+const RECOVERY_INPUT_BUFFER_MS := 120.0
 const Numbers = preload("res://stats/api/numbers.gd")
 const ActorNumbers = preload("res://stats/api/actor_numbers.gd")
 var numeric_player
@@ -341,7 +343,8 @@ func new_player() -> Dictionary:
 		"facing":1,"state":"idle","action":"","stage":0,"clock":0.0,"motion_clock":0.0,
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
 		"invuln_ms":0.0,"flash_ms":0.0,"landing_ms":0.0,"buff_ms":0.0,"cooldowns":{},"hits":{},
-		"queued_combo":false,"queued_skill":"","queued_jump":false,"queued_backstep":false,"fx_tag":""}
+		"queued_combo":false,"queued_skill":"","queued_jump":false,"queued_backstep":false,"fx_tag":"",
+		"recovery_code":-1,"recovery_buffer_ms":0.0,"air_attack_used":false,"air_move_speed":0.0}
 
 func emit_player_defeated() -> void:
 	var event: Dictionary=bus.emit("combat.player_defeated",flow_payload())
@@ -573,12 +576,31 @@ func buffering(code: int) -> void:
 		if id != "":player["queued_skill"] = id
 	elif code in [KEY_C,KEY_SPACE] and String(player["action"]) == "upper":player["queued_jump"] = true
 
+func buffer_recovery_input(code: int) -> void:
+	if not (code in [KEY_X,KEY_Z,KEY_C,KEY_SPACE] or skill_slot_index(code) >= 0):return
+	player["recovery_code"] = code
+	player["recovery_buffer_ms"] = RECOVERY_INPUT_BUFFER_MS
+
+func consume_recovery_input() -> int:
+	var code := int(player.get("recovery_code",-1))
+	if code < 0 or float(player.get("recovery_buffer_ms",0.0)) <= 0.0:
+		player["recovery_code"] = -1
+		player["recovery_buffer_ms"] = 0.0
+		return -1
+	player["recovery_code"] = -1
+	player["recovery_buffer_ms"] = 0.0
+	return code
+
 ## Back step (Down + jump): from free ground states, or cancelling the moves the adapt layer lists.
 func backstep_allowed() -> bool:
 	if float(player["z"]) > 0 or float(player["vz"]) > 0:return false
 	var state := String(player["state"])
 	if state in ["idle","move","guard"]:return true
-	return state == "action" and String(player["action"]) in rules["backstep"]["cancels"]
+	if state != "action":return false
+	if String(player["action"]) in rules["backstep"]["cancels"]:return true
+	var stage := action_def()
+	if stage.is_empty() or not stage.has("cancel_at"):return false
+	return float(player["clock"]) >= float(stage["cancel_at"])
 
 func start_backstep() -> void:
 	var b: Dictionary = rules["backstep"]
@@ -598,6 +620,8 @@ func start_backstep() -> void:
 	player["queued_combo"] = false
 	player["queued_skill"] = ""
 	player["queued_jump"] = false
+	player["recovery_code"] = -1
+	player["recovery_buffer_ms"] = 0.0
 	play_sound("backstep")
 
 ## Action-bound effects (slash marks, auras of a move) vanish when the move ends or is cut.
@@ -627,6 +651,7 @@ func step_game(ms: float) -> void:
 		max_mp = float(numeric_player.values["mp_max"])
 	player["invuln_ms"] = maxf(0,float(player["invuln_ms"])-ms)
 	player["flash_ms"] = maxf(0,float(player["flash_ms"])-ms)
+	player["recovery_buffer_ms"] = maxf(0,float(player.get("recovery_buffer_ms",0.0))-ms)
 	if numeric_player == null:player["buff_ms"] = maxf(0,float(player["buff_ms"])-ms)
 	player["landing_ms"] = maxf(0,float(player["landing_ms"])-ms)
 	door_lock_ms = maxf(0,door_lock_ms-ms)
@@ -692,6 +717,12 @@ func step_player(ms: float, move: Vector2) -> void:
 		if backstep_allowed():start_backstep()
 	var state: String = player["state"]
 	var grounded := float(player["z"])==0 and float(player["vz"])<=0
+	if state in ["hurt","air","down"]:
+		for code: int in requests:buffer_recovery_input(code)
+		requests.clear()
+	elif state in ["idle","move","guard","jump"]:
+		var recovery_code := consume_recovery_input()
+		if recovery_code >= 0:requests.push_front(recovery_code)
 	for code: int in requests:
 		if code in [KEY_C,KEY_SPACE]:
 			if held.get(KEY_DOWN,false) and backstep_allowed():
@@ -701,11 +732,16 @@ func step_player(ms: float, move: Vector2) -> void:
 			elif state in ["idle","move","guard"] and grounded:
 				player["vz"] = float(numeric_player.values["jump_power"]) if numeric_player != null else float(table.player["jump_power"])
 				player["air_ms"] = 0.0
+				player["air_attack_used"] = false
+				var takeoff_speed := float(rules["player"]["run_speed"] if run_direction != 0 else rules["player"]["walk_speed"])
+				if numeric_player != null:takeoff_speed *= float(numeric_player.values["move_speed"])
+				player["air_move_speed"] = takeoff_speed
 				player["state"] = "jump"
 				play_sound("jump")
 		elif code == KEY_X:
 			if String(player["state"]) == "action":buffering(code)
-			elif float(player["z"])>0 or float(player["vz"])>0:start_action("air_attack")
+			elif float(player["z"])>0 or float(player["vz"])>0:
+				if not bool(player.get("air_attack_used",false)):start_action("air_attack")
 			# Dash attack only out of an actual run (double-tapped direction, still moving).
 			elif state == "move" and run_direction != 0 and int(move.x) == run_direction:start_action("dash_attack")
 			else:start_action(primary_normal_attack())
@@ -750,6 +786,8 @@ func step_player(ms: float, move: Vector2) -> void:
 		if float(player["z"])==0 and float(player["vz"])<0:
 			player["vz"] = 0.0
 			player["landing_ms"] = 100.0
+			player["air_attack_used"] = false
+			player["air_move_speed"] = 0.0
 			if String(player["state"]) == "jump":player["state"] = "idle"
 			elif String(player["state"]) == "action" and move_def(String(player["action"])).get("air",false):
 				end_action()
@@ -776,7 +814,8 @@ func step_action(ms: float, move: Vector2) -> void:
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
 	if bool(m.get("air",false)) and move.length_squared() > 0:
 		# Jump attacks keep the airborne steering of a plain jump; facing stays locked.
-		var air_speed := float(rules["player"]["walk_speed"])*(float(numeric_player.values["move_speed"]) if numeric_player != null else 1.0)
+		var air_speed := float(player.get("air_move_speed",rules["player"]["walk_speed"]))
+		if air_speed <= 0.0:air_speed = float(rules["player"]["walk_speed"])
 		move_player(Vector2(move.x*air_speed,move.y*air_speed*float(rules["units"]["depth_speed_ratio"]))*ms/1000.0)
 	action_cues(stage,old_clock,clock)
 	apply_player_hits(stage,old_clock,clock)
@@ -853,6 +892,11 @@ func set_input_paused(value: bool) -> void:
 	paused = value
 	held.clear()
 	requests.clear()
+	if not player.is_empty():
+		player["recovery_code"] = -1
+		player["recovery_buffer_ms"] = 0.0
+		run_direction = 0
+		last_direction_release.clear()
 
 func report_defeat(enemy: Dictionary) -> void:
 	if enemy.get("defeat_reported",false):return
@@ -893,6 +937,7 @@ func start_action(name: String, cancel := false) -> bool:
 	if hp_cost > 0:player["hp"] = float(player["hp"])-hp_cost
 	if float(m["cool_ms"]) > 0:player["cooldowns"][name] = float(m["cool_ms"])/1000.0*(float(numeric_player.values["cooldown_rate"]) if numeric_player != null else 1.0)*skill_cooldown_multiplier(name)
 	end_action_fx()
+	if name == "air_attack":player["air_attack_used"] = true
 	player["state"] = "action"
 	player["action"] = name
 	player["queued_combo"] = false

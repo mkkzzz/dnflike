@@ -1,11 +1,12 @@
 extends Node2D
 ## Combat HUD root. Painters in ui/combat/widgets/ are discovered automatically and drawn
 ## in ascending ORDER on this single canvas item. Adding a widget = adding one file.
-## Placeholders still drawn here (system font, program rectangles) are listed in
+## Remaining placeholders (program rectangles/layouts) are listed in
 ## docs/tasks/design_tasks/ws1_combat_fidelity_gaps_v1.md and must be replaced, not extended.
 const WIDGET_DIR := "res://ui/combat/widgets"
+const UIFont = preload("res://ui/flow/ui_font.gd")
 
-var font: SystemFont
+var font: Font
 var atlas: Texture2D
 var items: Dictionary = {}
 var digit_atlas: Texture2D
@@ -21,9 +22,7 @@ var chrome_visible := true
 var trace: Array = []
 
 func setup(ui_assets: Dictionary, digit_bank := {}, monster_hp_bank := {}) -> void:
-	font = SystemFont.new()
-	font.font_names = PackedStringArray(["Microsoft YaHei UI","Microsoft YaHei","Noto Sans CJK SC"])
-	font.font_weight = 500
+	font = UIFont.make()
 	atlas = load(String(ui_assets["texture"])) as Texture2D
 	items = ui_assets["items"]
 	if not digit_bank.is_empty():

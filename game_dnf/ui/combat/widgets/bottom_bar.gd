@@ -1,6 +1,6 @@
 extends RefCounted
 ## Bottom bar: HP/MP orbs, class/weapon, skill slots, key hints.
-## Placeholders G05/G06 (cropped source bar, system font, text skill slots).
+## G05/G06 remaining gaps are the cropped source bar and procedural cooldown/gain text.
 ## Laid out from the canvas given by the view (800×600), bottom-anchored.
 const ORDER := 60
 var chrome := true

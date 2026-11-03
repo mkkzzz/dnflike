@@ -5,8 +5,8 @@ extends RefCounted
 ##   boss    frame 11 (+ cap 12), centred
 ## HP lines use frames 2..6 (red, orange, green, blue, purple); the depleted part of the
 ## current line shows the next line's colour. Face = MOB [face image]; frame 0 marks a kill.
-## Layout offsets are read from the frame pixels (face box, bar slot); name/level text is the
-## placeholder system font (G24). Line count per boss is E-ADAPT.
+## Layout offsets are read from the frame pixels (face box, bar slot); name/level text uses
+## the bundled source font (G24). Line count per boss is E-ADAPT.
 const ORDER := 40
 const LINE_COLORS := ["f2","f3","f4","f5","f6"]
 const STYLES := {

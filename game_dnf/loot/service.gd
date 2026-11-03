@@ -1,8 +1,10 @@
 extends RefCounted
 ## Stable rolls are persisted with the run. A claim updates ownership and receipt together.
 const Inventory=preload("res://items/inventory.gd")
+static var _config: Dictionary = {}
 static func config() -> Dictionary:
-	return JSON.parse_string(FileAccess.get_file_as_string("res://data/loot.json"))
+	if _config.is_empty():_config = JSON.parse_string(FileAccess.get_file_as_string("res://data/loot.json"))
+	return _config
 
 static func generate(run: Dictionary, event: Dictionary, quest_drops: Array=[]) -> bool:
 	var cfg:=config()

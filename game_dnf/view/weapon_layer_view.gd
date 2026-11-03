@@ -1,5 +1,6 @@
 extends Node2D
 ## Native weapon ANI, sampled from the parent's absolute action clock only.
+const TextureCache = preload("res://view/texture_cache.gd")
 var bank: Dictionary={}
 var clips: Dictionary={}
 var atlas: Texture2D
@@ -10,7 +11,7 @@ var tint:=Color.WHITE
 
 func setup(info: Dictionary, flash_material: ShaderMaterial) -> void:
 	bank=info["bank"];clips=info["clips"]
-	atlas=load(String(bank["texture"])) as Texture2D
+	atlas=TextureCache.load_texture(String(bank["texture"]))
 	show_behind_parent=int(info["order"])==650
 	material=flash_material
 

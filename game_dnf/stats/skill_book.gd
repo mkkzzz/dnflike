@@ -26,7 +26,7 @@ static func change(profile: Dictionary, id: String, delta: int, config: Dictiona
 			var grow_index := int(config.get("growtype_index",{}).get(profile["growtype"],0))
 			var cap := int(caps[grow_index]) if grow_index < caps.size() else int(definition["max_level"])
 			var mastery_bonus_ids: Array = config["skills"].get("weapon_mastery_up",{}).get("mastery_fields",[])
-			if definition.get("mastery_bonus_applies", definition.get("mastery",false)) and id in mastery_bonus_ids:
+			if id in mastery_bonus_ids or id.replace("_","") in mastery_bonus_ids:
 				var per_rank := int(config["skills"].get("weapon_mastery_up",{}).get("mastery_levels_per_rank",0))
 				cap += int(profile["skills"].get("weapon_mastery_up",0))*per_rank
 			cap = mini(cap,int(definition["max_level"]))

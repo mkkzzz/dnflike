@@ -131,7 +131,7 @@ static func wear(p: Dictionary, run: Dictionary, event: Dictionary) -> Dictionar
 	if not run.has("wear_seen"):run["wear_seen"]={}
 	if run["wear_seen"].has(key):return {"changed":false,"broken":false}
 	run["wear_seen"][key]=true
-	var broken:=false;var changed:=false
+	var broken:=false;var changed:=false;var save:=false
 	for slot: String in p["equipment"]:
 		if (slot=="weapon")!=(event.get("victim")=="monster"):continue
 		var gear: Dictionary=p["gear"][p["equipment"][slot]]
@@ -141,7 +141,10 @@ static func wear(p: Dictionary, run: Dictionary, event: Dictionary) -> Dictionar
 		if int(gear["wear_progress"])>=threshold:
 			gear["wear_progress"]=0;gear["durability"]=maxi(0,int(gear["durability"])-1)
 			broken=broken or int(gear["durability"])==0
-	return {"changed":changed,"broken":broken}
+			save=true
+	# Accumulating wear_progress is kept in memory; only a durability threshold
+	# needs a disk transaction. The next room/result save still includes progress.
+	return {"changed":changed,"save":save,"broken":broken}
 
 static func death_penalty(p: Dictionary) -> void:
 	for uid: String in p["equipment"].values():p["gear"][uid]["durability"]=maxi(0,int(p["gear"][uid]["durability"])-int(config()["wear"]["death_loss"]))

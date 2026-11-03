@@ -8,6 +8,7 @@ const Frame=preload("res://view/world_frame.gd")
 const LOOT_MANIFEST := "res://assets_local/loot/manifest.json"
 const LOOT_DIR := "res://assets_local/loot/"
 const ICON_BG_TOLERANCE := 0.38
+const X_PICKUP_COMBAT_RADIUS := 140.0
 var game
 var layer: Node2D
 var signature := ""
@@ -163,6 +164,9 @@ func setup(root) -> void:
 	add_child(player)
 	_pickup_audio=player
 	_load_pickup_sounds()
+	# Common drops are decoded before the first kill frame; rare item fields stay lazy.
+	for key in ["beam","gold","potion","scrap_iron","forest_sword"]:
+		if loot_entry(key).size() > 0:loot_sprite_frames(key)
 
 ## 拾取音效（原版 item_pick / coin_pick_01..03）由 bake_loot_sprites.py 复制到
 ## assets_local/loot/audio/；缺失时不播，不影响拾取。
@@ -189,7 +193,7 @@ func _process(_delta: float) -> void:
 	if game==null:return
 	if not is_instance_valid(game.battle) or game.combat==null:
 		signature="";return
-	var view: Dictionary=game.combat.read_view()
+	var view: Dictionary=game.combat.read_runtime_view()
 	if view.is_empty():return
 	if not is_instance_valid(layer):
 		layer=Node2D.new();layer.name="ground_loot";game.battle.add_child(layer);signature=""
@@ -239,14 +243,26 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if game.session.state!="battle" or game.overlay!="" or game.debug_panel.visible:return
 	pickup_nearest();get_viewport().set_input_as_handled()
 
-## 普攻键拾取用：附近有掉落就捡走并返回 true（没有则安静返回 false，让 X 照常出招）。
+## 普攻键拾取用：只有已经站稳、且附近没有贴身敌人时才接管 X。
+## 战斗中用 E 精确拾取，避免 X 在连招/跳攻或敌人贴近时被掉落抢走。
 func try_pickup() -> bool:
 	if game==null or game.combat==null:return false
-	var view: Dictionary=game.combat.read_view()
+	var view: Dictionary=game.combat.read_runtime_view()
 	if view.is_empty() or view.get("paused",true):return false
+	if not _can_start_pickup(view,true):return false
 	var nearest := _nearest_drop(view)
 	if nearest.is_empty():return false
 	return claim(String(nearest["id"]),view,false)
+
+func _can_start_pickup(view: Dictionary, attack_key: bool) -> bool:
+	if view.is_empty() or bool(view.get("finished",false)) or bool(view.get("paused",true)):return false
+	var state := String(view.get("player_state",""))
+	if state not in ["idle","move","guard"] or float(view.get("player_z",0.0)) > 0.0:return false
+	if attack_key and not bool(view.get("room_cleared",false)):
+		var player_pos := Vector2(view.get("pos",Vector2.ZERO))
+		for enemy: Dictionary in view.get("enemies",[]):
+			if Vector2(enemy.get("pos",Vector2.ZERO)).distance_to(player_pos) <= X_PICKUP_COMBAT_RADIUS:return false
+	return true
 
 func _nearest_drop(view: Dictionary) -> Dictionary:
 	var nearest: Dictionary={};var distance:=INF
@@ -260,8 +276,9 @@ func _nearest_drop(view: Dictionary) -> Dictionary:
 
 func pickup_nearest() -> bool:
 	if game.combat==null:return false
-	var view: Dictionary=game.combat.read_view()
+	var view: Dictionary=game.combat.read_runtime_view()
 	if view.is_empty() or view.get("paused",true):return false
+	if not _can_start_pickup(view,false):game.notice("站稳后才能拾取物品");return false
 	var nearest: Dictionary={};var distance:=INF
 	for drop: Dictionary in Loot.pending(game.session.run,String(view["room_id"])):
 		var point:=Vector2(float(drop["position"][0]),float(drop["position"][1]))

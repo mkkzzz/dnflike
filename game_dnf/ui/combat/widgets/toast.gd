@@ -1,5 +1,5 @@
 extends RefCounted
-## Center notice line. Placeholder G13 (program panel, system font).
+## Center notice line. Placeholder G13 (program panel, source font).
 const ORDER := 70
 var chrome := true
 
