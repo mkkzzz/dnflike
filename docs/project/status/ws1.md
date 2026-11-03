@@ -6,10 +6,12 @@
 |---|---|
 | 使用者 | rainmk |
 | 状态 | 已发布 |
-| 正在做 | 副本下行门可达修复已发布，等待 rainmk 实机复核；战斗响应、性能和拾取仍待手感/听感确认；60 级来源、职业范围与组队条件仍待决策 |
-| 产出位置 | `game_dnf/core/`、`game_dnf/content/api/`、`game_dnf/combat/`（action/hit/resolve/ai/data/api/fields）、`game_dnf/quests/`、`game_dnf/data/`（含 `campaign_1_16.json`、60 级基线 JSON）、`game_dnf/view/`、`game_dnf/ui/combat/`、`game_dnf/debug/`、`game_dnf/tests/`（含 `act8/`）、`tools/`、`docs/design/49_单机60级一致基线.md`、`docs/reports/ws1/2026-10/`、`docs/reports/ws1/2026-11/` |
+| 正在做 | 音频生命周期与 UI 音效接入已发布，等待 rainmk 实机试听；NPC 环境语停留不重播，离远再近才重新触发 |
+| 产出位置 | `game_dnf/core/`、`game_dnf/content/api/`、`game_dnf/combat/`（action/hit/resolve/ai/data/api/fields）、`game_dnf/quests/`、`game_dnf/data/`（含 `campaign_1_16.json`、60 级基线 JSON）、`game_dnf/view/`、`game_dnf/ui/combat/`、`game_dnf/ui/flow/`、`game_dnf/town/`、`game_dnf/debug/`、`game_dnf/tests/`（含 `act8/`）、`tools/`、`docs/design/49_单机60级一致基线.md`、`docs/reports/ws1/2026-10/`、`docs/reports/ws1/2026-11/` |
 
 ## 最近完成
+
+- 2026-11-03 发布[音频接入与 NPC 语音修复](../../reports/ws1/2026-11/2026-11-03_音频接入与NPC语音修复.md)：NPC 环境语改为进近单次触发，角色选择/进副本/切图停声，对白与告别共用抢占声道；新增 27 个原版 UI 音效与统一按钮/悬停/窗口/任务/交易路由；城镇环境底噪轮换续播。音频映射检查通过，角色/音频专项 **64项**、完整循环 **434项** 均 `failures=0`；音色与混音仍待实机试听。
 
 - 2026-11-03 发布[副本下行门可达修复](../../reports/ws1/2026-11/2026-11-03_副本下行门可达修复.md)：异常 `pathgate` 锚点按房间主连通地面吸附，触发区与原生门精灵共用坐标；上下门延伸到 HUD 上方触发，洛兰两处下门在屏幕约 475 切房。全正式路线 198 个前向/返程门及 **51/51** 个下门触发方向检查通过，其中 12 个异常锚点走 E-ADAPT。独立战斗 **193项**、完整循环 **410项** 均 `failures=0`。
 
@@ -18,8 +20,6 @@
 - 2026-11-02 发布[60级单机一致基线](../../reports/ws1/2026-11/2026-11-02_60级单机一致基线.md)：新增目标内容白名单生成器、本地权威规则清单和分层对账矩阵；明确不做更新器/联网服务端/社交/PVP，但服务端逻辑本地化。首轮筛出 11 CHR、1,507 SKL、97 DGN、1,404 QST；运行库 309 件 60 级以上装备保留为后续拓展、不计当前 60 内容分母，隐藏阿登源数据为 68/71 级而非现标 58 级。`--check` 和 8 项单测通过。
 
 - 2026-11-02 发布[技能大弹窗与双排快捷栏](../../reports/ws1/2026-11/2026-11-02_技能大弹窗与双排快捷栏.md)：核对原 UI 控件引用和帧像素，772×490 大弹窗露出真实 HUD，QWERTY 上排＋ASDFGH 下排，技能树直接拖入槽位、跨排移动、旧六格存档追加空槽；任务改 J，战斗 E/R 冲突已处理。Headless 数值流程 **112项**、完整循环 **405项**、独立战斗 **162项**、交互 **141项**均 failures=0；全程无可见 Godot，离线预览不冒充实时截图。
-
-- 2026-11-02 发布[原版技能树面板返修](../../reports/ws1/2026-11/2026-11-02_原版技能树面板返修.md)：纠正上一版四页签平铺列表，按 `Swordman_Sp.co` 的 47×67 网格恢复鬼剑士/剑魂/鬼泣/狂战士/阿修罗五个 SP 分支、580×400 滚动树、199×438 原版说明板及 `[next skill]`＋SKL 前置连线；保留学习、退点、重置、转职和拖槽。Headless 数值流程 **84项**、完整循环 **393项**、独立战斗 **156项** 均 failures=0；按用户要求未启动可见 Godot 窗口。
 
 ## 接续时的未完成工作
 

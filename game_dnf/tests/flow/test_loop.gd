@@ -193,6 +193,10 @@ func run() -> void:
 	character_tests.game = game
 	character_tests.host = self
 	await character_tests.run()
+	var audio_tests = load("res://tests/flow/test_audio.gd").new()
+	audio_tests.game = game
+	audio_tests.host = self
+	await audio_tests.run()
 	# Retain the old sample-loop regression alongside the separate original
 	# chapter test. Its adapted task/reward is deliberately not source quest 101.
 	game.town.set_location("elvengard",Vector2(540,230))

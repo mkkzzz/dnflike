@@ -65,7 +65,7 @@ func inventory(parent: Node) -> void:
 	label(parent, "点券", Vector2(27, 435), 10)
 	label(parent, "金币", Vector2(178, 435), 10)
 	for i in 5:
-		var tab := button(parent, ["装备", "消耗品", "材料", "副职业", "任务"][i], Vector2(20 + i * 52, 154), func(): pass, false)
+		var tab := button(parent, ["装备", "消耗品", "材料", "副职业", "任务"][i], Vector2(20 + i * 52, 154), func(): pass, false, "tab")
 		tab.add_theme_font_size_override("font_size", 11)
 		tab.size = Vector2(52 if i < 4 else 50, 22)
 		tab.toggle_mode = true
@@ -120,7 +120,7 @@ func rarity_frame(parent: Node, rarity: int, color: Color) -> void:
 	frame.self_modulate = color
 	frame.set_meta("rarity", rarity)
 
-func sprite_button(parent: Node, group: String, frames: Array, at: Vector2, action: Callable, hint := "") -> TextureButton:
+func sprite_button(parent: Node, group: String, frames: Array, at: Vector2, action: Callable, hint := "", sound_key := "", hover_key := "") -> TextureButton:
 	var view := TextureButton.new()
 	view.position = at
 	view.texture_normal = texture(group, frames[0])
@@ -128,6 +128,8 @@ func sprite_button(parent: Node, group: String, frames: Array, at: Vector2, acti
 	view.texture_pressed = texture(group, frames[2])
 	view.tooltip_text = chinese(hint)
 	view.focus_mode = Control.FOCUS_NONE
+	if sound_key != "":view.set_meta("ui_sound", sound_key)
+	if hover_key != "":view.set_meta("ui_sound_hover", hover_key)
 	view.pressed.connect(action)
 	parent.add_child(view)
 	return view
@@ -199,7 +201,7 @@ func label(parent: Node, text: String, at: Vector2, size := 14, color := Color("
 	parent.add_child(view)
 	return view
 
-func button(parent: Node, text: String, at: Vector2, action: Callable, wide := true) -> Button:
+func button(parent: Node, text: String, at: Vector2, action: Callable, wide := true, sound_key := "", hover_key := "") -> Button:
 	var view := NativeButton.new()
 	view.position = at
 	view.size = Vector2(97 if wide else 56, 23)
@@ -219,6 +221,8 @@ func button(parent: Node, text: String, at: Vector2, action: Callable, wide := t
 		style.content_margin_bottom = 2
 		view.add_theme_stylebox_override(entry[0], style)
 	view.focus_mode = Control.FOCUS_NONE
+	if sound_key != "":view.set_meta("ui_sound", sound_key)
+	if hover_key != "":view.set_meta("ui_sound_hover", hover_key)
 	view.pressed.connect(action)
 	parent.add_child(view)
 	view.configure(font, chinese(text))

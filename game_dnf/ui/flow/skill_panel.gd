@@ -151,7 +151,7 @@ func _navigation(root: Control) -> void:
 	for entry in entries:
 		var tab := int(entry[1])
 		var button: Button = skin.button(root, String(entry[0]), Vector2(16 + tab * 62, 10),
-			func(): game.number_windows.tab = tab; game.show_overlay("numbers"), false)
+			func(): game.number_windows.tab = tab; game.show_overlay("numbers"), false, "tab")
 		button.size = Vector2(56, 23)
 		button.disabled = tab == 1
 	skin.label(root, "技能学习", Vector2(218, 11), 14, Color("f0d18a"))
@@ -281,6 +281,7 @@ func _tree_node(parent: Control, node: Dictionary, skill: Dictionary) -> void:
 	hit.tooltip_text = String(skill["name"])
 	hit.set_meta("skill_id", int(skill["id"]))
 	hit.set_meta("skill_key", key)
+	hit.set_meta("ui_sound", "skill_click")
 	hit.set_meta("tree_x", int(node.get("x", 0)))
 	hit.set_meta("tree_y", int(node.get("y", 0)))
 	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
@@ -443,6 +444,7 @@ func _detail(root: Control) -> void:
 
 func _rank_button(parent: Control, title: String, at: Vector2, symbol: String, action: Callable) -> Button:
 	var hit := Button.new()
+	hit.set_meta("ui_sound", "skill_learn" if symbol == "+" else "skill_click")
 	hit.position = at
 	hit.size = Vector2(18, 16)
 	hit.focus_mode = Control.FOCUS_NONE

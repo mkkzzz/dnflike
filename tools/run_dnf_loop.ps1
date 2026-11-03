@@ -23,6 +23,8 @@ if ($LASTEXITCODE -ne 0) {throw "Game text must use Chinese; Korean text is not 
 # 新增副本/怪物/城镇只要过这四关，运行时不需要逐条写用例。
 & python (Join-Path $PSScriptRoot "pipeline_dnf.py") verify
 if ($LASTEXITCODE -ne 0) {throw "Content pipeline verification failed; see the lines above."}
+& python (Join-Path $PSScriptRoot "check_dnf_audio.py")
+if ($LASTEXITCODE -ne 0) {throw "Audio manifest verification failed; rebake the missing audio package."}
 if (-not (Test-Path -LiteralPath (Join-Path $gamePath "assets_local/manifest.json"))) {
     & python (Join-Path $PSScriptRoot "dnf_asset_store.py") sync
     if ($LASTEXITCODE -ne 0) {throw "Base runtime sync failed."}

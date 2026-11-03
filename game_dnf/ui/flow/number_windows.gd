@@ -23,7 +23,7 @@ func show_window() -> void:
 	node.name = "number_window"
 	for index in 3:
 		var value := index
-		skin.button(node,["角色属性","技能加点","装备管理"][index],Vector2(18+index*115,40),func(): tab=value; page=0; game.show_overlay("numbers"))
+		skin.button(node,["角色属性","技能加点","装备管理"][index],Vector2(18+index*115,40),func(): tab=value; page=0; game.show_overlay("numbers"),true,"tab")
 	if tab == 0:attributes(node)
 	else:equipment(node)
 	skin.label(node,"O 角色成长   K 技能加点   Esc 关闭",Vector2(20,428),11,Color("a59c88"))
@@ -50,8 +50,8 @@ func attributes(node: Control) -> void:
 		var value := float(values.get(id,0))
 		var formatted := "%.1f%%" % (value*100) if id in ["hit","evasion","physical_crit","magical_crit","attack_speed","move_speed","cast_speed","status_resist"] else "%.2f" % value
 		skin.label(node,formatted,Vector2(x+140,y+3),12,Color("a7dd74"))
-	skin.button(node,"上一页",Vector2(20,389),func(): page=maxi(0,page-1); game.show_overlay("numbers"),false)
-	skin.button(node,"下一页",Vector2(130,389),func(): page=mini((keys.size()-1)/18,page+1); game.show_overlay("numbers"),false)
+	skin.button(node,"上一页",Vector2(20,389),func(): page=maxi(0,page-1); game.show_overlay("numbers"),false,"page")
+	skin.button(node,"下一页",Vector2(130,389),func(): page=mini((keys.size()-1)/18,page+1); game.show_overlay("numbers"),false,"page")
 	skin.label(node,"属性来源 · "+String(NAMES.get(selected_stat,selected_stat)),Vector2(479,86),13,Color("f0d18a"))
 	var lines := ""
 	for source: Dictionary in data["sources"].get(selected_stat,[]):
@@ -91,8 +91,8 @@ func equipment(node: Control) -> void:
 		var slot: String = definition["slot"]
 		skin.button(node,"卸下" if equipped else "装备",Vector2(465,y),func():
 			if game.act("numbers.gear_unequip" if equipped else "numbers.gear_equip",{"uid":gear_uid,"slot":slot}):game.show_overlay("numbers"),false)
-	skin.button(node,"上一页",Vector2(20,389),func(): page=maxi(0,page-1); game.show_overlay("numbers"),false)
-	skin.button(node,"下一页",Vector2(130,389),func(): page+=1; game.show_overlay("numbers"),false)
+	skin.button(node,"上一页",Vector2(20,389),func(): page=maxi(0,page-1); game.show_overlay("numbers"),false,"page")
+	skin.button(node,"下一页",Vector2(130,389),func(): page+=1; game.show_overlay("numbers"),false,"page")
 	var text := "已装备部位\n\n"
 	for slot: String in cfg["equipment_slots"]:
 		var uid: String = profile["equipment"].get(slot,"")

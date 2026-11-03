@@ -47,10 +47,19 @@ var entry_latch:=""
 var weapon_shape:="katana"
 var weapon_item:=""
 var item_appearance_enabled:=false
-## NPC 语音（data/npc_voices.json 的 amb 循环）与立绘，按距离触发，靠近才响。
+## NPC 语音与立绘。amb 是“靠近时的一句环境语”，不是持续循环的 BGM；
+## talk/farewell 共用一条对白声道，新的台词会替换尚未播完的旧台词。
 var npc_voices: Dictionary={}
-var npc_players: Dictionary={}
+var ambient_player: AudioStreamPlayer
+var speech_player: AudioStreamPlayer
+var voice_enabled := false
+var ambient_npc := ""
+var speech_npc := ""
+var speech_kind := ""
+var ambient_play_count: Dictionary={}
+var speech_play_count: Dictionary={}
 const NPC_HEAR_RANGE := 150.0
+const NPC_HEAR_EXIT_RANGE := 190.0
 const NPC_VOICE_DB := -16.0
 
 func _ready() -> void:
@@ -73,53 +82,113 @@ func _ready() -> void:
 	set_location("elvengard",ground)
 	_load_npc_voices()
 
-## 读 NPC 语音表：每个 NPC 一个循环播放器，靠近时播放（原版 sounds/npc/*_amb_*）。
+## 读 NPC 语音表。环境语和对话语各用一个共享播放器，避免全城常驻声源。
 func _load_npc_voices() -> void:
 	if not FileAccess.file_exists("res://data/npc_voices.json"):return
 	var doc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/npc_voices.json"))
 	for name: String in doc.get("npcs", {}):
-		var entry: Dictionary = doc["npcs"][name]
-		var amb: Array = entry.get("amb", [])
-		if amb.is_empty():continue
-		var path := "res://assets_local/" + String(amb[0])
-		if not ResourceLoader.exists(path):continue
-		var stream = load(path)
-		if stream is AudioStreamOggVorbis:stream.loop = true
-		var player := AudioStreamPlayer.new()
-		player.stream = stream
-		player.volume_db = NPC_VOICE_DB
-		add_child(player)
-		npc_players[name] = player
-		npc_voices[name] = entry
+		npc_voices[name] = doc["npcs"][name]
+	if npc_voices.is_empty():return
+	ambient_player = AudioStreamPlayer.new()
+	ambient_player.name = "npc_ambient_voice"
+	ambient_player.volume_db = NPC_VOICE_DB
+	add_child(ambient_player)
+	speech_player = AudioStreamPlayer.new()
+	speech_player.name = "npc_speech_voice"
+	speech_player.volume_db = NPC_VOICE_DB
+	add_child(speech_player)
+	speech_player.finished.connect(func(): speech_kind = "")
 
-## 只有玩家走到 NPC 身边才响起，离开即停，避免全城同时播放。
+## 只在玩家进入 NPC 听觉范围时播一句环境语；停留不会重复，离开后才重新触发。
 func _update_npc_voices() -> void:
-	if npc_players.is_empty():return
+	if ambient_player == null:return
+	if not voice_enabled or not enabled or not is_visible_in_tree():
+		ambient_player.stop()
+		return
+	if speech_player != null and speech_player.playing:
+		ambient_player.stop()
+		return
 	var npcs: Dictionary = world.scene(location).get("npcs", {})
-	for name: String in npc_players:
-		if not npcs.has(name):
-			continue
-		var at := World.vec(npcs[name])
-		var near := ground.distance_to(at) <= NPC_HEAR_RANGE
-		var player: AudioStreamPlayer = npc_players[name]
-		if near and not player.playing:player.play()
-		elif not near and player.playing:player.stop()
-	for name: String in npc_players:
-		if not npcs.has(name) and npc_players[name].playing:npc_players[name].stop()
+	var range := NPC_HEAR_EXIT_RANGE if ambient_npc != "" else NPC_HEAR_RANGE
+	var closest := ""
+	var distance := INF
+	for name: String in npc_voices:
+		if not npcs.has(name):continue
+		var candidate_distance := ground.distance_to(World.vec(npcs[name]))
+		if candidate_distance <= range and candidate_distance < distance:
+			closest = name
+			distance = candidate_distance
+	if closest == "":
+		ambient_player.stop()
+		ambient_npc = ""
+		return
+	if closest == ambient_npc:return
+	ambient_npc = closest
+	_play_npc_ambient(closest)
 
-## 对话/告别语音：随机取一条一次性播放（原版 sounds/npc/*_tk_*、*_fw_*）。
-func play_npc_voice(name: String, kind := "talk") -> void:
+func _play_npc_ambient(name: String) -> void:
+	var entry: Dictionary = npc_voices.get(name, {})
+	var list: Array = entry.get("amb", [])
+	if list.is_empty():return
+	var stream := _load_voice_stream(String(list[randi() % list.size()]))
+	if stream == null:return
+	ambient_player.stop()
+	ambient_player.stream = stream
+	ambient_player.play()
+	ambient_play_count[name] = int(ambient_play_count.get(name, 0)) + 1
+
+## 对话/告别语音：随机取一条一次性播放。新的对白打断旧对白和环境语。
+func play_npc_voice(name: String, kind := "talk") -> bool:
+	if speech_player == null:return false
 	var entry: Dictionary = npc_voices.get(name, {})
 	var list: Array = entry.get(kind, [])
-	if list.is_empty():return
-	var path := "res://assets_local/" + String(list[randi() % list.size()])
-	if not ResourceLoader.exists(path):return
-	var player := AudioStreamPlayer.new()
-	player.stream = load(path)
-	player.volume_db = NPC_VOICE_DB
-	add_child(player)
-	player.finished.connect(player.queue_free)
-	player.play()
+	if list.is_empty():return false
+	var stream := _load_voice_stream(String(list[randi() % list.size()]))
+	if stream == null:return false
+	if ambient_player != null:ambient_player.stop()
+	speech_player.stop()
+	speech_player.stream = stream
+	speech_player.play()
+	speech_npc = name
+	speech_kind = kind
+	speech_play_count[kind] = int(speech_play_count.get(kind, 0)) + 1
+	return true
+
+func _load_voice_stream(relative: String) -> AudioStream:
+	if relative == "":return null
+	var path := "res://assets_local/" + relative
+	if not ResourceLoader.exists(path):return null
+	var stream := load(path) as AudioStream
+	if stream is AudioStreamOggVorbis:(stream as AudioStreamOggVorbis).loop = false
+	return stream
+
+func set_voice_enabled(value: bool) -> void:
+	voice_enabled = value
+	if not value and ambient_player != null:ambient_player.stop()
+
+func stop_npc_voices(reset := false) -> void:
+	if ambient_player != null:ambient_player.stop()
+	if speech_player != null:speech_player.stop()
+	if reset:
+		ambient_npc = ""
+		speech_npc = ""
+		speech_kind = ""
+
+func voice_debug() -> Dictionary:
+	var ambient_loop := false
+	if ambient_player != null and ambient_player.stream is AudioStreamOggVorbis:
+		ambient_loop = (ambient_player.stream as AudioStreamOggVorbis).loop
+	return {
+		"enabled": voice_enabled,
+		"ambient_npc": ambient_npc,
+		"ambient_playing": ambient_player != null and ambient_player.playing,
+		"ambient_loop": ambient_loop,
+		"speech_npc": speech_npc,
+		"speech_kind": speech_kind,
+		"speech_playing": speech_player != null and speech_player.playing,
+		"talk_count": int(speech_play_count.get("talk", 0)),
+		"farewell_count": int(speech_play_count.get("farewell", 0)),
+	}
 
 ## 对话立绘：优先 big face，其次 popup/small（原版 .npc 的三张脸）。
 func npc_face(name: String) -> Texture2D:
@@ -184,6 +253,7 @@ func ensure_location(id: String) -> bool:
 
 func set_location(id: String, point:=Vector2.ZERO) -> bool:
 	if not ensure_location(id):return false
+	stop_npc_voices(true)
 	location=id
 	map_root=map_nodes[id]
 	if actor.get_parent()!=map_root:actor.reparent(map_root,false)
@@ -321,6 +391,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 func constrain_ground(point: Vector2) -> Vector2:
 	return world.constrain(location,point)
+
+func _exit_tree() -> void:
+	stop_npc_voices(true)
 
 func draw_caption(value: String, at: Vector2, size:=13, color:=Color("e9d49a")) -> void:
 	at.x-=font.get_string_size(value,HORIZONTAL_ALIGNMENT_LEFT,-1,size).x/2

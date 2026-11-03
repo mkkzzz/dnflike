@@ -78,7 +78,7 @@ func show_window() -> void:
 	var node = game.windows.board(game.modal,"任务",Rect2(112,55,576,416))
 	for i in 3:
 		var index := i
-		var button: Button = game.skin.button(node,["可接受","进行中","已完成"][i],Vector2(17+i*84,41),func():tab=index; selected="";game.show_overlay("quest"),false)
+		var button: Button = game.skin.button(node,["可接受","进行中","已完成"][i],Vector2(17+i*84,41),func():tab=index; selected="";game.show_overlay("quest"),false,"tab")
 		button.size.x = 80
 		if i == tab:button.modulate=Color("ffdb85")
 	game.skin.surface(node,Rect2(16,73,236,288),"quest_list",5)

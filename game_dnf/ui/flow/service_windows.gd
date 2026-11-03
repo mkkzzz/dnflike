@@ -56,8 +56,8 @@ func open() -> void:
 			game.skin.label(node,"%s ×%d · %d金币" % [game.Catalog.ITEMS[id]["name"],Items.count(game.session.profile,uid),entry["price"]],Vector2(57,313+offset*37),10)
 			var sale: String=entry["id"]
 			game.skin.button(node,"回购",Vector2(339,310+offset*37),func():prepare("services.buyback",{"sale":sale}),false).name="buyback_"+sale
-		game.skin.button(node,"上一页",Vector2(18,426),func():page=maxi(0,page-1);game.show_overlay("services"),false)
-		game.skin.button(node,"下一页",Vector2(122,426),func():page+=1;game.show_overlay("services"),false)
+		game.skin.button(node,"上一页",Vector2(18,426),func():page=maxi(0,page-1);game.show_overlay("services"),false,"page")
+		game.skin.button(node,"下一页",Vector2(122,426),func():page+=1;game.show_overlay("services"),false,"page")
 	game.skin.label(node,"金币 %d · 分解不可回购；修理不会解除锁定" % int(game.session.profile["gold"]),Vector2(18,462),10)
 	game.windows.inventory()
 	refresh_detail()

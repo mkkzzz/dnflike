@@ -50,23 +50,20 @@ func dialogue(npc := "linus") -> void:
 	var portrait: TextureRect = skin.image(node, face if face != null else skin.texture("dialog_face"), Vector2(8, -61))
 	portrait.name = npc + "_dialogue_illustration"
 	if face == null:portrait.size = skin.texture("dialog_face").get_size()
-	game.town.play_npc_voice(npc, "talk")
 	skin.label(node, NPC_NAMES.get(npc, npc), Vector2(215, 18), 16, Color("f0d18a"))
 	var line := String(game.town.npc_definition(npc).get("dialogue", ""))
 	if line == "":line = "武器是冒险者的伙伴，出发前可别忘了检查。\n森林里的哥布林越来越多，能帮我去调查一下吗？"
 	skin.label(node, line, Vector2(215, 51), 13)
 	skin.button(node, "委托任务", Vector2(215, 120), func(): game.show_overlay("quest"))
 	skin.button(node, "购买物品", Vector2(325, 120), func(): game.show_overlay("shop"))
-	skin.button(node, "结束对话", Vector2(600, 120), func():
-		game.town.play_npc_voice(npc, "farewell")
-		game.show_overlay(""))
+	skin.button(node, "结束对话", Vector2(600, 120), func(): game.show_overlay(""))
 	skin.close_button(node, Vector2(686, 13), func(): game.show_overlay(""))
 
 func quests() -> void:
 	var node = board(game.modal, "任务", Rect2(112, 55, 576, 416))
 	for i in 3:
 		var tab_index := i
-		var tab: Button = skin.button(node, ["可接受", "进行中", "已完成"][i], Vector2(17 + i * 84, 41), func(): quest_tab = tab_index; game.show_overlay("quest"), false)
+		var tab: Button = skin.button(node, ["可接受", "进行中", "已完成"][i], Vector2(17 + i * 84, 41), func(): quest_tab = tab_index; game.show_overlay("quest"), false, "tab")
 		tab.size.x = 80
 		if i == quest_tab:tab.modulate = Color("ffdb85")
 	skin.surface(node, Rect2(16, 73, 236, 288), "quest_list", 5)
@@ -437,6 +434,8 @@ func dungeon() -> void:
 			Color("f0d18a") if unlocked else Color("8a8578"))
 		var hit := Button.new()
 		hit.set_meta("dungeon_id",id)
+		hit.set_meta("ui_sound","map_select")
+		hit.set_meta("ui_sound_hover","map_hover")
 		hit.flat = true
 		hit.position = locations[i]
 		hit.size = Vector2(168, 78)
@@ -480,13 +479,9 @@ func dungeon() -> void:
 	skin.button(node, "返回城镇", Vector2(631, 528), func(): game.show_overlay(""))
 	skin.label(node, "%d / %d 页 · 共 %d 个地下城" % [game.dungeon_page + 1, pages, choices.size()], Vector2(34, 569), 11)
 	if pages > 1:
-		var previous: TextureButton = skin.sprite_button(node, "select", [3, 4, 5], Vector2(34, 540), func():
-			game.dungeon_page = maxi(0, game.dungeon_page - 1)
-			game.show_overlay("dungeon"))
+		var previous: TextureButton = skin.sprite_button(node, "select", [3, 4, 5], Vector2(34, 540), func(): game.dungeon_page = maxi(0, game.dungeon_page - 1); game.show_overlay("dungeon"), "", "page")
 		previous.name = "dungeon_page_previous"
-		var following: TextureButton = skin.sprite_button(node, "select", [7, 8, 9], Vector2(232, 540), func():
-			game.dungeon_page = mini(pages - 1, game.dungeon_page + 1)
-			game.show_overlay("dungeon"))
+		var following: TextureButton = skin.sprite_button(node, "select", [7, 8, 9], Vector2(232, 540), func(): game.dungeon_page = mini(pages - 1, game.dungeon_page + 1); game.show_overlay("dungeon"), "", "page")
 		following.name = "dungeon_page_next"
 
 func result() -> void:

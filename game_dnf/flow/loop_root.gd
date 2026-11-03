@@ -23,6 +23,7 @@ const UpgradeWindows=preload("res://ui/flow/upgrade_windows.gd")
 const RecoveryBridge=preload("res://flow/recovery_bridge.gd")
 const RecoveryWindows=preload("res://ui/flow/recovery_windows.gd")
 const DurabilityBridge=preload("res://items/durability_bridge.gd")
+const UIAudio=preload("res://ui/flow/ui_audio.gd")
 var service_windows
 var upgrade_windows
 var recovery_bridge
@@ -71,6 +72,9 @@ var bgm_screens: Dictionary = {}
 var bgm_ambience: Dictionary = {}
 var _bgm_scene := ""
 var _bgm_ambience := ""
+var _ambience_index := -1
+var ui_audio
+var conversation_npc := ""
 var skill_catalog
 var _skill_panel_icons: Dictionary = {}
 var _skill_panel_textures: Dictionary = {}
@@ -121,6 +125,10 @@ func _ready() -> void:
 	ui.clip_contents = true
 	ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(ui)
+	ui_audio = UIAudio.new()
+	ui_audio.name = "ui_audio"
+	ui.add_child(ui_audio)
+	ui_audio.setup(ui)
 	build_hud()
 	modal = Control.new()
 	modal.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -399,7 +407,11 @@ func act(kind: String, payload: Dictionary = {}) -> bool:
 	if kind.begins_with("numbers."):
 		sync_number_changes(kind)
 	save_profile()
-	if int(session.profile["level"])>before_level:notice("等级提升 · Lv.%d" % int(session.profile["level"]))
+	if kind == "flow.accept_quest":ui_audio.play("quest_accept")
+	elif kind == "flow.claim_quest":ui_audio.play("quest_complete")
+	if int(session.profile["level"])>before_level:
+		notice("等级提升 · Lv.%d" % int(session.profile["level"]))
+		ui_audio.play("level_up")
 	return true
 
 func lifecycle_action(kind: String, payload: Dictionary) -> bool:
@@ -416,11 +428,20 @@ func item_action(kind: String, payload: Dictionary) -> bool:
 	candidate.profile=session.profile.duplicate(true);candidate.run=session.run.duplicate(true)
 	candidate.state=session.state;candidate.result=session.result.duplicate(true)
 	var response: Dictionary=candidate.command(kind,payload)
-	if not response.get("ok",false):notice(response.get("message","物品操作失败"));return false
+	if not response.get("ok",false):notice(response.get("message","物品操作失败"));ui_audio.play("error");return false
 	if not preload("res://content/api/weapon_appearance.gd").can_display(equipped_weapon_item(candidate.profile)):
-		notice("武器外观资源未就绪，换装未提交");return false
-	if not store.write(candidate):save_failed=true;notice(("技能加点" if kind=="numbers.skill" else "物品变更")+"未提交：存档写入失败，请重试");return false
+		notice("武器外观资源未就绪，换装未提交");ui_audio.play("error");return false
+	if not store.write(candidate):
+		save_failed=true
+		notice(("技能加点" if kind=="numbers.skill" else "物品变更")+"未提交：存档写入失败，请重试")
+		ui_audio.play("error")
+		return false
 	session=candidate;save_failed=false;sync_number_changes(kind)
+	if kind in ["items.equip","items.unequip","numbers.gear_equip","numbers.gear_unequip"]:ui_audio.play("equip")
+	elif kind == "items.buy":ui_audio.play("purchase")
+	elif kind == "slots.move":ui_audio.play("item_drop")
+	elif kind in ["items.split","items.recover"]:ui_audio.play("item_get")
+	elif kind == "numbers.skill":ui_audio.play("skill_learn")
 	if kind=="numbers.skill":notice("技能加点已保存")
 	return true
 
@@ -431,9 +452,19 @@ func service_action(kind: String, payload: Dictionary) -> bool:
 	candidate.state=session.state;candidate.result=session.result.duplicate(true)
 	var npc: String=town.nearest()
 	var response: Dictionary=candidate.service_command(kind,payload,{"npc":npc,"nearby":town.is_npc(npc)})
-	if not response["ok"]:notice(response["message"]);return false
-	if not store.write(candidate):save_failed=true;notice("服务未提交：存档写入失败，请重试");return false
-	session=candidate;save_failed=false;sync_number_changes(kind);notice(response.get("message","操作完成，进度已保存"));return true
+	if not response["ok"]:notice(response["message"]);ui_audio.play("error");return false
+	if not store.write(candidate):save_failed=true;notice("服务未提交：存档写入失败，请重试");ui_audio.play("error");return false
+	session=candidate;save_failed=false;sync_number_changes(kind);notice(response.get("message","操作完成，进度已保存"))
+	var cue := ""
+	if kind == "services.repair":cue = "repair"
+	elif kind == "services.sell":cue = "coin"
+	elif kind == "services.buyback":cue = "purchase"
+	elif kind == "services.disassemble":cue = "item_drop"
+	elif kind == "services.reinforce":
+		cue = "strengthen_success" if String(response.get("message", "")).begins_with("强化成功") else "strengthen_fail"
+	elif kind in ["services.enchant", "services.enchant_clear"]:cue = "strengthen_success"
+	if cue != "":ui_audio.play(cue)
+	return true
 
 func quest_action(kind: String, payload: Dictionary = {}) -> bool:
 	if not character_active or transitioning:return false
@@ -446,15 +477,19 @@ func quest_action(kind: String, payload: Dictionary = {}) -> bool:
 	candidate.result=session.result.duplicate(true)
 	var npc: String=town.nearest() if session.state=="town" else ""
 	var response: Dictionary=candidate.quest_command(kind,payload,{"npc":npc,"nearby":town.is_npc(npc)})
-	if not response.get("ok",false):notice(response.get("message","任务操作失败"));return false
+	if not response.get("ok",false):notice(response.get("message","任务操作失败"));ui_audio.play("error");return false
 	if not store.write(candidate):
 		save_failed=true
 		notice("任务未提交：存档写入失败，请重试")
+		ui_audio.play("error")
 		return false
 	session=candidate
 	save_failed=false
 	sync_number_changes("numbers.xp" if kind=="quest.claim" else kind)
-	if kind=="quest.claim":notice("任务已完成，奖励已保存")
+	if kind=="quest.claim":
+		notice("任务已完成，奖励已保存")
+		ui_audio.play("quest_complete")
+	elif kind=="quest.accept":ui_audio.play("quest_accept")
 	if overlay=="quest":show_overlay("quest")
 	return true
 
@@ -533,12 +568,26 @@ func sync_number_changes(kind := "numbers.update") -> void:
 func show_overlay(which: String) -> void:
 	if not character_active:return
 	if session.state=="defeated" or not recovery_bridge.pending_death.is_empty() or not recovery_bridge.pending_effect.is_empty():which="death"
+	var previous := overlay
 	windows.close_purchase()
 	if session.state == "result" and which == "":which = "result"
 	if which=="quest" and overlay not in ["quest","npc"]:
 		quest_windows.focus_npc=""
 		quest_windows.tab=1 if session.quests.active_count(session.profile)>0 else 0
 	overlay = which
+	if which == "npc" and previous != "npc":
+		var npc: String = String(town.nearest())
+		if town.is_npc(npc) and conversation_npc != npc:
+			conversation_npc = npc
+			town.play_npc_voice(npc, "talk")
+	var ended_conversation := which == "" and conversation_npc != ""
+	if ended_conversation:
+		town.play_npc_voice(conversation_npc, "farewell")
+		conversation_npc = ""
+	if which != previous:
+		if which == "result" and previous != "result":ui_audio.play("result")
+		elif which == "" and previous != "" and previous != "characters" and not ended_conversation:ui_audio.play("window_close")
+		elif previous == "" and which != "":ui_audio.play("window_open")
 	windows.hide_tooltip()
 	hud.visible = which not in ["dungeon", "result"]
 	for child in modal.get_children():
@@ -590,6 +639,8 @@ func depart() -> void:
 	if not act("flow.depart",{"dungeon":selected_dungeon}):return
 	recovery_bridge.reset()
 	show_overlay("")
+	town.set_voice_enabled(false)
+	town.stop_npc_voices(true)
 	town.hide()
 	combat = CombatSession.new()
 	battle = combat.mount(world_clip)
@@ -651,6 +702,7 @@ func return_town() -> void:
 		battle = null
 		combat = null
 	town.show()
+	town.set_voice_enabled(true)
 	show_overlay("")
 	town.set_location(session.profile["town_location"],session.TownWorld.vec(session.profile["town_position"]))
 	notice("回到"+String(town.world.scene(town.location)["name"])+" · " + ("保存失败，请重试" if save_failed else "进度已保存"))
@@ -674,6 +726,11 @@ func menu_panel() -> void:
 func show_character_selection() -> void:
 	if recovery_bridge!=null:recovery_bridge.reset()
 	character_active = false
+	conversation_npc = ""
+	if is_instance_valid(town):
+		town.set_voice_enabled(false)
+		town.stop_npc_voices(true)
+	if is_instance_valid(ui_audio):ui_audio.stop_all()
 	set_debug_open(false)
 	windows.close_purchase()
 	windows.hide_tooltip()
@@ -708,6 +765,8 @@ func enter_character(path: String) -> bool:
 	build_hotbars()
 	world_clip.show()
 	town.show()
+	town.set_voice_enabled(true)
+	town.stop_npc_voices(true)
 	town.inn_return=session.profile.get("inn_return","enter_inn")
 	town.set_equipped_weapon(equipped_weapon_item(),equipped_weapon_shape())
 	if not town.set_location(String(session.profile.get("town_location","elvengard")),session.TownWorld.vec(session.profile["town_position"])):
@@ -741,6 +800,7 @@ func _setup_bgm() -> void:
 	town_amb = AudioStreamPlayer.new()
 	town_amb.volume_db = -26.0
 	add_child(town_amb)
+	town_amb.finished.connect(_play_next_ambience)
 	if not FileAccess.file_exists("res://data/bgm.json"):return
 	var doc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/bgm.json"))
 	bgm_scenes = doc.get("scenes", {})
@@ -751,11 +811,11 @@ func _setup_bgm() -> void:
 		if not ResourceLoader.exists(path):continue
 		bgm_paths[key] = path
 
-func _music_stream(key: String) -> AudioStream:
+func _music_stream(key: String, should_loop := true) -> AudioStream:
 	if bgm_tracks.has(key):return bgm_tracks[key]
 	if not bgm_paths.has(key):return null
 	var stream := load(String(bgm_paths[key])) as AudioStream
-	if stream is AudioStreamOggVorbis:(stream as AudioStreamOggVorbis).loop = true
+	if stream is AudioStreamOggVorbis:(stream as AudioStreamOggVorbis).loop = should_loop
 	bgm_tracks[key] = stream
 	return stream
 
@@ -785,14 +845,27 @@ func update_bgm() -> void:
 		amb = "town" if bgm_scenes.has(scene) else "forest"
 	if amb != _bgm_ambience:
 		_bgm_ambience = amb
-		var list: Array = bgm_ambience.get(amb, []) if amb != "" else []
-		var pick := String(list[0]) if list.size() > 0 else ""
-		var stream := _music_stream(pick)
-		if stream != null:
-			town_amb.stream = stream
-			town_amb.play()
-		else:
-			town_amb.stop()
+		_ambience_index = -1
+		_play_next_ambience()
+
+## 环境底噪按组轮换播放；它和 NPC 人声不是同一类声音，可以自然循环。
+func _play_next_ambience() -> void:
+	if town_amb == null or test_mode:return
+	var list: Array = bgm_ambience.get(_bgm_ambience, []) if _bgm_ambience != "" else []
+	if list.is_empty():
+		town_amb.stop()
+		return
+	var start := randi() % list.size()
+	for offset in list.size():
+		var index := (start + offset) % list.size()
+		if list.size() > 1 and index == _ambience_index:continue
+		var stream := _music_stream(String(list[index]), false)
+		if stream == null:continue
+		_ambience_index = index
+		town_amb.stream = stream
+		town_amb.play()
+		return
+	town_amb.stop()
 
 func sync_debug_pause() -> void:
 	var open := debug_is_open()

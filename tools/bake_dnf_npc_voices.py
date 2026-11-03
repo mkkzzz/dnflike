@@ -1,7 +1,7 @@
 """烘焙 NPC 语音与立绘：`.npc` 的 sound key → 原版 ogg，face 引用 → 原版 PNG。
 
 对照关系（E-PARSE，实测）：
-  `R_NPC_<NAME>_AMB_LOOP`  → sounds/npc/<name>_amb_NN.ogg   站桩环境循环
+  `R_NPC_<NAME>_AMB_LOOP`  → sounds/npc/<name>_amb_NN.ogg   站桩环境语（运行时每次进近播一句）
   `R_NPC_<NAME>_TALK`      → sounds/npc/<name>_tk_NN.ogg    对话
   `R_NPC_<NAME>_FAREWELL`  → sounds/npc/<name>_fw_NN.ogg    告别
   `[small face]` / `[big face]` / `[popup face]` = [img, frame] → 立绘帧

@@ -36,7 +36,9 @@ func center_text(text: String, at: Vector2, width: float, font_size := 12, color
 	return label
 
 func show_roster(message := "") -> void:
+	var leaving_create := creating and message == ""
 	creating = false
+	if leaving_create:game.ui_audio.play("window_close")
 	clear_screen()
 	game.characters.refresh()
 	var records: Array = game.characters.entries
@@ -51,6 +53,7 @@ func show_roster(message := "") -> void:
 		if not occupied:game.skin.image(self, game.skin.texture("characters", 17), at)
 		if active:game.skin.image(self, game.skin.texture("characters", 3), at)
 		var hit := Button.new()
+		hit.set_meta("ui_sound", "character_select")
 		hit.position = at
 		hit.size = Vector2(119, 207)
 		hit.focus_mode = Control.FOCUS_NONE
@@ -81,6 +84,7 @@ func show_roster(message := "") -> void:
 	var create_button: Button = game.skin.button(self, "创建角色", Vector2(46, 537), show_create)
 	create_button.disabled = records.size() >= game.characters.LIMIT
 	enter_button = game.skin.sprite_button(self, "characters", [7, 8, 9], Vector2(646, 516), enter_selected, "进入游戏 Enter")
+	enter_button.set_meta("ui_sound", "character_select")
 	enter_button.texture_disabled = game.skin.texture("characters", 10)
 	enter_button.disabled = selected_path.is_empty()
 	center_text("进入游戏", Vector2(646, 490), 106, 12)
@@ -95,6 +99,7 @@ func select_path(path: String) -> void:
 func show_create() -> void:
 	if game.characters.entries.size() >= game.characters.LIMIT:return
 	creating = true
+	game.ui_audio.play("window_open")
 	clear_screen()
 	game.skin.image(self, game.skin.texture("character_create"), Vector2.ZERO)
 	game.skin.image(self, game.skin.texture("character_create", 38), Vector2.ZERO)
@@ -130,8 +135,10 @@ func create_character() -> void:
 	var response: Dictionary = game.characters.create(name_input.text)
 	if not response["ok"]:
 		message_label.text = response["message"]
+		game.ui_audio.play("error")
 		return
 	selected_path = response["path"]
+	game.ui_audio.play("character_create")
 	show_roster("角色创建成功")
 
 func enter_selected() -> void:

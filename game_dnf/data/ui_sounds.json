@@ -1,0 +1,168 @@
+{
+ "schema": "dnf_ui_sounds/1",
+ "evidence": "原版 sounds/ui/*.ogg 原字节；语义键到文件的映射由运行时统一使用（E-PARSE）",
+ "sounds": {
+  "click": {
+   "file": "ui_audio/click.ogg",
+   "source": "sounds/ui/click1.ogg",
+   "sha256": "de1bab9f3f43f1673b1412ff9adf62fa2d39d253d789d5fa6e355f4365ddd009",
+   "bytes": 9813
+  },
+  "hover": {
+   "file": "ui_audio/hover.ogg",
+   "source": "sounds/ui/mouseover.ogg",
+   "sha256": "be6f57ff03496f1face7e0bda4f6115cd2b4ed07137ce58959278fa25e22a465",
+   "bytes": 6067
+  },
+  "window_open": {
+   "file": "ui_audio/window_open.ogg",
+   "source": "sounds/ui/winshow.ogg",
+   "sha256": "1f344db0af70a668669779e33ca36884ea225df6042140c9a1cf6dd278acc5e3",
+   "bytes": 12319
+  },
+  "window_close": {
+   "file": "ui_audio/window_close.ogg",
+   "source": "sounds/ui/winclose.ogg",
+   "sha256": "1a6050f7d27b8ed187aa027bd2b7985a2960fdc0c8ff245ff30e7b64aa44597a",
+   "bytes": 7028
+  },
+  "tab": {
+   "file": "ui_audio/tab.ogg",
+   "source": "sounds/ui/tabselect.ogg",
+   "sha256": "a96c6eb8155d0dc4a1de319f0b1869483b0fad4f99027616ee643956c0fd5ae7",
+   "bytes": 7662
+  },
+  "character_select": {
+   "file": "ui_audio/character_select.ogg",
+   "source": "sounds/ui/selectcharacter.ogg",
+   "sha256": "dc042478e9ba624ddd74977450c803911da086c1f6ec7d7967fa307887a7170f",
+   "bytes": 8021
+  },
+  "character_create": {
+   "file": "ui_audio/character_create.ogg",
+   "source": "sounds/ui/char_create.ogg",
+   "sha256": "feec048cadd0ef3654288265118b07d32d7bcf3c89ab06be6df2045caa8a9bb3",
+   "bytes": 48991
+  },
+  "text_input": {
+   "file": "ui_audio/text_input.ogg",
+   "source": "sounds/ui/write_char.ogg",
+   "sha256": "a9689b8946dbb371dc800e370ae90cd0332d0d06fc5a8611218104950fdc2227",
+   "bytes": 6680
+  },
+  "quest_accept": {
+   "file": "ui_audio/quest_accept.ogg",
+   "source": "sounds/ui/quest_accept.ogg",
+   "sha256": "09fe59036e5085e4be5aa2a3a1c201c68b495ffcc1259be62bd178d3ecff050c",
+   "bytes": 21941
+  },
+  "quest_complete": {
+   "file": "ui_audio/quest_complete.ogg",
+   "source": "sounds/ui/qcomplete1.ogg",
+   "sha256": "bae0de798401fdb27cf51e07ace7386dd50c9fc5f82c3d0d96017f3a572737a4",
+   "bytes": 29012
+  },
+  "item_get": {
+   "file": "ui_audio/item_get.ogg",
+   "source": "sounds/ui/get_item.ogg",
+   "sha256": "c01918a0b029b7297cd366afa2af733dd3b709c09dcc9bd70ae39701a4024dee",
+   "bytes": 16137
+  },
+  "item_drop": {
+   "file": "ui_audio/item_drop.ogg",
+   "source": "sounds/ui/icondrop.ogg",
+   "sha256": "5cf77a265b88bfeaa55ae4bca6728d88d6cb43344b0794e1b9abbc41394dc49c",
+   "bytes": 5698
+  },
+  "purchase": {
+   "file": "ui_audio/purchase.ogg",
+   "source": "sounds/ui/buy_item.ogg",
+   "sha256": "566ca5254c5864bd9e260af975d648b15236003a6f6ef48c643f7a00b14c22e1",
+   "bytes": 23113
+  },
+  "coin": {
+   "file": "ui_audio/coin.ogg",
+   "source": "sounds/ui/coin_in.ogg",
+   "sha256": "6b01571834cf7b97695e06f53c8ff9e11b99fc8094f58d964b4210f7b3939db8",
+   "bytes": 31257
+  },
+  "repair": {
+   "file": "ui_audio/repair.ogg",
+   "source": "sounds/ui/repair.ogg",
+   "sha256": "a77567d2e92c471df937d7c524d2a1dff5861c3e21feeecc7e116602d87fbca5",
+   "bytes": 8616
+  },
+  "strengthen_success": {
+   "file": "ui_audio/strengthen_success.ogg",
+   "source": "sounds/ui/strengthen_success.ogg",
+   "sha256": "0ee4eef8cc80d96bfd56bd885418dbd8106751dd168dc02df470a258d76dbe8a",
+   "bytes": 38771
+  },
+  "strengthen_fail": {
+   "file": "ui_audio/strengthen_fail.ogg",
+   "source": "sounds/ui/strengthen_fail.ogg",
+   "sha256": "e4d381cc9c3f3d82a1f1f3b07f898dbafc08b2b52fdf75a3e25d92472422155c",
+   "bytes": 37728
+  },
+  "level_up": {
+   "file": "ui_audio/level_up.ogg",
+   "source": "sounds/ui/levup.ogg",
+   "sha256": "2f5fb1bc317c78acd994c8233b91792f83382d1d326d3689e5281ffda6a20184",
+   "bytes": 33306
+  },
+  "result": {
+   "file": "ui_audio/result.ogg",
+   "source": "sounds/ui/result_flash.ogg",
+   "sha256": "ab7027ceee3bf9459685e5bf6bae29f613aa4865e7ffa3a86d2f77ce346fc129",
+   "bytes": 15277
+  },
+  "error": {
+   "file": "ui_audio/error.ogg",
+   "source": "sounds/ui/alert_1.ogg",
+   "sha256": "795d7d7a265a7cf4ee44d704d656ab3c2e5cb62982af11fb767b9d76df4d68fd",
+   "bytes": 6468
+  },
+  "map_select": {
+   "file": "ui_audio/map_select.ogg",
+   "source": "sounds/ui/map_select.ogg",
+   "sha256": "c75e977ff039083bf3c4e056f2ba98ba263eb4ce6e25c51a0f86faca2ea7ec30",
+   "bytes": 7059
+  },
+  "map_hover": {
+   "file": "ui_audio/map_hover.ogg",
+   "source": "sounds/ui/map_mouse.ogg",
+   "sha256": "dd73429593110ded0b40cd1831a94ce361bc0ccb3d26831f3ab4a96c74f7b314",
+   "bytes": 5854
+  },
+  "page": {
+   "file": "ui_audio/page.ogg",
+   "source": "sounds/ui/scrollarrow.ogg",
+   "sha256": "1d892e97af13ee29aaed060ab557f1bb55ea2544577e99016cca9a3d26f0b07d",
+   "bytes": 5030
+  },
+  "skill_click": {
+   "file": "ui_audio/skill_click.ogg",
+   "source": "sounds/ui/skill_click.ogg",
+   "sha256": "a64f1acb3c0ec8b5194a6c392a7e9d715d6061a85d53f2287fc6403748c29b93",
+   "bytes": 10268
+  },
+  "skill_move": {
+   "file": "ui_audio/skill_move.ogg",
+   "source": "sounds/ui/skill_move.ogg",
+   "sha256": "673b880104070ae72edd222e820e97631c361241ee1846f6cb084495eea7f36f",
+   "bytes": 10379
+  },
+  "skill_learn": {
+   "file": "ui_audio/skill_learn.ogg",
+   "source": "sounds/ui/skill_learn.ogg",
+   "sha256": "9df7689f8c2ea8abecd978cb23d50086e32cecd8a7c035507bc5ae3f28cbfdbc",
+   "bytes": 36474
+  },
+  "equip": {
+   "file": "ui_audio/equip.ogg",
+   "source": "sounds/ui/iconset.ogg",
+   "sha256": "2ab3c31296ebeaaf2e4118ff5d3c520621be0785ec61a064264e8d789956e7b9",
+   "bytes": 8187
+  }
+ }
+}
