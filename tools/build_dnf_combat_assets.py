@@ -37,7 +37,7 @@ from dnf_locomotion import build as build_locomotion
 OUT = ROOT / 'game_dnf/assets_local/combat'
 ACTIVE_OUT = OUT
 SCHEMA = 'dnf_combat_assets/1'
-BUILD_VERSION = 6
+BUILD_VERSION = 7
 SKILL_RUNTIME = ROOT / 'game_dnf/data/skill_runtime.json'
 
 MONSTERS = {
@@ -63,6 +63,7 @@ OBJECTS = {
 # Player motions used by the trial skills that the runtime manifest does not carry yet.
 # Frames index the same 210-pose body/weapon atlases (all <= 209).
 PLAYER_CLIPS = {
+    'getitem': 'character/swordman/animation/getitem.ani',
     'hardattack': 'character/swordman/animation/hardattack.ani',
     'moonlightslash1': 'character/swordman/animation/moonlightslash1.ani',
     'moonlightslash2': 'character/swordman/animation/moonlightslash2.ani',
@@ -83,6 +84,8 @@ BORROWED = ['character/swordman/effect/animation/shortswordmastery/shortattack1d
             'character/swordman/effect/animation/shortswordmastery/shortattack2dodge.ani',
             'character/swordman/effect/animation/shortswordmastery/shortweaponupperslashafter.ani']
 EFFECTS = {
+    'item_heal': 'common/commoneffect/animation/heal.ani',
+    'item_fastheal': 'common/commoneffect/animation/fastheal.ani',
     'hardattack1': 'character/swordman/effect/animation/hardattack1.ani',
     'hardattack2': 'character/swordman/effect/animation/hardattack2.ani',
     'moonlight1': 'character/swordman/effect/animation/moonlightslash1.ani',

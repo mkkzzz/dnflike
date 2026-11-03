@@ -33,8 +33,12 @@ func run() -> void:
 	var before:=JSON.stringify(game.session.serialize());var hp: float=game.combat.read_view().hp
 	game.store.path="res://data/recovery.json/cannot_write.json";await tap(KEY_1)
 	check(game.save_failed and JSON.stringify(game.session.serialize())==before and game.combat.read_view().hp<=hp,"actual healing hotkey rolls back item and cooldown when disk fails")
-	game.store.path=path;hp=game.combat.read_view().hp;await tap(KEY_1)
+	game.store.path=path;hp=game.combat.read_view().hp
+	var cue_count:int=game.combat.events().events_of("combat.cue").size()
+	await tap(KEY_1)
 	check(game.session.profile.inventory.potion==5 and game.combat.read_view().hp>hp,"real first hotkey consumes once and heals live actor")
+	var item_cues:Array=game.combat.events().events_of("combat.cue").slice(cue_count).map(func(event):return String(event.get("key","")))
+	check("item_fastheal" in item_cues,"successful potion use publishes the original fast-heal effect cue")
 	check(game.quick_views[0].get_node("item_cooldown").text!="" and game.quick_views[0].get_node("item_cooldown").text==game.quick_views[1].get_node("item_cooldown").text,"both bound shortcuts display the same shared cooldown")
 	await frame("recovery_01_shared_cooldown")
 	for i in 2400:

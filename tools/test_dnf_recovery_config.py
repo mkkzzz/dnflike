@@ -17,7 +17,7 @@ class RecoveryConfigTests(unittest.TestCase):
             ('effect', lambda c: c['consumables']['potion'].update(effect={'kind': 'heal', 'amount': -1})),
             ('effect_kind', lambda c: c['consumables']['potion'].update(effect={'kind': 'missing', 'amount': 1})),
             ('catalog', lambda c: c['consumables'].update(iron_sword=c['consumables']['potion'])),
-            ('fee', lambda c: c['revival'].update(gold=-1)),
+            ('fee', lambda c: c['revival'].update(coin_cost=-1)),
             ('limit', lambda c: c['revival'].update(limit=101)),
             ('hp', lambda c: c['revival'].update(hp_percent=0)),
             ('mp', lambda c: c['revival'].update(mp_percent=101)),

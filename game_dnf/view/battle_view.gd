@@ -48,16 +48,16 @@ var _player_pos := Vector2.ZERO
 var _player_z := 0.0
 var revive_assets: Dictionary = {}
 var revive_fx_count := 0
-## 拾取下蹲：这段时间内把玩家姿势临时换成 sit（原版下蹲帧），到点自动回到模拟姿势。
+## 拾取使用 CHR [getitem motion]；只有仍处于可拾取地面状态时才覆盖模拟姿势。
 ## 由 loot/bridge.gd 在拾取成功时调用 request_pickup_pose()。
 var pickup_pose_until_ms := 0
 
-## 剩余帧数：用帧计数而不是墙上时钟，截图/掉帧时不会整段跳过（原版 sit 约 0.8s ≈ 48 帧）。
+## GetItem.ani 为 1 帧 / 200ms；按 60Hz 物理帧保留约 12 帧。
 var pickup_pose_frames := 0
 
-func request_pickup_pose(duration_ms := 900.0) -> void:
+func request_pickup_pose(duration_ms := 200.0) -> void:
 	pickup_pose_until_ms = Time.get_ticks_msec() + int(duration_ms)
-	pickup_pose_frames = int(maxf(8.0, duration_ms / 16.0))
+	pickup_pose_frames = int(maxf(1.0,ceili(duration_ms/1000.0*60.0)))
 
 func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictionary, bus, weapon: String, map_loader) -> void:
 	_assets = assets
@@ -177,13 +177,16 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	if String(p["weapon"]) != _weapon:_set_weapon(String(p["weapon"]))
 	player_actor.position = _canvas(_player_pos, 0.0)
 	player_actor.z_index = int(_player_pos.y)
-	# 拾取瞬间播放下蹲（原版 sit 帧），其余时间完全按模拟给的动作。
+	# 拾取瞬间播放 CHR GetItem.ani；出招、受击或腾空时立即把控制权交回模拟。
 	var pose := String(p["ani"])
 	var pose_clock := float(p["clock"])
-	if pickup_pose_frames > 0:
-		pose = "sit"
-		pose_clock = 30.0
+	var pickup_state := String(p.get("state",""))
+	if pickup_pose_frames > 0 and pickup_state in ["idle","move","guard"]:
+		pose = "getitem"
+		pose_clock = 0.0
 		pickup_pose_frames -= 1
+	elif pickup_pose_frames > 0:
+		pickup_pose_frames = 0
 	player_actor.present(pose,pose_clock,p["facing"],p["z"],1.0 if p["flash"] else 0.0)
 	_present_aura(String(p.get("aura","")),p,sim_ms)
 	for e: Dictionary in s["enemies"]:

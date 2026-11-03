@@ -743,7 +743,7 @@ func step_player(ms: float, move: Vector2) -> void:
 			elif float(player["z"])>0 or float(player["vz"])>0:
 				if not bool(player.get("air_attack_used",false)):start_action("air_attack")
 			# Dash attack only out of an actual run (double-tapped direction, still moving).
-			elif state == "move" and run_direction != 0 and int(move.x) == run_direction:start_action("dash_attack")
+			elif state == "move" and run_direction != 0 and signf(move.x) == float(run_direction):start_action("dash_attack")
 			else:start_action(primary_normal_attack())
 		elif code == KEY_Z:
 			if String(player["state"]) == "action":buffering(code)
@@ -767,7 +767,9 @@ func step_player(ms: float, move: Vector2) -> void:
 		move_player(Vector2(-int(player["facing"])*float(rules["backstep"]["speed"])*dt,0))
 		if float(player["clock"])>=float(rules["backstep"]["duration_ms"]) and float(player["z"])==0:player["state"] = "idle"
 	elif state != "dead":
-		if held.get(KEY_G,false) and float(player["z"])==0 and float(player["vz"])<=0 and int(skill_levels.get("guard",1))>0:
+		var g_slot := skill_slot_index(KEY_G)
+		var g_slot_empty := g_slot < 0 or String(skill_slots[g_slot]) == ""
+		if g_slot_empty and held.get(KEY_G,false) and float(player["z"])==0 and float(player["vz"])<=0 and int(skill_levels.get("guard",1))>0:
 			player["state"] = "guard"
 			if move.x!=0:player["facing"] = 1 if move.x>0 else -1
 		elif move.length_squared()>0:
@@ -848,9 +850,17 @@ func flow_payload(extra := {}) -> Dictionary:
 	payload.merge(extra,true)
 	return payload
 
+func cue_item_recovery(effect: Dictionary) -> void:
+	var key := "item_heal" if float(effect.get("duration_ms",0))>0 else "item_fastheal"
+	bus.emit("combat.cue",{"kind":"fx","key":key,"point":Vector2(player["pos"]),"height":float(player["z"]),
+		"facing":int(player["facing"]),"follow":PLAYER_ID})
+
 ## Effects already validated and paid for by the flow side (e.g. potions). Returns whether it applied.
 func apply_effect(effect: Dictionary) -> bool:
-	if effect.get("kind")=="restore":return preload("res://combat/item_restoration.gd").apply(self,effect)
+	if effect.get("kind")=="restore":
+		var applied: bool = preload("res://combat/item_restoration.gd").apply(self,effect)
+		if applied:cue_item_recovery(effect)
+		return applied
 	if String(effect.get("kind","")) in ["effect","remove_effect"]:
 		if numeric_player == null or finished:return false
 		var body: Dictionary = player
@@ -884,6 +894,7 @@ func apply_effect(effect: Dictionary) -> bool:
 		"heal":
 			if float(player["hp"]) >= max_hp:return false
 			player["hp"] = minf(max_hp,float(player["hp"])+float(effect.get("amount",0)))
+			cue_item_recovery(effect)
 			notice("恢复药剂 · HP +%d"%int(effect.get("amount",0)))
 			return true
 	return false
@@ -1677,7 +1688,8 @@ func view_snapshot() -> Dictionary:
 		route.append({"cell":room_placement(i).get("cell",[0,0]),"visited":room_snapshots.has(i),"current":i==room_index,"boss":bool(room.get("boss",false))})
 	var boss_room := bool(rules["rooms"][room_index].get("boss",false))
 	return {"frame":_frame,"paused":paused,
-		"player":{"pos":Vector2(player["pos"]),"z":float(player["z"]),"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],
+		"player":{"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
+			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],
 			"flash":float(player["flash_ms"])>0,"buff":float(player["buff_ms"])>0,"weapon":weapon,
 			"aura":String(move_def("buff").get("aura_fx","")) if float(player["buff_ms"])>0 else ""},
 		"enemies":enemies,"objects":objs,"props":props_view(),

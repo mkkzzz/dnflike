@@ -2,6 +2,7 @@ extends Node
 ## Presentation/input adapter. The candidate is written before becoming live.
 const Loot=preload("res://loot/service.gd")
 const Frame=preload("res://view/world_frame.gd")
+const SkillSlots=preload("res://stats/api/skill_slots.gd")
 ## 原版地面掉落：本体用 sprite/item/field*.img，光柱用 itemdropeffect/beam.img（16 帧循环）。
 ## 这些由 tools/bake_loot_sprites.py 从资源库烘到 assets_local/loot/（本机生成物，gitignore）。
 ## 没有烘焙结果时退回"背包图标去底色"的老方案，保证其它工作区仍能跑。
@@ -238,13 +239,22 @@ func _process(_delta: float) -> void:
 		var label: Label=game.skin.label(node,text,bounds.position-node.position,10,Color("ffdd85"));label.mouse_filter=Control.MOUSE_FILTER_IGNORE
 		label.z_index=1000
 
+## 普攻键拾取用：只有已经站稳、且附近没有贴身敌人时才接管 X。
+## E 的空槽兼容拾取只在不占用原版上排技能槽时生效。
+func e_pickup_available() -> bool:
+	if game==null or game.session==null:return false
+	var index:=SkillSlots.KEYS.find(KEY_E)
+	if index<0:return true
+	var slots:Array=game.session.profile.get("skill_slots",[])
+	return index>=slots.size() or String(slots[index])==""
+
 func _unhandled_key_input(event: InputEvent) -> void:
-	if game==null or not event is InputEventKey or not event.pressed or event.echo or event.keycode!=KEY_E:return
-	if game.session.state!="battle" or game.overlay!="" or game.debug_panel.visible:return
+	if game==null or not event is InputEventKey or not event.pressed or event.echo:return
+	var code:=int(event.physical_keycode if event.physical_keycode else event.keycode)
+	if code!=KEY_E or game.session.state!="battle" or game.overlay!="" or game.debug_panel.visible:return
+	if not e_pickup_available():return
 	pickup_nearest();get_viewport().set_input_as_handled()
 
-## 普攻键拾取用：只有已经站稳、且附近没有贴身敌人时才接管 X。
-## 战斗中用 E 精确拾取，避免 X 在连招/跳攻或敌人贴近时被掉落抢走。
 func try_pickup() -> bool:
 	if game==null or game.combat==null:return false
 	var view: Dictionary=game.combat.read_runtime_view()
@@ -306,7 +316,7 @@ func claim(id: String, view: Dictionary, cleared: bool) -> bool:
 	if battle_view != null and battle_view.has_method("request_pickup_pose"):
 		battle_view.request_pickup_pose()
 	play_pickup_sound(String(response.get("item", "")))
-	game.build_hotbars();return true
+	return true
 
 func collect_room() -> void:
 	if game.combat==null:return

@@ -46,7 +46,7 @@ static func claim(p: Dictionary, run: Dictionary, id: String, room: String, pos:
 	if drop["room"]!=room or not pos.is_finite():return Inventory.fail("掉落不在当前房间")
 	var target:=Vector2(float(drop["position"][0]),float(drop["position"][1]))
 	var limits: Array=config()["pickup_range"]
-	if not cleared and (absf(target.x-pos.x)>float(limits[0]) or absf(target.y-pos.y)>float(limits[1])):return Inventory.fail("请靠近掉落后按 E 拾取")
+	if not cleared and (absf(target.x-pos.x)>float(limits[0]) or absf(target.y-pos.y)>float(limits[1])):return Inventory.fail("请靠近掉落后按 X 拾取")
 	var candidate:=p.duplicate(true)
 	if drop["item"]=="gold":candidate["gold"]+=int(drop["count"])
 	else:

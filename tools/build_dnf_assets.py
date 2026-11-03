@@ -20,7 +20,7 @@ LAYERS = ['pants/sm_pants0000b.img', 'shoes/sm_shoes0000b.img', 'skin/sm_body000
           'pants/sm_pants0000a.img', 'shoes/sm_shoes0000a.img',
           'coat/sm_coat0000a.img', 'hair/sm_hair0000a.img']
 WEAPONS = {'shortsword': 'sswd', 'katana': 'katana', 'greatsword': 'lswd'}
-PLAYER_CLIPS = ['stay','move','dash','jump','jumpattack','hitback','guard','damage1',
+PLAYER_CLIPS = ['stay','move','dash','jump','jumpattack','hitback','guard','getitem','damage1',
                 'damage2','down','sit','overturn','attack1','attack2','attack3',
                 'dashattack','upperslashafter','momentaryslash','triplestab','gorecross']
 FX_CLIPS = {

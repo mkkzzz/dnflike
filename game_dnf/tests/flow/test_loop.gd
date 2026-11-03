@@ -406,6 +406,13 @@ func run() -> void:
 		unsafe_view["enemies"] = [{"id":999,"pos":Vector2(view0["pos"])+Vector2(30,0)}]
 		check(not game.loot_bridge._can_start_pickup(unsafe_view,true),"X does not get stolen by a drop while an enemy is in pickup reach")
 		check(game.loot_bridge._can_start_pickup(unsafe_view,false),"E remains available for an intentional pickup during combat")
+		var e_slot: int = int(game.SKILL_KEYS.find(KEY_E))
+		var prior_e := String(game.session.profile.skill_slots[e_slot])
+		game.session.profile.skill_slots[e_slot] = "hardattack"
+		check(not game.loot_bridge.e_pickup_available(),"a bound E skill slot disables E pickup instead of dispatching both")
+		game.session.profile.skill_slots[e_slot] = ""
+		check(game.loot_bridge.e_pickup_available(),"an empty E slot keeps the compatibility pickup")
+		game.session.profile.skill_slots[e_slot] = prior_e
 		var seeds := [["potion", 2], ["gold", 10], ["scrap_iron", 3]]
 		var injected: Array[String] = []
 		for index in seeds.size():
@@ -433,7 +440,7 @@ func run() -> void:
 		await ticks(3)
 		var gold_after := int(game.session.profile["gold"])
 		check(gold_after > gold_before, "attack key X picks up the drop at the player's feet (%d -> %d)" % [gold_before, gold_after])
-		# 拾取表现：下蹲姿势 + 原版音效
+		# 拾取表现：CHR GetItem.ani + 原版音效
 		var battle_view: Variant = game.battle.get("view")
 		check(game.battle.scale == Vector2.ONE and game.battle.position == Vector2.ZERO, "battle renders 1:1 on the shared 800x600 canvas")
 		var battle_bottom := art_bottom(battle_view.stage.root)
@@ -442,17 +449,18 @@ func run() -> void:
 		check(game.battle.table.boss_rules.size() > 0,
 			"boss pick rules loaded from decompiled .ai (%d monsters)" % game.battle.table.boss_rules.size())
 		check(battle_view.stage.root != null and battle_view.stage.root.position.y == 0.0, "map root keeps its canvas position (no private vertical offset)")
-		check(battle_view != null and battle_view.pickup_pose_until_ms > 0, "pickup requests the crouch pose")
+		check(battle_view != null and battle_view.pickup_pose_until_ms > 0, "pickup requests the get-item pose")
 		if battle_view != null:
-			check(battle_view.player_actor.clips.has("sit"), "player clips carry the original sit (crouch) frames")
-			# 轮询等 sit 出现：固定等 2 帧在负载波动时会误判（拾取动作可能第 3 帧才切过去）。
-			var sitting := false
+			check(battle_view.player_actor.clips.has("getitem"), "player clips carry the original GetItem.ani")
+			check(int(battle_view.player_actor.clips["getitem"].get("duration_ms",0))==200, "GetItem.ani keeps its original 200ms duration")
+			# 轮询等 getitem 出现：固定等 2 帧在负载波动时会误判。
+			var getting_item := false
 			for attempt in 16:
 				await ticks(1)
-				if String(battle_view.player_actor.pose) == "sit":
-					sitting = true
+				if String(battle_view.player_actor.pose) == "getitem":
+					getting_item = true
 					break
-			check(sitting, "player actually plays the crouch pose while picking up (%s)" % str(battle_view.player_actor.pose))
+			check(getting_item, "player actually plays GetItem.ani while picking up (%s)" % str(battle_view.player_actor.pose))
 			await frame("07c_pickup")
 		check(game.loot_bridge._pickup_streams.size() > 0, "original pickup sounds are loaded")
 		check(game.loot_bridge._pickup_audio != null and game.loot_bridge._pickup_audio.stream != null, "pickup sound actually started")
