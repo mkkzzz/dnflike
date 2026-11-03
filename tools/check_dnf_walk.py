@@ -6,7 +6,8 @@
     ① 每个可走采样点的脚点必须落在该场景地砖/背景/物件美术的某一纵向区段内；
     ② 并集必须是一个连通块（窄通道把两片区域连起来，不能断）；
     ③ 每条传送门的触发带必须有可走采样点，且与出生点同属一块。
-  副本用原 MAP 通行格：每格中心同样检查支撑，并从 [dungeon start area] 或门格出发做连通。
+  副本用原 MAP 通行格：每格中心同样检查支撑，并核对全部正式路线的前向/返程门。
+  门框与主连通地面不相交时，验证其能否按运行时规则吸附到该侧最近的有效格。
 
 用法：
   python tools/check_dnf_walk.py            # 默认读 game_dnf/
@@ -18,12 +19,20 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 
 ART_DY, MAP_DY = 80, 200
 TOLERANCE = 2.0
 STEP = 8
+GATE_HALF = {
+    'left': (28.0, 48.0),
+    'right': (28.0, 48.0),
+    'up': (48.0, 28.0),
+    'down': (48.0, 28.0),
+}
+OPPOSITE = {'left': 'right', 'right': 'left', 'up': 'down', 'down': 'up'}
 ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -125,6 +134,157 @@ def grid_blocks(cells: set[tuple[int, int]]) -> list[set[tuple[int, int]]]:
 def points_in(rect: list, points: set[tuple[int, int]]) -> list[tuple[int, int]]:
     x, y, w, h = rect
     return [p for p in points if x <= p[0] < x + w and y <= p[1] < y + h]
+
+
+def inside_gate_trigger(offset_x: float, offset_y: float, side: str) -> bool:
+    half_x, half_y = GATE_HALF[side]
+    return abs(offset_x) < half_x and abs(offset_y) < half_y
+
+
+def walkable_at(room: dict, x: float, y: float, cell_w: float, cell_h: float) -> bool:
+    grid = room['walk_grid']
+    col, row = math.floor(x / cell_w), math.floor(y / cell_h)
+    return 0 <= row < len(grid) and 0 <= col < len(grid[row]) and grid[row][col] == 0
+
+
+def gate_trigger_has_floor(room: dict, point: tuple[float, float], side: str,
+                           cell_w: float, cell_h: float,
+                           allowed: set[tuple[int, int]] | None = None) -> bool:
+    grid = room['walk_grid']
+    if not grid:
+        return False
+    half_x, half_y = GATE_HALF[side]
+    min_col = max(0, math.floor((point[0] - half_x) / cell_w))
+    max_col = min(len(grid[0]) - 1, math.floor((point[0] + half_x - 0.001) / cell_w))
+    min_row = max(0, math.floor((point[1] - half_y) / cell_h))
+    max_row = min(len(grid) - 1, math.floor((point[1] + half_y - 0.001) / cell_h))
+    for row in range(min_row, max_row + 1):
+        for col in range(min_col, min(max_col, len(grid[row]) - 1) + 1):
+            if grid[row][col] != 0 or (allowed is not None and (col, row) not in allowed):
+                continue
+            if inside_gate_trigger((col + 0.5) * cell_w - point[0],
+                                   (row + 0.5) * cell_h - point[1], side):
+                return True
+    return False
+
+
+def nearest_walkable_gate_point(room: dict, source: tuple[float, float], side: str,
+                                cell_w: float, cell_h: float,
+                                allowed: set[tuple[int, int]] | None = None) -> tuple[float, float] | None:
+    grid = room['walk_grid']
+    if not grid:
+        return None
+    target_x, target_y = source
+    if side == 'left':
+        target_x = 0.0
+    elif side == 'right':
+        target_x = len(grid[0]) * cell_w
+    elif side == 'up':
+        target_y = 0.0
+    else:
+        target_y = len(grid) * cell_h
+    best = None
+    best_distance = math.inf
+    for row, cells in enumerate(grid):
+        for col, value in enumerate(cells):
+            if value != 0 or (allowed is not None and (col, row) not in allowed):
+                continue
+            candidate = ((col + 0.5) * cell_w, (row + 0.5) * cell_h)
+            distance = (candidate[0] - target_x) ** 2 + (candidate[1] - target_y) ** 2
+            if distance < best_distance:
+                best_distance = distance
+                best = candidate
+    return best
+
+
+def normalized_gate_anchor(room: dict, placement: dict, side: str, cell_w: float, cell_h: float):
+    """Keep the runtime adaptation in sync with game_dnf/scripts/main.gd."""
+    cells = {(col, row) for row, values in enumerate(room['walk_grid'])
+             for col, value in enumerate(values) if value == 0}
+    components = grid_blocks(cells)
+    main = max(components, key=len) if components else set()
+    for gate in placement.get('gates', []):
+        if gate.get('direction') != side:
+            continue
+        anchor = gate.get('anchor')
+        if not isinstance(anchor, list) or len(anchor) < 2:
+            return None, False, None
+        source = (float(anchor[0]), float(anchor[1]))
+        if gate_trigger_has_floor(room, source, side, cell_w, cell_h, main):
+            return source, False, source
+        adapted = nearest_walkable_gate_point(room, source, side, cell_w, cell_h, main)
+        return adapted, True, source
+    return None, False, None
+
+
+def check_dungeon_routes(game: Path) -> list[str]:
+    fails: list[str] = []
+    route_doc = json.loads((game / 'data/dungeons.json').read_text(encoding='utf-8'))
+    manifests: dict[Path, dict] = {}
+    for name, spec in route_doc['dungeons'].items():
+        if spec.get('legacy') or not spec.get('map_export'):
+            continue
+        path = game / spec['map_export'].replace('res://', '')
+        if not path.is_file():
+            fails.append('%s: route export missing: %s' % (name, path))
+            continue
+        if path not in manifests:
+            manifests[path] = json.loads(path.read_text(encoding='utf-8'))
+        manifest = manifests[path]
+        dungeon = manifest['dungeon']
+        placements = {item['id']: item for item in dungeon['placements']}
+        rooms = spec.get('rooms') or []
+        cell_w = float(manifest['constants']['cell_width'])
+        cell_h = float(manifest['constants']['cell_height'])
+        door_count = 0
+        adapted_count = 0
+        for index, route_room in enumerate(rooms):
+            side = route_room.get('next', '')
+            if not side:
+                continue
+            placement = placements.get(route_room.get('placement', ''))
+            if placement is None:
+                fails.append('%s room %d: placement missing from export' % (name, index))
+                continue
+            room = dungeon['rooms'][placement['map']]
+            cells = {(col, row) for row, values in enumerate(room['walk_grid'])
+                     for col, value in enumerate(values) if value == 0}
+            main = max(grid_blocks(cells), key=len) if cells else set()
+            point, adapted, source = normalized_gate_anchor(room, placement, side, cell_w, cell_h)
+            door_count += 1
+            adapted_count += int(adapted)
+            if point is None or not gate_trigger_has_floor(room, point, side, cell_w, cell_h, main):
+                fails.append('%s room %d: %s gate has no reachable trigger area' % (name, index, side))
+                continue
+            if adapted and not walkable_at(room, point[0], point[1], cell_w, cell_h):
+                fails.append('%s room %d: %s gate anchor %s is not on a pass cell' % (name, index, side, point))
+            if index + 1 >= len(rooms):
+                continue
+            next_route = rooms[index + 1]
+            next_placement = placements.get(next_route.get('placement', ''))
+            if next_placement is None:
+                fails.append('%s room %d: next placement missing from export' % (name, index + 1))
+                continue
+            next_room = dungeon['rooms'][next_placement['map']]
+            next_cells = {(col, row) for row, values in enumerate(next_room['walk_grid'])
+                          for col, value in enumerate(values) if value == 0}
+            next_main = max(grid_blocks(next_cells), key=len) if next_cells else set()
+            back = OPPOSITE[side]
+            back_point, back_adapted, back_source = normalized_gate_anchor(
+                next_room, next_placement, back, cell_w, cell_h)
+            door_count += 1
+            adapted_count += int(back_adapted)
+            if back_point is None or not gate_trigger_has_floor(
+                    next_room, back_point, back, cell_w, cell_h, next_main):
+                fails.append('%s room %d: reciprocal %s gate has no reachable trigger area' %
+                             (name, index + 1, back))
+                continue
+            if back_adapted and not walkable_at(next_room, back_point[0], back_point[1], cell_w, cell_h):
+                fails.append('%s room %d: reciprocal %s gate anchor %s is not on a pass cell' %
+                             (name, index + 1, back, back_point))
+        print('  %-24s rooms=%2d gates=%2d adapted=%2d' %
+              (name, len(rooms), door_count, adapted_count))
+    return fails
 
 
 def check_towns(game: Path) -> list[str]:
@@ -235,6 +395,8 @@ def main() -> int:
     fails = check_towns(game)
     print('== 副本（通行格逐格 + 连通）==')
     fails += check_dungeons(game)
+    print('== 副本路线门（前向/返程触发落点）==')
+    fails += check_dungeon_routes(game)
     if fails:
         print('\n[WALK] FAIL %d' % len(fails))
         for line in fails:

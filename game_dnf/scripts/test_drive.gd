@@ -7,6 +7,8 @@ const DetRng = preload("res://core/det_rng.gd")
 const ContentDB = preload("res://content/api/content_db.gd")
 const CombatSession = preload("res://combat/api/combat_session.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
+const DOWN_GATE_FIXTURE := "res://assets_local/flow_v1/gran_v1/arden/map_export.json"
+const DOWN_GATE_PLACEMENT := "1_0:15255(1.0)normal"
 
 var game
 var api
@@ -820,6 +822,68 @@ func run_rooms() -> void:
 	check(api.paused() and api.elapsed_ms()==elapsed,"pause freezes dungeon simulation")
 	await tap(KEY_ESCAPE)
 	check(not api.paused(),"pause can be resumed")
+	await run_down_gate_fixture()
+
+func run_down_gate_fixture() -> void:
+	check(FileAccess.file_exists(DOWN_GATE_FIXTURE),"below-floor gate regression fixture exists")
+	if not FileAccess.file_exists(DOWN_GATE_FIXTURE):return
+	var probe=game.map_loader.get_script().new()
+	check(probe.load_export(DOWN_GATE_FIXTURE),"below-floor gate fixture loads through the native map loader")
+	if not probe.data is Dictionary:return
+	var placement: Dictionary = {}
+	for item: Dictionary in probe.data["dungeon"]["placements"]:
+		if String(item["id"])==DOWN_GATE_PLACEMENT:
+			placement=item
+			break
+	check(not placement.is_empty(),"below-floor source placement and gate are present")
+	if placement.is_empty():return
+
+	var loader=game.map_loader
+	var saved_data=loader.data
+	var saved_base_dir=loader.base_dir
+	var saved_textures: Dictionary=loader.textures.duplicate()
+	var saved_rules=game.rules
+	loader.data=probe.data
+	loader.base_dir=probe.base_dir
+	loader.textures.clear()
+	game.rules=saved_rules.duplicate(true)
+	game.rules["map_export"]=DOWN_GATE_FIXTURE
+	game.rules["rooms"]=[
+		{"name":"下行门回归","placement":DOWN_GATE_PLACEMENT,"next":"down"},
+		{"name":"下行门回归·终点","placement":DOWN_GATE_PLACEMENT,"next":"","boss":true},
+	]
+	game.dungeon_id="gate_fixture"
+	game.room_snapshots.clear()
+	game.load_room(0,"start")
+	await ticks(2)
+	var point: Vector2=game.door_point("down")
+	check(game.walkable(point),"below-floor pathgate is snapped onto the room's reachable floor")
+	var adapted:=false
+	for gate: Dictionary in placement.get("gates",[]):
+		if String(gate.get("direction",""))=="down":
+			adapted=String(gate.get("anchor_adaptation",""))!="" and Vector2(float(gate["anchor"][0]),float(gate["anchor"][1])).distance_to(point)<0.1
+			break
+	check(adapted,"movement and native gate rendering consume the same adapted anchor")
+	game.room_cleared=true
+	game.door_lock_ms=0.0
+	game.clear_monsters()
+	game.player["state"]="idle"
+	game.player["action"]=""
+	game.player["z"]=0.0
+	game.player["pos"]=game.constrain_pos(point+Vector2(0,-24))
+	key(KEY_DOWN,true)
+	await ticks(12)
+	key(KEY_DOWN,false)
+	await ticks(2)
+	check(game.room_index==1,"holding down physically reaches an adapted lower gate")
+
+	game.rules=saved_rules
+	loader.data=saved_data
+	loader.base_dir=saved_base_dir
+	loader.textures=saved_textures
+	game.dungeon_id="lorien"
+	api.restart()
+	await ticks(2)
 
 ## External mode: a flow root mounts its own combat scene through the public API.
 func run_session() -> void:

@@ -52,6 +52,8 @@ var room_cleared := false
 var room_snapshots: Dictionary = {}
 var room_map: Dictionary = {}
 var room_width := 640.0
+var _walk_component_ready := false
+var _walk_main_cells: Dictionary = {}
 var doors: Array = []
 var held: Dictionary = {}
 var taps: Dictionary = {}
@@ -704,7 +706,7 @@ func step_game(ms: float) -> void:
 			# up/down gate, so standing on the visible arch could fail to leave the room.
 			var offset := Vector2(player["pos"]) - Vector2(door["pos"])
 			var side := String(door.get("side",""))
-			var inside := absf(offset.y) < 28.0 and absf(offset.x) < 48.0 if side in ["up","down"] else absf(offset.x) < 28.0 and absf(offset.y) < 48.0
+			var inside := inside_door_trigger(offset,side)
 			if inside and (move.length()>0 or offset.length()<14 or taps.get(KEY_ENTER,false)):
 				load_room(int(door["to"]),side)
 				break
@@ -1508,6 +1510,102 @@ func walkable(p: Vector2) -> bool:
 	if room_map.is_empty() or p.x < 0 or p.x >= room_width:return false
 	return map_loader.is_walkable(room_map,p.x,p.y)
 
+## Route doors must use the room's main connected floor, not a decorative or isolated pass island.
+func main_walk_cells() -> Dictionary:
+	if _walk_component_ready:return _walk_main_cells
+	_walk_component_ready = true
+	_walk_main_cells = {}
+	var grid: Array = room_map.get("walk_grid",[])
+	if grid.is_empty():return _walk_main_cells
+	var remaining := {}
+	for row in grid.size():
+		var cells: Array = grid[row]
+		for col in cells.size():
+			if int(cells[col]) == 0:remaining[Vector2i(col,row)] = true
+	var best := {}
+	while not remaining.is_empty():
+		var start: Vector2i = remaining.keys()[0]
+		var component := {start:true}
+		remaining.erase(start)
+		var queue: Array[Vector2i] = [start]
+		while not queue.is_empty():
+			var cell: Vector2i = queue.pop_back()
+			for step: Vector2i in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
+				var next := cell+step
+				if not remaining.has(next):continue
+				remaining.erase(next)
+				component[next] = true
+				queue.append(next)
+		if component.size() > best.size():best = component
+	_walk_main_cells = best
+	return _walk_main_cells
+
+func door_trigger_half(side: String) -> Vector2:
+	return Vector2(48,28) if side in ["up","down"] else Vector2(28,48)
+
+func inside_door_trigger(offset: Vector2, side: String) -> bool:
+	var half := door_trigger_half(side)
+	return absf(offset.x) < half.x and absf(offset.y) < half.y
+
+## Some source MAPs carry pathgate y values below the 30-row pass grid (e.g. 492/703).
+## Their raw trigger rectangle is therefore unreachable. Keep valid source anchors, and
+## snap only invalid ones to the nearest pass cell on the door's own outer edge.
+func gate_trigger_has_floor(point: Vector2, side: String) -> bool:
+	var grid: Array = room_map.get("walk_grid",[])
+	if grid.is_empty():return false
+	var constants: Dictionary = map_loader.constants()
+	var cw := float(constants["cell_width"])
+	var ch := float(constants["cell_height"])
+	var half := door_trigger_half(side)
+	var min_col := maxi(0,floori((point.x-half.x)/cw))
+	var max_col := mini((grid[0] as Array).size()-1,floori((point.x+half.x-0.001)/cw))
+	var min_row := maxi(0,floori((point.y-half.y)/ch))
+	var max_row := mini(grid.size()-1,floori((point.y+half.y-0.001)/ch))
+	var main_cells := main_walk_cells()
+	for row in range(min_row,max_row+1):
+		var cells: Array = grid[row]
+		for col in range(min_col,mini(max_col,cells.size()-1)+1):
+			if not main_cells.has(Vector2i(col,row)):continue
+			var center := Vector2((float(col)+0.5)*cw,(float(row)+0.5)*ch)
+			if inside_door_trigger(center-point,side):return true
+	return false
+
+func nearest_walkable_gate_point(point: Vector2, side: String) -> Vector2:
+	var grid: Array = room_map.get("walk_grid",[])
+	if grid.is_empty():return Vector2.INF
+	var constants: Dictionary = map_loader.constants()
+	var cw := float(constants["cell_width"])
+	var ch := float(constants["cell_height"])
+	var target := point
+	match side:
+		"left":target.x = 0.0
+		"right":target.x = float((grid[0] as Array).size())*cw
+		"up":target.y = 0.0
+		"down":target.y = float(grid.size())*ch
+	var best := Vector2.INF
+	var best_distance := INF
+	for cell: Vector2i in main_walk_cells():
+		var candidate := Vector2((float(cell.x)+0.5)*cw,(float(cell.y)+0.5)*ch)
+		var distance := candidate.distance_squared_to(target)
+		if distance < best_distance:
+			best_distance = distance
+			best = candidate
+	return best
+
+func normalized_gate_anchor(placement: Dictionary, side: String) -> Vector2:
+	for gate: Dictionary in placement.get("gates",[]):
+		if String(gate.get("direction","")) != side:continue
+		var anchor = gate.get("anchor")
+		if not anchor is Array or anchor.size() < 2:return Vector2.INF
+		var source := Vector2(float(anchor[0]),float(anchor[1]))
+		if gate_trigger_has_floor(source,side):return source
+		var adapted := nearest_walkable_gate_point(source,side)
+		if not adapted.is_finite():return Vector2.INF
+		gate["anchor"] = [adapted.x,adapted.y,float(anchor[2]) if anchor.size() > 2 else 0.0]
+		gate["anchor_adaptation"] = "E-ADAPT: source pathgate outside pass grid; snapped to nearest walkable cell"
+		return adapted
+	return Vector2.INF
+
 ## Nearest walkable ground point (spawn anchors may sit on a blocked cell edge).
 func constrain_pos(value: Vector2) -> Vector2:
 	if walkable(value):return value
@@ -1537,6 +1635,8 @@ func load_room(index: int, from_side: String) -> void:
 	var placement := room_placement(index)
 	room_map = map_loader.room(String(placement["map"]))
 	room_width = float(room_map["width"])
+	_walk_component_ready = false
+	_walk_main_cells.clear()
 	if index>0:
 		var back := String(OPPOSITE[String(rules["rooms"][index-1]["next"])])
 		doors.append({"side":back,"to":index-1,"pos":door_point(back)})
@@ -1575,8 +1675,8 @@ func load_room(index: int, from_side: String) -> void:
 ## Gate anchor of the current room on the given side (placement gate, else map pathgate).
 func door_point(side: String) -> Vector2:
 	if room_map.is_empty():return Vector2.ZERO
-	for g: Dictionary in room_placement(room_index).get("gates",[]):
-		if String(g["direction"]) == side and g["anchor"] != null:return Vector2(float(g["anchor"][0]),float(g["anchor"][1]))
+	var adapted := normalized_gate_anchor(room_placement(room_index),side)
+	if adapted.is_finite():return adapted
 	var p = room_map["pathgate_pos"].get(side)
 	return Vector2(float(p[0]),float(p[1])) if p != null else Vector2.ZERO
 
