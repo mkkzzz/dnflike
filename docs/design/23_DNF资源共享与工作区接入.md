@@ -28,7 +28,7 @@ Godot 的 `.godot`、`.import` 缓存不进共享包。
 ```powershell
 # 在自己的 clone 中同步源码后执行；先有可用的 GitHub 登录
 python tools/dnf_asset_store.py sync
-tools/run_dnf.ps1
+tools/run_dnf_loop.ps1
 # 开发时需要浏览/筛选全库再执行
 python tools/dnf_asset_store.py sync --full
 # 原版补充说明/代码表；与运行资源锁独立

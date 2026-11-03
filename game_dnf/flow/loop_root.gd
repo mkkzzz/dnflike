@@ -658,7 +658,7 @@ func depart() -> void:
 	var headless_test := test_mode and DisplayServer.get_name() == "headless"
 	var started: bool = combat.start_room({"run_id": String(session.run["id"]), "dungeon":selected_dungeon, "route":session.dungeons[selected_dungeon], "room_id": selected_dungeon+":0", "room_index": 0,
 		"player": stat,
-		"audio": {"muted": headless_test, "bgm_volume_db": -32}, "show_hud": false})
+		"audio": {"muted": headless_test, "bgm_volume_db": -32}})
 	if not started:
 		combat.stop()
 		battle = null

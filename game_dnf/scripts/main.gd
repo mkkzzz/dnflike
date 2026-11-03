@@ -3,7 +3,6 @@ extends Node2D
 ## kernel (combat/api/kernel.gd) and the original content pack; presentation lives in view/ and
 ## ui/combat/ and only consumes view_snapshot() and combat.* events (doc 29, F1~F5).
 ## Outside code reaches it only through combat/api/combat_session.gd.
-const TestDrive = preload("res://scripts/test_drive.gd")
 const EventBus = preload("res://core/event_bus.gd")
 const DetRng = preload("res://core/det_rng.gd")
 const ContentDB = preload("res://content/api/content_db.gd")
@@ -93,7 +92,6 @@ var door_lock_ms := 0.0
 var _dynamic_refresh_ms := 0.0
 var _aura_pulse_ms := 0.0
 var test_drive
-var _capture := false
 var _frame := 0
 ## Isolated testbed bootstrap; set by a harness before add_child(). Empty keeps production paths.
 var test_content_pack := ""
@@ -106,11 +104,14 @@ var _muted := false:
 		if view != null:view.audio.muted = value
 
 func _ready() -> void:
+	var internal_test := "--test" in OS.get_cmdline_user_args() or test_content_pack != "" or test_dungeon_id != ""
+	if not external_mode and not internal_test:
+		return _fail("Independent battle entry was removed. Run tools/run_dnf_loop.ps1.")
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	if test_content_pack != "":content.pack_path = test_content_pack
 	var adapt_path := test_adapt_path if test_adapt_path != "" else "res://data/combat.json"
 	if not content.load_files("res://assets_local/manifest.json",adapt_path,"res://data/override"):
-		return _fail("Local DNF assets are missing. Run tools/run_dnf.ps1 (asset store sync).")
+		return _fail("Local DNF assets are missing. Run tools/run_dnf_loop.ps1.")
 	var combat_assets_path := test_combat_assets_path if test_combat_assets_path != "" else COMBAT_ASSETS
 	if not FileAccess.file_exists(combat_assets_path):
 		return _fail("Combat assets missing. Run python tools/build_dnf_combat_assets.py (needs sync --full).")
@@ -120,39 +121,23 @@ func _ready() -> void:
 	if not table.build(content,rules,combat_assets):
 		return _fail("Combat tables incomplete: "+", ".join(table.problems.slice(0,3)))
 	if not map_loader.load_export(String(rules["map_export"])):
-		return _fail("Lorien map export missing. Run tools/run_dnf.ps1 (needs the full library).")
+		return _fail("Lorien map export missing. Run tools/run_dnf_loop.ps1 (needs the full library).")
 	player_clips = content.clips("player").duplicate()
 	player_clips.merge(combat_assets.get("player_clips",{}),false)
 	view = BattleView.new()
 	add_child(view)
 	view.setup(assets,combat_assets,player_clips,bus,weapon,map_loader)
-	# 独立入口与循环共用同一画面基准（800×600 内容居中呈现）；循环里由 flow 自己设置。
-	if not external_mode:_setup_display()
-	# Managed mode leaves dungeon BGM to the flow side; tests never start it.
-	if not external_mode and not "--test" in OS.get_cmdline_user_args():view.audio.start_music()
 	if not external_mode:
 		session = CombatSession.new()
 		session.attach(self)
 		if test_dungeon_id != "":dungeon_id = test_dungeon_id
 		restart()
-	_capture = "--capture" in OS.get_cmdline_user_args()
 	if "--test" in OS.get_cmdline_user_args():
 		_muted = true
 		if not external_mode:
-			test_drive = TestDrive.new()
+			test_drive = load("res://scripts/test_drive.gd").new()
 			test_drive.game = self
 			add_child(test_drive)
-	if not external_mode:get_window().title = "洛兰 · 新版战斗验证"
-
-## 独立入口没有 flow 层，自己套一份与本循环相同的内容变换，保持 1:1 原生像素。
-func _setup_display() -> void:
-	if DisplayServer.get_name() == "headless":return
-	var settings = preload("res://ui/flow/display_settings.gd").new()
-	settings.setup(get_window(), false)
-	view.transform = settings.content_transform()
-	if view.hud_layer != null:view.hud_layer.transform = settings.content_transform()
-	if view.revive_layer != null:view.revive_layer.transform = settings.content_transform()
-	if "--review" in OS.get_cmdline_user_args():paused = true
 
 func _fail(reason: String) -> void:
 	missing_assets = true
@@ -293,7 +278,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 		if float(body["hp"])<=0:break
 
 ## Spec fields (contract v1): run_id, room_id, room_index (transitional trial route), from (entry side),
-## player {hp, mp, hp_max, mp_max, damage_multiplier, job, weapon}, audio {muted, bgm_volume_db}, show_hud.
+## player {hp, mp, hp_max, mp_max, damage_multiplier, job, weapon}, audio {muted, bgm_volume_db}.
 ## Long-term profile data stays with flow; these are the per-run combat stats it hands over.
 ## Without flow values, HP/MP start from the original CHR level-1 initial stats.
 func begin_room(spec: Dictionary) -> void:
@@ -321,7 +306,6 @@ func begin_room(spec: Dictionary) -> void:
 	var audio_spec: Dictionary = spec.get("audio",{})
 	if audio_spec.has("muted"):_muted = bool(audio_spec["muted"])
 	if audio_spec.has("bgm_volume_db") and not _muted:view.audio.start_music(float(audio_spec["bgm_volume_db"]))
-	view.hud.chrome_visible = bool(spec.get("show_hud",true))
 	run_id = String(spec.get("run_id","standalone"))
 	rng.reseed(hash(run_id))
 	room_snapshots.clear()
@@ -432,9 +416,6 @@ func _physics_process(delta: float) -> void:
 	view.present(view_snapshot(),ms,sim_ms)
 	taps.clear()
 	if test_drive != null:test_drive.after_tick()
-	if _capture and _frame in [25,130,260,400]:
-		capture_frame("frame_%04d"%_frame)
-
 # ---------------------------------------------------------------- player
 
 func move_def(name: String) -> Dictionary:

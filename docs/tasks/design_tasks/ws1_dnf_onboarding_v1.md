@@ -49,7 +49,7 @@ python tools/browse_dnf_assets.py
 
 # 缺固定Godot时先安装，然后验证当前工程
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/setup_godot.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_dnf.ps1 -Test
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_dnf_loop.ps1 -Test
 ```
 
 sync --full同时包含运行包与完整库；只需运行样板时使用sync即可。

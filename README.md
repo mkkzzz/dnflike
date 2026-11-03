@@ -4,8 +4,8 @@ Godot 4.7.2 单机横版动作 RPG。原生像素新版已接基础战斗、双�
 
 > 参与开发先读 [AGENTS.md](AGENTS.md)。当前进度见 [进度看板](docs/project/01_进度看板.md)，全部文档见 [文档索引](docs/project/07_文档索引.md)。
 
-**原生像素新版**：[game_dnf](game_dnf/README.md)，运行 `tools/run_dnf.ps1`。资源从独立私有库同步，完整库放工程外；接入见[共享说明](docs/design/23_DNF资源共享与工作区接入.md)。
-**城镇与完整试炼循环**：运行 `tools/run_dnf_loop.ps1`，接任务/购买→五房战斗→结算回城→装备成长/保存。原素材小包自动同步，见[实装记录](docs/reports/ws2/2026-10/2026-10-22_原生素材城镇循环首轮实装.md)，画面待试玩验收。
+**原生像素新版**：[game_dnf](game_dnf/README.md)，正式流程唯一入口为 `tools/run_dnf_loop.ps1`。资源从独立私有库同步，完整库放工程外；接入见[共享说明](docs/design/23_DNF资源共享与工作区接入.md)。
+**城镇与完整试炼循环**：接任务/购买→五房战斗→结算回城→装备成长/保存。原素材小包自动同步，见[实装记录](docs/reports/ws2/2026-10/2026-10-22_原生素材城镇循环首轮实装.md)，画面待试玩验收。
 
 ## 开始试玩
 
@@ -13,8 +13,8 @@ Godot 4.7.2 单机横版动作 RPG。原生像素新版已接基础战斗、双�
 # 首次：安装指定引擎（必须 4.7.2，其它版本会改写导入文件，启动脚本会拒绝）
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/setup_godot.ps1
 
-# 启动新版（资源同步需要 Python 与资源库访问权限）
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_dnf.ps1
+# 启动新版正式流程（资源同步需要 Python 与资源库访问权限）
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_dnf_loop.ps1
 
 # 旧版对照
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_demo.ps1
@@ -28,6 +28,7 @@ Godot 可打开新版 `game_dnf/project.godot` 或旧版 `game/project.godot` �
 
 ```powershell
 # 战斗与集成回归（headless，固定 60 Hz；当前项数见进度看板）
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_dnf_loop.ps1 -Test
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_demo.ps1 -Test
 
 # 真实渲染截图 → temp/demo/

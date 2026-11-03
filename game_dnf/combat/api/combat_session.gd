@@ -35,7 +35,7 @@ func _localize_monster_labels() -> void:
 	for definition: Dictionary in game.table.monsters.values():
 		definition["name"]=doc["labels"].get(definition.get("mob",""),definition["name"])
 
-## Standalone battle scene registers itself so tests and tools observe the same signals.
+## Headless combat-test harness registers itself so tests observe the same signals.
 func attach(existing: Node) -> void:
 	game = existing
 	_localize_monster_labels()
@@ -84,7 +84,7 @@ func start_room(spec: Dictionary) -> bool:
 	if player_spec.has("weapon_item"):game.view.set_equipped_weapon(String(player_spec["weapon_item"]))
 	return true
 
-## The outer UI owns configurable hotkeys; standalone battle keeps its own input.
+## The outer flow owns configurable hotkeys; the internal test harness uses this bridge.
 func submit_key(code: int, pressed: bool, echo := false) -> void:
 	if not _alive():return
 	var event := InputEventKey.new()

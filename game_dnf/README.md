@@ -1,6 +1,7 @@
-# DNF 原生像素新版验证工程
+# 格兰之森 · DNF 原生像素单机版
 
-独立 Godot 项目，使用现有本地 DNF IMG/ANI 资源实现战斗与五房副本样板。
+Godot 单机项目，使用现有本地 DNF IMG/ANI 资源实现城镇、任务与副本战斗。
+`scenes/loop.tscn` 是唯一游戏入口；`scenes/main.tscn` 仅作为正式流程内部挂载的战斗场景。
 玩法范围对照旧工程；原生像素、动作时序、锚点和分层按本套资源建立。
 首轮实机视频演示已获用户验收；后续新增内容仍按具体范围验收。
 
@@ -9,16 +10,12 @@
 引擎沿用仓库固定 Godot 4.7.2。旧工程入口保持在 `game/`。
 
 ```powershell
-# 仓库根目录：启动游戏
-tools/run_dnf.ps1
-# 选人→创建鬼剑士→城镇→五房战斗→结算（正式循环入口）
+# 仓库根目录：唯一游戏入口
 tools/run_dnf_loop.ps1
 # 同入口鼠标/战斗/存档检查，保存实际画面
 tools/run_dnf_loop.ps1 -Test -Capture
-# 打开新版编辑器
-tools/run_dnf.ps1 -Editor
-# 自动化战斗/副本验证；-Capture 额外保存实际渲染帧到 temp/
-tools/run_dnf.ps1 -Test -Capture
+# 内部战斗内核回归（不是游戏入口，日常优先跑正式循环）
+tools/test_dnf_combat.ps1
 # 原地图导出与独立验证场景（T2，需完整库）
 tools/run_dnf_map.ps1 -Test
 ```
@@ -26,7 +23,7 @@ tools/run_dnf_map.ps1 -Test
 循环入口固定1920×1080输出，F11切换全屏/窗口；F3不再更改分辨率。
 编辑器Game预览的启动尺寸也为1920×1080；更新后停止旧进程再运行，若保留旧项目设置则先重新加载工程。嵌入预览的缩放/窗口由编辑器工具栏管理，F11仅用于独立窗口。
 原版800×600内容以4:3居中，两侧留边；纹理最近邻采样，字体按1.8倍显示密度重栅格化，不拉宽角色或UI。
-编辑器打开scenes/loop.tscn按F6。P打开/关闭GM面板，输入时P为文字，Esc关闭；[命令与调试说明](../docs/reports/ws2/2026-10/2026-10-22_固定1080p与GM调试面板.md)。
+Godot 打开工程后按 F5 或编辑器打开 scenes/loop.tscn 按 F6。P打开/关闭GM面板，输入时P为文字，Esc关闭；[命令与调试说明](../docs/reports/ws2/2026-10/2026-10-22_固定1080p与GM调试面板.md)。
 
 启动先进入原版舞台选人；点击创建角色取名，职业固定鬼剑士。点击开始、双击角色或Enter进入城镇，Esc菜单可返回选人。已有旧存档自动显示，各角色进度独立保存。
 
@@ -44,7 +41,7 @@ I键背包支持拆分/整理/锁定/个人仓库；真实地面掉落走近按X
 `asset_store.json` 固定包版本与 SHA256；`assets_local/` 只是被 Git 忽略的消费副本。
 
 ```powershell
-# 各工作区拉取运行包，随后用 tools/run_dnf.ps1 启动
+# 各工作区拉取运行包，随后用 tools/run_dnf_loop.ps1 启动
 python tools/dnf_asset_store.py sync
 # 需要选资源、查动作时，拉取完整库到工程外；同机各 clone 共用一份
 python tools/dnf_asset_store.py sync --full

@@ -1,5 +1,5 @@
 param([Parameter(Mandatory)][string]$Label,[string]$Compare="")
-# Headless presentation trace for the native battle (no window). Records per-frame view
+# Headless combat-kernel trace for managed battle (no game entry). Records per-frame view
 # node state and every HUD draw call to temp/dnf_trace/<Label>.jsonl; with -Compare <label>
 # reports the first differing frame. Used to prove refactors keep the picture unchanged.
 $ErrorActionPreference="Stop"

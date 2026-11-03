@@ -67,7 +67,7 @@ func run() -> void:
 	await check_runtime_logic()
 
 func check_route_and_content() -> void:
-	check(game.dungeon_id=="arden","standalone bootstrap selects the hidden Arden route")
+	check(game.dungeon_id=="arden","isolated test bootstrap selects the hidden Arden route")
 	check(game.rules["rooms"].size()==10,"Arden route exposes all ten source rooms")
 	check(game.table.problems.is_empty(),"act8 content and combat tables resolve without missing records")
 	var room_total := 0

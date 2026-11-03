@@ -2,8 +2,8 @@
 config_version=5
 
 [application]
-config/name="格兰之森 · 新版战斗验证"
-run/main_scene="res://scenes/main.tscn"
+config/name="格兰之森 · 单机版"
+run/main_scene="res://scenes/loop.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [display]

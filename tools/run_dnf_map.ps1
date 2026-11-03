@@ -1,5 +1,5 @@
 param([string]$GodotPath="",[switch]$Test,[switch]$Capture,[switch]$Export,[string]$Dungeon="dungeon/act1/lorien.dgn")
-# T2 original-map verification scene; independent of the main game entry (run_dnf.ps1).
+# T2 original-map verification scene; independent of the formal loop entry.
 $ErrorActionPreference="Stop"
 $repoRoot=Split-Path $PSScriptRoot -Parent
 $gamePath=Join-Path $repoRoot "game_dnf"

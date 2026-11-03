@@ -79,7 +79,7 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 	hud_layer = layer
 	hud = CombatHud.new()
 	layer.add_child(hud)
-	hud.setup(assets["ui"],combat_assets.get("digits",{}),combat_assets.get("monster_hp",{}))
+	hud.setup(combat_assets.get("digits",{}),combat_assets.get("monster_hp",{}))
 	revive_layer=CanvasLayer.new()
 	revive_layer.layer=2
 	add_child(revive_layer)

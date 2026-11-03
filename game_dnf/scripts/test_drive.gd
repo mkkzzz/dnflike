@@ -91,7 +91,7 @@ func check_core() -> void:
 	var orders: Array = game.view.hud.painters.map(func(w): return w.ORDER)
 	var sorted := orders.duplicate()
 	sorted.sort()
-	check(orders.size()==8 and orders==sorted,"combat HUD widgets are discovered from their folder in draw order")
+	check(orders.size()==3 and orders==sorted,"battle feedback widgets are discovered from their folder in draw order")
 	var source := FileAccess.get_file_as_string("res://scripts/main.gd")
 	check(not source.contains("draw_texture") and not source.contains("draw_rect") and not source.contains("player_view.present") and not source.contains("AudioStreamPlayer.new"),"battle simulation no longer draws or owns presentation nodes")
 
