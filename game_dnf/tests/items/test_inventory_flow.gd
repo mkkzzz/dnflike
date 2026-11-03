@@ -27,6 +27,7 @@ func run() -> void:
 	var uid: String=game.session.profile.item_state.bags.consumable[1]
 	click_control(item_cell("bag",uid));await ticks(2)
 	(game.modal.find_child("split_count",true,false) as SpinBox).value=10
+	await ticks(1)
 	check(click_text("拆分堆叠"),"split is available through actual button")
 	await ticks(3)
 	check(Items.count(game.session.profile,uid)==14 and game.session.profile.inventory.potion==123,"split GUI preserves stack total")

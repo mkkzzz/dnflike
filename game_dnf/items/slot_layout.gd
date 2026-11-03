@@ -29,7 +29,10 @@ static func normalize(profile: Dictionary, catalog: Dictionary) -> void:
 			skill_seen[id] = true
 	if not profile.has("difficulty"):profile["difficulty"] = "normal"
 	if profile.has("item_state"):
-		Inventory.sync(profile)
+		# Restore validates the ledger after normalization; malformed saves must not
+		# reach Inventory.sync before Inventory.valid can reject them.
+		if profile["item_state"] is Dictionary and profile["item_state"].get("bags") is Dictionary:
+			Inventory.sync(profile)
 		return
 	for kind: String in KINDS:
 		var cells: Array = profile["bag_layout"].get(kind, [])

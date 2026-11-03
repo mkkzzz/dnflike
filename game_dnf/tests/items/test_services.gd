@@ -43,8 +43,11 @@ func _initialize() -> void:
 	check(Services.command(p,"services.repair",repair).ok and p.gear[gear].durability==40 and p.gold==913,"repair restores full durability at quoted cost")
 	check(not Services.quote(p,"services.repair",{"uid":gear}).ok,"fully repaired gear cannot charge twice")
 	p.gear[gear].durability=0
+	s.invalidate_stats()
 	check(s.stats().numbers.physical_attack==20,"zero durability disables equipment stats including reinforcement and enchant")
-	check(Services.command(p,"services.repair",payload(p,"services.repair",{"all":true})).ok and s.stats().numbers.physical_attack>20,"repair reactivates actual numeric equipment")
+	var repaired:=Services.command(p,"services.repair",payload(p,"services.repair",{"all":true}))
+	s.invalidate_stats()
+	check(repaired.ok and s.stats().numbers.physical_attack>20,"repair reactivates actual numeric equipment")
 	s.command("items.unequip")
 	var decompose:=payload(p,"services.disassemble",{"uid":gear})
 	check(Services.command(p,"services.disassemble",decompose).ok and not p.gear.has(gear) and p.inventory.scrap_iron==5 and Items.valid(p),"disassembly consumes one exact gear and creates configured material stacks")

@@ -34,6 +34,7 @@ func _initialize() -> void:
 	var response:=Services.command(p,"services.reinforce",request)
 	check(response.ok and p.gear[uid].reinforce==1 and p.gold==19980 and p.inventory.scrap_iron==199,"reinforcement commits exact UID, gold and material bill")
 	check(p.services.upgrades.attempts==1 and response.message.begins_with("强化成功"),"success returns truthful result and advances persisted attempt once")
+	s.invalidate_stats()
 	check(s.stats().numbers.physical_attack==attack+2,"reinforcement affects actual combat stats")
 	before=JSON.stringify(p)
 	check(not Services.command(p,"services.reinforce",request).ok and JSON.stringify(p)==before,"duplicate transaction cannot charge or roll twice")
@@ -66,20 +67,25 @@ func _initialize() -> void:
 	var necklace: String=s.command("numbers.gear_give",{"id":"training_necklace"}).uid
 	s.command("numbers.gear_equip",{"uid":coat});s.command("numbers.gear_equip",{"uid":necklace})
 	var defense: float=s.stats().numbers.physical_defense
+	s.invalidate_stats()
 	check(execute(p,"services.reinforce",{"uid":coat}).ok and s.stats().numbers.physical_defense==defense+3,"equipped armor enhancement contributes defense")
 	var magical: float=s.stats().numbers.magical_defense
+	s.invalidate_stats()
 	check(execute(p,"services.reinforce",{"uid":necklace}).ok and s.stats().numbers.magical_defense==magical+3,"accessory enhancement contributes magic defense")
 	p.gear[coat].durability=0
 	check(not Services.Numbers.Equipment.modifiers(p,Services.Numbers.config()).any(func(mod):return mod.get("source")=="装备强化" and mod.get("stat")=="physical_defense"),"broken armor disables enhancement too")
 	p.gear[coat].durability=40
 	check(not Services.quote(p,"services.enchant",{"uid":necklace,"recipe":"strength"}).ok,"enchant slot restriction enforced")
+	s.invalidate_stats()
 	var strength: float=s.stats().numbers.strength
 	amount=p.inventory.scrap_iron;gold=p.gold
+	s.invalidate_stats()
 	check(execute(p,"services.enchant",{"uid":uid,"recipe":"strength"}).ok and s.stats().numbers.strength==strength+3,"enchantment applies one configured stat modifier")
 	check(p.inventory.scrap_iron==amount-3 and p.gold==gold-80,"enchantment consumes exact configured cost")
 	check(not Services.quote(p,"services.enchant",{"uid":uid,"recipe":"strength"}).ok,"identical enchant cannot charge again")
 	q=Services.quote(p,"services.enchant",{"uid":uid,"recipe":"intelligence"})
 	check(q.ok and q.after.get("strength",0)==0 and q.after.intelligence==3,"replacement quote previews removal of previous bonus")
+	s.invalidate_stats()
 	check(execute(p,"services.enchant",{"uid":uid,"recipe":"intelligence"}).ok and p.gear[uid].enchants.size()==1 and s.stats().numbers.strength==strength,"replacement never accumulates obsolete enchant bonus")
 	amount=p.inventory.scrap_iron;gold=p.gold
 	check(execute(p,"services.enchant_clear",{"uid":uid}).ok and p.gear[uid].enchants.is_empty() and p.gold==gold and p.inventory.scrap_iron==amount,"clear enchant removes modifier without hidden cost")
