@@ -1,4 +1,4 @@
-; Independent native-pixel validation project. Third-party data lives in assets_local/.
+; Offline single-player project. Third-party runtime data lives in assets_local/.
 config_version=5
 
 [application]
@@ -7,10 +7,10 @@ run/main_scene="res://scenes/loop.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [display]
-window/size/viewport_width=640
-window/size/viewport_height=360
-window/size/window_width_override=1920
-window/size/window_height_override=1080
+window/size/viewport_width=800
+window/size/viewport_height=600
+window/size/window_width_override=1600
+window/size/window_height_override=1200
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 

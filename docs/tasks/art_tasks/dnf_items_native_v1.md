@@ -17,7 +17,7 @@
 | ui.item.training_necklace | equipment/character/common/amulet/100300001.equ 的icon；sprite/item/new_equipment/08_necklace/necklace.img，第69帧 | 原生28×28透明RGBA，偏移(0,0)，静态 |
 | ui.inventory.management | 既有WindowCommon、原背包32步距网格与原按钮 | 460×488逻辑布局，单元图标28×28；原材质1:1拼装，无自绘替代 |
 
-适用[22原生像素例外](../../design/22_资产画面规格.md)，800×600循环内容固定1080p居中显示，最近邻放大仅为像素显示。图标只提供外观；样板装备名称/品质/属性为E-ADAPT，不声称沿用原脚本装备身份或原版平衡。
+适用[22原生像素例外](../../design/22_资产画面规格.md)，800×600循环内容固定1600×1200、2倍整数显示，最近邻放大仅为像素显示。图标只提供外观；样板装备名称/品质/属性为E-ADAPT，不声称沿用原脚本装备身份或原版平衡。
 
 ## 依赖、复现与发布
 

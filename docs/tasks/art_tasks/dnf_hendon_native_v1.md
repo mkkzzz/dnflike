@@ -32,7 +32,7 @@
 | 大立绘 | npc_dialog_face家族指定原帧；保持原像素，底边贴底部718×165对白板；其余居民按manifest逐项记录 |
 | 空间 | screen_y=ground_y+120-z；分层按原MAP；地面、出口、镜头与装饰分别建模，不把出口矩形当碰撞面 |
 | 输出 | flow_v1/hendon_v1/manifest.json＋img；schema=dnf_native_map/1、hendon_art_schema=dnf_hendon_art/1 |
-| 展示 | 既有800×600逻辑画面→固定1920×1080居中呈现，nearest；放大显示不冒称2K新原画 |
+| 展示 | 既有800×600逻辑画面→固定1600×1200、2倍整数呈现，nearest；放大显示不冒称2K新原画 |
 
 制作配方为tools/build_dnf_hendon_assets.py；完整库制作端可通过tools/run_dnf_loop.ps1 -BuildAssets复现。它逐项记录原MAP/NPC/IMG哈希、原六值出口诊断；非副本缺pathgate_pos按用途显式记为info。
 

@@ -266,6 +266,7 @@ func run() -> void:
 	check(hotkeys == game.SkillSlots.LABELS, "HUD shows ASDFGH and QWERTY without basic ZXC actions")
 	check(not game.skill_views.has("upper"), "basic upper attack is absent from skill slots")
 	check(game.get_window().content_scale_mode == Window.CONTENT_SCALE_MODE_VIEWPORT and game.get_window().content_scale_size == game.display_settings.OUTPUT, "fixed output keeps the original layout transform")
+	check(game.display_settings.OUTPUT == game.display_settings.NATIVE * 2 and is_equal_approx(game.display_settings.CONTENT_SCALE, 2.0) and game.display_settings.CONTENT_OFFSET == Vector2.ZERO, "native 800x600 canvas uses an exact 2x integer output")
 	var percentages := false
 	for label in game.hud.find_children("*", "Label", true, false):
 		if "%" in label.text:percentages = true

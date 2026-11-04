@@ -1,9 +1,9 @@
 extends RefCounted
-## Fixed 1080p output. Original 800x600 content is centered in a 1440x1080 area.
-const OUTPUT := Vector2i(1920, 1080)
+## Integer 2x output for the native 800x600 canvas.
+const OUTPUT := Vector2i(1600, 1200)
 const NATIVE := Vector2i(800, 600)
-const CONTENT_SCALE := 1.8
-const CONTENT_OFFSET := Vector2(240, 0)
+const CONTENT_SCALE := 2.0
+const CONTENT_OFFSET := Vector2.ZERO
 var window: Window
 var window_position := Vector2i.ZERO
 
@@ -43,5 +43,6 @@ func toggle_fullscreen() -> void:
 		window.mode = Window.MODE_FULLSCREEN
 
 func description() -> String:
-	if Engine.is_embedded_in_editor():return "固定 1920×1080 · 编辑器预览"
-	return "固定 1920×1080 · F11 " + ("返回窗口" if is_fullscreen() else "全屏")
+	var size := "%d×%d" % [OUTPUT.x, OUTPUT.y]
+	if Engine.is_embedded_in_editor():return "固定 %s · 编辑器预览" % size
+	return "固定 %s · F11 %s" % [size, "返回窗口" if is_fullscreen() else "全屏"]
