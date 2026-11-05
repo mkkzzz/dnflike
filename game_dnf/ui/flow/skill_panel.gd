@@ -1,6 +1,6 @@
 extends RefCounted
 ## 原版 SkillShop 技能树：节点坐标和前后置边来自 Swordman_Sp.co + SKL。
-## 175 条源技能中只有已接入运行时招式的节点可交易；其余保留原图与说明但标灰。
+## 点选只刷新说明和选中态；读取共享配置，不复制整库，也不重建技能树。
 const Numbers = preload("res://stats/api/numbers.gd")
 const CATALOG := "res://data/skill_catalog.json"
 const MANIFEST := "res://assets_local/skill_panel/manifest.json"
@@ -30,6 +30,11 @@ var parts: Dictionary = {}
 var selected_branch := "none"
 var tree_scroll := 0.0
 var _textures: Dictionary = {}
+var _root: Control
+var _node_views: Dictionary = {}
+var _edge_views: Array = []
+var _sp_label: Label
+var _tip_label: Label
 
 func _init(target) -> void:
 	game = target
@@ -129,7 +134,10 @@ func show_window(parent: Control) -> void:
 		if selected == "" and not visible_ids.is_empty():
 			selected = String(by_id[visible_ids.keys()[0]]["key"])
 
+	_node_views.clear()
+	_edge_views.clear()
 	var root := Control.new()
+	_root = root
 	root.name = "number_window"
 	root.position = WINDOW_ORIGIN
 	root.size = WINDOW_SIZE
@@ -141,6 +149,7 @@ func show_window(parent: Control) -> void:
 	_navigation(root)
 	_header(root)
 	_tree(root, branch)
+	_footer(root)
 	_detail(root)
 	_job_advancement(root)
 	skin.close_button(root, Vector2(748, 8), func(): game.show_overlay(""))
@@ -160,12 +169,13 @@ func _header(root: Control) -> void:
 	var skin = game.skin
 	var profile: Dictionary = game.session.profile
 	var job := String(profile["growtype"])
-	var sp := Numbers.Skills.available(profile, Numbers.config())
+	var sp := Numbers.Skills.available(profile, Numbers.shared_config())
 	var sp_bar := _part("sp_icon")
 	if sp_bar != null:
 		var bar: TextureRect = skin.image(root, sp_bar, Vector2(342, 41))
 		bar.name = "skill_sp_bar"
 	var sp_label: Label = skin.label(root, str(sp), Vector2(364, 43), 12, Color("f0d18a"))
+	_sp_label = sp_label
 	sp_label.size = Vector2(44, 16)
 	sp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	skin.label(root, "%s  Lv.%d" % [JOB_NAMES.get(job, job), int(profile["level"])],
@@ -215,6 +225,7 @@ func _tree(root: Control, branch: Dictionary) -> void:
 		arrow.width = 1.0
 		arrow.default_color = line.default_color
 		content.add_child(arrow)
+		_edge_views.append({"from": int(edge["from"]), "to": int(edge["to"]), "line": line, "arrow": arrow})
 
 	var ordered := nodes.duplicate()
 	ordered.sort_custom(func(a, b):
@@ -291,30 +302,18 @@ func _tree_node(parent: Control, node: Dictionary, skill: Dictionary) -> void:
 	if icon == null:
 		icon = _tex(String(skill.get("icon", "")))
 	var icon_view: TextureRect = skin.image(hit, icon, Vector2(5, 5)) if icon != null else null
-	var state := _state(skill)
-	if local == "" or not class_allowed(skill):
-		if base != null:
-			base.modulate = Color(0.58, 0.58, 0.58, 0.8)
-		if icon_view != null:
-			icon_view.modulate = Color(0.48, 0.48, 0.48, 0.72)
-	elif not bool(state["ok"]):
-		if icon_view != null:
-			icon_view.modulate = Color(0.7, 0.7, 0.7, 0.9)
-	var rank := int(game.session.profile["skills"].get(local, 0)) if local != "" else 0
-	var rank_label: Label = skin.label(hit, "%d" % rank, Vector2(0, 37), 10,
-		Color("f3df9b") if rank > 0 else Color("938e82"))
+	var rank_label: Label = skin.label(hit, "", Vector2(0, 37), 10)
 	rank_label.size = Vector2(NODE_SLOT, 15)
 	rank_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hit.pressed.connect(func():
-		selected = key
-		game.show_overlay("numbers"))
-	var base_color: Color = base.modulate
+	_node_views[key] = {"skill": skill, "hit": hit, "base": base, "icon": icon_view, "rank": rank_label}
+	_refresh_node(key)
+	hit.pressed.connect(func(): select_skill(key))
 	hit.mouse_entered.connect(func():
-		if not chosen and is_instance_valid(base):
+		if key != selected and is_instance_valid(base):
 			base.modulate = Color(1.25, 1.25, 1.25, 1.0))
 	hit.mouse_exited.connect(func():
-		if not chosen and is_instance_valid(base):
-			base.modulate = base_color)
+		if is_instance_valid(base):
+			base.modulate = base.get_meta("rest_tint", Color.WHITE))
 	var drag_icon := icon
 	hit.set_drag_forwarding(func(_at: Vector2):
 		if not active_skill(local) or int(game.session.profile["skills"].get(local, 0)) <= 0:
@@ -328,6 +327,74 @@ func _tree_node(parent: Control, node: Dictionary, skill: Dictionary) -> void:
 			hit.set_drag_preview(preview)
 		return {"place": "skill_catalog", "id": local}, Callable(), Callable())
 	parent.add_child(hit)
+
+func _refresh_node(key: String) -> void:
+	var view: Dictionary = _node_views.get(key, {})
+	if view.is_empty():return
+	var skill: Dictionary = view["skill"]
+	var local := String(skill["local_id"])
+	var chosen := key == selected
+	var base: TextureRect = view["base"]
+	base.texture = _part("node_selected") if chosen else _part("node_slot")
+	base.modulate = Color.WHITE
+	var icon: TextureRect = view["icon"]
+	if icon != null:
+		var texture := _tex(String(skill.get("icon_selected", "")) if chosen else String(skill.get("icon", "")))
+		icon.texture = texture if texture != null else _tex(String(skill.get("icon", "")))
+		icon.modulate = Color.WHITE
+	if local == "" or not class_allowed(skill):
+		base.modulate = Color(0.58, 0.58, 0.58, 0.8)
+		if icon != null:icon.modulate = Color(0.48, 0.48, 0.48, 0.72)
+	elif not bool(_state(skill)["ok"]):
+		if icon != null:icon.modulate = Color(0.7, 0.7, 0.7, 0.9)
+	base.set_meta("rest_tint", base.modulate)
+	var rank := int(game.session.profile["skills"].get(local, 0))
+	var label: Label = view["rank"]
+	label.text = str(rank)
+	label.add_theme_color_override("font_color", Color("f3df9b") if rank > 0 else Color("938e82"))
+
+func select_skill(key: String) -> void:
+	if key == selected or not _node_views.has(key) or not is_instance_valid(_root):return
+	var previous := selected
+	selected = key
+	_refresh_node(previous)
+	_refresh_node(selected)
+	for edge: Dictionary in _edge_views:
+		var color := Color("c39a54") if _selected_id() in [edge["from"], edge["to"]] else Color("315f91")
+		edge["line"].default_color = color
+		edge["arrow"].default_color = color
+	_replace_detail()
+
+func _replace_detail(keep_scroll := false) -> void:
+	var old := _root.get_node_or_null("skill_detail")
+	var offset := 0.0
+	if old != null:
+		if keep_scroll:
+			var body := old.get_node_or_null("skill_detail_body") as RichTextLabel
+			if body != null:offset = body.get_v_scroll_bar().value
+		_root.remove_child(old)
+		old.queue_free()
+	_detail(_root)
+	if keep_scroll:
+		var body := _root.get_node_or_null("skill_detail/skill_detail_body") as RichTextLabel
+		if body != null:body.get_v_scroll_bar().set_deferred("value", offset)
+
+func _refresh_progress() -> void:
+	if not is_instance_valid(_root) or _root.is_queued_for_deletion():return
+	_sp_label.text = str(Numbers.Skills.available(game.session.profile, Numbers.shared_config()))
+	for key: String in _node_views:_refresh_node(key)
+	_replace_detail(true)
+
+func _footer(root: Control) -> void:
+	_tip_label = game.skin.label(root, "", Vector2(20, 440), 11)
+	_tip_label.size = Vector2(535, 18)
+	_tip_label.clip_text = true
+	_tip_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	var reset: Button = game.skin.button(root, "重置", Vector2(590, 461), func():
+		if game.act("numbers.skill_reset"):_refresh_progress())
+	reset.size = Vector2(68, 23)
+	var close: Button = game.skin.button(root, "关闭", Vector2(664, 461), func(): game.show_overlay(""))
+	close.size = Vector2(68, 23)
 
 func _find_node(nodes: Array, id: int) -> Dictionary:
 	for node: Dictionary in nodes:
@@ -402,10 +469,10 @@ func _detail(root: Control) -> void:
 	learn.disabled = not bool(_state(skill)["ok"])
 	learn.get_child(0).modulate.a = 0.35 if learn.disabled else 1.0
 	var refund := _rank_button(panel, "退点", Vector2(166, 153), "-", func(): change(selected, -1))
-	refund.disabled = rank <= 0
+	refund.disabled = game.session.profile.get("skill_purchases", {}).get(local, []).is_empty()
 	refund.get_child(0).modulate.a = 0.35 if refund.disabled else 1.0
 	var meta: Array[String] = ["技能类型：" + _type_name(String(skill["type"]))]
-	var need := int(skill.get("required_level", 0)) + rank * _number(skill.get("required_level_range"))
+	var need := _required_level(skill, rank)
 	meta.append("学习等级：%d" % need)
 	var requires := _requires(skill)
 	if requires != "":
@@ -431,16 +498,8 @@ func _detail(root: Control) -> void:
 	_style_scroll(body.get_v_scroll_bar())
 	var state := _state(skill)
 	var tip := "可以学习" if bool(state["ok"]) else String(state["reason"])
-	var tip_label: Label = skin.label(root, tip, Vector2(20, 440), 11,
-		Color("a7dd74") if bool(state["ok"]) else Color("c86a5a"))
-	tip_label.size = Vector2(535, 18)
-	tip_label.clip_text = true
-	tip_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	var reset: Button = skin.button(root, "重置", Vector2(232, 461),
-		func(): game.act("numbers.skill_reset"); game.show_overlay("numbers"))
-	reset.size = Vector2(68, 23)
-	var close: Button = skin.button(root, "关闭", Vector2(306, 461), func(): game.show_overlay(""))
-	close.size = Vector2(68, 23)
+	_tip_label.text = tip
+	_tip_label.add_theme_color_override("font_color", Color("a7dd74") if bool(state["ok"]) else Color("c86a5a"))
 
 func _rank_button(parent: Control, title: String, at: Vector2, symbol: String, action: Callable) -> Button:
 	var hit := Button.new()
@@ -464,7 +523,7 @@ func _job_advancement(root: Control) -> void:
 	var profile: Dictionary = game.session.profile
 	if String(profile.get("growtype", "swordman")) != "swordman":
 		return
-	var ready := int(profile.get("level", 1)) >= int(Numbers.config()["progression"].get("job_change_level", 18))
+	var ready := int(profile.get("level", 1)) >= int(Numbers.shared_config()["progression"].get("job_change_level", 18))
 	var first: Button = game.skin.button(root, "转职剑魂", Vector2(16, 461),
 		func(): job_change("weaponmaster"), false)
 	first.size = Vector2(80, 23)
@@ -490,7 +549,7 @@ func _type_name(raw: String) -> String:
 	return "未知"
 
 func _jobs(skill: Dictionary) -> String:
-	var index: Dictionary = Numbers.config().get("growtype_index", {})
+	var index: Dictionary = Numbers.shared_config().get("growtype_index", {})
 	var caps: Array = _array(skill.get("growtype_max_level"))
 	var out: Array[String] = []
 	for job: String in index:
@@ -516,7 +575,7 @@ func _state(skill: Dictionary) -> Dictionary:
 	if free_mode:
 		return {"ok": true, "reason": ""}
 	var profile: Dictionary = game.session.profile
-	var cfg := Numbers.config()
+	var cfg := Numbers.shared_config()
 	var rank := int(profile["skills"].get(local, 0))
 	if rank >= runtime_max_level(skill):
 		return {"ok": false, "reason": "已满级"}
@@ -524,7 +583,7 @@ func _state(skill: Dictionary) -> Dictionary:
 	var slot := int(cfg.get("growtype_index", {}).get(String(profile["growtype"]), 0))
 	if not caps.is_empty() and (slot >= caps.size() or rank >= int(caps[slot])):
 		return {"ok": false, "reason": "职业不符"}
-	var need := int(skill.get("required_level", 1)) + rank * _number(skill.get("required_level_range"))
+	var need := _required_level(skill, rank)
 	if int(profile["level"]) < need:
 		return {"ok": false, "reason": "需 Lv%d" % need}
 	for entry: Dictionary in _array(skill.get("pre_required_skill")):
@@ -546,7 +605,7 @@ func change(key: String, delta: int) -> void:
 		return
 	if game.act("numbers.skill", {"id": local, "delta": delta, "force": free_mode}):
 		selected = key
-		game.show_overlay("numbers")
+		_refresh_progress()
 
 func job_change(job: String) -> void:
 	if game.act("numbers.growtype", {"growtype": job}):
@@ -556,6 +615,12 @@ func job_change(job: String) -> void:
 
 func _array(value) -> Array:
 	return value if value is Array else []
+
+func _required_level(skill: Dictionary, rank: int) -> int:
+	# Missing SKL fields are null in the panel catalog; match SkillBook defaults.
+	var base = skill.get("required_level")
+	var step = skill.get("required_level_range")
+	return (1 if base == null else _number(base)) + rank * (1 if step == null else _number(step))
 
 func _number(value) -> int:
 	return int(value) if value is int or value is float else 0

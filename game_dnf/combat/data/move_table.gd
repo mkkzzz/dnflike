@@ -157,7 +157,7 @@ func _skill_row(path: String) -> Dictionary:
 		return {}
 	var d: Dictionary = rec["decoded"]
 	if not skill_levels.is_empty():
-		var cfg := Numbers.config()
+		var cfg := Numbers.shared_config()
 		for id: String in cfg["skills"]:
 			if cfg["skills"][id].get("path","") == path:return Numbers.Skills.sample(d,int(skill_levels.get(id,1)))
 	var dungeon: Dictionary = d.get("dungeon",{})
