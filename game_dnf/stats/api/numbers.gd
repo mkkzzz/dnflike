@@ -12,10 +12,11 @@ static var _config: Dictionary = {}
 static var _content_db
 static var _records: Dictionary = {}
 
-static func config() -> Dictionary:
+## Explicit, expensive mutable snapshot for tests/offline tooling only.
+static func config_snapshot() -> Dictionary:
 	return shared_config().duplicate(true)
 
-## 只读共享引用，调用方不得修改。config() 的深拷贝含全量原版装备表，不能放在每帧路径上。
+## 只读共享引用，调用方不得修改。config_snapshot() 的深拷贝含全量原版装备表，不能放在每帧路径上。
 static func shared_config() -> Dictionary:
 	ensure_config()
 	return _config
@@ -27,7 +28,13 @@ static func ensure_config() -> void:
 			var runtime: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SKILL_RUNTIME))
 			var runtime_skills: Dictionary = runtime.get("skills", {})
 			for id: String in runtime_skills:
-				_config["skills"][id] = runtime_skills[id]
+				# The source compiler owns SKL data; these two legacy runtime parameters
+				# are still consumed by guarding and its tooltip, and are not SKL fields.
+				var definition: Dictionary = runtime_skills[id].duplicate()
+				if id == "guard":
+					for field: String in ["guard_factor", "guard_per_level"]:
+						if not definition.has(field):definition[field] = _config["skills"][id][field]
+				_config["skills"][id] = definition
 				if not _config["skill_defaults"].has(id):
 					_config["skill_defaults"][id] = 0
 				var source_id := str(int(runtime_skills[id].get("source_id", 0)))
@@ -137,7 +144,7 @@ static func equipped_armor_count(profile: Dictionary, cfg: Dictionary, armor_typ
 	return count
 
 static func gear_detail(profile: Dictionary, uid: String) -> Dictionary:
-	var cfg := config()
+	var cfg := shared_config()
 	if not profile["gear"].has(uid):return {}
 	var instance: Dictionary = profile["gear"][uid]
 	var definition: Dictionary = cfg["equipment"][instance["definition"]]
@@ -158,7 +165,7 @@ static func combat_spec(profile: Dictionary) -> Dictionary:
 	return {"numbers":result["values"],"number_sources":result["sources"],"number_seed":{"level":profile["level"],"growtype":profile["growtype"],"modifiers":result["modifiers"]},"skills":profile["skills"].duplicate(true),"skill_slots":profile.get("skill_slots",[]).duplicate(),"weapon":weapon,"weapon_item":String(profile["gear"][uid]["definition"]) if uid!="" else "","element":element,"hp_max":result["values"]["hp_max"],"mp_max":result["values"]["mp_max"]}
 
 static func monster(base: Dictionary, level: int, chief: bool, difficulty: String, cfg: Dictionary = {}) -> Dictionary:
-	if cfg.is_empty():cfg = config()
+	if cfg.is_empty():cfg = shared_config()
 	var rules: Dictionary = cfg["monsters"]
 	var factor := float(rules["difficulty"].get(difficulty,1))
 	var stats: Dictionary = cfg["base"].duplicate(true)
@@ -168,7 +175,7 @@ static func monster(base: Dictionary, level: int, chief: bool, difficulty: Strin
 	return stats
 
 static func command(profile: Dictionary, kind: String, payload: Dictionary) -> Dictionary:
-	var cfg := config()
+	var cfg := shared_config()
 	match kind:
 		"numbers.xp":
 			if not whole(payload.get("amount"),0,1000000000):return fail("经验数量无效")
@@ -250,7 +257,7 @@ static func valid_modifier(mod, cfg: Dictionary) -> bool:
 	return mod is Dictionary and cfg["base"].has(mod.get("stat","")) and mod.get("op","add") in ["add","percent","mul"] and (mod.get("value") is int or mod.get("value") is float) and is_finite(float(mod["value"])) and absf(float(mod["value"])) <= 1000000 and (mod.get("op","add") != "mul" or float(mod["value"])>=0)
 
 static func valid(profile: Dictionary) -> bool:
-	var cfg := config()
+	var cfg := shared_config()
 	if not whole(profile.get("numbers_revision"),int(cfg["revision"]),int(cfg["revision"])) or not cfg["growtypes"].has(profile.get("growtype","")):return false
 	if profile.get("attack_element","none") not in ["none","fire","water","light","dark"]:return false
 	if not whole(profile.get("level"),1,int(cfg["progression"]["level_cap"])) or not whole(profile.get("xp"),0,1000000000) or not whole(profile.get("sp_bonus"),0,1000000) or not whole(profile.get("next_gear"),1,1000000000):return false

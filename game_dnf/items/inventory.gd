@@ -128,9 +128,9 @@ static func locate(p: Dictionary, uid: String) -> Array:
 static func equip(p: Dictionary, uid: String) -> Dictionary:
 	var location := locate(p,uid)
 	if not p["gear"].has(uid) or location.is_empty() or uid not in p["item_state"]["bags"]["weapon"]:return fail("请从装备背包选择装备")
-	var slot: String = Numbers.config()["equipment"][definition(p,uid)]["slot"]
+	var slot: String = Numbers.shared_config()["equipment"][definition(p,uid)]["slot"]
 	var old: String = p["equipment"].get(slot,"")
-	var response: Dictionary = Numbers.Equipment.equip(p,uid,Numbers.config())
+	var response: Dictionary = Numbers.Equipment.equip(p,uid,Numbers.shared_config())
 	if not response["ok"]:return response
 	location[0][location[1]]=old
 	sync(p);return {"ok":true}
@@ -177,7 +177,7 @@ static func move_inside(p: Dictionary, source: Dictionary, target: Dictionary) -
 		if from=="quick":p["quick_items"][old]=p["quick_items"][index]
 		p["quick_items"][index]=id;return true
 	if to=="equipment" and from=="bag":
-		if not p["gear"].has(uid) or Numbers.config()["equipment"][id]["slot"]!=target.get("slot","weapon"):return false
+		if not p["gear"].has(uid) or Numbers.shared_config()["equipment"][id]["slot"]!=target.get("slot","weapon"):return false
 		return equip(p,uid)["ok"]
 	var category: String=target.get("category","")
 	if to!="bag" or category!=Catalog.ITEMS[id]["kind"] or index not in range(CAPACITY):return false
@@ -185,7 +185,7 @@ static func move_inside(p: Dictionary, source: Dictionary, target: Dictionary) -
 	if from=="equipment":
 		var other: String=bag[index]
 		if other=="":return unequip(p,String(source.get("slot","weapon")),index)["ok"]
-		if Numbers.config()["equipment"][definition(p,other)]["slot"]!=source.get("slot","weapon"):return false
+		if Numbers.shared_config()["equipment"][definition(p,other)]["slot"]!=source.get("slot","weapon"):return false
 		return equip(p,other)["ok"]
 	if from=="quick":
 		for entry in bag:

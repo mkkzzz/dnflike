@@ -3,10 +3,13 @@ extends RefCounted
 const Inventory=preload("res://items/inventory.gd")
 const Numbers=preload("res://stats/api/numbers.gd")
 const Upgrades=preload("res://items/upgrades.gd")
+static var _config: Dictionary = {}
+## Immutable session configuration; callers only mutate profile/quote copies.
 static func config() -> Dictionary:
-	var data: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://data/services.json"))
-	data["items"].merge(preload("res://content/api/native_catalog.gd").runtime().get("services",{}),false)
-	return data
+	if _config.is_empty():
+		_config=JSON.parse_string(FileAccess.get_file_as_string("res://data/services.json"))
+		_config["items"].merge(preload("res://content/api/native_catalog.gd").runtime().get("services",{}),false)
+	return _config
 
 static func initialize(p: Dictionary) -> void:
 	if not p.has("services"):p["services"]={"revision":1,"next_sale":1,"buyback":[],"transactions":{}}

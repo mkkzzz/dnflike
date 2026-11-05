@@ -12,7 +12,12 @@ func check(value: bool, message: String) -> void:
 		print("[NUMBERS_TEST] FAIL "+message)
 
 func _initialize() -> void:
-	var cfg := Numbers.config()
+	var cfg := Numbers.config_snapshot()
+	var initial_strength: float = Numbers.shared_config()["base"]["strength"]
+	cfg["base"]["strength"] = initial_strength + 1
+	check(Numbers.shared_config()["base"]["strength"] == initial_strength,"explicit configuration snapshots isolate nested mutations")
+	cfg["base"]["strength"] = initial_strength
+	check(Numbers.shared_config()["skills"]["guard"].has_all(["guard_factor","guard_per_level"]),"compiled SKL keeps required guard runtime parameters")
 	var s = Session.new()
 	check(Numbers.valid(s.profile),"new profile is valid")
 	check(s.profile["skills"]["upper"]==1 and s.profile["skills"]["hardattack"]==1 and s.profile["skills"]["draw"]==0,"original starter skills are granted without unlocking subclass moves")

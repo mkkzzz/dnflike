@@ -5,8 +5,11 @@ const Numbers=preload("res://stats/api/numbers.gd")
 const KINDS=["services.reinforce","services.enchant","services.enchant_clear"]
 const MODULUS=2147483647
 
+static var _config: Dictionary = {}
+## Immutable session configuration; previews duplicate only the changed values.
 static func config() -> Dictionary:
-	return JSON.parse_string(FileAccess.get_file_as_string("res://data/upgrades.json"))
+	if _config.is_empty():_config=JSON.parse_string(FileAccess.get_file_as_string("res://data/upgrades.json"))
+	return _config
 
 static func initialize(p: Dictionary) -> void:
 	if not p["services"].has("upgrades"):
@@ -31,7 +34,7 @@ static func quote(p: Dictionary, kind: String, data: Dictionary) -> Dictionary:
 	if Items.locked(p,uid):return Items.fail("请先解锁装备")
 	var gear: Dictionary=p["gear"][uid]
 	if int(gear["durability"])<=0:return Items.fail("装备已损坏，请先修理")
-	var slot: String=Numbers.config()["equipment"][gear["definition"]]["slot"]
+	var slot: String=Numbers.shared_config()["equipment"][gear["definition"]]["slot"]
 	var cfg:=config()
 	var result: Dictionary={"ok":true,"kind":kind,"uid":uid,"name":Items.Catalog.ITEMS[gear["definition"]]["name"],"count":1,"price":0,"output":{},"targets":[],"materials":{},"before":Numbers.gear_detail(p,uid)}
 	var preview:=p.duplicate(true)

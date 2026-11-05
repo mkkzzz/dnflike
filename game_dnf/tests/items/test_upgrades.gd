@@ -73,7 +73,7 @@ func _initialize() -> void:
 	s.invalidate_stats()
 	check(execute(p,"services.reinforce",{"uid":necklace}).ok and s.stats().numbers.magical_defense==magical+3,"accessory enhancement contributes magic defense")
 	p.gear[coat].durability=0
-	check(not Services.Numbers.Equipment.modifiers(p,Services.Numbers.config()).any(func(mod):return mod.get("source")=="装备强化" and mod.get("stat")=="physical_defense"),"broken armor disables enhancement too")
+	check(not Services.Numbers.Equipment.modifiers(p,Services.Numbers.config_snapshot()).any(func(mod):return mod.get("source")=="装备强化" and mod.get("stat")=="physical_defense"),"broken armor disables enhancement too")
 	p.gear[coat].durability=40
 	check(not Services.quote(p,"services.enchant",{"uid":necklace,"recipe":"strength"}).ok,"enchant slot restriction enforced")
 	s.invalidate_stats()

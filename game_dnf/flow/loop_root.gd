@@ -978,7 +978,7 @@ func refresh_item_views() -> void:
 func equipped_weapon_shape() -> String:
 	if session == null:return "katana"
 	var id := String(session.profile.get("equipped", ""))
-	var entry: Dictionary = session.Numbers.config().get("equipment", {}).get(id, {})
+	var entry: Dictionary = session.Numbers.shared_config().get("equipment", {}).get(id, {})
 	return String(entry.get("weapon", "katana"))
 
 func equipped_weapon_item(profile: Dictionary = {}) -> String:

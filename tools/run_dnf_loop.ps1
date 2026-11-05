@@ -1,5 +1,7 @@
 param([string]$GodotPath="", [switch]$Test, [switch]$Capture, [switch]$BuildAssets, [switch]$SyncAssets, [string]$LibraryPath="", [switch]$NumbersOnly, [switch]$QuestsOnly, [switch]$ItemsOnly, [switch]$TownsOnly, [switch]$ServicesOnly, [switch]$GranOnly, [switch]$KainoOnly, [switch]$PoisonOnly, [switch]$TeachingOnly, [switch]$NativeOnly, [switch]$WeaponAppearanceOnly, [switch]$QuestRulesOnly, [switch]$UpgradesOnly, [switch]$RecoveryOnly)
 $ErrorActionPreference="Stop"
+& python (Join-Path $PSScriptRoot "check_dnf_performance.py")
+if ($LASTEXITCODE -ne 0) {throw "Runtime performance guard failed."}
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
 & python (Join-Path $PSScriptRoot "check_dnf_services.py")
@@ -85,6 +87,11 @@ if ($importExit -ne 0 -or ($importOutput -match '(?m)^(SCRIPT ERROR|ERROR:)')) {
     throw "Loop project import failed."
 }
 if ($Test) {
+    & python (Join-Path $PSScriptRoot "test_check_dnf_performance.py")
+    if ($LASTEXITCODE -ne 0) {throw "Performance guard self-tests failed."}
+    $performanceOutput=& $GodotPath --headless --path $gamePath --script res://tests/flow/test_ui_performance.gd 2>&1
+    $performanceOutput | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($performanceOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($performanceOutput -match '\[UI_PERF\] COMPLETE checks=\d+ failures=0')) {throw "UI performance regression failed."}
     # 流水线加固：原子发布、路线合并与城镇房间重应用必须独立于手动调用。
     $pipelineTests=@(
         "test_build_dnf_combat_assets.py",

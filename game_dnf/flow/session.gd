@@ -88,7 +88,7 @@ func mirror_legacy() -> void:
 func grant_quest_reward(candidate: Dictionary, reward: Dictionary, tx: String) -> Dictionary:
 	for item: String in reward["items"]:
 		if not CATALOG.ITEMS.has(item):return reject("任务奖励物品尚未接入")
-	var outcome: Dictionary = Numbers.Growth.grant(candidate,int(reward["xp"]),tx,Numbers.config()["progression"])
+	var outcome: Dictionary = Numbers.Growth.grant(candidate,int(reward["xp"]),tx,Numbers.shared_config()["progression"])
 	if not outcome.get("ok",false):return outcome
 	candidate["gold"] += int(reward["gold"])
 	# Quest consumption is expressed through the old count view. Apply that delta
@@ -154,7 +154,7 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 		if state!="town" and kind in ["items.equip","items.unequip","items.deposit","items.withdraw","items.recover"]:return reject("请回城后操作")
 		return Inventory.command(profile,kind,payload)
 	if kind=="numbers.gear_give":
-		if not Numbers.config()["equipment"].has(payload.get("id","")):return reject("装备定义不存在")
+		if not Numbers.shared_config()["equipment"].has(payload.get("id","")):return reject("装备定义不存在")
 		if not Numbers.whole(payload.get("quality",50),0,100):return reject("品质范围为 0 至 100")
 		var serial:=int(profile["next_gear"])
 		var response:=Inventory.give(profile,String(payload.get("id","")),1,int(payload.get("quality",50)))
@@ -334,7 +334,7 @@ func finish_run(won: bool, details: Dictionary) -> Dictionary:
 		var damage := int(details.get("damage_taken", 0))
 		result["rank"] = "S" if damage <= 50 else "A" if damage <= 250 else "B"
 		profile["gold"] += 150
-		Numbers.Growth.grant(profile,int(Numbers.config()["progression"]["clear_xp"]),"clear:"+id,Numbers.config()["progression"])
+		Numbers.Growth.grant(profile,int(Numbers.shared_config()["progression"]["clear_xp"]),"clear:"+id,Numbers.shared_config()["progression"])
 		profile["clears"] += 1
 		add_item("potion", 1)
 		if profile["quest"] == "active" and run["dungeon"]=="forest_trial":profile["quest"] = "ready";mirror_legacy()

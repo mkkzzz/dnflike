@@ -20,7 +20,7 @@ func run() -> void:
 	clips.merge(combat.player_clips,false)
 	var actor=Actor.new();root.add_child(actor)
 	var s=Session.new();var original_weapons:=0
-	var definitions: Dictionary=s.Numbers.config().equipment
+	var definitions: Dictionary=s.Numbers.config_snapshot().equipment
 	for id: String in definitions:
 		var definition: Dictionary=definitions[id]
 		if not id.begins_with("original_") or definition.slot!="weapon":continue

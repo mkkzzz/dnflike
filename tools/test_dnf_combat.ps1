@@ -1,5 +1,7 @@
 param([string]$GodotPath="",[switch]$Act8Test,[switch]$Capture,[switch]$BuildAssets,[switch]$SyncAssets,[string]$LibraryPath="")
 $ErrorActionPreference="Stop"
+& python (Join-Path $PSScriptRoot "check_dnf_performance.py")
+if ($LASTEXITCODE -ne 0) {throw "Runtime performance guard failed."}
 & python (Join-Path $PSScriptRoot "check_dnf_numbers.py")
 if ($LASTEXITCODE -ne 0) {throw "Numeric configuration invalid; check game_dnf/data/numbers.json."}
 $repoRoot=Split-Path $PSScriptRoot -Parent

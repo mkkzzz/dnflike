@@ -54,6 +54,7 @@ def tool(name: str) -> str:
 def verify() -> int:
     """全部检查；任一失败即非零退出。"""
     checks = [
+        ('性能防回归', [tool('check_dnf_performance.py')]),
         ('副本契约', [tool('check_dnf_dungeons.py')]),
         ('BGM 覆盖', [tool('check_dnf_bgm.py')]),
         ('走区一致', [tool('check_dnf_walk.py')]),

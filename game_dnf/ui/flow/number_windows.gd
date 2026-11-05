@@ -67,7 +67,7 @@ func attributes(node: Control) -> void:
 		skin.label(node,text,Vector2(480,385),10)
 
 func equipment(node: Control) -> void:
-	var cfg := Numbers.config()
+	var cfg := Numbers.shared_config()
 	var skin = game.skin
 	var profile: Dictionary = game.session.profile
 	var instances: Array = profile["gear"].keys()

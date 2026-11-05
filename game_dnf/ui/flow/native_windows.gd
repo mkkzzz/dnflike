@@ -143,7 +143,7 @@ func item_tip(id: String, rect: Rect2, buying := false, attached := false, insta
 	var data: Dictionary = game.Catalog.ITEMS[id]
 	var rarity: Dictionary = game.Catalog.RARITIES[int(data["rarity"])]
 	var is_weapon: bool = data["kind"] == "weapon"
-	var definition: Dictionary=game.session.Numbers.config()["equipment"].get(id,{}) if is_weapon else {}
+	var definition: Dictionary=game.session.Numbers.shared_config()["equipment"].get(id,{}) if is_weapon else {}
 	var properties: Dictionary=definition.get("stats",{})
 	var equipped_uid: String=instance_uid if instance_uid!="" else game.session.profile["equipment"].get("weapon","")
 	if is_weapon and equipped_uid!="" and game.session.profile["gear"][equipped_uid]["definition"]==id:properties=game.session.Numbers.gear_detail(game.session.profile,equipped_uid)
@@ -167,7 +167,7 @@ func item_tip(id: String, rect: Rect2, buying := false, attached := false, insta
 	skin.image(tip, skin.texture("common", 230), Vector2(39, 69))
 	if is_weapon:
 		skin.label(tip, "需要等级  %d" % int(data["level"]), Vector2(16, 82), 12, Color("a7dd74") if int(game.session.profile["level"]) >= int(data["level"]) else Color("ff7777"))
-		skin.label(tip, "装备部位："+String(game.number_windows.SLOT_NAMES.get(game.session.Numbers.config()["equipment"][id]["slot"],"装备")), Vector2(16, 108), 12, Color("cccccc"))
+		skin.label(tip, "装备部位："+String(game.number_windows.SLOT_NAMES.get(game.session.Numbers.shared_config()["equipment"][id]["slot"],"装备")), Vector2(16, 108), 12, Color("cccccc"))
 		skin.label(tip, "重量  %.2f kg" % float(data["weight"]), Vector2(163, 108), 11, Color("a59c88"))
 		skin.image(tip, skin.texture("common", 230), Vector2(39, 140))
 		skin.label(tip, "装备属性", Vector2(16, 152), 12, Color("d4c399"))
@@ -237,7 +237,7 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 	if detailed:
 		var detail: String = data["detail"]
 		if id == "buff":
-			var effect: Dictionary = game.session.Numbers.config()["effects"]["frenzy"]
+			var effect: Dictionary = game.session.Numbers.shared_config()["effects"]["frenzy"]
 			detail = "持续 %.1f 秒" % (float(effect["duration_ms"])/1000)
 			var index := 0
 			for mod: Dictionary in effect["modifiers"]:
@@ -245,7 +245,7 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 				detail += "  %s ×%.2f" % [game.number_windows.NAMES.get(mod["stat"],mod["stat"]),float(mod["value"])+float(mod.get("per_level",0))*(int(game.session.profile["skills"][id])-1)]
 				index += 1
 		if id == "guard":
-			var definition: Dictionary = game.session.Numbers.config()["skills"][id]
+			var definition: Dictionary = game.session.Numbers.shared_config()["skills"][id]
 			detail += "\n当前正面承伤 %.0f%%" % (maxf(0,float(definition["guard_factor"])-(int(game.session.profile["skills"][id])-1)*float(definition["guard_per_level"]))*100)
 		var text: Label = skin.label(tip, detail, Vector2(16, 148), 11)
 		text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -377,7 +377,7 @@ func purchase_dialog(id: String, target: Dictionary = {}) -> void:
 			if not target.is_empty():
 				var category: String = game.Catalog.ITEMS[id]["kind"]
 				var index: int = game.session.profile["bag_layout"][category].find(id)
-				var uid: String="gear_%d" % next_gear if game.session.Numbers.config()["equipment"].has(id) else ""
+				var uid: String="gear_%d" % next_gear if game.session.Numbers.shared_config()["equipment"].has(id) else ""
 				if uid!="":index=game.session.profile["item_state"]["bags"][category].find(uid)
 				if index >= 0:game.act("slots.move", {"source":{"place":"bag", "category":category, "index":index, "id":id,"uid":uid}, "target":target})
 			purchase.queue_free()

@@ -1,0 +1,23 @@
+name: DNF performance guard
+on:
+  push:
+    paths:
+      - 'game_dnf/**'
+      - 'tools/**'
+      - '.github/workflows/dnf-performance.yml'
+  pull_request:
+    paths:
+      - 'game_dnf/**'
+      - 'tools/**'
+      - '.github/workflows/dnf-performance.yml'
+permissions:
+  contents: read
+jobs:
+  static-performance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify the guard rejects regression fixtures
+        run: python3 tools/test_check_dnf_performance.py
+      - name: Reject runtime catalog copies and skill tree rebuilds
+        run: python3 tools/check_dnf_performance.py

@@ -27,7 +27,7 @@ func render() -> void:
 	var p: Dictionary=game.session.profile
 	var node: Control=game.windows.board(game.modal,"物品管理 · 个人仓库",Rect2(8,16,460,488))
 	node.name="inventory_management"
-	var slots: Array=game.session.Numbers.config()["equipment_slots"]
+	var slots: Array=game.session.Numbers.shared_config()["equipment_slots"]
 	for i in slots.size():
 		var slot: String=slots[i];var uid: String=p["equipment"].get(slot,"")
 		game.skin.item_grid(node,Vector2(15+i*47,44),1,1)
