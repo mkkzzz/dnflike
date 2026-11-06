@@ -1,0 +1,10451 @@
+{
+ "schema": "dnf_fixed_attack/1",
+ "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
+ "input_source": {
+  "input_sha256": "8748e19abf6155ca5a20d13244eaca0b9442c3d7569e8e5002bddffeeb9366ac",
+  "embedded": true,
+  "resource": "10/EXERESX/0",
+  "resource_offset": 734740
+ },
+ "method": "Replay native 90A950 -> 90A6F0 fixed-attack arithmetic, without executing PE.\n\nOriginal control flow and SSE instructions consume explicitly injected base-stat,\nnormalization and skill-value service results. These inputs are NOT reconstructed\ncharacter stats. The optional skill-extension multiplier is excluded. x87 uses\nPython binary64 intermediates with explicit binary32 stores, not an x87 emulator.",
+ "tools_sha256": {
+  "audit_dnf_fixed_attack.py": "9add18c70039727726756a2581589617257295e72827a2cdec0703344a04845e",
+  "audit_dnf_firewave.py": "3377abdf1f6b5a76908a4cd14652fc68fe28d56314e49c6ee65933bfbd792ddc",
+  "audit_dnf_ice_shatter.py": "b4f90d1797fd487af50a6e39716c77cc9e889b3e5b5c0b1c12864d088f29462c",
+  "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a",
+  "audit_dnf_particle_axis.py": "59b463dcff6537cc89c597bcf2bb5f1f0a336eb25a67b09da4c228d524b1af8e",
+  "audit_dnf_native_strings.py": "60b30f2e51e5a744b106d8df955f5a7acbd7d4341ba51f52fd7a2941a5d29c6f",
+  "audit_dnf_ice_particle_bindings.py": "660048b05498ea7dd11add2d7f3654083d99faafa8fc28b86ff198292fcdeed1",
+  "dnf_pvf.py": "85c92f7f970c7e59ae8b8e9756150b72e63c1ae4d1f456878a796e81458f4218",
+  "audit_dnf_design.py": "91b898c1807e8ab7628b5a6021802feaa1277109c270cd77ef5d47759f4b4248"
+ },
+ "boundaries": [
+  "Integer and finite SSE arithmetic/branches from original wrapper/resolver; no native execution.",
+  "Base stat, normalization, skill value and secure storage are ABI fixtures; final damage/defense/crit not replayed.",
+  "Skill+30 is null: optional skill-extension modifier branch excluded. Skill field +4A4 uses opaque fixture 1.",
+  "Requested-level mapping fixture is identity; x87 precision/control word/exception modes are not reproduced.",
+  "0xFFFF0001 parameter skips an optional divisor; its full domain meaning remains unverified."
+ ],
+ "constants": [
+  {
+   "address": "0x1556df8",
+   "raw": "0000c842"
+  },
+  {
+   "address": "0x1559c80",
+   "raw": "0ad7233c"
+  },
+  {
+   "address": "0x15560bc",
+   "raw": "0000803f"
+  }
+ ],
+ "candidate_parameters": {
+  "path": "etc/etcparameter.etc",
+  "sha256": "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4",
+  "asset_version": "dnf-native-assets-v1-20261022",
+  "status": "candidate: matching source tags; loader-to-global-array mapping and column semantics NOT proved",
+  "fields": [
+   {
+    "tag": "[skill damage base parameter dungeon]",
+    "values": [
+     1,
+     63,
+     59,
+     59,
+     48,
+     20,
+     53,
+     2,
+     72,
+     67,
+     67,
+     54,
+     22,
+     61,
+     3,
+     80,
+     75,
+     75,
+     60,
+     25,
+     68,
+     4,
+     89,
+     83,
+     83,
+     67,
+     28,
+     75,
+     5,
+     97,
+     91,
+     91,
+     73,
+     30,
+     82,
+     6,
+     105,
+     99,
+     99,
+     79,
+     33,
+     89,
+     7,
+     114,
+     107,
+     107,
+     86,
+     36,
+     96,
+     8,
+     122,
+     115,
+     115,
+     92,
+     38,
+     103,
+     9,
+     131,
+     123,
+     123,
+     98,
+     41,
+     110,
+     10,
+     139,
+     131,
+     131,
+     105,
+     44,
+     118,
+     11,
+     147,
+     139,
+     139,
+     111,
+     46,
+     125,
+     12,
+     156,
+     147,
+     147,
+     117,
+     49,
+     132,
+     13,
+     164,
+     154,
+     154,
+     124,
+     51,
+     139,
+     14,
+     173,
+     162,
+     162,
+     130,
+     54,
+     146,
+     15,
+     181,
+     170,
+     170,
+     136,
+     57,
+     153,
+     16,
+     189,
+     178,
+     178,
+     143,
+     59,
+     160,
+     17,
+     198,
+     186,
+     186,
+     149,
+     62,
+     168,
+     18,
+     206,
+     194,
+     194,
+     155,
+     65,
+     175,
+     19,
+     215,
+     202,
+     202,
+     162,
+     67,
+     182,
+     20,
+     223,
+     210,
+     210,
+     168,
+     70,
+     189,
+     21,
+     231,
+     218,
+     218,
+     174,
+     73,
+     196,
+     22,
+     240,
+     226,
+     226,
+     181,
+     75,
+     203,
+     23,
+     248,
+     234,
+     234,
+     187,
+     78,
+     210,
+     24,
+     257,
+     242,
+     242,
+     193,
+     81,
+     217,
+     25,
+     265,
+     249,
+     249,
+     200,
+     83,
+     225,
+     26,
+     273,
+     257,
+     257,
+     206,
+     86,
+     232,
+     27,
+     282,
+     265,
+     265,
+     212,
+     88,
+     239,
+     28,
+     290,
+     273,
+     273,
+     219,
+     91,
+     246,
+     29,
+     299,
+     281,
+     281,
+     225,
+     94,
+     253,
+     30,
+     307,
+     289,
+     289,
+     231,
+     96,
+     260,
+     31,
+     315,
+     297,
+     297,
+     238,
+     99,
+     267,
+     32,
+     324,
+     305,
+     305,
+     244,
+     102,
+     274,
+     33,
+     332,
+     313,
+     313,
+     250,
+     104,
+     282,
+     34,
+     341,
+     321,
+     321,
+     257,
+     107,
+     289,
+     35,
+     349,
+     329,
+     329,
+     263,
+     110,
+     296,
+     36,
+     357,
+     337,
+     337,
+     269,
+     112,
+     303,
+     37,
+     366,
+     345,
+     345,
+     276,
+     115,
+     310,
+     38,
+     374,
+     352,
+     352,
+     282,
+     117,
+     317,
+     39,
+     383,
+     360,
+     360,
+     288,
+     120,
+     324,
+     40,
+     391,
+     368,
+     368,
+     295,
+     123,
+     331,
+     41,
+     399,
+     376,
+     376,
+     301,
+     125,
+     339,
+     42,
+     408,
+     384,
+     384,
+     307,
+     128,
+     346,
+     43,
+     416,
+     392,
+     392,
+     314,
+     131,
+     353,
+     44,
+     425,
+     400,
+     400,
+     320,
+     133,
+     360,
+     45,
+     433,
+     408,
+     408,
+     326,
+     136,
+     367,
+     46,
+     441,
+     416,
+     416,
+     333,
+     139,
+     374,
+     47,
+     450,
+     424,
+     424,
+     339,
+     141,
+     381,
+     48,
+     458,
+     432,
+     432,
+     345,
+     144,
+     388,
+     49,
+     467,
+     440,
+     440,
+     352,
+     147,
+     396,
+     50,
+     475,
+     447,
+     447,
+     358,
+     149,
+     403,
+     51,
+     486,
+     457,
+     457,
+     366,
+     152,
+     412,
+     52,
+     496,
+     467,
+     467,
+     374,
+     156,
+     421,
+     53,
+     507,
+     477,
+     477,
+     382,
+     159,
+     429,
+     54,
+     517,
+     487,
+     487,
+     390,
+     162,
+     438,
+     55,
+     528,
+     497,
+     497,
+     398,
+     166,
+     447,
+     56,
+     538,
+     507,
+     507,
+     406,
+     169,
+     456,
+     57,
+     549,
+     517,
+     517,
+     413,
+     172,
+     465,
+     58,
+     559,
+     527,
+     527,
+     421,
+     176,
+     474,
+     59,
+     570,
+     537,
+     537,
+     429,
+     179,
+     483,
+     60,
+     580,
+     546,
+     546,
+     437,
+     182,
+     492,
+     61,
+     591,
+     556,
+     556,
+     445,
+     185,
+     501,
+     62,
+     601,
+     566,
+     566,
+     453,
+     189,
+     510,
+     63,
+     612,
+     576,
+     576,
+     461,
+     192,
+     519,
+     64,
+     622,
+     586,
+     586,
+     469,
+     195,
+     527,
+     65,
+     633,
+     596,
+     596,
+     477,
+     199,
+     536,
+     66,
+     643,
+     606,
+     606,
+     485,
+     202,
+     545,
+     67,
+     654,
+     616,
+     616,
+     493,
+     205,
+     554,
+     68,
+     664,
+     626,
+     626,
+     501,
+     209,
+     563,
+     69,
+     675,
+     636,
+     636,
+     508,
+     212,
+     572,
+     70,
+     685,
+     645,
+     645,
+     516,
+     215,
+     581,
+     71,
+     696,
+     655,
+     655,
+     524,
+     218,
+     590,
+     72,
+     706,
+     665,
+     665,
+     532,
+     222,
+     599,
+     73,
+     717,
+     675,
+     675,
+     540,
+     225,
+     608,
+     74,
+     727,
+     685,
+     685,
+     548,
+     228,
+     617,
+     75,
+     738,
+     695,
+     695,
+     556,
+     232,
+     625,
+     76,
+     748,
+     705,
+     705,
+     564,
+     235,
+     634,
+     77,
+     759,
+     715,
+     715,
+     572,
+     238,
+     643,
+     78,
+     769,
+     725,
+     725,
+     580,
+     242,
+     652,
+     79,
+     780,
+     735,
+     735,
+     588,
+     245,
+     661,
+     80,
+     790,
+     744,
+     744,
+     596,
+     248,
+     670,
+     81,
+     801,
+     754,
+     754,
+     604,
+     251,
+     679,
+     82,
+     811,
+     764,
+     764,
+     611,
+     255,
+     688,
+     83,
+     822,
+     774,
+     774,
+     619,
+     258,
+     697,
+     84,
+     832,
+     784,
+     784,
+     627,
+     261,
+     706,
+     85,
+     843,
+     794,
+     794,
+     635,
+     265,
+     715,
+     86,
+     853,
+     804,
+     804,
+     643,
+     268,
+     723,
+     87,
+     864,
+     814,
+     814,
+     651,
+     271,
+     732,
+     88,
+     874,
+     824,
+     824,
+     659,
+     275,
+     741,
+     89,
+     885,
+     834,
+     834,
+     667,
+     278,
+     750,
+     90,
+     895,
+     843,
+     843,
+     675,
+     281,
+     759,
+     91,
+     906,
+     853,
+     853,
+     683,
+     284,
+     768,
+     92,
+     916,
+     863,
+     863,
+     691,
+     288,
+     777,
+     93,
+     927,
+     873,
+     873,
+     699,
+     291,
+     786,
+     94,
+     937,
+     883,
+     883,
+     706,
+     294,
+     795,
+     95,
+     948,
+     893,
+     893,
+     714,
+     298,
+     804,
+     96,
+     958,
+     903,
+     903,
+     722,
+     301,
+     813,
+     97,
+     969,
+     913,
+     913,
+     730,
+     304,
+     822,
+     98,
+     979,
+     923,
+     923,
+     738,
+     308,
+     830,
+     99,
+     990,
+     933,
+     933,
+     746,
+     311,
+     839,
+     100,
+     1000,
+     942,
+     942,
+     754,
+     314,
+     848
+    ],
+    "types": [
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int"
+    ],
+    "offset": 54142,
+    "children": []
+   },
+   {
+    "tag": "[skill damage base parameter pvp]",
+    "values": [
+     1,
+     33,
+     30,
+     24,
+     24,
+     10,
+     27,
+     2,
+     38,
+     36,
+     29,
+     29,
+     12,
+     32,
+     3,
+     44,
+     41,
+     33,
+     33,
+     14,
+     37,
+     4,
+     50,
+     47,
+     37,
+     37,
+     16,
+     42,
+     5,
+     56,
+     52,
+     42,
+     42,
+     17,
+     47,
+     6,
+     61,
+     58,
+     46,
+     46,
+     19,
+     52,
+     7,
+     68,
+     63,
+     51,
+     51,
+     21,
+     57,
+     8,
+     73,
+     69,
+     55,
+     55,
+     23,
+     62,
+     9,
+     79,
+     74,
+     59,
+     59,
+     25,
+     67,
+     10,
+     85,
+     80,
+     64,
+     64,
+     27,
+     72,
+     11,
+     91,
+     85,
+     68,
+     68,
+     28,
+     77,
+     12,
+     96,
+     91,
+     72,
+     72,
+     30,
+     82,
+     13,
+     103,
+     96,
+     77,
+     77,
+     32,
+     86,
+     14,
+     108,
+     102,
+     81,
+     81,
+     34,
+     91,
+     15,
+     114,
+     107,
+     86,
+     86,
+     36,
+     96,
+     16,
+     120,
+     113,
+     90,
+     90,
+     38,
+     101,
+     17,
+     126,
+     118,
+     94,
+     94,
+     39,
+     106,
+     18,
+     131,
+     124,
+     99,
+     99,
+     41,
+     111,
+     19,
+     138,
+     129,
+     103,
+     103,
+     43,
+     116,
+     20,
+     143,
+     135,
+     108,
+     108,
+     45,
+     121,
+     21,
+     149,
+     140,
+     112,
+     112,
+     47,
+     126,
+     22,
+     154,
+     146,
+     116,
+     116,
+     49,
+     131,
+     23,
+     161,
+     151,
+     121,
+     121,
+     50,
+     136,
+     24,
+     166,
+     156,
+     125,
+     125,
+     52,
+     141,
+     25,
+     172,
+     162,
+     130,
+     130,
+     54,
+     146,
+     26,
+     178,
+     167,
+     134,
+     134,
+     56,
+     151,
+     27,
+     184,
+     173,
+     138,
+     138,
+     58,
+     156,
+     28,
+     189,
+     178,
+     143,
+     143,
+     59,
+     161,
+     29,
+     196,
+     184,
+     147,
+     147,
+     61,
+     166,
+     30,
+     201,
+     189,
+     152,
+     152,
+     63,
+     171,
+     31,
+     207,
+     195,
+     156,
+     156,
+     65,
+     175,
+     32,
+     213,
+     200,
+     160,
+     160,
+     67,
+     180,
+     33,
+     219,
+     206,
+     165,
+     165,
+     69,
+     185,
+     34,
+     224,
+     211,
+     169,
+     169,
+     70,
+     190,
+     35,
+     231,
+     217,
+     174,
+     174,
+     72,
+     195,
+     36,
+     236,
+     222,
+     178,
+     178,
+     74,
+     200,
+     37,
+     242,
+     228,
+     182,
+     182,
+     76,
+     205,
+     38,
+     248,
+     233,
+     187,
+     187,
+     78,
+     210,
+     39,
+     254,
+     239,
+     191,
+     191,
+     80,
+     215,
+     40,
+     259,
+     244,
+     195,
+     195,
+     81,
+     220,
+     41,
+     266,
+     250,
+     200,
+     200,
+     83,
+     225,
+     42,
+     271,
+     255,
+     204,
+     204,
+     85,
+     230,
+     43,
+     277,
+     261,
+     209,
+     209,
+     87,
+     235,
+     44,
+     283,
+     266,
+     213,
+     213,
+     89,
+     240,
+     45,
+     289,
+     272,
+     217,
+     217,
+     91,
+     245,
+     46,
+     294,
+     277,
+     222,
+     222,
+     92,
+     250,
+     47,
+     300,
+     283,
+     226,
+     226,
+     94,
+     255,
+     48,
+     306,
+     288,
+     231,
+     231,
+     96,
+     259,
+     49,
+     312,
+     294,
+     235,
+     235,
+     98,
+     264,
+     50,
+     318,
+     299,
+     239,
+     239,
+     100,
+     269,
+     51,
+     325,
+     306,
+     245,
+     245,
+     102,
+     276,
+     52,
+     332,
+     313,
+     250,
+     250,
+     104,
+     282,
+     53,
+     340,
+     320,
+     256,
+     256,
+     107,
+     288,
+     54,
+     347,
+     327,
+     261,
+     261,
+     109,
+     294,
+     55,
+     354,
+     334,
+     267,
+     267,
+     111,
+     300,
+     56,
+     362,
+     340,
+     272,
+     272,
+     113,
+     306,
+     57,
+     369,
+     347,
+     278,
+     278,
+     116,
+     313,
+     58,
+     376,
+     354,
+     283,
+     283,
+     118,
+     319,
+     59,
+     383,
+     361,
+     289,
+     289,
+     120,
+     325,
+     60,
+     390,
+     368,
+     294,
+     294,
+     123,
+     331,
+     61,
+     398,
+     375,
+     300,
+     300,
+     125,
+     337,
+     62,
+     405,
+     382,
+     305,
+     305,
+     127,
+     343,
+     63,
+     413,
+     389,
+     311,
+     311,
+     130,
+     350,
+     64,
+     420,
+     395,
+     316,
+     316,
+     132,
+     356,
+     65,
+     427,
+     402,
+     322,
+     322,
+     134,
+     362,
+     66,
+     434,
+     409,
+     327,
+     327,
+     136,
+     368,
+     67,
+     441,
+     416,
+     333,
+     333,
+     139,
+     374,
+     68,
+     449,
+     423,
+     338,
+     338,
+     141,
+     381,
+     69,
+     456,
+     430,
+     344,
+     344,
+     143,
+     387,
+     70,
+     463,
+     437,
+     349,
+     349,
+     146,
+     393,
+     71,
+     471,
+     443,
+     355,
+     355,
+     148,
+     399,
+     72,
+     478,
+     450,
+     360,
+     360,
+     150,
+     405,
+     73,
+     486,
+     457,
+     366,
+     366,
+     152,
+     411,
+     74,
+     493,
+     464,
+     371,
+     371,
+     155,
+     418,
+     75,
+     500,
+     471,
+     377,
+     377,
+     157,
+     424,
+     76,
+     507,
+     478,
+     382,
+     382,
+     159,
+     430,
+     77,
+     514,
+     485,
+     388,
+     388,
+     162,
+     436,
+     78,
+     522,
+     491,
+     393,
+     393,
+     164,
+     442,
+     79,
+     529,
+     498,
+     399,
+     399,
+     166,
+     448,
+     80,
+     536,
+     505,
+     404,
+     404,
+     168,
+     455,
+     81,
+     544,
+     512,
+     410,
+     410,
+     171,
+     461,
+     82,
+     551,
+     519,
+     415,
+     415,
+     173,
+     467,
+     83,
+     558,
+     526,
+     421,
+     421,
+     175,
+     473,
+     84,
+     565,
+     533,
+     426,
+     426,
+     178,
+     479,
+     85,
+     572,
+     540,
+     432,
+     432,
+     180,
+     486,
+     86,
+     580,
+     546,
+     437,
+     437,
+     182,
+     492,
+     87,
+     587,
+     553,
+     443,
+     443,
+     184,
+     498,
+     88,
+     595,
+     560,
+     448,
+     448,
+     187,
+     504,
+     89,
+     602,
+     567,
+     454,
+     454,
+     189,
+     510,
+     90,
+     609,
+     574,
+     459,
+     459,
+     191,
+     516,
+     91,
+     616,
+     581,
+     465,
+     465,
+     194,
+     523,
+     92,
+     623,
+     588,
+     470,
+     470,
+     196,
+     529,
+     93,
+     631,
+     594,
+     476,
+     476,
+     198,
+     535,
+     94,
+     638,
+     601,
+     481,
+     481,
+     200,
+     541,
+     95,
+     645,
+     608,
+     487,
+     487,
+     203,
+     547,
+     96,
+     653,
+     615,
+     492,
+     492,
+     205,
+     554,
+     97,
+     660,
+     622,
+     498,
+     498,
+     207,
+     560,
+     98,
+     668,
+     629,
+     503,
+     503,
+     210,
+     566,
+     99,
+     675,
+     636,
+     508,
+     508,
+     212,
+     572,
+     100,
+     682,
+     642,
+     514,
+     514,
+     214,
+     578
+    ],
+    "types": [
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int",
+     "int"
+    ],
+    "offset": 57652,
+    "children": []
+   }
+  ]
+ },
+ "native_parameter_tags": [
+  {
+   "address": "0x15b3598",
+   "raw": "0054762aaf4c029a0cf0214fa829af73884753a719a2cb6e88fb81ddddfe0798cfafce70863b2f6b9ec1eea383ad4d069eca923747f52a93a6538639429d259748bb93dbe514b9d8",
+   "text": "[skill damage base parameter pvp]"
+  },
+  {
+   "address": "0x15b35e8",
+   "raw": "0054722aaf4c029a0cf0214fa829af73884753a719a2cb6e88fb81ddddfe0798cfafce70863b2f6b9ec1eea383ad4d069eca923747f52a93a6538639429d31974bbbb9dbd014a6d51f1970b0a2424671",
+   "text": "[skill damage base parameter dungeon]"
+  }
+ ],
+ "runs": [
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 583,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 583,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 1170,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 1170.0
+    }
+   ],
+   "value": 1170,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 1170,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 1170.0
+    }
+   ],
+   "value": 1170,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 645,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 645.0
+    }
+   ],
+   "value": 645,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 645,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 645.0
+    }
+   ],
+   "value": 645,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 1289,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 1289.0
+    }
+   ],
+   "value": 1289,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 1289,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 1289.0
+    }
+   ],
+   "value": 1289,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 1129,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 1129.0
+    }
+   ],
+   "value": 1129,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 1129,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 1129.0
+    }
+   ],
+   "value": 1129,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 2257,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 2257.0
+    }
+   ],
+   "value": 2257,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 2257,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 2257.0
+    }
+   ],
+   "value": 2257,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 251,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 251.0
+    }
+   ],
+   "value": 251,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 251,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 251.0
+    }
+   ],
+   "value": 251,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 0.0
+    }
+   ],
+   "value": 0,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 0.0
+    }
+   ],
+   "value": 0,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": -125.5,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": -125.5
+    }
+   ],
+   "value": -125,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": -125.5,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": -125.5
+    }
+   ],
+   "value": -125,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 100,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 100.0
+    }
+   ],
+   "value": 100,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 100,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 100.0
+    }
+   ],
+   "value": 100,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 100.5,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 100.5
+    }
+   ],
+   "value": 100,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 100.5,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 100.5
+    }
+   ],
+   "value": 100,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 0,
+    "skill_value": 584,
+    "normalization": 1.25,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 0
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 0,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 0,
+    "skill_value": 584,
+    "normalization": 1.25,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 0
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 0,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 59,
+    "skill_value": 584,
+    "normalization": 1.25,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 59
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 59
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 430,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 59,
+    "skill_value": 584,
+    "normalization": 1.25,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 59
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 59
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 430,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584,
+    "normalization": 1.25,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 729,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584,
+    "normalization": 1.25,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 729,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 367,
+    "skill_value": 584,
+    "normalization": 1.25,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 367
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 367
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 2679,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 367,
+    "skill_value": 584,
+    "normalization": 1.25,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 367
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 367
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 2679,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 999,
+    "skill_value": 584,
+    "normalization": 1.25,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 999
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 999
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 7292,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 999,
+    "skill_value": 584,
+    "normalization": 1.25,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 999
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 999
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 7292,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 20,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.5,
+    "lower_normalization": 0.75,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x75bf90",
+     "this": "0x0",
+     "kind": "level_mapping_fixture",
+     "args": [
+      20
+     ],
+     "value": 20
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.5
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      20,
+      13,
+      0
+     ],
+     "value": 0.75
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 1167,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     false
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     false
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 165,
+   "trace_sha256": "472870b761ebe2a24bba588c2e644c1c8174558c72cff2ef9860c49bd69b2085"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 20,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.5,
+    "lower_normalization": 0.75,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x75bf90",
+     "this": "0xbaadf00d",
+     "kind": "level_mapping_fixture",
+     "args": [
+      20
+     ],
+     "value": 20
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.5
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      20,
+      13,
+      0
+     ],
+     "value": 0.75
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 1167,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     false
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     false
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 165,
+   "trace_sha256": "472870b761ebe2a24bba588c2e644c1c8174558c72cff2ef9860c49bd69b2085"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 40,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.5,
+    "lower_normalization": 0.75,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x75bf90",
+     "this": "0x0",
+     "kind": "level_mapping_fixture",
+     "args": [
+      40
+     ],
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 875,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     false
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 158,
+   "trace_sha256": "c91dd3c18637fea42ec7543a10c0b964682cc7aee2d252a83f61d7c839ce45c9"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 40,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.5,
+    "lower_normalization": 0.75,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x75bf90",
+     "this": "0xbaadf00d",
+     "kind": "level_mapping_fixture",
+     "args": [
+      40
+     ],
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 875,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     false
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 158,
+   "trace_sha256": "c91dd3c18637fea42ec7543a10c0b964682cc7aee2d252a83f61d7c839ce45c9"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 60,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.5,
+    "lower_normalization": 0.75,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x75bf90",
+     "this": "0x0",
+     "kind": "level_mapping_fixture",
+     "args": [
+      60
+     ],
+     "value": 60
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 875,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     false
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 158,
+   "trace_sha256": "c91dd3c18637fea42ec7543a10c0b964682cc7aee2d252a83f61d7c839ce45c9"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 60,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.5,
+    "lower_normalization": 0.75,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x75bf90",
+     "this": "0xbaadf00d",
+     "kind": "level_mapping_fixture",
+     "args": [
+      60
+     ],
+     "value": 60
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 875,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     false
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 158,
+   "trace_sha256": "c91dd3c18637fea42ec7543a10c0b964682cc7aee2d252a83f61d7c839ce45c9"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -150,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 58399,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     false
+    ],
+    [
+     "0x90a8b6",
+     false
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 166,
+   "trace_sha256": "9cbd3bd9a5692b25a237ed1821ed9153f967795d081e5e8af9dc15db84e5917c"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -150,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 58399,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     false
+    ],
+    [
+     "0x90a8b6",
+     false
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 166,
+   "trace_sha256": "9cbd3bd9a5692b25a237ed1821ed9153f967795d081e5e8af9dc15db84e5917c"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -99,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 58399,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     false
+    ],
+    [
+     "0x90a8b6",
+     false
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 166,
+   "trace_sha256": "9cbd3bd9a5692b25a237ed1821ed9153f967795d081e5e8af9dc15db84e5917c"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -99,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 58399,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     false
+    ],
+    [
+     "0x90a8b6",
+     false
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 166,
+   "trace_sha256": "9cbd3bd9a5692b25a237ed1821ed9153f967795d081e5e8af9dc15db84e5917c"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": 0,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 583,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     false
+    ],
+    [
+     "0x90a8b6",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 165,
+   "trace_sha256": "2422e27e25990a6286291f59a8f4d70d6ef071a691ae7709b8b9f6ab73b94217"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": 0,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 583,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     false
+    ],
+    [
+     "0x90a8b6",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 165,
+   "trace_sha256": "2422e27e25990a6286291f59a8f4d70d6ef071a691ae7709b8b9f6ab73b94217"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": 50,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 389,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     false
+    ],
+    [
+     "0x90a8b6",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 165,
+   "trace_sha256": "2422e27e25990a6286291f59a8f4d70d6ef071a691ae7709b8b9f6ab73b94217"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": 50,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 389,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     false
+    ],
+    [
+     "0x90a8b6",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 165,
+   "trace_sha256": "2422e27e25990a6286291f59a8f4d70d6ef071a691ae7709b8b9f6ab73b94217"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": 100,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 291,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     false
+    ],
+    [
+     "0x90a8b6",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 165,
+   "trace_sha256": "2422e27e25990a6286291f59a8f4d70d6ef071a691ae7709b8b9f6ab73b94217"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": 100,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 291,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     false
+    ],
+    [
+     "0x90a8b6",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 165,
+   "trace_sha256": "2422e27e25990a6286291f59a8f4d70d6ef071a691ae7709b8b9f6ab73b94217"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 10,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 0.75,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 10
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      1,
+      10,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 437,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 10,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 0.75,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 10
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      1,
+      10,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 437,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 154,
+   "trace_sha256": "f01b7247d1a5deefdba581f75ef510f83c1586edfb108d8148c1979aaaa64bc2"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 10,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": 2,
+    "divisor_parameter": -65535,
+    "multiplier": 0.75,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      1,
+      2,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 437,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     true
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 146,
+   "trace_sha256": "af827b2e45e23ae5accf96ee557cafdf29429778067513061a147590472f5982"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 10,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": 2,
+    "divisor_parameter": -65535,
+    "multiplier": 0.75,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      1,
+      2,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 437,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     true
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     true
+    ],
+    [
+     "0x90a819",
+     true
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 146,
+   "trace_sha256": "af827b2e45e23ae5accf96ee557cafdf29429778067513061a147590472f5982"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": false,
+    "poison": false
+   },
+   "events": [],
+   "value": 0,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     false
+    ]
+   ],
+   "steps": 47,
+   "trace_sha256": "daf500df272232f93c22a8ad072569abcbd3ef84263cb66a5f87d5cd2dc1a329"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "requested_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.0,
+    "lower_normalization": 1.0,
+    "has_owner": false,
+    "poison": true
+   },
+   "events": [],
+   "value": 0,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     false
+    ]
+   ],
+   "steps": 47,
+   "trace_sha256": "daf500df272232f93c22a8ad072569abcbd3ef84263cb66a5f87d5cd2dc1a329"
+  }
+ ],
+ "blocks": [
+  {
+   "start": "0x4429c0",
+   "end_exclusive": "0x4429c7",
+   "sha256": "a59cdafbeacbd35969f2096bf21a5abcb78307c4617a49f5a8aec3055c69a919",
+   "instructions": [
+    "004429C0 lea eax, [ecx + 0x2d4]",
+    "004429C6 ret "
+   ]
+  },
+  {
+   "start": "0x75bf00",
+   "end_exclusive": "0x75bf41",
+   "sha256": "229841e0ea3174771d167105199847228e1d3bd14b0d2cc4b46bf7fd70a2a461",
+   "instructions": [
+    "0075BF00 push ebp",
+    "0075BF01 mov ebp, esp",
+    "0075BF03 push esi",
+    "0075BF04 mov esi, dword ptr [ebp + 8]",
+    "0075BF07 test esi, esi",
+    "0075BF09 je 0x75bf3c",
+    "0075BF0B call 0x6fc760",
+    "0075BF10 mov ecx, eax",
+    "0075BF12 call 0x7527d0",
+    "0075BF17 test eax, eax",
+    "0075BF19 je 0x75bf3c",
+    "0075BF1B call 0x6fc760",
+    "0075BF20 mov ecx, eax",
+    "0075BF22 call 0x7527d0",
+    "0075BF27 mov ecx, dword ptr [ebp + 0x10]",
+    "0075BF2A mov edx, dword ptr [eax]",
+    "0075BF2C mov edx, dword ptr [edx + 0x40]",
+    "0075BF2F push ecx",
+    "0075BF30 mov ecx, dword ptr [ebp + 0xc]",
+    "0075BF33 push ecx",
+    "0075BF34 push esi",
+    "0075BF35 mov ecx, eax",
+    "0075BF37 call edx",
+    "0075BF39 pop esi",
+    "0075BF3A pop ebp",
+    "0075BF3B ret ",
+    "0075BF3C fld1 ",
+    "0075BF3E pop esi",
+    "0075BF3F pop ebp",
+    "0075BF40 ret "
+   ]
+  },
+  {
+   "start": "0x75eb80",
+   "end_exclusive": "0x75ee6c",
+   "sha256": "7ca956154a19ad1dad59141b98b64b1508de86ac29909f8a559299610faff4fa",
+   "instructions": [
+    "0075EB80 push ebp",
+    "0075EB81 mov ebp, esp",
+    "0075EB83 push -1",
+    "0075EB85 push 0x142b149",
+    "0075EB8A mov eax, dword ptr fs:[0]",
+    "0075EB90 push eax",
+    "0075EB91 sub esp, 0x14",
+    "0075EB94 push ebx",
+    "0075EB95 push esi",
+    "0075EB96 push edi",
+    "0075EB97 mov eax, dword ptr [0x1a367f0]",
+    "0075EB9C xor eax, ebp",
+    "0075EB9E push eax",
+    "0075EB9F lea eax, [ebp - 0xc]",
+    "0075EBA2 mov dword ptr fs:[0], eax",
+    "0075EBA8 mov dword ptr [ebp - 0x14], 0",
+    "0075EBAF mov esi, dword ptr [ebp + 0x1c]",
+    "0075EBB2 test esi, esi",
+    "0075EBB4 jne 0x75ebbc",
+    "0075EBB6 mov esi, dword ptr [0x1ab7cdc]",
+    "0075EBBC mov ebx, dword ptr [ebp + 0x10]",
+    "0075EBBF cmp ebx, 6",
+    "0075EBC2 ja 0x75ee31",
+    "0075EBC8 mov edi, dword ptr [ebp + 0x14]",
+    "0075EBCB test edi, edi",
+    "0075EBCD jne 0x75ec29",
+    "0075EBCF push edi",
+    "0075EBD0 push 0x15b1e50",
+    "0075EBD5 call 0x1194fc0",
+    "0075EBDA mov ecx, dword ptr [0x1a5fb20]",
+    "0075EBE0 add esp, 4",
+    "0075EBE3 push eax",
+    "0075EBE4 push 0x10d",
+    "0075EBE9 call 0xe6e070",
+    "0075EBEE mov esi, dword ptr [ebp + 8]",
+    "0075EBF1 mov ecx, esi",
+    "0075EBF3 call 0x1197630",
+    "0075EBF8 lea edx, [esi + 8]",
+    "0075EBFB push edx",
+    "0075EBFC lea eax, [ebp + 0x1c]",
+    "0075EBFF push eax",
+    "0075EC00 mov ecx, esi",
+    "0075EC02 mov dword ptr [ebp - 4], 2",
+    "0075EC09 mov dword ptr [ebp + 0x1c], 0",
+    "0075EC10 call 0x1195a10",
+    "0075EC15 mov eax, esi",
+    "0075EC17 mov ecx, dword ptr [ebp - 0xc]",
+    "0075EC1A mov dword ptr fs:[0], ecx",
+    "0075EC21 pop ecx",
+    "0075EC22 pop edi",
+    "0075EC23 pop esi",
+    "0075EC24 pop ebx",
+    "0075EC25 mov esp, ebp",
+    "0075EC27 pop ebp",
+    "0075EC28 ret ",
+    "0075EC29 jle 0x75ebee",
+    "0075EC2B mov ecx, dword ptr [0x1a66980]",
+    "0075EC31 sub ecx, dword ptr [0x1a6697c]",
+    "0075EC37 mov eax, 0x2aaaaaab",
+    "0075EC3C imul ecx",
+    "0075EC3E sar edx, 1",
+    "0075EC40 mov eax, edx",
+    "0075EC42 shr eax, 0x1f",
+    "0075EC45 add eax, edx",
+    "0075EC47 cmp edi, eax",
+    "0075EC49 jae 0x75ebee",
+    "0075EC4B lea ecx, [ebp - 0x20]",
+    "0075EC4E call 0x1197630",
+    "0075EC53 lea ecx, [ebp - 0x18]",
+    "0075EC56 push ecx",
+    "0075EC57 lea edx, [ebp + 0x1c]",
+    "0075EC5A push edx",
+    "0075EC5B lea ecx, [ebp - 0x20]",
+    "0075EC5E mov dword ptr [ebp - 4], 3",
+    "0075EC65 mov dword ptr [ebp + 0x1c], 0",
+    "0075EC6C call 0x1195a10",
+    "0075EC71 mov eax, dword ptr [ebp + 0xc]",
+    "0075EC74 mov dword ptr [ebp - 4], 4",
+    "0075EC7B cmp eax, 4",
+    "0075EC7E je 0x75ec96",
+    "0075EC80 cmp eax, 5",
+    "0075EC83 je 0x75ec96",
+    "0075EC85 cmp eax, 9",
+    "0075EC88 je 0x75ec96",
+    "0075EC8A lea ecx, [ebx + ebx*4]",
+    "0075EC8D lea ecx, [ecx*4 + 0x1a66978]",
+    "0075EC94 jmp 0x75eca0",
+    "0075EC96 lea ecx, [ebx + ebx*4]",
+    "0075EC99 lea ecx, [ecx*4 + 0x1a66a04]",
+    "0075ECA0 dec edi",
+    "0075ECA1 push edi",
+    "0075ECA2 call 0xfeecf0",
+    "0075ECA7 push eax",
+    "0075ECA8 lea ecx, [ebp - 0x20]",
+    "0075ECAB call 0x406970",
+    "0075ECB0 mov edi, dword ptr [ebp + 0x20]",
+    "0075ECB3 cmp ebx, 1",
+    "0075ECB6 jne 0x75edcd",
+    "0075ECBC test esi, esi",
+    "0075ECBE je 0x75edcd",
+    "0075ECC4 mov eax, dword ptr [esi]",
+    "0075ECC6 mov edx, dword ptr [eax + 0x440]",
+    "0075ECCC push 3",
+    "0075ECCE mov ecx, esi",
+    "0075ECD0 call edx",
+    "0075ECD2 test eax, eax",
+    "0075ECD4 je 0x75edcd",
+    "0075ECDA call 0x6fc760",
+    "0075ECDF test eax, eax",
+    "0075ECE1 je 0x75ed42",
+    "0075ECE3 call 0x6fc760",
+    "0075ECE8 mov ecx, eax",
+    "0075ECEA call 0x752880",
+    "0075ECEF test al, al",
+    "0075ECF1 jne 0x75ed42",
+    "0075ECF3 lea eax, [ebp + 0x10]",
+    "0075ECF6 push eax",
+    "0075ECF7 lea ecx, [ebp - 0x18]",
+    "0075ECFA push ecx",
+    "0075ECFB lea ecx, [ebp - 0x20]",
+    "0075ECFE call 0x1195eb0",
+    "0075ED03 mov edx, dword ptr [esi]",
+    "0075ED05 mov eax, dword ptr [edx + 0x440]",
+    "0075ED0B mov ebx, dword ptr [ebp + 0x10]",
+    "0075ED0E push 0",
+    "0075ED10 push edi",
+    "0075ED11 mov ecx, esi",
+    "0075ED13 call eax",
+    "0075ED15 mov ecx, eax",
+    "0075ED17 call 0x75e960",
+    "0075ED1C mov edx, dword ptr [esi]",
+    "0075ED1E add eax, ebx",
+    "0075ED20 mov dword ptr [ebp - 0x10], eax",
+    "0075ED23 fild dword ptr [ebp - 0x10]",
+    "0075ED26 mov eax, dword ptr [edx + 0x440]",
+    "0075ED2C push 0",
+    "0075ED2E push edi",
+    "0075ED2F fstp dword ptr [ebp - 0x10]",
+    "0075ED32 mov ecx, esi",
+    "0075ED34 call eax",
+    "0075ED36 mov ecx, eax",
+    "0075ED38 call 0x75e990",
+    "0075ED3D fmul dword ptr [ebp - 0x10]",
+    "0075ED40 jmp 0x75edb5",
+    "0075ED42 call 0x6fc760",
+    "0075ED47 mov ecx, eax",
+    "0075ED49 call 0x752850",
+    "0075ED4E cmp eax, 0x12",
+    "0075ED51 je 0x75ed67",
+    "0075ED53 cmp eax, 4",
+    "0075ED56 je 0x75ed67",
+    "0075ED58 cmp eax, 5",
+    "0075ED5B je 0x75ed67",
+    "0075ED5D cmp eax, 9",
+    "0075ED60 je 0x75ed67",
+    "0075ED62 cmp eax, 7",
+    "0075ED65 jne 0x75edcd",
+    "0075ED67 lea eax, [ebp + 0x10]",
+    "0075ED6A push eax",
+    "0075ED6B lea ecx, [ebp - 0x18]",
+    "0075ED6E push ecx",
+    "0075ED6F lea ecx, [ebp - 0x20]",
+    "0075ED72 call 0x1195eb0",
+    "0075ED77 mov edx, dword ptr [esi]",
+    "0075ED79 mov eax, dword ptr [edx + 0x440]",
+    "0075ED7F mov ebx, dword ptr [ebp + 0x10]",
+    "0075ED82 push 1",
+    "0075ED84 push edi",
+    "0075ED85 mov ecx, esi",
+    "0075ED87 call eax",
+    "0075ED89 mov ecx, eax",
+    "0075ED8B call 0x75e960",
+    "0075ED90 mov edx, dword ptr [esi]",
+    "0075ED92 add eax, ebx",
+    "0075ED94 mov dword ptr [ebp - 0x10], eax",
+    "0075ED97 fild dword ptr [ebp - 0x10]",
+    "0075ED9A mov eax, dword ptr [edx + 0x440]",
+    "0075EDA0 push 1",
+    "0075EDA2 push 3",
+    "0075EDA4 fstp dword ptr [ebp - 0x10]",
+    "0075EDA7 mov ecx, esi",
+    "0075EDA9 call eax",
+    "0075EDAB mov ecx, eax",
+    "0075EDAD call 0x75e990",
+    "0075EDB2 fmul dword ptr [ebp - 0x10]",
+    "0075EDB5 call 0x13cd690",
+    "0075EDBA lea ecx, [ebp - 0x18]",
+    "0075EDBD push ecx",
+    "0075EDBE lea edx, [ebp - 0x10]",
+    "0075EDC1 push edx",
+    "0075EDC2 lea ecx, [ebp - 0x20]",
+    "0075EDC5 mov dword ptr [ebp - 0x10], eax",
+    "0075EDC8 call 0x1195a10",
+    "0075EDCD mov eax, dword ptr [esi]",
+    "0075EDCF mov edx, dword ptr [eax + 0x440]",
+    "0075EDD5 push edi",
+    "0075EDD6 mov ecx, esi",
+    "0075EDD8 call edx",
+    "0075EDDA lea ecx, [ebp + 0x10]",
+    "0075EDDD push ecx",
+    "0075EDDE lea edx, [eax + 0x8b4]",
+    "0075EDE4 push edx",
+    "0075EDE5 lea ecx, [eax + 0x8ac]",
+    "0075EDEB call 0x1195eb0",
+    "0075EDF0 mov eax, dword ptr [ebp + 0x10]",
+    "0075EDF3 push eax",
+    "0075EDF4 lea ecx, [ebp - 0x20]",
+    "0075EDF7 call 0x42cdb0",
+    "0075EDFC mov esi, dword ptr [ebp + 8]",
+    "0075EDFF lea ecx, [ebp - 0x20]",
+    "0075EE02 push ecx",
+    "0075EE03 mov ecx, esi",
+    "0075EE05 call 0x40a950",
+    "0075EE0A lea ecx, [ebp - 0x20]",
+    "0075EE0D mov dword ptr [ebp - 0x14], 1",
+    "0075EE14 mov byte ptr [ebp - 4], 0",
+    "0075EE18 call 0x1195dc0",
+    "0075EE1D mov eax, esi",
+    "0075EE1F mov ecx, dword ptr [ebp - 0xc]",
+    "0075EE22 mov dword ptr fs:[0], ecx",
+    "0075EE29 pop ecx",
+    "0075EE2A pop edi",
+    "0075EE2B pop esi",
+    "0075EE2C pop ebx",
+    "0075EE2D mov esp, ebp",
+    "0075EE2F pop ebp",
+    "0075EE30 ret ",
+    "0075EE31 mov esi, dword ptr [ebp + 8]",
+    "0075EE34 mov ecx, esi",
+    "0075EE36 call 0x1197630",
+    "0075EE3B lea ecx, [esi + 8]",
+    "0075EE3E push ecx",
+    "0075EE3F lea edx, [ebp + 0x1c]",
+    "0075EE42 push edx",
+    "0075EE43 mov ecx, esi",
+    "0075EE45 mov dword ptr [ebp - 4], 1",
+    "0075EE4C mov dword ptr [ebp + 0x1c], 0",
+    "0075EE53 call 0x1195a10",
+    "0075EE58 mov eax, esi",
+    "0075EE5A mov ecx, dword ptr [ebp - 0xc]",
+    "0075EE5D mov dword ptr fs:[0], ecx",
+    "0075EE64 pop ecx",
+    "0075EE65 pop edi",
+    "0075EE66 pop esi",
+    "0075EE67 pop ebx",
+    "0075EE68 mov esp, ebp",
+    "0075EE6A pop ebp",
+    "0075EE6B ret "
+   ]
+  },
+  {
+   "start": "0x908c23",
+   "end_exclusive": "0x908c3a",
+   "sha256": "f0674bb1245280e1a6674a077528e0eda997e06763bd137999f5c99de7323b64",
+   "instructions": [
+    "00908C23 fld dword ptr [ebp + 0x10]",
+    "00908C26 mov ecx, dword ptr [ebp - 0xc]",
+    "00908C29 mov dword ptr fs:[0], ecx",
+    "00908C30 pop ecx",
+    "00908C31 pop edi",
+    "00908C32 pop esi",
+    "00908C33 pop ebx",
+    "00908C34 mov esp, ebp",
+    "00908C36 pop ebp",
+    "00908C37 ret 0x18"
+   ]
+  },
+  {
+   "start": "0x90a6f0",
+   "end_exclusive": "0x90a8d6",
+   "sha256": "ad06520f3bac5776e5bc7901dafabbc268b69c2fa2c551cb599f10c34f338685",
+   "instructions": [
+    "0090A6F0 push ebp",
+    "0090A6F1 mov ebp, esp",
+    "0090A6F3 push -1",
+    "0090A6F5 push 0x143e068",
+    "0090A6FA mov eax, dword ptr fs:[0]",
+    "0090A700 push eax",
+    "0090A701 sub esp, 0x14",
+    "0090A704 push ebx",
+    "0090A705 push esi",
+    "0090A706 push edi",
+    "0090A707 mov eax, dword ptr [0x1a367f0]",
+    "0090A70C xor eax, ebp",
+    "0090A70E push eax",
+    "0090A70F lea eax, [ebp - 0xc]",
+    "0090A712 mov dword ptr fs:[0], eax",
+    "0090A718 mov edi, ecx",
+    "0090A71A mov esi, dword ptr [ebp + 0x1c]",
+    "0090A71D test esi, esi",
+    "0090A71F jne 0x90a737",
+    "0090A721 xor eax, eax",
+    "0090A723 mov ecx, dword ptr [ebp - 0xc]",
+    "0090A726 mov dword ptr fs:[0], ecx",
+    "0090A72D pop ecx",
+    "0090A72E pop edi",
+    "0090A72F pop esi",
+    "0090A730 pop ebx",
+    "0090A731 mov esp, ebp",
+    "0090A733 pop ebp",
+    "0090A734 ret 0x18",
+    "0090A737 mov eax, dword ptr [esi]",
+    "0090A739 mov edx, dword ptr [eax + 0x238]",
+    "0090A73F mov ecx, esi",
+    "0090A741 call edx",
+    "0090A743 mov ebx, eax",
+    "0090A745 mov eax, dword ptr [ebp + 0x10]",
+    "0090A748 test eax, eax",
+    "0090A74A je 0x90a75a",
+    "0090A74C push eax",
+    "0090A74D call 0x75bf90",
+    "0090A752 add esp, 4",
+    "0090A755 mov dword ptr [ebp + 0x10], eax",
+    "0090A758 jmp 0x90a75d",
+    "0090A75A mov dword ptr [ebp + 0x10], ebx",
+    "0090A75D mov eax, dword ptr [esi]",
+    "0090A75F xorps xmm0, xmm0",
+    "0090A762 mov edx, dword ptr [eax + 0x204]",
+    "0090A768 mov ecx, esi",
+    "0090A76A movss dword ptr [ebp + 0x1c], xmm0",
+    "0090A76F call edx",
+    "0090A771 test eax, eax",
+    "0090A773 je 0x90a7e6",
+    "0090A775 lea ecx, [edi + 0x4a4]",
+    "0090A77B lea eax, [ebp - 0x10]",
+    "0090A77E push eax",
+    "0090A77F lea edx, [ecx + 8]",
+    "0090A782 push edx",
+    "0090A783 call 0x1195eb0",
+    "0090A788 mov eax, dword ptr [ebp - 0x10]",
+    "0090A78B mov edx, dword ptr [esi]",
+    "0090A78D push 3",
+    "0090A78F mov dword ptr [ebp - 0x14], eax",
+    "0090A792 mov eax, dword ptr [edx + 0x204]",
+    "0090A798 push esi",
+    "0090A799 mov ecx, esi",
+    "0090A79B call eax",
+    "0090A79D mov ecx, dword ptr [eax + 0x30]",
+    "0090A7A0 mov edx, dword ptr [ebp - 0x14]",
+    "0090A7A3 push ecx",
+    "0090A7A4 push ebx",
+    "0090A7A5 push 1",
+    "0090A7A7 push edx",
+    "0090A7A8 lea eax, [ebp - 0x20]",
+    "0090A7AB push eax",
+    "0090A7AC call 0x75eb80",
+    "0090A7B1 add esp, 0x1c",
+    "0090A7B4 lea ecx, [ebp - 0x14]",
+    "0090A7B7 push ecx",
+    "0090A7B8 lea edx, [eax + 8]",
+    "0090A7BB push edx",
+    "0090A7BC mov ecx, eax",
+    "0090A7BE mov dword ptr [ebp - 4], 0",
+    "0090A7C5 call 0x1195eb0",
+    "0090A7CA movd xmm0, dword ptr [ebp - 0x14]",
+    "0090A7CF cvtdq2ps xmm0, xmm0",
+    "0090A7D2 lea ecx, [ebp - 0x20]",
+    "0090A7D5 movss dword ptr [ebp + 0x1c], xmm0",
+    "0090A7DA mov dword ptr [ebp - 4], 0xffffffff",
+    "0090A7E1 call 0x1195dc0",
+    "0090A7E6 push 0",
+    "0090A7E8 push 0xd",
+    "0090A7EA push ebx",
+    "0090A7EB call 0x75bf00",
+    "0090A7F0 fmul dword ptr [ebp + 0x1c]",
+    "0090A7F3 mov eax, dword ptr [ebp + 0x10]",
+    "0090A7F6 add esp, 0xc",
+    "0090A7F9 fstp dword ptr [ebp + 0x1c]",
+    "0090A7FC cmp eax, ebx",
+    "0090A7FE jge 0x90a813",
+    "0090A800 push 0",
+    "0090A802 push 0xd",
+    "0090A804 push eax",
+    "0090A805 call 0x75bf00",
+    "0090A80A fdivr dword ptr [ebp + 0x1c]",
+    "0090A80D add esp, 0xc",
+    "0090A810 fstp dword ptr [ebp + 0x1c]",
+    "0090A813 mov ebx, dword ptr [ebp + 0x18]",
+    "0090A816 cmp ebx, -1",
+    "0090A819 jne 0x90a849",
+    "0090A81B lea ecx, [edi + 0x59c]",
+    "0090A821 lea eax, [ebp + 0x10]",
+    "0090A824 push eax",
+    "0090A825 lea edx, [ecx + 8]",
+    "0090A828 push edx",
+    "0090A829 call 0x1195eb0",
+    "0090A82E mov eax, dword ptr [esi]",
+    "0090A830 mov edx, dword ptr [eax + 0x238]",
+    "0090A836 mov ebx, dword ptr [ebp + 0x10]",
+    "0090A839 mov ecx, esi",
+    "0090A83B call edx",
+    "0090A83D push 0xe",
+    "0090A83F push eax",
+    "0090A840 push eax",
+    "0090A841 mov eax, dword ptr [ebp + 8]",
+    "0090A844 push esi",
+    "0090A845 push ebx",
+    "0090A846 push eax",
+    "0090A847 jmp 0x90a85f",
+    "0090A849 mov edx, dword ptr [esi]",
+    "0090A84B mov eax, dword ptr [edx + 0x238]",
+    "0090A851 mov ecx, esi",
+    "0090A853 call eax",
+    "0090A855 mov ecx, dword ptr [ebp + 8]",
+    "0090A858 push 0xe",
+    "0090A85A push eax",
+    "0090A85B push eax",
+    "0090A85C push esi",
+    "0090A85D push ebx",
+    "0090A85E push ecx",
+    "0090A85F mov ecx, edi",
+    "0090A861 call 0x9089a0",
+    "0090A866 fstp dword ptr [ebp + 8]",
+    "0090A869 movss xmm0, dword ptr [ebp + 8]",
+    "0090A86E movss xmm1, dword ptr [0x1556df8]",
+    "0090A876 mov eax, dword ptr [ebp + 0xc]",
+    "0090A879 subss xmm0, xmm1",
+    "0090A87D mulss xmm0, dword ptr [0x1559c80]",
+    "0090A885 addss xmm0, dword ptr [0x15560bc]",
+    "0090A88D mulss xmm0, dword ptr [ebp + 0x1c]",
+    "0090A892 mulss xmm0, dword ptr [ebp + 0x14]",
+    "0090A897 movss dword ptr [ebp + 0x1c], xmm0",
+    "0090A89C cmp eax, 0xffff0001",
+    "0090A8A1 je 0x90a8cf",
+    "0090A8A3 add eax, 0x64",
+    "0090A8A6 mov dword ptr [ebp + 8], eax",
+    "0090A8A9 cmp eax, 1",
+    "0090A8AC mov dword ptr [ebp + 0x10], 1",
+    "0090A8B3 lea eax, [ebp + 8]",
+    "0090A8B6 jg 0x90a8bb",
+    "0090A8B8 lea eax, [ebp + 0x10]",
+    "0090A8BB mulss xmm0, xmm1",
+    "0090A8BF movd xmm1, dword ptr [eax]",
+    "0090A8C3 cvtdq2ps xmm1, xmm1",
+    "0090A8C6 divss xmm0, xmm1",
+    "0090A8CA movss dword ptr [ebp + 0x1c], xmm0",
+    "0090A8CF mov eax, dword ptr [edi + 0x30]",
+    "0090A8D2 test eax, eax",
+    "0090A8D4 je 0x90a933"
+   ]
+  },
+  {
+   "start": "0x90a933",
+   "end_exclusive": "0x90a94b",
+   "sha256": "b75d7af2b968e1fa86690aae72ed0cf1dbc565a140fd4d262f8bc26c2845ae06",
+   "instructions": [
+    "0090A933 cvttss2si eax, xmm0",
+    "0090A937 mov ecx, dword ptr [ebp - 0xc]",
+    "0090A93A mov dword ptr fs:[0], ecx",
+    "0090A941 pop ecx",
+    "0090A942 pop edi",
+    "0090A943 pop esi",
+    "0090A944 pop ebx",
+    "0090A945 mov esp, ebp",
+    "0090A947 pop ebp",
+    "0090A948 ret 0x18"
+   ]
+  },
+  {
+   "start": "0x90a950",
+   "end_exclusive": "0x90a97b",
+   "sha256": "72afd8e2b73536dac5b226768f43fe617ba834045b6dda80770d3e32db80c2dc",
+   "instructions": [
+    "0090A950 push ebp",
+    "0090A951 mov ebp, esp",
+    "0090A953 mov eax, dword ptr [ecx + 0x34]",
+    "0090A956 movss xmm0, dword ptr [ebp + 0x14]",
+    "0090A95B mov edx, dword ptr [ebp + 0x10]",
+    "0090A95E push eax",
+    "0090A95F mov eax, dword ptr [ebp + 0x18]",
+    "0090A962 push eax",
+    "0090A963 mov eax, dword ptr [ebp + 0xc]",
+    "0090A966 push ecx",
+    "0090A967 movss dword ptr [esp], xmm0",
+    "0090A96C push edx",
+    "0090A96D mov edx, dword ptr [ebp + 8]",
+    "0090A970 push eax",
+    "0090A971 push edx",
+    "0090A972 call 0x90a6f0",
+    "0090A977 pop ebp",
+    "0090A978 ret 0x14"
+   ]
+  }
+ ]
+}
