@@ -23,6 +23,7 @@ import sqlite3
 from audit_dnf_reusable_data import TextResolver, string_bytes
 from build_dnf_progression_data import clean, simplify, reward_rows, STATS, SLOTS
 from dnf_pvf import open_library, resolve
+from dnf_equipment_stats import apply_separate_attack, separate_attack
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / 'game_dnf/data'
@@ -184,10 +185,8 @@ def compile_item(number, listing, path, sha, fields, words):
             stats[stat] = values[0] / divisor;ranges[stat] = [stats[stat], stats[stat]]
         if '[separate attack]' in fields:
             values = fields['[separate attack]']
-            if len(values) != 2 or not all(type(v) in [int, float] for v in values):reasons.append('separate_attack_grammar')
-            else:
-                for stat, value in zip(['physical_independent_attack', 'magical_independent_attack'], values):
-                    stats[stat] = value;ranges[stat] = [value, value]
+            try:separate_attack(values)
+            except ValueError:reasons.append('separate_attack_grammar')
         consumed.add('[separate attack]')
         if '[all elemental resistance]' in fields:
             values = fields['[all elemental resistance]']
@@ -203,6 +202,8 @@ def compile_item(number, listing, path, sha, fields, words):
         equipment = {'name': name, 'slot': slot, 'stats': stats, 'stat_ranges': ranges,
                      'required_level': item['level'], 'durability': max(1, scalar(fields, '[durability]', 40)),
                      'usable_jobs': fields.get('[usable job]', ['[all]']), 'source': item['source']}
+        if '[separate attack]' in fields and 'separate_attack_grammar' not in reasons:
+            apply_separate_attack(equipment,fields['[separate attack]'])
         if slot == 'weapon':
             weapon = next((v for k, v in [('/katana/', 'katana'), ('/ssword/', 'shortsword'), ('/lsword/', 'greatsword')] if k in path), None)
             if not weapon:reasons.append('weapon_family')

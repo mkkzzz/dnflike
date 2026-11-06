@@ -1,0 +1,2362 @@
+{
+ "schema": "dnf_separate_attack_migration/1",
+ "affected": [
+  {
+   "file": "numbers",
+   "id": "original_27601",
+   "path": "equipment/character/swordman/weapon/katana/kat_worn.equ",
+   "sha256": "fb8d74d46b2409a4e93fd89599efed0853ff83a87636fa01dee21724526765ad",
+   "values": [
+    26,
+    14
+   ],
+   "mapping": {
+    "default": 26,
+    "modes_4_5": 14
+   }
+  },
+  {
+   "file": "numbers",
+   "id": "original_27800",
+   "path": "equipment/character/swordman/weapon/katana/bazirang.equ",
+   "sha256": "c95c12432aa3554d2790dec27975edbd0ecb95afa1b106824dd33b87e8a0ba0d",
+   "values": [
+    31,
+    18
+   ],
+   "mapping": {
+    "default": 31,
+    "modes_4_5": 18
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_20190",
+   "path": "equipment/character/common/amulet/neck_20190.equ",
+   "sha256": "ee4604ef046e684c816546cd34933d4c55d997938840b1c84ba0fef3e492b231",
+   "values": [
+    64,
+    39
+   ],
+   "mapping": {
+    "default": 64,
+    "modes_4_5": 39
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_100320002",
+   "path": "equipment/character/common/ring/100320002.equ",
+   "sha256": "03b9c0d362c1ea1e4c390faca7d354f41b01f1ea315ecfc3e5fb5c160f52d7b5",
+   "values": [
+    45,
+    27
+   ],
+   "mapping": {
+    "default": 45,
+    "modes_4_5": 27
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_100320003",
+   "path": "equipment/character/common/ring/100320003.equ",
+   "sha256": "39bfa65ca34b6a9cc873f31be7272df009c98a1c5b76bce2f5e85caaac1742ec",
+   "values": [
+    45,
+    27
+   ],
+   "mapping": {
+    "default": 45,
+    "modes_4_5": 27
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_24211",
+   "path": "equipment/character/common/ring/ring_24211.equ",
+   "sha256": "35cd5d5ed4aa378cc00b0203a9c168d513ac4653984904644951baea5152a155",
+   "values": [
+    56,
+    34
+   ],
+   "mapping": {
+    "default": 56,
+    "modes_4_5": 34
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_101020033",
+   "path": "equipment/character/swordman/weapon/katana/101020033.equ",
+   "sha256": "238f53e6422eac74b192496360e90f41a53c76a227cc863a3db2e27a7a6ef5e1",
+   "values": [
+    254,
+    172
+   ],
+   "mapping": {
+    "default": 254,
+    "modes_4_5": 172
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_101020034",
+   "path": "equipment/character/swordman/weapon/katana/101020034.equ",
+   "sha256": "9a30a56089a40154e6753808d196cbeb51095b98c25c41a0c7ebe0ac956a0de4",
+   "values": [
+    338,
+    229
+   ],
+   "mapping": {
+    "default": 338,
+    "modes_4_5": 229
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_101020035",
+   "path": "equipment/character/swordman/weapon/katana/101020035.equ",
+   "sha256": "2a6d884ac2f1a247a604a65e9c55d18d9f2d563bc582bd458dc9838db214bfa8",
+   "values": [
+    364,
+    247
+   ],
+   "mapping": {
+    "default": 364,
+    "modes_4_5": 247
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27647",
+   "path": "equipment/character/swordman/weapon/katana/kageto.equ",
+   "sha256": "a790b349e20b2d40a5071ccd2b57465d6675c89dafeade8332415c2773502f6e",
+   "values": [
+    178,
+    118
+   ],
+   "mapping": {
+    "default": 178,
+    "modes_4_5": 118
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27646",
+   "path": "equipment/character/swordman/weapon/katana/kageto_out.equ",
+   "sha256": "799ebab08fb9b0dee4d626a15c1d15c5456ec30365d15fe579711c9e98524dd7",
+   "values": [
+    131,
+    87
+   ],
+   "mapping": {
+    "default": 131,
+    "modes_4_5": 87
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27602",
+   "path": "equipment/character/swordman/weapon/katana/kat.equ",
+   "sha256": "af55d988fb1132826358ac5e027dd99bcb42c483888c64e3f0d2a68f78138398",
+   "values": [
+    41,
+    23
+   ],
+   "mapping": {
+    "default": 41,
+    "modes_4_5": 23
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223102",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223102.equ",
+   "sha256": "3ccfb6cf95df6a5fd73eb878b037fc03d455330f0d025183e8ec753cea86242e",
+   "values": [
+    70,
+    44
+   ],
+   "mapping": {
+    "default": 70,
+    "modes_4_5": 44
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223103",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223103.equ",
+   "sha256": "793f3a6ebbbb672bbe11ca794c28a8d6adefaec9b54e77f0ec6c917a1e4927c8",
+   "values": [
+    89,
+    56
+   ],
+   "mapping": {
+    "default": 89,
+    "modes_4_5": 56
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223104",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223104.equ",
+   "sha256": "8f56ce0d953f84bc9ef8a43e1891032bb0fedbf95212cd713db6aed9af1034ee",
+   "values": [
+    108,
+    70
+   ],
+   "mapping": {
+    "default": 108,
+    "modes_4_5": 70
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223105",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223105.equ",
+   "sha256": "c5955fba10ad7fc920b41edfd3f4d21cdfae99cfbfed863aee60afc8e9ad6d28",
+   "values": [
+    126,
+    82
+   ],
+   "mapping": {
+    "default": 126,
+    "modes_4_5": 82
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223106",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223106.equ",
+   "sha256": "382b2c7652b0de5c706760892e02c065de69b736478e69b24c143dc454dd8187",
+   "values": [
+    145,
+    96
+   ],
+   "mapping": {
+    "default": 145,
+    "modes_4_5": 96
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223107",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223107.equ",
+   "sha256": "849ace768a87e58b737407312e639b2c6edfb583ed3b99de55f06b6ee0e0cea4",
+   "values": [
+    164,
+    109
+   ],
+   "mapping": {
+    "default": 164,
+    "modes_4_5": 109
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223108",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223108.equ",
+   "sha256": "af345bc72335a5c83f6f66b38b9ca59f824034468f189e51e15e26083e6093be",
+   "values": [
+    183,
+    122
+   ],
+   "mapping": {
+    "default": 183,
+    "modes_4_5": 122
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223109",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223109.equ",
+   "sha256": "63d6127a37a0dd899fdd29195b95baccb087fe0ac5791ad1b3e1d6242a0d8f1b",
+   "values": [
+    202,
+    135
+   ],
+   "mapping": {
+    "default": 202,
+    "modes_4_5": 135
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223110",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223110.equ",
+   "sha256": "e90c3ec1be38779167b08e80f35a97b4351a336bbb20f177bd65a183269f43de",
+   "values": [
+    233,
+    156
+   ],
+   "mapping": {
+    "default": 233,
+    "modes_4_5": 156
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223111",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223111.equ",
+   "sha256": "4697b2bcff3ffe9b4aa5db792ed42a830b1ed989db914c41a2ef62593d60c8b8",
+   "values": [
+    256,
+    173
+   ],
+   "mapping": {
+    "default": 256,
+    "modes_4_5": 173
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223112",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223112.equ",
+   "sha256": "bef843fa6c01535b6e798bd5a4ec61279f9ce4aa9a954c889b208645e5c6a0b7",
+   "values": [
+    270,
+    182
+   ],
+   "mapping": {
+    "default": 270,
+    "modes_4_5": 182
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223113",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223113.equ",
+   "sha256": "0c19f041ddca301c555e085405195e8f0505cc2d63cba90c0deb9a4acaf7fbed",
+   "values": [
+    293,
+    199
+   ],
+   "mapping": {
+    "default": 293,
+    "modes_4_5": 199
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2223114",
+   "path": "equipment/character/swordman/weapon/katana/kat_2223114.equ",
+   "sha256": "0db34c61c645286b27485d85c6f698ee4dafa517f6b5b4f96175f47ec3d76c29",
+   "values": [
+    318,
+    215
+   ],
+   "mapping": {
+    "default": 318,
+    "modes_4_5": 215
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27760",
+   "path": "equipment/character/swordman/weapon/katana/kat_27760.equ",
+   "sha256": "2c5876c9b9a853189d21aa5b906cfdf55c0cfc69b5cbb4a6f5527900598093d3",
+   "values": [
+    220,
+    149
+   ],
+   "mapping": {
+    "default": 220,
+    "modes_4_5": 149
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27761",
+   "path": "equipment/character/swordman/weapon/katana/kat_27761.equ",
+   "sha256": "7833a96e5d80b4604c82a655896d228a8d7913c3336069bec3822331f168b117",
+   "values": [
+    293,
+    198
+   ],
+   "mapping": {
+    "default": 293,
+    "modes_4_5": 198
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27720",
+   "path": "equipment/character/swordman/weapon/katana/kat_aviya.equ",
+   "sha256": "15793981f03eab8814f3eea9c1a7c8f867e0e4a3e33f5d23a60ec6e7da4c671a",
+   "values": [
+    248,
+    167
+   ],
+   "mapping": {
+    "default": 248,
+    "modes_4_5": 167
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27719",
+   "path": "equipment/character/swordman/weapon/katana/kat_aviya_old.equ",
+   "sha256": "ce6a5860b0be77f7dbb1737e1dcc4cc31d14a4859f520fdfc196ba406e864e30",
+   "values": [
+    186,
+    126
+   ],
+   "mapping": {
+    "default": 186,
+    "modes_4_5": 126
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27620",
+   "path": "equipment/character/swordman/weapon/katana/kat_bazirangdae.equ",
+   "sha256": "41e8bf9f37e02ea9b05415e5e730440a748407aa7a089ea907a6a88e80d86d84",
+   "values": [
+    106,
+    68
+   ],
+   "mapping": {
+    "default": 106,
+    "modes_4_5": 68
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27635",
+   "path": "equipment/character/swordman/weapon/katana/kat_biken.equ",
+   "sha256": "0f97515f8f4d963fb4acf21cb33339bcd339f99d4b63a05343d659fd816deab4",
+   "values": [
+    149,
+    98
+   ],
+   "mapping": {
+    "default": 149,
+    "modes_4_5": 98
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27600",
+   "path": "equipment/character/swordman/weapon/katana/kat_damaged.equ",
+   "sha256": "8a598d7a5f21c256fb97c11b8923796704ea867ef829d3acfe9d96186ad7f3f8",
+   "values": [
+    21,
+    10
+   ],
+   "mapping": {
+    "default": 21,
+    "modes_4_5": 10
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27619",
+   "path": "equipment/character/swordman/weapon/katana/kat_dbazirangdae.equ",
+   "sha256": "f3a25b46a8b7384e3036170c9364d819b0d03cf5df5c80ce56584a968b35a0ff",
+   "values": [
+    77,
+    50
+   ],
+   "mapping": {
+    "default": 77,
+    "modes_4_5": 50
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27735",
+   "path": "equipment/character/swordman/weapon/katana/kat_deepseaq.equ",
+   "sha256": "76572e54d4b056b6b7c32e98659eb86177e012d9e54d0831f28d7d75b682addf",
+   "values": [
+    293,
+    199
+   ],
+   "mapping": {
+    "default": 293,
+    "modes_4_5": 199
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27621",
+   "path": "equipment/character/swordman/weapon/katana/kat_elabazirangdae.equ",
+   "sha256": "7e9bc6e35b9317a6648571fc254f8368206c683831186640ee4229cad963c648",
+   "values": [
+    109,
+    71
+   ],
+   "mapping": {
+    "default": 109,
+    "modes_4_5": 71
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27637",
+   "path": "equipment/character/swordman/weapon/katana/kat_hbiken.equ",
+   "sha256": "67a919c8b8b630e4710fbeffe0ff8faea9e06db2e592835fac3697d51dead52a",
+   "values": [
+    153,
+    101
+   ],
+   "mapping": {
+    "default": 153,
+    "modes_4_5": 101
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27733",
+   "path": "equipment/character/swordman/weapon/katana/kat_hightechq.equ",
+   "sha256": "8f21e5ff9cdfb3ec1ace041640fb6f665f348f0e5a7a9c18cab6eadb699f8e04",
+   "values": [
+    270,
+    182
+   ],
+   "mapping": {
+    "default": 270,
+    "modes_4_5": 182
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27606",
+   "path": "equipment/character/swordman/weapon/katana/kat_hkotachi.equ",
+   "sha256": "02edc174f6adfea80affe1e10094585ea6865bb8bb5f1261b28888084525fe70",
+   "values": [
+    52,
+    31
+   ],
+   "mapping": {
+    "default": 52,
+    "modes_4_5": 31
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27734",
+   "path": "equipment/character/swordman/weapon/katana/kat_illusionq.equ",
+   "sha256": "d88f753f2e79c83af29b416c9e79d090115944f078b9aad6eae6c1e786fa4c08",
+   "values": [
+    284,
+    192
+   ],
+   "mapping": {
+    "default": 284,
+    "modes_4_5": 192
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27631",
+   "path": "equipment/character/swordman/weapon/katana/kat_impkaede.equ",
+   "sha256": "7112275bdbf608a478192226a5359c414b5d99b811ade35effcc6fac4e2f8aea",
+   "values": [
+    138,
+    91
+   ],
+   "mapping": {
+    "default": 138,
+    "modes_4_5": 91
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27630",
+   "path": "equipment/character/swordman/weapon/katana/kat_kaede.equ",
+   "sha256": "44507d84fd7c07b0ad2cdd06cd1d5e05192cdbd89b45c215144214a409343d3e",
+   "values": [
+    135,
+    88
+   ],
+   "mapping": {
+    "default": 135,
+    "modes_4_5": 88
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27611",
+   "path": "equipment/character/swordman/weapon/katana/kat_kogaras.equ",
+   "sha256": "c40d9d164276616c86d5694e1d5aa14e53e70dfdbbb1b03b8195540abc7f2650",
+   "values": [
+    77,
+    48
+   ],
+   "mapping": {
+    "default": 77,
+    "modes_4_5": 48
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27605",
+   "path": "equipment/character/swordman/weapon/katana/kat_kotachi.equ",
+   "sha256": "c057a2e1d97df086f464276328074aee28cffaefa990fd79e50e39da6a4723ac",
+   "values": [
+    48,
+    28
+   ],
+   "mapping": {
+    "default": 48,
+    "modes_4_5": 28
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27610",
+   "path": "equipment/character/swordman/weapon/katana/kat_lowkogaras.equ",
+   "sha256": "3ca92e3aa70fb4441823f431972da47070d755461ebeaf7caffaa694a4125007",
+   "values": [
+    55,
+    35
+   ],
+   "mapping": {
+    "default": 55,
+    "modes_4_5": 35
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27639",
+   "path": "equipment/character/swordman/weapon/katana/kat_loworochi.equ",
+   "sha256": "5b9cade8abeff3b7b02d87f703cd3530b20b6a435821e51a0fdbb91e9a9e907c",
+   "values": [
+    120,
+    80
+   ],
+   "mapping": {
+    "default": 120,
+    "modes_4_5": 80
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27613",
+   "path": "equipment/character/swordman/weapon/katana/kat_nkogaras.equ",
+   "sha256": "6f9916047884d4ff505cda006f60ae943f977d0f26b873c9ea53f154db52dd7c",
+   "values": [
+    81,
+    51
+   ],
+   "mapping": {
+    "default": 81,
+    "modes_4_5": 51
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27634",
+   "path": "equipment/character/swordman/weapon/katana/kat_obiken.equ",
+   "sha256": "95d91f9547715805cf79e7d5156ea731f5d1d18d0d06a0bdc6a7239aa818e7af",
+   "values": [
+    109,
+    72
+   ],
+   "mapping": {
+    "default": 109,
+    "modes_4_5": 72
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27641",
+   "path": "equipment/character/swordman/weapon/katana/kat_orochi.equ",
+   "sha256": "66e6b4d6fed7cd67b9680e10abf858cf932a5f066edebc761113167c3f00242d",
+   "values": [
+    163,
+    108
+   ],
+   "mapping": {
+    "default": 163,
+    "modes_4_5": 108
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27614",
+   "path": "equipment/character/swordman/weapon/katana/kat_otachi.equ",
+   "sha256": "ef4d4eb48573d2d51c407149008b1d1b52a0894157bd2951e0c6f4f8ff748f1c",
+   "values": [
+    66,
+    42
+   ],
+   "mapping": {
+    "default": 66,
+    "modes_4_5": 42
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27624",
+   "path": "equipment/character/swordman/weapon/katana/kat_owakizasi.equ",
+   "sha256": "ed3da9f27e0c0259dc1dfc264236443f544368f2fddfb18db64e257a410d8e0c",
+   "values": [
+    88,
+    57
+   ],
+   "mapping": {
+    "default": 88,
+    "modes_4_5": 57
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27629",
+   "path": "equipment/character/swordman/weapon/katana/kat_rkaede.equ",
+   "sha256": "ed843ca49298e20df754f5fcfbb74325aff1f721b4e52fa092f9ce1ff673f95d",
+   "values": [
+    99,
+    65
+   ],
+   "mapping": {
+    "default": 99,
+    "modes_4_5": 65
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27607",
+   "path": "equipment/character/swordman/weapon/katana/kat_ryaiba.equ",
+   "sha256": "3f0d931734fd9f1c8912941004fc6917b5053c6e52c44bec6a93e60a273f4866",
+   "values": [
+    45,
+    27
+   ],
+   "mapping": {
+    "default": 45,
+    "modes_4_5": 27
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27604",
+   "path": "equipment/character/swordman/weapon/katana/kat_s.equ",
+   "sha256": "336c7f1e7fd36628dc0379679de08a231230a40491aca911e2f571182bb2d49c",
+   "values": [
+    45,
+    26
+   ],
+   "mapping": {
+    "default": 45,
+    "modes_4_5": 26
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27725",
+   "path": "equipment/character/swordman/weapon/katana/kat_snakecoils.equ",
+   "sha256": "cb8317e04aa78d9eaf9738d666300620f5a0f1aa93c5dc2fdc2021c3a97de676",
+   "values": [
+    270,
+    182
+   ],
+   "mapping": {
+    "default": 270,
+    "modes_4_5": 182
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27724",
+   "path": "equipment/character/swordman/weapon/katana/kat_snakecoils_sb.equ",
+   "sha256": "6afde5f24decfd771707e9ee614fb3b37234cfaeae20ccc41277cf3442e59546",
+   "values": [
+    203,
+    137
+   ],
+   "mapping": {
+    "default": 203,
+    "modes_4_5": 137
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27617",
+   "path": "equipment/character/swordman/weapon/katana/kat_stachi.equ",
+   "sha256": "9a1118519ae318e8bb0376205c5069d432b022b8eaf0d5642425f5cbb4f27225",
+   "values": [
+    95,
+    61
+   ],
+   "mapping": {
+    "default": 95,
+    "modes_4_5": 61
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27642",
+   "path": "equipment/character/swordman/weapon/katana/kat_strorochi.equ",
+   "sha256": "eaf76b29a5ba4c0da1b9b56612b694fdc6e88b37a2440f3f9ed4b0bcaa4b4eaf",
+   "values": [
+    167,
+    111
+   ],
+   "mapping": {
+    "default": 167,
+    "modes_4_5": 111
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27626",
+   "path": "equipment/character/swordman/weapon/katana/kat_swakizasi.equ",
+   "sha256": "29af33e81413deca3d78685105615e69a6b421aaf508d2ca1a8187fe28ba4dbf",
+   "values": [
+    124,
+    81
+   ],
+   "mapping": {
+    "default": 124,
+    "modes_4_5": 81
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27616",
+   "path": "equipment/character/swordman/weapon/katana/kat_tachi.equ",
+   "sha256": "b34de9f2443db4a10cc1e0cd6f80abad829dbe5d18ef6d5f9b5cc0618590277c",
+   "values": [
+    91,
+    58
+   ],
+   "mapping": {
+    "default": 91,
+    "modes_4_5": 58
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27603",
+   "path": "equipment/character/swordman/weapon/katana/kat_ukotachi.equ",
+   "sha256": "e1e4540f795cc3344c569ae384cf5c90dc2bb89d4aa2bd6a3a6ff4e4a08991a7",
+   "values": [
+    34,
+    20
+   ],
+   "mapping": {
+    "default": 34,
+    "modes_4_5": 20
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27625",
+   "path": "equipment/character/swordman/weapon/katana/kat_wakizasi.equ",
+   "sha256": "f774bb536100eda4ff03d44fb6c639814f5112996006a494b7e33b16a7e530b1",
+   "values": [
+    120,
+    78
+   ],
+   "mapping": {
+    "default": 120,
+    "modes_4_5": 78
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27608",
+   "path": "equipment/character/swordman/weapon/katana/kat_yaiba.equ",
+   "sha256": "a12d14eed7583fcecd9e99db1228ebbee22b884b64378edbf7bb37626fe4f205",
+   "values": [
+    59,
+    36
+   ],
+   "mapping": {
+    "default": 59,
+    "modes_4_5": 36
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27708",
+   "path": "equipment/character/swordman/weapon/katana/misogi.equ",
+   "sha256": "c1b9bfa6eaaa7a28344475ce683ec521f955ddc9afb4328b5a640671468430d4",
+   "values": [
+    234,
+    157
+   ],
+   "mapping": {
+    "default": 234,
+    "modes_4_5": 157
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27707",
+   "path": "equipment/character/swordman/weapon/katana/misogi_rusty.equ",
+   "sha256": "fff7ca69c12e7ced4b7674455c6c0fd389fc9341147e7011b4e68eb140bcc149",
+   "values": [
+    176,
+    118
+   ],
+   "mapping": {
+    "default": 176,
+    "modes_4_5": 118
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27672",
+   "path": "equipment/character/swordman/weapon/katana/n_kageto.equ",
+   "sha256": "a0df5762706b8fc25b39112041a376fdf1c23faacee8c2c47bc0c579518c8e71",
+   "values": [
+    212,
+    142
+   ],
+   "mapping": {
+    "default": 212,
+    "modes_4_5": 142
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27671",
+   "path": "equipment/character/swordman/weapon/katana/n_kageto_out.equ",
+   "sha256": "477111d8cf27aecdd49089b010a077b0ec6e7f1a4def74ded4e1e0fa78efc591",
+   "values": [
+    159,
+    107
+   ],
+   "mapping": {
+    "default": 159,
+    "modes_4_5": 107
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27653",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_bazirangdae.equ",
+   "sha256": "b7759d32c9270c9701be9e8ec75ffbb51090220d79d34aa96dbdbb29505d4ea2",
+   "values": [
+    113,
+    73
+   ],
+   "mapping": {
+    "default": 113,
+    "modes_4_5": 73
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27664",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_biken.equ",
+   "sha256": "6c0c5fde8372542f5a71d0a4e2795f344517af079629351f4c9a53a43fbad4fa",
+   "values": [
+    167,
+    111
+   ],
+   "mapping": {
+    "default": 167,
+    "modes_4_5": 111
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27652",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_dbazirangdae.equ",
+   "sha256": "1bd7cb1357d62671857486472a782fb97e266ec5099fec974318becb7d5a1261",
+   "values": [
+    85,
+    55
+   ],
+   "mapping": {
+    "default": 85,
+    "modes_4_5": 55
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27660",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_kaede.equ",
+   "sha256": "81c16278ae072106f694032d3e93fadb43da78521ced3f1f3efdcd6d1c2fbad5",
+   "values": [
+    149,
+    98
+   ],
+   "mapping": {
+    "default": 149,
+    "modes_4_5": 98
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27669",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_loworochi.equ",
+   "sha256": "96c3fdd42ee896cb2f094992f4d7cc2f3ce4de19679c805c47e7c2ee29477bf9",
+   "values": [
+    139,
+    93
+   ],
+   "mapping": {
+    "default": 139,
+    "modes_4_5": 93
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27690",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_mishupaf.equ",
+   "sha256": "af38d47ab8a780f92c9491b605a4f9af23b546946dfaf7c0e878f3ae660a623e",
+   "values": [
+    91,
+    58
+   ],
+   "mapping": {
+    "default": 91,
+    "modes_4_5": 58
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27663",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_obiken.equ",
+   "sha256": "21f4eccfb04953f27cc7b65270cfba2d01e6e2790f2c6049e2b7ad34156b7ef7",
+   "values": [
+    126,
+    84
+   ],
+   "mapping": {
+    "default": 126,
+    "modes_4_5": 84
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27670",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_orochi.equ",
+   "sha256": "c903a16be5f6a5182c3b11aaadbc35f29b5b5c838970e080b853e63078206a6f",
+   "values": [
+    185,
+    123
+   ],
+   "mapping": {
+    "default": 185,
+    "modes_4_5": 123
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27648",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_otachi.equ",
+   "sha256": "946ca287efa3622ca2ca6ecd5bdf691ba083753cf2c0ef324c9f711986c1eb98",
+   "values": [
+    72,
+    46
+   ],
+   "mapping": {
+    "default": 72,
+    "modes_4_5": 46
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27655",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_owakizasi.equ",
+   "sha256": "7fa2d1ab9393ce22c6ebe2e278a26ba6188f7508ee954abef6fea98350cbc182",
+   "values": [
+    99,
+    65
+   ],
+   "mapping": {
+    "default": 99,
+    "modes_4_5": 65
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27659",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_rkaede.equ",
+   "sha256": "b0744fde4fa555f1a7f837745e531d51414bc3cc5a3dba4895c01c4aa1054455",
+   "values": [
+    112,
+    74
+   ],
+   "mapping": {
+    "default": 112,
+    "modes_4_5": 74
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27649",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_tachi.equ",
+   "sha256": "281ce27565504ecdd8fd24c5a0e9e53da223ea086b06c42a423e2f4d616fc77c",
+   "values": [
+    95,
+    61
+   ],
+   "mapping": {
+    "default": 95,
+    "modes_4_5": 61
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27656",
+   "path": "equipment/character/swordman/weapon/katana/n_kat_wakizasi.equ",
+   "sha256": "bd55d4ec55490aea2b0594aeac005c679cb21f7356430ce7d4b86a6c5dd28136",
+   "values": [
+    131,
+    86
+   ],
+   "mapping": {
+    "default": 131,
+    "modes_4_5": 86
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_101000013",
+   "path": "equipment/character/swordman/weapon/ssword/101000013.equ",
+   "sha256": "90195f2df3c0ccc58e70c166b7987654002003ad7154fb018319212ef85e7d85",
+   "values": [
+    254,
+    172
+   ],
+   "mapping": {
+    "default": 254,
+    "modes_4_5": 172
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_101000014",
+   "path": "equipment/character/swordman/weapon/ssword/101000014.equ",
+   "sha256": "15bac16e3f7e039178cd6cd8a20cb93f97385449c240cdb0e70b7698b1370c58",
+   "values": [
+    338,
+    229
+   ],
+   "mapping": {
+    "default": 338,
+    "modes_4_5": 229
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_101000015",
+   "path": "equipment/character/swordman/weapon/ssword/101000015.equ",
+   "sha256": "3104991f021ea7f3409edc1f76d0d1c9a73e9d438ab8bd34d4b7414b27bca97b",
+   "values": [
+    364,
+    247
+   ],
+   "mapping": {
+    "default": 364,
+    "modes_4_5": 247
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27200",
+   "path": "equipment/character/swordman/weapon/ssword/bantu_lefthand.equ",
+   "sha256": "87fa56b40fc3cc2df921deff72128d6d03e5583f10788956690b6c3926fb52a7",
+   "values": [
+    45,
+    27
+   ],
+   "mapping": {
+    "default": 45,
+    "modes_4_5": 27
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27004",
+   "path": "equipment/character/swordman/weapon/ssword/boneswd.equ",
+   "sha256": "44579c16b7f445c79545fb9bf619fb132d1b53ba1f2b8ba2c9cca518eb8a9008",
+   "values": [
+    45,
+    26
+   ],
+   "mapping": {
+    "default": 45,
+    "modes_4_5": 26
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27030",
+   "path": "equipment/character/swordman/weapon/ssword/boneswd_kris.equ",
+   "sha256": "74f2237f95053a8ca852491a810f8dc677a67d2d14ac3325c1fb687107506654",
+   "values": [
+    131,
+    86
+   ],
+   "mapping": {
+    "default": 131,
+    "modes_4_5": 86
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27029",
+   "path": "equipment/character/swordman/weapon/ssword/boneswd_oldkris.equ",
+   "sha256": "c6cd144bfa68c79ab68b6e12d9f75ac81a1781b3d496230a8ba16cb7891f6c6e",
+   "values": [
+    99,
+    65
+   ],
+   "mapping": {
+    "default": 99,
+    "modes_4_5": 65
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27014",
+   "path": "equipment/character/swordman/weapon/ssword/boneswd_oldtail.equ",
+   "sha256": "b98b93275011b015e291b8ed40d46f3e5371507c245fe98d3f3fac56c7364d72",
+   "values": [
+    66,
+    42
+   ],
+   "mapping": {
+    "default": 66,
+    "modes_4_5": 42
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27031",
+   "path": "equipment/character/swordman/weapon/ssword/boneswd_pkris.equ",
+   "sha256": "5bb48f516ab3cf047384e9702037c6a1309bb2839ab5e6d8f3a0170eacbbfe71",
+   "values": [
+    135,
+    88
+   ],
+   "mapping": {
+    "default": 135,
+    "modes_4_5": 88
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27003",
+   "path": "equipment/character/swordman/weapon/ssword/boneswd_rot.equ",
+   "sha256": "18c2b88cef30b6b230b717209e5ff9aeb8c42998c688eb99cce9266991dc91dc",
+   "values": [
+    34,
+    20
+   ],
+   "mapping": {
+    "default": 34,
+    "modes_4_5": 20
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27006",
+   "path": "equipment/character/swordman/weapon/ssword/boneswd_s.equ",
+   "sha256": "948f7c8e7223acb52f68ad9f6da8cf69a121f610aa281ea2c108821ca0a90a47",
+   "values": [
+    55,
+    33
+   ],
+   "mapping": {
+    "default": 55,
+    "modes_4_5": 33
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27017",
+   "path": "equipment/character/swordman/weapon/ssword/boneswd_stail.equ",
+   "sha256": "4508a7987ab56d0aadee2f756de3f5643d84e6b29bb6422c2fc3d260c52e341a",
+   "values": [
+    91,
+    58
+   ],
+   "mapping": {
+    "default": 91,
+    "modes_4_5": 58
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27015",
+   "path": "equipment/character/swordman/weapon/ssword/boneswd_tail.equ",
+   "sha256": "3fb55507e8129dfe31f8373570f1d3b2fc0bf8ebc28cd0cfa735c9e5d6a75fcc",
+   "values": [
+    88,
+    56
+   ],
+   "mapping": {
+    "default": 88,
+    "modes_4_5": 56
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27040",
+   "path": "equipment/character/swordman/weapon/ssword/gemsswd_centinel.equ",
+   "sha256": "435f41af77f038219bc76ed1bd23c6e42e42b5e8137fd33f8207f8c1c6debb46",
+   "values": [
+    160,
+    106
+   ],
+   "mapping": {
+    "default": 160,
+    "modes_4_5": 106
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27024",
+   "path": "equipment/character/swordman/weapon/ssword/gemsswd_gladius.equ",
+   "sha256": "aa541e2f4029ffc473cc7c003f0ea5dc29609eea6a88a887a8c9d0fd6d29d5e1",
+   "values": [
+    117,
+    76
+   ],
+   "mapping": {
+    "default": 117,
+    "modes_4_5": 76
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27034",
+   "path": "equipment/character/swordman/weapon/ssword/gemsswd_lowtitanium.equ",
+   "sha256": "4b2102408c6478d0afad7fef4a41c822962b8446715ad13bb899175eae5b9a48",
+   "values": [
+    109,
+    72
+   ],
+   "mapping": {
+    "default": 109,
+    "modes_4_5": 72
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27042",
+   "path": "equipment/character/swordman/weapon/ssword/gemsswd_scentinel.equ",
+   "sha256": "96aeeeb2a40133158b84e9ee3f43eb65ce984a28212156501e472ad767373f2e",
+   "values": [
+    163,
+    108
+   ],
+   "mapping": {
+    "default": 163,
+    "modes_4_5": 108
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27036",
+   "path": "equipment/character/swordman/weapon/ssword/gemsswd_sftitanium.equ",
+   "sha256": "392dbeea22bcca765b11b4551682f5bc307ee1c189cbfebc35711ce69c03e04d",
+   "values": [
+    149,
+    98
+   ],
+   "mapping": {
+    "default": 149,
+    "modes_4_5": 98
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27026",
+   "path": "equipment/character/swordman/weapon/ssword/gemsswd_sgladius.equ",
+   "sha256": "4bae78600188bb4f2d40c82df917bf83346c7fd7b574801f1fd4207374d3252c",
+   "values": [
+    120,
+    78
+   ],
+   "mapping": {
+    "default": 120,
+    "modes_4_5": 78
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27035",
+   "path": "equipment/character/swordman/weapon/ssword/gemsswd_titanium.equ",
+   "sha256": "4b70841136495085a09d4598cd3e1e558d38cec6bf10e80490b4bdc40fe7715c",
+   "values": [
+    145,
+    96
+   ],
+   "mapping": {
+    "default": 145,
+    "modes_4_5": 96
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27039",
+   "path": "equipment/character/swordman/weapon/ssword/gemsswd_ucentinel.equ",
+   "sha256": "2caf997069255247f5e557ad4c4a1eb19248fb1e2f98645a853772e7882f6c5e",
+   "values": [
+    120,
+    80
+   ],
+   "mapping": {
+    "default": 120,
+    "modes_4_5": 80
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27023",
+   "path": "equipment/character/swordman/weapon/ssword/gemsswd_ugladius.equ",
+   "sha256": "90897be6f86514d379b0add17818c19f68bc28c6198fcd48fc17cc9f47d55867",
+   "values": [
+    88,
+    57
+   ],
+   "mapping": {
+    "default": 88,
+    "modes_4_5": 57
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27061",
+   "path": "equipment/character/swordman/weapon/ssword/n_boneswd_kris.equ",
+   "sha256": "1a65fdb5d5873a0e3885a7f95fe081fe36afc02675b95db185ac1c301310490f",
+   "values": [
+    149,
+    98
+   ],
+   "mapping": {
+    "default": 149,
+    "modes_4_5": 98
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27060",
+   "path": "equipment/character/swordman/weapon/ssword/n_boneswd_oldkris.equ",
+   "sha256": "fb7d2953a41371b82b906f02a6a1a469232de506a3ecb8c7a71400a7dfea6932",
+   "values": [
+    112,
+    74
+   ],
+   "mapping": {
+    "default": 112,
+    "modes_4_5": 74
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27049",
+   "path": "equipment/character/swordman/weapon/ssword/n_boneswd_oldtail.equ",
+   "sha256": "f9a750da6122ff5df1d439a3c5613579730f799cd52df9bf9200b5155b0e43fd",
+   "values": [
+    72,
+    46
+   ],
+   "mapping": {
+    "default": 72,
+    "modes_4_5": 46
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27050",
+   "path": "equipment/character/swordman/weapon/ssword/n_boneswd_tail.equ",
+   "sha256": "23387c7092c959f9e272af0741e4b31069852c52715a4bc8cf44607d0611ba25",
+   "values": [
+    95,
+    61
+   ],
+   "mapping": {
+    "default": 95,
+    "modes_4_5": 61
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27071",
+   "path": "equipment/character/swordman/weapon/ssword/n_gemsswd_centinel.equ",
+   "sha256": "d9c81c90e7fc324080400361bfa208d2829679a1a055a0556c2c436bc3699e89",
+   "values": [
+    185,
+    123
+   ],
+   "mapping": {
+    "default": 185,
+    "modes_4_5": 123
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27057",
+   "path": "equipment/character/swordman/weapon/ssword/n_gemsswd_gladius.equ",
+   "sha256": "562734e96c1196f108251f9b548f44370794de3380043b83944e50eac37cedb2",
+   "values": [
+    131,
+    86
+   ],
+   "mapping": {
+    "default": 131,
+    "modes_4_5": 86
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27064",
+   "path": "equipment/character/swordman/weapon/ssword/n_gemsswd_lowtitanium.equ",
+   "sha256": "cc737e1768f2367d8fcc57ae962a2969a66c979a4bf7b6e7e9717d6e140cbde2",
+   "values": [
+    126,
+    84
+   ],
+   "mapping": {
+    "default": 126,
+    "modes_4_5": 84
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27065",
+   "path": "equipment/character/swordman/weapon/ssword/n_gemsswd_titanium.equ",
+   "sha256": "9c70e683b01a95323bd8239b94171ac93f1bcc5776a45a9a867df4208ac633fe",
+   "values": [
+    167,
+    111
+   ],
+   "mapping": {
+    "default": 167,
+    "modes_4_5": 111
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27070",
+   "path": "equipment/character/swordman/weapon/ssword/n_gemsswd_ucentinel.equ",
+   "sha256": "1b90e76b2fe4a592b9a2d636e187e78c81a1d6b1d741dd083309b3f88f48fb84",
+   "values": [
+    139,
+    93
+   ],
+   "mapping": {
+    "default": 139,
+    "modes_4_5": 93
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27056",
+   "path": "equipment/character/swordman/weapon/ssword/n_gemsswd_ugladius.equ",
+   "sha256": "96b6eaa7f2ab822e8ea0c11aecbfbb086109a446c1aac561c387e8d3e772b129",
+   "values": [
+    99,
+    65
+   ],
+   "mapping": {
+    "default": 99,
+    "modes_4_5": 65
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27051",
+   "path": "equipment/character/swordman/weapon/ssword/n_sswd_breeze.equ",
+   "sha256": "ca682737b2f1fff9cd00443d252ad7cfb6f7d4b8ffd6eecce15cf87cf748455c",
+   "values": [
+    108,
+    70
+   ],
+   "mapping": {
+    "default": 108,
+    "modes_4_5": 70
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27054",
+   "path": "equipment/character/swordman/weapon/ssword/n_sswd_bronze.equ",
+   "sha256": "7eb222958912d439ae35cce249b1e433253f664d6870f4a010b35552125c8d3d",
+   "values": [
+    113,
+    73
+   ],
+   "mapping": {
+    "default": 113,
+    "modes_4_5": 73
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27053",
+   "path": "equipment/character/swordman/weapon/ssword/n_sswd_fbronze.equ",
+   "sha256": "fe6f76ff1a2d9dfb28a4a429e5be07870258e7848473cdd81aa0abd83157ecc2",
+   "values": [
+    85,
+    55
+   ],
+   "mapping": {
+    "default": 85,
+    "modes_4_5": 55
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27073",
+   "path": "equipment/character/swordman/weapon/ssword/n_xiphos.equ",
+   "sha256": "bac1ab58f5c4a19ebef3dbdef0588af368a574d78f7c256394f76f3418394bdc",
+   "values": [
+    212,
+    142
+   ],
+   "mapping": {
+    "default": 212,
+    "modes_4_5": 142
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27072",
+   "path": "equipment/character/swordman/weapon/ssword/n_xiphos_old.equ",
+   "sha256": "773ad9126af78f5d26ea61a39c4f2439754b94589ff54da6d45693564ca80bc9",
+   "values": [
+    159,
+    107
+   ],
+   "mapping": {
+    "default": 159,
+    "modes_4_5": 107
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27110",
+   "path": "equipment/character/swordman/weapon/ssword/pallasch.equ",
+   "sha256": "7763086869a6c3fbdf81f34441c4efe760e2bc8bdbc2206aaf1ca19acc22634a",
+   "values": [
+    234,
+    157
+   ],
+   "mapping": {
+    "default": 234,
+    "modes_4_5": 157
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27109",
+   "path": "equipment/character/swordman/weapon/ssword/pallasch_old.equ",
+   "sha256": "21d9a566ab61df1acae14409ae8cef195a0c6894783c29a09697c7827beee762",
+   "values": [
+    176,
+    118
+   ],
+   "mapping": {
+    "default": 176,
+    "modes_4_5": 118
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220102",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220102.equ",
+   "sha256": "088e0b1e104aa05266b9d81fbe2fe935ad4d7862393194f28aad3569e91f8648",
+   "values": [
+    70,
+    44
+   ],
+   "mapping": {
+    "default": 70,
+    "modes_4_5": 44
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220103",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220103.equ",
+   "sha256": "aef4a60a2f475268b7df12fd09f489ff6185e3173c0635bb9477f8c3ad40bb5d",
+   "values": [
+    89,
+    56
+   ],
+   "mapping": {
+    "default": 89,
+    "modes_4_5": 56
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220104",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220104.equ",
+   "sha256": "115a6d18b25917936bdaca932db49c5ae70673a7436c56928c4d912dd3b1a59a",
+   "values": [
+    108,
+    70
+   ],
+   "mapping": {
+    "default": 108,
+    "modes_4_5": 70
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220105",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220105.equ",
+   "sha256": "1f9480dd5c5bc11ba9e0eba4aefd0e15297cff8c8bb3cd1e0f5f66bcc4236b56",
+   "values": [
+    126,
+    82
+   ],
+   "mapping": {
+    "default": 126,
+    "modes_4_5": 82
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220106",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220106.equ",
+   "sha256": "8432b8de3b9629dc513c0897128ed4f468cf93d668268238d353d3ac760b2e0f",
+   "values": [
+    145,
+    96
+   ],
+   "mapping": {
+    "default": 145,
+    "modes_4_5": 96
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220107",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220107.equ",
+   "sha256": "de7cb99fb79505d4a28ffd433dea5d87b37f30b34ef884d560fd97517a2ba26b",
+   "values": [
+    164,
+    109
+   ],
+   "mapping": {
+    "default": 164,
+    "modes_4_5": 109
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220108",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220108.equ",
+   "sha256": "a38dafb4d139ccdb9f436f126e9ee67946466d660fb97d9b6a630b10a70cef98",
+   "values": [
+    183,
+    122
+   ],
+   "mapping": {
+    "default": 183,
+    "modes_4_5": 122
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220109",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220109.equ",
+   "sha256": "2736b432875c9970f634f5d1a00d517d929f9d2ace2071e9fba5e3966a5d722d",
+   "values": [
+    202,
+    135
+   ],
+   "mapping": {
+    "default": 202,
+    "modes_4_5": 135
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220110",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220110.equ",
+   "sha256": "e73e475e57f98f97c10fcfe31899243d940572a9de09e7d567463cd0d82b0016",
+   "values": [
+    233,
+    156
+   ],
+   "mapping": {
+    "default": 233,
+    "modes_4_5": 156
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220111",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220111.equ",
+   "sha256": "1e600b5a5aa07781e5ec6dd9d1b0fba0e893d98ad8f0561dbf209197712f6bef",
+   "values": [
+    256,
+    173
+   ],
+   "mapping": {
+    "default": 256,
+    "modes_4_5": 173
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220112",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220112.equ",
+   "sha256": "d0220ddf3036c52a5e40cc7fc576369562ac712f6a3d89852acf465be6a92d51",
+   "values": [
+    270,
+    182
+   ],
+   "mapping": {
+    "default": 270,
+    "modes_4_5": 182
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220113",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220113.equ",
+   "sha256": "2a41764b5efb38bb3b2919443fc6c7022bbadae8f860456aa68189fcb8c1af71",
+   "values": [
+    293,
+    199
+   ],
+   "mapping": {
+    "default": 293,
+    "modes_4_5": 199
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_2220114",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_2220114.equ",
+   "sha256": "bbab1ccde62f8c4daa601f92aa62d347c7c7217dc235c713e079db820df1f8c1",
+   "values": [
+    318,
+    215
+   ],
+   "mapping": {
+    "default": 318,
+    "modes_4_5": 215
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27160",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_27160.equ",
+   "sha256": "37c380d4bb3cc320f4cda18c675207628faeabcaf4d6b352505de169d73f81bb",
+   "values": [
+    220,
+    149
+   ],
+   "mapping": {
+    "default": 220,
+    "modes_4_5": 149
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27161",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_27161.equ",
+   "sha256": "a013cc329d5ce5b80263059ee7866468a98a454a791d136405b542a1183c71a6",
+   "values": [
+    293,
+    198
+   ],
+   "mapping": {
+    "default": 293,
+    "modes_4_5": 198
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27126",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_alton.equ",
+   "sha256": "75a9a850953a836aa26fa3bf8ea7b1994792777833515ae33c7b3f13da8ca656",
+   "values": [
+    270,
+    182
+   ],
+   "mapping": {
+    "default": 270,
+    "modes_4_5": 182
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27125",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_alton_sb.equ",
+   "sha256": "7cad7e4e3c2b9cdff165f786a3c9389b05f3cbc54f4abe6c0873462e4c834cad",
+   "values": [
+    203,
+    137
+   ],
+   "mapping": {
+    "default": 203,
+    "modes_4_5": 137
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27016",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_breeze.equ",
+   "sha256": "0bc7409b77d88034382737de328a342ea18faec1f3614ea208fe99a6597d7d5f",
+   "values": [
+    100,
+    65
+   ],
+   "mapping": {
+    "default": 100,
+    "modes_4_5": 65
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27019",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_bronze.equ",
+   "sha256": "6e3c3cc8989f1c729633888a26ceb50a54b574c8487d3f58a7a0273d7bfea3ee",
+   "values": [
+    102,
+    66
+   ],
+   "mapping": {
+    "default": 102,
+    "modes_4_5": 66
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27000",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_damaged.equ",
+   "sha256": "f8be05bdd3e8e391221f445e30d92e082c0b402315317c1868acb6fc5cfdfdae",
+   "values": [
+    21,
+    10
+   ],
+   "mapping": {
+    "default": 21,
+    "modes_4_5": 10
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27136",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_deepseaq.equ",
+   "sha256": "ced42e872f0fe9a7a44c5d4832770f95df3a98208edf6e5cb1f136f3a2c8cacd",
+   "values": [
+    293,
+    199
+   ],
+   "mapping": {
+    "default": 293,
+    "modes_4_5": 199
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27077",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_failroton.equ",
+   "sha256": "bd89bac7ee0fbe36f1290e7fe28cd429b03b3961e831bd8ad58c9e30886827d5",
+   "values": [
+    89,
+    56
+   ],
+   "mapping": {
+    "default": 89,
+    "modes_4_5": 56
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27018",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_fbronze.equ",
+   "sha256": "e44f69ead852a5341924c2656e066d456b43052615fb4ed93f25b24ce17e1189",
+   "values": [
+    77,
+    50
+   ],
+   "mapping": {
+    "default": 77,
+    "modes_4_5": 50
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27043",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_gsd.equ",
+   "sha256": "292cddd0477eccc35dd2933c86dac452294f830d13dab27e249b5b53a66e9461",
+   "values": [
+    95,
+    61
+   ],
+   "mapping": {
+    "default": 95,
+    "modes_4_5": 61
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27121",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_handon.equ",
+   "sha256": "15d116e446657d57630af544e02c21d4aac6747a11f7c80d0ddae4fb635c737b",
+   "values": [
+    248,
+    167
+   ],
+   "mapping": {
+    "default": 248,
+    "modes_4_5": 167
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27120",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_handon_used.equ",
+   "sha256": "a7131b3786e8b21f3613f502ba72fc674643d9a30b95fe769871e8596f33ba44",
+   "values": [
+    186,
+    126
+   ],
+   "mapping": {
+    "default": 186,
+    "modes_4_5": 126
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27134",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_hightechq.equ",
+   "sha256": "74133916d2fa1a76b68b82d07a6416061e6fad1c44cb21acb07ea35c4ecb97cc",
+   "values": [
+    270,
+    182
+   ],
+   "mapping": {
+    "default": 270,
+    "modes_4_5": 182
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27135",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_illusionq.equ",
+   "sha256": "479f68489e7073d81d2edf16e3404123c30c5ceb7975d01b18564a50a0470eab",
+   "values": [
+    284,
+    192
+   ],
+   "mapping": {
+    "default": 284,
+    "modes_4_5": 192
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27002",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_iron.equ",
+   "sha256": "31e43d5055f2a7fe1b102f5a66628dbf4f310b4144ae1d7e9359f39d7926b73f",
+   "values": [
+    41,
+    23
+   ],
+   "mapping": {
+    "default": 41,
+    "modes_4_5": 23
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27009",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_nshort.equ",
+   "sha256": "a557aa78bffa85a3f5689ec7afa62e16bf0ba43820779610ed4a99519f91eb52",
+   "values": [
+    63,
+    38
+   ],
+   "mapping": {
+    "default": 63,
+    "modes_4_5": 38
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27005",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_nsteel.equ",
+   "sha256": "8475a6672e72993567c977455fd8405301d813fbd771e1f7cb9feb2f95f4c8fb",
+   "values": [
+    48,
+    28
+   ],
+   "mapping": {
+    "default": 48,
+    "modes_4_5": 28
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27012",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_refsteel.equ",
+   "sha256": "432bac70d3438b2c8372545b11c5fa5997bdadd913e27c9e438e041c1c2fd5d5",
+   "values": [
+    77,
+    48
+   ],
+   "mapping": {
+    "default": 77,
+    "modes_4_5": 48
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27001",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_riron.equ",
+   "sha256": "3904fabe5405cb16aaac3fe940085260d31cf32d19a44c8c06fc997d63b0de70",
+   "values": [
+    26,
+    14
+   ],
+   "mapping": {
+    "default": 26,
+    "modes_4_5": 14
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27007",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_rshort.equ",
+   "sha256": "012d3eca0eb3932b33491a6c44b8ce4df68af21ce8031a100a613fb612bfeb63",
+   "values": [
+    45,
+    27
+   ],
+   "mapping": {
+    "default": 45,
+    "modes_4_5": 27
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27008",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_short.equ",
+   "sha256": "14de94800bb8dfdd4476c7cc1ab258d1ee8cdb752d9049c670a1e4ffcee874d5",
+   "values": [
+    59,
+    36
+   ],
+   "mapping": {
+    "default": 59,
+    "modes_4_5": 36
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27011",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_steel.equ",
+   "sha256": "5de624d496b1eadd2df015c8269adb936ace6e57a8e75f1768b8741d99f73c9d",
+   "values": [
+    73,
+    46
+   ],
+   "mapping": {
+    "default": 73,
+    "modes_4_5": 46
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27010",
+   "path": "equipment/character/swordman/weapon/ssword/sswd_usteel.equ",
+   "sha256": "7b7059225fbc1e42f64500988c3e2715ff4685b133237877a448ea60e7bef711",
+   "values": [
+    55,
+    35
+   ],
+   "mapping": {
+    "default": 55,
+    "modes_4_5": 35
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27048",
+   "path": "equipment/character/swordman/weapon/ssword/xiphos.equ",
+   "sha256": "e826b1cf7477f2c39b51c2455c0eb969f0f5e8f454674df3d1ad2b3b9557fa54",
+   "values": [
+    174,
+    116
+   ],
+   "mapping": {
+    "default": 174,
+    "modes_4_5": 116
+   }
+  },
+  {
+   "file": "native_runtime",
+   "id": "original_27047",
+   "path": "equipment/character/swordman/weapon/ssword/xiphos_old.equ",
+   "sha256": "b56667f5c30df8de422b372f1c0b2044dd996ab4a85e8e550c1591b6413a5780",
+   "values": [
+    131,
+    87
+   ],
+   "mapping": {
+    "default": 131,
+    "modes_4_5": 87
+   }
+  }
+ ],
+ "changed": [
+  "numbers:original_27601",
+  "numbers:original_27800",
+  "native_runtime:original_20190",
+  "native_runtime:original_100320002",
+  "native_runtime:original_100320003",
+  "native_runtime:original_24211",
+  "native_runtime:original_101020033",
+  "native_runtime:original_101020034",
+  "native_runtime:original_101020035",
+  "native_runtime:original_27647",
+  "native_runtime:original_27646",
+  "native_runtime:original_27602",
+  "native_runtime:original_2223102",
+  "native_runtime:original_2223103",
+  "native_runtime:original_2223104",
+  "native_runtime:original_2223105",
+  "native_runtime:original_2223106",
+  "native_runtime:original_2223107",
+  "native_runtime:original_2223108",
+  "native_runtime:original_2223109",
+  "native_runtime:original_2223110",
+  "native_runtime:original_2223111",
+  "native_runtime:original_2223112",
+  "native_runtime:original_2223113",
+  "native_runtime:original_2223114",
+  "native_runtime:original_27760",
+  "native_runtime:original_27761",
+  "native_runtime:original_27720",
+  "native_runtime:original_27719",
+  "native_runtime:original_27620",
+  "native_runtime:original_27635",
+  "native_runtime:original_27600",
+  "native_runtime:original_27619",
+  "native_runtime:original_27735",
+  "native_runtime:original_27621",
+  "native_runtime:original_27637",
+  "native_runtime:original_27733",
+  "native_runtime:original_27606",
+  "native_runtime:original_27734",
+  "native_runtime:original_27631",
+  "native_runtime:original_27630",
+  "native_runtime:original_27611",
+  "native_runtime:original_27605",
+  "native_runtime:original_27610",
+  "native_runtime:original_27639",
+  "native_runtime:original_27613",
+  "native_runtime:original_27634",
+  "native_runtime:original_27641",
+  "native_runtime:original_27614",
+  "native_runtime:original_27624",
+  "native_runtime:original_27629",
+  "native_runtime:original_27607",
+  "native_runtime:original_27604",
+  "native_runtime:original_27725",
+  "native_runtime:original_27724",
+  "native_runtime:original_27617",
+  "native_runtime:original_27642",
+  "native_runtime:original_27626",
+  "native_runtime:original_27616",
+  "native_runtime:original_27603",
+  "native_runtime:original_27625",
+  "native_runtime:original_27608",
+  "native_runtime:original_27708",
+  "native_runtime:original_27707",
+  "native_runtime:original_27672",
+  "native_runtime:original_27671",
+  "native_runtime:original_27653",
+  "native_runtime:original_27664",
+  "native_runtime:original_27652",
+  "native_runtime:original_27660",
+  "native_runtime:original_27669",
+  "native_runtime:original_27690",
+  "native_runtime:original_27663",
+  "native_runtime:original_27670",
+  "native_runtime:original_27648",
+  "native_runtime:original_27655",
+  "native_runtime:original_27659",
+  "native_runtime:original_27649",
+  "native_runtime:original_27656",
+  "native_runtime:original_101000013",
+  "native_runtime:original_101000014",
+  "native_runtime:original_101000015",
+  "native_runtime:original_27200",
+  "native_runtime:original_27004",
+  "native_runtime:original_27030",
+  "native_runtime:original_27029",
+  "native_runtime:original_27014",
+  "native_runtime:original_27031",
+  "native_runtime:original_27003",
+  "native_runtime:original_27006",
+  "native_runtime:original_27017",
+  "native_runtime:original_27015",
+  "native_runtime:original_27040",
+  "native_runtime:original_27024",
+  "native_runtime:original_27034",
+  "native_runtime:original_27042",
+  "native_runtime:original_27036",
+  "native_runtime:original_27026",
+  "native_runtime:original_27035",
+  "native_runtime:original_27039",
+  "native_runtime:original_27023",
+  "native_runtime:original_27061",
+  "native_runtime:original_27060",
+  "native_runtime:original_27049",
+  "native_runtime:original_27050",
+  "native_runtime:original_27071",
+  "native_runtime:original_27057",
+  "native_runtime:original_27064",
+  "native_runtime:original_27065",
+  "native_runtime:original_27070",
+  "native_runtime:original_27056",
+  "native_runtime:original_27051",
+  "native_runtime:original_27054",
+  "native_runtime:original_27053",
+  "native_runtime:original_27073",
+  "native_runtime:original_27072",
+  "native_runtime:original_27110",
+  "native_runtime:original_27109",
+  "native_runtime:original_2220102",
+  "native_runtime:original_2220103",
+  "native_runtime:original_2220104",
+  "native_runtime:original_2220105",
+  "native_runtime:original_2220106",
+  "native_runtime:original_2220107",
+  "native_runtime:original_2220108",
+  "native_runtime:original_2220109",
+  "native_runtime:original_2220110",
+  "native_runtime:original_2220111",
+  "native_runtime:original_2220112",
+  "native_runtime:original_2220113",
+  "native_runtime:original_2220114",
+  "native_runtime:original_27160",
+  "native_runtime:original_27161",
+  "native_runtime:original_27126",
+  "native_runtime:original_27125",
+  "native_runtime:original_27016",
+  "native_runtime:original_27019",
+  "native_runtime:original_27000",
+  "native_runtime:original_27136",
+  "native_runtime:original_27077",
+  "native_runtime:original_27018",
+  "native_runtime:original_27043",
+  "native_runtime:original_27121",
+  "native_runtime:original_27120",
+  "native_runtime:original_27134",
+  "native_runtime:original_27135",
+  "native_runtime:original_27002",
+  "native_runtime:original_27009",
+  "native_runtime:original_27005",
+  "native_runtime:original_27012",
+  "native_runtime:original_27001",
+  "native_runtime:original_27007",
+  "native_runtime:original_27008",
+  "native_runtime:original_27011",
+  "native_runtime:original_27010",
+  "native_runtime:original_27048",
+  "native_runtime:original_27047"
+ ]
+}

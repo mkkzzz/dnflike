@@ -13,6 +13,7 @@ func check(value: bool, message: String) -> void:
 
 func _initialize() -> void:
 	check_back_critical()
+	check_equipment_separate_attack()
 	var cfg := Numbers.config_snapshot()
 	var initial_strength: float = Numbers.shared_config()["base"]["strength"]
 	cfg["base"]["strength"] = initial_strength + 1
@@ -213,3 +214,32 @@ func check_back_critical() -> void:
 			check(Numbers.Damage.resolve(stats,{}, {"damage_type":kind,"back":true},[0,0.01],formula)["critical"],"back %s attacks receive learned bonus" % kind)
 			check(not Numbers.Damage.resolve(stats,{}, {"damage_type":other,"back":true},[0,0.01],formula)["critical"],"back bonus does not leak to the other damage type")
 			check(not Numbers.Damage.resolve(stats,{"evasion":1}, {"damage_type":kind,"back":true},[1,0.01],formula)["critical"],"missed back attacks do not report a critical")
+
+func check_equipment_separate_attack() -> void:
+	var cfg := Numbers.shared_config()
+	# Actual legacy and native-catalog equipment: both damage categories must
+	# consume the ordinary-mode value, never the alternate-mode source value.
+	for sample: Array in [["original_27601",26,14],["original_27800",31,18],["original_27602",41,23],["original_24211",56,34]]:
+		var profile: Dictionary = Session.new().profile.duplicate(true)
+		profile["equipment"] = {}
+		profile["gear"] = {}
+		profile["skills"] = {}
+		profile["level"] = 60
+		var base: Dictionary = Numbers.profile_stats(profile)["values"]
+		var uid: String = Numbers.Equipment.create(profile,sample[0])
+		check(Numbers.Equipment.equip(profile,uid,cfg)["ok"],"source separate-attack item can be equipped: %s" % sample[0])
+		var stats: Dictionary = Numbers.profile_stats(profile)["values"]
+		check(stats["independent_attack"]-base["independent_attack"]==sample[1],"ordinary mode contributes common independent attack: %s" % sample[0])
+		check(cfg["equipment"][sample[0]]["native_separate_attack"]["modes_4_5"]==sample[2],"alternate-mode source remains retained: %s" % sample[0])
+		for kind: String in ["physical","magical"]:
+			var hit := {"percent":0,"fixed":100,"damage_type":kind}
+			var before: Dictionary = Numbers.Damage.resolve(base,{},hit,[0,1],cfg["formula"])
+			var after: Dictionary = Numbers.Damage.resolve(stats,{},hit,[0,1],cfg["formula"])
+			check(is_equal_approx(after["trace"]["fixed_part"]-before["trace"]["fixed_part"],float(sample[1])),"both fixed-damage categories receive ordinary-mode equipment value: %s/%s" % [sample[0],kind])
+			check(stats[kind+"_independent_attack"]==base[kind+"_independent_attack"],"mode values do not leak into damage-type stats: %s/%s" % [sample[0],kind])
+		var restored: Dictionary = JSON.parse_string(JSON.stringify(profile))
+		check(Numbers.profile_stats(restored)["values"]["independent_attack"]==stats["independent_attack"],"saved gear IDs recompute the corrected source value")
+		profile["gear"][uid]["durability"] = 0
+		check(Numbers.profile_stats(profile)["values"]["independent_attack"]==base["independent_attack"],"broken gear still stops contributing")
+		profile["equipment"] = {}
+		check(Numbers.profile_stats(profile)["values"]["independent_attack"]==base["independent_attack"],"unequipping removes the corrected contribution")

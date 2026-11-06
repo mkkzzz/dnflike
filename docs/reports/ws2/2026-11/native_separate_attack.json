@@ -1,0 +1,5840 @@
+{
+ "schema": "dnf_separate_attack/1",
+ "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
+ "input_source": {
+  "input_sha256": "8748e19abf6155ca5a20d13244eaca0b9442c3d7569e8e5002bddffeeb9366ac",
+  "embedded": true,
+  "resource": "10/EXERESX/0",
+  "resource_offset": 734740
+ },
+ "tools_sha256": {
+  "audit_dnf_separate_attack.py": "451dc21e3f91bcdeec6eb3ebee5b8a932deadc16de9404e2793c313491e526b8",
+  "dnf_equipment_stats.py": "332b4b44fb0d3a01f0af6b73c61a54a8348c675a133223318ce39264912d54f0",
+  "audit_dnf_fixed_base.py": "1e9c924efca81eccf8c09dd3748515141a39772d070b7f6f9afc71b0da4febe0",
+  "audit_dnf_firewave.py": "3377abdf1f6b5a76908a4cd14652fc68fe28d56314e49c6ee65933bfbd792ddc",
+  "audit_dnf_ice_shatter.py": "b4f90d1797fd487af50a6e39716c77cc9e889b3e5b5c0b1c12864d088f29462c",
+  "audit_dnf_ice_particle_bindings.py": "660048b05498ea7dd11add2d7f3654083d99faafa8fc28b86ff198292fcdeed1",
+  "audit_dnf_native_strings.py": "60b30f2e51e5a744b106d8df955f5a7acbd7d4341ba51f52fd7a2941a5d29c6f",
+  "audit_dnf_particle_axis.py": "59b463dcff6537cc89c597bcf2bb5f1f0a336eb25a67b09da4c228d524b1af8e",
+  "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a"
+ },
+ "tags": {
+  "0x185cdac": "[separate attack]",
+  "0x18627b4": "[separate rate]"
+ },
+ "runs": [
+  {
+   "fixture": {
+    "values": [
+     26,
+     14
+    ],
+    "initial": [
+     0,
+     0
+    ],
+    "poison": false
+   },
+   "parsed": [
+    26,
+    14
+   ],
+   "accumulated": [
+    26,
+    14
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     26,
+     14
+    ],
+    "initial": [
+     0,
+     0
+    ],
+    "poison": true
+   },
+   "parsed": [
+    26,
+    14
+   ],
+   "accumulated": [
+    26,
+    14
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     31,
+     18
+    ],
+    "initial": [
+     7,
+     19
+    ],
+    "poison": false
+   },
+   "parsed": [
+    31,
+    18
+   ],
+   "accumulated": [
+    38,
+    37
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     31,
+     18
+    ],
+    "initial": [
+     7,
+     19
+    ],
+    "poison": true
+   },
+   "parsed": [
+    31,
+    18
+   ],
+   "accumulated": [
+    38,
+    37
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     400,
+     264
+    ],
+    "initial": [
+     0,
+     0
+    ],
+    "poison": false
+   },
+   "parsed": [
+    400,
+    264
+   ],
+   "accumulated": [
+    400,
+    264
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     400,
+     264
+    ],
+    "initial": [
+     0,
+     0
+    ],
+    "poison": true
+   },
+   "parsed": [
+    400,
+    264
+   ],
+   "accumulated": [
+    400,
+    264
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     64,
+     39
+    ],
+    "initial": [
+     0,
+     0
+    ],
+    "poison": false
+   },
+   "parsed": [
+    64,
+    39
+   ],
+   "accumulated": [
+    64,
+    39
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     64,
+     39
+    ],
+    "initial": [
+     0,
+     0
+    ],
+    "poison": true
+   },
+   "parsed": [
+    64,
+    39
+   ],
+   "accumulated": [
+    64,
+    39
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     -5,
+     0
+    ],
+    "initial": [
+     7,
+     19
+    ],
+    "poison": false
+   },
+   "parsed": [
+    -5,
+    0
+   ],
+   "accumulated": [
+    2,
+    19
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     -5,
+     0
+    ],
+    "initial": [
+     7,
+     19
+    ],
+    "poison": true
+   },
+   "parsed": [
+    -5,
+    0
+   ],
+   "accumulated": [
+    2,
+    19
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     2147483647,
+     -2147483648
+    ],
+    "initial": [
+     1,
+     -1
+    ],
+    "poison": false
+   },
+   "parsed": [
+    2147483647,
+    -2147483648
+   ],
+   "accumulated": [
+    -2147483648,
+    2147483647
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     2147483647,
+     -2147483648
+    ],
+    "initial": [
+     1,
+     -1
+    ],
+    "poison": true
+   },
+   "parsed": [
+    2147483647,
+    -2147483648
+   ],
+   "accumulated": [
+    -2147483648,
+    2147483647
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     3.9,
+     -2.9
+    ],
+    "initial": [
+     7,
+     19
+    ],
+    "poison": false
+   },
+   "parsed": [
+    3,
+    -2
+   ],
+   "accumulated": [
+    10,
+    17
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 155,
+   "trace_sha256": "5fd6b6e696e982cf07aa912e0e50c9c1058669f1738b0b3c92c0011af8eece6f"
+  },
+  {
+   "fixture": {
+    "values": [
+     3.9,
+     -2.9
+    ],
+    "initial": [
+     7,
+     19
+    ],
+    "poison": true
+   },
+   "parsed": [
+    3,
+    -2
+   ],
+   "accumulated": [
+    10,
+    17
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 155,
+   "trace_sha256": "5fd6b6e696e982cf07aa912e0e50c9c1058669f1738b0b3c92c0011af8eece6f"
+  },
+  {
+   "fixture": {
+    "values": [
+     0,
+     0
+    ],
+    "initial": [
+     0,
+     0
+    ],
+    "poison": false
+   },
+   "parsed": [
+    0,
+    0
+   ],
+   "accumulated": [
+    0,
+    0
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  },
+  {
+   "fixture": {
+    "values": [
+     0,
+     0
+    ],
+    "initial": [
+     0,
+     0
+    ],
+    "poison": true
+   },
+   "parsed": [
+    0,
+    0
+   ],
+   "accumulated": [
+    0,
+    0
+   ],
+   "phases": [
+    {
+     "start": "0x126dabd",
+     "end": "0x126f227",
+     "stack": "0x6ffffc00"
+    },
+    {
+     "start": "0x77bdd9",
+     "end": "0x77be75",
+     "stack": "0x6ffffc00"
+    }
+   ],
+   "cursor": 2,
+   "frame_preserved": true,
+   "fp_depth": 0,
+   "steps": 125,
+   "trace_sha256": "5cd1f0571c2a7b09ed36c683a2f6d5c0dae681daa1456375d8648364c4e7c73f"
+  }
+ ],
+ "consumers": [
+  {
+   "values": [
+    26,
+    14
+   ],
+   "accumulated": [
+    26,
+    14
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 1,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 23,
+     "add_special": 11,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1243,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 1
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002b98",
+      "kind": "secure_read",
+      "value": 26
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bb0",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1243
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1243
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1243
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1243
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1243
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      false
+     ],
+     [
+      "0x75ecf1",
+      false
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 348,
+    "trace_sha256": "90f815b3d497381e014a162cec98ab39cfcde1c9da222f0033a10dab4d5465fb"
+   }
+  },
+  {
+   "values": [
+    26,
+    14
+   ],
+   "accumulated": [
+    26,
+    14
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 3,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 23,
+     "add_special": 11,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1243,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002b98",
+      "kind": "secure_read",
+      "value": 26
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bb0",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1243
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1243
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1243
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1243
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1243
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      false
+     ],
+     [
+      "0x75ecf1",
+      false
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 348,
+    "trace_sha256": "90f815b3d497381e014a162cec98ab39cfcde1c9da222f0033a10dab4d5465fb"
+   }
+  },
+  {
+   "values": [
+    26,
+    14
+   ],
+   "accumulated": [
+    26,
+    14
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 4,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 23,
+     "add_special": 11,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1231,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 4
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 4
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002ba4",
+      "kind": "secure_read",
+      "value": 14
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bbc",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1231
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1231
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1231
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1231
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1231
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      true
+     ],
+     [
+      "0x75ecf1",
+      true
+     ],
+     [
+      "0x75ed51",
+      false
+     ],
+     [
+      "0x75ed56",
+      true
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 367,
+    "trace_sha256": "0385fa6a3dd78b57b371cbb16145fbd6e2f18d09f073f4fa4dd3a8fa860cb22d"
+   }
+  },
+  {
+   "values": [
+    26,
+    14
+   ],
+   "accumulated": [
+    26,
+    14
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 5,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 23,
+     "add_special": 11,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1231,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 5
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 5
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002ba4",
+      "kind": "secure_read",
+      "value": 14
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bbc",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1231
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1231
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1231
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1231
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1231
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      true
+     ],
+     [
+      "0x75ecf1",
+      true
+     ],
+     [
+      "0x75ed51",
+      false
+     ],
+     [
+      "0x75ed56",
+      false
+     ],
+     [
+      "0x75ed5b",
+      true
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 371,
+    "trace_sha256": "a8ece1dfcdf044f65c7be715ac641316058e477dea8d3749b3ac99a1b95389a7"
+   }
+  },
+  {
+   "values": [
+    26,
+    14
+   ],
+   "accumulated": [
+    26,
+    14
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 7,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 23,
+     "add_special": 11,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1243,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 7
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002b98",
+      "kind": "secure_read",
+      "value": 26
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bb0",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1243
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1243
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1243
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1243
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1243
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      false
+     ],
+     [
+      "0x75ecf1",
+      false
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 348,
+    "trace_sha256": "90f815b3d497381e014a162cec98ab39cfcde1c9da222f0033a10dab4d5465fb"
+   }
+  },
+  {
+   "values": [
+    26,
+    14
+   ],
+   "accumulated": [
+    26,
+    14
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 9,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 23,
+     "add_special": 11,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1243,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 9
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002b98",
+      "kind": "secure_read",
+      "value": 26
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bb0",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1243
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1243
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1243
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1243
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1243
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      false
+     ],
+     [
+      "0x75ecf1",
+      false
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 348,
+    "trace_sha256": "90f815b3d497381e014a162cec98ab39cfcde1c9da222f0033a10dab4d5465fb"
+   }
+  },
+  {
+   "values": [
+    400,
+    264
+   ],
+   "accumulated": [
+    400,
+    264
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 1,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 397,
+     "add_special": 261,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1617,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 1
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002b98",
+      "kind": "secure_read",
+      "value": 400
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bb0",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1617
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1617
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1617
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1617
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1617
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      false
+     ],
+     [
+      "0x75ecf1",
+      false
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 348,
+    "trace_sha256": "90f815b3d497381e014a162cec98ab39cfcde1c9da222f0033a10dab4d5465fb"
+   }
+  },
+  {
+   "values": [
+    400,
+    264
+   ],
+   "accumulated": [
+    400,
+    264
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 3,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 397,
+     "add_special": 261,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1617,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002b98",
+      "kind": "secure_read",
+      "value": 400
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bb0",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1617
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1617
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1617
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1617
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1617
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      false
+     ],
+     [
+      "0x75ecf1",
+      false
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 348,
+    "trace_sha256": "90f815b3d497381e014a162cec98ab39cfcde1c9da222f0033a10dab4d5465fb"
+   }
+  },
+  {
+   "values": [
+    400,
+    264
+   ],
+   "accumulated": [
+    400,
+    264
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 4,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 397,
+     "add_special": 261,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1481,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 4
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 4
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002ba4",
+      "kind": "secure_read",
+      "value": 264
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bbc",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1481
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1481
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1481
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1481
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1481
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      true
+     ],
+     [
+      "0x75ecf1",
+      true
+     ],
+     [
+      "0x75ed51",
+      false
+     ],
+     [
+      "0x75ed56",
+      true
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 367,
+    "trace_sha256": "0385fa6a3dd78b57b371cbb16145fbd6e2f18d09f073f4fa4dd3a8fa860cb22d"
+   }
+  },
+  {
+   "values": [
+    400,
+    264
+   ],
+   "accumulated": [
+    400,
+    264
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 5,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 397,
+     "add_special": 261,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1481,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 5
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 5
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002ba4",
+      "kind": "secure_read",
+      "value": 264
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bbc",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1481
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1481
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1481
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1481
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1481
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      true
+     ],
+     [
+      "0x75ecf1",
+      true
+     ],
+     [
+      "0x75ed51",
+      false
+     ],
+     [
+      "0x75ed56",
+      false
+     ],
+     [
+      "0x75ed5b",
+      true
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 371,
+    "trace_sha256": "a8ece1dfcdf044f65c7be715ac641316058e477dea8d3749b3ac99a1b95389a7"
+   }
+  },
+  {
+   "values": [
+    400,
+    264
+   ],
+   "accumulated": [
+    400,
+    264
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 7,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 397,
+     "add_special": 261,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1617,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 7
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002b98",
+      "kind": "secure_read",
+      "value": 400
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bb0",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1617
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1617
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1617
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1617
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1617
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      false
+     ],
+     [
+      "0x75ecf1",
+      false
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 348,
+    "trace_sha256": "90f815b3d497381e014a162cec98ab39cfcde1c9da222f0033a10dab4d5465fb"
+   }
+  },
+  {
+   "values": [
+    400,
+    264
+   ],
+   "accumulated": [
+    400,
+    264
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 9,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 397,
+     "add_special": 261,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1617,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 9
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002b98",
+      "kind": "secure_read",
+      "value": 400
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bb0",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1617
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1617
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1617
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1617
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1617
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      false
+     ],
+     [
+      "0x75ecf1",
+      false
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 348,
+    "trace_sha256": "90f815b3d497381e014a162cec98ab39cfcde1c9da222f0033a10dab4d5465fb"
+   }
+  },
+  {
+   "values": [
+    64,
+    39
+   ],
+   "accumulated": [
+    64,
+    39
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 1,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 61,
+     "add_special": 36,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1281,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 1
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002b98",
+      "kind": "secure_read",
+      "value": 64
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bb0",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1281
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1281
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1281
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1281
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1281
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      false
+     ],
+     [
+      "0x75ecf1",
+      false
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 348,
+    "trace_sha256": "90f815b3d497381e014a162cec98ab39cfcde1c9da222f0033a10dab4d5465fb"
+   }
+  },
+  {
+   "values": [
+    64,
+    39
+   ],
+   "accumulated": [
+    64,
+    39
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 3,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 61,
+     "add_special": 36,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1281,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002b98",
+      "kind": "secure_read",
+      "value": 64
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bb0",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1281
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1281
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1281
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1281
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1281
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      false
+     ],
+     [
+      "0x75ecf1",
+      false
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 348,
+    "trace_sha256": "90f815b3d497381e014a162cec98ab39cfcde1c9da222f0033a10dab4d5465fb"
+   }
+  },
+  {
+   "values": [
+    64,
+    39
+   ],
+   "accumulated": [
+    64,
+    39
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 4,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 61,
+     "add_special": 36,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1256,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 4
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 4
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002ba4",
+      "kind": "secure_read",
+      "value": 39
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bbc",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1256
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1256
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1256
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1256
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1256
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      true
+     ],
+     [
+      "0x75ecf1",
+      true
+     ],
+     [
+      "0x75ed51",
+      false
+     ],
+     [
+      "0x75ed56",
+      true
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 367,
+    "trace_sha256": "0385fa6a3dd78b57b371cbb16145fbd6e2f18d09f073f4fa4dd3a8fa860cb22d"
+   }
+  },
+  {
+   "values": [
+    64,
+    39
+   ],
+   "accumulated": [
+    64,
+    39
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 5,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 61,
+     "add_special": 36,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1256,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 5
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 5
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002ba4",
+      "kind": "secure_read",
+      "value": 39
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bbc",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1256
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1256
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1256
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1256
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1256
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      true
+     ],
+     [
+      "0x75ecf1",
+      true
+     ],
+     [
+      "0x75ed51",
+      false
+     ],
+     [
+      "0x75ed56",
+      false
+     ],
+     [
+      "0x75ed5b",
+      true
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 371,
+    "trace_sha256": "a8ece1dfcdf044f65c7be715ac641316058e477dea8d3749b3ac99a1b95389a7"
+   }
+  },
+  {
+   "values": [
+    64,
+    39
+   ],
+   "accumulated": [
+    64,
+    39
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 7,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 61,
+     "add_special": 36,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1281,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 7
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002b98",
+      "kind": "secure_read",
+      "value": 64
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bb0",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1281
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1281
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1281
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1281
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1281
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      false
+     ],
+     [
+      "0x75ecf1",
+      false
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 348,
+    "trace_sha256": "90f815b3d497381e014a162cec98ab39cfcde1c9da222f0033a10dab4d5465fb"
+   }
+  },
+  {
+   "values": [
+    64,
+    39
+   ],
+   "accumulated": [
+    64,
+    39
+   ],
+   "run": {
+    "fixture": {
+     "table_mode": 1,
+     "mode": 9,
+     "column": 1,
+     "level": 40,
+     "count": 101,
+     "info_kind": 3,
+     "owner_fallback": false,
+     "poison": true,
+     "add_normal": 61,
+     "add_special": 36,
+     "mul_normal": 1,
+     "mul_special": 0.625,
+     "final_add": -3,
+     "unused_parameter": 0
+    },
+    "value": 1281,
+    "result_pointer": "0x60300000",
+    "stop": [
+     "returned"
+    ],
+    "stack": "0x70000004",
+    "fp_depth": 0,
+    "events": [
+     {
+      "target": "0x1197630",
+      "this": "0x6fffffdc",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 0
+     },
+     {
+      "kind": "vector_lookup",
+      "target": "0xfeecf0",
+      "this": "0x1a6698c",
+      "argument": 39
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x610011d4",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0x60000000",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x6fc760",
+      "this": "0xbaadf00d",
+      "kind": "singleton_fixture"
+     },
+     {
+      "target": "0x1195b90",
+      "this": "0x6fffffbc",
+      "kind": "mode_decode",
+      "value": 9
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1217
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002b98",
+      "kind": "secure_read",
+      "value": 64
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bb0",
+      "kind": "secure_read",
+      "value": 1065353216
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1281
+     },
+     {
+      "kind": "native_owner_info",
+      "target": "0xd07390",
+      "this": "0x60000000",
+      "argument": 3
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x60002bc8",
+      "kind": "secure_read",
+      "value": 0
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1281
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x6fffffdc",
+      "kind": "secure_write",
+      "value": 1281
+     },
+     {
+      "target": "0x1197630",
+      "this": "0x60300000",
+      "kind": "secure_init"
+     },
+     {
+      "target": "0x1195eb0",
+      "this": "0x6fffffdc",
+      "kind": "secure_read",
+      "value": 1281
+     },
+     {
+      "target": "0x1195a10",
+      "this": "0x60300000",
+      "kind": "secure_write",
+      "value": 1281
+     },
+     {
+      "target": "0x1195dc0",
+      "this": "0x6fffffdc",
+      "kind": "secure_destroy"
+     }
+    ],
+    "branches": [
+     [
+      "0x75ebb4",
+      true
+     ],
+     [
+      "0x75ebc2",
+      false
+     ],
+     [
+      "0x75ebcd",
+      true
+     ],
+     [
+      "0x75ec29",
+      false
+     ],
+     [
+      "0x75ec49",
+      false
+     ],
+     [
+      "0x75ec7e",
+      false
+     ],
+     [
+      "0x75ec83",
+      false
+     ],
+     [
+      "0x75ec88",
+      false
+     ],
+     [
+      "0xfeed11",
+      true
+     ],
+     [
+      "0x75ecb6",
+      false
+     ],
+     [
+      "0x75ecbe",
+      false
+     ],
+     [
+      "0x75ecd4",
+      false
+     ],
+     [
+      "0x75ece1",
+      false
+     ],
+     [
+      "0x7528a5",
+      false
+     ],
+     [
+      "0x7528aa",
+      false
+     ],
+     [
+      "0x75ecf1",
+      false
+     ],
+     [
+      "0x13cd697",
+      false
+     ]
+    ],
+    "steps": 348,
+    "trace_sha256": "90f815b3d497381e014a162cec98ab39cfcde1c9da222f0033a10dab4d5465fb"
+   }
+  }
+ ],
+ "blocks": [
+  {
+   "start": "0x4041c0",
+   "end_exclusive": "0x4041e2",
+   "sha256": "39225447bc21868947cf131223625e5edd046bdd1a00b9bbd3e95885e9c2a142",
+   "instructions": [
+    "004041C0 push ebp",
+    "004041C1 mov ebp, esp",
+    "004041C3 mov eax, dword ptr [ebp + 8]",
+    "004041C6 push esi",
+    "004041C7 mov esi, ecx",
+    "004041C9 lea ecx, [esi + 8]",
+    "004041CC push ecx",
+    "004041CD lea edx, [ebp + 8]",
+    "004041D0 push edx",
+    "004041D1 mov ecx, esi",
+    "004041D3 mov dword ptr [ebp + 8], eax",
+    "004041D6 call 0x1195a10",
+    "004041DB mov eax, esi",
+    "004041DD pop esi",
+    "004041DE pop ebp",
+    "004041DF ret 4"
+   ]
+  },
+  {
+   "start": "0x406970",
+   "end_exclusive": "0x4069a5",
+   "sha256": "35882c625247c2d8554e0835cc8391e64e53c8410a0842cd72a9278b04cd999c",
+   "instructions": [
+    "00406970 push ebp",
+    "00406971 mov ebp, esp",
+    "00406973 push ecx",
+    "00406974 push esi",
+    "00406975 mov esi, ecx",
+    "00406977 mov ecx, dword ptr [ebp + 8]",
+    "0040697A lea eax, [ebp + 8]",
+    "0040697D push eax",
+    "0040697E lea edx, [ecx + 8]",
+    "00406981 push edx",
+    "00406982 call 0x1195eb0",
+    "00406987 mov eax, dword ptr [ebp + 8]",
+    "0040698A lea ecx, [esi + 8]",
+    "0040698D push ecx",
+    "0040698E lea edx, [ebp - 4]",
+    "00406991 push edx",
+    "00406992 mov ecx, esi",
+    "00406994 mov dword ptr [ebp - 4], eax",
+    "00406997 call 0x1195a10",
+    "0040699C mov eax, esi",
+    "0040699E pop esi",
+    "0040699F mov esp, ebp",
+    "004069A1 pop ebp",
+    "004069A2 ret 4"
+   ]
+  },
+  {
+   "start": "0x40a950",
+   "end_exclusive": "0x40a9c0",
+   "sha256": "dbd59bffe8f7c5f62307afd7930b32f40f14c4385d26d6e2cd4555dded19259e",
+   "instructions": [
+    "0040A950 push ebp",
+    "0040A951 mov ebp, esp",
+    "0040A953 push -1",
+    "0040A955 push 0x1403e58",
+    "0040A95A mov eax, dword ptr fs:[0]",
+    "0040A960 push eax",
+    "0040A961 sub esp, 8",
+    "0040A964 push esi",
+    "0040A965 mov eax, dword ptr [0x1a367f0]",
+    "0040A96A xor eax, ebp",
+    "0040A96C push eax",
+    "0040A96D lea eax, [ebp - 0xc]",
+    "0040A970 mov dword ptr fs:[0], eax",
+    "0040A976 mov esi, ecx",
+    "0040A978 mov dword ptr [ebp - 0x14], esi",
+    "0040A97B call 0x1197630",
+    "0040A980 mov ecx, dword ptr [ebp + 8]",
+    "0040A983 lea eax, [ebp + 8]",
+    "0040A986 push eax",
+    "0040A987 lea edx, [ecx + 8]",
+    "0040A98A push edx",
+    "0040A98B mov dword ptr [ebp - 4], 0",
+    "0040A992 call 0x1195eb0",
+    "0040A997 mov eax, dword ptr [ebp + 8]",
+    "0040A99A lea ecx, [esi + 8]",
+    "0040A99D push ecx",
+    "0040A99E lea edx, [ebp - 0x10]",
+    "0040A9A1 push edx",
+    "0040A9A2 mov ecx, esi",
+    "0040A9A4 mov dword ptr [ebp - 0x10], eax",
+    "0040A9A7 call 0x1195a10",
+    "0040A9AC mov eax, esi",
+    "0040A9AE mov ecx, dword ptr [ebp - 0xc]",
+    "0040A9B1 mov dword ptr fs:[0], ecx",
+    "0040A9B8 pop ecx",
+    "0040A9B9 pop esi",
+    "0040A9BA mov esp, ebp",
+    "0040A9BC pop ebp",
+    "0040A9BD ret 4"
+   ]
+  },
+  {
+   "start": "0x42cdb0",
+   "end_exclusive": "0x42cde6",
+   "sha256": "d511b91e375691bb5d5302e1c97087075e2edba7f5165022b34a4c910da41474",
+   "instructions": [
+    "0042CDB0 push ebp",
+    "0042CDB1 mov ebp, esp",
+    "0042CDB3 push ecx",
+    "0042CDB4 push ebx",
+    "0042CDB5 push esi",
+    "0042CDB6 push edi",
+    "0042CDB7 mov esi, ecx",
+    "0042CDB9 lea eax, [ebp - 4]",
+    "0042CDBC push eax",
+    "0042CDBD lea edi, [esi + 8]",
+    "0042CDC0 push edi",
+    "0042CDC1 call 0x1195eb0",
+    "0042CDC6 mov ebx, dword ptr [ebp - 4]",
+    "0042CDC9 add ebx, dword ptr [ebp + 8]",
+    "0042CDCC push edi",
+    "0042CDCD lea eax, [ebp + 8]",
+    "0042CDD0 push eax",
+    "0042CDD1 mov ecx, esi",
+    "0042CDD3 mov dword ptr [ebp + 8], ebx",
+    "0042CDD6 call 0x1195a10",
+    "0042CDDB pop edi",
+    "0042CDDC pop esi",
+    "0042CDDD mov eax, ebx",
+    "0042CDDF pop ebx",
+    "0042CDE0 mov esp, ebp",
+    "0042CDE2 pop ebp",
+    "0042CDE3 ret 4"
+   ]
+  },
+  {
+   "start": "0x752850",
+   "end_exclusive": "0x752876",
+   "sha256": "cf8ae86bbfbb6c67ebe24d8234227c96d60c0d1cc7cbd164d37e59baa6c4e813",
+   "instructions": [
+    "00752850 push ebp",
+    "00752851 mov ebp, esp",
+    "00752853 sub esp, 8",
+    "00752856 mov eax, dword ptr [ecx + 0xa4]",
+    "0075285C lea ecx, [ebp - 8]",
+    "0075285F push ecx",
+    "00752860 lea edx, [ebp - 4]",
+    "00752863 push edx",
+    "00752864 mov dword ptr [ebp - 4], eax",
+    "00752867 call 0x1195b90",
+    "0075286C mov eax, dword ptr [ebp - 8]",
+    "0075286F add esp, 8",
+    "00752872 mov esp, ebp",
+    "00752874 pop ebp",
+    "00752875 ret "
+   ]
+  },
+  {
+   "start": "0x752880",
+   "end_exclusive": "0x7528bb",
+   "sha256": "3d0d4578097ea4f344c8f07e6256203500564632bb7db802890e78c6d9117388",
+   "instructions": [
+    "00752880 push ebp",
+    "00752881 mov ebp, esp",
+    "00752883 sub esp, 8",
+    "00752886 mov eax, dword ptr [ecx + 0xa4]",
+    "0075288C lea ecx, [ebp - 8]",
+    "0075288F push ecx",
+    "00752890 lea edx, [ebp - 4]",
+    "00752893 push edx",
+    "00752894 mov dword ptr [ebp - 4], eax",
+    "00752897 call 0x1195b90",
+    "0075289C mov eax, dword ptr [ebp - 8]",
+    "0075289F add esp, 8",
+    "007528A2 cmp eax, 4",
+    "007528A5 je 0x7528b2",
+    "007528A7 cmp eax, 5",
+    "007528AA je 0x7528b2",
+    "007528AC xor eax, eax",
+    "007528AE mov esp, ebp",
+    "007528B0 pop ebp",
+    "007528B1 ret ",
+    "007528B2 mov eax, 1",
+    "007528B7 mov esp, ebp",
+    "007528B9 pop ebp",
+    "007528BA ret "
+   ]
+  },
+  {
+   "start": "0x75e960",
+   "end_exclusive": "0x75e984",
+   "sha256": "5ca37de5e84cd07f963a51be3115bc3a888d63beeb4d31c201f1757896314527",
+   "instructions": [
+    "0075E960 push ebp",
+    "0075E961 mov ebp, esp",
+    "0075E963 mov eax, dword ptr [ebp + 8]",
+    "0075E966 lea eax, [eax + eax*2 + 0x21f]",
+    "0075E96D lea ecx, [ecx + eax*4]",
+    "0075E970 lea edx, [ebp + 8]",
+    "0075E973 push edx",
+    "0075E974 lea eax, [ecx + 8]",
+    "0075E977 push eax",
+    "0075E978 call 0x1195eb0",
+    "0075E97D mov eax, dword ptr [ebp + 8]",
+    "0075E980 pop ebp",
+    "0075E981 ret 4"
+   ]
+  },
+  {
+   "start": "0x75e990",
+   "end_exclusive": "0x75e9b4",
+   "sha256": "d2a00fc075be251cf9ebf0199ba8cd95e53414df71cffb6cd7288f1afe3325de",
+   "instructions": [
+    "0075E990 push ebp",
+    "0075E991 mov ebp, esp",
+    "0075E993 mov eax, dword ptr [ebp + 8]",
+    "0075E996 lea eax, [eax + eax*2 + 0x225]",
+    "0075E99D lea ecx, [ecx + eax*4]",
+    "0075E9A0 lea edx, [ebp + 8]",
+    "0075E9A3 push edx",
+    "0075E9A4 lea eax, [ecx + 8]",
+    "0075E9A7 push eax",
+    "0075E9A8 call 0x1195eb0",
+    "0075E9AD fld dword ptr [ebp + 8]",
+    "0075E9B0 pop ebp",
+    "0075E9B1 ret 4"
+   ]
+  },
+  {
+   "start": "0x75eb80",
+   "end_exclusive": "0x75ebb6",
+   "sha256": "e46e3e7fa889952c6cda6ac9b50cbfca837160874431bfa16779c2eb5e650ddc",
+   "instructions": [
+    "0075EB80 push ebp",
+    "0075EB81 mov ebp, esp",
+    "0075EB83 push -1",
+    "0075EB85 push 0x142b149",
+    "0075EB8A mov eax, dword ptr fs:[0]",
+    "0075EB90 push eax",
+    "0075EB91 sub esp, 0x14",
+    "0075EB94 push ebx",
+    "0075EB95 push esi",
+    "0075EB96 push edi",
+    "0075EB97 mov eax, dword ptr [0x1a367f0]",
+    "0075EB9C xor eax, ebp",
+    "0075EB9E push eax",
+    "0075EB9F lea eax, [ebp - 0xc]",
+    "0075EBA2 mov dword ptr fs:[0], eax",
+    "0075EBA8 mov dword ptr [ebp - 0x14], 0",
+    "0075EBAF mov esi, dword ptr [ebp + 0x1c]",
+    "0075EBB2 test esi, esi",
+    "0075EBB4 jne 0x75ebbc"
+   ]
+  },
+  {
+   "start": "0x75ebbc",
+   "end_exclusive": "0x75ebcf",
+   "sha256": "6961c624ee19e1eddb71eedf0002a6c86759a0fd5f66543d2de91ff6effef54b",
+   "instructions": [
+    "0075EBBC mov ebx, dword ptr [ebp + 0x10]",
+    "0075EBBF cmp ebx, 6",
+    "0075EBC2 ja 0x75ee31",
+    "0075EBC8 mov edi, dword ptr [ebp + 0x14]",
+    "0075EBCB test edi, edi",
+    "0075EBCD jne 0x75ec29"
+   ]
+  },
+  {
+   "start": "0x75ec29",
+   "end_exclusive": "0x75ec96",
+   "sha256": "7bbc0d338940939364e5da7668fcd428e12d9ac52077c1102e898c89f1275599",
+   "instructions": [
+    "0075EC29 jle 0x75ebee",
+    "0075EC2B mov ecx, dword ptr [0x1a66980]",
+    "0075EC31 sub ecx, dword ptr [0x1a6697c]",
+    "0075EC37 mov eax, 0x2aaaaaab",
+    "0075EC3C imul ecx",
+    "0075EC3E sar edx, 1",
+    "0075EC40 mov eax, edx",
+    "0075EC42 shr eax, 0x1f",
+    "0075EC45 add eax, edx",
+    "0075EC47 cmp edi, eax",
+    "0075EC49 jae 0x75ebee",
+    "0075EC4B lea ecx, [ebp - 0x20]",
+    "0075EC4E call 0x1197630",
+    "0075EC53 lea ecx, [ebp - 0x18]",
+    "0075EC56 push ecx",
+    "0075EC57 lea edx, [ebp + 0x1c]",
+    "0075EC5A push edx",
+    "0075EC5B lea ecx, [ebp - 0x20]",
+    "0075EC5E mov dword ptr [ebp - 4], 3",
+    "0075EC65 mov dword ptr [ebp + 0x1c], 0",
+    "0075EC6C call 0x1195a10",
+    "0075EC71 mov eax, dword ptr [ebp + 0xc]",
+    "0075EC74 mov dword ptr [ebp - 4], 4",
+    "0075EC7B cmp eax, 4",
+    "0075EC7E je 0x75ec96",
+    "0075EC80 cmp eax, 5",
+    "0075EC83 je 0x75ec96",
+    "0075EC85 cmp eax, 9",
+    "0075EC88 je 0x75ec96",
+    "0075EC8A lea ecx, [ebx + ebx*4]",
+    "0075EC8D lea ecx, [ecx*4 + 0x1a66978]",
+    "0075EC94 jmp 0x75eca0"
+   ]
+  },
+  {
+   "start": "0x75eca0",
+   "end_exclusive": "0x75ed5d",
+   "sha256": "c6d5876adf27370291da2b6c65cd4680eac7f4057491ab137c4e95a75c25448f",
+   "instructions": [
+    "0075ECA0 dec edi",
+    "0075ECA1 push edi",
+    "0075ECA2 call 0xfeecf0",
+    "0075ECA7 push eax",
+    "0075ECA8 lea ecx, [ebp - 0x20]",
+    "0075ECAB call 0x406970",
+    "0075ECB0 mov edi, dword ptr [ebp + 0x20]",
+    "0075ECB3 cmp ebx, 1",
+    "0075ECB6 jne 0x75edcd",
+    "0075ECBC test esi, esi",
+    "0075ECBE je 0x75edcd",
+    "0075ECC4 mov eax, dword ptr [esi]",
+    "0075ECC6 mov edx, dword ptr [eax + 0x440]",
+    "0075ECCC push 3",
+    "0075ECCE mov ecx, esi",
+    "0075ECD0 call edx",
+    "0075ECD2 test eax, eax",
+    "0075ECD4 je 0x75edcd",
+    "0075ECDA call 0x6fc760",
+    "0075ECDF test eax, eax",
+    "0075ECE1 je 0x75ed42",
+    "0075ECE3 call 0x6fc760",
+    "0075ECE8 mov ecx, eax",
+    "0075ECEA call 0x752880",
+    "0075ECEF test al, al",
+    "0075ECF1 jne 0x75ed42",
+    "0075ECF3 lea eax, [ebp + 0x10]",
+    "0075ECF6 push eax",
+    "0075ECF7 lea ecx, [ebp - 0x18]",
+    "0075ECFA push ecx",
+    "0075ECFB lea ecx, [ebp - 0x20]",
+    "0075ECFE call 0x1195eb0",
+    "0075ED03 mov edx, dword ptr [esi]",
+    "0075ED05 mov eax, dword ptr [edx + 0x440]",
+    "0075ED0B mov ebx, dword ptr [ebp + 0x10]",
+    "0075ED0E push 0",
+    "0075ED10 push edi",
+    "0075ED11 mov ecx, esi",
+    "0075ED13 call eax",
+    "0075ED15 mov ecx, eax",
+    "0075ED17 call 0x75e960",
+    "0075ED1C mov edx, dword ptr [esi]",
+    "0075ED1E add eax, ebx",
+    "0075ED20 mov dword ptr [ebp - 0x10], eax",
+    "0075ED23 fild dword ptr [ebp - 0x10]",
+    "0075ED26 mov eax, dword ptr [edx + 0x440]",
+    "0075ED2C push 0",
+    "0075ED2E push edi",
+    "0075ED2F fstp dword ptr [ebp - 0x10]",
+    "0075ED32 mov ecx, esi",
+    "0075ED34 call eax",
+    "0075ED36 mov ecx, eax",
+    "0075ED38 call 0x75e990",
+    "0075ED3D fmul dword ptr [ebp - 0x10]",
+    "0075ED40 jmp 0x75edb5",
+    "0075ED42 call 0x6fc760",
+    "0075ED47 mov ecx, eax",
+    "0075ED49 call 0x752850",
+    "0075ED4E cmp eax, 0x12",
+    "0075ED51 je 0x75ed67",
+    "0075ED53 cmp eax, 4",
+    "0075ED56 je 0x75ed67",
+    "0075ED58 cmp eax, 5",
+    "0075ED5B je 0x75ed67"
+   ]
+  },
+  {
+   "start": "0x75ed67",
+   "end_exclusive": "0x75ee31",
+   "sha256": "17b7e86192dc158fc40db77e503e1b7273d991acc98ef7cb86a7cad14dd6a702",
+   "instructions": [
+    "0075ED67 lea eax, [ebp + 0x10]",
+    "0075ED6A push eax",
+    "0075ED6B lea ecx, [ebp - 0x18]",
+    "0075ED6E push ecx",
+    "0075ED6F lea ecx, [ebp - 0x20]",
+    "0075ED72 call 0x1195eb0",
+    "0075ED77 mov edx, dword ptr [esi]",
+    "0075ED79 mov eax, dword ptr [edx + 0x440]",
+    "0075ED7F mov ebx, dword ptr [ebp + 0x10]",
+    "0075ED82 push 1",
+    "0075ED84 push edi",
+    "0075ED85 mov ecx, esi",
+    "0075ED87 call eax",
+    "0075ED89 mov ecx, eax",
+    "0075ED8B call 0x75e960",
+    "0075ED90 mov edx, dword ptr [esi]",
+    "0075ED92 add eax, ebx",
+    "0075ED94 mov dword ptr [ebp - 0x10], eax",
+    "0075ED97 fild dword ptr [ebp - 0x10]",
+    "0075ED9A mov eax, dword ptr [edx + 0x440]",
+    "0075EDA0 push 1",
+    "0075EDA2 push 3",
+    "0075EDA4 fstp dword ptr [ebp - 0x10]",
+    "0075EDA7 mov ecx, esi",
+    "0075EDA9 call eax",
+    "0075EDAB mov ecx, eax",
+    "0075EDAD call 0x75e990",
+    "0075EDB2 fmul dword ptr [ebp - 0x10]",
+    "0075EDB5 call 0x13cd690",
+    "0075EDBA lea ecx, [ebp - 0x18]",
+    "0075EDBD push ecx",
+    "0075EDBE lea edx, [ebp - 0x10]",
+    "0075EDC1 push edx",
+    "0075EDC2 lea ecx, [ebp - 0x20]",
+    "0075EDC5 mov dword ptr [ebp - 0x10], eax",
+    "0075EDC8 call 0x1195a10",
+    "0075EDCD mov eax, dword ptr [esi]",
+    "0075EDCF mov edx, dword ptr [eax + 0x440]",
+    "0075EDD5 push edi",
+    "0075EDD6 mov ecx, esi",
+    "0075EDD8 call edx",
+    "0075EDDA lea ecx, [ebp + 0x10]",
+    "0075EDDD push ecx",
+    "0075EDDE lea edx, [eax + 0x8b4]",
+    "0075EDE4 push edx",
+    "0075EDE5 lea ecx, [eax + 0x8ac]",
+    "0075EDEB call 0x1195eb0",
+    "0075EDF0 mov eax, dword ptr [ebp + 0x10]",
+    "0075EDF3 push eax",
+    "0075EDF4 lea ecx, [ebp - 0x20]",
+    "0075EDF7 call 0x42cdb0",
+    "0075EDFC mov esi, dword ptr [ebp + 8]",
+    "0075EDFF lea ecx, [ebp - 0x20]",
+    "0075EE02 push ecx",
+    "0075EE03 mov ecx, esi",
+    "0075EE05 call 0x40a950",
+    "0075EE0A lea ecx, [ebp - 0x20]",
+    "0075EE0D mov dword ptr [ebp - 0x14], 1",
+    "0075EE14 mov byte ptr [ebp - 4], 0",
+    "0075EE18 call 0x1195dc0",
+    "0075EE1D mov eax, esi",
+    "0075EE1F mov ecx, dword ptr [ebp - 0xc]",
+    "0075EE22 mov dword ptr fs:[0], ecx",
+    "0075EE29 pop ecx",
+    "0075EE2A pop edi",
+    "0075EE2B pop esi",
+    "0075EE2C pop ebx",
+    "0075EE2D mov esp, ebp",
+    "0075EE2F pop ebp",
+    "0075EE30 ret "
+   ]
+  },
+  {
+   "start": "0x77bdd9",
+   "end_exclusive": "0x77be75",
+   "sha256": "0fea9461846e48e56349cb526f69293054ddccd292fbd931e86630b1b020153a",
+   "instructions": [
+    "0077BDD9 lea ecx, [esi + 0x948]",
+    "0077BDDF lea edx, [ebp + 0xc]",
+    "0077BDE2 push edx",
+    "0077BDE3 lea eax, [ecx + 8]",
+    "0077BDE6 push eax",
+    "0077BDE7 call 0x1195eb0",
+    "0077BDEC mov ecx, dword ptr [ebp + 0xc]",
+    "0077BDEF lea edx, [ebp + 8]",
+    "0077BDF2 lea eax, [edi + 0x884]",
+    "0077BDF8 push edx",
+    "0077BDF9 mov dword ptr [ebp - 0x1c], ecx",
+    "0077BDFC push eax",
+    "0077BDFD lea ecx, [edi + 0x87c]",
+    "0077BE03 call 0x1195eb0",
+    "0077BE08 mov eax, dword ptr [ebp + 8]",
+    "0077BE0B add eax, dword ptr [ebp - 0x1c]",
+    "0077BE0E lea edx, [ebp + 8]",
+    "0077BE11 mov dword ptr [ebp + 8], eax",
+    "0077BE14 lea eax, [edi + 0x884]",
+    "0077BE1A push eax",
+    "0077BE1B push edx",
+    "0077BE1C lea ecx, [edi + 0x87c]",
+    "0077BE22 call 0x1195a10",
+    "0077BE27 lea ecx, [esi + 0x954]",
+    "0077BE2D lea eax, [ebp + 0xc]",
+    "0077BE30 push eax",
+    "0077BE31 lea edx, [ecx + 8]",
+    "0077BE34 push edx",
+    "0077BE35 call 0x1195eb0",
+    "0077BE3A mov eax, dword ptr [ebp + 0xc]",
+    "0077BE3D lea ecx, [ebp + 8]",
+    "0077BE40 mov dword ptr [ebp - 0x1c], eax",
+    "0077BE43 push ecx",
+    "0077BE44 lea eax, [edi + 0x890]",
+    "0077BE4A push eax",
+    "0077BE4B lea ecx, [edi + 0x888]",
+    "0077BE51 call 0x1195eb0",
+    "0077BE56 mov edx, dword ptr [ebp + 8]",
+    "0077BE59 add edx, dword ptr [ebp - 0x1c]",
+    "0077BE5C lea eax, [edi + 0x890]",
+    "0077BE62 push eax",
+    "0077BE63 lea ecx, [ebp + 8]",
+    "0077BE66 push ecx",
+    "0077BE67 lea ecx, [edi + 0x888]",
+    "0077BE6D mov dword ptr [ebp + 8], edx",
+    "0077BE70 call 0x1195a10"
+   ]
+  },
+  {
+   "start": "0xd07390",
+   "end_exclusive": "0xd073a7",
+   "sha256": "4888a5bae1dfc2579504bbe13ed53ea2e249822dfd06bbe7d6697a6ef24ef718",
+   "instructions": [
+    "00D07390 push ebp",
+    "00D07391 mov ebp, esp",
+    "00D07393 mov eax, dword ptr [ebp + 8]",
+    "00D07396 imul eax, eax, 0x8d0",
+    "00D0739C lea eax, [eax + ecx + 0x8ac]",
+    "00D073A3 pop ebp",
+    "00D073A4 ret 4"
+   ]
+  },
+  {
+   "start": "0xfeecf0",
+   "end_exclusive": "0xfeed13",
+   "sha256": "b15c0f2be353f1895232152a8f6f29af1392d5ec6b8ba7139e3bd6061a409f47",
+   "instructions": [
+    "00FEECF0 push ebp",
+    "00FEECF1 mov ebp, esp",
+    "00FEECF3 push esi",
+    "00FEECF4 mov esi, dword ptr [ecx + 4]",
+    "00FEECF7 mov ecx, dword ptr [ecx + 8]",
+    "00FEECFA sub ecx, esi",
+    "00FEECFC mov eax, 0x2aaaaaab",
+    "00FEED01 imul ecx",
+    "00FEED03 mov eax, dword ptr [ebp + 8]",
+    "00FEED06 sar edx, 1",
+    "00FEED08 mov ecx, edx",
+    "00FEED0A shr ecx, 0x1f",
+    "00FEED0D add ecx, edx",
+    "00FEED0F cmp eax, ecx",
+    "00FEED11 jb 0xfeed18"
+   ]
+  },
+  {
+   "start": "0xfeed18",
+   "end_exclusive": "0xfeed23",
+   "sha256": "e3f2a75154ee6007fd138c448edd240e8acb3c4fc848c567d7c468ed6ca09b9f",
+   "instructions": [
+    "00FEED18 lea edx, [eax + eax*2]",
+    "00FEED1B lea eax, [esi + edx*4]",
+    "00FEED1E pop esi",
+    "00FEED1F pop ebp",
+    "00FEED20 ret 4"
+   ]
+  },
+  {
+   "start": "0x1218a80",
+   "end_exclusive": "0x1218aa6",
+   "sha256": "13f23312408ba2731b8953476a6aa9d606558974773e00d2be17a450e677be40",
+   "instructions": [
+    "01218A80 push ebp",
+    "01218A81 mov ebp, esp",
+    "01218A83 push esi",
+    "01218A84 mov ecx, 0x1d176c8",
+    "01218A89 xor esi, esi",
+    "01218A8B call 0x119a6f0",
+    "01218A90 cmp eax, 2",
+    "01218A93 jne 0x1218aac",
+    "01218A95 mov ecx, 0x1d176c8",
+    "01218A9A call 0x119a800",
+    "01218A9F mov ecx, dword ptr [ebp + 8]",
+    "01218AA2 test ecx, ecx",
+    "01218AA4 je 0x1218af5"
+   ]
+  },
+  {
+   "start": "0x1218aac",
+   "end_exclusive": "0x1218ab1",
+   "sha256": "9083d7ad76f66b5d8974b9524e58312d04d5099068b76873192438be4a794ff9",
+   "instructions": [
+    "01218AAC cmp eax, 3",
+    "01218AAF jne 0x1218ac8"
+   ]
+  },
+  {
+   "start": "0x1218ac8",
+   "end_exclusive": "0x1218ae3",
+   "sha256": "a303b981f2fa29f1dec8010ecdfd4d51b3798a655b82e46330f8208946de37b0",
+   "instructions": [
+    "01218AC8 cmp eax, 4",
+    "01218ACB jne 0x1218ae9",
+    "01218ACD mov ecx, 0x1d176c8",
+    "01218AD2 call 0x119a860",
+    "01218AD7 call 0x13cd690",
+    "01218ADC mov ecx, dword ptr [ebp + 8]",
+    "01218ADF test ecx, ecx",
+    "01218AE1 je 0x1218af5"
+   ]
+  },
+  {
+   "start": "0x1218af5",
+   "end_exclusive": "0x1218af8",
+   "sha256": "9d221fc78fe72ebbde0a2b808631e4542ebc67b4d1354d762ad941f9b37e6a87",
+   "instructions": [
+    "01218AF5 pop esi",
+    "01218AF6 pop ebp",
+    "01218AF7 ret "
+   ]
+  },
+  {
+   "start": "0x126dabd",
+   "end_exclusive": "0x126daca",
+   "sha256": "392fc89ae697514f062a01e6b61baeb27aec63df0fe72d04e18239922213f7c6",
+   "instructions": [
+    "0126DABD cmp byte ptr [0x1d8b554], 0",
+    "0126DAC4 jne 0x126f633"
+   ]
+  },
+  {
+   "start": "0x126f633",
+   "end_exclusive": "0x126f664",
+   "sha256": "0453675db82066655d5c65301782f0e8095b596a7c0100af5c0f26274aa0519d",
+   "instructions": [
+    "0126F633 push 0",
+    "0126F635 call 0x1218a80",
+    "0126F63A add esp, 4",
+    "0126F63D push eax",
+    "0126F63E lea ecx, [esi + 0x948]",
+    "0126F644 call 0x4041c0",
+    "0126F649 push 0",
+    "0126F64B call 0x1218a80",
+    "0126F650 add esp, 4",
+    "0126F653 push eax",
+    "0126F654 lea ecx, [esi + 0x954]",
+    "0126F65A call 0x4041c0",
+    "0126F65F jmp 0x126f227"
+   ]
+  },
+  {
+   "start": "0x13cd690",
+   "end_exclusive": "0x13cd6ac",
+   "sha256": "f766e3a18d2df905705c884cb806967facb3649a78ff7d2792b246517b5529ba",
+   "instructions": [
+    "013CD690 cmp dword ptr [0x1d94a4c], 0",
+    "013CD697 je 0x13cd6c6",
+    "013CD699 push ebp",
+    "013CD69A mov ebp, esp",
+    "013CD69C sub esp, 8",
+    "013CD69F and esp, 0xfffffff8",
+    "013CD6A2 fstp qword ptr [esp]",
+    "013CD6A5 cvttsd2si eax, qword ptr [esp]",
+    "013CD6AA leave ",
+    "013CD6AB ret "
+   ]
+  }
+ ],
+ "static_provenance": [
+  {
+   "start": "0x126dabd",
+   "sha256": "a6ae0a00a145e792c0142454a362dcb3f64424c70f11c69adf48b27b98b65ec0",
+   "instructions": [
+    "0126DABD cmp byte ptr [0x1d8b554], 0",
+    "0126DAC4 jne 0x126f633",
+    "0126DACA push 0x185cdac",
+    "0126DACF call 0x1194fc0",
+    "0126DAD4 add esp, 4",
+    "0126DAD7 mov dword ptr [ebp - 0x36c], eax",
+    "0126DADD lea eax, [ebp - 0x36c]",
+    "0126DAE3 push eax",
+    "0126DAE4 lea ecx, [ebp - 0x9c8]",
+    "0126DAEA push ecx",
+    "0126DAEB mov ecx, 0x1d8b55c",
+    "0126DAF0 mov dword ptr [ebp - 0x368], 0x17cc",
+    "0126DAFA call 0x451130"
+   ]
+  },
+  {
+   "start": "0x126daff",
+   "sha256": "16684369afff5e9872e44c483dfaba49244c76f9ecfb33daa813af4928a8789d",
+   "instructions": [
+    "0126DAFF cmp byte ptr [0x1d8b554], 0",
+    "0126DB06 jne 0x126f664",
+    "0126DB0C push 0x18627b4",
+    "0126DB11 call 0x1194fc0",
+    "0126DB16 add esp, 4",
+    "0126DB19 lea edx, [ebp - 0x14c]",
+    "0126DB1F mov dword ptr [ebp - 0x14c], eax",
+    "0126DB25 push edx",
+    "0126DB26 lea eax, [ebp - 0x708]",
+    "0126DB2C push eax",
+    "0126DB2D mov ecx, 0x1d8b55c",
+    "0126DB32 mov dword ptr [ebp - 0x148], 0x17d0",
+    "0126DB3C call 0x451130"
+   ]
+  },
+  {
+   "start": "0x127157d",
+   "sha256": "7a876484453fc9c4bec493b2c009e5daed7b911a9b1a9b383d68597adb9cdf12",
+   "instructions": [
+    "0127157D push 0x185cdac",
+    "01271582 call 0x1194fc0",
+    "01271587 push eax",
+    "01271588 lea ecx, [ebp - 0x50]",
+    "0127158B push ecx",
+    "0127158C call 0x401dd0",
+    "01271591 add esp, 0xc",
+    "01271594 test al, al",
+    "01271596 je 0x12715cb",
+    "01271598 lea edi, [esi + 0xa68]",
+    "0127159E mov ebx, 4",
+    "012715A3 lea edx, [ebp - 0x98]",
+    "012715A9 push edx",
+    "012715AA call 0x1218b00",
+    "012715AF mov eax, dword ptr [ebp - 0x98]",
+    "012715B5 add esp, 4",
+    "012715B8 push eax",
+    "012715B9 mov ecx, edi",
+    "012715BB call 0x4041c0",
+    "012715C0 add edi, 0xc",
+    "012715C3 dec ebx",
+    "012715C4 jne 0x12715a3",
+    "012715C6 jmp 0x1271680"
+   ]
+  }
+ ],
+ "boundaries": [
+  "Prepared parser/accumulator frames; full outer equipment parser and full 77AA90 stat aggregation are excluded.",
+  "Secure storage and token stream are ABI fixtures; original integer reader/writer and accumulation instructions execute.",
+  "Separate 75EB80 replays use emitted accumulators, synthetic base tables and neutral multipliers; not one complete character lifecycle.",
+  "17CC separate attack writes 948/954; adjacent 17D0 separate rate writes 960/96C and is not this tag.",
+  "127157D four-value reinforcement context is recorded only as static provenance and remains unsupported by this ordinary-field compiler.",
+  "Modes 4/5 select the second accumulator in the stable-mode consumer; runtime mapping applies only the first to current offline PVE. Full damage formula remains adaptation."
+ ]
+}

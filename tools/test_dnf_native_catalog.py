@@ -28,8 +28,10 @@ class NativeCompiler(unittest.TestCase):
         self.assertFalse(reasons);self.assertEqual([p['amount'] for p in plan],[2,3])
 
     def test_clear_subtypes_do_not_become_plain_victory(self):
-        for sub in [1,7]:
-            self.assertTrue(quest_plan({'[type]':['[condition under clear]'],'[sub type]':[sub],'[int data]':[6,1,90]})[1])
+        plan,reasons=quest_plan({'[type]':['[condition under clear]'],'[sub type]':[1],'[int data]':[6,1,90]})
+        self.assertFalse(reasons)
+        self.assertEqual(plan[0]['conditions'],{'max_hits_taken':90})
+        self.assertTrue(quest_plan({'[type]':['[condition under clear]'],'[sub type]':[7],'[int data]':[6,1,90]})[1])
 
     def test_hunt_monster_uses_verified_four_value_tuple(self):
         plan, reasons = quest_plan({'[type]':['[hunt monster]'],'[sub type]':[-1],'[int data]':[6,-1,5004,2]})

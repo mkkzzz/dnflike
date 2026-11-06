@@ -417,8 +417,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 26.0,
-    "magical_independent_attack": 14.0
+    "independent_attack": 26
    },
    "stat_ranges": {
     "physical_attack": [
@@ -445,13 +444,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
-     26.0,
-     26.0
-    ],
-    "magical_independent_attack": [
-     14.0,
-     14.0
+    "independent_attack": [
+     26,
+     26
     ]
    },
    "source": {
@@ -464,7 +459,11 @@
    "usable_jobs": [
     "[swordman]"
    ],
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 26,
+    "modes_4_5": 14
+   }
   },
   "original_27800": {
    "name": "佩刀",
@@ -479,8 +478,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 31.0,
-    "magical_independent_attack": 18.0
+    "independent_attack": 31
    },
    "stat_ranges": {
     "strength": [
@@ -515,13 +513,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
-     31.0,
-     31.0
-    ],
-    "magical_independent_attack": [
-     18.0,
-     18.0
+    "independent_attack": [
+     31,
+     31
     ]
    },
    "source": {
@@ -534,7 +528,11 @@
    "usable_jobs": [
     "[swordman]"
    ],
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 31,
+    "modes_4_5": 18
+   }
   }
  },
  "equipment_slots": [

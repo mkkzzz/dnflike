@@ -116748,8 +116748,7 @@
     "intelligence": 28.0,
     "spirit": 70.0,
     "magical_defense": 5880.0,
-    "physical_independent_attack": 64,
-    "magical_independent_attack": 39
+    "independent_attack": 64
    },
    "stat_ranges": {
     "intelligence": [
@@ -116764,13 +116763,9 @@
      5680,
      6080
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      64,
      64
-    ],
-    "magical_independent_attack": [
-     39,
-     39
     ]
    },
    "required_level": 65,
@@ -116783,6 +116778,10 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/amulet/neck_20190.equ",
     "sha256": "ee4604ef046e684c816546cd34933d4c55d997938840b1c84ba0fef3e492b231"
+   },
+   "native_separate_attack": {
+    "default": 64,
+    "modes_4_5": 39
    }
   },
   "original_20195": {
@@ -160909,8 +160908,7 @@
     "intelligence": 44.0,
     "physical_attack": 26.5,
     "magical_defense": 2512.0,
-    "physical_independent_attack": 45,
-    "magical_independent_attack": 27
+    "independent_attack": 45
    },
    "stat_ranges": {
     "strength": [
@@ -160929,13 +160927,9 @@
      2432,
      2592
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      45,
      45
-    ],
-    "magical_independent_attack": [
-     27,
-     27
     ]
    },
    "required_level": 70,
@@ -160948,6 +160942,10 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/ring/100320002.equ",
     "sha256": "03b9c0d362c1ea1e4c390faca7d354f41b01f1ea315ecfc3e5fb5c160f52d7b5"
+   },
+   "native_separate_attack": {
+    "default": 45,
+    "modes_4_5": 27
    }
   },
   "original_100320003": {
@@ -160958,8 +160956,7 @@
     "intelligence": 44.0,
     "magical_attack": 26.5,
     "magical_defense": 2512.0,
-    "physical_independent_attack": 45,
-    "magical_independent_attack": 27
+    "independent_attack": 45
    },
    "stat_ranges": {
     "strength": [
@@ -160978,13 +160975,9 @@
      2432,
      2592
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      45,
      45
-    ],
-    "magical_independent_attack": [
-     27,
-     27
     ]
    },
    "required_level": 70,
@@ -160997,6 +160990,10 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/ring/100320003.equ",
     "sha256": "39bfa65ca34b6a9cc873f31be7272df009c98a1c5b76bce2f5e85caaac1742ec"
+   },
+   "native_separate_attack": {
+    "default": 45,
+    "modes_4_5": 27
    }
   },
   "original_100320005": {
@@ -161927,8 +161924,7 @@
     "strength": 39.0,
     "intelligence": 39.0,
     "magical_defense": 2192.0,
-    "physical_independent_attack": 56,
-    "magical_independent_attack": 34
+    "independent_attack": 56
    },
    "stat_ranges": {
     "strength": [
@@ -161943,13 +161939,9 @@
      2112,
      2272
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      56,
      56
-    ],
-    "magical_independent_attack": [
-     34,
-     34
     ]
    },
    "required_level": 60,
@@ -161962,6 +161954,10 @@
     "list": "equipment/equipment.lst",
     "path": "equipment/character/common/ring/ring_24211.equ",
     "sha256": "35cd5d5ed4aa378cc00b0203a9c168d513ac4653984904644951baea5152a155"
+   },
+   "native_separate_attack": {
+    "default": 56,
+    "modes_4_5": 34
    }
   },
   "original_24216": {
@@ -195747,8 +195743,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 254,
-    "magical_independent_attack": 172
+    "independent_attack": 254
    },
    "stat_ranges": {
     "physical_attack": [
@@ -195775,13 +195770,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      254,
      254
-    ],
-    "magical_independent_attack": [
-     172,
-     172
     ]
    },
    "required_level": 80,
@@ -195795,7 +195786,11 @@
     "path": "equipment/character/swordman/weapon/katana/101020033.equ",
     "sha256": "238f53e6422eac74b192496360e90f41a53c76a227cc863a3db2e27a7a6ef5e1"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 254,
+    "modes_4_5": 172
+   }
   },
   "original_101020034": {
    "name": "银斩刀",
@@ -195809,8 +195804,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 338,
-    "magical_independent_attack": 229
+    "independent_attack": 338
    },
    "stat_ranges": {
     "strength": [
@@ -195845,13 +195839,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      338,
      338
-    ],
-    "magical_independent_attack": [
-     229,
-     229
     ]
    },
    "required_level": 80,
@@ -195865,7 +195855,11 @@
     "path": "equipment/character/swordman/weapon/katana/101020034.equ",
     "sha256": "9a30a56089a40154e6753808d196cbeb51095b98c25c41a0c7ebe0ac956a0de4"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 338,
+    "modes_4_5": 229
+   }
   },
   "original_101020035": {
    "name": "金斩刀",
@@ -195879,8 +195873,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 364,
-    "magical_independent_attack": 247
+    "independent_attack": 364
    },
    "stat_ranges": {
     "strength": [
@@ -195915,13 +195908,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      364,
      364
-    ],
-    "magical_independent_attack": [
-     247,
-     247
     ]
    },
    "required_level": 80,
@@ -195935,7 +195924,11 @@
     "path": "equipment/character/swordman/weapon/katana/101020035.equ",
     "sha256": "2a6d884ac2f1a247a604a65e9c55d18d9f2d563bc582bd458dc9838db214bfa8"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 364,
+    "modes_4_5": 247
+   }
   },
   "original_27647": {
    "name": "影虎刀",
@@ -195949,8 +195942,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 178,
-    "magical_independent_attack": 118
+    "independent_attack": 178
    },
    "stat_ranges": {
     "strength": [
@@ -195985,13 +195977,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      178,
      178
-    ],
-    "magical_independent_attack": [
-     118,
-     118
     ]
    },
    "required_level": 43,
@@ -196005,7 +195993,11 @@
     "path": "equipment/character/swordman/weapon/katana/kageto.equ",
     "sha256": "a790b349e20b2d40a5071ccd2b57465d6675c89dafeade8332415c2773502f6e"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 178,
+    "modes_4_5": 118
+   }
   },
   "original_27646": {
    "name": "生锈的影虎刀",
@@ -196017,8 +196009,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 131,
-    "magical_independent_attack": 87
+    "independent_attack": 131
    },
    "stat_ranges": {
     "physical_attack": [
@@ -196045,13 +196036,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      131,
      131
-    ],
-    "magical_independent_attack": [
-     87,
-     87
     ]
    },
    "required_level": 42,
@@ -196065,7 +196052,11 @@
     "path": "equipment/character/swordman/weapon/katana/kageto_out.equ",
     "sha256": "799ebab08fb9b0dee4d626a15c1d15c5456ec30365d15fe579711c9e98524dd7"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 131,
+    "modes_4_5": 87
+   }
   },
   "original_27602": {
    "name": "武士刀",
@@ -196079,8 +196070,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 41,
-    "magical_independent_attack": 23
+    "independent_attack": 41
    },
    "stat_ranges": {
     "strength": [
@@ -196115,13 +196105,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      41,
      41
-    ],
-    "magical_independent_attack": [
-     23,
-     23
     ]
    },
    "required_level": 5,
@@ -196135,7 +196121,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat.equ",
     "sha256": "af55d988fb1132826358ac5e027dd99bcb42c483888c64e3f0d2a68f78138398"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 41,
+    "modes_4_5": 23
+   }
   },
   "original_2223102": {
    "name": "青铜骑士刀",
@@ -196149,8 +196139,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 70,
-    "magical_independent_attack": 44
+    "independent_attack": 70
    },
    "stat_ranges": {
     "strength": [
@@ -196185,13 +196174,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      70,
      70
-    ],
-    "magical_independent_attack": [
-     44,
-     44
     ]
    },
    "required_level": 10,
@@ -196205,7 +196190,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223102.equ",
     "sha256": "3ccfb6cf95df6a5fd73eb878b037fc03d455330f0d025183e8ec753cea86242e"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 70,
+    "modes_4_5": 44
+   }
   },
   "original_2223103": {
    "name": "铸造骑士刀",
@@ -196219,8 +196208,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 89,
-    "magical_independent_attack": 56
+    "independent_attack": 89
    },
    "stat_ranges": {
     "strength": [
@@ -196255,13 +196243,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      89,
      89
-    ],
-    "magical_independent_attack": [
-     56,
-     56
     ]
    },
    "required_level": 15,
@@ -196275,7 +196259,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223103.equ",
     "sha256": "793f3a6ebbbb672bbe11ca794c28a8d6adefaec9b54e77f0ec6c917a1e4927c8"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 89,
+    "modes_4_5": 56
+   }
   },
   "original_2223104": {
    "name": "锻造骑士刀",
@@ -196289,8 +196277,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 108,
-    "magical_independent_attack": 70
+    "independent_attack": 108
    },
    "stat_ranges": {
     "strength": [
@@ -196325,13 +196312,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      108,
      108
-    ],
-    "magical_independent_attack": [
-     70,
-     70
     ]
    },
    "required_level": 20,
@@ -196345,7 +196328,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223104.equ",
     "sha256": "8f56ce0d953f84bc9ef8a43e1891032bb0fedbf95212cd713db6aed9af1034ee"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 108,
+    "modes_4_5": 70
+   }
   },
   "original_2223105": {
    "name": "将军剑",
@@ -196359,8 +196346,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 126,
-    "magical_independent_attack": 82
+    "independent_attack": 126
    },
    "stat_ranges": {
     "strength": [
@@ -196395,13 +196381,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      126,
      126
-    ],
-    "magical_independent_attack": [
-     82,
-     82
     ]
    },
    "required_level": 25,
@@ -196415,7 +196397,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223105.equ",
     "sha256": "c5955fba10ad7fc920b41edfd3f4d21cdfae99cfbfed863aee60afc8e9ad6d28"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 126,
+    "modes_4_5": 82
+   }
   },
   "original_2223106": {
    "name": "斩破刀",
@@ -196429,8 +196415,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 145,
-    "magical_independent_attack": 96
+    "independent_attack": 145
    },
    "stat_ranges": {
     "strength": [
@@ -196465,13 +196450,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      145,
      145
-    ],
-    "magical_independent_attack": [
-     96,
-     96
     ]
    },
    "required_level": 30,
@@ -196485,7 +196466,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223106.equ",
     "sha256": "382b2c7652b0de5c706760892e02c065de69b736478e69b24c143dc454dd8187"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 145,
+    "modes_4_5": 96
+   }
   },
   "original_2223107": {
    "name": "卡艾德",
@@ -196499,8 +196484,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 164,
-    "magical_independent_attack": 109
+    "independent_attack": 164
    },
    "stat_ranges": {
     "strength": [
@@ -196535,13 +196519,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      164,
      164
-    ],
-    "magical_independent_attack": [
-     109,
-     109
     ]
    },
    "required_level": 35,
@@ -196555,7 +196535,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223107.equ",
     "sha256": "849ace768a87e58b737407312e639b2c6edfb583ed3b99de55f06b6ee0e0cea4"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 164,
+    "modes_4_5": 109
+   }
   },
   "original_2223108": {
    "name": "短刃",
@@ -196569,8 +196553,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 183,
-    "magical_independent_attack": 122
+    "independent_attack": 183
    },
    "stat_ranges": {
     "strength": [
@@ -196605,13 +196588,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      183,
      183
-    ],
-    "magical_independent_attack": [
-     122,
-     122
     ]
    },
    "required_level": 40,
@@ -196625,7 +196604,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223108.equ",
     "sha256": "af345bc72335a5c83f6f66b38b9ca59f824034468f189e51e15e26083e6093be"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 183,
+    "modes_4_5": 122
+   }
   },
   "original_2223109": {
    "name": "冰冻欧洛奇",
@@ -196639,8 +196622,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 202,
-    "magical_independent_attack": 135
+    "independent_attack": 202
    },
    "stat_ranges": {
     "strength": [
@@ -196675,13 +196657,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      202,
      202
-    ],
-    "magical_independent_attack": [
-     135,
-     135
     ]
    },
    "required_level": 45,
@@ -196695,7 +196673,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223109.equ",
     "sha256": "63d6127a37a0dd899fdd29195b95baccb087fe0ac5791ad1b3e1d6242a0d8f1b"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 202,
+    "modes_4_5": 135
+   }
   },
   "original_2223110": {
    "name": "金装弯刀",
@@ -196709,8 +196691,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 233,
-    "magical_independent_attack": 156
+    "independent_attack": 233
    },
    "stat_ranges": {
     "strength": [
@@ -196745,13 +196726,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      233,
      233
-    ],
-    "magical_independent_attack": [
-     156,
-     156
     ]
    },
    "required_level": 50,
@@ -196765,7 +196742,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223110.equ",
     "sha256": "e90c3ec1be38779167b08e80f35a97b4351a336bbb20f177bd65a183269f43de"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 233,
+    "modes_4_5": 156
+   }
   },
   "original_2223111": {
    "name": "赤血米索基",
@@ -196779,8 +196760,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 256,
-    "magical_independent_attack": 173
+    "independent_attack": 256
    },
    "stat_ranges": {
     "strength": [
@@ -196815,13 +196795,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      256,
      256
-    ],
-    "magical_independent_attack": [
-     173,
-     173
     ]
    },
    "required_level": 55,
@@ -196835,7 +196811,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223111.equ",
     "sha256": "4697b2bcff3ffe9b4aa5db792ed42a830b1ed989db914c41a2ef62593d60c8b8"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 256,
+    "modes_4_5": 173
+   }
   },
   "original_2223112": {
    "name": "血色阿比亚",
@@ -196849,8 +196829,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 270,
-    "magical_independent_attack": 182
+    "independent_attack": 270
    },
    "stat_ranges": {
     "strength": [
@@ -196885,13 +196864,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      270,
      270
-    ],
-    "magical_independent_attack": [
-     182,
-     182
     ]
    },
    "required_level": 60,
@@ -196905,7 +196880,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223112.equ",
     "sha256": "bef843fa6c01535b6e798bd5a4ec61279f9ce4aa9a954c889b208645e5c6a0b7"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 270,
+    "modes_4_5": 182
+   }
   },
   "original_2223113": {
    "name": "龙环蛇刀",
@@ -196919,8 +196898,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 293,
-    "magical_independent_attack": 199
+    "independent_attack": 293
    },
    "stat_ranges": {
     "strength": [
@@ -196955,13 +196933,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      293,
      293
-    ],
-    "magical_independent_attack": [
-     199,
-     199
     ]
    },
    "required_level": 65,
@@ -196975,7 +196949,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223113.equ",
     "sha256": "0c19f041ddca301c555e085405195e8f0505cc2d63cba90c0deb9a4acaf7fbed"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 293,
+    "modes_4_5": 199
+   }
   },
   "original_2223114": {
    "name": "塔伊奇",
@@ -196989,8 +196967,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 318,
-    "magical_independent_attack": 215
+    "independent_attack": 318
    },
    "stat_ranges": {
     "strength": [
@@ -197025,13 +197002,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      318,
      318
-    ],
-    "magical_independent_attack": [
-     215,
-     215
     ]
    },
    "required_level": 70,
@@ -197045,7 +197018,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_2223114.equ",
     "sha256": "0db34c61c645286b27485d85c6f698ee4dafa517f6b5b4f96175f47ec3d76c29"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 318,
+    "modes_4_5": 215
+   }
   },
   "original_27760": {
    "name": "古老的马勒奇",
@@ -197057,8 +197034,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 220,
-    "magical_independent_attack": 149
+    "independent_attack": 220
    },
    "stat_ranges": {
     "physical_attack": [
@@ -197085,13 +197061,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      220,
      220
-    ],
-    "magical_independent_attack": [
-     149,
-     149
     ]
    },
    "required_level": 70,
@@ -197105,7 +197077,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_27760.equ",
     "sha256": "2c5876c9b9a853189d21aa5b906cfdf55c0cfc69b5cbb4a6f5527900598093d3"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 220,
+    "modes_4_5": 149
+   }
   },
   "original_27761": {
    "name": "马勒奇",
@@ -197119,8 +197095,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 293,
-    "magical_independent_attack": 198
+    "independent_attack": 293
    },
    "stat_ranges": {
     "strength": [
@@ -197155,13 +197130,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      293,
      293
-    ],
-    "magical_independent_attack": [
-     198,
-     198
     ]
    },
    "required_level": 70,
@@ -197175,7 +197146,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_27761.equ",
     "sha256": "7833a96e5d80b4604c82a655896d228a8d7913c3336069bec3822331f168b117"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 293,
+    "modes_4_5": 198
+   }
   },
   "original_27720": {
    "name": "艾维亚太刀",
@@ -197189,8 +197164,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 248,
-    "magical_independent_attack": 167
+    "independent_attack": 248
    },
    "stat_ranges": {
     "strength": [
@@ -197225,13 +197199,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      248,
      248
-    ],
-    "magical_independent_attack": [
-     167,
-     167
     ]
    },
    "required_level": 60,
@@ -197245,7 +197215,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_aviya.equ",
     "sha256": "15793981f03eab8814f3eea9c1a7c8f867e0e4a3e33f5d23a60ec6e7da4c671a"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 248,
+    "modes_4_5": 167
+   }
   },
   "original_27719": {
    "name": "老古老的艾维亚太刀",
@@ -197257,8 +197231,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 186,
-    "magical_independent_attack": 126
+    "independent_attack": 186
    },
    "stat_ranges": {
     "physical_attack": [
@@ -197285,13 +197258,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      186,
      186
-    ],
-    "magical_independent_attack": [
-     126,
-     126
     ]
    },
    "required_level": 60,
@@ -197305,7 +197274,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_aviya_old.equ",
     "sha256": "ce6a5860b0be77f7dbb1737e1dcc4cc31d14a4859f520fdfc196ba406e864e30"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 186,
+    "modes_4_5": 126
+   }
   },
   "original_27620": {
    "name": "佩刀",
@@ -197319,8 +197292,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 106,
-    "magical_independent_attack": 68
+    "independent_attack": 106
    },
    "stat_ranges": {
     "strength": [
@@ -197355,13 +197327,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      106,
      106
-    ],
-    "magical_independent_attack": [
-     68,
-     68
     ]
    },
    "required_level": 23,
@@ -197375,7 +197343,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_bazirangdae.equ",
     "sha256": "41e8bf9f37e02ea9b05415e5e730440a748407aa7a089ea907a6a88e80d86d84"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 106,
+    "modes_4_5": 68
+   }
   },
   "original_27635": {
    "name": "梅轩刀",
@@ -197389,8 +197361,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 149,
-    "magical_independent_attack": 98
+    "independent_attack": 149
    },
    "stat_ranges": {
     "strength": [
@@ -197425,13 +197396,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      149,
      149
-    ],
-    "magical_independent_attack": [
-     98,
-     98
     ]
    },
    "required_level": 35,
@@ -197445,7 +197412,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_biken.equ",
     "sha256": "0f97515f8f4d963fb4acf21cb33339bcd339f99d4b63a05343d659fd816deab4"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 149,
+    "modes_4_5": 98
+   }
   },
   "original_27600": {
    "name": "破损的武士刀",
@@ -197457,8 +197428,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 21,
-    "magical_independent_attack": 10
+    "independent_attack": 21
    },
    "stat_ranges": {
     "physical_attack": [
@@ -197485,13 +197455,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      21,
      21
-    ],
-    "magical_independent_attack": [
-     10,
-     10
     ]
    },
    "required_level": 1,
@@ -197505,7 +197471,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_damaged.equ",
     "sha256": "8a598d7a5f21c256fb97c11b8923796704ea867ef829d3acfe9d96186ad7f3f8"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 21,
+    "modes_4_5": 10
+   }
   },
   "original_27619": {
    "name": "钝刃佩刀",
@@ -197517,8 +197487,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 77,
-    "magical_independent_attack": 50
+    "independent_attack": 77
    },
    "stat_ranges": {
     "physical_attack": [
@@ -197545,13 +197514,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      77,
      77
-    ],
-    "magical_independent_attack": [
-     50,
-     50
     ]
    },
    "required_level": 22,
@@ -197565,7 +197530,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_dbazirangdae.equ",
     "sha256": "f3a25b46a8b7384e3036170c9364d819b0d03cf5df5c80ce56584a968b35a0ff"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 77,
+    "modes_4_5": 50
+   }
   },
   "original_27735": {
    "name": "深海之艾维亚太刀",
@@ -197579,8 +197548,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 293,
-    "magical_independent_attack": 199
+    "independent_attack": 293
    },
    "stat_ranges": {
     "strength": [
@@ -197615,13 +197583,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      293,
      293
-    ],
-    "magical_independent_attack": [
-     199,
-     199
     ]
    },
    "required_level": 65,
@@ -197635,7 +197599,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_deepseaq.equ",
     "sha256": "76572e54d4b056b6b7c32e98659eb86177e012d9e54d0831f28d7d75b682addf"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 293,
+    "modes_4_5": 199
+   }
   },
   "original_27621": {
    "name": "精致的佩刀",
@@ -197649,8 +197617,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 109,
-    "magical_independent_attack": 71
+    "independent_attack": 109
    },
    "stat_ranges": {
     "strength": [
@@ -197685,13 +197652,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      109,
      109
-    ],
-    "magical_independent_attack": [
-     71,
-     71
     ]
    },
    "required_level": 24,
@@ -197705,7 +197668,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_elabazirangdae.equ",
     "sha256": "7e9bc6e35b9317a6648571fc254f8368206c683831186640ee4229cad963c648"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 109,
+    "modes_4_5": 71
+   }
   },
   "original_27637": {
    "name": "钢铁梅轩刀",
@@ -197719,8 +197686,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 153,
-    "magical_independent_attack": 101
+    "independent_attack": 153
    },
    "stat_ranges": {
     "strength": [
@@ -197755,13 +197721,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      153,
      153
-    ],
-    "magical_independent_attack": [
-     101,
-     101
     ]
    },
    "required_level": 36,
@@ -197775,7 +197737,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_hbiken.equ",
     "sha256": "67a919c8b8b630e4710fbeffe0ff8faea9e06db2e592835fac3697d51dead52a"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 153,
+    "modes_4_5": 101
+   }
   },
   "original_27733": {
    "name": "高科技艾维亚太刀",
@@ -197789,8 +197755,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 270,
-    "magical_independent_attack": 182
+    "independent_attack": 270
    },
    "stat_ranges": {
     "strength": [
@@ -197825,13 +197790,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      270,
      270
-    ],
-    "magical_independent_attack": [
-     182,
-     182
     ]
    },
    "required_level": 60,
@@ -197845,7 +197806,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_hightechq.equ",
     "sha256": "8f21e5ff9cdfb3ec1ace041640fb6f665f348f0e5a7a9c18cab6eadb699f8e04"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 270,
+    "modes_4_5": 182
+   }
   },
   "original_27606": {
    "name": "锋利的小太刀",
@@ -197859,8 +197824,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 52,
-    "magical_independent_attack": 31
+    "independent_attack": 52
    },
    "stat_ranges": {
     "strength": [
@@ -197895,13 +197859,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      52,
      52
-    ],
-    "magical_independent_attack": [
-     31,
-     31
     ]
    },
    "required_level": 8,
@@ -197915,7 +197875,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_hkotachi.equ",
     "sha256": "02edc174f6adfea80affe1e10094585ea6865bb8bb5f1261b28888084525fe70"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 52,
+    "modes_4_5": 31
+   }
   },
   "original_27734": {
    "name": "高科技艾维亚太刀",
@@ -197929,8 +197893,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 284,
-    "magical_independent_attack": 192
+    "independent_attack": 284
    },
    "stat_ranges": {
     "strength": [
@@ -197965,13 +197928,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      284,
      284
-    ],
-    "magical_independent_attack": [
-     192,
-     192
     ]
    },
    "required_level": 63,
@@ -197985,7 +197944,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_illusionq.equ",
     "sha256": "d88f753f2e79c83af29b416c9e79d090115944f078b9aad6eae6c1e786fa4c08"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 284,
+    "modes_4_5": 192
+   }
   },
   "original_27631": {
    "name": "精致的月华刀",
@@ -197999,8 +197962,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 138,
-    "magical_independent_attack": 91
+    "independent_attack": 138
    },
    "stat_ranges": {
     "strength": [
@@ -198035,13 +197997,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      138,
      138
-    ],
-    "magical_independent_attack": [
-     91,
-     91
     ]
    },
    "required_level": 32,
@@ -198055,7 +198013,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_impkaede.equ",
     "sha256": "7112275bdbf608a478192226a5359c414b5d99b811ade35effcc6fac4e2f8aea"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 138,
+    "modes_4_5": 91
+   }
   },
   "original_27630": {
    "name": "月华刀",
@@ -198069,8 +198031,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 135,
-    "magical_independent_attack": 88
+    "independent_attack": 135
    },
    "stat_ranges": {
     "strength": [
@@ -198105,13 +198066,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      135,
      135
-    ],
-    "magical_independent_attack": [
-     88,
-     88
     ]
    },
    "required_level": 31,
@@ -198125,7 +198082,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_kaede.equ",
     "sha256": "44507d84fd7c07b0ad2cdd06cd1d5e05192cdbd89b45c215144214a409343d3e"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 135,
+    "modes_4_5": 88
+   }
   },
   "original_27611": {
    "name": "枯叶刀",
@@ -198139,8 +198100,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 77,
-    "magical_independent_attack": 48
+    "independent_attack": 77
    },
    "stat_ranges": {
     "strength": [
@@ -198175,13 +198135,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      77,
      77
-    ],
-    "magical_independent_attack": [
-     48,
-     48
     ]
    },
    "required_level": 15,
@@ -198195,7 +198151,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_kogaras.equ",
     "sha256": "c40d9d164276616c86d5694e1d5aa14e53e70dfdbbb1b03b8195540abc7f2650"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 77,
+    "modes_4_5": 48
+   }
   },
   "original_27605": {
    "name": "小太刀",
@@ -198209,8 +198169,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 48,
-    "magical_independent_attack": 28
+    "independent_attack": 48
    },
    "stat_ranges": {
     "strength": [
@@ -198245,13 +198204,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      48,
      48
-    ],
-    "magical_independent_attack": [
-     28,
-     28
     ]
    },
    "required_level": 7,
@@ -198265,7 +198220,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_kotachi.equ",
     "sha256": "c057a2e1d97df086f464276328074aee28cffaefa990fd79e50e39da6a4723ac"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 48,
+    "modes_4_5": 28
+   }
   },
   "original_27610": {
    "name": "破古老的枯叶刀",
@@ -198277,8 +198236,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 55,
-    "magical_independent_attack": 35
+    "independent_attack": 55
    },
    "stat_ranges": {
     "physical_attack": [
@@ -198305,13 +198263,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      55,
      55
-    ],
-    "magical_independent_attack": [
-     35,
-     35
     ]
    },
    "required_level": 14,
@@ -198325,7 +198279,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_lowkogaras.equ",
     "sha256": "3ca92e3aa70fb4441823f431972da47070d755461ebeaf7caffaa694a4125007"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 55,
+    "modes_4_5": 35
+   }
   },
   "original_27639": {
    "name": "破古老的大蛇刀",
@@ -198337,8 +198295,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 120,
-    "magical_independent_attack": 80
+    "independent_attack": 120
    },
    "stat_ranges": {
     "physical_attack": [
@@ -198365,13 +198322,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      120,
      120
-    ],
-    "magical_independent_attack": [
-     80,
-     80
     ]
    },
    "required_level": 38,
@@ -198385,7 +198338,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_loworochi.equ",
     "sha256": "5b9cade8abeff3b7b02d87f703cd3530b20b6a435821e51a0fdbb91e9a9e907c"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 120,
+    "modes_4_5": 80
+   }
   },
   "original_27613": {
    "name": "锋利的枯叶刀",
@@ -198399,8 +198356,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 81,
-    "magical_independent_attack": 51
+    "independent_attack": 81
    },
    "stat_ranges": {
     "strength": [
@@ -198435,13 +198391,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      81,
      81
-    ],
-    "magical_independent_attack": [
-     51,
-     51
     ]
    },
    "required_level": 16,
@@ -198455,7 +198407,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_nkogaras.equ",
     "sha256": "6f9916047884d4ff505cda006f60ae943f977d0f26b873c9ea53f154db52dd7c"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 81,
+    "modes_4_5": 51
+   }
   },
   "original_27634": {
    "name": "古老式梅轩刀",
@@ -198467,8 +198423,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 109,
-    "magical_independent_attack": 72
+    "independent_attack": 109
    },
    "stat_ranges": {
     "physical_attack": [
@@ -198495,13 +198450,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      109,
      109
-    ],
-    "magical_independent_attack": [
-     72,
-     72
     ]
    },
    "required_level": 34,
@@ -198515,7 +198466,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_obiken.equ",
     "sha256": "95d91f9547715805cf79e7d5156ea731f5d1d18d0d06a0bdc6a7239aa818e7af"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 109,
+    "modes_4_5": 72
+   }
   },
   "original_27641": {
    "name": "大蛇刀",
@@ -198529,8 +198484,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 163,
-    "magical_independent_attack": 108
+    "independent_attack": 163
    },
    "stat_ranges": {
     "strength": [
@@ -198565,13 +198519,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      163,
      163
-    ],
-    "magical_independent_attack": [
-     108,
-     108
     ]
    },
    "required_level": 39,
@@ -198585,7 +198535,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_orochi.equ",
     "sha256": "66e6b4d6fed7cd67b9680e10abf858cf932a5f066edebc761113167c3f00242d"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 163,
+    "modes_4_5": 108
+   }
   },
   "original_27614": {
    "name": "古老的太刀",
@@ -198597,8 +198551,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 66,
-    "magical_independent_attack": 42
+    "independent_attack": 66
    },
    "stat_ranges": {
     "physical_attack": [
@@ -198625,13 +198578,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      66,
      66
-    ],
-    "magical_independent_attack": [
-     42,
-     42
     ]
    },
    "required_level": 18,
@@ -198645,7 +198594,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_otachi.equ",
     "sha256": "ef4d4eb48573d2d51c407149008b1d1b52a0894157bd2951e0c6f4f8ff748f1c"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 66,
+    "modes_4_5": 42
+   }
   },
   "original_27624": {
    "name": "古老式节刀",
@@ -198657,8 +198610,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 88,
-    "magical_independent_attack": 57
+    "independent_attack": 88
    },
    "stat_ranges": {
     "physical_attack": [
@@ -198685,13 +198637,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      88,
      88
-    ],
-    "magical_independent_attack": [
-     57,
-     57
     ]
    },
    "required_level": 26,
@@ -198705,7 +198653,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_owakizasi.equ",
     "sha256": "ed3da9f27e0c0259dc1dfc264236443f544368f2fddfb18db64e257a410d8e0c"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 88,
+    "modes_4_5": 57
+   }
   },
   "original_27629": {
    "name": "生锈的月华刀",
@@ -198717,8 +198669,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 99,
-    "magical_independent_attack": 65
+    "independent_attack": 99
    },
    "stat_ranges": {
     "physical_attack": [
@@ -198745,13 +198696,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      99,
      99
-    ],
-    "magical_independent_attack": [
-     65,
-     65
     ]
    },
    "required_level": 30,
@@ -198765,7 +198712,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_rkaede.equ",
     "sha256": "ed843ca49298e20df754f5fcfbb74325aff1f721b4e52fa092f9ce1ff673f95d"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 99,
+    "modes_4_5": 65
+   }
   },
   "original_27607": {
    "name": "生锈的长刀",
@@ -198777,8 +198728,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 45,
-    "magical_independent_attack": 27
+    "independent_attack": 45
    },
    "stat_ranges": {
     "physical_attack": [
@@ -198805,13 +198755,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      45,
      45
-    ],
-    "magical_independent_attack": [
-     27,
-     27
     ]
    },
    "required_level": 10,
@@ -198825,7 +198771,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_ryaiba.equ",
     "sha256": "3f0d931734fd9f1c8912941004fc6917b5053c6e52c44bec6a93e60a273f4866"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 45,
+    "modes_4_5": 27
+   }
   },
   "original_27604": {
    "name": "锋利的武士刀",
@@ -198839,8 +198789,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 45,
-    "magical_independent_attack": 26
+    "independent_attack": 45
    },
    "stat_ranges": {
     "strength": [
@@ -198875,13 +198824,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      45,
      45
-    ],
-    "magical_independent_attack": [
-     26,
-     26
     ]
    },
    "required_level": 6,
@@ -198895,7 +198840,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_s.equ",
     "sha256": "336c7f1e7fd36628dc0379679de08a231230a40491aca911e2f571182bb2d49c"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 45,
+    "modes_4_5": 26
+   }
   },
   "original_27725": {
    "name": "环蛇刀",
@@ -198909,8 +198858,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 270,
-    "magical_independent_attack": 182
+    "independent_attack": 270
    },
    "stat_ranges": {
     "strength": [
@@ -198945,13 +198893,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      270,
      270
-    ],
-    "magical_independent_attack": [
-     182,
-     182
     ]
    },
    "required_level": 65,
@@ -198965,7 +198909,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_snakecoils.equ",
     "sha256": "cb8317e04aa78d9eaf9738d666300620f5a0f1aa93c5dc2fdc2021c3a97de676"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 270,
+    "modes_4_5": 182
+   }
   },
   "original_27724": {
    "name": "破古老的环蛇刀",
@@ -198977,8 +198925,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 203,
-    "magical_independent_attack": 137
+    "independent_attack": 203
    },
    "stat_ranges": {
     "physical_attack": [
@@ -199005,13 +198952,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      203,
      203
-    ],
-    "magical_independent_attack": [
-     137,
-     137
     ]
    },
    "required_level": 65,
@@ -199025,7 +198968,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_snakecoils_sb.equ",
     "sha256": "6afde5f24decfd771707e9ee614fb3b37234cfaeae20ccc41277cf3442e59546"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 203,
+    "modes_4_5": 137
+   }
   },
   "original_27617": {
    "name": "锋利的太刀",
@@ -199039,8 +198986,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 95,
-    "magical_independent_attack": 61
+    "independent_attack": 95
    },
    "stat_ranges": {
     "strength": [
@@ -199075,13 +199021,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      95,
      95
-    ],
-    "magical_independent_attack": [
-     61,
-     61
     ]
    },
    "required_level": 20,
@@ -199095,7 +199037,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_stachi.equ",
     "sha256": "9a1118519ae318e8bb0376205c5069d432b022b8eaf0d5642425f5cbb4f27225"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 95,
+    "modes_4_5": 61
+   }
   },
   "original_27642": {
    "name": "坚韧的大蛇刀",
@@ -199109,8 +199055,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 167,
-    "magical_independent_attack": 111
+    "independent_attack": 167
    },
    "stat_ranges": {
     "strength": [
@@ -199145,13 +199090,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      167,
      167
-    ],
-    "magical_independent_attack": [
-     111,
-     111
     ]
    },
    "required_level": 40,
@@ -199165,7 +199106,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_strorochi.equ",
     "sha256": "eaf76b29a5ba4c0da1b9b56612b694fdc6e88b37a2440f3f9ed4b0bcaa4b4eaf"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 167,
+    "modes_4_5": 111
+   }
   },
   "original_27626": {
    "name": "锋利的节刀",
@@ -199179,8 +199124,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 124,
-    "magical_independent_attack": 81
+    "independent_attack": 124
    },
    "stat_ranges": {
     "strength": [
@@ -199215,13 +199159,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      124,
      124
-    ],
-    "magical_independent_attack": [
-     81,
-     81
     ]
    },
    "required_level": 28,
@@ -199235,7 +199175,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_swakizasi.equ",
     "sha256": "29af33e81413deca3d78685105615e69a6b421aaf508d2ca1a8187fe28ba4dbf"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 124,
+    "modes_4_5": 81
+   }
   },
   "original_27616": {
    "name": "短太刀",
@@ -199249,8 +199193,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 91,
-    "magical_independent_attack": 58
+    "independent_attack": 91
    },
    "stat_ranges": {
     "strength": [
@@ -199285,13 +199228,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      91,
      91
-    ],
-    "magical_independent_attack": [
-     58,
-     58
     ]
    },
    "required_level": 19,
@@ -199305,7 +199244,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_tachi.equ",
     "sha256": "b34de9f2443db4a10cc1e0cd6f80abad829dbe5d18ef6d5f9b5cc0618590277c"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 91,
+    "modes_4_5": 58
+   }
   },
   "original_27603": {
    "name": "劣质的小太刀",
@@ -199317,8 +199260,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 34,
-    "magical_independent_attack": 20
+    "independent_attack": 34
    },
    "stat_ranges": {
     "physical_attack": [
@@ -199345,13 +199287,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      34,
      34
-    ],
-    "magical_independent_attack": [
-     20,
-     20
     ]
    },
    "required_level": 6,
@@ -199365,7 +199303,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_ukotachi.equ",
     "sha256": "e1e4540f795cc3344c569ae384cf5c90dc2bb89d4aa2bd6a3a6ff4e4a08991a7"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 34,
+    "modes_4_5": 20
+   }
   },
   "original_27625": {
    "name": "节刀",
@@ -199379,8 +199321,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 120,
-    "magical_independent_attack": 78
+    "independent_attack": 120
    },
    "stat_ranges": {
     "strength": [
@@ -199415,13 +199356,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      120,
      120
-    ],
-    "magical_independent_attack": [
-     78,
-     78
     ]
    },
    "required_level": 27,
@@ -199435,7 +199372,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_wakizasi.equ",
     "sha256": "f774bb536100eda4ff03d44fb6c639814f5112996006a494b7e33b16a7e530b1"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 120,
+    "modes_4_5": 78
+   }
   },
   "original_27608": {
    "name": "长刀",
@@ -199449,8 +199390,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 59,
-    "magical_independent_attack": 36
+    "independent_attack": 59
    },
    "stat_ranges": {
     "strength": [
@@ -199485,13 +199425,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      59,
      59
-    ],
-    "magical_independent_attack": [
-     36,
-     36
     ]
    },
    "required_level": 10,
@@ -199505,7 +199441,11 @@
     "path": "equipment/character/swordman/weapon/katana/kat_yaiba.equ",
     "sha256": "a12d14eed7583fcecd9e99db1228ebbee22b884b64378edbf7bb37626fe4f205"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 59,
+    "modes_4_5": 36
+   }
   },
   "original_27708": {
    "name": "净化太刀",
@@ -199519,8 +199459,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 234,
-    "magical_independent_attack": 157
+    "independent_attack": 234
    },
    "stat_ranges": {
     "strength": [
@@ -199555,13 +199494,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      234,
      234
-    ],
-    "magical_independent_attack": [
-     157,
-     157
     ]
    },
    "required_level": 55,
@@ -199575,7 +199510,11 @@
     "path": "equipment/character/swordman/weapon/katana/misogi.equ",
     "sha256": "c1b9bfa6eaaa7a28344475ce683ec521f955ddc9afb4328b5a640671468430d4"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 234,
+    "modes_4_5": 157
+   }
   },
   "original_27707": {
    "name": "生锈的净化太刀",
@@ -199587,8 +199526,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 176,
-    "magical_independent_attack": 118
+    "independent_attack": 176
    },
    "stat_ranges": {
     "physical_attack": [
@@ -199615,13 +199553,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      176,
      176
-    ],
-    "magical_independent_attack": [
-     118,
-     118
     ]
    },
    "required_level": 55,
@@ -199635,7 +199569,11 @@
     "path": "equipment/character/swordman/weapon/katana/misogi_rusty.equ",
     "sha256": "fff7ca69c12e7ced4b7674455c6c0fd389fc9341147e7011b4e68eb140bcc149"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 176,
+    "modes_4_5": 118
+   }
   },
   "original_27672": {
    "name": "影虎刀",
@@ -199649,8 +199587,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 212,
-    "magical_independent_attack": 142
+    "independent_attack": 212
    },
    "stat_ranges": {
     "strength": [
@@ -199685,13 +199622,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      212,
      212
-    ],
-    "magical_independent_attack": [
-     142,
-     142
     ]
    },
    "required_level": 50,
@@ -199705,7 +199638,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kageto.equ",
     "sha256": "a0df5762706b8fc25b39112041a376fdf1c23faacee8c2c47bc0c579518c8e71"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 212,
+    "modes_4_5": 142
+   }
   },
   "original_27671": {
    "name": "生锈的影虎刀",
@@ -199717,8 +199654,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 159,
-    "magical_independent_attack": 107
+    "independent_attack": 159
    },
    "stat_ranges": {
     "physical_attack": [
@@ -199745,13 +199681,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      159,
      159
-    ],
-    "magical_independent_attack": [
-     107,
-     107
     ]
    },
    "required_level": 50,
@@ -199765,7 +199697,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kageto_out.equ",
     "sha256": "477111d8cf27aecdd49089b010a077b0ec6e7f1a4def74ded4e1e0fa78efc591"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 159,
+    "modes_4_5": 107
+   }
   },
   "original_27653": {
    "name": "佩刀",
@@ -199779,8 +199715,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 113,
-    "magical_independent_attack": 73
+    "independent_attack": 113
    },
    "stat_ranges": {
     "strength": [
@@ -199815,13 +199750,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      113,
      113
-    ],
-    "magical_independent_attack": [
-     73,
-     73
     ]
    },
    "required_level": 25,
@@ -199835,7 +199766,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_bazirangdae.equ",
     "sha256": "b7759d32c9270c9701be9e8ec75ffbb51090220d79d34aa96dbdbb29505d4ea2"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 113,
+    "modes_4_5": 73
+   }
   },
   "original_27664": {
    "name": "短刃",
@@ -199849,8 +199784,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 167,
-    "magical_independent_attack": 111
+    "independent_attack": 167
    },
    "stat_ranges": {
     "strength": [
@@ -199885,13 +199819,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      167,
      167
-    ],
-    "magical_independent_attack": [
-     111,
-     111
     ]
    },
    "required_level": 40,
@@ -199905,7 +199835,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_biken.equ",
     "sha256": "6c0c5fde8372542f5a71d0a4e2795f344517af079629351f4c9a53a43fbad4fa"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 167,
+    "modes_4_5": 111
+   }
   },
   "original_27652": {
    "name": "钝刃佩刀",
@@ -199917,8 +199851,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 85,
-    "magical_independent_attack": 55
+    "independent_attack": 85
    },
    "stat_ranges": {
     "physical_attack": [
@@ -199945,13 +199878,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      85,
      85
-    ],
-    "magical_independent_attack": [
-     55,
-     55
     ]
    },
    "required_level": 25,
@@ -199965,7 +199894,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_dbazirangdae.equ",
     "sha256": "1bd7cb1357d62671857486472a782fb97e266ec5099fec974318becb7d5a1261"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 85,
+    "modes_4_5": 55
+   }
   },
   "original_27660": {
    "name": "月华刀",
@@ -199979,8 +199912,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 149,
-    "magical_independent_attack": 98
+    "independent_attack": 149
    },
    "stat_ranges": {
     "strength": [
@@ -200015,13 +199947,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      149,
      149
-    ],
-    "magical_independent_attack": [
-     98,
-     98
     ]
    },
    "required_level": 35,
@@ -200035,7 +199963,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_kaede.equ",
     "sha256": "81c16278ae072106f694032d3e93fadb43da78521ced3f1f3efdcd6d1c2fbad5"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 149,
+    "modes_4_5": 98
+   }
   },
   "original_27669": {
    "name": "破古老的大蛇刀",
@@ -200047,8 +199979,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 139,
-    "magical_independent_attack": 93
+    "independent_attack": 139
    },
    "stat_ranges": {
     "physical_attack": [
@@ -200075,13 +200006,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      139,
      139
-    ],
-    "magical_independent_attack": [
-     93,
-     93
     ]
    },
    "required_level": 45,
@@ -200095,7 +200022,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_loworochi.equ",
     "sha256": "96c3fdd42ee896cb2f094992f4d7cc2f3ce4de19679c805c47e7c2ee29477bf9"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 139,
+    "modes_4_5": 93
+   }
   },
   "original_27690": {
    "name": "短刀",
@@ -200109,8 +200040,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 91,
-    "magical_independent_attack": 58
+    "independent_attack": 91
    },
    "stat_ranges": {
     "strength": [
@@ -200145,13 +200075,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      91,
      91
-    ],
-    "magical_independent_attack": [
-     58,
-     58
     ]
    },
    "required_level": 19,
@@ -200165,7 +200091,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_mishupaf.equ",
     "sha256": "af38d47ab8a780f92c9491b605a4f9af23b546946dfaf7c0e878f3ae660a623e"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 91,
+    "modes_4_5": 58
+   }
   },
   "original_27663": {
    "name": "古老式梅轩刀",
@@ -200177,8 +200107,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 126,
-    "magical_independent_attack": 84
+    "independent_attack": 126
    },
    "stat_ranges": {
     "physical_attack": [
@@ -200205,13 +200134,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      126,
      126
-    ],
-    "magical_independent_attack": [
-     84,
-     84
     ]
    },
    "required_level": 40,
@@ -200225,7 +200150,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_obiken.equ",
     "sha256": "21f4eccfb04953f27cc7b65270cfba2d01e6e2790f2c6049e2b7ad34156b7ef7"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 126,
+    "modes_4_5": 84
+   }
   },
   "original_27670": {
    "name": "大蛇刀",
@@ -200239,8 +200168,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 185,
-    "magical_independent_attack": 123
+    "independent_attack": 185
    },
    "stat_ranges": {
     "strength": [
@@ -200275,13 +200203,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      185,
      185
-    ],
-    "magical_independent_attack": [
-     123,
-     123
     ]
    },
    "required_level": 45,
@@ -200295,7 +200219,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_orochi.equ",
     "sha256": "c903a16be5f6a5182c3b11aaadbc35f29b5b5c838970e080b853e63078206a6f"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 185,
+    "modes_4_5": 123
+   }
   },
   "original_27648": {
    "name": "古老的太刀",
@@ -200307,8 +200235,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 72,
-    "magical_independent_attack": 46
+    "independent_attack": 72
    },
    "stat_ranges": {
     "physical_attack": [
@@ -200335,13 +200262,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      72,
      72
-    ],
-    "magical_independent_attack": [
-     46,
-     46
     ]
    },
    "required_level": 20,
@@ -200355,7 +200278,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_otachi.equ",
     "sha256": "946ca287efa3622ca2ca6ecd5bdf691ba083753cf2c0ef324c9f711986c1eb98"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 72,
+    "modes_4_5": 46
+   }
   },
   "original_27655": {
    "name": "古老式节刀",
@@ -200367,8 +200294,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 99,
-    "magical_independent_attack": 65
+    "independent_attack": 99
    },
    "stat_ranges": {
     "physical_attack": [
@@ -200395,13 +200321,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      99,
      99
-    ],
-    "magical_independent_attack": [
-     65,
-     65
     ]
    },
    "required_level": 30,
@@ -200415,7 +200337,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_owakizasi.equ",
     "sha256": "7fa2d1ab9393ce22c6ebe2e278a26ba6188f7508ee954abef6fea98350cbc182"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 99,
+    "modes_4_5": 65
+   }
   },
   "original_27659": {
    "name": "生锈的月华刀",
@@ -200427,8 +200353,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 112,
-    "magical_independent_attack": 74
+    "independent_attack": 112
    },
    "stat_ranges": {
     "physical_attack": [
@@ -200455,13 +200380,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      112,
      112
-    ],
-    "magical_independent_attack": [
-     74,
-     74
     ]
    },
    "required_level": 35,
@@ -200475,7 +200396,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_rkaede.equ",
     "sha256": "b0744fde4fa555f1a7f837745e531d51414bc3cc5a3dba4895c01c4aa1054455"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 112,
+    "modes_4_5": 74
+   }
   },
   "original_27649": {
    "name": "短太刀",
@@ -200489,8 +200414,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 95,
-    "magical_independent_attack": 61
+    "independent_attack": 95
    },
    "stat_ranges": {
     "strength": [
@@ -200525,13 +200449,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      95,
      95
-    ],
-    "magical_independent_attack": [
-     61,
-     61
     ]
    },
    "required_level": 20,
@@ -200545,7 +200465,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_tachi.equ",
     "sha256": "281ce27565504ecdd8fd24c5a0e9e53da223ea086b06c42a423e2f4d616fc77c"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 95,
+    "modes_4_5": 61
+   }
   },
   "original_27656": {
    "name": "节刀",
@@ -200559,8 +200483,7 @@
     "cast_speed": 0.04,
     "physical_crit": 0.02,
     "hit": -0.01,
-    "physical_independent_attack": 131,
-    "magical_independent_attack": 86
+    "independent_attack": 131
    },
    "stat_ranges": {
     "strength": [
@@ -200595,13 +200518,9 @@
      -0.01,
      -0.01
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      131,
      131
-    ],
-    "magical_independent_attack": [
-     86,
-     86
     ]
    },
    "required_level": 30,
@@ -200615,7 +200534,11 @@
     "path": "equipment/character/swordman/weapon/katana/n_kat_wakizasi.equ",
     "sha256": "bd55d4ec55490aea2b0594aeac005c679cb21f7356430ce7d4b86a6c5dd28136"
    },
-   "weapon": "katana"
+   "weapon": "katana",
+   "native_separate_attack": {
+    "default": 131,
+    "modes_4_5": 86
+   }
   },
   "original_101000013": {
    "name": "海洋剑",
@@ -200625,8 +200548,7 @@
     "magical_attack": 787.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 254,
-    "magical_independent_attack": 172
+    "independent_attack": 254
    },
    "stat_ranges": {
     "physical_attack": [
@@ -200645,13 +200567,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      254,
      254
-    ],
-    "magical_independent_attack": [
-     172,
-     172
     ]
    },
    "required_level": 80,
@@ -200665,7 +200583,11 @@
     "path": "equipment/character/swordman/weapon/ssword/101000013.equ",
     "sha256": "90195f2df3c0ccc58e70c166b7987654002003ad7154fb018319212ef85e7d85"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 254,
+    "modes_4_5": 172
+   }
   },
   "original_101000014": {
    "name": "蓝色海洋剑",
@@ -200676,8 +200598,7 @@
     "magical_attack": 798.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 338,
-    "magical_independent_attack": 229
+    "independent_attack": 338
    },
    "stat_ranges": {
     "intelligence": [
@@ -200700,13 +200621,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      338,
      338
-    ],
-    "magical_independent_attack": [
-     229,
-     229
     ]
    },
    "required_level": 80,
@@ -200720,7 +200637,11 @@
     "path": "equipment/character/swordman/weapon/ssword/101000014.equ",
     "sha256": "15bac16e3f7e039178cd6cd8a20cb93f97385449c240cdb0e70b7698b1370c58"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 338,
+    "modes_4_5": 229
+   }
   },
   "original_101000015": {
    "name": "阿尔古斯",
@@ -200731,8 +200652,7 @@
     "magical_attack": 844.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 364,
-    "magical_independent_attack": 247
+    "independent_attack": 364
    },
    "stat_ranges": {
     "intelligence": [
@@ -200755,13 +200675,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      364,
      364
-    ],
-    "magical_independent_attack": [
-     247,
-     247
     ]
    },
    "required_level": 80,
@@ -200775,7 +200691,11 @@
     "path": "equipment/character/swordman/weapon/ssword/101000015.equ",
     "sha256": "3104991f021ea7f3409edc1f76d0d1c9a73e9d438ab8bd34d4b7414b27bca97b"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 364,
+    "modes_4_5": 247
+   }
   },
   "original_27200": {
    "name": "班图的左手剑",
@@ -200786,8 +200706,7 @@
     "magical_attack": 97.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 45,
-    "magical_independent_attack": 27
+    "independent_attack": 45
    },
    "stat_ranges": {
     "vitality": [
@@ -200810,13 +200729,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      45,
      45
-    ],
-    "magical_independent_attack": [
-     27,
-     27
     ]
    },
    "required_level": 10,
@@ -200830,7 +200745,11 @@
     "path": "equipment/character/swordman/weapon/ssword/bantu_lefthand.equ",
     "sha256": "87fa56b40fc3cc2df921deff72128d6d03e5583f10788956690b6c3926fb52a7"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 45,
+    "modes_4_5": 27
+   }
   },
   "original_27004": {
    "name": "骨剑",
@@ -200841,8 +200760,7 @@
     "magical_attack": 69.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 45,
-    "magical_independent_attack": 26
+    "independent_attack": 45
    },
    "stat_ranges": {
     "intelligence": [
@@ -200865,13 +200783,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      45,
      45
-    ],
-    "magical_independent_attack": [
-     26,
-     26
     ]
    },
    "required_level": 6,
@@ -200885,7 +200799,11 @@
     "path": "equipment/character/swordman/weapon/ssword/boneswd.equ",
     "sha256": "44579c16b7f445c79545fb9bf619fb132d1b53ba1f2b8ba2c9cca518eb8a9008"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 45,
+    "modes_4_5": 26
+   }
   },
   "original_27030": {
    "name": "波刃骨剑",
@@ -200896,8 +200814,7 @@
     "magical_attack": 290.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 131,
-    "magical_independent_attack": 86
+    "independent_attack": 131
    },
    "stat_ranges": {
     "intelligence": [
@@ -200920,13 +200837,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      131,
      131
-    ],
-    "magical_independent_attack": [
-     86,
-     86
     ]
    },
    "required_level": 30,
@@ -200940,7 +200853,11 @@
     "path": "equipment/character/swordman/weapon/ssword/boneswd_kris.equ",
     "sha256": "74f2237f95053a8ca852491a810f8dc677a67d2d14ac3325c1fb687107506654"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 131,
+    "modes_4_5": 86
+   }
   },
   "original_27029": {
    "name": "古老的波刃骨剑",
@@ -200950,8 +200867,7 @@
     "magical_attack": 281.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 99,
-    "magical_independent_attack": 65
+    "independent_attack": 99
    },
    "stat_ranges": {
     "physical_attack": [
@@ -200970,13 +200886,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      99,
      99
-    ],
-    "magical_independent_attack": [
-     65,
-     65
     ]
    },
    "required_level": 30,
@@ -200990,7 +200902,11 @@
     "path": "equipment/character/swordman/weapon/ssword/boneswd_oldkris.equ",
     "sha256": "c6cd144bfa68c79ab68b6e12d9f75ac81a1781b3d496230a8ba16cb7891f6c6e"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 99,
+    "modes_4_5": 65
+   }
   },
   "original_27014": {
    "name": "古老的脊骨剑",
@@ -201000,8 +200916,7 @@
     "magical_attack": 170.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 66,
-    "magical_independent_attack": 42
+    "independent_attack": 66
    },
    "stat_ranges": {
     "physical_attack": [
@@ -201020,13 +200935,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      66,
      66
-    ],
-    "magical_independent_attack": [
-     42,
-     42
     ]
    },
    "required_level": 18,
@@ -201040,7 +200951,11 @@
     "path": "equipment/character/swordman/weapon/ssword/boneswd_oldtail.equ",
     "sha256": "b98b93275011b015e291b8ed40d46f3e5371507c245fe98d3f3fac56c7364d72"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 66,
+    "modes_4_5": 42
+   }
   },
   "original_27031": {
    "name": "锋利的波刃骨剑",
@@ -201051,8 +200966,7 @@
     "magical_attack": 299.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 135,
-    "magical_independent_attack": 88
+    "independent_attack": 135
    },
    "stat_ranges": {
     "intelligence": [
@@ -201075,13 +200989,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      135,
      135
-    ],
-    "magical_independent_attack": [
-     88,
-     88
     ]
    },
    "required_level": 31,
@@ -201095,7 +201005,11 @@
     "path": "equipment/character/swordman/weapon/ssword/boneswd_pkris.equ",
     "sha256": "5bb48f516ab3cf047384e9702037c6a1309bb2839ab5e6d8f3a0170eacbbfe71"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 135,
+    "modes_4_5": 88
+   }
   },
   "original_27003": {
    "name": "腐烂的骨剑",
@@ -201105,8 +201019,7 @@
     "magical_attack": 60.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 34,
-    "magical_independent_attack": 20
+    "independent_attack": 34
    },
    "stat_ranges": {
     "physical_attack": [
@@ -201125,13 +201038,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      34,
      34
-    ],
-    "magical_independent_attack": [
-     20,
-     20
     ]
    },
    "required_level": 6,
@@ -201145,7 +201054,11 @@
     "path": "equipment/character/swordman/weapon/ssword/boneswd_rot.equ",
     "sha256": "18c2b88cef30b6b230b717209e5ff9aeb8c42998c688eb99cce9266991dc91dc"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 34,
+    "modes_4_5": 20
+   }
   },
   "original_27006": {
    "name": "锋利的骨剑",
@@ -201156,8 +201069,7 @@
     "magical_attack": 97.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 55,
-    "magical_independent_attack": 33
+    "independent_attack": 55
    },
    "stat_ranges": {
     "intelligence": [
@@ -201180,13 +201092,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      55,
      55
-    ],
-    "magical_independent_attack": [
-     33,
-     33
     ]
    },
    "required_level": 9,
@@ -201200,7 +201108,11 @@
     "path": "equipment/character/swordman/weapon/ssword/boneswd_s.equ",
     "sha256": "948f7c8e7223acb52f68ad9f6da8cf69a121f610aa281ea2c108821ca0a90a47"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 55,
+    "modes_4_5": 33
+   }
   },
   "original_27017": {
    "name": "锋利的脊骨剑",
@@ -201211,8 +201123,7 @@
     "magical_attack": 189.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 91,
-    "magical_independent_attack": 58
+    "independent_attack": 91
    },
    "stat_ranges": {
     "intelligence": [
@@ -201235,13 +201146,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      91,
      91
-    ],
-    "magical_independent_attack": [
-     58,
-     58
     ]
    },
    "required_level": 19,
@@ -201255,7 +201162,11 @@
     "path": "equipment/character/swordman/weapon/ssword/boneswd_stail.equ",
     "sha256": "4508a7987ab56d0aadee2f756de3f5643d84e6b29bb6422c2fc3d260c52e341a"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 91,
+    "modes_4_5": 58
+   }
   },
   "original_27015": {
    "name": "脊骨剑",
@@ -201266,8 +201177,7 @@
     "magical_attack": 179.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 88,
-    "magical_independent_attack": 56
+    "independent_attack": 88
    },
    "stat_ranges": {
     "intelligence": [
@@ -201290,13 +201200,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      88,
      88
-    ],
-    "magical_independent_attack": [
-     56,
-     56
     ]
    },
    "required_level": 18,
@@ -201310,7 +201216,11 @@
     "path": "equipment/character/swordman/weapon/ssword/boneswd_tail.equ",
     "sha256": "3fb55507e8129dfe31f8373570f1d3b2fc0bf8ebc28cd0cfa735c9e5d6a75fcc"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 88,
+    "modes_4_5": 56
+   }
   },
   "original_27040": {
    "name": "哨兵侍剑",
@@ -201321,8 +201231,7 @@
     "magical_attack": 363.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 160,
-    "magical_independent_attack": 106
+    "independent_attack": 160
    },
    "stat_ranges": {
     "intelligence": [
@@ -201345,13 +201254,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      160,
      160
-    ],
-    "magical_independent_attack": [
-     106,
-     106
     ]
    },
    "required_level": 38,
@@ -201365,7 +201270,11 @@
     "path": "equipment/character/swordman/weapon/ssword/gemsswd_centinel.equ",
     "sha256": "435f41af77f038219bc76ed1bd23c6e42e42b5e8137fd33f8207f8c1c6debb46"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 160,
+    "modes_4_5": 106
+   }
   },
   "original_27024": {
    "name": "士兵短剑",
@@ -201376,8 +201285,7 @@
     "magical_attack": 253.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 117,
-    "magical_independent_attack": 76
+    "independent_attack": 117
    },
    "stat_ranges": {
     "intelligence": [
@@ -201400,13 +201308,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      117,
      117
-    ],
-    "magical_independent_attack": [
-     76,
-     76
     ]
    },
    "required_level": 26,
@@ -201420,7 +201324,11 @@
     "path": "equipment/character/swordman/weapon/ssword/gemsswd_gladius.equ",
     "sha256": "aa541e2f4029ffc473cc7c003f0ea5dc29609eea6a88a887a8c9d0fd6d29d5e1"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 117,
+    "modes_4_5": 76
+   }
   },
   "original_27034": {
    "name": "劣质的钛剑",
@@ -201430,8 +201338,7 @@
     "magical_attack": 317.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 109,
-    "magical_independent_attack": 72
+    "independent_attack": 109
    },
    "stat_ranges": {
     "physical_attack": [
@@ -201450,13 +201357,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      109,
      109
-    ],
-    "magical_independent_attack": [
-     72,
-     72
     ]
    },
    "required_level": 34,
@@ -201470,7 +201373,11 @@
     "path": "equipment/character/swordman/weapon/ssword/gemsswd_lowtitanium.equ",
     "sha256": "4b2102408c6478d0afad7fef4a41c822962b8446715ad13bb899175eae5b9a48"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 109,
+    "modes_4_5": 72
+   }
   },
   "original_27042": {
    "name": "锋利的哨兵侍剑",
@@ -201481,8 +201388,7 @@
     "magical_attack": 373.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 163,
-    "magical_independent_attack": 108
+    "independent_attack": 163
    },
    "stat_ranges": {
     "intelligence": [
@@ -201505,13 +201411,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      163,
      163
-    ],
-    "magical_independent_attack": [
-     108,
-     108
     ]
    },
    "required_level": 39,
@@ -201525,7 +201427,11 @@
     "path": "equipment/character/swordman/weapon/ssword/gemsswd_scentinel.equ",
     "sha256": "96aeeeb2a40133158b84e9ee3f43eb65ce984a28212156501e472ad767373f2e"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 163,
+    "modes_4_5": 108
+   }
   },
   "original_27036": {
    "name": "坚韧的钛剑",
@@ -201536,8 +201442,7 @@
     "magical_attack": 336.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 149,
-    "magical_independent_attack": 98
+    "independent_attack": 149
    },
    "stat_ranges": {
     "intelligence": [
@@ -201560,13 +201465,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      149,
      149
-    ],
-    "magical_independent_attack": [
-     98,
-     98
     ]
    },
    "required_level": 35,
@@ -201580,7 +201481,11 @@
     "path": "equipment/character/swordman/weapon/ssword/gemsswd_sftitanium.equ",
     "sha256": "392dbeea22bcca765b11b4551682f5bc307ee1c189cbfebc35711ce69c03e04d"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 149,
+    "modes_4_5": 98
+   }
   },
   "original_27026": {
    "name": "锋利的士兵短剑",
@@ -201591,8 +201496,7 @@
     "magical_attack": 262.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 120,
-    "magical_independent_attack": 78
+    "independent_attack": 120
    },
    "stat_ranges": {
     "intelligence": [
@@ -201615,13 +201519,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      120,
      120
-    ],
-    "magical_independent_attack": [
-     78,
-     78
     ]
    },
    "required_level": 27,
@@ -201635,7 +201535,11 @@
     "path": "equipment/character/swordman/weapon/ssword/gemsswd_sgladius.equ",
     "sha256": "4bae78600188bb4f2d40c82df917bf83346c7fd7b574801f1fd4207374d3252c"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 120,
+    "modes_4_5": 78
+   }
   },
   "original_27035": {
    "name": "钛剑",
@@ -201646,8 +201550,7 @@
     "magical_attack": 327.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 145,
-    "magical_independent_attack": 96
+    "independent_attack": 145
    },
    "stat_ranges": {
     "intelligence": [
@@ -201670,13 +201573,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      145,
      145
-    ],
-    "magical_independent_attack": [
-     96,
-     96
     ]
    },
    "required_level": 34,
@@ -201690,7 +201589,11 @@
     "path": "equipment/character/swordman/weapon/ssword/gemsswd_titanium.equ",
     "sha256": "4b70841136495085a09d4598cd3e1e558d38cec6bf10e80490b4bdc40fe7715c"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 145,
+    "modes_4_5": 96
+   }
   },
   "original_27039": {
    "name": "古老的哨兵侍剑",
@@ -201700,8 +201603,7 @@
     "magical_attack": 354.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 120,
-    "magical_independent_attack": 80
+    "independent_attack": 120
    },
    "stat_ranges": {
     "physical_attack": [
@@ -201720,13 +201622,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      120,
      120
-    ],
-    "magical_independent_attack": [
-     80,
-     80
     ]
    },
    "required_level": 38,
@@ -201740,7 +201638,11 @@
     "path": "equipment/character/swordman/weapon/ssword/gemsswd_ucentinel.equ",
     "sha256": "2caf997069255247f5e557ad4c4a1eb19248fb1e2f98645a853772e7882f6c5e"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 120,
+    "modes_4_5": 80
+   }
   },
   "original_27023": {
    "name": "破损的士兵短剑",
@@ -201750,8 +201652,7 @@
     "magical_attack": 244.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 88,
-    "magical_independent_attack": 57
+    "independent_attack": 88
    },
    "stat_ranges": {
     "physical_attack": [
@@ -201770,13 +201671,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      88,
      88
-    ],
-    "magical_independent_attack": [
-     57,
-     57
     ]
    },
    "required_level": 26,
@@ -201790,7 +201687,11 @@
     "path": "equipment/character/swordman/weapon/ssword/gemsswd_ugladius.equ",
     "sha256": "90897be6f86514d379b0add17818c19f68bc28c6198fcd48fc17cc9f47d55867"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 88,
+    "modes_4_5": 57
+   }
   },
   "original_27061": {
    "name": "波刃骨剑",
@@ -201801,8 +201702,7 @@
     "magical_attack": 336.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 149,
-    "magical_independent_attack": 98
+    "independent_attack": 149
    },
    "stat_ranges": {
     "intelligence": [
@@ -201825,13 +201725,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      149,
      149
-    ],
-    "magical_independent_attack": [
-     98,
-     98
     ]
    },
    "required_level": 35,
@@ -201845,7 +201741,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_boneswd_kris.equ",
     "sha256": "1a65fdb5d5873a0e3885a7f95fe081fe36afc02675b95db185ac1c301310490f"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 149,
+    "modes_4_5": 98
+   }
   },
   "original_27060": {
    "name": "古老的波刃骨剑",
@@ -201855,8 +201755,7 @@
     "magical_attack": 327.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 112,
-    "magical_independent_attack": 74
+    "independent_attack": 112
    },
    "stat_ranges": {
     "physical_attack": [
@@ -201875,13 +201774,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      112,
      112
-    ],
-    "magical_independent_attack": [
-     74,
-     74
     ]
    },
    "required_level": 35,
@@ -201895,7 +201790,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_boneswd_oldkris.equ",
     "sha256": "fb7d2953a41371b82b906f02a6a1a469232de506a3ecb8c7a71400a7dfea6932"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 112,
+    "modes_4_5": 74
+   }
   },
   "original_27049": {
    "name": "古老的脊骨剑",
@@ -201905,8 +201804,7 @@
     "magical_attack": 189.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 72,
-    "magical_independent_attack": 46
+    "independent_attack": 72
    },
    "stat_ranges": {
     "physical_attack": [
@@ -201925,13 +201823,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      72,
      72
-    ],
-    "magical_independent_attack": [
-     46,
-     46
     ]
    },
    "required_level": 20,
@@ -201945,7 +201839,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_boneswd_oldtail.equ",
     "sha256": "f9a750da6122ff5df1d439a3c5613579730f799cd52df9bf9200b5155b0e43fd"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 72,
+    "modes_4_5": 46
+   }
   },
   "original_27050": {
    "name": "脊骨剑",
@@ -201956,8 +201854,7 @@
     "magical_attack": 198.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 95,
-    "magical_independent_attack": 61
+    "independent_attack": 95
    },
    "stat_ranges": {
     "intelligence": [
@@ -201980,13 +201877,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      95,
      95
-    ],
-    "magical_independent_attack": [
-     61,
-     61
     ]
    },
    "required_level": 20,
@@ -202000,7 +201893,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_boneswd_tail.equ",
     "sha256": "23387c7092c959f9e272af0741e4b31069852c52715a4bc8cf44607d0611ba25"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 95,
+    "modes_4_5": 61
+   }
   },
   "original_27071": {
    "name": "哨兵侍剑",
@@ -202011,8 +201908,7 @@
     "magical_attack": 428.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 185,
-    "magical_independent_attack": 123
+    "independent_attack": 185
    },
    "stat_ranges": {
     "intelligence": [
@@ -202035,13 +201931,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      185,
      185
-    ],
-    "magical_independent_attack": [
-     123,
-     123
     ]
    },
    "required_level": 45,
@@ -202055,7 +201947,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_gemsswd_centinel.equ",
     "sha256": "d9c81c90e7fc324080400361bfa208d2829679a1a055a0556c2c436bc3699e89"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 185,
+    "modes_4_5": 123
+   }
   },
   "original_27057": {
    "name": "士兵短剑",
@@ -202066,8 +201962,7 @@
     "magical_attack": 290.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 131,
-    "magical_independent_attack": 86
+    "independent_attack": 131
    },
    "stat_ranges": {
     "intelligence": [
@@ -202090,13 +201985,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      131,
      131
-    ],
-    "magical_independent_attack": [
-     86,
-     86
     ]
    },
    "required_level": 30,
@@ -202110,7 +202001,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_gemsswd_gladius.equ",
     "sha256": "562734e96c1196f108251f9b548f44370794de3380043b83944e50eac37cedb2"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 131,
+    "modes_4_5": 86
+   }
   },
   "original_27064": {
    "name": "劣质的钛剑",
@@ -202120,8 +202015,7 @@
     "magical_attack": 373.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 126,
-    "magical_independent_attack": 84
+    "independent_attack": 126
    },
    "stat_ranges": {
     "physical_attack": [
@@ -202140,13 +202034,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      126,
      126
-    ],
-    "magical_independent_attack": [
-     84,
-     84
     ]
    },
    "required_level": 40,
@@ -202160,7 +202050,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_gemsswd_lowtitanium.equ",
     "sha256": "cc737e1768f2367d8fcc57ae962a2969a66c979a4bf7b6e7e9717d6e140cbde2"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 126,
+    "modes_4_5": 84
+   }
   },
   "original_27065": {
    "name": "钛剑",
@@ -202171,8 +202065,7 @@
     "magical_attack": 382.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 167,
-    "magical_independent_attack": 111
+    "independent_attack": 167
    },
    "stat_ranges": {
     "intelligence": [
@@ -202195,13 +202088,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      167,
      167
-    ],
-    "magical_independent_attack": [
-     111,
-     111
     ]
    },
    "required_level": 40,
@@ -202215,7 +202104,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_gemsswd_titanium.equ",
     "sha256": "9c70e683b01a95323bd8239b94171ac93f1bcc5776a45a9a867df4208ac633fe"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 167,
+    "modes_4_5": 111
+   }
   },
   "original_27070": {
    "name": "古老的哨兵侍剑",
@@ -202225,8 +202118,7 @@
     "magical_attack": 419.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 139,
-    "magical_independent_attack": 93
+    "independent_attack": 139
    },
    "stat_ranges": {
     "physical_attack": [
@@ -202245,13 +202137,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      139,
      139
-    ],
-    "magical_independent_attack": [
-     93,
-     93
     ]
    },
    "required_level": 45,
@@ -202265,7 +202153,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_gemsswd_ucentinel.equ",
     "sha256": "1b90e76b2fe4a592b9a2d636e187e78c81a1d6b1d741dd083309b3f88f48fb84"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 139,
+    "modes_4_5": 93
+   }
   },
   "original_27056": {
    "name": "破损的士兵短剑",
@@ -202275,8 +202167,7 @@
     "magical_attack": 281.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 99,
-    "magical_independent_attack": 65
+    "independent_attack": 99
    },
    "stat_ranges": {
     "physical_attack": [
@@ -202295,13 +202186,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      99,
      99
-    ],
-    "magical_independent_attack": [
-     65,
-     65
     ]
    },
    "required_level": 30,
@@ -202315,7 +202202,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_gemsswd_ugladius.equ",
     "sha256": "96b6eaa7f2ab822e8ea0c11aecbfbb086109a446c1aac561c387e8d3e772b129"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 99,
+    "modes_4_5": 65
+   }
   },
   "original_27051": {
    "name": "疾风剑",
@@ -202328,8 +202219,7 @@
     "attack_speed": 0.03,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 108,
-    "magical_independent_attack": 70
+    "independent_attack": 108
    },
    "stat_ranges": {
     "mp_max": [
@@ -202360,13 +202250,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      108,
      108
-    ],
-    "magical_independent_attack": [
-     70,
-     70
     ]
    },
    "required_level": 20,
@@ -202380,7 +202266,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_sswd_breeze.equ",
     "sha256": "ca682737b2f1fff9cd00443d252ad7cfb6f7d4b8ffd6eecce15cf87cf748455c"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 108,
+    "modes_4_5": 70
+   }
   },
   "original_27054": {
    "name": "青铜剑",
@@ -202391,8 +202281,7 @@
     "magical_attack": 244.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 113,
-    "magical_independent_attack": 73
+    "independent_attack": 113
    },
    "stat_ranges": {
     "intelligence": [
@@ -202415,13 +202304,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      113,
      113
-    ],
-    "magical_independent_attack": [
-     73,
-     73
     ]
    },
    "required_level": 25,
@@ -202435,7 +202320,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_sswd_bronze.equ",
     "sha256": "7eb222958912d439ae35cce249b1e433253f664d6870f4a010b35552125c8d3d"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 113,
+    "modes_4_5": 73
+   }
   },
   "original_27053": {
    "name": "生锈的青铜剑",
@@ -202445,8 +202334,7 @@
     "magical_attack": 235.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 85,
-    "magical_independent_attack": 55
+    "independent_attack": 85
    },
    "stat_ranges": {
     "physical_attack": [
@@ -202465,13 +202353,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      85,
      85
-    ],
-    "magical_independent_attack": [
-     55,
-     55
     ]
    },
    "required_level": 25,
@@ -202485,7 +202369,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_sswd_fbronze.equ",
     "sha256": "fe6f76ff1a2d9dfb28a4a429e5be07870258e7848473cdd81aa0abd83157ecc2"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 85,
+    "modes_4_5": 55
+   }
   },
   "original_27073": {
    "name": "宽刃剑",
@@ -202496,8 +202384,7 @@
     "magical_attack": 492.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 212,
-    "magical_independent_attack": 142
+    "independent_attack": 212
    },
    "stat_ranges": {
     "intelligence": [
@@ -202520,13 +202407,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      212,
      212
-    ],
-    "magical_independent_attack": [
-     142,
-     142
     ]
    },
    "required_level": 50,
@@ -202540,7 +202423,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_xiphos.equ",
     "sha256": "bac1ab58f5c4a19ebef3dbdef0588af368a574d78f7c256394f76f3418394bdc"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 212,
+    "modes_4_5": 142
+   }
   },
   "original_27072": {
    "name": "古老的宽刃剑",
@@ -202550,8 +202437,7 @@
     "magical_attack": 483.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 159,
-    "magical_independent_attack": 107
+    "independent_attack": 159
    },
    "stat_ranges": {
     "physical_attack": [
@@ -202570,13 +202456,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      159,
      159
-    ],
-    "magical_independent_attack": [
-     107,
-     107
     ]
    },
    "required_level": 50,
@@ -202590,7 +202472,11 @@
     "path": "equipment/character/swordman/weapon/ssword/n_xiphos_old.equ",
     "sha256": "773ad9126af78f5d26ea61a39c4f2439754b94589ff54da6d45693564ca80bc9"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 159,
+    "modes_4_5": 107
+   }
   },
   "original_27110": {
    "name": "突刺剑",
@@ -202601,8 +202487,7 @@
     "magical_attack": 538.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 234,
-    "magical_independent_attack": 157
+    "independent_attack": 234
    },
    "stat_ranges": {
     "intelligence": [
@@ -202625,13 +202510,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      234,
      234
-    ],
-    "magical_independent_attack": [
-     157,
-     157
     ]
    },
    "required_level": 55,
@@ -202645,7 +202526,11 @@
     "path": "equipment/character/swordman/weapon/ssword/pallasch.equ",
     "sha256": "7763086869a6c3fbdf81f34441c4efe760e2bc8bdbc2206aaf1ca19acc22634a"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 234,
+    "modes_4_5": 157
+   }
   },
   "original_27109": {
    "name": "古老的突刺剑",
@@ -202655,8 +202540,7 @@
     "magical_attack": 529.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 176,
-    "magical_independent_attack": 118
+    "independent_attack": 176
    },
    "stat_ranges": {
     "physical_attack": [
@@ -202675,13 +202559,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      176,
      176
-    ],
-    "magical_independent_attack": [
-     118,
-     118
     ]
    },
    "required_level": 55,
@@ -202695,7 +202575,11 @@
     "path": "equipment/character/swordman/weapon/ssword/pallasch_old.equ",
     "sha256": "21d9a566ab61df1acae14409ae8cef195a0c6894783c29a09697c7827beee762"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 176,
+    "modes_4_5": 118
+   }
   },
   "original_2220102": {
    "name": "青铜小剑",
@@ -202706,8 +202590,7 @@
     "magical_attack": 142.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 70,
-    "magical_independent_attack": 44
+    "independent_attack": 70
    },
    "stat_ranges": {
     "intelligence": [
@@ -202730,13 +202613,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      70,
      70
-    ],
-    "magical_independent_attack": [
-     44,
-     44
     ]
    },
    "required_level": 10,
@@ -202750,7 +202629,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220102.equ",
     "sha256": "088e0b1e104aa05266b9d81fbe2fe935ad4d7862393194f28aad3569e91f8648"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 70,
+    "modes_4_5": 44
+   }
   },
   "original_2220103": {
    "name": "铸造小剑",
@@ -202761,8 +202644,7 @@
     "magical_attack": 188.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 89,
-    "magical_independent_attack": 56
+    "independent_attack": 89
    },
    "stat_ranges": {
     "intelligence": [
@@ -202785,13 +202667,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      89,
      89
-    ],
-    "magical_independent_attack": [
-     56,
-     56
     ]
    },
    "required_level": 15,
@@ -202805,7 +202683,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220103.equ",
     "sha256": "aef4a60a2f475268b7df12fd09f489ff6185e3173c0635bb9477f8c3ad40bb5d"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 89,
+    "modes_4_5": 56
+   }
   },
   "original_2220104": {
    "name": "锻造小剑",
@@ -202816,8 +202698,7 @@
     "magical_attack": 234.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 108,
-    "magical_independent_attack": 70
+    "independent_attack": 108
    },
    "stat_ranges": {
     "intelligence": [
@@ -202840,13 +202721,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      108,
      108
-    ],
-    "magical_independent_attack": [
-     70,
-     70
     ]
    },
    "required_level": 20,
@@ -202860,7 +202737,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220104.equ",
     "sha256": "115a6d18b25917936bdaca932db49c5ae70673a7436c56928c4d912dd3b1a59a"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 108,
+    "modes_4_5": 70
+   }
   },
   "original_2220105": {
    "name": "青铜锯齿小剑",
@@ -202871,8 +202752,7 @@
     "magical_attack": 280.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 126,
-    "magical_independent_attack": 82
+    "independent_attack": 126
    },
    "stat_ranges": {
     "intelligence": [
@@ -202895,13 +202775,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      126,
      126
-    ],
-    "magical_independent_attack": [
-     82,
-     82
     ]
    },
    "required_level": 25,
@@ -202915,7 +202791,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220105.equ",
     "sha256": "1f9480dd5c5bc11ba9e0eba4aefd0e15297cff8c8bb3cd1e0f5f66bcc4236b56"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 126,
+    "modes_4_5": 82
+   }
   },
   "original_2220106": {
    "name": "锻造锯齿小剑",
@@ -202926,8 +202806,7 @@
     "magical_attack": 326.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 145,
-    "magical_independent_attack": 96
+    "independent_attack": 145
    },
    "stat_ranges": {
     "intelligence": [
@@ -202950,13 +202829,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      145,
      145
-    ],
-    "magical_independent_attack": [
-     96,
-     96
     ]
    },
    "required_level": 30,
@@ -202970,7 +202845,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220106.equ",
     "sha256": "8432b8de3b9629dc513c0897128ed4f468cf93d668268238d353d3ac760b2e0f"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 145,
+    "modes_4_5": 96
+   }
   },
   "original_2220107": {
    "name": "普雷皮蓝奇",
@@ -202981,8 +202860,7 @@
     "magical_attack": 372.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 164,
-    "magical_independent_attack": 109
+    "independent_attack": 164
    },
    "stat_ranges": {
     "intelligence": [
@@ -203005,13 +202883,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      164,
      164
-    ],
-    "magical_independent_attack": [
-     109,
-     109
     ]
    },
    "required_level": 35,
@@ -203025,7 +202899,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220107.equ",
     "sha256": "de7cb99fb79505d4a28ffd433dea5d87b37f30b34ef884d560fd97517a2ba26b"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 164,
+    "modes_4_5": 109
+   }
   },
   "original_2220108": {
    "name": "瓦伊德皮蓝奇",
@@ -203036,8 +202914,7 @@
     "magical_attack": 418.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 183,
-    "magical_independent_attack": 122
+    "independent_attack": 183
    },
    "stat_ranges": {
     "intelligence": [
@@ -203060,13 +202937,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      183,
      183
-    ],
-    "magical_independent_attack": [
-     122,
-     122
     ]
    },
    "required_level": 40,
@@ -203080,7 +202953,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220108.equ",
     "sha256": "a38dafb4d139ccdb9f436f126e9ee67946466d660fb97d9b6a630b10a70cef98"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 183,
+    "modes_4_5": 122
+   }
   },
   "original_2220109": {
    "name": "柯皮斯",
@@ -203091,8 +202968,7 @@
     "magical_attack": 464.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 202,
-    "magical_independent_attack": 135
+    "independent_attack": 202
    },
    "stat_ranges": {
     "intelligence": [
@@ -203115,13 +202991,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      202,
      202
-    ],
-    "magical_independent_attack": [
-     135,
-     135
     ]
    },
    "required_level": 45,
@@ -203135,7 +203007,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220109.equ",
     "sha256": "2736b432875c9970f634f5d1a00d517d929f9d2ace2071e9fba5e3966a5d722d"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 202,
+    "modes_4_5": 135
+   }
   },
   "original_2220110": {
    "name": "金饰柯皮斯",
@@ -203146,8 +203022,7 @@
     "magical_attack": 529.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 233,
-    "magical_independent_attack": 156
+    "independent_attack": 233
    },
    "stat_ranges": {
     "intelligence": [
@@ -203170,13 +203045,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      233,
      233
-    ],
-    "magical_independent_attack": [
-     156,
-     156
     ]
    },
    "required_level": 50,
@@ -203190,7 +203061,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220110.equ",
     "sha256": "e73e475e57f98f97c10fcfe31899243d940572a9de09e7d567463cd0d82b0016"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 233,
+    "modes_4_5": 156
+   }
   },
   "original_2220111": {
    "name": "佩里多特佩剑",
@@ -203201,8 +203076,7 @@
     "magical_attack": 575.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 256,
-    "magical_independent_attack": 173
+    "independent_attack": 256
    },
    "stat_ranges": {
     "intelligence": [
@@ -203225,13 +203099,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      256,
      256
-    ],
-    "magical_independent_attack": [
-     173,
-     173
     ]
    },
    "required_level": 55,
@@ -203245,7 +203115,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220111.equ",
     "sha256": "1e600b5a5aa07781e5ec6dd9d1b0fba0e893d98ad8f0561dbf209197712f6bef"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 256,
+    "modes_4_5": 173
+   }
   },
   "original_2220112": {
    "name": "特兰奇伊贝里安",
@@ -203256,8 +203130,7 @@
     "magical_attack": 614.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 270,
-    "magical_independent_attack": 182
+    "independent_attack": 270
    },
    "stat_ranges": {
     "intelligence": [
@@ -203280,13 +203153,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      270,
      270
-    ],
-    "magical_independent_attack": [
-     182,
-     182
     ]
    },
    "required_level": 60,
@@ -203300,7 +203169,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220112.equ",
     "sha256": "d0220ddf3036c52a5e40cc7fc576369562ac712f6a3d89852acf465be6a92d51"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 270,
+    "modes_4_5": 182
+   }
   },
   "original_2220113": {
    "name": "撒门小剑",
@@ -203311,8 +203184,7 @@
     "magical_attack": 671.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 293,
-    "magical_independent_attack": 199
+    "independent_attack": 293
    },
    "stat_ranges": {
     "intelligence": [
@@ -203335,13 +203207,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      293,
      293
-    ],
-    "magical_independent_attack": [
-     199,
-     199
     ]
    },
    "required_level": 65,
@@ -203355,7 +203223,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220113.equ",
     "sha256": "2a41764b5efb38bb3b2919443fc6c7022bbadae8f860456aa68189fcb8c1af71"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 293,
+    "modes_4_5": 199
+   }
   },
   "original_2220114": {
    "name": "贝尔兹拉克",
@@ -203366,8 +203238,7 @@
     "magical_attack": 729.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 318,
-    "magical_independent_attack": 215
+    "independent_attack": 318
    },
    "stat_ranges": {
     "intelligence": [
@@ -203390,13 +203261,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      318,
      318
-    ],
-    "magical_independent_attack": [
-     215,
-     215
     ]
    },
    "required_level": 70,
@@ -203410,7 +203277,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_2220114.equ",
     "sha256": "bbab1ccde62f8c4daa601f92aa62d347c7c7217dc235c713e079db820df1f8c1"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 318,
+    "modes_4_5": 215
+   }
   },
   "original_27160": {
    "name": "生锈的克特勒斯",
@@ -203420,8 +203291,7 @@
     "magical_attack": 672.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 220,
-    "magical_independent_attack": 149
+    "independent_attack": 220
    },
    "stat_ranges": {
     "physical_attack": [
@@ -203440,13 +203310,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      220,
      220
-    ],
-    "magical_independent_attack": [
-     149,
-     149
     ]
    },
    "required_level": 70,
@@ -203460,7 +203326,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_27160.equ",
     "sha256": "37c380d4bb3cc320f4cda18c675207628faeabcaf4d6b352505de169d73f81bb"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 220,
+    "modes_4_5": 149
+   }
   },
   "original_27161": {
    "name": "克特勒斯",
@@ -203471,8 +203341,7 @@
     "magical_attack": 683.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 293,
-    "magical_independent_attack": 198
+    "independent_attack": 293
    },
    "stat_ranges": {
     "intelligence": [
@@ -203495,13 +203364,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      293,
      293
-    ],
-    "magical_independent_attack": [
-     198,
-     198
     ]
    },
    "required_level": 70,
@@ -203515,7 +203380,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_27161.equ",
     "sha256": "a013cc329d5ce5b80263059ee7866468a98a454a791d136405b542a1183c71a6"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 293,
+    "modes_4_5": 198
+   }
   },
   "original_27126": {
    "name": "奥尔顿短剑",
@@ -203526,8 +203395,7 @@
     "magical_attack": 626.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 270,
-    "magical_independent_attack": 182
+    "independent_attack": 270
    },
    "stat_ranges": {
     "intelligence": [
@@ -203550,13 +203418,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      270,
      270
-    ],
-    "magical_independent_attack": [
-     182,
-     182
     ]
    },
    "required_level": 65,
@@ -203570,7 +203434,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_alton.equ",
     "sha256": "75a9a850953a836aa26fa3bf8ea7b1994792777833515ae33c7b3f13da8ca656"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 270,
+    "modes_4_5": 182
+   }
   },
   "original_27125": {
    "name": "破古老的奥尔顿短剑",
@@ -203580,8 +203448,7 @@
     "magical_attack": 614.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 203,
-    "magical_independent_attack": 137
+    "independent_attack": 203
    },
    "stat_ranges": {
     "physical_attack": [
@@ -203600,13 +203467,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      203,
      203
-    ],
-    "magical_independent_attack": [
-     137,
-     137
     ]
    },
    "required_level": 65,
@@ -203620,7 +203483,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_alton_sb.equ",
     "sha256": "7cad7e4e3c2b9cdff165f786a3c9389b05f3cbc54f4abe6c0873462e4c834cad"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 203,
+    "modes_4_5": 137
+   }
   },
   "original_27016": {
    "name": "疾风剑",
@@ -203633,8 +203500,7 @@
     "attack_speed": 0.03,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 100,
-    "magical_independent_attack": 65
+    "independent_attack": 100
    },
    "stat_ranges": {
     "mp_max": [
@@ -203665,13 +203531,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      100,
      100
-    ],
-    "magical_independent_attack": [
-     65,
-     65
     ]
    },
    "required_level": 18,
@@ -203685,7 +203547,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_breeze.equ",
     "sha256": "0bc7409b77d88034382737de328a342ea18faec1f3614ea208fe99a6597d7d5f"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 100,
+    "modes_4_5": 65
+   }
   },
   "original_27019": {
    "name": "青铜剑",
@@ -203696,8 +203562,7 @@
     "magical_attack": 216.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 102,
-    "magical_independent_attack": 66
+    "independent_attack": 102
    },
    "stat_ranges": {
     "intelligence": [
@@ -203720,13 +203585,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      102,
      102
-    ],
-    "magical_independent_attack": [
-     66,
-     66
     ]
    },
    "required_level": 22,
@@ -203740,7 +203601,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_bronze.equ",
     "sha256": "6e3c3cc8989f1c729633888a26ceb50a54b574c8487d3f58a7a0273d7bfea3ee"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 102,
+    "modes_4_5": 66
+   }
   },
   "original_27000": {
    "name": "破损的铁剑",
@@ -203750,8 +203615,7 @@
     "magical_attack": 21.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 21,
-    "magical_independent_attack": 10
+    "independent_attack": 21
    },
    "stat_ranges": {
     "physical_attack": [
@@ -203770,13 +203634,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      21,
      21
-    ],
-    "magical_independent_attack": [
-     10,
-     10
     ]
    },
    "required_level": 1,
@@ -203790,7 +203650,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_damaged.equ",
     "sha256": "f8be05bdd3e8e391221f445e30d92e082c0b402315317c1868acb6fc5cfdfdae"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 21,
+    "modes_4_5": 10
+   }
   },
   "original_27136": {
    "name": "深海之士兵短剑",
@@ -203801,8 +203665,7 @@
     "magical_attack": 671.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 293,
-    "magical_independent_attack": 199
+    "independent_attack": 293
    },
    "stat_ranges": {
     "intelligence": [
@@ -203825,13 +203688,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      293,
      293
-    ],
-    "magical_independent_attack": [
-     199,
-     199
     ]
    },
    "required_level": 65,
@@ -203845,7 +203704,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_deepseaq.equ",
     "sha256": "ced42e872f0fe9a7a44c5d4832770f95df3a98208edf6e5cb1f136f3a2c8cacd"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 293,
+    "modes_4_5": 199
+   }
   },
   "original_27118": {
    "name": "普通短剑",
@@ -203925,8 +203788,7 @@
     "magical_attack": 1.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 89,
-    "magical_independent_attack": 56
+    "independent_attack": 89
    },
    "stat_ranges": {
     "physical_attack": [
@@ -203945,13 +203807,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      89,
      89
-    ],
-    "magical_independent_attack": [
-     56,
-     56
     ]
    },
    "required_level": 15,
@@ -203965,7 +203823,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_failroton.equ",
     "sha256": "bd89bac7ee0fbe36f1290e7fe28cd429b03b3961e831bd8ad58c9e30886827d5"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 89,
+    "modes_4_5": 56
+   }
   },
   "original_27018": {
    "name": "生锈的青铜剑",
@@ -203975,8 +203837,7 @@
     "magical_attack": 207.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 77,
-    "magical_independent_attack": 50
+    "independent_attack": 77
    },
    "stat_ranges": {
     "physical_attack": [
@@ -203995,13 +203856,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      77,
      77
-    ],
-    "magical_independent_attack": [
-     50,
-     50
     ]
    },
    "required_level": 22,
@@ -204015,7 +203872,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_fbronze.equ",
     "sha256": "e44f69ead852a5341924c2656e066d456b43052615fb4ed93f25b24ce17e1189"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 77,
+    "modes_4_5": 50
+   }
   },
   "original_27043": {
    "name": "G.S.D的古剑",
@@ -204026,8 +203887,7 @@
     "magical_attack": 198.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 95,
-    "magical_independent_attack": 61
+    "independent_attack": 95
    },
    "stat_ranges": {
     "intelligence": [
@@ -204050,13 +203910,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      95,
      95
-    ],
-    "magical_independent_attack": [
-     61,
-     61
     ]
    },
    "required_level": 20,
@@ -204070,7 +203926,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_gsd.equ",
     "sha256": "292cddd0477eccc35dd2933c86dac452294f830d13dab27e249b5b53a66e9461"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 95,
+    "modes_4_5": 61
+   }
   },
   "original_27121": {
    "name": "赫顿士兵短剑",
@@ -204081,8 +203941,7 @@
     "magical_attack": 568.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 248,
-    "magical_independent_attack": 167
+    "independent_attack": 248
    },
    "stat_ranges": {
     "intelligence": [
@@ -204105,13 +203964,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      248,
      248
-    ],
-    "magical_independent_attack": [
-     167,
-     167
     ]
    },
    "required_level": 60,
@@ -204125,7 +203980,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_handon.equ",
     "sha256": "15d116e446657d57630af544e02c21d4aac6747a11f7c80d0ddae4fb635c737b"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 248,
+    "modes_4_5": 167
+   }
   },
   "original_27120": {
    "name": "破古老的赫顿士兵短剑",
@@ -204135,8 +203994,7 @@
     "magical_attack": 557.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 186,
-    "magical_independent_attack": 126
+    "independent_attack": 186
    },
    "stat_ranges": {
     "physical_attack": [
@@ -204155,13 +204013,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      186,
      186
-    ],
-    "magical_independent_attack": [
-     126,
-     126
     ]
    },
    "required_level": 60,
@@ -204175,7 +204029,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_handon_used.equ",
     "sha256": "a7131b3786e8b21f3613f502ba72fc674643d9a30b95fe769871e8596f33ba44"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 186,
+    "modes_4_5": 126
+   }
   },
   "original_27134": {
    "name": "高科技士兵短剑",
@@ -204186,8 +204044,7 @@
     "magical_attack": 614.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 270,
-    "magical_independent_attack": 182
+    "independent_attack": 270
    },
    "stat_ranges": {
     "intelligence": [
@@ -204210,13 +204067,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      270,
      270
-    ],
-    "magical_independent_attack": [
-     182,
-     182
     ]
    },
    "required_level": 60,
@@ -204230,7 +204083,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_hightechq.equ",
     "sha256": "74133916d2fa1a76b68b82d07a6416061e6fad1c44cb21acb07ea35c4ecb97cc"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 270,
+    "modes_4_5": 182
+   }
   },
   "original_27135": {
    "name": "高科技士兵短剑",
@@ -204241,8 +204098,7 @@
     "magical_attack": 648.5,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 284,
-    "magical_independent_attack": 192
+    "independent_attack": 284
    },
    "stat_ranges": {
     "intelligence": [
@@ -204265,13 +204121,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      284,
      284
-    ],
-    "magical_independent_attack": [
-     192,
-     192
     ]
    },
    "required_level": 63,
@@ -204285,7 +204137,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_illusionq.equ",
     "sha256": "479f68489e7073d81d2edf16e3404123c30c5ceb7975d01b18564a50a0470eab"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 284,
+    "modes_4_5": 192
+   }
   },
   "original_27002": {
    "name": "黑铁剑",
@@ -204296,8 +204152,7 @@
     "magical_attack": 60.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 41,
-    "magical_independent_attack": 23
+    "independent_attack": 41
    },
    "stat_ranges": {
     "intelligence": [
@@ -204320,13 +204175,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      41,
      41
-    ],
-    "magical_independent_attack": [
-     23,
-     23
     ]
    },
    "required_level": 5,
@@ -204340,7 +204191,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_iron.equ",
     "sha256": "31e43d5055f2a7fe1b102f5a66628dbf4f310b4144ae1d7e9359f39d7926b73f"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 41,
+    "modes_4_5": 23
+   }
   },
   "original_27009": {
    "name": "新式短剑",
@@ -204351,8 +204206,7 @@
     "magical_attack": 115.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 63,
-    "magical_independent_attack": 38
+    "independent_attack": 63
    },
    "stat_ranges": {
     "intelligence": [
@@ -204375,13 +204229,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      63,
      63
-    ],
-    "magical_independent_attack": [
-     38,
-     38
     ]
    },
    "required_level": 11,
@@ -204395,7 +204245,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_nshort.equ",
     "sha256": "a557aa78bffa85a3f5689ec7afa62e16bf0ba43820779610ed4a99519f91eb52"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 63,
+    "modes_4_5": 38
+   }
   },
   "original_27005": {
    "name": "精致的铁剑",
@@ -204406,8 +204260,7 @@
     "magical_attack": 78.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 48,
-    "magical_independent_attack": 28
+    "independent_attack": 48
    },
    "stat_ranges": {
     "intelligence": [
@@ -204430,13 +204283,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      48,
      48
-    ],
-    "magical_independent_attack": [
-     28,
-     28
     ]
    },
    "required_level": 7,
@@ -204450,7 +204299,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_nsteel.equ",
     "sha256": "8475a6672e72993567c977455fd8405301d813fbd771e1f7cb9feb2f95f4c8fb"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 48,
+    "modes_4_5": 28
+   }
   },
   "original_27012": {
    "name": "精炼的钢剑",
@@ -204461,8 +204314,7 @@
     "magical_attack": 152.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 77,
-    "magical_independent_attack": 48
+    "independent_attack": 77
    },
    "stat_ranges": {
     "intelligence": [
@@ -204485,13 +204337,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      77,
      77
-    ],
-    "magical_independent_attack": [
-     48,
-     48
     ]
    },
    "required_level": 15,
@@ -204505,7 +204353,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_refsteel.equ",
     "sha256": "432bac70d3438b2c8372545b11c5fa5997bdadd913e27c9e438e041c1c2fd5d5"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 77,
+    "modes_4_5": 48
+   }
   },
   "original_27001": {
    "name": "生锈的铁剑",
@@ -204515,8 +204367,7 @@
     "magical_attack": 32.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 26,
-    "magical_independent_attack": 14
+    "independent_attack": 26
    },
    "stat_ranges": {
     "physical_attack": [
@@ -204535,13 +204386,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      26,
      26
-    ],
-    "magical_independent_attack": [
-     14,
-     14
     ]
    },
    "required_level": 3,
@@ -204555,7 +204402,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_riron.equ",
     "sha256": "3904fabe5405cb16aaac3fe940085260d31cf32d19a44c8c06fc997d63b0de70"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 26,
+    "modes_4_5": 14
+   }
   },
   "original_27007": {
    "name": "生锈的短剑",
@@ -204565,8 +204416,7 @@
     "magical_attack": 97.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 45,
-    "magical_independent_attack": 27
+    "independent_attack": 45
    },
    "stat_ranges": {
     "physical_attack": [
@@ -204585,13 +204435,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      45,
      45
-    ],
-    "magical_independent_attack": [
-     27,
-     27
     ]
    },
    "required_level": 10,
@@ -204605,7 +204451,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_rshort.equ",
     "sha256": "012d3eca0eb3932b33491a6c44b8ce4df68af21ce8031a100a613fb612bfeb63"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 45,
+    "modes_4_5": 27
+   }
   },
   "original_27008": {
    "name": "短剑",
@@ -204616,8 +204466,7 @@
     "magical_attack": 106.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 59,
-    "magical_independent_attack": 36
+    "independent_attack": 59
    },
    "stat_ranges": {
     "intelligence": [
@@ -204640,13 +204489,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      59,
      59
-    ],
-    "magical_independent_attack": [
-     36,
-     36
     ]
    },
    "required_level": 10,
@@ -204660,7 +204505,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_short.equ",
     "sha256": "14de94800bb8dfdd4476c7cc1ab258d1ee8cdb752d9049c670a1e4ffcee874d5"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 59,
+    "modes_4_5": 36
+   }
   },
   "original_27011": {
    "name": "钢剑",
@@ -204671,8 +204520,7 @@
     "magical_attack": 143.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 73,
-    "magical_independent_attack": 46
+    "independent_attack": 73
    },
    "stat_ranges": {
     "intelligence": [
@@ -204695,13 +204543,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      73,
      73
-    ],
-    "magical_independent_attack": [
-     46,
-     46
     ]
    },
    "required_level": 14,
@@ -204715,7 +204559,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_steel.equ",
     "sha256": "5de624d496b1eadd2df015c8269adb936ace6e57a8e75f1768b8741d99f73c9d"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 73,
+    "modes_4_5": 46
+   }
   },
   "original_27010": {
    "name": "破古老的钢剑",
@@ -204725,8 +204573,7 @@
     "magical_attack": 133.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 55,
-    "magical_independent_attack": 35
+    "independent_attack": 55
    },
    "stat_ranges": {
     "physical_attack": [
@@ -204745,13 +204592,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      55,
      55
-    ],
-    "magical_independent_attack": [
-     35,
-     35
     ]
    },
    "required_level": 14,
@@ -204765,7 +204608,11 @@
     "path": "equipment/character/swordman/weapon/ssword/sswd_usteel.equ",
     "sha256": "7b7059225fbc1e42f64500988c3e2715ff4685b133237877a448ea60e7bef711"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 55,
+    "modes_4_5": 35
+   }
   },
   "original_27048": {
    "name": "宽刃剑",
@@ -204776,8 +204623,7 @@
     "magical_attack": 400.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 174,
-    "magical_independent_attack": 116
+    "independent_attack": 174
    },
    "stat_ranges": {
     "intelligence": [
@@ -204800,13 +204646,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      174,
      174
-    ],
-    "magical_independent_attack": [
-     116,
-     116
     ]
    },
    "required_level": 42,
@@ -204820,7 +204662,11 @@
     "path": "equipment/character/swordman/weapon/ssword/xiphos.equ",
     "sha256": "e826b1cf7477f2c39b51c2455c0eb969f0f5e8f454674df3d1ad2b3b9557fa54"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 174,
+    "modes_4_5": 116
+   }
   },
   "original_27047": {
    "name": "古老的宽刃剑",
@@ -204830,8 +204676,7 @@
     "magical_attack": 391.0,
     "cast_speed": 0.02,
     "magical_crit": 0.02,
-    "physical_independent_attack": 131,
-    "magical_independent_attack": 87
+    "independent_attack": 131
    },
    "stat_ranges": {
     "physical_attack": [
@@ -204850,13 +204695,9 @@
      0.02,
      0.02
     ],
-    "physical_independent_attack": [
+    "independent_attack": [
      131,
      131
-    ],
-    "magical_independent_attack": [
-     87,
-     87
     ]
    },
    "required_level": 42,
@@ -204870,7 +204711,11 @@
     "path": "equipment/character/swordman/weapon/ssword/xiphos_old.equ",
     "sha256": "b56667f5c30df8de422b372f1c0b2044dd996ab4a85e8e550c1591b6413a5780"
    },
-   "weapon": "shortsword"
+   "weapon": "shortsword",
+   "native_separate_attack": {
+    "default": 131,
+    "modes_4_5": 87
+   }
   }
  },
  "consumables": {

@@ -1522,7 +1522,7 @@
     "item_type:[teleport potion]": 1,
     "field:[summon npc]": 1
   },
-  "runtime_sha256": "826f640810153140f0e7ceae9df68d0b3b1f1308ce50ceb7027a9caaed82bab4",
+  "runtime_sha256": "695caba7362b2ba2a0ef333e104503c7e4d6993d8d3978a4b3a54692a54774b3",
   "files": {
     "index.json.gz": "6aac0ac91e429aaeb256bb5308324476dda84cc5f03b16d1a389c02f4110f665",
     "localization_sources.json.gz": "f4c8ab05d5f8b70645ab7ec7d184cb0ded4f98616b218d98f728ba4e9b6e07c3",

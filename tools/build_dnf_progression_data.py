@@ -15,6 +15,7 @@ from pathlib import Path
 from dnf_pvf import open_library, resolve, parse_script
 from dnf_pvf_archive import Archive
 from audit_dnf_reusable_data import TextResolver
+from dnf_equipment_stats import apply_separate_attack
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / 'game_dnf'
@@ -270,13 +271,10 @@ def main():
                 if '['+element+' resistance]' in fields:
                     value=float(fields['['+element+' resistance]'][0])
                     stats[element+'_resist']=value;ranges[element+'_resist']=[value,value]
-            if '[separate attack]' in fields:
-                for index,stat in enumerate(['physical_independent_attack','magical_independent_attack']):
-                    value=float(fields['[separate attack]'][index])
-                    stats[stat]=value;ranges[stat]=[value,value]
             definition = {'name':item['name'],'slot':slot,'required_level':item['level'], 'stats':stats,
                           'stat_ranges':ranges,'source':item['source'],'durability':int(get('[durability]',40)),
                           'usable_jobs':fields.get('[usable job]',['[all]'])}
+            if '[separate attack]' in fields:apply_separate_attack(definition,fields['[separate attack]'])
             if slot == 'weapon':
                 definition['weapon'] = 'katana' if 'katana' in path else 'greatsword' if '/lsword/' in path else 'shortsword'
             numbers['equipment'][id] = definition
