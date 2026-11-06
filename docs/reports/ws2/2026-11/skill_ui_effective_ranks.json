@@ -1,0 +1,109 @@
+{
+  "baseline": "ff49fdc0baa9f0e161e09c8258cebb8e5072f6fc",
+  "scope": "UI binding to existing source-derived effective ranks and move-table context; no original client UI execution or visual verification",
+  "original_evidence": [
+    "native_skill_rank_rebuild.json",
+    "native_weapon_mastery_rank.json"
+  ],
+  "baseline_method": "Replace only two UI files with git-show baseline bytes, retaining new catalog API for final API assertions. Restore modified UI bytes in finally. Legacy get_skill context reset was subsequently made explicit; formal final run uses committed implementation.",
+  "checks": {
+    "baseline": 476,
+    "baseline_failures": 157,
+    "after": 476,
+    "after_failures": 0,
+    "formal_loop": 435,
+    "formal_failures": 0
+  },
+  "files": {
+    "game_dnf/ui/flow/skill_panel.gd": "217cc40900f643163d297b0151b099e25731f265ee6cdc7a62d30d2f8ea72350",
+    "game_dnf/ui/flow/native_windows.gd": "832d5d16c0f9cd14c2dad9e145bf98bac3fca364d0a640d5d56ab5ed49910bab",
+    "game_dnf/combat/api/skill_catalog.gd": "774c6710df648d7d7070074a38f0cdbef1c343214e386fcd9ab11fbcc23ec7f2",
+    "game_dnf/tests/flow/test_skill_effective_ui.gd": "d965013de25e466824bc431358bf6d80f7f1b34e315580676ec463d213afce9d",
+    "tools/run_dnf_loop.ps1": "6dbf4e9e6de92a4003b7bae3d180c2dba77e0a303c5234b7f6296c99cbd0dee6"
+  },
+  "baseline_ui": {
+    "game_dnf/ui/flow/skill_panel.gd": "1df9aeac433d6d5c6b9e7e10259a45db16b5e215626141b7b8b4fa54fa3fbd83",
+    "game_dnf/ui/flow/native_windows.gd": "cd361a7faa9622b819a7cc42ec3fcb6a2567f2921454e9197ccdbac27a159c0e"
+  },
+  "logs": {
+    "skill_ui_ranks_before": {
+      "sha256": "1b700d29a4885894dbee3111eb261b3b608f6d38f0c1775758b340b8b49419c9",
+      "completion_lines": [
+        "[SKILL_UI_RANKS] COMPLETE checks=476 failures=157"
+      ]
+    },
+    "skill_ui_ranks_after": {
+      "sha256": "e5bae79d5d3c92efe1e616beea331bf4a8f6ae086636193b8cec9645f32ef46c",
+      "completion_lines": [
+        "[SKILL_UI_RANKS] COMPLETE checks=476 failures=0"
+      ]
+    },
+    "skill_ui_ranks_perf": {
+      "sha256": "11b5c0eb2ce819dff718c884da0812a43759c5814b8037a525faeaf6a96affd8",
+      "completion_lines": [
+        "[UI_PERF] equipment_window median_ms=7.803 peak_ms=9.763 budget_ms=80.0",
+        "[UI_PERF] weapon_tooltip median_ms=2.048 peak_ms=2.383 budget_ms=30.0",
+        "[UI_PERF] skill_tooltip median_ms=11.920 peak_ms=12.046 budget_ms=60.0",
+        "[UI_PERF] drag_equipment_check median_ms=0.464 peak_ms=0.521 budget_ms=20.0",
+        "[UI_PERF] reinforcement_preview median_ms=0.395 peak_ms=0.604 budget_ms=30.0",
+        "[UI_PERF] profile_validation median_ms=0.684 peak_ms=0.753 budget_ms=20.0",
+        "[UI_PERF] weapon_appearance_query median_ms=0.026 peak_ms=0.027 budget_ms=5.0",
+        "[UI_PERF] skill_window median_ms=18.399 peak_ms=18.914 budget_ms=80.0",
+        "[UI_PERF] COMPLETE checks=17 failures=0"
+      ]
+    },
+    "skill_ui_ranks_loop_final": {
+      "sha256": "8b75c7804c618b3706bfc98a151c3fc0fc68de5177f4125ca3ed89d869dbd0c6",
+      "completion_lines": [
+        "[PARTICLE_MOTION] COMPLETE checks=275 failures=0",
+        "[PARTICLE_EMITTER] COMPLETE checks=153 failures=0",
+        "[PARTICLE_VIEW] COMPLETE checks=87 failures=0",
+        "[ICE_PARTICLES] COMPLETE checks=355 failures=0",
+        "[FIREWAVE] COMPLETE checks=91 failures=0",
+        "[SKILL_EFFECTS] COMPLETE checks=19 failures=0",
+        "[GHOST_RANKS] COMPLETE checks=126 failures=0",
+        "[MASTERY_RANKS] COMPLETE checks=229 failures=0",
+        "[SKILL_IDENTITY] COMPLETE checks=501 failures=0",
+        "[UI_PERF] equipment_window median_ms=7.151 peak_ms=8.170 budget_ms=80.0",
+        "[UI_PERF] weapon_tooltip median_ms=1.789 peak_ms=1.873 budget_ms=30.0",
+        "[UI_PERF] skill_tooltip median_ms=9.409 peak_ms=9.446 budget_ms=60.0",
+        "[UI_PERF] drag_equipment_check median_ms=0.246 peak_ms=0.327 budget_ms=20.0",
+        "[UI_PERF] reinforcement_preview median_ms=0.399 peak_ms=0.411 budget_ms=30.0",
+        "[UI_PERF] profile_validation median_ms=0.350 peak_ms=0.351 budget_ms=20.0",
+        "[UI_PERF] weapon_appearance_query median_ms=0.023 peak_ms=0.028 budget_ms=5.0",
+        "[UI_PERF] skill_window median_ms=15.777 peak_ms=17.323 budget_ms=80.0",
+        "[UI_PERF] COMPLETE checks=17 failures=0",
+        "[QUEST_RULES] COMPLETE checks=288 failures=0",
+        "[CAMPAIGN] COMPLETE checks=132 failures=0",
+        "[WEAPON_RULES] COMPLETE checks=29925 failures=0",
+        "[NATIVE_BULK] COMPLETE checks=7780 failures=0",
+        "[TEACHING_RULES] COMPLETE checks=30 failures=0",
+        "[POISON_RULES] COMPLETE checks=26 failures=0",
+        "[ORIGINAL_DATA] COMPLETE checks=31 failures=0",
+        "[RECOVERY_TEST] COMPLETE checks=53 failures=0",
+        "[UPGRADE_TEST] COMPLETE checks=46 failures=0",
+        "[SERVICE_TEST] COMPLETE checks=33 failures=0",
+        "[ITEM_TEST] COMPLETE checks=44 failures=0",
+        "[SKILL_UI_RANKS] COMPLETE checks=476 failures=0",
+        "[NUMBERS_TEST] COMPLETE checks=251 failures=0",
+        "[QUEST_TEST] COMPLETE checks=45 failures=0",
+        "[TOWN_UNIT] COMPLETE checks=110 failures=0",
+        "[GRAN_UNIT] COMPLETE checks=19 failures=0",
+        "[LOOP_TEST] COMPLETE checks=435 failures=0 captures=0"
+      ]
+    },
+    "skill_ui_job_gap": {
+      "sha256": "6fd1c82c348a807d1fe49ca1bc203a4dd3d94787e81256a78a02d2b08dc7d584",
+      "completion_lines": [
+        "JOB_GAP {\"asura\":{\"message\":\"成长类型不存在\",\"ok\":false},\"berserker\":{\"ok\":true},\"soulbringer\":{\"message\":\"成长类型不存在\",\"ok\":false},\"weaponmaster\":{\"ok\":true}}"
+      ]
+    }
+  },
+  "job_probe": "extends SceneTree\nconst Session = preload(\"res://flow/session.gd\")\nfunc _initialize() -> void:\n\tvar results := {}\n\tfor job: String in [\"weaponmaster\",\"berserker\",\"soulbringer\",\"asura\"]:\n\t\tvar session = Session.new()\n\t\tsession.command(\"numbers.level\",{\"level\":60})\n\t\tresults[job] = session.command(\"numbers.growtype\",{\"growtype\":job})\n\tprint(\"JOB_GAP \",JSON.stringify(results))\n\tquit()\n",
+  "boundaries": [
+    "soulbringer/asura UI fixtures manually assign growtype; actual advancement rejected until progression definitions supplied",
+    "12 targets: ghost 7 and weapon mastery 5; no full equipment/global rank rebuild",
+    "headless UI labels and combat tables, no screenshot acceptance",
+    "preview remains existing damage-percent summary; full final damage and resource corrections pending"
+  ]
+}

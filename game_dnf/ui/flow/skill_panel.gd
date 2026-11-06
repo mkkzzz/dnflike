@@ -36,6 +36,7 @@ var _node_views: Dictionary = {}
 var _edge_views: Array = []
 var _sp_label: Label
 var _tip_label: Label
+var _effective_levels: Dictionary = {}
 
 func _init(target) -> void:
 	game = target
@@ -124,6 +125,7 @@ func class_allowed(skill: Dictionary) -> bool:
 	return int(caps[0]) > 0 or int(caps[slot]) > 0
 
 func show_window(parent: Control) -> void:
+	_effective_levels = Numbers.Skills.effective_levels(game.session.profile["skills"],Numbers.shared_config())
 	var skin = game.skin
 	selected_branch = current_branch()
 	var branch := branch_data(selected_branch)
@@ -339,7 +341,7 @@ func _refresh_node(key: String) -> void:
 	elif not bool(_state(skill)["ok"]):
 		if icon != null:icon.modulate = Color(0.7, 0.7, 0.7, 0.9)
 	base.set_meta("rest_tint", base.modulate)
-	var rank := int(game.session.profile["skills"].get(local, 0))
+	var rank := int(_effective_levels.get(local, 0))
 	var label: Label = view["rank"]
 	label.text = str(rank)
 	label.add_theme_color_override("font_color", Color("f3df9b") if rank > 0 else Color("938e82"))
@@ -372,6 +374,7 @@ func _replace_detail(keep_scroll := false) -> void:
 
 func _refresh_progress() -> void:
 	if not is_instance_valid(_root) or _root.is_queued_for_deletion():return
+	_effective_levels = Numbers.Skills.effective_levels(game.session.profile["skills"],Numbers.shared_config())
 	_sp_label.text = str(Numbers.Skills.available(game.session.profile, Numbers.shared_config()))
 	for key: String in _node_views:_refresh_node(key)
 	_replace_detail(true)
@@ -444,9 +447,11 @@ func _detail(root: Control) -> void:
 		skin.image(panel, separator, Vector2(8, 134))
 	var local := String(skill["local_id"])
 	var rank := int(game.session.profile["skills"].get(local, 0)) if local != "" else 0
+	var effective_rank := int(_effective_levels.get(local,0))
 	var limit := runtime_max_level(skill)
-	var level_text := "等级  %d / %d" % [rank, limit] if local != "" else "状态  未实装"
+	var level_text := "等级  %d / %d" % [effective_rank, limit] if local != "" else "状态  未实装"
 	var level_label: Label = skin.label(panel, level_text, Vector2(30, 104), 11, Color("e8ddb9"))
+	level_label.name = "skill_effective_rank"
 	level_label.size = Vector2(140, 17)
 	level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
@@ -455,7 +460,8 @@ func _detail(root: Control) -> void:
 		description = String(skill.get("basic_explain", ""))
 	var cost := _number(skill.get("purchase_cost"))
 	skin.label(panel, "消耗 SP：%d" % cost, Vector2(16, 137), 11, Color("68d5ed"))
-	skin.label(panel, "技能等级  %d" % rank, Vector2(16, 154), 10, Color("ddd0b2"))
+	var learned_label: Label = skin.label(panel, "已学等级  %d" % rank, Vector2(16, 154), 10, Color("ddd0b2"))
+	learned_label.name = "skill_learned_rank"
 	var learn := _rank_button(panel, "加点", Vector2(146, 153), "+", func(): change(selected, 1))
 	learn.disabled = not bool(_state(skill)["ok"])
 	var refund := _rank_button(panel, "退点", Vector2(166, 153), "-", func(): change(selected, -1))
@@ -467,7 +473,7 @@ func _detail(root: Control) -> void:
 	if requires != "":
 		meta.append("前置技能：" + requires)
 	if local != "":
-		var values: Dictionary = game.skill_catalog.get_skill(local, maxi(1, rank))
+		var values: Dictionary = game.skill_catalog.get_profile_skill(local, game.session.profile)
 		meta.append("MP：%d    冷却：%.1f秒" % [int(values.get("mp", 0)), float(values.get("cooldown", 0))])
 		var percentages: Array = values.get("damage_percent", [])
 		if not percentages.is_empty():

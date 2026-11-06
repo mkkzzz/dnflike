@@ -208,6 +208,14 @@ if ($Test) {
     $itemOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_inventory.gd 2>&1
     $itemOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($itemOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($itemOutput -match '\[ITEM_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Item regression failed."}
+    $skillUiPreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $skillUiOutput=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/flow/test_skill_effective_ui.gd 2>&1
+        $skillUiExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$skillUiPreference}
+    $skillUiOutput | Write-Output
+    if ($skillUiExit -ne 0 -or ($skillUiOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($skillUiOutput -match '\[SKILL_UI_RANKS\] COMPLETE checks=\d+ failures=0')) {throw "Skill UI effective-rank regression failed."}
     $numericOutput=& $GodotPath --headless --path $gamePath --script res://tests/stats/test_numbers.gd 2>&1
     $numericOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($numericOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($numericOutput -match '\[NUMBERS_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Numeric regression failed."}

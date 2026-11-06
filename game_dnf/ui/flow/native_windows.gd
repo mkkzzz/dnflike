@@ -216,14 +216,15 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 	skill_tip_id = id
 	skill_tip_rect = rect
 	var data: Dictionary = game.SkillDescriptions.SKILLS[id]
-	var values: Dictionary = game.skill_catalog.get_skill(id,int(game.session.profile["skills"].get(id,1)))
+	var values: Dictionary = game.skill_catalog.get_profile_skill(id,game.session.profile)
+	var rank := int(values["rank"])
 	var height := 260 if detailed else 178
 	var at := slot_tip_anchor(rect, Vector2(300, height))
 	tip = skin.item_board(game.ui, Rect2(at, Vector2(300, height)))
 	tip.z_index = 100
 	tip.set_meta("skill", id)
 	skin.label(tip, data["name"], Vector2(16, 12), 16, Color("f0d18a"))
-	skin.label(tip, "技能等级 %d" % int(game.session.profile["skills"].get(id,1)), Vector2(16, 40), 11, Color("b9b1a0"))
+	skin.label(tip, "技能等级 %d" % rank, Vector2(16, 40), 11, Color("b9b1a0")).name = "skill_effective_rank"
 	skin.image(tip, game.slot_texture({"place":"skill", "id":id}), Vector2(254, 14))
 	var brief: Label = skin.label(tip, data["brief"], Vector2(16, 69), 12)
 	brief.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -242,11 +243,11 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 			var index := 0
 			for mod: Dictionary in effect["modifiers"]:
 				if index%2 == 0:detail += "\n"
-				detail += "  %s ×%.2f" % [game.number_windows.NAMES.get(mod["stat"],mod["stat"]),float(mod["value"])+float(mod.get("per_level",0))*(int(game.session.profile["skills"][id])-1)]
+				detail += "  %s ×%.2f" % [game.number_windows.NAMES.get(mod["stat"],mod["stat"]),float(mod["value"])+float(mod.get("per_level",0))*(rank-1)]
 				index += 1
 		if id == "guard":
 			var definition: Dictionary = game.session.Numbers.shared_config()["skills"][id]
-			detail += "\n当前正面承伤 %.0f%%" % (maxf(0,float(definition["guard_factor"])-(int(game.session.profile["skills"][id])-1)*float(definition["guard_per_level"]))*100)
+			detail += "\n当前正面承伤 %.0f%%" % (maxf(0,float(definition["guard_factor"])-(rank-1)*float(definition["guard_per_level"]))*100)
 		var text: Label = skin.label(tip, detail, Vector2(16, 148), 11)
 		text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		text.clip_text = true

@@ -2,6 +2,7 @@ extends RefCounted
 ## Read-only UI projection of the same compiled SKL and move table as combat.
 const ContentDB = preload("res://content/api/content_db.gd")
 const MoveTable = preload("res://combat/data/move_table.gd")
+const Numbers = preload("res://stats/api/numbers.gd")
 var table = MoveTable.new()
 func _init() -> void:
 	var db = ContentDB.new()
@@ -10,7 +11,26 @@ func _init() -> void:
 	table.build(db, db.rules(), assets)
 
 func get_skill(id: String, rank := 1) -> Dictionary:
-	table.configure_skills({id:rank})
+	# Standalone legacy preview has a fixed context, independent of prior UI calls.
+	table.configure_skills({id:rank},"weaponmaster","katana")
+	return _values(id)
+
+## Same purchased -> effective rank projection and variant context as combat.
+## A zero rank remains unlearned; the table's first row is only a preview.
+func get_profile_skill(id: String, profile: Dictionary) -> Dictionary:
+	var cfg := Numbers.shared_config()
+	id = Numbers.SkillIdentity.canonical(id,cfg)
+	var levels := Numbers.Skills.effective_levels(profile["skills"],cfg)
+	var uid := String(profile.get("equipment",{}).get("weapon",""))
+	var definition := String(profile.get("gear",{}).get(uid,{}).get("definition",""))
+	var weapon := String(cfg["equipment"].get(definition,{}).get("weapon","katana"))
+	table.configure_skills(levels,String(profile.get("growtype","swordman")),weapon)
+	var result := _values(id)
+	result["rank"] = int(levels.get(id,0))
+	result["learned_rank"] = int(profile["skills"].get(id,0))
+	return result
+
+func _values(id: String) -> Dictionary:
 	var move: Dictionary = table.moves.get(id, {})
 	var percentages: Array = []
 	for hit: Dictionary in move.get("hits", []):
