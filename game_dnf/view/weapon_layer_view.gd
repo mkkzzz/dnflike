@@ -8,14 +8,18 @@ var frame: Dictionary={}
 var facing:=1
 var height:=0.0
 var tint:=Color.WHITE
+var parent_flash: ShaderMaterial
+var own_material: ShaderMaterial
 
 func setup(info: Dictionary, flash_material: ShaderMaterial) -> void:
 	bank=info["bank"];clips=info["clips"]
 	atlas=TextureCache.load_texture(String(bank["texture"]))
 	show_behind_parent=int(info["order"])==650
-	material=flash_material
+	parent_flash=flash_material
+	own_material=flash_material.duplicate()
+	material=own_material
 
-func present(pose: String, clock_ms: float, direction: int, z: float, color: Color) -> void:
+func present(pose: String, clock_ms: float, direction: int, z: float, color: Color, body_frame := -1) -> void:
 	facing=direction;height=z;tint=color
 	var ani: Dictionary=clips.get(pose,clips.get("stay",{}))
 	var frames: Array=ani.get("frames",[])
@@ -28,6 +32,14 @@ func present(pose: String, clock_ms: float, direction: int, z: float, color: Col
 		end+=float(entry.get("delay_ms",100))
 		if local<end:frame=entry;break
 	if frame.is_empty():frame=frames[-1]
+	# Native equipment wave has a 50ms first frame; the body's 10000ms hold
+	# is state-controlled. Bind equipment to body frame, never clamp at 10s.
+	if ani.get("sync_body_frame",false) and body_frame>=0 and body_frame<frames.size():frame=frames[body_frame]
+	var blend: Dictionary=frame.get("items",{}).get("11",{})
+	own_material.set_shader_parameter("source_monochrome",int(blend.get("type",0))==5)
+	var rgb: Array=blend.get("color",[255,255,255])
+	own_material.set_shader_parameter("mono_rgb",Vector3(float(rgb[0]),float(rgb[1]),float(rgb[2]))/255.0)
+	own_material.set_shader_parameter("hit_flash",parent_flash.get_shader_parameter("hit_flash"))
 	queue_redraw()
 
 func _draw() -> void:

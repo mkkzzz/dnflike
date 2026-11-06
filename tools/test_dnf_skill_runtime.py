@@ -84,6 +84,21 @@ class SkillRuntimeTest(unittest.TestCase):
         hit = self.moves["normalwave"]["stages"][0]["hits"][0]
         self.assertEqual((hit.get("percent_col"),hit.get("fixed_col"),hit.get("size_col")), (2,0,1))
 
+    def test_native_wave_binds_body_weapon_and_effect(self):
+        stage=self.moves['normalwave']['stages'][0]
+        self.assertEqual(self.moves['normalwave']['native_state'],'normalwave')
+        self.assertEqual(stage['ani'],'wave')
+        self.assertEqual(stage['hits'][0]['at'],10100)
+        self.assertEqual(stage['fx'][0]['at'],10000)
+        self.assertEqual(self.runtime['assets']['effect_anims'][stage['fx'][0]['key']],
+                         'character/swordman/effect/animation/normalwaveslash.ani')
+        appearance=json.loads((ROOT/'game_dnf/assets_local/weapon_appearance_v2/manifest.json').read_text(encoding='utf8'))
+        for skin in appearance['appearances'].values():
+            for layer in skin['layers']:
+                ani=appearance['animations'][layer['clips']['wave']]
+                self.assertTrue(ani['sync_body_frame'])
+                self.assertEqual([f['img_frame'] for f in ani['frames']],list(range(42,51)))
+
     def test_job_derivatives_are_declared(self):
         triple = self.runtime["variants"]["triple"][0]
         self.assertEqual(triple["job"], "weaponmaster")

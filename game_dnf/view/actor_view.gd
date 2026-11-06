@@ -28,7 +28,7 @@ func setup(atlas_bank: Dictionary, animation_clips: Dictionary, overrides: Dicti
 	atlas = TextureCache.load_texture(String(bank.get("texture","")))
 	if _flash_shader == null:
 		_flash_shader = Shader.new()
-		_flash_shader.code = "shader_type canvas_item; uniform float hit_flash=0.0; void fragment(){ vec4 c=texture(TEXTURE,UV)*COLOR; c.rgb=mix(c.rgb,vec3(1.0),hit_flash); COLOR=c; }"
+		_flash_shader.code = "shader_type canvas_item; uniform float hit_flash=0.0; uniform bool source_monochrome=false; uniform vec3 mono_rgb=vec3(1.0); void fragment(){ vec4 c=texture(TEXTURE,UV)*COLOR; if(source_monochrome){c.rgb=mono_rgb*COLOR.rgb;} c.rgb=mix(c.rgb,vec3(1.0),hit_flash); COLOR=c; }"
 	_flash_material = ShaderMaterial.new()
 	_flash_material.shader = _flash_shader
 	material = _flash_material
@@ -71,7 +71,9 @@ func present(next_pose: String, ms: float, direction: int, z: float, white: floa
 	tint = color
 	if _flash_material != null:
 		_flash_material.set_shader_parameter("hit_flash", clampf(flash,0,1))
-	for layer in equipment_layers:layer.present(next_pose,ms,direction,z,color)
+	if not equipment_layers.is_empty():
+		var body_frame := int(sample().get("frame",-1))
+		for layer in equipment_layers:layer.present(next_pose,ms,direction,z,color,body_frame)
 	queue_redraw()
 
 func _draw() -> void:

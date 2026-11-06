@@ -166,7 +166,10 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	for fx in effects:
 		if is_instance_valid(fx) and not fx.is_queued_for_deletion():
 			if fx.follow == 0:fx.position = _canvas(_player_pos, _player_z)
-			fx.advance(sim_ms)
+			if fx.action_clock_at >= 0:
+				if int(p.get("action_instance",-1)) != fx.action_instance or p.get("state","") != "action":fx.queue_free()
+				else:fx.seek(maxf(0,float(p["clock"])-fx.action_clock_at))
+			else:fx.advance(sim_ms)
 	effects = effects.filter(func(fx):return is_instance_valid(fx) and not fx.is_queued_for_deletion())
 	stage.show_room(s["stage"])
 	var props: Array = s["props"]
@@ -344,6 +347,8 @@ func _spawn_fx(event: Dictionary) -> void:
 	fx.tag = String(event.get("tag",""))
 	fx.follow = int(event.get("follow",-1))
 	fx.max_ms = float(event.get("max_ms",-1.0))
+	fx.action_clock_at = float(event.get("action_clock_at",-1.0))
+	fx.action_instance = int(event.get("action_instance",-1))
 	fx.setup(_effects[key],int(event["facing"]))
 	fx.advance(0)
 	effects.append(fx)

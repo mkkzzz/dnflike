@@ -226,6 +226,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		"effect_id":String(spec.get("effect_id","")),"requires_effect":String(spec.get("requires_effect","")),
 		"movement":String(spec.get("movement","")),
 		"super_armor":bool(spec.get("super_armor",false)),"invuln_ms":float(spec.get("invuln_ms",0))}
+	if spec.get("native_state","") == "normalwave":
+		move["native_state"] = "normalwave"
+		move["native_recovery_ms"] = float(skill["static"][0])
 	if spec.has("stages"):
 		move["stages"] = []
 		for stage: Dictionary in spec["stages"]:move["stages"].append(_build_stage(stage,skill))

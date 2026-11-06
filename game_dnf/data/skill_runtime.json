@@ -32,6 +32,7 @@
    "skillfx_moonlightslash1_d0608d59": "character/swordman/effect/animation/moonlightslash1.ani",
    "skillfx_moonlightslash2_574395d9": "character/swordman/effect/animation/moonlightslash2.ani",
    "skillfx_moonlightslashfull_3d8e1047": "character/swordman/effect/animation/moonlightslashfull.ani",
+   "skillfx_normalwaveslash_0f16bb7b": "character/swordman/effect/animation/normalwaveslash.ani",
    "skillfx_outragebreak_stone_part_1_18a07756": "character/swordman/effect/animation/outragebreak/particle/outragebreak_stone_part_1.ani",
    "skillfx_outragebreak_stone_part_2_376e63de": "character/swordman/effect/animation/outragebreak/particle/outragebreak_stone_part_2.ani",
    "skillfx_saya_down_ced86275": "passiveobject/character/swordman/animation/hardattackcharge/saya-down.ani",
@@ -134,6 +135,7 @@
    "tripleslash5": "character/swordman/animation/tripleslash5.ani",
    "vaneslash": "character/swordman/animation/vaneslash.ani",
    "vaneslashtry": "character/swordman/animation/vaneslashtry.ani",
+   "wave": "character/swordman/animation/wave.ani",
    "waveeyeattack1": "character/swordman/animation/waveeyeattack1.ani",
    "waveeyeattack2": "character/swordman/animation/waveeyeattack2.ani",
    "waveeyeattack3": "character/swordman/animation/waveeyeattack3.ani",
@@ -2914,15 +2916,22 @@
   },
   "normalwave": {
    "name": "地裂 · 波动剑",
+   "native_state": "normalwave",
    "skill": "skill/swordman/normalwave.skl",
    "stages": [
     {
-     "ani": "summon2",
+     "ani": "wave",
      "atk": "",
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 10000,
+       "key": "skillfx_normalwaveslash_0f16bb7b"
+      }
+     ],
      "hits": [
       {
-       "at": 340,
-       "effects": [],
+       "at": 10100,
        "fixed_col": 0,
        "life_ms": -1,
        "object": "passiveobject/character/swordman/normalwave.obj",

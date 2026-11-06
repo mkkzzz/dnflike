@@ -1,6 +1,6 @@
 extends RefCounted
 ## Item identity is separate from weapon family (simulation/sound/skill rules).
-const PATH := "res://assets_local/weapon_appearance_v1/manifest.json"
+const PATH := "res://assets_local/weapon_appearance_v2/manifest.json"
 static var _data: Dictionary = {}
 static var _layers: Dictionary = {}
 

@@ -115,8 +115,8 @@ CAST_OBJECTS = {
     "ashenfork": (OBJ_ROOT + "ashenforksub.obj", 260, 0.0, 700),
     # Native object 20001 (0x9EBAF0) dies at ANI end. Its OBJ supplies no
     # travel controller; the image/box positions already advance within ANI.
-    # Cast pose and spawn timing below still await native state integration.
-    "normalwave": (OBJ_ROOT + "normalwave.obj", 340, 0.0, -1),
+    # Its native-state adapter below supplies the source-frame trigger.
+    "normalwave": (OBJ_ROOT + "normalwave.obj", 0, 0.0, -1),
     "icewave": (OBJ_ROOT + "icewave1.obj", 360, 240.0, 1800),
     "firewave": (OBJ_ROOT + "firewavebig.obj", 420, 360.0, 1800),
     "bloodblast": (OBJ_ROOT + "grabblastbloodbig.obj", 280, 0.0, 1700),
@@ -1034,12 +1034,18 @@ def build_move(
     if key == "normalwave":
         # SKL [level property]: percent <- (-1,2,1), fixed <- (-2,0,1),
         # size percent <- (-1,1,1). The generic column-zero attack loses both
-        # the real percentage and independent-attack term. Timing remains an
-        # unverified adapter; this mapping does not certify the whole skill.
-        for stage in stages:
-            for hit in stage.get("hits", []):
-                if hit.get("object") == OBJ_ROOT + "normalwave.obj":
-                    hit.update(percent_col=2, fixed_col=0, size_col=1)
+        # the real percentage and independent-attack term. Full movement and
+        # cancel semantics still require further native-code tracing.
+        # Native CNSwordman state 24: CHR etc motion 9, frame 0 hold,
+        # resume at frame 1, attach skill20 FX, create object at frame 3.
+        wave = records[CHR_ANI + "wave.ani"]["decoded"]
+        delays = [int(f["end_ms"]-f["start_ms"]) for f in wave["timeline"]]
+        slash = add_fx(fx, effects, CHR_FX + "normalwaveslash.ani")
+        result["native_state"] = "normalwave"
+        stages[:] = [{"ani": "wave", "atk": "", "hits": [{
+            "object": OBJ_ROOT + "normalwave.obj", "at": sum(delays[:3]),
+            "speed": 0.0, "life_ms": -1, "percent_col": 2, "fixed_col": 0, "size_col": 1,
+        }], "fx": [{"key": slash, "at": delays[0], "action_clock": True}]}]
     if key in ["bloodyrave", "outragebreak"]:
         result["requires_effect"] = "frenzy"
     if key == "outragebreak":

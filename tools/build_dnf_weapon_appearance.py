@@ -86,10 +86,13 @@ class Atlas:
 
 def check(output):
     data=json.loads((output/'manifest.json').read_text(encoding='utf8'))
+    for path,digest in data.get('dependencies',{}).items():
+        if sha((ROOT/'game_dnf'/path.removeprefix('res://')).read_bytes())!=digest:
+            raise ValueError('Weapon dependency hash: '+path)
     for file, digest in data['files'].items():
         if sha((output/file).read_bytes())!=digest:raise ValueError('Weapon asset hash: '+file)
     for bank in list(data['banks'].values())+list(data['body'].values()):
-        with Image.open(output/Path(bank['texture']).name) as image:
+        with Image.open(ROOT/'game_dnf'/bank['texture'].removeprefix('res://')) as image:
             image=image.convert('RGBA')
             for number, frame in bank['items'].items():
                 x,y,w,h=frame['rect']
@@ -100,11 +103,53 @@ def check(output):
     return data
 
 
+def extend_poses(src, output, base, poses):
+    """New immutable metadata revision; unchanged native PNGs remain in the base pack."""
+    data=check(base)
+    data['dependencies']={**data.get('dependencies',{}),
+        'res://assets_local/'+base.name+'/manifest.json':sha((base/'manifest.json').read_bytes())}
+    data['files']={}
+    remap={};appearances={}
+    for old,skin in data['appearances'].items():
+        for layer in skin['layers']:
+            folder=PurePosixPath(layer['clips']['stay']).parent
+            bank=data['banks'][layer['bank']]
+            for pose in poses:
+                path=str(folder/(pose+'.ani'));ani=src.animation(path)
+                for frame in ani['frames']:
+                    if frame.get('img'):
+                        image=bind_image(frame['img'],skin['variation'])
+                        # Reuse only the same verified IMG; never substitute a family bank.
+                        if image not in data['source_images'] or src.image(image) is None or src.sources[image]!=data['source_images'][image]['sha256']:
+                            raise ValueError('Changed source IMG: '+image)
+                        if layer['bank']!='weapon_'+src.sources[image][:20]:
+                            raise ValueError('Weapon pose changes bank: '+path)
+                        if str(frame.get('img_frame',0)) not in bank['items']:
+                            raise ValueError('Weapon frame outside IMG: '+path)
+                    if set(frame.get('items',{}))-{'8','11','12','23'}:
+                        raise ValueError('Unknown weapon visual control: '+path)
+                    blend=frame.get('items',{}).get('11')
+                    if blend and (blend.get('type')!=5 or len(blend.get('color',[]))!=3):
+                        raise ValueError('Unsupported weapon blend: '+path)
+                data['animations'][path]={'frames':ani['frames'],'duration_ms':ani['duration_ms'],'source_ani':path,'sha256':src.sources[path],'sync_body_frame':True}
+                data['source_animations'][path]=src.sources[path]
+                layer['clips'][pose]=path
+        new=sha(json.dumps(skin['layers'],sort_keys=True,separators=(',',':')).encode())[:20]
+        remap[old]=new;appearances[new]=skin
+    data['appearances']=appearances
+    data['items']={item:remap[skin] for item,skin in data['items'].items()}
+    data['summary']['poses']=len(next(iter(appearances.values()))['layers'][0]['clips'])
+    write(output/'manifest.json',data)
+    check(output)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--library',type=Path)
     parser.add_argument('--version',default='weapon_appearance_v1')
     parser.add_argument('--check',action='store_true')
+    parser.add_argument('--extend-from',type=Path,help='Verified existing appearance pack; reuse immutable PNGs')
+    parser.add_argument('--pose',action='append',default=[],help='Explicit source ANI pose to append to an existing pack')
     args=parser.parse_args()
     if not re.fullmatch(r'weapon_appearance_v\d+',args.version):raise ValueError('Expected immutable weapon_appearance_vN')
     output=ROOT/'game_dnf/assets_local'/args.version
@@ -112,6 +157,12 @@ def main():
     if output.exists() and any(output.iterdir()):raise ValueError('Immutable appearance version already exists')
     output.mkdir(parents=True,exist_ok=True)
     src=Source(args.library)
+    if args.extend_from:
+        try:
+            if not args.pose or any(not re.fullmatch(r'[a-z0-9_]+',pose) for pose in args.pose):raise ValueError('Explicit source poses required')
+            extend_poses(src,output,args.extend_from,args.pose)
+        finally:src.lib.close();src.cat.close()
+        return
     ram=sqlite3.connect(':memory:');src.cat.backup(ram);src.cat.close();ram.row_factory=sqlite3.Row
     ram.execute('create index if not exists appearance_image_lookup on assets(lower(original_path),validation)');src.cat=ram
     equipment=json.loads((ROOT/'game_dnf/data/numbers.json').read_text(encoding='utf8'))['equipment']

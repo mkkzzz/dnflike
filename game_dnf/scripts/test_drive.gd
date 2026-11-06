@@ -461,6 +461,7 @@ func run_combat() -> void:
 func run_skill_fidelity() -> void:
 	check_normalwave_level_data()
 	check_normalwave_lifecycle()
+	check_normalwave_phases()
 	for code in [KEY_A,KEY_D,KEY_Y]:
 		api.restart()
 		api.set_god(true)
@@ -509,6 +510,50 @@ func run_skill_fidelity() -> void:
 	await ticks(35)
 	check(Vector2(api.p("pos")).is_equal_approx(Vector2(125,250)),"casting normal wave does not slide the caster")
 	check(float(api.e(enemy,"hp")) < 5000.0,"normal wave still deals damage through its projectile")
+
+func check_normalwave_phases() -> void:
+	for rates in [[1.0,1.0,50.0,150.0,450.0],[2.0,0.5,100.0,150.0,350.0],[0.5,2.0,25.0,225.0,650.0]]:
+		api.restart()
+		api.set_god(true)
+		api.set_p("mp",500.0)
+		game.numeric_player = preload("res://stats/api/actor_numbers.gd").new()
+		game.numeric_player.configure({"numbers":Numbers.shared_config()["base"]})
+		game.numeric_player.values["attack_speed"] = rates[0]
+		game.numeric_player.values["cast_speed"] = rates[1]
+		check(game.view.set_equipped_weapon("original_27601"),"wave equips an original item-specific weapon")
+		var started: bool = api.start_action("normalwave")
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		check(started and api.view_pose()=="wave","normal wave selects CHR etc motion 9 instead of summon2")
+		game.step_action(float(rates[2])-1.0,Vector2.ZERO)
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		check(int(game.view.player_actor.sample()["img_frame"])==42 and game.objects.is_empty(),"native wave holds frame zero until cast-speed wait expires")
+		game.step_action(1.0,Vector2.ZERO)
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		var actor = game.view.player_actor
+		var sync := int(actor.sample()["img_frame"])==43
+		for layer in actor.equipment_layers:sync = sync and int(layer.frame.get("img_frame",-1))==43
+		check(sync and actor.equipment_layers.size()==2,"body and both weapon layers enter frame one together despite different ANI hold lengths")
+		var attached: Array = game.view.effects.filter(func(fx):return is_instance_valid(fx) and not fx.is_queued_for_deletion() and fx.action_clock_at>=0)
+		check(attached.size()==1 and is_zero_approx(float(attached[0].clock_ms)),"dedicated wave slash starts exactly when waiting ends")
+		game.step_action(float(rates[3])-float(rates[2])-1.0,Vector2.ZERO)
+		check(game.objects.is_empty(),"normal wave cannot spawn before original trigger frame three")
+		game.step_action(1.0,Vector2.ZERO)
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		check(game.objects.size()==1 and int(actor.sample()["img_frame"])==45,"original frame three creates exactly one wave")
+		check(is_equal_approx(float(attached[0].clock_ms),100.0),"slash advances on the same source clock as the body under mixed speed rates")
+		var frozen := float(attached[0].clock_ms)
+		game.view.present(game.view_snapshot(),100.0,100.0)
+		check(is_equal_approx(float(attached[0].clock_ms),frozen),"attached slash cannot advance while actor clock is frozen")
+		game.step_action(float(rates[4])-float(rates[3])-1.0,Vector2.ZERO)
+		check(api.p("state")=="action" and game.objects.size()==1,"wave recovery uses source static time without repeating object creation")
+		game.step_action(1.0,Vector2.ZERO)
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		check(api.p("state")=="idle" and attached[0].is_queued_for_deletion(),"native recovery ends at cast divided by attack rate plus static recovery")
+	api.restart()
+	api.set_p("mp",500.0)
+	api.start_action("normalwave")
+	game.step_action(50.0,Vector2.ZERO)
+	check(api.start_action("buff",true) and game.player.get("native_phase",{}).is_empty(),"replacing a native cast with a buff clears its phase controller")
 
 func check_normalwave_lifecycle() -> void:
 	for facing in [1,-1]:

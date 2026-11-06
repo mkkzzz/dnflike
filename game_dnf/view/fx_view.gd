@@ -16,6 +16,9 @@ var base_scale := 1.0
 ## Effects tied to a skill can be cut early (e.g. gore-cross marks end when the cross flies).
 var tag := ""
 var max_ms := -1.0
+## Optional original actor-clock attachment; seek from snapshots, never wall time.
+var action_clock_at := -1.0
+var action_instance := -1
 ## Attached effects follow the casting entity every frame instead of staying where spawned.
 var follow := -1
 var fade := 1.0

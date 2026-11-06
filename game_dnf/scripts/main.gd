@@ -547,11 +547,16 @@ func action_def() -> Dictionary:
 
 func action_duration(action: String) -> float:
 	var m := move_def(action)
+	if m.get("native_state","") == "normalwave" and player.get("native_phase",{}).size()>0:
+		return float(player["native_phase"]["end_ms"])
 	var stage := action_def() if String(player.get("action","")) == action else m
-	# SKL casting time is not the lifetime of an ANI stage. Using it alone cut
-	# normalwave off at 200 ms before its object cue at 340 ms. Full cast/hold
-	# state transitions still need per-skill evidence; never truncate the clip.
+	# Generic moves retain the ANI duration. Only an evidenced state controller
+	# may replace its waiting/recovery phases with a different action lifetime.
 	return maxf(float(stage.get("duration",0)),float(m.get("cast_ms",0)))
+
+func action_ani_clock(elapsed: float) -> float:
+	var phase: Dictionary = player.get("native_phase",{})
+	return Kernel.NativeWave.ani_clock(phase,elapsed) if not phase.is_empty() else elapsed
 
 func buffering(code: int) -> void:
 	if code in [KEY_C,KEY_SPACE] and held.get(KEY_DOWN,false) and backstep_allowed():player["queued_backstep"] = true
@@ -619,6 +624,7 @@ func end_action_fx() -> void:
 
 func end_action() -> void:
 	end_action_fx()
+	player["native_phase"] = {}
 	player["state"] = "jump" if float(player["z"])>0 else "idle"
 	player["action"] = ""
 
@@ -791,6 +797,8 @@ func step_action(ms: float, move: Vector2) -> void:
 		var speed_kind: String = Numbers.shared_config()["skills"].get(name,{}).get("speed","attack")
 		speed = float(numeric_player.values["cast_speed" if speed_kind=="cast" else "attack_speed"])
 	var clock := old_clock+ms*speed
+	var native_phase: Dictionary = player.get("native_phase",{})
+	if not native_phase.is_empty():clock = old_clock+ms
 	player["clock"] = clock
 	if m.has("dash"):
 		# Decelerating slide per stage: x(t) = v0 t + a t^2 / 2 until the speed reaches zero.
@@ -806,10 +814,11 @@ func step_action(ms: float, move: Vector2) -> void:
 		var air_speed := float(player.get("air_move_speed",rules["player"]["walk_speed"]))
 		if air_speed <= 0.0:air_speed = float(rules["player"]["walk_speed"])
 		move_player(Vector2(move.x*air_speed,move.y*air_speed*float(rules["units"]["depth_speed_ratio"]))*ms/1000.0)
-	action_cues(stage,old_clock,clock)
-	apply_player_hits(stage,old_clock,clock)
+	action_cues(stage,action_ani_clock(old_clock),action_ani_clock(clock))
+	apply_player_hits(stage,action_ani_clock(old_clock),action_ani_clock(clock))
 	var duration := action_duration(name)
 	var cancel_at := float(stage.get("cancel_at",duration))
+	if not native_phase.is_empty():cancel_at = duration
 	if clock >= cancel_at and bool(player["queued_jump"]) and name == "upper":
 		end_action_fx()
 		player["state"] = "jump"
@@ -944,6 +953,7 @@ func start_action(name: String, cancel := false) -> bool:
 	if name == "air_attack":player["air_attack_used"] = true
 	player["state"] = "action"
 	player["action"] = name
+	player["native_phase"] = {}
 	player["queued_combo"] = false
 	player["queued_skill"] = ""
 	player["queued_jump"] = false
@@ -973,6 +983,11 @@ func start_stage(index: int) -> void:
 	player["hits"] = {}
 	action_seq += 1
 	var m := move_def(name)
+	player["native_phase"] = {}
+	if m.get("native_state","") == "normalwave":
+		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+		var cast_rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
+		player["native_phase"] = Kernel.NativeWave.plan(m,attack_rate,cast_rate)
 	# Multi-stage slides may turn round between stages (each slash picks its own side).
 	if m.has("stages"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
@@ -984,8 +999,8 @@ func start_stage(index: int) -> void:
 	if swing >= 0:
 		var wav: Array = table.weapon_wav(weapon)
 		if swing < wav.size() and String(wav[swing]) != "":play_sound(String(wav[swing]))
-	action_cues(stage,-1.0,0.0)
-	apply_player_hits(stage,-1.0,0.0)
+	action_cues(stage,-1.0,action_ani_clock(0.0))
+	apply_player_hits(stage,-1.0,action_ani_clock(0.0))
 
 func apply_skill_effect(skill_id: String, effect_id: String) -> void:
 	if numeric_player != null:
@@ -1003,8 +1018,10 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 		var at := float(fx["at"])
 		if at > old_t and at <= new_t:
 			var left := action_duration(String(player["action"]))-at
+			var synchronized := bool(fx.get("action_clock",false))
 			bus.emit("combat.cue",{"kind":"fx","key":String(fx["key"]),"point":Vector2(player["pos"]),"height":float(player["z"]),
-				"facing":int(player["facing"]),"tag":String(player["fx_tag"]),"follow":PLAYER_ID,"max_ms":maxf(left,1.0)})
+				"facing":int(player["facing"]),"tag":String(player["fx_tag"]),"follow":PLAYER_ID,"max_ms":-1.0 if synchronized else maxf(left,1.0),
+				"action_clock_at":at if synchronized else -1.0,"action_instance":action_seq})
 	for s: Dictionary in stage.get("sounds",[]):
 		var at := float(s["at"])
 		if at > old_t and at <= new_t:play_sound(String(s["key"]))
@@ -1705,7 +1722,7 @@ func player_ani() -> Array:
 	var rp: Dictionary = rules["reaction"]
 	if state=="action":
 		if String(move_def(String(player["action"])).get("effect_id","")) != "":return [String(move_def(String(player["action"]))["ani"]),float(player["clock"])]
-		return [String(action_def()["ani"]),float(player["clock"])]
+		return [String(action_def()["ani"]),action_ani_clock(float(player["clock"]))]
 	if state=="dead":return ["down",float(table.player_timeline("down")[2]["start_ms"]) if table.player_timeline("down").size()>2 else 0.0]
 	if state=="hurt":return [String(player["hit_motion"]),0.0]
 	if state=="air":return ["overturn",0.0]
@@ -1785,7 +1802,7 @@ func view_snapshot() -> Dictionary:
 	var boss_room := bool(rules["rooms"][room_index].get("boss",false))
 	return {"frame":_frame,"paused":paused,
 		"player":{"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
-			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],
+			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,
 			"flash":float(player["flash_ms"])>0,"buff":float(player["buff_ms"])>0,"weapon":weapon,
 			"aura":String(move_def("buff").get("aura_fx","")) if float(player["buff_ms"])>0 else ""},
 		"enemies":enemies,"objects":objs,"props":props_view(),
