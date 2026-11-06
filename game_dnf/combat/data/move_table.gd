@@ -229,6 +229,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	if spec.get("native_state","") == "normalwave":
 		move["native_state"] = "normalwave"
 		move["native_recovery_ms"] = float(skill["static"][0])
+		move["native_move"] = {"speed":float(skill["static"][1]),"accel":float(skill["static"][2])}
+		move["normal_cancel_job"] = "asura"
 	if spec.has("stages"):
 		move["stages"] = []
 		for stage: Dictionary in spec["stages"]:move["stages"].append(_build_stage(stage,skill))

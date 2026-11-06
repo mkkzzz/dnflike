@@ -9,10 +9,23 @@ static func plan(move: Dictionary, attack_rate: float, cast_rate: float) -> Dict
 	# Native speed values use thousandths and IDIV truncation.
 	var attack := maxi(1,int(attack_rate*1000.0))
 	var cast := maxi(1,int(cast_rate*1000.0))
+	# Native +0x3188 scales both velocity and acceleration, not time squared.
+	var velocity := float(move["native_move"]["speed"])*attack/1000.0
+	var acceleration := int(float(move["native_move"]["accel"])*attack/1000.0)
 	return {"wait_ms":maxi(0,int((float(move["cast_ms"])-lead)*1000.0/cast)),
 		"end_ms":int(float(move["cast_ms"])*1000.0/attack)+float(move["native_recovery_ms"]),
-		"resume_ms":float(tl[1]["start_ms"]),"rate":attack/1000.0}
+		"resume_ms":float(tl[1]["start_ms"]),"rate":attack/1000.0,
+		"velocity":velocity,"acceleration":acceleration,
+		"stop_ms":int(-velocity*1000.0/acceleration) if velocity*acceleration<0 else -1}
 
 static func ani_clock(plan: Dictionary, elapsed: float) -> float:
 	if elapsed < float(plan["wait_ms"]):return 0.0
 	return float(plan["resume_ms"])+(elapsed-float(plan["wait_ms"]))*float(plan["rate"])
+
+## Native parameter/stop-time translation. Continuous integration is the current
+## engine adapter; original per-update quantization remains separately unverified.
+static func distance(plan: Dictionary, elapsed: float) -> float:
+	var end := float(plan["end_ms"])
+	if int(plan["stop_ms"])>=0:end = minf(end,float(plan["stop_ms"]))
+	var seconds := clampf(elapsed,0.0,end)/1000.0
+	return float(plan["velocity"])*seconds+0.5*float(plan["acceleration"])*seconds*seconds

@@ -789,6 +789,12 @@ func step_player(ms: float, move: Vector2) -> void:
 
 func step_action(ms: float, move: Vector2) -> void:
 	var name: String = player["action"]
+	var queued := String(player["queued_skill"])
+	if queued != "" and queued != name and normal_attack_cancel_allowed(move_def(queued)):
+		player["queued_skill"] = ""
+		# This source permission interrupts a normal attack immediately; it does
+		# not wait for the generic late combo/cancel window or emit its next hit.
+		if start_action(queued,true):return
 	var m := move_def(name)
 	var stage := action_def()
 	var old_clock := float(player["clock"])
@@ -800,6 +806,9 @@ func step_action(ms: float, move: Vector2) -> void:
 	var native_phase: Dictionary = player.get("native_phase",{})
 	if not native_phase.is_empty():clock = old_clock+ms
 	player["clock"] = clock
+	if not native_phase.is_empty():
+		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
+		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
 	if m.has("dash"):
 		# Decelerating slide per stage: x(t) = v0 t + a t^2 / 2 until the speed reaches zero.
 		var v0 := float(m["dash"]["speed"])
@@ -819,6 +828,11 @@ func step_action(ms: float, move: Vector2) -> void:
 	var duration := action_duration(name)
 	var cancel_at := float(stage.get("cancel_at",duration))
 	if not native_phase.is_empty():cancel_at = duration
+	var pending := String(player["queued_skill"])
+	if pending != "" and move_def(pending).has("normal_cancel_job") and not normal_attack_cancel_allowed(move_def(pending)):
+		# Keep a valid next cast buffered until recovery ends; lack of early
+		# cancel permission must not consume and silently lose the request.
+		cancel_at = duration
 	if clock >= cancel_at and bool(player["queued_jump"]) and name == "upper":
 		end_action_fx()
 		player["state"] = "jump"
@@ -917,6 +931,9 @@ func reject_action(name: String, reason: String) -> bool:
 	return false
 
 ## Starts a move. MP and cooldown come from the original SKL [dungeon] section (level 1).
+func normal_attack_cancel_allowed(move: Dictionary) -> bool:
+	return move.has("normal_cancel_job") and String(player["state"]) == "action" and job == String(move["normal_cancel_job"]) and String(player["action"]) in ["attack1","attack2","attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]
+
 func start_action(name: String, cancel := false) -> bool:
 	var m := move_def(name)
 	if m.is_empty():return reject_action(name,"unknown")
@@ -929,6 +946,13 @@ func start_action(name: String, cancel := false) -> bool:
 	if backward_hop:
 		if not backstep_allowed():return reject_action(name,"state")
 	elif not cancel and String(player["state"]) in ["hurt","air","down","dead","backstep","action"]:return reject_action(name,"state")
+	if m.has("normal_cancel_job"):
+		var state := String(player["state"])
+		if state not in ["idle","move","guard","action"]:return reject_action(name,"state")
+		if state == "action" and float(player["clock"]) < action_duration(String(player["action"])):
+			# Original SKL: only Asura may interrupt a normal attack with this skill.
+			if not cancel or not normal_attack_cancel_allowed(m):
+				return reject_action(name,"state")
 	if float(player["cooldowns"].get(name,0))>0:return reject_action(name,"cooldown")
 	var hp_cost := 0.0
 	if m.has("hp_cost_row"):

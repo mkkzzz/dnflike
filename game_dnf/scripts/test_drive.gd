@@ -462,6 +462,8 @@ func run_skill_fidelity() -> void:
 	check_normalwave_level_data()
 	check_normalwave_lifecycle()
 	check_normalwave_phases()
+	check_normalwave_movement_and_cancel()
+	await check_normalwave_cancel_input()
 	for code in [KEY_A,KEY_D,KEY_Y]:
 		api.restart()
 		api.set_god(true)
@@ -508,7 +510,7 @@ func run_skill_fidelity() -> void:
 	await ticks(8)
 	check(float(api.e(enemy,"hp")) == 5000.0,"normal wave does not borrow an early upper-slash hit")
 	await ticks(35)
-	check(Vector2(api.p("pos")).is_equal_approx(Vector2(125,250)),"casting normal wave does not slide the caster")
+	check(Vector2(api.p("pos")).x>125.0 and is_equal_approx(Vector2(api.p("pos")).y,250.0),"normal wave applies its explicit native forward movement without depth drift")
 	check(float(api.e(enemy,"hp")) < 5000.0,"normal wave still deals damage through its projectile")
 
 func check_normalwave_phases() -> void:
@@ -554,6 +556,82 @@ func check_normalwave_phases() -> void:
 	api.start_action("normalwave")
 	game.step_action(50.0,Vector2.ZERO)
 	check(api.start_action("buff",true) and game.player.get("native_phase",{}).is_empty(),"replacing a native cast with a buff clears its phase controller")
+
+func check_normalwave_movement_and_cancel() -> void:
+	var saved_job: String = api.job()
+	for facing in [1,-1]:
+		for rate: float in [0.2,0.5,1.0,2.0]:
+			api.restart()
+			api.set_god(true)
+			api.set_p("mp",500.0)
+			api.set_p("facing",facing)
+			game.numeric_player = preload("res://stats/api/actor_numbers.gd").new()
+			game.numeric_player.configure({"numbers":Numbers.shared_config()["base"]})
+			game.numeric_player.values["attack_speed"] = rate
+			game.numeric_player.values["cast_speed"] = 1.0
+			var origin := Vector2(api.p("pos"))
+			api.start_action("normalwave")
+			api.set_hitstop(20.0)
+			game.step_game(20.0)
+			check(Vector2(api.p("pos")).is_equal_approx(origin) and is_zero_approx(float(api.p("clock"))),"native wave motion freezes with the caster during hitstop")
+			var trigger := 50.0+100.0/rate
+			game.step_action(trigger,Vector2(0,1))
+			var seconds := trigger/1000.0
+			var expected := origin+Vector2((100.0*rate*seconds-75.0*rate*seconds*seconds)*facing,0)
+			check(Vector2(api.p("pos")).distance_to(expected)<0.01,"native movement scales velocity and acceleration once, facing %d rate %.1f" % [facing,rate])
+			var wave: Dictionary = game.objects[-1]
+			check(Vector2(wave["pos"]).distance_to(expected)<0.01,"wave object is created at the moving caster's release anchor")
+			var end_ms := 200.0/rate+250.0
+			game.step_action(end_ms-trigger+100.0,Vector2.ZERO)
+			# Native opposite-sign velocity/acceleration sets an integer stop timer.
+			seconds = minf(end_ms,666.0)/1000.0
+			expected = origin+Vector2((100.0*rate*seconds-75.0*rate*seconds*seconds)*facing,0)
+			check(Vector2(api.p("pos")).distance_to(expected)<0.01 and api.p("state")=="idle","native movement stops at state end even when a simulation slice overshoots")
+			check(Vector2(wave["pos"]).distance_to(Vector2(api.p("pos")))>0.1,"released wave does not follow the caster's remaining slide")
+	for target_job in ["swordman","weaponmaster","berserker","soulbringer","asura"]:
+		api.restart()
+		api.set_job(target_job)
+		api.set_p("mp",500.0)
+		api.start_action("attack1")
+		var before := float(api.p("mp"))
+		var accepted: bool = api.start_action("normalwave",true)
+		check(accepted==(target_job=="asura"),"source normal-attack cancel restriction for "+target_job)
+		check((float(api.p("mp"))<before)==accepted and (api.cooldown("normalwave")>0)==accepted,"rejected native cancel cannot spend MP or start cooldown")
+	api.restart()
+	api.set_job("asura")
+	api.set_p("mp",500.0)
+	api.start_action("upper")
+	check(not api.start_action("normalwave",true),"Asura's normal-attack permission does not cancel an unrelated skill")
+	for state in ["hurt","down","dead","backstep"]:
+		api.set_p("state",state)
+		check(not api.start_action("normalwave",true),"cancel flag cannot bypass native wave state gate: "+state)
+	api.restart()
+	api.set_job("swordman")
+	api.set_p("mp",500.0)
+	api.start_action("attack1")
+	api.set_p("clock",game.action_duration("attack1"))
+	check(api.start_action("normalwave",true),"finished normal attack permits the next cast without requiring a cancel profession")
+	api.set_job(saved_job)
+
+func check_normalwave_cancel_input() -> void:
+	var saved_job: String = api.job()
+	for target_job in ["swordman","asura"]:
+		api.restart()
+		api.set_god(true)
+		api.set_job(target_job)
+		api.set_p("mp",500.0)
+		api.spawn_dummy(Vector2(550,250))
+		api.set_skill_slots(["","","normalwave","","","","","","","","",""])
+		await tap(KEY_X)
+		await ticks(2)
+		check(api.p("action")=="attack1" and float(api.p("clock"))<float(api.move("attack1")["cancel_at"]),"normal attack input is still before its generic cancellation window")
+		await tap(KEY_D)
+		await ticks(2)
+		check((api.p("action")=="normalwave")== (target_job=="asura"),"D shortcut observes the immediate source cancel profession: "+target_job)
+		if target_job=="swordman":
+			await ticks(40)
+			check(api.p("action")=="normalwave","non-Asura keeps the D request buffered for normal recovery completion")
+	api.set_job(saved_job)
 
 func check_normalwave_lifecycle() -> void:
 	for facing in [1,-1]:

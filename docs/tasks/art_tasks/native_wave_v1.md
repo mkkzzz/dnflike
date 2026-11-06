@@ -57,3 +57,9 @@ python tools/capture_dnf_native_wave.py --output temp/full_restore/wave_frames
 - [左向第3帧出波](../../screenshots/native_wave_v1/wave_left_150.png)
 
 源图、锚点、身体/武器帧、速度组合、一次出波、停帧、恢复及替换清理有自动回归；实际执行结果见取证报告和项目看板。其他区同步后自行确认接收；不代填用户视觉验收。后续继续追角色位移、原声音、取消/特殊职业分支以及其他技能和系统，不将本批批准范围扩展到全部游戏。
+
+## 施放位移规则续修
+
+本资产v1不重绘、不变更源图。后续已按原生SetStaticMoveInfo调用接入角色向前减速，修正此前施放者不动的适配，并按SKL明文限制阿修罗普通攻击强制取消。对象仍在释放锚点独立播放，不跟随人物余势。原位置积分精度和完整取消状态尚未验收，依据见取证报告的后续修正节。
+
+新版规则实绘：[释放帧](../../screenshots/native_wave_motion_v1/wave_right_150.png)、[恢复前](../../screenshots/native_wave_motion_v1/wave_right_449.png)。上方截图保留为动作接入阶段的历史证据，当前规则以此续修为准；原声音仍待接入。
