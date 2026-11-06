@@ -4,6 +4,7 @@ const Growth = preload("res://stats/progression.gd")
 const Attributes = preload("res://stats/attributes.gd")
 const Equipment = preload("res://stats/equipment.gd")
 const Skills = preload("res://stats/skill_book.gd")
+const SkillIdentity = preload("res://stats/skill_identity.gd")
 const Effects = preload("res://stats/effects.gd")
 const Damage = preload("res://stats/damage.gd")
 const ContentDB = preload("res://content/api/content_db.gd")
@@ -24,9 +25,21 @@ static func shared_config() -> Dictionary:
 static func ensure_config() -> void:
 	if _config.is_empty():
 		_config = JSON.parse_string(FileAccess.get_file_as_string("res://data/numbers.json"))
+		_config["skill_aliases"] = {}
 		if FileAccess.file_exists(SKILL_RUNTIME):
 			var runtime: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SKILL_RUNTIME))
 			var runtime_skills: Dictionary = runtime.get("skills", {})
+			# Resolve only identical source paths; spelling similarity is not identity.
+			for legacy_id: String in _config["skills"].keys():
+				var legacy_definition: Dictionary = _config["skills"][legacy_id]
+				var path: String = legacy_definition.get("path","")
+				if path.is_empty() or runtime_skills.has(legacy_id):continue
+				for id: String in runtime_skills:
+					if runtime_skills[id].get("path","")!=path:continue
+					_config["skill_aliases"][legacy_id] = {"id":id,"path":path,"source_id":runtime_skills[id]["source_id"],"max_level":legacy_definition["max_level"],"default":_config["skill_defaults"][legacy_id]}
+					_config["skills"].erase(legacy_id)
+					_config["skill_defaults"].erase(legacy_id)
+					break
 			for id: String in runtime_skills:
 				# The source compiler owns SKL data; these two legacy runtime parameters
 				# are still consumed by guarding and its tooltip, and are not SKL fields.
@@ -49,6 +62,7 @@ static func is_equipment(id: String) -> bool:
 	return _config["equipment"].has(id)
 
 static func record(id: String) -> Dictionary:
+	id = SkillIdentity.canonical(id,shared_config())
 	if _records.has(id):
 		return _records[id]
 	var cfg := shared_config()
@@ -63,8 +77,8 @@ static func normalize(profile: Dictionary) -> void:
 	var cfg := shared_config()
 	if not profile.has("numbers_revision"):
 		profile.merge({"numbers_revision":1,"growtype":"swordman","sp_bonus":0,"skills":cfg["skill_defaults"].duplicate(true),"skill_purchases":{},"xp_transactions":{},"gear":{},"next_gear":1,"equipment":{},"stat_modifiers":[],"attack_element":"none"},false)
-	# Additive skill-table migration: never discard a learned rank when new source
-	# skills are compiled. Deprecated training entries remain readable until reset.
+	# Source aliases merge atomically before canonicalizing numeric JSON values.
+	if not SkillIdentity.migrate(profile,cfg):return
 	for id: String in cfg["skills"]:
 		if not profile["skills"].has(id):profile["skills"][id] = int(cfg["skill_defaults"].get(id,0))
 		if not profile["skill_purchases"].has(id):profile["skill_purchases"][id] = []
@@ -75,6 +89,7 @@ static func normalize(profile: Dictionary) -> void:
 	canonicalize(profile)
 
 static func canonicalize(profile: Dictionary) -> void:
+	SkillIdentity.canonicalize_history(profile)
 	for key in ["numbers_revision","sp_bonus","next_gear"]:profile[key] = int(profile[key])
 	for id: String in profile["skills"]:profile["skills"][id] = int(profile["skills"][id])
 	for purchases: Array in profile["skill_purchases"].values():
@@ -176,6 +191,9 @@ static func monster(base: Dictionary, level: int, chief: bool, difficulty: Strin
 	return stats
 
 static func command(profile: Dictionary, kind: String, payload: Dictionary) -> Dictionary:
+	if kind in ["numbers.skill","numbers.skill_grant"]:
+		payload = payload.duplicate()
+		payload["id"] = SkillIdentity.canonical(String(payload.get("id","")),shared_config())
 	var cfg := shared_config()
 	match kind:
 		"numbers.xp":
@@ -259,6 +277,7 @@ static func valid_modifier(mod, cfg: Dictionary) -> bool:
 
 static func valid(profile: Dictionary) -> bool:
 	var cfg := shared_config()
+	if not SkillIdentity.valid_history(profile.get("skill_alias_history",[]),cfg):return false
 	if not whole(profile.get("numbers_revision"),int(cfg["revision"]),int(cfg["revision"])) or not cfg["growtypes"].has(profile.get("growtype","")):return false
 	if profile.get("attack_element","none") not in ["none","fire","water","light","dark"]:return false
 	if not whole(profile.get("level"),1,int(cfg["progression"]["level_cap"])) or not whole(profile.get("xp"),0,1000000000) or not whole(profile.get("sp_bonus"),0,1000000) or not whole(profile.get("next_gear"),1,1000000000):return false

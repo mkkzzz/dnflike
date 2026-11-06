@@ -144,6 +144,14 @@ if ($Test) {
     } finally {$ErrorActionPreference=$masteryRankPreference}
     $masteryRanks | Write-Output
     if ($masteryRankExit -ne 0 -or ($masteryRanks -match 'SCRIPT ERROR|ERROR:') -or -not ($masteryRanks -match '\[MASTERY_RANKS\] COMPLETE checks=\d+ failures=0')) {throw "Weapon mastery effective-rank regression failed."}
+    $identityPreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $identityResult=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/stats/test_skill_identity.gd 2>&1
+        $identityExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$identityPreference}
+    $identityResult | Write-Output
+    if ($identityExit -ne 0 -or ($identityResult -match 'SCRIPT ERROR|ERROR:') -or -not ($identityResult -match '\[SKILL_IDENTITY\] COMPLETE checks=\d+ failures=0')) {throw "Source skill identity migration regression failed."}
     & python (Join-Path $PSScriptRoot "test_check_dnf_performance.py")
     if ($LASTEXITCODE -ne 0) {throw "Performance guard self-tests failed."}
     $performanceOutput=& $GodotPath --headless --path $gamePath --script res://tests/flow/test_ui_performance.gd 2>&1

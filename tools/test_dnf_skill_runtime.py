@@ -14,6 +14,13 @@ COMBAT= ROOT / "game_dnf/assets_local/combat/manifest.json"
 
 
 class SkillRuntimeTest(unittest.TestCase):
+    def test_source_paths_and_ids_are_unique(self):
+        # Source-path identity is also used to migrate legacy save aliases.
+        paths=[skill['path'] for skill in self.skills.values()]
+        ids=[skill['source_id'] for skill in self.skills.values()]
+        self.assertEqual(len(paths),len(set(paths)))
+        self.assertEqual(len(ids),len(set(ids)))
+
     @classmethod
     def setUpClass(cls):
         cls.runtime = json.loads(RUNTIME.read_text(encoding="utf-8"))

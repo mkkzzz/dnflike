@@ -1,0 +1,230 @@
+{
+ "schema": "dnf_skill_identity_migration/1",
+ "baseline_commit": "bb6653bab8276376d0a0ce28a55b40828fdb4307",
+ "sources": [
+  {
+   "legacy": "physical_crit_up",
+   "canonical": "physicalcriticalhitup",
+   "source_id": 186,
+   "path": "skill/swordman/physicalcriticalhitup.skl",
+   "sha256": "4c5ddc072ad74d1d1951476b319e556debadaedc8d5128b76664cbeb3d889081",
+   "legacy_maximum": 10,
+   "canonical_maximum": 20,
+   "default": 0
+  },
+  {
+   "legacy": "hp_source",
+   "canonical": "basichpmaxup",
+   "source_id": 195,
+   "path": "skill/swordman/basichpmaxup.skl",
+   "sha256": "87bbb561642cfa5c5bac51f9302aaa9f557c88398e0434107a7701e00de75e1a",
+   "legacy_maximum": 20,
+   "canonical_maximum": 30,
+   "default": 0
+  },
+  {
+   "legacy": "short_sword_mastery",
+   "canonical": "shortswordmastery",
+   "source_id": 12,
+   "path": "skill/swordman/shortswordmastery.skl",
+   "sha256": "878192ecb37f8ebdce7f79b6158f38fd28412876c05c9dfb6c24c5569d40901d",
+   "legacy_maximum": 30,
+   "canonical_maximum": 50,
+   "default": 0
+  },
+  {
+   "legacy": "blade_mastery",
+   "canonical": "blademastery",
+   "source_id": 13,
+   "path": "skill/swordman/blademastery.skl",
+   "sha256": "52dfe8a797e0e317195d8b7f30277b4cb361e8f6a23a67ba896103ef26dd99e2",
+   "legacy_maximum": 30,
+   "canonical_maximum": 50,
+   "default": 0
+  },
+  {
+   "legacy": "heavy_sword_mastery",
+   "canonical": "heavyswordmastery",
+   "source_id": 14,
+   "path": "skill/swordman/heavyswordmastery.skl",
+   "sha256": "120520fdf20f57f190f5d88d127ceaa0f48e1e33f4553b8f050fca2f7a121f05",
+   "legacy_maximum": 30,
+   "canonical_maximum": 50,
+   "default": 0
+  }
+ ],
+ "comparison": [
+  {
+   "after_alias_present": false,
+   "after_rank": 3,
+   "after_valid": true,
+   "alias": "physical_crit_up",
+   "before_live_ranks": [
+    3,
+    2
+   ],
+   "before_valid": true,
+   "changed_values": {
+    "physical_crit": [
+     0.05,
+     0.03
+    ]
+   },
+   "sp_after": 1120,
+   "sp_before": 1080,
+   "target": "physicalcriticalhitup"
+  },
+  {
+   "after_alias_present": false,
+   "after_rank": 3,
+   "after_valid": true,
+   "alias": "hp_source",
+   "before_live_ranks": [
+    3,
+    2
+   ],
+   "before_valid": true,
+   "changed_values": {
+    "hp_max": [
+     2750.1,
+     2601.78
+    ]
+   },
+   "sp_after": 1120,
+   "sp_before": 1080,
+   "target": "basichpmaxup"
+  },
+  {
+   "after_alias_present": false,
+   "after_rank": 3,
+   "after_valid": true,
+   "alias": "short_sword_mastery",
+   "before_live_ranks": [
+    3,
+    2
+   ],
+   "before_valid": true,
+   "changed_values": {},
+   "sp_after": 1120,
+   "sp_before": 1080,
+   "target": "shortswordmastery"
+  },
+  {
+   "after_alias_present": false,
+   "after_rank": 3,
+   "after_valid": true,
+   "alias": "blade_mastery",
+   "before_live_ranks": [
+    3,
+    2
+   ],
+   "before_valid": true,
+   "changed_values": {
+    "hit": [
+     0.724,
+     0.366
+    ],
+    "magical_attack": [
+     25.0494,
+     24.216
+    ],
+    "magical_panel": [
+     30.9610584,
+     29.930976
+    ],
+    "physical_attack": [
+     29.6514,
+     25.975
+    ],
+    "physical_panel": [
+     43.6468608,
+     38.2352
+    ]
+   },
+   "sp_after": 1120,
+   "sp_before": 1080,
+   "target": "blademastery"
+  },
+  {
+   "after_alias_present": false,
+   "after_rank": 3,
+   "after_valid": true,
+   "alias": "heavy_sword_mastery",
+   "before_live_ranks": [
+    3,
+    2
+   ],
+   "before_valid": true,
+   "changed_values": {},
+   "sp_after": 1120,
+   "sp_before": 1080,
+   "target": "heavyswordmastery"
+  }
+ ],
+ "logs": {
+  "baseline": {
+   "sha256": "58b8f23a9d73b2567593b3b6eb0f638ef0296d266c970d6ffae5e205184d066e",
+   "markers": [
+    "[IDENTITY_BASELINE] compared=5"
+   ]
+  },
+  "after": {
+   "sha256": "55871ca5e496f93f43922d8c0025c53648310a5f07c6c91b274effd21d198e07",
+   "markers": [
+    "[SKILL_IDENTITY] COMPLETE checks=501 failures=0"
+   ]
+  },
+  "numbers": {
+   "sha256": "225d67045f97de82242ac3c9035afd4bdaa93fde4eb61b90bef603d3788efb02",
+   "markers": [
+    "[NUMBERS_TEST] COMPLETE checks=251 failures=0"
+   ]
+  },
+  "loop": {
+   "sha256": "73f9d2c9029e7c3afbed9d6833e6408bc31cf885ef07bea83338c9ba565c2038",
+   "markers": [
+    "[PARTICLE_MOTION] COMPLETE checks=275 failures=0",
+    "[PARTICLE_EMITTER] COMPLETE checks=153 failures=0",
+    "[PARTICLE_VIEW] COMPLETE checks=87 failures=0",
+    "[ICE_PARTICLES] COMPLETE checks=355 failures=0",
+    "[FIREWAVE] COMPLETE checks=91 failures=0",
+    "[SKILL_EFFECTS] COMPLETE checks=19 failures=0",
+    "[GHOST_RANKS] COMPLETE checks=126 failures=0",
+    "[MASTERY_RANKS] COMPLETE checks=229 failures=0",
+    "[SKILL_IDENTITY] COMPLETE checks=501 failures=0",
+    "[UI_PERF] COMPLETE checks=17 failures=0",
+    "[QUEST_RULES] COMPLETE checks=288 failures=0",
+    "[CAMPAIGN] COMPLETE checks=132 failures=0",
+    "[WEAPON_RULES] COMPLETE checks=29925 failures=0",
+    "[NATIVE_BULK] COMPLETE checks=7780 failures=0",
+    "[TEACHING_RULES] COMPLETE checks=30 failures=0",
+    "[POISON_RULES] COMPLETE checks=26 failures=0",
+    "[ORIGINAL_DATA] COMPLETE checks=31 failures=0",
+    "[RECOVERY_TEST] COMPLETE checks=53 failures=0",
+    "[UPGRADE_TEST] COMPLETE checks=46 failures=0",
+    "[SERVICE_TEST] COMPLETE checks=33 failures=0",
+    "[ITEM_TEST] COMPLETE checks=44 failures=0",
+    "[NUMBERS_TEST] COMPLETE checks=251 failures=0",
+    "[QUEST_TEST] COMPLETE checks=45 failures=0",
+    "[TOWN_UNIT] COMPLETE checks=110 failures=0",
+    "[GRAN_UNIT] COMPLETE checks=19 failures=0",
+    "[LOOP_TEST] COMPLETE checks=435 failures=0 captures=0"
+   ]
+  }
+ },
+ "baseline_numbers_sha256": "ac681561de6cdf6d13e863f696354ec686b3b990c2b689a2d118d70da55995b8",
+ "baseline_probe": "extends SceneTree\nconst Old = preload(\"D:/dnf like/dnflike/temp/skill_identity_old_numbers.gd\")\nconst Current = preload(\"res://stats/api/numbers.gd\")\nconst Session = preload(\"res://flow/session.gd\")\n\nfunc _initialize() -> void:\n\tvar rows: Array = []\n\tvar session = Session.new()\n\tsession.command(\"numbers.level\",{\"level\":60})\n\tfor alias: String in Current.shared_config()[\"skill_aliases\"]:\n\t\tvar id: String = Current.shared_config()[\"skill_aliases\"][alias][\"id\"]\n\t\tvar profile: Dictionary = session.profile.duplicate(true)\n\t\tprofile[\"skills\"][alias]=3\n\t\tprofile[\"skills\"][id]=2\n\t\tprofile[\"skill_purchases\"][alias]=[20,20,20]\n\t\tprofile[\"skill_purchases\"][id]=[20,20]\n\t\tvar before := profile.duplicate(true)\n\t\tOld.normalize(before)\n\t\tvar after := profile.duplicate(true)\n\t\tCurrent.normalize(after)\n\t\tvar old_values: Dictionary = Old.profile_stats(before)[\"values\"]\n\t\tvar new_values: Dictionary = Current.profile_stats(after)[\"values\"]\n\t\tvar changed := {}\n\t\tfor stat in old_values:\n\t\t\tif old_values[stat]!=new_values[stat]:changed[stat]=[old_values[stat],new_values[stat]]\n\t\trows.append({\"alias\":alias,\"target\":id,\"before_live_ranks\":[before[\"skills\"][alias],before[\"skills\"][id]],\n\t\t\t\"after_rank\":after[\"skills\"][id],\"after_alias_present\":after[\"skills\"].has(alias),\n\t\t\t\"sp_before\":Old.Skills.available(before,Old.shared_config()),\"sp_after\":Current.Skills.available(after,Current.shared_config()),\n\t\t\t\"before_valid\":Old.valid(before),\"after_valid\":Current.valid(after),\"changed_values\":changed})\n\tvar file := FileAccess.open(\"D:/dnf like/dnflike/temp/skill_identity_baseline.json\",FileAccess.WRITE)\n\tfile.store_string(JSON.stringify(rows,\" \"))\n\tfile.close()\n\tprint(\"[IDENTITY_BASELINE] compared=\",rows.size())\n\tquit()\n",
+ "files_sha256": {
+  "game_dnf/stats/skill_identity.gd": "e31d1312d62028dbc3a8e33910112318f84f9c73408e450b5f2aa1193a6df5af",
+  "game_dnf/stats/api/numbers.gd": "a13098320a0aa4b379849f2e617507358ff08c048d76462723907971cce08bff",
+  "game_dnf/flow/session.gd": "1ef5977665ac0abebe4ae97072d685a055e55181d8cba541bdb30bc9fad778cd",
+  "game_dnf/tests/stats/test_skill_identity.gd": "8b997475771253c3731d6b480e5796b413d9bec47094030651a392cb4e38172b",
+  "tools/run_dnf_loop.ps1": "a01c0fe45b32682831911b85e77d861d3003cd4b10fe00041980d0e4243c83ed"
+ },
+ "boundaries": [
+  "Migration policy is local compatibility, not original DNF save semantics.",
+  "The baseline probe runs the prior Numbers API with unchanged dependencies and synthetic profiles; no user save is written.",
+  "Formal loop used the first passing 501-check fixture; distinct canonical purchase costs were strengthened and passed separately with the same production code.",
+  "Only five exact source-path aliases are merged. Other inferred passives and full damage fidelity remain unfinished."
+ ]
+}

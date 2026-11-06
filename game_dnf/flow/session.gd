@@ -366,7 +366,7 @@ func restore(data: Dictionary) -> bool:
 	var legacy := not p.has("numbers_revision")
 	for k: String in profile:
 		if k in ["quest_state", "town_location", "item_state", "town_position", "inn_return", "services"]:continue
-		if k in ["bag_layout", "quick_items", "skill_slots", "difficulty", "attack_element"]:continue
+		if k in ["bag_layout", "quick_items", "skill_slots", "difficulty", "attack_element", "skill_alias_history"]:continue
 		if legacy and k in ["numbers_revision","growtype","sp_bonus","skills","skill_purchases","xp_transactions","gear","next_gear","equipment","stat_modifiers","attack_element"]:continue
 		if not p.has(k) or typeof(p[k]) != typeof(profile[k]) and not (p[k] is float and profile[k] is int):return false
 	if not p["inventory"] is Dictionary or not p["settled"] is Dictionary:return false
