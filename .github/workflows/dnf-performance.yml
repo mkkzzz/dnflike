@@ -40,6 +40,7 @@ jobs:
           python3 tools/test_dnf_fixed_base.py
           python3 tools/test_dnf_fixed_table_loader.py
           python3 tools/test_dnf_level_normalization.py
+          python3 tools/test_dnf_revision_table.py
       - name: Check quest semantics and portable package verification
         run: python3 tools/test_dnf_quest_rules.py
       - name: Inventory skill binding evidence gaps
