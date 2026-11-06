@@ -1,0 +1,2568 @@
+{
+ "schema": "dnf_ice_particle_bindings/1",
+ "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
+ "input_source": {
+  "input_sha256": "8748e19abf6155ca5a20d13244eaca0b9442c3d7569e8e5002bddffeeb9366ac",
+  "embedded": true,
+  "resource": "10/EXERESX/0",
+  "resource_offset": 734740
+ },
+ "method": "Reproduce bounded protected-code evidence for three ice particle bindings.\n\nReads the pinned PE as data; never starts the client or invokes native code.\nSplices independently identified bytecode operands into a source-derived VM\nframe. String decoding and constructor returns are explicit ABI fixtures.\nThis proves local operand/return-store chains under those boundaries, not\nsuccessful initialization of a live client or particle gameplay triggers.",
+ "tools_sha256": {
+  "audit_dnf_ice_particle_bindings.py": "660048b05498ea7dd11add2d7f3654083d99faafa8fc28b86ff198292fcdeed1",
+  "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a",
+  "audit_dnf_native_strings.py": "60b30f2e51e5a744b106d8df955f5a7acbd7d4341ba51f52fd7a2941a5d29c6f",
+  "audit_dnf_particle_axis.py": "59b463dcff6537cc89c597bcf2bb5f1f0a336eb25a67b09da4c228d524b1af8e"
+ },
+ "boundaries": [
+  "Source-derived VM frame at 0x7711D0, spliced at immediate handler 0x21D7D21.",
+  "Owner=0 and first constructor this=0 are splice fixtures, not a live allocation.",
+  "String wrapper replaced by pinned decoder; constructor body replaced by return identity and RET 8.",
+  "Two different constructor identities and volatile-register/flag fixtures per path.",
+  "Stops at first targeted global write; does not certify full initialization or trigger behavior."
+ ],
+ "prefix_steps": 1606,
+ "prefix_trace_sha256": "c610bdb6720317dda98fe3ff94fe667e099dd71cd5d4825c51641ce205ef9f41",
+ "operands": [
+  {
+   "bytecode": "0x775c8d",
+   "raw8": "bdccdb66fc6a64f9",
+   "decoded": "0x15b5100",
+   "string_bytes": "0054172aa44c109a2ff0454f7e27226f779f0d8db125ac622a4f6375a284ea1a5db1c81bc496637e9d12089d11acddd03d6d130ab0e62bf25fd2448c5bba725484d5146e93a3dd06124b9540da91b94425da0681f8b7d2b341305f0324d26dfc05be67e598da671ec9e4794bcd456e5d9828802a4d16d6b9507454be1b9b2845d5409ea987fd601341c7"
+  },
+  {
+   "bytecode": "0x215be2d",
+   "raw8": "bd7c80685c775bf4",
+   "decoded": "0x1a5f820"
+  },
+  {
+   "bytecode": "0x219215a",
+   "raw8": "66258568af8fc2f7",
+   "decoded": "0x15b5078",
+   "string_bytes": "00546a2aa44c109a2ff0454f7e27226f779f0d8db125ac622a4f6375a284ea1a5db1c81bc496637e9d12089d11acddd03d6d130ab0e62bf25fd2448c5bba725484d5146e93a3dd06124b9540da91b94425da0681f8b7d2b341305f0324d26dfc05be67e598da671ec9e4794bcd456e5d9828802a4d16abb94d7462be1f9b373c"
+  },
+  {
+   "bytecode": "0x21632f9",
+   "raw8": "dc948668d0025bf4",
+   "decoded": "0x1a5f824"
+  },
+  {
+   "bytecode": "0x21f4ecb",
+   "raw8": "e1d981683e1bbbf7",
+   "decoded": "0x15b4fe8",
+   "string_bytes": "0054162aa44c109a2ff0454f7e27226f779f0d8db125ac622a4f6375a284ea1a5db1c81bc496637e9d12089d11acddd03d6d130ab0e62bf25fd2448c5bba725484d5146e93a3dd06124b9540da91b94425da0681f8b7d2b341305f0324d26dfc05be67e598da671ec9e4794bcd456e5d9828802a4d16d6b949745abe059b1145cb4238a6196cf32f"
+  },
+  {
+   "bytecode": "0x2207ffe",
+   "raw8": "bd7c80680bb650f4",
+   "decoded": "0x1a5f828"
+  }
+ ],
+ "runs": [
+  {
+   "bytecode_operand": "0x775c8d",
+   "constructor": {
+    "entry": "0x5fef30",
+    "filename": "PassiveObject/Character/Swordman/Particle/IceWaveParticleSmoke.ptl",
+    "owner_fixture": 0,
+    "this_at_spliced_entry": "0x0",
+    "return_pc": "0x21791c7",
+    "return_identity_fixture": "0x61500000",
+    "callee_stack_pop_bytes": 8
+   },
+   "clobber_fixture": [
+    "0x0",
+    "0x0",
+    "0x202"
+   ],
+   "write": {
+    "pc": "0x21a38c8",
+    "address": "0x1a5f820",
+    "size": 4,
+    "value": "0x61500000"
+   },
+   "steps": 1267,
+   "trace_sha256": "011ebe8200c6f6d5d4aeb7eb81c69c0ce00107da3b6af753d74ba9c78b945606",
+   "conditional_branches": [
+    [
+     "0x22190f7",
+     true
+    ],
+    [
+     "0x21f7017",
+     true
+    ]
+   ]
+  },
+  {
+   "bytecode_operand": "0x775c8d",
+   "constructor": {
+    "entry": "0x5fef30",
+    "filename": "PassiveObject/Character/Swordman/Particle/IceWaveParticleSmoke.ptl",
+    "owner_fixture": 0,
+    "this_at_spliced_entry": "0x0",
+    "return_pc": "0x21791c7",
+    "return_identity_fixture": "0x61500100",
+    "callee_stack_pop_bytes": 8
+   },
+   "clobber_fixture": [
+    "0xbaadf00d",
+    "0xbad0c0de",
+    "0xa97"
+   ],
+   "write": {
+    "pc": "0x21a38c8",
+    "address": "0x1a5f820",
+    "size": 4,
+    "value": "0x61500100"
+   },
+   "steps": 1267,
+   "trace_sha256": "011ebe8200c6f6d5d4aeb7eb81c69c0ce00107da3b6af753d74ba9c78b945606",
+   "conditional_branches": [
+    [
+     "0x22190f7",
+     true
+    ],
+    [
+     "0x21f7017",
+     true
+    ]
+   ]
+  },
+  {
+   "bytecode_operand": "0x219215a",
+   "constructor": {
+    "entry": "0x5fef30",
+    "filename": "PassiveObject/Character/Swordman/Particle/IceWaveParticle.ptl",
+    "owner_fixture": 0,
+    "this_at_spliced_entry": "0x0",
+    "return_pc": "0x2205298",
+    "return_identity_fixture": "0x61501000",
+    "callee_stack_pop_bytes": 8
+   },
+   "clobber_fixture": [
+    "0x0",
+    "0x0",
+    "0x202"
+   ],
+   "write": {
+    "pc": "0x22050e8",
+    "address": "0x1a5f824",
+    "size": 4,
+    "value": "0x61501000"
+   },
+   "steps": 1276,
+   "trace_sha256": "a6c4431c5703f92372eb40afc61d806276779645f8b38b6c5e42dc2f6df6054a",
+   "conditional_branches": [
+    [
+     "0x22190f7",
+     true
+    ],
+    [
+     "0x2216047",
+     true
+    ]
+   ]
+  },
+  {
+   "bytecode_operand": "0x219215a",
+   "constructor": {
+    "entry": "0x5fef30",
+    "filename": "PassiveObject/Character/Swordman/Particle/IceWaveParticle.ptl",
+    "owner_fixture": 0,
+    "this_at_spliced_entry": "0x0",
+    "return_pc": "0x2205298",
+    "return_identity_fixture": "0x61501100",
+    "callee_stack_pop_bytes": 8
+   },
+   "clobber_fixture": [
+    "0xbaadf00d",
+    "0xbad0c0de",
+    "0xa97"
+   ],
+   "write": {
+    "pc": "0x22050e8",
+    "address": "0x1a5f824",
+    "size": 4,
+    "value": "0x61501100"
+   },
+   "steps": 1276,
+   "trace_sha256": "a6c4431c5703f92372eb40afc61d806276779645f8b38b6c5e42dc2f6df6054a",
+   "conditional_branches": [
+    [
+     "0x22190f7",
+     true
+    ],
+    [
+     "0x2216047",
+     true
+    ]
+   ]
+  },
+  {
+   "bytecode_operand": "0x21f4ecb",
+   "constructor": {
+    "entry": "0x5fef30",
+    "filename": "PassiveObject/Character/Swordman/Particle/IceWaveParticleStar.ptl",
+    "owner_fixture": 0,
+    "this_at_spliced_entry": "0x0",
+    "return_pc": "0x2220f42",
+    "return_identity_fixture": "0x61502000",
+    "callee_stack_pop_bytes": 8
+   },
+   "clobber_fixture": [
+    "0x0",
+    "0x0",
+    "0x202"
+   ],
+   "write": {
+    "pc": "0x21a38c8",
+    "address": "0x1a5f828",
+    "size": 4,
+    "value": "0x61502000"
+   },
+   "steps": 1240,
+   "trace_sha256": "77073ecf7e31988e0752d164a5968be75712bd5664bfb34f2091bac67e7977ff",
+   "conditional_branches": [
+    [
+     "0x2216047",
+     true
+    ],
+    [
+     "0x2216047",
+     true
+    ]
+   ]
+  },
+  {
+   "bytecode_operand": "0x21f4ecb",
+   "constructor": {
+    "entry": "0x5fef30",
+    "filename": "PassiveObject/Character/Swordman/Particle/IceWaveParticleStar.ptl",
+    "owner_fixture": 0,
+    "this_at_spliced_entry": "0x0",
+    "return_pc": "0x2220f42",
+    "return_identity_fixture": "0x61502100",
+    "callee_stack_pop_bytes": 8
+   },
+   "clobber_fixture": [
+    "0xbaadf00d",
+    "0xbad0c0de",
+    "0xa97"
+   ],
+   "write": {
+    "pc": "0x21a38c8",
+    "address": "0x1a5f828",
+    "size": 4,
+    "value": "0x61502100"
+   },
+   "steps": 1240,
+   "trace_sha256": "77073ecf7e31988e0752d164a5968be75712bd5664bfb34f2091bac67e7977ff",
+   "conditional_branches": [
+    [
+     "0x2216047",
+     true
+    ],
+    [
+     "0x2216047",
+     true
+    ]
+   ]
+  }
+ ],
+ "blocks": [
+  {
+   "start": "0x403abd",
+   "end_exclusive": "0x403abf",
+   "sha256": "b5916d40205265465cce91e2cd0704bf6e1e36263acfe53c729a06f296e9f353",
+   "instructions": [
+    "00403ABD jmp eax"
+   ]
+  },
+  {
+   "start": "0x5fef58",
+   "end_exclusive": "0x5fef5d",
+   "sha256": "200bc9b4470125d9abfe610d57ecf50f00e1a13cacb7d870aca5a77cb5916285",
+   "instructions": [
+    "005FEF58 mov edi, ecx",
+    "005FEF5A mov dword ptr [ebp - 0x18], edi"
+   ]
+  },
+  {
+   "start": "0x5ff036",
+   "end_exclusive": "0x5ff069",
+   "sha256": "449b71bfaa5ce33bb553d1fd029097a707a123b80cf1e8455999e0c75fbc6acb",
+   "instructions": [
+    "005FF036 mov edx, dword ptr [ebp + 0xc]",
+    "005FF039 mov eax, dword ptr [ebp + 8]",
+    "005FF03C push edx",
+    "005FF03D push eax",
+    "005FF03E push 0x1556138",
+    "005FF043 call 0x1194fc0",
+    "005FF048 add esp, 4",
+    "005FF04B push eax",
+    "005FF04C mov ecx, edi",
+    "005FF04E call 0xe4d1b0",
+    "005FF053 mov eax, edi",
+    "005FF055 mov ecx, dword ptr [ebp - 0xc]",
+    "005FF058 mov dword ptr fs:[0], ecx",
+    "005FF05F pop ecx",
+    "005FF060 pop edi",
+    "005FF061 pop esi",
+    "005FF062 pop ebx",
+    "005FF063 mov esp, ebp",
+    "005FF065 pop ebp",
+    "005FF066 ret 8"
+   ]
+  },
+  {
+   "start": "0x6df7ba",
+   "end_exclusive": "0x6df7c1",
+   "sha256": "468d4c26fa4b1d36e49dc20bedb082b10a5607fe5dc845859e43d089532c7289",
+   "instructions": [
+    "006DF7BA add ecx, dword ptr [edi]",
+    "006DF7BC call 0x2192136"
+   ]
+  },
+  {
+   "start": "0x6f97ec",
+   "end_exclusive": "0x6f97ef",
+   "sha256": "1d10894625976bca9d8906f3ecf1e766b94e9219ec3bf1c30e02feea5e18e45a",
+   "instructions": [
+    "006F97EC ret 8"
+   ]
+  },
+  {
+   "start": "0x7588b3",
+   "end_exclusive": "0x7588c2",
+   "sha256": "9c2a7dacc4db3a776b424a816ac1155038bcc490e3512e401f2c6c3ad0a00f57",
+   "instructions": [
+    "007588B3 push esi",
+    "007588B4 pop eax",
+    "007588B5 sub eax, dword ptr [edi + 4]",
+    "007588B8 add eax, dword ptr [esi + 4]",
+    "007588BB not eax",
+    "007588BD call 0x21bc644"
+   ]
+  },
+  {
+   "start": "0x75d41c",
+   "end_exclusive": "0x75d436",
+   "sha256": "d84f69e9efe71e1eb770f0105d959435b90295a14e04315709964f498d2a5e01",
+   "instructions": [
+    "0075D41C lea esp, [esp + 4]",
+    "0075D420 push 0x556aa996",
+    "0075D425 mov dword ptr [esp], ebx",
+    "0075D428 push edi",
+    "0075D429 mov edi, dword ptr [esp + 4]",
+    "0075D430 pushfd ",
+    "0075D431 jmp 0x2167d7c"
+   ]
+  },
+  {
+   "start": "0x75d45d",
+   "end_exclusive": "0x75d474",
+   "sha256": "ed92848cd6a9d9c8b130cd96889a4c1c93e1821930e073585e01291bf552f76f",
+   "instructions": [
+    "0075D45D lea esp, [esp + 4]",
+    "0075D461 mov ecx, dword ptr [esp + 4]",
+    "0075D468 push 0x200164e3",
+    "0075D46D pushfd ",
+    "0075D46E push ecx",
+    "0075D46F call 0x2160c72"
+   ]
+  },
+  {
+   "start": "0x7711d0",
+   "end_exclusive": "0x7711d5",
+   "sha256": "3c2e9d5be895cb67b9fad723dea760d772c8f51ea7b48823ae991b979afbde8b",
+   "instructions": [
+    "007711D0 jmp 0x218546a"
+   ]
+  },
+  {
+   "start": "0x7755cc",
+   "end_exclusive": "0x775601",
+   "sha256": "9e9723fde10356903e0dfcea03bf78d383ee00d274e1b7c84db82d873ab92406",
+   "instructions": [
+    "007755CC sub eax, dword ptr [esp]",
+    "007755CF lea esp, [esp + 4]",
+    "007755D6 xor eax, 0x1f9bf630",
+    "007755DC not eax",
+    "007755DE xor eax, 0x3c6aaede",
+    "007755E4 dec eax",
+    "007755E5 ror eax, 4",
+    "007755E8 lea esp, [esp - 4]",
+    "007755EF mov dword ptr [esp], eax",
+    "007755F2 mov edx, dword ptr [esi]",
+    "007755F4 add edx, 0x9999bbf6",
+    "007755FA add edx, dword ptr [edi]",
+    "007755FC lea esi, [esi + 8]",
+    "007755FF jmp edx"
+   ]
+  },
+  {
+   "start": "0x776d62",
+   "end_exclusive": "0x776d6e",
+   "sha256": "f36fe7f497881b3efa9c097992191c5a1a208abf92c7bb6124be058155c37475",
+   "instructions": [
+    "00776D62 lea esp, [esp + 4]",
+    "00776D66 add eax, 0x332381e6",
+    "00776D6C jmp eax"
+   ]
+  },
+  {
+   "start": "0x7b4202",
+   "end_exclusive": "0x7b4229",
+   "sha256": "58efb1415c44883e8df5879ee2d4e9e6e5c9341e530fd93197842c0edd7a1d68",
+   "instructions": [
+    "007B4202 lea esp, [esp + 4]",
+    "007B4206 xor eax, 0x3c6aaede",
+    "007B420C dec eax",
+    "007B420D ror eax, 4",
+    "007B4210 lea esp, [esp - 4]",
+    "007B4217 mov dword ptr [esp], eax",
+    "007B421A mov edx, dword ptr [esi]",
+    "007B421C add edx, 0x9999bbf6",
+    "007B4222 add edx, dword ptr [edi]",
+    "007B4224 lea esi, [esi + 8]",
+    "007B4227 jmp edx"
+   ]
+  },
+  {
+   "start": "0x7ba719",
+   "end_exclusive": "0x7ba73e",
+   "sha256": "8a118fc0090d9b38790b9bc81aa8da574ebaab6c184bc4a437148d44a2ab1890",
+   "instructions": [
+    "007BA719 lea esp, [esp + 4]",
+    "007BA71D rol ax, 7",
+    "007BA721 ror ax, 4",
+    "007BA725 not ax",
+    "007BA728 ror ax, 1",
+    "007BA72C xor ax, 0x225c",
+    "007BA731 ror ax, 4",
+    "007BA735 ror ax, 6",
+    "007BA739 call 0x21d0217"
+   ]
+  },
+  {
+   "start": "0xa6fe41",
+   "end_exclusive": "0xa6feb4",
+   "sha256": "358d70a40d2ddc56fd6baa737c920b12f2b5e36a5c7676b6e5d629aec507613a",
+   "instructions": [
+    "00A6FE41 mov ebx, dword ptr [0x1a5f820]",
+    "00A6FE47 mov eax, dword ptr [ebx]",
+    "00A6FE49 mov edx, dword ptr [esi]",
+    "00A6FE4B add eax, 0x28",
+    "00A6FE4E mov dword ptr [ebp + 8], eax",
+    "00A6FE51 mov eax, dword ptr [edx + 0xac]",
+    "00A6FE57 mov ecx, esi",
+    "00A6FE59 call eax",
+    "00A6FE5B mov edx, dword ptr [esi]",
+    "00A6FE5D push eax",
+    "00A6FE5E mov eax, dword ptr [edx + 0xa8]",
+    "00A6FE64 mov ecx, esi",
+    "00A6FE66 call eax",
+    "00A6FE68 mov edx, dword ptr [esi]",
+    "00A6FE6A push eax",
+    "00A6FE6B mov eax, dword ptr [edx + 0xa4]",
+    "00A6FE71 mov ecx, esi",
+    "00A6FE73 call eax",
+    "00A6FE75 mov edx, dword ptr [ebp + 8]",
+    "00A6FE78 push eax",
+    "00A6FE79 mov eax, dword ptr [edx]",
+    "00A6FE7B mov ecx, ebx",
+    "00A6FE7D call eax",
+    "00A6FE7F mov edx, dword ptr [ebx]",
+    "00A6FE81 mov eax, dword ptr [edx + 0xc]",
+    "00A6FE84 push 0",
+    "00A6FE86 mov ecx, ebx",
+    "00A6FE88 call eax",
+    "00A6FE8A mov edx, dword ptr [ebx]",
+    "00A6FE8C mov edx, dword ptr [edx + 0x60]",
+    "00A6FE8F lea eax, [ebp - 0x68]",
+    "00A6FE92 push eax",
+    "00A6FE93 mov ecx, ebx",
+    "00A6FE95 call edx",
+    "00A6FE97 mov ecx, dword ptr [esi + 0xb8]",
+    "00A6FE9D push 0",
+    "00A6FE9F lea eax, [ebp - 0x68]",
+    "00A6FEA2 push eax",
+    "00A6FEA3 push 0",
+    "00A6FEA5 push 2",
+    "00A6FEA7 push esi",
+    "00A6FEA8 mov dword ptr [ebp - 4], 5",
+    "00A6FEAF call 0x8a6290"
+   ]
+  },
+  {
+   "start": "0xa6ff1d",
+   "end_exclusive": "0xa6ff3e",
+   "sha256": "65770ecfec7b9409176b228af78c084c0cbe2483ea9f6afbc2e00ca78f1d8fe0",
+   "instructions": [
+    "00A6FF1D mov ecx, dword ptr [ecx]",
+    "00A6FF1F mov eax, dword ptr [ecx]",
+    "00A6FF21 movss xmm0, dword ptr [esi + 0xdd8]",
+    "00A6FF29 mov edx, dword ptr [eax + 0x130]",
+    "00A6FF2F push ecx",
+    "00A6FF30 movss dword ptr [esp], xmm0",
+    "00A6FF35 call edx",
+    "00A6FF37 mov ecx, eax",
+    "00A6FF39 call 0x1086e20"
+   ]
+  },
+  {
+   "start": "0x215eb05",
+   "end_exclusive": "0x215eb0d",
+   "sha256": "13bca2881d06b0a99e0c294d5976aef14d336f62c0371b9646b615c923e45e40",
+   "instructions": [
+    "0215EB05 mov ecx, dword ptr [esp]",
+    "0215EB08 jmp 0x216798b"
+   ]
+  },
+  {
+   "start": "0x2160463",
+   "end_exclusive": "0x216046b",
+   "sha256": "7be6b3571150ad5348ce2d3ccdcad7f5e8fd533fae75ddbe851cea12e0e9170d",
+   "instructions": [
+    "02160463 mov edx, dword ptr [esp]",
+    "02160466 jmp 0x21c53ea"
+   ]
+  },
+  {
+   "start": "0x2160c72",
+   "end_exclusive": "0x2160c80",
+   "sha256": "7deb9dfd4f4559c03487c4aec6b65d4a441576ca887d25adcb364c3014de0bce",
+   "instructions": [
+    "02160C72 lea esp, [esp + 4]",
+    "02160C76 mov ecx, dword ptr [esp + 0xc]",
+    "02160C7D ret 0x10"
+   ]
+  },
+  {
+   "start": "0x2160c89",
+   "end_exclusive": "0x2160c97",
+   "sha256": "ab2de4e9de101433781ffa2352adcf5e3d9cfdeadd554e623291fac954016c9a",
+   "instructions": [
+    "02160C89 lodsd eax, dword ptr [esi]",
+    "02160C8A add eax, dword ptr [edi]",
+    "02160C8C add eax, 0x72f1c22a",
+    "02160C92 call 0x2210a87"
+   ]
+  },
+  {
+   "start": "0x216798b",
+   "end_exclusive": "0x2167999",
+   "sha256": "521100c02d3785e48cd8e5140e1e28d0f5245fd82f2683bd76f74caf8d2c9e8e",
+   "instructions": [
+    "0216798B lea esp, [esp + 4]",
+    "02167992 pop ax",
+    "02167994 jmp 0x21c0b2c"
+   ]
+  },
+  {
+   "start": "0x2167d7c",
+   "end_exclusive": "0x2167d88",
+   "sha256": "d9b51699c5c7e5f74e5abea7aec815045e372b71e01d6dcba6c94a8bb2becdfb",
+   "instructions": [
+    "02167D7C pushfd ",
+    "02167D7D push edi",
+    "02167D7E mov edi, dword ptr [esp + 0xc]",
+    "02167D85 ret 0x10"
+   ]
+  },
+  {
+   "start": "0x2168ade",
+   "end_exclusive": "0x2168aeb",
+   "sha256": "5cedbdb507c235a2cd8b7d3cd3799868c70d370c44f44b8a1923f8d058724c3d",
+   "instructions": [
+    "02168ADE add ecx, dword ptr [edi]",
+    "02168AE0 add ecx, 0x6414941b",
+    "02168AE6 call 0x219822b"
+   ]
+  },
+  {
+   "start": "0x216a0fc",
+   "end_exclusive": "0x216a104",
+   "sha256": "81a3aad66e439e6b2258335590bf1d8d913bfa25e30eed4908ccb70c8ea713a7",
+   "instructions": [
+    "0216A0FC push edx",
+    "0216A0FD push ebx",
+    "0216A0FE push eax",
+    "0216A0FF jmp 0x21ea41a"
+   ]
+  },
+  {
+   "start": "0x216a702",
+   "end_exclusive": "0x216a71a",
+   "sha256": "b01bc1975d2bd4e7d2794570afa713635f881e0e8eb3fe07defa9508afdc677f",
+   "instructions": [
+    "0216A702 lea esp, [esp + 4]",
+    "0216A706 push edx",
+    "0216A707 lea esp, [esp - 4]",
+    "0216A70E push edx",
+    "0216A70F push ecx",
+    "0216A710 mov ecx, dword ptr [esp + 0x10]",
+    "0216A717 ret 0x14"
+   ]
+  },
+  {
+   "start": "0x216a8fb",
+   "end_exclusive": "0x216a928",
+   "sha256": "d87c997530617b93056703e094d1d4a9559013071ee633005b1b9a623ba4333f",
+   "instructions": [
+    "0216A8FB mov eax, dword ptr [esp]",
+    "0216A8FE lea esp, [esp + 4]",
+    "0216A905 mov edi, dword ptr [esp]",
+    "0216A908 lea esp, [esp + 4]",
+    "0216A90F mov ebp, dword ptr [esp]",
+    "0216A912 lea esp, [esp + 4]",
+    "0216A919 mov esi, dword ptr [esp]",
+    "0216A91C lea esp, [esp + 4]",
+    "0216A923 jmp 0x2213f9c"
+   ]
+  },
+  {
+   "start": "0x216aefa",
+   "end_exclusive": "0x216af12",
+   "sha256": "f84c59c9597308dd178cd945b8ca649d32daa34face79504ecbaf9ce6fcda1ef",
+   "instructions": [
+    "0216AEFA push dword ptr [eax]",
+    "0216AEFC mov edx, dword ptr [esi]",
+    "0216AEFE add edx, dword ptr [edi]",
+    "0216AF00 add edx, 0x6e9a669c",
+    "0216AF06 add esi, 5",
+    "0216AF0C pushfd ",
+    "0216AF0D call 0x21bc4ab"
+   ]
+  },
+  {
+   "start": "0x216b095",
+   "end_exclusive": "0x216b0a1",
+   "sha256": "2bd61d18110ddc996bd5af4c97513415d0ac6af54e81fd4c1d55b9855e92d07e",
+   "instructions": [
+    "0216B095 lea esp, [esp + 4]",
+    "0216B099 push ebx",
+    "0216B09A push eax",
+    "0216B09B push esi",
+    "0216B09C jmp 0x216f030"
+   ]
+  },
+  {
+   "start": "0x216c5e9",
+   "end_exclusive": "0x216c5fa",
+   "sha256": "dc120fe4c45c06d7898a4bba7a9aa88a43a6209e613ae9f6b71cba032561a9e9",
+   "instructions": [
+    "0216C5E9 mov ecx, dword ptr [esp]",
+    "0216C5EC lea esp, [esp + 4]",
+    "0216C5F3 mov ecx, dword ptr [esi]",
+    "0216C5F5 jmp 0x2202e3c"
+   ]
+  },
+  {
+   "start": "0x216d6b8",
+   "end_exclusive": "0x216d6c1",
+   "sha256": "c9917a9771842463adb3b4b9e5a8760ec3c74d230e376d1afc0c6a5036ecd400",
+   "instructions": [
+    "0216D6B8 push eax",
+    "0216D6B9 push esi",
+    "0216D6BA pushfd ",
+    "0216D6BB push ebp",
+    "0216D6BC jmp 0x218a804"
+   ]
+  },
+  {
+   "start": "0x216f030",
+   "end_exclusive": "0x216f038",
+   "sha256": "17939b47587dd71bd4fe6a353757eeff849eaf1291ca37d9cd22c10912ef9f8b",
+   "instructions": [
+    "0216F030 pushfd ",
+    "0216F031 push ebp",
+    "0216F032 push edi",
+    "0216F033 jmp 0x22190d8"
+   ]
+  },
+  {
+   "start": "0x21702a8",
+   "end_exclusive": "0x21702cd",
+   "sha256": "9d6e990d7440efdc55093cf29fdcdd407bdfb8e2d033bb0a39f53dde46874e81",
+   "instructions": [
+    "021702A8 lea esp, [esp + 4]",
+    "021702AC ror ax, 6",
+    "021702B0 inc ax",
+    "021702B2 not ax",
+    "021702B5 push ax",
+    "021702B7 mov ebx, dword ptr [esi]",
+    "021702B9 lea esi, [esi + 6]",
+    "021702BC add ebx, dword ptr [edi]",
+    "021702BE add ebx, 0x2beeb097",
+    "021702C4 pushfd ",
+    "021702C5 mov dword ptr [esp], ebx",
+    "021702C8 jmp 0x21fcc20"
+   ]
+  },
+  {
+   "start": "0x217033f",
+   "end_exclusive": "0x2170348",
+   "sha256": "c99cc2c5abd248b43e875516683fa15f2527314959aef9baa34d8de78410f9e0",
+   "instructions": [
+    "0217033F lea esp, [esp + 4]",
+    "02170343 lea esi, [esi + 4]",
+    "02170346 jmp ebx"
+   ]
+  },
+  {
+   "start": "0x2172f61",
+   "end_exclusive": "0x2172f72",
+   "sha256": "22f138e4bbbf9d3f035a3af6b3eef854158e62a776bce86746f9bd2a3da81a2f",
+   "instructions": [
+    "02172F61 lea esp, [esp + 4]",
+    "02172F65 add ebx, dword ptr [edi]",
+    "02172F67 add ebx, 0x2ba6f13c",
+    "02172F6D lea esi, [esi + 4]",
+    "02172F70 jmp ebx"
+   ]
+  },
+  {
+   "start": "0x2173a48",
+   "end_exclusive": "0x2173a70",
+   "sha256": "47a449ffacdf3bf343c6a584b45175bcbbe6d0f76aa371419ee5f36b2422b918",
+   "instructions": [
+    "02173A48 mov dword ptr [esp], edx",
+    "02173A4B push ecx",
+    "02173A4C mov ecx, dword ptr [esp + 4]",
+    "02173A53 lea esp, [esp - 4]",
+    "02173A5A push 0x4bb866ea",
+    "02173A5F pushfd ",
+    "02173A60 push 0x4afedd03",
+    "02173A65 push ecx",
+    "02173A66 mov ecx, dword ptr [esp + 0x14]",
+    "02173A6D ret 0x18"
+   ]
+  },
+  {
+   "start": "0x2178e84",
+   "end_exclusive": "0x2178e90",
+   "sha256": "7e396a1de6365daa46826c274f59a47b99278994b8bac9de8f734096feab3a1b",
+   "instructions": [
+    "02178E84 add eax, 0x423a35b4",
+    "02178E8A pushfd ",
+    "02178E8B call 0x21b9c78"
+   ]
+  },
+  {
+   "start": "0x21791c7",
+   "end_exclusive": "0x21791d4",
+   "sha256": "006cbe7435a0d33882f4a77f71b13f98504715396c7e25f2e2e15949374aa530",
+   "instructions": [
+    "021791C7 push 0x3f217ad8",
+    "021791CC push ecx",
+    "021791CD push edx",
+    "021791CE push ebx",
+    "021791CF jmp 0x21b6069"
+   ]
+  },
+  {
+   "start": "0x2179571",
+   "end_exclusive": "0x21795a4",
+   "sha256": "944e9c005c0f13393ae7791146f5fbf6b45ca2c09154db7aa37a2e955c0b6d6b",
+   "instructions": [
+    "02179571 lea edx, [edx]",
+    "02179573 mov eax, 0",
+    "02179579 mov al, byte ptr [esi + 4]",
+    "0217957F nop ",
+    "02179580 shl eax, 2",
+    "02179583 lea eax, [eax + edi]",
+    "02179586 push dword ptr [eax]",
+    "02179588 mov edx, dword ptr [esi]",
+    "0217958A add edx, dword ptr [edi]",
+    "0217958C add edx, 0x6e9a669c",
+    "02179592 add esi, 5",
+    "02179598 lea esp, [esp - 4]",
+    "0217959F jmp 0x2173a48"
+   ]
+  },
+  {
+   "start": "0x217a0bf",
+   "end_exclusive": "0x217a0d6",
+   "sha256": "12d469114c23d51f53d20b418b37b55bd86864047a8c1d3343375d286fb63899",
+   "instructions": [
+    "0217A0BF push esi",
+    "0217A0C0 pop eax",
+    "0217A0C1 sub eax, dword ptr [edi + 4]",
+    "0217A0C4 add eax, dword ptr [esi + 4]",
+    "0217A0C7 not eax",
+    "0217A0C9 not eax",
+    "0217A0CB dec eax",
+    "0217A0CC push 0x30201078",
+    "0217A0D1 jmp 0x7755cc"
+   ]
+  },
+  {
+   "start": "0x217a0e4",
+   "end_exclusive": "0x217a10b",
+   "sha256": "7b7a5f3cb3f9597fb4ab2a7c2eff0823d908094e354d263c472e6f2e45f950ff",
+   "instructions": [
+    "0217A0E4 push esi",
+    "0217A0E5 pop eax",
+    "0217A0E6 sub eax, dword ptr [edi + 4]",
+    "0217A0E9 add al, byte ptr [esi + 4]",
+    "0217A0EC ror al, 1",
+    "0217A0EF xor al, 0x60",
+    "0217A0F2 inc al",
+    "0217A0F4 dec al",
+    "0217A0F6 dec al",
+    "0217A0F8 ror al, 2",
+    "0217A0FB ror al, 7",
+    "0217A0FE rol al, 1",
+    "0217A101 ror al, 1",
+    "0217A104 inc al",
+    "0217A106 jmp 0x2194e44"
+   ]
+  },
+  {
+   "start": "0x217f9dc",
+   "end_exclusive": "0x217f9f0",
+   "sha256": "7a4c3e801fb8e3b9c7592a9123926eabfbe2bf670b44fa1b54814e247d12077b",
+   "instructions": [
+    "0217F9DC lea esp, [esp + 4]",
+    "0217F9E0 push dword ptr fs:[eax]",
+    "0217F9E3 mov ecx, dword ptr [esi]",
+    "0217F9E5 add ecx, 0x854714b8",
+    "0217F9EB jmp 0x6df7ba"
+   ]
+  },
+  {
+   "start": "0x21831d2",
+   "end_exclusive": "0x21831f5",
+   "sha256": "6aeb25c8e194ae60964d6dc01691eff9ef2c8833b01b64803cd586e44f376fde",
+   "instructions": [
+    "021831D2 ror al, 1",
+    "021831D5 inc al",
+    "021831D7 movsx eax, al",
+    "021831DA lea esp, [esp - 4]",
+    "021831E1 mov dword ptr [esp], eax",
+    "021831E4 lodsd eax, dword ptr [esi]",
+    "021831E5 add esi, 1",
+    "021831EB add eax, 0x50593edb",
+    "021831F1 add eax, dword ptr [edi]",
+    "021831F3 jmp eax"
+   ]
+  },
+  {
+   "start": "0x218546a",
+   "end_exclusive": "0x2185477",
+   "sha256": "0ddafcbe0eb0f9b05191614b50089fdabb4fdbe5bd9b4dfc9ac5e5a6dbfab987",
+   "instructions": [
+    "0218546A push 0x71a24d9a",
+    "0218546F push ecx",
+    "02185470 push edx",
+    "02185471 push ebx",
+    "02185472 jmp 0x216d6b8"
+   ]
+  },
+  {
+   "start": "0x21873b2",
+   "end_exclusive": "0x21873c9",
+   "sha256": "946fc65576057b25d3c9be290b6f1f6ea1daf96efc84f43240b3951129d8f858",
+   "instructions": [
+    "021873B2 lea esp, [esp + 4]",
+    "021873B6 pop dword ptr [eax]",
+    "021873B8 lodsd eax, dword ptr [esi]",
+    "021873B9 add esi, 1",
+    "021873BF add eax, dword ptr [edi]",
+    "021873C1 add eax, 0x3ecbfb8d",
+    "021873C7 jmp eax"
+   ]
+  },
+  {
+   "start": "0x218a804",
+   "end_exclusive": "0x218a80a",
+   "sha256": "8efe43f7d9aea9a98a72128609972ae77675060d9b563d45ac379d718bfd9a31",
+   "instructions": [
+    "0218A804 push edi",
+    "0218A805 jmp 0x21f6ff8"
+   ]
+  },
+  {
+   "start": "0x2190194",
+   "end_exclusive": "0x219019e",
+   "sha256": "9fc8fd54b87b76c5112cf9ff9e41d1df7cdfbf271df98540de0a7a8872eb8b81",
+   "instructions": [
+    "02190194 add eax, dword ptr [edi]",
+    "02190196 add eax, 0x332381e6",
+    "0219019C jmp eax"
+   ]
+  },
+  {
+   "start": "0x21903a8",
+   "end_exclusive": "0x21903b0",
+   "sha256": "75b33ec90f7fabb8ec7a24947e5d6787e57998dd1213dc99ff55419a609db33a",
+   "instructions": [
+    "021903A8 mov edx, esp",
+    "021903AA push edx",
+    "021903AB call 0x2222ed4"
+   ]
+  },
+  {
+   "start": "0x2192136",
+   "end_exclusive": "0x2192142",
+   "sha256": "bb322b5c08995dac761f8e649dcdf6bad6e6305af0770ac9cdb060c8f8ebd1f7",
+   "instructions": [
+    "02192136 lea esp, [esp + 4]",
+    "0219213A add esi, 4",
+    "02192140 jmp ecx"
+   ]
+  },
+  {
+   "start": "0x2193fc8",
+   "end_exclusive": "0x2193fce",
+   "sha256": "b59852b528bb39cd4ae8e90936390ee25dbb96402ec80b5216d9f5cd365ff412",
+   "instructions": [
+    "02193FC8 push edi",
+    "02193FC9 jmp 0x21f6ff8"
+   ]
+  },
+  {
+   "start": "0x219404a",
+   "end_exclusive": "0x2194058",
+   "sha256": "8c0e928c107ce91adf33e59c4fa6904cc2e13aae305a5b92506e82026af6e4eb",
+   "instructions": [
+    "0219404A lea esp, [esp + 4]",
+    "0219404E add eax, 0x27524128",
+    "02194054 add eax, dword ptr [edi]",
+    "02194056 jmp eax"
+   ]
+  },
+  {
+   "start": "0x2194059",
+   "end_exclusive": "0x2194074",
+   "sha256": "f4069334fa821dcdacb2e928defc771be53034c538a5ff1a31278e49d1442b77",
+   "instructions": [
+    "02194059 lea esi, [esi]",
+    "0219405B mov eax, 0",
+    "02194061 mov al, byte ptr [esi + 4]",
+    "02194067 lea edi, [edi]",
+    "02194069 rol eax, 2",
+    "0219406C lea eax, [eax + edi]",
+    "0219406F jmp 0x216aefa"
+   ]
+  },
+  {
+   "start": "0x2194e44",
+   "end_exclusive": "0x2194e5c",
+   "sha256": "4cf7eeddabb1935f7692bf1c08737b394a4e574775e5fefd119149217c2ccfed",
+   "instructions": [
+    "02194E44 movsx eax, al",
+    "02194E47 push edi",
+    "02194E48 mov dword ptr [esp], eax",
+    "02194E4B lodsd eax, dword ptr [esi]",
+    "02194E4C add esi, 1",
+    "02194E52 add eax, 0x50593edb",
+    "02194E58 add eax, dword ptr [edi]",
+    "02194E5A jmp eax"
+   ]
+  },
+  {
+   "start": "0x219822b",
+   "end_exclusive": "0x2198237",
+   "sha256": "bb322b5c08995dac761f8e649dcdf6bad6e6305af0770ac9cdb060c8f8ebd1f7",
+   "instructions": [
+    "0219822B lea esp, [esp + 4]",
+    "0219822F add esi, 4",
+    "02198235 jmp ecx"
+   ]
+  },
+  {
+   "start": "0x2198436",
+   "end_exclusive": "0x219844a",
+   "sha256": "5e6f8912e4e3ef38100ea74c9acc1ebbfa3a6846c825543108297f945d148609",
+   "instructions": [
+    "02198436 lea esp, [esp + 4]",
+    "0219843A add ebx, 0x3b90d790",
+    "02198440 add ebx, dword ptr [edi]",
+    "02198442 lea esi, [esi + 4]",
+    "02198445 call 0x75d41c"
+   ]
+  },
+  {
+   "start": "0x2198983",
+   "end_exclusive": "0x219899d",
+   "sha256": "795f0f38951ed8336df21dbf13faa73fb48f965af553090c7fbdc1e010e72063",
+   "instructions": [
+    "02198983 push esi",
+    "02198984 pop eax",
+    "02198985 sub eax, dword ptr [edi + 4]",
+    "02198988 add eax, dword ptr [esi + 4]",
+    "0219898B not eax",
+    "0219898D not eax",
+    "0219898F dec eax",
+    "02198990 push 0x30201078",
+    "02198995 sub eax, dword ptr [esp]",
+    "02198998 jmp 0x21a5e09"
+   ]
+  },
+  {
+   "start": "0x219b81c",
+   "end_exclusive": "0x219b82d",
+   "sha256": "9bdd0c6371edc334612dd948f82751bc2d7e40fdc1dbfe491335b68484843f75",
+   "instructions": [
+    "0219B81C lea esp, [esp - 4]",
+    "0219B823 mov dword ptr [esp], edx",
+    "0219B826 mov ebx, dword ptr [esi]",
+    "0219B828 call 0x21a14b2"
+   ]
+  },
+  {
+   "start": "0x219b83f",
+   "end_exclusive": "0x219b848",
+   "sha256": "91738960b7f2e2227458bac7c3817db1d65ceac669d83358844c6ab5eedbb115",
+   "instructions": [
+    "0219B83F push ebx",
+    "0219B840 push eax",
+    "0219B841 push esi",
+    "0219B842 pushfd ",
+    "0219B843 jmp 0x21b02ce"
+   ]
+  },
+  {
+   "start": "0x219c773",
+   "end_exclusive": "0x219c781",
+   "sha256": "2f6013ab9364f1badd41dfe6f479ce0afd6b2edc403a055a5eead4aba45c1754",
+   "instructions": [
+    "0219C773 lea esp, [esp + 4]",
+    "0219C777 mov eax, dword ptr [esp + 4]",
+    "0219C77E ret 8"
+   ]
+  },
+  {
+   "start": "0x219cf65",
+   "end_exclusive": "0x219cf80",
+   "sha256": "2b121007e51d6cfb44697cd3004163ff258baa4433fc76f7d7870016d70d5624",
+   "instructions": [
+    "0219CF65 lea esp, [esp + 4]",
+    "0219CF69 mov dword ptr [esp], eax",
+    "0219CF6C push edi",
+    "0219CF6D mov edi, dword ptr [esp + 4]",
+    "0219CF74 push 0x600c3829",
+    "0219CF79 push ebp",
+    "0219CF7A pushfd ",
+    "0219CF7B call 0x21e00ff"
+   ]
+  },
+  {
+   "start": "0x219d34b",
+   "end_exclusive": "0x219d359",
+   "sha256": "eac12ebd5fc172c7f08a845fd97f1f6dba7578e0c3ede9cca83a1901fd0ad8fd",
+   "instructions": [
+    "0219D34B pushfd ",
+    "0219D34C pushfd ",
+    "0219D34D pushfd ",
+    "0219D34E push ebp",
+    "0219D34F mov ebp, dword ptr [esp + 0x10]",
+    "0219D356 ret 0x14"
+   ]
+  },
+  {
+   "start": "0x219f600",
+   "end_exclusive": "0x219f60e",
+   "sha256": "b849e1c4a26d7b6da667813f1ef1f32a2abfa792a9e109e7726721644e86e406",
+   "instructions": [
+    "0219F600 dec eax",
+    "0219F601 push 0x30201078",
+    "0219F606 sub eax, dword ptr [esp]",
+    "0219F609 jmp 0x21da7fb"
+   ]
+  },
+  {
+   "start": "0x21a14b2",
+   "end_exclusive": "0x21a14c3",
+   "sha256": "6c83269c31cac15c35c3fffa1d963b42703f0325576a508ddf5047bdbbbc080f",
+   "instructions": [
+    "021A14B2 lea esp, [esp + 4]",
+    "021A14B6 add ebx, dword ptr [edi]",
+    "021A14B8 add ebx, 0x2ba6f13c",
+    "021A14BE call 0x2211308"
+   ]
+  },
+  {
+   "start": "0x21a2123",
+   "end_exclusive": "0x21a2157",
+   "sha256": "633ab10ea4ef1a6ae8c2efb7326186a211bb0d3b0b8ca0364c393e1cb4a84e53",
+   "instructions": [
+    "021A2123 lea esp, [esp + 4]",
+    "021A2127 mov edx, dword ptr [esi]",
+    "021A2129 add edx, dword ptr [edi]",
+    "021A212B add edx, 0x6e9a669c",
+    "021A2131 add esi, 5",
+    "021A2137 push ebp",
+    "021A2138 mov dword ptr [esp], edx",
+    "021A213B push esi",
+    "021A213C mov esi, dword ptr [esp + 4]",
+    "021A2143 push ebp",
+    "021A2144 lea esp, [esp - 4]",
+    "021A214B pushfd ",
+    "021A214C push esi",
+    "021A214D mov esi, dword ptr [esp + 0x10]",
+    "021A2154 ret 0x14"
+   ]
+  },
+  {
+   "start": "0x21a38b3",
+   "end_exclusive": "0x21a38df",
+   "sha256": "cf1a69c2d73592cb0b2f4304eb3760cb0276647a4c776fead0007d64e16be595",
+   "instructions": [
+    "021A38B3 mov edx, dword ptr [esp]",
+    "021A38B6 lea esp, [esp + 4]",
+    "021A38BD nop ",
+    "021A38BE mov eax, dword ptr [esp]",
+    "021A38C1 lea esp, [esp + 4]",
+    "021A38C8 mov dword ptr [edx], eax",
+    "021A38CA lodsd eax, dword ptr [esi]",
+    "021A38CB add eax, 0x5a110bcc",
+    "021A38D1 add eax, dword ptr [edi]",
+    "021A38D3 lea esp, [esp - 4]",
+    "021A38DA call 0x219cf65"
+   ]
+  },
+  {
+   "start": "0x21a41a7",
+   "end_exclusive": "0x21a41c0",
+   "sha256": "f1b5eb23a0bde73a5a03acd2d0a0a272e98adb3b837871968269a58d33245b30",
+   "instructions": [
+    "021A41A7 lea esp, [esp + 4]",
+    "021A41AB add eax, edi",
+    "021A41AD pop dword ptr [eax]",
+    "021A41AF lodsd eax, dword ptr [esi]",
+    "021A41B0 add esi, 1",
+    "021A41B6 add eax, dword ptr [edi]",
+    "021A41B8 add eax, 0x3ecbfb8d",
+    "021A41BE jmp eax"
+   ]
+  },
+  {
+   "start": "0x21a5e09",
+   "end_exclusive": "0x21a5e27",
+   "sha256": "05c0077b863373468e625c110237a7cfaf31eeb221ac2f99909dab30131eba59",
+   "instructions": [
+    "021A5E09 lea esp, [esp + 4]",
+    "021A5E10 xor eax, 0x1f9bf630",
+    "021A5E16 not eax",
+    "021A5E18 xor eax, 0x3c6aaede",
+    "021A5E1E dec eax",
+    "021A5E1F ror eax, 4",
+    "021A5E22 jmp 0x22138f5"
+   ]
+  },
+  {
+   "start": "0x21a9180",
+   "end_exclusive": "0x21a918a",
+   "sha256": "fa7be034349ef25ac9ac20663b6c42fa68e9827119c677106a6d6db1fac55364",
+   "instructions": [
+    "021A9180 add eax, 0x27524128",
+    "021A9186 add eax, dword ptr [edi]",
+    "021A9188 jmp eax"
+   ]
+  },
+  {
+   "start": "0x21a918b",
+   "end_exclusive": "0x21a9192",
+   "sha256": "c7126982600475f297adfea14796715131e8a56d9a554ea97d20f1d1be7a709f",
+   "instructions": [
+    "021A918B lea esp, [esp + 4]",
+    "021A918F ret 0x18"
+   ]
+  },
+  {
+   "start": "0x21a9d41",
+   "end_exclusive": "0x21a9d60",
+   "sha256": "90015157d18d55134c0002632d28ee9a7d10f261d8976140d317855ee32723bf",
+   "instructions": [
+    "021A9D41 mov edx, dword ptr [esp]",
+    "021A9D44 lea esp, [esp + 4]",
+    "021A9D4B nop ",
+    "021A9D4C mov eax, dword ptr [edx]",
+    "021A9D4E lea esp, [esp - 4]",
+    "021A9D55 mov dword ptr [esp], eax",
+    "021A9D58 lodsd eax, dword ptr [esi]",
+    "021A9D59 add eax, dword ptr [edi]",
+    "021A9D5B call 0x220db76"
+   ]
+  },
+  {
+   "start": "0x21adddb",
+   "end_exclusive": "0x21adde3",
+   "sha256": "9b65dc2d2566b6171d298df046b829c5b4329b50727f7b9448b1775e2c0899b0",
+   "instructions": [
+    "021ADDDB mov eax, dword ptr [esp]",
+    "021ADDDE jmp 0x21df684"
+   ]
+  },
+  {
+   "start": "0x21ae7b6",
+   "end_exclusive": "0x21ae7ee",
+   "sha256": "9d40f4231c86e8600c3e5046835d749a833bd2c9eda0c33df9bdb11abf9ec49b",
+   "instructions": [
+    "021AE7B6 lea esp, [esp + 4]",
+    "021AE7BA push 0x30201078",
+    "021AE7BF sub eax, dword ptr [esp]",
+    "021AE7C2 lea esp, [esp + 4]",
+    "021AE7C9 xor eax, 0x1f9bf630",
+    "021AE7CF not eax",
+    "021AE7D1 xor eax, 0x3c6aaede",
+    "021AE7D7 dec eax",
+    "021AE7D8 ror eax, 4",
+    "021AE7DB add eax, dword ptr [edi + 4]",
+    "021AE7DE pushfd ",
+    "021AE7DF mov dword ptr [esp], eax",
+    "021AE7E2 lodsd eax, dword ptr [esi]",
+    "021AE7E3 add esi, 4",
+    "021AE7E9 call 0x21c86e1"
+   ]
+  },
+  {
+   "start": "0x21aef65",
+   "end_exclusive": "0x21aef79",
+   "sha256": "9f47f595bf738628e41225ed8eec74cc3cd0bfc70a6f7caf8afa709c6100c5b0",
+   "instructions": [
+    "021AEF65 mov eax, dword ptr [esp]",
+    "021AEF68 lea esp, [esp + 4]",
+    "021AEF6F not eax",
+    "021AEF71 not dword ptr [esp]",
+    "021AEF74 jmp 0x21c64d1"
+   ]
+  },
+  {
+   "start": "0x21b02ce",
+   "end_exclusive": "0x21b02d5",
+   "sha256": "0652dcab33643d4fc2e06b52ce133534df60d00272a820ea076c87fe879992b4",
+   "instructions": [
+    "021B02CE push ebp",
+    "021B02CF push edi",
+    "021B02D0 jmp 0x22190d8"
+   ]
+  },
+  {
+   "start": "0x21b3cd0",
+   "end_exclusive": "0x21b3ce6",
+   "sha256": "b68f86ff5de8cd81226e9d8ffd1971909e139ffc477bf2b3e11512a3f5b0dd5f",
+   "instructions": [
+    "021B3CD0 lea esp, [esp + 4]",
+    "021B3CD4 lea esp, [esp - 4]",
+    "021B3CDB push esi",
+    "021B3CDC mov esi, dword ptr [esp + 0xc]",
+    "021B3CE3 ret 0x10"
+   ]
+  },
+  {
+   "start": "0x21b6069",
+   "end_exclusive": "0x21b6072",
+   "sha256": "a9e6122c253456bf22975a1b0723dd341f2e4184734c40f1893d78a405a8a783",
+   "instructions": [
+    "021B6069 push eax",
+    "021B606A push esi",
+    "021B606B pushfd ",
+    "021B606C push ebp",
+    "021B606D jmp 0x2193fc8"
+   ]
+  },
+  {
+   "start": "0x21b7599",
+   "end_exclusive": "0x21b75af",
+   "sha256": "e506cd788e5b1c6876a430cd8242aa483dc5efd5d087f22071de7eec93926e99",
+   "instructions": [
+    "021B7599 mov ax, word ptr [esi + 4]",
+    "021B75A0 and eax, 0xff",
+    "021B75A6 nop ",
+    "021B75A7 shl eax, 2",
+    "021B75AA call 0x21a41a7"
+   ]
+  },
+  {
+   "start": "0x21b95d7",
+   "end_exclusive": "0x21b95fb",
+   "sha256": "cdc7dfbea828d26e650a2de56979dfbcc4ab86ca9f5539a77bd954268bafaef7",
+   "instructions": [
+    "021B95D7 push esi",
+    "021B95D8 pop eax",
+    "021B95D9 sub eax, dword ptr [edi + 4]",
+    "021B95DC add eax, dword ptr [esi + 4]",
+    "021B95DF not eax",
+    "021B95E1 not eax",
+    "021B95E3 dec eax",
+    "021B95E4 cmp eax, 0x30201078",
+    "021B95EA lea eax, [eax - 0x540220f8]",
+    "021B95F0 lea eax, [eax + 0x23e21080]",
+    "021B95F6 call 0x21cbfae"
+   ]
+  },
+  {
+   "start": "0x21b9c78",
+   "end_exclusive": "0x21b9c8d",
+   "sha256": "c581cbaa02652b393c555567d10eec2a6dc17726a0a798a6bd053ba39e559bdf",
+   "instructions": [
+    "021B9C78 lea esp, [esp + 4]",
+    "021B9C7C mov dword ptr [esp], eax",
+    "021B9C7F push esi",
+    "021B9C80 mov esi, dword ptr [esp + 4]",
+    "021B9C87 push ecx",
+    "021B9C88 call 0x21b3cd0"
+   ]
+  },
+  {
+   "start": "0x21bc237",
+   "end_exclusive": "0x21bc247",
+   "sha256": "0d31a3ebd612608b6b75e94de0af1c404c88170fdc58e7bcdb623881c8daf3c1",
+   "instructions": [
+    "021BC237 mov byte ptr [ecx], al",
+    "021BC239 lodsd eax, dword ptr [esi]",
+    "021BC23A add eax, dword ptr [edi]",
+    "021BC23C add eax, 0x332381e6",
+    "021BC242 jmp 0x403abd"
+   ]
+  },
+  {
+   "start": "0x21bc4ab",
+   "end_exclusive": "0x21bc4ce",
+   "sha256": "9e4aa4fd3458cd8085cfea861f6fe0bbbf75a61539624aa16b0cc56f65217a42",
+   "instructions": [
+    "021BC4AB lea esp, [esp + 4]",
+    "021BC4AF mov dword ptr [esp], edx",
+    "021BC4B2 push edi",
+    "021BC4B3 mov edi, dword ptr [esp + 4]",
+    "021BC4BA pushfd ",
+    "021BC4BB lea esp, [esp - 4]",
+    "021BC4C2 push ebp",
+    "021BC4C3 push 0x381828e1",
+    "021BC4C8 push edi",
+    "021BC4C9 jmp 0x21d3cd0"
+   ]
+  },
+  {
+   "start": "0x21bc644",
+   "end_exclusive": "0x21bc66a",
+   "sha256": "4bb4aaf11e420020a8d34ee538cd18b53bda433e64f3d4953a5678b3f187adfa",
+   "instructions": [
+    "021BC644 lea esp, [esp + 4]",
+    "021BC648 not eax",
+    "021BC64A dec eax",
+    "021BC64B cmp eax, 0x30201078",
+    "021BC651 lea eax, [eax - 0x7ab24c75]",
+    "021BC657 lea eax, [eax + 0x4a923bfd]",
+    "021BC65D xor eax, 0x1f9bf630",
+    "021BC663 not eax",
+    "021BC665 jmp 0x21d96e4"
+   ]
+  },
+  {
+   "start": "0x21c0118",
+   "end_exclusive": "0x21c011f",
+   "sha256": "3dcc2d153873873c41902ebbf7c80e8eec442b4190c012f32e9b2b751fdc5541",
+   "instructions": [
+    "021C0118 push ebp",
+    "021C0119 push edi",
+    "021C011A jmp 0x2216028"
+   ]
+  },
+  {
+   "start": "0x21c0b2c",
+   "end_exclusive": "0x21c0b36",
+   "sha256": "d0a2eec406e9fb93be9ddf30dfc5125ea850ef6f528ef3c710d2cc42ddaa2e4c",
+   "instructions": [
+    "021C0B2C mov byte ptr [ecx], al",
+    "021C0B2E lodsd eax, dword ptr [esi]",
+    "021C0B2F add eax, dword ptr [edi]",
+    "021C0B31 call 0x776d62"
+   ]
+  },
+  {
+   "start": "0x21c53ea",
+   "end_exclusive": "0x21c53fb",
+   "sha256": "0027a58a3e63f282385cd73dd5994c08f92c2cea012dd2e5883c05492a7c3cba",
+   "instructions": [
+    "021C53EA lea esp, [esp + 4]",
+    "021C53F1 pop dword ptr fs:[edx]",
+    "021C53F4 mov ecx, dword ptr [esi]",
+    "021C53F6 jmp 0x2168ade"
+   ]
+  },
+  {
+   "start": "0x21c5569",
+   "end_exclusive": "0x21c5591",
+   "sha256": "f4b8faf35289f605747d56cd66ba6cce88831d003c7ed343d2e93299b9222d79",
+   "instructions": [
+    "021C5569 lea esp, [esp + 4]",
+    "021C556D add ebx, dword ptr [edi]",
+    "021C556F add esi, 4",
+    "021C5575 push 0x3c8c646c",
+    "021C557A mov dword ptr [esp], ebx",
+    "021C557D push eax",
+    "021C557E mov eax, dword ptr [esp + 4]",
+    "021C5585 lea esp, [esp - 4]",
+    "021C558C call 0x21f7b59"
+   ]
+  },
+  {
+   "start": "0x21c5c3c",
+   "end_exclusive": "0x21c5c47",
+   "sha256": "c07faee9ba3a8fba46a2334bc4bd9e2813a7f8cb0458585f3ed967a4c9c3ae50",
+   "instructions": [
+    "021C5C3C lea esp, [esp + 4]",
+    "021C5C40 push ebp",
+    "021C5C41 push edi",
+    "021C5C42 jmp 0x2216028"
+   ]
+  },
+  {
+   "start": "0x21c64d1",
+   "end_exclusive": "0x21c64df",
+   "sha256": "01b0d6136a2503381aa75b1c26976bc5d288473dc26aa1e4dfc8088d560cb432",
+   "instructions": [
+    "021C64D1 and dword ptr [esp], eax",
+    "021C64D4 lodsd eax, dword ptr [esi]",
+    "021C64D5 add eax, 0x27524128",
+    "021C64DB add eax, dword ptr [edi]",
+    "021C64DD jmp eax"
+   ]
+  },
+  {
+   "start": "0x21c6c77",
+   "end_exclusive": "0x21c6c8b",
+   "sha256": "d4837f1809c66bfd5f336a36f8b36fababc541c8876914371a8e334d01be8927",
+   "instructions": [
+    "021C6C77 mov ecx, dword ptr [esp]",
+    "021C6C7A lea esp, [esp + 4]",
+    "021C6C81 pop ax",
+    "021C6C83 mov byte ptr [ecx], al",
+    "021C6C85 lodsd eax, dword ptr [esi]",
+    "021C6C86 jmp 0x2190194"
+   ]
+  },
+  {
+   "start": "0x21c6f09",
+   "end_exclusive": "0x21c6f41",
+   "sha256": "f6ef9cc8bf9f2384a0008a502dcf9840fde66edb403a8833a6e64620d79949ca",
+   "instructions": [
+    "021C6F09 add ebx, 0x3b90d790",
+    "021C6F0F add ebx, dword ptr [edi]",
+    "021C6F11 lea esi, [esi + 4]",
+    "021C6F14 lea esp, [esp - 4]",
+    "021C6F1B mov dword ptr [esp], ebx",
+    "021C6F1E push esi",
+    "021C6F1F mov esi, dword ptr [esp + 4]",
+    "021C6F26 pushfd ",
+    "021C6F27 lea esp, [esp - 4]",
+    "021C6F2E push 0x5fd4881c",
+    "021C6F33 pushfd ",
+    "021C6F34 push esi",
+    "021C6F35 mov esi, dword ptr [esp + 0x14]",
+    "021C6F3C call 0x21a918b"
+   ]
+  },
+  {
+   "start": "0x21c7f0b",
+   "end_exclusive": "0x21c7f25",
+   "sha256": "ebd872b99ab96d213526943d67283420f2ec6172d4357b506b7d1614bf1d7f43",
+   "instructions": [
+    "021C7F0B mov eax, dword ptr [esp]",
+    "021C7F0E lea esp, [esp + 4]",
+    "021C7F15 mov ecx, dword ptr [esp]",
+    "021C7F18 lea esp, [esp + 4]",
+    "021C7F1F push ebp",
+    "021C7F20 jmp 0x2211f5a"
+   ]
+  },
+  {
+   "start": "0x21c86e1",
+   "end_exclusive": "0x21c86ef",
+   "sha256": "5ba94d2fef8fe0048406759de48175832ccb40a386ca7a1fcfeaaa82de9a9e60",
+   "instructions": [
+    "021C86E1 lea esp, [esp + 4]",
+    "021C86E5 add eax, 0x23b02e8e",
+    "021C86EB add eax, dword ptr [edi]",
+    "021C86ED jmp eax"
+   ]
+  },
+  {
+   "start": "0x21c93bf",
+   "end_exclusive": "0x21c93e2",
+   "sha256": "ade4d97e26a69019521de579a789a57402b41456db4db92af42e3f5e7bf63342",
+   "instructions": [
+    "021C93BF add edx, 0x6e9a669c",
+    "021C93C5 add esi, 5",
+    "021C93CB pushfd ",
+    "021C93CC mov dword ptr [esp], edx",
+    "021C93CF push esi",
+    "021C93D0 mov esi, dword ptr [esp + 4]",
+    "021C93D7 push esi",
+    "021C93D8 mov esi, dword ptr [esp + 4]",
+    "021C93DF ret 8"
+   ]
+  },
+  {
+   "start": "0x21c9467",
+   "end_exclusive": "0x21c9472",
+   "sha256": "c5631656660fb5539f108618a6c4428417e4dccced83ebdb5e7432b196a11a31",
+   "instructions": [
+    "021C9467 lea esp, [esp + 4]",
+    "021C946B push esi",
+    "021C946C pushfd ",
+    "021C946D jmp 0x21c0118"
+   ]
+  },
+  {
+   "start": "0x21cb391",
+   "end_exclusive": "0x21cb3b3",
+   "sha256": "f994f9fcd5b190f719b3ccbbd8b6a1cf60fd54d7a9dbaf90a61db978490f5f5e",
+   "instructions": [
+    "021CB391 push esi",
+    "021CB392 pop eax",
+    "021CB393 sub eax, dword ptr [edi + 4]",
+    "021CB396 add al, byte ptr [esi + 4]",
+    "021CB399 ror al, 1",
+    "021CB39C xor al, 0x60",
+    "021CB39F inc al",
+    "021CB3A1 dec al",
+    "021CB3A3 dec al",
+    "021CB3A5 ror al, 2",
+    "021CB3A8 ror al, 7",
+    "021CB3AB rol al, 1",
+    "021CB3AE jmp 0x21831d2"
+   ]
+  },
+  {
+   "start": "0x21cbfae",
+   "end_exclusive": "0x21cbfdc",
+   "sha256": "09d094d2db98cb41838c72eb3a4217053b0fe496d8872eccc171901e9841384a",
+   "instructions": [
+    "021CBFAE lea esp, [esp + 4]",
+    "021CBFB2 xor eax, 0x1f9bf630",
+    "021CBFB8 not eax",
+    "021CBFBA xor eax, 0x3c6aaede",
+    "021CBFC0 dec eax",
+    "021CBFC1 ror eax, 4",
+    "021CBFC4 add eax, dword ptr [edi + 4]",
+    "021CBFC7 push esi",
+    "021CBFC8 mov dword ptr [esp], eax",
+    "021CBFCB lodsd eax, dword ptr [esi]",
+    "021CBFCC add esi, 4",
+    "021CBFD2 add eax, 0x23b02e8e",
+    "021CBFD8 add eax, dword ptr [edi]",
+    "021CBFDA jmp eax"
+   ]
+  },
+  {
+   "start": "0x21cc87c",
+   "end_exclusive": "0x21cc88f",
+   "sha256": "d9506f5557bc0cbe688a4dcb0a0eb5a04535c852b036dfe7a3765af9824f8b02",
+   "instructions": [
+    "021CC87C lea eax, [eax]",
+    "021CC87E mov eax, dword ptr [esi + 4]",
+    "021CC884 and eax, 0xff",
+    "021CC88A call 0x22188ad"
+   ]
+  },
+  {
+   "start": "0x21cdee6",
+   "end_exclusive": "0x21cdf02",
+   "sha256": "e09c1671a6e48dc3cde1b668ba08703583d303050a234c62e6f5d021d8816f31",
+   "instructions": [
+    "021CDEE6 mov cl, cl",
+    "021CDEE8 mov eax, dword ptr [esi + 4]",
+    "021CDEEE and eax, 0xff",
+    "021CDEF4 mov cl, cl",
+    "021CDEF6 shl eax, 2",
+    "021CDEF9 add eax, edi",
+    "021CDEFB push dword ptr [eax]",
+    "021CDEFD call 0x21a2123"
+   ]
+  },
+  {
+   "start": "0x21d0217",
+   "end_exclusive": "0x21d0238",
+   "sha256": "e3429f2bdb13cdf4de06ed6404784bd5de9f165ac5f0a93bdbae404e0047e67d",
+   "instructions": [
+    "021D0217 lea esp, [esp + 4]",
+    "021D021B inc ax",
+    "021D021D not ax",
+    "021D0220 push ax",
+    "021D0222 mov ebx, dword ptr [esi]",
+    "021D0224 lea esi, [esi + 6]",
+    "021D0227 add ebx, dword ptr [edi]",
+    "021D0229 add ebx, 0x2beeb097",
+    "021D022F push ebx",
+    "021D0230 mov dword ptr [esp], ebx",
+    "021D0233 jmp 0x21d6f4a"
+   ]
+  },
+  {
+   "start": "0x21d1166",
+   "end_exclusive": "0x21d1172",
+   "sha256": "9a30639bfd4f48f725422578089f004d76f650d750cf2e4cdbde7b00faa4159e",
+   "instructions": [
+    "021D1166 push 0xfaa17ad7",
+    "021D116B push ecx",
+    "021D116C push edx",
+    "021D116D call 0x216b095"
+   ]
+  },
+  {
+   "start": "0x21d118a",
+   "end_exclusive": "0x21d1196",
+   "sha256": "3b9339423ddb20373d0605940e5ff3aa535e93c056762d17afeee220a69a903d",
+   "instructions": [
+    "021D118A lea esp, [esp + 4]",
+    "021D118E push eax",
+    "021D118F push esi",
+    "021D1190 pushfd ",
+    "021D1191 call 0x21c5c3c"
+   ]
+  },
+  {
+   "start": "0x21d3cd0",
+   "end_exclusive": "0x21d3cda",
+   "sha256": "1e335c17ffe5bfde96de8ccd69ef6ef5d5d9b0a601cf86cea0ec17063262f11d",
+   "instructions": [
+    "021D3CD0 mov edi, dword ptr [esp + 0x14]",
+    "021D3CD7 ret 0x18"
+   ]
+  },
+  {
+   "start": "0x21d5256",
+   "end_exclusive": "0x21d525d",
+   "sha256": "c96f02b1ad693917246e20bc72543656c636eda145d7288ad376b7ce2e08c2f9",
+   "instructions": [
+    "021D5256 mov edx, esp",
+    "021D5258 jmp 0x219b81c"
+   ]
+  },
+  {
+   "start": "0x21d6f35",
+   "end_exclusive": "0x21d6f42",
+   "sha256": "4a88786df7b601f2d1bec0de0cb92147e284e93f553caf5324ce9347b20a7d72",
+   "instructions": [
+    "021D6F35 mov eax, dword ptr [esp + 4]",
+    "021D6F3C push eax",
+    "021D6F3D call 0x219c773"
+   ]
+  },
+  {
+   "start": "0x21d6f4a",
+   "end_exclusive": "0x21d6f5d",
+   "sha256": "cbb5694f148d04780d44035d59af384314653677bd82c45ca2ed92fcd29d495b",
+   "instructions": [
+    "021D6F4A push ebx",
+    "021D6F4B mov ebx, dword ptr [esp + 4]",
+    "021D6F52 push ebx",
+    "021D6F53 mov ebx, dword ptr [esp + 4]",
+    "021D6F5A ret 8"
+   ]
+  },
+  {
+   "start": "0x21d7a4c",
+   "end_exclusive": "0x21d7a5f",
+   "sha256": "61e0ef7bac6f6a699f290d75ea1bad6ead49e98dbc82fd8fb9e1f4a97c807c84",
+   "instructions": [
+    "021D7A4C shl eax, 2",
+    "021D7A4F add eax, edi",
+    "021D7A51 pop dword ptr [eax]",
+    "021D7A53 lodsd eax, dword ptr [esi]",
+    "021D7A54 add esi, 1",
+    "021D7A5A call 0x21dd876"
+   ]
+  },
+  {
+   "start": "0x21d7d21",
+   "end_exclusive": "0x21d7d48",
+   "sha256": "2bba076897dfe7a3be50be54ae0cdc57adc9cc1b3c659cfcb456fa0ebac58697",
+   "instructions": [
+    "021D7D21 push esi",
+    "021D7D22 pop eax",
+    "021D7D23 sub eax, dword ptr [edi + 4]",
+    "021D7D26 add eax, dword ptr [esi + 4]",
+    "021D7D29 not eax",
+    "021D7D2B not eax",
+    "021D7D2D dec eax",
+    "021D7D2E push 0x30201078",
+    "021D7D33 sub eax, dword ptr [esp]",
+    "021D7D36 lea esp, [esp + 4]",
+    "021D7D3D xor eax, 0x1f9bf630",
+    "021D7D43 jmp 0x21fae27"
+   ]
+  },
+  {
+   "start": "0x21d9336",
+   "end_exclusive": "0x21d9345",
+   "sha256": "16eba4a710c52adb1480101430b8f94556b0c497cf43dff1e4a7fa6597a95b85",
+   "instructions": [
+    "021D9336 mov ecx, dword ptr [esp]",
+    "021D9339 lea esp, [esp + 4]",
+    "021D9340 jmp 0x2202533"
+   ]
+  },
+  {
+   "start": "0x21d96e4",
+   "end_exclusive": "0x21d9700",
+   "sha256": "aa018c095e3926619df230f5ef3fca8ed4de13444f7cda9ca95a0e1e9b45568c",
+   "instructions": [
+    "021D96E4 xor eax, 0x3c6aaede",
+    "021D96EA dec eax",
+    "021D96EB ror eax, 4",
+    "021D96EE add eax, dword ptr [edi + 4]",
+    "021D96F1 lea esp, [esp - 4]",
+    "021D96F8 mov dword ptr [esp], eax",
+    "021D96FB call 0x221bbc9"
+   ]
+  },
+  {
+   "start": "0x21da22e",
+   "end_exclusive": "0x21da242",
+   "sha256": "92a7ae440ee83e97199f7f47e9bb2e854dea543ff30a5b7e804b71f1989ce07a",
+   "instructions": [
+    "021DA22E mov edi, dword ptr [esp + 4]",
+    "021DA235 push esi",
+    "021DA236 push edx",
+    "021DA237 push edi",
+    "021DA238 mov edi, dword ptr [esp + 0xc]",
+    "021DA23F ret 0x10"
+   ]
+  },
+  {
+   "start": "0x21da7fb",
+   "end_exclusive": "0x21da80f",
+   "sha256": "098723c3b93194c22b8a2360caa287396ae8945dbf1246ec7822b1b3566e0f99",
+   "instructions": [
+    "021DA7FB lea esp, [esp + 4]",
+    "021DA802 xor eax, 0x1f9bf630",
+    "021DA808 not eax",
+    "021DA80A call 0x7b4202"
+   ]
+  },
+  {
+   "start": "0x21dd876",
+   "end_exclusive": "0x21dd884",
+   "sha256": "66db21053d3c1d065ae533aba30aa9d8eeb55de68331f5f3021c2e6a44aa8dcd",
+   "instructions": [
+    "021DD876 lea esp, [esp + 4]",
+    "021DD87A add eax, dword ptr [edi]",
+    "021DD87C add eax, 0x3ecbfb8d",
+    "021DD882 jmp eax"
+   ]
+  },
+  {
+   "start": "0x21ded86",
+   "end_exclusive": "0x21ded92",
+   "sha256": "c3e7e8287319397037b78da097623ab44df1508088e631085fa11e7dbc2efa67",
+   "instructions": [
+    "021DED86 push 0x61224bba",
+    "021DED8B push ecx",
+    "021DED8C push edx",
+    "021DED8D jmp 0x219b83f"
+   ]
+  },
+  {
+   "start": "0x21df684",
+   "end_exclusive": "0x21df699",
+   "sha256": "13c5126247023e8945633653324eef272008921c8bc40bf02098072752a3b646",
+   "instructions": [
+    "021DF684 lea esp, [esp + 4]",
+    "021DF68B not eax",
+    "021DF68D not dword ptr [esp]",
+    "021DF690 and dword ptr [esp], eax",
+    "021DF693 lodsd eax, dword ptr [esi]",
+    "021DF694 call 0x219404a"
+   ]
+  },
+  {
+   "start": "0x21e00ff",
+   "end_exclusive": "0x21e010e",
+   "sha256": "96b68e1e81d74016c308d395ab41b0d0bd91c42e44282690a74742865cef6a99",
+   "instructions": [
+    "021E00FF lea esp, [esp + 4]",
+    "021E0103 push edi",
+    "021E0104 mov edi, dword ptr [esp + 0x10]",
+    "021E010B ret 0x14"
+   ]
+  },
+  {
+   "start": "0x21e145c",
+   "end_exclusive": "0x21e1485",
+   "sha256": "abee13cc3c528cb6ac79a766cc54c6050db25c2c3c428646a7276f1dd419d30a",
+   "instructions": [
+    "021E145C lea esp, [esp + 4]",
+    "021E1460 add ecx, 0x413cbb5f",
+    "021E1466 add ecx, dword ptr [edi]",
+    "021E1468 push 0x8675d423",
+    "021E146D mov dword ptr [esp], ecx",
+    "021E1470 push ecx",
+    "021E1471 mov ecx, dword ptr [esp + 4]",
+    "021E1478 push ecx",
+    "021E1479 mov ecx, dword ptr [esp + 4]",
+    "021E1480 jmp 0x6f97ec"
+   ]
+  },
+  {
+   "start": "0x21e3eae",
+   "end_exclusive": "0x21e3edb",
+   "sha256": "6fd340be3d23d50bbf0aadf036dd99d9cfd64108b19c919f609ec354a073d730",
+   "instructions": [
+    "021E3EAE mov eax, dword ptr [esp]",
+    "021E3EB1 lea esp, [esp + 4]",
+    "021E3EB8 not eax",
+    "021E3EBA not dword ptr [esp]",
+    "021E3EBD and dword ptr [esp], eax",
+    "021E3EC0 pushfd ",
+    "021E3EC1 mov ebx, dword ptr [esi]",
+    "021E3EC3 add ebx, 0x1f01b95f",
+    "021E3EC9 add ebx, dword ptr [edi]",
+    "021E3ECB add esi, 4",
+    "021E3ED1 pushfd ",
+    "021E3ED2 mov dword ptr [esp], ebx",
+    "021E3ED5 push edi",
+    "021E3ED6 jmp 0x21da22e"
+   ]
+  },
+  {
+   "start": "0x21e821f",
+   "end_exclusive": "0x21e8237",
+   "sha256": "b04e9a47e0d182dd67df12657c80c289939e2f705ffcabe92bb4220e9c192c6d",
+   "instructions": [
+    "021E821F mov eax, dword ptr [esp]",
+    "021E8222 lea esp, [esp + 4]",
+    "021E8229 not eax",
+    "021E822B not dword ptr [esp]",
+    "021E822E and dword ptr [esp], eax",
+    "021E8231 lodsd eax, dword ptr [esi]",
+    "021E8232 jmp 0x21a9180"
+   ]
+  },
+  {
+   "start": "0x21e9493",
+   "end_exclusive": "0x21e94b1",
+   "sha256": "7900f865304a090b71b4289ac76eb57ef0a0786456f667a9926ca462110df736",
+   "instructions": [
+    "021E9493 mov eax, dword ptr [esp]",
+    "021E9496 lea esp, [esp + 4]",
+    "021E949D mov ecx, dword ptr [esp]",
+    "021E94A0 lea esp, [esp + 4]",
+    "021E94A7 push edi",
+    "021E94A8 mov edi, ecx",
+    "021E94AA add esi, edi",
+    "021E94AC call 0x220e769"
+   ]
+  },
+  {
+   "start": "0x21ea41a",
+   "end_exclusive": "0x21ea421",
+   "sha256": "1bd18a9d225c82451c00c4f78144b3a2fde0b61d6b634265b7148a075c4d47a3",
+   "instructions": [
+    "021EA41A push esi",
+    "021EA41B pushfd ",
+    "021EA41C call 0x2208b24"
+   ]
+  },
+  {
+   "start": "0x21eb0c4",
+   "end_exclusive": "0x21eb0d8",
+   "sha256": "cda002ff861260744eabd95aad7cbcd0d7302f4e413b716a69e186a2d3813167",
+   "instructions": [
+    "021EB0C4 push esi",
+    "021EB0C5 mov esi, dword ptr [esp + 4]",
+    "021EB0CC push edi",
+    "021EB0CD push esi",
+    "021EB0CE mov esi, dword ptr [esp + 8]",
+    "021EB0D5 ret 0xc"
+   ]
+  },
+  {
+   "start": "0x21ee15c",
+   "end_exclusive": "0x21ee16e",
+   "sha256": "a540c9500c66c2cfc3ec2b8787908005b6083446b84e938045bd797a883c5aae",
+   "instructions": [
+    "021EE15C push esi",
+    "021EE15D pop eax",
+    "021EE15E sub eax, dword ptr [edi + 4]",
+    "021EE161 add eax, dword ptr [esi + 4]",
+    "021EE164 not eax",
+    "021EE166 not eax",
+    "021EE168 dec eax",
+    "021EE169 call 0x21ae7b6"
+   ]
+  },
+  {
+   "start": "0x21efad2",
+   "end_exclusive": "0x21efae0",
+   "sha256": "9ed1a5964a9ef9ef3a303186ab041873d2050700d696e4ef5d0f0de6d57f0f3d",
+   "instructions": [
+    "021EFAD2 push esi",
+    "021EFAD3 pop eax",
+    "021EFAD4 sub eax, dword ptr [edi + 4]",
+    "021EFAD7 add ax, word ptr [esi + 4]",
+    "021EFADB jmp 0x220e729"
+   ]
+  },
+  {
+   "start": "0x21efae1",
+   "end_exclusive": "0x21efaf4",
+   "sha256": "cbb5694f148d04780d44035d59af384314653677bd82c45ca2ed92fcd29d495b",
+   "instructions": [
+    "021EFAE1 push ebx",
+    "021EFAE2 mov ebx, dword ptr [esp + 4]",
+    "021EFAE9 push ebx",
+    "021EFAEA mov ebx, dword ptr [esp + 4]",
+    "021EFAF1 ret 8"
+   ]
+  },
+  {
+   "start": "0x21f0953",
+   "end_exclusive": "0x21f0964",
+   "sha256": "a9a8e5167d1556dc01bdf52914fe9e3fc73c938025b4bef55da1699ae9eac7dc",
+   "instructions": [
+    "021F0953 mov ecx, dword ptr [esp]",
+    "021F0956 lea esp, [esp + 4]",
+    "021F095D pop ax",
+    "021F095F jmp 0x21bc237"
+   ]
+  },
+  {
+   "start": "0x21f22d4",
+   "end_exclusive": "0x21f22dc",
+   "sha256": "815bdf423a735eb5567706750c579eb08d677785f5fd4566dfaf9f9064819e13",
+   "instructions": [
+    "021F22D4 mov edx, esp",
+    "021F22D6 push eax",
+    "021F22D7 jmp 0x2211376"
+   ]
+  },
+  {
+   "start": "0x21f25a0",
+   "end_exclusive": "0x21f25ab",
+   "sha256": "010f79efeabd5df7704628e7f0dcd6aebd067e186940e381498ca55806a5dca4",
+   "instructions": [
+    "021F25A0 push 0x19a24ed1",
+    "021F25A5 push ecx",
+    "021F25A6 call 0x2211d01"
+   ]
+  },
+  {
+   "start": "0x21f2bd6",
+   "end_exclusive": "0x21f2bf5",
+   "sha256": "e5f48777201a451884f1a0a3edf0d2e379d61044948c67f59bcf0218430c4149",
+   "instructions": [
+    "021F2BD6 lea esp, [esp + 4]",
+    "021F2BDD mov ecx, dword ptr [esp]",
+    "021F2BE0 lea esp, [esp + 4]",
+    "021F2BE7 popfd ",
+    "021F2BE8 push ebp",
+    "021F2BE9 mov ebp, dword ptr [esp + 4]",
+    "021F2BF0 jmp 0x219d34b"
+   ]
+  },
+  {
+   "start": "0x21f4619",
+   "end_exclusive": "0x21f4639",
+   "sha256": "2270a18d11bb62f5b2454d4f0a8552b23a42885f3d8b60be6b3d65273cde337f",
+   "instructions": [
+    "021F4619 mov eax, dword ptr [esp]",
+    "021F461C lea esp, [esp + 4]",
+    "021F4623 not eax",
+    "021F4625 not dword ptr [esp]",
+    "021F4628 and dword ptr [esp], eax",
+    "021F462B pushfd ",
+    "021F462C mov ebx, dword ptr [esi]",
+    "021F462E add ebx, 0x1f01b95f",
+    "021F4634 call 0x21c5569"
+   ]
+  },
+  {
+   "start": "0x21f6ff8",
+   "end_exclusive": "0x21f7019",
+   "sha256": "d9391d942a4487bde1b047bf01085d2c61cb065939711af88fcf37716f1bdbcb",
+   "instructions": [
+    "021F6FF8 call 0x21f6ffd",
+    "021F6FFD pop eax",
+    "021F6FFE sub eax, 0x21f6ffd",
+    "021F7003 mov edi, dword ptr fs:[0x18]",
+    "021F700A mov edi, dword ptr [edi + 8]",
+    "021F700D mov ecx, esp",
+    "021F700F sub ecx, edi",
+    "021F7011 cmp ecx, 0x4000",
+    "021F7017 jg 0x21f7029"
+   ]
+  },
+  {
+   "start": "0x21f7029",
+   "end_exclusive": "0x21f7050",
+   "sha256": "7f6a24929db3d834a2e5de61c6bb303bef4bb0ab7141168bdca0fb3f970d9282",
+   "instructions": [
+    "021F7029 mov dword ptr [edi], eax",
+    "021F702B mov dword ptr [edi + 4], eax",
+    "021F702E mov esi, dword ptr [esp + 0x20]",
+    "021F7032 rol esi, 9",
+    "021F7035 add esi, 0xbd81ace6",
+    "021F703B add esi, eax",
+    "021F703D xor ebp, ebp",
+    "021F703F xor ebx, ebx",
+    "021F7041 mov ecx, dword ptr [esi]",
+    "021F7043 add ecx, dword ptr [edi]",
+    "021F7045 lea esi, [esi + 4]",
+    "021F7048 add ecx, 0x31c528e6",
+    "021F704E push ecx",
+    "021F704F ret "
+   ]
+  },
+  {
+   "start": "0x21f7b59",
+   "end_exclusive": "0x21f7b69",
+   "sha256": "38ad381d475cc35ff965a51a8295190969e4faf6e648378a52cb681e7e661a30",
+   "instructions": [
+    "021F7B59 lea esp, [esp + 4]",
+    "021F7B5D push ebp",
+    "021F7B5E push eax",
+    "021F7B5F mov eax, dword ptr [esp + 0xc]",
+    "021F7B66 ret 0x10"
+   ]
+  },
+  {
+   "start": "0x21f7be8",
+   "end_exclusive": "0x21f7c07",
+   "sha256": "2738e0798e69021f2c40c26e894d0b5ae79664c9e6c3ef0fb35d729cb4c94d3a",
+   "instructions": [
+    "021F7BE8 mov edx, dword ptr [esp]",
+    "021F7BEB lea esp, [esp + 4]",
+    "021F7BF2 mov cl, cl",
+    "021F7BF4 add esp, 0xfffffffc",
+    "021F7BFA mov ecx, dword ptr [edx]",
+    "021F7BFC mov dword ptr [esp], ecx",
+    "021F7BFF lodsd eax, dword ptr [esi]",
+    "021F7C00 add eax, dword ptr [edi]",
+    "021F7C02 call 0x2204bb4"
+   ]
+  },
+  {
+   "start": "0x21fae27",
+   "end_exclusive": "0x21fae4a",
+   "sha256": "f38ba960f31894f2e226b66a4cdcc4677217b30aaf220c7fcf136af6d353c29b",
+   "instructions": [
+    "021FAE27 not eax",
+    "021FAE29 xor eax, 0x3c6aaede",
+    "021FAE2F dec eax",
+    "021FAE30 ror eax, 4",
+    "021FAE33 push 0x55345d00",
+    "021FAE38 mov dword ptr [esp], eax",
+    "021FAE3B mov edx, dword ptr [esi]",
+    "021FAE3D add edx, 0x9999bbf6",
+    "021FAE43 add edx, dword ptr [edi]",
+    "021FAE45 lea esi, [esi + 8]",
+    "021FAE48 jmp edx"
+   ]
+  },
+  {
+   "start": "0x21fb262",
+   "end_exclusive": "0x21fb27e",
+   "sha256": "c8ba56f097d76de9acf1bdfbe7a0a3753af5731e16921266f152fafa743b0cef",
+   "instructions": [
+    "021FB262 mov edx, dword ptr [esp]",
+    "021FB265 lea esp, [esp + 4]",
+    "021FB26C mov edi, edi",
+    "021FB26E mov ecx, dword ptr [edx]",
+    "021FB270 sub esp, 4",
+    "021FB276 mov dword ptr [esp], ecx",
+    "021FB279 jmp 0x2160c89"
+   ]
+  },
+  {
+   "start": "0x21fcc20",
+   "end_exclusive": "0x21fcc33",
+   "sha256": "f0cf830594df84cfd674904e8cf39bc33394ae0268c947359ce288834c717cd4",
+   "instructions": [
+    "021FCC20 push ebp",
+    "021FCC21 mov ebp, dword ptr [esp + 4]",
+    "021FCC28 push ebp",
+    "021FCC29 mov ebp, dword ptr [esp + 4]",
+    "021FCC30 ret 8"
+   ]
+  },
+  {
+   "start": "0x220245f",
+   "end_exclusive": "0x2202473",
+   "sha256": "b2e1f9b5ccc204f2a1344253a39edbcd0a53aa87622535bf18edff58da480ae0",
+   "instructions": [
+    "0220245F mov edx, dword ptr [esp]",
+    "02202462 lea esp, [esp + 4]",
+    "02202469 add dword ptr [esp], edx",
+    "0220246C mov ebx, dword ptr [esi]",
+    "0220246E call 0x2198436"
+   ]
+  },
+  {
+   "start": "0x2202533",
+   "end_exclusive": "0x220253d",
+   "sha256": "ff430c0ac5200fa46f89e85673c61c823995b61964d7f021778cbb63fef3b4ba",
+   "instructions": [
+    "02202533 mov ecx, dword ptr [esi]",
+    "02202535 lea esi, [esi + 4]",
+    "02202538 call 0x21e145c"
+   ]
+  },
+  {
+   "start": "0x2202e3c",
+   "end_exclusive": "0x2202e50",
+   "sha256": "9621df46a9f037b3a89a8c3f8dfa119253f787892b1d8561afa09d9bdae8a267",
+   "instructions": [
+    "02202E3C lea esi, [esi + 4]",
+    "02202E3F add ecx, 0x413cbb5f",
+    "02202E45 add ecx, dword ptr [edi]",
+    "02202E47 push eax",
+    "02202E48 mov dword ptr [esp], ecx",
+    "02202E4B jmp 0x21eb0c4"
+   ]
+  },
+  {
+   "start": "0x2204bb4",
+   "end_exclusive": "0x2204bc7",
+   "sha256": "c127a9d61a48c61b28de3a8ac9ebf0c2a1cf5598e528ec77513f73e5469997d2",
+   "instructions": [
+    "02204BB4 lea esp, [esp + 4]",
+    "02204BB8 add eax, 0x72f1c22a",
+    "02204BBE pushfd ",
+    "02204BBF mov dword ptr [esp], eax",
+    "02204BC2 jmp 0x21efae1"
+   ]
+  },
+  {
+   "start": "0x22050d2",
+   "end_exclusive": "0x22050ea",
+   "sha256": "9fbd69769986f0920a313f13efead91962267c5e018f604936191be2c192d6d8",
+   "instructions": [
+    "022050D2 mov edx, dword ptr [esp]",
+    "022050D5 lea esp, [esp + 4]",
+    "022050DC lea ebx, [ebx]",
+    "022050DE mov eax, dword ptr [esp]",
+    "022050E1 lea esp, [esp + 4]",
+    "022050E8 mov dword ptr [edx], eax"
+   ]
+  },
+  {
+   "start": "0x2205298",
+   "end_exclusive": "0x22052a3",
+   "sha256": "ad5c0c95413b4aed407c746846f0c944c26ddc9907824963eb0cd4a32081e236",
+   "instructions": [
+    "02205298 push 0xa5a24bba",
+    "0220529D push ecx",
+    "0220529E jmp 0x22171ec"
+   ]
+  },
+  {
+   "start": "0x2208b24",
+   "end_exclusive": "0x2208b2f",
+   "sha256": "748ad1e27a0764ce103a487ab73e5cde7a5c8349bf6ae197e4da2b1baec0c28b",
+   "instructions": [
+    "02208B24 lea esp, [esp + 4]",
+    "02208B28 push ebp",
+    "02208B29 push edi",
+    "02208B2A jmp 0x2216028"
+   ]
+  },
+  {
+   "start": "0x220a627",
+   "end_exclusive": "0x220a651",
+   "sha256": "8b12e943c6edd3da5550afc80ba9994a3ba4316e152e9d06d72fcfe8690637cb",
+   "instructions": [
+    "0220A627 mov edx, dword ptr [esp]",
+    "0220A62A lea esp, [esp + 4]",
+    "0220A631 add dword ptr [esp], edx",
+    "0220A634 mov ebx, dword ptr [esi]",
+    "0220A636 add ebx, 0x3b90d790",
+    "0220A63C add ebx, dword ptr [edi]",
+    "0220A63E lea esi, [esi + 4]",
+    "0220A641 lea esp, [esp - 4]",
+    "0220A648 mov dword ptr [esp], ebx",
+    "0220A64B push ecx",
+    "0220A64C call 0x75d45d"
+   ]
+  },
+  {
+   "start": "0x220d5fa",
+   "end_exclusive": "0x220d609",
+   "sha256": "74faf1fe18c6619a43555214df447186ce929ac6268760c4d513aecc5d1080dc",
+   "instructions": [
+    "0220D5FA mov eax, dword ptr [esp]",
+    "0220D5FD lea esp, [esp + 4]",
+    "0220D604 call 0x217f9dc"
+   ]
+  },
+  {
+   "start": "0x220db76",
+   "end_exclusive": "0x220db9b",
+   "sha256": "e7818c38ffc54e3f926f20092bd4a2c303808294986d14ae831830687f39107d",
+   "instructions": [
+    "0220DB76 lea esp, [esp + 4]",
+    "0220DB7A add eax, 0x72f1c22a",
+    "0220DB80 push 0x4d68d5bc",
+    "0220DB85 mov dword ptr [esp], eax",
+    "0220DB88 push ecx",
+    "0220DB89 mov ecx, dword ptr [esp + 4]",
+    "0220DB90 push ecx",
+    "0220DB91 mov ecx, dword ptr [esp + 4]",
+    "0220DB98 ret 8"
+   ]
+  },
+  {
+   "start": "0x220e729",
+   "end_exclusive": "0x220e74b",
+   "sha256": "96ac761281965b9434533aaa9504c36d4ae17d0650f1b6af63f49ae3717deae4",
+   "instructions": [
+    "0220E729 sub ax, 0x2694",
+    "0220E72E rol ax, 7",
+    "0220E732 ror ax, 4",
+    "0220E736 not ax",
+    "0220E739 ror ax, 1",
+    "0220E73D xor ax, 0x225c",
+    "0220E742 ror ax, 4",
+    "0220E746 call 0x21702a8"
+   ]
+  },
+  {
+   "start": "0x220e769",
+   "end_exclusive": "0x220e77a",
+   "sha256": "cad3a10ca5ede7318ed5da16093865e028f8983936044323f17a67161e747721",
+   "instructions": [
+    "0220E769 lea esp, [esp + 4]",
+    "0220E76D pop edi",
+    "0220E76E push eax",
+    "0220E76F pop eax",
+    "0220E770 add eax, 0x1fc552bc",
+    "0220E776 add eax, dword ptr [edi]",
+    "0220E778 jmp eax"
+   ]
+  },
+  {
+   "start": "0x220fe99",
+   "end_exclusive": "0x220feac",
+   "sha256": "8709f5199badfefd1819fa6ec86b03d32bf4b7afb5781248468b9e64e4176966",
+   "instructions": [
+    "0220FE99 mov eax, dword ptr [esi + 4]",
+    "0220FE9F and eax, 0xff",
+    "0220FEA5 mov dl, dl",
+    "0220FEA7 jmp 0x22206e5"
+   ]
+  },
+  {
+   "start": "0x2210a87",
+   "end_exclusive": "0x2210a9c",
+   "sha256": "d6d69861fb80c4575bc15906305ea8bf17f17563bec183fbdfad397d08338405",
+   "instructions": [
+    "02210A87 lea esp, [esp + 4]",
+    "02210A8B push edx",
+    "02210A8C mov dword ptr [esp], eax",
+    "02210A8F push ecx",
+    "02210A90 mov ecx, dword ptr [esp + 4]",
+    "02210A97 call 0x216a702"
+   ]
+  },
+  {
+   "start": "0x2210f99",
+   "end_exclusive": "0x2210fa2",
+   "sha256": "b090ac7fecaee4ce7c1ac4f754c8f2faa16c7041415428afe242c45cd6a3869a",
+   "instructions": [
+    "02210F99 pop esp",
+    "02210F9A lodsd eax, dword ptr [esi]",
+    "02210F9B add eax, dword ptr [edi]",
+    "02210F9D jmp 0x2178e84"
+   ]
+  },
+  {
+   "start": "0x2211308",
+   "end_exclusive": "0x2211311",
+   "sha256": "c99cc2c5abd248b43e875516683fa15f2527314959aef9baa34d8de78410f9e0",
+   "instructions": [
+    "02211308 lea esp, [esp + 4]",
+    "0221130C lea esi, [esi + 4]",
+    "0221130F jmp ebx"
+   ]
+  },
+  {
+   "start": "0x2211376",
+   "end_exclusive": "0x2211388",
+   "sha256": "7e22ce803a772ed9fbea9939df3ca1babf21d053f4034daab418d9274dd3b08e",
+   "instructions": [
+    "02211376 mov dword ptr [esp], edx",
+    "02211379 mov ebx, dword ptr [esi]",
+    "0221137B add ebx, dword ptr [edi]",
+    "0221137D add ebx, 0x2ba6f13c",
+    "02211383 call 0x217033f"
+   ]
+  },
+  {
+   "start": "0x2211d01",
+   "end_exclusive": "0x2211d0d",
+   "sha256": "b28e05e336576fab4aeaa084e8a8a7181708c1b2766fb4716199a76162337b1c",
+   "instructions": [
+    "02211D01 lea esp, [esp + 4]",
+    "02211D05 push edx",
+    "02211D06 push ebx",
+    "02211D07 push eax",
+    "02211D08 call 0x21c9467"
+   ]
+  },
+  {
+   "start": "0x2211f5a",
+   "end_exclusive": "0x2211f6b",
+   "sha256": "2361fac6ec5718945c00f84d1890a7409f652508a345985a9d3df6b3fd58029d",
+   "instructions": [
+    "02211F5A mov ebp, ecx",
+    "02211F5C add esi, ebp",
+    "02211F5E pop ebp",
+    "02211F5F push eax",
+    "02211F60 pop eax",
+    "02211F61 add eax, 0x1fc552bc",
+    "02211F67 add eax, dword ptr [edi]",
+    "02211F69 jmp eax"
+   ]
+  },
+  {
+   "start": "0x22138f5",
+   "end_exclusive": "0x221390d",
+   "sha256": "2bf765791e10190eb73fdf6b8d2c73ec98e4839f73ce4c4c91108731d42ae62d",
+   "instructions": [
+    "022138F5 add eax, dword ptr [edi + 4]",
+    "022138F8 pushfd ",
+    "022138F9 mov dword ptr [esp], eax",
+    "022138FC lodsd eax, dword ptr [esi]",
+    "022138FD add esi, 4",
+    "02213903 add eax, 0x23b02e8e",
+    "02213909 add eax, dword ptr [edi]",
+    "0221390B jmp eax"
+   ]
+  },
+  {
+   "start": "0x2213950",
+   "end_exclusive": "0x2213964",
+   "sha256": "2bd89a52ff34b7d1c7fa0c03be04f48595dcdb22152cace03c8d2b6ba853e55a",
+   "instructions": [
+    "02213950 mov edx, dword ptr [esp]",
+    "02213953 lea esp, [esp + 4]",
+    "0221395A add dword ptr [esp], edx",
+    "0221395D mov ebx, dword ptr [esi]",
+    "0221395F jmp 0x21c6f09"
+   ]
+  },
+  {
+   "start": "0x2213f9c",
+   "end_exclusive": "0x2213fae",
+   "sha256": "8a1f8b4195fcec9e74c1196f43ea0b31f6bd5dee9156ead420c8498b81b9ec42",
+   "instructions": [
+    "02213F9C mov ebx, dword ptr [esp]",
+    "02213F9F lea esp, [esp + 4]",
+    "02213FA6 mov edx, dword ptr [esp]",
+    "02213FA9 jmp 0x21f2bd6"
+   ]
+  },
+  {
+   "start": "0x2215787",
+   "end_exclusive": "0x221579b",
+   "sha256": "6d3d942db742486bce52e93f054004fa991a73633bac60cfc7a19c4a56e8152b",
+   "instructions": [
+    "02215787 mov ax, word ptr [esi + 4]",
+    "0221578E and eax, 0xff",
+    "02215794 mov bh, bh",
+    "02215796 jmp 0x21d7a4c"
+   ]
+  },
+  {
+   "start": "0x2215b93",
+   "end_exclusive": "0x2215ba6",
+   "sha256": "2cfe4d0f511c3b9b024bbfc1ab47ecf469a650f26d9719c39b99378d6da79a84",
+   "instructions": [
+    "02215B93 push esi",
+    "02215B94 pop eax",
+    "02215B95 sub eax, dword ptr [edi + 4]",
+    "02215B98 add ax, word ptr [esi + 4]",
+    "02215B9C sub ax, 0x2694",
+    "02215BA1 call 0x7ba719"
+   ]
+  },
+  {
+   "start": "0x2216028",
+   "end_exclusive": "0x2216049",
+   "sha256": "9e39460cc0feaf02b7fea04d28cce70938c3d3e3eabf01659c8a042df2ad562c",
+   "instructions": [
+    "02216028 call 0x221602d",
+    "0221602D pop eax",
+    "0221602E sub eax, 0x221602d",
+    "02216033 mov edi, dword ptr fs:[0x18]",
+    "0221603A mov edi, dword ptr [edi + 8]",
+    "0221603D mov ecx, esp",
+    "0221603F sub ecx, edi",
+    "02216041 cmp ecx, 0x4000",
+    "02216047 jg 0x2216059"
+   ]
+  },
+  {
+   "start": "0x2216059",
+   "end_exclusive": "0x2216080",
+   "sha256": "7f6a24929db3d834a2e5de61c6bb303bef4bb0ab7141168bdca0fb3f970d9282",
+   "instructions": [
+    "02216059 mov dword ptr [edi], eax",
+    "0221605B mov dword ptr [edi + 4], eax",
+    "0221605E mov esi, dword ptr [esp + 0x20]",
+    "02216062 rol esi, 9",
+    "02216065 add esi, 0xbd81ace6",
+    "0221606B add esi, eax",
+    "0221606D xor ebp, ebp",
+    "0221606F xor ebx, ebx",
+    "02216071 mov ecx, dword ptr [esi]",
+    "02216073 add ecx, dword ptr [edi]",
+    "02216075 lea esi, [esi + 4]",
+    "02216078 add ecx, 0x31c528e6",
+    "0221607E push ecx",
+    "0221607F ret "
+   ]
+  },
+  {
+   "start": "0x22171ec",
+   "end_exclusive": "0x22171f3",
+   "sha256": "bf1a7d73370893b91b69a444d455c95d14f24e4d9018d41e48640ad9c340d1b6",
+   "instructions": [
+    "022171EC push edx",
+    "022171ED push ebx",
+    "022171EE call 0x21d118a"
+   ]
+  },
+  {
+   "start": "0x22188ad",
+   "end_exclusive": "0x22188bc",
+   "sha256": "3017c86eed50db146df0770f13d2dfa1f3e0fea404661ef8bb8149e51414eb34",
+   "instructions": [
+    "022188AD lea esp, [esp + 4]",
+    "022188B1 rol eax, 2",
+    "022188B4 lea eax, [eax + edi]",
+    "022188B7 call 0x21873b2"
+   ]
+  },
+  {
+   "start": "0x22190d8",
+   "end_exclusive": "0x22190f9",
+   "sha256": "5d520e395a983e85cac4ddff74a5b671e666f9a34719c04cba30d2b5e49e9a6b",
+   "instructions": [
+    "022190D8 call 0x22190dd",
+    "022190DD pop eax",
+    "022190DE sub eax, 0x22190dd",
+    "022190E3 mov edi, dword ptr fs:[0x18]",
+    "022190EA mov edi, dword ptr [edi + 8]",
+    "022190ED mov ecx, esp",
+    "022190EF sub ecx, edi",
+    "022190F1 cmp ecx, 0x4000",
+    "022190F7 jg 0x2219109"
+   ]
+  },
+  {
+   "start": "0x2219109",
+   "end_exclusive": "0x2219130",
+   "sha256": "7f6a24929db3d834a2e5de61c6bb303bef4bb0ab7141168bdca0fb3f970d9282",
+   "instructions": [
+    "02219109 mov dword ptr [edi], eax",
+    "0221910B mov dword ptr [edi + 4], eax",
+    "0221910E mov esi, dword ptr [esp + 0x20]",
+    "02219112 rol esi, 9",
+    "02219115 add esi, 0xbd81ace6",
+    "0221911B add esi, eax",
+    "0221911D xor ebp, ebp",
+    "0221911F xor ebx, ebx",
+    "02219121 mov ecx, dword ptr [esi]",
+    "02219123 add ecx, dword ptr [edi]",
+    "02219125 lea esi, [esi + 4]",
+    "02219128 add ecx, 0x31c528e6",
+    "0221912E push ecx",
+    "0221912F ret "
+   ]
+  },
+  {
+   "start": "0x221bbc9",
+   "end_exclusive": "0x221bbde",
+   "sha256": "1a352468dafd4498eb03ca04106d6a32a13870efa8539a5bfa0a63a8f0905d86",
+   "instructions": [
+    "0221BBC9 lea esp, [esp + 4]",
+    "0221BBCD lodsd eax, dword ptr [esi]",
+    "0221BBCE add esi, 4",
+    "0221BBD4 add eax, 0x23b02e8e",
+    "0221BBDA add eax, dword ptr [edi]",
+    "0221BBDC jmp eax"
+   ]
+  },
+  {
+   "start": "0x221bc07",
+   "end_exclusive": "0x221bc19",
+   "sha256": "e0c36296e77aba39d41a1269d20bdeb2aac1d3c7298ddd66c1b613fdf5b28dda",
+   "instructions": [
+    "0221BC07 add ecx, dword ptr [edi]",
+    "0221BC09 lea esp, [esp - 4]",
+    "0221BC10 mov dword ptr [esp], ecx",
+    "0221BC13 push eax",
+    "0221BC14 jmp 0x21d6f35"
+   ]
+  },
+  {
+   "start": "0x221e071",
+   "end_exclusive": "0x221e08b",
+   "sha256": "f7efe2946558c118339f2e97c2c70ed5cae7c6e0dc83d4c7d5f32ec15d624720",
+   "instructions": [
+    "0221E071 mov ecx, dword ptr [esp]",
+    "0221E074 lea esp, [esp + 4]",
+    "0221E07B mov ecx, dword ptr [esi]",
+    "0221E07D lea esi, [esi + 4]",
+    "0221E080 add ecx, 0x413cbb5f",
+    "0221E086 jmp 0x221bc07"
+   ]
+  },
+  {
+   "start": "0x221f2e4",
+   "end_exclusive": "0x221f2f5",
+   "sha256": "887b0a2de5ce421f76afc69ac8399d8c3a8c85257fd23f84515e2fc7e93f22d7",
+   "instructions": [
+    "0221F2E4 push esi",
+    "0221F2E5 pop eax",
+    "0221F2E6 sub eax, dword ptr [edi + 4]",
+    "0221F2E9 add eax, dword ptr [esi + 4]",
+    "0221F2EC not eax",
+    "0221F2EE not eax",
+    "0221F2F0 jmp 0x219f600"
+   ]
+  },
+  {
+   "start": "0x22206e5",
+   "end_exclusive": "0x22206f6",
+   "sha256": "ac82eb451697b60060273ce47fcfb9f7c20f359e181a3f09b8875b754fe76c28",
+   "instructions": [
+    "022206E5 shl eax, 2",
+    "022206E8 lea eax, [eax + edi]",
+    "022206EB push dword ptr [eax]",
+    "022206ED mov edx, dword ptr [esi]",
+    "022206EF add edx, dword ptr [edi]",
+    "022206F1 jmp 0x21c93bf"
+   ]
+  },
+  {
+   "start": "0x2220f42",
+   "end_exclusive": "0x2220f4d",
+   "sha256": "b090fec4bef8abdd8bd739241012f432b64f8c6b96465e4238fa48600a7f0a30",
+   "instructions": [
+    "02220F42 push 0x5e224ed1",
+    "02220F47 push ecx",
+    "02220F48 jmp 0x216a0fc"
+   ]
+  },
+  {
+   "start": "0x2222ed4",
+   "end_exclusive": "0x2222ee2",
+   "sha256": "541995023a827aa40d4ef281eb4eeb62bd15edd001c4d3783586ff2ed16f6a64",
+   "instructions": [
+    "02222ED4 lea esp, [esp + 4]",
+    "02222ED8 mov dword ptr [esp], edx",
+    "02222EDB mov ebx, dword ptr [esi]",
+    "02222EDD call 0x2172f61"
+   ]
+  }
+ ]
+}

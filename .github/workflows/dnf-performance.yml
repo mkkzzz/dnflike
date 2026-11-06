@@ -33,6 +33,7 @@ jobs:
           python3 tools/test_dnf_particles.py
           python3 tools/test_dnf_particle_axis.py
           python3 tools/test_dnf_particle_random.py
+          python3 tools/test_dnf_ice_particle_bindings.py
       - name: Check quest semantics and portable package verification
         run: python3 tools/test_dnf_quest_rules.py
       - name: Inventory skill binding evidence gaps
