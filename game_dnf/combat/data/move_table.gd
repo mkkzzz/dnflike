@@ -273,7 +273,7 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 		if h.has("lift_col") and row.size() > int(h["lift_col"]):lift = float(row[int(h["lift_col"])])
 		var hit := {"atk":decoded,"atk_path":atk_path,"percent":percent,"lift":lift,"skill":skill.size() > 0,
 			"ignore_defense":bool(h.get("ignore_defense",enum_value(decoded,"attack_type")=="[ignore defense]")),"true_damage":float(h.get("true_damage",0)),
-			"effects":h.get("effects",[]),
+			"effects":_level_effects(h.get("effects",[]),row),
 			"fixed":float(row[int(h["fixed_col"])]) if h.has("fixed_col") and row.size()>int(h["fixed_col"]) else float(decoded.get("absolute_damage",0)),
 			"damage_type":String(h.get("damage_type","magical" if enum_value(decoded,"attack_type")=="[magic]" else "physical")),
 			"element":String(h.get("element",enum_value(decoded,"element", "[none element]").trim_prefix("[").trim_suffix(" element]")))}
@@ -319,6 +319,16 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 	if hits.is_empty():last = Timeline.duration(body)
 	return {"ani":ani,"timeline":body,"duration":Timeline.duration(body),"hits":hits,"cancel_at":last,
 		"fx":spec.get("fx",[]),"voice":String(spec.get("voice","")),"sounds":spec.get("sounds",[])}
+
+## Explicit native field bindings only; never infer columns for other skills.
+func _level_effects(specs: Array, row: Array) -> Array:
+	var result: Array = specs.duplicate(true)
+	for effect: Dictionary in result:
+		for field: String in ["chance","duration_ms","status_level"]:
+			var column := int(effect.get(field+"_col",-1))
+			if column>=0 and column<row.size():
+				effect[field] = float(row[column])*float(effect.get(field+"_scale",1.0))
+	return result
 
 ## Passive object: motion timeline, attack info, particle motion and the render bank key.
 func object(path: String) -> Dictionary:

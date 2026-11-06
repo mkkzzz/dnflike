@@ -44,9 +44,13 @@ func set_runtime_modifiers(value: Array) -> void:
 	runtime_modifiers = value.duplicate(true)
 	recalculate()
 
-func add_effect(id: String, rank := 1) -> bool:
+func add_effect(id: String, rank := 1, parameters: Dictionary = {}) -> bool:
 	if not config["effects"].has(id):return false
 	var definition: Dictionary = config["effects"][id].duplicate(true)
+	# Per-hit source values belong to this application, never the shared template.
+	# status_level is retained for the still-unresolved native resistance formula.
+	for field: String in ["duration_ms","status_level"]:
+		if parameters.has(field):definition[field] = parameters[field]
 	var abnormal: bool = definition.has("control") or float(definition.get("tick_damage",0))>0 or bool(definition.get("harmful",false))
 	definition["duration_ms"] = float(definition.get("duration_ms",0))*(1-clampf(float(values.get("status_resist",0)),0,1) if abnormal else 1.0)
 	if float(definition["duration_ms"])<=0:return false

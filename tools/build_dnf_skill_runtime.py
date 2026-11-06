@@ -218,7 +218,9 @@ EFFECT_DIR_ALIASES = {
 }
 
 HIT_STATUS = {
-    "icewave": [{"id": "freeze", "chance": 0.12}],
+    # CNIceWave init 0xA6E602/643/679: probability per mille, status level, ms.
+    "icewave": [{"id": "freeze", "chance_col": 4, "chance_scale": 0.001,
+                 "status_level_col": 5, "duration_ms_col": 6}],
     "firewave": [{"id": "burn", "chance": 0.25}],
     "gorecross": [{"id": "bleed", "chance": 0.2}],
     "bloodyrave": [{"id": "bleed", "chance": 0.3}],
@@ -1086,6 +1088,13 @@ def build_move(
             "life_ms": life, "percent_col": 0, "effects": statuses,
             "offset": [100, -4, 0] if key == "icewave" else [0, 0, 0],
         }], "fx": [{"key": effect_key, "at": delays[0], "action_clock": True, "offset_x": 59}]}]
+        if key == "icewave":
+            # 0xA6E6B4 -> 0x90A950: fixed magic uses column 3, not column 0.
+            hit = stages[0]["hits"][0]
+            del hit["percent_col"]
+            hit.update(percent=0, fixed_col=3)
+            result["fidelity_pending"].remove("damage_and_status")
+            result["fidelity_pending"].append("status_level_resistance_formula")
     if key in ["bloodyrave", "outragebreak"]:
         result["requires_effect"] = "frenzy"
     if key == "outragebreak":

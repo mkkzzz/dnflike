@@ -460,6 +460,7 @@ func run_combat() -> void:
 ## Behaviour regressions for confirmed adapter defects; these do not certify original fidelity.
 func run_skill_fidelity() -> void:
 	check_normalwave_level_data()
+	check_icewave_level_data()
 	check_normalwave_lifecycle()
 	check_normalwave_phases()
 	check_wave_family_phases()
@@ -752,6 +753,75 @@ func check_normalwave_level_data() -> void:
 			check(view!=null and is_equal_approx(view.base_scale,size_rate),"object snapshot and view preserve wave size %.2f facing %d" % [size_rate,facing])
 			game.step_objects(1.0)
 			check((float(enemy["hp"])<5000.0)==(size_rate>1.0),"wave collision grows with presentation at the far edge, facing %d scale %.2f" % [facing,size_rate])
+	game.table.configure_skills(game.skill_levels,game.job,game.weapon)
+
+func check_icewave_level_data() -> void:
+	var rows: Array = api.content().record("skill/swordman/icewave.skl")["decoded"]["dungeon"]["level_info"]
+	var correct := true
+	for rank in range(1,int((rows.size()-1)/7)+1):
+		game.table.configure_skills({"icewave":rank},"asura","katana")
+		var hit: Dictionary = api.move("icewave")["hits"][0]
+		var freeze: Dictionary = hit["effects"][0]
+		var at := 1+(rank-1)*7
+		correct = correct and is_zero_approx(float(hit["percent"])) and float(hit["fixed"])==float(rows[at+3]) and is_equal_approx(float(freeze["chance"]),float(rows[at+4])/1000.0) and float(freeze["duration_ms"])==float(rows[at+6]) and int(freeze["status_level"])==int(rows[at+5])
+	check(correct,"every ice-wave rank retains source fixed damage and its own freeze probability, duration and status level")
+	game.table.configure_skills({"icewave":1},"asura","katana")
+	var hit: Dictionary = api.move("icewave")["hits"][0].duplicate(true)
+	var formula: Dictionary = Numbers.shared_config()["formula"]
+	var a: Dictionary = Numbers.Damage.resolve({"magical_attack":100,"independent_attack":100},{},hit,[0.0,1.0],formula)
+	var b: Dictionary = Numbers.Damage.resolve({"magical_attack":9999,"independent_attack":100},{},hit,[0.0,1.0],formula)
+	var c: Dictionary = Numbers.Damage.resolve({"magical_attack":100,"independent_attack":200},{},hit,[0.0,1.0],formula)
+	check(a["amount"]==b["amount"] and a["trace"]["fixed_part"]==251.0 and c["trace"]["fixed_part"]==502.0 and a["trace"]["percent_part"]==0.0,"ice-wave fixed damage scales with independent attack, not weapon magic attack")
+	check(a["category"]=="magical" and a["element"]=="water","ice-wave retains original ATK magic and water flags")
+	var template: Dictionary = Numbers.shared_config()["effects"]["freeze"].duplicate(true)
+	# Search deterministic rolls around both rank thresholds. The first two rolls
+	# belong to hit/critical resolution; the cut cue draws one variant before status.
+	for sample in [[1,0.13,0.25,true],[1,0.254,0.268,false],[2,0.254,0.268,true],[2,0.27,0.4,false]]:
+		var chosen := -1
+		var probe = preload("res://core/det_rng.gd").new()
+		for seed_value in range(10000):
+			probe.reseed(seed_value)
+			var hit_roll: float = probe.next_float()
+			probe.next_float()
+			probe.range_int(1,3)
+			var status_roll: float = probe.next_float()
+			if hit_roll<0.5 and status_roll>=float(sample[1]) and status_roll<float(sample[2]):
+				chosen = seed_value
+				break
+		check(chosen>=0,"deterministic ice-wave threshold fixture is available")
+		api.restart()
+		game.numeric_player = preload("res://stats/api/actor_numbers.gd").new()
+		game.numeric_player.configure({"numbers":Numbers.shared_config()["base"]})
+		game.numeric_player.values["hit"] = 1.0
+		game.table.configure_skills({"icewave":int(sample[0])},"asura","katana")
+		hit = api.move("icewave")["hits"][0].duplicate(true)
+		var enemy: Dictionary = api.spawn_dummy(Vector2(600,246))
+		enemy["numeric"].values["status_resist"] = 0.0
+		game.rng.reseed(chosen)
+		game.spawn_object(hit,"player",Vector2(500,250),0.0,1,1.0)
+		game.step_objects(1.0)
+		var effects: Dictionary = enemy["numeric"].effects.active
+		check(game.hit_count==1 and effects.has("freeze")==bool(sample[3]),"live ice-wave object uses rank %d freeze threshold for roll %.3f..%.3f" % [sample[0],sample[1],sample[2]])
+		if effects.has("freeze"):
+			var duration: float = 2070.0 if int(sample[0])==1 else 2139.0
+			check(float(effects["freeze"]["remaining_ms"])==duration and int(effects["freeze"]["definition"]["status_level"])==34+2*int(sample[0]),"landed ice-wave preserves per-hit duration and abnormal level")
+			enemy["numeric"].step(duration-1.0)
+			check(enemy["numeric"].effects.controlled(),"ice-wave freeze survives until its final simulation millisecond")
+			enemy["numeric"].step(1.0)
+			check(not enemy["numeric"].effects.controlled(),"ice-wave freeze expires at the source duration")
+	# The optional values must not leak into unrelated callers or other targets.
+	var actor = preload("res://stats/api/actor_numbers.gd").new()
+	actor.configure({"numbers":Numbers.shared_config()["base"]})
+	actor.values["status_resist"] = 0.25
+	actor.add_effect("freeze",1,{"duration_ms":2070,"status_level":36})
+	check(float(actor.effects.active["freeze"]["remaining_ms"])==1552.5,"existing resistance adapter applies to the per-hit duration")
+	actor.values["status_resist"] = 0.0
+	actor.add_effect("freeze")
+	check(actor.effects.active["freeze"]["definition"]==template and Numbers.shared_config()["effects"]["freeze"]==template,"legacy effect callers and shared templates remain isolated from skill-specific freeze values")
+	actor.remove_effect("freeze")
+	actor.values["status_resist"] = 1.0
+	check(not actor.add_effect("freeze",1,{"duration_ms":2070,"status_level":36}) and actor.effects.active.is_empty(),"full status resistance rejects the parameterized freeze")
+	api.restart()
 	game.table.configure_skills(game.skill_levels,game.job,game.weapon)
 
 ## New skill nodes and slot-driven input, without borrowing the old fixed A/S/D/F table.

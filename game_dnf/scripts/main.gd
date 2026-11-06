@@ -883,7 +883,7 @@ func apply_effect(effect: Dictionary) -> bool:
 					actor = enemy.get("numeric")
 		if actor == null or float(body["hp"])<=0:return false
 		var id := String(effect.get("id",""))
-		var applied: bool = actor.add_effect(id,int(effect.get("rank",1))) if effect["kind"]=="effect" else actor.remove_effect(id)
+		var applied: bool = actor.add_effect(id,int(effect.get("rank",1)),effect) if effect["kind"]=="effect" else actor.remove_effect(id)
 		if applied:
 			if actor.effects.controlled():
 				if body == player:end_action_fx()
@@ -1156,7 +1156,11 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			var chance := float(effect.get("chance",1))
 			if effect.get("id","") == "bleed" and hit_skill_id in ["rage_slash","hopsmash"] and int(skill_levels.get("bloody_vigorous",0)) > 0:
 				chance = minf(1.0,chance+0.4)
-			if rng.chance(chance):apply_effect({"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(skill_levels.get(hit_skill_id,1))})
+			if rng.chance(chance):
+				var request := {"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(skill_levels.get(hit_skill_id,1))}
+				for field: String in ["duration_ms","status_level"]:
+					if effect.has(field):request[field] = effect[field]
+				apply_effect(request)
 		if bool(resolved.get("critical",false)) and int(skill_levels.get("defensedownoncritical",0)) > 0:
 			apply_effect({"kind":"effect","id":"defense_down","target":target["id"],"rank":int(skill_levels["defensedownoncritical"])})
 	if not target_is_player:

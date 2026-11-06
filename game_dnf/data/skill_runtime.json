@@ -2308,10 +2308,10 @@
   "icewave": {
    "fidelity_pending": [
     "object_controller",
-    "damage_and_status",
     "effect_weapon_scale",
     "cancel_rules",
-    "voice"
+    "voice",
+    "status_level_resistance_formula"
    ],
    "name": "冰刃 · 波动剑",
    "native_recovery_col": 1,
@@ -2334,10 +2334,14 @@
        "at": 10150,
        "effects": [
         {
-         "chance": 0.12,
-         "id": "freeze"
+         "chance_col": 4,
+         "chance_scale": 0.001,
+         "duration_ms_col": 6,
+         "id": "freeze",
+         "status_level_col": 5
         }
        ],
+       "fixed_col": 3,
        "life_ms": 1800,
        "object": "passiveobject/character/swordman/icewave1.obj",
        "offset": [
@@ -2345,7 +2349,7 @@
         -4,
         0
        ],
-       "percent_col": 0,
+       "percent": 0,
        "speed": 240.0
       }
      ]
@@ -2355,10 +2359,10 @@
   "icewaveex": {
    "fidelity_pending": [
     "object_controller",
-    "damage_and_status",
     "effect_weapon_scale",
     "cancel_rules",
-    "voice"
+    "voice",
+    "status_level_resistance_formula"
    ],
    "name": "极冰 · 裂波剑",
    "native_recovery_col": 1,
@@ -2381,10 +2385,14 @@
        "at": 10150,
        "effects": [
         {
-         "chance": 0.12,
-         "id": "freeze"
+         "chance_col": 4,
+         "chance_scale": 0.001,
+         "duration_ms_col": 6,
+         "id": "freeze",
+         "status_level_col": 5
         }
        ],
+       "fixed_col": 3,
        "life_ms": 1800,
        "object": "passiveobject/character/swordman/icewave1.obj",
        "offset": [
@@ -2392,7 +2400,7 @@
         -4,
         0
        ],
-       "percent_col": 0,
+       "percent": 0,
        "speed": 240.0
       }
      ]
