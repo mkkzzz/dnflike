@@ -1777,7 +1777,7 @@ func view_snapshot() -> Dictionary:
 	var objs: Array = []
 	for o: Dictionary in objects:
 		if String(o["def"]["bank"]) == "":continue
-		objs.append({"id":o["id"],"bank":String(o["def"]["bank"]),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":float(o["clock"]),"size_rate":float(o.get("size_rate",1))})
+		objs.append({"id":o["id"],"bank":String(o["def"]["bank"]),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":float(o["clock"]),"size_rate":float(o.get("size_rate",1)),"loop":float(o["life_ms"])>0})
 	var route: Array = []
 	for i in rules["rooms"].size():
 		var room: Dictionary = rules["rooms"][i]

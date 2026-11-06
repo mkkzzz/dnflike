@@ -460,6 +460,7 @@ func run_combat() -> void:
 ## Behaviour regressions for confirmed adapter defects; these do not certify original fidelity.
 func run_skill_fidelity() -> void:
 	check_normalwave_level_data()
+	check_normalwave_lifecycle()
 	for code in [KEY_A,KEY_D,KEY_Y]:
 		api.restart()
 		api.set_god(true)
@@ -502,12 +503,45 @@ func run_skill_fidelity() -> void:
 	check(not api.move("normalwave").has("dash"),"normal wave static columns do not implicitly become a dash")
 	var projectile: Dictionary = api.move("normalwave")["stages"][0]["hits"][0]
 	check(projectile.get("damage_type") == "magical","normal wave damage type comes from its object ATK")
-	check(float(projectile.get("speed",0)) > 0 and float(projectile.get("life_ms",0)) > 0,"projectile movement and lifetime survive compilation")
+	check(float(projectile.get("speed",0)) == 0 and float(projectile.get("life_ms",0)) < 0,"normal wave uses its source animation without extra travel or looping")
 	await ticks(8)
 	check(float(api.e(enemy,"hp")) == 5000.0,"normal wave does not borrow an early upper-slash hit")
 	await ticks(35)
 	check(Vector2(api.p("pos")).is_equal_approx(Vector2(125,250)),"casting normal wave does not slide the caster")
 	check(float(api.e(enemy,"hp")) < 5000.0,"normal wave still deals damage through its projectile")
+
+func check_normalwave_lifecycle() -> void:
+	for facing in [1,-1]:
+		api.restart()
+		api.set_god(true)
+		var hit: Dictionary = api.move("normalwave")["hits"][0]
+		var origin := Vector2(500,250)
+		game.spawn_object(hit,"player",origin,0.0,facing,1.0)
+		var entity: Dictionary = game.objects[-1]
+		game.step_objects(194.0)
+		check(Vector2(entity["pos"]).is_equal_approx(origin),"wave retains source anchor instead of adding travel, facing %d" % facing)
+		game.step_objects(1.0)
+		var enemy: Dictionary = api.spawn_dummy(origin+Vector2(100*facing,0))
+		game.step_objects(129.0)
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		var view = game.view.object_views.get(entity["id"])
+		check(game.objects.size()==1 and view!=null and not view.loop,"wave remains visible without looping until its last frame ends")
+		check(float(enemy["hp"])==5000.0,"wave fade frames cannot hit a newly arriving target")
+		game.step_objects(1.0)
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		check(game.objects.is_empty() and not game.view.object_views.has(entity["id"]),"wave simulation and view end together at source ANI duration 325ms")
+		game.step_objects(1000.0)
+		check(float(enemy["hp"])==5000.0,"expired wave cannot restart its attack frames")
+	# Synthetic moving-object fixture verifies the shared transport contract.
+	api.restart()
+	var moving: Dictionary = api.move("normalwave")["hits"][0].duplicate(true)
+	moving["speed"] = 100.0
+	moving["life_ms"] = 1000.0
+	game.spawn_object(moving,"player",Vector2(500,250),0.0,1,1.0)
+	game.step_objects(20.0)
+	var entity: Dictionary = game.objects[-1]
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(float(entity["pos"].x)>500 and game.view.object_views[entity["id"]].loop,"explicit moving objects retain their movement and loop contract")
 
 func check_normalwave_level_data() -> void:
 	var record: Dictionary = api.content().record("skill/swordman/normalwave.skl")["decoded"]

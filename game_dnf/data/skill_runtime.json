@@ -2924,11 +2924,11 @@
        "at": 340,
        "effects": [],
        "fixed_col": 0,
-       "life_ms": 1500,
+       "life_ms": -1,
        "object": "passiveobject/character/swordman/normalwave.obj",
        "percent_col": 2,
        "size_col": 1,
-       "speed": 520.0
+       "speed": 0.0
       }
      ]
     }

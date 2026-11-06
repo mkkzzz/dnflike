@@ -113,7 +113,10 @@ GENERIC_HIT_EFFECT = CHR_FX + "upperslash1.ani"
 CAST_ANIM = "summon2"
 CAST_OBJECTS = {
     "ashenfork": (OBJ_ROOT + "ashenforksub.obj", 260, 0.0, 700),
-    "normalwave": (OBJ_ROOT + "normalwave.obj", 340, 520.0, 1500),
+    # Native object 20001 (0x9EBAF0) dies at ANI end. Its OBJ supplies no
+    # travel controller; the image/box positions already advance within ANI.
+    # Cast pose and spawn timing below still await native state integration.
+    "normalwave": (OBJ_ROOT + "normalwave.obj", 340, 0.0, -1),
     "icewave": (OBJ_ROOT + "icewave1.obj", 360, 240.0, 1800),
     "firewave": (OBJ_ROOT + "firewavebig.obj", 420, 360.0, 1800),
     "bloodblast": (OBJ_ROOT + "grabblastbloodbig.obj", 280, 0.0, 1700),

@@ -275,8 +275,8 @@ func _present_objects(list: Array) -> void:
 			v = FxView.new()
 			world.add_child(v)
 			v.setup(bank,int(o["facing"]))
-			v.loop = true
 			object_views[o["id"]] = v
+		v.loop = bool(o.get("loop",false))
 		v.position = _canvas(Vector2(o["pos"]), float(o["z"]))
 		v.z_index = int(Vector2(o["pos"]).y)+2
 		v.base_scale = float(o.get("size_rate",1))
