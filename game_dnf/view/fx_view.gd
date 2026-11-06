@@ -11,6 +11,8 @@ var frame: Dictionary = {}
 var hitstop_sensitive := true
 ## Looping banks (auras, passive objects) wrap instead of freeing at the end.
 var loop := false
+## Native particle objects disable ANI-end deletion; motion owns their lifetime.
+var hold_last_frame := false
 ## Whole-effect scale from ATK/CHR hit info (1.0 = native pixels).
 var base_scale := 1.0
 ## Effects tied to a skill can be cut early (e.g. gore-cross marks end when the cross flies).
@@ -43,11 +45,12 @@ func seek(t: float) -> void:
 		return
 	var duration := float(data["duration_ms"])
 	if clock_ms >= duration:
-		if not loop or duration <= 0:
+		if (not loop or duration <= 0) and not hold_last_frame:
 			queue_free()
 			return
 	var local := fposmod(clock_ms,duration) if loop and duration > 0 else clock_ms
 	var elapsed := 0.0
+	_frame_local = 0.0
 	frame = {}
 	for f: Dictionary in data["frames"]:
 		var delay = f.get("delay_ms",100)

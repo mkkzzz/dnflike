@@ -16,6 +16,7 @@ Contents
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import os
@@ -254,6 +255,34 @@ def cropped(image: Image.Image, meta: dict):
     return image.crop(box), [meta['x'] + box[0], meta['y'] + box[1]]
 
 
+def animation_flags(ani: dict) -> dict:
+    """Preserve native globals; binary tag 0 is [LOOP], default false.
+
+    Verified client: 10943E2 writes data+1, 1093FC7 initializes it to 0;
+    1095EB3 is the [LOOP] text branch, 108E5F8 chooses stop/restart.
+    Tag 1 writes data+2 and is NOT the loop flag.
+    """
+    globals_ = copy.deepcopy(ani.get('global_items', {}))
+    return {'global_items': globals_, 'loop': bool(globals_.get('0', 0))}
+
+
+def refresh_animation_metadata(src: Source, manifest: dict) -> dict:
+    """Update only ANI metadata, validating the bank's pinned source first.
+
+    Prepare a copy so any missing/mismatched source leaves the caller intact.
+    Original PNGs, frame timing, cropping and anchors are never regenerated.
+    """
+    result = copy.deepcopy(manifest)
+    for section in ('objects', 'effects'):
+        for bank in result.get(section, {}).values():
+            path = bank['source']
+            ani = src.animation(path)
+            if manifest.get('sources', {}).get(path) != src.sources[path]:
+                raise ValueError('ANI source hash differs from existing bank: ' + path)
+            bank.update(animation_flags(ani))
+    return result
+
+
 def effect_bank(src: Source, key: str, ani_path: str, unresolved: list) -> dict:
     ani = src.animation(ani_path)
     atlas, frames = Atlas('fx_' + key), []
@@ -275,7 +304,8 @@ def effect_bank(src: Source, key: str, ani_path: str, unresolved: list) -> dict:
                 b = (x, y, x + image.width, y + image.height)
                 bounds = b if bounds is None else (min(bounds[0], b[0]), min(bounds[1], b[1]), max(bounds[2], b[2]), max(bounds[3], b[3]))
         frames.append(rec)
-    bank = {'atlas': atlas.save(), 'frames': frames, 'duration_ms': ani['duration_ms'], 'source': ani_path}
+    bank = {'atlas': atlas.save(), 'frames': frames, 'duration_ms': ani['duration_ms'], 'source': ani_path,
+            **animation_flags(ani)}
     if bounds is not None:
         # Box6 [x, y, z, w, d, h]: screen y grows downward, height z grows upward from the anchor.
         bank['pixel_box'] = [bounds[0], DERIVED_DEPTH[0], -bounds[3], bounds[2] - bounds[0], DERIVED_DEPTH[1], bounds[3] - bounds[1]]
@@ -717,7 +747,23 @@ def build(library: Path | None, output: Path = OUT) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('--library', type=Path)
+    parser.add_argument('--refresh-ani-metadata', action='store_true',
+                        help='Update pinned ANI globals in existing manifest without rebuilding images')
     args = parser.parse_args()
+    if args.refresh_ani_metadata:
+        path = OUT / 'manifest.json'
+        source = Source(args.library)
+        try:
+            manifest = refresh_animation_metadata(source, json.loads(path.read_text(encoding='utf8')))
+            body = json.dumps(manifest, ensure_ascii=False, separators=(',', ':'))
+            temporary = path.with_suffix('.json.tmp')
+            temporary.write_text(body, encoding='utf8')
+            os.replace(temporary, path)
+            print(json.dumps({'updated_banks': sum(len(manifest.get(k, {})) for k in ('objects', 'effects'))}))
+        finally:
+            source.cat.close()
+            source.lib.db.close()
+        return 0
     print(json.dumps(build(args.library), ensure_ascii=True))
     return 0
 

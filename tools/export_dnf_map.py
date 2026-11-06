@@ -248,7 +248,7 @@ class Library:
             entry['color'] = items.get('9')
             entry['additive'] = isinstance(items.get('11'), dict) and items['11'].get('type') == 2
             frames.append(entry)
-        return {'ani': ani_path, 'ani_sha256': ani['sha256'], 'loop_flag': ani['meta'].get('global_items', {}).get('1'),
+        return {'ani': ani_path, 'ani_sha256': ani['sha256'], 'loop_flag': ani['meta'].get('global_items', {}).get('0', 0),
                 'duration_ms': ani['meta'].get('duration_ms'), 'frames': frames}
 
 
