@@ -21,10 +21,12 @@ from audit_dnf_native_strings import ENGINE_SHA
 SRC,NODE,FRAME=0x60500000,0x60600000,0x6FFFFE00
 
 
-def parse_bonus(source,value,*,poison=False):
+def parse_bonus(source,value,*,poison=False,tail_values=()):
     from dnf_native_vm_probe import CPU
-    if type(value) not in (int,float) or not math.isfinite(value) or not -2147483648<=value<2147483648:raise ValueError('Finite integer-conversion domain')
-    if type(value)==float and not -2147483648<=real(fbits(value))<2147483648:raise ValueError('Finite integer-conversion domain after binary32 rounding')
+    sequence=[value,*tail_values]
+    for v in sequence:
+        if type(v) not in (int,float) or not math.isfinite(v) or not -2147483648<=v<2147483648:raise ValueError('Finite integer-conversion domain')
+        if type(v)==float and not -2147483648<=real(fbits(v))<2147483648:raise ValueError('Finite integer-conversion domain after binary32 rounding')
     c=CPU(source)
     for a in range(0x6FFFC000,0x70000000,4):c.write(a,4,0)
     c.reg.update(ebp=FRAME,esp=FRAME-0x800,esi=SRC,ebx=NODE,edi=31)
@@ -76,16 +78,20 @@ def parse_bonus(source,value,*,poison=False):
         raise ValueError('Parser instruction budget')
     run(0x12CFA55,0x12CFA97)
     c.write(NODE+0x10,4,registration[0]['enum']);c.write(0x1D8F828,1,1)
-    run(0x12CF93C,0x12D1609)
-    return {'fixture':{'value':value,'poison':poison},'registration':registration,'value':signed(secure[SRC+0x24]),
+    for value in sequence:
+        cursor=0
+        run(0x12CF93C,0x12D1609)
+    return {'fixture':{'value':sequence[0],'poison':poison,**({'tail_values':list(tail_values)} if tail_values else {})},'registration':registration,'value':signed(secure[SRC+0x24]),
         'writes':writes,'cursor':cursor,'phases':phases,'fp_depth':len(fp),
         'abi':[c.reg[k] for k in ('ebx','esi','edi','ebp','esp')],
         'steps':len(c.trace),'trace_sha256':trace_hash(c.trace)},c.trace
 
 
 def verify_parser(row):
-    v=row['fixture']['value'];expected=v if type(v)==int else math.trunc(real(fbits(v)))
-    if row['registration']!=[{'tag':'[damage bonus]','enum':78}] or row['value']!=expected or row['writes']!=[{'offset':'0x24','value':expected}]:raise ValueError('ATK bonus mapping mismatch')
+    sequence=[row['fixture']['value'],*row['fixture'].get('tail_values',[])]
+    expected=[v if type(v)==int else math.trunc(real(fbits(v))) for v in sequence]
+    if row['registration']!=[{'tag':'[damage bonus]','enum':78}] or row['value']!=expected[-1] or row['writes']!=[{'offset':'0x24','value':v} for v in expected]:raise ValueError('ATK bonus mapping mismatch')
+    if len(row['phases'])!=1+len(sequence):raise ValueError('ATK field sequence mismatch')
     if row['cursor']!=1 or row['fp_depth'] or row['abi']!=[NODE,SRC,31,FRAME,FRAME-0x800]:raise ValueError('ATK parser ABI mismatch')
     if any(p['stack']!=hex(FRAME-0x800) for p in row['phases']):raise ValueError('ATK fragment stack mismatch')
 

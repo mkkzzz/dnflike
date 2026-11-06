@@ -17,6 +17,7 @@ import argparse
 from collections import Counter, defaultdict
 import hashlib
 import json
+import math
 from pathlib import Path, PurePosixPath
 import sys
 
@@ -26,13 +27,13 @@ from dnf_particle_fields import decode_particle_fields
 
 OUT = ROOT / 'game_dnf/assets_local/content'
 SCHEMA = 'dnf_combat_content/1'
-COMPILER_VERSION = 2
+COMPILER_VERSION = 3
 HANDLED_FILE = ROOT / 'game_dnf/combat/fields/handled.json'
 
 # Decoders: canonical tag -> (decoded key, shape, evidence, note). Shapes:
 #   int|float|str = first value; list = all values; enum = canonical enum tag(s); flag = presence.
 ATK_FIELDS = {
-    '[damage bonus]': ('damage_bonus', 'number', 'E-PARSE', 'Percent-like bonus; formula unknown'),
+    '[damage bonus]': ('damage_bonus', 'atk_integer', 'E-PARSE', 'Original 1218A80 integer reader -> attack record +24; final damage formula unresolved'),
     '[absolute damage]': ('absolute_damage', 'number', 'E-PARSE', ''),
     '[attack type]': ('attack_type', 'enum', 'E-PARSE', 'physic / magic / ignore defense'),
     '[weapon damage apply]': ('weapon_damage_apply', 'int', 'E-PARSE', ''),
@@ -262,6 +263,14 @@ def first(node: dict):
 
 
 def decode_value(node: dict, shape: str, base_path: str):
+    if shape == 'atk_integer':
+        # PVF type-4 tokens have already been decoded as binary32 by dnf_pvf.
+        # 1218A80 truncates those toward zero; type-2 integers keep all 32 bits.
+        # This rule is proven for damage bonus only, not every numeric ATK tag.
+        value = first(node)
+        if type(value) not in (int, float) or not math.isfinite(value) or not -2147483648 <= value < 2147483648:
+            raise ValueError(f'{base_path}: damage bonus outside verified signed integer domain')
+        return int(value)
     if shape == 'enum':
         return [{'value': e['canonical'], 'raw': e['tag'], 'args': e['values']} for e in node.get('enum', [])] or None
     if shape in ('int', 'float', 'str', 'number'):
@@ -339,7 +348,11 @@ def decode_fields(kind: str, fields: list, path: str) -> tuple[dict, dict, list]
         elif shape == 'repeat_list':
             decoded.setdefault(key, []).append(node['values'])
         elif key in decoded and shape not in ('section',):
-            decoded.setdefault(key + '_repeats', []).append(decode_value(node, shape, path))
+            value = decode_value(node, shape, path)
+            decoded.setdefault(key + '_repeats', []).append(value)
+            if kind == 'atk' and key == 'damage_bonus':
+                # Each 12D044B field dispatch overwrites +24; raw retains order.
+                decoded[key] = value
         else:
             decoded[key] = decode_value(node, shape, path)
         evidence[key] = ev

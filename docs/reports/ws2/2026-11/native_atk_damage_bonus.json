@@ -1,0 +1,4924 @@
+{
+ "schema": "dnf_atk_damage_bonus/1",
+ "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
+ "input_source": {
+  "input_sha256": "8748e19abf6155ca5a20d13244eaca0b9442c3d7569e8e5002bddffeeb9366ac",
+  "embedded": true,
+  "resource": "10/EXERESX/0",
+  "resource_offset": 734740
+ },
+ "asset_version": "dnf-native-assets-v1-20261022",
+ "tools_sha256": {
+  "audit_dnf_atk_damage_bonus.py": "e64269b2a960c42496e6c26a5d4478256307dcbbae1d3e19f9d80c08c7f9ce4b",
+  "audit_dnf_basic_mastery_pipeline.py": "d9dc0fe453e27aebc5df920e438d164473352798d08832408b65e0cc8092741b",
+  "audit_dnf_basic_mastery.py": "2d223d1ee7f6a1d7d7a3545b872e24fca62fccb8d55850d98ff4ccde9d28b7a3",
+  "audit_dnf_firewave.py": "3377abdf1f6b5a76908a4cd14652fc68fe28d56314e49c6ee65933bfbd792ddc",
+  "audit_dnf_ice_shatter.py": "b4f90d1797fd487af50a6e39716c77cc9e889b3e5b5c0b1c12864d088f29462c",
+  "audit_dnf_ice_particle_bindings.py": "660048b05498ea7dd11add2d7f3654083d99faafa8fc28b86ff198292fcdeed1",
+  "audit_dnf_native_strings.py": "60b30f2e51e5a744b106d8df955f5a7acbd7d4341ba51f52fd7a2941a5d29c6f",
+  "audit_dnf_particle_axis.py": "59b463dcff6537cc89c597bcf2bb5f1f0a336eb25a67b09da4c228d524b1af8e",
+  "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a",
+  "compile_dnf_content.py": "b6125e784b3ff77e82ca81a4c6bfa2c4642c786176bc4f2694b7197924b84ab2",
+  "dnf_pvf.py": "85c92f7f970c7e59ae8b8e9756150b72e63c1ae4d1f456878a796e81458f4218",
+  "dnf_particle_fields.py": "058105bd7b5b1604fc8ccef394f408c7bbcf03fb75d0a38f88bc1d678bf09204"
+ },
+ "census": {
+  "atk_files": 6089,
+  "top_level_fields": 3281,
+  "float_files": 42,
+  "repeated_field_files": 5,
+  "numeric_changes_from_first_raw_value": 37
+ },
+ "cases": [
+  {
+   "path": "character/swordman/attackinfo/weaponcomboshort1.atk",
+   "sha256": "d74af72da0f98293728489b1a378d9fd35a4e7f1fafc5077499e1380229ee062",
+   "values": [
+    20,
+    0
+   ],
+   "offsets": [
+    2,
+    32
+   ],
+   "decoded": 0,
+   "runs": [
+    {
+     "fixture": {
+      "value": 20,
+      "poison": false,
+      "tail_values": [
+       0
+      ]
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": 0,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": 20
+      },
+      {
+       "offset": "0x24",
+       "value": 0
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 111,
+     "trace_sha256": "ed60c6d80a1d5f1a963994fd74c5ea00d41cbdd936d06f8053cb7c73e2cc94e6"
+    },
+    {
+     "fixture": {
+      "value": 20,
+      "poison": true,
+      "tail_values": [
+       0
+      ]
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": 0,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": 20
+      },
+      {
+       "offset": "0x24",
+       "value": 0
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 111,
+     "trace_sha256": "ed60c6d80a1d5f1a963994fd74c5ea00d41cbdd936d06f8053cb7c73e2cc94e6"
+    }
+   ]
+  },
+  {
+   "path": "character/swordman/dsattackinfo/weaponcomboshort1.atk",
+   "sha256": "d74af72da0f98293728489b1a378d9fd35a4e7f1fafc5077499e1380229ee062",
+   "values": [
+    20,
+    0
+   ],
+   "offsets": [
+    2,
+    32
+   ],
+   "decoded": 0,
+   "runs": [
+    {
+     "fixture": {
+      "value": 20,
+      "poison": false,
+      "tail_values": [
+       0
+      ]
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": 0,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": 20
+      },
+      {
+       "offset": "0x24",
+       "value": 0
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 111,
+     "trace_sha256": "ed60c6d80a1d5f1a963994fd74c5ea00d41cbdd936d06f8053cb7c73e2cc94e6"
+    },
+    {
+     "fixture": {
+      "value": 20,
+      "poison": true,
+      "tail_values": [
+       0
+      ]
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": 0,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": 20
+      },
+      {
+       "offset": "0x24",
+       "value": 0
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 111,
+     "trace_sha256": "ed60c6d80a1d5f1a963994fd74c5ea00d41cbdd936d06f8053cb7c73e2cc94e6"
+    }
+   ]
+  },
+  {
+   "path": "monster/newmonsters/event/seria/attackinfo/dashattack.atk",
+   "sha256": "e95789a1d9a90472986fa1ececa22dfb2db85e3fac89a41dd64f6bb9e3bc5484",
+   "values": [
+    -97.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "monster/newmonsters/event/seria/attackinfo/jumpattack.atk",
+   "sha256": "592455cd0fd472ad61ad3ccfeb7594f0596ba967f821a14e8439df4415580351",
+   "values": [
+    -97.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "monster/newmonsters/event/seria/attackinfo/swing.atk",
+   "sha256": "0b50ededad91a61cb472961aa0bb6d4e40dbdb3361a71aaa2ca317db10da18b2",
+   "values": [
+    -97.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "monster/newmonsters/event/seria/attackinfo/swingex.atk",
+   "sha256": "02990a12c7c360eb52a93fabbbea3ccff54de2bd9b89f294b6a39a3dd8de2570",
+   "values": [
+    -97.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "monster/newmonsters/militiaman/militiamanboss/attackinfo/attack2.atk",
+   "sha256": "eff4ad43312600b1af9db20740ef7c9889b6af4a0ac45ad37baff2cdc91da459",
+   "values": [
+    100,
+    10
+   ],
+   "offsets": [
+    2,
+    22
+   ],
+   "decoded": 10,
+   "runs": [
+    {
+     "fixture": {
+      "value": 100,
+      "poison": false,
+      "tail_values": [
+       10
+      ]
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": 10,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": 100
+      },
+      {
+       "offset": "0x24",
+       "value": 10
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 111,
+     "trace_sha256": "ed60c6d80a1d5f1a963994fd74c5ea00d41cbdd936d06f8053cb7c73e2cc94e6"
+    },
+    {
+     "fixture": {
+      "value": 100,
+      "poison": true,
+      "tail_values": [
+       10
+      ]
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": 10,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": 100
+      },
+      {
+       "offset": "0x24",
+       "value": 10
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 111,
+     "trace_sha256": "ed60c6d80a1d5f1a963994fd74c5ea00d41cbdd936d06f8053cb7c73e2cc94e6"
+    }
+   ]
+  },
+  {
+   "path": "monster/newmonsters/riding/archer_goblin/attackinfo/attack.atk",
+   "sha256": "44cbc0ad3f42c4192b97ee07e6f819e390cbd0375d7ad4f51f203fece3e0a5bd",
+   "values": [
+    -97.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "monster/newmonsters/riding/archer_goblin/attackinfo/dashattack.atk",
+   "sha256": "a37e06d7b1d19a541489186f5350e8e94ba2adbe34a53c781d7aa1537a835e62",
+   "values": [
+    -97.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "monster/newmonsters/riding/kartana/attackinfo/attack1.atk",
+   "sha256": "0871d76220043ab0847e677e04d17f0476627be26d2ffa31ddb9cc7001120b03",
+   "values": [
+    -97.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "monster/newmonsters/riding/kartana/attackinfo/attack2.atk",
+   "sha256": "cd18560e375db7f38cf71517a7a23af52167566b8db00de76f0301feedb07c75",
+   "values": [
+    -97.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "monster/newmonsters/risk_dungeon/noirpera/militiamanboss/attackinfo/attack2.atk",
+   "sha256": "eff4ad43312600b1af9db20740ef7c9889b6af4a0ac45ad37baff2cdc91da459",
+   "values": [
+    100,
+    10
+   ],
+   "offsets": [
+    2,
+    22
+   ],
+   "decoded": 10,
+   "runs": [
+    {
+     "fixture": {
+      "value": 100,
+      "poison": false,
+      "tail_values": [
+       10
+      ]
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": 10,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": 100
+      },
+      {
+       "offset": "0x24",
+       "value": 10
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 111,
+     "trace_sha256": "ed60c6d80a1d5f1a963994fd74c5ea00d41cbdd936d06f8053cb7c73e2cc94e6"
+    },
+    {
+     "fixture": {
+      "value": 100,
+      "poison": true,
+      "tail_values": [
+       10
+      ]
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": 10,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": 100
+      },
+      {
+       "offset": "0x24",
+       "value": 10
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 111,
+     "trace_sha256": "ed60c6d80a1d5f1a963994fd74c5ea00d41cbdd936d06f8053cb7c73e2cc94e6"
+    }
+   ]
+  },
+  {
+   "path": "monster/newmonsters/silverspoon/crazyman/attackinfo/kick.atk",
+   "sha256": "f2b0425684e1a81f29ec542099124b8c2ca04e9ef017f031992da0bef7510f38",
+   "values": [
+    -20,
+    -20
+   ],
+   "offsets": [
+    2,
+    82
+   ],
+   "decoded": -20,
+   "runs": [
+    {
+     "fixture": {
+      "value": -20,
+      "poison": false,
+      "tail_values": [
+       -20
+      ]
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -20,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -20
+      },
+      {
+       "offset": "0x24",
+       "value": -20
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 111,
+     "trace_sha256": "ed60c6d80a1d5f1a963994fd74c5ea00d41cbdd936d06f8053cb7c73e2cc94e6"
+    },
+    {
+     "fixture": {
+      "value": -20,
+      "poison": true,
+      "tail_values": [
+       -20
+      ]
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -20,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -20
+      },
+      {
+       "offset": "0x24",
+       "value": -20
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 111,
+     "trace_sha256": "ed60c6d80a1d5f1a963994fd74c5ea00d41cbdd936d06f8053cb7c73e2cc94e6"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/act8/monster/attackinfo/arrow2.atk",
+   "sha256": "e7cf8580c02f8f66f96c29f84f6970f1087e6ee4a00d631b1ee6e12e0c44d69d",
+   "values": [
+    -97.08999633789062
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.08999633789062,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.08999633789062,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/act8/monster/attackinfo/arrow3.atk",
+   "sha256": "b1ad585a8566b954f9a9b3398206e973b5eabe66491a518a09b01f4a0f2cadb7",
+   "values": [
+    -97.80000305175781
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.80000305175781,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.80000305175781,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/common/attackinfo/archer_atk.atk",
+   "sha256": "9829c11898b25a72643affbbfba5d315b15028d0ee66ed8053a47cbaaf016b9b",
+   "values": [
+    3.130000114440918
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": 3,
+   "runs": [
+    {
+     "fixture": {
+      "value": 3.130000114440918,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": 3,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": 3
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": 3.130000114440918,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": 3,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": 3
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/common/attackinfo/archer_atk11.atk",
+   "sha256": "98aadefc91b4d8a123380445342f1552900aece7afab51e2d8b4ee38abb01339",
+   "values": [
+    4.170000076293945
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": 4,
+   "runs": [
+    {
+     "fixture": {
+      "value": 4.170000076293945,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": 4,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": 4
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": 4.170000076293945,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": 4,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": 4
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/common/attackinfo/archer_tr.atk",
+   "sha256": "26a0c82f5e758e1d1562f47bf69f8383d284ce5a155c6b440b8fc4ac58f0a678",
+   "values": [
+    -96.87000274658203
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -96,
+   "runs": [
+    {
+     "fixture": {
+      "value": -96.87000274658203,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -96,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -96
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -96.87000274658203,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -96,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -96
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/common/attackinfo/archer_tr1.atk",
+   "sha256": "397f7dce7a35929d14500cb4be9a4927bf704f351c52ed17fe09cf95b7fb6ea5",
+   "values": [
+    -97.0
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.0,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.0,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/common/attackinfo/darkthunderbolt2.atk",
+   "sha256": "a4926d1d854317aca003d1ccae01b0b321282a3c642456b7ada84d61eef02c35",
+   "values": [
+    -94.0
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -94,
+   "runs": [
+    {
+     "fixture": {
+      "value": -94.0,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -94,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -94
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -94.0,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -94,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -94
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/common/attackinfo/fire_arrow.atk",
+   "sha256": "a944d4ac662ee81c22adf1be14f021c3803c1a442c7a980a5ed096d4f7ffa630",
+   "values": [
+    -97.91999816894531
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.91999816894531,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.91999816894531,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/common/attackinfo/fire_arrow3.atk",
+   "sha256": "001468a9fc57ee5214389e0ee467a5473dccadc40e0ee15153a946942c1ab17a",
+   "values": [
+    -95.83000183105469
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -95,
+   "runs": [
+    {
+     "fixture": {
+      "value": -95.83000183105469,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -95,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -95
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -95.83000183105469,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -95,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -95
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/common/attackinfo/fire_arrow4.atk",
+   "sha256": "363f9919b51ffcfe2950235c87680af06f5e4326130d81ac202dc981feab5bfd",
+   "values": [
+    -95.83000183105469
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -95,
+   "runs": [
+    {
+     "fixture": {
+      "value": -95.83000183105469,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -95,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -95
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -95.83000183105469,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -95,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -95
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/common/attackinfo/jumpattack.atk",
+   "sha256": "95fb42885d34eee16c73c4996ac350316120b78b1f79bc1393c69148ef010c19",
+   "values": [
+    -96.87000274658203
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -96,
+   "runs": [
+    {
+     "fixture": {
+      "value": -96.87000274658203,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -96,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -96
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -96.87000274658203,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -96,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -96
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/common/attackinfo/kain_danger.atk",
+   "sha256": "397f7dce7a35929d14500cb4be9a4927bf704f351c52ed17fe09cf95b7fb6ea5",
+   "values": [
+    -97.0
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.0,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.0,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/common/attackinfo/kain_danger_bomb.atk",
+   "sha256": "8ac12cb4c2c229b69e9b2691597d40b6519d1fc72f2ee04d9a958aba1b0d7e43",
+   "values": [
+    -97.0
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.0,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.0,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/common/attackinfo/rtx_bigboom.atk",
+   "sha256": "223844213d98299ddc29020e379025d01c9128431dbef3b1709b6a165668b3b5",
+   "values": [
+    -93.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -93,
+   "runs": [
+    {
+     "fixture": {
+      "value": -93.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -93,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -93
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -93.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -93,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -93
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/event/attackinfo/box.atk",
+   "sha256": "8ffa0be6c974aa80e551e6156bcf7502f86d6d6bafeb08f347ee28cc619d7dbc",
+   "values": [
+    -95.0
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -95,
+   "runs": [
+    {
+     "fixture": {
+      "value": -95.0,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -95,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -95
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -95.0,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -95,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -95
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/event/attackinfo/box2.atk",
+   "sha256": "483cfec5cfb5d6fec5bf8f4c7beb196a12dfc6b33c12804da461277448a104eb",
+   "values": [
+    -90.0
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -90,
+   "runs": [
+    {
+     "fixture": {
+      "value": -90.0,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -90,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -90
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -90.0,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -90,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -90
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/event/attackinfo/magicmissile.atk",
+   "sha256": "8ebbae38c5b8cef2d6305f0feef14fb65c31b53497b27216f1f87a1da325a7fb",
+   "values": [
+    -97.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/map/risk_dungeon/cartelcommand/attackinfo/stinger2.atk",
+   "sha256": "9979b221e50773fe8043db4907d8e60924a7f1596571be67656667bdc217dc04",
+   "values": [
+    -99.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -99,
+   "runs": [
+    {
+     "fixture": {
+      "value": -99.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -99,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -99
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -99.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -99,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -99
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/advanceatlar/attackinfo/archer_tr1.atk",
+   "sha256": "397f7dce7a35929d14500cb4be9a4927bf704f351c52ed17fe09cf95b7fb6ea5",
+   "values": [
+    -97.0
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.0,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.0,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/advanceatlar/attackinfo/darkthunderbolt2.atk",
+   "sha256": "a4926d1d854317aca003d1ccae01b0b321282a3c642456b7ada84d61eef02c35",
+   "values": [
+    -94.0
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -94,
+   "runs": [
+    {
+     "fixture": {
+      "value": -94.0,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -94,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -94
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -94.0,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -94,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -94
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/advanceatlar/attackinfo/jumpattack.atk",
+   "sha256": "95fb42885d34eee16c73c4996ac350316120b78b1f79bc1393c69148ef010c19",
+   "values": [
+    -96.87000274658203
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -96,
+   "runs": [
+    {
+     "fixture": {
+      "value": -96.87000274658203,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -96,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -96
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -96.87000274658203,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -96,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -96
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/cartelcommand/attackinfo/stinger2.atk",
+   "sha256": "9979b221e50773fe8043db4907d8e60924a7f1596571be67656667bdc217dc04",
+   "values": [
+    -99.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -99,
+   "runs": [
+    {
+     "fixture": {
+      "value": -99.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -99,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -99
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -99.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -99,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -99
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/event_goblin/attackinfo/event_thunder2.atk",
+   "sha256": "97831cd063b8b81c8f326c3a4d22a8b27469365b2310550e9cd5a8ee68b1d3d4",
+   "values": [
+    -88.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -88,
+   "runs": [
+    {
+     "fixture": {
+      "value": -88.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -88,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -88
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -88.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -88,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -88
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/grim/grim_seeker/attackinfo/fireball3.atk",
+   "sha256": "979b79d67d7cbbe9d6822da833d7f2d3af3893a65286319dbefed8113f0d97a1",
+   "values": [
+    -96.0
+   ],
+   "offsets": [
+    12
+   ],
+   "decoded": -96,
+   "runs": [
+    {
+     "fixture": {
+      "value": -96.0,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -96,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -96
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -96.0,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -96,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -96
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/grim/grim_seeker/attackinfo/fireball_r.atk",
+   "sha256": "ab67094161abb34b7ec897e42e89fde93df240a60057f54c23752a513a7a1f99",
+   "values": [
+    -98.61000061035156
+   ],
+   "offsets": [
+    12
+   ],
+   "decoded": -98,
+   "runs": [
+    {
+     "fixture": {
+      "value": -98.61000061035156,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -98,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -98
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -98.61000061035156,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -98,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -98
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/masaccio/attackinfo/bliz.atk",
+   "sha256": "ef438459520defe3c9e8654bab936eebbd41f0a3aa71306d01e374ff95cc6369",
+   "values": [
+    -97.08000183105469
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.08000183105469,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.08000183105469,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/masaccio/attackinfo/damage2.atk",
+   "sha256": "17f6f7cffc6f937dd66dd0e59241a852f02455edbcc71e9ae4cd782bd6d8110f",
+   "values": [
+    -98.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -98,
+   "runs": [
+    {
+     "fixture": {
+      "value": -98.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -98,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -98
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -98.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -98,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -98
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/metacow/attackinfo/down.atk",
+   "sha256": "3794dbef7d65a365a4bd5cfb9f69c090b5fd8521a27e01b6c42489f7f306c69d",
+   "values": [
+    -76.7699966430664
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -76,
+   "runs": [
+    {
+     "fixture": {
+      "value": -76.7699966430664,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -76,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -76
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -76.7699966430664,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -76,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -76
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/riding/attackinfo/bullet2.atk",
+   "sha256": "2be216181cf1cb32632d7cb0b84ac00a7660ce84441c8fd6eb0397f6838852ef",
+   "values": [
+    -99.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -99,
+   "runs": [
+    {
+     "fixture": {
+      "value": -99.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -99,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -99
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -99.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -99,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -99
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/riding/attackinfo/fireexplosion.atk",
+   "sha256": "3516b2981f9b8798434a63b94dc5683d1e3281875df7c007dab5c41f5e554ae8",
+   "values": [
+    -99.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -99,
+   "runs": [
+    {
+     "fixture": {
+      "value": -99.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -99,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -99
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -99.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -99,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -99
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/riding/attackinfo/stinger.atk",
+   "sha256": "d56b38294f435f5afe493d10b7a2c694099311a8536e136f32f3c6fec755700e",
+   "values": [
+    -97.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -97,
+   "runs": [
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -97.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -97,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -97
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/actionobject/monster/riding/attackinfo/stinger2.atk",
+   "sha256": "9979b221e50773fe8043db4907d8e60924a7f1596571be67656667bdc217dc04",
+   "values": [
+    -99.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -99,
+   "runs": [
+    {
+     "fixture": {
+      "value": -99.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -99,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -99
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -99.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -99,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -99
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/equipmentpassiveobject/event_goblin/attackinfo/event_thunder2.atk",
+   "sha256": "97831cd063b8b81c8f326c3a4d22a8b27469365b2310550e9cd5a8ee68b1d3d4",
+   "values": [
+    -88.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -88,
+   "runs": [
+    {
+     "fixture": {
+      "value": -88.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -88,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -88
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -88.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -88,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -88
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  },
+  {
+   "path": "passiveobject/monster/zepplin/attackinfo/bullet2.atk",
+   "sha256": "dbbaae2b0f9d82ca6e6762b9583fc9e05fbf5e65c42931ca86c08ea1f4eafe4d",
+   "values": [
+    -98.5
+   ],
+   "offsets": [
+    2
+   ],
+   "decoded": -98,
+   "runs": [
+    {
+     "fixture": {
+      "value": -98.5,
+      "poison": false
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -98,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -98
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    },
+    {
+     "fixture": {
+      "value": -98.5,
+      "poison": true
+     },
+     "registration": [
+      {
+       "tag": "[damage bonus]",
+       "enum": 78
+      }
+     ],
+     "value": -98,
+     "writes": [
+      {
+       "offset": "0x24",
+       "value": -98
+      }
+     ],
+     "cursor": 1,
+     "phases": [
+      {
+       "start": "0x12cfa55",
+       "end": "0x12cfa97",
+       "stack": "0x6ffff600"
+      },
+      {
+       "start": "0x12cf93c",
+       "end": "0x12d1609",
+       "stack": "0x6ffff600"
+      }
+     ],
+     "fp_depth": 0,
+     "abi": [
+      1616904192,
+      1615855616,
+      31,
+      1879047680,
+      1879045632
+     ],
+     "steps": 77,
+     "trace_sha256": "04af6b3992e10adbbbe97c13157e6dc4bb44bd9aa9893662cfca2dc81fd7598b"
+    }
+   ]
+  }
+ ],
+ "blocks": [
+  {
+   "start": "0x4041c0",
+   "end_exclusive": "0x4041e2",
+   "sha256": "39225447bc21868947cf131223625e5edd046bdd1a00b9bbd3e95885e9c2a142",
+   "instructions": [
+    "004041C0 push ebp",
+    "004041C1 mov ebp, esp",
+    "004041C3 mov eax, dword ptr [ebp + 8]",
+    "004041C6 push esi",
+    "004041C7 mov esi, ecx",
+    "004041C9 lea ecx, [esi + 8]",
+    "004041CC push ecx",
+    "004041CD lea edx, [ebp + 8]",
+    "004041D0 push edx",
+    "004041D1 mov ecx, esi",
+    "004041D3 mov dword ptr [ebp + 8], eax",
+    "004041D6 call 0x1195a10",
+    "004041DB mov eax, esi",
+    "004041DD pop esi",
+    "004041DE pop ebp",
+    "004041DF ret 4"
+   ]
+  },
+  {
+   "start": "0x1218a80",
+   "end_exclusive": "0x1218aa6",
+   "sha256": "13f23312408ba2731b8953476a6aa9d606558974773e00d2be17a450e677be40",
+   "instructions": [
+    "01218A80 push ebp",
+    "01218A81 mov ebp, esp",
+    "01218A83 push esi",
+    "01218A84 mov ecx, 0x1d176c8",
+    "01218A89 xor esi, esi",
+    "01218A8B call 0x119a6f0",
+    "01218A90 cmp eax, 2",
+    "01218A93 jne 0x1218aac",
+    "01218A95 mov ecx, 0x1d176c8",
+    "01218A9A call 0x119a800",
+    "01218A9F mov ecx, dword ptr [ebp + 8]",
+    "01218AA2 test ecx, ecx",
+    "01218AA4 je 0x1218af5"
+   ]
+  },
+  {
+   "start": "0x1218aac",
+   "end_exclusive": "0x1218ab1",
+   "sha256": "9083d7ad76f66b5d8974b9524e58312d04d5099068b76873192438be4a794ff9",
+   "instructions": [
+    "01218AAC cmp eax, 3",
+    "01218AAF jne 0x1218ac8"
+   ]
+  },
+  {
+   "start": "0x1218ac8",
+   "end_exclusive": "0x1218ae3",
+   "sha256": "a303b981f2fa29f1dec8010ecdfd4d51b3798a655b82e46330f8208946de37b0",
+   "instructions": [
+    "01218AC8 cmp eax, 4",
+    "01218ACB jne 0x1218ae9",
+    "01218ACD mov ecx, 0x1d176c8",
+    "01218AD2 call 0x119a860",
+    "01218AD7 call 0x13cd690",
+    "01218ADC mov ecx, dword ptr [ebp + 8]",
+    "01218ADF test ecx, ecx",
+    "01218AE1 je 0x1218af5"
+   ]
+  },
+  {
+   "start": "0x1218af5",
+   "end_exclusive": "0x1218af8",
+   "sha256": "9d221fc78fe72ebbde0a2b808631e4542ebc67b4d1354d762ad941f9b37e6a87",
+   "instructions": [
+    "01218AF5 pop esi",
+    "01218AF6 pop ebp",
+    "01218AF7 ret "
+   ]
+  },
+  {
+   "start": "0x12cf93c",
+   "end_exclusive": "0x12cf969",
+   "sha256": "08fbe0457dc1c13ed111e07fad53ea78203372ce8f255a41dfdf78ec9659d353",
+   "instructions": [
+    "012CF93C mov eax, dword ptr [ebx + 0x10]",
+    "012CF93F cmp eax, 0x102",
+    "012CF944 jg 0x12d0f2c",
+    "012CF94A je 0x12cfd6d",
+    "012CF950 cmp eax, 0xfe",
+    "012CF955 ja 0x12d1609",
+    "012CF95B movzx ecx, byte ptr [eax + 0x12d18c8]",
+    "012CF962 jmp dword ptr [ecx*4 + 0x12d1888]"
+   ]
+  },
+  {
+   "start": "0x12cfa55",
+   "end_exclusive": "0x12cfa97",
+   "sha256": "92fa06235edb965e9dc63d18eaeb90201de9f3fd044f1e0555db2e4711411a6b",
+   "instructions": [
+    "012CFA55 cmp byte ptr [0x1d8f828], 0",
+    "012CFA5C jne 0x12d044b",
+    "012CFA62 push 0x18714c8",
+    "012CFA67 call 0x1194fc0",
+    "012CFA6C add esp, 4",
+    "012CFA6F mov dword ptr [ebp - 0x1e0], eax",
+    "012CFA75 lea eax, [ebp - 0x1e0]",
+    "012CFA7B push eax",
+    "012CFA7C lea ecx, [ebp - 0x588]",
+    "012CFA82 push ecx",
+    "012CFA83 mov ecx, 0x1d8f830",
+    "012CFA88 mov dword ptr [ebp - 0x1dc], 0x4e",
+    "012CFA92 call 0x451130"
+   ]
+  },
+  {
+   "start": "0x12d044b",
+   "end_exclusive": "0x12d0463",
+   "sha256": "9019847480c62de3171324a394521c1dcf44e0447e0263d579e8678e029f9bfa",
+   "instructions": [
+    "012D044B push 0",
+    "012D044D call 0x1218a80",
+    "012D0452 add esp, 4",
+    "012D0455 push eax",
+    "012D0456 lea ecx, [esi + 0x24]",
+    "012D0459 call 0x4041c0",
+    "012D045E jmp 0x12d1609"
+   ]
+  },
+  {
+   "start": "0x13cd690",
+   "end_exclusive": "0x13cd6ac",
+   "sha256": "f766e3a18d2df905705c884cb806967facb3649a78ff7d2792b246517b5529ba",
+   "instructions": [
+    "013CD690 cmp dword ptr [0x1d94a4c], 0",
+    "013CD697 je 0x13cd6c6",
+    "013CD699 push ebp",
+    "013CD69A mov ebp, esp",
+    "013CD69C sub esp, 8",
+    "013CD69F and esp, 0xfffffff8",
+    "013CD6A2 fstp qword ptr [esp]",
+    "013CD6A5 cvttsd2si eax, qword ptr [esp]",
+    "013CD6AA leave ",
+    "013CD6AB ret "
+   ]
+  }
+ ],
+ "static_provenance": [
+  {
+   "start": "0x12cf643",
+   "end": "0x12cf64a",
+   "sha256": "6e7608744eee33a2a45d393e76aebf0d94ec953aa91468c8fe2299bc77ee056b",
+   "instructions": [
+    "012CF643 mov ecx, esi",
+    "012CF645 call 0x12ad4b0"
+   ]
+  },
+  {
+   "start": "0x12ad4b0",
+   "end": "0x12ad4fa",
+   "sha256": "e493529c3aa94249bffa3e261136e8f37f44785a2a8aebf40ce995b340f4e1bb",
+   "instructions": [
+    "012AD4B0 push ebp",
+    "012AD4B1 mov ebp, esp",
+    "012AD4B3 sub esp, 0x38",
+    "012AD4B6 xorps xmm0, xmm0",
+    "012AD4B9 push ebx",
+    "012AD4BA push esi",
+    "012AD4BB mov esi, ecx",
+    "012AD4BD push edi",
+    "012AD4BE lea eax, [esi + 8]",
+    "012AD4C1 push eax",
+    "012AD4C2 lea ecx, [ebp - 0xc]",
+    "012AD4C5 push ecx",
+    "012AD4C6 mov ecx, esi",
+    "012AD4C8 movss dword ptr [ebp - 0xc], xmm0",
+    "012AD4CD call 0x1195a10",
+    "012AD4D2 lea ecx, [esi + 0x18]",
+    "012AD4D5 lea edx, [ecx + 8]",
+    "012AD4D8 push edx",
+    "012AD4D9 lea eax, [ebp - 0xc]",
+    "012AD4DC xor ebx, ebx",
+    "012AD4DE push eax",
+    "012AD4DF mov dword ptr [ebp - 0xc], ebx",
+    "012AD4E2 call 0x1195a10",
+    "012AD4E7 lea ecx, [esi + 0x24]",
+    "012AD4EA lea edx, [ecx + 8]",
+    "012AD4ED push edx",
+    "012AD4EE lea eax, [ebp - 0xc]",
+    "012AD4F1 push eax",
+    "012AD4F2 mov dword ptr [ebp - 0xc], ebx",
+    "012AD4F5 call 0x1195a10"
+   ]
+  }
+ ],
+ "boundaries": [
+  "Every top-level archive damage bonus field was inventoried; float/repeated-field files are replayed, not every integer-only file.",
+  "Each file sequence executes original registration once and enum dispatch/integer reader/write repeatedly on the same synthetic record.",
+  "Lexer and secure storage remain ABI fixtures; field boundaries are supplied in archive order. Other intervening tags and full outer parser are excluded.",
+  "Loader/reset prefix is static provenance only. Missing fields remain absent in decoded data; this change adds no fabricated source tag.",
+  "Raw PVF fields, order, offsets and bytes are preserved. Only damage bonus uses integer conversion and last-write semantics; other fields remain unaudited.",
+  "Correct ATK decoding does not prove original action selection, basic mastery integration or final damage formula."
+ ]
+}

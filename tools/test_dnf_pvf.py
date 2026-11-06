@@ -53,6 +53,29 @@ class Builder:
 
 
 class PvfStructure(unittest.TestCase):
+    def test_atk_damage_bonus_uses_native_integer_conversion(self):
+        for value,expected in ((-97.5,-97),(3.13,3),(-96.87,-96),(16777217.,16777216)):
+            with self.subTest(value=value):
+                raw,strings=Builder().tag('[damage bonus]').float(value).build()
+                fields=parse_script(raw,strings,'atk')['fields']
+                decoded,_,_=decode_fields('atk',fields,'a.atk')
+                self.assertEqual(decoded['damage_bonus'],expected)
+                self.assertIs(type(decoded['damage_bonus']),int)
+                self.assertIs(type(fields[0]['values'][0]),float)
+        raw,strings=Builder().tag('[damage bonus]').int(16777217).build()
+        decoded,_,_=decode_fields('atk',parse_script(raw,strings,'atk')['fields'],'a.atk')
+        self.assertEqual(decoded['damage_bonus'],16777217)
+
+    def test_atk_damage_bonus_last_assignment_wins_without_losing_source(self):
+        raw,strings=(Builder().tag('[damage bonus]').int(20).tag('[damage bonus]').int(0)
+                     .tag('[damage bonus]').float(-2.9)).build()
+        fields=parse_script(raw,strings,'atk')['fields']
+        decoded,_,_=decode_fields('atk',fields,'a.atk')
+        self.assertEqual(decoded['damage_bonus'],-2)
+        self.assertEqual(decoded['damage_bonus_repeats'],[0,-2])
+        self.assertEqual(fields[0]['values'],[20]);self.assertEqual(fields[1]['values'],[0])
+        self.assertLess(fields[2]['values'][0],-2)
+
     def test_enum_slots_attach_to_parent_and_aliases_normalize(self):
         content, strings = (Builder().tag('[attack type]').tag('[physic]').tag('[push aside]').int(30)
                             .tag('[attack direction]').tag('[hit horizono]')

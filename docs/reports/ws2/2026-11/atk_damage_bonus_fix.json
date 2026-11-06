@@ -1,0 +1,31 @@
+{
+ "schema": "dnf_atk_damage_bonus_fix/1",
+ "baseline_commit": "b1cbad7db749807c9877526cb8cf37735972719f",
+ "compiler_version_before": 2,
+ "compiler_version_after": 3,
+ "pack_sha256_before": "4e143b9019f9d4f2a0484a869af9941d7d87ecf2df3838b338b5aea8b53fb4e0",
+ "pack_sha256_after": "f99963e9e2b112470e33adf42f2963c4a09a9e634d2e8404b13188df9c36b7f5",
+ "compiler_sha256_after": "42637a371e2cc5c1d0db98ba7408fdc1045ab9be2ff88799d8f3c24d4be3723e",
+ "records": 3327,
+ "record_changes": [
+  {
+   "path": "character/swordman/attackinfo/weaponcomboshort1.atk",
+   "before": 20,
+   "after": 0
+  },
+  {
+   "path": "character/swordman/dsattackinfo/weaponcomboshort1.atk",
+   "before": 20,
+   "after": 0
+  }
+ ],
+ "other_record_fields_unchanged": true,
+ "runtime_logs": {
+  "before": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\n\n[ATK_BONUS_RUNTIME] character/swordman/attackinfo/weaponcomboshort1.atk percent=120.0 expected=100.0\n[ATK_BONUS_RUNTIME] character/swordman/dsattackinfo/weaponcomboshort1.atk percent=120.0 expected=100.0\n[ATK_BONUS_RUNTIME] character/swordman/attackinfo/attack1.atk percent=85.0 expected=85.0\n[ATK_BONUS_RUNTIME] character/swordman/attackinfo/attack2.atk percent=100.0 expected=100.0\n[ATK_BONUS_RUNTIME] character/swordman/attackinfo/attack3.atk percent=120.0 expected=120.0\n[ATK_BONUS_RUNTIME] COMPLETE checks=6 failures=2",
+  "after": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\n\n[ATK_BONUS_RUNTIME] character/swordman/attackinfo/weaponcomboshort1.atk percent=100.0 expected=100.0\n[ATK_BONUS_RUNTIME] character/swordman/dsattackinfo/weaponcomboshort1.atk percent=100.0 expected=100.0\n[ATK_BONUS_RUNTIME] character/swordman/attackinfo/attack1.atk percent=85.0 expected=85.0\n[ATK_BONUS_RUNTIME] character/swordman/attackinfo/attack2.atk percent=100.0 expected=100.0\n[ATK_BONUS_RUNTIME] character/swordman/attackinfo/attack3.atk percent=120.0 expected=120.0\n[ATK_BONUS_RUNTIME] COMPLETE checks=6 failures=0"
+ },
+ "probe_gd": "extends SceneTree\nconst DB = preload(\"res://content/api/content_db.gd\")\nconst Table = preload(\"res://combat/data/move_table.gd\")\nfunc _initialize() -> void:\n\tvar db = DB.new()\n\tvar table = Table.new()\n\ttable.db = db\n\tvar rules: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(\"res://data/combat.json\"))\n\tvar checks := 0\n\tvar failures := 0\n\tfor pair in [[\"character/swordman/attackinfo/weaponcomboshort1.atk\",100.0],[\"character/swordman/dsattackinfo/weaponcomboshort1.atk\",100.0],[\"character/swordman/attackinfo/attack1.atk\",85.0],[\"character/swordman/attackinfo/attack2.atk\",100.0],[\"character/swordman/attackinfo/attack3.atk\",120.0]]:\n\t\tvar spec: Dictionary = rules[\"moves\"][\"attack1\"].duplicate(true)\n\t\tspec[\"atk\"] = pair[0]\n\t\tvar stage: Dictionary = table._build_stage(spec,{})\n\t\tvar actual: float = stage[\"hits\"][0][\"percent\"]\n\t\tchecks += 1\n\t\tif actual != pair[1]:failures += 1\n\t\tprint(\"[ATK_BONUS_RUNTIME] \",pair[0],\" percent=\",actual,\" expected=\",pair[1])\n\tchecks += 1\n\tif not table.problems.is_empty():failures += 1\n\tprint(\"[ATK_BONUS_RUNTIME] COMPLETE checks=\",checks,\" failures=\",failures)\n\tquit(0 if failures==0 else 1)\n",
+ "formal_loop_summary": "[LOOP_TEST] COMPLETE checks=435 failures=0 captures=0",
+ "loop_log_sha256": "6f64aac63b971f4020c33840dc1444304cf424015dd9071a631865916b72fb6a",
+ "scope": "ContentDB/MoveTable stage-data probe plus formal workflow; no short-sword action selection, animation or native-equivalent final damage claim."
+}

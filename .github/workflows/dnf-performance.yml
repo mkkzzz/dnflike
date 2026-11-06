@@ -54,6 +54,7 @@ jobs:
           python3 tools/test_dnf_basic_mastery.py
           python3 tools/test_dnf_basic_mastery_pipeline.py
           python3 tools/test_dnf_basic_mastery_states.py
+          python3 tools/test_dnf_atk_damage_bonus.py
           python3 tools/test_dnf_native_catalog.py
       - name: Check quest semantics and portable package verification
         run: python3 tools/test_dnf_quest_rules.py
