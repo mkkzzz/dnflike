@@ -25,10 +25,12 @@ def f32(value):return real(fbits(value))
 
 def replay(source, *, category=8, rank=1, values=(24.,48.,72.), initial=35,
            static=1, learned=1, skill_exists=True, attack_exists=True,
-           states=(None,None,None), poison=False):
+           states=(None,None,None), poison=False, caller=False, cached_skill=False):
     from dnf_native_vm_probe import CPU
     if len(values)!=3 or len(states)!=3 or any(x is not None and x not in (0,1) for x in states):raise ValueError('Fixture shape')
     if any(not math.isfinite(v) or not -2147483648<=v<2147483648 for v in values):raise ValueError('Finite conversion domain')
+    if caller and not attack_exists:raise ValueError('Native caller always passes its embedded attack record')
+    if cached_skill and learned!=rank:raise ValueError('Native rank getter must read the same effective-rank field as the value wrapper')
     c=CPU(source)
     for a in range(0x6FFFC000,0x70000000,4):c.write(a,4,0)
     c.write(OWNER,4,VTABLE);c.write(0x70000004,4,ATTACK if attack_exists else 0);c.write(0x70000008,4,category)
@@ -36,8 +38,16 @@ def replay(source, *, category=8, rank=1, values=(24.,48.,72.), initial=35,
         c.write(OWNER+off,4,0 if status is None else STATE+index*0x100)
         if status is not None:c.write(STATE+index*0x100,4,STATE_VT)
     c.write(STATE_VT+0x70,4,0)
-    secure={ATTACK+0x24:initial&0xFFFFFFFF,SKILL+0x59C:rank&0xFFFFFFFF}
+    if cached_skill:
+        c.write(OWNER+0x3C08,4,0);c.write(OWNER+0x4C0C,4,0)
+        c.write(OWNER+0x4018+174*4,4,SKILL if skill_exists else 0)
+        c.write(OWNER+0x4414+174*4,4,SKILL if skill_exists else 0)
+    attack=OWNER+0x2D4 if caller else ATTACK
+    secure={attack+0x24:initial&0xFFFFFFFF,SKILL+0x59C:rank&0xFFFFFFFF}
     c.reg.update(ecx=OWNER,ebx=17,esi=29,edi=31,ebp=37);c.pc=0x83FA10
+    if caller:
+        secure[OWNER+0x3094]=category&0xFFFFFFFF
+        c.reg.update(esi=OWNER,ebp=0x6FFFFE00,esp=0x6FFFFD00);c.pc=0xCA6EE0
     xmm={f'xmm{j}':0 for j in range(8)};fp=[];calls=[];writes=[];state_calls=[]
     def clobber():
         c.reg['ecx'],c.reg['edx'],c.flags=(0xBAADF00D,0xBAD0C0DE,0xA97) if poison else (0,0,0x202)
@@ -45,6 +55,8 @@ def replay(source, *, category=8, rank=1, values=(24.,48.,72.), initial=35,
     def finish(value,count):
         c.reg['eax']=value&0xFFFFFFFF;c.pc=c.pop();c.reg['esp']+=count*4;clobber()
     for _ in range(12000):
+        if caller and c.pc==0xCA6F05:
+            stop=('caller_boundary',hex(c.pc));break
         arg=lambda j:c.read(c.reg['esp']+4+j*4,4)
         if c.pc in (0xC9EE7A,0xC9EE94,0xC9EEAE):
             index=(c.reg['ecx']-STATE)//0x100
@@ -53,7 +65,8 @@ def replay(source, *, category=8, rank=1, values=(24.,48.,72.), initial=35,
         if c.pc in (0x8444F0,0x8406C0):
             if c.reg['ecx']!=OWNER or arg(0)!=174:raise ValueError('Skill lookup ABI')
             calls.append({'service':'learned' if c.pc==0x8444F0 else 'lookup','id':arg(0)})
-            finish(learned if c.pc==0x8444F0 else SKILL if skill_exists else 0,1);continue
+            if not cached_skill:
+                finish(learned if c.pc==0x8444F0 else SKILL if skill_exists else 0,1);continue
         if c.pc==0x908510:
             if c.reg['ecx']!=SKILL or [arg(0),arg(1)]!=[0,OWNER]:raise ValueError('Static ABI')
             calls.append({'service':'static','column':0});finish(static,2);continue
@@ -68,7 +81,7 @@ def replay(source, *, category=8, rank=1, values=(24.,48.,72.), initial=35,
             write=c.pc==0x1195A10;this=c.reg['ecx']
             if this not in secure or arg(1 if write else 0)!=this+8:raise ValueError('Secure ABI')
             if write:
-                secure[this]=c.read(arg(0),4);writes.append({'offset':hex(this-ATTACK),'value':signed(secure[this])})
+                secure[this]=c.read(arg(0),4);writes.append({'offset':hex(this-attack),'value':signed(secure[this])})
             else:c.write(arg(1),4,secure[this])
             finish(0,2);continue
         stop=c.run(c.pc,1)
@@ -77,7 +90,7 @@ def replay(source, *, category=8, rank=1, values=(24.,48.,72.), initial=35,
         i=next(source.decoder.disasm(source.source_bytes(c.pc,15),c.pc,count=1))
         if stop[0]=='call':
             target=int(stop[2],16)
-            if target not in (0x8444F0,0x8406C0,0xC9EE60,0x83C020,0x83C040,0x9095B0,0x908510,0x908770,0x13CD690,0x1195EB0,0x1195A10,0x4041C0,0x42CDB0):raise ValueError(f'Unknown call {target:#x}')
+            if target not in (0x83FA10,0x8444F0,0x8406C0,0xC9EE60,0x83C020,0x83C040,0x9095B0,0x908510,0x908770,0x13CD690,0x1195EB0,0x1195A10,0x4041C0,0x42CDB0):raise ValueError(f'Unknown call {target:#x}')
             c.push(c.pc+i.size);c.pc=target;continue
         if stop[0]!='unsupported':raise ValueError(f'Unmodeled stop {stop}')
         if i.mnemonic in ('addss','subss'):
@@ -87,12 +100,16 @@ def replay(source, *, category=8, rank=1, values=(24.,48.,72.), initial=35,
         elif i.mnemonic=='imul' and len(i.operands)==1:
             product=signed(c.reg['eax'])*signed(c.get(i,i.operands[0]));c.reg['eax']=product&0xFFFFFFFF;c.reg['edx']=(product>>32)&0xFFFFFFFF
             c.flags=(c.flags&~0x801)|(0x801 if not -2147483648<=product<=2147483647 else 0)
+        elif i.mnemonic=='imul' and len(i.operands)==3:
+            dst,left,right=i.operands;product=signed(c.get(i,left))*signed(c.get(i,right));c.put(i,dst,product&0xFFFFFFFF)
+            c.flags=(c.flags&~0x801)|(0x801 if not -2147483648<=product<=2147483647 else 0)
         else:extra_step(c,xmm,i);continue
         c.pc+=i.size
     else:raise ValueError('Instruction budget')
     return {'fixture':{'category':category,'rank':rank,'values':list(values),'initial':initial,'static':static,'learned':learned,
-        'skill_exists':skill_exists,'attack_exists':attack_exists,'states':list(states),'poison':poison},
-        'value':signed(secure[ATTACK+0x24]),'calls':calls,'writes':writes,'state_calls':state_calls,
+        'skill_exists':skill_exists,'attack_exists':attack_exists,'states':list(states),'poison':poison,
+        **({'caller':True} if caller else {}),**({'cached_skill':True} if cached_skill else {})},
+        'value':signed(secure[attack+0x24]),'calls':calls,'writes':writes,'state_calls':state_calls,
         'stop':list(stop),'abi':[c.reg[k] for k in ('ebx','esi','edi','ebp','esp')],'fp_depth':len(fp),
         'steps':len(c.trace),'trace_sha256':trace_hash(c.trace)},c.trace
 
@@ -101,7 +118,9 @@ def verify(row):
     f=row['fixture'];expected=f['initial'];calls=[];states=[];writes=[]
     if f['attack_exists']:
         calls.append({'service':'learned','id':174})
-        if f['learned']>0:
+        if f.get('cached_skill') and f['skill_exists']:calls.append({'service':'lookup','id':174})
+        learned=(f['rank'] if f['skill_exists'] else 0) if f.get('cached_skill') else f['learned']
+        if learned>0:
             calls.append({'service':'lookup','id':174})
             if f['skill_exists']:
                 for j,value in enumerate(f['states']):
@@ -119,7 +138,9 @@ def verify(row):
                     else:expected=signed((expected+math.trunc(v/10))&0xFFFFFFFF)
                     writes=[{'offset':'0x24','value':expected}]
     if (row['value'],row['calls'],row['state_calls'],row['writes'])!=(expected,calls,states,writes):raise ValueError('Basic mastery scope/arithmetic mismatch')
-    if row['stop']!=['returned'] or row['abi']!=[17,29,31,37,0x7000000C] or row['fp_depth']:raise ValueError('Basic mastery ABI mismatch')
+    stop=['caller_boundary','0xca6f05'] if f.get('caller') else ['returned']
+    abi=[17,OWNER,31,0x6FFFFE00,0x6FFFFD00] if f.get('caller') else [17,29,31,37,0x7000000C]
+    if row['stop']!=stop or row['abi']!=abi or row['fp_depth']:raise ValueError('Basic mastery ABI mismatch')
 
 
 def audit(source):
