@@ -1,0 +1,476 @@
+{
+ "schema": "dnf_weapon_mastery_rank_fix/1",
+ "baseline_commit": "abf330659ba0f7b9a95c1f2cfd5a2eee95389294",
+ "native_evidence": "native_weapon_mastery_rank.json",
+ "source_id": 27,
+ "before": {
+  "active": false,
+  "cost": 20,
+  "growtype_max_level": [
+   0,
+   30,
+   0,
+   0,
+   0,
+   0
+  ],
+  "mastery_bonus": true,
+  "mastery_fields": [
+   "shortswordmastery",
+   "heavyswordmastery",
+   "bluntmastery",
+   "blademastery"
+  ],
+  "mastery_levels_per_rank": 2,
+  "max_level": 50,
+  "name": "武器奥义",
+  "path": "skill/swordman/weaponmasteryup.skl",
+  "source_id": 27,
+  "source_path": "skill/swordman/weaponmasteryup.skl",
+  "speed": "attack",
+  "tree_visible": true
+ },
+ "after": {
+  "active": false,
+  "cost": 20,
+  "growtype_max_level": [
+   0,
+   30,
+   0,
+   0,
+   0,
+   0
+  ],
+  "max_level": 50,
+  "name": "武器奥义",
+  "path": "skill/swordman/weaponmasteryup.skl",
+  "runtime_hook": "weapon_mastery_rank_bonus",
+  "skill_rank_bonus_ids": [
+   12,
+   13,
+   14,
+   15,
+   4
+  ],
+  "skill_rank_bonus_rows": [
+   [
+    3,
+    3,
+    3,
+    3,
+    2
+   ],
+   [
+    4,
+    4,
+    4,
+    4,
+    3
+   ],
+   [
+    5,
+    5,
+    5,
+    5,
+    4
+   ],
+   [
+    6,
+    6,
+    6,
+    6,
+    5
+   ],
+   [
+    7,
+    7,
+    7,
+    7,
+    6
+   ],
+   [
+    8,
+    8,
+    8,
+    8,
+    7
+   ],
+   [
+    9,
+    9,
+    9,
+    9,
+    8
+   ],
+   [
+    10,
+    10,
+    10,
+    10,
+    9
+   ],
+   [
+    11,
+    11,
+    11,
+    11,
+    10
+   ],
+   [
+    12,
+    12,
+    12,
+    12,
+    11
+   ],
+   [
+    13,
+    13,
+    13,
+    13,
+    12
+   ],
+   [
+    14,
+    14,
+    14,
+    14,
+    13
+   ],
+   [
+    15,
+    15,
+    15,
+    15,
+    14
+   ],
+   [
+    16,
+    16,
+    16,
+    16,
+    15
+   ],
+   [
+    17,
+    17,
+    17,
+    17,
+    16
+   ],
+   [
+    18,
+    18,
+    18,
+    18,
+    17
+   ],
+   [
+    19,
+    19,
+    19,
+    19,
+    18
+   ],
+   [
+    20,
+    20,
+    20,
+    20,
+    19
+   ],
+   [
+    21,
+    21,
+    21,
+    21,
+    20
+   ],
+   [
+    22,
+    22,
+    22,
+    22,
+    21
+   ],
+   [
+    23,
+    23,
+    23,
+    23,
+    22
+   ],
+   [
+    24,
+    24,
+    24,
+    24,
+    23
+   ],
+   [
+    25,
+    25,
+    25,
+    25,
+    24
+   ],
+   [
+    26,
+    26,
+    26,
+    26,
+    25
+   ],
+   [
+    27,
+    27,
+    27,
+    27,
+    26
+   ],
+   [
+    28,
+    28,
+    28,
+    28,
+    27
+   ],
+   [
+    29,
+    29,
+    29,
+    29,
+    28
+   ],
+   [
+    30,
+    30,
+    30,
+    30,
+    29
+   ],
+   [
+    31,
+    31,
+    31,
+    31,
+    30
+   ],
+   [
+    32,
+    32,
+    32,
+    32,
+    31
+   ],
+   [
+    33,
+    33,
+    33,
+    33,
+    32
+   ],
+   [
+    34,
+    34,
+    34,
+    34,
+    33
+   ],
+   [
+    35,
+    35,
+    35,
+    35,
+    34
+   ],
+   [
+    36,
+    36,
+    36,
+    36,
+    35
+   ],
+   [
+    37,
+    37,
+    37,
+    37,
+    36
+   ],
+   [
+    38,
+    38,
+    38,
+    38,
+    37
+   ],
+   [
+    39,
+    39,
+    39,
+    39,
+    38
+   ],
+   [
+    40,
+    40,
+    40,
+    40,
+    39
+   ],
+   [
+    41,
+    41,
+    41,
+    41,
+    40
+   ],
+   [
+    42,
+    42,
+    42,
+    42,
+    41
+   ],
+   [
+    43,
+    43,
+    43,
+    43,
+    42
+   ],
+   [
+    44,
+    44,
+    44,
+    44,
+    43
+   ],
+   [
+    45,
+    45,
+    45,
+    45,
+    44
+   ],
+   [
+    46,
+    46,
+    46,
+    46,
+    45
+   ],
+   [
+    47,
+    47,
+    47,
+    47,
+    46
+   ],
+   [
+    48,
+    48,
+    48,
+    48,
+    47
+   ],
+   [
+    49,
+    49,
+    49,
+    49,
+    48
+   ],
+   [
+    50,
+    50,
+    50,
+    50,
+    49
+   ],
+   [
+    51,
+    51,
+    51,
+    51,
+    50
+   ],
+   [
+    52,
+    52,
+    52,
+    52,
+    51
+   ]
+  ],
+  "source_id": 27,
+  "source_path": "skill/swordman/weaponmasteryup.skl",
+  "speed": "attack",
+  "tree_visible": true
+ },
+ "changed_runtime_sections": [
+  "skills"
+ ],
+ "changed_skills": [
+  "weapon_mastery_up"
+ ],
+ "assets_identical": true,
+ "runtime_sha256": "84a0dacd633f98d42794cdd1d3db6697fa493870e41d077a1ee85639995ab1fb",
+ "logs": {
+  "before": {
+   "sha256": "05ab5462edf22ea5d8f6cf81f80a30cca001132b7bc9d888b7ac2c5155617afc",
+   "completion_markers": [
+    "[MASTERY_RANKS] COMPLETE checks=229 failures=58"
+   ]
+  },
+  "after": {
+   "sha256": "42ef477a665a695808aed337617e0ca5c99ff5ac5f88d99f77c3aec29cb943f6",
+   "completion_markers": [
+    "[MASTERY_RANKS] COMPLETE checks=229 failures=0"
+   ]
+  },
+  "loop": {
+   "sha256": "97d4db9eb32347de3545c45f88461ec3f51a23915085d462c3981d68ec3d7680",
+   "completion_markers": [
+    "[PARTICLE_MOTION] COMPLETE checks=275 failures=0",
+    "[PARTICLE_EMITTER] COMPLETE checks=153 failures=0",
+    "[PARTICLE_VIEW] COMPLETE checks=87 failures=0",
+    "[ICE_PARTICLES] COMPLETE checks=355 failures=0",
+    "[FIREWAVE] COMPLETE checks=91 failures=0",
+    "[SKILL_EFFECTS] COMPLETE checks=19 failures=0",
+    "[GHOST_RANKS] COMPLETE checks=126 failures=0",
+    "[MASTERY_RANKS] COMPLETE checks=229 failures=0",
+    "[UI_PERF] COMPLETE checks=17 failures=0",
+    "[QUEST_RULES] COMPLETE checks=288 failures=0",
+    "[CAMPAIGN] COMPLETE checks=132 failures=0",
+    "[WEAPON_RULES] COMPLETE checks=29925 failures=0",
+    "[NATIVE_BULK] COMPLETE checks=7780 failures=0",
+    "[TEACHING_RULES] COMPLETE checks=30 failures=0",
+    "[POISON_RULES] COMPLETE checks=26 failures=0",
+    "[ORIGINAL_DATA] COMPLETE checks=31 failures=0",
+    "[RECOVERY_TEST] COMPLETE checks=53 failures=0",
+    "[UPGRADE_TEST] COMPLETE checks=46 failures=0",
+    "[SERVICE_TEST] COMPLETE checks=33 failures=0",
+    "[ITEM_TEST] COMPLETE checks=44 failures=0",
+    "[NUMBERS_TEST] COMPLETE checks=251 failures=0",
+    "[QUEST_TEST] COMPLETE checks=45 failures=0",
+    "[TOWN_UNIT] COMPLETE checks=110 failures=0",
+    "[GRAN_UNIT] COMPLETE checks=19 failures=0",
+    "[LOOP_TEST] COMPLETE checks=435 failures=0 captures=0"
+   ]
+  }
+ },
+ "files_sha256": {
+  "tools/build_dnf_skill_runtime.py": "5dc3f7cf39c6a39886b74440b52195cbbe3f2d2933f9dff6f58563d72afb59bc",
+  "game_dnf/stats/skill_book.gd": "27b204c27a6594a4ba16516c487120a2c660e212545785c9dce8ab4916eb83e7",
+  "game_dnf/stats/api/numbers.gd": "ac681561de6cdf6d13e863f696354ec686b3b990c2b689a2d118d70da55995b8",
+  "game_dnf/tests/combat/test_weapon_mastery_ranks.gd": "46b62b1cc1426fc86ccf5963db766cb7cf982fed0fba40f5b33cf690212bbcbf",
+  "tools/run_dnf_loop.ps1": "f9b8458a37dd751217d5392901cbaea6d9c5c688e56d8d8ca24b0b31395dd8aa"
+ },
+ "boundaries": [
+  "Protected static and level value services are declared ABI inputs from unmodified source data.",
+  "Existing mastery stat conversion is not certified native; this fixes the effective source row used by it.",
+  "Legacy training aliases remain readable/refundable, without a full save migration; source-ID canonical entries receive the new bonus."
+ ]
+}

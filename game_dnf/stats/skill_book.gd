@@ -10,18 +10,32 @@ static func spent(profile: Dictionary) -> int:
 static func available(profile: Dictionary, config: Dictionary) -> int:
 	return Growth.sp_total(profile,config["progression"])-spent(profile)
 
-## Native ghostpowerup caller CD9E60..CD9F4E, unmodified source static IDs.
+## Native ghostpowerup/weaponmasteryup callers, unmodified source IDs and rows.
 ## Equipment/global rank rebuilding and protected static-ID modifiers are pending.
 static func effective_levels(base: Dictionary, config: Dictionary) -> Dictionary:
 	var result := base.duplicate(true)
-	if int(result.get("ghostpowerup",0)) <= 0:return result
-	var definition: Dictionary = config["skills"].get("ghostpowerup",{})
-	for source_id in definition.get("skill_rank_bonus_ids",[]):
-		var id: String = config["skill_index"].get(str(int(source_id)),"")
-		if id.is_empty() or not config["skills"].has(id):continue
-		var rank := int(result.get(id,0))
-		if rank > 0 and rank < int(config["skills"][id]["max_level"]):
-			result[id] = rank+1
+	if int(result.get("ghostpowerup",0)) > 0:
+		var definition: Dictionary = config["skills"].get("ghostpowerup",{})
+		for source_id in definition.get("skill_rank_bonus_ids",[]):
+			var id: String = config["skill_index"].get(str(int(source_id)),"")
+			if id.is_empty() or not config["skills"].has(id):continue
+			var rank := int(result.get(id,0))
+			if rank > 0 and rank < int(config["skills"][id]["max_level"]):
+				result[id] = rank+1
+	var mastery: Dictionary = config["skills"].get("weapon_mastery_up",{})
+	var mastery_rank := int(result.get("weapon_mastery_up",0))
+	var rows: Array = mastery.get("skill_rank_bonus_rows",[])
+	var targets: Array = mastery.get("skill_rank_bonus_ids",[])
+	if mastery_rank > 0 and mastery_rank <= rows.size():
+		var row: Array = rows[mastery_rank-1]
+		if row.size() != targets.size():return result
+		for column in targets.size():
+			var id: String = config["skill_index"].get(str(int(targets[column])),"")
+			if id.is_empty() or not config["skills"].has(id):continue
+			var rank := int(result.get(id,0))
+			# CD9FFD checks the old rank; CDA034 adds without a final clamp.
+			if rank > 0 and rank < int(config["skills"][id]["max_level"]):
+				result[id] = rank+int(row[column])
 	return result
 
 ## force=true 跳过等级/职业/前置校验（调试入口），仍受技能上限与 SP 约束。
@@ -39,10 +53,6 @@ static func change(profile: Dictionary, id: String, delta: int, config: Dictiona
 			var caps: Array = record.get("growtype_max_level",[])
 			var grow_index := int(config.get("growtype_index",{}).get(profile["growtype"],0))
 			var cap := int(caps[grow_index]) if grow_index < caps.size() else int(definition["max_level"])
-			var mastery_bonus_ids: Array = config["skills"].get("weapon_mastery_up",{}).get("mastery_fields",[])
-			if id in mastery_bonus_ids or id.replace("_","") in mastery_bonus_ids:
-				var per_rank := int(config["skills"].get("weapon_mastery_up",{}).get("mastery_levels_per_rank",0))
-				cap += int(profile["skills"].get("weapon_mastery_up",0))*per_rank
 			cap = mini(cap,int(definition["max_level"]))
 			if not caps.is_empty() and rank>=cap:return {"ok":false,"message":"该职业无法继续学习此技能"}
 			var required := int(record.get("required_level",1))+rank*int(record.get("required_level_range",1))

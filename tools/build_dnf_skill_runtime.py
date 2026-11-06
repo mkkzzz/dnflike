@@ -799,11 +799,7 @@ PASSIVE_BUILDERS = {
     "blademastery": mastery_passive("katana"),
     "heavyswordmastery": mastery_passive("greatsword"),
     "bluntmastery": mastery_passive("club"),
-    "weaponmasteryup": {
-        "mastery_bonus": True,
-        "mastery_levels_per_rank": 2,
-        "mastery_fields": ["shortswordmastery", "heavyswordmastery", "bluntmastery", "blademastery"],
-    },
+    "weaponmasteryup": {"runtime_hook": "weapon_mastery_rank_bonus"},
     "darkfriendship": {
         "passive": [
             {"stat": "dark_resist", "op": "add", "value": 20},
@@ -921,13 +917,21 @@ def build_skill_definition(skill: dict, record: dict) -> dict:
         definition.update(PASSIVE_BUILDERS[key])
     elif not active:
         definition.update(generic_passive_spec(key))
-    if key == "ghostpowerup":
-        # CD9E60..CD9F4E walks every static element, including Keiga (84).
-        # Each eligible target receives one rank, independent of passive rank.
+    if key in ("ghostpowerup", "weaponmasteryup"):
+        # CD9E60..CDA05C walks all static IDs: seven ghost targets (including
+        # Keiga) and five mastery targets (including the beamsword column).
         targets = decoded.get("dungeon", {}).get("static_data", decoded.get("static_data", []))
         if not targets or any(type(n) is not int or not 0 <= n < 255 for n in targets):
-            raise ValueError("ghostpowerup requires source static skill IDs")
+            raise ValueError(f"{key} requires source static skill IDs")
         definition["skill_rank_bonus_ids"] = list(targets)
+        if key == "weaponmasteryup":
+            levels = decoded.get("dungeon", {}).get("level_info", decoded.get("level_info", []))
+            if (not levels or levels[0] != len(targets) or (len(levels)-1) % len(targets)
+                    or any(type(n) is not int for n in levels)):
+                raise ValueError("weaponmasteryup requires aligned source level columns")
+            definition["skill_rank_bonus_rows"] = [levels[j:j+len(targets)] for j in range(1,len(levels),len(targets))]
+            if len(definition["skill_rank_bonus_rows"]) < definition["max_level"]:
+                raise ValueError("weaponmasteryup source levels do not cover maximum rank")
     return definition
 
 

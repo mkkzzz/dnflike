@@ -43,7 +43,7 @@ func _initialize() -> void:
 	check(class_gate.command("numbers.growtype",{"growtype":"weaponmaster"})["ok"],"level 35 character can advance to weaponmaster")
 	check(class_gate.command("numbers.skill",{"id":"draw","delta":1})["ok"] and class_gate.profile["skills"]["draw"]==1,"weaponmaster can learn the class skill after advancement")
 	check(class_gate.command("numbers.skill",{"id":"blade_mastery","delta":1})["ok"] and not class_gate.command("numbers.skill",{"id":"blade_mastery","delta":1})["ok"],"weapon-master mastery cap follows its original growth-type column")
-	check(class_gate.command("numbers.skill",{"id":"weapon_mastery_up","delta":1})["ok"] and class_gate.command("numbers.skill",{"id":"blade_mastery","delta":1})["ok"],"weapon mastery oath raises the mastery learning cap")
+	check(class_gate.command("numbers.skill",{"id":"weapon_mastery_up","delta":1})["ok"] and not class_gate.command("numbers.skill",{"id":"blade_mastery","delta":1})["ok"],"weapon mastery oath preserves source learning caps, including legacy mastery entries")
 	var berserker = Session.new()
 	berserker.command("numbers.level",{"level":25})
 	check(not berserker.command("numbers.skill",{"id":"buff","delta":1})["ok"],"berserker skill is locked before advancement")

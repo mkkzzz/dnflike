@@ -95,8 +95,9 @@ static func profile_stats(profile: Dictionary, extra: Array = []) -> Dictionary:
 	var weapon_uid := String(profile.get("equipment",{}).get("weapon",""))
 	if weapon_uid != "":
 		weapon = String(cfg["equipment"].get(profile.get("gear",{}).get(weapon_uid,{}).get("definition",""),{}).get("weapon",weapon))
-	for id: String in profile["skills"]:
-		var rank := int(profile["skills"][id])
+	var effective := Skills.effective_levels(profile["skills"],cfg)
+	for id: String in effective:
+		var rank := int(effective[id])
 		if rank <= 0:continue
 		var definition: Dictionary = cfg["skills"].get(id,{})
 		var source := record(id) if definition.get("path","") != "" else {}

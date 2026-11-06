@@ -136,6 +136,14 @@ if ($Test) {
     } finally {$ErrorActionPreference=$ghostRankPreference}
     $ghostRanks | Write-Output
     if ($ghostRankExit -ne 0 -or ($ghostRanks -match 'SCRIPT ERROR|ERROR:') -or -not ($ghostRanks -match '\[GHOST_RANKS\] COMPLETE checks=\d+ failures=0')) {throw "Ghost skill effective-rank regression failed."}
+    $masteryRankPreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $masteryRanks=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_weapon_mastery_ranks.gd 2>&1
+        $masteryRankExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$masteryRankPreference}
+    $masteryRanks | Write-Output
+    if ($masteryRankExit -ne 0 -or ($masteryRanks -match 'SCRIPT ERROR|ERROR:') -or -not ($masteryRanks -match '\[MASTERY_RANKS\] COMPLETE checks=\d+ failures=0')) {throw "Weapon mastery effective-rank regression failed."}
     & python (Join-Path $PSScriptRoot "test_check_dnf_performance.py")
     if ($LASTEXITCODE -ne 0) {throw "Performance guard self-tests failed."}
     $performanceOutput=& $GodotPath --headless --path $gamePath --script res://tests/flow/test_ui_performance.gd 2>&1
