@@ -1615,6 +1615,7 @@ def main() -> int:
     args.output.write_text(
         json.dumps(document, ensure_ascii=False, indent=1, sort_keys=True) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     print(
         "[SKILL_RUNTIME] tree=%d active=%d passive=%d moves=%d effects=%d "

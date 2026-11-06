@@ -152,6 +152,7 @@ class SkillRuntimeTest(unittest.TestCase):
 
     def test_runtime_assets_are_baked(self):
         manifest = json.loads(COMBAT.read_text(encoding="utf-8"))
+        self.assertNotIn(b"\r\n", RUNTIME.read_bytes())
         self.assertEqual(manifest["skill_runtime_sha256"], hashlib.sha256(RUNTIME.read_bytes()).hexdigest())
         base = json.loads((ROOT / "game_dnf/assets_local/manifest.json").read_text(encoding="utf-8"))
         player_clips = set(manifest["player_clips"]) | {
