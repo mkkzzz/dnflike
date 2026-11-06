@@ -1,0 +1,6959 @@
+{
+ "schema": "dnf_basic_mastery_sync/1",
+ "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
+ "input_source": {
+  "input_sha256": "8748e19abf6155ca5a20d13244eaca0b9442c3d7569e8e5002bddffeeb9366ac",
+  "embedded": true,
+  "resource": "10/EXERESX/0",
+  "resource_offset": 734740
+ },
+ "tools_sha256": {
+  "audit_dnf_basic_mastery_sync.py": "787bae46e1fc5bf72fcccc7c5495414ae3fea9261d581638dc03bf8e7c9f6dff",
+  "audit_dnf_basic_mastery.py": "2d223d1ee7f6a1d7d7a3545b872e24fca62fccb8d55850d98ff4ccde9d28b7a3",
+  "audit_dnf_firewave.py": "3377abdf1f6b5a76908a4cd14652fc68fe28d56314e49c6ee65933bfbd792ddc",
+  "audit_dnf_ice_shatter.py": "b4f90d1797fd487af50a6e39716c77cc9e889b3e5b5c0b1c12864d088f29462c",
+  "audit_dnf_ice_particle_bindings.py": "660048b05498ea7dd11add2d7f3654083d99faafa8fc28b86ff198292fcdeed1",
+  "audit_dnf_native_strings.py": "60b30f2e51e5a744b106d8df955f5a7acbd7d4341ba51f52fd7a2941a5d29c6f",
+  "audit_dnf_particle_axis.py": "59b463dcff6537cc89c597bcf2bb5f1f0a336eb25a67b09da4c228d524b1af8e",
+  "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a"
+ },
+ "input": [
+  {
+   "fixture": {
+    "value": 0,
+    "poison": false
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 0
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 0
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 0,
+    "poison": true
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 0
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 0
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 1,
+    "poison": false
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 1
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 1
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 1,
+    "poison": true
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 1
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 1
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 2,
+    "poison": false
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 2
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 2
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 2,
+    "poison": true
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 2
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 2
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 60,
+    "poison": false
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 60
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 60
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 60,
+    "poison": true
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 60
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 60
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 100,
+    "poison": false
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 100
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 100
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 100,
+    "poison": true
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 100
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 100
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 127,
+    "poison": false
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 127
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 127
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 127,
+    "poison": true
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 127
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 127
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 128,
+    "poison": false
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 128
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 128
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 128,
+    "poison": true
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 128
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 128
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 255,
+    "poison": false
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 255
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 255
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  },
+  {
+   "fixture": {
+    "value": 255,
+    "poison": true
+   },
+   "reads": [
+    {
+     "bytes": 1,
+     "value": 255
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x14",
+     "value": 255
+    }
+   ],
+   "abi": [
+    0,
+    29,
+    31,
+    1879047680,
+    1879046656
+   ],
+   "steps": 14,
+   "trace_sha256": "e39730613361e5188dac9d7881f7e0960e0c61f45c9482982e6cc074180b48c8"
+  }
+ ],
+ "events": [
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 61,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 0,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 1,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 6,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 169,
+   "trace_sha256": "4197271e89621d39edcd80f12e0dae1059b654dd17c50a33406864cdd5e7b5fd"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 7,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": false,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 49,
+   "trace_sha256": "137944d5cee1ee2a8b3685f3bcb4ae1c3c7bff36d1f1e0afed491db0e6d33927"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": false,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 79,
+   "trace_sha256": "41bc52007ccb67a934ad88a292b1794982f2403084de8425ea632c82912b540a"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": false,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 82,
+   "trace_sha256": "489dd9e93680394ba6fdfb96e737f04404f51e1c6010999b4536f139a3478ff7"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     2,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 2,
+    "new": 10,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 10
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 10
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     10,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 99,
+    "new": 100,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     100,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     255,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 61,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 0,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 1,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 6,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 169,
+   "trace_sha256": "4197271e89621d39edcd80f12e0dae1059b654dd17c50a33406864cdd5e7b5fd"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 7,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": false,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 49,
+   "trace_sha256": "137944d5cee1ee2a8b3685f3bcb4ae1c3c7bff36d1f1e0afed491db0e6d33927"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": false,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 79,
+   "trace_sha256": "41bc52007ccb67a934ad88a292b1794982f2403084de8425ea632c82912b540a"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": false,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 82,
+   "trace_sha256": "489dd9e93680394ba6fdfb96e737f04404f51e1c6010999b4536f139a3478ff7"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     2,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 2,
+    "new": 10,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 10
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 10
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     10,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 99,
+    "new": 100,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     100,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     255,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 60
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 61,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 0,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 1,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 6,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 60
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 291,
+   "trace_sha256": "3151aed828bd63d8f1752b91badd78223067c48e3a353fef84e7907f7300f87b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 7,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": false,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 49,
+   "trace_sha256": "137944d5cee1ee2a8b3685f3bcb4ae1c3c7bff36d1f1e0afed491db0e6d33927"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": false,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 79,
+   "trace_sha256": "41bc52007ccb67a934ad88a292b1794982f2403084de8425ea632c82912b540a"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": false,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 82,
+   "trace_sha256": "489dd9e93680394ba6fdfb96e737f04404f51e1c6010999b4536f139a3478ff7"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 2
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     2,
+     19
+    ],
+    [
+     2,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 2,
+    "new": 10,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 10
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 10
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 10
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 10
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     10,
+     19
+    ],
+    [
+     10,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 99,
+    "new": 100,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 100
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     100,
+     19
+    ],
+    [
+     100,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 255
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     255,
+     19
+    ],
+    [
+     255,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 60
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 61,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 0,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 1,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 6,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 60
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 291,
+   "trace_sha256": "3151aed828bd63d8f1752b91badd78223067c48e3a353fef84e7907f7300f87b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 7,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": false,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 49,
+   "trace_sha256": "137944d5cee1ee2a8b3685f3bcb4ae1c3c7bff36d1f1e0afed491db0e6d33927"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": false,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 79,
+   "trace_sha256": "41bc52007ccb67a934ad88a292b1794982f2403084de8425ea632c82912b540a"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": false,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 82,
+   "trace_sha256": "489dd9e93680394ba6fdfb96e737f04404f51e1c6010999b4536f139a3478ff7"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 2
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     2,
+     19
+    ],
+    [
+     2,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 2,
+    "new": 10,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 10
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 10
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 10
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 10
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     10,
+     19
+    ],
+    [
+     10,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 99,
+    "new": 100,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 100
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     100,
+     19
+    ],
+    [
+     100,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 255
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     255,
+     19
+    ],
+    [
+     255,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 61,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 0,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 1,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 6,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 169,
+   "trace_sha256": "4197271e89621d39edcd80f12e0dae1059b654dd17c50a33406864cdd5e7b5fd"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 7,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": false,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 49,
+   "trace_sha256": "137944d5cee1ee2a8b3685f3bcb4ae1c3c7bff36d1f1e0afed491db0e6d33927"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": false,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 79,
+   "trace_sha256": "41bc52007ccb67a934ad88a292b1794982f2403084de8425ea632c82912b540a"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": false,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 82,
+   "trace_sha256": "489dd9e93680394ba6fdfb96e737f04404f51e1c6010999b4536f139a3478ff7"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     2,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 2,
+    "new": 10,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 10
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 10
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     10,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 99,
+    "new": 100,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     100,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     255,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 61,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 0,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 1,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 6,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 169,
+   "trace_sha256": "4197271e89621d39edcd80f12e0dae1059b654dd17c50a33406864cdd5e7b5fd"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 7,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": false,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 49,
+   "trace_sha256": "137944d5cee1ee2a8b3685f3bcb4ae1c3c7bff36d1f1e0afed491db0e6d33927"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": false,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 79,
+   "trace_sha256": "41bc52007ccb67a934ad88a292b1794982f2403084de8425ea632c82912b540a"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": false,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 82,
+   "trace_sha256": "489dd9e93680394ba6fdfb96e737f04404f51e1c6010999b4536f139a3478ff7"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     2,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 2,
+    "new": 10,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 10
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 10
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     10,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 99,
+    "new": 100,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     100,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     255,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 167,
+   "trace_sha256": "eaeb4f3b292e383b794dd6a6e2e90772fa5ea593d1dd47815daeb53a0fff4b38"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 60
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 61,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 0,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 1,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 6,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 60
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 291,
+   "trace_sha256": "3151aed828bd63d8f1752b91badd78223067c48e3a353fef84e7907f7300f87b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 7,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": false,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 49,
+   "trace_sha256": "137944d5cee1ee2a8b3685f3bcb4ae1c3c7bff36d1f1e0afed491db0e6d33927"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": false,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 79,
+   "trace_sha256": "41bc52007ccb67a934ad88a292b1794982f2403084de8425ea632c82912b540a"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": false,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 82,
+   "trace_sha256": "489dd9e93680394ba6fdfb96e737f04404f51e1c6010999b4536f139a3478ff7"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 2
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     2,
+     19
+    ],
+    [
+     2,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 2,
+    "new": 10,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 10
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 10
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 10
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 10
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     10,
+     19
+    ],
+    [
+     10,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 99,
+    "new": 100,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 100
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     100,
+     19
+    ],
+    [
+     100,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 255
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     255,
+     19
+    ],
+    [
+     255,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 60
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 31,
+   "trace_sha256": "d9ff6c34d202238f28b0d2b81f20cd341a1305dfe79f432c1651c9cfe83b8081"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 61,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 0,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 48,
+   "trace_sha256": "51a2e17b91a432536a77ff33f2f7db459c1ce96177db4365bcd4518f88cc6a4b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 1,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 6,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 60
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 291,
+   "trace_sha256": "3151aed828bd63d8f1752b91badd78223067c48e3a353fef84e7907f7300f87b"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 7,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 47,
+   "trace_sha256": "8e7f414f5f5d24ffde3b363f20a8b4ccf5b22f0ea533892cba2100bdd04b0537"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": false,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x5099c2",
+   "stack": "0x6fffffe4",
+   "steps": 49,
+   "trace_sha256": "137944d5cee1ee2a8b3685f3bcb4ae1c3c7bff36d1f1e0afed491db0e6d33927"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": false,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 79,
+   "trace_sha256": "41bc52007ccb67a934ad88a292b1794982f2403084de8425ea632c82912b540a"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": false,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [],
+   "calls": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "stop": "0x80a75b",
+   "stack": "0x6fffff9c",
+   "steps": 82,
+   "trace_sha256": "489dd9e93680394ba6fdfb96e737f04404f51e1c6010999b4536f139a3478ff7"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 2
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     2,
+     19
+    ],
+    [
+     2,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 2,
+    "new": 10,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 10
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 10
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 10
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 10
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     10,
+     19
+    ],
+    [
+     10,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 99,
+    "new": 100,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 100
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     100,
+     19
+    ],
+    [
+     100,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "profile_kind": 0,
+    "observer_exists": true,
+    "current_observer": true,
+    "actor_exists": true,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "reads": [
+    "old",
+    "new",
+    "old",
+    "new"
+   ],
+   "writes": [
+    {
+     "bank": 0,
+     "field": "0x590",
+     "value": 255
+    },
+    {
+     "bank": 1,
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "id": 174,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "id": 174,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     255,
+     19
+    ],
+    [
+     255,
+     20
+    ]
+   ],
+   "stop": "0x80a755",
+   "stack": "0x6fffff9c",
+   "steps": 289,
+   "trace_sha256": "1b8a30c392dab876b83c439e810e008038429e9b0a84a35a41bb290df9ba820c"
+  }
+ ],
+ "blocks": [
+  {
+   "start": "0x509930",
+   "end_exclusive": "0x5099c2",
+   "sha256": "96c22478fdde6669c93a98c9d3e26005635d0e8bea87ecb5e4e4159cc8ba3a90",
+   "instructions": [
+    "00509930 push ebp",
+    "00509931 mov ebp, esp",
+    "00509933 sub esp, 0xc",
+    "00509936 push ebx",
+    "00509937 push esi",
+    "00509938 push edi",
+    "00509939 mov edi, dword ptr [ebp + 8]",
+    "0050993C lea esi, [edi + 0x24]",
+    "0050993F lea eax, [ebp - 8]",
+    "00509942 push eax",
+    "00509943 lea ebx, [esi + 8]",
+    "00509946 push ebx",
+    "00509947 mov ecx, esi",
+    "00509949 call 0x1195eb0",
+    "0050994E cmp dword ptr [ebp - 8], 0",
+    "00509952 je 0x509982",
+    "00509954 mov ecx, dword ptr [ebp + 0xc]",
+    "00509957 add ecx, 0x14",
+    "0050995A lea edx, [ebp - 8]",
+    "0050995D push edx",
+    "0050995E lea eax, [ecx + 8]",
+    "00509961 push eax",
+    "00509962 call 0x1195eb0",
+    "00509967 mov edi, dword ptr [ebp - 8]",
+    "0050996A lea ecx, [ebp - 0xc]",
+    "0050996D push ecx",
+    "0050996E push ebx",
+    "0050996F mov ecx, esi",
+    "00509971 call 0x1195eb0",
+    "00509976 cmp edi, dword ptr [ebp - 0xc]",
+    "00509979 mov edi, dword ptr [ebp + 8]",
+    "0050997C mov byte ptr [ebp - 1], 1",
+    "00509980 jg 0x509986",
+    "00509982 mov byte ptr [ebp - 1], 0",
+    "00509986 mov ecx, edi",
+    "00509988 call 0x9197c0",
+    "0050998D test al, al",
+    "0050998F je 0x5099c2",
+    "00509991 cmp byte ptr [ebp - 1], 0",
+    "00509995 je 0x5099c2",
+    "00509997 cmp dword ptr [edi + 0x398], 0",
+    "0050999E je 0x5099c2",
+    "005099A0 mov ecx, dword ptr [ebp + 0xc]",
+    "005099A3 add ecx, 0x14",
+    "005099A6 lea edx, [ebp + 8]",
+    "005099A9 push edx",
+    "005099AA lea eax, [ecx + 8]",
+    "005099AD push eax",
+    "005099AE call 0x1195eb0",
+    "005099B3 mov ecx, dword ptr [ebp + 8]",
+    "005099B6 push ecx",
+    "005099B7 mov ecx, dword ptr [edi + 0x398]",
+    "005099BD call 0x80a680"
+   ]
+  },
+  {
+   "start": "0x50b02b",
+   "end_exclusive": "0x50b068",
+   "sha256": "3bb61fd7a1eca7fdc929d41efb9337149d9095e8d5b375c02822e5d380deaf2c",
+   "instructions": [
+    "0050B02B lea ecx, [ebp - 0x379]",
+    "0050B031 push 1",
+    "0050B033 push ecx",
+    "0050B034 mov byte ptr [ebp - 0x379], bl",
+    "0050B03A call 0x11aea00",
+    "0050B03F movzx edx, byte ptr [ebp - 0x379]",
+    "0050B046 add esp, 8",
+    "0050B049 lea eax, [ebp - 0x35c]",
+    "0050B04F push eax",
+    "0050B050 lea ecx, [ebp - 0x380]",
+    "0050B056 push ecx",
+    "0050B057 lea ecx, [ebp - 0x364]",
+    "0050B05D mov dword ptr [ebp - 0x380], edx",
+    "0050B063 call 0x1195a10"
+   ]
+  },
+  {
+   "start": "0x80a680",
+   "end_exclusive": "0x80a755",
+   "sha256": "c1e577957f67e8c981853f5b0fcf877869e821a315d654fb027307e310f2f470",
+   "instructions": [
+    "0080A680 push ebp",
+    "0080A681 mov ebp, esp",
+    "0080A683 push -1",
+    "0080A685 push 0x1435a21",
+    "0080A68A mov eax, dword ptr fs:[0]",
+    "0080A690 push eax",
+    "0080A691 sub esp, 0x20",
+    "0080A694 push ebx",
+    "0080A695 push esi",
+    "0080A696 push edi",
+    "0080A697 mov eax, dword ptr [0x1a367f0]",
+    "0080A69C xor eax, ebp",
+    "0080A69E push eax",
+    "0080A69F lea eax, [ebp - 0xc]",
+    "0080A6A2 mov dword ptr fs:[0], eax",
+    "0080A6A8 mov esi, ecx",
+    "0080A6AA mov ecx, dword ptr [0x1ab7ce0]",
+    "0080A6B0 cmp esi, ecx",
+    "0080A6B2 jne 0x80a75b",
+    "0080A6B8 mov edi, dword ptr [0x1ab7cdc]",
+    "0080A6BE test edi, edi",
+    "0080A6C0 je 0x80a75b",
+    "0080A6C6 cmp byte ptr [edi + 0x4c10], 0",
+    "0080A6CD je 0x80a728",
+    "0080A6CF mov eax, dword ptr [edi + 0x4c0c]",
+    "0080A6D5 mov dword ptr [ebp - 0x1c], eax",
+    "0080A6D8 xor ebx, ebx",
+    "0080A6DA lea ebx, [ebx]",
+    "0080A6E0 push ebx",
+    "0080A6E1 mov ecx, edi",
+    "0080A6E3 call 0x83db80",
+    "0080A6E8 mov eax, dword ptr [ebp + 8]",
+    "0080A6EB mov edx, dword ptr [edi]",
+    "0080A6ED mov edx, dword ptr [edx + 0x7cc]",
+    "0080A6F3 push eax",
+    "0080A6F4 push 0xae",
+    "0080A6F9 mov ecx, edi",
+    "0080A6FB call edx",
+    "0080A6FD mov eax, dword ptr [edi]",
+    "0080A6FF mov edx, dword ptr [eax + 0x7d8]",
+    "0080A705 mov ecx, edi",
+    "0080A707 call edx",
+    "0080A709 mov eax, dword ptr [edi]",
+    "0080A70B mov edx, dword ptr [eax + 0x7dc]",
+    "0080A711 mov ecx, edi",
+    "0080A713 call edx",
+    "0080A715 inc ebx",
+    "0080A716 cmp ebx, 2",
+    "0080A719 jl 0x80a6e0",
+    "0080A71B mov eax, dword ptr [ebp - 0x1c]",
+    "0080A71E push eax",
+    "0080A71F mov ecx, edi",
+    "0080A721 call 0x83db80",
+    "0080A726 jmp 0x80a755",
+    "0080A728 mov eax, dword ptr [ebp + 8]",
+    "0080A72B mov edx, dword ptr [edi]",
+    "0080A72D mov edx, dword ptr [edx + 0x7cc]",
+    "0080A733 push eax",
+    "0080A734 push 0xae",
+    "0080A739 mov ecx, edi",
+    "0080A73B call edx",
+    "0080A73D mov eax, dword ptr [edi]",
+    "0080A73F mov edx, dword ptr [eax + 0x7d8]",
+    "0080A745 mov ecx, edi",
+    "0080A747 call edx",
+    "0080A749 mov eax, dword ptr [edi]",
+    "0080A74B mov edx, dword ptr [eax + 0x7dc]",
+    "0080A751 mov ecx, edi",
+    "0080A753 call edx"
+   ]
+  },
+  {
+   "start": "0x83db80",
+   "end_exclusive": "0x83db90",
+   "sha256": "f97f6d6c729442efd449c3479dfed701abbda7a1c01452ccf42bfa7a61a09a6c",
+   "instructions": [
+    "0083DB80 push ebp",
+    "0083DB81 mov ebp, esp",
+    "0083DB83 mov eax, dword ptr [ebp + 8]",
+    "0083DB86 mov dword ptr [ecx + 0x4c0c], eax",
+    "0083DB8C pop ebp",
+    "0083DB8D ret 4"
+   ]
+  },
+  {
+   "start": "0x8406c0",
+   "end_exclusive": "0x840720",
+   "sha256": "bf88f3866eb466b5e8b27a27d45c2a5bfc0b7843468784b6e32a94ffb064c716",
+   "instructions": [
+    "008406C0 push ebp",
+    "008406C1 mov ebp, esp",
+    "008406C3 push -1",
+    "008406C5 push 0x14ab78b",
+    "008406CA mov eax, dword ptr fs:[0]",
+    "008406D0 push eax",
+    "008406D1 push ebx",
+    "008406D2 push esi",
+    "008406D3 push edi",
+    "008406D4 mov eax, dword ptr [0x1a367f0]",
+    "008406D9 xor eax, ebp",
+    "008406DB push eax",
+    "008406DC lea eax, [ebp - 0xc]",
+    "008406DF mov dword ptr fs:[0], eax",
+    "008406E5 mov esi, ecx",
+    "008406E7 mov ecx, dword ptr [esi + 0x3c08]",
+    "008406ED cmp ecx, 0xb",
+    "008406F0 je 0x8407e4",
+    "008406F6 mov ebx, dword ptr [ebp + 8]",
+    "008406F9 cmp ebx, 0xfe",
+    "008406FF ja 0x8407e4",
+    "00840705 mov eax, dword ptr [esi + 0x4c0c]",
+    "0084070B imul eax, eax, 0x3fc",
+    "00840711 lea eax, [eax + esi + 0x4414]",
+    "00840718 cmp ebx, 0xff",
+    "0084071E jb 0x840725"
+   ]
+  },
+  {
+   "start": "0x840725",
+   "end_exclusive": "0x840736",
+   "sha256": "4c2889cebf9c602567c668742925500d8c11c4b5dea956f69e1f291b822ac73f",
+   "instructions": [
+    "00840725 lea edi, [ebx*4]",
+    "0084072C cmp dword ptr [edi + eax], 0",
+    "00840730 jne 0x8407ba"
+   ]
+  },
+  {
+   "start": "0x8407ba",
+   "end_exclusive": "0x8407e4",
+   "sha256": "3019adf3dc13728573978109878da8a913704398ac8c67d38a440e166cc1f483",
+   "instructions": [
+    "008407BA mov eax, dword ptr [esi + 0x4c0c]",
+    "008407C0 imul eax, eax, 0x3fc",
+    "008407C6 lea eax, [eax + esi + 0x4414]",
+    "008407CD mov eax, dword ptr [edi + eax]",
+    "008407D0 mov ecx, dword ptr [ebp - 0xc]",
+    "008407D3 mov dword ptr fs:[0], ecx",
+    "008407DA pop ecx",
+    "008407DB pop edi",
+    "008407DC pop esi",
+    "008407DD pop ebx",
+    "008407DE mov esp, ebp",
+    "008407E0 pop ebp",
+    "008407E1 ret 4"
+   ]
+  },
+  {
+   "start": "0x844880",
+   "end_exclusive": "0x844892",
+   "sha256": "be09355e386be472799e049a0cb73571c47354f3a3b4d72842bf60f6f6d4d82f",
+   "instructions": [
+    "00844880 push ebp",
+    "00844881 mov ebp, esp",
+    "00844883 push esi",
+    "00844884 push edi",
+    "00844885 mov edi, dword ptr [ebp + 0xc]",
+    "00844888 mov esi, ecx",
+    "0084488A test edi, edi",
+    "0084488C jne 0x84494f"
+   ]
+  },
+  {
+   "start": "0x84494f",
+   "end_exclusive": "0x84497d",
+   "sha256": "4f0ce815dbb2f18894b623233ae5ba35abe400651c91982953736fa54df01321",
+   "instructions": [
+    "0084494F mov edx, dword ptr [esi]",
+    "00844951 mov eax, dword ptr [ebp + 8]",
+    "00844954 mov edx, dword ptr [edx + 0x804]",
+    "0084495A push eax",
+    "0084495B call edx",
+    "0084495D test eax, eax",
+    "0084495F je 0x844977",
+    "00844961 lea ecx, [eax + 0x590]",
+    "00844967 lea eax, [ecx + 8]",
+    "0084496A push eax",
+    "0084496B lea edx, [ebp + 8]",
+    "0084496E push edx",
+    "0084496F mov dword ptr [ebp + 8], edi",
+    "00844972 call 0x1195a10",
+    "00844977 pop edi",
+    "00844978 pop esi",
+    "00844979 pop ebp",
+    "0084497A ret 8"
+   ]
+  },
+  {
+   "start": "0x9197c0",
+   "end_exclusive": "0x9197dc",
+   "sha256": "b0badfa08f29c3e4cf39e02d6cf5b74e998465ff30cf7a61f565e3ba49b7dd05",
+   "instructions": [
+    "009197C0 lea eax, [ecx + 0x10]",
+    "009197C3 test eax, eax",
+    "009197C5 je 0x9197dc",
+    "009197C7 mov eax, dword ptr [ecx + 0x30]",
+    "009197CA test eax, eax",
+    "009197CC je 0x9197d6",
+    "009197CE cmp eax, 6",
+    "009197D1 je 0x9197d6",
+    "009197D3 xor eax, eax",
+    "009197D5 ret ",
+    "009197D6 mov eax, 1",
+    "009197DB ret "
+   ]
+  }
+ ],
+ "boundaries": [
+  "50B02B..50B068 unsigned packet-byte conversion into incoming record +14 executes; transport and secure write are ABI fixtures.",
+  "509930 growth predicate, 9197C0 kind predicate, 80A680 prefix, 83DB80 bank setter, 844880 nonzero rank setter and 8406C0 cached lookup execute original bytes.",
+  "Notification connects incoming +14 to skill 174 +590. Complete profile-field semantics and the actor level-stat production chain are still unresolved.",
+  "Profile kind 0/6 is tested without guessing job/mode names. First load with old value zero does not enter this growth path.",
+  "CD9E50 rebuild and 84D000 refresh are ABI event boundaries; effective ranks deliberately remain sentinel fixtures, not production results.",
+  "UI suffix after 80A755/80A75B and notification suffix after 5099C2 are excluded. Initial skill loading, missing-cache allocation and final damage remain unresolved.",
+  "Packet input and notification are composed as field-value evidence, not full network processing. No runtime rank or basic mastery implementation change."
+ ]
+}
