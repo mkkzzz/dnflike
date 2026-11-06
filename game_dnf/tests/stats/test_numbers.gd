@@ -14,6 +14,7 @@ func check(value: bool, message: String) -> void:
 func _initialize() -> void:
 	check_back_critical()
 	check_equipment_separate_attack()
+	check_throw_mastery_scope()
 	var cfg := Numbers.config_snapshot()
 	var initial_strength: float = Numbers.shared_config()["base"]["strength"]
 	cfg["base"]["strength"] = initial_strength + 1
@@ -195,6 +196,30 @@ func _initialize() -> void:
 	check(not s.command("numbers.level",{"level":61})["ok"],"configured cap applies to level setter")
 	print("[NUMBERS_TEST] COMPLETE checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
+
+func check_throw_mastery_scope() -> void:
+	var s = Session.new()
+	check(s.command("numbers.level",{"level":60})["ok"],"throw mastery test character reaches source learning requirements")
+	var cfg := Numbers.shared_config()
+	var before: Dictionary = s.stats()["numbers"].duplicate(true)
+	var sp_before := Numbers.Skills.available(s.profile,cfg)
+	for rank in range(1,11):
+		check(s.command("numbers.skill",{"id":"throwmastery","delta":1})["ok"],"throw mastery source rank %d remains learnable" % rank)
+		if rank not in [1,5,10]:continue
+		var after: Dictionary = s.stats()["numbers"]
+		check(after==before,"throw mastery rank %d does not modify general character attributes" % rank)
+		for kind: String in ["physical","magical"]:
+			for hit: Dictionary in [{"percent":100,"fixed":0},{"percent":0,"fixed":100},{"percent":100,"fixed":100}]:
+				hit["damage_type"] = kind
+				var baseline: Dictionary = Numbers.Damage.resolve(before,{},hit,[0,1],cfg["formula"])
+				check(Numbers.Damage.resolve(after,{},hit,[0,1],cfg["formula"])==baseline,"throw mastery rank %d does not boost unrelated %s hit %s" % [rank,kind,hit])
+		var loaded = Session.new()
+		check(loaded.restore(JSON.parse_string(JSON.stringify(s.serialize()))),"learned throw mastery survives JSON roundtrip")
+		check(loaded.profile["skills"]["throwmastery"]==rank and loaded.stats()["numbers"]==before,"old learned ranks recompute without global throw mastery bonus")
+	check(Numbers.Skills.available(s.profile,cfg)==sp_before-250,"source throw mastery purchase cost is preserved")
+	for rank in range(10,0,-1):
+		check(s.command("numbers.skill",{"id":"throwmastery","delta":-1})["ok"],"throw mastery rank %d can be refunded" % rank)
+	check(s.profile["skills"]["throwmastery"]==0 and s.stats()["numbers"]==before and Numbers.Skills.available(s.profile,cfg)==sp_before,"refunding retains source SP and removes no unrelated attributes")
 
 func check_back_critical() -> void:
 	var profile: Dictionary = Session.new().profile.duplicate(true)

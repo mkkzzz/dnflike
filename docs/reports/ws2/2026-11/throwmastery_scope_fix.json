@@ -1,0 +1,182 @@
+{
+ "schema": "dnf_throw_mastery_scope_fix/1",
+ "basis": "Original SKL and linked localized text prove effect scope; native throw-item controller has not been replayed.",
+ "baseline_commit": "ad043bf24072fde95fa30a6967249ff1672e9558",
+ "asset_version": "dnf-native-assets-v1-20261022",
+ "skill_id": 177,
+ "source_path": "skill/swordman/throwmastery.skl",
+ "source_sha256": "36ace7af1da97273326bbfad03cced835d4035bd24dcea928d6ff870c9c12147",
+ "pack_source": {
+  "asset_version": "dnf-native-assets-v1-20261022",
+  "path": "skill/swordman/throwmastery.skl",
+  "sha256": "36ace7af1da97273326bbfad03cced835d4035bd24dcea928d6ff870c9c12147"
+ },
+ "source_fields": {
+  "[consume MP]": [
+   1,
+   1
+  ],
+  "[level info]": [
+   1,
+   10,
+   20,
+   30,
+   40,
+   50,
+   60,
+   70,
+   80,
+   90,
+   100,
+   110,
+   120,
+   130,
+   140,
+   150,
+   160,
+   170,
+   180,
+   190,
+   200
+  ],
+  "[growtype maximum level]": [
+   10,
+   10,
+   10,
+   10,
+   10,
+   10
+  ],
+  "[maximum level]": [
+   20
+  ],
+  "[purchase cost]": [
+   25
+  ]
+ },
+ "localized": {
+  "[name]": [
+   {
+    "text": "投擲精通",
+    "table": "skill/skill.kor.str",
+    "table_id": 12,
+    "key": "name_15830",
+    "line": 6965,
+    "missing": false,
+    "needs_review": false
+   }
+  ],
+  "[explain]": [
+   {
+    "text": "投擲時可以增加投擲道具的攻擊力， 但能造成2次傷害的投擲道具(如燃燒瓶等)， 將不增加第2次傷害的攻擊力。\\n    每次投擲時會消耗一定量的MP。",
+    "table": "skill/skill.kor.str",
+    "table_id": 12,
+    "key": "explain_15835",
+    "line": 6966,
+    "missing": false,
+    "needs_review": false
+   }
+  ],
+  "[basic explain]": [
+   {
+    "text": "投擲時可以增加投擲道具的攻擊力。",
+    "table": "skill/skill.kor.str",
+    "table_id": 12,
+    "key": "throw_mastery_basic_explain",
+    "line": 427,
+    "missing": false,
+    "needs_review": false
+   }
+  ]
+ },
+ "level_property": {
+  "table": "skill/skill.kor.str",
+  "key": "level_property_15840",
+  "entry": {
+   "text": "攻擊力增加率 : <int>%%",
+   "line": 6967
+  }
+ },
+ "text_table": {
+  "sha256": "7681bd1f7a8af9a4258a8271fc8e8f9697b6e74fdbee8af60d4eea0e1ba85a79",
+  "encoding": "cp950",
+  "round_trip": true,
+  "entries": 6976,
+  "duplicate_keys": []
+ },
+ "old_mapping": {
+  "stat": "physical_independent_attack",
+  "op": "add",
+  "level_row": 0,
+  "scale": 1.0
+ },
+ "current_mapping": {
+  "active": false,
+  "cost": 25,
+  "growtype_max_level": [
+   10,
+   10,
+   10,
+   10,
+   10,
+   10
+  ],
+  "max_level": 20,
+  "name": "投掷精通",
+  "path": "skill/swordman/throwmastery.skl",
+  "runtime_hook": "throw_item_mastery",
+  "runtime_status": "pending_throw_item_pipeline",
+  "source_id": 177,
+  "source_path": "skill/swordman/throwmastery.skl",
+  "speed": "attack",
+  "tree_visible": false
+ },
+ "regression": {
+  "before": {
+   "checks": 200,
+   "failures": 12,
+   "log_sha256": "ef4275a917ddac5799b5bdc4e5e07162c50c86a7f908daa3d233e23278c94112"
+  },
+  "after": {
+   "checks": 200,
+   "failures": 0,
+   "log_sha256": "cc72f40dac7e58788073ff6e98c75c9e526d48df470919d3c77dfd416df58af1"
+  },
+  "python_skill_tests": 16,
+  "formal_loop": {
+   "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_dnf_loop.ps1 -Test",
+   "exit_code": 0,
+   "log_sha256": "09b4e4966d6ae36c7d1ba6bd8a54dea243cb4a3771f39344e76ab88e78735f1d",
+   "completion_markers": [
+    "[PARTICLE_MOTION] COMPLETE checks=275 failures=0",
+    "[PARTICLE_EMITTER] COMPLETE checks=153 failures=0",
+    "[PARTICLE_VIEW] COMPLETE checks=87 failures=0",
+    "[ICE_PARTICLES] COMPLETE checks=355 failures=0",
+    "[FIREWAVE] COMPLETE checks=91 failures=0",
+    "[UI_PERF] COMPLETE checks=17 failures=0",
+    "[QUEST_RULES] COMPLETE checks=288 failures=0",
+    "[CAMPAIGN] COMPLETE checks=132 failures=0",
+    "[WEAPON_RULES] COMPLETE checks=29925 failures=0",
+    "[NATIVE_BULK] COMPLETE checks=7780 failures=0",
+    "[TEACHING_RULES] COMPLETE checks=30 failures=0",
+    "[POISON_RULES] COMPLETE checks=26 failures=0",
+    "[ORIGINAL_DATA] COMPLETE checks=31 failures=0",
+    "[RECOVERY_TEST] COMPLETE checks=53 failures=0",
+    "[UPGRADE_TEST] COMPLETE checks=46 failures=0",
+    "[SERVICE_TEST] COMPLETE checks=33 failures=0",
+    "[ITEM_TEST] COMPLETE checks=44 failures=0",
+    "[NUMBERS_TEST] COMPLETE checks=200 failures=0",
+    "[QUEST_TEST] COMPLETE checks=45 failures=0",
+    "[TOWN_UNIT] COMPLETE checks=110 failures=0",
+    "[GRAN_UNIT] COMPLETE checks=19 failures=0",
+    "[LOOP_TEST] COMPLETE checks=435 failures=0 captures=0"
+   ],
+   "scope": "Headless formal regression, not visual/original fidelity acceptance."
+  }
+ },
+ "boundaries": [
+  "Removes an unsupported global damage bonus; does not implement thrown items.",
+  "Original per-throw MP use, attack bonus, exclusion of secondary damage and thrown-item lifecycle remain pending.",
+  "No skill level/SP/save IDs or skill counts changed; existing learned ranks recompute via current definition."
+ ]
+}

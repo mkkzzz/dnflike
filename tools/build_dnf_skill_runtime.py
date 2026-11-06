@@ -746,7 +746,11 @@ def generic_passive_spec(key: str) -> dict:
     if key == "basicattackup":
         return {"passive": [{"stat": "physical_attack", "op": "percent", "level_row": 0, "scale": 0.001}]}
     if key == "throwmastery":
-        return {"passive": [{"stat": "physical_independent_attack", "op": "add", "level_row": 0, "scale": 1.0}]}
+        # Original SKL text limits this to thrown-item damage (excluding a
+        # secondary hit such as a fire bottle), with MP consumed per throw.
+        # There is no thrown-item consumer yet. Do not turn its level column
+        # into a global fixed-damage stat while that pipeline is unresolved.
+        return {"runtime_hook": "throw_item_mastery", "runtime_status": "pending_throw_item_pipeline"}
     if key == "jumppowerup":
         return {"passive": [{"stat": "jump_power", "op": "add", "level_row": 0, "scale": 1.0}]}
     if key == "magicalattackup":

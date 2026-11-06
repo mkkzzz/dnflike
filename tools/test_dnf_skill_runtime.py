@@ -54,6 +54,28 @@ class SkillRuntimeTest(unittest.TestCase):
             self.assertEqual(record["level_info"][:3], [1, 15, 30])
             self.assertEqual(skill["passive"], [{"stat": kind+"_back_crit", "op": "add", "level_row": 0, "scale": 0.001}])
 
+    def test_throw_mastery_does_not_pollute_global_fixed_damage(self):
+        skill = self.skills["throwmastery"]
+        record = self.pack["records"][skill["source_path"]]["decoded"]
+        self.assertEqual(record["level_info"], [1]+list(range(10,201,10)))
+        self.assertEqual(record["consume_mp"], [1,1])
+        self.assertEqual(skill["source_id"],177)
+        self.assertFalse(skill.get("passive"))
+        self.assertEqual(skill["runtime_status"],"pending_throw_item_pipeline")
+        self.assertEqual(builder.generic_passive_spec("throwmastery"),
+                         {"runtime_hook":"throw_item_mastery","runtime_status":"pending_throw_item_pipeline"})
+        catalog=json.loads((ROOT/"game_dnf/data/skill_catalog.json").read_text(encoding="utf8"))
+        source=next(s for s in catalog["skills"] if s["key"]=="throwmastery")
+        self.assertIn("投掷道具",source["explain"])
+        self.assertIn("不增加第2次伤害",source["explain"])
+        from audit_dnf_skill_fidelity import audit
+        subset=dict(self.runtime,skills={"throwmastery":skill})
+        risk=audit(subset,{"moves":{}},self.pack["records"],catalog,set())["skills"][0]["risks"]
+        self.assertIn("pending_runtime_consumer",risk)
+        broken=dict(skill,passive=[{"stat":"physical_independent_attack","op":"add","level_row":0,"scale":1.0}])
+        risk=audit(dict(subset,skills={"throwmastery":broken}),{"moves":{}},self.pack["records"],catalog,set())["skills"][0]["risks"]
+        self.assertIn("throw_item_bonus_applied_to_general_character_stats",risk)
+
     def test_normalwave_has_no_borrowed_upper_slash_damage_or_visual(self):
         move = self.moves["normalwave"]
         hits = [hit for stage in move["stages"] for hit in stage.get("hits", [])]
@@ -179,7 +201,7 @@ class SkillRuntimeTest(unittest.TestCase):
         for path in self.runtime["assets"]["objects"].values():
             self.assertIn(path, object_paths, path)
 
-    def test_passives_have_runtime_semantics(self):
+    def test_passives_declare_adapters_or_hooks_without_certifying_fidelity(self):
         semantic_keys = {
             "passive",
             "mastery",

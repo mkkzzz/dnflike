@@ -8217,15 +8217,9 @@
    ],
    "max_level": 20,
    "name": "投掷精通",
-   "passive": [
-    {
-     "level_row": 0,
-     "op": "add",
-     "scale": 1.0,
-     "stat": "physical_independent_attack"
-    }
-   ],
    "path": "skill/swordman/throwmastery.skl",
+   "runtime_hook": "throw_item_mastery",
+   "runtime_status": "pending_throw_item_pipeline",
    "source_id": 177,
    "source_path": "skill/swordman/throwmastery.skl",
    "speed": "attack",

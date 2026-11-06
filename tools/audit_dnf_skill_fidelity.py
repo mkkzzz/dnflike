@@ -106,6 +106,10 @@ def audit(runtime, combat, records, catalog, clips):
             item["passive_definition"] = {k: v for k, v in skill.items() if k not in ("name", "path", "source_path")}
             if skill.get("runtime_hook") == "declarative_passive":
                 item["risks"].append("declarative_hook_without_verified_consumer")
+            if str(skill.get("runtime_status", "")).startswith("pending_"):
+                item["risks"].append("pending_runtime_consumer")
+            if skill_id == "throwmastery" and skill.get("passive"):
+                item["risks"].append("throw_item_bonus_applied_to_general_character_stats")
             if "backattackcritical" in skill_id and any(m.get("stat") in ("physical_crit", "magical_crit") for m in skill.get("passive", [])):
                 item["risks"].append("back_attack_bonus_applied_without_direction_condition")
         result.append(item)
