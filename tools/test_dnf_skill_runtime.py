@@ -1,4 +1,4 @@
-"""Generated Swordman skill runtime keeps every SP-tree node executable."""
+"""Catalog/asset integrity and specific adapter regressions, not fidelity certification."""
 import json
 import unittest
 from pathlib import Path
@@ -29,14 +29,29 @@ class SkillRuntimeTest(unittest.TestCase):
         self.assertEqual(len(self.skills), 175)
         self.assertEqual(len({skill["source_id"] for skill in self.skills.values()}), 175)
 
-    def test_every_active_node_has_a_hit_or_timed_effect(self):
+    def test_every_active_node_has_a_runtime_entry(self):
         for skill_id, skill in self.skills.items():
             if not skill["active"]:
                 continue
             self.assertIn(skill_id, self.moves, skill_id)
             move = self.moves[skill_id]
             hits = sum(len(stage.get("hits", [])) for stage in move.get("stages", []))
-            self.assertTrue(hits > 0 or move.get("effect_id"), skill_id)
+            self.assertTrue(hits > 0 or move.get("effect_id") or move.get("movement"), skill_id)
+
+    def test_backstep_dispatches_movement_without_a_fake_buff(self):
+        move = self.moves["backstep"]
+        self.assertEqual(move.get("movement"), "backstep")
+        self.assertNotIn("effect_id", move)
+        self.assertEqual(move["stages"][0]["ani"], "jump")
+
+    def test_normalwave_has_no_borrowed_upper_slash_damage_or_visual(self):
+        move = self.moves["normalwave"]
+        hits = [hit for stage in move["stages"] for hit in stage.get("hits", [])]
+        self.assertEqual(len(hits), 1)
+        self.assertEqual(hits[0]["object"], "passiveobject/character/swordman/normalwave.obj")
+        for stage in move["stages"]:
+            for fx in stage.get("fx", []):
+                self.assertNotIn("upperslash", self.runtime["assets"]["effect_anims"][fx["key"]])
 
     def test_named_passives_and_morph_buffs_are_present(self):
         for skill_id in [
@@ -74,10 +89,14 @@ class SkillRuntimeTest(unittest.TestCase):
 
     def test_runtime_assets_are_baked(self):
         manifest = json.loads(COMBAT.read_text(encoding="utf-8"))
+        base = json.loads((ROOT / "game_dnf/assets_local/manifest.json").read_text(encoding="utf-8"))
+        player_clips = set(manifest["player_clips"]) | {
+            key.removeprefix("player/") for key in base["clips"] if key.startswith("player/")
+        }
         for key in self.runtime["assets"]["effect_anims"]:
             self.assertIn(key, manifest["effects"], key)
         for key in self.runtime["assets"]["player_anims"]:
-            self.assertIn(key, manifest["player_clips"], key)
+            self.assertIn(key, player_clips, key)
         object_paths = {entry.get("object") for entry in manifest["objects"].values()}
         for path in self.runtime["assets"]["objects"].values():
             self.assertIn(path, object_paths, path)

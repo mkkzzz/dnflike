@@ -5,9 +5,9 @@ The source of truth is:
   - game_dnf/assets_local/content/combat_content.json (SKL/ANI/ATK/OBJ/PTL)
   - explicit skill engine adapters in this file
 
-The generated file contains every unique SP-tree node. Active skills receive a
-source-backed move profile; passives receive declarative modifiers and engine
-hooks. No generated node is left as display-only.
+The generated file contains every unique SP-tree node. Resource references and
+numeric fields are mixed with incomplete engine adapters and inferred mappings.
+Catalog coverage is NOT evidence of original behaviour or presentation fidelity.
 """
 from __future__ import annotations
 
@@ -147,7 +147,6 @@ BUFF_SKILLS = {
     "jumppowerup": "jump_power_up",
     "magicalattackup": "magical_memory",
     "superarmoroncast": "super_armor_cast",
-    "backstep": "backstep_utility",
     "quickstanding": "quick_standing",
     "flowmind": "flowmind",
     "flowmindpowerup": "flowmind_powerup",
@@ -489,12 +488,6 @@ BUFF_EFFECTS = {
         "stacking": "refresh",
         "max_stacks": 1,
         "super_armor": True,
-    },
-    "backstep_utility": {
-        "name": "后跳",
-        "duration_ms": 1,
-        "stacking": "refresh",
-        "max_stacks": 1,
     },
     "quick_standing": {
         "name": "受身蹲伏",
@@ -923,6 +916,11 @@ def build_move(
     move_id = local_id(key)
     stages: list[dict] = []
     statuses = HIT_STATUS.get(key, [])
+    if key == "backstep":
+        # SKL describes a backward hop. Dispatch to the existing movement state;
+        # a summon animation plus a one-millisecond effect cannot implement it.
+        return {"skill": str(skill["path"]), "name": str(skill["name"]),
+                "movement": "backstep", "stages": [{"ani": "jump", "atk": "", "hits": []}]}
     if key in BUFF_SKILLS:
         stages.append({"ani": CAST_ANIM, "atk": "", "hits": []})
         effect_path = pick_effect(key, effect_paths, skill_key=key)
@@ -982,7 +980,10 @@ def build_move(
                 statuses=statuses,
             )
         )
-    if stages and not any(stage.get("hits") for stage in stages) and key not in BUFF_SKILLS:
+    if stages and not any(stage.get("hits") for stage in stages) and key not in BUFF_SKILLS and not (
+        key in CAST_OBJECTS and CAST_OBJECTS[key][0] in SAFE_OBJECTS
+        or DIRECT_OBJECTS.get(key) and DIRECT_OBJECTS[key][0] in SAFE_OBJECTS
+    ):
         generic_record = records.get(GENERIC_HIT_EFFECT, {})
         if generic_record:
             duration = max(200.0, duration_ms(generic_record))
@@ -1525,6 +1526,7 @@ def main() -> int:
             "pack_sha256": hashlib.sha256(args.pack.read_bytes()).hexdigest(),
             "asset_version": pack.get("asset_version", ""),
             "builder": "tools/build_dnf_skill_runtime.py",
+            "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
         },
         "skill_count": len(skills),
         "tree_skill_count": len(tree_ids),

@@ -104,6 +104,7 @@
    "illusionslash3": "character/swordman/animation/illusionslash3.ani",
    "illusionslash4": "character/swordman/animation/illusionslash4.ani",
    "illusionslashfinal": "character/swordman/animation/illusionslashfinal.ani",
+   "jump": "character/swordman/animation/jump.ani",
    "jumpattackmultislash1": "character/swordman/animation/jumpattackmultislash1.ani",
    "jumpattackmultislash2": "character/swordman/animation/jumpattackmultislash2.ani",
    "kallafinish1": "character/swordman/animation/kallafinish1.ani",
@@ -158,12 +159,6 @@
    "name": "自动格挡",
    "stacking": "refresh",
    "super_armor": true
-  },
-  "backstep_utility": {
-   "duration_ms": 1,
-   "max_stacks": 1,
-   "name": "后跳",
-   "stacking": "refresh"
   },
   "bremen_aura": {
    "aura": {
@@ -723,12 +718,12 @@
    ]
   },
   "backstep": {
-   "effect_id": "backstep_utility",
+   "movement": "backstep",
    "name": "后跳",
    "skill": "skill/swordman/backstep.skl",
    "stages": [
     {
-     "ani": "summon2",
+     "ani": "jump",
      "atk": "",
      "hits": []
     }
@@ -819,23 +814,7 @@
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
      "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      },
       {
        "at": 280,
        "effects": [],
@@ -855,23 +834,7 @@
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
      "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      },
       {
        "at": 280,
        "effects": [],
@@ -1363,23 +1326,7 @@
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
      "hits": [
-      {
-       "atk": "passiveobject/character/swordman/attackinfo/epidemicrasa.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      },
       {
        "at": 360,
        "effects": [],
@@ -1399,28 +1346,7 @@
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
      "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [
-        {
-         "chance": 0.25,
-         "id": "burn"
-        }
-       ],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      },
       {
        "at": 420,
        "effects": [
@@ -1445,28 +1371,7 @@
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
      "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [
-        {
-         "chance": 0.25,
-         "id": "burn"
-        }
-       ],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      },
       {
        "at": 420,
        "effects": [
@@ -1948,23 +1853,7 @@
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
      "hits": [
-      {
-       "atk": "character/swordman/attackinfo/grabblastblood.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      },
       {
        "at": 320,
        "effects": [],
@@ -1984,23 +1873,7 @@
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
      "hits": [
-      {
-       "atk": "character/swordman/attackinfo/grabblastblood.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      },
       {
        "at": 320,
        "effects": [],
@@ -2020,23 +1893,7 @@
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
      "hits": [
-      {
-       "atk": "passiveobject/character/swordman/attackinfo/grandwave.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      },
       {
        "at": 420,
        "effects": [],
@@ -2056,23 +1913,7 @@
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
      "hits": [
-      {
-       "atk": "passiveobject/character/swordman/attackinfo/grandwave.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      },
       {
        "at": 420,
        "effects": [],
@@ -2099,23 +1940,7 @@
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
      "hits": [
-      {
-       "atk": "passiveobject/character/swordman/attackinfo/grandwave.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      },
       {
        "at": 420,
        "effects": [],
@@ -3094,23 +2919,7 @@
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
      "hits": [
-      {
-       "atk": "passiveobject/character/swordman/attackinfo/normalwave.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      },
       {
        "at": 340,
        "effects": [],
@@ -5141,7 +4950,7 @@
    "path": "skill/swordman/backstep.skl",
    "source_id": 169,
    "source_path": "skill/swordman/backstep.skl",
-   "speed": "cast",
+   "speed": "attack",
    "tree_visible": false
   },
   "backstepcutter": {
@@ -8657,6 +8466,7 @@
   "asset_version": "dnf-native-assets-v1-20261022",
   "builder": "tools/build_dnf_skill_runtime.py",
   "catalog": "game_dnf/data/skill_catalog.json",
+  "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
   "pack": "game_dnf/assets_local/content/combat_content.json",
   "pack_sha256": "e553acac5662784c36d458d04c71a682f9e1b794c3f2a93cc79c84a0f18f40de"
  },

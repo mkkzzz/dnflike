@@ -21,3 +21,9 @@ jobs:
         run: python3 tools/test_check_dnf_performance.py
       - name: Reject runtime catalog copies and skill tree rebuilds
         run: python3 tools/check_dnf_performance.py
+      - name: Check skill data regressions (not original fidelity sign-off)
+        run: python3 tools/test_dnf_skill_runtime.py
+      - name: Preserve archive CRC checks when decoding the client directory
+        run: python3 tools/test_dnf_pvf_archive.py
+      - name: Inventory skill binding evidence gaps
+        run: python3 tools/audit_dnf_skill_fidelity.py

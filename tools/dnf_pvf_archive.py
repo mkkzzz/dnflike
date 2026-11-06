@@ -2,7 +2,9 @@
 
 Algorithm matches the already used config_library.py extraction: XOR then ROR6,
 directory CRC seeded by file count, payload CRC seeded by filename hash. Refuse
-nonstandard client headers and CRC mismatches instead of guessing or patching.
+nonstandard client headers and CRC mismatches. An explicit option decodes the
+identified ImagePacks2 client directory transform in memory, retaining ALL CRC
+checks and leaving the source file unchanged.
 """
 from __future__ import annotations
 
@@ -32,8 +34,14 @@ def decrypt(data: bytes, key: int) -> bytes:
     return result.tobytes()
 
 
+# Evidence: 2026-11-06 client/backup audit. Restricted to this exact archive;
+# unknown layouts must fail instead of using a guessed deobfuscation fallback.
+CLIENT_IMAGE_SHA = '3893d5d1506bcc332ca4b6438f6f884d128481641483bee9478cad8d0221fe01'
+CLIENT_DIRECTORY_MASK = bytes.fromhex('e351a3418a09d5c468cf381b4c657f462bf281425d5267f4')
+
+
 class Archive:
-    def __init__(self, path: Path):
+    def __init__(self, path: Path, *, allow_known_client_transform=False):
         self.path = path.resolve()
         self.data = self.path.read_bytes()
         if len(self.data) < 20:
@@ -48,6 +56,18 @@ class Archive:
         if self.base > len(self.data) or count > length // 20:
             raise ValueError('PVF directory outside archive')
         tree = decrypt(self.data[20 + guid:self.base], key)
+        self.directory_transform = ''
+        if zlib.crc32(tree, count) & 0xffffffff != key and allow_known_client_transform:
+            if hashlib.sha256(self.data).hexdigest() == CLIENT_IMAGE_SHA:
+                decoded = bytearray(tree)
+                # Absolute file offsets 4096 + n*2048, 1024 blocks, 24 bytes
+                # each; XOR mask shown here is after the normal ROR6 decrypt.
+                for block in range(1024):
+                    start = 4096 - (20 + guid) + block * 2048
+                    for index, value in enumerate(CLIENT_DIRECTORY_MASK):
+                        decoded[start + index] ^= value
+                tree = bytes(decoded)
+                self.directory_transform = 'known_imagepacks2_xor24_stride2048_blocks1024'
         if zlib.crc32(tree, count) & 0xffffffff != key:
             raise ValueError('Directory CRC mismatch')
         self.entries = {}

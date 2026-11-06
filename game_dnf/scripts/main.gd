@@ -547,8 +547,11 @@ func action_def() -> Dictionary:
 
 func action_duration(action: String) -> float:
 	var m := move_def(action)
-	if float(m.get("cast_ms",0)) > 0:return maxf(float(m["cast_ms"]),1.0)
-	return float(m.get("duration",0))
+	var stage := action_def() if String(player.get("action","")) == action else m
+	# SKL casting time is not the lifetime of an ANI stage. Using it alone cut
+	# normalwave off at 200 ms before its object cue at 340 ms. Full cast/hold
+	# state transitions still need per-skill evidence; never truncate the clip.
+	return maxf(float(stage.get("duration",0)),float(m.get("cast_ms",0)))
 
 func buffering(code: int) -> void:
 	if code in [KEY_C,KEY_SPACE] and held.get(KEY_DOWN,false) and backstep_allowed():player["queued_backstep"] = true
@@ -556,7 +559,8 @@ func buffering(code: int) -> void:
 	elif code == KEY_Z:player["queued_skill"] = "upper"
 	elif skill_slot_index(code) >= 0:
 		var id := String(skill_slots[skill_slot_index(code)])
-		if id != "":player["queued_skill"] = id
+		if id == "backstep" and backstep_allowed():player["queued_backstep"] = true
+		elif id != "":player["queued_skill"] = id
 	elif code in [KEY_C,KEY_SPACE] and String(player["action"]) == "upper":player["queued_jump"] = true
 
 func buffer_recovery_input(code: int) -> void:
@@ -697,7 +701,7 @@ func step_player(ms: float, move: Vector2) -> void:
 	player["motion_clock"] = float(player["motion_clock"])+ms
 	if bool(player["queued_backstep"]):
 		player["queued_backstep"] = false
-		if backstep_allowed():start_backstep()
+		if backstep_allowed():start_action("backstep",true)
 	var state: String = player["state"]
 	var grounded := float(player["z"])==0 and float(player["vz"])<=0
 	if state in ["hurt","air","down"]:
@@ -709,8 +713,7 @@ func step_player(ms: float, move: Vector2) -> void:
 	for code: int in requests:
 		if code in [KEY_C,KEY_SPACE]:
 			if held.get(KEY_DOWN,false) and backstep_allowed():
-				start_backstep()
-				state = "backstep"
+				if start_action("backstep",true):state = "backstep"
 			elif state == "action":buffering(code)
 			elif state in ["idle","move","guard"] and grounded:
 				player["vz"] = float(numeric_player.values["jump_power"]) if numeric_player != null else float(table.player["jump_power"])
@@ -732,9 +735,10 @@ func step_player(ms: float, move: Vector2) -> void:
 			if String(player["state"]) == "action":buffering(code)
 			else:start_action("upper")
 		elif skill_slot_index(code) >= 0:
-			if String(player["state"]) == "action":buffering(code)
+			var id := String(skill_slots[skill_slot_index(code)])
+			if id == "backstep" and backstep_allowed():start_action(id,true)
+			elif String(player["state"]) == "action":buffering(code)
 			else:
-				var id := String(skill_slots[skill_slot_index(code)])
 				if id != "":start_action(id)
 	requests.clear()
 	state = player["state"]
@@ -912,7 +916,10 @@ func start_action(name: String, cancel := false) -> bool:
 	if required_effect != "" and (numeric_player == null or not numeric_player.effects.active.has(required_effect)):return reject_action(name,"effect")
 	var airborne := float(player["z"])>0 or float(player["vz"])>0
 	if airborne != bool(m.get("air",false)):return reject_action(name,"state")
-	if not cancel and String(player["state"]) in ["hurt","air","down","dead","backstep","action"]:return reject_action(name,"state")
+	var backward_hop := String(m.get("movement","")) == "backstep"
+	if backward_hop:
+		if not backstep_allowed():return reject_action(name,"state")
+	elif not cancel and String(player["state"]) in ["hurt","air","down","dead","backstep","action"]:return reject_action(name,"state")
 	if float(player["cooldowns"].get(name,0))>0:return reject_action(name,"cooldown")
 	var hp_cost := 0.0
 	if m.has("hp_cost_row"):
@@ -930,6 +937,9 @@ func start_action(name: String, cancel := false) -> bool:
 		player["mp"] = float(player["mp"])-mp_cost
 	if hp_cost > 0:player["hp"] = float(player["hp"])-hp_cost
 	if float(m["cool_ms"]) > 0:player["cooldowns"][name] = float(m["cool_ms"])/1000.0*(float(numeric_player.values["cooldown_rate"]) if numeric_player != null else 1.0)*skill_cooldown_multiplier(name)
+	if backward_hop:
+		start_backstep()
+		return true
 	end_action_fx()
 	if name == "air_attack":player["air_attack_used"] = true
 	player["state"] = "action"

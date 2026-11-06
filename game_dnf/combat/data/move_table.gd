@@ -224,15 +224,19 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		"air":bool(spec.get("air",false)),"next":String(spec.get("next","")),"swing":int(spec.get("swing",-1)),
 		"cast_fx":String(spec.get("cast_fx","")),"aura_fx":String(spec.get("aura_fx","")),
 		"effect_id":String(spec.get("effect_id","")),"requires_effect":String(spec.get("requires_effect","")),
+		"movement":String(spec.get("movement","")),
 		"super_armor":bool(spec.get("super_armor",false)),"invuln_ms":float(spec.get("invuln_ms",0))}
 	if spec.has("stages"):
 		move["stages"] = []
 		for stage: Dictionary in spec["stages"]:move["stages"].append(_build_stage(stage,skill))
-		var dash: Dictionary = spec.get("dash",{})
-		var stat: Array = skill.get("static",[])
-		var vi := int(dash.get("speed_static",0))
-		var ai := int(dash.get("accel_static",1))
-		move["dash"] = {"speed":float(stat[vi]) if stat.size() > vi else 0.0,"accel":float(stat[ai]) if stat.size() > ai else 0.0}
+		# Static SKL columns are skill-specific. They are movement parameters only
+		# when an explicit adapter declares their meaning.
+		if spec.has("dash"):
+			var dash: Dictionary = spec["dash"]
+			var stat: Array = skill.get("static",[])
+			var vi := int(dash.get("speed_static",0))
+			var ai := int(dash.get("accel_static",1))
+			move["dash"] = {"speed":float(stat[vi]) if stat.size() > vi else 0.0,"accel":float(stat[ai]) if stat.size() > ai else 0.0}
 		move.merge(move["stages"][0],false)
 	else:
 		move.merge(_build_stage(spec,skill),false)
@@ -248,6 +252,11 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 	var row: Array = skill.get("level_row",[])
 	for h: Dictionary in spec.get("hits",[]):
 		var atk_path := String(h.get("atk",default_atk))
+		var obj: Dictionary = {}
+		if h.has("object"):
+			obj = object(String(h["object"]))
+			if obj.is_empty():continue
+			if atk_path == "":atk_path = String(obj["atk_path"])
 		var decoded := atk(atk_path)
 		var percent := 100.0+float(decoded.get("damage_bonus",0))
 		if h.has("percent_col") and row.size() > int(h["percent_col"]):percent = float(row[int(h["percent_col"])])
@@ -276,22 +285,18 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 			hit["source"] = "derived:"+String(h["derived"])
 			hit["segments"] = [{"start":float(w[0]),"end":float(w[1]),"frames":[{"start":float(w[0]),"end":float(w[1]),"boxes":[box]}]}]
 		elif h.has("object"):
-			var obj := object(String(h["object"]))
-			if obj.is_empty():continue
 			hit["kind"] = "object"
 			hit["object"] = String(h["object"])
 			hit["at"] = float(h.get("at",0))
 			hit["active_ms"] = float(h.get("active_ms",-1))
+			hit["speed"] = float(h.get("speed",0))
+			hit["life_ms"] = float(h.get("life_ms",-1))
 			if h.has("percent_col") and row.size() > int(h["percent_col"]):
 				hit["percent"] = float(row[int(h["percent_col"])])
 			elif h.has("percent"):
 				hit["percent"] = float(h["percent"])
 			var off: Array = h.get("offset",[0,0,0])
 			hit["offset"] = Vector3(float(off[0]),float(off[1]),float(off[2]))
-			if atk_path == "":
-				hit["atk"] = obj["atk"]
-				hit["atk_path"] = obj["atk_path"]
-				if not h.has("percent_col"):hit["percent"] = 100.0+float(obj["atk"].get("damage_bonus",0))
 		if hit.get("kind","") == "boxes" and hit["segments"].is_empty():
 			problems.append("no attack boxes for "+ani+" ("+String(hit["source"])+")")
 		hits.append(hit)

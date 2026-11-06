@@ -50,11 +50,17 @@ func tap(code: int) -> void:
 
 func run() -> void:
 	await ticks(3)
+	if "--skill-fidelity-only" in OS.get_cmdline_user_args():
+		await run_skill_fidelity()
+		print("[SKILL_FIDELITY] COMPLETE checks=%d failures=%d" % [checks,failures])
+		get_tree().quit(0 if failures == 0 else 1)
+		return
 	check_core()
 	check_content()
 	check_skill_runtime()
 	await run_combat()
 	await run_skill_system()
+	await run_skill_fidelity()
 	await run_kernel()
 	await run_rooms()
 	await run_session()
@@ -134,10 +140,10 @@ func check_skill_runtime() -> void:
 		var built: Dictionary = game.table.moves.get(id,{})
 		var hit_count: int = built.get("hits",[]).size()
 		for stage: Dictionary in built.get("stages",[]):hit_count += stage.get("hits",[]).size()
-		if hit_count == 0 and String(built.get("effect_id","")) == "":empty_moves.append(id)
+		if hit_count == 0 and String(built.get("effect_id","")) == "" and String(built.get("movement","")) == "":empty_moves.append(id)
 	for id: String in empty_moves:
 		check(false,"active runtime move lost its last hit or timed effect: "+id)
-	check(empty_moves.is_empty(),"all active runtime moves retain a hit or timed effect after resource validation")
+	check(empty_moves.is_empty(),"active runtime moves retain a hit, effect or movement entry; this does not certify fidelity")
 	var sample_profile := {"level":40,"growtype":"weaponmaster","equipment":{},"gear":{},"skills":{"blademastery":5},"stat_modifiers":[]}
 	var mastered: Dictionary = Numbers.profile_stats(sample_profile)["values"]
 	var plain: Dictionary = Numbers.profile_stats({"level":40,"growtype":"weaponmaster","equipment":{},"gear":{},"skills":{},"stat_modifiers":[]})["values"]
@@ -450,7 +456,58 @@ func run_combat() -> void:
 	key(KEY_X,false)
 	check(api.p("action")=="air_attack","same-tick jump and attack selects airborne source pose")
 
-## New source-backed skill nodes and slot-driven input, without borrowing the old fixed A/S/D/F table.
+## Behaviour regressions for confirmed adapter defects; these do not certify original fidelity.
+func run_skill_fidelity() -> void:
+	for code in [KEY_A,KEY_D,KEY_Y]:
+		api.restart()
+		api.set_god(true)
+		api.spawn_dummy(Vector2(550,250))
+		var slots: Array = ["","","","","","","","","","","",""]
+		for i in slots.size():
+			if api.skill_slot_code(i) == code:slots[i] = "backstep"
+		api.set_skill_slots(slots)
+		var before := Vector2(api.p("pos"))
+		await tap(code)
+		await ticks(3)
+		check(api.p("state") == "backstep" and float(api.p("z")) > 0 and Vector2(api.p("pos")).x < before.x,"bound backstep hops backward on %s" % OS.get_keycode_string(code))
+		check(api.view_pose() == "jump" and api.p("action") == "","bound backstep uses the jump pose instead of a cast buff")
+		await ticks(40)
+		check(api.p("state") == "idle","bound backstep returns to ground")
+	api.restart()
+	api.set_god(true)
+	api.spawn_dummy(Vector2(550,250))
+	api.set_skill_slots(["","","backstep","","",""])
+	api.start_action("attack1")
+	await ticks(4)
+	await tap(KEY_D)
+	await ticks(2)
+	check(api.p("state") == "backstep","bound backstep shares the command cancel gate")
+	api.restart()
+	api.set_p("mp",0.0)
+	check(not api.start_action("backstep") and api.p("state") == "idle","insufficient MP rejects backstep without changing state")
+	api.set_p("mp",50.0)
+	api.set_p("z",20.0)
+	check(not api.start_action("backstep") and float(api.p("mp")) == 50.0,"airborne backstep is rejected without consuming MP")
+	api.set_p("z",0.0)
+	api.set_p("state","down")
+	check(not api.start_action("backstep",true),"cancel flag cannot force backstep while down")
+	api.restart()
+	api.set_god(true)
+	var enemy: Dictionary = api.spawn_dummy(Vector2(170,250))
+	api.set_p("pos",Vector2(125,250))
+	api.set_p("mp",500.0)
+	check(api.start_action("normalwave"),"normal wave starts")
+	check(not api.move("normalwave").has("dash"),"normal wave static columns do not implicitly become a dash")
+	var projectile: Dictionary = api.move("normalwave")["stages"][0]["hits"][0]
+	check(projectile.get("damage_type") == "magical","normal wave damage type comes from its object ATK")
+	check(float(projectile.get("speed",0)) > 0 and float(projectile.get("life_ms",0)) > 0,"projectile movement and lifetime survive compilation")
+	await ticks(8)
+	check(float(api.e(enemy,"hp")) == 5000.0,"normal wave does not borrow an early upper-slash hit")
+	await ticks(35)
+	check(Vector2(api.p("pos")).is_equal_approx(Vector2(125,250)),"casting normal wave does not slide the caster")
+	check(float(api.e(enemy,"hp")) < 5000.0,"normal wave still deals damage through its projectile")
+
+## New skill nodes and slot-driven input, without borrowing the old fixed A/S/D/F table.
 func run_skill_system() -> void:
 	api.restart()
 	api.set_skill_slots(["hardattack","moonlight","charge_crash","","",""])
