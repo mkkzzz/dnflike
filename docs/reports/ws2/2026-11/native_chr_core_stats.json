@@ -1,0 +1,10284 @@
+{
+ "schema": "dnf_chr_core_stats/1",
+ "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
+ "input_source": {
+  "input_sha256": "8748e19abf6155ca5a20d13244eaca0b9442c3d7569e8e5002bddffeeb9366ac",
+  "embedded": true,
+  "resource": "10/EXERESX/0",
+  "resource_offset": 734740
+ },
+ "tools_sha256": {
+  "audit_dnf_chr_core_stats.py": "9a157d24572e9ad89be9fbad79d8f3b0ffb3b0ea85a8c191439862e12809893b",
+  "audit_dnf_chr_writeback.py": "2ace9ec672ab0908b50a91aeb12f3b1f2f80c9532e94c54c3041fc2220b91052",
+  "audit_dnf_chr_numbers.py": "43aa49dbdd9aebfa9989dac02f492a4d60da9368a7daaa53abd3779df80ceb26",
+  "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a",
+  "audit_dnf_firewave.py": "3377abdf1f6b5a76908a4cd14652fc68fe28d56314e49c6ee65933bfbd792ddc",
+  "audit_dnf_ice_shatter.py": "b4f90d1797fd487af50a6e39716c77cc9e889b3e5b5c0b1c12864d088f29462c",
+  "audit_dnf_ice_particle_bindings.py": "660048b05498ea7dd11add2d7f3654083d99faafa8fc28b86ff198292fcdeed1",
+  "audit_dnf_native_strings.py": "60b30f2e51e5a744b106d8df955f5a7acbd7d4341ba51f52fd7a2941a5d29c6f",
+  "audit_dnf_particle_axis.py": "59b463dcff6537cc89c597bcf2bb5f1f0a336eb25a67b09da4c228d524b1af8e"
+ },
+ "previous_evidence_sha256": "dbe088812835fa2758fc086628567d497a831659cfd626fd60ac182b00856feb",
+ "cases": [
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 0,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     0
+    ],
+    [
+     "0x90c",
+     0
+    ],
+    [
+     "0x924",
+     0
+    ],
+    [
+     "0x93c",
+     0
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    0
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 1,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     0
+    ],
+    [
+     "0x90c",
+     0
+    ],
+    [
+     "0x924",
+     0
+    ],
+    [
+     "0x93c",
+     0
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    1
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 50,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     3
+    ],
+    [
+     "0x90c",
+     3
+    ],
+    [
+     "0x924",
+     2
+    ],
+    [
+     "0x93c",
+     2
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    50
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 100,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 474,
+   "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     10
+    ],
+    [
+     "0x90c",
+     10
+    ],
+    [
+     "0x924",
+     6
+    ],
+    [
+     "0x93c",
+     6
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": -21,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     4294967295
+    ],
+    [
+     "0x90c",
+     4294967295
+    ],
+    [
+     "0x924",
+     0
+    ],
+    [
+     "0x93c",
+     0
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    -21
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 2147483647,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     2147483
+    ],
+    [
+     "0x90c",
+     2147483
+    ],
+    [
+     "0x924",
+     2147483
+    ],
+    [
+     "0x93c",
+     2147483
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    2147483647
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": true,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "mode_id"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 460,
+   "trace_sha256": "db524cc178d2a497f6d58b4584d77aa82e457794762b13dd29e5297922017737"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": true,
+    "mode_id": 9,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     10
+    ],
+    [
+     "0x90c",
+     10
+    ],
+    [
+     "0x924",
+     6
+    ],
+    [
+     "0x93c",
+     6
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "mode_id"
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 559,
+   "trace_sha256": "f3c4fa044d46ae6ee2c29bdbe2d4d2a25c056b81e4bbcf63b3e3905f4fc9c984"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": true,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 461,
+   "trace_sha256": "228d9d96921511e148f40f30a0ac15b483f4ab4dfd135a3089faf66139134554"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": true,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 467,
+   "trace_sha256": "514b3dd387db85095dabe4fa518a095c471c47f4a43c8b0545242b276f87c7af"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": true,
+    "mode_id": 9,
+    "flag10": true,
+    "flag13": true,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "mode_id"
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 466,
+   "trace_sha256": "70395585a75a88c4925571c1853f87d45c04804ea478a26aab06bf7ad10eef0c"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 100,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 0,
+    "factors": [
+     2.0,
+     3.0
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 464,
+   "trace_sha256": "ec9f154a778345a6cd7cbf6e25380d2375c89ded22a3489a6ff6251a6f7da7e7"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 100,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": true,
+    "scalar_key": 0,
+    "factors": [
+     2.0,
+     3.0
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 464,
+   "trace_sha256": "ec9f154a778345a6cd7cbf6e25380d2375c89ded22a3489a6ff6251a6f7da7e7"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 100,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": true,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     225
+    ],
+    [
+     "0x8d0",
+     105
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scale",
+     2,
+     7
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scale",
+     12,
+     7
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 494,
+   "trace_sha256": "4ba4988002ac23f8ec2d3f19882ad2a5a1d45e114e44fe5e5a9c3a1bc57331a8"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 100,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": true,
+    "scalar_key": 7,
+    "factors": [
+     -0.25,
+     0.0
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     4294967251
+    ],
+    [
+     "0x8d0",
+     0
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scale",
+     2,
+     7
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scale",
+     12,
+     7
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 494,
+   "trace_sha256": "4ba4988002ac23f8ec2d3f19882ad2a5a1d45e114e44fe5e5a9c3a1bc57331a8"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 100,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": true,
+    "scalar_key": 7,
+    "factors": [
+     1.33333337,
+     0.99999994
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     240
+    ],
+    [
+     "0x8d0",
+     139
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scale",
+     2,
+     7
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scale",
+     12,
+     7
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 494,
+   "trace_sha256": "4ba4988002ac23f8ec2d3f19882ad2a5a1d45e114e44fe5e5a9c3a1bc57331a8"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 3,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     10
+    ],
+    [
+     "0x90c",
+     10
+    ],
+    [
+     "0x924",
+     6
+    ],
+    [
+     "0x93c",
+     6
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": true,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     10
+    ],
+    [
+     "0x90c",
+     10
+    ],
+    [
+     "0x924",
+     6
+    ],
+    [
+     "0x93c",
+     6
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 559,
+   "trace_sha256": "a0708e16465d29821fe23b9a5b8e67e906892916ad9de991a7c0fb52b2454d25"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": true,
+    "kind": 3,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     10
+    ],
+    [
+     "0x90c",
+     10
+    ],
+    [
+     "0x924",
+     6
+    ],
+    [
+     "0x93c",
+     6
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "callback_bank0"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 572,
+   "trace_sha256": "4eb9fe4146200a73a00546372e39aa50ec52e2cd121580f86710710e2e881ef4"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": true,
+    "kind": 8,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     10
+    ],
+    [
+     "0x90c",
+     10
+    ],
+    [
+     "0x924",
+     6
+    ],
+    [
+     "0x93c",
+     6
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "callback_bank0"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 574,
+   "trace_sha256": "ea8ff01cc1a5a2a3bc53b165f913ce2ba86d1b74ee80b5db0b13c71407097689"
+  },
+  {
+   "fixture": {
+    "core": [
+     4294967287,
+     16777217,
+     65535,
+     32768,
+     9999,
+     -9999
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": false
+   },
+   "writes": [
+    [
+     "0x8b8",
+     0
+    ],
+    [
+     "0x8d0",
+     1677721
+    ],
+    [
+     "0x8f4",
+     8847
+    ],
+    [
+     "0x90c",
+     4423
+    ],
+    [
+     "0x924",
+     1349
+    ],
+    [
+     "0x93c",
+     4294965947
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 0,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     0
+    ],
+    [
+     "0x90c",
+     0
+    ],
+    [
+     "0x924",
+     0
+    ],
+    [
+     "0x93c",
+     0
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    0
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 1,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     0
+    ],
+    [
+     "0x90c",
+     0
+    ],
+    [
+     "0x924",
+     0
+    ],
+    [
+     "0x93c",
+     0
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    1
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 50,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     3
+    ],
+    [
+     "0x90c",
+     3
+    ],
+    [
+     "0x924",
+     2
+    ],
+    [
+     "0x93c",
+     2
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    50
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 100,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 474,
+   "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     10
+    ],
+    [
+     "0x90c",
+     10
+    ],
+    [
+     "0x924",
+     6
+    ],
+    [
+     "0x93c",
+     6
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": -21,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     4294967295
+    ],
+    [
+     "0x90c",
+     4294967295
+    ],
+    [
+     "0x924",
+     0
+    ],
+    [
+     "0x93c",
+     0
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    -21
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 2147483647,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     2147483
+    ],
+    [
+     "0x90c",
+     2147483
+    ],
+    [
+     "0x924",
+     2147483
+    ],
+    [
+     "0x93c",
+     2147483
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    2147483647
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": true,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "mode_id"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 460,
+   "trace_sha256": "db524cc178d2a497f6d58b4584d77aa82e457794762b13dd29e5297922017737"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": true,
+    "mode_id": 9,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     10
+    ],
+    [
+     "0x90c",
+     10
+    ],
+    [
+     "0x924",
+     6
+    ],
+    [
+     "0x93c",
+     6
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "mode_id"
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 559,
+   "trace_sha256": "f3c4fa044d46ae6ee2c29bdbe2d4d2a25c056b81e4bbcf63b3e3905f4fc9c984"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": true,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 461,
+   "trace_sha256": "228d9d96921511e148f40f30a0ac15b483f4ab4dfd135a3089faf66139134554"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": true,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 467,
+   "trace_sha256": "514b3dd387db85095dabe4fa518a095c471c47f4a43c8b0545242b276f87c7af"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": true,
+    "mode_id": 9,
+    "flag10": true,
+    "flag13": true,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "mode_id"
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 466,
+   "trace_sha256": "70395585a75a88c4925571c1853f87d45c04804ea478a26aab06bf7ad10eef0c"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 100,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 0,
+    "factors": [
+     2.0,
+     3.0
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 464,
+   "trace_sha256": "ec9f154a778345a6cd7cbf6e25380d2375c89ded22a3489a6ff6251a6f7da7e7"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 100,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": true,
+    "scalar_key": 0,
+    "factors": [
+     2.0,
+     3.0
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 464,
+   "trace_sha256": "ec9f154a778345a6cd7cbf6e25380d2375c89ded22a3489a6ff6251a6f7da7e7"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 100,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": true,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     225
+    ],
+    [
+     "0x8d0",
+     105
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scale",
+     2,
+     7
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scale",
+     12,
+     7
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 494,
+   "trace_sha256": "4ba4988002ac23f8ec2d3f19882ad2a5a1d45e114e44fe5e5a9c3a1bc57331a8"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 100,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": true,
+    "scalar_key": 7,
+    "factors": [
+     -0.25,
+     0.0
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     4294967251
+    ],
+    [
+     "0x8d0",
+     0
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scale",
+     2,
+     7
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scale",
+     12,
+     7
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 494,
+   "trace_sha256": "4ba4988002ac23f8ec2d3f19882ad2a5a1d45e114e44fe5e5a9c3a1bc57331a8"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 100,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": true,
+    "scalar_key": 7,
+    "factors": [
+     1.33333337,
+     0.99999994
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     240
+    ],
+    [
+     "0x8d0",
+     139
+    ],
+    [
+     "0x8f4",
+     7
+    ],
+    [
+     "0x90c",
+     7
+    ],
+    [
+     "0x924",
+     4
+    ],
+    [
+     "0x93c",
+     4
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scale",
+     2,
+     7
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scale",
+     12,
+     7
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    100
+   ],
+   "bank_tail": {
+    "0xc": 99,
+    "0x18": 1076887552,
+    "0x24": 101,
+    "0x30": 1080033280
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 494,
+   "trace_sha256": "4ba4988002ac23f8ec2d3f19882ad2a5a1d45e114e44fe5e5a9c3a1bc57331a8"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 3,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     10
+    ],
+    [
+     "0x90c",
+     10
+    ],
+    [
+     "0x924",
+     6
+    ],
+    [
+     "0x93c",
+     6
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": true,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     10
+    ],
+    [
+     "0x90c",
+     10
+    ],
+    [
+     "0x924",
+     6
+    ],
+    [
+     "0x93c",
+     6
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 559,
+   "trace_sha256": "a0708e16465d29821fe23b9a5b8e67e906892916ad9de991a7c0fb52b2454d25"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": true,
+    "kind": 3,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     10
+    ],
+    [
+     "0x90c",
+     10
+    ],
+    [
+     "0x924",
+     6
+    ],
+    [
+     "0x93c",
+     6
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "callback_bank0"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 572,
+   "trace_sha256": "4eb9fe4146200a73a00546372e39aa50ec52e2cd121580f86710710e2e881ef4"
+  },
+  {
+   "fixture": {
+    "core": [
+     1800,
+     1400,
+     75,
+     75,
+     45,
+     45
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": true,
+    "kind": 8,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     180
+    ],
+    [
+     "0x8d0",
+     140
+    ],
+    [
+     "0x8f4",
+     10
+    ],
+    [
+     "0x90c",
+     10
+    ],
+    [
+     "0x924",
+     6
+    ],
+    [
+     "0x93c",
+     6
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "callback_bank0"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 574,
+   "trace_sha256": "ea8ff01cc1a5a2a3bc53b165f913ce2ba86d1b74ee80b5db0b13c71407097689"
+  },
+  {
+   "fixture": {
+    "core": [
+     4294967287,
+     16777217,
+     65535,
+     32768,
+     9999,
+     -9999
+    ],
+    "rate": 135,
+    "query": false,
+    "mode_id": 0,
+    "flag10": false,
+    "flag13": false,
+    "scalar_present": false,
+    "scalar_key": 7,
+    "factors": [
+     1.25,
+     0.75
+    ],
+    "eligible": false,
+    "kind": 0,
+    "poison": true
+   },
+   "writes": [
+    [
+     "0x8b8",
+     0
+    ],
+    [
+     "0x8d0",
+     1677721
+    ],
+    [
+     "0x8f4",
+     8847
+    ],
+    [
+     "0x90c",
+     4423
+    ],
+    [
+     "0x924",
+     1349
+    ],
+    [
+     "0x93c",
+     4294965947
+    ],
+    [
+     "0x2328",
+     16777216
+    ],
+    [
+     "0x2334",
+     1068498944
+    ],
+    [
+     "0x2340",
+     4278190080
+    ],
+    [
+     "0x234c",
+     3221749760
+    ]
+   ],
+   "calls": [
+    [
+     "reset"
+    ],
+    [
+     "refresh",
+     1
+    ],
+    [
+     "query",
+     -1
+    ],
+    [
+     "flag",
+     10
+    ],
+    [
+     "flag",
+     13
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "scaler_lookup"
+    ],
+    [
+     "eligible"
+    ],
+    [
+     "refresh",
+     2
+    ]
+   ],
+   "rates": [
+    135
+   ],
+   "bank_tail": {
+    "0xc": 16777216,
+    "0x18": 1068498944,
+    "0x24": 4278190080,
+    "0x30": 3221749760
+   },
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048200
+   ],
+   "fp_depth": 0,
+   "temporary_count": 0,
+   "seh": 4294967295,
+   "stop": "0xdeadbeef",
+   "steps": 554,
+   "trace_sha256": "db436c1a911bd4ba7ed71a0722655193d5daaa667b7e5c1a9394835b44d94e47"
+  }
+ ],
+ "source_input_cases": [
+  {
+   "level": 1,
+   "job": 0,
+   "result": {
+    "fixture": {
+     "core": [
+      1800,
+      1400,
+      75,
+      75,
+      45,
+      45
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      180
+     ],
+     [
+      "0x8d0",
+      140
+     ],
+     [
+      "0x8f4",
+      7
+     ],
+     [
+      "0x90c",
+      7
+     ],
+     [
+      "0x924",
+      4
+     ],
+     [
+      "0x93c",
+      4
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 1,
+   "job": 1,
+   "result": {
+    "fixture": {
+     "core": [
+      1800,
+      1400,
+      75,
+      75,
+      45,
+      45
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      180
+     ],
+     [
+      "0x8d0",
+      140
+     ],
+     [
+      "0x8f4",
+      7
+     ],
+     [
+      "0x90c",
+      7
+     ],
+     [
+      "0x924",
+      4
+     ],
+     [
+      "0x93c",
+      4
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 1,
+   "job": 2,
+   "result": {
+    "fixture": {
+     "core": [
+      1800,
+      1400,
+      75,
+      75,
+      45,
+      45
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      180
+     ],
+     [
+      "0x8d0",
+      140
+     ],
+     [
+      "0x8f4",
+      7
+     ],
+     [
+      "0x90c",
+      7
+     ],
+     [
+      "0x924",
+      4
+     ],
+     [
+      "0x93c",
+      4
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 1,
+   "job": 3,
+   "result": {
+    "fixture": {
+     "core": [
+      1800,
+      1400,
+      75,
+      75,
+      45,
+      45
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      180
+     ],
+     [
+      "0x8d0",
+      140
+     ],
+     [
+      "0x8f4",
+      7
+     ],
+     [
+      "0x90c",
+      7
+     ],
+     [
+      "0x924",
+      4
+     ],
+     [
+      "0x93c",
+      4
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 1,
+   "job": 4,
+   "result": {
+    "fixture": {
+     "core": [
+      1800,
+      1400,
+      75,
+      75,
+      45,
+      45
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      180
+     ],
+     [
+      "0x8d0",
+      140
+     ],
+     [
+      "0x8f4",
+      7
+     ],
+     [
+      "0x90c",
+      7
+     ],
+     [
+      "0x924",
+      4
+     ],
+     [
+      "0x93c",
+      4
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 18,
+   "job": 0,
+   "result": {
+    "fixture": {
+     "core": [
+      9450,
+      5650,
+      891,
+      891,
+      759,
+      759
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      945
+     ],
+     [
+      "0x8d0",
+      565
+     ],
+     [
+      "0x8f4",
+      89
+     ],
+     [
+      "0x90c",
+      89
+     ],
+     [
+      "0x924",
+      75
+     ],
+     [
+      "0x93c",
+      75
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 18,
+   "job": 1,
+   "result": {
+    "fixture": {
+     "core": [
+      9450,
+      5650,
+      891,
+      891,
+      759,
+      759
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      945
+     ],
+     [
+      "0x8d0",
+      565
+     ],
+     [
+      "0x8f4",
+      89
+     ],
+     [
+      "0x90c",
+      89
+     ],
+     [
+      "0x924",
+      75
+     ],
+     [
+      "0x93c",
+      75
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 18,
+   "job": 2,
+   "result": {
+    "fixture": {
+     "core": [
+      9450,
+      5650,
+      891,
+      891,
+      759,
+      759
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      945
+     ],
+     [
+      "0x8d0",
+      565
+     ],
+     [
+      "0x8f4",
+      89
+     ],
+     [
+      "0x90c",
+      89
+     ],
+     [
+      "0x924",
+      75
+     ],
+     [
+      "0x93c",
+      75
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 18,
+   "job": 3,
+   "result": {
+    "fixture": {
+     "core": [
+      9450,
+      5650,
+      891,
+      891,
+      759,
+      759
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      945
+     ],
+     [
+      "0x8d0",
+      565
+     ],
+     [
+      "0x8f4",
+      89
+     ],
+     [
+      "0x90c",
+      89
+     ],
+     [
+      "0x924",
+      75
+     ],
+     [
+      "0x93c",
+      75
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 18,
+   "job": 4,
+   "result": {
+    "fixture": {
+     "core": [
+      9450,
+      5650,
+      891,
+      891,
+      759,
+      759
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      945
+     ],
+     [
+      "0x8d0",
+      565
+     ],
+     [
+      "0x8f4",
+      89
+     ],
+     [
+      "0x90c",
+      89
+     ],
+     [
+      "0x924",
+      75
+     ],
+     [
+      "0x93c",
+      75
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 19,
+   "job": 0,
+   "result": {
+    "fixture": {
+     "core": [
+      9900,
+      5900,
+      939,
+      939,
+      801,
+      801
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      990
+     ],
+     [
+      "0x8d0",
+      590
+     ],
+     [
+      "0x8f4",
+      93
+     ],
+     [
+      "0x90c",
+      93
+     ],
+     [
+      "0x924",
+      80
+     ],
+     [
+      "0x93c",
+      80
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 19,
+   "job": 1,
+   "result": {
+    "fixture": {
+     "core": [
+      9950,
+      5850,
+      941,
+      941,
+      799,
+      799
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      995
+     ],
+     [
+      "0x8d0",
+      585
+     ],
+     [
+      "0x8f4",
+      94
+     ],
+     [
+      "0x90c",
+      94
+     ],
+     [
+      "0x924",
+      79
+     ],
+     [
+      "0x93c",
+      79
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 19,
+   "job": 2,
+   "result": {
+    "fixture": {
+     "core": [
+      9850,
+      5950,
+      926,
+      926,
+      814,
+      814
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      985
+     ],
+     [
+      "0x8d0",
+      595
+     ],
+     [
+      "0x8f4",
+      92
+     ],
+     [
+      "0x90c",
+      92
+     ],
+     [
+      "0x924",
+      81
+     ],
+     [
+      "0x93c",
+      81
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 19,
+   "job": 3,
+   "result": {
+    "fixture": {
+     "core": [
+      10000,
+      5800,
+      946,
+      946,
+      794,
+      794
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      1000
+     ],
+     [
+      "0x8d0",
+      580
+     ],
+     [
+      "0x8f4",
+      94
+     ],
+     [
+      "0x90c",
+      94
+     ],
+     [
+      "0x924",
+      79
+     ],
+     [
+      "0x93c",
+      79
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 19,
+   "job": 4,
+   "result": {
+    "fixture": {
+     "core": [
+      9900,
+      5900,
+      936,
+      936,
+      804,
+      804
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      990
+     ],
+     [
+      "0x8d0",
+      590
+     ],
+     [
+      "0x8f4",
+      93
+     ],
+     [
+      "0x90c",
+      93
+     ],
+     [
+      "0x924",
+      80
+     ],
+     [
+      "0x93c",
+      80
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 60,
+   "job": 0,
+   "result": {
+    "fixture": {
+     "core": [
+      28350,
+      16150,
+      2907,
+      2907,
+      2523,
+      2523
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      2835
+     ],
+     [
+      "0x8d0",
+      1615
+     ],
+     [
+      "0x8f4",
+      290
+     ],
+     [
+      "0x90c",
+      290
+     ],
+     [
+      "0x924",
+      252
+     ],
+     [
+      "0x93c",
+      252
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 60,
+   "job": 1,
+   "result": {
+    "fixture": {
+     "core": [
+      30450,
+      14050,
+      2991,
+      2991,
+      2439,
+      2439
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      3045
+     ],
+     [
+      "0x8d0",
+      1405
+     ],
+     [
+      "0x8f4",
+      299
+     ],
+     [
+      "0x90c",
+      299
+     ],
+     [
+      "0x924",
+      243
+     ],
+     [
+      "0x93c",
+      243
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 60,
+   "job": 2,
+   "result": {
+    "fixture": {
+     "core": [
+      26250,
+      18250,
+      2361,
+      2361,
+      3069,
+      3069
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      2625
+     ],
+     [
+      "0x8d0",
+      1825
+     ],
+     [
+      "0x8f4",
+      236
+     ],
+     [
+      "0x90c",
+      236
+     ],
+     [
+      "0x924",
+      306
+     ],
+     [
+      "0x93c",
+      306
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 60,
+   "job": 3,
+   "result": {
+    "fixture": {
+     "core": [
+      32550,
+      11950,
+      3201,
+      3201,
+      2229,
+      2229
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      3255
+     ],
+     [
+      "0x8d0",
+      1195
+     ],
+     [
+      "0x8f4",
+      320
+     ],
+     [
+      "0x90c",
+      320
+     ],
+     [
+      "0x924",
+      222
+     ],
+     [
+      "0x93c",
+      222
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 60,
+   "job": 4,
+   "result": {
+    "fixture": {
+     "core": [
+      28350,
+      16150,
+      2781,
+      2781,
+      2649,
+      2649
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": false
+    },
+    "writes": [
+     [
+      "0x8b8",
+      2835
+     ],
+     [
+      "0x8d0",
+      1615
+     ],
+     [
+      "0x8f4",
+      278
+     ],
+     [
+      "0x90c",
+      278
+     ],
+     [
+      "0x924",
+      264
+     ],
+     [
+      "0x93c",
+      264
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 1,
+   "job": 0,
+   "result": {
+    "fixture": {
+     "core": [
+      1800,
+      1400,
+      75,
+      75,
+      45,
+      45
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      180
+     ],
+     [
+      "0x8d0",
+      140
+     ],
+     [
+      "0x8f4",
+      7
+     ],
+     [
+      "0x90c",
+      7
+     ],
+     [
+      "0x924",
+      4
+     ],
+     [
+      "0x93c",
+      4
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 1,
+   "job": 1,
+   "result": {
+    "fixture": {
+     "core": [
+      1800,
+      1400,
+      75,
+      75,
+      45,
+      45
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      180
+     ],
+     [
+      "0x8d0",
+      140
+     ],
+     [
+      "0x8f4",
+      7
+     ],
+     [
+      "0x90c",
+      7
+     ],
+     [
+      "0x924",
+      4
+     ],
+     [
+      "0x93c",
+      4
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 1,
+   "job": 2,
+   "result": {
+    "fixture": {
+     "core": [
+      1800,
+      1400,
+      75,
+      75,
+      45,
+      45
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      180
+     ],
+     [
+      "0x8d0",
+      140
+     ],
+     [
+      "0x8f4",
+      7
+     ],
+     [
+      "0x90c",
+      7
+     ],
+     [
+      "0x924",
+      4
+     ],
+     [
+      "0x93c",
+      4
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 1,
+   "job": 3,
+   "result": {
+    "fixture": {
+     "core": [
+      1800,
+      1400,
+      75,
+      75,
+      45,
+      45
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      180
+     ],
+     [
+      "0x8d0",
+      140
+     ],
+     [
+      "0x8f4",
+      7
+     ],
+     [
+      "0x90c",
+      7
+     ],
+     [
+      "0x924",
+      4
+     ],
+     [
+      "0x93c",
+      4
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 1,
+   "job": 4,
+   "result": {
+    "fixture": {
+     "core": [
+      1800,
+      1400,
+      75,
+      75,
+      45,
+      45
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      180
+     ],
+     [
+      "0x8d0",
+      140
+     ],
+     [
+      "0x8f4",
+      7
+     ],
+     [
+      "0x90c",
+      7
+     ],
+     [
+      "0x924",
+      4
+     ],
+     [
+      "0x93c",
+      4
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 18,
+   "job": 0,
+   "result": {
+    "fixture": {
+     "core": [
+      9450,
+      5650,
+      891,
+      891,
+      759,
+      759
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      945
+     ],
+     [
+      "0x8d0",
+      565
+     ],
+     [
+      "0x8f4",
+      89
+     ],
+     [
+      "0x90c",
+      89
+     ],
+     [
+      "0x924",
+      75
+     ],
+     [
+      "0x93c",
+      75
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 18,
+   "job": 1,
+   "result": {
+    "fixture": {
+     "core": [
+      9450,
+      5650,
+      891,
+      891,
+      759,
+      759
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      945
+     ],
+     [
+      "0x8d0",
+      565
+     ],
+     [
+      "0x8f4",
+      89
+     ],
+     [
+      "0x90c",
+      89
+     ],
+     [
+      "0x924",
+      75
+     ],
+     [
+      "0x93c",
+      75
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 18,
+   "job": 2,
+   "result": {
+    "fixture": {
+     "core": [
+      9450,
+      5650,
+      891,
+      891,
+      759,
+      759
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      945
+     ],
+     [
+      "0x8d0",
+      565
+     ],
+     [
+      "0x8f4",
+      89
+     ],
+     [
+      "0x90c",
+      89
+     ],
+     [
+      "0x924",
+      75
+     ],
+     [
+      "0x93c",
+      75
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 18,
+   "job": 3,
+   "result": {
+    "fixture": {
+     "core": [
+      9450,
+      5650,
+      891,
+      891,
+      759,
+      759
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      945
+     ],
+     [
+      "0x8d0",
+      565
+     ],
+     [
+      "0x8f4",
+      89
+     ],
+     [
+      "0x90c",
+      89
+     ],
+     [
+      "0x924",
+      75
+     ],
+     [
+      "0x93c",
+      75
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 18,
+   "job": 4,
+   "result": {
+    "fixture": {
+     "core": [
+      9450,
+      5650,
+      891,
+      891,
+      759,
+      759
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      945
+     ],
+     [
+      "0x8d0",
+      565
+     ],
+     [
+      "0x8f4",
+      89
+     ],
+     [
+      "0x90c",
+      89
+     ],
+     [
+      "0x924",
+      75
+     ],
+     [
+      "0x93c",
+      75
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 19,
+   "job": 0,
+   "result": {
+    "fixture": {
+     "core": [
+      9900,
+      5900,
+      939,
+      939,
+      801,
+      801
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      990
+     ],
+     [
+      "0x8d0",
+      590
+     ],
+     [
+      "0x8f4",
+      93
+     ],
+     [
+      "0x90c",
+      93
+     ],
+     [
+      "0x924",
+      80
+     ],
+     [
+      "0x93c",
+      80
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 19,
+   "job": 1,
+   "result": {
+    "fixture": {
+     "core": [
+      9950,
+      5850,
+      941,
+      941,
+      799,
+      799
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      995
+     ],
+     [
+      "0x8d0",
+      585
+     ],
+     [
+      "0x8f4",
+      94
+     ],
+     [
+      "0x90c",
+      94
+     ],
+     [
+      "0x924",
+      79
+     ],
+     [
+      "0x93c",
+      79
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 19,
+   "job": 2,
+   "result": {
+    "fixture": {
+     "core": [
+      9850,
+      5950,
+      926,
+      926,
+      814,
+      814
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      985
+     ],
+     [
+      "0x8d0",
+      595
+     ],
+     [
+      "0x8f4",
+      92
+     ],
+     [
+      "0x90c",
+      92
+     ],
+     [
+      "0x924",
+      81
+     ],
+     [
+      "0x93c",
+      81
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 19,
+   "job": 3,
+   "result": {
+    "fixture": {
+     "core": [
+      10000,
+      5800,
+      946,
+      946,
+      794,
+      794
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      1000
+     ],
+     [
+      "0x8d0",
+      580
+     ],
+     [
+      "0x8f4",
+      94
+     ],
+     [
+      "0x90c",
+      94
+     ],
+     [
+      "0x924",
+      79
+     ],
+     [
+      "0x93c",
+      79
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 19,
+   "job": 4,
+   "result": {
+    "fixture": {
+     "core": [
+      9900,
+      5900,
+      936,
+      936,
+      804,
+      804
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      990
+     ],
+     [
+      "0x8d0",
+      590
+     ],
+     [
+      "0x8f4",
+      93
+     ],
+     [
+      "0x90c",
+      93
+     ],
+     [
+      "0x924",
+      80
+     ],
+     [
+      "0x93c",
+      80
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 60,
+   "job": 0,
+   "result": {
+    "fixture": {
+     "core": [
+      28350,
+      16150,
+      2907,
+      2907,
+      2523,
+      2523
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      2835
+     ],
+     [
+      "0x8d0",
+      1615
+     ],
+     [
+      "0x8f4",
+      290
+     ],
+     [
+      "0x90c",
+      290
+     ],
+     [
+      "0x924",
+      252
+     ],
+     [
+      "0x93c",
+      252
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 60,
+   "job": 1,
+   "result": {
+    "fixture": {
+     "core": [
+      30450,
+      14050,
+      2991,
+      2991,
+      2439,
+      2439
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      3045
+     ],
+     [
+      "0x8d0",
+      1405
+     ],
+     [
+      "0x8f4",
+      299
+     ],
+     [
+      "0x90c",
+      299
+     ],
+     [
+      "0x924",
+      243
+     ],
+     [
+      "0x93c",
+      243
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 60,
+   "job": 2,
+   "result": {
+    "fixture": {
+     "core": [
+      26250,
+      18250,
+      2361,
+      2361,
+      3069,
+      3069
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      2625
+     ],
+     [
+      "0x8d0",
+      1825
+     ],
+     [
+      "0x8f4",
+      236
+     ],
+     [
+      "0x90c",
+      236
+     ],
+     [
+      "0x924",
+      306
+     ],
+     [
+      "0x93c",
+      306
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 60,
+   "job": 3,
+   "result": {
+    "fixture": {
+     "core": [
+      32550,
+      11950,
+      3201,
+      3201,
+      2229,
+      2229
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      3255
+     ],
+     [
+      "0x8d0",
+      1195
+     ],
+     [
+      "0x8f4",
+      320
+     ],
+     [
+      "0x90c",
+      320
+     ],
+     [
+      "0x924",
+      222
+     ],
+     [
+      "0x93c",
+      222
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  },
+  {
+   "level": 60,
+   "job": 4,
+   "result": {
+    "fixture": {
+     "core": [
+      28350,
+      16150,
+      2781,
+      2781,
+      2649,
+      2649
+     ],
+     "rate": 100,
+     "query": false,
+     "mode_id": 0,
+     "flag10": false,
+     "flag13": false,
+     "scalar_present": false,
+     "scalar_key": 7,
+     "factors": [
+      1.25,
+      0.75
+     ],
+     "eligible": false,
+     "kind": 0,
+     "poison": true
+    },
+    "writes": [
+     [
+      "0x8b8",
+      2835
+     ],
+     [
+      "0x8d0",
+      1615
+     ],
+     [
+      "0x8f4",
+      278
+     ],
+     [
+      "0x90c",
+      278
+     ],
+     [
+      "0x924",
+      264
+     ],
+     [
+      "0x93c",
+      264
+     ]
+    ],
+    "calls": [
+     [
+      "reset"
+     ],
+     [
+      "refresh",
+      1
+     ],
+     [
+      "query",
+      -1
+     ],
+     [
+      "flag",
+      10
+     ],
+     [
+      "flag",
+      13
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "scaler_lookup"
+     ],
+     [
+      "eligible"
+     ],
+     [
+      "refresh",
+      2
+     ]
+    ],
+    "rates": [
+     100
+    ],
+    "bank_tail": {
+     "0xc": 99,
+     "0x18": 1076887552,
+     "0x24": 101,
+     "0x30": 1080033280
+    },
+    "abi": [
+     17,
+     29,
+     31,
+     37,
+     1879048200
+    ],
+    "fp_depth": 0,
+    "temporary_count": 0,
+    "seh": 4294967295,
+    "stop": "0xdeadbeef",
+    "steps": 474,
+    "trace_sha256": "770b04276e71895d4e2d47c9efdd11f5b7700c8b980d73d105975cd47c919e6b"
+   }
+  }
+ ],
+ "blocks": [
+  {
+   "start": "0x75bf00",
+   "end_exclusive": "0x75bf37",
+   "sha256": "82142a29067a0fbc87ec7e667d195971cd44e8e9e5bfc251e54e1169b8b13888",
+   "instructions": [
+    "0075BF00 push ebp",
+    "0075BF01 mov ebp, esp",
+    "0075BF03 push esi",
+    "0075BF04 mov esi, dword ptr [ebp + 8]",
+    "0075BF07 test esi, esi",
+    "0075BF09 je 0x75bf3c",
+    "0075BF0B call 0x6fc760",
+    "0075BF10 mov ecx, eax",
+    "0075BF12 call 0x7527d0",
+    "0075BF17 test eax, eax",
+    "0075BF19 je 0x75bf3c",
+    "0075BF1B call 0x6fc760",
+    "0075BF20 mov ecx, eax",
+    "0075BF22 call 0x7527d0",
+    "0075BF27 mov ecx, dword ptr [ebp + 0x10]",
+    "0075BF2A mov edx, dword ptr [eax]",
+    "0075BF2C mov edx, dword ptr [edx + 0x40]",
+    "0075BF2F push ecx",
+    "0075BF30 mov ecx, dword ptr [ebp + 0xc]",
+    "0075BF33 push ecx",
+    "0075BF34 push esi",
+    "0075BF35 mov ecx, eax"
+   ]
+  },
+  {
+   "start": "0x75bf39",
+   "end_exclusive": "0x75bf41",
+   "sha256": "e36edc500bf6eb5eaff867d1c8136f2f566b27df145d3e0f57171e76ea81bcf4",
+   "instructions": [
+    "0075BF39 pop esi",
+    "0075BF3A pop ebp",
+    "0075BF3B ret ",
+    "0075BF3C fld1 ",
+    "0075BF3E pop esi",
+    "0075BF3F pop ebp",
+    "0075BF40 ret "
+   ]
+  },
+  {
+   "start": "0x855770",
+   "end_exclusive": "0x8557b0",
+   "sha256": "118f1c8fac58c9cadd1bde03cb8958697eab7067f23b98a2566c603c4b79171c",
+   "instructions": [
+    "00855770 push ebp",
+    "00855771 mov ebp, esp",
+    "00855773 push -1",
+    "00855775 push 0x1438720",
+    "0085577A mov eax, dword ptr fs:[0]",
+    "00855780 push eax",
+    "00855781 sub esp, 0x58",
+    "00855784 push ebx",
+    "00855785 push esi",
+    "00855786 push edi",
+    "00855787 mov eax, dword ptr [0x1a367f0]",
+    "0085578C xor eax, ebp",
+    "0085578E push eax",
+    "0085578F lea eax, [ebp - 0xc]",
+    "00855792 mov dword ptr fs:[0], eax",
+    "00855798 mov esi, ecx",
+    "0085579A mov edi, 0x64",
+    "0085579F call 0x8549f0",
+    "008557A4 mov eax, dword ptr [esi]",
+    "008557A6 mov edx, dword ptr [eax + 0x444]",
+    "008557AC push 0",
+    "008557AE mov ecx, esi"
+   ]
+  },
+  {
+   "start": "0x8557b2",
+   "end_exclusive": "0x855bc9",
+   "sha256": "a44c5afcb7db7226a64f861bccaf55823a9e392e0793f79673805f1c114eff0c",
+   "instructions": [
+    "008557B2 mov eax, dword ptr [esi]",
+    "008557B4 mov edx, dword ptr [eax + 0x440]",
+    "008557BA push 3",
+    "008557BC mov ecx, esi",
+    "008557BE call edx",
+    "008557C0 mov ebx, eax",
+    "008557C2 lea ecx, [ebx + 0x60]",
+    "008557C5 lea eax, [ebp - 0x40]",
+    "008557C8 push eax",
+    "008557C9 lea edx, [ecx + 8]",
+    "008557CC push edx",
+    "008557CD call 0x1195eb0",
+    "008557D2 lea ecx, [ebx + 0x6c]",
+    "008557D5 lea eax, [ebp - 0x3c]",
+    "008557D8 push eax",
+    "008557D9 lea edx, [ecx + 8]",
+    "008557DC push edx",
+    "008557DD call 0x1195eb0",
+    "008557E2 mov eax, dword ptr [esi]",
+    "008557E4 mov edx, dword ptr [eax + 0x440]",
+    "008557EA push 3",
+    "008557EC mov ecx, esi",
+    "008557EE call edx",
+    "008557F0 mov ebx, eax",
+    "008557F2 lea ecx, [ebx + 0x90]",
+    "008557F8 lea eax, [ebp - 0x40]",
+    "008557FB push eax",
+    "008557FC lea edx, [ecx + 8]",
+    "008557FF push edx",
+    "00855800 call 0x1195eb0",
+    "00855805 lea ecx, [ebx + 0x9c]",
+    "0085580B lea eax, [ebp - 0x3c]",
+    "0085580E push eax",
+    "0085580F lea edx, [ecx + 8]",
+    "00855812 push edx",
+    "00855813 call 0x1195eb0",
+    "00855818 mov eax, dword ptr [esi]",
+    "0085581A mov edx, dword ptr [eax + 0x440]",
+    "00855820 push 3",
+    "00855822 mov ecx, esi",
+    "00855824 call edx",
+    "00855826 lea ecx, [ebp - 0x10]",
+    "00855829 push ecx",
+    "0085582A lea edx, [eax + 0x14]",
+    "0085582D push edx",
+    "0085582E lea ecx, [eax + 0xc]",
+    "00855831 call 0x1195eb0",
+    "00855836 mov eax, dword ptr [esi]",
+    "00855838 movd xmm0, dword ptr [ebp - 0x10]",
+    "0085583D mov edx, dword ptr [eax + 0x440]",
+    "00855843 cvtdq2ps xmm0, xmm0",
+    "00855846 push 3",
+    "00855848 mov ecx, esi",
+    "0085584A movss dword ptr [ebp - 0x34], xmm0",
+    "0085584F call edx",
+    "00855851 lea ecx, [ebp - 0x38]",
+    "00855854 push ecx",
+    "00855855 lea edx, [eax + 0x20]",
+    "00855858 push edx",
+    "00855859 lea ecx, [eax + 0x18]",
+    "0085585C call 0x1195eb0",
+    "00855861 mov eax, dword ptr [esi]",
+    "00855863 mov edx, dword ptr [eax + 0x440]",
+    "00855869 push 3",
+    "0085586B mov ecx, esi",
+    "0085586D call edx",
+    "0085586F lea ecx, [ebp - 0x10]",
+    "00855872 push ecx",
+    "00855873 lea edx, [eax + 0x2c]",
+    "00855876 push edx",
+    "00855877 lea ecx, [eax + 0x24]",
+    "0085587A call 0x1195eb0",
+    "0085587F movd xmm0, dword ptr [ebp - 0x10]",
+    "00855884 cvtdq2ps xmm0, xmm0",
+    "00855887 mov eax, dword ptr [esi]",
+    "00855889 mov edx, dword ptr [eax + 0x440]",
+    "0085588F push 3",
+    "00855891 mov ecx, esi",
+    "00855893 movss dword ptr [ebp - 0x3c], xmm0",
+    "00855898 call edx",
+    "0085589A lea ecx, [ebp - 0x40]",
+    "0085589D push ecx",
+    "0085589E lea edx, [eax + 0x38]",
+    "008558A1 push edx",
+    "008558A2 lea ecx, [eax + 0x30]",
+    "008558A5 call 0x1195eb0",
+    "008558AA call 0x6fc760",
+    "008558AF push -1",
+    "008558B1 mov ecx, eax",
+    "008558B3 call 0x752ab0",
+    "008558B8 test al, al",
+    "008558BA je 0x8558cd",
+    "008558BC call 0x6fc760",
+    "008558C1 mov ecx, eax",
+    "008558C3 call 0x752850",
+    "008558C8 cmp eax, 9",
+    "008558CB jne 0x855907",
+    "008558CD call 0x6fc760",
+    "008558D2 push 0xa",
+    "008558D4 mov ecx, eax",
+    "008558D6 call 0x752930",
+    "008558DB test al, al",
+    "008558DD jne 0x855907",
+    "008558DF call 0x6fc760",
+    "008558E4 push 0xd",
+    "008558E6 mov ecx, eax",
+    "008558E8 call 0x752930",
+    "008558ED test al, al",
+    "008558EF jne 0x855907",
+    "008558F1 lea ecx, [esi + 0x4e60]",
+    "008558F7 lea eax, [ebp - 0x10]",
+    "008558FA push eax",
+    "008558FB lea edx, [ecx + 8]",
+    "008558FE push edx",
+    "008558FF call 0x1195eb0",
+    "00855904 mov edi, dword ptr [ebp - 0x10]",
+    "00855907 lea ecx, [ebp - 0x4c]",
+    "0085590A call 0x1197630",
+    "0085590F movss xmm0, dword ptr [0x16cf488]",
+    "00855917 lea eax, [ebp - 0x44]",
+    "0085591A push eax",
+    "0085591B lea ecx, [ebp - 0x10]",
+    "0085591E push ecx",
+    "0085591F lea ecx, [ebp - 0x4c]",
+    "00855922 mov dword ptr [ebp - 4], 0",
+    "00855929 movss dword ptr [ebp - 0x10], xmm0",
+    "0085592E call 0x1195a10",
+    "00855933 mov edx, dword ptr [esi]",
+    "00855935 mov eax, dword ptr [edx + 0x440]",
+    "0085593B push 3",
+    "0085593D mov ecx, esi",
+    "0085593F mov dword ptr [ebp - 4], 1",
+    "00855946 call eax",
+    "00855948 lea ecx, [ebp - 0x14]",
+    "0085594B push ecx",
+    "0085594C lea edx, [eax + 8]",
+    "0085594F push edx",
+    "00855950 mov ecx, eax",
+    "00855952 call 0x1195eb0",
+    "00855957 mov eax, dword ptr [ebp - 0x14]",
+    "0085595A push esi",
+    "0085595B push 2",
+    "0085595D push eax",
+    "0085595E call 0x75bf00",
+    "00855963 fstp dword ptr [ebp - 0x18]",
+    "00855966 add esp, 0xc",
+    "00855969 lea ecx, [ebp - 0x64]",
+    "0085596C call 0x1197630",
+    "00855971 fld dword ptr [ebp - 0x18]",
+    "00855974 lea ecx, [ebp - 0x5c]",
+    "00855977 fstp dword ptr [ebp - 0x18]",
+    "0085597A push ecx",
+    "0085597B lea edx, [ebp - 0x18]",
+    "0085597E push edx",
+    "0085597F lea ecx, [ebp - 0x64]",
+    "00855982 mov byte ptr [ebp - 4], 2",
+    "00855986 call 0x1195a10",
+    "0085598B lea ecx, [esi + 0x4cb0]",
+    "00855991 lea eax, [ebp - 0x1c]",
+    "00855994 push eax",
+    "00855995 lea edx, [ecx + 8]",
+    "00855998 push edx",
+    "00855999 mov byte ptr [ebp - 4], 3",
+    "0085599D call 0x1195eb0",
+    "008559A2 mov ebx, dword ptr [ebp - 0x1c]",
+    "008559A5 lea eax, [ebp - 0x20]",
+    "008559A8 push eax",
+    "008559A9 lea ecx, [ebp - 0x5c]",
+    "008559AC push ecx",
+    "008559AD lea ecx, [ebp - 0x64]",
+    "008559B0 call 0x1195eb0",
+    "008559B5 movss xmm0, dword ptr [ebp - 0x20]",
+    "008559BA lea edx, [ebp - 0x28]",
+    "008559BD push edx",
+    "008559BE lea eax, [ebp - 0x44]",
+    "008559C1 push eax",
+    "008559C2 lea ecx, [ebp - 0x4c]",
+    "008559C5 movss dword ptr [ebp - 0x24], xmm0",
+    "008559CA call 0x1195eb0",
+    "008559CF movss xmm0, dword ptr [ebp - 0x24]",
+    "008559D4 divss xmm0, dword ptr [ebp - 0x28]",
+    "008559D9 xorps xmm1, xmm1",
+    "008559DC cvtsi2ss xmm1, ebx",
+    "008559E0 lea ecx, [esi + 0x8b8]",
+    "008559E6 mulss xmm0, xmm1",
+    "008559EA cvttss2si eax, xmm0",
+    "008559EE lea edx, [ecx + 8]",
+    "008559F1 mov dword ptr [ebp - 0x24], eax",
+    "008559F4 push edx",
+    "008559F5 lea eax, [ebp - 0x24]",
+    "008559F8 push eax",
+    "008559F9 call 0x1195a10",
+    "008559FE mov edx, dword ptr [esi]",
+    "00855A00 mov eax, dword ptr [edx + 0x440]",
+    "00855A06 push 3",
+    "00855A08 mov ecx, esi",
+    "00855A0A call eax",
+    "00855A0C lea ecx, [ebp - 0x28]",
+    "00855A0F push ecx",
+    "00855A10 lea edx, [eax + 8]",
+    "00855A13 push edx",
+    "00855A14 mov ecx, eax",
+    "00855A16 call 0x1195eb0",
+    "00855A1B mov eax, dword ptr [ebp - 0x28]",
+    "00855A1E push esi",
+    "00855A1F push 0xc",
+    "00855A21 push eax",
+    "00855A22 call 0x75bf00",
+    "00855A27 fstp dword ptr [ebp - 0x24]",
+    "00855A2A add esp, 0xc",
+    "00855A2D lea ecx, [ebp - 0x58]",
+    "00855A30 call 0x1197630",
+    "00855A35 fld dword ptr [ebp - 0x24]",
+    "00855A38 lea ecx, [ebp - 0x50]",
+    "00855A3B fstp dword ptr [ebp - 0x24]",
+    "00855A3E push ecx",
+    "00855A3F lea edx, [ebp - 0x24]",
+    "00855A42 push edx",
+    "00855A43 lea ecx, [ebp - 0x58]",
+    "00855A46 mov byte ptr [ebp - 4], 4",
+    "00855A4A call 0x1195a10",
+    "00855A4F lea ecx, [esi + 0x4cbc]",
+    "00855A55 lea eax, [ebp - 0x20]",
+    "00855A58 push eax",
+    "00855A59 lea edx, [ecx + 8]",
+    "00855A5C push edx",
+    "00855A5D mov byte ptr [ebp - 4], 5",
+    "00855A61 call 0x1195eb0",
+    "00855A66 mov ebx, dword ptr [ebp - 0x20]",
+    "00855A69 lea eax, [ebp - 0x1c]",
+    "00855A6C push eax",
+    "00855A6D lea ecx, [ebp - 0x50]",
+    "00855A70 push ecx",
+    "00855A71 lea ecx, [ebp - 0x58]",
+    "00855A74 call 0x1195eb0",
+    "00855A79 movss xmm0, dword ptr [ebp - 0x1c]",
+    "00855A7E lea edx, [ebp - 0x30]",
+    "00855A81 push edx",
+    "00855A82 lea eax, [ebp - 0x44]",
+    "00855A85 push eax",
+    "00855A86 lea ecx, [ebp - 0x4c]",
+    "00855A89 movss dword ptr [ebp - 0x2c], xmm0",
+    "00855A8E call 0x1195eb0",
+    "00855A93 movss xmm0, dword ptr [ebp - 0x2c]",
+    "00855A98 divss xmm0, dword ptr [ebp - 0x30]",
+    "00855A9D xorps xmm1, xmm1",
+    "00855AA0 cvtsi2ss xmm1, ebx",
+    "00855AA4 lea ecx, [esi + 0x8d0]",
+    "00855AAA mulss xmm0, xmm1",
+    "00855AAE cvttss2si eax, xmm0",
+    "00855AB2 lea edx, [ecx + 8]",
+    "00855AB5 mov dword ptr [ebp - 0x2c], eax",
+    "00855AB8 push edx",
+    "00855AB9 lea eax, [ebp - 0x2c]",
+    "00855ABC push eax",
+    "00855ABD call 0x1195a10",
+    "00855AC2 lea ecx, [esi + 0x4cc8]",
+    "00855AC8 lea edx, [ebp - 0x30]",
+    "00855ACB push edx",
+    "00855ACC lea eax, [ecx + 8]",
+    "00855ACF push eax",
+    "00855AD0 call 0x1195eb0",
+    "00855AD5 mov ecx, dword ptr [ebp - 0x30]",
+    "00855AD8 imul ecx, edi",
+    "00855ADB mov eax, 0x10624dd3",
+    "00855AE0 imul ecx",
+    "00855AE2 sar edx, 6",
+    "00855AE5 mov eax, edx",
+    "00855AE7 shr eax, 0x1f",
+    "00855AEA add eax, edx",
+    "00855AEC lea ecx, [esi + 0x8f4]",
+    "00855AF2 mov dword ptr [ebp - 0x2c], eax",
+    "00855AF5 lea edx, [ecx + 8]",
+    "00855AF8 push edx",
+    "00855AF9 lea eax, [ebp - 0x2c]",
+    "00855AFC push eax",
+    "00855AFD call 0x1195a10",
+    "00855B02 lea ecx, [esi + 0x4cd4]",
+    "00855B08 lea edx, [ebp - 0x30]",
+    "00855B0B push edx",
+    "00855B0C lea eax, [ecx + 8]",
+    "00855B0F push eax",
+    "00855B10 call 0x1195eb0",
+    "00855B15 mov ecx, dword ptr [ebp - 0x30]",
+    "00855B18 imul ecx, edi",
+    "00855B1B mov eax, 0x10624dd3",
+    "00855B20 imul ecx",
+    "00855B22 sar edx, 6",
+    "00855B25 mov eax, edx",
+    "00855B27 shr eax, 0x1f",
+    "00855B2A add eax, edx",
+    "00855B2C lea ecx, [esi + 0x90c]",
+    "00855B32 lea edx, [ecx + 8]",
+    "00855B35 mov dword ptr [ebp - 0x2c], eax",
+    "00855B38 push edx",
+    "00855B39 lea eax, [ebp - 0x2c]",
+    "00855B3C push eax",
+    "00855B3D call 0x1195a10",
+    "00855B42 lea ecx, [esi + 0x4ce0]",
+    "00855B48 lea edx, [ebp - 0x30]",
+    "00855B4B push edx",
+    "00855B4C lea eax, [ecx + 8]",
+    "00855B4F push eax",
+    "00855B50 call 0x1195eb0",
+    "00855B55 mov ecx, dword ptr [ebp - 0x30]",
+    "00855B58 imul ecx, edi",
+    "00855B5B mov eax, 0x10624dd3",
+    "00855B60 imul ecx",
+    "00855B62 sar edx, 6",
+    "00855B65 mov eax, edx",
+    "00855B67 shr eax, 0x1f",
+    "00855B6A add eax, edx",
+    "00855B6C lea ecx, [esi + 0x924]",
+    "00855B72 lea edx, [ecx + 8]",
+    "00855B75 mov dword ptr [ebp - 0x2c], eax",
+    "00855B78 push edx",
+    "00855B79 lea eax, [ebp - 0x2c]",
+    "00855B7C push eax",
+    "00855B7D call 0x1195a10",
+    "00855B82 lea ecx, [esi + 0x4cec]",
+    "00855B88 lea edx, [ebp - 0x30]",
+    "00855B8B push edx",
+    "00855B8C lea eax, [ecx + 8]",
+    "00855B8F push eax",
+    "00855B90 call 0x1195eb0",
+    "00855B95 mov ecx, dword ptr [ebp - 0x30]",
+    "00855B98 imul ecx, edi",
+    "00855B9B mov eax, 0x10624dd3",
+    "00855BA0 imul ecx",
+    "00855BA2 sar edx, 6",
+    "00855BA5 mov eax, edx",
+    "00855BA7 shr eax, 0x1f",
+    "00855BAA add eax, edx",
+    "00855BAC lea ecx, [esi + 0x93c]",
+    "00855BB2 lea edx, [ecx + 8]",
+    "00855BB5 mov dword ptr [ebp - 0x2c], eax",
+    "00855BB8 push edx",
+    "00855BB9 lea eax, [ebp - 0x2c]",
+    "00855BBC push eax",
+    "00855BBD call 0x1195a10",
+    "00855BC2 mov edx, dword ptr [esi]",
+    "00855BC4 mov eax, dword ptr [edx + 0x38]",
+    "00855BC7 mov ecx, esi"
+   ]
+  },
+  {
+   "start": "0x855bcb",
+   "end_exclusive": "0x855c02",
+   "sha256": "b34a0919de0b649d5de0408f2c55942b10e3676f0ae5ce751d47fa20cab109fb",
+   "instructions": [
+    "00855BCB test al, al",
+    "00855BCD je 0x855bf6",
+    "00855BCF mov eax, dword ptr [esi + 0x3658]",
+    "00855BD5 cmp eax, 3",
+    "00855BD8 je 0x855bdf",
+    "00855BDA cmp eax, 8",
+    "00855BDD jne 0x855bf6",
+    "00855BDF mov edx, dword ptr [esi]",
+    "00855BE1 mov eax, dword ptr [edx + 0x440]",
+    "00855BE7 push 0",
+    "00855BE9 mov ecx, esi",
+    "00855BEB call eax",
+    "00855BED push eax",
+    "00855BEE call 0x11b3780",
+    "00855BF3 add esp, 4",
+    "00855BF6 mov edx, dword ptr [esi]",
+    "00855BF8 mov eax, dword ptr [edx + 0x444]",
+    "00855BFE push 0",
+    "00855C00 mov ecx, esi"
+   ]
+  },
+  {
+   "start": "0x855c04",
+   "end_exclusive": "0x855cb3",
+   "sha256": "c55eff8b02af981d72b928b8deeba4aec6e88ab7c5cc43422beca17ee13569f4",
+   "instructions": [
+    "00855C04 cmp edi, 0x64",
+    "00855C07 je 0x855ca9",
+    "00855C0D mov edx, dword ptr [esi]",
+    "00855C0F mov eax, dword ptr [edx + 0x440]",
+    "00855C15 push 3",
+    "00855C17 mov ecx, esi",
+    "00855C19 call eax",
+    "00855C1B cvttss2si ecx, dword ptr [ebp - 0x34]",
+    "00855C20 mov dword ptr [ebp - 0x34], ecx",
+    "00855C23 lea edx, [eax + 0x14]",
+    "00855C26 push edx",
+    "00855C27 lea ecx, [ebp - 0x34]",
+    "00855C2A push ecx",
+    "00855C2B lea ecx, [eax + 0xc]",
+    "00855C2E call 0x1195a10",
+    "00855C33 mov edx, dword ptr [esi]",
+    "00855C35 mov eax, dword ptr [edx + 0x440]",
+    "00855C3B push 3",
+    "00855C3D mov ecx, esi",
+    "00855C3F call eax",
+    "00855C41 movss xmm0, dword ptr [ebp - 0x38]",
+    "00855C46 lea ecx, [eax + 0x20]",
+    "00855C49 push ecx",
+    "00855C4A lea edx, [ebp - 0x38]",
+    "00855C4D push edx",
+    "00855C4E lea ecx, [eax + 0x18]",
+    "00855C51 movss dword ptr [ebp - 0x38], xmm0",
+    "00855C56 call 0x1195a10",
+    "00855C5B mov eax, dword ptr [esi]",
+    "00855C5D mov edx, dword ptr [eax + 0x440]",
+    "00855C63 push 3",
+    "00855C65 mov ecx, esi",
+    "00855C67 call edx",
+    "00855C69 cvttss2si ecx, dword ptr [ebp - 0x3c]",
+    "00855C6E mov dword ptr [ebp - 0x3c], ecx",
+    "00855C71 lea edx, [eax + 0x2c]",
+    "00855C74 push edx",
+    "00855C75 lea ecx, [ebp - 0x3c]",
+    "00855C78 push ecx",
+    "00855C79 lea ecx, [eax + 0x24]",
+    "00855C7C call 0x1195a10",
+    "00855C81 mov edx, dword ptr [esi]",
+    "00855C83 mov eax, dword ptr [edx + 0x440]",
+    "00855C89 push 3",
+    "00855C8B mov ecx, esi",
+    "00855C8D call eax",
+    "00855C8F movss xmm0, dword ptr [ebp - 0x40]",
+    "00855C94 lea ecx, [eax + 0x38]",
+    "00855C97 push ecx",
+    "00855C98 lea edx, [ebp - 0x40]",
+    "00855C9B push edx",
+    "00855C9C lea ecx, [eax + 0x30]",
+    "00855C9F movss dword ptr [ebp - 0x40], xmm0",
+    "00855CA4 call 0x1195a10",
+    "00855CA9 cmp byte ptr [ebp + 8], 0",
+    "00855CAD je 0x855d94"
+   ]
+  },
+  {
+   "start": "0x855d94",
+   "end_exclusive": "0x855dcf",
+   "sha256": "283cd073979140ddd1243276b08554f9b13d6e1780221271077f699849d29ad6",
+   "instructions": [
+    "00855D94 lea ecx, [ebp - 0x58]",
+    "00855D97 mov byte ptr [ebp - 4], 3",
+    "00855D9B call 0x1195dc0",
+    "00855DA0 lea ecx, [ebp - 0x64]",
+    "00855DA3 mov byte ptr [ebp - 4], 1",
+    "00855DA7 call 0x1195dc0",
+    "00855DAC lea ecx, [ebp - 0x4c]",
+    "00855DAF mov dword ptr [ebp - 4], 0xffffffff",
+    "00855DB6 call 0x1195dc0",
+    "00855DBB mov ecx, dword ptr [ebp - 0xc]",
+    "00855DBE mov dword ptr fs:[0], ecx",
+    "00855DC5 pop ecx",
+    "00855DC6 pop edi",
+    "00855DC7 pop esi",
+    "00855DC8 pop ebx",
+    "00855DC9 mov esp, ebp",
+    "00855DCB pop ebp",
+    "00855DCC ret 4"
+   ]
+  },
+  {
+   "start": "0xd07390",
+   "end_exclusive": "0xd073a7",
+   "sha256": "4888a5bae1dfc2579504bbe13ed53ea2e249822dfd06bbe7d6697a6ef24ef718",
+   "instructions": [
+    "00D07390 push ebp",
+    "00D07391 mov ebp, esp",
+    "00D07393 mov eax, dword ptr [ebp + 8]",
+    "00D07396 imul eax, eax, 0x8d0",
+    "00D0739C lea eax, [eax + ecx + 0x8ac]",
+    "00D073A3 pop ebp",
+    "00D073A4 ret 4"
+   ]
+  }
+ ],
+ "constants": [
+  {
+   "address": "0x16cf488",
+   "bytes": "00002041"
+  },
+  {
+   "address": "0x16f9b6c",
+   "bytes": "9073d000"
+  }
+ ],
+ "boundaries": [
+  "855770 executes from entry to return with its byte argument fixed at 0; the current-HP/MP refill branch for nonzero arguments is excluded.",
+  "D07390 bank selection and 75BF00 scaler dispatch execute native instructions; mode services and scaler virtual results are explicit ABI fixtures.",
+  "8549F0 reset, virtual 444 refresh, virtual 38 predicate and 11B3780 callback remain fixtures, not proven implementations.",
+  "Second refresh injects changed bank fields solely to observe the native restoration branch; these are not real refresh outputs.",
+  "Protected storage constructors/read/write/destructors use checked ABI fixtures, including three local temporary lifetimes.",
+  "Prior source records are data inputs only; intervening growth modifiers and full character initialization are not proved.",
+  "Actor 4E60 rate producer and mode meanings are unresolved. HP/MP factors are mode-scaler results, not guessed vitality/spirit formulas.",
+  "Six destination fields are identified by offsets; final panel labels, later modifiers and gameplay equations remain unresolved."
+ ]
+}
