@@ -28,6 +28,7 @@ jobs:
       - name: Check native CHR scopes and compiled awakening records
         run: |
           python3 tools/test_dnf_chr_scope.py
+          python3 tools/test_dnf_chr_numbers.py
           python3 tools/test_dnf_pvf.py
       - name: Preserve archive CRC checks when decoding the client directory
         run: python3 tools/test_dnf_pvf_archive.py
