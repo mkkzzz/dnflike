@@ -1,0 +1,6621 @@
+{
+ "schema": "dnf_basic_mastery_local_sync/1",
+ "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
+ "input_source": {
+  "input_sha256": "8748e19abf6155ca5a20d13244eaca0b9442c3d7569e8e5002bddffeeb9366ac",
+  "embedded": true,
+  "resource": "10/EXERESX/0",
+  "resource_offset": 734740
+ },
+ "tools_sha256": {
+  "audit_dnf_basic_mastery_local_sync.py": "04709907e59bdd74d72e86f831cbba21ce687ca93d0980c24b04cb47044a682b",
+  "audit_dnf_basic_mastery_sync.py": "787bae46e1fc5bf72fcccc7c5495414ae3fea9261d581638dc03bf8e7c9f6dff",
+  "audit_dnf_basic_mastery.py": "2d223d1ee7f6a1d7d7a3545b872e24fca62fccb8d55850d98ff4ccde9d28b7a3",
+  "audit_dnf_firewave.py": "3377abdf1f6b5a76908a4cd14652fc68fe28d56314e49c6ee65933bfbd792ddc",
+  "audit_dnf_ice_shatter.py": "b4f90d1797fd487af50a6e39716c77cc9e889b3e5b5c0b1c12864d088f29462c",
+  "audit_dnf_ice_particle_bindings.py": "660048b05498ea7dd11add2d7f3654083d99faafa8fc28b86ff198292fcdeed1",
+  "audit_dnf_native_strings.py": "60b30f2e51e5a744b106d8df955f5a7acbd7d4341ba51f52fd7a2941a5d29c6f",
+  "audit_dnf_particle_axis.py": "59b463dcff6537cc89c597bcf2bb5f1f0a336eb25a67b09da4c228d524b1af8e",
+  "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a"
+ },
+ "runs": [
+  {
+   "fixture": {
+    "old": 0,
+    "new": 0,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 1,
+   "profile_value": 0,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 0,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 1,
+   "profile_value": 0,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 0,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 1,
+   "profile_value": 0,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 0,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 1,
+   "profile_value": 0,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 0,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 1,
+   "profile_value": 0,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 0,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 1,
+   "profile_value": 0,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 0,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 1,
+   "profile_value": 0,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 0,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 1,
+   "profile_value": 0,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    1
+   ],
+   "profile_lookups": 2,
+   "profile_value": 1,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 1
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 1
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     1,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    1
+   ],
+   "profile_lookups": 2,
+   "profile_value": 1,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 1
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 1
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     1,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    1
+   ],
+   "profile_lookups": 2,
+   "profile_value": 1,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 1
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 1
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     1,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    1
+   ],
+   "profile_lookups": 2,
+   "profile_value": 1,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 1
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 1
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 1
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     1,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    1
+   ],
+   "profile_lookups": 2,
+   "profile_value": 1,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 1
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 1
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 1
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 1
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     1,
+     19
+    ],
+    [
+     1,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    1
+   ],
+   "profile_lookups": 2,
+   "profile_value": 1,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 1
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 1
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 1
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 1
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     1,
+     19
+    ],
+    [
+     1,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    1
+   ],
+   "profile_lookups": 2,
+   "profile_value": 1,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 1
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 1
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 1
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 1
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     1,
+     19
+    ],
+    [
+     1,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 0,
+    "new": 1,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    1
+   ],
+   "profile_lookups": 2,
+   "profile_value": 1,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 1
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 1
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 1
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 1
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 1
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     1,
+     19
+    ],
+    [
+     1,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    2
+   ],
+   "profile_lookups": 2,
+   "profile_value": 2,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 2
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     2,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    2
+   ],
+   "profile_lookups": 2,
+   "profile_value": 2,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 2
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     2,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    2
+   ],
+   "profile_lookups": 2,
+   "profile_value": 2,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 2
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     2,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    2
+   ],
+   "profile_lookups": 2,
+   "profile_value": 2,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 2
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     2,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    2
+   ],
+   "profile_lookups": 2,
+   "profile_value": 2,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 2
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 2
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     2,
+     19
+    ],
+    [
+     2,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    2
+   ],
+   "profile_lookups": 2,
+   "profile_value": 2,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 2
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 2
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     2,
+     19
+    ],
+    [
+     2,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    2
+   ],
+   "profile_lookups": 2,
+   "profile_value": 2,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 2
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 2
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     2,
+     19
+    ],
+    [
+     2,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 2,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    2
+   ],
+   "profile_lookups": 2,
+   "profile_value": 2,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 2
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 2
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 2
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 2
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     2,
+     19
+    ],
+    [
+     2,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 2,
+   "profile_value": 60,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 60
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 2,
+   "profile_value": 60,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 60
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 2,
+   "profile_value": 60,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 60
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 2,
+   "profile_value": 60,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 60
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 2,
+   "profile_value": 60,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 60
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 60
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 2,
+   "profile_value": 60,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 60
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 60
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 2,
+   "profile_value": 60,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 60
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 60
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 59,
+    "new": 60,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 2,
+   "profile_value": 60,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 60
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 60
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 60
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 60
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     60,
+     19
+    ],
+    [
+     60,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 59,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    59
+   ],
+   "profile_lookups": 2,
+   "profile_value": 59,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 59
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 59
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 59
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     59,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 59,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    59
+   ],
+   "profile_lookups": 2,
+   "profile_value": 59,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 59
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 59
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 59
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     59,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 59,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    59
+   ],
+   "profile_lookups": 2,
+   "profile_value": 59,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 59
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 59
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 59
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     59,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 59,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    59
+   ],
+   "profile_lookups": 2,
+   "profile_value": 59,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 59
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 59
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 59
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     59,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 59,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    59
+   ],
+   "profile_lookups": 2,
+   "profile_value": 59,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 59
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 59
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 59
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 59
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 59
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     59,
+     19
+    ],
+    [
+     59,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 59,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    59
+   ],
+   "profile_lookups": 2,
+   "profile_value": 59,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 59
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 59
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 59
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 59
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 59
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     59,
+     19
+    ],
+    [
+     59,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 59,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    59
+   ],
+   "profile_lookups": 2,
+   "profile_value": 59,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 59
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 59
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 59
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 59
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 59
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     59,
+     19
+    ],
+    [
+     59,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 59,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    59
+   ],
+   "profile_lookups": 2,
+   "profile_value": 59,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 59
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 59
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 59
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 59
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 59
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     59,
+     19
+    ],
+    [
+     59,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 1,
+   "profile_value": 60,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 1,
+   "profile_value": 60,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 1,
+   "profile_value": 60,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 1,
+   "profile_value": 60,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 1,
+   "profile_value": 60,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 1,
+   "profile_value": 60,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 1,
+   "profile_value": 60,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 60,
+    "new": 60,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    60
+   ],
+   "profile_lookups": 1,
+   "profile_value": 60,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 0,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 2,
+   "profile_value": 0,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x844892",
+     "stack": "0x6ffff8e8"
+    }
+   ],
+   "stop": "0x844892",
+   "steps": 74,
+   "trace_sha256": "574cd726bb7f697048feaef2029a2ade86a4e83fe76c667a4e66fb008f0086bc"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 0,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 2,
+   "profile_value": 0,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x844892",
+     "stack": "0x6ffff8e8"
+    }
+   ],
+   "stop": "0x844892",
+   "steps": 74,
+   "trace_sha256": "574cd726bb7f697048feaef2029a2ade86a4e83fe76c667a4e66fb008f0086bc"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 0,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 2,
+   "profile_value": 0,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x844892",
+     "stack": "0x6ffff8e8"
+    }
+   ],
+   "stop": "0x844892",
+   "steps": 74,
+   "trace_sha256": "574cd726bb7f697048feaef2029a2ade86a4e83fe76c667a4e66fb008f0086bc"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 0,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 2,
+   "profile_value": 0,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 0
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x844892",
+     "stack": "0x6ffff8e8"
+    }
+   ],
+   "stop": "0x844892",
+   "steps": 74,
+   "trace_sha256": "574cd726bb7f697048feaef2029a2ade86a4e83fe76c667a4e66fb008f0086bc"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 0,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 2,
+   "profile_value": 0,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 0
+    }
+   ],
+   "switches": [
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x844892",
+     "stack": "0x6ffff8e8"
+    }
+   ],
+   "stop": "0x844892",
+   "steps": 87,
+   "trace_sha256": "e9fbfb7b2448f2296223cbe9a24b37235983db535b135aeca30763c0a552a0c5"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 0,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 2,
+   "profile_value": 0,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 0
+    }
+   ],
+   "switches": [
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x844892",
+     "stack": "0x6ffff8e8"
+    }
+   ],
+   "stop": "0x844892",
+   "steps": 87,
+   "trace_sha256": "e9fbfb7b2448f2296223cbe9a24b37235983db535b135aeca30763c0a552a0c5"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 0,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 2,
+   "profile_value": 0,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 0
+    }
+   ],
+   "switches": [
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x844892",
+     "stack": "0x6ffff8e8"
+    }
+   ],
+   "stop": "0x844892",
+   "steps": 87,
+   "trace_sha256": "e9fbfb7b2448f2296223cbe9a24b37235983db535b135aeca30763c0a552a0c5"
+  },
+  {
+   "fixture": {
+    "old": 1,
+    "new": 0,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    0
+   ],
+   "profile_lookups": 2,
+   "profile_value": 0,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 0
+    }
+   ],
+   "switches": [
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x844892",
+     "stack": "0x6ffff8e8"
+    }
+   ],
+   "stop": "0x844892",
+   "steps": 87,
+   "trace_sha256": "e9fbfb7b2448f2296223cbe9a24b37235983db535b135aeca30763c0a552a0c5"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 2,
+   "profile_value": 255,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 255
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     255,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 2,
+   "profile_value": 255,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 255
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     255,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 2,
+   "profile_value": 255,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 255
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     255,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 2,
+   "profile_value": 255,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 255
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     255,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 2,
+   "profile_value": 255,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 255
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 255
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     255,
+     19
+    ],
+    [
+     255,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 2,
+   "profile_value": 255,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 255
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 255
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     255,
+     19
+    ],
+    [
+     255,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 2,
+   "profile_value": 255,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 255
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 255
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     255,
+     19
+    ],
+    [
+     255,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 100,
+    "new": 255,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 2,
+   "profile_value": 255,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 255
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 255
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 255
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 255
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     255,
+     19
+    ],
+    [
+     255,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 100,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    100
+   ],
+   "profile_lookups": 2,
+   "profile_value": 100,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 100
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     100,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 100,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    100
+   ],
+   "profile_lookups": 2,
+   "profile_value": 100,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 100
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     100,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 100,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    100
+   ],
+   "profile_lookups": 2,
+   "profile_value": 100,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 100
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     100,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 100,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    100
+   ],
+   "profile_lookups": 2,
+   "profile_value": 100,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 100
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     100,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 142,
+   "trace_sha256": "376005ce9f4319a1773609959de6a941ec9585f10bf2881aa3a92163faa4cc59"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 100,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    100
+   ],
+   "profile_lookups": 2,
+   "profile_value": 100,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 100
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 100
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     100,
+     19
+    ],
+    [
+     100,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 100,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    100
+   ],
+   "profile_lookups": 2,
+   "profile_value": 100,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 100
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 100
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    0
+   ],
+   "final_bank": 0,
+   "ranks": [
+    [
+     100,
+     19
+    ],
+    [
+     100,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 100,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    100
+   ],
+   "profile_lookups": 2,
+   "profile_value": 100,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 100
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 100
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     100,
+     19
+    ],
+    [
+     100,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 100,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    100
+   ],
+   "profile_lookups": 2,
+   "profile_value": 100,
+   "calls": [
+    {
+     "service": "set_base",
+     "bank": 0,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 0
+    },
+    {
+     "service": "refresh",
+     "bank": 0
+    },
+    {
+     "service": "set_base",
+     "bank": 1,
+     "rank": 100
+    },
+    {
+     "service": "rebuild",
+     "bank": 1
+    },
+    {
+     "service": "refresh",
+     "bank": 1
+    }
+   ],
+   "writes": [
+    {
+     "target": "profile",
+     "field": "0x24",
+     "value": 100
+    },
+    {
+     "target": "bank0",
+     "field": "0x590",
+     "value": 100
+    },
+    {
+     "target": "bank1",
+     "field": "0x590",
+     "value": 100
+    }
+   ],
+   "switches": [
+    0,
+    1,
+    1
+   ],
+   "final_bank": 1,
+   "ranks": [
+    [
+     100,
+     19
+    ],
+    [
+     100,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x7357dc",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x73582e",
+     "end": "0x735834",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735862",
+     "end": "0x73588d",
+     "stack": "0x6ffff900"
+    },
+    {
+     "start": "0x735a06",
+     "end": "0x735aa6",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735aa6",
+   "steps": 265,
+   "trace_sha256": "5064a8fae827309cca8adc4a460cd34874a35baa16d7f2cdef09f96e8a8bb934"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 255,
+    "dual": false,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 1,
+   "profile_value": 255,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 255,
+    "dual": false,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 1,
+   "profile_value": 255,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 255,
+    "dual": false,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 1,
+   "profile_value": 255,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 255,
+    "dual": false,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 1,
+   "profile_value": 255,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 255,
+    "dual": true,
+    "bank": 0,
+    "poison": false
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 1,
+   "profile_value": 255,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 255,
+    "dual": true,
+    "bank": 0,
+    "poison": true
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 1,
+   "profile_value": 255,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 0,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 255,
+    "dual": true,
+    "bank": 1,
+    "poison": false
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 1,
+   "profile_value": 255,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  },
+  {
+   "fixture": {
+    "old": 255,
+    "new": 255,
+    "dual": true,
+    "bank": 1,
+    "poison": true
+   },
+   "packet_reads": [
+    255
+   ],
+   "profile_lookups": 1,
+   "profile_value": 255,
+   "calls": [],
+   "writes": [],
+   "switches": [],
+   "final_bank": 1,
+   "ranks": [
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     20
+    ]
+   ],
+   "phases": [
+    {
+     "start": "0x735618",
+     "end": "0x735645",
+     "stack": "0x6ffff8f8"
+    },
+    {
+     "start": "0x7357a2",
+     "end": "0x735b04",
+     "stack": "0x6ffff900"
+    }
+   ],
+   "stop": "0x735b04",
+   "steps": 34,
+   "trace_sha256": "cd18a2480ff3fc3404a80492b8f2488a33cbe2a90cc8f392fc68df00bfa263f9"
+  }
+ ],
+ "blocks": [
+  {
+   "start": "0x735618",
+   "end_exclusive": "0x735645",
+   "sha256": "96d273f1820f31e626d783300cc117a2aa5fcc3053b52438a68c2e1e8b99aa9f",
+   "instructions": [
+    "00735618 lea eax, [ebp - 0x434]",
+    "0073561E push 1",
+    "00735620 push eax",
+    "00735621 mov byte ptr [ebp - 0x434], 0",
+    "00735628 mov dword ptr [ebp - 0x448], ebx",
+    "0073562E mov dword ptr [ebp - 0x454], ebx",
+    "00735634 mov dword ptr [ebp - 0x46c], ebx",
+    "0073563A mov dword ptr [ebp - 0x460], ebx",
+    "00735640 call 0x11aea00"
+   ]
+  },
+  {
+   "start": "0x7357a2",
+   "end_exclusive": "0x7357dc",
+   "sha256": "47603906b9163a5a71ca48286545b060ae094156676ca20a24df1fe3fc95ae08",
+   "instructions": [
+    "007357A2 mov ecx, dword ptr [0x1a5fae8]",
+    "007357A8 mov esi, dword ptr [0x1ab7cdc]",
+    "007357AE add esp, 0x10",
+    "007357B1 call 0x91ba90",
+    "007357B6 lea ecx, [eax + 0x24]",
+    "007357B9 lea edx, [ebp - 0x440]",
+    "007357BF push edx",
+    "007357C0 lea eax, [ecx + 8]",
+    "007357C3 push eax",
+    "007357C4 call 0x1195eb0",
+    "007357C9 movzx ecx, byte ptr [ebp - 0x434]",
+    "007357D0 cmp dword ptr [ebp - 0x440], ecx",
+    "007357D6 je 0x735b04"
+   ]
+  },
+  {
+   "start": "0x73582e",
+   "end_exclusive": "0x735834",
+   "sha256": "78e564c67d93e0281f52ba82fd07bb464fb7e2d21497656a09b8dafb30eefc36",
+   "instructions": [
+    "0073582E mov edi, dword ptr [ebp - 0x440]"
+   ]
+  },
+  {
+   "start": "0x735862",
+   "end_exclusive": "0x73588d",
+   "sha256": "1669209fd589c80993d68471a23225f9c343a5b66fa4027411f847ad8bd957ff",
+   "instructions": [
+    "00735862 mov ecx, dword ptr [0x1a5fae8]",
+    "00735868 call 0x91ba90",
+    "0073586D movzx edx, byte ptr [ebp - 0x434]",
+    "00735874 lea ecx, [eax + 0x24]",
+    "00735877 mov dword ptr [ebp - 0x438], edx",
+    "0073587D lea edx, [ecx + 8]",
+    "00735880 push edx",
+    "00735881 lea eax, [ebp - 0x438]",
+    "00735887 push eax",
+    "00735888 call 0x1195a10"
+   ]
+  },
+  {
+   "start": "0x735a06",
+   "end_exclusive": "0x735aa6",
+   "sha256": "88ffceb1fda282e2ad49b9abcd28f085aed85fae43711c78ca639f0baf55b993",
+   "instructions": [
+    "00735A06 cmp byte ptr [esi + 0x4c10], 0",
+    "00735A0D je 0x735a75",
+    "00735A0F mov ecx, dword ptr [esi + 0x4c0c]",
+    "00735A15 mov dword ptr [ebp - 0x438], ecx",
+    "00735A1B xor edi, edi",
+    "00735A1D lea ecx, [ecx]",
+    "00735A20 push edi",
+    "00735A21 mov ecx, esi",
+    "00735A23 call 0x83db80",
+    "00735A28 movzx eax, byte ptr [ebp - 0x434]",
+    "00735A2F mov edx, dword ptr [esi]",
+    "00735A31 mov edx, dword ptr [edx + 0x7cc]",
+    "00735A37 push eax",
+    "00735A38 push 0xae",
+    "00735A3D mov ecx, esi",
+    "00735A3F call edx",
+    "00735A41 mov eax, dword ptr [esi]",
+    "00735A43 mov edx, dword ptr [eax + 0x7d8]",
+    "00735A49 mov ecx, esi",
+    "00735A4B call edx",
+    "00735A4D mov eax, dword ptr [esi]",
+    "00735A4F mov edx, dword ptr [eax + 0x7dc]",
+    "00735A55 mov ecx, esi",
+    "00735A57 call edx",
+    "00735A59 inc edi",
+    "00735A5A cmp edi, 2",
+    "00735A5D jl 0x735a20",
+    "00735A5F mov eax, dword ptr [ebp - 0x438]",
+    "00735A65 push eax",
+    "00735A66 mov ecx, esi",
+    "00735A68 call 0x83db80",
+    "00735A6D mov edi, dword ptr [ebp - 0x440]",
+    "00735A73 jmp 0x735aa6",
+    "00735A75 movzx eax, byte ptr [ebp - 0x434]",
+    "00735A7C mov edx, dword ptr [esi]",
+    "00735A7E mov edx, dword ptr [edx + 0x7cc]",
+    "00735A84 push eax",
+    "00735A85 push 0xae",
+    "00735A8A mov ecx, esi",
+    "00735A8C call edx",
+    "00735A8E mov eax, dword ptr [esi]",
+    "00735A90 mov edx, dword ptr [eax + 0x7d8]",
+    "00735A96 mov ecx, esi",
+    "00735A98 call edx",
+    "00735A9A mov eax, dword ptr [esi]",
+    "00735A9C mov edx, dword ptr [eax + 0x7dc]",
+    "00735AA2 mov ecx, esi",
+    "00735AA4 call edx"
+   ]
+  },
+  {
+   "start": "0x83db80",
+   "end_exclusive": "0x83db90",
+   "sha256": "f97f6d6c729442efd449c3479dfed701abbda7a1c01452ccf42bfa7a61a09a6c",
+   "instructions": [
+    "0083DB80 push ebp",
+    "0083DB81 mov ebp, esp",
+    "0083DB83 mov eax, dword ptr [ebp + 8]",
+    "0083DB86 mov dword ptr [ecx + 0x4c0c], eax",
+    "0083DB8C pop ebp",
+    "0083DB8D ret 4"
+   ]
+  },
+  {
+   "start": "0x8406c0",
+   "end_exclusive": "0x840720",
+   "sha256": "bf88f3866eb466b5e8b27a27d45c2a5bfc0b7843468784b6e32a94ffb064c716",
+   "instructions": [
+    "008406C0 push ebp",
+    "008406C1 mov ebp, esp",
+    "008406C3 push -1",
+    "008406C5 push 0x14ab78b",
+    "008406CA mov eax, dword ptr fs:[0]",
+    "008406D0 push eax",
+    "008406D1 push ebx",
+    "008406D2 push esi",
+    "008406D3 push edi",
+    "008406D4 mov eax, dword ptr [0x1a367f0]",
+    "008406D9 xor eax, ebp",
+    "008406DB push eax",
+    "008406DC lea eax, [ebp - 0xc]",
+    "008406DF mov dword ptr fs:[0], eax",
+    "008406E5 mov esi, ecx",
+    "008406E7 mov ecx, dword ptr [esi + 0x3c08]",
+    "008406ED cmp ecx, 0xb",
+    "008406F0 je 0x8407e4",
+    "008406F6 mov ebx, dword ptr [ebp + 8]",
+    "008406F9 cmp ebx, 0xfe",
+    "008406FF ja 0x8407e4",
+    "00840705 mov eax, dword ptr [esi + 0x4c0c]",
+    "0084070B imul eax, eax, 0x3fc",
+    "00840711 lea eax, [eax + esi + 0x4414]",
+    "00840718 cmp ebx, 0xff",
+    "0084071E jb 0x840725"
+   ]
+  },
+  {
+   "start": "0x840725",
+   "end_exclusive": "0x840736",
+   "sha256": "4c2889cebf9c602567c668742925500d8c11c4b5dea956f69e1f291b822ac73f",
+   "instructions": [
+    "00840725 lea edi, [ebx*4]",
+    "0084072C cmp dword ptr [edi + eax], 0",
+    "00840730 jne 0x8407ba"
+   ]
+  },
+  {
+   "start": "0x8407ba",
+   "end_exclusive": "0x8407e4",
+   "sha256": "3019adf3dc13728573978109878da8a913704398ac8c67d38a440e166cc1f483",
+   "instructions": [
+    "008407BA mov eax, dword ptr [esi + 0x4c0c]",
+    "008407C0 imul eax, eax, 0x3fc",
+    "008407C6 lea eax, [eax + esi + 0x4414]",
+    "008407CD mov eax, dword ptr [edi + eax]",
+    "008407D0 mov ecx, dword ptr [ebp - 0xc]",
+    "008407D3 mov dword ptr fs:[0], ecx",
+    "008407DA pop ecx",
+    "008407DB pop edi",
+    "008407DC pop esi",
+    "008407DD pop ebx",
+    "008407DE mov esp, ebp",
+    "008407E0 pop ebp",
+    "008407E1 ret 4"
+   ]
+  },
+  {
+   "start": "0x844880",
+   "end_exclusive": "0x844892",
+   "sha256": "be09355e386be472799e049a0cb73571c47354f3a3b4d72842bf60f6f6d4d82f",
+   "instructions": [
+    "00844880 push ebp",
+    "00844881 mov ebp, esp",
+    "00844883 push esi",
+    "00844884 push edi",
+    "00844885 mov edi, dword ptr [ebp + 0xc]",
+    "00844888 mov esi, ecx",
+    "0084488A test edi, edi",
+    "0084488C jne 0x84494f"
+   ]
+  },
+  {
+   "start": "0x84494f",
+   "end_exclusive": "0x84497d",
+   "sha256": "4f0ce815dbb2f18894b623233ae5ba35abe400651c91982953736fa54df01321",
+   "instructions": [
+    "0084494F mov edx, dword ptr [esi]",
+    "00844951 mov eax, dword ptr [ebp + 8]",
+    "00844954 mov edx, dword ptr [edx + 0x804]",
+    "0084495A push eax",
+    "0084495B call edx",
+    "0084495D test eax, eax",
+    "0084495F je 0x844977",
+    "00844961 lea ecx, [eax + 0x590]",
+    "00844967 lea eax, [ecx + 8]",
+    "0084496A push eax",
+    "0084496B lea edx, [ebp + 8]",
+    "0084496E push edx",
+    "0084496F mov dword ptr [ebp + 8], edi",
+    "00844972 call 0x1195a10",
+    "00844977 pop edi",
+    "00844978 pop esi",
+    "00844979 pop ebp",
+    "0084497A ret 8"
+   ]
+  },
+  {
+   "start": "0x91ba90",
+   "end_exclusive": "0x91ba9d",
+   "sha256": "6329fd2ec00ce4c825e146465f5dbfdf994e9269647d3462e551c70561e58efc",
+   "instructions": [
+    "0091BA90 push ebp",
+    "0091BA91 mov ebp, esp",
+    "0091BA93 push ecx",
+    "0091BA94 push esi",
+    "0091BA95 mov esi, ecx",
+    "0091BA97 cmp dword ptr [esi + 0x3c], 0",
+    "0091BA9B jne 0x91babf"
+   ]
+  },
+  {
+   "start": "0x91babf",
+   "end_exclusive": "0x91bac7",
+   "sha256": "ca8ba07e2479f1f2455744940454996d1b59087b071c7dc95f248034dc96401b",
+   "instructions": [
+    "0091BABF mov eax, dword ptr [esi + 0x3c]",
+    "0091BAC2 pop esi",
+    "0091BAC3 mov esp, ebp",
+    "0091BAC5 pop ebp",
+    "0091BAC6 ret "
+   ]
+  }
+ ],
+ "static_provenance": [
+  {
+   "start": "0x74d5aa",
+   "end": "0x74d5b6",
+   "sha256": "b251c4c12cb06585c341220c4077323869c142da0f14f607b189fb78eed094b9",
+   "instructions": [
+    "0074D5AA push 0x7355a0",
+    "0074D5AF push 0x25",
+    "0074D5B1 call 0x744b30"
+   ]
+  },
+  {
+   "start": "0x7355a0",
+   "end": "0x735618",
+   "sha256": "564e833ff0775addb3b748812437e460e9ffe7bf466a20e87b7f577eb28c19a2",
+   "instructions": [
+    "007355A0 push ebp",
+    "007355A1 mov ebp, esp",
+    "007355A3 push -1",
+    "007355A5 push 0x1427fd7",
+    "007355AA mov eax, dword ptr fs:[0]",
+    "007355B0 push eax",
+    "007355B1 sub esp, 0x474",
+    "007355B7 mov eax, dword ptr [0x1a367f0]",
+    "007355BC xor eax, ebp",
+    "007355BE mov dword ptr [ebp - 0x10], eax",
+    "007355C1 push ebx",
+    "007355C2 push esi",
+    "007355C3 push edi",
+    "007355C4 push eax",
+    "007355C5 lea eax, [ebp - 0xc]",
+    "007355C8 mov dword ptr fs:[0], eax",
+    "007355CE test byte ptr [0x1a39c48], 1",
+    "007355D5 jne 0x735603",
+    "007355D7 or dword ptr [0x1a39c48], 1",
+    "007355DE xor ebx, ebx",
+    "007355E0 mov ecx, 0x1a39c3c",
+    "007355E5 mov dword ptr [ebp - 4], ebx",
+    "007355E8 call 0x6f1be0",
+    "007355ED push 0x15383c0",
+    "007355F2 call 0x13cc5ba",
+    "007355F7 add esp, 4",
+    "007355FA mov dword ptr [ebp - 4], 0xffffffff",
+    "00735601 jmp 0x735605",
+    "00735603 xor ebx, ebx",
+    "00735605 mov ecx, 0x1a39c3c",
+    "0073560A call 0x1215780",
+    "0073560F cmp eax, 1",
+    "00735612 je 0x736235"
+   ]
+  },
+  {
+   "start": "0x7357dc",
+   "end": "0x735862",
+   "sha256": "dce9a1d62de07e23e6f2d19e93e9946137a5526effae34866cac525b402aad20",
+   "instructions": [
+    "007357DC mov ecx, dword ptr [0x1a5fb18]",
+    "007357E2 mov edx, dword ptr [ecx]",
+    "007357E4 mov eax, dword ptr [edx + 8]",
+    "007357E7 push 2",
+    "007357E9 push 0xf",
+    "007357EB call eax",
+    "007357ED mov ecx, dword ptr [0x1a5fb18]",
+    "007357F3 mov edx, dword ptr [esi]",
+    "007357F5 mov edi, dword ptr [ecx]",
+    "007357F7 mov eax, dword ptr [edx + 0x44]",
+    "007357FA mov ecx, esi",
+    "007357FC call eax",
+    "007357FE mov ecx, dword ptr [0x1a5fb18]",
+    "00735804 mov edx, dword ptr [edi + 0x24]",
+    "00735807 push eax",
+    "00735808 call edx",
+    "0073580A mov eax, dword ptr [0x1a5fb18]",
+    "0073580F mov edx, dword ptr [esi]",
+    "00735811 mov edi, dword ptr [eax]",
+    "00735813 mov eax, dword ptr [edx + 0x48]",
+    "00735816 mov ecx, esi",
+    "00735818 call eax",
+    "0073581A mov ecx, dword ptr [0x1a5fb18]",
+    "00735820 mov edx, dword ptr [edi + 0x24]",
+    "00735823 push eax",
+    "00735824 call edx",
+    "00735826 mov ecx, dword ptr [0x1a5fb18]",
+    "0073582C mov eax, dword ptr [ecx]",
+    "0073582E mov edi, dword ptr [ebp - 0x440]",
+    "00735834 mov edx, dword ptr [eax + 0x20]",
+    "00735837 push edi",
+    "00735838 call edx",
+    "0073583A mov ecx, dword ptr [0x1a5fb18]",
+    "00735840 mov eax, dword ptr [ecx]",
+    "00735842 mov edx, dword ptr [ebp - 0x434]",
+    "00735848 mov eax, dword ptr [eax + 0x20]",
+    "0073584B push edx",
+    "0073584C call eax",
+    "0073584E mov ecx, dword ptr [0x1acd918]",
+    "00735854 mov edx, dword ptr [ecx]",
+    "00735856 mov eax, dword ptr [edx + 0x44]",
+    "00735859 push 3",
+    "0073585B push ebx",
+    "0073585C push -1",
+    "0073585E push 1",
+    "00735860 call eax"
+   ]
+  },
+  {
+   "start": "0x73588d",
+   "end": "0x735a06",
+   "sha256": "d86dadfda7368550a2b346e1a1fec87a058de18d6c752f725bc6abe28ef2ef02",
+   "instructions": [
+    "0073588D movzx ecx, byte ptr [ebp - 0x434]",
+    "00735894 cmp ecx, edi",
+    "00735896 jle 0x7358fc",
+    "00735898 mov edx, dword ptr [0x1a5fae8]",
+    "0073589E mov byte ptr [edx + 0x40], 1",
+    "007358A2 call 0x59d070",
+    "007358A7 mov ecx, eax",
+    "007358A9 call 0x59ccf0",
+    "007358AE test al, al",
+    "007358B0 je 0x7358bf",
+    "007358B2 push esi",
+    "007358B3 call 0x59d070",
+    "007358B8 mov ecx, eax",
+    "007358BA call 0x59e170",
+    "007358BF movzx eax, byte ptr [ebp - 0x434]",
+    "007358C6 push eax",
+    "007358C7 call 0x543750",
+    "007358CC add esp, 4",
+    "007358CF call 0x52fd10",
+    "007358D4 mov ecx, eax",
+    "007358D6 call 0x52c650",
+    "007358DB push 0x1ab7de0",
+    "007358E0 call 0x6fc760",
+    "007358E5 mov ecx, eax",
+    "007358E7 call 0x751d40",
+    "007358EC mov ecx, dword ptr [0x1a5fb20]",
+    "007358F2 mov ecx, dword ptr [ecx + 0x3c]",
+    "007358F5 push 1",
+    "007358F7 call 0x4b3b20",
+    "007358FC test byte ptr [0x1a3b244], 1",
+    "00735903 jne 0x735931",
+    "00735905 or dword ptr [0x1a3b244], 1",
+    "0073590C mov ecx, 0x1a3b1a8",
+    "00735911 mov dword ptr [ebp - 4], 2",
+    "00735918 call 0x66b020",
+    "0073591D push 0x1538e70",
+    "00735922 call 0x13cc5ba",
+    "00735927 add esp, 4",
+    "0073592A mov dword ptr [ebp - 4], 0xffffffff",
+    "00735931 mov ecx, 0x1a3b1a8",
+    "00735936 call 0x669d60",
+    "0073593B movzx edx, byte ptr [ebp - 0x434]",
+    "00735942 push edx",
+    "00735943 call 0x6d8540",
+    "00735948 mov ecx, eax",
+    "0073594A call 0x6d6100",
+    "0073594F movzx edx, byte ptr [ebp - 0x434]",
+    "00735956 mov eax, dword ptr [0x1a5fb20]",
+    "0073595B mov ecx, dword ptr [eax + 0x3c]",
+    "0073595E push edx",
+    "0073595F call 0x4c3770",
+    "00735964 mov ecx, dword ptr [0x1a5fae8]",
+    "0073596A call 0x91ba90",
+    "0073596F mov eax, dword ptr [eax + 0x278]",
+    "00735975 push 8",
+    "00735977 mov dword ptr [ebp - 0x438], eax",
+    "0073597D mov dword ptr [ebp - 0x430], ebx",
+    "00735983 call 0x13cbdca",
+    "00735988 add esp, 4",
+    "0073598B cmp eax, ebx",
+    "0073598D je 0x735edc",
+    "00735993 mov dword ptr [ebp - 0x430], eax",
+    "00735999 mov dword ptr [eax + 4], ebx",
+    "0073599C xor ecx, ecx",
+    "0073599E mov dword ptr [eax], ecx",
+    "007359A0 mov edx, dword ptr [ebp - 0x430]",
+    "007359A6 lea ecx, [ebp - 0x430]",
+    "007359AC mov dword ptr [edx], ecx",
+    "007359AE xor eax, eax",
+    "007359B0 mov dword ptr [ebp - 0x418], 7",
+    "007359BA mov dword ptr [ebp - 0x41c], ebx",
+    "007359C0 mov word ptr [ebp - 0x42c], ax",
+    "007359C7 mov ecx, dword ptr [ebp - 0x438]",
+    "007359CD push 0x22",
+    "007359CF push ebx",
+    "007359D0 push 0x12",
+    "007359D2 push ecx",
+    "007359D3 lea edx, [ebp - 0x430]",
+    "007359D9 push edx",
+    "007359DA mov dword ptr [ebp - 4], 3",
+    "007359E1 call 0xe3de30",
+    "007359E6 push eax",
+    "007359E7 call 0xe40380",
+    "007359EC add esp, 0x18",
+    "007359EF test al, al",
+    "007359F1 je 0x735a06",
+    "007359F3 lea eax, [ebp - 0x430]",
+    "007359F9 push eax",
+    "007359FA call 0xe3de30",
+    "007359FF mov ecx, eax",
+    "00735A01 call 0xe3bd10"
+   ]
+  },
+  {
+   "start": "0x735aa6",
+   "end": "0x735abd",
+   "sha256": "7230293ac4afd5be23b741f9e6fafaba57d7ac7a79ed57787e65afff0e54b034",
+   "instructions": [
+    "00735AA6 movzx eax, byte ptr [ebp - 0x434]",
+    "00735AAD cmp eax, edi",
+    "00735AAF jle 0x735abd",
+    "00735AB1 call 0x69e7e0",
+    "00735AB6 mov ecx, eax",
+    "00735AB8 call 0x69c980"
+   ]
+  }
+ ],
+ "boundaries": [
+  "Static registration maps message 0x25 to 7355A0; this is not a claim about server protocol names or login initialization.",
+  "Five explicit fragments share one CPU/profile/skill fixture: input byte, change comparison, old-value register save, profile write, bank synchronization.",
+  "Transport, other packet fields and UI spans are omitted; the prepared-frame stack adjustment is explicit. Full handler preconditions are not executed.",
+  "91BA90 executes its cached profile getter; 83DB80, 844880 nonzero setter and 8406C0 cached skill lookup execute source instructions.",
+  "Changed zero reaches 844892 deletion entry and stops before cleanup; no cache deletion, bank restoration or callbacks are claimed on that path.",
+  "CD9E50/84D000 rebuild and refresh are ABI events. Effective ranks remain sentinel fixtures; full rank rebuild is still unresolved.",
+  "This handler compares inequality, unlike the separate growth-only 509930 path. Profile field semantics, initial skill loading and final damage are still unresolved.",
+  "No native process is launched and no runtime rank behavior changes in this batch."
+ ]
+}
