@@ -2,8 +2,10 @@
 
 The checked client keeps an axis selector (default X); only move type and
 variables 1/2 use it. Changing term/type and gravity are global fields.
-Units, random distribution, object-list integer semantics and simulation are
-NOT established by this structural decoder. Callers retain the ordered raw tree.
+Native generator 0xE4E170 distinguishes relative ANI files (parameter -1),
+direct image-manager lookups (other parameters), and passive-object IDs.
+Units, random distribution and simulation remain unestablished here.
+Callers retain the ordered raw tree, including original object names.
 """
 from __future__ import annotations
 
@@ -66,7 +68,9 @@ def decode_particle_fields(fields: list, path: str) -> tuple[dict, dict, list]:
                 if not isinstance(values[i], str) or type(values[i+1]) is not int:
                     valid = False
                     continue
-                entries.append({"path": resolve(path, values[i]), "parameter": values[i+1]})
+                # Defer resolution: [object type] may follow [object]. The native
+                # reader copies the string verbatim; the generator dispatches it.
+                entries.append({"path": values[i], "parameter": values[i+1]})
             decoded["object_entries"] = entries
             evidence["object_entries"] = "E-PARSE"
             if not valid:
@@ -87,4 +91,19 @@ def decode_particle_fields(fields: list, path: str) -> tuple[dict, dict, list]:
         else:
             decoded[key] = value
             evidence[key] = "E-PARSE"
+    for entry in decoded.get("object_entries", []):
+        name = entry["path"]
+        if not name:
+            # 0xE4E5F9..620 constructs an empty animation object. Resolving an
+            # empty name to the PTL directory changes that branch's meaning.
+            continue
+        object_type = decoded.get("object_type")
+        if object_type == "[passive object]" or (object_type == "[animation]" and entry["parameter"] != -1):
+            # 0xE4E73A..74A passes the name + integer directly to the image
+            # manager, without the PTL folder; passive objects use the integer
+            # at 0xE4E47E..484. Keep their names out of script path resolution.
+            entry["path"] = name.replace("\\", "/").lower()
+        else:
+            # 0xE4E67A..6CB loads an ANI with the template folder + its name.
+            entry["path"] = resolve(path, name)
     return decoded, evidence, unsupported

@@ -64,6 +64,53 @@ class ParticleFields(unittest.TestCase):
         self.assertEqual(d["object_entries"],[{"path":"a/last.ani","parameter":7}])
         self.assertFalse(u)
 
+    def test_original_image_frames_use_image_manager_names_not_ptl_folder(self):
+        path = "creature/bronzepig/effect/particle/pig_skill_stone.ptl"
+        entry = self.catalog["particles"][path]
+        self.assertEqual(entry["sha256"], "b042701ad1ce868bde6a8b5fcaa2e51105a223b30e8f30dfc2f95feb5504d03f")
+        self.assertEqual(entry["decoded"]["object_entries"], [
+            {"path": "creature/common/pig_part.img", "parameter": 2},
+            {"path": "creature/common/pig_part.img", "parameter": 3},
+        ])
+        self.assertEqual(entry["animations"], [])
+        # One original PTL mixes image indices with a relative ANI filename.
+        entry = self.catalog["particles"]["monster/common/particle/monsterdiepieceveryyoung.ptl"]
+        self.assertEqual(entry["sha256"], "e45acd817ecbedeedcff53f35a56fcee2449da5c28294a90290f105b95d8471c")
+        self.assertEqual(entry["decoded"]["object_entries"], [
+            {"path": "monster/common/monsterdiepieceveryyoung.img", "parameter": 0},
+            {"path": "monster/common/monsterdiepieceveryyoung.img", "parameter": 1},
+            {"path": "monster/common/animation/monsterdiepieceveryyoung.ani", "parameter": -1},
+        ])
+
+    def test_empty_object_names_survive_for_animation_and_passive_objects(self):
+        count = 0
+        for path, entry in self.catalog["particles"].items():
+            blocks = [n for n in entry["raw"] if n["tag"] == "[object]"]
+            if not blocks:
+                continue
+            values = blocks[-1]["values"]
+            for i in range(0, len(values)-1, 2):
+                if values[i] == "":
+                    count += 1
+                    self.assertEqual(entry["decoded"]["object_entries"][i//2],
+                                     {"path": "", "parameter": values[i+1]}, path)
+        self.assertEqual(count, 156)
+
+    def test_object_type_after_list_and_parameter_choose_reference_namespace(self):
+        fields = [field("[object]", "../anim.ani", -1, "Sprite\\Parts.img", 7, "", -1),
+                  field("[object type]", "[animation]")]
+        d, _, u = decode_particle_fields(fields, "root/particle/mixed.ptl")
+        self.assertEqual(d["object_entries"], [
+            {"path": "root/anim.ani", "parameter": -1},
+            {"path": "sprite/parts.img", "parameter": 7},
+            {"path": "", "parameter": -1},
+        ])
+        self.assertFalse(u)
+        # Filename suffix alone cannot turn an indexed image into an ANI dependency.
+        indexed = parse("root/test.ptl", {"fields": [field("[object]", "fake.ani", 3),
+                                                   field("[object type]", "[animation]")]})
+        self.assertEqual(indexed["animations"], [])
+
     def test_unknown_language_and_malformed_values_remain_in_raw(self):
         fields = [field("[unknown internal tag]","내부 값"),field("[move variable 1]",50),field("[object]","ok.ani",-1,"unpaired.ani")]
         entry = parse("a/b.ptl",{"fields":fields,"sha256":"test"})

@@ -2,7 +2,8 @@
 
 Native reader 0x1310C60 distinguishes three axes and global parameters. This
 catalog preserves decoded values, ordered raw fields, hashes and unsupported
-fields; it does not certify units, object parameters or rendered behaviour.
+fields. Native 0xE4E170 distinguishes ANI files and indexed image references;
+this catalog does not certify motion units or rendered behaviour.
 """
 from __future__ import annotations
 
@@ -27,9 +28,11 @@ def parse(path: str, doc: dict) -> dict | None:
     entry = {"ptl": path, "sha256": doc.get("sha256"), "decoded": decoded,
              "raw": fields, "evidence": evidence, "unsupported": unsupported,
              "diagnostics": doc.get("diagnostics", [])}
-    # Keep the established asset-baking dependency list, including duplicates.
+    # Only parameter -1 loads a script ANI. Other parameters address images
+    # directly, even if a misleading filename happens to end in .ani.
     entry["animations"] = [item["path"] for item in decoded.get("object_entries", [])
-                           if item["path"].endswith(".ani")]
+                           if decoded.get("object_type") != "[passive object]"
+                           and item["parameter"] == -1 and item["path"].endswith(".ani")]
     return entry
 
 
