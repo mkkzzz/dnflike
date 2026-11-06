@@ -6,7 +6,7 @@ The v1 source/runtime bytes remain unchanged; v2 is an additive runtime layer.
 """
 from pathlib import Path
 from collections import Counter
-import argparse,gzip,hashlib,json
+import argparse,gzip,hashlib,json,zlib
 from build_dnf_native_catalog import compile_quest, NPCS
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -23,9 +23,29 @@ def digest(path):
     # Input JSON semantics, not checkout-specific CRLF/LF or indentation.
     return hashlib.sha256(json.dumps(load(path),ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 def write(path,value):path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(value,ensure_ascii=False,indent=1)+'\n',encoding='utf-8',newline='\n')
-def status_bytes(audit):
+def status_payload(audit):
     value={'schema':'dnf_native_quest_status/2','rows':{str(r['id']):{'state':r['state'],'reasons':r['reasons']} for r in audit['rows']}}
-    return gzip.compress(json.dumps(value,ensure_ascii=True,separators=(',',':')).encode(),mtime=0)
+    return json.dumps(value,ensure_ascii=True,separators=(',',':')).encode()
+
+def status_bytes(audit):
+    result=bytearray(gzip.compress(status_payload(audit),mtime=0))
+    # Python/zlib versions differ in the gzip OS byte; new outputs use unknown.
+    # Existing packages remain valid when payload and their recorded SHA agree.
+    result[9]=255
+    return bytes(result)
+
+def stale_outputs(runtime,audit,catalog):
+    stale=[]
+    expected=dict(runtime)
+    try:
+        blob=STATUS.read_bytes()
+        expected['status_sha256']=hashlib.sha256(blob).hexdigest()
+        if gzip.decompress(blob)!=status_payload(audit):stale.append(STATUS)
+    except (OSError,EOFError,zlib.error):
+        stale.append(STATUS)
+    for path,value in [(OUT,expected),(AUDIT,audit),(CATALOG,catalog)]:
+        if not path.is_file() or load(path)!=value:stale.append(path)
+    return stale
 
 def sync_catalog(runtime):
     catalog=load(CATALOG)
@@ -133,7 +153,8 @@ def main():
     catalog,missing=sync_catalog(runtime)
     if missing:raise ValueError('Runtime quest paths absent from catalog: '+', '.join(missing[:8]))
     if args.check:
-        if load(OUT)!=runtime or load(AUDIT)!=audit or load(CATALOG)!=catalog or STATUS.read_bytes()!=status_bytes(audit):raise ValueError('Quest v2 definitions/audit are stale; rebuild explicitly')
+        stale=stale_outputs(runtime,audit,catalog)
+        if stale:raise ValueError('Quest v2 outputs stale or inconsistent: '+', '.join(p.name for p in stale)+'; rebuild explicitly')
         print('QUEST RULES VERIFIED',runtime['coverage']);return
     write(OUT,runtime);write(AUDIT,audit);write(CATALOG,catalog);STATUS.write_bytes(status_bytes(audit))
     print('QUEST RULES BUILT',runtime['coverage'])
