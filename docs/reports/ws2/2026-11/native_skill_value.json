@@ -1,0 +1,11003 @@
+{
+ "schema": "dnf_skill_value_body/1",
+ "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
+ "input_source": {
+  "input_sha256": "8748e19abf6155ca5a20d13244eaca0b9442c3d7569e8e5002bddffeeb9366ac",
+  "embedded": true,
+  "resource": "10/EXERESX/0",
+  "resource_offset": 734740
+ },
+ "method": "Bounded 908794 skill-value body replay; does not bypass a protected entry.\n\nThe fixture explicitly starts AFTER the unproved 908770 protected prologue and\ninitial alternate-table selection, on the own-table branch. Later 905D70 calls\nand mode gates run original instructions with a -1 linked-skill field. Four\nmodifier services and normalization values are ABI fixtures, not game formulas.\nNo PE execution. x87 intermediates use Python floats with binary32 stores.",
+ "tools_sha256": {
+  "audit_dnf_skill_value.py": "7597b9763057a88166bd60a01e176ec612c7fc293bc725650523ff7c5f1a4a11",
+  "audit_dnf_firewave.py": "3377abdf1f6b5a76908a4cd14652fc68fe28d56314e49c6ee65933bfbd792ddc",
+  "audit_dnf_ice_shatter.py": "b4f90d1797fd487af50a6e39716c77cc9e889b3e5b5c0b1c12864d088f29462c",
+  "audit_dnf_ice_particle_bindings.py": "660048b05498ea7dd11add2d7f3654083d99faafa8fc28b86ff198292fcdeed1",
+  "audit_dnf_native_strings.py": "60b30f2e51e5a744b106d8df955f5a7acbd7d4341ba51f52fd7a2941a5d29c6f",
+  "audit_dnf_particle_axis.py": "59b463dcff6537cc89c597bcf2bb5f1f0a336eb25a67b09da4c228d524b1af8e",
+  "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a"
+ },
+ "boundaries": [
+  "Entry is 908794 with an explicit prepared frame, NOT full 908770 or wrapper 9089A0.",
+  "Initial own-table selection is assumed. Later 905D70 calls execute, linked field +518=-1; alternate skills are excluded.",
+  "Columns/rows are synthetic unequal-length 20-byte vectors of 12-byte secured binary32 entries; PVF loader not traced.",
+  "Modifier helpers are explicit identity/noncommuting ABI fixtures, not equipment/status implementations.",
+  "Normalization inputs are fixtures; x87 precision/control-word/exceptions and special outer-mode rescaling excluded."
+ ],
+ "table_fixture": [
+  [
+   1.25,
+   584.0,
+   1234.5
+  ],
+  [
+   -5.0,
+   0.0,
+   6.25,
+   9.0
+  ],
+  [
+   100.0
+  ]
+ ],
+ "runs": [
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 1.25,
+   "bits": 1067450368,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300100",
+     "kind": "secure_read_fixture",
+     "bits": 1067450368
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1067450368,
+      1,
+      1
+     ],
+     "input": 1.25,
+     "output": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1067450368,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 1.25,
+     "output": 1.25
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1067450368,
+      1,
+      0
+     ],
+     "input": 1.25,
+     "output": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1067450368,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 1.25,
+     "output": 1.25
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 1.25,
+   "bits": 1067450368,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300100",
+     "kind": "secure_read_fixture",
+     "bits": 1067450368
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1067450368,
+      1,
+      1
+     ],
+     "input": 1.25,
+     "output": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1067450368,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 1.25,
+     "output": 1.25
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1067450368,
+      1,
+      0
+     ],
+     "input": 1.25,
+     "output": 1.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1067450368,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 1.25,
+     "output": 1.25
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 584.0,
+   "bits": 1142030336,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 584.0,
+   "bits": 1142030336,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 3,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 1234.5,
+   "bits": 1150963712,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300118",
+     "kind": "secure_read_fixture",
+     "bits": 1150963712
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1150963712,
+      1,
+      1
+     ],
+     "input": 1234.5,
+     "output": 1234.5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1150963712,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 1234.5,
+     "output": 1234.5
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1150963712,
+      1,
+      0
+     ],
+     "input": 1234.5,
+     "output": 1234.5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1150963712,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 1234.5,
+     "output": 1234.5
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 3,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 1234.5,
+   "bits": 1150963712,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300118",
+     "kind": "secure_read_fixture",
+     "bits": 1150963712
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1150963712,
+      1,
+      1
+     ],
+     "input": 1234.5,
+     "output": 1234.5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1150963712,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 1234.5,
+     "output": 1234.5
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1150963712,
+      1,
+      0
+     ],
+     "input": 1234.5,
+     "output": 1234.5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1150963712,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 1234.5,
+     "output": 1234.5
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 4,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 137,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     true
+    ]
+   ],
+   "trace_sha256": "40c4dcdcb798a3268c3659e5f9dfdc3adc98dac8459b9ae88a07950a9b2c3003"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 4,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 137,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     true
+    ]
+   ],
+   "trace_sha256": "40c4dcdcb798a3268c3659e5f9dfdc3adc98dac8459b9ae88a07950a9b2c3003"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 0,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 137,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     true
+    ]
+   ],
+   "trace_sha256": "40c4dcdcb798a3268c3659e5f9dfdc3adc98dac8459b9ae88a07950a9b2c3003"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 0,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 137,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     true
+    ]
+   ],
+   "trace_sha256": "40c4dcdcb798a3268c3659e5f9dfdc3adc98dac8459b9ae88a07950a9b2c3003"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": -1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 137,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     true
+    ]
+   ],
+   "trace_sha256": "40c4dcdcb798a3268c3659e5f9dfdc3adc98dac8459b9ae88a07950a9b2c3003"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": -1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 137,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     true
+    ]
+   ],
+   "trace_sha256": "40c4dcdcb798a3268c3659e5f9dfdc3adc98dac8459b9ae88a07950a9b2c3003"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": -5.0,
+   "bits": 3231711232,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300200",
+     "kind": "secure_read_fixture",
+     "bits": 3231711232
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      3231711232,
+      1,
+      1
+     ],
+     "input": -5.0,
+     "output": -5.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      3231711232,
+      1,
+      1,
+      20,
+      1
+     ],
+     "input": -5.0,
+     "output": -5.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      3231711232,
+      1,
+      0
+     ],
+     "input": -5.0,
+     "output": -5.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      3231711232,
+      1,
+      1,
+      20,
+      0
+     ],
+     "input": -5.0,
+     "output": -5.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": -5.0,
+   "bits": 3231711232,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300200",
+     "kind": "secure_read_fixture",
+     "bits": 3231711232
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      3231711232,
+      1,
+      1
+     ],
+     "input": -5.0,
+     "output": -5.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      3231711232,
+      1,
+      1,
+      20,
+      1
+     ],
+     "input": -5.0,
+     "output": -5.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      3231711232,
+      1,
+      0
+     ],
+     "input": -5.0,
+     "output": -5.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      3231711232,
+      1,
+      1,
+      20,
+      0
+     ],
+     "input": -5.0,
+     "output": -5.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030020c",
+     "kind": "secure_read_fixture",
+     "bits": 0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      0,
+      1,
+      1
+     ],
+     "input": 0.0,
+     "output": 0.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1,
+      1,
+      20,
+      1
+     ],
+     "input": 0.0,
+     "output": 0.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      0,
+      1,
+      0
+     ],
+     "input": 0.0,
+     "output": 0.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1,
+      1,
+      20,
+      0
+     ],
+     "input": 0.0,
+     "output": 0.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030020c",
+     "kind": "secure_read_fixture",
+     "bits": 0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      0,
+      1,
+      1
+     ],
+     "input": 0.0,
+     "output": 0.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1,
+      1,
+      20,
+      1
+     ],
+     "input": 0.0,
+     "output": 0.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      0,
+      1,
+      0
+     ],
+     "input": 0.0,
+     "output": 0.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1,
+      1,
+      20,
+      0
+     ],
+     "input": 0.0,
+     "output": 0.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 3,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 6.25,
+   "bits": 1086849024,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300218",
+     "kind": "secure_read_fixture",
+     "bits": 1086849024
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      1086849024,
+      1,
+      1
+     ],
+     "input": 6.25,
+     "output": 6.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1086849024,
+      1,
+      1,
+      20,
+      1
+     ],
+     "input": 6.25,
+     "output": 6.25
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      1086849024,
+      1,
+      0
+     ],
+     "input": 6.25,
+     "output": 6.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1086849024,
+      1,
+      1,
+      20,
+      0
+     ],
+     "input": 6.25,
+     "output": 6.25
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 3,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 6.25,
+   "bits": 1086849024,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300218",
+     "kind": "secure_read_fixture",
+     "bits": 1086849024
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      1086849024,
+      1,
+      1
+     ],
+     "input": 6.25,
+     "output": 6.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1086849024,
+      1,
+      1,
+      20,
+      1
+     ],
+     "input": 6.25,
+     "output": 6.25
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      1086849024,
+      1,
+      0
+     ],
+     "input": 6.25,
+     "output": 6.25
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1086849024,
+      1,
+      1,
+      20,
+      0
+     ],
+     "input": 6.25,
+     "output": 6.25
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 4,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 9.0,
+   "bits": 1091567616,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300224",
+     "kind": "secure_read_fixture",
+     "bits": 1091567616
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      1091567616,
+      1,
+      1
+     ],
+     "input": 9.0,
+     "output": 9.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1091567616,
+      1,
+      1,
+      20,
+      1
+     ],
+     "input": 9.0,
+     "output": 9.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      1091567616,
+      1,
+      0
+     ],
+     "input": 9.0,
+     "output": 9.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1091567616,
+      1,
+      1,
+      20,
+      0
+     ],
+     "input": 9.0,
+     "output": 9.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 4,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 9.0,
+   "bits": 1091567616,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300224",
+     "kind": "secure_read_fixture",
+     "bits": 1091567616
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      1091567616,
+      1,
+      1
+     ],
+     "input": 9.0,
+     "output": 9.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1091567616,
+      1,
+      1,
+      20,
+      1
+     ],
+     "input": 9.0,
+     "output": 9.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      1091567616,
+      1,
+      0
+     ],
+     "input": 9.0,
+     "output": 9.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1091567616,
+      1,
+      1,
+      20,
+      0
+     ],
+     "input": 9.0,
+     "output": 9.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 5,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 137,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     true
+    ]
+   ],
+   "trace_sha256": "40c4dcdcb798a3268c3659e5f9dfdc3adc98dac8459b9ae88a07950a9b2c3003"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 5,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 137,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     true
+    ]
+   ],
+   "trace_sha256": "40c4dcdcb798a3268c3659e5f9dfdc3adc98dac8459b9ae88a07950a9b2c3003"
+  },
+  {
+   "fixture": {
+    "column": 2,
+    "rank": 1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 100.0,
+   "bits": 1120403456,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300300",
+     "kind": "secure_read_fixture",
+     "bits": 1120403456
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      2,
+      1120403456,
+      1,
+      1
+     ],
+     "input": 100.0,
+     "output": 100.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1120403456,
+      2,
+      1,
+      20,
+      1
+     ],
+     "input": 100.0,
+     "output": 100.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      2,
+      1120403456,
+      1,
+      0
+     ],
+     "input": 100.0,
+     "output": 100.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1120403456,
+      2,
+      1,
+      20,
+      0
+     ],
+     "input": 100.0,
+     "output": 100.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 2,
+    "rank": 1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 100.0,
+   "bits": 1120403456,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300300",
+     "kind": "secure_read_fixture",
+     "bits": 1120403456
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      2,
+      1120403456,
+      1,
+      1
+     ],
+     "input": 100.0,
+     "output": 100.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1120403456,
+      2,
+      1,
+      20,
+      1
+     ],
+     "input": 100.0,
+     "output": 100.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      2,
+      1120403456,
+      1,
+      0
+     ],
+     "input": 100.0,
+     "output": 100.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1120403456,
+      2,
+      1,
+      20,
+      0
+     ],
+     "input": 100.0,
+     "output": 100.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 2,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 137,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     true
+    ]
+   ],
+   "trace_sha256": "40c4dcdcb798a3268c3659e5f9dfdc3adc98dac8459b9ae88a07950a9b2c3003"
+  },
+  {
+   "fixture": {
+    "column": 2,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 137,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     true
+    ]
+   ],
+   "trace_sha256": "40c4dcdcb798a3268c3659e5f9dfdc3adc98dac8459b9ae88a07950a9b2c3003"
+  },
+  {
+   "fixture": {
+    "column": 3,
+    "rank": 1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 18,
+   "branches": [
+    [
+     "0x9087b6",
+     false
+    ]
+   ],
+   "trace_sha256": "bb277ddbb95d45a8638a3f501145145bff711e81c60c6b8084d7b6b8131ae4ed"
+  },
+  {
+   "fixture": {
+    "column": 3,
+    "rank": 1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 18,
+   "branches": [
+    [
+     "0x9087b6",
+     false
+    ]
+   ],
+   "trace_sha256": "bb277ddbb95d45a8638a3f501145145bff711e81c60c6b8084d7b6b8131ae4ed"
+  },
+  {
+   "fixture": {
+    "column": -1,
+    "rank": 1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 18,
+   "branches": [
+    [
+     "0x9087b6",
+     false
+    ]
+   ],
+   "trace_sha256": "bb277ddbb95d45a8638a3f501145145bff711e81c60c6b8084d7b6b8131ae4ed"
+  },
+  {
+   "fixture": {
+    "column": -1,
+    "rank": 1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 0.0,
+   "bits": 0,
+   "fp_depth": 1,
+   "events": [],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 18,
+   "branches": [
+    [
+     "0x9087b6",
+     false
+    ]
+   ],
+   "trace_sha256": "bb277ddbb95d45a8638a3f501145145bff711e81c60c6b8084d7b6b8131ae4ed"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": true,
+    "poison": false
+   },
+   "value": 291.75,
+   "bits": 1133633536,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 587.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142079488,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 587.0,
+     "output": 1174.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1150468096,
+      1,
+      0
+     ],
+     "input": 1174.0,
+     "output": 1167.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1150410752,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 1167.0,
+     "output": 291.75
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": true,
+    "poison": true
+   },
+   "value": 291.75,
+   "bits": 1133633536,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 587.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142079488,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 587.0,
+     "output": 1174.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1150468096,
+      1,
+      0
+     ],
+     "input": 1174.0,
+     "output": 1167.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1150410752,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 1167.0,
+     "output": 291.75
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": true,
+    "poison": false
+   },
+   "value": -2.75,
+   "bits": 3224371200,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300200",
+     "kind": "secure_read_fixture",
+     "bits": 3231711232
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      3231711232,
+      1,
+      1
+     ],
+     "input": -5.0,
+     "output": -2.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      3221225472,
+      1,
+      1,
+      20,
+      1
+     ],
+     "input": -2.0,
+     "output": -4.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      3229614080,
+      1,
+      0
+     ],
+     "input": -4.0,
+     "output": -11.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      3241148416,
+      1,
+      1,
+      20,
+      0
+     ],
+     "input": -11.0,
+     "output": -2.75
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 1,
+    "rank": 1,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": true,
+    "poison": true
+   },
+   "value": -2.75,
+   "bits": 3224371200,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60300200",
+     "kind": "secure_read_fixture",
+     "bits": 3231711232
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      3231711232,
+      1,
+      1
+     ],
+     "input": -5.0,
+     "output": -2.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      3221225472,
+      1,
+      1,
+      20,
+      1
+     ],
+     "input": -2.0,
+     "output": -4.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1,
+      3229614080,
+      1,
+      0
+     ],
+     "input": -4.0,
+     "output": -11.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      3241148416,
+      1,
+      1,
+      20,
+      0
+     ],
+     "input": -11.0,
+     "output": -2.75
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 4,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 584.0,
+   "bits": 1142030336,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 4
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 4
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 226,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     true
+    ],
+    [
+     "0x905d87",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     true
+    ],
+    [
+     "0x905d87",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "f19e684ff75f52e298d04aaff78d31f62e3721018353b6b00de8423413bac29b"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 4,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 584.0,
+   "bits": 1142030336,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 4
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 4
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 226,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     true
+    ],
+    [
+     "0x905d87",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     true
+    ],
+    [
+     "0x905d87",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "f19e684ff75f52e298d04aaff78d31f62e3721018353b6b00de8423413bac29b"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 5,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 584.0,
+   "bits": 1142030336,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 5
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 230,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     true
+    ],
+    [
+     "0x905d87",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     true
+    ],
+    [
+     "0x905d87",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "65f0328af228ecb5cbdf2361e8ce8a7ac9b3ddbf280e6cf59a1126317b842a9d"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 5,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 584.0,
+   "bits": 1142030336,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 5
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 230,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     true
+    ],
+    [
+     "0x905d87",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     true
+    ],
+    [
+     "0x905d87",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "65f0328af228ecb5cbdf2361e8ce8a7ac9b3ddbf280e6cf59a1126317b842a9d"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 9,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 584.0,
+   "bits": 1142030336,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 9
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 9
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 9
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 9
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 270,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "81a7606176a78ea46e9a9f4e594f8165592bd3b2c7b7baab75c65bb099ab8975"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 9,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 584.0,
+   "bits": 1142030336,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 9
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 9
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 9
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 9
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 270,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "81a7606176a78ea46e9a9f4e594f8165592bd3b2c7b7baab75c65bb099ab8975"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 4,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 584.0,
+   "bits": 1142030336,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 4
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 4
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 286,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "e2f672a1099c67a709787388fa974a337aeb005e3f4ec085a02201fe2236cf6b"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 4,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 584.0,
+   "bits": 1142030336,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 4
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 4
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 286,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "e2f672a1099c67a709787388fa974a337aeb005e3f4ec085a02201fe2236cf6b"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 5,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": false
+   },
+   "value": 584.0,
+   "bits": 1142030336,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 5
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 300,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "02e015326b89f9c1e6b67b7e82c6aff1e68a5826a699ae74525cde9eba7a602a"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 5,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 14,
+    "modifiers": false,
+    "poison": true
+   },
+   "value": 584.0,
+   "bits": 1142030336,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 5
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 5
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142030336,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 584.0,
+     "output": 584.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 300,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "02e015326b89f9c1e6b67b7e82c6aff1e68a5826a699ae74525cde9eba7a602a"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 20,
+    "normalization_column": 14,
+    "modifiers": true,
+    "poison": false
+   },
+   "value": 291.75,
+   "bits": 1133633536,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 587.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142079488,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 587.0,
+     "output": 1174.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1150468096,
+      1,
+      0
+     ],
+     "input": 1174.0,
+     "output": 1167.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1150410752,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 1167.0,
+     "output": 291.75
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 20,
+    "normalization_column": 14,
+    "modifiers": true,
+    "poison": true
+   },
+   "value": 291.75,
+   "bits": 1133633536,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 587.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142079488,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 587.0,
+     "output": 1174.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1150468096,
+      1,
+      0
+     ],
+     "input": 1174.0,
+     "output": 1167.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1150410752,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 1167.0,
+     "output": 291.75
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 324,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     true
+    ]
+   ],
+   "trace_sha256": "651ee91e711453e1299283c811687b6c1a718e34e60e1724d009fe50ee33995f"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 13,
+    "modifiers": true,
+    "poison": false
+   },
+   "value": 291.75,
+   "bits": 1133633536,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 587.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142079488,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 587.0,
+     "output": 1174.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1150468096,
+      1,
+      0
+     ],
+     "input": 1174.0,
+     "output": 1167.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1150410752,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 1167.0,
+     "output": 291.75
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 328,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     false
+    ],
+    [
+     "0x908967",
+     true
+    ]
+   ],
+   "trace_sha256": "f040bdb042aa23903720a1b41c49a975276c42cc7654b78621d210472caa8279"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 40,
+    "normalization_column": 13,
+    "modifiers": true,
+    "poison": true
+   },
+   "value": 291.75,
+   "bits": 1133633536,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 587.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142079488,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 587.0,
+     "output": 1174.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1150468096,
+      1,
+      0
+     ],
+     "input": 1174.0,
+     "output": 1167.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1150410752,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 1167.0,
+     "output": 291.75
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 328,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     false
+    ],
+    [
+     "0x908967",
+     true
+    ]
+   ],
+   "trace_sha256": "f040bdb042aa23903720a1b41c49a975276c42cc7654b78621d210472caa8279"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 20,
+    "normalization_column": 13,
+    "modifiers": true,
+    "poison": false
+   },
+   "value": 145.875,
+   "bits": 1125244928,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 587.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142079488,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 587.0,
+     "output": 1174.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1150468096,
+      1,
+      0
+     ],
+     "input": 1174.0,
+     "output": 1167.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1150410752,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 1167.0,
+     "output": 291.75
+    },
+    {
+     "target": "0x75bf00",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "output": 2.0
+    },
+    {
+     "target": "0x75bf00",
+     "kind": "normalization_fixture",
+     "args": [
+      20,
+      13,
+      0
+     ],
+     "output": 4.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 343,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     false
+    ],
+    [
+     "0x908967",
+     false
+    ]
+   ],
+   "trace_sha256": "e7a84e090f538bbddd18cb378fe0beb74a3eca025b0b5167d49f4dc969fb33c2"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 2,
+    "mode": 3,
+    "skill_mode": 1,
+    "level_a": 40,
+    "level_b": 20,
+    "normalization_column": 13,
+    "modifiers": true,
+    "poison": true
+   },
+   "value": 145.875,
+   "bits": 1125244928,
+   "fp_depth": 1,
+   "events": [
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x6fc760",
+     "kind": "singleton_fixture"
+    },
+    {
+     "target": "0x1195b90",
+     "kind": "mode_decode_fixture",
+     "value": 3
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "bits": 1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000518",
+     "kind": "secure_read_fixture",
+     "bits": 4294967295
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6030010c",
+     "kind": "secure_read_fixture",
+     "bits": 1142030336
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1142030336,
+      1,
+      1
+     ],
+     "input": 584.0,
+     "output": 587.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1142079488,
+      0,
+      1,
+      20,
+      1
+     ],
+     "input": 587.0,
+     "output": 1174.0
+    },
+    {
+     "target": "0x906250",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      0,
+      1150468096,
+      1,
+      0
+     ],
+     "input": 1174.0,
+     "output": 1167.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x60000038",
+     "kind": "secure_read_fixture",
+     "bits": 20
+    },
+    {
+     "target": "0x907d40",
+     "this": "0x60000000",
+     "kind": "modifier_fixture",
+     "args": [
+      1611661312,
+      1150410752,
+      0,
+      1,
+      20,
+      0
+     ],
+     "input": 1167.0,
+     "output": 291.75
+    },
+    {
+     "target": "0x75bf00",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "output": 2.0
+    },
+    {
+     "target": "0x75bf00",
+     "kind": "normalization_fixture",
+     "args": [
+      20,
+      13,
+      0
+     ],
+     "output": 4.0
+    }
+   ],
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x6fffff28",
+   "preserved": {
+    "edi": true,
+    "esi": true,
+    "ebx": true,
+    "ebp": true
+   },
+   "steps": 343,
+   "branches": [
+    [
+     "0x9087b6",
+     true
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x9087cb",
+     true
+    ],
+    [
+     "0x9087fd",
+     true
+    ],
+    [
+     "0x90882d",
+     false
+    ],
+    [
+     "0x7528a5",
+     false
+    ],
+    [
+     "0x7528aa",
+     false
+    ],
+    [
+     "0x905d87",
+     false
+    ],
+    [
+     "0x905d9c",
+     false
+    ],
+    [
+     "0x905dbc",
+     false
+    ],
+    [
+     "0x905dd6",
+     false
+    ],
+    [
+     "0x905de1",
+     true
+    ],
+    [
+     "0x905e07",
+     true
+    ],
+    [
+     "0x90883c",
+     true
+    ],
+    [
+     "0x908871",
+     true
+    ],
+    [
+     "0x90889a",
+     true
+    ],
+    [
+     "0x90895d",
+     false
+    ],
+    [
+     "0x908967",
+     false
+    ]
+   ],
+   "trace_sha256": "e7a84e090f538bbddd18cb378fe0beb74a3eca025b0b5167d49f4dc969fb33c2"
+  }
+ ],
+ "blocks": [
+  {
+   "start": "0x752850",
+   "end_exclusive": "0x752876",
+   "sha256": "cf8ae86bbfbb6c67ebe24d8234227c96d60c0d1cc7cbd164d37e59baa6c4e813",
+   "instructions": [
+    "00752850 push ebp",
+    "00752851 mov ebp, esp",
+    "00752853 sub esp, 8",
+    "00752856 mov eax, dword ptr [ecx + 0xa4]",
+    "0075285C lea ecx, [ebp - 8]",
+    "0075285F push ecx",
+    "00752860 lea edx, [ebp - 4]",
+    "00752863 push edx",
+    "00752864 mov dword ptr [ebp - 4], eax",
+    "00752867 call 0x1195b90",
+    "0075286C mov eax, dword ptr [ebp - 8]",
+    "0075286F add esp, 8",
+    "00752872 mov esp, ebp",
+    "00752874 pop ebp",
+    "00752875 ret "
+   ]
+  },
+  {
+   "start": "0x752880",
+   "end_exclusive": "0x7528bb",
+   "sha256": "3d0d4578097ea4f344c8f07e6256203500564632bb7db802890e78c6d9117388",
+   "instructions": [
+    "00752880 push ebp",
+    "00752881 mov ebp, esp",
+    "00752883 sub esp, 8",
+    "00752886 mov eax, dword ptr [ecx + 0xa4]",
+    "0075288C lea ecx, [ebp - 8]",
+    "0075288F push ecx",
+    "00752890 lea edx, [ebp - 4]",
+    "00752893 push edx",
+    "00752894 mov dword ptr [ebp - 4], eax",
+    "00752897 call 0x1195b90",
+    "0075289C mov eax, dword ptr [ebp - 8]",
+    "0075289F add esp, 8",
+    "007528A2 cmp eax, 4",
+    "007528A5 je 0x7528b2",
+    "007528A7 cmp eax, 5",
+    "007528AA je 0x7528b2",
+    "007528AC xor eax, eax",
+    "007528AE mov esp, ebp",
+    "007528B0 pop ebp",
+    "007528B1 ret ",
+    "007528B2 mov eax, 1",
+    "007528B7 mov esp, ebp",
+    "007528B9 pop ebp",
+    "007528BA ret "
+   ]
+  },
+  {
+   "start": "0x905d70",
+   "end_exclusive": "0x905de3",
+   "sha256": "ec354cb1d8cbb01b9097975af2e938c98dc97e6c1f1f02fefb48b7ca7116da9c",
+   "instructions": [
+    "00905D70 push ebp",
+    "00905D71 mov ebp, esp",
+    "00905D73 push ecx",
+    "00905D74 push ebx",
+    "00905D75 push esi",
+    "00905D76 push edi",
+    "00905D77 mov ebx, ecx",
+    "00905D79 call 0x6fc760",
+    "00905D7E mov ecx, eax",
+    "00905D80 call 0x752880",
+    "00905D85 test al, al",
+    "00905D87 jne 0x905e77",
+    "00905D8D call 0x6fc760",
+    "00905D92 mov ecx, eax",
+    "00905D94 call 0x752850",
+    "00905D99 cmp eax, 9",
+    "00905D9C je 0x905e77",
+    "00905DA2 lea eax, [ebp - 4]",
+    "00905DA5 push eax",
+    "00905DA6 lea edi, [ebx + 0x4ac]",
+    "00905DAC push edi",
+    "00905DAD lea ecx, [ebx + 0x4a4]",
+    "00905DB3 call 0x1195eb0",
+    "00905DB8 cmp dword ptr [ebp - 4], 4",
+    "00905DBC je 0x905e77",
+    "00905DC2 lea ecx, [ebp - 4]",
+    "00905DC5 push ecx",
+    "00905DC6 push edi",
+    "00905DC7 lea ecx, [ebx + 0x4a4]",
+    "00905DCD call 0x1195eb0",
+    "00905DD2 cmp dword ptr [ebp - 4], 5",
+    "00905DD6 je 0x905e77",
+    "00905DDC mov esi, dword ptr [ebp + 8]",
+    "00905DDF test esi, esi",
+    "00905DE1 jne 0x905dee"
+   ]
+  },
+  {
+   "start": "0x905dee",
+   "end_exclusive": "0x905e09",
+   "sha256": "3b8f4b14a649c48e0b511720775f89ef654aa75cae563c5f9fd80f28305de363",
+   "instructions": [
+    "00905DEE lea edi, [ebx + 0x518]",
+    "00905DF4 lea edx, [ebp + 8]",
+    "00905DF7 push edx",
+    "00905DF8 lea ebx, [edi + 8]",
+    "00905DFB push ebx",
+    "00905DFC mov ecx, edi",
+    "00905DFE call 0x1195eb0",
+    "00905E03 cmp dword ptr [ebp + 8], -1",
+    "00905E07 je 0x905e77"
+   ]
+  },
+  {
+   "start": "0x905e77",
+   "end_exclusive": "0x905e82",
+   "sha256": "1120a35542a282233124663036f6a5ffcf545603a8b01cd7feec645315797e7a",
+   "instructions": [
+    "00905E77 pop edi",
+    "00905E78 pop esi",
+    "00905E79 xor eax, eax",
+    "00905E7B pop ebx",
+    "00905E7C mov esp, ebp",
+    "00905E7E pop ebp",
+    "00905E7F ret 4"
+   ]
+  },
+  {
+   "start": "0x908794",
+   "end_exclusive": "0x9087cd",
+   "sha256": "862776fb3e720fafa0c99c2ad2afc7c895850336d680e337807faecfcb8efaca",
+   "instructions": [
+    "00908794 lea eax, [esi + 0x3cc]",
+    "0090879A mov ecx, dword ptr [eax + 8]",
+    "0090879D sub ecx, dword ptr [eax + 4]",
+    "009087A0 mov edi, dword ptr [ebp + 8]",
+    "009087A3 mov eax, 0x66666667",
+    "009087A8 imul ecx",
+    "009087AA sar edx, 3",
+    "009087AD mov eax, edx",
+    "009087AF shr eax, 0x1f",
+    "009087B2 add eax, edx",
+    "009087B4 cmp edi, eax",
+    "009087B6 jb 0x9087c1",
+    "009087B8 fldz ",
+    "009087BA pop edi",
+    "009087BB pop esi",
+    "009087BC pop ebx",
+    "009087BD pop ebp",
+    "009087BE ret 0x20",
+    "009087C1 push ebx",
+    "009087C2 mov ecx, esi",
+    "009087C4 call 0x905d70",
+    "009087C9 test eax, eax",
+    "009087CB je 0x9087dc"
+   ]
+  },
+  {
+   "start": "0x9087dc",
+   "end_exclusive": "0x9087ff",
+   "sha256": "ad4427f4ef4f60d89373b48fa0c61c9ddb02a436149449d6c58c9f53f561d6b5",
+   "instructions": [
+    "009087DC lea eax, [esi + 0x3cc]",
+    "009087E2 mov ecx, dword ptr [eax + 4]",
+    "009087E5 mov edx, dword ptr [eax + 8]",
+    "009087E8 sub edx, ecx",
+    "009087EA mov eax, 0x66666667",
+    "009087EF imul edx",
+    "009087F1 sar edx, 3",
+    "009087F4 mov eax, edx",
+    "009087F6 shr eax, 0x1f",
+    "009087F9 add eax, edx",
+    "009087FB cmp edi, eax",
+    "009087FD jb 0x908804"
+   ]
+  },
+  {
+   "start": "0x908804",
+   "end_exclusive": "0x90883e",
+   "sha256": "3995fdbcbf462478aa96ec4059d6b828fe7b6228ed7272190ddca9e011aa39a1",
+   "instructions": [
+    "00908804 mov edx, dword ptr [ebp + 0xc]",
+    "00908807 dec edx",
+    "00908808 lea ebx, [edi + edi*4]",
+    "0090880B add ebx, ebx",
+    "0090880D mov dword ptr [ebp + 8], edx",
+    "00908810 add ebx, ebx",
+    "00908812 mov edx, dword ptr [ebx + ecx + 8]",
+    "00908816 sub edx, dword ptr [ebx + ecx + 4]",
+    "0090881A mov eax, 0x2aaaaaab",
+    "0090881F imul edx",
+    "00908821 sar edx, 1",
+    "00908823 mov eax, edx",
+    "00908825 shr eax, 0x1f",
+    "00908828 add eax, edx",
+    "0090882A cmp dword ptr [ebp + 8], eax",
+    "0090882D jae 0x9087b8",
+    "0090882F mov ecx, dword ptr [ebp + 0x10]",
+    "00908832 push ecx",
+    "00908833 mov ecx, esi",
+    "00908835 call 0x905d70",
+    "0090883A test eax, eax",
+    "0090883C je 0x908850"
+   ]
+  },
+  {
+   "start": "0x908850",
+   "end_exclusive": "0x908873",
+   "sha256": "ad4427f4ef4f60d89373b48fa0c61c9ddb02a436149449d6c58c9f53f561d6b5",
+   "instructions": [
+    "00908850 lea eax, [esi + 0x3cc]",
+    "00908856 mov ecx, dword ptr [eax + 4]",
+    "00908859 mov edx, dword ptr [eax + 8]",
+    "0090885C sub edx, ecx",
+    "0090885E mov eax, 0x66666667",
+    "00908863 imul edx",
+    "00908865 sar edx, 3",
+    "00908868 mov eax, edx",
+    "0090886A shr eax, 0x1f",
+    "0090886D add eax, edx",
+    "0090886F cmp edi, eax",
+    "00908871 jb 0x908878"
+   ]
+  },
+  {
+   "start": "0x908878",
+   "end_exclusive": "0x90889c",
+   "sha256": "8021c9488792fd6f880f2a4eafda3595903f881d1f58b93399281d8da80c42da",
+   "instructions": [
+    "00908878 mov eax, dword ptr [ecx + ebx + 4]",
+    "0090887C mov ebx, dword ptr [ecx + ebx + 8]",
+    "00908880 sub ebx, eax",
+    "00908882 mov dword ptr [ebp + 0xc], eax",
+    "00908885 mov eax, 0x2aaaaaab",
+    "0090888A imul ebx",
+    "0090888C mov eax, dword ptr [ebp + 8]",
+    "0090888F sar edx, 1",
+    "00908891 mov ecx, edx",
+    "00908893 shr ecx, 0x1f",
+    "00908896 add ecx, edx",
+    "00908898 cmp eax, ecx",
+    "0090889A jb 0x9088a1"
+   ]
+  },
+  {
+   "start": "0x9088a1",
+   "end_exclusive": "0x908994",
+   "sha256": "a9eea64c25a479bae0f3c618275937bd3acec363d52884b03ce249115b23ffb9",
+   "instructions": [
+    "009088A1 lea edx, [eax + eax*2]",
+    "009088A4 mov eax, dword ptr [ebp + 0xc]",
+    "009088A7 lea ecx, [eax + edx*4]",
+    "009088AA lea edx, [ebp + 8]",
+    "009088AD push edx",
+    "009088AE lea eax, [ecx + 8]",
+    "009088B1 push eax",
+    "009088B2 call 0x1195eb0",
+    "009088B7 movss xmm0, dword ptr [ebp + 8]",
+    "009088BC push 1",
+    "009088BE push 1",
+    "009088C0 push ecx",
+    "009088C1 mov ecx, dword ptr [ebp + 0x10]",
+    "009088C4 movss dword ptr [esp], xmm0",
+    "009088C9 push edi",
+    "009088CA push ecx",
+    "009088CB mov ecx, esi",
+    "009088CD call 0x906250",
+    "009088D2 fstp dword ptr [ebp + 8]",
+    "009088D5 lea edx, [ebp + 0xc]",
+    "009088D8 lea eax, [esi + 0x40]",
+    "009088DB push edx",
+    "009088DC push eax",
+    "009088DD lea ecx, [esi + 0x38]",
+    "009088E0 call 0x1195eb0",
+    "009088E5 mov eax, dword ptr [ebp + 0xc]",
+    "009088E8 movss xmm0, dword ptr [ebp + 8]",
+    "009088ED push 1",
+    "009088EF push eax",
+    "009088F0 push 1",
+    "009088F2 push edi",
+    "009088F3 push ecx",
+    "009088F4 mov ecx, dword ptr [ebp + 0x10]",
+    "009088F7 movss dword ptr [esp], xmm0",
+    "009088FC push ecx",
+    "009088FD mov ecx, esi",
+    "009088FF call 0x907d40",
+    "00908904 fstp dword ptr [ebp + 8]",
+    "00908907 movss xmm0, dword ptr [ebp + 8]",
+    "0090890C mov edx, dword ptr [ebp + 0x10]",
+    "0090890F push 0",
+    "00908911 push 1",
+    "00908913 push ecx",
+    "00908914 movss dword ptr [esp], xmm0",
+    "00908919 push edi",
+    "0090891A push edx",
+    "0090891B mov ecx, esi",
+    "0090891D call 0x906250",
+    "00908922 fstp dword ptr [ebp + 8]",
+    "00908925 lea eax, [ebp + 0xc]",
+    "00908928 push eax",
+    "00908929 lea eax, [esi + 0x40]",
+    "0090892C push eax",
+    "0090892D lea ecx, [esi + 0x38]",
+    "00908930 call 0x1195eb0",
+    "00908935 mov ecx, dword ptr [ebp + 0xc]",
+    "00908938 movss xmm0, dword ptr [ebp + 8]",
+    "0090893D mov edx, dword ptr [ebp + 0x10]",
+    "00908940 push 0",
+    "00908942 push ecx",
+    "00908943 push 1",
+    "00908945 push edi",
+    "00908946 push ecx",
+    "00908947 movss dword ptr [esp], xmm0",
+    "0090894C push edx",
+    "0090894D mov ecx, esi",
+    "0090894F call 0x907d40",
+    "00908954 fst dword ptr [ebp + 8]",
+    "00908957 mov esi, dword ptr [ebp + 0x1c]",
+    "0090895A cmp esi, 0xe",
+    "0090895D je 0x90898d",
+    "0090895F mov eax, dword ptr [ebp + 0x14]",
+    "00908962 mov edi, dword ptr [ebp + 0x18]",
+    "00908965 cmp eax, edi",
+    "00908967 je 0x90898d",
+    "00908969 mov ecx, dword ptr [ebp + 0x20]",
+    "0090896C fstp st(0)",
+    "0090896E push ecx",
+    "0090896F push esi",
+    "00908970 push eax",
+    "00908971 call 0x75bf00",
+    "00908976 fmul dword ptr [ebp + 8]",
+    "00908979 mov edx, dword ptr [ebp + 0x24]",
+    "0090897C push edx",
+    "0090897D push esi",
+    "0090897E fstp dword ptr [ebp + 0x10]",
+    "00908981 push edi",
+    "00908982 call 0x75bf00",
+    "00908987 fdivr dword ptr [ebp + 0x10]",
+    "0090898A add esp, 0x18",
+    "0090898D pop edi",
+    "0090898E pop esi",
+    "0090898F pop ebx",
+    "00908990 pop ebp",
+    "00908991 ret 0x20"
+   ]
+  }
+ ]
+}
