@@ -1409,6 +1409,13 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		entity["timeline"] = timeline
 	_next_entity_id += 1
 	objects.append(entity)
+	if controller.get("kind","") == "icewave_chain":
+		# A6FE41 reads 1A5F820 (Smoke.ptl), sets emitter XYZ, resets it at 0,
+		# emits once, then A6FF21 applies ice DD8 to the generated ANI only.
+		# This source block does not mirror the shared emitter with the caster.
+		bus.emit("combat.cue",{"kind":"native_particle",
+			"path":"passiveobject/character/swordman/particle/icewaveparticlesmoke.ptl",
+			"point":entity["pos"],"height":entity["z"],"scale":entity["size_rate"]})
 	if String(obj["add_fx"]) != "":spawn_effect(String(obj["add_fx"]),entity["pos"],facing,float(entity["z"]))
 
 func step_objects(ms: float) -> void:

@@ -6,6 +6,8 @@ extends Node2D
 ## exported original Lorien maps (assets_local/native_maps).
 const ActorView = preload("res://view/actor_view.gd")
 const FxView = preload("res://view/fx_view.gd")
+const NativeParticleView = preload("res://view/native_particle_view.gd")
+const ParticleBursts = preload("res://combat/api/particle_bursts.gd")
 const TextureCache = preload("res://view/texture_cache.gd")
 const AudioRouter = preload("res://view/audio_router.gd")
 const MapStage = preload("res://view/map_stage.gd")
@@ -29,6 +31,8 @@ var hud_layer
 var revive_layer
 var audio
 var effects: Array = []
+var particle_bursts = ParticleBursts.new()
+var _particle_banks: Dictionary = {}
 var revive_effects: Array = []
 var numbers: Array = []
 var prop_views: Array = []
@@ -65,6 +69,8 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 	_player_clips = player_clips
 	_effects = assets.get("effects",{}).duplicate()
 	_effects.merge(combat_assets.get("effects",{}),true)
+	for bank: Dictionary in combat_assets.get("effects",{}).values():
+		if bank.has("source"):_particle_banks[String(bank.source).to_lower()] = bank
 	_warm_render_assets()
 	world = Node2D.new()
 	add_child(world)
@@ -169,6 +175,10 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 			if fx.action_clock_at >= 0:
 				if int(p.get("action_instance",-1)) != fx.action_instance or p.get("state","") != "action":fx.queue_free()
 				else:fx.seek(maxf(0,float(p["clock"])-fx.action_clock_at))
+			elif fx.get_meta("particle_birth_pending",false):
+				# The cue was created during this simulation tick. Its ANI begins
+				# at zero, rather than consuming a tick before its first rendering.
+				fx.set_meta("particle_birth_pending",false)
 			else:fx.advance(sim_ms)
 	effects = effects.filter(func(fx):return is_instance_valid(fx) and not fx.is_queued_for_deletion())
 	stage.show_room(s["stage"])
@@ -330,10 +340,35 @@ func _on_cue(event: Dictionary) -> void:
 	match String(event["kind"]):
 		"sound":audio.on_cue(event)
 		"fx":_spawn_fx(event)
+		"native_particle":_spawn_native_particle(event)
 		"fx_clear":
 			for fx in effects:
 				if is_instance_valid(fx) and fx.tag == String(event["tag"]):fx.queue_free()
 		"ghost":_spawn_ghost(event)
+
+func _spawn_native_particle(event: Dictionary) -> void:
+	var path := String(event["path"])
+	var template: Dictionary = _combat.get("particles",{}).get(path,{})
+	if template.is_empty():
+		push_error("Missing original particle template: "+path)
+		return
+	var point: Vector2 = event["point"]
+	var result: Dictionary = particle_bursts.emit_once(template.decoded,
+		Vector3i(int(point.x),int(point.y),int(event.get("height",0))),bool(event.get("mirrored",false)))
+	if not result.ok:
+		push_error(str(result.problems))
+		return
+	for emission: Dictionary in result.particles:
+		var particle = NativeParticleView.new()
+		world.add_child(particle)
+		particle.base_scale = float(event.get("scale",1.0))
+		particle.set_meta("source_ptl",path)
+		particle.set_meta("particle_birth_pending",true)
+		if not particle.setup_particle(emission,_particle_banks.get(emission.entry.path,{})):
+			push_error(str(particle.errors))
+			particle.queue_free()
+			continue
+		effects.append(particle)
 
 func _spawn_fx(event: Dictionary) -> void:
 	var key := String(event["key"])

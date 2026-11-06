@@ -34,12 +34,34 @@ from dnf_asset_reader import decode, parse
 from dnf_asset_store import ROOT
 from dnf_pvf import open_library, resolve
 from dnf_locomotion import build as build_locomotion
+from build_dnf_particles import parse as parse_particle
 
 OUT = ROOT / 'game_dnf/assets_local/combat'
 ACTIVE_OUT = OUT
 SCHEMA = 'dnf_combat_assets/1'
 BUILD_VERSION = 7
 SKILL_RUNTIME = ROOT / 'game_dnf/data/skill_runtime.json'
+NATIVE_PARTICLES = [
+    'passiveobject/character/swordman/particle/'+stem+'.ptl'
+    for stem in ('icewaveparticlesmoke', 'icewaveparticle', 'icewaveparticlestar')
+]
+
+
+def native_particle_definitions(src):
+    """Small runtime subset, decoded from the source; retain duplicate choices."""
+    particles, effects = {}, {}
+    for path in NATIVE_PARTICLES:
+        doc = src.lib.script(path)
+        if not doc:
+            raise ValueError('Missing original particle: '+path)
+        entry = parse_particle(path, doc)
+        if not entry or entry['unsupported'] or entry['diagnostics']:
+            raise ValueError('Unresolved native particle: '+path)
+        particles[path] = {'sha256': entry['sha256'], 'decoded': entry['decoded']}
+        src.sources[path] = entry['sha256']
+        for animation in entry['animations']:
+            effects['native_'+PurePosixPath(animation).stem] = animation
+    return particles, effects
 
 MONSTERS = {
     # key: (mob path, clip dir, extra clips)
@@ -633,6 +655,8 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     objects.update(runtime_assets.get('objects', {}))
     effects = dict(EFFECTS)
     effects.update(runtime_assets.get('effect_anims', {}))
+    manifest['particles'], particle_effects = native_particle_definitions(src)
+    effects.update(particle_effects)
     for key, spec in monster_specifications().items():
         manifest['monsters'][key] = monster_bank(src, key, spec['mob'], spec.get('clip_dir', ''), unresolved,
                                                   spec.get('extra', ()), spec.get('motions'))
@@ -732,7 +756,8 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     (ACTIVE_OUT / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     summary = {'monsters': list(manifest['monsters']), 'objects': list(manifest['objects']),
                'effects': len(manifest['effects']), 'digits': len(manifest['digits']['items']),
-               'audio_keys': len(manifest['audio']), 'unresolved': len(unresolved)}
+               'audio_keys': len(manifest['audio']), 'unresolved': len(unresolved),
+               'particle_templates': len(manifest['particles'])}
     (ACTIVE_OUT / 'build_summary.json').write_text(json.dumps({**summary, 'unresolved_items': unresolved}, ensure_ascii=False, indent=1), encoding='utf-8')
     # Marks a machine that builds combat banks from the full library itself. Kept outside the
     # combat/ folder so the shared combat_runtime pack (tools/pack_dnf_flow.py) never carries it;
@@ -744,12 +769,59 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     return summary
 
 
+def extend_native_particles(library: Path | None, output: Path = OUT) -> dict:
+    """Stage the existing tree plus new banks; reject changes to existing PNGs."""
+    global ACTIVE_OUT
+    src = Source(library)
+    previous_output = ACTIVE_OUT
+    (ROOT/'temp').mkdir(parents=True,exist_ok=True)
+    stage = Path(tempfile.mkdtemp(prefix='dnf-particle-extend-', dir=ROOT/'temp'))
+    try:
+        shutil.copytree(output, stage, dirs_exist_ok=True)
+        ACTIVE_OUT = stage
+        manifest = json.loads((output/'manifest.json').read_text(encoding='utf8'))
+        definitions, effects = native_particle_definitions(src)
+        unresolved = []
+        for key, path in effects.items():
+            bank = effect_bank(src, key, path, unresolved)
+            if key in manifest['effects'] and manifest['effects'][key] != bank:
+                raise ValueError('Existing particle bank differs; create a new version: '+key)
+            texture = 'fx_'+key+'.png'
+            if (output/texture).exists() and (output/texture).read_bytes() != (stage/texture).read_bytes():
+                raise ValueError('Existing particle texture differs: '+texture)
+            manifest['effects'][key] = bank
+        if unresolved:
+            raise ValueError('Incomplete particle assets: '+str(unresolved))
+        for path, digest in src.sources.items():
+            if path in manifest['sources'] and manifest['sources'][path] != digest:
+                raise ValueError('Existing source identity differs: '+path)
+        manifest.setdefault('particles', {}).update(definitions)
+        manifest['sources'].update(src.sources)
+        (stage/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,separators=(',',':')),encoding='utf8')
+        summary_path = stage/'build_summary.json'
+        if summary_path.is_file():
+            summary = json.loads(summary_path.read_text(encoding='utf8'))
+            summary.update(effects=len(manifest['effects']),particle_templates=len(manifest['particles']))
+            summary_path.write_text(json.dumps(summary,ensure_ascii=False,indent=1),encoding='utf8')
+        publish_tree(stage, output)
+        return {'particle_templates': len(definitions), 'animation_banks': len(effects)}
+    finally:
+        ACTIVE_OUT = previous_output
+        src.cat.close()
+        src.lib.db.close()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('--library', type=Path)
     parser.add_argument('--refresh-ani-metadata', action='store_true',
                         help='Update pinned ANI globals in existing manifest without rebuilding images')
+    parser.add_argument('--extend-native-particles', action='store_true',
+                        help='Add native particle banks atomically, preserving every existing asset')
     args = parser.parse_args()
+    if args.extend_native_particles:
+        print(json.dumps(extend_native_particles(args.library)))
+        return 0
     if args.refresh_ani_metadata:
         path = OUT / 'manifest.json'
         source = Source(args.library)

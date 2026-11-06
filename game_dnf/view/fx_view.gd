@@ -72,12 +72,27 @@ func seek(t: float) -> void:
 		material = _materials[mode]
 	queue_redraw()
 
+## ANI item 9 supplies RGBA endpoints; item 10 enables interpolation. Keep
+## PTL fade separate so particle opacity is not applied twice. The renderer
+## uses float channels; original packed-byte quantization remains unverified.
+func frame_color() -> Color:
+	var rgba: Array = frame.get("items",{}).get("9",[255,255,255,255])
+	var color := Color(float(rgba[0])/255,float(rgba[1])/255,float(rgba[2])/255,float(rgba[3])/255)
+	if int(frame.get("items",{}).get("10",0)) == 1:
+		var index: int = data["frames"].find(frame)
+		var span := float(frame.get("delay_ms",0) if frame.get("delay_ms") != null else 0)
+		if index >= 0 and index+1 < data["frames"].size() and span > 0:
+			var next_rgba: Array = data["frames"][index+1].get("items",{}).get("9",[255,255,255,255])
+			var target := Color(float(next_rgba[0])/255,float(next_rgba[1])/255,float(next_rgba[2])/255,float(next_rgba[3])/255)
+			color = color.lerp(target,clampf(_frame_local/span,0,1))
+	color.a *= fade
+	return color
+
 func _draw() -> void:
 	if atlas == null or not frame.has("sprite"):return
 	var item: Dictionary = data["atlas"]["items"][frame["sprite"]]
 	var r: Array = item["rect"]
 	var o: Array = item["offset"]
-	var rgba: Array = frame.get("items",{}).get("9",[255,255,255,255])
 	var rate: Array = frame.get("items",{}).get("7",[1.0,1.0])
 	# [ROTATE] is in radians; [INTERPOLATION] (item 10) eases it toward the next frame.
 	var rotate := float(frame.get("items",{}).get("8",0.0))
@@ -88,5 +103,4 @@ func _draw() -> void:
 			var next_rot := float(data["frames"][i+1].get("items",{}).get("8",0.0))
 			if span > 0:rotate = lerpf(rotate,next_rot,clampf(_frame_local/span,0,1))
 	draw_set_transform(Vector2.ZERO,rotate*facing,Vector2(facing*float(rate[0])*base_scale,float(rate[1])*base_scale))
-	var alpha := float(rgba[3])/255*fade
-	draw_texture_rect_region(atlas,Rect2(float(o[0]),float(o[1]),float(r[2]),float(r[3])),Rect2(float(r[0]),float(r[1]),float(r[2]),float(r[3])),Color(float(rgba[0])/255,float(rgba[1])/255,float(rgba[2])/255,alpha))
+	draw_texture_rect_region(atlas,Rect2(float(o[0]),float(o[1]),float(r[2]),float(r[3])),Rect2(float(r[0]),float(r[1]),float(r[2]),float(r[3])),frame_color())

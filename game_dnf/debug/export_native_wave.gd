@@ -42,6 +42,7 @@ func capture() -> void:
 				var delta := minf(1.0,remaining)
 				game.step_objects(delta)
 				if String(game.player["action"])!="":game.step_action(delta,Vector2.ZERO)
+				game.view.present(game.view_snapshot(),delta,delta)
 				remaining -= delta
 			var snapshot: Dictionary = game.view_snapshot()
 			print("[WAVE_STATE] ",facing," ",at," ",JSON.stringify(snapshot["objects"]))

@@ -963,7 +963,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisleftlight.ani",
        "ani_sha256": "a2dc03b5e4f45710f75ad900846d14d4da3cd01981503f064415bb6484cddb84",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -1396,7 +1396,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisleftlight.ani",
        "ani_sha256": "a2dc03b5e4f45710f75ad900846d14d4da3cd01981503f064415bb6484cddb84",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -2009,7 +2009,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisrightlight.ani",
        "ani_sha256": "ad5cea376ccf3a268b5377347b6232cd0d24b0ea3f4bb4bb76d448a217b793bd",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -2434,7 +2434,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisrightlight.ani",
        "ani_sha256": "ad5cea376ccf3a268b5377347b6232cd0d24b0ea3f4bb4bb76d448a217b793bd",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -3005,7 +3005,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisuplight.ani",
        "ani_sha256": "29c40dbf85f54d86398491ab372291e75d83d638a6b26742f59265ee3d01c42a",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -3361,7 +3361,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisuplight.ani",
        "ani_sha256": "29c40dbf85f54d86398491ab372291e75d83d638a6b26742f59265ee3d01c42a",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -3670,7 +3670,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisdownlight.ani",
        "ani_sha256": "b77bb2c6d478da202d2b579731ecde3c5fcc859a72d8343ba8d0000cecad9315",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -3979,7 +3979,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisdownlight.ani",
        "ani_sha256": "b77bb2c6d478da202d2b579731ecde3c5fcc859a72d8343ba8d0000cecad9315",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -9276,7 +9276,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -9328,7 +9328,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -9377,7 +9377,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -9426,7 +9426,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -9475,7 +9475,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -9524,7 +9524,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17576,7 +17576,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/questcage.ani",
        "ani_sha256": "05f929a21a4cfe4d935860115915fd2da18fde5ac04b83e2f1709c418e3234ff",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 80,
        "frames": [
         {
@@ -17627,7 +17627,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17676,7 +17676,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17725,7 +17725,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17774,7 +17774,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17823,7 +17823,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17872,7 +17872,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17921,7 +17921,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17970,7 +17970,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -25973,7 +25973,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -26024,7 +26024,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -26075,7 +26075,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -26126,7 +26126,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -26177,7 +26177,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -26228,7 +26228,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -26280,7 +26280,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -26329,7 +26329,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -26378,7 +26378,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -26427,7 +26427,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -26476,7 +26476,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -26525,7 +26525,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -34121,7 +34121,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -34173,7 +34173,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -34222,7 +34222,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -34271,7 +34271,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -34320,7 +34320,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -34369,7 +34369,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -41474,7 +41474,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -41523,7 +41523,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -41572,7 +41572,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -41621,7 +41621,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -50055,7 +50055,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -50107,7 +50107,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -50156,7 +50156,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -50205,7 +50205,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -50254,7 +50254,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -50303,7 +50303,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -50352,7 +50352,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -58586,7 +58586,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -58644,7 +58644,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -58696,7 +58696,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -58745,7 +58745,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -58794,7 +58794,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -58843,7 +58843,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -58892,7 +58892,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_thrower/stay.ani",
        "ani_sha256": "d99348de752da670261b66a765b7e0bb507a3463c31bc934c78aea94733e9680",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -58941,7 +58941,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -58990,7 +58990,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -66256,7 +66256,7 @@
       "sprite": {
        "ani": "map/lorien/animation/aniflower.ani",
        "ani_sha256": "18c68e30ce4ce155682853af921b9c0d5ab19787e628a2f846fac416d882d4be",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 480,
        "frames": [
         {
@@ -66333,7 +66333,7 @@
       "sprite": {
        "ani": "map/lorien/animation/aniflower.ani",
        "ani_sha256": "18c68e30ce4ce155682853af921b9c0d5ab19787e628a2f846fac416d882d4be",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 480,
        "frames": [
         {
@@ -66410,7 +66410,7 @@
       "sprite": {
        "ani": "map/lorien/animation/aniflower.ani",
        "ani_sha256": "18c68e30ce4ce155682853af921b9c0d5ab19787e628a2f846fac416d882d4be",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 480,
        "frames": [
         {
@@ -66684,7 +66684,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/actiontree/lorien/actiontree1-0.ani",
        "ani_sha256": "5937381845e804d917850e30eb39ae7f4eb4cb2cfa5a59886f154352963b61b2",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 200000,
        "frames": [
         {
@@ -66834,7 +66834,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/actiontree/lorien/actiontree1-0.ani",
        "ani_sha256": "5937381845e804d917850e30eb39ae7f4eb4cb2cfa5a59886f154352963b61b2",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 200000,
        "frames": [
         {
@@ -66934,7 +66934,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/actiontree/lorien/actiontree1-0.ani",
        "ani_sha256": "5937381845e804d917850e30eb39ae7f4eb4cb2cfa5a59886f154352963b61b2",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 200000,
        "frames": [
         {
@@ -67191,7 +67191,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/actiontree/lorien/actiontree1-0.ani",
        "ani_sha256": "5937381845e804d917850e30eb39ae7f4eb4cb2cfa5a59886f154352963b61b2",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 200000,
        "frames": [
         {
@@ -67242,7 +67242,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -67291,7 +67291,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -67340,7 +67340,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_thrower/stay.ani",
        "ani_sha256": "d99348de752da670261b66a765b7e0bb507a3463c31bc934c78aea94733e9680",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -67389,7 +67389,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -67438,7 +67438,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -67487,7 +67487,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -67536,7 +67536,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -75925,7 +75925,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -75974,7 +75974,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -76023,7 +76023,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -76072,7 +76072,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -76121,7 +76121,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -76170,7 +76170,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_thrower/stay.ani",
        "ani_sha256": "d99348de752da670261b66a765b7e0bb507a3463c31bc934c78aea94733e9680",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -76219,7 +76219,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -84186,7 +84186,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/actiontree/lorien/actiontree1-0.ani",
        "ani_sha256": "5937381845e804d917850e30eb39ae7f4eb4cb2cfa5a59886f154352963b61b2",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 200000,
        "frames": [
         {
@@ -84237,7 +84237,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -84286,7 +84286,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -84335,7 +84335,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -84384,7 +84384,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -84433,7 +84433,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -84482,7 +84482,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -93059,7 +93059,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -93117,7 +93117,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -93169,7 +93169,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -93218,7 +93218,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -93267,7 +93267,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -93316,7 +93316,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -93365,7 +93365,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -93414,7 +93414,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -100692,7 +100692,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/treasurebox.ani",
        "ani_sha256": "df79f0c1b59bbae5e6cb5c834b881369c3cd44e63d0d9c9848328d51b3254290",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -100743,7 +100743,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -100792,7 +100792,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -100841,7 +100841,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -100890,7 +100890,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -100939,7 +100939,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -100988,7 +100988,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -107592,7 +107592,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -107641,7 +107641,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -107690,7 +107690,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -114276,7 +114276,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -114325,7 +114325,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -114374,7 +114374,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -114423,7 +114423,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -120667,7 +120667,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -120716,7 +120716,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -120765,7 +120765,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -120814,7 +120814,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -127084,7 +127084,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -127133,7 +127133,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -127182,7 +127182,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -127231,7 +127231,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_goblin2/stay.ani",
        "ani_sha256": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {

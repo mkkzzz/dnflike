@@ -22,6 +22,30 @@ class ParticleFields(unittest.TestCase):
         cls.catalog = json.loads((ROOT/"game_dnf/assets_local/content/particles.json").read_text(encoding="utf8"))
         cls.pack = json.loads((ROOT/"game_dnf/assets_local/content/combat_content.json").read_text(encoding="utf8"))
 
+    def test_runtime_ice_templates_have_every_ordered_animation_dependency(self):
+        manifest = json.loads((ROOT/'game_dnf/assets_local/combat/manifest.json').read_text(encoding='utf8'))
+        by_source = {bank['source']: bank for bank in manifest['effects'].values()}
+        paths = set()
+        for stem in ('icewaveparticlesmoke','icewaveparticle','icewaveparticlestar'):
+            path = PREFIX+stem+'.ptl'
+            original = self.catalog['particles'][path]
+            runtime = manifest['particles'][path]
+            self.assertEqual(runtime['decoded'], original['decoded'])
+            self.assertEqual(runtime['sha256'], original['sha256'])
+            self.assertEqual(manifest['sources'][path], original['sha256'])
+            for entry in runtime['decoded']['object_entries']:
+                self.assertEqual(entry['parameter'], -1)
+                paths.add(entry['path'])
+                bank = by_source[entry['path']]
+                self.assertEqual(bank['loop'], bool(bank['global_items'].get('0',0)))
+                self.assertTrue(bank['frames'])
+                for frame in bank['frames']:
+                    if frame.get('img'):
+                        self.assertIn(frame['sprite'], bank['atlas']['items'])
+                texture = ROOT/'game_dnf'/bank['atlas']['texture'].removeprefix('res://')
+                self.assertTrue(texture.is_file())
+        self.assertEqual(len(paths),9)
+
     def test_original_ice_axes_are_independent_and_match_compiled_content(self):
         fixtures = [
             ("icewaveparticlestar",50,40,100,500,"c3cf3b07bd086517b508a95fa56d669362b6c7465e9636057612bb6a936c1c20"),

@@ -1,0 +1,332 @@
+{
+ "schema": "dnf_native_particle_assets/1",
+ "asset_version": "dnf-native-assets-v1-20261022",
+ "method": "Every original ANI field, ordered PTL entry, sprite pixel and anchor compared; not gameplay fidelity approval",
+ "templates": {
+  "passiveobject/character/swordman/particle/icewaveparticlesmoke.ptl": {
+   "sha256": "4d9fb45684ce5ca6a1f0e6391a3b40f9714c281d3d6d11135d3815152527dbcf",
+   "decoded": {
+    "axes": {
+     "x": {
+      "move_type": "[straight line]",
+      "move_variable_1": [
+       3,
+       3
+      ]
+     },
+     "z": {
+      "move_type": "[straight line]",
+      "move_variable_1": [
+       5,
+       5
+      ]
+     }
+    },
+    "changing_term": 1500,
+    "changing_type": "[keep changing]",
+    "rotation_angle": [
+     0,
+     90,
+     0
+    ],
+    "life_time": 1000,
+    "creation_frequency": -1,
+    "maximum_create_number": 1,
+    "rotation_angle_range_type": "[circle]",
+    "rotation_angle_variable": [
+     180,
+     0
+    ],
+    "random_range": 12,
+    "object_type": "[animation]",
+    "object_entries": [
+     {
+      "path": "passiveobject/character/swordman/animation/icewaveparticlesmoke2.ani",
+      "parameter": -1
+     },
+     {
+      "path": "passiveobject/character/swordman/animation/icewaveparticlesmoke1.ani",
+      "parameter": -1
+     }
+    ],
+    "display_effect_rate": [
+     0,
+     100,
+     100
+    ]
+   }
+  },
+  "passiveobject/character/swordman/particle/icewaveparticle.ptl": {
+   "sha256": "79f2237538306697422a6240aa57e562363d6594ced32f892cba95ce016699ff",
+   "decoded": {
+    "axes": {
+     "x": {
+      "move_type": "[straight line]",
+      "move_variable_1": [
+       1,
+       1
+      ]
+     },
+     "z": {
+      "move_type": "[straight line]",
+      "move_variable_1": [
+       30,
+       30
+      ]
+     }
+    },
+    "changing_term": 1000,
+    "changing_type": "[keep changing]",
+    "gravity": 500,
+    "rotation_angle": [
+     0,
+     96,
+     0
+    ],
+    "life_time": 500,
+    "landing_type": "[stop]",
+    "creation_frequency": -1.0,
+    "maximum_create_number": 3,
+    "create_area_size": [
+     20,
+     5,
+     40
+    ],
+    "rotation_angle_range_type": "[circle]",
+    "random_range": 34,
+    "object_type": "[animation]",
+    "object_entries": [
+     {
+      "path": "passiveobject/character/swordman/animation/icewaveparticle1.ani",
+      "parameter": -1
+     },
+     {
+      "path": "passiveobject/character/swordman/animation/icewaveparticle2.ani",
+      "parameter": -1
+     },
+     {
+      "path": "passiveobject/character/swordman/animation/icewaveparticle3.ani",
+      "parameter": -1
+     },
+     {
+      "path": "passiveobject/character/swordman/animation/icewaveparticle4.ani",
+      "parameter": -1
+     },
+     {
+      "path": "passiveobject/character/swordman/animation/icewaveparticle4.ani",
+      "parameter": -1
+     },
+     {
+      "path": "passiveobject/character/swordman/animation/icewaveparticle4.ani",
+      "parameter": -1
+     },
+     {
+      "path": "passiveobject/character/swordman/animation/icewaveparticle4.ani",
+      "parameter": -1
+     }
+    ],
+    "display_effect_rate": [
+     30,
+     60,
+     100
+    ]
+   }
+  },
+  "passiveobject/character/swordman/particle/icewaveparticlestar.ptl": {
+   "sha256": "c3cf3b07bd086517b508a95fa56d669362b6c7465e9636057612bb6a936c1c20",
+   "decoded": {
+    "axes": {
+     "x": {
+      "move_type": "[straight line]",
+      "move_variable_1": [
+       50,
+       50
+      ]
+     },
+     "z": {
+      "move_type": "[straight line]",
+      "move_variable_1": [
+       40,
+       40
+      ]
+     }
+    },
+    "changing_term": 1000,
+    "changing_type": "[keep changing]",
+    "gravity": 100,
+    "rotation_angle": [
+     0,
+     96,
+     0
+    ],
+    "life_time": 500,
+    "landing_type": "[stop]",
+    "creation_frequency": -1.0,
+    "maximum_create_number": 3,
+    "create_area_size": [
+     20,
+     5,
+     40
+    ],
+    "rotation_angle_range_type": "[circle]",
+    "random_range": 54,
+    "object_type": "[animation]",
+    "object_entries": [
+     {
+      "path": "passiveobject/character/swordman/animation/icewaveparticlestar1.ani",
+      "parameter": -1
+     },
+     {
+      "path": "passiveobject/character/swordman/animation/icewaveparticlestar2.ani",
+      "parameter": -1
+     },
+     {
+      "path": "passiveobject/character/swordman/animation/icewaveparticlestar3.ani",
+      "parameter": -1
+     }
+    ],
+    "display_effect_rate": [
+     0,
+     50,
+     100
+    ]
+   }
+  }
+ },
+ "banks": [
+  {
+   "source": "passiveobject/character/swordman/animation/icewaveparticlesmoke2.ani",
+   "source_sha256": "2dd2e8c836175c285c5203f855e7447d0b26c6fe2336240388e365f8fdac801a",
+   "texture": "res://assets_local/combat/fx_native_icewaveparticlesmoke2.png",
+   "texture_sha256": "cd523e411da8bb387a09e89f4e19df46060791828d55825e69889224ba6ec04d",
+   "size": [
+    2048,
+    27
+   ],
+   "frames": 2,
+   "duration_ms": 1500,
+   "loop": false
+  },
+  {
+   "source": "passiveobject/character/swordman/animation/icewaveparticlesmoke1.ani",
+   "source_sha256": "534141bbd227e2755fd875e18539935ce1911c49f1115949f2e5fef21c6d3cd0",
+   "texture": "res://assets_local/combat/fx_native_icewaveparticlesmoke1.png",
+   "texture_sha256": "fcc5475a42b4473bd24fdc2eff0fc25372cdbcad9d8373a975fca0b19dec8aa9",
+   "size": [
+    2048,
+    59
+   ],
+   "frames": 2,
+   "duration_ms": 1500,
+   "loop": false
+  },
+  {
+   "source": "passiveobject/character/swordman/animation/icewaveparticle1.ani",
+   "source_sha256": "ec5c1deef2fbff25b35dba19ec2d2771c99876a3a1135837bed52bafbd423b21",
+   "texture": "res://assets_local/combat/fx_native_icewaveparticle1.png",
+   "texture_sha256": "236016ed21263ea385440801f7be3bb924ea05f093550b6cfcac00621c39d69b",
+   "size": [
+    2048,
+    74
+   ],
+   "frames": 17,
+   "duration_ms": 890,
+   "loop": false
+  },
+  {
+   "source": "passiveobject/character/swordman/animation/icewaveparticle2.ani",
+   "source_sha256": "3951a3a14a9b1e67289687b680b1636df52d5723a9f5e82e67eb4826b14e9ae1",
+   "texture": "res://assets_local/combat/fx_native_icewaveparticle2.png",
+   "texture_sha256": "c335c28b7afaee9df1db7f19a98ed03c10a4b1cd3b14f1c61e4011051f9bc6e4",
+   "size": [
+    2048,
+    60
+   ],
+   "frames": 17,
+   "duration_ms": 890,
+   "loop": false
+  },
+  {
+   "source": "passiveobject/character/swordman/animation/icewaveparticle3.ani",
+   "source_sha256": "059ca4958be26d4ad75a8fa29ef84419d424a478293f0a7ee2f56aa4263c8a2f",
+   "texture": "res://assets_local/combat/fx_native_icewaveparticle3.png",
+   "texture_sha256": "1e37a1e98a5257ed6d96bd926e4cfa0f3f49b51888750cc121c58770e312b3fb",
+   "size": [
+    2048,
+    65
+   ],
+   "frames": 17,
+   "duration_ms": 890,
+   "loop": false
+  },
+  {
+   "source": "passiveobject/character/swordman/animation/icewaveparticle4.ani",
+   "source_sha256": "76d56d41e15581f2e1f1f5ae11d3c61a5871cd55c590030146bb87c009a69435",
+   "texture": "res://assets_local/combat/fx_native_icewaveparticle4.png",
+   "texture_sha256": "3159eee464ccbf5cf441d918ea5364c970f73b4d9ee8a565e08941c9925eab97",
+   "size": [
+    2048,
+    46
+   ],
+   "frames": 17,
+   "duration_ms": 890,
+   "loop": false
+  },
+  {
+   "source": "passiveobject/character/swordman/animation/icewaveparticlestar1.ani",
+   "source_sha256": "b2903545261ab39e438909dfd5e4e2bb999992a55180b9b66477d13e66d7049d",
+   "texture": "res://assets_local/combat/fx_native_icewaveparticlestar1.png",
+   "texture_sha256": "5ee66f06dec410724a542c6b5086d4fb6596045f8b0da7a4b9664832c8c33c36",
+   "size": [
+    2048,
+    11
+   ],
+   "frames": 2,
+   "duration_ms": 1000,
+   "loop": true
+  },
+  {
+   "source": "passiveobject/character/swordman/animation/icewaveparticlestar2.ani",
+   "source_sha256": "53ef6ddc6f323f680000c8806361d16f15f840c39c03770e47ba20a5e2def1f3",
+   "texture": "res://assets_local/combat/fx_native_icewaveparticlestar2.png",
+   "texture_sha256": "214f4e87d59dad5cd85a856dddb101b2000dd82e4448851e7138a3011538948f",
+   "size": [
+    2048,
+    15
+   ],
+   "frames": 2,
+   "duration_ms": 1000,
+   "loop": true
+  },
+  {
+   "source": "passiveobject/character/swordman/animation/icewaveparticlestar3.ani",
+   "source_sha256": "ba83d7076933ba8eafcf001cf4274441eea85ef884aa46ed60de4fe8fb347c69",
+   "texture": "res://assets_local/combat/fx_native_icewaveparticlestar3.png",
+   "texture_sha256": "b40fc5bd8935a281f8e7f045708a7e77e1c99d5beb71916984b076e6801190f6",
+   "size": [
+    2048,
+    16
+   ],
+   "frames": 2,
+   "duration_ms": 1000,
+   "loop": true
+  }
+ ],
+ "sources": {
+  "passiveobject/character/swordman/particle/icewaveparticlesmoke.ptl": "4d9fb45684ce5ca6a1f0e6391a3b40f9714c281d3d6d11135d3815152527dbcf",
+  "passiveobject/character/swordman/particle/icewaveparticle.ptl": "79f2237538306697422a6240aa57e562363d6594ced32f892cba95ce016699ff",
+  "passiveobject/character/swordman/particle/icewaveparticlestar.ptl": "c3cf3b07bd086517b508a95fa56d669362b6c7465e9636057612bb6a936c1c20",
+  "passiveobject/character/swordman/animation/icewaveparticlesmoke2.ani": "2dd2e8c836175c285c5203f855e7447d0b26c6fe2336240388e365f8fdac801a",
+  "sprite/character/swordman/effect/icewaveparticlesmoke.img": "09bb43a1c4577b8df918852b809114746572cfbb3f95b5aafb377c1d87d94a76",
+  "passiveobject/character/swordman/animation/icewaveparticlesmoke1.ani": "534141bbd227e2755fd875e18539935ce1911c49f1115949f2e5fef21c6d3cd0",
+  "passiveobject/character/swordman/animation/icewaveparticle1.ani": "ec5c1deef2fbff25b35dba19ec2d2771c99876a3a1135837bed52bafbd423b21",
+  "sprite/character/swordman/effect/icewaveparticle.img": "b258fec4760792a319ad987775cdd4fc49cac05a91035699c6ef2adbddbd77f5",
+  "passiveobject/character/swordman/animation/icewaveparticle2.ani": "3951a3a14a9b1e67289687b680b1636df52d5723a9f5e82e67eb4826b14e9ae1",
+  "passiveobject/character/swordman/animation/icewaveparticle3.ani": "059ca4958be26d4ad75a8fa29ef84419d424a478293f0a7ee2f56aa4263c8a2f",
+  "passiveobject/character/swordman/animation/icewaveparticle4.ani": "76d56d41e15581f2e1f1f5ae11d3c61a5871cd55c590030146bb87c009a69435",
+  "passiveobject/character/swordman/animation/icewaveparticlestar1.ani": "b2903545261ab39e438909dfd5e4e2bb999992a55180b9b66477d13e66d7049d",
+  "sprite/character/swordman/effect/icewaveparticlestar.img": "37073bdddfc729954f5bea9b37c794151e1def59a618a2585d51303bd87bfbcc",
+  "passiveobject/character/swordman/animation/icewaveparticlestar2.ani": "53ef6ddc6f323f680000c8806361d16f15f840c39c03770e47ba20a5e2def1f3",
+  "passiveobject/character/swordman/animation/icewaveparticlestar3.ani": "ba83d7076933ba8eafcf001cf4274441eea85ef884aa46ed60de4fe8fb347c69"
+ }
+}

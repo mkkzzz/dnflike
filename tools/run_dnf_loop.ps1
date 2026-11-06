@@ -100,6 +100,16 @@ if ($Test) {
     $particleView=& $GodotPath --headless --path $gamePath --script res://tests/combat/test_native_particle_view.gd 2>&1
     $particleView | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($particleView -match 'SCRIPT ERROR|ERROR:') -or -not ($particleView -match '\[PARTICLE_VIEW\] COMPLETE checks=\d+ failures=0')) {throw "Native particle display regression failed."}
+    # Full battle assets include original OGG comment warnings on stderr.
+    # Judge exit status / engine errors, not PowerShell's native stderr wrapper.
+    $icePreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $iceParticles=& $GodotPath --headless --path $gamePath --script res://tests/combat/test_ice_particle_integration.gd 2>&1
+        $iceExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$icePreference}
+    $iceParticles | Write-Output
+    if ($iceExit -ne 0 -or ($iceParticles -match 'SCRIPT ERROR|ERROR:') -or -not ($iceParticles -match '\[ICE_PARTICLES\] COMPLETE checks=\d+ failures=0')) {throw "Ice particle integration regression failed."}
     & python (Join-Path $PSScriptRoot "test_check_dnf_performance.py")
     if ($LASTEXITCODE -ne 0) {throw "Performance guard self-tests failed."}
     $performanceOutput=& $GodotPath --headless --path $gamePath --script res://tests/flow/test_ui_performance.gd 2>&1
