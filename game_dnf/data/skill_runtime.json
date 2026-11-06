@@ -7153,9 +7153,10 @@
    "name": "魔法背击",
    "passive": [
     {
+     "level_row": 0,
      "op": "add",
-     "stat": "magical_crit",
-     "value": 0.03
+     "scale": 0.001,
+     "stat": "magical_back_crit"
     }
    ],
    "path": "skill/swordman/magicalbackattackcritical.skl",
@@ -7454,9 +7455,10 @@
    "name": "物理背击",
    "passive": [
     {
+     "level_row": 0,
      "op": "add",
-     "stat": "physical_crit",
-     "value": 0.03
+     "scale": 0.001,
+     "stat": "physical_back_crit"
     }
    ],
    "path": "skill/swordman/physicalbackattackcritical.skl",

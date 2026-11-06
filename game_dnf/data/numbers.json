@@ -57,6 +57,8 @@
   "evasion": 0,
   "physical_crit": 0,
   "magical_crit": 0,
+  "physical_back_crit": 0,
+  "magical_back_crit": 0,
   "attack_speed": 1,
   "move_speed": 1,
   "cast_speed": 1,

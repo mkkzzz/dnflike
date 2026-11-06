@@ -7,7 +7,9 @@ static func resolve(attacker: Dictionary, defender: Dictionary, hit: Dictionary,
 	var attack := float(attacker.get("magical_attack" if magic else "physical_attack",0))
 	var defense := maxf(0,float(defender.get("magical_defense" if magic else "physical_defense",0)))
 	var chance := clampf(float(formula["hit_base"])+float(attacker.get("hit",0))-float(defender.get("evasion",0)),float(formula["hit_min"]),float(formula["hit_max"]))
-	var critical := float(rolls[1]) < clampf(float(attacker.get("magical_crit" if magic else "physical_crit",0))+float(hit.get("critical_chance",0)),0,1)
+	var critical_chance := float(attacker.get("magical_crit" if magic else "physical_crit",0))+float(hit.get("critical_chance",0))
+	if hit.get("back",false):critical_chance += float(attacker.get("magical_back_crit" if magic else "physical_back_crit",0))
+	var critical := float(rolls[1]) < clampf(critical_chance,0,1)
 	var main_factor := maxf(0,1+main/float(formula["main_stat_divisor"]))
 	var percent := attack*float(hit.get("percent",100))/100
 	var independent:=float(attacker.get("independent_attack",100))+float(attacker.get("magical_independent_attack" if magic else "physical_independent_attack",0))

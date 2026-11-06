@@ -708,9 +708,9 @@ def generic_passive_spec(key: str) -> dict:
     if base != key:
         return {"enhances": LOCAL_IDS.get(base, base), "enhancement": "source_override"}
     if "physicalbackattackcritical" == key:
-        return {"passive": [{"stat": "physical_crit", "op": "add", "value": 0.03}]}
+        return {"passive": [{"stat": "physical_back_crit", "op": "add", "level_row": 0, "scale": 0.001}]}
     if "magicalbackattackcritical" == key:
-        return {"passive": [{"stat": "magical_crit", "op": "add", "value": 0.03}]}
+        return {"passive": [{"stat": "magical_back_crit", "op": "add", "level_row": 0, "scale": 0.001}]}
     if key == "physicalcriticalhitup":
         return {"passive": [{"stat": "physical_crit", "op": "add", "level_row": 0, "scale": 0.001}]}
     if key == "magicalcriticalhitup":

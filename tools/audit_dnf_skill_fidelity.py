@@ -106,7 +106,7 @@ def audit(runtime, combat, records, catalog, clips):
             item["passive_definition"] = {k: v for k, v in skill.items() if k not in ("name", "path", "source_path")}
             if skill.get("runtime_hook") == "declarative_passive":
                 item["risks"].append("declarative_hook_without_verified_consumer")
-            if "backattackcritical" in skill_id and "passive" in skill:
+            if "backattackcritical" in skill_id and any(m.get("stat") in ("physical_crit", "magical_crit") for m in skill.get("passive", [])):
                 item["risks"].append("back_attack_bonus_applied_without_direction_condition")
         result.append(item)
     counts = Counter(risk for item in result for risk in item["risks"])

@@ -44,6 +44,13 @@ class SkillRuntimeTest(unittest.TestCase):
         self.assertNotIn("effect_id", move)
         self.assertEqual(move["stages"][0]["ani"], "jump")
 
+    def test_back_critical_uses_conditional_source_level_columns(self):
+        for kind in ("physical", "magical"):
+            skill = self.skills[kind+"backattackcritical"]
+            record = self.pack["records"][skill["source_path"]]["decoded"]
+            self.assertEqual(record["level_info"][:3], [1, 15, 30])
+            self.assertEqual(skill["passive"], [{"stat": kind+"_back_crit", "op": "add", "level_row": 0, "scale": 0.001}])
+
     def test_normalwave_has_no_borrowed_upper_slash_damage_or_visual(self):
         move = self.moves["normalwave"]
         hits = [hit for stage in move["stages"] for hit in stage.get("hits", [])]

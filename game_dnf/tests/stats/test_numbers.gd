@@ -12,6 +12,7 @@ func check(value: bool, message: String) -> void:
 		print("[NUMBERS_TEST] FAIL "+message)
 
 func _initialize() -> void:
+	check_back_critical()
 	var cfg := Numbers.config_snapshot()
 	var initial_strength: float = Numbers.shared_config()["base"]["strength"]
 	cfg["base"]["strength"] = initial_strength + 1
@@ -193,3 +194,22 @@ func _initialize() -> void:
 	check(not s.command("numbers.level",{"level":61})["ok"],"configured cap applies to level setter")
 	print("[NUMBERS_TEST] COMPLETE checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
+
+func check_back_critical() -> void:
+	var profile: Dictionary = Session.new().profile.duplicate(true)
+	profile["equipment"] = {}
+	profile["gear"] = {}
+	profile["skills"] = {}
+	var base: Dictionary = Numbers.profile_stats(profile)["values"]
+	var formula: Dictionary = Numbers.shared_config()["formula"]
+	for kind: String in ["physical","magical"]:
+		var other := "magical" if kind == "physical" else "physical"
+		for rank in [1,10]:
+			profile["skills"] = {kind+"backattackcritical":rank}
+			var stats: Dictionary = Numbers.profile_stats(profile)["values"]
+			check(is_equal_approx(float(stats[kind+"_crit"]),float(base[kind+"_crit"])),"%s back critical does not increase unconditional critical chance" % kind)
+			check(is_equal_approx(float(stats.get(kind+"_back_crit",0)),rank*0.015),"%s back critical rank %d follows source level row" % [kind,rank])
+			check(not Numbers.Damage.resolve(stats,{}, {"damage_type":kind,"back":false},[0,0.01],formula)["critical"],"frontal %s attacks do not receive back-only bonus" % kind)
+			check(Numbers.Damage.resolve(stats,{}, {"damage_type":kind,"back":true},[0,0.01],formula)["critical"],"back %s attacks receive learned bonus" % kind)
+			check(not Numbers.Damage.resolve(stats,{}, {"damage_type":other,"back":true},[0,0.01],formula)["critical"],"back bonus does not leak to the other damage type")
+			check(not Numbers.Damage.resolve(stats,{"evasion":1}, {"damage_type":kind,"back":true},[1,0.01],formula)["critical"],"missed back attacks do not report a critical")
