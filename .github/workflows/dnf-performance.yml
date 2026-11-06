@@ -46,6 +46,7 @@ jobs:
           python3 tools/test_dnf_skill_modifier.py
           python3 tools/test_dnf_skill_modifier_load.py
           python3 tools/test_dnf_item_skill_modifier.py
+          python3 tools/test_dnf_item_modifier_load.py
       - name: Check quest semantics and portable package verification
         run: python3 tools/test_dnf_quest_rules.py
       - name: Inventory skill binding evidence gaps
