@@ -25,6 +25,8 @@ jobs:
         run: python3 tools/test_dnf_skill_runtime.py
       - name: Preserve archive CRC checks when decoding the client directory
         run: python3 tools/test_dnf_pvf_archive.py
+      - name: Verify native string decoder with original byte fixtures
+        run: python3 tools/test_dnf_native_strings.py
       - name: Check quest semantics and portable package verification
         run: python3 tools/test_dnf_quest_rules.py
       - name: Inventory skill binding evidence gaps
