@@ -103,7 +103,7 @@ static func rotate_pair(a: float, b: float, degrees: int) -> Vector2:
 	var angle := f32(f32(atan2(b, a)) + f32(float(degrees) * DEG_NATIVE))
 	return Vector2(f32(cos(angle) * radius), f32(sin(angle) * radius))
 
-func _init(prepared: Dictionary = {}, start := Vector3i.ZERO, mirror_x := false) -> void:
+func _init(prepared: Dictionary = {}, start := Vector3i.ZERO, mirror_x := false, initial_age_ms := 0) -> void:
 	config = prepared.duplicate(true)
 	origin = start
 	position = start
@@ -115,6 +115,8 @@ func _init(prepared: Dictionary = {}, start := Vector3i.ZERO, mirror_x := false)
 		problems.append("unsupported landing type")
 	if int(config.get("changing_term", 0)) < 0:
 		problems.append("negative changing term needs native validation")
+	if initial_age_ms < 0:
+		problems.append("negative initial age")
 	for key in AXES:
 		var axis: Dictionary = config.get("axes", {}).get(key, {})
 		if not MOVES.has(axis.get("move_type", "[stop]")):
@@ -123,9 +125,12 @@ func _init(prepared: Dictionary = {}, start := Vector3i.ZERO, mirror_x := false)
 			if axis.has(field) and axis[field].size() != 2:
 				problems.append("invalid movement pair: " + key + "/" + field)
 	# Native reset (0xE4F230) immediately evaluates time zero after copying the
-	# prepared instance. Cosine therefore starts at its amplitude, not at zero.
+	# prepared instance. A pre-aged emission resets directly to that age; sampling
+	# zero first could incorrectly land/vanish a cosine particle before its birth.
 	if problems.is_empty():
-		var initial := advance_to(0)
+		var life := int(config.get("life_time", 0))
+		var age := mini(initial_age_ms, life) if life > 0 else initial_age_ms
+		var initial := advance_to(age)
 		if not initial.ok:
 			for problem in initial.problems:
 				problems.append(str(problem))

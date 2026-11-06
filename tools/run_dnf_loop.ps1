@@ -92,6 +92,11 @@ if ($Test) {
     $particleMotion=& $GodotPath --headless --path $gamePath --script res://tests/combat/test_native_particle_motion.gd 2>&1
     $particleMotion | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($particleMotion -match 'SCRIPT ERROR|ERROR:') -or -not ($particleMotion -match '\[PARTICLE_MOTION\] COMPLETE checks=\d+ failures=0')) {throw "Native particle motion regression failed."}
+    & python (Join-Path $PSScriptRoot "test_dnf_particle_random.py")
+    if ($LASTEXITCODE -ne 0) {throw "Native particle random evidence is stale."}
+    $particleEmitter=& $GodotPath --headless --path $gamePath --script res://tests/combat/test_native_particle_emitter.gd 2>&1
+    $particleEmitter | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($particleEmitter -match 'SCRIPT ERROR|ERROR:') -or -not ($particleEmitter -match '\[PARTICLE_EMITTER\] COMPLETE checks=\d+ failures=0')) {throw "Native particle emitter regression failed."}
     & python (Join-Path $PSScriptRoot "test_check_dnf_performance.py")
     if ($LASTEXITCODE -ne 0) {throw "Performance guard self-tests failed."}
     $performanceOutput=& $GodotPath --headless --path $gamePath --script res://tests/flow/test_ui_performance.gd 2>&1
