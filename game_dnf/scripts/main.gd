@@ -1433,6 +1433,14 @@ func step_objects(ms: float) -> void:
 		var life := float(o["life_ms"])
 		var tl: Array = o.get("timeline",obj["timeline"])
 		var controller: Dictionary = hit.get("native_controller",{})
+		if controller.get("kind","") == "firewave_chain" and t >= Kernel.Timeline.duration(tl):
+			# Native ANI+1EC bit 8: create 20025 at +/-360, then delete 20024.
+			# The successor starts at age zero, independently of the actor clock.
+			var child_hit: Dictionary = controller["child"].duplicate(true)
+			child_hit["skill_id"] = hit.get("skill_id","")
+			spawn_object(child_hit,String(o["owner"]),o["pos"],float(o["z"]),int(o["facing"]),float(o["power"]),o["source"])
+			objects.remove_at(i)
+			continue
 		if controller.get("kind","") == "icewave_chain" and not bool(o["child_spawned"]) and t>=float(controller["interval_ms"]):
 			o["child_spawned"] = true
 			var ordinal := int(hit.get("chain_ordinal",0))
@@ -1889,7 +1897,7 @@ func view_snapshot() -> Dictionary:
 	var objs: Array = []
 	for o: Dictionary in objects:
 		if String(o["def"]["bank"]) == "":continue
-		objs.append({"id":o["id"],"bank":String(o["def"]["bank"]),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":object_view_clock(o),"size_rate":float(o.get("size_rate",1)),"loop":float(o["life_ms"])>0})
+		objs.append({"id":o["id"],"bank":String(o["def"]["bank"]),"rear_fx":String(o["hit"].get("rear_fx","")),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":object_view_clock(o),"size_rate":float(o.get("size_rate",1)),"loop":float(o["life_ms"])>0})
 	var route: Array = []
 	for i in rules["rooms"].size():
 		var room: Dictionary = rules["rooms"][i]

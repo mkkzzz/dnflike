@@ -118,9 +118,10 @@
   "passiveobject/character/swordman/outragebreakfloor.obj",
   "passiveobject/character/swordman/reflectguardbead.obj",
   "passiveobject/character/swordman/saya.obj",
-  "passiveobject/character/swordman/wavespinarea.obj"
+  "passiveobject/character/swordman/wavespinarea.obj",
+  "passiveobject/character/swordman/firewavebigsub.obj"
  ],
- "effects": 164,
+ "effects": 166,
  "digits": 61,
  "audio_keys": 195,
  "unresolved": 32,

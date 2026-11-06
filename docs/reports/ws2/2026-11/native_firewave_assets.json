@@ -1,0 +1,70 @@
+{
+ "schema": "dnf_native_firewave_assets/1",
+ "asset_version": "dnf-native-assets-v1-20261022",
+ "method": "Every original ANI field, ordered PTL entry, sprite pixel and anchor compared; not gameplay fidelity approval",
+ "templates": {},
+ "banks": [
+  {
+   "source": "passiveobject/character/swordman/animation/firewavebig/blast-back.ani",
+   "source_sha256": "df9d1a84324d7ccb45cdd4ef252c679755e892de0b771a98c3db9b0f2377d482",
+   "texture": "res://assets_local/combat/fx_skillfx_blast_back_c66f1708.png",
+   "texture_sha256": "1f4aa30cf851866816d0b69f3dc4f9dc9b49e56cafdd3ba90e1a8ed3ba199018",
+   "size": [
+    2048,
+    69
+   ],
+   "frames": 5,
+   "duration_ms": 350,
+   "loop": false
+  },
+  {
+   "source": "passiveobject/character/swordman/animation/firewavebig/fire-back.ani",
+   "source_sha256": "3ee463f108eb8d26fec13028d8ff6cd9f1170758d3efabab0d611a2c495b9d7f",
+   "texture": "res://assets_local/combat/fx_skillfx_fire_back_d7808a4c.png",
+   "texture_sha256": "53de446c4a129d9a2f75640130b5c2a36410309cb2b98f47622c5b72640afbf2",
+   "size": [
+    2048,
+    91
+   ],
+   "frames": 6,
+   "duration_ms": 420,
+   "loop": false
+  },
+  {
+   "source": "passiveobject/character/swordman/animation/firewavebig/fire-front.ani",
+   "source_sha256": "a52bdd89dcb6ba3f76a5e92aa32f992228c5d47db7ba47889a2ddf4a9e08ea92",
+   "texture": "res://assets_local/combat/fx_obj_firewavebig_95f667b9.png",
+   "texture_sha256": "0d5e711c0605a7e1dcd5f749507ab84bc12d67846905bc4a9e7104dfd37c65b5",
+   "size": [
+    2048,
+    215
+   ],
+   "frames": 7,
+   "duration_ms": 490,
+   "loop": false
+  },
+  {
+   "source": "passiveobject/character/swordman/animation/firewavebig/blast-front.ani",
+   "source_sha256": "7ee299c98913808f28dbc50cca974ad61f2ebfb1759f020db8aa95b63add4717",
+   "texture": "res://assets_local/combat/fx_obj_firewavebigsub_8543243f.png",
+   "texture_sha256": "c431a8079c2a3e7f5231ea072a93075c6c36ff8a7610e100a1332987288c7c43",
+   "size": [
+    2048,
+    190
+   ],
+   "frames": 9,
+   "duration_ms": 630,
+   "loop": false
+  }
+ ],
+ "sources": {
+  "passiveobject/character/swordman/animation/firewavebig/blast-back.ani": "df9d1a84324d7ccb45cdd4ef252c679755e892de0b771a98c3db9b0f2377d482",
+  "sprite/character/swordman/effect/firewave/blast-back.img": "ce566d21ab2dfddf0a39a0aeb3a2978b72bd83312d6a506628c4b2e7d623d351",
+  "passiveobject/character/swordman/animation/firewavebig/fire-back.ani": "3ee463f108eb8d26fec13028d8ff6cd9f1170758d3efabab0d611a2c495b9d7f",
+  "sprite/character/swordman/effect/firewave/fire-back.img": "0999fc5d79c58c35a745823ca330a935e0d53560fb380d896a2742069d985039",
+  "passiveobject/character/swordman/animation/firewavebig/fire-front.ani": "a52bdd89dcb6ba3f76a5e92aa32f992228c5d47db7ba47889a2ddf4a9e08ea92",
+  "sprite/character/swordman/effect/firewave/fire-front.img": "64afef202a4e6d16cbb742e1a4eee131070007ba01d8283e2031cdf157f22a94",
+  "passiveobject/character/swordman/animation/firewavebig/blast-front.ani": "7ee299c98913808f28dbc50cca974ad61f2ebfb1759f020db8aa95b63add4717",
+  "sprite/character/swordman/effect/firewave/blast-front.img": "25bd5a98a5345fe337b8cfb8a64a7a7294d4e9c4b156a69a205c08c36130a4a8"
+ }
+}

@@ -811,6 +811,58 @@ def extend_native_particles(library: Path | None, output: Path = OUT) -> dict:
         src.lib.db.close()
 
 
+def extend_firewave(library: Path | None, output: Path = OUT) -> dict:
+    """Add the verified ordinary firewave banks without touching existing PNGs."""
+    global ACTIVE_OUT
+    src = Source(library)
+    previous = ACTIVE_OUT
+    (ROOT/'temp').mkdir(parents=True, exist_ok=True)
+    stage = Path(tempfile.mkdtemp(prefix='dnf-firewave-extend-', dir=ROOT/'temp'))
+    try:
+        shutil.copytree(output, stage, dirs_exist_ok=True)
+        ACTIVE_OUT = stage
+        manifest = json.loads((output/'manifest.json').read_text(encoding='utf8'))
+        runtime = json.loads(SKILL_RUNTIME.read_text(encoding='utf8'))
+        prefix = 'passiveobject/character/swordman/'
+        additions, unresolved = [], []
+        specs = [('objects', key, path) for key, path in runtime['assets']['objects'].items()
+                 if path == prefix+'firewavebigsub.obj']
+        specs += [('effects', key, path) for key, path in runtime['assets']['effect_anims'].items()
+                  if path in [prefix+'animation/firewavebig/'+n+'.ani' for n in ('fire-back', 'blast-back')]]
+        if len(specs) != 3:
+            raise ValueError('Build skill runtime first; need explosion and two rear banks')
+        for section, key, path in specs:
+            ani = src.object_animation(path) if section == 'objects' else path
+            bank = effect_bank(src, safe_atlas_key('obj', key) if section == 'objects' else key, ani, unresolved)
+            if section == 'objects':
+                bank.update(clip=src.animation(ani), object=path)
+            if key in manifest[section] and manifest[section][key] != bank:
+                raise ValueError('Existing bank differs; needs a new version: '+key)
+            manifest[section][key] = bank
+            additions.append(bank['atlas']['texture'])
+        if unresolved:
+            raise ValueError('Incomplete firewave assets: '+str(unresolved))
+        for image in output.glob('*.png'):
+            if image.read_bytes() != (stage/image.name).read_bytes():
+                raise ValueError('Cannot overwrite existing original image: '+image.name)
+        for path, digest in src.sources.items():
+            if path in manifest['sources'] and manifest['sources'][path] != digest:
+                raise ValueError('Source identity differs: '+path)
+        manifest['sources'].update(src.sources)
+        manifest['skill_runtime_sha256'] = hashlib.sha256(SKILL_RUNTIME.read_bytes()).hexdigest()
+        (stage/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,separators=(',',':')),encoding='utf8')
+        summary_path = stage/'build_summary.json'
+        if summary_path.is_file():
+            summary = json.loads(summary_path.read_text(encoding='utf8'))
+            summary.update(effects=len(manifest['effects']), objects=list(manifest['objects']))
+            summary_path.write_text(json.dumps(summary,ensure_ascii=False,indent=1),encoding='utf8')
+        publish_tree(stage, output)
+        return {'banks': additions}
+    finally:
+        ACTIVE_OUT = previous
+        src.cat.close(); src.lib.db.close()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('--library', type=Path)
@@ -818,7 +870,12 @@ def main() -> int:
                         help='Update pinned ANI globals in existing manifest without rebuilding images')
     parser.add_argument('--extend-native-particles', action='store_true',
                         help='Add native particle banks atomically, preserving every existing asset')
+    parser.add_argument('--extend-firewave', action='store_true',
+                        help='Add ordinary firewave explosion/rear banks, preserving existing assets')
     args = parser.parse_args()
+    if args.extend_firewave:
+        print(json.dumps(extend_firewave(args.library)))
+        return 0
     if args.extend_native_particles:
         print(json.dumps(extend_native_particles(args.library)))
         return 0

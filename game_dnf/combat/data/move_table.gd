@@ -302,9 +302,16 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 			hit["life_ms"] = float(h.get("life_ms",-1))
 			if h.has("native_controller"):
 				var controller: Dictionary = h["native_controller"].duplicate(true)
-				controller["count"] = int(row[int(controller["count_col"])])
-				controller["frame2_at_ms"] = float(row[int(controller["frame2_at_col"])])
+				if controller.get("kind","") == "icewave_chain":
+					controller["count"] = int(row[int(controller["count_col"])])
+					controller["frame2_at_ms"] = float(row[int(controller["frame2_at_col"])])
+				elif controller.get("kind","") == "firewave_chain":
+					# Resolve the successor's own ATK and fixed column, not a copy
+					# of the travelling-front reaction/damage definition.
+					var child_stage := _build_stage({"hits":[controller["child"]]},skill)
+					controller["child"] = child_stage["hits"][0]
 				hit["native_controller"] = controller
+			hit["rear_fx"] = String(h.get("rear_fx",""))
 			# Explicit skill-specific size column; other objects retain native size.
 			hit["size_rate"] = float(row[int(h["size_col"])])/100.0 if h.has("size_col") and row.size()>int(h["size_col"]) else 1.0
 			if h.has("percent_col") and row.size() > int(h["percent_col"]):

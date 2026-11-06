@@ -288,12 +288,23 @@ func _present_objects(list: Array) -> void:
 			v = FxView.new()
 			world.add_child(v)
 			v.setup(bank,int(o["facing"]))
+			var rear_bank: Dictionary = _effects.get(String(o.get("rear_fx","")),{})
+			if not rear_bank.is_empty():
+				var rear = FxView.new()
+				rear.name = "RearAnimation"
+				rear.z_index = -1
+				v.add_child(rear)
+				rear.setup(rear_bank,int(o["facing"]))
 			object_views[o["id"]] = v
 		v.loop = bool(o.get("loop",false))
 		v.position = _canvas(Vector2(o["pos"]), float(o["z"]))
 		v.z_index = int(Vector2(o["pos"]).y)+2
 		v.base_scale = float(o.get("size_rate",1))
 		v.seek(float(o["clock"]))
+		var rear = v.get_node_or_null("RearAnimation")
+		if is_instance_valid(rear) and not rear.is_queued_for_deletion():
+			rear.base_scale = v.base_scale
+			rear.seek(float(o["clock"]))
 	for id in object_views.keys():
 		if not live.has(id):
 			if is_instance_valid(object_views[id]):object_views[id].queue_free()

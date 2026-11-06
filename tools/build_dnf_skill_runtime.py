@@ -175,6 +175,7 @@ DIRECT_OBJECTS = {
 NATIVE_WAVE_BINDINGS = {
     CHR_FX + "icewave.ani",
     CHR_FX + "firewavebig-sword-effect.ani",
+    OBJ_ROOT + "animation/firewavebig/blast-front.ani",
     *(OBJ_ROOT + f"animation/icewave{i}.ani" for i in range(1, 7)),
 }
 
@@ -1105,9 +1106,27 @@ def build_move(
                 "gap_base": 21, "gap_step": 1.2,
             })
             result["fidelity_pending"].remove("object_controller")
-            result["fidelity_pending"].extend(["ice_shatter_particles", "object_ground_authority_rules", "object_create_sound"])
+            result["fidelity_pending"].extend(["object_ground_authority_rules", "object_create_sound"])
             result["fidelity_pending"].remove("damage_and_status")
             result["fidelity_pending"].append("status_level_resistance_formula")
+        else:
+            # Native 20024 -> 20025: fixed columns 0/1; ANI-end successor at
+            # +/-360, then deletion. See audit_dnf_firewave.py, not file names.
+            hit = stages[0]["hits"][0]
+            del hit["percent_col"]
+            rear = add_fx(fx, effects, OBJ_ROOT + "animation/firewavebig/fire-back.ani")
+            blast_rear = add_fx(fx, effects, OBJ_ROOT + "animation/firewavebig/blast-back.ani")
+            successor = add_object(objects, OBJ_ROOT + "firewavebigsub.obj")
+            if not rear or not blast_rear or not successor:
+                raise ValueError("Missing original firewave two-stage dependency")
+            hit.update(percent=0, fixed_col=0, speed=0, life_ms=-1, effects=[], rear_fx=rear,
+                       native_controller={"kind": "firewave_chain", "child": {
+                           "object": successor, "at": 0, "offset": [360, 0, 0],
+                           "percent": 0, "fixed_col": 1, "speed": 0, "life_ms": -1,
+                           "effects": [], "rear_fx": blast_rear}})
+            result["fidelity_pending"].remove("object_controller")
+            result["fidelity_pending"].remove("damage_and_status")
+            result["fidelity_pending"].extend(["fixed_stat_formula", "object_ground_authority_rules", "object_create_sound", "ani_box_scale", "draw_layer_and_blend_quantization"])
     if key in ["bloodyrave", "outragebreak"]:
         result["requires_effect"] = "frenzy"
     if key == "outragebreak":
@@ -1525,6 +1544,7 @@ def main() -> int:
             if value and value[0]
         }
         object_candidates.update(OBJ_ROOT + f"icewave{i}.obj" for i in range(1, 7))
+        object_candidates.add(OBJ_ROOT + "firewavebigsub.obj")
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(
             path for path in object_candidates if safe_object(library, records, path)
@@ -1560,11 +1580,21 @@ def main() -> int:
             move["name"] = str(skill["name"])
             if key == "icewaveex":
                 # EX uses different IDs/sizing/branches. Do not inherit a base-only controller.
+                move["fidelity_pending"].insert(move["fidelity_pending"].index("object_ground_authority_rules"), "ice_shatter_particles")
                 for stage in move["stages"]:
                     for hit in stage.get("hits", []):
                         hit.pop("native_controller", None)
                         hit.update(speed=240.0, life_ms=1800)
                 move["fidelity_pending"].append("object_controller")
+            if key == "firewaveex":
+                # EX 20101 has additional timer/ANI/controller branches. Keep
+                # its previous adapter until those paths have source evidence.
+                for stage in move["stages"]:
+                    for hit in stage.get("hits", []):
+                        for field in ("native_controller", "rear_fx", "fixed_col", "percent"):
+                            hit.pop(field, None)
+                        hit.update(speed=360.0, life_ms=1800, percent_col=0, effects=HIT_STATUS["firewave"])
+                move["fidelity_pending"] = ["object_controller", "damage_and_status", "effect_weapon_scale", "cancel_rules", "voice"]
         else:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects)
         if move:

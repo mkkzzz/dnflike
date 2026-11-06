@@ -110,6 +110,16 @@ if ($Test) {
     } finally {$ErrorActionPreference=$icePreference}
     $iceParticles | Write-Output
     if ($iceExit -ne 0 -or ($iceParticles -match 'SCRIPT ERROR|ERROR:') -or -not ($iceParticles -match '\[ICE_PARTICLES\] COMPLETE checks=\d+ failures=0')) {throw "Ice particle integration regression failed."}
+    & python (Join-Path $PSScriptRoot "test_dnf_firewave.py")
+    if ($LASTEXITCODE -ne 0) {throw "Native firewave evidence is stale."}
+    $firePreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $firewave=& $GodotPath --headless --path $gamePath --quit-after 3000 --script res://tests/combat/test_firewave_integration.gd 2>&1
+        $fireExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$firePreference}
+    $firewave | Write-Output
+    if ($fireExit -ne 0 -or ($firewave -match 'SCRIPT ERROR|ERROR:') -or -not ($firewave -match '\[FIREWAVE\] COMPLETE checks=\d+ failures=0')) {throw "Firewave integration regression failed."}
     & python (Join-Path $PSScriptRoot "test_check_dnf_performance.py")
     if ($LASTEXITCODE -ne 0) {throw "Performance guard self-tests failed."}
     $performanceOutput=& $GodotPath --headless --path $gamePath --script res://tests/flow/test_ui_performance.gd 2>&1

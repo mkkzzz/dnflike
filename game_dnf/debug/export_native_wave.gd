@@ -16,7 +16,7 @@ func capture() -> void:
 	if skill not in ["normalwave","icewave","firewave"]:quit(7);return
 	var samples: Array = [0.0,49.0,50.0,100.0,150.0,250.0,300.0,449.0,450.0]
 	if skill=="icewave":samples=[150.0,300.0,350.0,500.0,600.0,800.0,1000.0,1200.0,1380.0]
-	if skill=="firewave":samples=[0.0,249.0,250.0,300.0,399.0,400.0,450.0,749.0,750.0]
+	if skill=="firewave":samples=[399.0,400.0,600.0,889.0,890.0,960.0,1240.0,1450.0,1520.0]
 	DirAccess.make_dir_recursive_absolute(output)
 	root.size=Vector2i(800,600)
 	root.content_scale_size=Vector2i(800,600)
@@ -30,6 +30,7 @@ func capture() -> void:
 	for facing in [1,-1]:
 		game.restart()
 		game.player["pos"]=Vector2(350,300) if skill=="icewave" else Vector2(350,250)
+		if skill=="firewave":game.player["pos"]=Vector2(180 if facing==1 else 620,300)
 		game.player["mp"]=500.0
 		game.player["facing"]=facing
 		game.view.set_equipped_weapon("original_27601")
@@ -46,6 +47,16 @@ func capture() -> void:
 				remaining -= delta
 			var snapshot: Dictionary = game.view_snapshot()
 			print("[WAVE_STATE] ",facing," ",at," ",JSON.stringify(snapshot["objects"]))
+			if skill=="firewave":
+				var expected := 1 if at>=400 and at<1520 else 0
+				if (snapshot["objects"] as Array).size()!=expected:
+					push_error("Firewave capture object lifecycle mismatch at "+str(at))
+					quit(9)
+					return
+				if expected==1 and String(snapshot["objects"][0].bank).ends_with("firewavebigsub.obj")!=(at>=890):
+					push_error("Firewave capture stage mismatch at "+str(at))
+					quit(10)
+					return
 			if skill=="icewave":
 				var expected := 0
 				for ordinal in 8:
@@ -56,6 +67,10 @@ func capture() -> void:
 					quit(8)
 					return
 			game.view.present(snapshot,0.0,0.0)
+			if skill=="firewave":
+				# Fixed camera fixture keeps the +/-360 successor in the frame.
+				game.view.world.position=Vector2.ZERO
+				game.view.stage.apply_camera(0.0)
 			for i in 2:await process_frame
 			await RenderingServer.frame_post_draw
 			var file:=output+"/wave_%s_%03d.png" % ["right" if facing==1 else "left",int(at)]

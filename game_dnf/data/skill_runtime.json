@@ -10,6 +10,7 @@
    "skillfx_balltail1_fe1b6b78": "character/swordman/effect/animation/blache/balltail1.ani",
    "skillfx_blast1_08fc54d5": "character/swordman/effect/animation/standalonewave/blast1.ani",
    "skillfx_blast2_13b8f710": "character/swordman/effect/animation/standalonewave/blast2.ani",
+   "skillfx_blast_back_c66f1708": "passiveobject/character/swordman/animation/firewavebig/blast-back.ani",
    "skillfx_bremen1_73d2043e": "passiveobject/character/swordman/animation/bremen1.ani",
    "skillfx_charge1_522d5c86": "character/swordman/effect/animation/standalonewave/charge1.ani",
    "skillfx_charge_623ff08a": "character/swordman/effect/animation/chargecrash/charge.ani",
@@ -23,6 +24,7 @@
    "skillfx_dust_2e1015db": "character/swordman/effect/animation/guard/dust.ani",
    "skillfx_exp1_99b066d8": "character/swordman/effect/animation/kalla/exp1.ani",
    "skillfx_finishflash_7520151b": "character/swordman/effect/animation/hundredsword/finishflash.ani",
+   "skillfx_fire_back_d7808a4c": "passiveobject/character/swordman/animation/firewavebig/fire-back.ani",
    "skillfx_firewavebig_sword_effect_edc95164": "character/swordman/effect/animation/firewavebig-sword-effect.ani",
    "skillfx_icewave_ca30731c": "character/swordman/effect/animation/icewave.ani",
    "skillfx_jumpchainattackslash1_katana_under_0e0a4d92": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash1_katana_under.ani",
@@ -54,6 +56,7 @@
    "passiveobject/character/swordman/bremen.obj": "passiveobject/character/swordman/bremen.obj",
    "passiveobject/character/swordman/epidemicrasa.obj": "passiveobject/character/swordman/epidemicrasa.obj",
    "passiveobject/character/swordman/firewavebig.obj": "passiveobject/character/swordman/firewavebig.obj",
+   "passiveobject/character/swordman/firewavebigsub.obj": "passiveobject/character/swordman/firewavebigsub.obj",
    "passiveobject/character/swordman/grabblastblood.obj": "passiveobject/character/swordman/grabblastblood.obj",
    "passiveobject/character/swordman/grabblastbloodbig.obj": "passiveobject/character/swordman/grabblastbloodbig.obj",
    "passiveobject/character/swordman/grandwave.obj": "passiveobject/character/swordman/grandwave.obj",
@@ -1351,11 +1354,14 @@
   },
   "firewave": {
    "fidelity_pending": [
-    "object_controller",
-    "damage_and_status",
     "effect_weapon_scale",
     "cancel_rules",
-    "voice"
+    "voice",
+    "fixed_stat_formula",
+    "object_ground_authority_rules",
+    "object_create_sound",
+    "ani_box_scale",
+    "draw_layer_and_blend_quantization"
    ],
    "name": "爆炎 · 波动剑",
    "native_recovery_col": 0,
@@ -1376,21 +1382,36 @@
      "hits": [
       {
        "at": 10150,
-       "effects": [
-        {
-         "chance": 0.25,
-         "id": "burn"
-        }
-       ],
-       "life_ms": 1800,
+       "effects": [],
+       "fixed_col": 0,
+       "life_ms": -1,
+       "native_controller": {
+        "child": {
+         "at": 0,
+         "effects": [],
+         "fixed_col": 1,
+         "life_ms": -1,
+         "object": "passiveobject/character/swordman/firewavebigsub.obj",
+         "offset": [
+          360,
+          0,
+          0
+         ],
+         "percent": 0,
+         "rear_fx": "skillfx_blast_back_c66f1708",
+         "speed": 0
+        },
+        "kind": "firewave_chain"
+       },
        "object": "passiveobject/character/swordman/firewavebig.obj",
        "offset": [
         0,
         0,
         0
        ],
-       "percent_col": 0,
-       "speed": 360.0
+       "percent": 0,
+       "rear_fx": "skillfx_fire_back_d7808a4c",
+       "speed": 0
       }
      ]
     }
@@ -2315,7 +2336,6 @@
     "effect_weapon_scale",
     "cancel_rules",
     "voice",
-    "ice_shatter_particles",
     "object_ground_authority_rules",
     "object_create_sound",
     "status_level_resistance_formula"
