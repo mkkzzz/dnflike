@@ -22,10 +22,11 @@ import sys
 
 from dnf_pvf import Library, canonical, find, key_of, open_library, resolve
 from dnf_asset_store import ROOT
+from dnf_particle_fields import decode_particle_fields
 
 OUT = ROOT / 'game_dnf/assets_local/content'
 SCHEMA = 'dnf_combat_content/1'
-COMPILER_VERSION = 1
+COMPILER_VERSION = 2
 HANDLED_FILE = ROOT / 'game_dnf/combat/fields/handled.json'
 
 # Decoders: canonical tag -> (decoded key, shape, evidence, note). Shapes:
@@ -194,13 +195,8 @@ OBJ_FIELDS = {
     '[string data]': ('string_data', 'list', 'E-PARSE', '破坏粒子路径与受击/破坏音效 key'),
     '[name]': ('name', 'list', 'E-PARSE', ''),
 }
-PTL_FIELDS = {
-    '[x axis]': ('x_axis', 'section', 'E-PARSE', ''),
-    '[move type]': ('move_type', 'str', 'E-PARSE', ''),
-    '[move variable 1]': ('move_variable_1', 'list', 'E-PARSE', 'Speed min, max (px/s, E-INFER)'),
-    '[life time]': ('life_time', 'int', 'E-PARSE', 'Milliseconds (E-INFER)'),
-    '[landing type]': ('landing_type', 'str', 'E-PARSE', ''),
-}
+# PTL uses the ordered axis-aware decoder, not this flat tag table.
+PTL_FIELDS = {}
 ACT_FIELDS = {
     '[BASE ANI]': ('base_ani', 'path', 'E-PARSE', 'Motion ANI, relative to the .act file'),
     '[SUB ANI]': ('sub_ani', 'path', 'E-PARSE', 'Secondary layered ANI'),
@@ -299,6 +295,8 @@ def flatten_nodes(nodes: list):
 
 
 def decode_fields(kind: str, fields: list, path: str) -> tuple[dict, dict, list]:
+    if kind == 'ptl':
+        return decode_particle_fields(fields, path)
     table = FIELD_TABLES[kind]
     decoded, evidence, unsupported = {}, {}, []
     if kind == 'act':
@@ -660,7 +658,8 @@ def run(library: Path | None, output: Path) -> dict:
         scope = compile_scope(lib)
         handled = json.loads(HANDLED_FILE.read_text(encoding='utf-8')) if HANDLED_FILE.is_file() else {}
         cov = coverage(lib, handled)
-        compiler_sha = hashlib.sha256(Path(__file__).read_bytes() + (ROOT / 'tools/dnf_pvf.py').read_bytes()).hexdigest()
+        compiler_sources = [Path(__file__), ROOT / 'tools/dnf_pvf.py', ROOT / 'tools/dnf_particle_fields.py']
+        compiler_sha = hashlib.sha256(b''.join(p.read_bytes().replace(b'\r\n', b'\n') for p in compiler_sources)).hexdigest()
         pack = {'schema': SCHEMA, 'compiler_version': COMPILER_VERSION, 'compiler_sha256': compiler_sha,
                 'asset_version': lib.asset_version,
                 'scope': 'swordman chr + reachable atk/ani + swordman skills; goblin-family monsters',

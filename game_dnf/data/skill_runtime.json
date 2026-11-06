@@ -8592,7 +8592,7 @@
   "catalog": "game_dnf/data/skill_catalog.json",
   "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
   "pack": "game_dnf/assets_local/content/combat_content.json",
-  "pack_sha256": "e553acac5662784c36d458d04c71a682f9e1b794c3f2a93cc79c84a0f18f40de"
+  "pack_sha256": "8d36cc9dffd80329798819baa3bc4aa14d0f4da8a759ddf66f7ecd1091977c22"
  },
  "tree_active_count": 52,
  "tree_passive_count": 26,

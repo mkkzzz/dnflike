@@ -496,7 +496,7 @@ def breakable_particle_animations(src: Source) -> tuple[dict, dict]:
     返回 (effect_key → ANI 路径, obj 路径 → effect_key 列表)：
     前者用于烘 effect bank，后者写进 data/breakable_particles.json 供运行时查。
     """
-    particles_path = ROOT / 'game_dnf/data/particles.json'
+    particles_path = ROOT / 'game_dnf/assets_local/content/particles.json'
     if not particles_path.is_file():
         return {}, {}
     particles = json.loads(particles_path.read_text(encoding='utf-8'))['particles']

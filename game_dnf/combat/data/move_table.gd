@@ -520,7 +520,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		var filename:=String(throw.get("passive_object_filename","")).to_lower()
 		var ptl_path:=filename if filename.begins_with("passiveobject/") else path.get_base_dir().path_join(filename)
 		var ptl: Dictionary = db.record(ptl_path).get("decoded",{})
-		var speed: Array = ptl.get("move_variable_1",[0])
+		var speed: Array = ptl.get("axes",{}).get("x",{}).get("move_variable_1",[0])
 		m["throw"] = {"object":obj,"frame":int(throw.get("throw_frame",0)),"sound":String(throw.get("throw_sound","")),
 			"start":Vector3(float(throw.get("passive_object_start_x_cood",0)),float(throw.get("passive_object_start_y_cood",0)),
 				float(throw.get("passive_object_start_z_cood",0))),
