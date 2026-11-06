@@ -58,7 +58,8 @@ class Evidence(unittest.TestCase):
         for application in self.e['consumers']:
             row=application['run'];verify_consumer(row)
             # Native base table fixture is 1217. The ordinary mode gives
-            # trunc(f32((1217+87)*f32(1.1*0.9))) + final = 1290 + final.
+            # trunc(f32(1217+87)*f32(f32(1.1)*f32(0.9))) + final = 1290 + final.
+            # Native base multiplication remains in x87 until the truncation helper.
             before_final=1269 if row['fixture']['mode'] in (4,5) else 1290
             self.assertEqual(row['value'],before_final+application['state'][4])
 
