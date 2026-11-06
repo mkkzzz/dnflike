@@ -744,7 +744,10 @@ def generic_passive_spec(key: str) -> dict:
     if key == "basichpmaxup":
         return {"passive": [{"stat": "hp_max", "op": "add", "level_row": 0, "scale": 1.0}]}
     if key == "basicattackup":
-        return {"passive": [{"stat": "physical_attack", "op": "percent", "level_row": 0, "scale": 0.001}]}
+        # Native 83FA10 adjusts one eligible attack record, after swordman
+        # state gates, using category-specific columns and native rounding.
+        # Its rank producer/attack-record integration is not yet closed.
+        return {"runtime_hook": "basic_attack_mastery", "runtime_status": "pending_native_attack_record_pipeline"}
     if key == "throwmastery":
         # Original SKL text limits this to thrown-item damage (excluding a
         # secondary hit such as a fire bottle), with MP consumed per throw.

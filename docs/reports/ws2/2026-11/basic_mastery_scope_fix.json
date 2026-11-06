@@ -1,0 +1,122 @@
+{
+  "schema": "dnf_basic_mastery_scope_fix/1",
+  "baseline_commit": "7fa4ea346dac16f8fc3c7109b6da8df35154ac74",
+  "native_evidence": "native_basic_mastery.json",
+  "old_definition": {
+    "active": false,
+    "cost": 0,
+    "growtype_max_level": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "max_level": 100,
+    "name": "基础精通",
+    "passive": [
+      {
+        "level_row": 0,
+        "op": "percent",
+        "scale": 0.001,
+        "stat": "physical_attack"
+      }
+    ],
+    "path": "skill/swordman/basicattackup.skl",
+    "source_id": 174,
+    "source_path": "skill/swordman/basicattackup.skl",
+    "speed": "attack",
+    "tree_visible": false
+  },
+  "new_definition": {
+    "active": false,
+    "cost": 0,
+    "growtype_max_level": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "max_level": 100,
+    "name": "基础精通",
+    "path": "skill/swordman/basicattackup.skl",
+    "runtime_hook": "basic_attack_mastery",
+    "runtime_status": "pending_native_attack_record_pipeline",
+    "source_id": 174,
+    "source_path": "skill/swordman/basicattackup.skl",
+    "speed": "attack",
+    "tree_visible": false
+  },
+  "native_tests": {
+    "total": 14,
+    "offline": 7,
+    "original_source": 7,
+    "failures": 0
+  },
+  "skill_tests": {
+    "total": 18,
+    "failures": 0
+  },
+  "logs": {
+    "before": {
+      "exit_code": 1,
+      "sha256": "81b082b5e24fb9cad0f43a0fc169e6f130bb7f821e51d0f23f3a54dc53e335ba",
+      "markers": [
+        "[NUMBERS_TEST] FAIL basic mastery rank 2 never changes general character attributes",
+        "[NUMBERS_TEST] FAIL basic mastery does not boost unrelated physical skills",
+        "[NUMBERS_TEST] FAIL stored basic mastery ranks survive without global attack pollution",
+        "[NUMBERS_TEST] FAIL basic mastery rank 60 never changes general character attributes",
+        "[NUMBERS_TEST] FAIL basic mastery does not boost unrelated physical skills",
+        "[NUMBERS_TEST] FAIL stored basic mastery ranks survive without global attack pollution",
+        "[NUMBERS_TEST] FAIL basic mastery rank 100 never changes general character attributes",
+        "[NUMBERS_TEST] FAIL basic mastery does not boost unrelated physical skills",
+        "[NUMBERS_TEST] FAIL stored basic mastery ranks survive without global attack pollution",
+        "[NUMBERS_TEST] COMPLETE checks=251 failures=9"
+      ]
+    },
+    "after": {
+      "exit_code": 0,
+      "sha256": "225d67045f97de82242ac3c9035afd4bdaa93fde4eb61b90bef603d3788efb02",
+      "markers": [
+        "[NUMBERS_TEST] COMPLETE checks=251 failures=0"
+      ]
+    },
+    "formal_loop": {
+      "exit_code": 0,
+      "sha256": "acd01f37aa042e8a1521667599652e999df7de22f55558312e803ab7c6e1f219",
+      "markers": [
+        "[PARTICLE_MOTION] COMPLETE checks=275 failures=0",
+        "[PARTICLE_EMITTER] COMPLETE checks=153 failures=0",
+        "[PARTICLE_VIEW] COMPLETE checks=87 failures=0",
+        "[ICE_PARTICLES] COMPLETE checks=355 failures=0",
+        "[FIREWAVE] COMPLETE checks=91 failures=0",
+        "[SKILL_EFFECTS] COMPLETE checks=19 failures=0",
+        "[UI_PERF] COMPLETE checks=17 failures=0",
+        "[QUEST_RULES] COMPLETE checks=288 failures=0",
+        "[CAMPAIGN] COMPLETE checks=132 failures=0",
+        "[WEAPON_RULES] COMPLETE checks=29925 failures=0",
+        "[NATIVE_BULK] COMPLETE checks=7780 failures=0",
+        "[TEACHING_RULES] COMPLETE checks=30 failures=0",
+        "[POISON_RULES] COMPLETE checks=26 failures=0",
+        "[ORIGINAL_DATA] COMPLETE checks=31 failures=0",
+        "[RECOVERY_TEST] COMPLETE checks=53 failures=0",
+        "[UPGRADE_TEST] COMPLETE checks=46 failures=0",
+        "[SERVICE_TEST] COMPLETE checks=33 failures=0",
+        "[ITEM_TEST] COMPLETE checks=44 failures=0",
+        "[NUMBERS_TEST] COMPLETE checks=251 failures=0",
+        "[QUEST_TEST] COMPLETE checks=45 failures=0",
+        "[TOWN_UNIT] COMPLETE checks=110 failures=0",
+        "[GRAN_UNIT] COMPLETE checks=19 failures=0",
+        "[LOOP_TEST] COMPLETE checks=435 failures=0 captures=0"
+      ]
+    }
+  },
+  "boundaries": [
+    "Runtime fix removes incorrect global physical-attack modifier; original basic-attack bonus remains pending.",
+    "Native protected value service, auto rank production, three status lifecycles, ATK field producer and final damage pipeline remain unresolved.",
+    "Headless verification is not visual or original-game acceptance."
+  ]
+}

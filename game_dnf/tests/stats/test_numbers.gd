@@ -16,6 +16,7 @@ func _initialize() -> void:
 	check_equipment_separate_attack()
 	check_throw_mastery_scope()
 	check_magical_memory()
+	check_basic_mastery_scope()
 	var cfg := Numbers.config_snapshot()
 	var initial_strength: float = Numbers.shared_config()["base"]["strength"]
 	cfg["base"]["strength"] = initial_strength + 1
@@ -235,6 +236,22 @@ func check_magical_memory() -> void:
 	actor.config["effects"]["magical_memory"] = template.duplicate(true)
 	actor.config["effects"]["magical_memory"]["source_skill"] = "missing_source_skill"
 	check(not actor.add_effect("magical_memory",1) and actor.effects.active["magical_memory"]==applied,"missing source rejects refresh without losing the existing effect")
+
+func check_basic_mastery_scope() -> void:
+	var profile: Dictionary = Session.new().profile.duplicate(true)
+	profile["skills"] = {}
+	var before: Dictionary = Numbers.profile_stats(profile)["values"]
+	var formula: Dictionary = Numbers.shared_config()["formula"]
+	# Source table ranks, not a claim that the skill-learning UI permits rank 100.
+	for rank in [1,2,60,100]:
+		profile["skills"] = {"basicattackup":rank}
+		var after: Dictionary = Numbers.profile_stats(profile)["values"]
+		check(after==before,"basic mastery rank %d never changes general character attributes" % rank)
+		for kind: String in ["physical","magical"]:
+			var hit := {"skill":true,"damage_type":kind,"percent":123,"fixed":47}
+			check(Numbers.Damage.resolve(after,{},hit,[0,1],formula)==Numbers.Damage.resolve(before,{},hit,[0,1],formula),"basic mastery does not boost unrelated %s skills" % kind)
+		var restored: Dictionary = JSON.parse_string(JSON.stringify(profile))
+		check(restored["skills"]["basicattackup"]==rank and Numbers.profile_stats(restored)["values"]==before,"stored basic mastery ranks survive without global attack pollution")
 
 func check_throw_mastery_scope() -> void:
 	var s = Session.new()

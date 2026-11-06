@@ -110,6 +110,8 @@ def audit(runtime, combat, records, catalog, clips):
                 item["risks"].append("pending_runtime_consumer")
             if skill_id == "throwmastery" and skill.get("passive"):
                 item["risks"].append("throw_item_bonus_applied_to_general_character_stats")
+            if skill_id == "basicattackup" and skill.get("passive"):
+                item["risks"].append("basic_attack_bonus_applied_to_general_character_stats")
             if "backattackcritical" in skill_id and any(m.get("stat") in ("physical_crit", "magical_crit") for m in skill.get("passive", [])):
                 item["risks"].append("back_attack_bonus_applied_without_direction_condition")
         result.append(item)

@@ -1,0 +1,6711 @@
+{
+ "schema": "dnf_basic_mastery/1",
+ "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
+ "input_source": {
+  "input_sha256": "8748e19abf6155ca5a20d13244eaca0b9442c3d7569e8e5002bddffeeb9366ac",
+  "embedded": true,
+  "resource": "10/EXERESX/0",
+  "resource_offset": 734740
+ },
+ "tools_sha256": {
+  "audit_dnf_basic_mastery.py": "5bd733ea6afb00f72074181b85bb8fe748651ab49675a88d86a980999d0c39a5",
+  "audit_dnf_firewave.py": "3377abdf1f6b5a76908a4cd14652fc68fe28d56314e49c6ee65933bfbd792ddc",
+  "audit_dnf_ice_shatter.py": "b4f90d1797fd487af50a6e39716c77cc9e889b3e5b5c0b1c12864d088f29462c",
+  "audit_dnf_ice_particle_bindings.py": "660048b05498ea7dd11add2d7f3654083d99faafa8fc28b86ff198292fcdeed1",
+  "audit_dnf_native_strings.py": "60b30f2e51e5a744b106d8df955f5a7acbd7d4341ba51f52fd7a2941a5d29c6f",
+  "audit_dnf_particle_axis.py": "59b463dcff6537cc89c597bcf2bb5f1f0a336eb25a67b09da4c228d524b1af8e",
+  "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a"
+ },
+ "vtable": {
+  "address": "0x16f972c",
+  "slots": {
+   "0x7d0": "f0448400",
+   "0x804": "c0068400",
+   "0x878": "60eec900",
+   "0x87c": "40c08300"
+  }
+ },
+ "constants": {
+  "0x156889c": "cdcccc3d",
+  "0x1556df8": "0000c842",
+  "0x1559c80": "0ad7233c"
+ },
+ "runs": [
+  {
+   "fixture": {
+    "category": -1,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": -1,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": -1,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": -1,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 0,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 0,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 0,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 0,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 7,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 39,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      1,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 39
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 164,
+   "trace_sha256": "d6ad6c3939d9824f96a0557a8c14b6d4c4909caed19d159d8bd1c08d49f44be9"
+  },
+  {
+   "fixture": {
+    "category": 7,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 39,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      1,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 39
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 164,
+   "trace_sha256": "d6ad6c3939d9824f96a0557a8c14b6d4c4909caed19d159d8bd1c08d49f44be9"
+  },
+  {
+   "fixture": {
+    "category": 7,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 41,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      1,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 41
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 166,
+   "trace_sha256": "f8e5fba19744892c5ad68f0e830af5576685918bcca6d864a133673041d50e46"
+  },
+  {
+   "fixture": {
+    "category": 7,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 41,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      1,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 41
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 166,
+   "trace_sha256": "f8e5fba19744892c5ad68f0e830af5576685918bcca6d864a133673041d50e46"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 37,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 37
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 37,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 37
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 38,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 38
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 38,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 38
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 15,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 42,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      2,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 42
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 167,
+   "trace_sha256": "eaf093cbaccf853359d1842c484c62eda0c431de88c581cf58f52607213a0147"
+  },
+  {
+   "fixture": {
+    "category": 15,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 42,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      2,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 42
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 167,
+   "trace_sha256": "eaf093cbaccf853359d1842c484c62eda0c431de88c581cf58f52607213a0147"
+  },
+  {
+   "fixture": {
+    "category": 15,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 44,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      2,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 44
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 169,
+   "trace_sha256": "a03cdd0ce9d5961a104b4d628831e1c0719af092cb0e5e57d97457113381b450"
+  },
+  {
+   "fixture": {
+    "category": 15,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 44,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      2,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 44
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 169,
+   "trace_sha256": "a03cdd0ce9d5961a104b4d628831e1c0719af092cb0e5e57d97457113381b450"
+  },
+  {
+   "fixture": {
+    "category": 18,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 18,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 18,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 18,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 31,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 31,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 31,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 31,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 64,
+   "trace_sha256": "5a2a64ceba20a3c1a81ceed7862353aeb4538412b75264e9b15aa9788218372f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 35
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 35
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 2,
+    "values": [
+     24.0,
+     24.0,
+     24.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 38,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      2,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 38
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 2,
+    "values": [
+     24.0,
+     24.0,
+     24.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 38,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      2,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 38
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 10,
+    "values": [
+     216.0,
+     216.0,
+     216.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 64,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      10,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 64
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 10,
+    "values": [
+     216.0,
+     216.0,
+     216.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 64,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      10,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 64
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 60,
+    "values": [
+     1416.0,
+     1416.0,
+     1416.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 226,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      60,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 226
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 60,
+    "values": [
+     1416.0,
+     1416.0,
+     1416.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 226,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      60,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 226
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 100,
+    "values": [
+     2376.0,
+     2376.0,
+     2376.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 355,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      100,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 355
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 100,
+    "values": [
+     2376.0,
+     2376.0,
+     2376.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 355,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      100,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 355
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     -121.9,
+     -121.9,
+     -121.9
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 23,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 23
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     -121.9,
+     -121.9,
+     -121.9
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 23,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 23
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     -121.9,
+     -121.9,
+     -121.9
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 18,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 18
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     -121.9,
+     -121.9,
+     -121.9
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 18,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 18
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     -24.9,
+     -24.9,
+     -24.9
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 33,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 33
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     -24.9,
+     -24.9,
+     -24.9
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 33,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 33
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     -24.9,
+     -24.9,
+     -24.9
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 31,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 31
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     -24.9,
+     -24.9,
+     -24.9
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 31,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 31
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 35
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 35
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 35
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 35
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.9,
+     24.9,
+     24.9
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 37,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 37
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.9,
+     24.9,
+     24.9
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 37,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 37
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.9,
+     24.9,
+     24.9
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 38,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 38
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.9,
+     24.9,
+     24.9
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 38,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 38
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     1416.0,
+     1416.0,
+     1416.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 176,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 176
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     1416.0,
+     1416.0,
+     1416.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 176,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 176
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     1416.0,
+     1416.0,
+     1416.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 226,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 226
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     1416.0,
+     1416.0,
+     1416.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 226,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 226
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     2376.0,
+     2376.0,
+     2376.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 272,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 272
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     2376.0,
+     2376.0,
+     2376.0
+    ],
+    "initial": 35,
+    "static": 0,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 272,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 272
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 160,
+   "trace_sha256": "d25e2e58dc12e56ce6fd1da30f845755db84ae5595854abccda658d1f5a0165f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     2376.0,
+     2376.0,
+     2376.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 355,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 355
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     2376.0,
+     2376.0,
+     2376.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 355,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 355
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": false,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 12,
+   "trace_sha256": "7ccb15e532bf8bea300102ca2efda054d450d0b8eb41f9f594f52887d6193c82"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": false,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 12,
+   "trace_sha256": "7ccb15e532bf8bea300102ca2efda054d450d0b8eb41f9f594f52887d6193c82"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 0,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 18,
+   "trace_sha256": "3ea73fab89b4ae870e6074014c337c2a6916acd86b422ac41f11953739230f9f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 0,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 18,
+   "trace_sha256": "3ea73fab89b4ae870e6074014c337c2a6916acd86b422ac41f11953739230f9f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": -1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 18,
+   "trace_sha256": "3ea73fab89b4ae870e6074014c337c2a6916acd86b422ac41f11953739230f9f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": -1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 18,
+   "trace_sha256": "3ea73fab89b4ae870e6074014c337c2a6916acd86b422ac41f11953739230f9f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": false,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 25,
+   "trace_sha256": "aaf55e3a069efb1ab5419ba0807e425e54b36ef7e05b289538d6c523b05a88de"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": false,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 25,
+   "trace_sha256": "aaf55e3a069efb1ab5419ba0807e425e54b36ef7e05b289538d6c523b05a88de"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     0,
+     0,
+     0
+    ],
+    "poison": false
+   },
+   "value": 38,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 38
+    }
+   ],
+   "state_calls": [
+    0,
+    1,
+    2
+   ],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 177,
+   "trace_sha256": "8197a7228fcc8a2c72d3ec87e2a60fd6aeda7f8108c8273a86bc30fbfc6a870f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     0,
+     0,
+     0
+    ],
+    "poison": true
+   },
+   "value": 38,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 38
+    }
+   ],
+   "state_calls": [
+    0,
+    1,
+    2
+   ],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 177,
+   "trace_sha256": "8197a7228fcc8a2c72d3ec87e2a60fd6aeda7f8108c8273a86bc30fbfc6a870f"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     1,
+     1,
+     1
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [
+    0
+   ],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 50,
+   "trace_sha256": "af294a1b13fcbd70cfe89d04f1b3d018e4951a589a6cadc6708b67efdd35f468"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     1,
+     1,
+     1
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [
+    0
+   ],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 50,
+   "trace_sha256": "af294a1b13fcbd70cfe89d04f1b3d018e4951a589a6cadc6708b67efdd35f468"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     1,
+     0
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [
+    1
+   ],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 52,
+   "trace_sha256": "e92f1e55040b37291fc3c54f0b25afe7866b21d0092ac73e31d25441cede8888"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     1,
+     0
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [
+    1
+   ],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 52,
+   "trace_sha256": "e92f1e55040b37291fc3c54f0b25afe7866b21d0092ac73e31d25441cede8888"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     0,
+     null,
+     1
+    ],
+    "poison": false
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [
+    0,
+    2
+   ],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 59,
+   "trace_sha256": "1bb066a520823b93537e5565e3335dd09bf84335cdef40fac682c7fd2a57dfc0"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     0,
+     null,
+     1
+    ],
+    "poison": true
+   },
+   "value": 35,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    }
+   ],
+   "writes": [],
+   "state_calls": [
+    0,
+    2
+   ],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 59,
+   "trace_sha256": "1bb066a520823b93537e5565e3335dd09bf84335cdef40fac682c7fd2a57dfc0"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": -101,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": -101,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": -101
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": -101,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": -101,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": -101
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": -100,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": -100,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": -100
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": -100,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": -100,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": -100
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 0,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 2,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 2
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 0,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 2,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 2
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 100,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 104,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 104
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 100,
+    "static": 1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 104,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 104
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": -1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": false
+   },
+   "value": 38,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 38
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  },
+  {
+   "fixture": {
+    "category": 8,
+    "rank": 1,
+    "values": [
+     24.0,
+     48.0,
+     72.0
+    ],
+    "initial": 35,
+    "static": -1,
+    "learned": 1,
+    "skill_exists": true,
+    "attack_exists": true,
+    "states": [
+     null,
+     null,
+     null
+    ],
+    "poison": true
+   },
+   "value": 38,
+   "calls": [
+    {
+     "service": "learned",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "static",
+     "column": 0
+    },
+    {
+     "service": "lookup",
+     "id": 174
+    },
+    {
+     "service": "value",
+     "args": [
+      0,
+      1,
+      1610612736,
+      -1,
+      -1,
+      14,
+      0,
+      0
+     ]
+    }
+   ],
+   "writes": [
+    {
+     "offset": "0x24",
+     "value": 38
+    }
+   ],
+   "state_calls": [],
+   "stop": [
+    "returned"
+   ],
+   "abi": [
+    17,
+    29,
+    31,
+    37,
+    1879048204
+   ],
+   "fp_depth": 0,
+   "steps": 162,
+   "trace_sha256": "2bfded43ebadddbbdc4947554f0e66dff905bbdf3c26cb5f54c99c286ec80738"
+  }
+ ],
+ "blocks": [
+  {
+   "start": "0x4041c0",
+   "end_exclusive": "0x4041e2",
+   "sha256": "39225447bc21868947cf131223625e5edd046bdd1a00b9bbd3e95885e9c2a142",
+   "instructions": [
+    "004041C0 push ebp",
+    "004041C1 mov ebp, esp",
+    "004041C3 mov eax, dword ptr [ebp + 8]",
+    "004041C6 push esi",
+    "004041C7 mov esi, ecx",
+    "004041C9 lea ecx, [esi + 8]",
+    "004041CC push ecx",
+    "004041CD lea edx, [ebp + 8]",
+    "004041D0 push edx",
+    "004041D1 mov ecx, esi",
+    "004041D3 mov dword ptr [ebp + 8], eax",
+    "004041D6 call 0x1195a10",
+    "004041DB mov eax, esi",
+    "004041DD pop esi",
+    "004041DE pop ebp",
+    "004041DF ret 4"
+   ]
+  },
+  {
+   "start": "0x42cdb0",
+   "end_exclusive": "0x42cde6",
+   "sha256": "d511b91e375691bb5d5302e1c97087075e2edba7f5165022b34a4c910da41474",
+   "instructions": [
+    "0042CDB0 push ebp",
+    "0042CDB1 mov ebp, esp",
+    "0042CDB3 push ecx",
+    "0042CDB4 push ebx",
+    "0042CDB5 push esi",
+    "0042CDB6 push edi",
+    "0042CDB7 mov esi, ecx",
+    "0042CDB9 lea eax, [ebp - 4]",
+    "0042CDBC push eax",
+    "0042CDBD lea edi, [esi + 8]",
+    "0042CDC0 push edi",
+    "0042CDC1 call 0x1195eb0",
+    "0042CDC6 mov ebx, dword ptr [ebp - 4]",
+    "0042CDC9 add ebx, dword ptr [ebp + 8]",
+    "0042CDCC push edi",
+    "0042CDCD lea eax, [ebp + 8]",
+    "0042CDD0 push eax",
+    "0042CDD1 mov ecx, esi",
+    "0042CDD3 mov dword ptr [ebp + 8], ebx",
+    "0042CDD6 call 0x1195a10",
+    "0042CDDB pop edi",
+    "0042CDDC pop esi",
+    "0042CDDD mov eax, ebx",
+    "0042CDDF pop ebx",
+    "0042CDE0 mov esp, ebp",
+    "0042CDE2 pop ebp",
+    "0042CDE3 ret 4"
+   ]
+  },
+  {
+   "start": "0x83c020",
+   "end_exclusive": "0x83c03d",
+   "sha256": "063df99599a83f86decf1d750437ec0852c7eb9933c2738122cbb5bc286fb5fa",
+   "instructions": [
+    "0083C020 push ebp",
+    "0083C021 mov ebp, esp",
+    "0083C023 mov ecx, dword ptr [ebp + 8]",
+    "0083C026 xor al, al",
+    "0083C028 cmp ecx, 8",
+    "0083C02B je 0x83c037",
+    "0083C02D cmp ecx, 7",
+    "0083C030 je 0x83c037",
+    "0083C032 cmp ecx, 0xf",
+    "0083C035 jne 0x83c039",
+    "0083C037 mov al, 1",
+    "0083C039 pop ebp",
+    "0083C03A ret 4"
+   ]
+  },
+  {
+   "start": "0x83c040",
+   "end_exclusive": "0x83c082",
+   "sha256": "8f37561866c8510955259eba2ef8aa3d660909d881722c95e88772dc4998a74f",
+   "instructions": [
+    "0083C040 push ebp",
+    "0083C041 mov ebp, esp",
+    "0083C043 mov edx, dword ptr [ebp + 8]",
+    "0083C046 xor eax, eax",
+    "0083C048 cmp edx, 8",
+    "0083C04B jne 0x83c051",
+    "0083C04D push ecx",
+    "0083C04E push eax",
+    "0083C04F jmp 0x83c063",
+    "0083C051 cmp edx, 7",
+    "0083C054 jne 0x83c05b",
+    "0083C056 push ecx",
+    "0083C057 push 1",
+    "0083C059 jmp 0x83c063",
+    "0083C05B cmp edx, 0xf",
+    "0083C05E jne 0x83c07e",
+    "0083C060 push ecx",
+    "0083C061 push 2",
+    "0083C063 mov eax, dword ptr [ecx]",
+    "0083C065 mov edx, dword ptr [eax + 0x804]",
+    "0083C06B push 0xae",
+    "0083C070 call edx",
+    "0083C072 mov ecx, eax",
+    "0083C074 call 0x9095b0",
+    "0083C079 call 0x13cd690",
+    "0083C07E pop ebp",
+    "0083C07F ret 4"
+   ]
+  },
+  {
+   "start": "0x83fa10",
+   "end_exclusive": "0x83fb2a",
+   "sha256": "249a002e4e59fdf5ffc988b923d9e167b103dc1f5d4b9827c1a3a6934421f3e7",
+   "instructions": [
+    "0083FA10 push ebp",
+    "0083FA11 mov ebp, esp",
+    "0083FA13 push esi",
+    "0083FA14 push edi",
+    "0083FA15 mov edi, dword ptr [ebp + 8]",
+    "0083FA18 mov esi, ecx",
+    "0083FA1A test edi, edi",
+    "0083FA1C je 0x83fb24",
+    "0083FA22 mov eax, dword ptr [esi]",
+    "0083FA24 mov edx, dword ptr [eax + 0x7d0]",
+    "0083FA2A push 0xae",
+    "0083FA2F call edx",
+    "0083FA31 test eax, eax",
+    "0083FA33 jle 0x83fb24",
+    "0083FA39 mov eax, dword ptr [esi]",
+    "0083FA3B mov edx, dword ptr [eax + 0x804]",
+    "0083FA41 push 0xae",
+    "0083FA46 mov ecx, esi",
+    "0083FA48 call edx",
+    "0083FA4A test eax, eax",
+    "0083FA4C je 0x83fb24",
+    "0083FA52 mov eax, dword ptr [esi]",
+    "0083FA54 mov edx, dword ptr [eax + 0x878]",
+    "0083FA5A push ebx",
+    "0083FA5B mov ebx, dword ptr [ebp + 0xc]",
+    "0083FA5E push ebx",
+    "0083FA5F mov ecx, esi",
+    "0083FA61 call edx",
+    "0083FA63 test al, al",
+    "0083FA65 je 0x83fb23",
+    "0083FA6B mov eax, dword ptr [esi]",
+    "0083FA6D mov edx, dword ptr [eax + 0x804]",
+    "0083FA73 push esi",
+    "0083FA74 push 0",
+    "0083FA76 push 0xae",
+    "0083FA7B mov ecx, esi",
+    "0083FA7D call edx",
+    "0083FA7F mov ecx, eax",
+    "0083FA81 call 0x908510",
+    "0083FA86 push ebx",
+    "0083FA87 mov ecx, esi",
+    "0083FA89 test eax, eax",
+    "0083FA8B je 0x83fafd",
+    "0083FA8D mov eax, dword ptr [esi]",
+    "0083FA8F mov edx, dword ptr [eax + 0x87c]",
+    "0083FA95 call edx",
+    "0083FA97 xorps xmm0, xmm0",
+    "0083FA9A cvtsi2ss xmm0, eax",
+    "0083FA9E mulss xmm0, dword ptr [0x156889c]",
+    "0083FAA6 lea eax, [ebp + 8]",
+    "0083FAA9 push eax",
+    "0083FAAA lea ecx, [edi + 0x2c]",
+    "0083FAAD push ecx",
+    "0083FAAE lea ecx, [edi + 0x24]",
+    "0083FAB1 movss dword ptr [ebp + 0xc], xmm0",
+    "0083FAB6 call 0x1195eb0",
+    "0083FABB mov edx, dword ptr [ebp + 8]",
+    "0083FABE movss xmm0, dword ptr [ebp + 0xc]",
+    "0083FAC3 addss xmm0, dword ptr [0x1556df8]",
+    "0083FACB xorps xmm2, xmm2",
+    "0083FACE add edx, 0x64",
+    "0083FAD1 cvtsi2ss xmm2, edx",
+    "0083FAD5 mulss xmm2, xmm0",
+    "0083FAD9 mulss xmm2, dword ptr [0x1559c80]",
+    "0083FAE1 subss xmm2, dword ptr [0x1556df8]",
+    "0083FAE9 cvttss2si eax, xmm2",
+    "0083FAED push eax",
+    "0083FAEE lea ecx, [edi + 0x24]",
+    "0083FAF1 call 0x4041c0",
+    "0083FAF6 pop ebx",
+    "0083FAF7 pop edi",
+    "0083FAF8 pop esi",
+    "0083FAF9 pop ebp",
+    "0083FAFA ret 8",
+    "0083FAFD mov edx, dword ptr [esi]",
+    "0083FAFF mov eax, dword ptr [edx + 0x87c]",
+    "0083FB05 call eax",
+    "0083FB07 mov ecx, eax",
+    "0083FB09 mov eax, 0x66666667",
+    "0083FB0E imul ecx",
+    "0083FB10 sar edx, 2",
+    "0083FB13 mov ecx, edx",
+    "0083FB15 shr ecx, 0x1f",
+    "0083FB18 add ecx, edx",
+    "0083FB1A push ecx",
+    "0083FB1B lea ecx, [edi + 0x24]",
+    "0083FB1E call 0x42cdb0",
+    "0083FB23 pop ebx",
+    "0083FB24 pop edi",
+    "0083FB25 pop esi",
+    "0083FB26 pop ebp",
+    "0083FB27 ret 8"
+   ]
+  },
+  {
+   "start": "0x9095b0",
+   "end_exclusive": "0x9095ee",
+   "sha256": "8274b39296534ae0efdb14a29a4eb4223f1ccb28b0192295b097b1967772b6f5",
+   "instructions": [
+    "009095B0 push ebp",
+    "009095B1 mov ebp, esp",
+    "009095B3 push ecx",
+    "009095B4 push esi",
+    "009095B5 mov esi, ecx",
+    "009095B7 lea ecx, [esi + 0x59c]",
+    "009095BD lea eax, [ebp - 4]",
+    "009095C0 push eax",
+    "009095C1 lea edx, [ecx + 8]",
+    "009095C4 push edx",
+    "009095C5 call 0x1195eb0",
+    "009095CA mov eax, dword ptr [ebp + 0xc]",
+    "009095CD mov ecx, dword ptr [ebp - 4]",
+    "009095D0 mov edx, dword ptr [ebp + 8]",
+    "009095D3 push 0",
+    "009095D5 push 0",
+    "009095D7 push 0xe",
+    "009095D9 push -1",
+    "009095DB push -1",
+    "009095DD push eax",
+    "009095DE push ecx",
+    "009095DF push edx",
+    "009095E0 mov ecx, esi",
+    "009095E2 call 0x908770",
+    "009095E7 pop esi",
+    "009095E8 mov esp, ebp",
+    "009095EA pop ebp",
+    "009095EB ret 8"
+   ]
+  },
+  {
+   "start": "0xc9ee60",
+   "end_exclusive": "0xc9ee7a",
+   "sha256": "2fd46fa30846d61a6a4f9fb33ee45944db65fe3a89b9fb89ddbcc944928e3477",
+   "instructions": [
+    "00C9EE60 push ebp",
+    "00C9EE61 mov ebp, esp",
+    "00C9EE63 push esi",
+    "00C9EE64 mov esi, ecx",
+    "00C9EE66 cmp dword ptr [esi + 0x6a44], 0",
+    "00C9EE6D je 0xc9ee80",
+    "00C9EE6F mov ecx, dword ptr [esi + 0x6a44]",
+    "00C9EE75 mov eax, dword ptr [ecx]",
+    "00C9EE77 mov edx, dword ptr [eax + 0x70]"
+   ]
+  },
+  {
+   "start": "0xc9ee7c",
+   "end_exclusive": "0xc9ee94",
+   "sha256": "3ed01a99f38f82722dc7c726a76978d0d7f59cb4e187321b82283334795660c0",
+   "instructions": [
+    "00C9EE7C test al, al",
+    "00C9EE7E jne 0xc9eec4",
+    "00C9EE80 cmp dword ptr [esi + 0x6514], 0",
+    "00C9EE87 je 0xc9ee9a",
+    "00C9EE89 mov ecx, dword ptr [esi + 0x6514]",
+    "00C9EE8F mov eax, dword ptr [ecx]",
+    "00C9EE91 mov edx, dword ptr [eax + 0x70]"
+   ]
+  },
+  {
+   "start": "0xc9ee96",
+   "end_exclusive": "0xc9eeae",
+   "sha256": "2b43a9aff2b8bf71b995ccaabe56df424a738124928a6edaf863401116ba4780",
+   "instructions": [
+    "00C9EE96 test al, al",
+    "00C9EE98 jne 0xc9eec4",
+    "00C9EE9A cmp dword ptr [esi + 0x67e8], 0",
+    "00C9EEA1 je 0xc9eeb4",
+    "00C9EEA3 mov ecx, dword ptr [esi + 0x67e8]",
+    "00C9EEA9 mov eax, dword ptr [ecx]",
+    "00C9EEAB mov edx, dword ptr [eax + 0x70]"
+   ]
+  },
+  {
+   "start": "0xc9eeb0",
+   "end_exclusive": "0xc9eecb",
+   "sha256": "131d18192ae8e330eb7d6657bf1e6a7f8f7fda022ccdf1a27639a39690872668",
+   "instructions": [
+    "00C9EEB0 test al, al",
+    "00C9EEB2 jne 0xc9eec4",
+    "00C9EEB4 mov eax, dword ptr [ebp + 8]",
+    "00C9EEB7 push eax",
+    "00C9EEB8 mov ecx, esi",
+    "00C9EEBA call 0x83c020",
+    "00C9EEBF pop esi",
+    "00C9EEC0 pop ebp",
+    "00C9EEC1 ret 4",
+    "00C9EEC4 xor al, al",
+    "00C9EEC6 pop esi",
+    "00C9EEC7 pop ebp",
+    "00C9EEC8 ret 4"
+   ]
+  }
+ ],
+ "boundaries": [
+  "83FA10 full entry/return, actual swordman vtable, C9EE60/83C020 eligibility, 83C040 column selection and 9095B0 rank wrapper execute original bytes.",
+  "Learned-rank lookup, skill pointer, protected static/value services, inner status virtuals and secure storage are explicit ABI fixtures.",
+  "The value wrapper passes stored rank and owner with -1/-1 normalization inputs; rank production/automatic level progression remains unresolved.",
+  "Attack record +24 is observed, but its original producer/field semantics and downstream damage consumer are not certified by this replay.",
+  "Three swordman state-pointer gates are observed without naming their production or complete lifecycle.",
+  "Finite binary32 round-to-nearest and in-range conversions only; no complete damage formula or original-equivalent gameplay claim."
+ ],
+ "skill_source": {
+  "asset_version": "dnf-native-assets-v1-20261022",
+  "skill_id": 174,
+  "path": "skill/swordman/basicattackup.skl",
+  "sha256": "d6287b7182bb5471a578b6225bcc369d82665163362801fa660e22973ebad0e4",
+  "fields": {
+   "[feature skill index]": [
+    161
+   ],
+   "[maximum level]": [
+    100
+   ],
+   "[growtype maximum level]": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "[required level]": [
+    1
+   ],
+   "[required level range]": [
+    1
+   ],
+   "[static data]": [
+    1
+   ],
+   "[level info]": [
+    3,
+    0,
+    0,
+    0,
+    24,
+    24,
+    24,
+    48,
+    48,
+    48,
+    72,
+    72,
+    72,
+    96,
+    96,
+    96,
+    120,
+    120,
+    120,
+    144,
+    144,
+    144,
+    168,
+    168,
+    168,
+    192,
+    192,
+    192,
+    216,
+    216,
+    216,
+    240,
+    240,
+    240,
+    264,
+    264,
+    264,
+    288,
+    288,
+    288,
+    312,
+    312,
+    312,
+    336,
+    336,
+    336,
+    360,
+    360,
+    360,
+    384,
+    384,
+    384,
+    408,
+    408,
+    408,
+    432,
+    432,
+    432,
+    456,
+    456,
+    456,
+    480,
+    480,
+    480,
+    504,
+    504,
+    504,
+    528,
+    528,
+    528,
+    552,
+    552,
+    552,
+    576,
+    576,
+    576,
+    600,
+    600,
+    600,
+    624,
+    624,
+    624,
+    648,
+    648,
+    648,
+    672,
+    672,
+    672,
+    696,
+    696,
+    696,
+    720,
+    720,
+    720,
+    744,
+    744,
+    744,
+    768,
+    768,
+    768,
+    792,
+    792,
+    792,
+    816,
+    816,
+    816,
+    840,
+    840,
+    840,
+    864,
+    864,
+    864,
+    888,
+    888,
+    888,
+    912,
+    912,
+    912,
+    936,
+    936,
+    936,
+    960,
+    960,
+    960,
+    984,
+    984,
+    984,
+    1008,
+    1008,
+    1008,
+    1032,
+    1032,
+    1032,
+    1056,
+    1056,
+    1056,
+    1080,
+    1080,
+    1080,
+    1104,
+    1104,
+    1104,
+    1128,
+    1128,
+    1128,
+    1152,
+    1152,
+    1152,
+    1176,
+    1176,
+    1176,
+    1200,
+    1200,
+    1200,
+    1224,
+    1224,
+    1224,
+    1248,
+    1248,
+    1248,
+    1272,
+    1272,
+    1272,
+    1296,
+    1296,
+    1296,
+    1320,
+    1320,
+    1320,
+    1344,
+    1344,
+    1344,
+    1368,
+    1368,
+    1368,
+    1392,
+    1392,
+    1392,
+    1416,
+    1416,
+    1416,
+    1440,
+    1440,
+    1440,
+    1464,
+    1464,
+    1464,
+    1488,
+    1488,
+    1488,
+    1512,
+    1512,
+    1512,
+    1536,
+    1536,
+    1536,
+    1560,
+    1560,
+    1560,
+    1584,
+    1584,
+    1584,
+    1608,
+    1608,
+    1608,
+    1632,
+    1632,
+    1632,
+    1656,
+    1656,
+    1656,
+    1680,
+    1680,
+    1680,
+    1704,
+    1704,
+    1704,
+    1728,
+    1728,
+    1728,
+    1752,
+    1752,
+    1752,
+    1776,
+    1776,
+    1776,
+    1800,
+    1800,
+    1800,
+    1824,
+    1824,
+    1824,
+    1848,
+    1848,
+    1848,
+    1872,
+    1872,
+    1872,
+    1896,
+    1896,
+    1896,
+    1920,
+    1920,
+    1920,
+    1944,
+    1944,
+    1944,
+    1968,
+    1968,
+    1968,
+    1992,
+    1992,
+    1992,
+    2016,
+    2016,
+    2016,
+    2040,
+    2040,
+    2040,
+    2064,
+    2064,
+    2064,
+    2088,
+    2088,
+    2088,
+    2112,
+    2112,
+    2112,
+    2136,
+    2136,
+    2136,
+    2160,
+    2160,
+    2160,
+    2184,
+    2184,
+    2184,
+    2208,
+    2208,
+    2208,
+    2232,
+    2232,
+    2232,
+    2256,
+    2256,
+    2256,
+    2280,
+    2280,
+    2280,
+    2304,
+    2304,
+    2304,
+    2328,
+    2328,
+    2328,
+    2352,
+    2352,
+    2352,
+    2376,
+    2376,
+    2376
+   ],
+   "[level property]": [
+    1,
+    99,
+    {
+     "link_type": 9,
+     "raw": 12
+    },
+    {
+     "link_type": 10,
+     "raw": 360683
+    },
+    -1,
+    0,
+    0.10000000149011612,
+    -1,
+    1,
+    0.10000000149011612,
+    -1,
+    2,
+    0.10000000149011612
+   ]
+  },
+  "text": {
+   "[name]": [
+    {
+     "text": "\u57fa\u790e\u7cbe\u901a",
+     "table": "skill/skill.kor.str",
+     "table_id": 12,
+     "key": "basic_attack_up_name",
+     "line": 3102,
+     "missing": false,
+     "needs_review": false
+    }
+   ],
+   "[explain]": [
+    {
+     "text": "\u589e\u52a0\u57fa\u672c\u653b\u64ca\u3001 \u524d\u6c96\u653b\u64ca\u3001 \u8df3\u8e8d\u653b\u64ca\u7684\u653b\u64ca\u529b\u3002",
+     "table": "skill/skill.kor.str",
+     "table_id": 12,
+     "key": "basic_attack_up_explain",
+     "line": 3104,
+     "missing": false,
+     "needs_review": false
+    }
+   ],
+   "[basic explain]": [
+    {
+     "text": "\u589e\u52a0\u57fa\u672c\u653b\u64ca\u3001 \u524d\u6c96\u653b\u64ca\u3001 \u8df3\u8e8d\u653b\u64ca\u7684\u653b\u64ca\u529b\u3002",
+     "table": "skill/skill.kor.str",
+     "table_id": 12,
+     "key": "basic_attack_up_basic_explain",
+     "line": 3103,
+     "missing": false,
+     "needs_review": false
+    }
+   ]
+  },
+  "level_property": {
+   "table": "skill/skill.kor.str",
+   "key": "basic_attack_up_level_property",
+   "text": "\u57fa\u672c\u653b\u64ca\u529b\u589e\u52a0\u91cf : <float1>%%\\n\u524d\u6c96\u653b\u64ca\u529b\u589e\u52a0\u91cf : <float1>%%\\n\u8df3\u8e8d\u653b\u64ca\u529b\u589e\u52a0\u91cf : <float1>%%\n\n\n//?? ??? ??? ?? : 09.11.10 ??",
+   "line": 3105
+  },
+  "text_sources": {
+   "skill/skill.kor.str": {
+    "sha256": "7681bd1f7a8af9a4258a8271fc8e8f9697b6e74fdbee8af60d4eea0e1ba85a79",
+    "encoding": "cp950",
+    "round_trip": true,
+    "entries": 6976,
+    "duplicate_keys": []
+   }
+  }
+ }
+}

@@ -76,6 +76,22 @@ class SkillRuntimeTest(unittest.TestCase):
         risk=audit(dict(subset,skills={"throwmastery":broken}),{"moves":{}},self.pack["records"],catalog,set())["skills"][0]["risks"]
         self.assertIn("throw_item_bonus_applied_to_general_character_stats",risk)
 
+    def test_basic_mastery_does_not_boost_global_physical_attack(self):
+        skill=self.skills["basicattackup"]
+        self.assertEqual(skill["source_id"],174)
+        self.assertFalse(skill.get("passive"))
+        self.assertEqual(skill["runtime_status"],"pending_native_attack_record_pipeline")
+        self.assertEqual(builder.generic_passive_spec("basicattackup"),
+                         {"runtime_hook":"basic_attack_mastery","runtime_status":"pending_native_attack_record_pipeline"})
+        from audit_dnf_skill_fidelity import audit
+        catalog=json.loads((ROOT/"game_dnf/data/skill_catalog.json").read_text(encoding="utf8"))
+        subset=dict(self.runtime,skills={"basicattackup":skill})
+        risks=audit(subset,{"moves":{}},self.pack["records"],catalog,set())["skills"][0]["risks"]
+        self.assertIn("pending_runtime_consumer",risks)
+        broken=dict(skill,passive=[{"stat":"physical_attack","op":"percent","level_row":0,"scale":0.001}])
+        risks=audit(dict(subset,skills={"basicattackup":broken}),{"moves":{}},self.pack["records"],catalog,set())["skills"][0]["risks"]
+        self.assertIn("basic_attack_bonus_applied_to_general_character_stats",risks)
+
     def test_magical_memory_binds_only_original_duration_and_intelligence(self):
         source=self.pack["records"]["skill/swordman/magicalattackup.skl"]["decoded"]
         self.assertEqual(source["level_info"],[2]+[v for rank in range(1,21) for v in (20000,15*rank)])

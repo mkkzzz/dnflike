@@ -5124,15 +5124,9 @@
    ],
    "max_level": 100,
    "name": "基础精通",
-   "passive": [
-    {
-     "level_row": 0,
-     "op": "percent",
-     "scale": 0.001,
-     "stat": "physical_attack"
-    }
-   ],
    "path": "skill/swordman/basicattackup.skl",
+   "runtime_hook": "basic_attack_mastery",
+   "runtime_status": "pending_native_attack_record_pipeline",
    "source_id": 174,
    "source_path": "skill/swordman/basicattackup.skl",
    "speed": "attack",
