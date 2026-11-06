@@ -257,5 +257,46 @@
     "pvf_tests": 10,
     "skill_runtime_tests": 19
   },
-  "boundary": "Compiled structure and original parser pointer routing only; no runtime growth formula, automatic grants, client visual or gameplay fidelity completion."
+  "boundary": "Compiled structure and original parser pointer routing only; no runtime growth formula, automatic grants, client visual or gameplay fidelity completion.",
+  "compiler_dependency_followup": {
+    "first_ci": {
+      "commit": "f244b543e5eb5e97d8ba99a200d03507ca2cccfe",
+      "run": 42241531315,
+      "failure": "native_atk_damage_bonus.json compiler fingerprint remained at version 3"
+    },
+    "resolution": "Reran original ATK archive audit and native instruction cases; only compile_dnf_content.py fingerprint changed, all other evidence values identical. Added same gate to local formal loop.",
+    "native_atk_evidence_sha256": "90568e3b7d5112c192a7fdeebeca73185e7958714d37e91d8a512f6aad34a7eb",
+    "formal_final_log_sha256": "c1a47fe27f6dcb891dd4eda9812981bf9696ee895efb2bd2465d6e789c8c8548",
+    "formal_final_completion": [
+      "[PARTICLE_MOTION] COMPLETE checks=275 failures=0",
+      "[PARTICLE_EMITTER] COMPLETE checks=153 failures=0",
+      "[PARTICLE_VIEW] COMPLETE checks=87 failures=0",
+      "[ICE_PARTICLES] COMPLETE checks=355 failures=0",
+      "[FIREWAVE] COMPLETE checks=91 failures=0",
+      "[SKILL_EFFECTS] COMPLETE checks=19 failures=0",
+      "[GHOST_RANKS] COMPLETE checks=126 failures=0",
+      "[MASTERY_RANKS] COMPLETE checks=229 failures=0",
+      "[SKILL_IDENTITY] COMPLETE checks=501 failures=0",
+      "[UI_PERF] COMPLETE checks=17 failures=0",
+      "[QUEST_RULES] COMPLETE checks=288 failures=0",
+      "[CAMPAIGN] COMPLETE checks=132 failures=0",
+      "[WEAPON_RULES] COMPLETE checks=29925 failures=0",
+      "[NATIVE_BULK] COMPLETE checks=7780 failures=0",
+      "[TEACHING_RULES] COMPLETE checks=30 failures=0",
+      "[POISON_RULES] COMPLETE checks=26 failures=0",
+      "[ORIGINAL_DATA] COMPLETE checks=31 failures=0",
+      "[RECOVERY_TEST] COMPLETE checks=53 failures=0",
+      "[UPGRADE_TEST] COMPLETE checks=46 failures=0",
+      "[SERVICE_TEST] COMPLETE checks=33 failures=0",
+      "[ITEM_TEST] COMPLETE checks=44 failures=0",
+      "[CHR_GROUPS] COMPLETE checks=27 failures=0",
+      "[JOB_IDENTITY] COMPLETE checks=89 failures=0",
+      "[SKILL_UI_RANKS] COMPLETE checks=483 failures=0",
+      "[NUMBERS_TEST] COMPLETE checks=251 failures=0",
+      "[QUEST_TEST] COMPLETE checks=45 failures=0",
+      "[TOWN_UNIT] COMPLETE checks=110 failures=0",
+      "[GRAN_UNIT] COMPLETE checks=19 failures=0",
+      "[LOOP_TEST] COMPLETE checks=435 failures=0 captures=0"
+    ]
+  }
 }

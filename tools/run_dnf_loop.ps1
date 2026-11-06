@@ -212,6 +212,8 @@ if ($Test) {
     if ($LASTEXITCODE -ne 0) {throw "Source job identity evidence differs from runtime."}
     & python (Join-Path $PSScriptRoot "test_dnf_chr_scope.py")
     if ($LASTEXITCODE -ne 0) {throw "Native CHR scope evidence differs from content."}
+    & python (Join-Path $PSScriptRoot "test_dnf_atk_damage_bonus.py")
+    if ($LASTEXITCODE -ne 0) {throw "ATK parser evidence has stale compiler dependencies."}
     $chrOutput=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/stats/test_chr_groups.gd 2>&1
     $chrOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($chrOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($chrOutput -match '\[CHR_GROUPS\] COMPLETE checks=\d+ failures=0')) {throw "CHR group content regression failed."}
