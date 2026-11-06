@@ -24,7 +24,7 @@ CHANGED = {0xc: 99, 0x18: fbits(2.75), 0x24: 101, 0x30: fbits(3.5)}
 
 def replay(source, core=(1800, 1400, 75, 75, 45, 45), rate=100, query=False,
            mode_id=0, flag10=False, flag13=False, scalar_present=False,
-           scalar_key=7, factors=(1.25, .75), eligible=False, kind=0, poison=False):
+           scalar_key=7, factors=(1.25, .75), eligible=False, kind=0, poison=False, refill=None):
     from dnf_native_vm_probe import CPU
     if len(core) != 6 or len(factors) != 2:
         raise ValueError('Fixture shape')
@@ -38,6 +38,13 @@ def replay(source, core=(1800, 1400, 75, 75, 45, 45), rate=100, query=False,
     c.write(SCALER_VT + 0x40, 4, 0)  # explicit external virtual service marker
     protected = {ACTOR + 0x4cb0 + i * 12: v & 0xffffffff for i, v in enumerate(core)}
     protected[ACTOR + 0x4e60] = rate & 0xffffffff
+    refill_events, before_refill = [], None
+    if refill is not None:
+        c.write(0x70000004, 4, refill['argument'])
+        c.write(ACTOR + 0x5664, 4, 0x60400000)
+        c.write(0x60401ee0, 4, 0x60500000 if refill['profile_present'] else 0)
+        protected[ACTOR + 0x98] = refill['actor_id'] & 0xffffffff
+        protected[0x605002d0] = refill['profile_rate'] & 0xffffffff
     protected[BANK] = scalar_key & 0xffffffff
     for off, v in {0x60: 61, 0x6c: 62, 0x90: 91, 0x9c: 92, **SNAPSHOT}.items():
         protected[BANK + off] = v
@@ -64,6 +71,41 @@ def replay(source, core=(1800, 1400, 75, 75, 45, 45), rate=100, query=False,
         if c.pc == 0xdeadbeef:
             break
         arg = lambda j: c.read(c.reg['esp'] + 4 + j * 4, 4)
+        if refill is not None:
+            if c.pc in (0xd07af0, 0xd07a70):
+                expected = [1] if c.pc == 0xd07af0 else [0, 1]
+                if c.reg['ecx'] != ACTOR or [arg(i) for i in range(len(expected))] != expected:
+                    raise ValueError('Limit getter caller defaults')
+                refill_events.append(['limit_get', hex(c.pc), expected])
+            if c.pc in (0x812260, 0x831620):
+                defaults = [1] if c.pc == 0x812260 else [0, 1]
+                if c.reg['ecx'] != ACTOR or [arg(i + 1) for i in range(len(defaults))] != defaults:
+                    raise ValueError('Current value setter ABI')
+                refill_events.append(['set_request', hex(c.pc), signed(arg(0)), defaults])
+                finish(pop_bytes=4 * (len(defaults) + 1))
+                continue
+            if c.pc == 0x92f9b0:
+                refill_events.append(['guard'])
+                finish(int(refill['guard']))
+                continue
+            if c.pc == 0x92e060:
+                if arg(0) != (refill['actor_id'] & 0xffffffff):
+                    raise ValueError('Actor type predicate ABI')
+                refill_events.append(['type_predicate', arg(0)])
+                finish(int(refill['type_match']))
+                continue
+            if c.pc == 0x82eb58:
+                if c.reg['ecx'] != ACTOR or c.reg['edx'] != int.from_bytes(source.source_bytes(VTABLE + 0x38, 4), 'little'):
+                    raise ValueError('Profile eligibility ABI')
+                refill_events.append(['profile_eligible', eligible])
+                virtual(int(eligible))
+                continue
+            if c.pc == 0x842070:
+                if c.reg['ecx'] != ACTOR:
+                    raise ValueError('Fallback profile ABI')
+                refill_events.append(['profile_fallback'])
+                finish(0x60500000 if refill['profile_present'] else 0)
+                continue
         if c.pc == 0x8549f0:
             if c.reg['ecx'] != ACTOR:
                 raise ValueError('Reset ABI')
@@ -127,11 +169,11 @@ def replay(source, core=(1800, 1400, 75, 75, 45, 45), rate=100, query=False,
             fp.append(f32(factors[0 if selector == 2 else 1]))
             virtual(0, 12)
             continue
-        if c.pc in (0x8557b0, 0x855c02):
+        if c.pc in (0x8557b0, 0x855c02, 0x855cbf):
             if c.reg['ecx'] != ACTOR or c.read(c.reg['esp'], 4) != 0:
                 raise ValueError('Refresh ABI')
-            # Register holding the actual virtual target differs at the two sites.
-            target = c.reg['edx'] if c.pc == 0x8557b0 else c.reg['eax']
+            # Only the second refresh site keeps the virtual target in EAX.
+            target = c.reg['eax'] if c.pc == 0x855c02 else c.reg['edx']
             if target != int.from_bytes(source.source_bytes(VTABLE + 0x444, 4), 'little'):
                 raise ValueError('Refresh target')
             refreshes += 1
@@ -140,6 +182,13 @@ def replay(source, core=(1800, 1400, 75, 75, 45, 45), rate=100, query=False,
                 # Explicit second-service output makes the subsequent restoration
                 # observable; this is not an emulation of the refresh function.
                 for off, v in CHANGED.items():
+                    protected[BANK + off] = v
+            if refreshes == 3:
+                if refill is None:
+                    raise ValueError('Unexpected refill')
+                before_refill = {hex(o): protected[BANK + o] for o in SNAPSHOT}
+                hp, hp_factor, mp, mp_factor = refill['bank']
+                for off, v in zip(SNAPSHOT, (hp & 0xffffffff, fbits(hp_factor), mp & 0xffffffff, fbits(mp_factor))):
                     protected[BANK + off] = v
             virtual(0, 4)
             continue
@@ -164,7 +213,8 @@ def replay(source, core=(1800, 1400, 75, 75, 45, 45), rate=100, query=False,
         if result[0] == 'call':
             target = int(result[2], 16)
             if target not in (0x8549f0, 0xd07390, 0x1195eb0, 0x1195a10, 0x1197630, 0x1195dc0,
-                0x6fc760, 0x752ab0, 0x752850, 0x752930, 0x7527d0, 0x75bf00, 0x11b3780):
+                0x6fc760, 0x752ab0, 0x752850, 0x752930, 0x7527d0, 0x75bf00, 0x11b3780,
+                0xd07af0, 0xd07a70, 0x812260, 0x831620, 0x92f9b0, 0x92e060, 0x406920, 0x82eb50):
                 raise ValueError('Unexpected call ' + str(result))
             c.push(c.pc + ins.size)
             c.pc = target
@@ -190,13 +240,17 @@ def replay(source, core=(1800, 1400, 75, 75, 45, 45), rate=100, query=False,
             raise ValueError('Unexpected stop ' + str(result))
     else:
         raise ValueError('Core consumer instruction budget')
-    return {'fixture': {'core': list(core), 'rate': rate, 'query': query, 'mode_id': mode_id,
+    row = {'fixture': {'core': list(core), 'rate': rate, 'query': query, 'mode_id': mode_id,
         'flag10': flag10, 'flag13': flag13, 'scalar_present': scalar_present, 'scalar_key': scalar_key,
         'factors': list(factors), 'eligible': eligible, 'kind': kind, 'poison': poison},
         'writes': writes, 'calls': calls, 'rates': rates, 'bank_tail': {hex(o): protected[BANK + o] for o in SNAPSHOT},
         'abi': [c.reg[k] for k in ('ebx', 'esi', 'edi', 'ebp', 'esp')], 'fp_depth': len(fp),
         'temporary_count': sum(a in protected for a in locals_), 'seh': c.read(0x50000000, 4),
-        'stop': hex(c.pc), 'steps': len(c.trace), 'trace_sha256': trace_hash(c.trace)}, c.trace
+        'stop': hex(c.pc), 'steps': len(c.trace), 'trace_sha256': trace_hash(c.trace)}
+    if refill is not None:
+        row['fixture']['refill'] = refill
+        row['refill'] = {'events': refill_events, 'bank_before': before_refill}
+    return row, c.trace
 
 
 def verify(row):
