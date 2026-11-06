@@ -48,7 +48,7 @@ func run() -> void:
 	battle.restart()
 	var cfg := Numbers.shared_config()
 	for job: String in ["soulbringer","weaponmaster"]:
-		game.session.profile["growtype"] = job # Read fixture: soulbringer/asura progression definitions are still missing.
+		check(game.session.command("numbers.growtype",{"growtype":job,"force":true})["ok"],"registered UI job")
 		var passive := "ghostpowerup" if job=="soulbringer" else "weapon_mastery_up"
 		var targets := ["hardattack","khazan","saya","bremen","keiga","epidemicrasa","kalla"] if job=="soulbringer" else ["shortswordmastery","blademastery","heavyswordmastery","bluntmastery","lightswordmastery"]
 		for mode: String in ["learned","zero","near_ceiling","ceiling","disabled"]:
@@ -86,7 +86,7 @@ func run() -> void:
 					check(texts(game.windows.tip).contains("技能等级 %d" % expected),mode+" "+id+" shortcut rank")
 			check(JSON.stringify(game.session.profile)==before,"display leaves purchases and SP unchanged")
 	# Refresh an existing tree after removing a passive; keep scroll and controls.
-	game.session.profile["growtype"] = "soulbringer"
+	check(game.session.command("numbers.growtype",{"growtype":"soulbringer","force":true})["ok"],"registered refund UI job")
 	grant("ghostpowerup",1)
 	grant("hardattack",1)
 	panel.selected = "hardattack"
@@ -100,7 +100,7 @@ func run() -> void:
 	check(Numbers.Skills.available(game.session.profile,cfg)==sp,"free granted passive refunds zero SP")
 	# A preview must carry all linked skills and reset job/weapon context on reuse.
 	for job: String in ["asura","weaponmaster","swordman","soulbringer"]:
-		game.session.profile["growtype"] = job # Read fixture: soulbringer/asura progression definitions are still missing.
+		check(game.session.command("numbers.growtype",{"growtype":job,"force":true})["ok"],"registered UI job")
 		grant("normalwave",3)
 		check(battle.update_numbers(game.session.stats()),"variant combat update")
 		var values: Dictionary = game.skill_catalog.get_profile_skill("normalwave",game.session.profile)

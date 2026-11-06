@@ -23,6 +23,8 @@ jobs:
         run: python3 tools/check_dnf_performance.py
       - name: Check skill data regressions (not original fidelity sign-off)
         run: python3 tools/test_dnf_skill_runtime.py
+      - name: Check source job identity and learning columns
+        run: python3 tools/test_dnf_job_identity.py
       - name: Preserve archive CRC checks when decoding the client directory
         run: python3 tools/test_dnf_pvf_archive.py
       - name: Verify native string decoder with original byte fixtures

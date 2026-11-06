@@ -61,6 +61,11 @@ static func is_equipment(id: String) -> bool:
 	ensure_config()
 	return _config["equipment"].has(id)
 
+## Identity/source column is independent of the legacy growth-coefficient table.
+## Missing original growth formulas must not make an existing job invalid.
+static func has_growtype(id) -> bool:
+	return id is String and shared_config()["growtype_index"].has(id)
+
 static func record(id: String) -> Dictionary:
 	id = SkillIdentity.canonical(id,shared_config())
 	if _records.has(id):
@@ -215,11 +220,11 @@ static func command(profile: Dictionary, kind: String, payload: Dictionary) -> D
 			profile["attack_element"] = payload["element"]
 		"numbers.growtype":
 			var target := String(payload.get("growtype",""))
-			if not cfg["growtypes"].has(target):return fail("成长类型不存在")
+			if not has_growtype(target):return fail("成长类型不存在")
 			if not bool(payload.get("force",false)):
 				if int(profile["level"]) < int(cfg["progression"].get("job_change_level",18)):return fail("%d 级才能转职" % int(cfg["progression"].get("job_change_level",18)))
 				if String(profile["growtype"]) != "swordman":return fail("已经转职")
-				if target == "swordman":return fail("请选择剑魂或狂战士")
+				if target == "swordman":return fail("请选择转职职业")
 			profile["growtype"] = target
 		"numbers.sp":
 			if not whole(payload.get("amount"),0,1000000):return fail("SP 数量无效")
@@ -278,7 +283,7 @@ static func valid_modifier(mod, cfg: Dictionary) -> bool:
 static func valid(profile: Dictionary) -> bool:
 	var cfg := shared_config()
 	if not SkillIdentity.valid_history(profile.get("skill_alias_history",[]),cfg):return false
-	if not whole(profile.get("numbers_revision"),int(cfg["revision"]),int(cfg["revision"])) or not cfg["growtypes"].has(profile.get("growtype","")):return false
+	if not whole(profile.get("numbers_revision"),int(cfg["revision"]),int(cfg["revision"])) or not has_growtype(profile.get("growtype","")):return false
 	if profile.get("attack_element","none") not in ["none","fire","water","light","dark"]:return false
 	if not whole(profile.get("level"),1,int(cfg["progression"]["level_cap"])) or not whole(profile.get("xp"),0,1000000000) or not whole(profile.get("sp_bonus"),0,1000000) or not whole(profile.get("next_gear"),1,1000000000):return false
 	for key in ["skills","skill_purchases","xp_transactions","gear","equipment"]:

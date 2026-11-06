@@ -12,7 +12,7 @@ func execute(words: PackedStringArray) -> Dictionary:
 			if args.size()!=1:return fail("用法：element none|fire|water|light|dark")
 			return mutate("numbers.element",{"element":args[0]})
 		"growtype":
-			if args.size()!=1:return fail("用法：growtype swordman|weaponmaster|berserker")
+			if args.size()!=1:return fail("用法：growtype swordman|weaponmaster|soulbringer|berserker|asura")
 			return mutate("numbers.growtype",{"growtype":args[0]})
 		"xp", "sp":
 			if args.size()!=1 or not args[0].is_valid_int():return fail("用法：xp 数量 / sp 数量")

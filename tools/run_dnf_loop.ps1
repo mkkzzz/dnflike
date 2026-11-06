@@ -208,6 +208,16 @@ if ($Test) {
     $itemOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_inventory.gd 2>&1
     $itemOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($itemOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($itemOutput -match '\[ITEM_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Item regression failed."}
+    & python (Join-Path $PSScriptRoot "test_dnf_job_identity.py")
+    if ($LASTEXITCODE -ne 0) {throw "Source job identity evidence differs from runtime."}
+    $jobPreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $jobOutput=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/stats/test_job_identity.gd 2>&1
+        $jobExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$jobPreference}
+    $jobOutput | Write-Output
+    if ($jobExit -ne 0 -or ($jobOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($jobOutput -match '\[JOB_IDENTITY\] COMPLETE checks=\d+ failures=0')) {throw "Job identity integration regression failed."}
     $skillUiPreference=$ErrorActionPreference
     try {
         $ErrorActionPreference="Continue"

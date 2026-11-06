@@ -194,7 +194,7 @@ func can_revive(spec: Dictionary) -> bool:
 			var value=actor["numbers"].get(field)
 			if not (value is int or value is float) or not is_finite(float(value)) or value<(1 if field=="hp_max" else 0):return false
 		var seed: Dictionary=actor["number_seed"];var cfg:=Numbers.shared_config()
-		if not Numbers.whole(seed.get("level"),1,int(cfg["progression"]["level_cap"])) or not cfg["growtypes"].has(seed.get("growtype","")) or not seed.get("modifiers") is Array:return false
+		if not Numbers.whole(seed.get("level"),1,int(cfg["progression"]["level_cap"])) or not Numbers.has_growtype(seed.get("growtype","")) or not seed.get("modifiers") is Array:return false
 		for modifier in seed["modifiers"]:
 			if not Numbers.valid_modifier(modifier,cfg):return false
 		for id in actor["skills"]:

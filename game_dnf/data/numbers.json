@@ -917,6 +917,8 @@
  "growtype_index": {
   "swordman": 0,
   "weaponmaster": 1,
-  "berserker": 3
+  "soulbringer": 2,
+  "berserker": 3,
+  "asura": 4
  }
 }

@@ -1,0 +1,1225 @@
+{
+  "schema": "dnf_job_identity_evidence/1",
+  "source": {
+    "chr": {
+      "path": "character/swordman/swordman.chr",
+      "sha256": "576c7f66296b6dc9882280654a8378a95de6c677388c0a3e9b0050bfbfddb679"
+    },
+    "tree": {
+      "path": "clientonly/skilltree/swordman_sp.co",
+      "sha256": "1a9a1e320e2c9b1d6cc6933495a66a872bdc744737b72bf44366fc0a2e0b098e"
+    },
+    "name_tables": {
+      "character/character.kor.str": {
+        "sha256": "d2a4983481ff6d892817cba70f76269c9aac5bc8ffb1ee269f4a3c6f6b364908",
+        "encoding": "cp950",
+        "round_trip": true,
+        "entries": 153,
+        "duplicate_keys": []
+      }
+    }
+  },
+  "name_order": [
+    {
+      "source_index": 0,
+      "name_key": "growtype_name_75",
+      "name": "鬼劍士",
+      "references": [
+        {
+          "link_type": 9,
+          "raw": 0
+        },
+        {
+          "link_type": 10,
+          "raw": 10614
+        }
+      ],
+      "name_table": "character/character.kor.str",
+      "line": 58,
+      "local_id": "swordman",
+      "chr_group": "[growtype 1]"
+    },
+    {
+      "source_index": 1,
+      "name_key": "growtype_name_80",
+      "name": "劍魂",
+      "references": [
+        {
+          "link_type": 9,
+          "raw": 0
+        },
+        {
+          "link_type": 10,
+          "raw": 10252
+        }
+      ],
+      "name_table": "character/character.kor.str",
+      "line": 59,
+      "local_id": "weaponmaster",
+      "chr_group": "[growtype 2]"
+    },
+    {
+      "source_index": 2,
+      "name_key": "growtype_name_85",
+      "name": "鬼泣",
+      "references": [
+        {
+          "link_type": 9,
+          "raw": 0
+        },
+        {
+          "link_type": 10,
+          "raw": 10253
+        }
+      ],
+      "name_table": "character/character.kor.str",
+      "line": 62,
+      "local_id": "soulbringer",
+      "chr_group": "[growtype 3]"
+    },
+    {
+      "source_index": 3,
+      "name_key": "growtype_name_90",
+      "name": "狂戰士",
+      "references": [
+        {
+          "link_type": 9,
+          "raw": 0
+        },
+        {
+          "link_type": 10,
+          "raw": 10254
+        }
+      ],
+      "name_table": "character/character.kor.str",
+      "line": 65,
+      "local_id": "berserker",
+      "chr_group": "[growtype 4]"
+    },
+    {
+      "source_index": 4,
+      "name_key": "growtype_name_95",
+      "name": "阿修羅",
+      "references": [
+        {
+          "link_type": 9,
+          "raw": 0
+        },
+        {
+          "link_type": 10,
+          "raw": 10255
+        }
+      ],
+      "name_table": "character/character.kor.str",
+      "line": 68,
+      "local_id": "asura",
+      "chr_group": "[growtype 5]"
+    },
+    {
+      "source_index": 5,
+      "name_key": "growtype_name_171",
+      "name": "//(后續確認)劍魔",
+      "references": [
+        {
+          "link_type": 9,
+          "raw": 0
+        },
+        {
+          "link_type": 10,
+          "raw": 10256
+        }
+      ],
+      "name_table": "character/character.kor.str",
+      "line": 118,
+      "local_id": null,
+      "chr_group": "[growtype 6]"
+    }
+  ],
+  "sp_branches": [
+    "none",
+    "weaponmaster",
+    "soulbringer",
+    "berserker",
+    "asura"
+  ],
+  "runtime_identity": {
+    "swordman": 0,
+    "weaponmaster": 1,
+    "soulbringer": 2,
+    "berserker": 3,
+    "asura": 4
+  },
+  "exclusive_skill_probes": {
+    "soulbringer": {
+      "path": "skill/swordman/ghostpowerup.skl",
+      "sha256": "82c42036e33e71cf28b96b4aea94b3a3f3ae47f6ce4e9cb429feb8c6af09da17",
+      "growtype_max_level": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    "asura": {
+      "path": "skill/swordman/armormasteryplatewave.skl",
+      "sha256": "0176e4b3b3e9bc2f0aa503d2b35633178dd4b2ce12cc755fad8c7cb5e1404f08",
+      "growtype_max_level": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    }
+  },
+  "growth_fields_uninterpreted": {
+    "[initial value]": [
+      {
+        "tag": "[HP MAX]",
+        "values": [
+          180.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 97
+      },
+      {
+        "tag": "[MP MAX]",
+        "values": [
+          140.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 107
+      },
+      {
+        "tag": "[physical attack]",
+        "values": [
+          7.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 117
+      },
+      {
+        "tag": "[physical defense]",
+        "values": [
+          7.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 127
+      },
+      {
+        "tag": "[magical attack]",
+        "values": [
+          4.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 137
+      },
+      {
+        "tag": "[magical defense]",
+        "values": [
+          4.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 147
+      },
+      {
+        "tag": "[dark resistance]",
+        "values": [
+          20.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 157
+      },
+      {
+        "tag": "[light resistance]",
+        "values": [
+          -20.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 167
+      },
+      {
+        "tag": "[inventory limit]",
+        "values": [
+          48000.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 177
+      },
+      {
+        "tag": "[MP regen speed]",
+        "values": [
+          50.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 187
+      },
+      {
+        "tag": "[move speed]",
+        "values": [
+          850.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 197
+      },
+      {
+        "tag": "[attack speed]",
+        "values": [
+          850.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 207
+      },
+      {
+        "tag": "[cast speed]",
+        "values": [
+          700.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 217
+      },
+      {
+        "tag": "[hit recovery]",
+        "values": [
+          600.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 227
+      },
+      {
+        "tag": "[jump power]",
+        "values": [
+          430.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 237
+      },
+      {
+        "tag": "[weight]",
+        "values": [
+          68000.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 247
+      },
+      {
+        "tag": "[jump speed]",
+        "values": [
+          95
+        ],
+        "types": [
+          "int"
+        ],
+        "offset": 257
+      },
+      {
+        "tag": "[skill]",
+        "values": [
+          181,
+          2,
+          182,
+          2,
+          184,
+          1,
+          179,
+          7,
+          5,
+          1,
+          46,
+          1,
+          169,
+          1,
+          174,
+          1
+        ],
+        "types": [
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int"
+        ],
+        "offset": 267
+      }
+    ],
+    "[growtype 1]": [
+      {
+        "tag": "[HP MAX]",
+        "values": [
+          45.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 362
+      },
+      {
+        "tag": "[MP MAX]",
+        "values": [
+          25.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 372
+      },
+      {
+        "tag": "[physical attack]",
+        "values": [
+          4.800000190734863
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 382
+      },
+      {
+        "tag": "[physical defense]",
+        "values": [
+          4.800000190734863
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 392
+      },
+      {
+        "tag": "[magical attack]",
+        "values": [
+          4.199999809265137
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 402
+      },
+      {
+        "tag": "[magical defense]",
+        "values": [
+          4.199999809265137
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 412
+      },
+      {
+        "tag": "[inventory limit]",
+        "values": [
+          300.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 422
+      },
+      {
+        "tag": "[MP regen speed]",
+        "values": [
+          2.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 432
+      },
+      {
+        "tag": "[hit recovery]",
+        "values": [
+          1.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 442
+      },
+      {
+        "tag": "[module damage rate]",
+        "values": [
+          0.949999988079071,
+          1.0,
+          1.0,
+          0.949999988079071
+        ],
+        "types": [
+          "float",
+          "float",
+          "float",
+          "float"
+        ],
+        "offset": 452
+      }
+    ],
+    "[growtype 2]": [
+      {
+        "tag": "[HP MAX]",
+        "values": [
+          50.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 482
+      },
+      {
+        "tag": "[MP MAX]",
+        "values": [
+          20.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 492
+      },
+      {
+        "tag": "[physical attack]",
+        "values": [
+          5.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 502
+      },
+      {
+        "tag": "[physical defense]",
+        "values": [
+          5.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 512
+      },
+      {
+        "tag": "[magical attack]",
+        "values": [
+          4.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 522
+      },
+      {
+        "tag": "[magical defense]",
+        "values": [
+          4.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 532
+      },
+      {
+        "tag": "[inventory limit]",
+        "values": [
+          300.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 542
+      },
+      {
+        "tag": "[MP regen speed]",
+        "values": [
+          2.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 552
+      },
+      {
+        "tag": "[hit recovery]",
+        "values": [
+          2.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 562
+      },
+      {
+        "tag": "[skill]",
+        "values": [
+          27,
+          1,
+          33,
+          1,
+          37,
+          1,
+          8,
+          1,
+          25,
+          1,
+          65,
+          1,
+          94,
+          1,
+          197,
+          1
+        ],
+        "types": [
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int"
+        ],
+        "offset": 572
+      },
+      {
+        "tag": "[module damage rate]",
+        "values": [
+          0.699999988079071,
+          1.0,
+          1.100000023841858,
+          0.699999988079071
+        ],
+        "types": [
+          "float",
+          "float",
+          "float",
+          "float"
+        ],
+        "offset": 662
+      }
+    ],
+    "[growtype 3]": [
+      {
+        "tag": "[HP MAX]",
+        "values": [
+          40.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 987
+      },
+      {
+        "tag": "[MP MAX]",
+        "values": [
+          30.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 997
+      },
+      {
+        "tag": "[physical attack]",
+        "values": [
+          3.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1007
+      },
+      {
+        "tag": "[physical defense]",
+        "values": [
+          3.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1017
+      },
+      {
+        "tag": "[magical attack]",
+        "values": [
+          5.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1027
+      },
+      {
+        "tag": "[magical defense]",
+        "values": [
+          5.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1037
+      },
+      {
+        "tag": "[inventory limit]",
+        "values": [
+          300.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1047
+      },
+      {
+        "tag": "[MP regen speed]",
+        "values": [
+          5.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1057
+      },
+      {
+        "tag": "[hit recovery]",
+        "values": [
+          1.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1067
+      },
+      {
+        "tag": "[skill]",
+        "values": [
+          35,
+          1,
+          29,
+          1,
+          25,
+          1,
+          65,
+          1,
+          93,
+          1,
+          197,
+          1
+        ],
+        "types": [
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int"
+        ],
+        "offset": 1077
+      },
+      {
+        "tag": "[module damage rate]",
+        "values": [
+          1.0,
+          1.0,
+          1.2000000476837158,
+          1.0
+        ],
+        "types": [
+          "float",
+          "float",
+          "float",
+          "float"
+        ],
+        "offset": 1147
+      }
+    ],
+    "[growtype 4]": [
+      {
+        "tag": "[HP MAX]",
+        "values": [
+          55.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1472
+      },
+      {
+        "tag": "[MP MAX]",
+        "values": [
+          15.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1482
+      },
+      {
+        "tag": "[physical attack]",
+        "values": [
+          5.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1492
+      },
+      {
+        "tag": "[physical defense]",
+        "values": [
+          5.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1502
+      },
+      {
+        "tag": "[magical attack]",
+        "values": [
+          3.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1512
+      },
+      {
+        "tag": "[magical defense]",
+        "values": [
+          3.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1522
+      },
+      {
+        "tag": "[inventory limit]",
+        "values": [
+          300.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1532
+      },
+      {
+        "tag": "[MP regen speed]",
+        "values": [
+          2.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1542
+      },
+      {
+        "tag": "[hit recovery]",
+        "values": [
+          2.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1552
+      },
+      {
+        "tag": "[skill]",
+        "values": [
+          56,
+          1,
+          25,
+          1,
+          65,
+          1,
+          76,
+          1,
+          197,
+          1
+        ],
+        "types": [
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int"
+        ],
+        "offset": 1562
+      },
+      {
+        "tag": "[module damage rate]",
+        "values": [
+          0.8399999737739563,
+          1.0,
+          0.800000011920929,
+          0.8999999761581421
+        ],
+        "types": [
+          "float",
+          "float",
+          "float",
+          "float"
+        ],
+        "offset": 1622
+      }
+    ],
+    "[growtype 5]": [
+      {
+        "tag": "[HP MAX]",
+        "values": [
+          45.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1947
+      },
+      {
+        "tag": "[MP MAX]",
+        "values": [
+          25.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1957
+      },
+      {
+        "tag": "[physical attack]",
+        "values": [
+          4.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1967
+      },
+      {
+        "tag": "[physical defense]",
+        "values": [
+          4.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1977
+      },
+      {
+        "tag": "[magical attack]",
+        "values": [
+          4.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1987
+      },
+      {
+        "tag": "[magical defense]",
+        "values": [
+          4.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 1997
+      },
+      {
+        "tag": "[inventory limit]",
+        "values": [
+          300.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 2007
+      },
+      {
+        "tag": "[MP regen speed]",
+        "values": [
+          4.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 2017
+      },
+      {
+        "tag": "[hit recovery]",
+        "values": [
+          2.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 2027
+      },
+      {
+        "tag": "[skill]",
+        "values": [
+          47,
+          1,
+          55,
+          1,
+          61,
+          1,
+          25,
+          1,
+          65,
+          1,
+          20,
+          1,
+          197,
+          1
+        ],
+        "types": [
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int"
+        ],
+        "offset": 2037
+      },
+      {
+        "tag": "[module damage rate]",
+        "values": [
+          0.8100000023841858,
+          1.0,
+          1.100000023841858,
+          0.8999999761581421
+        ],
+        "types": [
+          "float",
+          "float",
+          "float",
+          "float"
+        ],
+        "offset": 2117
+      }
+    ],
+    "[growtype 6]": [
+      {
+        "tag": "[HP MAX]",
+        "values": [
+          47.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 2442
+      },
+      {
+        "tag": "[MP MAX]",
+        "values": [
+          22.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 2452
+      },
+      {
+        "tag": "[physical attack]",
+        "values": [
+          5.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 2462
+      },
+      {
+        "tag": "[physical defense]",
+        "values": [
+          4.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 2472
+      },
+      {
+        "tag": "[magical attack]",
+        "values": [
+          5.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 2482
+      },
+      {
+        "tag": "[magical defense]",
+        "values": [
+          4.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 2492
+      },
+      {
+        "tag": "[inventory limit]",
+        "values": [
+          270.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 2502
+      },
+      {
+        "tag": "[MP regen speed]",
+        "values": [
+          3.5
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 2512
+      },
+      {
+        "tag": "[hit recovery]",
+        "values": [
+          2.0
+        ],
+        "types": [
+          "float"
+        ],
+        "offset": 2522
+      },
+      {
+        "tag": "[skill]",
+        "values": [
+          8,
+          1,
+          25,
+          1,
+          65,
+          1,
+          20,
+          1,
+          94,
+          1,
+          27,
+          1,
+          33,
+          1,
+          37,
+          1,
+          56,
+          1,
+          187,
+          1
+        ],
+        "types": [
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int",
+          "int"
+        ],
+        "offset": 2532
+      },
+      {
+        "tag": "[module damage rate]",
+        "values": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "types": [
+          "float",
+          "float",
+          "float",
+          "float"
+        ],
+        "offset": 2642
+      }
+    ]
+  },
+  "boundary": "Name/column identity only. CHR group arithmetic, units, job change grants and server requirements are not established by this audit."
+}

@@ -111,7 +111,12 @@ def validate(data: dict) -> list[str]:
     for key in ['hp_per_level', 'attack_per_level', 'defense_per_level']:
         require(number(data['monsters'].get(key), 0), f'monsters.{key} must be non-negative')
     require(isinstance(data['monsters'].get('difficulty'), dict) and 'normal' in data['monsters']['difficulty'] and all(number(v, 0.000001) for v in data['monsters']['difficulty'].values()), 'monster difficulty factors must be positive')
-    require(isinstance(data.get('growtype_index'), dict) and data['growtype_index'].get('swordman') == 0, 'growtype_index must map swordman to source column zero')
+    indices = data.get('growtype_index')
+    require(isinstance(indices, dict) and indices.get('swordman') == 0, 'growtype_index must map swordman to source column zero')
+    if isinstance(indices, dict):
+        require(all(isinstance(k, str) and number(v, 0, 255, True) for k, v in indices.items()), 'growtype_index must contain integer source columns')
+        require(len({float(v) for v in indices.values() if number(v)}) == len(indices), 'growtype_index must use distinct numeric source columns')
+        require(data['growtypes'].keys() <= indices.keys(), 'growth coefficients refer to an unknown job identity')
     return errors
 
 

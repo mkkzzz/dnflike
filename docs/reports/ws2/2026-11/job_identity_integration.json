@@ -1,0 +1,86 @@
+{
+  "schema": "dnf_job_identity_integration/1",
+  "baseline_commit": "a17b3284002058addaf33f6f0a3e4254166219d3",
+  "before": {
+    "checks": 89,
+    "failures": 20
+  },
+  "after": {
+    "checks": 89,
+    "failures": 0
+  },
+  "formal": {
+    "checks": 435,
+    "failures": 0
+  },
+  "ui": {
+    "checks": 483,
+    "failures": 0
+  },
+  "source_evidence_sha256": "ace7b1f80d8f15b5505d990d7b3c504e1a6aed4db99d77dca8bffdbdf23205ed",
+  "baseline_method": "Three production files (numbers.json, numbers.gd, main.gd) replaced by exact baseline git bytes while running new regression; restored in finally. Other production changes only GM help text. First exploratory baseline aborted on missing-key access; published completed baseline uses safe lookup.",
+  "runtime_files": {
+    "game_dnf/data/numbers.json": "b5fae1d5497dffb8350492ef62842ad5376a2b99e6a7cbcc4d68edbbe9ed4f33",
+    "game_dnf/stats/api/numbers.gd": "08c1bcdf68cb5cc183748cf20816dbc1f616e958187a2a7aa6f3c2168db06a20",
+    "game_dnf/scripts/main.gd": "0c739b4593b0a312f6549e8ec0c9670785630815b40efa3fc4e521b77d695287",
+    "game_dnf/tests/stats/test_job_identity.gd": "4b47fa1dcb318162e4902bcfbd405c81e31354844a8925381cdc535e3af73762",
+    "game_dnf/tests/flow/test_skill_effective_ui.gd": "95c3644ae5469436106088cd54437530a3e3e6404b0079a735f4eb60f865bf72",
+    "tools/audit_dnf_job_identity.py": "a623d4060c76d91f16c0ef9ac0e5dbd434bd7798b1fe2d0c322da5e673cce975",
+    "tools/test_dnf_job_identity.py": "0e487774a8b68a0af5fc79bd810c2a7f82595d273dfb1b76679786b1f07cd22d",
+    "tools/check_dnf_numbers.py": "1234d8cd7f2950b90c8043d40bc7f99e15926d2b2b3082b8eabde32e8b032ac4",
+    "tools/run_dnf_loop.ps1": "ca88dad430bdfd1bdf4ae8a12b719bd618460662efdd5c1eb20cec3441b36f7f"
+  },
+  "logs": {
+    "job_identity_before": {
+      "sha256": "1774e3b60d6c06f86173da402c57452822219c925d7dbcc5c3d78080821c454c",
+      "completion": [
+        "[JOB_IDENTITY] COMPLETE checks=89 failures=20"
+      ]
+    },
+    "job_identity_after": {
+      "sha256": "b8b5d685958164e95ced7f6f44f18cd068efe886e21fd8db785b45efa836690a",
+      "completion": [
+        "[JOB_IDENTITY] COMPLETE checks=89 failures=0"
+      ]
+    },
+    "job_identity_loop": {
+      "sha256": "376dc8dc8c2c61d635fc0e60e4cc21e2f9aafc84e3d34e7818a6a6e70829a767",
+      "completion": [
+        "[PARTICLE_MOTION] COMPLETE checks=275 failures=0",
+        "[PARTICLE_EMITTER] COMPLETE checks=153 failures=0",
+        "[PARTICLE_VIEW] COMPLETE checks=87 failures=0",
+        "[ICE_PARTICLES] COMPLETE checks=355 failures=0",
+        "[FIREWAVE] COMPLETE checks=91 failures=0",
+        "[SKILL_EFFECTS] COMPLETE checks=19 failures=0",
+        "[GHOST_RANKS] COMPLETE checks=126 failures=0",
+        "[MASTERY_RANKS] COMPLETE checks=229 failures=0",
+        "[SKILL_IDENTITY] COMPLETE checks=501 failures=0",
+        "[UI_PERF] COMPLETE checks=17 failures=0",
+        "[QUEST_RULES] COMPLETE checks=288 failures=0",
+        "[CAMPAIGN] COMPLETE checks=132 failures=0",
+        "[WEAPON_RULES] COMPLETE checks=29925 failures=0",
+        "[NATIVE_BULK] COMPLETE checks=7780 failures=0",
+        "[TEACHING_RULES] COMPLETE checks=30 failures=0",
+        "[POISON_RULES] COMPLETE checks=26 failures=0",
+        "[ORIGINAL_DATA] COMPLETE checks=31 failures=0",
+        "[RECOVERY_TEST] COMPLETE checks=53 failures=0",
+        "[UPGRADE_TEST] COMPLETE checks=46 failures=0",
+        "[SERVICE_TEST] COMPLETE checks=33 failures=0",
+        "[ITEM_TEST] COMPLETE checks=44 failures=0",
+        "[JOB_IDENTITY] COMPLETE checks=89 failures=0",
+        "[SKILL_UI_RANKS] COMPLETE checks=483 failures=0",
+        "[NUMBERS_TEST] COMPLETE checks=251 failures=0",
+        "[QUEST_TEST] COMPLETE checks=45 failures=0",
+        "[TOWN_UNIT] COMPLETE checks=110 failures=0",
+        "[GRAN_UNIT] COMPLETE checks=19 failures=0",
+        "[LOOP_TEST] COMPLETE checks=435 failures=0 captures=0"
+      ]
+    }
+  },
+  "unresolved": [
+    "Original growth arithmetic and field semantics",
+    "Original job-change quests and server prerequisites; existing local level-18 gate remains",
+    "CHR starting and job-change skill grants",
+    "Original class stats and entire combat/UI fidelity"
+  ]
+}
