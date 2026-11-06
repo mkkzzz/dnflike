@@ -1,0 +1,2266 @@
+{
+ "schema": "dnf_chr_scope/1",
+ "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
+ "input_source": {
+  "input_sha256": "8748e19abf6155ca5a20d13244eaca0b9442c3d7569e8e5002bddffeeb9366ac",
+  "embedded": true,
+  "resource": "10/EXERESX/0",
+  "resource_offset": 734740
+ },
+ "tools_sha256": {
+  "audit_dnf_chr_scope.py": "008a927ea599c071e5dfe8d3ad716682a31bfd8e341e8882185affa65fb483f6",
+  "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a",
+  "audit_dnf_native_strings.py": "60b30f2e51e5a744b106d8df955f5a7acbd7d4341ba51f52fd7a2941a5d29c6f",
+  "audit_dnf_particle_axis.py": "59b463dcff6537cc89c597bcf2bb5f1f0a336eb25a67b09da4c228d524b1af8e",
+  "audit_dnf_ice_particle_bindings.py": "660048b05498ea7dd11add2d7f3654083d99faafa8fc28b86ff198292fcdeed1"
+ },
+ "cases": [
+  {
+   "order": [
+    "[initial value]"
+   ],
+   "poison": false,
+   "states": [
+    {
+     "tag": "[initial value]",
+     "slots": [
+      "0x24",
+      "0x288",
+      "0x314",
+      "0x670",
+      "0x5555"
+     ],
+     "selected_stat": "0x24",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 18,
+   "trace_sha256": "4452cff5c6b284b59ab93fe2dcb3f8ed4f69272544a45baa727e97042c208da7"
+  },
+  {
+   "order": [
+    "[growtype 1]",
+    "[awakening name]",
+    "[awakening 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": false,
+   "states": [
+    {
+     "tag": "[growtype 1]",
+     "slots": [
+      "0x7b",
+      "0x29c",
+      "0x358",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7b",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening name]",
+     "slots": [
+      "0x7b",
+      "0x29c",
+      "0x358",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7b",
+     "stack": "0x6fffdf00",
+     "stop": "0x129c7d9",
+     "selected_name": "0x4f0"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x7d0",
+      "0x880",
+      "0x8a8",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7d0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0x827",
+      "0x894",
+      "0x8ec",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x827",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x7d0",
+      "0x880",
+      "0x8a8",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7d0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 367,
+   "trace_sha256": "e04b4cd20548299de7bb958335ea6bc98caaaa4e18fb3915c0d61256285458bb"
+  },
+  {
+   "order": [
+    "[growtype 2]",
+    "[awakening name]",
+    "[awakening 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": false,
+   "states": [
+    {
+     "tag": "[growtype 2]",
+     "slots": [
+      "0xd2",
+      "0x2b0",
+      "0x39c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0xd2",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening name]",
+     "slots": [
+      "0xd2",
+      "0x2b0",
+      "0x39c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0xd2",
+     "stack": "0x6fffdf00",
+     "stop": "0x129c7d9",
+     "selected_name": "0x530"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x930",
+      "0x9e0",
+      "0xa08",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x930",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0x987",
+      "0x9f4",
+      "0xa4c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x987",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x930",
+      "0x9e0",
+      "0xa08",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x930",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 376,
+   "trace_sha256": "93cc8ceeaab985a0d2dd31ee19b05527a604f971503dfd266b01ef16127d9c7d"
+  },
+  {
+   "order": [
+    "[growtype 3]",
+    "[awakening name]",
+    "[awakening 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": false,
+   "states": [
+    {
+     "tag": "[growtype 3]",
+     "slots": [
+      "0x129",
+      "0x2c4",
+      "0x3e0",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0x129",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening name]",
+     "slots": [
+      "0x129",
+      "0x2c4",
+      "0x3e0",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0x129",
+     "stack": "0x6fffdf00",
+     "stop": "0x129c7d9",
+     "selected_name": "0x570"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xa90",
+      "0xb40",
+      "0xb68",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xa90",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xae7",
+      "0xb54",
+      "0xbac",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xae7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xa90",
+      "0xb40",
+      "0xb68",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xa90",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 385,
+   "trace_sha256": "b0483b1d14ef47b5ef410681ba1303a2a8947b77b2381e18e6e797d4d933a98f"
+  },
+  {
+   "order": [
+    "[growtype 4]",
+    "[awakening name]",
+    "[awakening 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": false,
+   "states": [
+    {
+     "tag": "[growtype 4]",
+     "slots": [
+      "0x180",
+      "0x2d8",
+      "0x424",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0x180",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening name]",
+     "slots": [
+      "0x180",
+      "0x2d8",
+      "0x424",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0x180",
+     "stack": "0x6fffdf00",
+     "stop": "0x129c7d9",
+     "selected_name": "0x5b0"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xbf0",
+      "0xca0",
+      "0xcc8",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xbf0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xc47",
+      "0xcb4",
+      "0xd0c",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xc47",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xbf0",
+      "0xca0",
+      "0xcc8",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xbf0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 394,
+   "trace_sha256": "8757dd0509c3d1d7516f0e03b1ae7457bcf6e027cba203b6ca875cdf8344f940"
+  },
+  {
+   "order": [
+    "[growtype 5]",
+    "[awakening name]",
+    "[awakening 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": false,
+   "states": [
+    {
+     "tag": "[growtype 5]",
+     "slots": [
+      "0x1d7",
+      "0x2ec",
+      "0x468",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0x1d7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening name]",
+     "slots": [
+      "0x1d7",
+      "0x2ec",
+      "0x468",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0x1d7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129c7d9",
+     "selected_name": "0x5f0"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xd50",
+      "0xe00",
+      "0xe28",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xd50",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xda7",
+      "0xe14",
+      "0xe6c",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xda7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xd50",
+      "0xe00",
+      "0xe28",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xd50",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 403,
+   "trace_sha256": "0b838b9e77e2df80ebdf2c9089415b66b6e8b9479f7da0b2025f7be7131cb41f"
+  },
+  {
+   "order": [
+    "[growtype 6]",
+    "[awakening name]",
+    "[awakening 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": false,
+   "states": [
+    {
+     "tag": "[growtype 6]",
+     "slots": [
+      "0x22e",
+      "0x300",
+      "0x4ac",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0x22e",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening name]",
+     "slots": [
+      "0x22e",
+      "0x300",
+      "0x4ac",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0x22e",
+     "stack": "0x6fffdf00",
+     "stop": "0x129c7d9",
+     "selected_name": "0x630"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xeb0",
+      "0xf60",
+      "0xf88",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xeb0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xf07",
+      "0xf74",
+      "0xfcc",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xf07",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xeb0",
+      "0xf60",
+      "0xf88",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xeb0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 412,
+   "trace_sha256": "ac5094dcb672470192c6e19c99fbdc6414179d584e7d6cc56e5d891b706aa3a9"
+  },
+  {
+   "order": [
+    "[growtype 1]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 2]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 3]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 4]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 5]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 6]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": false,
+   "states": [
+    {
+     "tag": "[growtype 1]",
+     "slots": [
+      "0x7b",
+      "0x29c",
+      "0x358",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7b",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0x827",
+      "0x894",
+      "0x8ec",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x827",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x7d0",
+      "0x880",
+      "0x8a8",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7d0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 2]",
+     "slots": [
+      "0xd2",
+      "0x2b0",
+      "0x39c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0xd2",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0x987",
+      "0x9f4",
+      "0xa4c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x987",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x930",
+      "0x9e0",
+      "0xa08",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x930",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 3]",
+     "slots": [
+      "0x129",
+      "0x2c4",
+      "0x3e0",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0x129",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xae7",
+      "0xb54",
+      "0xbac",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xae7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xa90",
+      "0xb40",
+      "0xb68",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xa90",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 4]",
+     "slots": [
+      "0x180",
+      "0x2d8",
+      "0x424",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0x180",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xc47",
+      "0xcb4",
+      "0xd0c",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xc47",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xbf0",
+      "0xca0",
+      "0xcc8",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xbf0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 5]",
+     "slots": [
+      "0x1d7",
+      "0x2ec",
+      "0x468",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0x1d7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xda7",
+      "0xe14",
+      "0xe6c",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xda7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xd50",
+      "0xe00",
+      "0xe28",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xd50",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 6]",
+     "slots": [
+      "0x22e",
+      "0x300",
+      "0x4ac",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0x22e",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xf07",
+      "0xf74",
+      "0xfcc",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xf07",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xeb0",
+      "0xf60",
+      "0xf88",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xeb0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 1317,
+   "trace_sha256": "38420790e04abe79ef97f0b29138d9b8d956eed549cea4454db89f8f98083d5f"
+  },
+  {
+   "order": [
+    "[growtype 6]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 5]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 4]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 3]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 2]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": false,
+   "states": [
+    {
+     "tag": "[growtype 6]",
+     "slots": [
+      "0x22e",
+      "0x300",
+      "0x4ac",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0x22e",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xf07",
+      "0xf74",
+      "0xfcc",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xf07",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xeb0",
+      "0xf60",
+      "0xf88",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xeb0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 5]",
+     "slots": [
+      "0x1d7",
+      "0x2ec",
+      "0x468",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0x1d7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xda7",
+      "0xe14",
+      "0xe6c",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xda7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xd50",
+      "0xe00",
+      "0xe28",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xd50",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 4]",
+     "slots": [
+      "0x180",
+      "0x2d8",
+      "0x424",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0x180",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xc47",
+      "0xcb4",
+      "0xd0c",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xc47",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xbf0",
+      "0xca0",
+      "0xcc8",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xbf0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 3]",
+     "slots": [
+      "0x129",
+      "0x2c4",
+      "0x3e0",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0x129",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xae7",
+      "0xb54",
+      "0xbac",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xae7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xa90",
+      "0xb40",
+      "0xb68",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xa90",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 2]",
+     "slots": [
+      "0xd2",
+      "0x2b0",
+      "0x39c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0xd2",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0x987",
+      "0x9f4",
+      "0xa4c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x987",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x930",
+      "0x9e0",
+      "0xa08",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x930",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 1]",
+     "slots": [
+      "0x7b",
+      "0x29c",
+      "0x358",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7b",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0x827",
+      "0x894",
+      "0x8ec",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x827",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x7d0",
+      "0x880",
+      "0x8a8",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7d0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 1317,
+   "trace_sha256": "3e2b5de2113b9614392f1050d7179d82acfffbdfbcf7d7edb774147c9a42acb0"
+  },
+  {
+   "order": [
+    "[initial value]"
+   ],
+   "poison": true,
+   "states": [
+    {
+     "tag": "[initial value]",
+     "slots": [
+      "0x24",
+      "0x288",
+      "0x314",
+      "0x670",
+      "0x5555"
+     ],
+     "selected_stat": "0x24",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 18,
+   "trace_sha256": "4452cff5c6b284b59ab93fe2dcb3f8ed4f69272544a45baa727e97042c208da7"
+  },
+  {
+   "order": [
+    "[growtype 1]",
+    "[awakening name]",
+    "[awakening 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": true,
+   "states": [
+    {
+     "tag": "[growtype 1]",
+     "slots": [
+      "0x7b",
+      "0x29c",
+      "0x358",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7b",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening name]",
+     "slots": [
+      "0x7b",
+      "0x29c",
+      "0x358",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7b",
+     "stack": "0x6fffdf00",
+     "stop": "0x129c7d9",
+     "selected_name": "0x4f0"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x7d0",
+      "0x880",
+      "0x8a8",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7d0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0x827",
+      "0x894",
+      "0x8ec",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x827",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x7d0",
+      "0x880",
+      "0x8a8",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7d0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 367,
+   "trace_sha256": "e04b4cd20548299de7bb958335ea6bc98caaaa4e18fb3915c0d61256285458bb"
+  },
+  {
+   "order": [
+    "[growtype 2]",
+    "[awakening name]",
+    "[awakening 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": true,
+   "states": [
+    {
+     "tag": "[growtype 2]",
+     "slots": [
+      "0xd2",
+      "0x2b0",
+      "0x39c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0xd2",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening name]",
+     "slots": [
+      "0xd2",
+      "0x2b0",
+      "0x39c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0xd2",
+     "stack": "0x6fffdf00",
+     "stop": "0x129c7d9",
+     "selected_name": "0x530"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x930",
+      "0x9e0",
+      "0xa08",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x930",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0x987",
+      "0x9f4",
+      "0xa4c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x987",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x930",
+      "0x9e0",
+      "0xa08",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x930",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 376,
+   "trace_sha256": "93cc8ceeaab985a0d2dd31ee19b05527a604f971503dfd266b01ef16127d9c7d"
+  },
+  {
+   "order": [
+    "[growtype 3]",
+    "[awakening name]",
+    "[awakening 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": true,
+   "states": [
+    {
+     "tag": "[growtype 3]",
+     "slots": [
+      "0x129",
+      "0x2c4",
+      "0x3e0",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0x129",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening name]",
+     "slots": [
+      "0x129",
+      "0x2c4",
+      "0x3e0",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0x129",
+     "stack": "0x6fffdf00",
+     "stop": "0x129c7d9",
+     "selected_name": "0x570"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xa90",
+      "0xb40",
+      "0xb68",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xa90",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xae7",
+      "0xb54",
+      "0xbac",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xae7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xa90",
+      "0xb40",
+      "0xb68",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xa90",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 385,
+   "trace_sha256": "b0483b1d14ef47b5ef410681ba1303a2a8947b77b2381e18e6e797d4d933a98f"
+  },
+  {
+   "order": [
+    "[growtype 4]",
+    "[awakening name]",
+    "[awakening 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": true,
+   "states": [
+    {
+     "tag": "[growtype 4]",
+     "slots": [
+      "0x180",
+      "0x2d8",
+      "0x424",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0x180",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening name]",
+     "slots": [
+      "0x180",
+      "0x2d8",
+      "0x424",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0x180",
+     "stack": "0x6fffdf00",
+     "stop": "0x129c7d9",
+     "selected_name": "0x5b0"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xbf0",
+      "0xca0",
+      "0xcc8",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xbf0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xc47",
+      "0xcb4",
+      "0xd0c",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xc47",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xbf0",
+      "0xca0",
+      "0xcc8",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xbf0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 394,
+   "trace_sha256": "8757dd0509c3d1d7516f0e03b1ae7457bcf6e027cba203b6ca875cdf8344f940"
+  },
+  {
+   "order": [
+    "[growtype 5]",
+    "[awakening name]",
+    "[awakening 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": true,
+   "states": [
+    {
+     "tag": "[growtype 5]",
+     "slots": [
+      "0x1d7",
+      "0x2ec",
+      "0x468",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0x1d7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening name]",
+     "slots": [
+      "0x1d7",
+      "0x2ec",
+      "0x468",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0x1d7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129c7d9",
+     "selected_name": "0x5f0"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xd50",
+      "0xe00",
+      "0xe28",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xd50",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xda7",
+      "0xe14",
+      "0xe6c",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xda7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xd50",
+      "0xe00",
+      "0xe28",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xd50",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 403,
+   "trace_sha256": "0b838b9e77e2df80ebdf2c9089415b66b6e8b9479f7da0b2025f7be7131cb41f"
+  },
+  {
+   "order": [
+    "[growtype 6]",
+    "[awakening name]",
+    "[awakening 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": true,
+   "states": [
+    {
+     "tag": "[growtype 6]",
+     "slots": [
+      "0x22e",
+      "0x300",
+      "0x4ac",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0x22e",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening name]",
+     "slots": [
+      "0x22e",
+      "0x300",
+      "0x4ac",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0x22e",
+     "stack": "0x6fffdf00",
+     "stop": "0x129c7d9",
+     "selected_name": "0x630"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xeb0",
+      "0xf60",
+      "0xf88",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xeb0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xf07",
+      "0xf74",
+      "0xfcc",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xf07",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xeb0",
+      "0xf60",
+      "0xf88",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xeb0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 412,
+   "trace_sha256": "ac5094dcb672470192c6e19c99fbdc6414179d584e7d6cc56e5d891b706aa3a9"
+  },
+  {
+   "order": [
+    "[growtype 1]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 2]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 3]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 4]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 5]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 6]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": true,
+   "states": [
+    {
+     "tag": "[growtype 1]",
+     "slots": [
+      "0x7b",
+      "0x29c",
+      "0x358",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7b",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0x827",
+      "0x894",
+      "0x8ec",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x827",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x7d0",
+      "0x880",
+      "0x8a8",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7d0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 2]",
+     "slots": [
+      "0xd2",
+      "0x2b0",
+      "0x39c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0xd2",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0x987",
+      "0x9f4",
+      "0xa4c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x987",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x930",
+      "0x9e0",
+      "0xa08",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x930",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 3]",
+     "slots": [
+      "0x129",
+      "0x2c4",
+      "0x3e0",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0x129",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xae7",
+      "0xb54",
+      "0xbac",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xae7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xa90",
+      "0xb40",
+      "0xb68",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xa90",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 4]",
+     "slots": [
+      "0x180",
+      "0x2d8",
+      "0x424",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0x180",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xc47",
+      "0xcb4",
+      "0xd0c",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xc47",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xbf0",
+      "0xca0",
+      "0xcc8",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xbf0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 5]",
+     "slots": [
+      "0x1d7",
+      "0x2ec",
+      "0x468",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0x1d7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xda7",
+      "0xe14",
+      "0xe6c",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xda7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xd50",
+      "0xe00",
+      "0xe28",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xd50",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 6]",
+     "slots": [
+      "0x22e",
+      "0x300",
+      "0x4ac",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0x22e",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xf07",
+      "0xf74",
+      "0xfcc",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xf07",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xeb0",
+      "0xf60",
+      "0xf88",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xeb0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 1317,
+   "trace_sha256": "38420790e04abe79ef97f0b29138d9b8d956eed549cea4454db89f8f98083d5f"
+  },
+  {
+   "order": [
+    "[growtype 6]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 5]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 4]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 3]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 2]",
+    "[awakening 2]",
+    "[awakening 1]",
+    "[growtype 1]",
+    "[awakening 2]",
+    "[awakening 1]"
+   ],
+   "poison": true,
+   "states": [
+    {
+     "tag": "[growtype 6]",
+     "slots": [
+      "0x22e",
+      "0x300",
+      "0x4ac",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0x22e",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xf07",
+      "0xf74",
+      "0xfcc",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xf07",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xeb0",
+      "0xf60",
+      "0xf88",
+      "0xeb0",
+      "0x630"
+     ],
+     "selected_stat": "0xeb0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 5]",
+     "slots": [
+      "0x1d7",
+      "0x2ec",
+      "0x468",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0x1d7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xda7",
+      "0xe14",
+      "0xe6c",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xda7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xd50",
+      "0xe00",
+      "0xe28",
+      "0xd50",
+      "0x5f0"
+     ],
+     "selected_stat": "0xd50",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 4]",
+     "slots": [
+      "0x180",
+      "0x2d8",
+      "0x424",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0x180",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xc47",
+      "0xcb4",
+      "0xd0c",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xc47",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xbf0",
+      "0xca0",
+      "0xcc8",
+      "0xbf0",
+      "0x5b0"
+     ],
+     "selected_stat": "0xbf0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 3]",
+     "slots": [
+      "0x129",
+      "0x2c4",
+      "0x3e0",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0x129",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0xae7",
+      "0xb54",
+      "0xbac",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xae7",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0xa90",
+      "0xb40",
+      "0xb68",
+      "0xa90",
+      "0x570"
+     ],
+     "selected_stat": "0xa90",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 2]",
+     "slots": [
+      "0xd2",
+      "0x2b0",
+      "0x39c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0xd2",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0x987",
+      "0x9f4",
+      "0xa4c",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x987",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x930",
+      "0x9e0",
+      "0xa08",
+      "0x930",
+      "0x530"
+     ],
+     "selected_stat": "0x930",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[growtype 1]",
+     "slots": [
+      "0x7b",
+      "0x29c",
+      "0x358",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7b",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 2]",
+     "slots": [
+      "0x827",
+      "0x894",
+      "0x8ec",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x827",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    },
+    {
+     "tag": "[awakening 1]",
+     "slots": [
+      "0x7d0",
+      "0x880",
+      "0x8a8",
+      "0x7d0",
+      "0x4f0"
+     ],
+     "selected_stat": "0x7d0",
+     "stack": "0x6fffdf00",
+     "stop": "0x129e5b1"
+    }
+   ],
+   "steps": 1317,
+   "trace_sha256": "3e2b5de2113b9614392f1050d7179d82acfffbdfbcf7d7edb774147c9a42acb0"
+  }
+ ],
+ "blocks": [
+  {
+   "start": "0x129c49e",
+   "end_exclusive": "0x129c7d9",
+   "sha256": "c4ddb95d386c40e26aae792c88642f5cf6c15978755a464ff886e86d0a8f5d3d",
+   "instructions": [
+    "0129C49E push 0x1869e5c",
+    "0129C4A3 call 0x1194fc0",
+    "0129C4A8 push eax",
+    "0129C4A9 lea eax, [ebp - 0x230]",
+    "0129C4AF push eax",
+    "0129C4B0 call 0x401dd0",
+    "0129C4B5 add esp, 0xc",
+    "0129C4B8 test al, al",
+    "0129C4BA je 0x129c4ee",
+    "0129C4BC lea eax, [edi + 0x288]",
+    "0129C4C2 mov dword ptr [ebp - 0x324], eax",
+    "0129C4C8 lea ebx, [edi + 0x24]",
+    "0129C4CB lea eax, [edi + 0x314]",
+    "0129C4D1 lea ecx, [edi + 0x670]",
+    "0129C4D7 mov dword ptr [ebp - 0x320], ebx",
+    "0129C4DD mov dword ptr [ebp - 0x32c], eax",
+    "0129C4E3 mov dword ptr [ebp - 0x344], ecx",
+    "0129C4E9 jmp 0x129e5b1",
+    "0129C4EE push 0x1869e38",
+    "0129C4F3 call 0x1194fc0",
+    "0129C4F8 push eax",
+    "0129C4F9 lea edx, [ebp - 0x230]",
+    "0129C4FF push edx",
+    "0129C500 call 0x401dd0",
+    "0129C505 add esp, 0xc",
+    "0129C508 test al, al",
+    "0129C50A je 0x129c54a",
+    "0129C50C lea eax, [edi + 0x29c]",
+    "0129C512 mov dword ptr [ebp - 0x324], eax",
+    "0129C518 lea ebx, [edi + 0x7b]",
+    "0129C51B lea ecx, [edi + 0x358]",
+    "0129C521 lea edx, [edi + 0x7d0]",
+    "0129C527 lea eax, [edi + 0x4f0]",
+    "0129C52D mov dword ptr [ebp - 0x320], ebx",
+    "0129C533 mov dword ptr [ebp - 0x32c], ecx",
+    "0129C539 mov dword ptr [ebp - 0x344], edx",
+    "0129C53F mov dword ptr [ebp - 0x348], eax",
+    "0129C545 jmp 0x129e5b1",
+    "0129C54A push 0x1869e14",
+    "0129C54F call 0x1194fc0",
+    "0129C554 push eax",
+    "0129C555 lea ecx, [ebp - 0x230]",
+    "0129C55B push ecx",
+    "0129C55C call 0x401dd0",
+    "0129C561 add esp, 0xc",
+    "0129C564 test al, al",
+    "0129C566 je 0x129c5a9",
+    "0129C568 lea edx, [edi + 0x2b0]",
+    "0129C56E mov dword ptr [ebp - 0x324], edx",
+    "0129C574 lea ebx, [edi + 0xd2]",
+    "0129C57A lea eax, [edi + 0x39c]",
+    "0129C580 lea ecx, [edi + 0x930]",
+    "0129C586 lea edx, [edi + 0x530]",
+    "0129C58C mov dword ptr [ebp - 0x320], ebx",
+    "0129C592 mov dword ptr [ebp - 0x32c], eax",
+    "0129C598 mov dword ptr [ebp - 0x344], ecx",
+    "0129C59E mov dword ptr [ebp - 0x348], edx",
+    "0129C5A4 jmp 0x129e5b1",
+    "0129C5A9 push 0x1869df0",
+    "0129C5AE call 0x1194fc0",
+    "0129C5B3 push eax",
+    "0129C5B4 lea eax, [ebp - 0x230]",
+    "0129C5BA push eax",
+    "0129C5BB call 0x401dd0",
+    "0129C5C0 add esp, 0xc",
+    "0129C5C3 test al, al",
+    "0129C5C5 je 0x129c608",
+    "0129C5C7 lea ecx, [edi + 0x2c4]",
+    "0129C5CD mov dword ptr [ebp - 0x324], ecx",
+    "0129C5D3 lea ebx, [edi + 0x129]",
+    "0129C5D9 lea edx, [edi + 0x3e0]",
+    "0129C5DF lea eax, [edi + 0xa90]",
+    "0129C5E5 lea ecx, [edi + 0x570]",
+    "0129C5EB mov dword ptr [ebp - 0x320], ebx",
+    "0129C5F1 mov dword ptr [ebp - 0x32c], edx",
+    "0129C5F7 mov dword ptr [ebp - 0x344], eax",
+    "0129C5FD mov dword ptr [ebp - 0x348], ecx",
+    "0129C603 jmp 0x129e5b1",
+    "0129C608 push 0x1869dcc",
+    "0129C60D call 0x1194fc0",
+    "0129C612 push eax",
+    "0129C613 lea edx, [ebp - 0x230]",
+    "0129C619 push edx",
+    "0129C61A call 0x401dd0",
+    "0129C61F add esp, 0xc",
+    "0129C622 test al, al",
+    "0129C624 je 0x129c667",
+    "0129C626 lea eax, [edi + 0x2d8]",
+    "0129C62C mov dword ptr [ebp - 0x324], eax",
+    "0129C632 lea ebx, [edi + 0x180]",
+    "0129C638 lea ecx, [edi + 0x424]",
+    "0129C63E lea edx, [edi + 0xbf0]",
+    "0129C644 lea eax, [edi + 0x5b0]",
+    "0129C64A mov dword ptr [ebp - 0x320], ebx",
+    "0129C650 mov dword ptr [ebp - 0x32c], ecx",
+    "0129C656 mov dword ptr [ebp - 0x344], edx",
+    "0129C65C mov dword ptr [ebp - 0x348], eax",
+    "0129C662 jmp 0x129e5b1",
+    "0129C667 push 0x1869da8",
+    "0129C66C call 0x1194fc0",
+    "0129C671 push eax",
+    "0129C672 lea ecx, [ebp - 0x230]",
+    "0129C678 push ecx",
+    "0129C679 call 0x401dd0",
+    "0129C67E add esp, 0xc",
+    "0129C681 test al, al",
+    "0129C683 je 0x129c6c6",
+    "0129C685 lea edx, [edi + 0x2ec]",
+    "0129C68B mov dword ptr [ebp - 0x324], edx",
+    "0129C691 lea ebx, [edi + 0x1d7]",
+    "0129C697 lea eax, [edi + 0x468]",
+    "0129C69D lea ecx, [edi + 0xd50]",
+    "0129C6A3 lea edx, [edi + 0x5f0]",
+    "0129C6A9 mov dword ptr [ebp - 0x320], ebx",
+    "0129C6AF mov dword ptr [ebp - 0x32c], eax",
+    "0129C6B5 mov dword ptr [ebp - 0x344], ecx",
+    "0129C6BB mov dword ptr [ebp - 0x348], edx",
+    "0129C6C1 jmp 0x129e5b1",
+    "0129C6C6 push 0x1869d84",
+    "0129C6CB call 0x1194fc0",
+    "0129C6D0 push eax",
+    "0129C6D1 lea eax, [ebp - 0x230]",
+    "0129C6D7 push eax",
+    "0129C6D8 call 0x401dd0",
+    "0129C6DD add esp, 0xc",
+    "0129C6E0 test al, al",
+    "0129C6E2 je 0x129c725",
+    "0129C6E4 lea ecx, [edi + 0x300]",
+    "0129C6EA mov dword ptr [ebp - 0x324], ecx",
+    "0129C6F0 lea ebx, [edi + 0x22e]",
+    "0129C6F6 lea edx, [edi + 0x4ac]",
+    "0129C6FC lea eax, [edi + 0xeb0]",
+    "0129C702 lea ecx, [edi + 0x630]",
+    "0129C708 mov dword ptr [ebp - 0x320], ebx",
+    "0129C70E mov dword ptr [ebp - 0x32c], edx",
+    "0129C714 mov dword ptr [ebp - 0x344], eax",
+    "0129C71A mov dword ptr [ebp - 0x348], ecx",
+    "0129C720 jmp 0x129e5b1",
+    "0129C725 push 0x1869d60",
+    "0129C72A call 0x1194fc0",
+    "0129C72F push eax",
+    "0129C730 lea edx, [ebp - 0x230]",
+    "0129C736 push edx",
+    "0129C737 call 0x401dd0",
+    "0129C73C add esp, 0xc",
+    "0129C73F test al, al",
+    "0129C741 je 0x129c76c",
+    "0129C743 mov ebx, dword ptr [ebp - 0x344]",
+    "0129C749 lea eax, [ebx + 0xb0]",
+    "0129C74F lea ecx, [ebx + 0xd8]",
+    "0129C755 mov dword ptr [ebp - 0x320], ebx",
+    "0129C75B mov dword ptr [ebp - 0x324], eax",
+    "0129C761 mov dword ptr [ebp - 0x32c], ecx",
+    "0129C767 jmp 0x129e5b1",
+    "0129C76C push 0x1869d3c",
+    "0129C771 call 0x1194fc0",
+    "0129C776 push eax",
+    "0129C777 lea edx, [ebp - 0x230]",
+    "0129C77D push edx",
+    "0129C77E call 0x401dd0",
+    "0129C783 add esp, 0xc",
+    "0129C786 test al, al",
+    "0129C788 je 0x129c7b5",
+    "0129C78A mov eax, dword ptr [ebp - 0x344]",
+    "0129C790 lea ebx, [eax + 0x57]",
+    "0129C793 lea ecx, [eax + 0xc4]",
+    "0129C799 add eax, 0x11c",
+    "0129C79E mov dword ptr [ebp - 0x320], ebx",
+    "0129C7A4 mov dword ptr [ebp - 0x324], ecx",
+    "0129C7AA mov dword ptr [ebp - 0x32c], eax",
+    "0129C7B0 jmp 0x129e5b1",
+    "0129C7B5 push 0x1869d10",
+    "0129C7BA call 0x1194fc0",
+    "0129C7BF push eax",
+    "0129C7C0 lea edx, [ebp - 0x230]",
+    "0129C7C6 push edx",
+    "0129C7C7 call 0x401dd0",
+    "0129C7CC add esp, 0xc",
+    "0129C7CF test al, al",
+    "0129C7D1 je 0x129c7f8",
+    "0129C7D3 mov esi, dword ptr [ebp - 0x348]"
+   ]
+  }
+ ],
+ "boundaries": [
+  "129C49E group-dispatch prefix to 129E5B1 or 129C7D9 executes original instruction bytes.",
+  "1194FC0 uses existing read-only original string decoder; 401DD0 comparison is an explicit text-equality ABI fixture.",
+  "Prepared EDI parser object and EBP locals; full CHR parsing, allocation and field value writes are not executed.",
+  "Awakening name path stops before 121A480 string writes. Pointer association, not complete localized-name loading, is proved.",
+  "Growth formulas, automatic skill grants and gameplay progression remain unresolved."
+ ]
+}

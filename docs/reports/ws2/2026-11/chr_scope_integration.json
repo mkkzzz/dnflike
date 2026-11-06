@@ -1,0 +1,261 @@
+{
+  "schema": "dnf_chr_scope_integration/1",
+  "baseline_commit": "94a7d2c5ace15fdddf4726daebfa39fd48fe2ad8",
+  "before_pack_sha256": "f99963e9e2b112470e33adf42f2963c4a09a9e634d2e8404b13188df9c36b7f5",
+  "after_pack_sha256": "213d5929657e77d027f8a75b5a9679eeab2bc64ca1f8f5622e2461c77391d009",
+  "changed_records": [
+    "character/swordman/swordman.chr"
+  ],
+  "unchanged_records": 3326,
+  "raw_and_source_unchanged": true,
+  "initial_value_unchanged": true,
+  "runtime_changed_top_keys": [
+    "source"
+  ],
+  "manifest_changed_top_keys": [
+    "skill_runtime_sha256"
+  ],
+  "files": {
+    "tools/compile_dnf_content.py": "05d1a627b306d5982552e1327915e9a52b9dfddcc560e4688bceeea8c3686ecf",
+    "tools/test_dnf_pvf.py": "a8099bc8bcc68a3cd0b8c4067d01ab571febe3e7602f68e8c8af6387fa677e93",
+    "tools/test_dnf_chr_scope.py": "1cf0f78fb75867f7f9b32b29192ca4ecec9bf383772ae7a2dd0d9a5398476a59",
+    "game_dnf/tests/stats/test_chr_groups.gd": "75c3a1f54999d5df340f573037c63a3e98cd194658d8c22008d037869ba43e25",
+    "game_dnf/assets_local/content/combat_content.json": "213d5929657e77d027f8a75b5a9679eeab2bc64ca1f8f5622e2461c77391d009",
+    "game_dnf/data/skill_runtime.json": "aa7dbaa54abc2c8f4380ffa47d010000abbcdaeabf5757843998014d4ab69e29",
+    "game_dnf/assets_local/combat/manifest.json": "cd3468d109651769bea5d88997b5e647355246760e828c548b8c8f571d441817"
+  },
+  "native_evidence_sha256": "8230ce07bdf4bcadad6f0be62517a0f8d491710c3304a3a7a5afcbff552fd7e4",
+  "archive_chr": [
+    {
+      "path": "character/gunner/gunner.chr",
+      "sha256": "2a0fa7b7d54a694e2d80849fa9b3ca916e36632e9ecdeb2896b96d0ec2daa02c",
+      "awakening_tags": 10,
+      "decoded_scopes": {
+        "initial_value": 0,
+        "growtype_1": 0,
+        "growtype_2": 2,
+        "growtype_3": 2,
+        "growtype_4": 2,
+        "growtype_5": 2,
+        "growtype_6": 2
+      },
+      "orphan_errors": []
+    },
+    {
+      "path": "character/fighter/atfighter.chr",
+      "sha256": "a1854503321301765e3b3bfac47c0cd42fc7ba0c021d8a58f60dc95f97f7a9ed",
+      "awakening_tags": 8,
+      "decoded_scopes": {
+        "initial_value": 0,
+        "growtype_1": 0,
+        "growtype_2": 2,
+        "growtype_3": 2,
+        "growtype_4": 2,
+        "growtype_5": 2
+      },
+      "orphan_errors": []
+    },
+    {
+      "path": "character/gunner/atgunner.chr",
+      "sha256": "7d60ae0ab060f6dfb34c3d183ae7d29f92750938dece598a8e4caa87fcf9be1f",
+      "awakening_tags": 10,
+      "decoded_scopes": {
+        "initial_value": 0,
+        "growtype_1": 0,
+        "growtype_2": 2,
+        "growtype_3": 2,
+        "growtype_4": 2,
+        "growtype_5": 2,
+        "growtype_6": 2
+      },
+      "orphan_errors": []
+    },
+    {
+      "path": "character/mage/mage.chr",
+      "sha256": "24303a3be41bfd70605b8849970652567f7978a4dc7b4733d58e753c90a1b0d1",
+      "awakening_tags": 10,
+      "decoded_scopes": {
+        "initial_value": 0,
+        "growtype_1": 0,
+        "growtype_2": 2,
+        "growtype_3": 2,
+        "growtype_4": 2,
+        "growtype_5": 2,
+        "growtype_6": 2
+      },
+      "orphan_errors": []
+    },
+    {
+      "path": "character/fighter/fighter.chr",
+      "sha256": "c7a0488026efa975712efe33e615379d37e1aeb6b9347820e0249ebd3377800e",
+      "awakening_tags": 8,
+      "decoded_scopes": {
+        "initial_value": 0,
+        "growtype_1": 0,
+        "growtype_2": 2,
+        "growtype_3": 2,
+        "growtype_4": 2,
+        "growtype_5": 2
+      },
+      "orphan_errors": []
+    },
+    {
+      "path": "character/mage/atmage.chr",
+      "sha256": "995b6e4e4c11e83e2ea42531a43e009f1621aee62dbdcadd4f62a98aa53cd900",
+      "awakening_tags": 10,
+      "decoded_scopes": {
+        "initial_value": 0,
+        "growtype_1": 0,
+        "growtype_2": 2,
+        "growtype_3": 2,
+        "growtype_4": 2,
+        "growtype_5": 2,
+        "growtype_6": 2
+      },
+      "orphan_errors": []
+    },
+    {
+      "path": "character/mage/creatormage.chr",
+      "sha256": "d7ac244e60f15d81b3670312daef1e2a53b3a381430e6783538ead6192f9f90b",
+      "awakening_tags": 10,
+      "decoded_scopes": {
+        "initial_value": 0,
+        "growtype_1": 0,
+        "growtype_2": 2,
+        "growtype_3": 2,
+        "growtype_4": 2,
+        "growtype_5": 2,
+        "growtype_6": 2
+      },
+      "orphan_errors": []
+    },
+    {
+      "path": "character/swordman/demonicswordman.chr",
+      "sha256": "8b303dab93aac4d99a096c6f05f078956f2699ba697234d66435ca3e2ec7d1d4",
+      "awakening_tags": 10,
+      "decoded_scopes": {
+        "initial_value": 0,
+        "growtype_1": 0,
+        "growtype_2": 2,
+        "growtype_3": 2,
+        "growtype_4": 2,
+        "growtype_5": 2,
+        "growtype_6": 2
+      },
+      "orphan_errors": []
+    },
+    {
+      "path": "character/priest/priest.chr",
+      "sha256": "d572d09c28ad1da7abb7f5e3c0b3762b8b95bc366dc67e0614ae6dbfb153164c",
+      "awakening_tags": 10,
+      "decoded_scopes": {
+        "initial_value": 0,
+        "growtype_1": 0,
+        "growtype_2": 2,
+        "growtype_3": 2,
+        "growtype_4": 2,
+        "growtype_5": 2,
+        "growtype_6": 2
+      },
+      "orphan_errors": []
+    },
+    {
+      "path": "character/thief/thief.chr",
+      "sha256": "74d7572f1fb96edf84739378a7838155365c0d5d8aecc064c44f131912a2a339",
+      "awakening_tags": 10,
+      "decoded_scopes": {
+        "initial_value": 0,
+        "growtype_1": 0,
+        "growtype_2": 2,
+        "growtype_3": 2,
+        "growtype_4": 2,
+        "growtype_5": 2,
+        "growtype_6": 2
+      },
+      "orphan_errors": []
+    },
+    {
+      "path": "character/swordman/swordman.chr",
+      "sha256": "576c7f66296b6dc9882280654a8378a95de6c677388c0a3e9b0050bfbfddb679",
+      "awakening_tags": 10,
+      "decoded_scopes": {
+        "initial_value": 0,
+        "growtype_1": 0,
+        "growtype_2": 2,
+        "growtype_3": 2,
+        "growtype_4": 2,
+        "growtype_5": 2,
+        "growtype_6": 2
+      },
+      "orphan_errors": []
+    }
+  ],
+  "logs": {
+    "chr_groups_before": {
+      "sha256": "2ad8ec2a86c8f86858178cad5bf756cb8a26d8f78db2fe2f22de7a7fb4ec6d37",
+      "completion": [
+        "[CHR_GROUPS] COMPLETE checks=27 failures=20"
+      ]
+    },
+    "chr_groups_after": {
+      "sha256": "29110789d82e4020dda07525a340cc3d10539f61c2ae2e4b6a15b7ab58de52c3",
+      "completion": [
+        "[CHR_GROUPS] COMPLETE checks=27 failures=0"
+      ]
+    },
+    "chr_groups_loop": {
+      "sha256": "a4bce606eb0143960869c69f6e636e67bb12212a25a09952782b2d04784d3bf6",
+      "completion": [
+        "[PARTICLE_MOTION] COMPLETE checks=275 failures=0",
+        "[PARTICLE_EMITTER] COMPLETE checks=153 failures=0",
+        "[PARTICLE_VIEW] COMPLETE checks=87 failures=0",
+        "[ICE_PARTICLES] COMPLETE checks=355 failures=0",
+        "[FIREWAVE] COMPLETE checks=91 failures=0",
+        "[SKILL_EFFECTS] COMPLETE checks=19 failures=0",
+        "[GHOST_RANKS] COMPLETE checks=126 failures=0",
+        "[MASTERY_RANKS] COMPLETE checks=229 failures=0",
+        "[SKILL_IDENTITY] COMPLETE checks=501 failures=0",
+        "[UI_PERF] COMPLETE checks=17 failures=0",
+        "[QUEST_RULES] COMPLETE checks=288 failures=0",
+        "[CAMPAIGN] COMPLETE checks=132 failures=0",
+        "[WEAPON_RULES] COMPLETE checks=29925 failures=0",
+        "[NATIVE_BULK] COMPLETE checks=7780 failures=0",
+        "[TEACHING_RULES] COMPLETE checks=30 failures=0",
+        "[POISON_RULES] COMPLETE checks=26 failures=0",
+        "[ORIGINAL_DATA] COMPLETE checks=31 failures=0",
+        "[RECOVERY_TEST] COMPLETE checks=53 failures=0",
+        "[UPGRADE_TEST] COMPLETE checks=46 failures=0",
+        "[SERVICE_TEST] COMPLETE checks=33 failures=0",
+        "[ITEM_TEST] COMPLETE checks=44 failures=0",
+        "[CHR_GROUPS] COMPLETE checks=27 failures=0",
+        "[JOB_IDENTITY] COMPLETE checks=89 failures=0",
+        "[SKILL_UI_RANKS] COMPLETE checks=483 failures=0",
+        "[NUMBERS_TEST] COMPLETE checks=251 failures=0",
+        "[QUEST_TEST] COMPLETE checks=45 failures=0",
+        "[TOWN_UNIT] COMPLETE checks=110 failures=0",
+        "[GRAN_UNIT] COMPLETE checks=19 failures=0",
+        "[LOOP_TEST] COMPLETE checks=435 failures=0 captures=0"
+      ]
+    }
+  },
+  "checks": {
+    "before_api": [
+      27,
+      20
+    ],
+    "after_api": [
+      27,
+      0
+    ],
+    "formal": [
+      435,
+      0
+    ],
+    "native_tests": 10,
+    "native_optional_live_tests": 4,
+    "actual_native_mutations": 3,
+    "pvf_tests": 10,
+    "skill_runtime_tests": 19
+  },
+  "boundary": "Compiled structure and original parser pointer routing only; no runtime growth formula, automatic grants, client visual or gameplay fidelity completion."
+}

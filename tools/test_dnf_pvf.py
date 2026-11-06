@@ -53,6 +53,40 @@ class Builder:
 
 
 class PvfStructure(unittest.TestCase):
+    def test_chr_awakening_stats_keep_their_parent_job(self):
+        raw,strings=(Builder().tag('[initial value]').tag('[HP MAX]').float(180)
+            .tag('[growtype 2]').tag('[HP MAX]').float(50)
+            .tag('[awakening name]').str('job2 first').str('job2 second')
+            .tag('[awakening 1]').tag('[HP MAX]').float(50).tag('[awakening skill]').int(91).int(1)
+            .tag('[awakening 2]').tag('[HP MAX]').float(51)
+            .tag('[growtype 3]').tag('[HP MAX]').float(40)
+            .tag('[awakening name]').str('job3 first').str('job3 second')
+            .tag('[awakening 1]').tag('[HP MAX]').float(40).tag('[awakening skill]').int(87).int(1)
+            .tag('[awakening 2]').tag('[HP MAX]').float(41).build())
+        fields=parse_script(raw,strings,'chr')['fields']
+        decoded,evidence,unsupported=decode_fields('chr',fields,'character/test.chr')
+        groups=decoded['stat_groups']
+        self.assertEqual(groups['initial_value']['hp_max'],180)
+        for job,hp,skill in [('growtype_2',50,91),('growtype_3',40,87)]:
+            self.assertEqual(groups[job]['hp_max'],hp)
+            self.assertEqual(groups[job]['awakenings']['awakening_1']['hp_max'],hp)
+            self.assertEqual(groups[job]['awakenings']['awakening_2']['hp_max'],hp+1)
+            self.assertEqual(groups[job]['awakenings']['awakening_1']['awakening_skill'],[skill,1])
+            self.assertIn('stat_groups/'+job+'/awakenings/awakening_1',evidence)
+        self.assertEqual(groups['growtype_2']['awakening_name_refs'],['job2 first','job2 second'])
+        self.assertEqual(groups['growtype_3']['awakening_name_refs'],['job3 first','job3 second'])
+        self.assertNotIn('awakening_1',groups)
+        self.assertNotIn('awakening_name_refs',decoded)
+        self.assertEqual(unsupported,[])
+
+    def test_chr_orphan_awakening_reports_missing_context(self):
+        raw,strings=Builder().tag('[awakening 1]').tag('[HP MAX]').float(99).tag('[awakening name]').str('orphan').build()
+        fields=parse_script(raw,strings,'chr')['fields']
+        decoded,_,unsupported=decode_fields('chr',fields,'test.chr')
+        self.assertNotIn('stat_groups',decoded)
+        self.assertEqual(len(unsupported),2)
+        self.assertEqual(fields[1]['values'],[99.0]) # raw data remains available
+
     def test_atk_damage_bonus_uses_native_integer_conversion(self):
         for value,expected in ((-97.5,-97),(3.13,3),(-96.87,-96),(16777217.,16777216)):
             with self.subTest(value=value):

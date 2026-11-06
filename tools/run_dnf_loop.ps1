@@ -210,6 +210,11 @@ if ($Test) {
     if ($LASTEXITCODE -ne 0 -or ($itemOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($itemOutput -match '\[ITEM_TEST\] COMPLETE checks=\d+ failures=0')) {throw "Item regression failed."}
     & python (Join-Path $PSScriptRoot "test_dnf_job_identity.py")
     if ($LASTEXITCODE -ne 0) {throw "Source job identity evidence differs from runtime."}
+    & python (Join-Path $PSScriptRoot "test_dnf_chr_scope.py")
+    if ($LASTEXITCODE -ne 0) {throw "Native CHR scope evidence differs from content."}
+    $chrOutput=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/stats/test_chr_groups.gd 2>&1
+    $chrOutput | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($chrOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($chrOutput -match '\[CHR_GROUPS\] COMPLETE checks=\d+ failures=0')) {throw "CHR group content regression failed."}
     $jobPreference=$ErrorActionPreference
     try {
         $ErrorActionPreference="Continue"

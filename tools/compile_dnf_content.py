@@ -27,7 +27,7 @@ from dnf_particle_fields import decode_particle_fields
 
 OUT = ROOT / 'game_dnf/assets_local/content'
 SCHEMA = 'dnf_combat_content/1'
-COMPILER_VERSION = 3
+COMPILER_VERSION = 4
 HANDLED_FILE = ROOT / 'game_dnf/combat/fields/handled.json'
 
 # Decoders: canonical tag -> (decoded key, shape, evidence, note). Shapes:
@@ -308,6 +308,7 @@ def decode_fields(kind: str, fields: list, path: str) -> tuple[dict, dict, list]
         return decode_particle_fields(fields, path)
     table = FIELD_TABLES[kind]
     decoded, evidence, unsupported = {}, {}, []
+    chr_group = None
     if kind == 'act':
         # .act nests semantic fields under [MOTION]/[TRIGGER]/[BEHAVIOR]. Only the
         # stable action-asset fields needed by the runtime are decoded here; the
@@ -317,16 +318,35 @@ def decode_fields(kind: str, fields: list, path: str) -> tuple[dict, dict, list]
     while i < len(fields):
         node = fields[i]
         tag = canonical(node['tag'])
-        if kind == 'chr' and tag in ('[initial value]',) or (kind == 'chr' and tag.startswith('[growtype ') and tag != '[growtype name]') \
-                or (kind == 'chr' and tag.startswith('[awakening ') and tag[-2].isdigit()):
-            group, stats = key_of(tag), {}
+        is_growth = tag.startswith('[growtype ') and tag[10:-1].isdigit()
+        is_awakening = tag.startswith('[awakening ') and tag[11:-1].isdigit()
+        if kind == 'chr' and (tag == '[initial value]' or is_growth or is_awakening):
+            group = key_of(tag)
+            if is_awakening:
+                if chr_group is None:
+                    unsupported.append({'tag': node['tag'], 'offset': node['offset'], 'reason': 'awakening has no preceding CHR group'})
+                    stats, location = {}, None
+                else:
+                    stats = decoded['stat_groups'][chr_group].setdefault('awakenings', {}).setdefault(group, {})
+                    location = 'stat_groups/' + chr_group + '/awakenings/' + group
+            else:
+                chr_group = group
+                stats = decoded.setdefault('stat_groups', {}).setdefault(group, {})
+                location = 'stat_groups/' + group
             i += 1
             while i < len(fields) and canonical(fields[i]['tag']) in STAT_TAGS + GROUP_EXTRAS:
                 f = fields[i]
                 stats[key_of(f['tag'])] = first(f) if len(f['values']) == 1 else f['values']
                 i += 1
-            decoded.setdefault('stat_groups', {})[group] = stats
-            evidence['stat_groups/' + group] = 'E-PARSE'
+            if location is not None:evidence[location] = 'E-PARSE'
+            continue
+        if kind == 'chr' and tag == '[awakening name]':
+            if chr_group is None:
+                unsupported.append({'tag': node['tag'], 'offset': node['offset'], 'reason': 'awakening name has no preceding CHR group'})
+            else:
+                decoded['stat_groups'][chr_group]['awakening_name_refs'] = node['values']
+                evidence['stat_groups/' + chr_group + '/awakening_name_refs'] = 'E-PARSE'
+            i += 1
             continue
         if kind == 'chr' and tag in STAT_TAGS:
             unsupported.append({'tag': node['tag'], 'offset': node['offset'], 'reason': 'stat outside a group'})

@@ -25,6 +25,10 @@ jobs:
         run: python3 tools/test_dnf_skill_runtime.py
       - name: Check source job identity and learning columns
         run: python3 tools/test_dnf_job_identity.py
+      - name: Check native CHR scopes and compiled awakening records
+        run: |
+          python3 tools/test_dnf_chr_scope.py
+          python3 tools/test_dnf_pvf.py
       - name: Preserve archive CRC checks when decoding the client directory
         run: python3 tools/test_dnf_pvf_archive.py
       - name: Verify native string decoder with original byte fixtures
