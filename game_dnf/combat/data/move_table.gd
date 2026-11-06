@@ -291,6 +291,8 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 			hit["active_ms"] = float(h.get("active_ms",-1))
 			hit["speed"] = float(h.get("speed",0))
 			hit["life_ms"] = float(h.get("life_ms",-1))
+			# Explicit skill-specific size column; other objects retain native size.
+			hit["size_rate"] = float(row[int(h["size_col"])])/100.0 if h.has("size_col") and row.size()>int(h["size_col"]) else 1.0
 			if h.has("percent_col") and row.size() > int(h["percent_col"]):
 				hit["percent"] = float(row[int(h["percent_col"])])
 			elif h.has("percent"):

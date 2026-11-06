@@ -77,6 +77,13 @@ class SkillRuntimeTest(unittest.TestCase):
         self.assertIn("frenzy1", self.moves)
         self.assertIn("frenzy4", self.moves)
 
+    def test_normalwave_level_columns_match_original_tooltip_order(self):
+        record = self.pack["records"]["skill/swordman/normalwave.skl"]["decoded"]
+        self.assertEqual(record["dungeon"]["level_info"][:7], [3,69,115,317,78,116,357])
+        self.assertEqual(record["level_property"][-9:], [-1,2,1.0,-2,0,1.0,-1,1,1.0])
+        hit = self.moves["normalwave"]["stages"][0]["hits"][0]
+        self.assertEqual((hit.get("percent_col"),hit.get("fixed_col"),hit.get("size_col")), (2,0,1))
+
     def test_job_derivatives_are_declared(self):
         triple = self.runtime["variants"]["triple"][0]
         self.assertEqual(triple["job"], "weaponmaster")

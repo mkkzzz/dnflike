@@ -279,6 +279,7 @@ func _present_objects(list: Array) -> void:
 			object_views[o["id"]] = v
 		v.position = _canvas(Vector2(o["pos"]), float(o["z"]))
 		v.z_index = int(Vector2(o["pos"]).y)+2
+		v.base_scale = float(o.get("size_rate",1))
 		v.seek(float(o["clock"]))
 	for id in object_views.keys():
 		if not live.has(id):

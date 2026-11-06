@@ -7,9 +7,16 @@ const Box6 = preload("res://core/box6.gd")
 static func anchor(pos: Vector2, z: float) -> Vector3:
 	return Vector3(pos.x,pos.y,z)
 
-static func world_boxes(boxes: Array, at: Vector3, facing: int) -> Array:
+static func world_boxes(boxes: Array, at: Vector3, facing: int, size_rate := 1.0) -> Array:
 	var out: Array = []
-	for b: Array in boxes:out.append(Box6.to_world(b,at,facing))
+	if size_rate == 1.0:
+		for b: Array in boxes:out.append(Box6.to_world(b,at,facing))
+		return out
+	for b: Array in boxes:
+		# Scale local offsets and extents about the object's anchor, before mirror
+		# and translation. Never mutate shared source ANI boxes.
+		var world := Box6.to_world(b,Vector3.ZERO,facing)
+		out.append(AABB(at+world.position*size_rate,world.size*size_rate))
 	return out
 
 ## First intersection between two box lists, or an empty Dictionary.

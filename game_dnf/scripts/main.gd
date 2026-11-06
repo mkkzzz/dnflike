@@ -1347,7 +1347,7 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 	var off: Vector3 = hit.get("offset",Vector3.ZERO)
 	var entity := {"id":_next_entity_id,"def":obj,"owner":owner,"source":source,"hit":hit,"power":power,
 		"pos":Vector2(pos.x+off.x*facing,pos.y+off.y),"z":z+off.z,"facing":facing,"clock":0.0,
-		"speed":float(hit.get("speed",0)),"life_ms":float(hit.get("life_ms",-1)),"hits":{}}
+		"speed":float(hit.get("speed",0)),"life_ms":float(hit.get("life_ms",-1)),"size_rate":float(hit.get("size_rate",1)),"hits":{}}
 	_next_entity_id += 1
 	objects.append(entity)
 	if String(obj["add_fx"]) != "":spawn_effect(String(obj["add_fx"]),entity["pos"],facing,float(entity["z"]))
@@ -1370,7 +1370,7 @@ func step_objects(ms: float) -> void:
 			var f: Dictionary = Kernel.Timeline.frame_at(tl,t,loops)
 			var boxes: Array = f.get("attack_boxes",[])
 			if not boxes.is_empty():
-				var world: Array = Kernel.HitJudge.world_boxes(boxes,Kernel.HitJudge.anchor(o["pos"],float(o["z"])),int(o["facing"]))
+				var world: Array = Kernel.HitJudge.world_boxes(boxes,Kernel.HitJudge.anchor(o["pos"],float(o["z"])),int(o["facing"]),float(o.get("size_rate",1)))
 				var attacker: Dictionary = player if o["owner"] == "player" else o["source"]
 				if o["owner"] == "player":
 					for enemy: Dictionary in monsters:
@@ -1777,7 +1777,7 @@ func view_snapshot() -> Dictionary:
 	var objs: Array = []
 	for o: Dictionary in objects:
 		if String(o["def"]["bank"]) == "":continue
-		objs.append({"id":o["id"],"bank":String(o["def"]["bank"]),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":float(o["clock"])})
+		objs.append({"id":o["id"],"bank":String(o["def"]["bank"]),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":float(o["clock"]),"size_rate":float(o.get("size_rate",1))})
 	var route: Array = []
 	for i in rules["rooms"].size():
 		var room: Dictionary = rules["rooms"][i]

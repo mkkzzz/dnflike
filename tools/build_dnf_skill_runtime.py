@@ -1028,6 +1028,15 @@ def build_move(
                     }
                 )
     result = {"skill": str(skill["path"]), "name": str(skill["name"]), "stages": stages}
+    if key == "normalwave":
+        # SKL [level property]: percent <- (-1,2,1), fixed <- (-2,0,1),
+        # size percent <- (-1,1,1). The generic column-zero attack loses both
+        # the real percentage and independent-attack term. Timing remains an
+        # unverified adapter; this mapping does not certify the whole skill.
+        for stage in stages:
+            for hit in stage.get("hits", []):
+                if hit.get("object") == OBJ_ROOT + "normalwave.obj":
+                    hit.update(percent_col=2, fixed_col=0, size_col=1)
     if key in ["bloodyrave", "outragebreak"]:
         result["requires_effect"] = "frenzy"
     if key == "outragebreak":

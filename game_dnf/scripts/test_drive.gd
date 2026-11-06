@@ -7,6 +7,7 @@ const DetRng = preload("res://core/det_rng.gd")
 const ContentDB = preload("res://content/api/content_db.gd")
 const CombatSession = preload("res://combat/api/combat_session.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
+const HitJudge = preload("res://combat/hit/hit_judge.gd")
 const DOWN_GATE_FIXTURE := "res://assets_local/flow_v1/gran_v1/arden/map_export.json"
 const DOWN_GATE_PLACEMENT := "1_0:15255(1.0)normal"
 
@@ -458,6 +459,7 @@ func run_combat() -> void:
 
 ## Behaviour regressions for confirmed adapter defects; these do not certify original fidelity.
 func run_skill_fidelity() -> void:
+	check_normalwave_level_data()
 	for code in [KEY_A,KEY_D,KEY_Y]:
 		api.restart()
 		api.set_god(true)
@@ -506,6 +508,51 @@ func run_skill_fidelity() -> void:
 	await ticks(35)
 	check(Vector2(api.p("pos")).is_equal_approx(Vector2(125,250)),"casting normal wave does not slide the caster")
 	check(float(api.e(enemy,"hp")) < 5000.0,"normal wave still deals damage through its projectile")
+
+func check_normalwave_level_data() -> void:
+	var record: Dictionary = api.content().record("skill/swordman/normalwave.skl")["decoded"]
+	var rows: Array = record["dungeon"]["level_info"]
+	var correct := true
+	for rank in range(1,int((rows.size()-1)/3)+1):
+		game.table.configure_skills({"normalwave":rank},"swordman","katana")
+		var h: Dictionary = api.move("normalwave")["hits"][0]
+		var at := 1+(rank-1)*3
+		correct = correct and is_equal_approx(float(h["percent"]),float(rows[at+2])) and is_equal_approx(float(h["fixed"]),float(rows[at])) and is_equal_approx(float(h.get("size_rate",0)),float(rows[at+1])/100)
+	check(correct,"every normal-wave rank uses separate source percent, fixed and size columns")
+	game.table.configure_skills({"normalwave":1},"swordman","katana")
+	var hit: Dictionary = api.move("normalwave")["hits"][0].duplicate(true)
+	var formula: Dictionary = Numbers.shared_config()["formula"]
+	var damage := preload("res://stats/damage.gd")
+	var a: Dictionary = damage.resolve({"magical_attack":100,"independent_attack":100},{},hit,[0.0,1.0],formula)
+	var b: Dictionary = damage.resolve({"magical_attack":200,"independent_attack":100},{},hit,[0.0,1.0],formula)
+	var c: Dictionary = damage.resolve({"magical_attack":100,"independent_attack":200},{},hit,[0.0,1.0],formula)
+	check(a["trace"]["percent_part"]==317.0 and a["trace"]["fixed_part"]==69.0,"rank-one normal wave retains both 317 percent and 69 fixed coefficient")
+	check(b["trace"]["percent_part"]==634.0 and b["trace"]["fixed_part"]==69.0 and c["trace"]["percent_part"]==317.0 and c["trace"]["fixed_part"]==138.0,"weapon and independent attack affect their own normal-wave damage term")
+	var local_boxes: Array = [[11,-20,-18,238,40,120]]
+	var original := local_boxes.duplicate(true)
+	for facing in [1,-1]:
+		var origin := Vector3(500,250,10)
+		var native: AABB = HitJudge.world_boxes(local_boxes,origin,facing)[0]
+		var scaled: AABB = HitJudge.world_boxes(local_boxes,origin,facing,1.15)[0]
+		check(scaled.position.is_equal_approx(origin+(native.position-origin)*1.15) and scaled.size.is_equal_approx(native.size*1.15),"wave boxes grow about their anchor in facing %d" % facing)
+	check(local_boxes==original,"scaling never changes shared source animation boxes")
+	# A target beyond the unscaled wave edge must be reached by the larger wave.
+	# Freeze travel to isolate scale; do not borrow movement to satisfy the test.
+	hit["speed"] = 0.0
+	for facing in [1,-1]:
+		for size_rate in [1.0,1.15]:
+			api.restart()
+			api.set_god(true)
+			var enemy: Dictionary = api.spawn_dummy(Vector2(500+275*facing,250))
+			hit["size_rate"] = size_rate
+			game.spawn_object(hit,"player",Vector2(500,250),0.0,facing,1.0)
+			var entity: Dictionary = game.objects[-1]
+			game.view.present(game.view_snapshot(),0.0,0.0)
+			var view = game.view.object_views.get(entity["id"])
+			check(view!=null and is_equal_approx(view.base_scale,size_rate),"object snapshot and view preserve wave size %.2f facing %d" % [size_rate,facing])
+			game.step_objects(1.0)
+			check((float(enemy["hp"])<5000.0)==(size_rate>1.0),"wave collision grows with presentation at the far edge, facing %d scale %.2f" % [facing,size_rate])
+	game.table.configure_skills(game.skill_levels,game.job,game.weapon)
 
 ## New skill nodes and slot-driven input, without borrowing the old fixed A/S/D/F table.
 func run_skill_system() -> void:
