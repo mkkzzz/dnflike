@@ -84,7 +84,19 @@ func _initialize() -> void:
 	var probe: Dictionary = s.profile.duplicate(true)
 	check(layout.move(probe, s.CATALOG.ITEMS, {"place":"skill_catalog","id":"draw"}, {"place":"skill","index":0}),"skill panel drag binds a learned skill to a slot")
 	check(probe["skill_slots"][0]=="draw" and probe["skill_slots"].count("draw")==1,"dragging the same skill does not duplicate a slot")
-	check(not layout.move(probe, s.CATALOG.ITEMS, {"place":"skill_catalog","id":"upper"}, {"place":"skill","index":1}),"skill without a slot code cannot enter the bar")
+	check(layout.move(probe, s.CATALOG.ITEMS, {"place":"skill_catalog","id":"upper"}, {"place":"skill","index":1}),"learned upper can bind without a legacy slot whitelist")
+	var all_active_bind := true
+	var passives_rejected := true
+	for id: String in cfg["skills"]:
+		probe["skills"][id] = 1
+		var bound: bool = layout.move(probe, s.CATALOG.ITEMS, {"place":"skill_catalog","id":id}, {"place":"skill","index":2})
+		if bool(cfg["skills"][id].get("active", false)):
+			layout.normalize(probe, s.CATALOG.ITEMS)
+			all_active_bind = all_active_bind and bound and probe["skill_slots"][2] == id and layout.valid(probe, s.CATALOG.ITEMS)
+		else:
+			passives_rejected = passives_rejected and not bound
+	check(all_active_bind, "all runtime active skill definitions can bind and survive normalization")
+	check(passives_rejected, "all runtime passive skill definitions are excluded from shortcuts")
 	check(layout.move(probe, s.CATALOG.ITEMS, {"place":"skill_catalog","id":"draw"}, {"place":"skill","index":6}) and probe["skill_slots"][6]=="draw" and probe["skill_slots"].count("draw")==1,"upper Q slot accepts a learned skill without duplicating the old binding")
 	check(layout.move(probe, s.CATALOG.ITEMS, {"place":"skill","index":6,"id":"draw"}, {"place":"skill","index":11}) and probe["skill_slots"][11]=="draw" and probe["skill_slots"][6]=="","inventory-backed movement supports the full upper row")
 	var old_save:Dictionary=s.serialize().duplicate(true)

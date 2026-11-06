@@ -2,6 +2,7 @@ extends RefCounted
 ## 原版 SkillShop 技能树：节点坐标和前后置边来自 Swordman_Sp.co + SKL。
 ## 点选只刷新说明和选中态；读取共享配置，不复制整库，也不重建技能树。
 const Numbers = preload("res://stats/api/numbers.gd")
+const SkillSlots = preload("res://stats/api/skill_slots.gd")
 const CATALOG := "res://data/skill_catalog.json"
 const MANIFEST := "res://assets_local/skill_panel/manifest.json"
 const WINDOW_ORIGIN := Vector2(14, 12)
@@ -103,7 +104,7 @@ func tree_edges(source_branch := "") -> Array:
 	return _array(branch_data(source_branch).get("edges", []))
 
 func active_skill(id: String) -> bool:
-	return bool(Numbers.shared_config().get("skills", {}).get(id, {}).get("active", false))
+	return SkillSlots.is_active(id)
 
 func runtime_max_level(skill: Dictionary) -> int:
 	var local := String(skill.get("local_id", ""))
@@ -306,7 +307,7 @@ func _tree_node(parent: Control, node: Dictionary, skill: Dictionary) -> void:
 			base.modulate = base.get_meta("rest_tint", Color.WHITE))
 	var drag_icon := icon
 	hit.set_drag_forwarding(func(_at: Vector2):
-		if not active_skill(local) or int(game.session.profile["skills"].get(local, 0)) <= 0:
+		if not SkillSlots.can_bind(game.session.profile, local):
 			return null
 		if drag_icon != null:
 			var preview := TextureRect.new()

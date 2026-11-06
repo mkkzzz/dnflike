@@ -2,6 +2,7 @@ extends RefCounted
 ## Slot positions and shortcut bindings never duplicate item ownership counts.
 const BAG_CAPACITY := 48
 const KINDS := ["weapon", "consumable", "material", "profession", "quest"]
+# Migration order only; bindability comes from the current runtime definitions.
 const DEFAULT_SKILLS := ["hardattack", "draw", "triple", "rage_slash", "buff", "guard", "moonlight", "charge_crash"]
 const Inventory = preload("res://items/inventory.gd")
 const SkillSlots = preload("res://stats/api/skill_slots.gd")
@@ -23,7 +24,7 @@ static func normalize(profile: Dictionary, catalog: Dictionary) -> void:
 	var skill_seen := {}
 	for index in SkillSlots.COUNT:
 		var id := String(profile["skill_slots"][index])
-		if id != "" and (not id in DEFAULT_SKILLS or int(profile.get("skills",{}).get(id,0)) < 1 or skill_seen.has(id)):
+		if id != "" and (not SkillSlots.can_bind(profile, id) or skill_seen.has(id)):
 			profile["skill_slots"][index] = ""
 		elif id != "":
 			skill_seen[id] = true
@@ -69,7 +70,7 @@ static func valid(p: Dictionary, catalog: Dictionary) -> bool:
 			if not id is String:return false
 			if id == "":continue
 			if key == "quick_items" and (not catalog.has(id) or catalog[id]["kind"] != "consumable"):return false
-			if key == "skill_slots" and (not id in DEFAULT_SKILLS or seen.has(id) or int(p.get("skills",{}).get(id,0)) < 1):return false
+			if key == "skill_slots" and (not SkillSlots.can_bind(p, id) or seen.has(id)):return false
 			seen[id] = true
 	return true
 
@@ -83,8 +84,7 @@ static func move(p: Dictionary, catalog: Dictionary, source: Dictionary, target:
 	# 放在 item_state 分支之前——它只改 skill_slots，与物品系统无关。
 	if from == "skill_catalog":
 		if to != "skill" or index < 0 or index >= SkillSlots.COUNT:return false
-		if not id in DEFAULT_SKILLS:return false
-		if int(p.get("skills", {}).get(id, 0)) < 1:return false
+		if not SkillSlots.can_bind(p, id):return false
 		for i in SkillSlots.COUNT:
 			if p["skill_slots"][i] == id:p["skill_slots"][i] = ""
 		p["skill_slots"][index] = id

@@ -15,6 +15,7 @@ func run() -> void:
 	await host.frame("61_number_skills")
 	var skill_panel=game.number_windows.skill_panel
 	await preload("res://tests/flow/test_skill_panel.gd").new().run(game, host)
+	await preload("res://tests/flow/test_skill_shortcuts.gd").new().run(game, host, self)
 	var viewport:Control=game.modal.find_child("skill_tree_viewport",true,false)
 	var content:Control=game.modal.find_child("skill_tree_content",true,false)
 	var base_upper:Control=game.modal.find_child("skill_node_46",true,false)
@@ -117,6 +118,21 @@ func run() -> void:
 		await host.ticks(2)
 		host.key(game.SKILL_KEYS[index],false)
 		host.check(api.p("action")=="hardattack" and game.overlay=="","live %s casts its bound skill without opening another window" % game.SkillSlots.LABELS[index])
+	game.number_windows.tab = 1
+	game.number_windows.skill_panel.tree_scroll = 0
+	game.show_overlay("numbers")
+	await host.ticks(3)
+	await drag_skill(game.modal.find_child("skill_node_46", true, false), game.hud.find_child("hud_skill_slot_2", true, false))
+	host.check(game.session.profile["skill_slots"][2] == "upper", "D accepts a real upper drag with the skill panel open during battle")
+	game.show_overlay("")
+	api.set_p("state","idle")
+	api.set_p("action","")
+	api.set_p("cooldowns",{})
+	api.set_p("stuck_ms",0.0)
+	host.key(KEY_D,true)
+	await host.ticks(2)
+	host.key(KEY_D,false)
+	host.check(api.p("action")=="upper" and game.overlay=="","D actually casts upper after binding without opening the town map")
 	game.set_debug_open(true)
 	var old: Dictionary = game.combat.read_view()
 	host.check(not old["numbers"].is_empty() and float(old["numbers"]["physical_defense"])==float(game.session.stats()["numbers"]["physical_defense"]),"combat consumes full profile including equipment defense")
@@ -200,10 +216,10 @@ func run() -> void:
 	var restored = game.Session.new()
 	host.check(restored.restore(JSON.parse_string(JSON.stringify(snapshot))) and restored.profile["skills"]["draw"]==2,"new progression and equipment survive real flow save")
 
-func drag_skill(source: Control, target: Control) -> void:
+func drag_skill(source: Control, target: Control, target_at := Vector2(-1, -1)) -> void:
 	var viewport:Viewport=game.get_viewport()
 	var start:=source.get_global_transform_with_canvas()*(source.size/2)
-	var finish:=target.get_global_transform_with_canvas()*(target.size/2)
+	var finish:=target.get_global_transform_with_canvas()*(target_at if target_at.x >= 0 else target.size/2)
 	var motion:=InputEventMouseMotion.new()
 	motion.position=start
 	viewport.push_input(motion,true)
