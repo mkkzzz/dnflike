@@ -1,0 +1,223 @@
+{
+  "schema": "dnf_magical_memory_source_binding/1",
+  "baseline_commit": "dfd0359c20752aa2e038a90defab5bc17721945e",
+  "basis": "Original SKL rows and linked text identify duration/intelligence; original casting state and effect onset not replayed.",
+  "asset_version": "dnf-native-assets-v1-20261022",
+  "skill_id": 176,
+  "source_path": "skill/swordman/magicalattackup.skl",
+  "source_sha256": "2e24406ebbf2610e56c37e39a74bb1a45254ac5b18de4d3bc9f04dabdcdf2d5e",
+  "pack_source": {
+    "asset_version": "dnf-native-assets-v1-20261022",
+    "path": "skill/swordman/magicalattackup.skl",
+    "sha256": "2e24406ebbf2610e56c37e39a74bb1a45254ac5b18de4d3bc9f04dabdcdf2d5e"
+  },
+  "source_fields": {
+    "[level info]": [
+      2,
+      20000,
+      15,
+      20000,
+      30,
+      20000,
+      45,
+      20000,
+      60,
+      20000,
+      75,
+      20000,
+      90,
+      20000,
+      105,
+      20000,
+      120,
+      20000,
+      135,
+      20000,
+      150,
+      20000,
+      165,
+      20000,
+      180,
+      20000,
+      195,
+      20000,
+      210,
+      20000,
+      225,
+      20000,
+      240,
+      20000,
+      255,
+      20000,
+      270,
+      20000,
+      285,
+      20000,
+      300
+    ],
+    "[consume MP]": [
+      15,
+      150
+    ],
+    "[cool time]": [
+      40000,
+      40000
+    ],
+    "[casting time]": [
+      500,
+      500
+    ],
+    "[maximum level]": [
+      20
+    ],
+    "[growtype maximum level]": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10
+    ]
+  },
+  "localized": {
+    "[name]": [
+      {
+        "text": "遠古記憶",
+        "table": "skill/skill.kor.str",
+        "table_id": 12,
+        "key": "name_15480",
+        "line": 6958,
+        "missing": false,
+        "needs_review": false
+      }
+    ],
+    "[explain]": [
+      {
+        "text": "增加自身的智力， 效果持續一定時間。\\n    使用該技能時， 無法強制中斷當前進行的普通攻擊動作。",
+        "table": "skill/skill.kor.str",
+        "table_id": 12,
+        "key": "explain_15485",
+        "line": 6959,
+        "missing": false,
+        "needs_review": false
+      }
+    ],
+    "[basic explain]": [
+      {
+        "text": "增加自身的智力， 效果持續一定時間。\\n    使用該技能時， 無法強制中斷當前進行的普通攻擊動作。",
+        "table": "skill/skill.kor.str",
+        "table_id": 12,
+        "key": "magicalattackup_basic_explain",
+        "line": 421,
+        "missing": false,
+        "needs_review": false
+      }
+    ]
+  },
+  "level_property": {
+    "table": "skill/skill.kor.str",
+    "key": "level_property_15490",
+    "entry": {
+      "text": "持續時間 : <float1>秒\\n智力增加量 : <int>",
+      "line": 6960
+    }
+  },
+  "text_table": {
+    "sha256": "7681bd1f7a8af9a4258a8271fc8e8f9697b6e74fdbee8af60d4eea0e1ba85a79",
+    "encoding": "cp950",
+    "round_trip": true,
+    "entries": 6976,
+    "duplicate_keys": []
+  },
+  "old_effect": {
+    "duration_ms": 20000,
+    "max_stacks": 1,
+    "modifiers": [
+      {
+        "op": "add",
+        "stat": "intelligence",
+        "value": 150
+      },
+      {
+        "op": "percent",
+        "stat": "magical_attack",
+        "value": 0.1
+      }
+    ],
+    "name": "远古记忆",
+    "stacking": "refresh"
+  },
+  "new_effect": {
+    "duration_level_row": 0,
+    "max_stacks": 1,
+    "modifiers": [
+      {
+        "level_row": 1,
+        "op": "add",
+        "stat": "intelligence"
+      }
+    ],
+    "name": "远古记忆",
+    "source_skill": "magicalattackup",
+    "stacking": "refresh"
+  },
+  "validation": {
+    "before": {
+      "checks": 231,
+      "failures": 11,
+      "log_sha256": "766577bb15b9be893aaa80e661d7a7daabd70a4b5f63b9beb0f275a8435fdda2"
+    },
+    "after": {
+      "checks": 235,
+      "failures": 0,
+      "log_sha256": "2b899fe214cc5d0338c8077cbc3cd80475051422c2fc90c6356c2410bcec7be2"
+    },
+    "integration": {
+      "checks": 19,
+      "failures": 0,
+      "log_sha256": "eb831404443d380bc21f0e07bfe7a1c9ae68fc4defa849f5e444b25bf7dd0a4f"
+    },
+    "python_skill_tests": {
+      "count": 17,
+      "failures": 0,
+      "command": "python tools/test_dnf_skill_runtime.py"
+    },
+    "formal_loop": {
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_dnf_loop.ps1 -Test",
+      "exit_code": 0,
+      "log_sha256": "a37796ca27f865bc6ee71ed589b8e11f7f5463c3ed09ed98827f60adb2333842",
+      "completion_markers": [
+        "[PARTICLE_MOTION] COMPLETE checks=275 failures=0",
+        "[PARTICLE_EMITTER] COMPLETE checks=153 failures=0",
+        "[PARTICLE_VIEW] COMPLETE checks=87 failures=0",
+        "[ICE_PARTICLES] COMPLETE checks=355 failures=0",
+        "[FIREWAVE] COMPLETE checks=91 failures=0",
+        "[SKILL_EFFECTS] COMPLETE checks=19 failures=0",
+        "[UI_PERF] COMPLETE checks=17 failures=0",
+        "[QUEST_RULES] COMPLETE checks=288 failures=0",
+        "[CAMPAIGN] COMPLETE checks=132 failures=0",
+        "[WEAPON_RULES] COMPLETE checks=29925 failures=0",
+        "[NATIVE_BULK] COMPLETE checks=7780 failures=0",
+        "[TEACHING_RULES] COMPLETE checks=30 failures=0",
+        "[POISON_RULES] COMPLETE checks=26 failures=0",
+        "[ORIGINAL_DATA] COMPLETE checks=31 failures=0",
+        "[RECOVERY_TEST] COMPLETE checks=53 failures=0",
+        "[UPGRADE_TEST] COMPLETE checks=46 failures=0",
+        "[SERVICE_TEST] COMPLETE checks=33 failures=0",
+        "[ITEM_TEST] COMPLETE checks=44 failures=0",
+        "[NUMBERS_TEST] COMPLETE checks=235 failures=0",
+        "[QUEST_TEST] COMPLETE checks=45 failures=0",
+        "[TOWN_UNIT] COMPLETE checks=110 failures=0",
+        "[GRAN_UNIT] COMPLETE checks=19 failures=0",
+        "[LOOP_TEST] COMPLETE checks=435 failures=0 captures=0"
+      ],
+      "scope": "Headless regression; not original animation or visual acceptance."
+    }
+  },
+  "boundaries": [
+    "Duration and intelligence use learned-rank raw source rows. Other buffs remain on their existing adapters.",
+    "Actual action invokes the existing immediate apply path; native animation, cancel permissions, exact onset, voice and visual composition remain unverified.",
+    "MP endpoints/cast/cooldown inputs unchanged; existing endpoint interpolation is still inference.",
+    "No claim of full original damage formula or full ancient-memory skill fidelity."
+  ]
+}

@@ -76,6 +76,17 @@ class SkillRuntimeTest(unittest.TestCase):
         risk=audit(dict(subset,skills={"throwmastery":broken}),{"moves":{}},self.pack["records"],catalog,set())["skills"][0]["risks"]
         self.assertIn("throw_item_bonus_applied_to_general_character_stats",risk)
 
+    def test_magical_memory_binds_only_original_duration_and_intelligence(self):
+        source=self.pack["records"]["skill/swordman/magicalattackup.skl"]["decoded"]
+        self.assertEqual(source["level_info"],[2]+[v for rank in range(1,21) for v in (20000,15*rank)])
+        effect=self.runtime["effects"]["magical_memory"]
+        self.assertEqual(effect["source_skill"],"magicalattackup")
+        self.assertEqual(effect["duration_level_row"],0)
+        self.assertEqual(effect["modifiers"],[{"stat":"intelligence","op":"add","level_row":1}])
+        self.assertNotIn("duration_ms",effect)
+        self.assertEqual(builder.BUFF_EFFECTS["magical_memory"],effect)
+        self.assertEqual(self.moves["magicalattackup"]["effect_id"],"magical_memory")
+
     def test_normalwave_has_no_borrowed_upper_slash_damage_or_visual(self):
         move = self.moves["normalwave"]
         hits = [hit for stage in move["stages"] for hit in stage.get("hits", [])]

@@ -120,6 +120,14 @@ if ($Test) {
     } finally {$ErrorActionPreference=$firePreference}
     $firewave | Write-Output
     if ($fireExit -ne 0 -or ($firewave -match 'SCRIPT ERROR|ERROR:') -or -not ($firewave -match '\[FIREWAVE\] COMPLETE checks=\d+ failures=0')) {throw "Firewave integration regression failed."}
+    $skillEffectPreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $skillEffects=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_skill_effects.gd 2>&1
+        $skillEffectExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$skillEffectPreference}
+    $skillEffects | Write-Output
+    if ($skillEffectExit -ne 0 -or ($skillEffects -match 'SCRIPT ERROR|ERROR:') -or -not ($skillEffects -match '\[SKILL_EFFECTS\] COMPLETE checks=\d+ failures=0')) {throw "Skill effect source-column regression failed."}
     & python (Join-Path $PSScriptRoot "test_check_dnf_performance.py")
     if ($LASTEXITCODE -ne 0) {throw "Performance guard self-tests failed."}
     $performanceOutput=& $GodotPath --headless --path $gamePath --script res://tests/flow/test_ui_performance.gd 2>&1

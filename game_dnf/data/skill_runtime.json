@@ -485,21 +485,17 @@
    "stacking": "refresh"
   },
   "magical_memory": {
-   "duration_ms": 20000,
+   "duration_level_row": 0,
    "max_stacks": 1,
    "modifiers": [
     {
+     "level_row": 1,
      "op": "add",
-     "stat": "intelligence",
-     "value": 150
-    },
-    {
-     "op": "percent",
-     "stat": "magical_attack",
-     "value": 0.1
+     "stat": "intelligence"
     }
    ],
    "name": "远古记忆",
+   "source_skill": "magicalattackup",
    "stacking": "refresh"
   },
   "mindflash": {

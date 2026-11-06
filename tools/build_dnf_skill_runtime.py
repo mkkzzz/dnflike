@@ -488,12 +488,12 @@ BUFF_EFFECTS = {
     },
     "magical_memory": {
         "name": "远古记忆",
-        "duration_ms": 20000,
+        "source_skill": "magicalattackup",
+        "duration_level_row": 0,
         "stacking": "refresh",
         "max_stacks": 1,
         "modifiers": [
-            {"stat": "intelligence", "op": "add", "value": 150},
-            {"stat": "magical_attack", "op": "percent", "value": 0.1},
+            {"stat": "intelligence", "op": "add", "level_row": 1},
         ],
     },
     "super_armor_cast": {

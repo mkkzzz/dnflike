@@ -47,6 +47,7 @@ func set_runtime_modifiers(value: Array) -> void:
 func add_effect(id: String, rank := 1, parameters: Dictionary = {}) -> bool:
 	if not config["effects"].has(id):return false
 	var definition: Dictionary = config["effects"][id].duplicate(true)
+	if definition.has("source_skill") and not sample_source_effect(definition,rank):return false
 	# Per-hit source values belong to this application, never the shared template.
 	# status_level is retained for the still-unresolved native resistance formula.
 	for field: String in ["duration_ms","status_level"]:
@@ -57,6 +58,31 @@ func add_effect(id: String, rank := 1, parameters: Dictionary = {}) -> bool:
 	if not effects.add(id,definition,rank):return false
 	recalculate()
 	return true
+
+## Resolve verified SKL column bindings once per application, into its private copy.
+## Missing source/columns reject the application; never fall back to invented values.
+func sample_source_effect(definition: Dictionary, rank: int) -> bool:
+	var source := Numbers.record(String(definition["source_skill"]))
+	if source.is_empty() or rank <= 0 or rank > int(source.get("max_level",0)):return false
+	var context: Dictionary = source.get("dungeon",{})
+	var info: Array = context.get("level_info",source.get("level_info",[]))
+	if info.is_empty():return false
+	var columns := int(info[0])
+	if columns <= 0 or (info.size()-1)%columns != 0 or rank*columns >= info.size():return false
+	var row: Array = Numbers.Skills.sample(source,rank)["level_row"]
+	var duration_column := int(definition.get("duration_level_row",-1))
+	if not valid_source_column(row,duration_column):return false
+	definition["duration_ms"] = float(row[duration_column])
+	for mod: Dictionary in definition.get("modifiers",[]):
+		var column := int(mod.get("level_row",-1))
+		if not valid_source_column(row,column):return false
+		mod["value"] = float(row[column])
+		mod.erase("level_row")
+		mod.erase("per_level")
+	return true
+
+func valid_source_column(row: Array, column: int) -> bool:
+	return column >= 0 and column < row.size() and (row[column] is int or row[column] is float) and is_finite(float(row[column]))
 
 func remove_effect(id: String) -> bool:
 	var removed: bool = effects.remove(id)

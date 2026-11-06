@@ -15,6 +15,7 @@ func _initialize() -> void:
 	check_back_critical()
 	check_equipment_separate_attack()
 	check_throw_mastery_scope()
+	check_magical_memory()
 	var cfg := Numbers.config_snapshot()
 	var initial_strength: float = Numbers.shared_config()["base"]["strength"]
 	cfg["base"]["strength"] = initial_strength + 1
@@ -196,6 +197,44 @@ func _initialize() -> void:
 	check(not s.command("numbers.level",{"level":61})["ok"],"configured cap applies to level setter")
 	print("[NUMBERS_TEST] COMPLETE checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
+
+func check_magical_memory() -> void:
+	var session = Session.new()
+	session.command("numbers.level",{"level":60})
+	var actor = Actor.new()
+	actor.configure(session.stats())
+	var before: Dictionary = actor.values.duplicate(true)
+	var template: Dictionary = actor.config["effects"]["magical_memory"].duplicate(true)
+	for rank in [1,5,10,20]:
+		check(actor.add_effect("magical_memory",rank),"magical memory rank %d applies" % rank)
+		check(actor.values["intelligence"]-before["intelligence"]==15*rank,"magical memory reads source intelligence column at rank %d" % rank)
+		check(actor.values["magical_attack"]==before["magical_attack"],"magical memory never invents a weapon magic attack multiplier")
+		check(actor.values["physical_attack"]==before["physical_attack"] and actor.values["strength"]==before["strength"],"magical memory does not change physical attributes")
+		check(actor.effects.active["magical_memory"]["remaining_ms"]==20000,"magical memory duration reads source milliseconds")
+		actor.step(19999)
+		check(actor.effects.active.has("magical_memory") and actor.values["intelligence"]==before["intelligence"]+15*rank,"magical memory lasts through 19999ms")
+		actor.step(1)
+		check(not actor.effects.active.has("magical_memory") and actor.values==before,"magical memory expiration removes the exact learned bonus")
+	actor.add_effect("magical_memory",10)
+	actor.step(1000)
+	actor.add_effect("magical_memory",1)
+	check(actor.values["intelligence"]==before["intelligence"]+15 and actor.effects.active["magical_memory"]["remaining_ms"]==20000,"refresh uses new application rank without stacking old intelligence")
+	actor.remove_effect("magical_memory")
+	check(actor.values==before,"explicit removal restores base attributes")
+	check(actor.config["effects"]["magical_memory"]==template,"source sampling never mutates the shared effect template")
+	check(not actor.add_effect("magical_memory",0) and not actor.add_effect("magical_memory",21),"source-bound effects reject unlearned and out-of-table ranks")
+	actor.add_effect("magical_memory",5)
+	var applied: Dictionary = actor.effects.active["magical_memory"].duplicate(true)
+	actor.config = actor.config.duplicate()
+	actor.config["effects"] = actor.config["effects"].duplicate(true)
+	actor.config["effects"]["magical_memory"]["duration_level_row"] = 99
+	check(not actor.add_effect("magical_memory",1) and actor.effects.active["magical_memory"]==applied,"invalid source duration preserves the previous valid application")
+	actor.config["effects"]["magical_memory"] = template.duplicate(true)
+	actor.config["effects"]["magical_memory"]["modifiers"][0]["level_row"] = -1
+	check(not actor.add_effect("magical_memory",1) and actor.effects.active["magical_memory"]==applied,"invalid modifier column never substitutes a generic buff")
+	actor.config["effects"]["magical_memory"] = template.duplicate(true)
+	actor.config["effects"]["magical_memory"]["source_skill"] = "missing_source_skill"
+	check(not actor.add_effect("magical_memory",1) and actor.effects.active["magical_memory"]==applied,"missing source rejects refresh without losing the existing effect")
 
 func check_throw_mastery_scope() -> void:
 	var s = Session.new()
