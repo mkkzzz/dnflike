@@ -8,7 +8,7 @@
   "resource_offset": 734740
  },
  "tools_sha256": {
-  "audit_dnf_basic_mastery.py": "6cb671764cf96d452eff11b2667e7f465058fba66f110411dd70bee3117e1fe6",
+  "audit_dnf_basic_mastery.py": "2d223d1ee7f6a1d7d7a3545b872e24fca62fccb8d55850d98ff4ccde9d28b7a3",
   "audit_dnf_firewave.py": "3377abdf1f6b5a76908a4cd14652fc68fe28d56314e49c6ee65933bfbd792ddc",
   "audit_dnf_ice_shatter.py": "b4f90d1797fd487af50a6e39716c77cc9e889b3e5b5c0b1c12864d088f29462c",
   "audit_dnf_ice_particle_bindings.py": "660048b05498ea7dd11add2d7f3654083d99faafa8fc28b86ff198292fcdeed1",

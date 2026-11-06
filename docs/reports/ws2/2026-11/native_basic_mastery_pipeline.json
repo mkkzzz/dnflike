@@ -9,7 +9,7 @@
  },
  "tools_sha256": {
   "audit_dnf_basic_mastery_pipeline.py": "159902f1c366ee6354c409368190c0df5a543bcfc06289164cd57b3d6533bfe7",
-  "audit_dnf_basic_mastery.py": "6cb671764cf96d452eff11b2667e7f465058fba66f110411dd70bee3117e1fe6",
+  "audit_dnf_basic_mastery.py": "2d223d1ee7f6a1d7d7a3545b872e24fca62fccb8d55850d98ff4ccde9d28b7a3",
   "audit_dnf_reusable_data.py": "fc0ec65c447910a2fdda11093084be6d2537f5e4232402ab41218db2c1e21a67",
   "dnf_pvf.py": "85c92f7f970c7e59ae8b8e9756150b72e63c1ae4d1f456878a796e81458f4218",
   "audit_dnf_firewave.py": "3377abdf1f6b5a76908a4cd14652fc68fe28d56314e49c6ee65933bfbd792ddc",

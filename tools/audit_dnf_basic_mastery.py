@@ -18,6 +18,7 @@ from audit_dnf_native_strings import ENGINE_SHA
 OWNER, ATTACK, SKILL, STATE, STATE_VT = 0x60000000,0x60100000,0x60200000,0x60300000,0x60400000
 VTABLE = 0x16F972C
 STATE_OFFSETS = (0x6A44,0x6514,0x67E8)
+STATE_VTABLES = (0x16EF3F4,0x16EC7AC,0x16EC65C)
 
 
 def f32(value):return real(fbits(value))
@@ -25,9 +26,9 @@ def f32(value):return real(fbits(value))
 
 def replay(source, *, category=8, rank=1, values=(24.,48.,72.), initial=35,
            static=1, learned=1, skill_exists=True, attack_exists=True,
-           states=(None,None,None), poison=False, caller=False, cached_skill=False):
+           states=(None,None,None), poison=False, caller=False, cached_skill=False,native_states=False):
     from dnf_native_vm_probe import CPU
-    if len(values)!=3 or len(states)!=3 or any(x is not None and x not in (0,1) for x in states):raise ValueError('Fixture shape')
+    if len(values)!=3 or len(states)!=3 or any(x is not None and (type(x)!=int or not 0<=x<=255) for x in states):raise ValueError('Fixture shape')
     if any(not math.isfinite(v) or not -2147483648<=v<2147483648 for v in values):raise ValueError('Finite conversion domain')
     if caller and not attack_exists:raise ValueError('Native caller always passes its embedded attack record')
     if cached_skill and learned!=rank:raise ValueError('Native rank getter must read the same effective-rank field as the value wrapper')
@@ -36,7 +37,9 @@ def replay(source, *, category=8, rank=1, values=(24.,48.,72.), initial=35,
     c.write(OWNER,4,VTABLE);c.write(0x70000004,4,ATTACK if attack_exists else 0);c.write(0x70000008,4,category)
     for index,(off,status) in enumerate(zip(STATE_OFFSETS,states)):
         c.write(OWNER+off,4,0 if status is None else STATE+index*0x100)
-        if status is not None:c.write(STATE+index*0x100,4,STATE_VT)
+        if status is not None:
+            c.write(STATE+index*0x100,4,STATE_VTABLES[index] if native_states else STATE_VT)
+            c.write(STATE+index*0x100+0x40,1,status)
     c.write(STATE_VT+0x70,4,0)
     if cached_skill:
         c.write(OWNER+0x3C08,4,0);c.write(OWNER+0x4C0C,4,0)
@@ -60,8 +63,11 @@ def replay(source, *, category=8, rank=1, values=(24.,48.,72.), initial=35,
         arg=lambda j:c.read(c.reg['esp']+4+j*4,4)
         if c.pc in (0xC9EE7A,0xC9EE94,0xC9EEAE):
             index=(c.reg['ecx']-STATE)//0x100
-            if index not in (0,1,2) or states[index] is None or c.reg['edx']!=0:raise ValueError('Unknown status ABI')
-            state_calls.append(index);c.reg['eax']=states[index];clobber();c.pc+=2;continue
+            if index not in (0,1,2) or states[index] is None:raise ValueError('Unknown status ABI')
+            state_calls.append(index)
+            if not native_states:
+                if c.reg['edx']!=0:raise ValueError('Unknown status ABI')
+                c.reg['eax']=states[index];clobber();c.pc+=2;continue
         if c.pc in (0x8444F0,0x8406C0):
             if c.reg['ecx']!=OWNER or arg(0)!=174:raise ValueError('Skill lookup ABI')
             calls.append({'service':'learned' if c.pc==0x8444F0 else 'lookup','id':arg(0)})
@@ -90,7 +96,7 @@ def replay(source, *, category=8, rank=1, values=(24.,48.,72.), initial=35,
         i=next(source.decoder.disasm(source.source_bytes(c.pc,15),c.pc,count=1))
         if stop[0]=='call':
             target=int(stop[2],16)
-            if target not in (0x83FA10,0x8444F0,0x8406C0,0xC9EE60,0x83C020,0x83C040,0x9095B0,0x908510,0x908770,0x13CD690,0x1195EB0,0x1195A10,0x4041C0,0x42CDB0):raise ValueError(f'Unknown call {target:#x}')
+            if target not in (0x42D650,0x83FA10,0x8444F0,0x8406C0,0xC9EE60,0x83C020,0x83C040,0x9095B0,0x908510,0x908770,0x13CD690,0x1195EB0,0x1195A10,0x4041C0,0x42CDB0):raise ValueError(f'Unknown call {target:#x}')
             c.push(c.pc+i.size);c.pc=target;continue
         if stop[0]!='unsupported':raise ValueError(f'Unmodeled stop {stop}')
         if i.mnemonic in ('addss','subss'):
@@ -108,7 +114,7 @@ def replay(source, *, category=8, rank=1, values=(24.,48.,72.), initial=35,
     else:raise ValueError('Instruction budget')
     return {'fixture':{'category':category,'rank':rank,'values':list(values),'initial':initial,'static':static,'learned':learned,
         'skill_exists':skill_exists,'attack_exists':attack_exists,'states':list(states),'poison':poison,
-        **({'caller':True} if caller else {}),**({'cached_skill':True} if cached_skill else {})},
+        **({'caller':True} if caller else {}),**({'cached_skill':True} if cached_skill else {}),**({'native_states':True} if native_states else {})},
         'value':signed(secure[attack+0x24]),'calls':calls,'writes':writes,'state_calls':state_calls,
         'stop':list(stop),'abi':[c.reg[k] for k in ('ebx','esi','edi','ebp','esp')],'fp_depth':len(fp),
         'steps':len(c.trace),'trace_sha256':trace_hash(c.trace)},c.trace
@@ -125,8 +131,8 @@ def verify(row):
             if f['skill_exists']:
                 for j,value in enumerate(f['states']):
                     if value is not None:states.append(j)
-                    if value==1:break
-                if 1 not in f['states'] and f['category'] in (8,7,15):
+                    if value is not None and value!=0:break
+                if not any(v is not None and v!=0 for v in f['states']) and f['category'] in (8,7,15):
                     col={8:0,7:1,15:2}[f['category']]
                     calls.extend([{'service':'lookup','id':174},{'service':'static','column':0},{'service':'lookup','id':174},
                         {'service':'value','args':[col,f['rank'],OWNER,-1,-1,14,0,0]}])
