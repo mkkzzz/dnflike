@@ -19,6 +19,12 @@ func run(game, host) -> void:
 	panel.tree_scroll = 0
 	game.show_overlay("numbers")
 	await host.ticks(3)
+	var has_navigation := false
+	for button: Button in game.modal.find_children("*", "Button", true, false):
+		has_navigation = has_navigation or button.get_meta("action_label", "") in ["属性", "技能", "装备"]
+	host.check(not has_navigation and game.modal.find_child("skill_window_title", true, false) != null, "skill window has a title and no cross-panel tabs")
+	var ui_font = preload("res://ui/flow/ui_font.gd")
+	host.check(game.skin.font.oversampling == game.display_settings.CONTENT_SCALE and game.skin.font == ui_font.make(), "UI font matches the 2x canvas density and reuses its glyph cache")
 	var content: Control = game.modal.find_child("skill_tree_content", true, false)
 	var scroll: VScrollBar = game.modal.find_child("skill_tree_scroll", true, false)
 	var guard: Button = game.modal.find_child("skill_node_1", true, false)
@@ -67,6 +73,14 @@ func run(game, host) -> void:
 	host.check(footer.size() == 6 and separated, "all four job buttons remain separate from reset and close")
 	var refund: Button = action_button(game, "退点")
 	host.check(refund != null and refund.disabled, "gifted initial rank cannot offer an invalid refund")
+	var learn: Button = action_button(game, "加点")
+	var buttons_fit := true
+	for button: Button in [learn, refund]:
+		buttons_fit = buttons_fit and button.size == Vector2(18, 18) and button.position.y + button.size.y <= 176
+		for state: String in ["normal", "hover", "pressed", "disabled"]:
+			var style := button.get_theme_stylebox(state) as StyleBoxTexture
+			buttons_fit = buttons_fit and style != null and style.texture != null and style.texture.get_size() == Vector2(18, 18)
+	host.check(buttons_fit, "native rank button states fit above the scrollable description")
 
 func action_button(game, title: String) -> Button:
 	for button: Button in game.modal.find_children("*", "Button", true, false):

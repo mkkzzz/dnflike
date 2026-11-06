@@ -62,12 +62,8 @@ class EXTENDED_LIMIT(ctypes.Structure):
                 ('PeakJobMemoryUsed', ctypes.c_size_t)]
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--node', required=True, type=Path)
-    args = parser.parse_args()
-    node = args.node.resolve(strict=True)
-    entry = Path(__file__).resolve().with_name('start_dnf_mcp.mjs')
+def run_isolated(command_args: list[str], cwd: Path) -> int:
+    """Run a renderer/server on a private desktop; close all children on exit."""
     os.environ['DNF_PRIVATE_DESKTOP'] = '1'
     kernel = ctypes.WinDLL('kernel32', use_last_error=True)
     user = ctypes.WinDLL('user32', use_last_error=True)
@@ -117,10 +113,10 @@ def main() -> int:
             handle = msvcrt.get_osfhandle(stream.fileno())
             check(kernel.SetHandleInformation(handle, 1, 1))
             setattr(startup, attribute, handle)
-        command = ctypes.create_unicode_buffer(subprocess.list2cmdline([str(node), str(entry)]))
+        command = ctypes.create_unicode_buffer(subprocess.list2cmdline(command_args))
         # Start suspended so no descendant can escape the cleanup job assignment.
-        check(kernel.CreateProcessW(str(node), command, None, None, True,
-                                    0x08000004, None, str(entry.parent.parent),
+        check(kernel.CreateProcessW(command_args[0], command, None, None, True,
+                                    0x08000004, None, str(cwd),
                                     ctypes.byref(startup), ctypes.byref(process)))
         try:
             check(kernel.AssignProcessToJobObject(job, process.hProcess))
@@ -129,7 +125,7 @@ def main() -> int:
             raise
         if kernel.ResumeThread(process.hThread) == 0xFFFFFFFF:
             raise ctypes.WinError(ctypes.get_last_error())
-        print('[DNF_BACKGROUND] MCP rendering isolated on a private desktop.', file=sys.stderr, flush=True)
+        print('[DNF_BACKGROUND] Rendering isolated on a private desktop.', file=sys.stderr, flush=True)
         result = kernel.WaitForSingleObject(process.hProcess, 0xFFFFFFFF)
         if result == 0xFFFFFFFF:
             raise ctypes.WinError(ctypes.get_last_error())
@@ -145,6 +141,15 @@ def main() -> int:
         if process.hProcess:
             kernel.CloseHandle(process.hProcess)
         user.CloseDesktop(desktop)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--node', required=True, type=Path)
+    args = parser.parse_args()
+    node = args.node.resolve(strict=True)
+    entry = Path(__file__).resolve().with_name('start_dnf_mcp.mjs')
+    return run_isolated([str(node), str(entry)], entry.parent.parent)
 
 
 if __name__ == '__main__':

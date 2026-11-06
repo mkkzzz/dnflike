@@ -71,8 +71,8 @@ PARTS = {
     'button_hot': (21, '按钮高亮 106×28'),
     'button_wide': (30, '宽按钮 180×30'),
     'button_wide_hot': (31, '宽按钮高亮 180×30'),
-    'plus': (22, '加号 19×19'),
-    'minus': (23, '减号 19×19'),
+    'plus': (22, '旧导出重置箭头；语义加号由v3覆盖'),
+    'minus': (23, '旧导出重置箭头高亮；语义减号由v3覆盖'),
     'sp_icon': (15, 'SP 数值底条 181×18'),
     'arrow_down': (33, '下拉箭头 17×10'),
     'icon_frame': (45, '技能图标框 107×40'),
@@ -348,10 +348,51 @@ def tree_source_info(src: B.Source) -> dict:
     return result
 
 
+def build_rank_controls(src: B.Source, parts: dict) -> None:
+    """Native +/- states, audited visually; old 22/23 entries were reset arrows.
+
+    Explain.ui 4000/4001 actually use change/lock sprites (75..82). These
+    learning controls are an explicit adapter, not a claim about those controls.
+    """
+    output = OUT / 'v3'
+    output.mkdir(parents=True, exist_ok=True)
+    for key, first in [('plus', 59), ('minus', 62)]:
+        for offset, state in enumerate(['', '_hover', '_pressed']):
+            image, meta = src.frame(PANEL_BANK, first + offset)
+            if image.size != (18, 18):
+                raise ValueError('Unexpected skill rank button size')
+            name = key + state
+            target = output / (name + '.png')
+            if target.exists():
+                from PIL import Image
+                if Image.open(target).convert('RGBA').tobytes() != image.convert('RGBA').tobytes():
+                    raise ValueError('Refusing to overwrite immutable v3 asset: ' + name)
+            else:
+                image.save(target)
+            parts[name] = {
+                'file': 'v3/' + target.name, 'size': list(image.size),
+                'frame': first + offset, 'offset': [meta['x'], meta['y']],
+                'note': 'Original +/- sprite; learning placement is E-ADAPT, not Explain 4000/4001',
+            }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--library', type=Path, default=None)
+    parser.add_argument('--rank-controls-only', action='store_true',
+                        help='Only export the audited +/- revision and update its manifest entries')
     args = parser.parse_args()
+    if args.rank_controls_only:
+        manifest_path = OUT / 'manifest.json'
+        manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+        source = B.Source(args.library)
+        build_rank_controls(source, manifest['parts'])
+        bank_hash = source.sources['sprite/' + PANEL_BANK.lower()]
+        if bank_hash != manifest['source']['bank_sha256']:
+            raise ValueError('Skillshop bank version differs from the manifest')
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+        print('[SKILL_PANEL] audited rank controls: 6 native 18x18 sprites')
+        return 0
     pack = json.loads(PACK.read_text(encoding='utf-8'))
     runtime = json.loads(RUNTIME.read_text(encoding='utf-8'))
     combat = json.loads((GAME / 'data/combat.json').read_text(encoding='utf-8'))
@@ -381,6 +422,7 @@ def main() -> int:
         image.save(OUT / 'parts' / (key + '.png'))
         parts[key] = {'file': 'parts/%s.png' % key, 'size': list(image.size), 'frame': frame, 'note': note}
     ui_layout = build_ui_revision(src, parts)
+    build_rank_controls(src, parts)
 
     skills = []
     missing_icon = []

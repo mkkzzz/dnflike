@@ -109,6 +109,17 @@ class SkillPanelSourceTest(unittest.TestCase):
         self.assertEqual(board.crop((0, 0, 12, 13)).tobytes(), top_left.convert('RGBA').tobytes())
         self.assertEqual(self.manifest['ui_layout']['detail_body']['size'], [179, 260])
 
+    def test_rank_buttons_are_plus_minus_not_reset_or_lock(self):
+        from PIL import Image
+        for name, first in [('plus', 59), ('minus', 62)]:
+            for offset, suffix in enumerate(['', '_hover', '_pressed']):
+                part = self.manifest['parts'][name + suffix]
+                self.assertEqual(part['frame'], first + offset)
+                source, _ = self.source.frame(self.build.PANEL_BANK, first + offset)
+                exported = Image.open(ROOT / 'game_dnf/assets_local/skill_panel' / part['file']).convert('RGBA')
+                self.assertEqual(exported.size, (18, 18))
+                self.assertEqual(exported.tobytes(), source.convert('RGBA').tobytes())
+
 
 if __name__ == '__main__':
     unittest.main()

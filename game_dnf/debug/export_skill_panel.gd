@@ -1,5 +1,5 @@
 extends SceneTree
-## Export the actual panel controls for an offline preview without a native window.
+## Export controls headlessly, or capture pixels on an isolated Windows desktop.
 const Loop = preload("res://flow/loop_root.gd")
 const NativeSkin = preload("res://ui/flow/native_skin.gd")
 const Town = preload("res://town/native_town.gd")
@@ -17,7 +17,10 @@ func _initialize() -> void:
 
 func export_panel() -> void:
 	var args := OS.get_cmdline_user_args()
-	if args.size() < 2 or DisplayServer.get_name() != "headless":
+	var capture := "--capture" in args
+	if capture:args.remove_at(args.find("--capture"))
+	var valid_mode := OS.get_environment("DNF_PRIVATE_DESKTOP") == "1" and DisplayServer.get_name() != "headless" if capture else DisplayServer.get_name() == "headless"
+	if args.size() < 2 or not valid_mode:
 		push_error("Use --headless --script res://debug/export_skill_panel.gd -- OUTPUT JOB [SCROLL] [SKILL]")
 		quit(1)
 		return
@@ -38,6 +41,10 @@ func export_panel() -> void:
 	panel.tree_scroll = float(args[2]) if args.size() > 2 else 0.0
 	panel.selected = args[3] if args.size() > 3 else "upperslash"
 	var canvas := Control.new()
+	if capture:
+		root.size = Vector2i(1600, 1200)
+		root.content_scale_size = Vector2i(1600, 1200)
+		canvas.scale = Vector2.ONE * 2
 	canvas.size = Vector2(800, 600)
 	canvas.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	root.add_child(canvas)
@@ -51,10 +58,19 @@ func export_panel() -> void:
 	panel.show_window(canvas)
 	for index in 5:
 		await process_frame
-	walk(canvas, Rect2(0, 0, 800, 600))
-	var file := FileAccess.open(output.path_join("layout.json"), FileAccess.WRITE)
-	file.store_string(JSON.stringify({"size": [800, 600], "commands": commands}, " "))
-	print("[SKILL_PREVIEW] commands=%d textures=%d headless=true" % [commands.size(), textures.size()])
+	if capture:
+		await RenderingServer.frame_post_draw
+		var error := root.get_texture().get_image().save_png(output.path_join("actual.png"))
+		if error != OK:
+			push_error("Skill capture failed: " + error_string(error))
+			quit(1)
+			return
+		print("[SKILL_CAPTURE] actual framebuffer, isolated desktop: " + output)
+	else:
+		walk(canvas, Rect2(0, 0, 800, 600))
+		var file := FileAccess.open(output.path_join("layout.json"), FileAccess.WRITE)
+		file.store_string(JSON.stringify({"size": [800, 600], "commands": commands}, " "))
+		print("[SKILL_PREVIEW] commands=%d textures=%d headless=true" % [commands.size(), textures.size()])
 	canvas.free()
 	game.town.free()
 	game.free()

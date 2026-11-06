@@ -146,24 +146,14 @@ func show_window(parent: Control) -> void:
 	parent.add_child(root)
 	skin.panel(root, Rect2(Vector2.ZERO, WINDOW_SIZE))
 	skin.image_region(root, _part("dim"), Rect2(8, 8, WINDOW_SIZE.x - 16, WINDOW_SIZE.y - 16), Vector2(8, 8))
-	_navigation(root)
+	var title: Label = skin.label(root, "技能学习", Vector2(20, 11), 14, Color("f0d18a"))
+	title.name = "skill_window_title"
 	_header(root)
 	_tree(root, branch)
 	_footer(root)
 	_detail(root)
 	_job_advancement(root)
 	skin.close_button(root, Vector2(748, 8), func(): game.show_overlay(""))
-
-func _navigation(root: Control) -> void:
-	var skin = game.skin
-	var entries := [["属性", 0], ["技能", 1], ["装备", 2]]
-	for entry in entries:
-		var tab := int(entry[1])
-		var button: Button = skin.button(root, String(entry[0]), Vector2(16 + tab * 62, 10),
-			func(): game.number_windows.tab = tab; game.show_overlay("numbers"), false, "tab")
-		button.size = Vector2(56, 23)
-		button.disabled = tab == 1
-	skin.label(root, "技能学习", Vector2(218, 11), 14, Color("f0d18a"))
 
 func _header(root: Control) -> void:
 	var skin = game.skin
@@ -467,10 +457,8 @@ func _detail(root: Control) -> void:
 	skin.label(panel, "技能等级  %d" % rank, Vector2(16, 154), 10, Color("ddd0b2"))
 	var learn := _rank_button(panel, "加点", Vector2(146, 153), "+", func(): change(selected, 1))
 	learn.disabled = not bool(_state(skill)["ok"])
-	learn.get_child(0).modulate.a = 0.35 if learn.disabled else 1.0
 	var refund := _rank_button(panel, "退点", Vector2(166, 153), "-", func(): change(selected, -1))
 	refund.disabled = game.session.profile.get("skill_purchases", {}).get(local, []).is_empty()
-	refund.get_child(0).modulate.a = 0.35 if refund.disabled else 1.0
 	var meta: Array[String] = ["技能类型：" + _type_name(String(skill["type"]))]
 	var need := _required_level(skill, rank)
 	meta.append("学习等级：%d" % need)
@@ -505,16 +493,19 @@ func _rank_button(parent: Control, title: String, at: Vector2, symbol: String, a
 	var hit := Button.new()
 	hit.set_meta("ui_sound", "skill_learn" if symbol == "+" else "skill_click")
 	hit.position = at
-	hit.size = Vector2(18, 16)
+	hit.size = Vector2(18, 18)
 	hit.focus_mode = Control.FOCUS_NONE
 	hit.tooltip_text = title
 	hit.set_meta("action_label", title)
-	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
-		hit.add_theme_stylebox_override(state, StyleBoxEmpty.new())
-	var label: Label = game.skin.label(hit, symbol, Vector2.ZERO, 12, Color("e8ddb9"))
-	label.size = hit.size
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	# Original +/- sprites are 59..64; 22/23 are reset arrows, not +/-.
+	# Explain.ui's 4000/4001 are change/lock, so this remains a learning adapter.
+	var part := "plus" if symbol == "+" else "minus"
+	for state: String in ["normal", "hover", "pressed", "disabled"]:
+		var style := StyleBoxTexture.new()
+		style.texture = _part(part + ("_" + state if state in ["hover", "pressed"] else ""))
+		if state == "disabled":style.modulate_color = Color(0.6, 0.6, 0.6, 0.5)
+		hit.add_theme_stylebox_override(state, style)
+	hit.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	hit.pressed.connect(action)
 	parent.add_child(hit)
 	return hit

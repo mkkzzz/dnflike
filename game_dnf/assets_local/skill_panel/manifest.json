@@ -134,22 +134,30 @@
    "note": "宽按钮高亮 180×30"
   },
   "plus": {
-   "file": "parts/plus.png",
+   "file": "v3/plus.png",
    "size": [
-    19,
-    19
+    18,
+    18
    ],
-   "frame": 22,
-   "note": "加号 19×19"
+   "frame": 59,
+   "offset": [
+    0,
+    0
+   ],
+   "note": "Original +/- sprite; learning placement is E-ADAPT, not Explain 4000/4001"
   },
   "minus": {
-   "file": "parts/minus.png",
+   "file": "v3/minus.png",
    "size": [
-    19,
-    19
+    18,
+    18
    ],
-   "frame": 23,
-   "note": "减号 19×19"
+   "frame": 62,
+   "offset": [
+    0,
+    0
+   ],
+   "note": "Original +/- sprite; learning placement is E-ADAPT, not Explain 4000/4001"
   },
   "sp_icon": {
    "file": "parts/sp_icon.png",
@@ -333,6 +341,58 @@
      35
     ]
    }
+  },
+  "plus_hover": {
+   "file": "v3/plus_hover.png",
+   "size": [
+    18,
+    18
+   ],
+   "frame": 60,
+   "offset": [
+    0,
+    0
+   ],
+   "note": "Original +/- sprite; learning placement is E-ADAPT, not Explain 4000/4001"
+  },
+  "plus_pressed": {
+   "file": "v3/plus_pressed.png",
+   "size": [
+    18,
+    18
+   ],
+   "frame": 61,
+   "offset": [
+    0,
+    0
+   ],
+   "note": "Original +/- sprite; learning placement is E-ADAPT, not Explain 4000/4001"
+  },
+  "minus_hover": {
+   "file": "v3/minus_hover.png",
+   "size": [
+    18,
+    18
+   ],
+   "frame": 63,
+   "offset": [
+    0,
+    0
+   ],
+   "note": "Original +/- sprite; learning placement is E-ADAPT, not Explain 4000/4001"
+  },
+  "minus_pressed": {
+   "file": "v3/minus_pressed.png",
+   "size": [
+    18,
+    18
+   ],
+   "frame": 64,
+   "offset": [
+    0,
+    0
+   ],
+   "note": "Original +/- sprite; learning placement is E-ADAPT, not Explain 4000/4001"
   }
  },
  "ui_layout": {
