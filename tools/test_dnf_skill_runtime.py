@@ -94,6 +94,19 @@ class SkillRuntimeTest(unittest.TestCase):
             self.assertNotIn("sprite", frames[0])
             self.assertIn("sprite", frames[1])
 
+    def test_ice_chain_bakes_each_original_variant_and_blank_tail(self):
+        manifest = json.loads(COMBAT.read_text(encoding="utf8"))
+        hit = self.moves["icewave"]["stages"][0]["hits"][0]
+        controller = hit["native_controller"]
+        self.assertEqual(controller["interval_ms"], self.pack["records"]["skill/swordman/icewave.skl"]["decoded"]["dungeon"]["static_data"][0])
+        for ordinal, path in enumerate(controller["objects"]):
+            bank = manifest["objects"][path]
+            self.assertEqual(bank["source"], builder.OBJ_ROOT+f"animation/icewave{ordinal+1}.ani")
+            self.assertEqual([f["img_frame"] for f in bank["frames"]], [ordinal*3,ordinal*3+1,ordinal*3+2,None])
+            self.assertEqual([f["delay_ms"] for f in bank["frames"]], [80,50,50,100])
+            self.assertNotIn("sprite",bank["frames"][-1])
+            self.assertTrue((ROOT/"game_dnf"/bank["atlas"]["texture"].removeprefix("res://")).is_file())
+
     def test_named_passives_and_morph_buffs_are_present(self):
         for skill_id in [
             "lightswordmastery",

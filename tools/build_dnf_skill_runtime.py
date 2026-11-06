@@ -117,7 +117,7 @@ CAST_OBJECTS = {
     # travel controller; the image/box positions already advance within ANI.
     # Its native-state adapter below supplies the source-frame trigger.
     "normalwave": (OBJ_ROOT + "normalwave.obj", 0, 0.0, -1),
-    "icewave": (OBJ_ROOT + "icewave1.obj", 360, 240.0, 1800),
+    "icewave": (OBJ_ROOT + "icewave1.obj", 360, 0.0, -1),
     "firewave": (OBJ_ROOT + "firewavebig.obj", 420, 360.0, 1800),
     "bloodblast": (OBJ_ROOT + "grabblastbloodbig.obj", 280, 0.0, 1700),
     "khazan": (OBJ_ROOT + "khazan.obj", 320, 0.0, 25000),
@@ -175,7 +175,7 @@ DIRECT_OBJECTS = {
 NATIVE_WAVE_BINDINGS = {
     CHR_FX + "icewave.ani",
     CHR_FX + "firewavebig-sword-effect.ani",
-    OBJ_ROOT + "animation/icewave1.ani",
+    *(OBJ_ROOT + f"animation/icewave{i}.ani" for i in range(1, 7)),
 }
 
 SAFE_EFFECTS: set[str] = set()
@@ -1092,7 +1092,20 @@ def build_move(
             # 0xA6E6B4 -> 0x90A950: fixed magic uses column 3, not column 0.
             hit = stages[0]["hits"][0]
             del hit["percent_col"]
-            hit.update(percent=0, fixed_col=3)
+            # CNIceWave::proc (A6EF60 protected path): stationary pillars,
+            # 100ms static[0], six object IDs wrapping 20007 -> 20002.
+            pillars = [add_object(objects, OBJ_ROOT + f"icewave{i}.obj") for i in range(1, 7)]
+            if not all(pillars):
+                raise ValueError("Missing native icewave chain objects")
+            interval = records[str(skill["path"])]["decoded"]["dungeon"]["static_data"][0]
+            hit.update(percent=0, fixed_col=3, native_controller={
+                "kind": "icewave_chain", "objects": pillars, "interval_ms": interval,
+                "count_col": 1, "frame2_at_col": 0,
+                "initial_size": 1.5, "size_step": 0.075,
+                "gap_base": 21, "gap_step": 1.2,
+            })
+            result["fidelity_pending"].remove("object_controller")
+            result["fidelity_pending"].extend(["ice_shatter_particles", "object_ground_authority_rules", "object_create_sound"])
             result["fidelity_pending"].remove("damage_and_status")
             result["fidelity_pending"].append("status_level_resistance_formula")
     if key in ["bloodyrave", "outragebreak"]:
@@ -1511,6 +1524,7 @@ def main() -> int:
             for value in DIRECT_OBJECTS.values()
             if value and value[0]
         }
+        object_candidates.update(OBJ_ROOT + f"icewave{i}.obj" for i in range(1, 7))
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(
             path for path in object_candidates if safe_object(library, records, path)
@@ -1544,6 +1558,13 @@ def main() -> int:
             move = json.loads(json.dumps(move))
             move["skill"] = str(skill["path"])
             move["name"] = str(skill["name"])
+            if key == "icewaveex":
+                # EX uses different IDs/sizing/branches. Do not inherit a base-only controller.
+                for stage in move["stages"]:
+                    for hit in stage.get("hits", []):
+                        hit.pop("native_controller", None)
+                        hit.update(speed=240.0, life_ms=1800)
+                move["fidelity_pending"].append("object_controller")
         else:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects)
         if move:

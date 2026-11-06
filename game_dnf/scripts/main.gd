@@ -1393,6 +1393,20 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 	var entity := {"id":_next_entity_id,"def":obj,"owner":owner,"source":source,"hit":hit,"power":power,
 		"pos":Vector2(pos.x+off.x*facing,pos.y+off.y),"z":z+off.z,"facing":facing,"clock":0.0,
 		"speed":float(hit.get("speed",0)),"life_ms":float(hit.get("life_ms",-1)),"size_rate":float(hit.get("size_rate",1)),"hits":{}}
+	var controller: Dictionary = hit.get("native_controller",{})
+	if controller.get("kind","") == "icewave_chain":
+		var ordinal := int(hit.get("chain_ordinal",0))
+		entity["size_rate"] = _native_float32(float(controller["initial_size"])+_native_float32(ordinal*_native_float32(float(controller["size_step"]))))
+		entity["z"] = 0.0
+		entity["child_spawned"] = ordinal >= int(controller["count"])-1
+		# A6E554..5BB changes frame 1, keeping the original frame 0 and tail.
+		var timeline: Array = obj["timeline"].duplicate(true)
+		var shift := float(controller["frame2_at_ms"])-float(timeline[1]["end_ms"])
+		timeline[1]["end_ms"] = float(controller["frame2_at_ms"])
+		for frame_index in range(2,timeline.size()):
+			timeline[frame_index]["start_ms"] = float(timeline[frame_index]["start_ms"])+shift
+			timeline[frame_index]["end_ms"] = float(timeline[frame_index]["end_ms"])+shift
+		entity["timeline"] = timeline
 	_next_entity_id += 1
 	objects.append(entity)
 	if String(obj["add_fx"]) != "":spawn_effect(String(obj["add_fx"]),entity["pos"],facing,float(entity["z"]))
@@ -1409,7 +1423,19 @@ func step_objects(ms: float) -> void:
 		var active := float(hit.get("active_ms",-1))
 		var done := false
 		var life := float(o["life_ms"])
-		var tl: Array = obj["timeline"]
+		var tl: Array = o.get("timeline",obj["timeline"])
+		var controller: Dictionary = hit.get("native_controller",{})
+		if controller.get("kind","") == "icewave_chain" and not bool(o["child_spawned"]) and t>=float(controller["interval_ms"]):
+			o["child_spawned"] = true
+			var ordinal := int(hit.get("chain_ordinal",0))
+			var child_hit: Dictionary = hit.duplicate(true)
+			var paths: Array = controller["objects"]
+			child_hit["chain_ordinal"] = ordinal+1
+			child_hit["object"] = paths[(ordinal+1)%paths.size()]
+			# 2331DB1 MULSS -1.2f; 2431497 CVTTSS2SI; 24314C1 subtracts from 21.
+			var gap := int(controller["gap_base"])-int(_native_float32(_native_float32(-float(controller["gap_step"]))*ordinal))
+			child_hit["offset"] = Vector3(gap,0,0)
+			spawn_object(child_hit,String(o["owner"]),o["pos"],0.0,int(o["facing"]),float(o["power"]),o["source"])
 		var loops := life > 0
 		if active < 0 or t <= active:
 			var f: Dictionary = Kernel.Timeline.frame_at(tl,t,loops)
@@ -1435,6 +1461,23 @@ func step_objects(ms: float) -> void:
 		elif life <= 0 and t >= Kernel.Timeline.duration(tl) and (active < 0 or t >= active):done = true
 		if active >= 0 and t >= active and life <= 0 and Kernel.Timeline.duration(tl) > 2000:done = true
 		if done:objects.remove_at(i)
+
+## Round the original SSE scalar operation before its truncating integer conversion.
+func _native_float32(value: float) -> float:
+	return PackedFloat32Array([value])[0]
+
+## Render the same frame as collision while keeping the shared source atlas immutable.
+func object_view_clock(o: Dictionary) -> float:
+	var clock := float(o["clock"])
+	if not o.has("timeline"):return clock
+	var timeline: Array = o["timeline"]
+	var source: Array = o["def"]["timeline"]
+	for i in timeline.size():
+		var frame: Dictionary = timeline[i]
+		if clock < float(frame["end_ms"]):
+			var progress := (clock-float(frame["start_ms"]))/maxf(0.001,float(frame["end_ms"])-float(frame["start_ms"]))
+			return lerpf(float(source[i]["start_ms"]),float(source[i]["end_ms"]),progress)
+	return Kernel.Timeline.duration(source)
 
 # ---------------------------------------------------------------- world
 # Rooms are original Lorien maps (data/combat.json "rooms" -> map export placement). Ground
@@ -1822,7 +1865,7 @@ func view_snapshot() -> Dictionary:
 	var objs: Array = []
 	for o: Dictionary in objects:
 		if String(o["def"]["bank"]) == "":continue
-		objs.append({"id":o["id"],"bank":String(o["def"]["bank"]),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":float(o["clock"]),"size_rate":float(o.get("size_rate",1)),"loop":float(o["life_ms"])>0})
+		objs.append({"id":o["id"],"bank":String(o["def"]["bank"]),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":object_view_clock(o),"size_rate":float(o.get("size_rate",1)),"loop":float(o["life_ms"])>0})
 	var route: Array = []
 	for i in rules["rooms"].size():
 		var room: Dictionary = rules["rooms"][i]

@@ -461,6 +461,7 @@ func run_combat() -> void:
 func run_skill_fidelity() -> void:
 	check_normalwave_level_data()
 	check_icewave_level_data()
+	check_icewave_chain()
 	check_normalwave_lifecycle()
 	check_normalwave_phases()
 	check_wave_family_phases()
@@ -753,6 +754,89 @@ func check_normalwave_level_data() -> void:
 			check(view!=null and is_equal_approx(view.base_scale,size_rate),"object snapshot and view preserve wave size %.2f facing %d" % [size_rate,facing])
 			game.step_objects(1.0)
 			check((float(enemy["hp"])<5000.0)==(size_rate>1.0),"wave collision grows with presentation at the far edge, facing %d scale %.2f" % [facing,size_rate])
+	game.table.configure_skills(game.skill_levels,game.job,game.weapon)
+
+func check_icewave_chain() -> void:
+	var root := "passiveobject/character/swordman/"
+	var positions: Array = [0,21,43,66,90,115,142,170]
+	for facing in [-1,1]:
+		api.restart()
+		game.monsters.clear()
+		game.table.configure_skills({"icewave":1},"asura","katana")
+		var hit: Dictionary = api.move("icewave")["hits"][0]
+		var cached: Array = game.table.object(root+"icewave1.obj")["timeline"].duplicate(true)
+		game.spawn_object(hit,"player",Vector2(400,250),25.0,facing,1.0)
+		var first: Dictionary = game.objects[0]
+		var anchor := Vector2(400+100*facing,246)
+		check(first["pos"]==anchor and first["z"]==0.0 and is_equal_approx(float(first["size_rate"]),1.5),"first ice pillar uses native ground anchor and size, facing %d" % facing)
+		game.step_objects(99.0)
+		check(game.objects.size()==1 and first["pos"]==anchor,"ice pillar stays fixed and does not generate early")
+		game.step_objects(1.0)
+		var seen := {0:true}
+		var correct := true
+		for step in range(1,11):
+			for object: Dictionary in game.objects:
+				var ordinal := int(object["hit"].get("chain_ordinal",0))
+				seen[ordinal] = true
+				correct = correct and ordinal<8 and object["pos"]==anchor+Vector2(positions[ordinal]*facing,0) and object["def"]["path"]==root+"icewave%d.obj" % (ordinal%6+1) and is_equal_approx(float(object["size_rate"]),1.5+ordinal*0.075)
+			game.step_objects(100.0)
+		check(correct and seen.size()==8 and game.objects.is_empty(),"native ice chain generates exactly eight stationary alternating pillars and expires, facing %d" % facing)
+		check(game.table.object(root+"icewave1.obj")["timeline"]==cached,"ice per-instance timing never edits cached source animation")
+	# Collision and renderer must select the same original frame around the changed hold.
+	api.restart()
+	game.monsters.clear()
+	game.table.configure_skills({"icewave":1},"asura","katana")
+	var hit: Dictionary = api.move("icewave")["hits"][0].duplicate(true)
+	hit["chain_ordinal"] = 7
+	game.spawn_object(hit,"player",Vector2(400,250),0.0,1,1.0)
+	var pillar: Dictionary = game.objects[0]
+	var elapsed := 0.0
+	for sample in [[79.0,0],[80.0,1],[130.0,1],[229.0,1],[230.0,2],[279.0,2],[280.0,3],[379.0,3]]:
+		game.step_objects(float(sample[0])-elapsed)
+		elapsed = float(sample[0])
+		var collision: Dictionary = game.Kernel.Timeline.frame_at(pillar["timeline"],elapsed)
+		var render: Dictionary = game.Kernel.Timeline.frame_at(pillar["def"]["timeline"],game.object_view_clock(pillar))
+		check(int(collision["frame"])==int(sample[1]) and render["frame"]==collision["frame"],"ice collision and source render clock agree at %d ms" % int(elapsed))
+	game.step_objects(1.0)
+	check(game.objects.is_empty(),"last ice pillar ends at 380 ms with no child or repeated image")
+	# A target entering after the raw frame-1 end still meets the extended native hold.
+	api.restart()
+	game.monsters.clear()
+	game.table.configure_skills({"icewave":1},"asura","katana")
+	hit = api.move("icewave")["hits"][0].duplicate(true)
+	hit["chain_ordinal"] = 7
+	game.spawn_object(hit,"player",Vector2(400,250),0.0,1,1.0)
+	game.step_objects(149.0)
+	var target: Dictionary = api.spawn_dummy(Vector2(500,246))
+	game.step_objects(1.0)
+	check(game.hit_count==1,"ice pillar can hit a new target during the extended level-data hold")
+	game.monsters.clear()
+	game.step_objects(80.0)
+	target = api.spawn_dummy(Vector2(500,246))
+	game.step_objects(1.0)
+	check(float(target["hp"])==5000.0,"ice pillar has no attack after the source frame-2 boundary")
+	# Later child collisions must remain functional after the first pillar has died.
+	api.restart()
+	game.monsters.clear()
+	game.table.configure_skills({"icewave":1},"asura","katana")
+	hit = api.move("icewave")["hits"][0]
+	target = api.spawn_dummy(Vector2(670,246))
+	game.spawn_object(hit,"player",Vector2(400,250),0.0,1,1.0)
+	for i in 50:game.step_objects(10.0)
+	check(float(target["hp"])==5000.0,"ice chain does not hit a distant target before its pillars arrive")
+	for i in 25:game.step_objects(10.0)
+	check(float(target["hp"])<5000.0,"late ice children retain collision and damage after their root expires")
+	# All level rows drive count/hold independently of the fixed-damage column.
+	var rows: Array = api.content().record("skill/swordman/icewave.skl")["decoded"]["dungeon"]["level_info"]
+	var all_ranks := true
+	for rank in range(1,int((rows.size()-1)/7)+1):
+		game.table.configure_skills({"icewave":rank},"asura","katana")
+		var controller: Dictionary = api.move("icewave")["hits"][0]["native_controller"]
+		var at := 1+(rank-1)*7
+		all_ranks = all_ranks and int(controller["count"])==int(rows[at+1]) and float(controller["frame2_at_ms"])==float(rows[at]) and float(controller["interval_ms"])==100.0
+	check(all_ranks,"all ice skill ranks bind source count, animation hold and static interval")
+	check(not game.table.skill_runtime["moves"]["icewaveex"]["stages"][0]["hits"][0].has("native_controller"),"unverified EX ice controller does not inherit the ordinary ice chain")
+	api.restart()
 	game.table.configure_skills(game.skill_levels,game.job,game.weapon)
 
 func check_icewave_level_data() -> void:

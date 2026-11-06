@@ -63,6 +63,11 @@
    "passiveobject/character/swordman/hopsmashsub.obj": "passiveobject/character/swordman/hopsmashsub.obj",
    "passiveobject/character/swordman/hundredswordhit.obj": "passiveobject/character/swordman/hundredswordhit.obj",
    "passiveobject/character/swordman/icewave1.obj": "passiveobject/character/swordman/icewave1.obj",
+   "passiveobject/character/swordman/icewave2.obj": "passiveobject/character/swordman/icewave2.obj",
+   "passiveobject/character/swordman/icewave3.obj": "passiveobject/character/swordman/icewave3.obj",
+   "passiveobject/character/swordman/icewave4.obj": "passiveobject/character/swordman/icewave4.obj",
+   "passiveobject/character/swordman/icewave5.obj": "passiveobject/character/swordman/icewave5.obj",
+   "passiveobject/character/swordman/icewave6.obj": "passiveobject/character/swordman/icewave6.obj",
    "passiveobject/character/swordman/illusionslashwave.obj": "passiveobject/character/swordman/illusionslashwave.obj",
    "passiveobject/character/swordman/khazan.obj": "passiveobject/character/swordman/khazan.obj",
    "passiveobject/character/swordman/momentaryslashwave.obj": "passiveobject/character/swordman/momentaryslashwave.obj",
@@ -2307,10 +2312,12 @@
   },
   "icewave": {
    "fidelity_pending": [
-    "object_controller",
     "effect_weapon_scale",
     "cancel_rules",
     "voice",
+    "ice_shatter_particles",
+    "object_ground_authority_rules",
+    "object_create_sound",
     "status_level_resistance_formula"
    ],
    "name": "冰刃 · 波动剑",
@@ -2342,7 +2349,25 @@
         }
        ],
        "fixed_col": 3,
-       "life_ms": 1800,
+       "life_ms": -1,
+       "native_controller": {
+        "count_col": 1,
+        "frame2_at_col": 0,
+        "gap_base": 21,
+        "gap_step": 1.2,
+        "initial_size": 1.5,
+        "interval_ms": 100,
+        "kind": "icewave_chain",
+        "objects": [
+         "passiveobject/character/swordman/icewave1.obj",
+         "passiveobject/character/swordman/icewave2.obj",
+         "passiveobject/character/swordman/icewave3.obj",
+         "passiveobject/character/swordman/icewave4.obj",
+         "passiveobject/character/swordman/icewave5.obj",
+         "passiveobject/character/swordman/icewave6.obj"
+        ],
+        "size_step": 0.075
+       },
        "object": "passiveobject/character/swordman/icewave1.obj",
        "offset": [
         100,
@@ -2350,7 +2375,7 @@
         0
        ],
        "percent": 0,
-       "speed": 240.0
+       "speed": 0.0
       }
      ]
     }
@@ -2358,11 +2383,14 @@
   },
   "icewaveex": {
    "fidelity_pending": [
-    "object_controller",
     "effect_weapon_scale",
     "cancel_rules",
     "voice",
-    "status_level_resistance_formula"
+    "ice_shatter_particles",
+    "object_ground_authority_rules",
+    "object_create_sound",
+    "status_level_resistance_formula",
+    "object_controller"
    ],
    "name": "极冰 · 裂波剑",
    "native_recovery_col": 1,

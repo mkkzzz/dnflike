@@ -15,7 +15,7 @@ func capture() -> void:
 	var skill:=args[1] if args.size()>1 else "normalwave"
 	if skill not in ["normalwave","icewave","firewave"]:quit(7);return
 	var samples: Array = [0.0,49.0,50.0,100.0,150.0,250.0,300.0,449.0,450.0]
-	if skill=="icewave":samples=[0.0,149.0,150.0,200.0,299.0,300.0,350.0,599.0,600.0]
+	if skill=="icewave":samples=[150.0,300.0,350.0,500.0,600.0,800.0,1000.0,1200.0,1380.0]
 	if skill=="firewave":samples=[0.0,249.0,250.0,300.0,399.0,400.0,450.0,749.0,750.0]
 	DirAccess.make_dir_recursive_absolute(output)
 	root.size=Vector2i(800,600)
@@ -29,18 +29,32 @@ func capture() -> void:
 	game.set_physics_process(false)
 	for facing in [1,-1]:
 		game.restart()
-		game.player["pos"]=Vector2(350,250)
+		game.player["pos"]=Vector2(350,300) if skill=="icewave" else Vector2(350,250)
 		game.player["mp"]=500.0
 		game.player["facing"]=facing
 		game.view.set_equipped_weapon("original_27601")
 		if not game.start_action(skill):quit(3);return
 		var previous:=0.0
 		for at in samples:
-			if at>previous:
-				# Existing objects advance before this slice's new frame cue.
-				game.step_objects(at-previous)
-				game.step_action(at-previous,Vector2.ZERO)
-			game.view.present(game.view_snapshot(),0.0,0.0)
+			var remaining: float = at-previous
+			while remaining>0.0:
+				# Never skip child-generation ticks between distant image samples.
+				var delta := minf(1.0,remaining)
+				game.step_objects(delta)
+				if String(game.player["action"])!="":game.step_action(delta,Vector2.ZERO)
+				remaining -= delta
+			var snapshot: Dictionary = game.view_snapshot()
+			print("[WAVE_STATE] ",facing," ",at," ",JSON.stringify(snapshot["objects"]))
+			if skill=="icewave":
+				var expected := 0
+				for ordinal in 8:
+					var birth := 300.0+ordinal*100.0
+					if at>=birth and at<birth+380.0:expected += 1
+				if (snapshot["objects"] as Array).size()!=expected:
+					push_error("Ice capture object lifecycle mismatch at "+str(at))
+					quit(8)
+					return
+			game.view.present(snapshot,0.0,0.0)
 			for i in 2:await process_frame
 			await RenderingServer.frame_post_draw
 			var file:=output+"/wave_%s_%03d.png" % ["right" if facing==1 else "left",int(at)]
