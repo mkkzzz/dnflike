@@ -1399,6 +1399,7 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		entity["size_rate"] = _native_float32(float(controller["initial_size"])+_native_float32(ordinal*_native_float32(float(controller["size_step"]))))
 		entity["z"] = 0.0
 		entity["child_spawned"] = ordinal >= int(controller["count"])-1
+		entity["shatter_emitted"] = false
 		# A6E554..5BB changes frame 1, keeping the original frame 0 and tail.
 		var timeline: Array = obj["timeline"].duplicate(true)
 		var shift := float(controller["frame2_at_ms"])-float(timeline[1]["end_ms"])
@@ -1443,6 +1444,22 @@ func step_objects(ms: float) -> void:
 			var gap := int(controller["gap_base"])-int(_native_float32(_native_float32(-float(controller["gap_step"]))*ordinal))
 			child_hit["offset"] = Vector3(gap,0,0)
 			spawn_object(child_hit,String(o["owner"]),o["pos"],0.0,int(o["facing"]),float(o["power"]),o["source"])
+		if controller.get("kind","") == "icewave_chain" and not bool(o["shatter_emitted"]):
+			# Native DD6 guard / ANI+144 >= 3, independent of hit or ANI end.
+			# Source replay: tools/audit_dnf_ice_shatter.py; 2304DA4 sets DD6 once.
+			var ice_frame: Dictionary = Kernel.Timeline.frame_at(tl,t)
+			if int(ice_frame.get("frame",-1)) >= 3:
+				o["shatter_emitted"] = true
+				var ordinal := int(hit.get("chain_ordinal",0))
+				# MULSS -1.5, CVTTSS2SI, then subtract from Z+20 in both branches.
+				var height := int(o["z"])+20-int(_native_float32(_native_float32(ordinal)*-1.5))
+				bus.emit("combat.cue",{"kind":"native_particle",
+					"path":"passiveobject/character/swordman/particle/icewaveparticle.ptl",
+					"point":o["pos"],"height":height,"scale":o["size_rate"]})
+				# Only the shard vector passes through 23CF53E image scaling.
+				bus.emit("combat.cue",{"kind":"native_particle",
+					"path":"passiveobject/character/swordman/particle/icewaveparticlestar.ptl",
+					"point":o["pos"],"height":height,"scale":1.0})
 		var loops := life > 0
 		if active < 0 or t <= active:
 			var f: Dictionary = Kernel.Timeline.frame_at(tl,t,loops)
