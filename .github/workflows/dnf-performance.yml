@@ -37,6 +37,7 @@ jobs:
           python3 tools/test_dnf_ice_shatter.py
           python3 tools/test_dnf_firewave.py
           python3 tools/test_dnf_fixed_attack.py
+          python3 tools/test_dnf_fixed_base.py
       - name: Check quest semantics and portable package verification
         run: python3 tools/test_dnf_quest_rules.py
       - name: Inventory skill binding evidence gaps
