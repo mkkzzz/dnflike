@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 import unittest
 
-from audit_dnf_level_normalization import replay, verify, table_value
+from audit_dnf_level_normalization import replay, verify, table_value, OBJECTS
 from audit_dnf_native_strings import ENGINE_SHA, recover_string
 
 p=argparse.ArgumentParser(add_help=False)
@@ -44,7 +44,7 @@ class Archive(unittest.TestCase):
             self.assertIn(line,lines)
 
     def test_routes_and_caller_saved_poison(self):
-        runs=self.e['runs'];self.assertEqual(len(runs),92)
+        runs=self.e['runs'];self.assertEqual(len(runs),120)
         for row in runs:verify(row)
         for a,b in zip(runs[::2],runs[1::2]):
             self.assertEqual(a['value'],b['value'])
@@ -64,17 +64,35 @@ class Archive(unittest.TestCase):
         bad=copy.deepcopy(runs[0]);bad['value']=1
         with self.assertRaisesRegex(ValueError,'result'):verify(bad)
 
-    def test_mapping_is_lookup_not_identity_or_nearest(self):
+    def test_object_mapping_is_lookup_not_input_level_or_nearest(self):
         runs=[r for r in self.e['runs'] if r['fixture']['operation']=='map']
-        for level,value in ((9,-1),(10,8),(11,-1),(39,-1),(40,25),(41,-1),(79,-1),(80,60),(81,-1)):
-            row=next(r for r in runs if r['fixture']['level']==level)
-            self.assertEqual(row['value'],value)
+        for key,value in zip(OBJECTS,(8,25,60)):
+            for delta in (-1,0,1):
+                row=next(r for r in runs if r['object_input']['key']==key+delta)
+                self.assertEqual(row['value'],value if delta==0 else -1)
         for r in runs:
             if r['fixture']['empty_map']:self.assertEqual(r['value'],-1)
         lines=[line for b in self.e['blocks'] for line in b['instructions']]
         for line in ('0093583E dec eax','009358D1 mov eax, dword ptr [ecx + 0x10]',
                      '00FCA948 jae 0xfca94f','00924C72 jb 0x924c8b'):
             self.assertIn(line,lines)
+
+    def test_object_write_then_original_lookup(self):
+        runs=[r for r in self.e['runs'] if r['fixture']['operation']=='update' and not r['fixture']['poison']]
+        self.assertEqual([r['value'] for r in runs],[15,25,-1,15,15])
+        for r in runs:
+            key=r['object_input']['key']
+            self.assertTrue(any(e['kind']=='native_call' and e['target']=='0x935870' for e in r['events']))
+            casts=[e for e in r['events'] if e['kind']=='failed_dynamic_cast_fixture']
+            self.assertTrue(all(e['object']==hex(key) for e in casts))
+        lines=[line for b in self.e['blocks'] for line in b['instructions']]
+        self.assertIn('00935B4C mov dword ptr [eax], ecx',lines)
+
+    def test_object_types_choose_distinct_banks(self):
+        runs=[r for r in self.e['runs'] if r['fixture']['operation']=='object_scale' and not r['fixture']['poison']]
+        base=table_value(24,13)
+        self.assertEqual([r['value'] for r in runs[:6]],[base,base,base+10,base,base+20,base])
+        self.assertEqual([r['value'] for r in runs[6:]],[1,1,1,table_value(0,13)])
 
 
 @unittest.skipUnless(args.client,'optional original-source replay')
@@ -105,7 +123,20 @@ class Live(unittest.TestCase):
     def test_map_returns_key_instead_of_value_mutation(self):
         original,_=replay(self.s,operation='map');verify(original);self.assertEqual(original['value'],25)
         source=self.changed(0x9358D3,b'\x10',b'\x0c')
-        row,_=replay(source,operation='map');self.assertEqual(row['value'],40)
+        row,_=replay(source,operation='map');self.assertEqual(row['value'],OBJECTS[1])
+        with self.assertRaisesRegex(ValueError,'result'):verify(row)
+
+    def test_object_update_value_mutation(self):
+        # Store the node address instead of the supplied normalized level.
+        source=self.changed(0x935B4D,b'\x08',b'\x00')
+        row,_=replay(source,operation='update')
+        self.assertNotEqual(row['value'],15)
+        with self.assertRaisesRegex(ValueError,'result'):verify(row)
+
+    def test_object_bank_mutation(self):
+        source=self.changed(0x935911,b'\x02',b'\x01')
+        row,_=replay(source,operation='object_scale',object_type=0x211)
+        self.assertEqual(row['value'],table_value(24,13)+10)
         with self.assertRaisesRegex(ValueError,'result'):verify(row)
 
 

@@ -25,7 +25,7 @@ def f32(value):
     return real(fbits(value))
 
 
-def replay(source, *, column=0, rank=1, owner_level=40, requested_level=0,
+def replay(source, *, column=0, rank=1, owner_level=40, normalization_object=0, mapped_level=20,
            rank_override=-1, divisor_parameter=-65535, multiplier=1.0,
            base_stat=100, skill_value=584.0, normalization=1.0,
            lower_normalization=1.0, has_owner=True, poison=False):
@@ -36,7 +36,7 @@ def replay(source, *, column=0, rank=1, owner_level=40, requested_level=0,
     c.write(SKILL+0x34,4,OWNER if has_owner else 0)
     c.write(OWNER,4,0x16F972C)
     c.write(OWNER+0x304,4,0)  # opaque field passed to base-stat service
-    for j,value in enumerate((column,divisor_parameter,requested_level,fbits(multiplier),rank_override)):
+    for j,value in enumerate((column,divisor_parameter,normalization_object,fbits(multiplier),rank_override)):
         c.write(0x70000004+j*4,4,value)
     xmm={f'xmm{j}':0 for j in range(8)}
     fp=[]
@@ -63,8 +63,9 @@ def replay(source, *, column=0, rank=1, owner_level=40, requested_level=0,
             elif target==0x1195DC0:
                 event.update(kind='secure_destroy_fixture')
             elif target==0x75BF90:
-                event.update(kind='level_mapping_fixture',args=[arg(0)],value=requested_level)
-                returned=requested_level  # identity input fixture, not source mapping semantics
+                if arg(0)!=normalization_object:raise ValueError('Wrong normalization object')
+                event.update(kind='object_level_mapping_fixture',args=[arg(0)],value=mapped_level)
+                returned=mapped_level  # object-key lookup result, not input level identity
             elif target==0x75BF00:
                 value=normalization if arg(0)==owner_level else lower_normalization
                 event.update(kind='normalization_fixture',args=[arg(j) for j in range(3)],value=f32(value))
@@ -107,7 +108,7 @@ def replay(source, *, column=0, rank=1, owner_level=40, requested_level=0,
             extra_step(c,xmm,i);continue
         c.pc+=i.size
     else:raise ValueError('Fixed-attack instruction budget exceeded')
-    return {'fixture':dict(column=column,rank=rank,owner_level=owner_level,requested_level=requested_level,
+    return {'fixture':dict(column=column,rank=rank,owner_level=owner_level,normalization_object=normalization_object,mapped_level=mapped_level,
                 rank_override=rank_override,divisor_parameter=divisor_parameter,multiplier=multiplier,
                 base_stat=base_stat,skill_value=skill_value,normalization=normalization,
                 lower_normalization=lower_normalization,has_owner=has_owner,poison=poison),
@@ -119,7 +120,7 @@ def expected(f):
     """Independent algebra check, retaining the observed binary32 store points."""
     if not f['has_owner']:return 0
     base=f32(f32(f['base_stat'])*f32(f['normalization']))
-    if 0<f['requested_level']<f['owner_level']:base=f32(base/f32(f['lower_normalization']))
+    if f['normalization_object']!=0 and f['mapped_level']<f['owner_level']:base=f32(base/f32(f['lower_normalization']))
     ratio=f32(f32(f32(f['skill_value'])-100.0)*f32(.01))
     ratio=f32(ratio+1.0)
     value=f32(f32(ratio*base)*f32(f['multiplier']))
@@ -141,7 +142,9 @@ def verify(row):
     rank=f['rank'] if f['rank_override']==-1 else f['rank_override']
     if len(values)!=1 or values[0]['args']!=[f['column'],rank,OWNER,f['owner_level'],f['owner_level'],14]:
         raise ValueError('Wrong native skill column/rank arguments')
-    if [e['args'] for e in pick('normalization_fixture')] != [[f['owner_level'],13,0]]+([[f['requested_level'],13,0]] if 0<f['requested_level']<f['owner_level'] else []):
+    if [e['args'] for e in pick('object_level_mapping_fixture')] != ([[f['normalization_object']]] if f['normalization_object'] else []):
+        raise ValueError('Wrong object-to-level mapping argument')
+    if [e['args'] for e in pick('normalization_fixture')] != [[f['owner_level'],13,0]]+([[f['mapped_level']&0xffffffff,13,0]] if f['normalization_object']!=0 and f['mapped_level']<f['owner_level'] else []):
         raise ValueError('Wrong level normalization branch')
     base=pick('base_stat_fixture')
     if len(base)!=1 or base[0]['args'][1:]!=[1,1,f['owner_level'],0,OWNER,3]:
@@ -151,7 +154,7 @@ def verify(row):
 def audit(source):
     fixtures=[{}]+[dict(skill_value=v) for v in (1170,645,1289,1129,2257,251,0,-125.5,100,100.5)]
     fixtures += [dict(base_stat=b,normalization=1.25,skill_value=584) for b in (0,59,100,367,999)]
-    fixtures += [dict(requested_level=l,normalization=1.5,lower_normalization=.75) for l in (20,40,60)]
+    fixtures += [dict(normalization_object=0x60510000,mapped_level=l,normalization=1.5,lower_normalization=1.0 if l<=0 else .75) for l in (-1,0,20,40,60)]
     fixtures += [dict(divisor_parameter=d) for d in (-150,-99,0,50,100)]
     fixtures += [dict(rank=10,column=1,rank_override=r,multiplier=.75) for r in (-1,2)]
     fixtures += [dict(has_owner=False)]
@@ -184,12 +187,12 @@ def audit(source):
     names=('audit_dnf_fixed_attack.py','audit_dnf_firewave.py','audit_dnf_ice_shatter.py',
            'dnf_native_vm_probe.py','audit_dnf_particle_axis.py','audit_dnf_native_strings.py',
            'audit_dnf_ice_particle_bindings.py','dnf_pvf.py','audit_dnf_design.py')
-    return {'schema':'dnf_fixed_attack/1','engine_sha256':ENGINE_SHA,'input_source':source.source,
+    return {'schema':'dnf_fixed_attack/2','engine_sha256':ENGINE_SHA,'input_source':source.source,
             'method':__doc__.strip(),'tools_sha256':{n:hashlib.sha256(Path(__file__).with_name(n).read_bytes().replace(b'\r\n',b'\n')).hexdigest() for n in names},
             'boundaries':['Integer and finite SSE arithmetic/branches from original wrapper/resolver; no native execution.',
                 'Base stat, normalization, skill value and secure storage are ABI fixtures; final damage/defense/crit not replayed.',
                 'Skill+30 is null: optional skill-extension modifier branch excluded. Skill field +4A4 uses opaque fixture 1.',
-                'Requested-level mapping fixture is identity; x87 precision/control word/exception modes are not reproduced.',
+                'Object-to-level service uses explicit mapped_level fixture; no object pointer is used as a level. Missing (-1) and zero results exercise the native lower-level branch. x87 precision/control word/exception modes are not reproduced.',
                 '0xFFFF0001 parameter skips an optional divisor; its full domain meaning remains unverified.'],
             'constants':[{'address':hex(a),'raw':source.source_bytes(a,4).hex()} for a in (0x1556DF8,0x1559C80,0x15560BC)],
             'candidate_parameters':candidates,'native_parameter_tags':native_tags,

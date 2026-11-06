@@ -29,7 +29,7 @@ class Archive(unittest.TestCase):
         self.assertEqual([int.from_bytes(bytes.fromhex(v['raw']),'little') for v in self.e['constants']],[fbits(100),fbits(.01),fbits(1)])
 
     def test_matrix_and_register_clobbers(self):
-        runs=self.e['runs'];self.assertEqual(len(runs),54)
+        runs=self.e['runs'];self.assertEqual(len(runs),58)
         for r in runs:verify(r)
         for a,b in zip(runs[::2],runs[1::2]):
             self.assertEqual(a['value'],b['value'])
@@ -61,6 +61,14 @@ class Archive(unittest.TestCase):
         changed=copy.deepcopy(self.e['runs'][0]);changed['value']=584
         with self.assertRaisesRegex(ValueError,'arithmetic'):verify(changed)
 
+    def test_object_pointer_and_mapped_level_are_distinct(self):
+        rows=[r for r in self.e['runs'] if r['fixture']['normalization_object'] and not r['fixture']['poison']]
+        self.assertEqual([r['fixture']['mapped_level'] for r in rows],[-1,0,20,40,60])
+        for r in rows:
+            mapping=next(e for e in r['events'] if e['kind']=='object_level_mapping_fixture')
+            self.assertEqual(mapping['args'],[0x60510000])
+            self.assertEqual(mapping['value'],r['fixture']['mapped_level'])
+
 
 @unittest.skipUnless(args.client,'optional original source replay')
 class Live(unittest.TestCase):
@@ -88,7 +96,7 @@ class Live(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'arithmetic'):verify(row)
 
     def test_live_override_routes_and_negative_truncation(self):
-        for parameters in (dict(rank=10,rank_override=2,column=1),dict(requested_level=20,normalization=1.5,lower_normalization=.75),dict(skill_value=-125.5)):
+        for parameters in (dict(rank=10,rank_override=2,column=1),dict(normalization_object=0x60510000,mapped_level=20,normalization=1.5,lower_normalization=.75),dict(skill_value=-125.5)):
             row,_=replay(self.s,poison=True,**parameters);verify(row)
 
 

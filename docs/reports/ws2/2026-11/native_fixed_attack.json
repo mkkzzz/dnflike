@@ -1,5 +1,5 @@
 {
- "schema": "dnf_fixed_attack/1",
+ "schema": "dnf_fixed_attack/2",
  "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
  "input_source": {
   "input_sha256": "8748e19abf6155ca5a20d13244eaca0b9442c3d7569e8e5002bddffeeb9366ac",
@@ -9,7 +9,7 @@
  },
  "method": "Replay native 90A950 -> 90A6F0 fixed-attack arithmetic, without executing PE.\n\nOriginal control flow and SSE instructions consume explicitly injected base-stat,\nnormalization and skill-value service results. These inputs are NOT reconstructed\ncharacter stats. The optional skill-extension multiplier is excluded. x87 uses\nPython binary64 intermediates with explicit binary32 stores, not an x87 emulator.",
  "tools_sha256": {
-  "audit_dnf_fixed_attack.py": "9add18c70039727726756a2581589617257295e72827a2cdec0703344a04845e",
+  "audit_dnf_fixed_attack.py": "0dc1ec6915df16f3120d9a95a865efb6a175dcbdee08ca5d48d7880aa21cc24c",
   "audit_dnf_firewave.py": "3377abdf1f6b5a76908a4cd14652fc68fe28d56314e49c6ee65933bfbd792ddc",
   "audit_dnf_ice_shatter.py": "b4f90d1797fd487af50a6e39716c77cc9e889b3e5b5c0b1c12864d088f29462c",
   "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a",
@@ -23,7 +23,7 @@
   "Integer and finite SSE arithmetic/branches from original wrapper/resolver; no native execution.",
   "Base stat, normalization, skill value and secure storage are ABI fixtures; final damage/defense/crit not replayed.",
   "Skill+30 is null: optional skill-extension modifier branch excluded. Skill field +4A4 uses opaque fixture 1.",
-  "Requested-level mapping fixture is identity; x87 precision/control word/exception modes are not reproduced.",
+  "Object-to-level service uses explicit mapped_level fixture; no object pointer is used as a level. Missing (-1) and zero results exercise the native lower-level branch. x87 precision/control word/exception modes are not reproduced.",
   "0xFFFF0001 parameter skips an optional divisor; its full domain meaning remains unverified."
  ],
  "constants": [
@@ -2884,7 +2884,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -3016,7 +3017,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -3148,7 +3150,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -3280,7 +3283,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -3412,7 +3416,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -3544,7 +3549,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -3676,7 +3682,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -3808,7 +3815,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -3940,7 +3948,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -4072,7 +4081,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -4204,7 +4214,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -4336,7 +4347,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -4468,7 +4480,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -4600,7 +4613,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -4732,7 +4746,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -4864,7 +4879,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -4996,7 +5012,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -5128,7 +5145,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -5260,7 +5278,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -5392,7 +5411,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -5524,7 +5544,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -5656,7 +5677,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -5788,7 +5810,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -5920,7 +5943,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -6052,7 +6076,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -6184,7 +6209,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -6316,7 +6342,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -6448,7 +6475,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -6580,7 +6608,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -6712,7 +6741,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -6844,7 +6874,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -6976,7 +7007,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -7108,7 +7140,620 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 20,
+    "normalization_object": 1615921152,
+    "mapped_level": -1,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.5,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x75bf90",
+     "this": "0x0",
+     "kind": "object_level_mapping_fixture",
+     "args": [
+      1615921152
+     ],
+     "value": -1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.5
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      4294967295,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 875,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     false
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     false
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 165,
+   "trace_sha256": "472870b761ebe2a24bba588c2e644c1c8174558c72cff2ef9860c49bd69b2085"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "normalization_object": 1615921152,
+    "mapped_level": -1,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.5,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x75bf90",
+     "this": "0xbaadf00d",
+     "kind": "object_level_mapping_fixture",
+     "args": [
+      1615921152
+     ],
+     "value": -1
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.5
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      4294967295,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 875,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     false
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     false
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 165,
+   "trace_sha256": "472870b761ebe2a24bba588c2e644c1c8174558c72cff2ef9860c49bd69b2085"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "normalization_object": 1615921152,
+    "mapped_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.5,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": false
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x75bf90",
+     "this": "0x0",
+     "kind": "object_level_mapping_fixture",
+     "args": [
+      1615921152
+     ],
+     "value": 0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.5
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0x0",
+     "kind": "normalization_fixture",
+     "args": [
+      0,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 875,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     false
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     false
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 165,
+   "trace_sha256": "472870b761ebe2a24bba588c2e644c1c8174558c72cff2ef9860c49bd69b2085"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "normalization_object": 1615921152,
+    "mapped_level": 0,
+    "rank_override": -1,
+    "divisor_parameter": -65535,
+    "multiplier": 1.0,
+    "base_stat": 100,
+    "skill_value": 584.0,
+    "normalization": 1.5,
+    "lower_normalization": 1.0,
+    "has_owner": true,
+    "poison": true
+   },
+   "events": [
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x75bf90",
+     "this": "0xbaadf00d",
+     "kind": "object_level_mapping_fixture",
+     "args": [
+      1615921152
+     ],
+     "value": 0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x600004a4",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0x75eb80",
+     "this": "0x0",
+     "kind": "base_stat_fixture",
+     "args": [
+      1879048124,
+      1,
+      1,
+      40,
+      0,
+      1611661312,
+      3
+     ],
+     "value": 100
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6fffffbc",
+     "kind": "secure_read_fixture",
+     "value": 100
+    },
+    {
+     "target": "0x1195dc0",
+     "this": "0x6fffffbc",
+     "kind": "secure_destroy_fixture"
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      40,
+      13,
+      0
+     ],
+     "value": 1.5
+    },
+    {
+     "target": "0x75bf00",
+     "this": "0xbaadf00d",
+     "kind": "normalization_fixture",
+     "args": [
+      0,
+      13,
+      0
+     ],
+     "value": 1.0
+    },
+    {
+     "target": "0x1195eb0",
+     "this": "0x6000059c",
+     "kind": "secure_read_fixture",
+     "value": 1
+    },
+    {
+     "target": "0xd07760",
+     "this": "0x60100000",
+     "kind": "owner_level_fixture",
+     "value": 40
+    },
+    {
+     "target": "0x9089a0",
+     "this": "0x60000000",
+     "kind": "skill_value_fixture",
+     "args": [
+      0,
+      1,
+      1611661312,
+      40,
+      40,
+      14
+     ],
+     "value": 584.0
+    }
+   ],
+   "value": 875,
+   "stop": [
+    "returned"
+   ],
+   "stack": "0x70000018",
+   "fp_depth": 0,
+   "branches": [
+    [
+     "0x90a71f",
+     true
+    ],
+    [
+     "0x90a74a",
+     false
+    ],
+    [
+     "0x90a773",
+     false
+    ],
+    [
+     "0x90a7fe",
+     false
+    ],
+    [
+     "0x90a819",
+     false
+    ],
+    [
+     "0x90a8a1",
+     true
+    ],
+    [
+     "0x90a8d4",
+     true
+    ]
+   ],
+   "steps": 165,
+   "trace_sha256": "472870b761ebe2a24bba588c2e644c1c8174558c72cff2ef9860c49bd69b2085"
+  },
+  {
+   "fixture": {
+    "column": 0,
+    "rank": 1,
+    "owner_level": 40,
+    "normalization_object": 1615921152,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -7129,9 +7774,9 @@
     {
      "target": "0x75bf90",
      "this": "0x0",
-     "kind": "level_mapping_fixture",
+     "kind": "object_level_mapping_fixture",
      "args": [
-      20
+      1615921152
      ],
      "value": 20
     },
@@ -7260,7 +7905,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 20,
+    "normalization_object": 1615921152,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -7281,9 +7927,9 @@
     {
      "target": "0x75bf90",
      "this": "0xbaadf00d",
-     "kind": "level_mapping_fixture",
+     "kind": "object_level_mapping_fixture",
      "args": [
-      20
+      1615921152
      ],
      "value": 20
     },
@@ -7412,7 +8058,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 40,
+    "normalization_object": 1615921152,
+    "mapped_level": 40,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -7433,9 +8080,9 @@
     {
      "target": "0x75bf90",
      "this": "0x0",
-     "kind": "level_mapping_fixture",
+     "kind": "object_level_mapping_fixture",
      "args": [
-      40
+      1615921152
      ],
      "value": 40
     },
@@ -7553,7 +8200,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 40,
+    "normalization_object": 1615921152,
+    "mapped_level": 40,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -7574,9 +8222,9 @@
     {
      "target": "0x75bf90",
      "this": "0xbaadf00d",
-     "kind": "level_mapping_fixture",
+     "kind": "object_level_mapping_fixture",
      "args": [
-      40
+      1615921152
      ],
      "value": 40
     },
@@ -7694,7 +8342,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 60,
+    "normalization_object": 1615921152,
+    "mapped_level": 60,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -7715,9 +8364,9 @@
     {
      "target": "0x75bf90",
      "this": "0x0",
-     "kind": "level_mapping_fixture",
+     "kind": "object_level_mapping_fixture",
      "args": [
-      60
+      1615921152
      ],
      "value": 60
     },
@@ -7835,7 +8484,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 60,
+    "normalization_object": 1615921152,
+    "mapped_level": 60,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -7856,9 +8506,9 @@
     {
      "target": "0x75bf90",
      "this": "0xbaadf00d",
-     "kind": "level_mapping_fixture",
+     "kind": "object_level_mapping_fixture",
      "args": [
-      60
+      1615921152
      ],
      "value": 60
     },
@@ -7976,7 +8626,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -150,
     "multiplier": 1.0,
@@ -8112,7 +8763,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -150,
     "multiplier": 1.0,
@@ -8248,7 +8900,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -99,
     "multiplier": 1.0,
@@ -8384,7 +9037,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -99,
     "multiplier": 1.0,
@@ -8520,7 +9174,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": 0,
     "multiplier": 1.0,
@@ -8656,7 +9311,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": 0,
     "multiplier": 1.0,
@@ -8792,7 +9448,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": 50,
     "multiplier": 1.0,
@@ -8928,7 +9585,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": 50,
     "multiplier": 1.0,
@@ -9064,7 +9722,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": 100,
     "multiplier": 1.0,
@@ -9200,7 +9859,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": 100,
     "multiplier": 1.0,
@@ -9336,7 +9996,8 @@
     "column": 1,
     "rank": 10,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 0.75,
@@ -9468,7 +10129,8 @@
     "column": 1,
     "rank": 10,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 0.75,
@@ -9600,7 +10262,8 @@
     "column": 1,
     "rank": 10,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": 2,
     "divisor_parameter": -65535,
     "multiplier": 0.75,
@@ -9726,7 +10389,8 @@
     "column": 1,
     "rank": 10,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": 2,
     "divisor_parameter": -65535,
     "multiplier": 0.75,
@@ -9852,7 +10516,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
@@ -9884,7 +10549,8 @@
     "column": 0,
     "rank": 1,
     "owner_level": 40,
-    "requested_level": 0,
+    "normalization_object": 0,
+    "mapped_level": 20,
     "rank_override": -1,
     "divisor_parameter": -65535,
     "multiplier": 1.0,
