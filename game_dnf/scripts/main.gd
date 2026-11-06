@@ -165,13 +165,7 @@ func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
 	if vitals_policy not in ["preserve","refill"]:return false
 	if numeric_player == null:numeric_player = ActorNumbers.new()
 	numeric_player.configure(spec)
-	skill_levels = spec.get("skills",Numbers.shared_config()["skill_defaults"]).duplicate(true)
-	for passive_id: String in skill_levels:
-		var passive_rank := int(skill_levels[passive_id])
-		if passive_rank <= 0:continue
-		var bonuses: Dictionary = Numbers.shared_config()["skills"].get(passive_id,{}).get("skill_level_bonus",{})
-		for target_id: String in bonuses:
-			skill_levels[target_id] = int(skill_levels.get(target_id,0))+int(bonuses[target_id])*passive_rank
+	skill_levels = Numbers.Skills.effective_levels(spec.get("skills",Numbers.shared_config()["skill_defaults"]),Numbers.shared_config())
 	var seed: Dictionary = spec.get("number_seed", {})
 	if seed.has("growtype"):
 		job = String(seed["growtype"])

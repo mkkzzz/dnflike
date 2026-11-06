@@ -10,6 +10,20 @@ static func spent(profile: Dictionary) -> int:
 static func available(profile: Dictionary, config: Dictionary) -> int:
 	return Growth.sp_total(profile,config["progression"])-spent(profile)
 
+## Native ghostpowerup caller CD9E60..CD9F4E, unmodified source static IDs.
+## Equipment/global rank rebuilding and protected static-ID modifiers are pending.
+static func effective_levels(base: Dictionary, config: Dictionary) -> Dictionary:
+	var result := base.duplicate(true)
+	if int(result.get("ghostpowerup",0)) <= 0:return result
+	var definition: Dictionary = config["skills"].get("ghostpowerup",{})
+	for source_id in definition.get("skill_rank_bonus_ids",[]):
+		var id: String = config["skill_index"].get(str(int(source_id)),"")
+		if id.is_empty() or not config["skills"].has(id):continue
+		var rank := int(result.get(id,0))
+		if rank > 0 and rank < int(config["skills"][id]["max_level"]):
+			result[id] = rank+1
+	return result
+
 ## force=true 跳过等级/职业/前置校验（调试入口），仍受技能上限与 SP 约束。
 static func change(profile: Dictionary, id: String, delta: int, config: Dictionary, record: Dictionary = {}, force := false) -> Dictionary:
 	if not config["skills"].has(id) or delta not in [-1,1]:return {"ok":false,"message":"技能或操作无效"}

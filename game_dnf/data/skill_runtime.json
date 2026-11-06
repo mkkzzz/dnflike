@@ -6392,18 +6392,16 @@
    "max_level": 1,
    "name": "封印解除",
    "path": "skill/swordman/ghostpowerup.skl",
-   "skill_damage_bonus": {
-    "bremen": 0.1,
-    "khazan": 0.1
-   },
-   "skill_level_bonus": {
-    "bremen": 1,
-    "epidemicrasa": 1,
-    "hardattack": 1,
-    "kalla": 1,
-    "khazan": 1,
-    "saya": 1
-   },
+   "runtime_hook": "ghost_skill_rank_bonus",
+   "skill_rank_bonus_ids": [
+    5,
+    25,
+    36,
+    41,
+    84,
+    75,
+    82
+   ],
    "source_id": 35,
    "source_path": "skill/swordman/ghostpowerup.skl",
    "speed": "attack",
@@ -8596,7 +8594,7 @@
   "catalog": "game_dnf/data/skill_catalog.json",
   "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
   "pack": "game_dnf/assets_local/content/combat_content.json",
-  "pack_sha256": "4e143b9019f9d4f2a0484a869af9941d7d87ecf2df3838b338b5aea8b53fb4e0"
+  "pack_sha256": "f99963e9e2b112470e33adf42f2963c4a09a9e634d2e8404b13188df9c36b7f5"
  },
  "tree_active_count": 52,
  "tree_passive_count": 26,

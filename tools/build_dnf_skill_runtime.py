@@ -811,17 +811,7 @@ PASSIVE_BUILDERS = {
         ]
     },
     "equiplightsword": {"unlock_weapon": "beamsword"},
-    "ghostpowerup": {
-        "skill_level_bonus": {
-            "khazan": 1,
-            "saya": 1,
-            "bremen": 1,
-            "epidemicrasa": 1,
-            "kalla": 1,
-            "hardattack": 1,
-        },
-        "skill_damage_bonus": {"khazan": 0.1, "bremen": 0.1},
-    },
+    "ghostpowerup": {"runtime_hook": "ghost_skill_rank_bonus"},
     "fastequip": {
         "weapon_switch_cooldown_rate": 0.5,
         "weapon_switch_buff": {"damage_rate": 0.1, "physical_crit": 0.1, "duration_ms": 5000},
@@ -931,6 +921,13 @@ def build_skill_definition(skill: dict, record: dict) -> dict:
         definition.update(PASSIVE_BUILDERS[key])
     elif not active:
         definition.update(generic_passive_spec(key))
+    if key == "ghostpowerup":
+        # CD9E60..CD9F4E walks every static element, including Keiga (84).
+        # Each eligible target receives one rank, independent of passive rank.
+        targets = decoded.get("dungeon", {}).get("static_data", decoded.get("static_data", []))
+        if not targets or any(type(n) is not int or not 0 <= n < 255 for n in targets):
+            raise ValueError("ghostpowerup requires source static skill IDs")
+        definition["skill_rank_bonus_ids"] = list(targets)
     return definition
 
 

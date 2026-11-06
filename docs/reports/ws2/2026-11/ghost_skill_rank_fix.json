@@ -1,0 +1,144 @@
+{
+ "schema": "dnf_ghost_skill_rank_fix/1",
+ "baseline_commit": "ea3611b170c3d5ed0cd62b739ed59d03d90afac5",
+ "native_evidence": "native_skill_rank_rebuild.json",
+ "source_id": 35,
+ "before": {
+  "active": false,
+  "cost": 0,
+  "growtype_max_level": [
+   0,
+   0,
+   1,
+   0,
+   0,
+   0
+  ],
+  "max_level": 1,
+  "name": "封印解除",
+  "path": "skill/swordman/ghostpowerup.skl",
+  "skill_damage_bonus": {
+   "bremen": 0.1,
+   "khazan": 0.1
+  },
+  "skill_level_bonus": {
+   "bremen": 1,
+   "epidemicrasa": 1,
+   "hardattack": 1,
+   "kalla": 1,
+   "khazan": 1,
+   "saya": 1
+  },
+  "source_id": 35,
+  "source_path": "skill/swordman/ghostpowerup.skl",
+  "speed": "attack",
+  "tree_visible": true
+ },
+ "after": {
+  "active": false,
+  "cost": 0,
+  "growtype_max_level": [
+   0,
+   0,
+   1,
+   0,
+   0,
+   0
+  ],
+  "max_level": 1,
+  "name": "封印解除",
+  "path": "skill/swordman/ghostpowerup.skl",
+  "runtime_hook": "ghost_skill_rank_bonus",
+  "skill_rank_bonus_ids": [
+   5,
+   25,
+   36,
+   41,
+   84,
+   75,
+   82
+  ],
+  "source_id": 35,
+  "source_path": "skill/swordman/ghostpowerup.skl",
+  "speed": "attack",
+  "tree_visible": true
+ },
+ "changed_runtime_sections": [
+  "skills",
+  "source"
+ ],
+ "changed_skills": [
+  "ghostpowerup"
+ ],
+ "assets_identical": true,
+ "runtime_sha256": "9a828c93e3ea9996070dcd6dda8d491816047125cf5ab0aba373699bcee8da6a",
+ "runtime_source_before": {
+  "asset_version": "dnf-native-assets-v1-20261022",
+  "builder": "tools/build_dnf_skill_runtime.py",
+  "catalog": "game_dnf/data/skill_catalog.json",
+  "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
+  "pack": "game_dnf/assets_local/content/combat_content.json",
+  "pack_sha256": "4e143b9019f9d4f2a0484a869af9941d7d87ecf2df3838b338b5aea8b53fb4e0"
+ },
+ "runtime_source_after": {
+  "asset_version": "dnf-native-assets-v1-20261022",
+  "builder": "tools/build_dnf_skill_runtime.py",
+  "catalog": "game_dnf/data/skill_catalog.json",
+  "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
+  "pack": "game_dnf/assets_local/content/combat_content.json",
+  "pack_sha256": "f99963e9e2b112470e33adf42f2963c4a09a9e634d2e8404b13188df9c36b7f5"
+ },
+ "logs": {
+  "before": {
+   "sha256": "fb2964fa0142461588e1d8e3400163fe54dd19cc54b569a56d4e9efdfee164de",
+   "completion_markers": [
+    "[GHOST_RANKS] COMPLETE checks=126 failures=54"
+   ]
+  },
+  "after": {
+   "sha256": "bdba2f5843a627ba0834a4dfa3825df37a607eaff458100e6ed8f414bacab26e",
+   "completion_markers": [
+    "[GHOST_RANKS] COMPLETE checks=126 failures=0"
+   ]
+  },
+  "loop": {
+   "sha256": "bf275e357c91cf61f357b289d28e2fbdc74e31d494a72aa141586b4c3e6f5b38",
+   "completion_markers": [
+    "[PARTICLE_MOTION] COMPLETE checks=275 failures=0",
+    "[PARTICLE_EMITTER] COMPLETE checks=153 failures=0",
+    "[PARTICLE_VIEW] COMPLETE checks=87 failures=0",
+    "[ICE_PARTICLES] COMPLETE checks=355 failures=0",
+    "[FIREWAVE] COMPLETE checks=91 failures=0",
+    "[SKILL_EFFECTS] COMPLETE checks=19 failures=0",
+    "[UI_PERF] COMPLETE checks=17 failures=0",
+    "[QUEST_RULES] COMPLETE checks=288 failures=0",
+    "[CAMPAIGN] COMPLETE checks=132 failures=0",
+    "[WEAPON_RULES] COMPLETE checks=29925 failures=0",
+    "[NATIVE_BULK] COMPLETE checks=7780 failures=0",
+    "[TEACHING_RULES] COMPLETE checks=30 failures=0",
+    "[POISON_RULES] COMPLETE checks=26 failures=0",
+    "[ORIGINAL_DATA] COMPLETE checks=31 failures=0",
+    "[RECOVERY_TEST] COMPLETE checks=53 failures=0",
+    "[UPGRADE_TEST] COMPLETE checks=46 failures=0",
+    "[SERVICE_TEST] COMPLETE checks=33 failures=0",
+    "[ITEM_TEST] COMPLETE checks=44 failures=0",
+    "[NUMBERS_TEST] COMPLETE checks=251 failures=0",
+    "[QUEST_TEST] COMPLETE checks=45 failures=0",
+    "[TOWN_UNIT] COMPLETE checks=110 failures=0",
+    "[GRAN_UNIT] COMPLETE checks=19 failures=0",
+    "[LOOP_TEST] COMPLETE checks=435 failures=0 captures=0"
+   ]
+  }
+ },
+ "files_sha256": {
+  "tools/build_dnf_skill_runtime.py": "8c4e58d82698d4fd8b342ed198f1240c973cd0f4393d1209d67bbd7beb351169",
+  "game_dnf/stats/skill_book.gd": "c3e9494ac0bc75a14869d639813c13d602870a678c8bd91db2e2c29c29974b8c",
+  "game_dnf/scripts/main.gd": "483742ae695f09582dfb5e5f83207a40160267abc9078577a43bce291d95937e",
+  "game_dnf/tests/combat/test_ghost_skill_ranks.gd": "5b7edc4ea8d6354562180bbded4c8ea7ea2701a845eeda5bf11d6bbede015b7e"
+ },
+ "boundaries": [
+  "126 combat checks ran separately; the 435-check formal run started before the new hook was added to its script.",
+  "Native ghost static selection/ID resolution is a declared ABI input; runtime consumes unmodified static source IDs.",
+  "No complete equipment/global rank rebuild, UI rank display or final damage fidelity claim."
+ ]
+}
