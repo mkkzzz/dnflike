@@ -12,6 +12,11 @@ func capture() -> void:
 	var args:=OS.get_cmdline_user_args()
 	if args.is_empty():quit(2);return
 	var output:=args[0]
+	var skill:=args[1] if args.size()>1 else "normalwave"
+	if skill not in ["normalwave","icewave","firewave"]:quit(7);return
+	var samples: Array = [0.0,49.0,50.0,100.0,150.0,250.0,300.0,449.0,450.0]
+	if skill=="icewave":samples=[0.0,149.0,150.0,200.0,299.0,300.0,350.0,599.0,600.0]
+	if skill=="firewave":samples=[0.0,249.0,250.0,300.0,399.0,400.0,450.0,749.0,750.0]
 	DirAccess.make_dir_recursive_absolute(output)
 	root.size=Vector2i(800,600)
 	root.content_scale_size=Vector2i(800,600)
@@ -28,9 +33,9 @@ func capture() -> void:
 		game.player["mp"]=500.0
 		game.player["facing"]=facing
 		game.view.set_equipped_weapon("original_27601")
-		if not game.start_action("normalwave"):quit(3);return
+		if not game.start_action(skill):quit(3);return
 		var previous:=0.0
-		for at in [0.0,49.0,50.0,100.0,150.0,250.0,300.0,449.0,450.0]:
+		for at in samples:
 			if at>previous:
 				# Existing objects advance before this slice's new frame cue.
 				game.step_objects(at-previous)

@@ -462,6 +462,7 @@ func run_skill_fidelity() -> void:
 	check_normalwave_level_data()
 	check_normalwave_lifecycle()
 	check_normalwave_phases()
+	check_wave_family_phases()
 	check_normalwave_movement_and_cancel()
 	await check_normalwave_cancel_input()
 	for code in [KEY_A,KEY_D,KEY_Y]:
@@ -556,6 +557,48 @@ func check_normalwave_phases() -> void:
 	api.start_action("normalwave")
 	game.step_action(50.0,Vector2.ZERO)
 	check(api.start_action("buff",true) and game.player.get("native_phase",{}).is_empty(),"replacing a native cast with a buff clears its phase controller")
+
+func check_wave_family_phases() -> void:
+	for skill in ["icewave","firewave"]:
+		for rates in [[2.0,0.5,1],[0.5,2.0,-1],[1.0,1.0,1]]:
+			api.restart()
+			api.set_god(true)
+			api.set_p("mp",500.0)
+			api.set_p("pos",Vector2(350,250))
+			api.set_p("facing",int(rates[2]))
+			game.numeric_player = preload("res://stats/api/actor_numbers.gd").new()
+			game.numeric_player.configure({"numbers":Numbers.shared_config()["base"]})
+			game.numeric_player.values["attack_speed"] = rates[0]
+			game.numeric_player.values["cast_speed"] = rates[1]
+			var cast_ms := 300.0 if skill=="icewave" else 400.0
+			var recovery := 300.0 if skill=="icewave" else 350.0
+			var wait_ms: float = int((cast_ms-150.0)/float(rates[1]))
+			var spawn_ms: float = wait_ms+150.0/float(rates[1])
+			var end_ms: float = int(cast_ms/float(rates[1]))+recovery
+			check(api.start_action(skill),skill+" native cast starts")
+			game.step_action(wait_ms-1.0,Vector2.ZERO)
+			game.view.present(game.view_snapshot(),0.0,0.0)
+			check(api.view_pose()=="wave" and int(game.view.player_actor.sample()["img_frame"])==42 and game.objects.is_empty(),skill+" holds source wave pose before cast wait")
+			game.step_action(1.0,Vector2.ZERO)
+			game.view.present(game.view_snapshot(),0.0,0.0)
+			var attached: Array = game.view.effects.filter(func(fx):return is_instance_valid(fx) and not fx.is_queued_for_deletion() and fx.action_clock_at>=0)
+			check(attached.size()==1 and not attached[0].frame.has("sprite"),skill+" preserves intentional invisible first FX frame")
+			game.step_action(spawn_ms-wait_ms-1.0,Vector2.ZERO)
+			check(game.objects.is_empty(),skill+" waits until source frame four")
+			game.step_action(1.0,Vector2.ZERO)
+			game.view.present(game.view_snapshot(),0.0,0.0)
+			check(game.objects.size()==1 and int(game.view.player_actor.sample()["img_frame"])==46,skill+" spawns once at frame four using cast speed rather than attack speed")
+			check(is_equal_approx(float(attached[0].clock_ms),150.0) and attached[0].frame.has("sprite"),skill+" dedicated effect shares the body source clock")
+			game.view.present(game.view_snapshot(),200.0,200.0)
+			check(is_equal_approx(float(attached[0].clock_ms),150.0),skill+" FX respects actor pause")
+			check(attached[0].follow_offset.is_equal_approx(Vector2(59*int(rates[2]),0)) and (attached[0].position-game.view.player_actor.position).is_equal_approx(attached[0].follow_offset),skill+" native FX anchor mirrors along facing and survives following")
+			var expected := Vector2(350+100*int(rates[2]),246) if skill=="icewave" else Vector2(350,250)
+			check(Vector2(game.objects[0]["pos"]).is_equal_approx(expected) and Vector2(api.p("pos")).is_equal_approx(Vector2(350,250)),skill+" uses native spawn offset without borrowing normalwave caster slide")
+			game.step_action(end_ms-spawn_ms-1.0,Vector2.ZERO)
+			check(api.p("state")=="action" and game.objects.size()==1,skill+" recovery preserves one-shot spawning")
+			game.step_action(1.0,Vector2.ZERO)
+			game.view.present(game.view_snapshot(),0.0,0.0)
+			check(api.p("state")=="idle" and attached[0].is_queued_for_deletion(),skill+" ends at source cast-speed duration plus its own recovery column")
 
 func check_normalwave_movement_and_cancel() -> void:
 	var saved_job: String = api.job()

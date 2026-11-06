@@ -547,7 +547,7 @@ func action_def() -> Dictionary:
 
 func action_duration(action: String) -> float:
 	var m := move_def(action)
-	if m.get("native_state","") == "normalwave" and player.get("native_phase",{}).size()>0:
+	if m.get("native_state","") in ["normalwave","wave_cast"] and player.get("native_phase",{}).size()>0:
 		return float(player["native_phase"]["end_ms"])
 	var stage := action_def() if String(player.get("action","")) == action else m
 	# Generic moves retain the ANI duration. Only an evidenced state controller
@@ -1008,7 +1008,7 @@ func start_stage(index: int) -> void:
 	action_seq += 1
 	var m := move_def(name)
 	player["native_phase"] = {}
-	if m.get("native_state","") == "normalwave":
+	if m.get("native_state","") in ["normalwave","wave_cast"]:
 		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
 		var cast_rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 		player["native_phase"] = Kernel.NativeWave.plan(m,attack_rate,cast_rate)
@@ -1045,7 +1045,7 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 			var synchronized := bool(fx.get("action_clock",false))
 			bus.emit("combat.cue",{"kind":"fx","key":String(fx["key"]),"point":Vector2(player["pos"]),"height":float(player["z"]),
 				"facing":int(player["facing"]),"tag":String(player["fx_tag"]),"follow":PLAYER_ID,"max_ms":-1.0 if synchronized else maxf(left,1.0),
-				"action_clock_at":at if synchronized else -1.0,"action_instance":action_seq})
+				"action_clock_at":at if synchronized else -1.0,"action_instance":action_seq,"offset_x":float(fx.get("offset_x",0))})
 	for s: Dictionary in stage.get("sounds",[]):
 		var at := float(s["at"])
 		if at > old_t and at <= new_t:play_sound(String(s["key"]))

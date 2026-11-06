@@ -105,6 +105,7 @@
   "passiveobject/character/swordman/hardattackchargeafter.obj",
   "passiveobject/character/swordman/hopsmashsub.obj",
   "passiveobject/character/swordman/hundredswordhit.obj",
+  "passiveobject/character/swordman/icewave1.obj",
   "passiveobject/character/swordman/illusionslashwave.obj",
   "passiveobject/character/swordman/khazan.obj",
   "passiveobject/character/swordman/momentaryslashwave.obj",
@@ -114,7 +115,7 @@
   "passiveobject/character/swordman/saya.obj",
   "passiveobject/character/swordman/wavespinarea.obj"
  ],
- "effects": 153,
+ "effects": 155,
  "digits": 61,
  "audio_keys": 195,
  "unresolved": 32,

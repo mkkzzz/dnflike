@@ -165,7 +165,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	_player_z = float(p["z"])
 	for fx in effects:
 		if is_instance_valid(fx) and not fx.is_queued_for_deletion():
-			if fx.follow == 0:fx.position = _canvas(_player_pos, _player_z)
+			if fx.follow == 0:fx.position = _canvas(_player_pos, _player_z)+fx.follow_offset
 			if fx.action_clock_at >= 0:
 				if int(p.get("action_instance",-1)) != fx.action_instance or p.get("state","") != "action":fx.queue_free()
 				else:fx.seek(maxf(0,float(p["clock"])-fx.action_clock_at))
@@ -341,7 +341,8 @@ func _spawn_fx(event: Dictionary) -> void:
 	var point: Vector2 = event["point"]
 	var fx = FxView.new()
 	world.add_child(fx)
-	fx.position = _canvas(point, float(event["height"]))
+	fx.follow_offset = Vector2(float(event.get("offset_x",0))*int(event["facing"]),0)
+	fx.position = _canvas(point, float(event["height"]))+fx.follow_offset
 	fx.z_index = int(point.y)+4
 	fx.base_scale = float(event.get("scale",1.0))
 	fx.tag = String(event.get("tag",""))

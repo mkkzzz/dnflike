@@ -1,6 +1,9 @@
 """Catalog/asset integrity and specific adapter regressions, not fidelity certification."""
 import json
+import hashlib
 import unittest
+from unittest.mock import patch
+import build_dnf_skill_runtime as builder
 from pathlib import Path
 
 
@@ -60,6 +63,37 @@ class SkillRuntimeTest(unittest.TestCase):
             for fx in stage.get("fx", []):
                 self.assertNotIn("upperslash", self.runtime["assets"]["effect_anims"][fx["key"]])
 
+    def test_blank_frames_are_not_missing_image_paths(self):
+        class Library:
+            def animation(self, path):
+                return {"metadata": {"frames": [{"img": None}, {"img": path}]}}
+        with patch.object(builder, "image_exists", side_effect=lambda _, path: path == "valid.img") as lookup:
+            self.assertTrue(builder.safe_animation(Library(), "valid.img"))
+            self.assertFalse(builder.safe_animation(Library(), "missing.img"))
+            self.assertFalse(builder.safe_animation(Library(), "weapon%02d.img"))
+            self.assertNotIn("None", [call.args[1] for call in lookup.call_args_list])
+
+    def test_ice_fire_wave_casts_bind_verified_source_effects(self):
+        manifest = json.loads(COMBAT.read_text(encoding="utf8"))
+        for key, effect, recovery in [("icewave", "icewave.ani", 1), ("firewave", "firewavebig-sword-effect.ani", 0)]:
+            move = self.moves[key]
+            stage = move["stages"][0]
+            self.assertEqual(move["native_state"], "wave_cast")
+            self.assertEqual(move["native_recovery_col"], recovery)
+            self.assertEqual(stage["ani"], "wave")
+            self.assertEqual(len(stage["hits"]), 1)  # No pixel-derived caster damage.
+            self.assertEqual(stage["hits"][0]["at"], 10150)
+            self.assertNotIn("derived", stage["hits"][0])
+            fx = stage["fx"][0]
+            self.assertEqual(fx["at"], 10000)
+            self.assertTrue(fx["action_clock"])
+            self.assertEqual(fx["offset_x"], 59)
+            self.assertEqual(self.runtime["assets"]["effect_anims"][fx["key"]], builder.CHR_FX + effect)
+            frames = manifest["effects"][fx["key"]]["frames"]
+            self.assertIsNone(frames[0]["img"])
+            self.assertNotIn("sprite", frames[0])
+            self.assertIn("sprite", frames[1])
+
     def test_named_passives_and_morph_buffs_are_present(self):
         for skill_id in [
             "lightswordmastery",
@@ -118,6 +152,7 @@ class SkillRuntimeTest(unittest.TestCase):
 
     def test_runtime_assets_are_baked(self):
         manifest = json.loads(COMBAT.read_text(encoding="utf-8"))
+        self.assertEqual(manifest["skill_runtime_sha256"], hashlib.sha256(RUNTIME.read_bytes()).hexdigest())
         base = json.loads((ROOT / "game_dnf/assets_local/manifest.json").read_text(encoding="utf-8"))
         player_clips = set(manifest["player_clips"]) | {
             key.removeprefix("player/") for key in base["clips"] if key.startswith("player/")

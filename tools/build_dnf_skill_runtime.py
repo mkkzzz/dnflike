@@ -170,6 +170,14 @@ DIRECT_OBJECTS = {
     "waveeye": (OBJ_ROOT + "waveeye.obj", 850, 0.0, 5000),
 }
 
+# Source bindings proved in CNSwordman state 24. Other newly eligible blank-frame
+# clips must not enter the old filename heuristic and create new guessed damage.
+NATIVE_WAVE_BINDINGS = {
+    CHR_FX + "icewave.ani",
+    CHR_FX + "firewavebig-sword-effect.ani",
+    OBJ_ROOT + "animation/icewave1.ani",
+}
+
 SAFE_EFFECTS: set[str] = set()
 SAFE_OBJECTS: set[str] = set()
 IMAGE_DB = None
@@ -599,10 +607,22 @@ def safe_animation(library, path: str) -> bool:
     if not any(frame.get("img") for frame in frames):
         return False
     for frame in frames:
-        image = str(frame.get("img", ""))
+        # ANI may deliberately start with an invisible frame. None is not an
+        # archive path; treating it as "None" discarded valid native effects.
+        image = frame.get("img") or ""
         if image and ("%" in image or not image_exists(library, image)):
             return False
     return True
+
+
+def supported_animation_binding(library, path: str) -> bool:
+    if not safe_animation(library, path):
+        return False
+    # Keep legacy inferred choices stable while migrating each skill to a native
+    # controller. Asset availability alone cannot establish a hit/FX binding.
+    return path in NATIVE_WAVE_BINDINGS or all(
+        frame.get("img") for frame in library.animation(path)["metadata"]["frames"]
+    )
 
 
 def image_exists(library, image: str) -> bool:
@@ -1046,6 +1066,26 @@ def build_move(
             "object": OBJ_ROOT + "normalwave.obj", "at": sum(delays[:3]),
             "speed": 0.0, "life_ms": -1, "percent_col": 2, "fixed_col": 0, "size_col": 1,
         }], "fx": [{"key": slash, "at": delays[0], "action_clock": True}]}]
+    if key in ("icewave", "firewave"):
+        # 0xCC899D CHR motion 9; 0xCC8B05 trigger frame4. Unlike skill20,
+        # these branches keep CAST speed (0xCC8A06) and zero movement.
+        # Object sub-behaviour remains an explicit incomplete adapter below.
+        wave = records[CHR_ANI + "wave.ani"]["decoded"]
+        delays = [int(f["end_ms"]-f["start_ms"]) for f in wave["timeline"]]
+        effect = CHR_FX + ("icewave.ani" if key == "icewave" else "firewavebig-sword-effect.ani")
+        effect_key = add_fx(fx, effects, effect)
+        path, _, speed, life = CAST_OBJECTS[key]
+        object_path = add_object(objects, path)
+        if not effect_key or not object_path:
+            raise ValueError(f"Missing verified wave binding: {key}")
+        result["native_state"] = "wave_cast"
+        result["native_recovery_col"] = 1 if key == "icewave" else 0
+        result["fidelity_pending"] = ["object_controller", "damage_and_status", "effect_weapon_scale", "cancel_rules", "voice"]
+        stages[:] = [{"ani": "wave", "atk": "", "hits": [{
+            "object": path, "at": sum(delays[:4]), "speed": speed,
+            "life_ms": life, "percent_col": 0, "effects": statuses,
+            "offset": [100, -4, 0] if key == "icewave" else [0, 0, 0],
+        }], "fx": [{"key": effect_key, "at": delays[0], "action_clock": True, "offset_x": 59}]}]
     if key in ["bloodyrave", "outragebreak"]:
         result["requires_effect"] = "frenzy"
     if key == "outragebreak":
@@ -1452,7 +1492,7 @@ def main() -> int:
     library = open_library()
     try:
         SAFE_EFFECTS.clear()
-        SAFE_EFFECTS.update(path for path in effect_paths if safe_animation(library, path))
+        SAFE_EFFECTS.update(path for path in effect_paths if supported_animation_binding(library, path))
         object_candidates = {
             value[0]
             for value in CAST_OBJECTS.values()
@@ -1465,6 +1505,7 @@ def main() -> int:
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(
             path for path in object_candidates if safe_object(library, records, path)
+            and supported_animation_binding(library, (records[path]["decoded"].get("basic_motion") or records[path]["decoded"].get("etc_motions"))[0])
         )
     finally:
         library.close()

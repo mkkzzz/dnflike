@@ -21,6 +21,8 @@ var action_clock_at := -1.0
 var action_instance := -1
 ## Attached effects follow the casting entity every frame instead of staying where spawned.
 var follow := -1
+## Native attachment offset, already mirrored when the action creates it.
+var follow_offset := Vector2.ZERO
 var fade := 1.0
 var _frame_local := 0.0
 var _blend_mode := -1

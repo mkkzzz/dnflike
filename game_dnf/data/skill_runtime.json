@@ -23,6 +23,8 @@
    "skillfx_dust_2e1015db": "character/swordman/effect/animation/guard/dust.ani",
    "skillfx_exp1_99b066d8": "character/swordman/effect/animation/kalla/exp1.ani",
    "skillfx_finishflash_7520151b": "character/swordman/effect/animation/hundredsword/finishflash.ani",
+   "skillfx_firewavebig_sword_effect_edc95164": "character/swordman/effect/animation/firewavebig-sword-effect.ani",
+   "skillfx_icewave_ca30731c": "character/swordman/effect/animation/icewave.ani",
    "skillfx_jumpchainattackslash1_katana_under_0e0a4d92": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash1_katana_under.ani",
    "skillfx_jumpchainattackslash2_katana_under_3fe65613": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash2_katana_under.ani",
    "skillfx_khazan_down_45a97897": "passiveobject/character/swordman/animation/hardattackcharge/khazan-down.ani",
@@ -60,6 +62,7 @@
    "passiveobject/character/swordman/hardattackchargeafter.obj": "passiveobject/character/swordman/hardattackchargeafter.obj",
    "passiveobject/character/swordman/hopsmashsub.obj": "passiveobject/character/swordman/hopsmashsub.obj",
    "passiveobject/character/swordman/hundredswordhit.obj": "passiveobject/character/swordman/hundredswordhit.obj",
+   "passiveobject/character/swordman/icewave1.obj": "passiveobject/character/swordman/icewave1.obj",
    "passiveobject/character/swordman/illusionslashwave.obj": "passiveobject/character/swordman/illusionslashwave.obj",
    "passiveobject/character/swordman/khazan.obj": "passiveobject/character/swordman/khazan.obj",
    "passiveobject/character/swordman/momentaryslashwave.obj": "passiveobject/character/swordman/momentaryslashwave.obj",
@@ -1342,15 +1345,32 @@
    ]
   },
   "firewave": {
+   "fidelity_pending": [
+    "object_controller",
+    "damage_and_status",
+    "effect_weapon_scale",
+    "cancel_rules",
+    "voice"
+   ],
    "name": "爆炎 · 波动剑",
+   "native_recovery_col": 0,
+   "native_state": "wave_cast",
    "skill": "skill/swordman/firewave.skl",
    "stages": [
     {
-     "ani": "summon2",
+     "ani": "wave",
      "atk": "",
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 10000,
+       "key": "skillfx_firewavebig_sword_effect_edc95164",
+       "offset_x": 59
+      }
+     ],
      "hits": [
       {
-       "at": 420,
+       "at": 10150,
        "effects": [
         {
          "chance": 0.25,
@@ -1359,6 +1379,11 @@
        ],
        "life_ms": 1800,
        "object": "passiveobject/character/swordman/firewavebig.obj",
+       "offset": [
+        0,
+        0,
+        0
+       ],
        "percent_col": 0,
        "speed": 360.0
       }
@@ -1367,15 +1392,32 @@
    ]
   },
   "firewaveex": {
+   "fidelity_pending": [
+    "object_controller",
+    "damage_and_status",
+    "effect_weapon_scale",
+    "cancel_rules",
+    "voice"
+   ],
    "name": "极炎 · 裂波剑",
+   "native_recovery_col": 0,
+   "native_state": "wave_cast",
    "skill": "skill/swordman/firewaveex.skl",
    "stages": [
     {
-     "ani": "summon2",
+     "ani": "wave",
      "atk": "",
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 10000,
+       "key": "skillfx_firewavebig_sword_effect_edc95164",
+       "offset_x": 59
+      }
+     ],
      "hits": [
       {
-       "at": 420,
+       "at": 10150,
        "effects": [
         {
          "chance": 0.25,
@@ -1384,6 +1426,11 @@
        ],
        "life_ms": 1800,
        "object": "passiveobject/character/swordman/firewavebig.obj",
+       "offset": [
+        0,
+        0,
+        0
+       ],
        "percent_col": 0,
        "speed": 360.0
       }
@@ -2259,66 +2306,94 @@
    ]
   },
   "icewave": {
+   "fidelity_pending": [
+    "object_controller",
+    "damage_and_status",
+    "effect_weapon_scale",
+    "cancel_rules",
+    "voice"
+   ],
    "name": "冰刃 · 波动剑",
+   "native_recovery_col": 1,
+   "native_state": "wave_cast",
    "skill": "skill/swordman/icewave.skl",
    "stages": [
     {
-     "ani": "summon2",
+     "ani": "wave",
      "atk": "",
      "fx": [
       {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
+       "action_clock": true,
+       "at": 10000,
+       "key": "skillfx_icewave_ca30731c",
+       "offset_x": 59
       }
      ],
      "hits": [
       {
-       "atk": "passiveobject/character/swordman/attackinfo/icewave.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
+       "at": 10150,
        "effects": [
         {
          "chance": 0.12,
          "id": "freeze"
         }
        ],
+       "life_ms": 1800,
+       "object": "passiveobject/character/swordman/icewave1.obj",
+       "offset": [
+        100,
+        -4,
+        0
+       ],
        "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
+       "speed": 240.0
       }
      ]
     }
    ]
   },
   "icewaveex": {
+   "fidelity_pending": [
+    "object_controller",
+    "damage_and_status",
+    "effect_weapon_scale",
+    "cancel_rules",
+    "voice"
+   ],
    "name": "极冰 · 裂波剑",
+   "native_recovery_col": 1,
+   "native_state": "wave_cast",
    "skill": "skill/swordman/icewaveex.skl",
    "stages": [
     {
-     "ani": "summon2",
+     "ani": "wave",
      "atk": "",
      "fx": [
       {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
+       "action_clock": true,
+       "at": 10000,
+       "key": "skillfx_icewave_ca30731c",
+       "offset_x": 59
       }
      ],
      "hits": [
       {
-       "atk": "passiveobject/character/swordman/attackinfo/icewave.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
+       "at": 10150,
        "effects": [
         {
          "chance": 0.12,
          "id": "freeze"
         }
        ],
+       "life_ms": 1800,
+       "object": "passiveobject/character/swordman/icewave1.obj",
+       "offset": [
+        100,
+        -4,
+        0
+       ],
        "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
+       "speed": 240.0
       }
      ]
     }
