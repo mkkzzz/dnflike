@@ -1,0 +1,3553 @@
+{
+ "schema": "dnf_revision_dispatch/1",
+ "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
+ "input_source": {
+  "input_sha256": "8748e19abf6155ca5a20d13244eaca0b9442c3d7569e8e5002bddffeeb9366ac",
+  "embedded": true,
+  "resource": "10/EXERESX/0",
+  "resource_offset": 734740
+ },
+ "method": "Bounded native DGN revision filename registration/dispatch/copy/load routing.\n\nThree source blocks use explicitly prepared stack frames, not full DGN parsing\nor dungeon construction. Native tag registration operands, enum jump tables,\nrecord offsets, copy gates, SSO pointer selection and load-call arguments are\nreplayed. String read/copy and the final loader call are ABI boundaries; original\ntable loading has a separate artifact. Fresh objects and stable pointers only.",
+ "asset_version": "dnf-native-assets-v1-20261022",
+ "inventory": [
+  {
+   "path": "dungeon/act1/grakkarak.dgn",
+   "sha256": "f7bdf1dc94b047058b35cef9d6227c03624c8e4d7165b8532282c1fb52a7cece",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act1/grakkarakburning.dgn",
+   "sha256": "767b6ebb77563a22797ab4e08d976aa12ec5934a3dd733c264763958aa536cd1",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act1/lorien.dgn",
+   "sha256": "0a66d21a92945c306c74c3c1e926965c7ea644821a52606c0887687e27ab3541",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act1/lorieninside.dgn",
+   "sha256": "447e7412e9b547d1e5707032916f3ee60c691fa9572155c6b0c1fd2a7361a7e8",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act1/mirkwood.dgn",
+   "sha256": "f3b7f6c7cfe548e22697c10d988e0d100122a0276c27ca39d295aad121d9568a",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act1/mirkwooddeep.dgn",
+   "sha256": "dd9cbcf079744fe683d6d4efd704c239781a284e4a9eaecf4565245a992569c6",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act1/mirkwoodfrost.dgn",
+   "sha256": "920805e3b32c8fb007473a45fde847d7ec511feb3a1334a54ec14ad19ccc2dca",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act1/sunderland.dgn",
+   "sha256": "09701e5f530bab84178d0cd78604435bbe380d4358d841e4763a3889b3c7f1dc",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act1/sunderlanddark.dgn",
+   "sha256": "0010a2b0306eba62124ba6fc27af46ee5000a40193ef7ece0a1e5b85099eae29",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act1/sunderlandpoison.dgn",
+   "sha256": "c3c9a35364fcdcc125424524eee56a5e58137a0f10c60be95b243f5e99ff7a53",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/amonhigh.dgn",
+   "sha256": "721a4a70178bb7426458fc7c35e4f96c7084bfd6dea04776637915164374b805",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/amonlow.dgn",
+   "sha256": "181cd8772b5d8571389ce9343f26f3169d06efa1a335347aec3adaf77bad8253",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/darkentrance.dgn",
+   "sha256": "8360d6af074f0e06d168676d4ddf41f5051fc01343e10dcb35cc2f294c6b94af",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/draconiantower.dgn",
+   "sha256": "6820b4a4fec53cd26ef31546d1906b04dbf4704771f0b2fa86729e98f109b8af",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/draconiantower_amonlow.dgn",
+   "sha256": "2a52ad4b056671316f51c7983b26a21fd335187e3bf8482b5e0b0d2ac6c1eb31",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/floatingcastle.dgn",
+   "sha256": "a47fbc4f4b1ad758db3deb1f9ed3d7a88daa8b23067eb7741362acc52d18168c",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/golemtower.dgn",
+   "sha256": "74721f20550b3fc723af93dec30f108fc1d6d3c386e7fb3ea41196053f9bb3eb",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/hallofdoll.dgn",
+   "sha256": "ab66fa90875965c5cf7f6d1e301bc5a8bd4ea42588923955f2e8b13658c5cef8",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/oceanhigh.dgn",
+   "sha256": "9bea9535e6fc8ce6d9da44b63511f75395819020ad17d64226f3222d84bdc61c",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/oceanlow.dgn",
+   "sha256": "7341ce93c237cfabd20f953a0feda4e2b1cd66092c4f5a8d99292bd45a4601b0",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/palaceofload.dgn",
+   "sha256": "baf8aea1f8b0c30f953db28f3fe536ccd77d4f96499360adfefa29558def2bdb",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/sepahigh.dgn",
+   "sha256": "b40c113d28c490964fe2ef2f0b4abe3539b136b4f1ff21303efb8305554ea3b8",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act2/sepalow.dgn",
+   "sha256": "10e5c69ff35fd1fba40b4da29b0d2c61881d050aa399496631b160e6d5a82dcd",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act3/1stbackbone.dgn",
+   "sha256": "005a1cba836b48bd1f56f2a6a6dd5e72ffa91786c701cc0b2a6791027176da85",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act3/2ndbackbone.dgn",
+   "sha256": "0c5b269fe35d1699c652beb77ec946eb6e3b6c417fd70f18d24a9bfa10e417cc",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act3/bloodhell.dgn",
+   "sha256": "8b4d8a743b8b57bc3118575bab15c85f67277bc8991056dc82b3d1c4dcfc8a57",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act3/breeding.dgn",
+   "sha256": "5ca157ff900f7f3522614e9f186e1712ec1d2470726daac32da6f6f40f23c8a5",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act3/darkhell.dgn",
+   "sha256": "fd954e4d7abc752b5ac7b6048a4099fa7bbfc7e752e3cefa37ecb7fe18639974",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act3/goddesstemple.dgn",
+   "sha256": "88aa7ce4c942f1981c2df755691480e3991ac539ef60e9850822e5c33f375a04",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act3/jungle.dgn",
+   "sha256": "aaa68a88b6cea80c7749fe4b5dabcea5aca6b290f27ebf1de01dc880a9457291",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act3/outerwall.dgn",
+   "sha256": "4bc1517d37fdefdd4288ff0766a0bdc52d4c03248ca5e8d395e02354f05b08b8",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act3/whitenight.dgn",
+   "sha256": "a50170f3734e0a88917e27a8b741834bb68e19fcd99ec25280228c8703f94a71",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act4/darkelfcemetary.dgn",
+   "sha256": "ee3566c5e528abf12e13edcd1721a18aaf4be8677e450222dccc113a472520b0",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act4/kingsruins.dgn",
+   "sha256": "f03c598f40d969f903f61266b0c33c38ab09c4e6cbf2ee92a60ebdf5118d1346",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act4/magmacave.dgn",
+   "sha256": "5b47aac76324fb52d63eedb834b5f32bb7cfd1cedba610ce9fccf12873d775e8",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act4/marpissalair.dgn",
+   "sha256": "10848752c082de15b0929fb171fc827165fe995009bff7ff5786658754a308c7",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act4/shadowmaze.dgn",
+   "sha256": "9a7a1db69528eab5f295fdb81b6f81324c5b502d05cfe8da6013ea3a0d297eca",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act4/shallowkeep.dgn",
+   "sha256": "652be6d9a2d862210a92c767e5cb7c3cbb4d3f8e887868e0e98cc8fa9f9ab833",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act4/underfoot.dgn",
+   "sha256": "01413357d13471901ca0dcceabc466ada9449f3f888eba97c00cd5dfd8687546",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act5/bwanga.dgn",
+   "sha256": "87a37cd9a924747b4a7ab422e4ac4788a26c9443716c5acafad572f96cac6021",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act5/charnakridge.dgn",
+   "sha256": "172e5364d6e341d5eb23da3fe53ffa2291863930744548990bf541fd80122349",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act5/icepalace.dgn",
+   "sha256": "13c7ece1b64c949af4870f9413334459c723812fea0d56ee6bf0347143e7dd16",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act5/old_charnakridge.dgn",
+   "sha256": "2bef78ec37d215e9c5ff715c50b0d5f3fd421bf837fdd1f9373d2e63b16fd918",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act5/ricuceiling.dgn",
+   "sha256": "e4ca542dfdbb447d5b3382fcb506e47ba20348b455bb14d8fb816cd62247f01a",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act5/scasalair.dgn",
+   "sha256": "33d86d36e372ad3d17ed062ce82a80710ec54395b19785c784a9419e760cb536",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act5/theboywithcoldheart.dgn",
+   "sha256": "dcf7202c45f573b15c34dcd576872ffca34370ed7ec049464543229b4b562a03",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act5/whiteland.dgn",
+   "sha256": "096575dbf1ac14fab9681071a8ddc00189008977353d07c706006d0aa5e11f25",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act6/astraythief.dgn",
+   "sha256": "72925d7c530658a4a7f9a4196fe5dccbef11d068c327c4f0d77dff85d40f81d8",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act6/danceingbutterfly.dgn",
+   "sha256": "28c0923a5734941b2fa005164fb33d69b11f6bba5fad0568f136c514f36eb579",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act6/suspiciousvillage.dgn",
+   "sha256": "f92eec32178f4f2eeab3a991dbed6c23e4b112e2d78783d3a194a79a5f116252",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act6/villageoftemptation.dgn",
+   "sha256": "8a5c04698a9c51fa62c86e87a4cc33f1af1dd69643d64081adba4dafb03f2aa2",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act7/counterattack.dgn",
+   "sha256": "d10cc66c7b9c8a1a97a26261789a8c6d21e755b1488dac32150260fd6816eb0b",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act7/gentdefence.dgn",
+   "sha256": "8eeabda96e1dff224c6dccbe823a7510e184950ee142dd438bfb5648f3af3d1b",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act7/genteastgate.dgn",
+   "sha256": "064337edb39b84d7a4dc7c7fbef089378ae64c6c1b61857224f2f9371d06d1a0",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act7/gentnorthgate.dgn",
+   "sha256": "ae29e83fdf749ac3b7bc69625675a508a97aedbfa660eaa28a8688a6394d3d64",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act7/gentsouthgate.dgn",
+   "sha256": "3c0f02b78b9fc0072a44d28726f52dc5ab38fd9bbc6bd7d4c772390dedc2119a",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act7/nightassault.dgn",
+   "sha256": "dcd5afc917b2b41e05f94052731a2bfa377aba431590c8347fbaca7f030cc6eb",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act7/outergent.dgn",
+   "sha256": "246884645ad85315f63f144f86b1347fa52b4d8cc5df29006bccd2ff6d3dfdb7",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act7/supplycut.dgn",
+   "sha256": "b6445b594eb30fdcd54704e6ad22a09a8e7dd411a0f0bdf290bea37c8f2bb1f8",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act8/arden.dgn",
+   "sha256": "9a4906b12d7b7945e55cffd4203039baeeb4dad899ede8cf32beb45785433765",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act8/haze.dgn",
+   "sha256": "e3249f45f059f2e8402e3502baffec1fa32be9c5b995a7124fc216aa18b0c9da",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act8/pirateonthetrain.dgn",
+   "sha256": "b11ee67f2c1341c4816b163d81c909e9bebb074efd1c6167fd8156be9dbc5be0",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act8/seatrainretaking.dgn",
+   "sha256": "3ab9ad1bb3c082dc5027c3406fde5e0f957e6cae4db70704577d701ce1df3741",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act9/fruz_station.dgn",
+   "sha256": "1eb784df6f468fc1dac5fc48cfc27e491e442a34811196bddf39a0ceb1032edd",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act9/grandine.dgn",
+   "sha256": "508f350024e13a413c08e6c8d4f0ebc9c4038b2fab1dd21d7738efae6244d011",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act9/kohlepowerstation.dgn",
+   "sha256": "bcf1d4f11bda1fb33fb5e29a37419f08376b11ea4d456d79cff45baa01aa2ed3",
+   "fields": []
+  },
+  {
+   "path": "dungeon/act9/trombe.dgn",
+   "sha256": "a66e674f1593ab4f47bc94069529de79f98e741677139cba26271a82bf702992",
+   "fields": []
+  },
+  {
+   "path": "dungeon/ancient/cartelcommand.dgn",
+   "sha256": "1bd0d8d768b636649bde625cc2d1c1566e837a5379f1300178f9118228814a36",
+   "fields": []
+  },
+  {
+   "path": "dungeon/ancient/ghosttrain.dgn",
+   "sha256": "e325de5c820583c01ca8a51bafd756577cfa50d6560172e001f42c3017d75338",
+   "fields": []
+  },
+  {
+   "path": "dungeon/ancient/leshphon.dgn",
+   "sha256": "523a5924b9faeae3da4e63c2cbac7f8f7fdb0bd27a7155d7b0b8388714365293",
+   "fields": []
+  },
+  {
+   "path": "dungeon/ancient/noirpera.dgn",
+   "sha256": "123d44302169bc52aae44ac4220e220b9caae708a221984a5298c8c788aab56f",
+   "fields": []
+  },
+  {
+   "path": "dungeon/ancient/screamingcave.dgn",
+   "sha256": "af64830f63d7142e1ba7794dcc5f0b5b8731f79fbda68d881b8778797306c05a",
+   "fields": []
+  },
+  {
+   "path": "dungeon/ancient/vilmark.dgn",
+   "sha256": "4505427c9068da16427cd32547f070e9f912352d7d9f9cd00ae51dcd26fee45d",
+   "fields": []
+  },
+  {
+   "path": "dungeon/dungeonsample.dgn",
+   "sha256": "b9cb2a4b0f5cacce13b40f1c57d27bf899db8a1ddbebe01220afa7468341b454",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3001.dgn",
+   "sha256": "5804ed384e20663b2fc33211523ddcdfc559ae91790abaa8a867ab19d1c38be5",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3002.dgn",
+   "sha256": "16ccac89232e1e96c48f94e3d9302f06cf61d3f2100c23586859bb122b0975dc",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3003.dgn",
+   "sha256": "e8722af0cd764f1b5bb0b7392611b7ebd6c629a6c2044cf7c061d882b89e9112",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3004.dgn",
+   "sha256": "598f1d35a6026acea7dbec75e5cb59a280e7259f182ba952614affa7e9cbf5eb",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3005.dgn",
+   "sha256": "598f1d35a6026acea7dbec75e5cb59a280e7259f182ba952614affa7e9cbf5eb",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3006.dgn",
+   "sha256": "221c0c5a2c7fcb0fcecb91a82bc7c0057fee8e75e5d9aebac91d9b6b60288ab3",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3007.dgn",
+   "sha256": "b8b70b451ff8c1d40722d7355e1e4866e4ab5e1e0662e20c295101aa1d57ee4b",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3008.dgn",
+   "sha256": "acf233d53b0211915008608cebbb6ab37ed68a9b5cca85662b96f83dbfb72dfe",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3009.dgn",
+   "sha256": "6afe744ca2c18420a8780ec2d58bc4c7b6b3a6327dd0d9f418f48af2b001bf58",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3010.dgn",
+   "sha256": "24316ea3e85070607e86f03c23c1c0d274f0a77c91af9bb77234dd758c6622bb",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3011.dgn",
+   "sha256": "47f2f9f23fd6ecc9d0f78e82721f054b19fd9e0fa3c541317957b15922327b35",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3012.dgn",
+   "sha256": "b983534658b1affa631ffb76ad92486ab4f07423b575569c07ceb868ae445111",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3013.dgn",
+   "sha256": "d8b07b42113d2c9993fb1a7358937000a12e09b80853c9019ec952416007a67c",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3014.dgn",
+   "sha256": "141901ca2b5d730dba68f161ab2d1de685ea646dcf65336f33cb6f3b89950c5f",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3015.dgn",
+   "sha256": "141901ca2b5d730dba68f161ab2d1de685ea646dcf65336f33cb6f3b89950c5f",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3016.dgn",
+   "sha256": "05545dd7cbe9eb9ad7ceee7287ef456a2d02f734748ee78c4cc6843a82249a52",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3017.dgn",
+   "sha256": "fbe4f81c69c0677ff9ed7b161f78560f5919c08b776308088e89aa11bd32bbff",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3018.dgn",
+   "sha256": "1e8c24ddffedd670827bead2fce81beda5b48e0411bb23bdb57c3ea343355d95",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3019.dgn",
+   "sha256": "2e4ce7a55180671f45905d801cb86ee292abda80658afa975c2622209d8a9f2f",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3020.dgn",
+   "sha256": "53bfaea1fbe858fefc64bd723b029c17b61114e1bb9914a86cd7d36a8370d334",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3021.dgn",
+   "sha256": "6e89f47597bb52f779267d800d74d2f3c844a80d6484f3ebb185aae9041239a5",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3022.dgn",
+   "sha256": "3083e06278a3fd4ec424d3729756cf543257078b93cf4b02f99d2a61f5541dde",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3023.dgn",
+   "sha256": "3083e06278a3fd4ec424d3729756cf543257078b93cf4b02f99d2a61f5541dde",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3024.dgn",
+   "sha256": "d961885820bc970889266f7746785da8713039fdd234d3dd89a75b7ddf9199ba",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3025.dgn",
+   "sha256": "b20a3aec2900f81a64d2e69d4a8779c9480734dd29fb23f6348c7affb5ea888a",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3026.dgn",
+   "sha256": "0a064284ed426980726d8a526f0f175f862ac9166e6af246de071e7e62306384",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3027.dgn",
+   "sha256": "cbf02ac3f9e861d849dbb400601f9cdf12c65c9ceba1bffed70af12cd55060ce",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3028.dgn",
+   "sha256": "01575f009d25fe562678b9c6bd8c963bb4a2b14c8d5aaf144986c5098e25e024",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3029.dgn",
+   "sha256": "a656119df81526df0c830785e7765f2f6103f0d3dec57922445d4ba9c1809b39",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3030.dgn",
+   "sha256": "7dadf2fd539039e5644f26032229ded9317249f2287fe0a01b35a0f8aed11c1d",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3031.dgn",
+   "sha256": "9c2c1a123d07a59681818bdf51ec916475cf954c791fc92ee7b1430f1f795de1",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3032.dgn",
+   "sha256": "7967a6165df51c22996075934754cc5f0b38f496108424e3d97529c2f0d14d60",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3033.dgn",
+   "sha256": "7967a6165df51c22996075934754cc5f0b38f496108424e3d97529c2f0d14d60",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3034.dgn",
+   "sha256": "aabce5c1a70111005f601cf1de06e380097186f97f2ebcbd86bb541857ef9de8",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3035.dgn",
+   "sha256": "180da3b730c96b8df322cbbb74bd1353283b373107422431e47ecc3c04a271fb",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3036.dgn",
+   "sha256": "bbd88040d293c890c741f84648c9ee9efafb7f8ee5461e68a7e0d974bf4bb7f8",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3037.dgn",
+   "sha256": "2e8ecbaf10c99496ad8a83ce92efecdbc7be0325eaf6fb3ce0d73fe4ebf53ba7",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3038.dgn",
+   "sha256": "f433eb18be03494b1a6fc55d88bcf53fc1719afc615535368a1d2681ff7029d0",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3039.dgn",
+   "sha256": "b1171521ae9731b1bda237b7d2eccdfd824cfa2aaf41f6035fbb4c6e6399c858",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3040.dgn",
+   "sha256": "a310ab4d66a8c4826be9fe4d3b79ef2ed7eeaedb9dee72eff7c6977a999cffe7",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3041.dgn",
+   "sha256": "3eab9718be858750f438998f25adbf14ec737a5ee56752134e9cfac638ab9811",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3042.dgn",
+   "sha256": "ece9ecc367c799fd75b1cee1383323398e5f02534114752eda372a38b0d887a5",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3043.dgn",
+   "sha256": "ece9ecc367c799fd75b1cee1383323398e5f02534114752eda372a38b0d887a5",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3044.dgn",
+   "sha256": "ece9ecc367c799fd75b1cee1383323398e5f02534114752eda372a38b0d887a5",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/3045.dgn",
+   "sha256": "afc57755c072c0c1e2c419b0deeb5a34180858d97c414a499a2309e739c256c4",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/aganzo.dgn",
+   "sha256": "f71058abfcb628a7fa98a0d7cd725a07f07f6a180be4e84fe8c244d1e701e159",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/gbl_laboratory.dgn",
+   "sha256": "80f102207d37ac09e6979116f5a13d4cfeb0851f0e6d6db1f80c344d9de18809",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/gentdefence.dgn",
+   "sha256": "92076fe92881e0dd887200292fdb15dca019f7a917503969c7a27dae2d255aef",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/icepalace.dgn",
+   "sha256": "4dae2fb412d42f8acf19136cdbdf94dbf91f4967bad7da51039537fc3e8bf7a0",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/kick.dgn",
+   "sha256": "51c3f6f9dd70f567a5da04c2e19beb43778b4172c7ff84e7333b5c979c9f59c5",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/lorien.dgn",
+   "sha256": "670541ab425d7f1920993e9783d8178b3688f52a52f90c57f701a269225eedc3",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/bluemarble/shadowmaze.dgn",
+   "sha256": "89dd7770865e230c688c1d9a9c553e8f7becd7e5c3242308be68c116af7f95c0",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/dual/dual_raid.dgn",
+   "sha256": "9bbeefbaa28831dc842bb782ac5594d89d22c18e5f5e09d610d9c0599cc424b4",
+   "fields": [
+    {
+     "offset": 537,
+     "value": "Dungeon/Event/Dual/table/Dual_Raid.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/event/dual/dual_raid_boss.dgn",
+   "sha256": "81663f029b502ec7a359da332e7ff80fa1e6e78bf0128700510da0ede58c1814",
+   "fields": [
+    {
+     "offset": 312,
+     "value": "Dungeon/Event/Dual/table/Dual_Raid.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/event/dual/dual_raid_p.dgn",
+   "sha256": "9c3d8a93ad087f89d35e5e47d038afce261424c7f87913b027fd71023a35a219",
+   "fields": [
+    {
+     "offset": 517,
+     "value": "Dungeon/Event/Dual/table/Dual_Raid.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/event/race/dnfrider.dgn",
+   "sha256": "2a577853b12411e5ad9cd53fe81967920bd9c0540bb366ac912d2aaedfeb5c31",
+   "fields": []
+  },
+  {
+   "path": "dungeon/event/race/title/kingsruins.dgn",
+   "sha256": "f03c598f40d969f903f61266b0c33c38ab09c4e6cbf2ee92a60ebdf5118d1346",
+   "fields": []
+  },
+  {
+   "path": "dungeon/globaltutorial/globaltutorial.dgn",
+   "sha256": "2b753992c962af7e78b4c904f8fe8ddac1346cb7a9906f0f6f9220a72dcfb709",
+   "fields": []
+  },
+  {
+   "path": "dungeon/impossible/activeskycastle.dgn",
+   "sha256": "bbe82a8a5cd3785d56f21c133a91be18274f077899badd0f8af6207e222f915e",
+   "fields": []
+  },
+  {
+   "path": "dungeon/impossible/bakalcastle.dgn",
+   "sha256": "d40be784df9c65b0c6e9f24ddca4361ca93ae62c74cbec5b9ddd3fba2922bfba",
+   "fields": []
+  },
+  {
+   "path": "dungeon/impossible/blackearth.dgn",
+   "sha256": "a64c350119990a14060e2f08ae2f09b64271f7d7f911b21a0acf895bcc01b5a2",
+   "fields": []
+  },
+  {
+   "path": "dungeon/impossible/cosmofiend.dgn",
+   "sha256": "1c13453d1391adc61c69f8b6f28ac871d37eeac6993ac938d9c235bb9f23b067",
+   "fields": []
+  },
+  {
+   "path": "dungeon/impossible/goblinkingdom.dgn",
+   "sha256": "96be7cca09904427e16a7cd5bf3a87e377c90ee66f13d5d37e7466817a171e73",
+   "fields": []
+  },
+  {
+   "path": "dungeon/impossible/ranjerusdogs.dgn",
+   "sha256": "44570d491b2531278b54156c074a8fcbd464e152fb1cb599eac8303103bfec75",
+   "fields": []
+  },
+  {
+   "path": "dungeon/kcontents3/abaddon/thirdtower.dgn",
+   "sha256": "3623b1ca2ceb674ab0383ad44549553db3a2a5a23770cb7c125d86a1a4421606",
+   "fields": []
+  },
+  {
+   "path": "dungeon/poongjintrainingroom/poongjintrainingroom.dgn",
+   "sha256": "817b3163f8431699d8c92b0e86575e7c72f6ce8a05418cc2a52d00f19f2c871a",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/captainscabin.dgn",
+   "sha256": "dcfad279de3389e242053274717ef9f6cc317fe404bec50fca3899b448e0c906",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/deadmoon.dgn",
+   "sha256": "07b325e117ca93583d08afc7e2e6b4d278dff87263e7b582ba8a02748311bdb4",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/deadmoon_avenger1.dgn",
+   "sha256": "9bf676202974484fa57c7411a164520fa0340ee922b90552afd66f0f3e0ed4be",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/deadmoon_avenger2.dgn",
+   "sha256": "8f7e9f88ab4bf69657d31695a0f52f75cd0aae6f1f3be91a1bd9a234cce2286f",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/deadmoon_elemental.dgn",
+   "sha256": "242ed0dbc99249e276b98ff171e2b473298fcf75493f4a2771ffcbc697dc75f3",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/deadmoon_new.dgn",
+   "sha256": "7bcb3e4d0b6964e05ffd80cc4e1f4eb5dcd2784be30c679d5093d162c722d7fd",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/deadmoon_summoner1.dgn",
+   "sha256": "b2726eb9fcbf72d25b114d5528ce0621186ce303b37e4a47eb96873b32e45a5a",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/deadmoon_summoner2.dgn",
+   "sha256": "c5f705fb2ebcf460862a63da5deeff1d9c55bc8418881c46cd2dad8b8ed22263",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/deadmoon_witch.dgn",
+   "sha256": "9c0044d7bf211a858c8ef2f420a403fcacb12132fd21197c8a6716b6f1582d74",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/energyisolator.dgn",
+   "sha256": "580bdddce377d227f773a19b88e650fa89c299c667261cc1060a990daff9b9d7",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/fairyforest.dgn",
+   "sha256": "5b1d9862af9344a65e56a85771acf711177ae6ff9f35db9d43af58316b4279b4",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/irisconsciousness.dgn",
+   "sha256": "2536a1eb10ba928229aedf4b70a7021f572259e18e2143cb4cee75614fd42d69",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/iristime.dgn",
+   "sha256": "4664ffbae1e602a49cad152a724c6e5208fc2afd8b208366545d252566297988",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/lawlessdistrict.dgn",
+   "sha256": "c6036d80c9a9a28b1691c224d3209ca41992b0967e029856ab0c0f33b21861eb",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/middleocean.dgn",
+   "sha256": "f2a9d8b42e22a06f65a1a6e7d9828256f15ead69bf6c1740c95ce56a0815d79e",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/steelscales.dgn",
+   "sha256": "8a5571fa37254a77d1934f98929646034e1bff6bbac617d9ac8fe9c0df2db285",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/tangledtimegate.dgn",
+   "sha256": "87402b97b4a0b227e9e17dcb5c22038537da41489fbd93d5b3cdee6c6ada0d5a",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/timegate.dgn",
+   "sha256": "41e096e20fdb727aaf6c8ecfedf23b11780dfd405d1f91719795e645c6ed868e",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/training.dgn",
+   "sha256": "ae81eed6631cc6232efda6c88769887308f2ce54b951b7d95b0cfaf62e45fa75",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/training2.dgn",
+   "sha256": "92da771e3991f446d27948ca2747f300f9f4290159258fb869f0ec6af2088484",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/training_asura.dgn",
+   "sha256": "d142032ef9207ee27339247f46577a764bc64ae139a6f44d7fe1545200c179fe",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/training_striker.dgn",
+   "sha256": "9a232e2ae73a73c78a2c587b1c005a3797e917cfbb0194b9f10657e9e96566dd",
+   "fields": []
+  },
+  {
+   "path": "dungeon/quest/training_weaponmaster.dgn",
+   "sha256": "d76275dc15de1e4178fa59db314d830eb900567b87a8d973ae850ed4f754d108",
+   "fields": []
+  },
+  {
+   "path": "dungeon/riskdungeon/r_cartelcommand.dgn",
+   "sha256": "52ad6864d783a74f69437f19f55ea7652b7c2cf9fd8a5284ee183cde65418b05",
+   "fields": []
+  },
+  {
+   "path": "dungeon/riskdungeon/r_ghosttrain.dgn",
+   "sha256": "7b7a2485fb462888237b2fa997c9a145202ce56e47125ca51c8d10fce2b3e38f",
+   "fields": []
+  },
+  {
+   "path": "dungeon/riskdungeon/r_kingsruins.dgn",
+   "sha256": "f8978cffe917ac5e4a790c3d3f2a9377e307daa0b1c3a8e890d483340da1561c",
+   "fields": []
+  },
+  {
+   "path": "dungeon/riskdungeon/r_leshphon.dgn",
+   "sha256": "357b93e3eee5e9b13f355c46b47189fbdaa60a977759bb267e0fc98187ab7249",
+   "fields": []
+  },
+  {
+   "path": "dungeon/riskdungeon/r_noirpera.dgn",
+   "sha256": "5b93f9bddce798c77d6bf9d004ad491789983714382de915234b529f9e6f1270",
+   "fields": []
+  },
+  {
+   "path": "dungeon/riskdungeon/r_screamingcave.dgn",
+   "sha256": "11c2edc3f27fe10e543a17e026dc102fd7c4b00d894e420b3c6a5d78fcc957d7",
+   "fields": []
+  },
+  {
+   "path": "dungeon/riskdungeon/r_vilmark.dgn",
+   "sha256": "fd9d32cf10c7a3ab1edbeeeb1bda561661b325368c47354a56008908269581d6",
+   "fields": []
+  },
+  {
+   "path": "dungeon/shonantournament/bluedragon.dgn",
+   "sha256": "e25a4850a0eda931a656c2c8999f561a84352195d52bebce3a54e78a179cacfe",
+   "fields": []
+  },
+  {
+   "path": "dungeon/shonantournament/yellowdragon.dgn",
+   "sha256": "02452dab265c5261ecc914e8d403fb1d83a29bb4987a3289298a672b49025105",
+   "fields": []
+  },
+  {
+   "path": "dungeon/southerndale/grimseeker.dgn",
+   "sha256": "77a3f83255fad5f4bf72cd4c03891995a0b29f3035ce218ac14979a45092fc7f",
+   "fields": [
+    {
+     "offset": 622,
+     "value": "Dungeon/SouthernDale/table/SouthernDale.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/timegate/beginning.dgn",
+   "sha256": "b2df0eb74a4fe9c3dad11c900659d03c00ba76081f3534a6b6687bfd67a4afcd",
+   "fields": []
+  },
+  {
+   "path": "dungeon/timegate/black_church.dgn",
+   "sha256": "2f8cecf02511881a1b102c1490de0044ab450c15c6602c6fbe6bbabde0c7514f",
+   "fields": []
+  },
+  {
+   "path": "dungeon/timegate/conflagration.dgn",
+   "sha256": "eb29d3573295a96679f760e612bdaf72f5db761aa25d05fbf527c619744ea3cf",
+   "fields": []
+  },
+  {
+   "path": "dungeon/timegate/consciousness.dgn",
+   "sha256": "8dfdbffea675940152014767fcee469bde8e616c924c96c8c8a66b667b7b66b3",
+   "fields": []
+  },
+  {
+   "path": "dungeon/timegate/epidemic.dgn",
+   "sha256": "1349b07b299e7eb2b71d5c490a5766770f7d41226ecb4f4d47d44c701226d5b2",
+   "fields": []
+  },
+  {
+   "path": "dungeon/timegate/formacartel.dgn",
+   "sha256": "591e0cc4e91d7015af8f6cfe5fe87b729cec18cf011146b5b0b14c1ac1f8b6f2",
+   "fields": []
+  },
+  {
+   "path": "dungeon/timegate/oldscreamingcave.dgn",
+   "sha256": "fba24453fd146a00e0b9af306a47853b8dcd29ebb43039025862520b2a54f1f3",
+   "fields": []
+  },
+  {
+   "path": "dungeon/timegate/topsecretarea.dgn",
+   "sha256": "287bcd137c403143b7b1a5c2fcb0af72bec82cfec86a75ae268d0354b8eaa55c",
+   "fields": []
+  },
+  {
+   "path": "dungeon/towers/towerofbloodyfight4.dgn",
+   "sha256": "635e52d079ace9e9cb51b3daee0cb1a50ce5a234b17e1b70a034bd14326bff15",
+   "fields": [
+    {
+     "offset": 352,
+     "value": "Dungeon/Towers/table/TowerOfBloodyFight.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/towerofboss.dgn",
+   "sha256": "94810b8cec07624449b77a4aea71d428c8a81814cdfd99b060941f245c5a19b4",
+   "fields": []
+  },
+  {
+   "path": "dungeon/towers/towerofdeath.dgn",
+   "sha256": "a32436145d5aedc0ee881f82726f6673adbceacf851ab349bcecde0c9748df16",
+   "fields": [
+    {
+     "offset": 2547,
+     "value": "Dungeon/Towers/table/TowerOfDeath.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/towerofillusion.dgn",
+   "sha256": "cae3c13b88497245e888302d5a4e3ad0ad150f7dc8996f5beb5b7971a16bdada",
+   "fields": [
+    {
+     "offset": 1192,
+     "value": "Dungeon/Towers/table/TowerOfIllusion.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/towerofultimate.dgn",
+   "sha256": "aba71a3dbb5754c1fff7eebeda312783ed19c5ced1343d9bda14342d7a14ff2d",
+   "fields": []
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair001.dgn",
+   "sha256": "4b0288d291950c4fb3cecde9f0a25eb39bc6e5f8a08aacae4350ada4c2b2b155",
+   "fields": [
+    {
+     "offset": 307,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair002.dgn",
+   "sha256": "61d4e9115dc154b651624a3d320a261fcd36fda36a0b1df6d1bd5179ae2dd02f",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair003.dgn",
+   "sha256": "70fadad5f73ed3c4bcd975e91f2373662cb7cc698182dc479ed84a88992893ea",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair004.dgn",
+   "sha256": "70fadad5f73ed3c4bcd975e91f2373662cb7cc698182dc479ed84a88992893ea",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair005.dgn",
+   "sha256": "70fadad5f73ed3c4bcd975e91f2373662cb7cc698182dc479ed84a88992893ea",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair006.dgn",
+   "sha256": "ff7505d1ca395908ab5c9f99862e0c97b90352d923a4dd076377331d0e938edc",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair007.dgn",
+   "sha256": "70fadad5f73ed3c4bcd975e91f2373662cb7cc698182dc479ed84a88992893ea",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair008.dgn",
+   "sha256": "70fadad5f73ed3c4bcd975e91f2373662cb7cc698182dc479ed84a88992893ea",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair009.dgn",
+   "sha256": "4aee11d85980dcb7153d0f74482fc24d96223a75ce751df6c644b563aa5989ee",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair010.dgn",
+   "sha256": "70fadad5f73ed3c4bcd975e91f2373662cb7cc698182dc479ed84a88992893ea",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair011.dgn",
+   "sha256": "97abed70786c616e306e3e9e025e477876d305384eaab5efab6163f5f3cf86b7",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair012.dgn",
+   "sha256": "95f1fb35bfc0c4099b972d63e614f71f4539d7ebfeb1e4f6d75bff1604d6c39f",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair013.dgn",
+   "sha256": "a3f309e6ca9d2b309481212e78c9638256a5c2dafc19b8ac85da88ffe4a76142",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair014.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair015.dgn",
+   "sha256": "fa4091cc1f6fd45e3af1d0655018c0aac0640c888dfb361a95fe22d1f52340dc",
+   "fields": [
+    {
+     "offset": 352,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair016.dgn",
+   "sha256": "80d36608f99aadff5b46975bf83f35eb23b1542dd2c6af85d850d392413dfc68",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair017.dgn",
+   "sha256": "265eda71db403d0aaf12958ae1dc9cf2d1702d9a6951fc06fbae39255b9dd983",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair018.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair019.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair020.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair021.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair022.dgn",
+   "sha256": "84eb98b07b68f870fc15930b0eb97bf6d75b69b9147c81cce448661b3625369d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair023.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair024.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair025.dgn",
+   "sha256": "b0c99228d29e13e2d27d5ef1157ad8eae68216d18c4be0d7aadedf449487a3f1",
+   "fields": [
+    {
+     "offset": 377,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair026.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair027.dgn",
+   "sha256": "6630a9fad1e13d7ce1f818dc826e1c2fe9b5e3ab9759df70652a562fa3092800",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair028.dgn",
+   "sha256": "0fd645aff6d6c5ed1ec1557a03bdf2e4ab9af9b2cfec202ad3a62a68171eaef5",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair029.dgn",
+   "sha256": "bf5da94dac5a1ff7bc9252d4a26f9deb0311fe0fe626abc46e5375b250bad303",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair030.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair031.dgn",
+   "sha256": "581785592e2c72744b9e05e0f952d94af4d8cc31a07d47b75cc4e28db6ef76c2",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair032.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair033.dgn",
+   "sha256": "a37ff23301994f2be3982f26ad1e62523b47a0f1b4b8b177f6d8a11806d44538",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair034.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair035.dgn",
+   "sha256": "654fee84e93a371c9aa5235659eb08251f99b46aca5d87447a5198c1842b5f7b",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair036.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair037.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair038.dgn",
+   "sha256": "10b858da53758435f21e8a40bcfbe250621068a8f5dd3684a454eb191e97343b",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair039.dgn",
+   "sha256": "bc0084daaaae17e7e68103c7c61c06373a170d3cdf51f7f0c1aaa24a047eef8d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair040.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair041.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair042.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair043.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair044.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair045.dgn",
+   "sha256": "4eba4f6c158aaa578b8ffce5eb84dbda129013c937f19958d300edb05aa74a5d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair046.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair047.dgn",
+   "sha256": "7cf68bf9ad77ddc32284fa5cb8d3e1f675e0274c23fcb91938c4a5bf4a7ef1da",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair048.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair049.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair050.dgn",
+   "sha256": "a0cfb85d2eeaf878f4aa6d211f591b32877361430c42daa212548bca8ef6b77d",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair051.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair052.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair053.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair054.dgn",
+   "sha256": "7ec91aceb5abfa68d548b14098e79453fa630ea54b6069ca9990e478538d8f68",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair055.dgn",
+   "sha256": "c7277d61222492917369a03ee12413853fce818e35396ae6f42805ed02fb8dac",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair056.dgn",
+   "sha256": "5f25172166a022bae05bed38fad007871a47c1824c95a40c8407136356cea362",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair057.dgn",
+   "sha256": "a2c3da387b53ddc5c5ff67a7823dc43c1e4f25de87884e591c15b41531dde62a",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair058.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair059.dgn",
+   "sha256": "d1cc7c2705d6074268b05d4d4250e52c857d9fb0acb3c711aafe27258ce97280",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair060.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair061.dgn",
+   "sha256": "985636e8e5ee5afae4856663e4d1e433e533476a94d9e96add2f14df16a7f2b4",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair062.dgn",
+   "sha256": "8c3e62c372c376434d69cb69b7e88f03a3224a576392d24d5bae49512f9e30e6",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair063.dgn",
+   "sha256": "f4eab35382b8ecd5b54de04e53627c9486c198def2eb826336d58db47a80dc6c",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair064.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair065.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair066.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair067.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair068.dgn",
+   "sha256": "d7388929527e15766dd13de8c0a27d84d218d94160185452a07a2cf6c370b02e",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair069.dgn",
+   "sha256": "ea8aa3a3f5abf2a409bcfc49b0daea5a8f988454efc5a0f99ba71fb4a3044bce",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair070.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair071.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair072.dgn",
+   "sha256": "221c5a425dbb3b480be7e5aede3bdb2e34a2b85bff4a742ee8953acc5dd90b70",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair073.dgn",
+   "sha256": "d094fce3ea912f673721bfcbbbefcfa923bcbae897775dbe1b5e18257dcf68f9",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair074.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair075.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair076.dgn",
+   "sha256": "bbc6b84114b69fd7fa15e13a71f58878e48cb41e2a5f334105a94b6451749b52",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair077.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair078.dgn",
+   "sha256": "bb09ee2f23c213950c7e24a3d35bc0538cef9ecfe2e617d08237b5bc17bd04d2",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair079.dgn",
+   "sha256": "ab1136cae587708c891239543a3b7875b7771de56f860b2c620a434865ad0166",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair080.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair081.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair082.dgn",
+   "sha256": "ec842e741203cba1c76c98be5eae4bf29dfa29b769033527f2dcc6620484437e",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair083.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair084.dgn",
+   "sha256": "74d1867667c65544f5f2cdfad0149a81f3b5948fbffe353f099f19dcfada5edb",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair085.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair086.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair087.dgn",
+   "sha256": "addd933469ba1e881dbd6d38f092d4adb0138e5243bea0d9d78792eec77c8ccd",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair088.dgn",
+   "sha256": "5655f0e7bf855e8849d96c19146a49bcdae5c1bc07b4ddbe8cfb35e8fb1e6bda",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair089.dgn",
+   "sha256": "d68c8dd48179aea843ec77c4f63e383bb093978a1bd1e59fa4f12e6d8f3d950e",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair090.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair091.dgn",
+   "sha256": "7ef73cb08c37002bfaad67a8d68ec1468300377ebe726001c1f5d9a9d34c920c",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair092.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair093.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair094.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair095.dgn",
+   "sha256": "075a9e4fd46bbf5506b33e4663f8b6c72b69af73b23ff5e2370406afa4e1a07a",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair096.dgn",
+   "sha256": "bc50a642068cd196b08e681af144ada980ba2cc48bd10e94b8f2a8a5727db56c",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair097.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair098.dgn",
+   "sha256": "f20482acd0b1a9ea02b94988d5db3c6fad67766007cabebd4cb91eed7c455140",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair099.dgn",
+   "sha256": "ab61f795161de637af7b66dccfdf6d59c79bf5f231512f93dba0cb8af6c081b8",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/towers/ztowerofdespair100.dgn",
+   "sha256": "66563cb5a433c82a619df33cb37ddf6a846e6fec7779e8f722079a4f32f5f34b",
+   "fields": [
+    {
+     "offset": 327,
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/tutorial/tutorial.dgn",
+   "sha256": "f493a439d437fd502f21616c8126732c99ff92c4df4e4ba6bb3324107524034d",
+   "fields": []
+  },
+  {
+   "path": "dungeon/tutorial/tutorial_timegate.dgn",
+   "sha256": "8db6eae26d854c320d5298114b4161cbfa178078369e466cf72ece574214fbf1",
+   "fields": []
+  },
+  {
+   "path": "dungeon/tutorial/tutorial_timegate2.dgn",
+   "sha256": "bd82a65ddfbf4b4971bf1ddfcdf8220be6703deca65c45da8451e2785fc1e7ab",
+   "fields": []
+  },
+  {
+   "path": "dungeon/village/cartelarad/grozni.dgn",
+   "sha256": "6573a9ef1a05fb400c903b97b2ae89543504fb5cdf804d778c1bc26a289b5970",
+   "fields": []
+  },
+  {
+   "path": "dungeon/village/cartelarad/odesa.dgn",
+   "sha256": "1fed07147d1f2be9a4071572589b208a7e2c493410925df8f92d8655f7d5ed7b",
+   "fields": []
+  },
+  {
+   "path": "dungeon/village/gbl/gbl_branchofarad.dgn",
+   "sha256": "8666193f452687ae3eed7e27bf05d3b2b3721efa0952985eab4e6bb9fac357b8",
+   "fields": []
+  },
+  {
+   "path": "dungeon/village/gbl/gbl_hatchery.dgn",
+   "sha256": "266393055e4e3894218aa8f26b4ab35c1e7a416ec0b486b57cdfc1fe5b5b70ce",
+   "fields": []
+  },
+  {
+   "path": "dungeon/village/gbl/gbl_laboratory.dgn",
+   "sha256": "ee701f2b6a72085033a4b8fe8430d1374e9ddd4dbd5c88dc88455fd00ee9e379",
+   "fields": []
+  },
+  {
+   "path": "dungeon/village/grim_low/grim02.dgn",
+   "sha256": "0917c493858b30f2a9821d35ab8362688afae524a17c4459f7324edc61aab9f4",
+   "fields": []
+  },
+  {
+   "path": "dungeon/village/grim_low/grim03.dgn",
+   "sha256": "57f1359e6edc86340afcc5dbe02ca18e53648030e3575c23b86edb87c10c9706",
+   "fields": []
+  },
+  {
+   "path": "dungeon/village/grim_low/grim04.dgn",
+   "sha256": "bee19a1440537be11a6e61f2743224a60dbe8711af3c5b24ef560f3e03c986da",
+   "fields": []
+  },
+  {
+   "path": "dungeon/village/moonlightpub/aganzo.dgn",
+   "sha256": "882dc960c67fc9378e11b20e2331ad628cf012f78cc581c6e2f463280461524e",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_auction_easy.dgn",
+   "sha256": "2623259bb984113e9502f3ecfd545ac76b7d540cd9117710ccda2d7f0253af17",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_auction_hard.dgn",
+   "sha256": "6b120198e9669352b0797daeb446c939dbc5eb511d6550d22cebc30e31700913",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_auction_normal.dgn",
+   "sha256": "9a4de25c399c723c6c390ed8be06c8c25565ba96d51a7b77961ad3956e869337",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_auction_special.dgn",
+   "sha256": "a2d1ed7bba8808ffd7072370d565e130955d22fba301de084b2d7352d5567e00",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_auction_ultimate.dgn",
+   "sha256": "4154682fbd9fef790644706d3ead1adc8e2fe99d12859209ba3c68748ab14f29",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_city_easy.dgn",
+   "sha256": "afce655b6cb3fd642b188f2f084e8517a1bc1f6fe43842501c570c2048bc2797",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_city_hard.dgn",
+   "sha256": "2dff41bef8f1ac4733d3aaad1390931dadd76b793f623717bb86edcd236d305d",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_city_normal.dgn",
+   "sha256": "fd63300bf90255a0dfc11554c62de0e7665fbeb5b317d68c722abcb767745d1d",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_city_special.dgn",
+   "sha256": "ef4de9e4cd97d5eb7ce499562452875ebadd8318d62bad575b27f436bb82be81",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_city_ultimate.dgn",
+   "sha256": "c68c3403f4496b74abaf6d6a199943c8034e7cf2ad0276af8fdb48e42045a487",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_org_easy.dgn",
+   "sha256": "cfdba9d3485769a019bd9e280af4e8c615e89369f20f90194211dc22de64d1f3",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_org_hard.dgn",
+   "sha256": "a0163a9a973054ff1cf91d37d5be20f7d6c2d4be7b2b19d693b976ad61241128",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_org_normal.dgn",
+   "sha256": "d0d24bca2cbe76b2fab814dae0b074ff2b6151c151cbba9c2dad4fe0301294e1",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_org_special.dgn",
+   "sha256": "45be2f62fc01c3c41b5a51458ace25d7a4966bd3eb3ed386f239473ccdefaab7",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/hendon_org_ultimate.dgn",
+   "sha256": "c70efe248f3cd9bb1c515ddffaba655dc12b8a3a4ac51aef8ee076fd66a3ee51",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/westcoast_magic_easy.dgn",
+   "sha256": "76fcd2bc89ec6bc53bc70f0ea18bb1596c816ec8fd58e73f445d35e28b99a29d",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/westcoast_magic_hard.dgn",
+   "sha256": "ccf21942f466d26961846e463269014d870ed301764e4bd8ff310d5c78b13dff",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/westcoast_magic_normal.dgn",
+   "sha256": "d51e6ab773a2f4cf615897e68df63b95d2ac63e05c3a0e60592956afa69f2ff6",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/westcoast_magic_special.dgn",
+   "sha256": "daf05edaee3b795bfed59e25d9e1bca41cac3f2f0d0337f379f13ad12e10bfd3",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/westcoast_magic_ultimate.dgn",
+   "sha256": "60e65ccff37432e89e3067bc7b98dfd27df1847027fe0010608599571c991062",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/westcoast_org_easy.dgn",
+   "sha256": "eab5311a80d1c67c3dc341f5cac8319950ba5c0552a7c5147a3940cdadbcfb43",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/westcoast_org_hard.dgn",
+   "sha256": "d4290f0ae9bec98c966b12ce3531a1cb213a0799022ba839caf3722b2838c686",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/westcoast_org_normal.dgn",
+   "sha256": "dc186425cb4a268bb33a36e46df2122b54664c2dabf194987c706e22daf5df49",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/westcoast_org_special.dgn",
+   "sha256": "5c6595ff6eaca3351ac22244640ffd6bf5063dc279f1a8e08c7fdd4dccad6d9a",
+   "fields": []
+  },
+  {
+   "path": "dungeon/villageattack/westcoast_org_ultimate.dgn",
+   "sha256": "22665bead348420059397c892aeb381dce7478ea5dae37279dda7fb50f0886a7",
+   "fields": []
+  },
+  {
+   "path": "dungeon/warroom/grenselos20-30.dgn",
+   "sha256": "a5a3c60646574c35ddd49a6bf376ce66b773d885340821d2dfe3006bc685dd05",
+   "fields": [
+    {
+     "offset": 912,
+     "value": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/warroom/grenselos30-40.dgn",
+   "sha256": "dfd5dc642ad958912c4ed966b5187059580017ffbf339db5ca7d70b5deecbf84",
+   "fields": [
+    {
+     "offset": 907,
+     "value": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/warroom/grenselos40-50.dgn",
+   "sha256": "7ae9eff900c5a0dde1e52a7786d5c49da74d5e9a50d82e460269f799bc2b7354",
+   "fields": [
+    {
+     "offset": 947,
+     "value": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/warroom/grenselos50-60.dgn",
+   "sha256": "573b3d2323a1f6bc793af3eec6674e1a5839a949e0146235ca3abc8af176abf2",
+   "fields": [
+    {
+     "offset": 932,
+     "value": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl"
+    }
+   ]
+  },
+  {
+   "path": "dungeon/warroom/grenselos60-70.dgn",
+   "sha256": "7923ba2a84307420773cd7196bd1fa323797fde6391277d2e930ff3cbfb627b0",
+   "fields": [
+    {
+     "offset": 932,
+     "value": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl"
+    }
+   ]
+  }
+ ],
+ "tag": {
+  "address": "0x18759f8",
+  "text": "[revision table]",
+  "raw": "0054452aaf4c039a02f0314fd729e2734246859a9044616684fa4c6fe6c1cd57bb9fe3520731"
+ },
+ "table_evidence": {
+  "path": "docs/reports/ws2/2026-11/native_revision_table.json",
+  "sha256": "449abd07f234ba7f8630791be10dd8fcaad1a764bc269f70180e959722df5a3b",
+  "tables": {
+   "dungeon/towers/table/towerofillusion.tbl": {
+    "loaded": true,
+    "enabled": 1,
+    "rows": [
+     200,
+     200,
+     200
+    ]
+   },
+   "dungeon/towers/table/towerofdeath.tbl": {
+    "loaded": true,
+    "enabled": 1,
+    "rows": [
+     200,
+     200,
+     200
+    ]
+   },
+   "dungeon/towers/table/towerofdespair.tbl": {
+    "loaded": false,
+    "enabled": 0,
+    "rows": [
+     0,
+     0,
+     0
+    ]
+   },
+   "dungeon/towers/table/towerofbloodyfight.tbl": {
+    "loaded": true,
+    "enabled": 1,
+    "rows": [
+     200,
+     200,
+     200
+    ]
+   },
+   "dungeon/warroom/table/towerofbloodyfight.tbl": {
+    "loaded": false,
+    "enabled": 0,
+    "rows": [
+     0,
+     0,
+     0
+    ]
+   },
+   "dungeon/event/dual/table/dual_raid.tbl": {
+    "loaded": true,
+    "enabled": 1,
+    "rows": [
+     200,
+     0,
+     0
+    ]
+   },
+   "dungeon/southerndale/table/southerndale.tbl": {
+    "loaded": false,
+    "enabled": 0,
+    "rows": [
+     0,
+     0,
+     0
+    ]
+   }
+  }
+ },
+ "tools_sha256": {
+  "audit_dnf_revision_dispatch.py": "d0ae6d0d5e79d0a3724717770c82aafabd954913d721cb15803353cf49e93a1b",
+  "audit_dnf_ice_particle_bindings.py": "660048b05498ea7dd11add2d7f3654083d99faafa8fc28b86ff198292fcdeed1",
+  "audit_dnf_native_strings.py": "60b30f2e51e5a744b106d8df955f5a7acbd7d4341ba51f52fd7a2941a5d29c6f",
+  "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a",
+  "audit_dnf_particle_axis.py": "59b463dcff6537cc89c597bcf2bb5f1f0a336eb25a67b09da4c228d524b1af8e",
+  "dnf_pvf.py": "85c92f7f970c7e59ae8b8e9756150b72e63c1ae4d1f456878a796e81458f4218",
+  "audit_dnf_design.py": "91b898c1807e8ab7628b5a6021802feaa1277109c270cd77ef5d47759f4b4248"
+ },
+ "static_provenance": [
+  {
+   "start": "0x7e1e1e",
+   "sha256": "83bcd70c6136680dbac92ad4ef4a347be73339917008ceb0f2b6db878137ca5e",
+   "instructions": [
+    "007E1E1E mov esi, dword ptr [ebp + 8]",
+    "007E1E21 mov ebx, ecx",
+    "007E1E23 lea ecx, [ebp - 0x834]",
+    "007E1E29 mov dword ptr [ebp - 0x83c], ebx",
+    "007E1E2F call 0x7e0610",
+    "007E1E34 lea eax, [ebp - 0x834]",
+    "007E1E3A push esi",
+    "007E1E3B push eax",
+    "007E1E3C mov dword ptr [ebp - 4], 0",
+    "007E1E43 call 0x12f3aa0",
+    "007E1E48 add esp, 8",
+    "007E1E4B test al, al"
+   ]
+  }
+ ],
+ "runs": [
+  {
+   "filename": "Dungeon/Event/Dual/table/Dual_Raid.tbl",
+   "poison": false,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/Event/Dual/table/Dual_Raid.tbl",
+   "copied": "Dungeon/Event/Dual/table/Dual_Raid.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/Event/Dual/table/Dual_Raid.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/Event/Dual/table/Dual_Raid.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/Event/Dual/table/Dual_Raid.tbl",
+     "filename_pointer": "0x608000a0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/Event/Dual/table/Dual_Raid.tbl",
+   "poison": true,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/Event/Dual/table/Dual_Raid.tbl",
+   "copied": "Dungeon/Event/Dual/table/Dual_Raid.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/Event/Dual/table/Dual_Raid.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/Event/Dual/table/Dual_Raid.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/Event/Dual/table/Dual_Raid.tbl",
+     "filename_pointer": "0x608000a0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/SouthernDale/table/SouthernDale.tbl",
+   "poison": false,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/SouthernDale/table/SouthernDale.tbl",
+   "copied": "Dungeon/SouthernDale/table/SouthernDale.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/SouthernDale/table/SouthernDale.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/SouthernDale/table/SouthernDale.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/SouthernDale/table/SouthernDale.tbl",
+     "filename_pointer": "0x608000c0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/SouthernDale/table/SouthernDale.tbl",
+   "poison": true,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/SouthernDale/table/SouthernDale.tbl",
+   "copied": "Dungeon/SouthernDale/table/SouthernDale.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/SouthernDale/table/SouthernDale.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/SouthernDale/table/SouthernDale.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/SouthernDale/table/SouthernDale.tbl",
+     "filename_pointer": "0x608000c0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/Towers/table/TowerOfBloodyFight.tbl",
+   "poison": false,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/Towers/table/TowerOfBloodyFight.tbl",
+   "copied": "Dungeon/Towers/table/TowerOfBloodyFight.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/Towers/table/TowerOfBloodyFight.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/Towers/table/TowerOfBloodyFight.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/Towers/table/TowerOfBloodyFight.tbl",
+     "filename_pointer": "0x608000c0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/Towers/table/TowerOfBloodyFight.tbl",
+   "poison": true,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/Towers/table/TowerOfBloodyFight.tbl",
+   "copied": "Dungeon/Towers/table/TowerOfBloodyFight.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/Towers/table/TowerOfBloodyFight.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/Towers/table/TowerOfBloodyFight.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/Towers/table/TowerOfBloodyFight.tbl",
+     "filename_pointer": "0x608000c0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/Towers/table/TowerOfDeath.tbl",
+   "poison": false,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/Towers/table/TowerOfDeath.tbl",
+   "copied": "Dungeon/Towers/table/TowerOfDeath.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/Towers/table/TowerOfDeath.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/Towers/table/TowerOfDeath.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/Towers/table/TowerOfDeath.tbl",
+     "filename_pointer": "0x608000a0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/Towers/table/TowerOfDeath.tbl",
+   "poison": true,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/Towers/table/TowerOfDeath.tbl",
+   "copied": "Dungeon/Towers/table/TowerOfDeath.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/Towers/table/TowerOfDeath.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/Towers/table/TowerOfDeath.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/Towers/table/TowerOfDeath.tbl",
+     "filename_pointer": "0x608000a0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/Towers/table/TowerOfDespair.tbl",
+   "poison": false,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/Towers/table/TowerOfDespair.tbl",
+   "copied": "Dungeon/Towers/table/TowerOfDespair.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/Towers/table/TowerOfDespair.tbl",
+     "filename_pointer": "0x608000a0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/Towers/table/TowerOfDespair.tbl",
+   "poison": true,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/Towers/table/TowerOfDespair.tbl",
+   "copied": "Dungeon/Towers/table/TowerOfDespair.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/Towers/table/TowerOfDespair.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/Towers/table/TowerOfDespair.tbl",
+     "filename_pointer": "0x608000a0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/Towers/table/TowerOfIllusion.tbl",
+   "poison": false,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/Towers/table/TowerOfIllusion.tbl",
+   "copied": "Dungeon/Towers/table/TowerOfIllusion.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/Towers/table/TowerOfIllusion.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/Towers/table/TowerOfIllusion.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/Towers/table/TowerOfIllusion.tbl",
+     "filename_pointer": "0x608000c0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/Towers/table/TowerOfIllusion.tbl",
+   "poison": true,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/Towers/table/TowerOfIllusion.tbl",
+   "copied": "Dungeon/Towers/table/TowerOfIllusion.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/Towers/table/TowerOfIllusion.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/Towers/table/TowerOfIllusion.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/Towers/table/TowerOfIllusion.tbl",
+     "filename_pointer": "0x608000c0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl",
+   "poison": false,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl",
+   "copied": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl",
+     "filename_pointer": "0x608000c0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl",
+   "poison": true,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl",
+   "copied": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "Dungeon/WarRoom/table/TowerOfBloodyFight.tbl",
+     "filename_pointer": "0x608000c0"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 11
+    }
+   ],
+   "steps": 59,
+   "trace_sha256": "54478e53dc2363b14f65f4e52f9ee4800f9728cd33db1316a5abb09a6d985899"
+  },
+  {
+   "filename": "a.tbl",
+   "poison": false,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "a.tbl",
+   "copied": "a.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "a.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "a.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "a.tbl",
+     "filename_pointer": "0x601004f4"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 10
+    }
+   ],
+   "steps": 58,
+   "trace_sha256": "d978d96be404dd054e582126ab7a7840b0661e1755e2b5e4c1f9da52c6169ba6"
+  },
+  {
+   "filename": "a.tbl",
+   "poison": true,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "a.tbl",
+   "copied": "a.tbl",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": "a.tbl"
+    },
+    {
+     "kind": "string_copy_fixture",
+     "source": "0x6fffeef8",
+     "destination": "0x601004f0",
+     "value": "a.tbl"
+    },
+    {
+     "kind": "load_boundary",
+     "this": "0x60100044",
+     "filename": "a.tbl",
+     "filename_pointer": "0x601004f4"
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 9
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 10
+    }
+   ],
+   "steps": 58,
+   "trace_sha256": "d978d96be404dd054e582126ab7a7840b0661e1755e2b5e4c1f9da52c6169ba6"
+  },
+  {
+   "filename": "",
+   "poison": false,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "",
+   "copied": "",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": ""
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 3
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 4
+    }
+   ],
+   "steps": 46,
+   "trace_sha256": "53f66392e71afe26d8b538cb3dd1101f800efda236ff504a1ec595b789018a82"
+  },
+  {
+   "filename": "",
+   "poison": true,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "",
+   "copied": "",
+   "events": [
+    {
+     "kind": "string_read_fixture",
+     "destination": "0x6000072c",
+     "value": ""
+    }
+   ],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "field_dispatch",
+     "start": "0x12f3ca1",
+     "end": "0x12fb1ee",
+     "steps": 28
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 3
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 4
+    }
+   ],
+   "steps": 46,
+   "trace_sha256": "53f66392e71afe26d8b538cb3dd1101f800efda236ff504a1ec595b789018a82"
+  },
+  {
+   "filename": null,
+   "poison": false,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "",
+   "copied": "",
+   "events": [],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 3
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 4
+    }
+   ],
+   "steps": 18,
+   "trace_sha256": "7065703383218471ad7083458d20485e006b6dc2e8b66c43e16bb6773140afe1"
+  },
+  {
+   "filename": null,
+   "poison": true,
+   "registration": {
+    "tag": "[revision table]",
+    "enum": 2141,
+    "map": "0x1d90f00"
+   },
+   "parsed": "",
+   "copied": "",
+   "events": [],
+   "phases": [
+    {
+     "phase": "registration",
+     "start": "0x12f9dd9",
+     "end": "0x451130",
+     "steps": 11
+    },
+    {
+     "phase": "record_to_object",
+     "start": "0x7e3be0",
+     "end": "0x7e3bff",
+     "steps": 3
+    },
+    {
+     "phase": "load_gate",
+     "start": "0x7de9d9",
+     "end": "0x7dea06",
+     "steps": 4
+    }
+   ],
+   "steps": 18,
+   "trace_sha256": "7065703383218471ad7083458d20485e006b6dc2e8b66c43e16bb6773140afe1"
+  }
+ ],
+ "blocks": [
+  {
+   "start": "0x7de9d9",
+   "end_exclusive": "0x7dea06",
+   "sha256": "be18fc3ca8c585fe67d11295cf3f1fce334105a394ad140671efacc80d60d95d",
+   "instructions": [
+    "007DE9D9 xor esi, esi",
+    "007DE9DB add esp, 8",
+    "007DE9DE cmp dword ptr [ebx + 0x504], esi",
+    "007DE9E4 je 0x7dea06",
+    "007DE9E6 cmp dword ptr [ebx + 0x508], 8",
+    "007DE9ED jb 0x7de9f7",
+    "007DE9EF mov eax, dword ptr [ebx + 0x4f4]",
+    "007DE9F5 jmp 0x7de9fd",
+    "007DE9F7 lea eax, [ebx + 0x4f4]",
+    "007DE9FD push eax",
+    "007DE9FE lea ecx, [ebx + 0x44]",
+    "007DEA01 call 0x9363b0"
+   ]
+  },
+  {
+   "start": "0x7e3be0",
+   "end_exclusive": "0x7e3bff",
+   "sha256": "027d194d544571b613293584320524571bcbd77f9f63c8281b7410200c638fd8",
+   "instructions": [
+    "007E3BE0 xor ebx, ebx",
+    "007E3BE2 cmp dword ptr [ebp - 0xf4], ebx",
+    "007E3BE8 je 0x7e3bff",
+    "007E3BEA push -1",
+    "007E3BEC push ebx",
+    "007E3BED lea eax, [ebp - 0x108]",
+    "007E3BF3 push eax",
+    "007E3BF4 lea ecx, [edi + 0x4f0]",
+    "007E3BFA call 0x405420"
+   ]
+  },
+  {
+   "start": "0x12f3ca1",
+   "end_exclusive": "0x12f3cac",
+   "sha256": "cf478c58a10775f5a0967cb507d657f819fcd938eb8ef6495293de90a5f85747",
+   "instructions": [
+    "012F3CA1 cmp eax, 0xff",
+    "012F3CA6 jg 0x12f47d4"
+   ]
+  },
+  {
+   "start": "0x12f47d4",
+   "end_exclusive": "0x12f47df",
+   "sha256": "72f4cfbbbc6a095c7ecb490f5c6f358244d1773e4ed51838770ae59c11c18e64",
+   "instructions": [
+    "012F47D4 cmp eax, 0x21d",
+    "012F47D9 jg 0x12f4fa7"
+   ]
+  },
+  {
+   "start": "0x12f4fa7",
+   "end_exclusive": "0x12f4fb2",
+   "sha256": "abfcfb331dc8a3cbc3e2438d4a2a0a6b514ce23b885fd450c25f33528d163a7d",
+   "instructions": [
+    "012F4FA7 cmp eax, 0x47f",
+    "012F4FAC jg 0x12f76b5"
+   ]
+  },
+  {
+   "start": "0x12f76b5",
+   "end_exclusive": "0x12f76c0",
+   "sha256": "6d75aa7f144ad91726f0ba12a5cb2aefcfecbdf437618c939633d34ec6309f95",
+   "instructions": [
+    "012F76B5 cmp eax, 0x58e",
+    "012F76BA jg 0x12f8690"
+   ]
+  },
+  {
+   "start": "0x12f8690",
+   "end_exclusive": "0x12f869b",
+   "sha256": "ca6a5465ba7a431e8684dbaadb035f417cc205522e7265b40faae01e6e240490",
+   "instructions": [
+    "012F8690 cmp eax, 0x6a5",
+    "012F8695 jg 0x12f91c7"
+   ]
+  },
+  {
+   "start": "0x12f91c7",
+   "end_exclusive": "0x12f91d2",
+   "sha256": "0c99347070921c24a213da030520a0d339822e9d26b6b9b85f7fafe0153dcdff",
+   "instructions": [
+    "012F91C7 cmp eax, 0x7a9",
+    "012F91CC jg 0x12fa0b8"
+   ]
+  },
+  {
+   "start": "0x12f9dcc",
+   "end_exclusive": "0x12f9e0e",
+   "sha256": "f93cac23ebc6974f7a3b0693a2244c0f38bb61fcefd4a1c97c41eec5ed9f0e57",
+   "instructions": [
+    "012F9DCC cmp byte ptr [0x1d90ef8], 0",
+    "012F9DD3 jne 0x12fa72c",
+    "012F9DD9 push 0x18759f8",
+    "012F9DDE call 0x1194fc0",
+    "012F9DE3 add esp, 4",
+    "012F9DE6 lea ecx, [ebp - 0x594]",
+    "012F9DEC push ecx",
+    "012F9DED lea edx, [ebp - 0xfe8]",
+    "012F9DF3 push edx",
+    "012F9DF4 mov ecx, 0x1d90f00",
+    "012F9DF9 mov dword ptr [ebp - 0x594], eax",
+    "012F9DFF mov dword ptr [ebp - 0x590], 0x85d",
+    "012F9E09 call 0x451130"
+   ]
+  },
+  {
+   "start": "0x12fa0b8",
+   "end_exclusive": "0x12fa0e7",
+   "sha256": "561a365c38806845e42be7b803c8a9c37f77cabd81d09227f468f3c2ad0c2fc6",
+   "instructions": [
+    "012FA0B8 cmp eax, 0x8ed",
+    "012FA0BD jg 0x12fad3e",
+    "012FA0C3 je 0x12faaba",
+    "012FA0C9 add eax, 0xfffff853",
+    "012FA0CE cmp eax, 0xeb",
+    "012FA0D3 ja 0x12fb1ee",
+    "012FA0D9 movzx eax, byte ptr [eax + 0x12fbe98]",
+    "012FA0E0 jmp dword ptr [eax*4 + 0x12fbe40]"
+   ]
+  },
+  {
+   "start": "0x12fa72c",
+   "end_exclusive": "0x12fa745",
+   "sha256": "6ccd1f3d6d80ded3394e5f8384151dc7fa59b1f37140b921f85812b6598e26e1",
+   "instructions": [
+    "012FA72C mov eax, dword ptr [ebp - 0x1f8]",
+    "012FA732 add eax, 0x72c",
+    "012FA737 push eax",
+    "012FA738 call 0x121a480",
+    "012FA73D add esp, 4",
+    "012FA740 jmp 0x12fb1ee"
+   ]
+  }
+ ],
+ "boundaries": [
+  "Separate bounded blocks with synthetic frames; registration map insertion/lookup and full DGN constructor are not replayed.",
+  "String input/copy are ABI fixtures; replay proves original destinations, gates and SSO selection, not std::wstring allocator behavior.",
+  "Final load is a call boundary linked to previous loader evidence by SHA, not full same-instance startup execution.",
+  "Inventory covers this archived PVF only. No field in a fresh-object fixture means no call here; other mode paths/later writes remain possible.",
+  "Three referenced old-format tables fail under the published reader fixture. Do not claim actual original dungeon failure without effective-version/runtime evidence."
+ ]
+}
