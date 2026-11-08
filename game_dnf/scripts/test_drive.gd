@@ -459,6 +459,7 @@ func run_combat() -> void:
 
 ## Behaviour regressions for confirmed adapter defects; these do not certify original fidelity.
 func run_skill_fidelity() -> void:
+	await check_bound_guard()
 	check_normalwave_level_data()
 	check_icewave_level_data()
 	check_icewave_chain()
@@ -515,6 +516,45 @@ func run_skill_fidelity() -> void:
 	await ticks(35)
 	check(Vector2(api.p("pos")).x>125.0 and is_equal_approx(Vector2(api.p("pos")).y,250.0),"normal wave applies its explicit native forward movement without depth drift")
 	check(float(api.e(enemy,"hp")) < 5000.0,"normal wave still deals damage through its projectile")
+
+func check_bound_guard() -> void:
+	for code in [KEY_D,KEY_W]:
+		api.restart()
+		api.set_god(false)
+		api.spawn_dummy(Vector2(550,250))
+		var slots: Array = []
+		slots.resize(12)
+		slots.fill("")
+		for index in slots.size():
+			if api.skill_slot_code(index) == code:slots[index] = "guard"
+		api.set_skill_slots(slots)
+		api.set_p("facing",1)
+		api.set_p("mp",30.0)
+		key(code)
+		await ticks(2)
+		var paid_mp := float(api.p("mp"))
+		check(api.p("state") == "guard" and api.view_pose() == "guard","bound guard key enters a defensive state on %s" % OS.get_keycode_string(code))
+		check(absf(30.0-paid_mp-float(api.move("guard")["mp"]))<0.2,"guard pays the source entry MP cost")
+		await ticks(15)
+		check(api.p("state") == "guard" and float(api.p("mp")) >= paid_mp,"holding guard maintains defense without paying again")
+		api.set_p("invuln_ms",0.0)
+		var hp := float(api.p("hp"))
+		api.damage_player(50,Vector2(api.p("pos"))+Vector2(30,0))
+		check(is_equal_approx(hp-float(api.p("hp")),10.0),"held guard reaches the frontal damage reducer")
+		key(code,false)
+		await ticks(2)
+		check(api.p("state") == "idle","releasing the bound key ends guard")
+		var before_repress := float(api.p("mp"))
+		key(code)
+		await ticks(2)
+		check(api.p("state") == "idle" and float(api.p("mp")) >= before_repress,"guard cooldown rejects re-entry without spending MP")
+		key(code,false)
+		await ticks(1)
+		key(KEY_G)
+		await ticks(2)
+		check(api.p("state") == "idle","rebinding guard leaves the empty G slot inactive")
+		key(KEY_G,false)
+		await ticks(1)
 
 func check_normalwave_phases() -> void:
 	for rates in [[1.0,1.0,50.0,150.0,450.0],[2.0,0.5,100.0,150.0,350.0],[0.5,2.0,25.0,225.0,650.0]]:
@@ -1382,17 +1422,17 @@ func run_session() -> void:
 	await ticks(2)
 	check(external.player.is_empty() and session.read_view().is_empty(),"external mode waits for start_room instead of auto-starting")
 	session.start_room({"run_id":"run-7","room_id":"lorien:2","room_index":2,"audio":{"muted":true},
-		"player":{"hp":300,"mp":40,"hp_max":525,"mp_max":180,"damage_multiplier":1.2,"weapon":"katana"}})
+		"player":{"hp":300,"mp":40,"hp_max":525,"mp_max":180,"damage_multiplier":1.2,"weapon":"katana","skill_slots":["","","guard"]}})
 	await ticks(1)
 	var view: Dictionary = session.read_view()
 	check(view["room_index"]==2 and view["hp"]==300 and absf(float(view["mp"])-40)<1 and view["weapon"]=="katana","start_room applies the room and the flow-supplied character snapshot")
 	check(view["hp_max"]==525 and view["room"]==3 and view["room_count"]==5 and is_equal_approx(float(view["attack_damage"]),30),"flow-supplied max HP and equipment multiplier drive the actual combat")
 	check(session.apply_effect({"kind":"heal","amount":150}) and session.read_view()["hp"]==450,"validated flow effect heals through the public entry")
-	key(KEY_RIGHT)
-	await ticks(1)
+	session.submit_skill(2,true)
+	await ticks(2)
+	check(external.player["state"]=="guard","flow skill-slot bridge starts held guard")
 	session.pause()
-	key(KEY_RIGHT,false)
-	check(not external.held.get(KEY_RIGHT,false) and not session.apply_effect({"kind":"heal","amount":10}),"pausing drops held input and refuses effects")
+	check(not external.held.get(KEY_D,false) and not session.apply_effect({"kind":"heal","amount":10}),"pausing drops held input and refuses effects")
 	key(KEY_TAB)
 	await ticks(1)
 	key(KEY_TAB,false)
@@ -1402,6 +1442,8 @@ func run_session() -> void:
 	await ticks(4)
 	check(session.read_view()["paused"] and float(external.elapsed_ms)==paused_elapsed,"session pause freezes only the managed combat")
 	session.resume()
+	await ticks(2)
+	check(external.player["state"]!="guard","guard does not persist after the flow clears held input")
 	external.god_mode = true
 	var count := 0
 	for enemy: Dictionary in external.monsters:

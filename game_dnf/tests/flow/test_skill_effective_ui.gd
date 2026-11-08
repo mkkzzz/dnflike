@@ -108,6 +108,9 @@ func run() -> void:
 		check(game.skill_catalog.table.skill_levels==battle.table.skill_levels,"preview includes entire effective skill context")
 		check(game.skill_catalog.table.job==battle.table.job and game.skill_catalog.table.weapon==battle.table.weapon,"preview job and weapon agree with combat")
 		check(values["mp"]==float(expected.get("mp",0)) and values["cooldown"]==float(expected.get("cool_ms",0))/1000.0,"variant resource values agree with combat")
+		var preview_move: Dictionary = game.skill_catalog.table.moves["normalwave"]
+		game.skill_catalog.get_profile_skill("guard",game.session.profile)
+		check(is_same(preview_move, game.skill_catalog.table.moves["normalwave"]), "selecting another skill in the same context reuses compiled preview moves")
 	game.windows.hide_tooltip()
 	battle.queue_free()
 	game.ui.free()

@@ -24,7 +24,11 @@ func get_profile_skill(id: String, profile: Dictionary) -> Dictionary:
 	var uid := String(profile.get("equipment",{}).get("weapon",""))
 	var definition := String(profile.get("gear",{}).get(uid,{}).get("definition",""))
 	var weapon := String(cfg["equipment"].get(definition,{}).get("weapon","katana"))
-	table.configure_skills(levels,String(profile.get("growtype","swordman")),weapon)
+	var job := String(profile.get("growtype","swordman"))
+	# Selection and hover only change the requested skill. Rebuild moves when
+	# ranks or the context for choosing native variants actually change.
+	if table.skill_levels != levels or table.job != job or table.weapon != weapon:
+		table.configure_skills(levels,job,weapon)
 	var result := _values(id)
 	result["rank"] = int(levels.get(id,0))
 	result["learned_rank"] = int(profile["skills"].get(id,0))

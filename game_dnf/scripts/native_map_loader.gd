@@ -12,16 +12,21 @@ const LAYER_BASE := {"distantback": -4000, "middleback": -3500, "bottom": -3000,
 class MapSprite extends Sprite2D:
 	var frames: Array = []
 	var textures: Array = []
-	var offsets: Array = []
 	var index := 0
 	var elapsed := 0.0
-	var playing := false
+	var loop_duration_ms := 0.0
+
+	func _ready() -> void:
+		set_process(false)
 
 	func setup(sprite: Dictionary, loader) -> bool:
 		frames = sprite.get("frames", [])
 		centered = false
+		var loop: bool = sprite.get("loop_flag") == 1
 		for f: Dictionary in frames:
 			textures.append(loader.texture(f.get("image")))
+			if loop:
+				loop_duration_ms += _frame_span(f)
 		if textures.all(func(t): return t == null):
 			return false
 		show_frame(0)
@@ -38,33 +43,45 @@ class MapSprite extends Sprite2D:
 		var c = f.get("color")
 		modulate = Color8(int(c[0]), int(c[1]), int(c[2]), int(c[3])) if c is Array and c.size() == 4 else Color.WHITE
 		if bool(f.get("additive", false)):
-			var m := CanvasItemMaterial.new()
-			m.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
-			material = m
+			if material == null:
+				var m := CanvasItemMaterial.new()
+				m.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+				material = m
+		else:
+			material = null
 
-	func play_once() -> void:
+	func play() -> void:
 		elapsed = 0.0
 		show_frame(0)
-		playing = frames.size() > 1
+		set_process(frames.size() > 1)
 
 	func _process(delta: float) -> void:
-		if not playing:return
 		elapsed += delta * 1000.0
-		var f: Dictionary = frames[index]
-		var span := float(f.get("delay_ms", 0) if f.get("delay_ms") != null else 0)
-		var nxt := index + 1
-		if nxt >= frames.size():
-			playing = false
-			return
-		var items: Dictionary = f.get("items", {})
-		if int(items.get("10", 0)) == 1 and span > 0.0:
-			var a: Color = _frame_color(f)
-			var b: Color = _frame_color(frames[nxt])
-			modulate = a.lerp(b, clampf(elapsed / span, 0.0, 1.0))
-		if elapsed >= span:
+		var loop := loop_duration_ms > 0.0
+		if loop and elapsed >= loop_duration_ms:
+			elapsed = fposmod(elapsed, loop_duration_ms)
+		var frame_index := index
+		var span := _frame_span(frames[frame_index])
+		while elapsed >= span and (loop or frame_index + 1 < frames.size()):
 			elapsed -= span
-			show_frame(nxt)
-			if nxt == frames.size() - 1:playing = false
+			frame_index = (frame_index + 1) % frames.size()
+			span = _frame_span(frames[frame_index])
+		if frame_index != index:
+			show_frame(frame_index)
+		var nxt := index + 1
+		if nxt == frames.size():
+			if not loop:
+				set_process(false)
+				return
+			nxt = 0
+		var f: Dictionary = frames[index]
+		var items: Dictionary = f.get("items", {})
+		if int(items.get("10", 0)) == 1:
+			modulate = _frame_color(f).lerp(_frame_color(frames[nxt]), elapsed / span)
+
+	func _frame_span(f: Dictionary) -> float:
+		var delay = f.get("delay_ms")
+		return maxf(0.0, float(delay)) if delay != null else 0.0
 
 	func _frame_color(f: Dictionary) -> Color:
 		var c = f.get("color")
@@ -213,7 +230,11 @@ func set_gates_open(root: Node2D, open: bool) -> void:
 	for node: MapSprite in root.get_meta("gate_nodes", []):
 		var state := String(node.get_meta("gate_state"))
 		node.visible = state == "always" or (state == "closed" and not open) or (state == "open" and open)
-		if open and state == "open":node.play_once()
+		if state != "open":continue
+		if open:
+			node.play()
+		else:
+			node.set_process(false)
 
 ## World is shifted by -camera_x; background layers counter-shift by their scroll factor.
 func apply_camera(root: Node2D, camera_x: float) -> void:

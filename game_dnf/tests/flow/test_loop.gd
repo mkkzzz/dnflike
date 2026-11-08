@@ -8,6 +8,8 @@ var captured: Array = []
 var controls: Dictionary = {}
 const Language = preload("res://ui/flow/language_guard.gd")
 const GateLight = preload("res://town/gate_light.gd")
+const MapLoader = preload("res://scripts/native_map_loader.gd")
+const MapStage = preload("res://view/map_stage.gd")
 
 func _ready() -> void:
 	capture = "--capture" in OS.get_cmdline_user_args()
@@ -187,6 +189,45 @@ func unit_states() -> void:
 	impossible_store.path = "res://../temp/loop_tests/unit_profile.json/nested/file.json"
 	check(not impossible_store.write(loaded), "write failure is reported without replacing primary save")
 
+func check_lorien_gate_animation(dungeon: Dictionary) -> void:
+	var loader := MapLoader.new()
+	var loaded := loader.load_export(dungeon["map_export"])
+	check(loaded, "Lorien gate test loads the production map export")
+	if not loaded:return
+	var stage := MapStage.new()
+	stage.setup(loader)
+	add_child(stage)
+	var room := {"placement": dungeon["rooms"][0]["placement"], "cleared": false}
+	stage.show_room(room)
+	var light: MapLoader.MapSprite
+	var door: MapLoader.MapSprite
+	if stage.root != null:
+		for part: MapLoader.MapSprite in stage.root.get_meta("gate_nodes", []):
+			if part.get_meta("gate_role") == "light":light = part
+			if part.get_meta("gate_role") == "door_open":door = part
+	check(light != null and door != null, "Lorien entrance has original light and opening door parts")
+	if light == null or door == null:
+		stage.free()
+		return
+	check(not light.visible and not light.is_processing(), "closed Lorien gate keeps its opening light idle")
+	room["cleared"] = true
+	stage.show_room(room)
+	light._process(0.25)
+	check(light.visible and is_equal_approx(light.modulate.a, 0.5), "cleared Lorien gate fades its light in over the first ANI frame")
+	light._process(0.5)
+	check(light.is_processing() and is_equal_approx(light.modulate.a, 0.5), "Lorien gate light fades back toward the first frame instead of freezing")
+	light._process(2.25)
+	check(light.is_processing() and is_zero_approx(light.modulate.a), "Lorien gate light wraps on its original one-second cycle")
+	door._process(1.25)
+	check(is_zero_approx(door.modulate.a) and not door.is_processing(), "Lorien opening door stays faded out after one playback")
+	room["cleared"] = false
+	stage.show_room(room)
+	check(not light.visible and not light.is_processing(), "closing the Lorien gate stops its loop")
+	room["cleared"] = true
+	stage.show_room(room)
+	check(light.visible and light.is_processing() and is_zero_approx(light.modulate.a), "reopening starts the Lorien gate light at the original first frame")
+	stage.free()
+
 func run() -> void:
 	await ticks(4)
 	var character_tests = load("res://tests/flow/test_characters.gd").new()
@@ -226,6 +267,7 @@ func run() -> void:
 		get_tree().quit(1 if failures else 0)
 		return
 	unit_states()
+	check_lorien_gate_animation(game.session.dungeons["lorien"])
 	check(Language.contains_korean(String.chr(0xac00)) and Language.contains_korean(String.chr(0x3131)), "Korean syllables and Jamo are rejected")
 	check(not Language.contains_korean("背包 负重 普通难度 X HP 评价 S"), "Chinese text and normal key/rank notation are accepted")
 	check(game.town.loader.errors.is_empty(), "all native town textures load")

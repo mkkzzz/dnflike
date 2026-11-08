@@ -338,6 +338,18 @@ const SKILL_SLOT_KEYS := SkillSlots.KEYS
 func skill_slot_index(code: int) -> int:
 	return SKILL_SLOT_KEYS.find(code)
 
+func skill_request(code: int) -> String:
+	var index := skill_slot_index(code)
+	if index < 0:return ""
+	var id := String(skill_slots[index])
+	if code == KEY_G and id == "" and not skill_slots.has("guard"):return "guard"
+	return id
+
+func guard_input_held() -> bool:
+	for code: int in SKILL_SLOT_KEYS:
+		if held.get(code,false) and skill_request(code) == "guard":return true
+	return false
+
 func configure_skill_slots(slots: Array) -> void:
 	skill_slots = []
 	skill_slots.resize(SkillSlots.COUNT)
@@ -557,7 +569,7 @@ func buffering(code: int) -> void:
 	elif code == KEY_X and String(player["action"]) in ["attack1","attack2","attack3","frenzy1","frenzy2","frenzy3","frenzy4","ghoststep_attack1","ghoststep_attack2","kalla_attack1","kalla_attack2","kalla_attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]:player["queued_combo"] = true
 	elif code == KEY_Z:player["queued_skill"] = "upper"
 	elif skill_slot_index(code) >= 0:
-		var id := String(skill_slots[skill_slot_index(code)])
+		var id := skill_request(code)
 		if id == "backstep" and backstep_allowed():player["queued_backstep"] = true
 		elif id != "":player["queued_skill"] = id
 	elif code in [KEY_C,KEY_SPACE] and String(player["action"]) == "upper":player["queued_jump"] = true
@@ -650,6 +662,7 @@ func step_game(ms: float) -> void:
 	var move := Vector2(float(bool(held.get(KEY_RIGHT,false)))-float(bool(held.get(KEY_LEFT,false))),float(bool(held.get(KEY_DOWN,false)))-float(bool(held.get(KEY_UP,false))))
 	if move.x == 0 or signi(int(move.x)) != run_direction:run_direction = 0
 	if move.length_squared()>1:move = move.normalized()
+	if player["state"] == "guard" and not guard_input_held():player["state"] = "idle"
 	# Local hitstop: only the attacker and its targets freeze; inputs are buffered meanwhile.
 	if float(player["stuck_ms"]) > 0:
 		player["stuck_ms"] = maxf(0,float(player["stuck_ms"])-ms)
@@ -735,7 +748,7 @@ func step_player(ms: float, move: Vector2) -> void:
 			if String(player["state"]) == "action":buffering(code)
 			else:start_action("upper")
 		elif skill_slot_index(code) >= 0:
-			var id := String(skill_slots[skill_slot_index(code)])
+			var id := skill_request(code)
 			if id == "backstep" and backstep_allowed():start_action(id,true)
 			elif String(player["state"]) == "action":buffering(code)
 			else:
@@ -754,10 +767,7 @@ func step_player(ms: float, move: Vector2) -> void:
 		move_player(Vector2(-int(player["facing"])*float(rules["backstep"]["speed"])*dt,0))
 		if float(player["clock"])>=float(rules["backstep"]["duration_ms"]) and float(player["z"])==0:player["state"] = "idle"
 	elif state != "dead":
-		var g_slot := skill_slot_index(KEY_G)
-		var g_slot_empty := g_slot < 0 or String(skill_slots[g_slot]) == ""
-		if g_slot_empty and held.get(KEY_G,false) and float(player["z"])==0 and float(player["vz"])<=0 and int(skill_levels.get("guard",1))>0:
-			player["state"] = "guard"
+		if state == "guard":
 			if move.x!=0:player["facing"] = 1 if move.x>0 else -1
 		elif move.length_squared()>0:
 			if move.x!=0:player["facing"] = 1 if move.x>0 else -1
@@ -936,6 +946,10 @@ func start_action(name: String, cancel := false) -> bool:
 	if required_effect != "" and (numeric_player == null or not numeric_player.effects.active.has(required_effect)):return reject_action(name,"effect")
 	var airborne := float(player["z"])>0 or float(player["vz"])>0
 	if airborne != bool(m.get("air",false)):return reject_action(name,"state")
+	var guard := name == "guard"
+	if guard:
+		if not guard_input_held():return reject_action(name,"state")
+		if player["state"] == "guard":return true
 	var backward_hop := String(m.get("movement","")) == "backstep"
 	if backward_hop:
 		if not backstep_allowed():return reject_action(name,"state")
@@ -969,13 +983,20 @@ func start_action(name: String, cancel := false) -> bool:
 		return true
 	end_action_fx()
 	if name == "air_attack":player["air_attack_used"] = true
-	player["state"] = "action"
-	player["action"] = name
+	player["state"] = "guard" if guard else "action"
+	player["action"] = "" if guard else name
 	player["native_phase"] = {}
 	player["queued_combo"] = false
 	player["queued_skill"] = ""
 	player["queued_jump"] = false
 	player["queued_backstep"] = false
+	if guard:
+		# Source guard.skl keeps the defensive state while the skill key is held.
+		# MP is paid at entry above; animation duration does not end this state.
+		player["clock"] = 0.0
+		action_seq += 1
+		bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"instance":action_seq})
+		return true
 	if String(m.get("effect_id","")) != "":
 		player["stage"] = 0
 		player["clock"] = 0.0
