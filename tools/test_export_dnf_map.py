@@ -54,6 +54,36 @@ class Rules(unittest.TestCase):
 
 
 class LibraryExport(unittest.TestCase):
+    def test_gate_loop_refresh_matches_source_and_preserves_other_bytes(self):
+        lock = json.loads(LOCK.read_text(encoding='utf-8'))
+        library = cache_home() / lock['version'] / 'library_v1'
+        if not (library / 'pvf_config.sqlite').exists():
+            self.skipTest('full library not synced')
+        source = ROOT / 'game_dnf/assets_local/flow_v1/skytower_v1/draconiantower/map_export.json'
+        export = json.loads(source.read_bytes())
+        light = next(p['sprite'] for gate in export['dungeon']['gate_objects'].values()
+                     for p in gate['parts'] if p['role'] == 'light')
+
+        def encode():
+            return (json.dumps(export, ensure_ascii=False, indent=1) + '\n').replace('\n', '\r\n').encode('utf-8')
+
+        (ROOT / 'temp').mkdir(exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=ROOT / 'temp') as folder:
+            good, bad = Path(folder) / 'good.json', Path(folder) / 'bad.json'
+            light['loop_flag'] = 1
+            expected = encode()
+            light['loop_flag'] = 0
+            before = encode()
+            good.write_bytes(before)
+            light['ani_sha256'] = '0' * 64
+            bad.write_bytes(encode())
+            with self.assertRaisesRegex(ValueError, 'stale gate ANI'):
+                m.refresh_gate_loops([good, bad], library)
+            self.assertEqual(good.read_bytes(), before)
+            self.assertEqual(m.refresh_gate_loops([good], library), {good: 1})
+            self.assertEqual(good.read_bytes(), expected)
+            self.assertEqual(m.refresh_gate_loops([good], library), {})
+
     def test_lorien_export_is_traceable(self):
         lock = json.loads(LOCK.read_text(encoding='utf-8'))
         library = cache_home() / lock['version'] / 'library_v1'

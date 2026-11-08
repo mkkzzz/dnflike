@@ -1425,7 +1425,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisleftlight.ani",
        "ani_sha256": "a2dc03b5e4f45710f75ad900846d14d4da3cd01981503f064415bb6484cddb84",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -1858,7 +1858,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisleftlight.ani",
        "ani_sha256": "a2dc03b5e4f45710f75ad900846d14d4da3cd01981503f064415bb6484cddb84",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -2471,7 +2471,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisrightlight.ani",
        "ani_sha256": "ad5cea376ccf3a268b5377347b6232cd0d24b0ea3f4bb4bb76d448a217b793bd",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -2896,7 +2896,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisrightlight.ani",
        "ani_sha256": "ad5cea376ccf3a268b5377347b6232cd0d24b0ea3f4bb4bb76d448a217b793bd",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -3467,7 +3467,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisuplight.ani",
        "ani_sha256": "29c40dbf85f54d86398491ab372291e75d83d638a6b26742f59265ee3d01c42a",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -3823,7 +3823,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisuplight.ani",
        "ani_sha256": "29c40dbf85f54d86398491ab372291e75d83d638a6b26742f59265ee3d01c42a",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -4132,7 +4132,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisdownlight.ani",
        "ani_sha256": "b77bb2c6d478da202d2b579731ecde3c5fcc859a72d8343ba8d0000cecad9315",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -4441,7 +4441,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act1/animation/granflorisdownlight.ani",
        "ani_sha256": "b77bb2c6d478da202d2b579731ecde3c5fcc859a72d8343ba8d0000cecad9315",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {

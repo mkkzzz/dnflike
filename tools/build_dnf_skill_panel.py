@@ -44,6 +44,7 @@ RUNTIME = GAME / 'data/skill_runtime.json'
 
 PANEL_BANK = 'Interface2/UI/SkillShop/Skillshop.img'
 WINDOW_BANK = 'Interface/WindowCommon.img'
+SP_DIGIT_BANK = 'Common/digit/SP/SP.img'
 TREE_SP_PATH = 'clientonly/skilltree/swordman_sp.co'
 TREE_TP_PATH = 'clientonly/skilltree/swordman_tp.co'
 TREE_INDEX_PATH = 'clientonly/skillshoptreespindex.co'
@@ -376,11 +377,45 @@ def build_rank_controls(src: B.Source, parts: dict) -> None:
             }
 
 
+def build_sp_digits(src: B.Source, parts: dict) -> None:
+    """Pack the ten original digit crops with no scaling or recoloring."""
+    control = ui_control(src, SKILL_WINDOW_UI, '2000')
+    if control[0] != '[numberset]' or control[5].lower() != SP_DIGIT_BANK.lower():
+        raise ValueError('Unexpected SP digit control')
+    frames = list(range(1, 11))
+    glyphs = [src.frame(SP_DIGIT_BANK, frame)[0].convert('RGBA') for frame in frames]
+    atlas = Image.new('RGBA', (sum(glyph.width for glyph in glyphs), max(glyph.height for glyph in glyphs)))
+    regions = []
+    x = 0
+    for glyph in glyphs:
+        atlas.paste(glyph, (x, 0))
+        regions.append([x, 0, glyph.width, glyph.height])
+        x += glyph.width
+    target = OUT / 'v4/sp_digits.png'
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.exists():
+        with Image.open(target) as previous:
+            if previous.size != atlas.size or previous.convert('RGBA').tobytes() != atlas.tobytes():
+                raise ValueError('SP digit art differs from the existing revision')
+    else:
+        atlas.save(target)
+    parts['sp_digits'] = {
+        'file': 'v4/sp_digits.png', 'size': list(atlas.size), 'frames': frames,
+        'regions': regions, 'bank': SP_DIGIT_BANK,
+        'bank_sha256': src.sources['sprite/' + SP_DIGIT_BANK.lower()],
+        'ui_reference': {'path': SKILL_WINDOW_UI, 'control': '2000',
+                         'position': control[2:4], 'parameters': control[6:]},
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--library', type=Path, default=None)
-    parser.add_argument('--rank-controls-only', action='store_true',
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--rank-controls-only', action='store_true',
                         help='Only export the audited +/- revision and update its manifest entries')
+    mode.add_argument('--sp-digits-only', action='store_true',
+                      help='Only export the original SP digits and update their manifest entry')
     args = parser.parse_args()
     if args.rank_controls_only:
         manifest_path = OUT / 'manifest.json'
@@ -392,6 +427,16 @@ def main() -> int:
             raise ValueError('Skillshop bank version differs from the manifest')
         manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
         print('[SKILL_PANEL] audited rank controls: 6 native 18x18 sprites')
+        return 0
+    if args.sp_digits_only:
+        manifest_path = OUT / 'manifest.json'
+        manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+        source = B.Source(args.library)
+        if source.lib.raw(SKILL_WINDOW_UI)[1] != manifest['source']['tree_sources'][SKILL_WINDOW_UI]:
+            raise ValueError('Skillshop window version differs from the manifest')
+        build_sp_digits(source, manifest['parts'])
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+        print('[SKILL_PANEL] original SP digits: 10 glyphs')
         return 0
     pack = json.loads(PACK.read_text(encoding='utf-8'))
     runtime = json.loads(RUNTIME.read_text(encoding='utf-8'))
@@ -423,6 +468,7 @@ def main() -> int:
         parts[key] = {'file': 'parts/%s.png' % key, 'size': list(image.size), 'frame': frame, 'note': note}
     ui_layout = build_ui_revision(src, parts)
     build_rank_controls(src, parts)
+    build_sp_digits(src, parts)
 
     skills = []
     missing_icon = []

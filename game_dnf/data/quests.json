@@ -1414,7 +1414,6 @@
           100,
           1
         ],
-        "drop_adaptation": "Verified 100 percent fixed-one tuple; four source difficulties map to currently supported three modes",
         "text_path": "n_quest/handonmyre/sunderlandpoison/epic_7_sunderlandpoison_shauta_2.qst",
         "raw_reward": [
           0,
@@ -1473,6 +1472,7 @@
           "difficulty": [
             "normal",
             "adventure",
+            "expert",
             "king"
           ],
           "item": "original_4169",

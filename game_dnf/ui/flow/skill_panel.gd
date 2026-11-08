@@ -12,6 +12,7 @@ const TREE_SIZE := Vector2(540, 342)
 const TREE_INSET := Vector2(24, 8)
 const NODE_SLOT := 38
 const NODE_CENTER := 19
+const SP_DIGIT_SLOTS := 6
 const JOB_NAMES := {
 	"swordman": "鬼剑士",
 	"weaponmaster": "剑魂",
@@ -35,6 +36,7 @@ var _root: Control
 var _node_views: Dictionary = {}
 var _edge_views: Array = []
 var _sp_label: Label
+var _sp_digits_view: Control
 var _tip_label: Label
 var _effective_levels: Dictionary = {}
 
@@ -171,10 +173,48 @@ func _header(root: Control) -> void:
 	_sp_label = sp_label
 	sp_label.size = Vector2(44, 16)
 	sp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_sp_digits_view = null
+	var atlas := _part("sp_digits")
+	var regions: Array = parts.get("sp_digits", {}).get("regions", [])
+	if atlas != null and regions.size() == 10:
+		var digits := Control.new()
+		digits.name = "skill_sp_digits"
+		digits.position = Vector2(364, 47)
+		digits.size = Vector2(44, 9)
+		digits.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		digits.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		root.add_child(digits)
+		for i in SP_DIGIT_SLOTS:
+			skin.image_region(digits, atlas, Rect2(0, 0, 6, 9), Vector2.ZERO)
+		_sp_digits_view = digits
+	_set_sp(sp)
 	skin.label(root, "%s  Lv.%d" % [JOB_NAMES.get(job, job), int(profile["level"])],
 		Vector2(20, 49), 12, Color("a7dd74"))
 	skin.label(root, "SP 技能", Vector2(20, 77), 11, Color("e8ddb9"))
 	skin.label(root, "剩余 SP", Vector2(342, 25), 10, Color("c9c0a8"))
+
+func _set_sp(amount: int) -> void:
+	_sp_label.text = str(amount)
+	if not is_instance_valid(_sp_digits_view):return
+	# Six widest glyphs plus the gaps fit the existing 44 px value area.
+	var value := _sp_label.text
+	var fits := amount >= 0 and value.length() <= SP_DIGIT_SLOTS
+	_sp_label.visible = not fits
+	_sp_digits_view.visible = fits
+	if not fits:return
+	var regions: Array = parts["sp_digits"]["regions"]
+	var x := _sp_digits_view.size.x
+	for i in SP_DIGIT_SLOTS:
+		var glyph: TextureRect = _sp_digits_view.get_child(i)
+		glyph.visible = i < value.length()
+		if not glyph.visible:continue
+		var r: Array = regions[int(value[value.length() - 1 - i])]
+		var texture := glyph.texture as AtlasTexture
+		texture.region = Rect2(r[0], r[1], r[2], r[3])
+		glyph.size = texture.region.size
+		x -= glyph.size.x
+		glyph.position.x = x
+		x -= 1.0
 
 func _tree(root: Control, branch: Dictionary) -> void:
 	var skin = game.skin
@@ -375,7 +415,7 @@ func _replace_detail(keep_scroll := false) -> void:
 func _refresh_progress() -> void:
 	if not is_instance_valid(_root) or _root.is_queued_for_deletion():return
 	_effective_levels = Numbers.Skills.effective_levels(game.session.profile["skills"],Numbers.shared_config())
-	_sp_label.text = str(Numbers.Skills.available(game.session.profile, Numbers.shared_config()))
+	_set_sp(Numbers.Skills.available(game.session.profile, Numbers.shared_config()))
 	for key: String in _node_views:_refresh_node(key)
 	_replace_detail(true)
 

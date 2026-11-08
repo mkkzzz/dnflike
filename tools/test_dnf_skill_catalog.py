@@ -109,6 +109,23 @@ class SkillPanelSourceTest(unittest.TestCase):
         self.assertEqual(board.crop((0, 0, 12, 13)).tobytes(), top_left.convert('RGBA').tobytes())
         self.assertEqual(self.manifest['ui_layout']['detail_body']['size'], [179, 260])
 
+    def test_sp_digits_preserve_source_frames(self):
+        from PIL import Image
+        part = self.manifest['parts']['sp_digits']
+        reference = part['ui_reference']
+        values = self.build.ui_control(self.source, reference['path'], reference['control'])
+        self.assertEqual((values[0], values[5], values[2:4], values[6:]),
+                         ('[numberset]', part['bank'], reference['position'], reference['parameters']))
+        with Image.open(ROOT / 'game_dnf/assets_local/skill_panel' / part['file']) as exported:
+            atlas = exported.convert('RGBA')
+        self.assertEqual(len(part['regions']), 10)
+        self.assertEqual(part['frames'], list(range(1, 11)))
+        for frame, (x, y, width, height) in zip(part['frames'], part['regions']):
+            image, _ = self.source.frame(part['bank'], frame)
+            self.assertEqual((width, height), image.size)
+            self.assertEqual(atlas.crop((x, y, x + width, y + height)).tobytes(), image.convert('RGBA').tobytes())
+        self.assertEqual(self.source.sources['sprite/' + part['bank'].lower()], part['bank_sha256'])
+
     def test_rank_buttons_are_plus_minus_not_reset_or_lock(self):
         from PIL import Image
         for name, first in [('plus', 59), ('minus', 62)]:

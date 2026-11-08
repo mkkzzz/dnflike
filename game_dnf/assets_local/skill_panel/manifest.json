@@ -393,6 +393,106 @@
     0
    ],
    "note": "Original +/- sprite; learning placement is E-ADAPT, not Explain 4000/4001"
+  },
+  "sp_digits": {
+   "file": "v4/sp_digits.png",
+   "size": [
+    58,
+    9
+   ],
+   "frames": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "regions": [
+    [
+     0,
+     0,
+     6,
+     9
+    ],
+    [
+     6,
+     0,
+     4,
+     9
+    ],
+    [
+     10,
+     0,
+     6,
+     9
+    ],
+    [
+     16,
+     0,
+     6,
+     9
+    ],
+    [
+     22,
+     0,
+     6,
+     9
+    ],
+    [
+     28,
+     0,
+     6,
+     9
+    ],
+    [
+     34,
+     0,
+     6,
+     9
+    ],
+    [
+     40,
+     0,
+     6,
+     9
+    ],
+    [
+     46,
+     0,
+     6,
+     9
+    ],
+    [
+     52,
+     0,
+     6,
+     9
+    ]
+   ],
+   "bank": "Common/digit/SP/SP.img",
+   "bank_sha256": "43bf8749b84f753b91aa767e93cb0b4939bdc81d035e3a0a2d3af99cc528a401",
+   "ui_reference": {
+    "path": "ui/skill/skillshopwindow.ui",
+    "control": "2000",
+    "position": [
+     56,
+     6
+    ],
+    "parameters": [
+     6,
+     0,
+     5,
+     -3,
+     1,
+     0,
+     0
+    ]
+   }
   }
  },
  "ui_layout": {

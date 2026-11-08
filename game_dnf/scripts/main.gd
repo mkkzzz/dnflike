@@ -321,6 +321,7 @@ func begin_room(spec: Dictionary) -> void:
 func new_player() -> Dictionary:
 	return {"id":PLAYER_ID,"pos":Vector2(125,250),"z":0.0,"vz":0.0,"air_ms":0.0,"hp":max_hp,"mp":max_mp,
 		"facing":1,"state":"idle","action":"","stage":0,"clock":0.0,"motion_clock":0.0,
+		"guard_recoil_ms":0.0,
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
 		"invuln_ms":0.0,"flash_ms":0.0,"landing_ms":0.0,"buff_ms":0.0,"cooldowns":{},"hits":{},
 		"queued_combo":false,"queued_skill":"","queued_jump":false,"queued_backstep":false,"fx_tag":"",
@@ -662,7 +663,10 @@ func step_game(ms: float) -> void:
 	var move := Vector2(float(bool(held.get(KEY_RIGHT,false)))-float(bool(held.get(KEY_LEFT,false))),float(bool(held.get(KEY_DOWN,false)))-float(bool(held.get(KEY_UP,false))))
 	if move.x == 0 or signi(int(move.x)) != run_direction:run_direction = 0
 	if move.length_squared()>1:move = move.normalized()
-	if player["state"] == "guard" and not guard_input_held():player["state"] = "idle"
+	if player["state"] == "guard":
+		if float(player["stuck_ms"]) <= 0.0:
+			player["guard_recoil_ms"] = maxf(0.0,float(player["guard_recoil_ms"])-ms)
+		if float(player["guard_recoil_ms"]) <= 0.0 and not guard_input_held():player["state"] = "idle"
 	# Local hitstop: only the attacker and its targets freeze; inputs are buffered meanwhile.
 	if float(player["stuck_ms"]) > 0:
 		player["stuck_ms"] = maxf(0,float(player["stuck_ms"])-ms)
@@ -768,7 +772,7 @@ func step_player(ms: float, move: Vector2) -> void:
 		if float(player["clock"])>=float(rules["backstep"]["duration_ms"]) and float(player["z"])==0:player["state"] = "idle"
 	elif state != "dead":
 		if state == "guard":
-			if move.x!=0:player["facing"] = 1 if move.x>0 else -1
+			if move.x!=0 and float(player["guard_recoil_ms"]) <= 0.0:player["facing"] = 1 if move.x>0 else -1
 		elif move.length_squared()>0:
 			if move.x!=0:player["facing"] = 1 if move.x>0 else -1
 			var speed := float(rules["player"]["run_speed"] if run_direction!=0 else rules["player"]["walk_speed"])
@@ -994,6 +998,7 @@ func start_action(name: String, cancel := false) -> bool:
 		# Source guard.skl keeps the defensive state while the skill key is held.
 		# MP is paid at entry above; animation duration does not end this state.
 		player["clock"] = 0.0
+		player["guard_recoil_ms"] = 0.0
 		action_seq += 1
 		bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"instance":action_seq})
 		return true
@@ -1346,7 +1351,8 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 	if god_mode or float(player["invuln_ms"])>0 or finished:return "blocked"
 	var was_action := String(player["state"]) == "action"
 	var front_hit := (Vector2(source["pos"]).x-Vector2(player["pos"]).x)*int(player["facing"])>=0
-	var guarded: bool = String(player["state"])=="guard" and front_hit
+	var manual_guard: bool = String(player["state"])=="guard" and front_hit
+	var guarded := manual_guard
 	var auto_guard: Dictionary = active_effect("autoguard")
 	if not guarded and not auto_guard.is_empty() and front_hit:
 		var auto_rank := int(auto_guard.get("rank",1))
@@ -1361,6 +1367,11 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 			var definition: Dictionary = Numbers.shared_config()["skills"]["guard"]
 			guard_factor = maxf(0,float(definition["guard_factor"])-(int(skill_levels.get("guard",1))-1)*float(definition["guard_per_level"]))
 		taken *= guard_factor
+		if manual_guard and amount > 0:
+			# CC5E78..CC5E98 reads guard.skl column 1, and CB1139 compares the state clock to it.
+			var rank := int(skill_levels.get("guard",1))
+			var row: Array = Numbers.Skills.sample(Numbers.record("guard"),rank)["level_row"]
+			if row.size() > 1:player["guard_recoil_ms"] = float(row[1])
 	elif numeric_player == null and float(player["buff_ms"])>0:taken *= float(rules["buff"]["damage_taken"])
 	var keiga: Dictionary = active_effect("keiga")
 	if taken > 0 and not keiga.is_empty() and int(keiga.get("absorb_remaining",0)) > 0:
@@ -1845,7 +1856,11 @@ func player_ani() -> Array:
 	if state=="hurt":return [String(player["hit_motion"]),0.0]
 	if state=="air":return ["overturn",0.0]
 	if state=="down":return ["down",Kernel.Reaction.down_clock(player,rp,table.player_timeline("down"))]
-	if state=="guard":return ["guard",0.0]
+	if state=="guard":
+		var timeline := table.player_timeline("guard")
+		# Native guard state 0x13 seeks frame 0 while holding and frame 1 on recoil.
+		var recoil_clock := float(timeline[1]["start_ms"]) if timeline.size()>1 and float(player["guard_recoil_ms"])>0.0 else 0.0
+		return ["guard",recoil_clock]
 	if state=="backstep":return ["jump",minf(float(player["clock"]),600) if float(player["vz"])>=0 else 10680.0]
 	if float(player["z"])>0:return ["jump",minf(float(player["air_ms"]),600) if float(player["vz"])>=0 else 10680.0]
 	if float(player["landing_ms"])>0:return ["sit",0.0]

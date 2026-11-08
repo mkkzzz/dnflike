@@ -29,8 +29,9 @@ func fixture():
 func death(s, entity:=1, mob:="monster/lugaru/penril.mob") -> Dictionary:
 	return {"type":"combat.monster_defeated","run_id":s.run.id,"event_id":"poison:"+str(entity),"entity_id":entity,"room_id":"poison:boss","position":Vector2(100,200),"monster_id":mob,"boss":true}
 
-func begin(s) -> void:
+func begin(s, difficulty := "normal") -> void:
 	s.quest_command("quest.accept",{"id":"gran.poison_scent"},{"npc":"gsd","nearby":true})
+	s.command("flow.difficulty",{"id":difficulty})
 	s.command("flow.depart",{"dungeon":"sunderland_poison"})
 
 func _initialize() -> void:
@@ -46,6 +47,11 @@ func run() -> void:
 	s.command("flow.depart",{"dungeon":"sunderland_poison"})
 	s.combat_event(death(s))
 	check(s.Loot.pending(s.run,"poison:boss").is_empty(),"killing source boss without accepting task cannot generate its quest item")
+	for difficulty: String in ["normal","adventure","expert","king"]:
+		var trial = fixture()
+		begin(trial, difficulty)
+		check(trial.run.difficulty == difficulty and Drops.entries(trial.profile, trial.run, death(trial), trial.quests.catalog.definitions).size() == 1,
+			"source Penril drop qualifies in " + difficulty)
 	s=fixture();begin(s)
 	var event:=death(s)
 	var eligible_rules: Array=Drops.entries(s.profile,s.run,event,s.quests.catalog.definitions)

@@ -14,9 +14,11 @@ import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import sqlite3
+import tempfile
 
 from audit_dnf_design import Strings, connect_readonly, decode_tokens, digest
 from dnf_asset_store import LOCK, ROOT, cache_home
+from dnf_pvf import Library as PvfLibrary
 
 SCHEMA = 'dnf_native_map/1'
 REVISION = 1
@@ -551,17 +553,90 @@ def run(library: Path, dungeon: str, output: Path, extra_maps: list[str]) -> dic
     return result
 
 
+def refresh_gate_loops(paths: list[Path], library: Path) -> dict[Path, int]:
+    """Update only gate LOOP fields after matching the archive and raw ANI bytes."""
+    def frame_data(record: dict) -> list:
+        return [(frame['frame'], frame.get('delay_ms'), frame.get('items', {})) for frame in record['frames']]
+
+    planned = []
+    verified = {}
+    with closing(PvfLibrary(library)) as lib:
+        source_hash = digest(lib.db_path)
+        for path in paths:
+            before = path.read_bytes()
+            doc = json.loads(before)
+            source = doc.get('source', {})
+            if (doc.get('schema') != SCHEMA or source.get('asset_version') != lib.asset_version
+                    or source.get('config_db_sha256') != source_hash):
+                raise ValueError(f'{path}: map export does not match the source archive')
+            newline = '\r\n' if b'\r\n' in before else '\n'
+
+            def encode() -> bytes:
+                return (json.dumps(doc, ensure_ascii=False, indent=1, allow_nan=False) + '\n').replace('\n', newline).encode('utf-8')
+
+            if before != encode():
+                raise ValueError(f'{path}: noncanonical map JSON would change unrelated bytes')
+            changes = 0
+            for gate in doc['dungeon']['gate_objects'].values():
+                for part in gate['parts']:
+                    sprite = part.get('sprite')
+                    if sprite is None:
+                        continue
+                    ani_path = sprite['ani']
+                    if ani_path not in verified:
+                        raw = lib.raw(ani_path)
+                        parsed = lib.animation(ani_path)
+                        if (raw is None or parsed is None or parsed['status'] != 'parsed'
+                                or hashlib.sha256(raw[0]).hexdigest() != raw[1] or parsed['sha256'] != raw[1]):
+                            raise ValueError(f'{path}: unverified gate ANI {ani_path}')
+                        verified[ani_path] = (raw[1], parsed['metadata'])
+                    ani_sha, meta = verified[ani_path]
+                    if sprite['ani_sha256'] != ani_sha or frame_data(sprite) != frame_data(meta):
+                        raise ValueError(f'{path}: stale gate ANI or frame metadata for {ani_path}')
+                    flag = meta.get('global_items', {}).get('0', 0)
+                    if type(flag) is not int or flag not in (0, 1):
+                        raise ValueError(f'{path}: unrecognized LOOP value for {ani_path}: {flag!r}')
+                    if sprite['loop_flag'] != flag:
+                        sprite['loop_flag'] = flag
+                        changes += 1
+            if changes:
+                planned.append((path, before, encode(), changes))
+
+    # Validate the full batch before replacing any file. Each replacement is atomic.
+    for path, before, _, _ in planned:
+        if path.read_bytes() != before:
+            raise ValueError(f'{path}: changed during refresh')
+    for path, _, after, _ in planned:
+        with tempfile.NamedTemporaryFile(dir=path.parent, prefix='.gate-loop-', delete=False) as stream:
+            stream.write(after)
+            temporary = Path(stream.name)
+        try:
+            temporary.replace(path)
+        finally:
+            temporary.unlink(missing_ok=True)
+    return {path: changes for path, _, _, changes in planned}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--library', type=Path)
     parser.add_argument('--dungeon', default='dungeon/act1/lorien.dgn')
     parser.add_argument('--map', action='append', default=[], dest='maps', help='Extra exact map path to include')
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--refresh-gate-loops', type=Path, nargs='+', metavar='MAP_EXPORT',
+                        help='Refresh gate ANI LOOP fields in existing map exports without exporting images')
     args = parser.parse_args()
     lock = json.loads(LOCK.read_text(encoding='utf-8'))
     library = (args.library or cache_home() / lock['version'] / 'library_v1').resolve()
     output = (args.output or DEFAULT_OUTPUT / PurePosixPath(args.dungeon.lower()).stem).resolve()
     allowed = [(ROOT / 'temp').resolve(), (ROOT / 'game_dnf/assets_local').resolve()]
+    if args.refresh_gate_loops:
+        paths = list(dict.fromkeys(path.resolve() for path in args.refresh_gate_loops))
+        if any(path.name != 'map_export.json' or not any(base in path.parents for base in allowed) for path in paths):
+            parser.error('Refresh inputs must be map_export.json in temp/ or game_dnf/assets_local/')
+        changes = refresh_gate_loops(paths, library)
+        print(f'GATE LOOP refreshed {sum(changes.values())} records in {len(changes)} maps')
+        return
     if not any(output == base or base in output.parents for base in allowed):
         parser.error('Export output must stay in git-ignored temp/ or game_dnf/assets_local/')
     result = run(library, args.dungeon, output, args.maps)

@@ -184,19 +184,20 @@ def main():
         if number == 110:
             q['consume'] = {'original_4169':1}
             raw = fields['[monster reward item]']
-            if len(raw) % 7:
+            if not raw or len(raw) % 7:
                 raise ValueError('Malformed quest monster reward tuple')
-            rules = []
+            difficulty_names = ('normal', 'adventure', 'expert', 'king')
+            difficulties = []
             for i in range(0,len(raw),7):
                 monster,dungeon,difficulty,item,amount,chance,limit=raw[i:i+7]
-                if (monster,dungeon,item,amount,chance,limit) != (5004,6,4169,1,100,1) or difficulty not in range(4):
+                if (monster,dungeon,item,amount,chance,limit) != (5004,6,4169,1,100,1) or type(difficulty) is not int or difficulty not in range(len(difficulty_names)):
                     raise ValueError('Unverified poison quest drop semantics')
-            rules.append({'monster':'monster/lugaru/penril.mob','dungeon':'sunderland_poison',
-                          'difficulty':['normal','adventure','king'],'item':'original_4169',
-                          'amount':1,'chance':100,'limit':1})
-            q['drops'] = rules
+                difficulties.append(difficulty_names[difficulty])
+            q['drops'] = [{'monster':'monster/lugaru/penril.mob','dungeon':'sunderland_poison',
+                           'difficulty':list(dict.fromkeys(difficulties)),'item':'original_4169',
+                           'amount':1,'chance':100,'limit':1}]
             q['source']['raw_monster_reward_item'] = raw
-            q['source']['drop_adaptation'] = 'Verified 100 percent fixed-one tuple; four source difficulties map to currently supported three modes'
+            q['source'].pop('drop_adaptation', None)
         if number in [108,4302]:
             q['objectives'][0]['target'] = 'monster/goblin/kinol.mob'
         q['name'] = words['[name]']

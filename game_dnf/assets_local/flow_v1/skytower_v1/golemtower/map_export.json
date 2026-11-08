@@ -1274,7 +1274,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftlightl.ani",
        "ani_sha256": "2b7deafe2a375b3d3da47dbff24244d76cfc64bcf895dffd5d384fa85c4391a5",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -1340,7 +1340,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftlightr.ani",
        "ani_sha256": "27039ef590f0bf08ec921f195e5960108ac14ff35295a7a304df9194fa41773d",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -1780,7 +1780,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftlightl.ani",
        "ani_sha256": "2b7deafe2a375b3d3da47dbff24244d76cfc64bcf895dffd5d384fa85c4391a5",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -1846,7 +1846,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02leftlightr.ani",
        "ani_sha256": "27039ef590f0bf08ec921f195e5960108ac14ff35295a7a304df9194fa41773d",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -2390,7 +2390,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightlightl.ani",
        "ani_sha256": "d8712f1bb9ee269105a42e0d8147a36131149aae297e313408058999e867195e",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -2456,7 +2456,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightlightr.ani",
        "ani_sha256": "6005fe0291c3535f59e9fb119abdffc5c72e9c487b627a050118539942cddacc",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -2943,7 +2943,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightlightl.ani",
        "ani_sha256": "d8712f1bb9ee269105a42e0d8147a36131149aae297e313408058999e867195e",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -3009,7 +3009,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02rightlightr.ani",
        "ani_sha256": "6005fe0291c3535f59e9fb119abdffc5c72e9c487b627a050118539942cddacc",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -3503,7 +3503,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder5m.ani",
        "ani_sha256": "20ccf1c81a1effba26e006189c86a83f02173454b7bd08672b76dbd19dd1ee54",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 5200,
        "frames": [
         {
@@ -3600,7 +3600,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder4m.ani",
        "ani_sha256": "c65ca34f2e5797382ef32b6f548b7cfcd1ecb29cb93687a076459f27b07f9a7c",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 5400,
        "frames": [
         {
@@ -3697,7 +3697,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder3m.ani",
        "ani_sha256": "77217e7e23e5c54f890c88edb2ebaf1be9400d157075f4a944efcaa112eaf1c3",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 5200,
        "frames": [
         {
@@ -3794,7 +3794,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder2m.ani",
        "ani_sha256": "c5ad174b5a61d98dc86d9541072cf3434dc74c47d56de6039b1608b8dc7bba02",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 5400,
        "frames": [
         {
@@ -3891,7 +3891,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder6m.ani",
        "ani_sha256": "8d6db41c39e6354a472c49399d0c6eb9c1152d727cabc5ec7b6bef141c7c701d",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 6000,
        "frames": [
         {
@@ -4111,7 +4111,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02uplightl.ani",
        "ani_sha256": "a0dff0f4cc389fbcde557750710bc3ef21a4d33134786cd884c8ab9fa52f33ac",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -4177,7 +4177,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02uplightr.ani",
        "ani_sha256": "5efb17450b840fa69adfa651ffb4d90d7f574d54a27c7777a4f8072c6fe44cc6",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -4575,7 +4575,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder3m.ani",
        "ani_sha256": "77217e7e23e5c54f890c88edb2ebaf1be9400d157075f4a944efcaa112eaf1c3",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 5200,
        "frames": [
         {
@@ -4672,7 +4672,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder4m.ani",
        "ani_sha256": "c65ca34f2e5797382ef32b6f548b7cfcd1ecb29cb93687a076459f27b07f9a7c",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 5400,
        "frames": [
         {
@@ -4769,7 +4769,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder2m.ani",
        "ani_sha256": "c5ad174b5a61d98dc86d9541072cf3434dc74c47d56de6039b1608b8dc7bba02",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 5400,
        "frames": [
         {
@@ -4866,7 +4866,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder5m.ani",
        "ani_sha256": "20ccf1c81a1effba26e006189c86a83f02173454b7bd08672b76dbd19dd1ee54",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 5200,
        "frames": [
         {
@@ -4963,7 +4963,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02upladder6m.ani",
        "ani_sha256": "8d6db41c39e6354a472c49399d0c6eb9c1152d727cabc5ec7b6bef141c7c701d",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 6000,
        "frames": [
         {
@@ -5183,7 +5183,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02uplightl.ani",
        "ani_sha256": "a0dff0f4cc389fbcde557750710bc3ef21a4d33134786cd884c8ab9fa52f33ac",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -5249,7 +5249,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02uplightr.ani",
        "ani_sha256": "5efb17450b840fa69adfa651ffb4d90d7f574d54a27c7777a4f8072c6fe44cc6",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -5573,7 +5573,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02downlightl.ani",
        "ani_sha256": "af90a6a3d00feb6e86039fa10029bcf316efed7a50a0bebc8f0a0ca7e56b1e71",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -5639,7 +5639,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02downlightr.ani",
        "ani_sha256": "1000a32e28d75236890ae38ef9f4c1e692116dbbc2e84ea14216278079c1294c",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -5963,7 +5963,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02downlightl.ani",
        "ani_sha256": "af90a6a3d00feb6e86039fa10029bcf316efed7a50a0bebc8f0a0ca7e56b1e71",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {
@@ -6029,7 +6029,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/pathgate/act2/animation/02downlightr.ani",
        "ani_sha256": "1000a32e28d75236890ae38ef9f4c1e692116dbbc2e84ea14216278079c1294c",
-       "loop_flag": 0,
+       "loop_flag": 1,
        "duration_ms": 1000,
        "frames": [
         {

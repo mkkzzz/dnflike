@@ -16,8 +16,10 @@ func run() -> void:
 	print("[POISON_CHAPTER] MODE ","gm_quick" if quick else "full_route")
 	var state=game.Session.new();state.profile.name="毒香验证";state.profile.level=10
 	state.profile.town_location="hendon_auction";state.profile.town_position=[1496.0,245.0]
-	for id: String in state.quests.catalog.definitions:
-		if id in ["gran.poison_scent","legacy.trial"]:continue
+	# Seed the original prerequisite chain through QST109, leaving other quests available.
+	for id: String in ["elvengard.meet_linus", "lorien.first_clear", "lorien.goblin_noise", "elvengard.seria_fate",
+		"hendon.meet_pungjin", "gran.tau_rage", "gran.cat_trouble", "gran.meet_shylock", "gran.kaino_legend",
+		"gran.goblin_mutation", "gran.meet_gsd"]:
 		var entry: Dictionary=state.quests.new_entry(state.quests.catalog.definitions[id]);entry.state="completed"
 		state.profile.quest_state.entries[id]=entry;state.profile.quest_state.transactions[state.Quests.transaction_id(id)]=true
 	state.Inventory.give(state.profile,"original_27800",1)
@@ -32,6 +34,7 @@ func run() -> void:
 	check(game.session.quests.status(game.session.profile,"gran.poison_scent")=="active","source collection task accepts at its original NPC")
 	game.show_overlay("")
 	if quick:
+		check(game.act("flow.difficulty", {"id":"expert"}), "normal difficulty command selects Expert for the quest route")
 		game.selected_dungeon="sunderland_poison";game.depart()
 	else:
 		await walk_to(Vector2(388,295));await walk_to(Vector2(388,359));await cross("auction_to_main","hendon_main")
@@ -47,6 +50,7 @@ func run() -> void:
 	await ticks(6)
 	check(game.combat!=null and game.session.state=="battle","ws1 registered monsters preflight and mount the poison map")
 	if game.combat==null:get_tree().quit(1);return
+	if quick:check(game.session.run.difficulty=="expert", "live poison run consumes the selected Expert difficulty")
 	keep_quest_drop_on_ground=true
 	if quick:
 		check(game.debug_panel.execute("win").ok,"authorized GM win skips dungeon combat and emits source death/settlement events")

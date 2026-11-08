@@ -528,12 +528,16 @@ func check_bound_guard() -> void:
 		for index in slots.size():
 			if api.skill_slot_code(index) == code:slots[index] = "guard"
 		api.set_skill_slots(slots)
+		var rank := 1 if code == KEY_D else 4
+		game.skill_levels["guard"] = rank
+		game.table.configure_skills(game.skill_levels)
 		api.set_p("facing",1)
 		api.set_p("mp",30.0)
 		key(code)
 		await ticks(2)
 		var paid_mp := float(api.p("mp"))
 		check(api.p("state") == "guard" and api.view_pose() == "guard","bound guard key enters a defensive state on %s" % OS.get_keycode_string(code))
+		check(int(game.view.player_actor.sample().get("img_frame",-1))==123,"held guard shows the first original body image")
 		check(absf(30.0-paid_mp-float(api.move("guard")["mp"]))<0.2,"guard pays the source entry MP cost")
 		await ticks(15)
 		check(api.p("state") == "guard" and float(api.p("mp")) >= paid_mp,"holding guard maintains defense without paying again")
@@ -541,8 +545,20 @@ func check_bound_guard() -> void:
 		var hp := float(api.p("hp"))
 		api.damage_player(50,Vector2(api.p("pos"))+Vector2(30,0))
 		check(is_equal_approx(hp-float(api.p("hp")),10.0),"held guard reaches the frontal damage reducer")
+		var recovery_ms := 200.0 if rank == 1 else 140.0
+		check(is_equal_approx(float(game.player.get("guard_recoil_ms",0.0)),recovery_ms),"blocked hit reads source guard recovery at rank %d" % rank)
+		await ticks(2)
+		check(int(game.view.player_actor.sample().get("img_frame",-1))==124,"blocked hit shows the second original body image")
+		var boxes: Array = game.player_damage_boxes()
+		check(not boxes.is_empty() and is_equal_approx(boxes[0].position.x,Vector2(api.p("pos")).x-31.0),"guard recoil uses the damage box of the same original frame")
+		if code == KEY_D:
+			await ticks(13)
+			check(api.p("state") == "guard" and int(game.view.player_actor.sample().get("img_frame",-1))==123,"recovery returns to the held frame while the key remains down")
 		key(code,false)
 		await ticks(2)
+		if code == KEY_W:
+			check(api.p("state") == "guard" and int(game.view.player_actor.sample().get("img_frame",-1))==124,"release waits for the current guarded-hit reaction")
+			await ticks(10)
 		check(api.p("state") == "idle","releasing the bound key ends guard")
 		var before_repress := float(api.p("mp"))
 		key(code)
