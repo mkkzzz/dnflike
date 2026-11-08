@@ -365,7 +365,7 @@
    "rooms": [
     {
      "name": "龙人之塔",
-     "placement": "2_0:(2,0)d1601",
+     "placement": "2_0:(2,0)s1601",
      "next": "left"
     },
     {
@@ -409,7 +409,7 @@
    "rooms": [
     {
      "name": "石巨人塔",
-     "placement": "0_2:(0,1)2002",
+     "placement": "0_2:(0,2)s2003",
      "next": "right"
     },
     {
@@ -522,7 +522,7 @@
    "rooms": [
     {
      "name": "城主宫殿",
-     "placement": "0_5:(0,5)d2406",
+     "placement": "0_5:(0,5)s2407",
      "next": "right"
     },
     {
@@ -571,7 +571,7 @@
    "rooms": [
     {
      "name": "幽暗回廊",
-     "placement": "0_0:(0,0)d2401",
+     "placement": "0_0:(0,0)s2401",
      "next": "right"
     },
     {
@@ -620,7 +620,7 @@
    "rooms": [
     {
      "name": "人偶之塔",
-     "placement": "0_1:(0,1)d1616",
+     "placement": "0_1:(0,1)s1616",
      "next": "down"
     },
     {
@@ -669,7 +669,7 @@
    "rooms": [
     {
      "name": "龙人之塔·亚蒙下层",
-     "placement": "2_0:(2,0)d1601",
+     "placement": "2_0:(2,0)s1601",
      "next": "left"
     },
     {

@@ -461,6 +461,7 @@ func run_combat() -> void:
 func run_skill_fidelity() -> void:
 	await check_bound_guard()
 	check_guard_attack_types()
+	await check_auto_guard()
 	check_normalwave_level_data()
 	check_icewave_level_data()
 	check_icewave_chain()
@@ -602,6 +603,52 @@ func check_guard_attack_types() -> void:
 		game.land_hit(attacker,game.player,hit,Vector3(pos.x,pos.y,0.0),-int(sample[3]),100.0)
 		check(is_equal_approx(before-float(api.p("hp")),float(sample[4])),"guard damage entry applies expected HP loss for "+String(sample[0]))
 		check((api.p("state") == "guard") == (int(sample[3]) > 0),"guard outcome preserves facing gate for "+String(sample[0]))
+
+func check_auto_guard() -> void:
+	check(DetRng.new(19754).range_int(0,9999)==499 and DetRng.new(9469).range_int(0,9999)==500,"auto-guard fixture brackets the first source rank at rolls 499 and 500")
+	var magical: Dictionary = game.table.atk("monster/characterstatue/attackinfo/magicianattack.atk")
+	for sample: Dictionary in [
+		{"name":"below 5% cutoff","seed":19754,"blocks":true},
+		{"name":"at 5% cutoff","seed":9469},
+		{"name":"rear magic at current effective rank","seed":6754,"guard_rank":4,"live_rank":20,"rear":true,"magic":true,"blocks":true},
+		{"name":"missing ordinary guard rank","seed":19754,"guard_rank":0,"cast_rank":20,"live_rank":20},
+		{"name":"missing current automatic rank","seed":19754,"cast_rank":20,"live_rank":0},
+		{"name":"removed effect","seed":19754,"live_rank":20,"remove":true},
+		{"name":"downed character","seed":19754,"cast_rank":20,"live_rank":20,"state":"down"},
+		{"name":"airborne character","seed":19754,"cast_rank":20,"live_rank":20,"state":"jump","height":12.0},
+		{"name":"controlled character","seed":19754,"cast_rank":20,"live_rank":20,"controlled":true},
+	]:
+		api.restart()
+		api.set_god(false)
+		game.numeric_player = preload("res://stats/api/actor_numbers.gd").new()
+		game.numeric_player.configure({"numbers":Numbers.shared_config()["base"]})
+		var guard_rank := int(sample.get("guard_rank",1))
+		game.skill_levels = {"guard":guard_rank,"autoguard":int(sample.get("cast_rank",1))}
+		game.table.configure_skills(game.skill_levels)
+		api.set_p("mp",500.0)
+		check(api.start_action("autoguard"),"auto guard begins through the live skill entry")
+		game.step_action(game.action_duration("autoguard")+1.0,Vector2.ZERO)
+		game.skill_levels["autoguard"] = int(sample.get("live_rank",1))
+		if sample.get("remove",false):game.apply_effect({"kind":"remove_effect","id":"autoguard"})
+		if sample.get("controlled",false):check(game.apply_effect({"kind":"effect","id":"freeze"}),"control gate fixture applies freeze")
+		api.set_p("state",String(sample.get("state","idle")))
+		api.set_p("z",float(sample.get("height",0.0)))
+		api.set_p("facing",1)
+		api.set_p("invuln_ms",0.0)
+		api.spawn_dummy(Vector2(550,250))
+		var side := -1 if sample.get("rear",false) else 1
+		var source := {"pos":Vector2(api.p("pos"))+Vector2(30.0*side,0.0)}
+		game.rng.reseed(int(sample["seed"]))
+		var hp := float(api.p("hp"))
+		var reaction: String = game.hurt_player(100,source,magical if sample.get("magic",false) else {},-side)
+		var blocks := bool(sample.get("blocks",false))
+		var taken := (70.0 if sample.get("magic",false) else 60.0) if blocks else 100.0
+		check((reaction=="guard")==blocks and is_equal_approx(hp-float(api.p("hp")),taken),"auto-guard actual damage and trigger for "+String(sample["name"]))
+		if blocks:
+			await ticks(2)
+			check(api.p("state")=="guard" and api.p("facing")==side and int(game.view.player_actor.sample().get("img_frame",-1))==124,"automatic block faces the hit and uses source recoil without a held key")
+			await ticks(14)
+			check(api.p("state")=="idle","automatic guard ends when recoil finishes without a held key")
 
 func check_normalwave_phases() -> void:
 	for rates in [[1.0,1.0,50.0,150.0,450.0],[2.0,0.5,100.0,150.0,350.0],[0.5,2.0,25.0,225.0,650.0]]:

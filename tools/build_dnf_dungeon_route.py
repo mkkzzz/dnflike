@@ -72,10 +72,19 @@ def shortest(cells: dict, start: tuple[int, int], goal: tuple[int, int]) -> list
     return None
 
 
-def pick_map(cell: dict, role: str) -> str:
+def source_start_maps(cell: dict, maps: dict) -> list[str]:
+    return [path for path in cell.get('map_candidates') or [] if maps[path].get('start_area')]
+
+
+def pick_map(cell: dict, role: str, maps: dict) -> str:
     candidates = [str(c) for c in cell.get('map_candidates') or []]
     if role == 'start':
-        preferred = [c for c in candidates if Path(c).stem.lower().startswith('s')]
+        # Some Act 2 start MAPs prefix their stem with the authored cell.
+        # Their actual spawn area is stronger evidence than a filename prefix.
+        start_maps = source_start_maps(cell, maps)
+        prefix = f"({cell['x']},{cell['y']})"
+        matching_cell = [path for path in start_maps if Path(path).stem.startswith(prefix)]
+        preferred = matching_cell or start_maps or [c for c in candidates if Path(c).stem.lower().startswith('s')]
     else:
         preferred = [c for c in candidates if not Path(c).stem.lower().startswith(('s', 'b'))]
     chosen = (preferred or candidates)
@@ -117,7 +126,7 @@ def build(export: dict, start_cell=None, boss_cell=None) -> list[dict] | None:
     for index, (cell, door) in enumerate(path):
         rooms.append({
             'name': '',
-            'placement': '%d_%d:%s' % (cell[0], cell[1], pick_map(cells[cell], 'start' if index == 0 else 'normal')),
+            'placement': '%d_%d:%s' % (cell[0], cell[1], pick_map(cells[cell], 'start' if index == 0 else 'normal', maps)),
             'next': door,
         })
     rooms.append({

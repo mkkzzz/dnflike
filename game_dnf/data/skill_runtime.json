@@ -463,25 +463,22 @@
    "stacking": "refresh"
   },
   "khazan_aura": {
-   "aura": {
-    "damage_percent": 31,
-    "radius": 250
-   },
-   "duration_ms": 25000,
+   "duration_level_row": 1,
    "max_stacks": 1,
    "modifiers": [
     {
+     "level_row": 0,
      "op": "add",
-     "stat": "strength",
-     "value": 31
+     "stat": "strength"
     },
     {
+     "level_row": 2,
      "op": "add",
-     "stat": "intelligence",
-     "value": 31
+     "stat": "intelligence"
     }
    ],
    "name": "刀魂之卡赞",
+   "source_skill": "khazan",
    "stacking": "refresh"
   },
   "magical_memory": {
@@ -2864,36 +2861,35 @@
    ]
   },
   "khazan": {
+   "fidelity_pending": [
+    "cast_frame",
+    "area_membership_geometry",
+    "area_animation",
+    "voice"
+   ],
    "name": "刀魂之卡赞",
    "skill": "skill/swordman/khazan.skl",
    "stages": [
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_khazan_down_45a97897"
-      }
-     ],
+     "fx": [],
      "hits": [
       {
-       "atk": "",
-       "derived": "skillfx_khazan_down_45a97897",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0.0,
-        425.0
-       ]
-      },
-      {
        "at": 320,
-       "effects": [],
-       "life_ms": 25000,
+       "native_controller": {
+        "duration_col": 1,
+        "kind": "khazan_field",
+        "radius": 250
+       },
        "object": "passiveobject/character/swordman/khazan.obj",
-       "percent_col": 0,
-       "speed": 0.0
+       "offset": [
+        122,
+        0,
+        0
+       ],
+       "percent": 0,
+       "speed": 0
       }
      ]
     }

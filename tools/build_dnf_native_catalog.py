@@ -59,6 +59,11 @@ QUEST_METADATA = {
 QUEST_BEHAVIOR = {
     '[depend give item]', '[clear reward item]', '[monster reward item]',
 }
+# The six typed MOB drops in G.S.D.'s Draconian Tower quest have been cross-checked
+# against this archive's DGN, monster and item lists. Other typed drops stay blocked.
+VERIFIED_ENEMY_REWARD_QUESTS = {
+    4306: '8959c548a60f0f101cca8af0e625f6ec630586c38ded2995e0fb0f487c0bcff0',
+}
 
 
 def dumps(value):
@@ -298,10 +303,12 @@ def pair_items(values):
 def compile_quest(number, path, sha, fields, words, existing, items, monster_index, *, custom_events=None, dungeon_index=None, npc_index=None, map_index=None):
     plan, reasons = quest_plan(fields)
     quest_dungeons = DUNGEONS if dungeon_index is None else dungeon_index
+    verified_enemy_rewards = VERIFIED_ENEMY_REWARD_QUESTS.get(number) == sha
+    behavior = QUEST_BEHAVIOR | {'[enemy reward item]'} if verified_enemy_rewards else QUEST_BEHAVIOR
     if number is None:reasons.append('unindexed')
     if not words.get('[name]') or not words.get('[condition message]'):reasons.append('missing_chinese_text')
     if any(BAD.search(v) for v in words.values()):reasons.append('invalid_display_text')
-    reasons.extend('field:' + k for k in fields if k not in QUEST_META | QUEST_METADATA | QUEST_BEHAVIOR)
+    reasons.extend('field:' + k for k in fields if k not in QUEST_META | QUEST_METADATA | behavior)
     if scalar(fields, '[grade]') not in ['[epic]', '[achievement]', '[common unique]', '[training]', '[normaly repeat]', '[daily]']:
         reasons.append('quest_grade:' + str(scalar(fields, '[grade]')))
     npc_registry=NPCS if npc_index is None else npc_index
@@ -389,7 +396,18 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
         for item in grant_items:
             if item not in items:reasons.append('grant_item_unavailable:'+item)
     drops=[]
-    raw_drops=fields.get('[monster reward item]',[])
+    raw_drops=list(fields.get('[monster reward item]',[]))
+    if verified_enemy_rewards:
+        typed_drops = fields.get('[enemy reward item]', [])
+        if not typed_drops or len(typed_drops) % 8:
+            reasons.append('enemy_reward_item_grammar')
+        else:
+            for index in range(0, len(typed_drops), 8):
+                enemy, kind, dungeon, difficulty, item, amount, chance, limit = typed_drops[index:index+8]
+                if type(kind) is not int or kind != 1:
+                    reasons.append('enemy_reward_item_nonmonster')
+                    continue
+                raw_drops.extend((enemy, dungeon, difficulty, item, amount, chance, limit))
     if raw_drops:
         if len(raw_drops)%7:
             reasons.append('monster_reward_item_grammar')
@@ -445,7 +463,7 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
          'giver': giver or '', 'receiver': receiver or '', 'objectives': objectives,
          'reward': reward, 'consume': consume, 'enabled': True, 'abandonable': '[cant giveup]' not in fields,
          'source_metadata': {
-             tag: fields[tag] for tag in sorted(QUEST_METADATA | QUEST_BEHAVIOR) if tag in fields
+             tag: fields[tag] for tag in sorted(QUEST_METADATA | behavior) if tag in fields
          }}
     if grant_items:q['grant_items']=grant_items
     if drops:q['drops']=drops

@@ -3,7 +3,7 @@
  "evidence": "原版 .qst 结构化字段 E-PARSE；总账保留名称/描述字符串引用，完整简体正文见 native_data_v1，启用名称取运行定义",
  "summary": {
   "total": 3716,
-  "implemented": 120,
+  "implemented": 121,
   "failed": 0,
   "pending_name_refs": 1383,
   "groups": {
@@ -80910,9 +80910,9 @@
     5000
    ],
    "name_ref": "string:332158",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4306",
+   "local_name": "不寻常的天空之城气息"
   },
   {
    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_sky_gsd_3.qst",

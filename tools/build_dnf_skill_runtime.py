@@ -306,14 +306,14 @@ ROOT_EFFECTS = {
     },
     "khazan_aura": {
         "name": "刀魂之卡赞",
-        "duration_ms": 25000,
+        "source_skill": "khazan",
+        "duration_level_row": 1,
         "stacking": "refresh",
         "max_stacks": 1,
         "modifiers": [
-            {"stat": "strength", "op": "add", "value": 31},
-            {"stat": "intelligence", "op": "add", "value": 31},
+            {"stat": "strength", "op": "add", "level_row": 0},
+            {"stat": "intelligence", "op": "add", "level_row": 2},
         ],
-        "aura": {"radius": 250, "damage_percent": 31},
     },
     "saya_aura": {
         "name": "冰霜之萨亚",
@@ -1077,6 +1077,18 @@ def build_move(
             "object": OBJ_ROOT + "normalwave.obj", "at": sum(delays[:3]),
             "speed": 0.0, "life_ms": -1, "percent_col": 2, "fixed_col": 0, "size_col": 1,
         }], "fx": [{"key": slash, "at": delays[0], "action_clock": True}]}]
+    if key == "khazan":
+        path = add_object(objects, OBJ_ROOT + "khazan.obj")
+        if not path:
+            raise ValueError("Missing original Khazan object 20011")
+        # CD6026 -> 86DE68/86DE70: the original spawn mirrors a 122 px X offset.
+        # Cast-frame timing and circular area membership still use adapters.
+        result["fidelity_pending"] = ["cast_frame", "area_membership_geometry", "area_animation", "voice"]
+        stages[:] = [{"ani": CAST_ANIM, "atk": "", "hits": [{
+            "object": path, "at": 320, "offset": [122, 0, 0],
+            "percent": 0, "speed": 0,
+            "native_controller": {"kind": "khazan_field", "duration_col": 1, "radius": 250},
+        }], "fx": []}]
     if key in ("icewave", "firewave"):
         # 0xCC899D CHR motion 9; 0xCC8B05 trigger frame4. Unlike skill20,
         # these branches keep CAST speed (0xCC8A06) and zero movement.

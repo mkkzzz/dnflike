@@ -2,9 +2,9 @@
 import unittest
 
 try:
-    from .build_dnf_dungeon_route import build, merge_route
+    from .build_dnf_dungeon_route import build, merge_route, pick_map
 except ImportError:
-    from build_dnf_dungeon_route import build, merge_route
+    from build_dnf_dungeon_route import build, merge_route, pick_map
 
 
 class DungeonRouteMergeTest(unittest.TestCase):
@@ -69,6 +69,21 @@ class DungeonBossMapTest(unittest.TestCase):
         export['dungeon']['rooms'][ordinary] = {'monsters': []}
         export['dungeon']['rooms'][boss] = {'monsters': []}
         self.assertIsNone(build(export), 'an ordinary map cannot be promoted to the final room')
+
+
+class DungeonStartMapTest(unittest.TestCase):
+    def test_start_map_uses_source_area_and_matching_cell(self):
+        ordinary = 'map/example/(2,0)d1601.map'
+        other_start = 'map/example/(2,4)s1616.map'
+        exact_start = 'map/example/(2,0)s1601.map'
+        cell = {'x': 2, 'y': 0, 'map_candidates': [ordinary, other_start, exact_start]}
+        maps = {
+            ordinary: {'start_area': None},
+            other_start: {'start_area': [945, 224, 253, 201]},
+            exact_start: {'start_area': [990, 217, 198, 208]},
+        }
+        self.assertEqual(pick_map(cell, 'start', maps), '(2,0)s1601')
+        self.assertEqual(pick_map(cell, 'normal', maps), '(2,0)d1601')
 
 
 if __name__ == "__main__":

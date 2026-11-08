@@ -50,6 +50,51 @@ func satisfy(session: Session,q: Dictionary) -> void:
 		session.run={"id":"campaign_clear:"+q.id,"dungeon":rule.dungeon,"difficulty":rule.difficulty[0]}
 		session.award_clear_items()
 
+func draconian_eyes() -> void:
+	var session := Session.new()
+	var quest_id := "original.quest.4306"
+	check(session.quests.catalog.definitions.has(quest_id), "G.S.D. source eye collection quest is available to the game")
+	if not session.quests.catalog.definitions.has(quest_id):return
+	session.profile.level = 16
+	completed(session, "original.quest.8")
+	completed(session, "original.quest.117")
+	var gsd := {"npc":"gsd", "nearby":true}
+	check(session.quest_command("quest.accept", {"id":"original.quest.4305"}, gsd).ok, "G.S.D. offers the source prerequisite")
+	session.npc_met("gsd")
+	check(session.quest_command("quest.claim", {"id":"original.quest.4305"}, gsd).ok
+		and session.quest_command("quest.accept", {"id":quest_id}, gsd).ok, "G.S.D. offers the eye quest after its conversation")
+	var room := "draconiantower:source_boss_fixture"
+	var boss := {"type":"combat.monster_defeated", "entity_id":0, "event_id":"boss:0", "room_id":room,
+		"position":Vector2(100, 200), "monster_id":"monster/draconian/lakius.mob", "boss":true}
+	check(session.command("flow.depart", {"dungeon":"draconiantower"}).ok, "normal Draconian Tower departure uses the live route")
+	boss.run_id = session.run.id
+	check(Drops.entries(session.profile, session.run, boss, session.quests.catalog.definitions).is_empty(), "normal mode has no source eye drop")
+	session.finish_run(true, {})
+	session.command("flow.return")
+	check(session.command("flow.difficulty", {"id":"expert"}).ok
+		and session.command("flow.depart", {"dungeon":"draconiantower"}).ok, "Expert Draconian Tower departure succeeds")
+	boss.run_id = session.run.id
+	# Repeated source boss-event fixtures exercise the holding cap without playing 15 routes.
+	for index in range(16):
+		boss.entity_id = index
+		boss.event_id = "boss:%d" % index
+		session.combat_event(boss)
+	var eyes: Array = session.Loot.pending(session.run, room).filter(func(drop):return drop.item == "original_3129")
+	check(eyes.size() == 15 and Inventory.stock(session.profile, "original_3129") == 0,
+		"guaranteed source boss drops reserve the fifteen-eye cap on the ground")
+	check(session.quests.status(session.profile, quest_id) == "active", "unclaimed eyes do not satisfy the quest")
+	var picked_up := true
+	for drop: Dictionary in eyes:
+		var position := Vector2(float(drop.position[0]), float(drop.position[1]))
+		picked_up = session.Loot.claim(session.profile, session.run, drop.id, room, position).ok and picked_up
+	check(picked_up and session.quests.status(session.profile, quest_id) == "ready", "picking up fifteen eyes prepares the hand-in")
+	session.finish_run(true, {})
+	session.command("flow.return")
+	var gold := int(session.profile.gold)
+	check(session.quest_command("quest.claim", {"id":quest_id}, gsd).ok and Inventory.stock(session.profile, "original_3129") == 0
+		and session.quests.has_completed(session.profile, quest_id) and int(session.profile.gold) == gold + 5000,
+		"G.S.D. consumes the source eyes and pays the original fixed gold")
+
 func run() -> void:
 	var rules: Dictionary=Native.quest_rules()
 	var campaign: Dictionary=rules.campaign
@@ -143,6 +188,7 @@ func run() -> void:
 					remaining.erase(id);acted=true
 		if remaining.is_empty() or not acted:break
 	check(remaining.is_empty(),"all campaign nodes form one playable dependency graph")
+	draconian_eyes()
 
 	print("[CAMPAIGN] COMPLETE checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)

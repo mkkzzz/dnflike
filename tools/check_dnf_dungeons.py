@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
-from build_dnf_dungeon_route import has_source_boss
+from build_dnf_dungeon_route import cell_graph, has_source_boss, source_start_maps
 
 ROOT = Path(__file__).resolve().parent.parent
 GAME = ROOT / 'game_dnf'
@@ -67,6 +67,8 @@ def main() -> int:
         grid_rows = int(constants['grid_rows'])
         tile_width = int(constants['tile_width'])
         placements = {p['id']: p for p in data['dungeon']['placements']}
+        cells = cell_graph(data)
+        maps = data['dungeon']['rooms']
         playable += 1
         boss_rooms = [i for i, r in enumerate(rooms) if r.get('boss')]
         if not boss_rooms:
@@ -86,7 +88,7 @@ def main() -> int:
             if not found:
                 fails.append('%s: 第 %d 房 %s 不在 %s 里' % (name, index, pid, export))
                 continue
-            map_room = data['dungeon']['rooms'].get(found['map'])
+            map_room = maps.get(found['map'])
             if map_room is None:
                 fails.append('%s: 第 %d 房 %s 的地图 %s 不存在' % (name, index, pid, found['map']))
                 continue
@@ -101,10 +103,12 @@ def main() -> int:
                 fails.append('%s: 第 %d 房 %s walk_grid 列数 %d != %d' % (name, index, pid, len(grid[0]), columns * cell_cols))
             if columns and int(map_room.get('width', 0)) != columns * tile_width:
                 fails.append('%s: 第 %d 房 %s width %s != %d' % (name, index, pid, map_room.get('width'), columns * tile_width))
-            # 原版部分副本的首房没有 [start area]（由 dgn 的 start map 决定出生格），
-            # 运行时按 walk_grid 首个可走点回退，这里只记提示，不阻断契约。
             if index == 0 and not map_room.get('start_area'):
-                warnings.append('%s: 首房 %s 无 start_area，运行时按通行格回退' % (name, pid))
+                alternatives = source_start_maps(cells.get(tuple(found['cell']), {}), maps)
+                if alternatives and not spec.get('hidden'):
+                    fails.append('%s: 首房 %s 缺少原出生区域，同格已有原入口地图' % (name, pid))
+                else:
+                    warnings.append('%s: 首房 %s 无 start_area，运行时按通行格回退' % (name, pid))
             for monster in map_room.get('monsters', []):
                 if len(monster.get('anchor') or []) < 3:
                     fails.append('%s: 第 %d 房 %s 有怪物锚点不完整' % (name, index, pid))

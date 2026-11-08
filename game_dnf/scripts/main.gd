@@ -524,7 +524,6 @@ func pulse_passive_auras() -> void:
 			if Vector2(enemy["pos"]).distance_to(Vector2(player["pos"])) <= 260.0:
 				land_hit(player,enemy,{"atk":{},"atk_path":"","percent":percent,"skill_id":"dotarea","damage_type":"magical","element":"none","lift":-1.0},Vector3(enemy["pos"].x,enemy["pos"].y,float(enemy["z"])),int(player["facing"]),attack_power())
 	for aura_entry in [
-		["khazan_aura","khazan",31.0,"none",{}],
 		["saya_aura","saya",80.0,"water",{"id":"freeze","chance":0.12}],
 		["bremen_aura","bremen",0.0,"dark",{"id":"bremen_debuff","chance":1.0}],
 		["epidemic_aura","epidemicrasa",40.0,"dark",{"id":"slow","chance":0.4}],
@@ -1014,7 +1013,6 @@ func start_action(name: String, cancel := false) -> bool:
 	player["fx_tag"] = "act:%d" % (action_seq+1)
 	start_stage(0)
 	match name:
-		"khazan":apply_effect({"kind":"effect","id":"khazan_aura","rank":int(skill_levels.get(name,1))})
 		"saya":apply_effect({"kind":"effect","id":"saya_aura","rank":int(skill_levels.get(name,1))})
 		"bremen":apply_effect({"kind":"effect","id":"bremen_aura","rank":int(skill_levels.get(name,1))})
 		"epidemicrasa":apply_effect({"kind":"effect","id":"epidemic_aura","rank":int(skill_levels.get(name,1))})
@@ -1349,33 +1347,38 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 ## Player takes a monster hit. Returns the reaction kind, or "blocked" if nothing applied.
 func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) -> String:
 	if god_mode or float(player["invuln_ms"])>0 or finished:return "blocked"
-	var was_action := String(player["state"]) == "action"
+	var state := String(player["state"])
+	var was_action := state == "action"
 	var front_hit := (Vector2(source["pos"]).x-Vector2(player["pos"]).x)*int(player["facing"])>=0
-	var manual_guard: bool = String(player["state"])=="guard" and front_hit
-	var guarded := manual_guard
-	var auto_guard: Dictionary = active_effect("autoguard")
-	if not guarded and not auto_guard.is_empty() and front_hit:
-		var auto_rank := int(auto_guard.get("rank",1))
-		var sample: Dictionary = Numbers.Skills.sample(Numbers.record("autoguard"),auto_rank)
-		var row: Array = sample.get("level_row",[])
-		var chance := float(row[0])/100.0 if not row.is_empty() else 0.05
-		guarded = rng.chance(chance)
+	var manual_guard := state == "guard" and front_hit
+	var guard_rank := int(skill_levels.get("guard",0))
+	var auto_rank := int(skill_levels.get("autoguard",0))
+	var auto_guard := false
+	var grounded := float(player["z"]) == 0.0 and float(player["vz"]) <= 0.0
+	if not manual_guard and amount > 0 and guard_rank > 0 and auto_rank > 0 and grounded \
+			and state not in ["air","down","dead"] and not active_effect("autoguard").is_empty() \
+			and not numeric_player.effects.controlled():
+		# CA9346..CA9484 resolves both current ranks and compares the original percentage on a 10000-point roll.
+		var row: Array = Numbers.Skills.sample(Numbers.record("autoguard"),auto_rank)["level_row"]
+		auto_guard = not row.is_empty() and rng.range_int(0,9999) < int(row[0])*100
+	if auto_guard:
+		# CA9503..CA9614 transitions to guard recoil and turns toward a rear hit.
+		end_action()
+		player["state"] = "guard"
+		if not front_hit:player["facing"] = -int(player["facing"])
+		player["queued_combo"] = false
+		player["queued_skill"] = ""
+		player["queued_jump"] = false
+		player["queued_backstep"] = false
+	var guarded := manual_guard or auto_guard
 	var taken := float(amount)
-	if manual_guard:
-		var rank := int(skill_levels.get("guard",1))
-		var row: Array = Numbers.Skills.sample(Numbers.record("guard"),rank)["level_row"]
+	if guarded:
+		var row: Array = Numbers.Skills.sample(Numbers.record("guard"),maxi(1,guard_rank))["level_row"]
 		# Original ATK +30 resets to physical when the source omits attack type.
 		var attack_type := Kernel.MoveTable.enum_value(atk,"attack_type","[physic]")
 		taken *= float(Numbers.Skills.guard_taken_percent(row,attack_type))/100.0
 		# CC5E78..CC5E98 reads guard.skl column 1, and CB1139 compares the state clock to it.
 		if amount > 0 and row.size() > 1:player["guard_recoil_ms"] = float(row[1])
-	elif guarded:
-		# Auto Guard retains its existing approximation until the native trigger is integrated.
-		var guard_factor := float(rules["player"]["guard_factor"])
-		if numeric_player != null:
-			var definition: Dictionary = Numbers.shared_config()["skills"]["guard"]
-			guard_factor = maxf(0,float(definition["guard_factor"])-(int(skill_levels.get("guard",1))-1)*float(definition["guard_per_level"]))
-		taken *= guard_factor
 	elif numeric_player == null and float(player["buff_ms"])>0:taken *= float(rules["buff"]["damage_taken"])
 	var keiga: Dictionary = active_effect("keiga")
 	if taken > 0 and not keiga.is_empty() and int(keiga.get("absorb_remaining",0)) > 0:
@@ -1424,6 +1427,13 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		"pos":Vector2(pos.x+off.x*facing,pos.y+off.y),"z":z+off.z,"facing":facing,"clock":0.0,
 		"speed":float(hit.get("speed",0)),"life_ms":float(hit.get("life_ms",-1)),"size_rate":float(hit.get("size_rate",1)),"hits":{}}
 	var controller: Dictionary = hit.get("native_controller",{})
+	if controller.get("kind","") == "khazan_field":
+		for i in range(objects.size()-1,-1,-1):
+			var previous: Dictionary = objects[i]
+			if previous["owner"] == owner and previous["hit"].get("native_controller",{}).get("kind") == "khazan_field":
+				objects.remove_at(i)
+		entity["field_rank"] = int(skill_levels.get("khazan",1))
+		if numeric_player != null:numeric_player.remove_effect("khazan_aura")
 	if controller.get("kind","") == "icewave_chain":
 		var ordinal := int(hit.get("chain_ordinal",0))
 		entity["size_rate"] = _native_float32(float(controller["initial_size"])+_native_float32(ordinal*_native_float32(float(controller["size_step"]))))
@@ -1450,6 +1460,7 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 	if String(obj["add_fx"]) != "":spawn_effect(String(obj["add_fx"]),entity["pos"],facing,float(entity["z"]))
 
 func step_objects(ms: float) -> void:
+	var khazan_field: Dictionary = {}
 	for i in range(objects.size()-1,-1,-1):
 		var o: Dictionary = objects[i]
 		var obj: Dictionary = o["def"]
@@ -1458,6 +1469,10 @@ func step_objects(ms: float) -> void:
 		o["clock"] = t
 		o["pos"] = Vector2(o["pos"])+Vector2(float(o["speed"])*int(o["facing"])*ms/1000.0,0)
 		var hit: Dictionary = o["hit"]
+		if hit.get("native_controller",{}).get("kind") == "khazan_field":
+			if t >= float(o["life_ms"]):objects.remove_at(i)
+			elif o["owner"] == "player":khazan_field = o
+			continue
 		var active := float(hit.get("active_ms",-1))
 		var done := false
 		var life := float(o["life_ms"])
@@ -1523,6 +1538,19 @@ func step_objects(ms: float) -> void:
 		elif life <= 0 and t >= Kernel.Timeline.duration(tl) and (active < 0 or t >= active):done = true
 		if active >= 0 and t >= active and life <= 0 and Kernel.Timeline.duration(tl) > 2000:done = true
 		if done:objects.remove_at(i)
+	update_khazan_aura(khazan_field)
+
+func update_khazan_aura(field: Dictionary = {}) -> void:
+	if numeric_player == null:return
+	if not field.is_empty():
+		var controller: Dictionary = field["hit"].get("native_controller",{})
+		var radius := float(controller["radius"])
+		if Vector2(player["pos"]).distance_squared_to(Vector2(field["pos"])) <= radius * radius:
+			if active_effect("khazan_aura").is_empty():
+				var remaining := float(field["life_ms"]) - float(field["clock"])
+				numeric_player.add_effect("khazan_aura",int(field["field_rank"]),{"duration_ms":remaining})
+			return
+	numeric_player.remove_effect("khazan_aura")
 
 ## Round the original SSE scalar operation before its truncating integer conversion.
 func _native_float32(value: float) -> float:
@@ -1772,6 +1800,7 @@ func move_player(delta: Vector2) -> void:
 func load_room(index: int, from_side: String) -> void:
 	clear_monsters()
 	objects.clear()
+	update_khazan_aura()
 	end_action_fx()
 	room_index = index
 	room_id = "%s:%d"%[dungeon_id,index]

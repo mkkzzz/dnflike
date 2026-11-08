@@ -50,6 +50,15 @@ class QuestRules(unittest.TestCase):
         admitted={r['id'] for r in audit['rows'] if r['state']=='admitted'}
         self.assertEqual(admitted,{q['source']['id'] for q in runtime['quests']})
         self.assertTrue(all(not r['reasons'] for r in audit['rows'] if r['state']=='admitted'))
+        eye_quest = next(q for q in runtime['quests'] if q['source']['id'] == 4306)
+        self.assertEqual(eye_quest['requires'], ['original.quest.4305'])
+        self.assertEqual(eye_quest['consume'], {'original_3129': 15})
+        self.assertEqual(eye_quest['drops'], [
+            {'monster': f'monster/draconian/{monster}.mob', 'dungeon': 'draconiantower',
+             'difficulty': [mode], 'item': 'original_3129', 'amount': 1, 'chance': chance, 'limit': 15}
+            for monster, chance in [('mirkius', 30), ('lakius', 100), ('minius', 30)]
+            for mode in ('adventure', 'expert')
+        ])
     def test_callbacks_never_become_universal_skill_events(self):
         f={'[type]':['[custom quest]'],'[sub type]':[0],'[int data]':[1,0,1]}
         _,_,reasons=compile_quest(999,'n_quest/example/a.qst','x',f,{}, {}, {}, {},custom_events={211})

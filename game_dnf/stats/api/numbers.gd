@@ -41,8 +41,7 @@ static func ensure_config() -> void:
 					_config["skill_defaults"].erase(legacy_id)
 					break
 			for id: String in runtime_skills:
-				# The source compiler owns SKL data. Auto Guard still uses these legacy
-				# runtime parameters while its original attack reaction is pending.
+				# Keep the legacy Guard fields available to configuration readers.
 				var definition: Dictionary = runtime_skills[id].duplicate()
 				if id == "guard":
 					for field: String in ["guard_factor", "guard_per_level"]:

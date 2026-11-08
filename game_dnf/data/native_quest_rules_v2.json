@@ -6,7 +6,7 @@
   "game_dnf/data/runtime_items.json": "e0e3ce46d6b39aae805808a1bce7110c55aa9265606ce7f671534543690ae2ae",
   "game_dnf/data/monster_catalog.json": "bc0689f1d377e47a66d439fdc2a99d998bc14d32fdfb7d38ce3276a090c7563c",
   "game_dnf/data/combat.json": "cba7ae4b96d0bc2b49a74037d0cb112d87e324262f8ce8ac76bda107caea8d23",
-  "game_dnf/data/dungeons.json": "cfb1df8493f2566c5634ac9ff41f7f0d6355d3fdbfcbd98def36674a4ab07bc0",
+  "game_dnf/data/dungeons.json": "a6ec38f8da83fddf7747f6eb4ac67105742728f72f3f9bd69057c1be42bab65c",
   "game_dnf/data/towns.json": "9ad3908636807b646cee1e1ad8a31cefd457834c1841eb4136808debf81d8075",
   "game_dnf/data/campaign_1_16.json": "976058418137f7de23e97d0d0c70d58201e4386b6751ea737bb361a151ced221",
   "game_dnf/assets_local/native_data_v1/manifest.json": "7828c4203fabb534006b8b178ed24251242f144ab7bb69e572f6420a0cd08f15",
@@ -3285,6 +3285,185 @@
    "source_metadata": {}
   },
   {
+   "id": "original.quest.4306",
+   "source": {
+    "id": 4306,
+    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_sky_gsd_2.qst",
+    "sha256": "8959c548a60f0f101cca8af0e625f6ec630586c38ded2995e0fb0f487c0bcff0",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3129,
+     15
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "不寻常的天空之城气息",
+   "description": "前往天空之城的龙人之塔，收集15个[耀眼的龙人之眼]，要求地下城难度为中等难度(Medium)以上。",
+   "dialogue": {
+    "accept": "天空之城的生命体与一般的生命体不同， 但那些生命体身上散发的气息却和鬼手的气息有几分相似。\n年轻人， 你能给我找来蕴含着天空之城生命体气息的东西吗？",
+    "complete": "你去过天空之城了吗?"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 16,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4305"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 15,
+     "target": "original_3129"
+    }
+   ],
+   "reward": {
+    "gold": 5000,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3129": 15
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[enemy reward item]": [
+     70,
+     1,
+     11,
+     1,
+     3129,
+     1,
+     30,
+     15,
+     70,
+     1,
+     11,
+     2,
+     3129,
+     1,
+     30,
+     15,
+     71,
+     1,
+     11,
+     1,
+     3129,
+     1,
+     100,
+     15,
+     71,
+     1,
+     11,
+     2,
+     3129,
+     1,
+     100,
+     15,
+     72,
+     1,
+     11,
+     1,
+     3129,
+     1,
+     30,
+     15,
+     72,
+     1,
+     11,
+     2,
+     3129,
+     1,
+     30,
+     15
+    ]
+   },
+   "drops": [
+    {
+     "monster": "monster/draconian/mirkius.mob",
+     "dungeon": "draconiantower",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_3129",
+     "amount": 1,
+     "chance": 30,
+     "limit": 15
+    },
+    {
+     "monster": "monster/draconian/mirkius.mob",
+     "dungeon": "draconiantower",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_3129",
+     "amount": 1,
+     "chance": 30,
+     "limit": 15
+    },
+    {
+     "monster": "monster/draconian/lakius.mob",
+     "dungeon": "draconiantower",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_3129",
+     "amount": 1,
+     "chance": 100,
+     "limit": 15
+    },
+    {
+     "monster": "monster/draconian/lakius.mob",
+     "dungeon": "draconiantower",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_3129",
+     "amount": 1,
+     "chance": 100,
+     "limit": 15
+    },
+    {
+     "monster": "monster/draconian/minius.mob",
+     "dungeon": "draconiantower",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_3129",
+     "amount": 1,
+     "chance": 30,
+     "limit": 15
+    },
+    {
+     "monster": "monster/draconian/minius.mob",
+     "dungeon": "draconiantower",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_3129",
+     "amount": 1,
+     "chance": 30,
+     "limit": 15
+    }
+   ]
+  },
+  {
    "id": "original.quest.120",
    "source": {
     "id": 120,
@@ -4292,13 +4471,13 @@
  "coverage": {
   "indexed_quests": 2824,
   "existing": 64,
-  "new_executable": 56,
-  "total_executable": 120,
+  "new_executable": 57,
+  "total_executable": 121,
   "objective_parsed": 2359,
   "new_lifecycles": {
-   "once": 56
+   "once": 57
   },
-  "blocked": 2704
+  "blocked": 2703
  },
  "campaign": {
   "id": "campaign_1_16",
@@ -4515,5 +4694,5 @@
   ]
  },
  "status_file": "res://data/native_quest_status_v2.json.gz",
- "status_sha256": "a3c05edc5b42fca131fe8dc36cff9469893ae3d884ec892aea69cfa9f6fe1285"
+ "status_sha256": "e9d00c2e0bf01ac8d8939c38dedb4584825dd2dfc41aedc3a0e1505274967382"
 }

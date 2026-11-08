@@ -305,6 +305,10 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 				if controller.get("kind","") == "icewave_chain":
 					controller["count"] = int(row[int(controller["count_col"])])
 					controller["frame2_at_ms"] = float(row[int(controller["frame2_at_col"])])
+				elif controller.get("kind","") == "khazan_field":
+					var column := int(controller["duration_col"])
+					if row.size() <= column or float(row[column]) <= 0.0:continue
+					hit["life_ms"] = float(row[column])
 				elif controller.get("kind","") == "firewave_chain":
 					# Resolve the successor's own ATK and fixed column, not a copy
 					# of the travelling-front reaction/damage definition.
