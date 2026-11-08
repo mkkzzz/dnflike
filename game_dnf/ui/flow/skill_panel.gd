@@ -515,9 +515,7 @@ func _detail(root: Control) -> void:
 	if local != "":
 		var values: Dictionary = game.skill_catalog.get_profile_skill(local, game.session.profile)
 		meta.append("MP：%d    冷却：%.1f秒" % [int(values.get("mp", 0)), float(values.get("cooldown", 0))])
-		var percentages: Array = values.get("damage_percent", [])
-		if not percentages.is_empty():
-			meta.append("攻击力：%d%%" % int(percentages[0]))
+		meta.append_array(values["damage_lines"])
 	var body := RichTextLabel.new()
 	body.name = "skill_detail_body"
 	body.position = Vector2(9, 176)

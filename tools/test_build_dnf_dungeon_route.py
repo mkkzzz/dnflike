@@ -2,9 +2,9 @@
 import unittest
 
 try:
-    from .build_dnf_dungeon_route import merge_route
+    from .build_dnf_dungeon_route import build, merge_route
 except ImportError:
-    from build_dnf_dungeon_route import merge_route
+    from build_dnf_dungeon_route import build, merge_route
 
 
 class DungeonRouteMergeTest(unittest.TestCase):
@@ -47,6 +47,28 @@ class DungeonRouteMergeTest(unittest.TestCase):
     def test_new_route_is_used_verbatim(self):
         merged = merge_route(None, self.generated, refresh=False)
         self.assertEqual(merged, self.generated)
+
+
+class DungeonBossMapTest(unittest.TestCase):
+    def test_boss_cell_prefers_source_spawn_over_filename(self):
+        ordinary = 'map/example/(0,0)d1601.map'
+        boss = 'map/example/(1,0)b1823.map'
+        export = {'dungeon': {
+            'cells': [
+                {'x': 0, 'y': 0, 'start_candidate': True, 'map_candidates': [ordinary], 'doors': ['right']},
+                {'x': 1, 'y': 0, 'boss_candidate': True, 'map_candidates': [ordinary, boss], 'doors': ['left']},
+            ],
+            'rooms': {
+                ordinary: {'monsters': [{'raw': [14, 1, 0, 60, 120, 0, 1, 1, '[fixed]']}]},
+                boss: {'monsters': [{'raw': [71, 1, 0, 1399, 332, 0, 2, 1, '[fixed]', '[boss]']}]},
+            },
+        }}
+        self.assertEqual(build(export)[-1]['placement'], '1_0:(1,0)b1823')
+        export['dungeon']['rooms'][ordinary] = export['dungeon']['rooms'][boss]
+        self.assertIsNone(build(export), 'a cell with multiple source boss maps requires a known selection')
+        export['dungeon']['rooms'][ordinary] = {'monsters': []}
+        export['dungeon']['rooms'][boss] = {'monsters': []}
+        self.assertIsNone(build(export), 'an ordinary map cannot be promoted to the final room')
 
 
 if __name__ == "__main__":

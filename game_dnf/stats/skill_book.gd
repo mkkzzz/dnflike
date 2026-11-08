@@ -83,3 +83,13 @@ static func sample(record: Dictionary, rank: int) -> Dictionary:
 		var values: Array = context.get(pair[0],record.get(pair[0],[]))
 		result[pair[1]] = 0.0 if values.is_empty() else float(values[0]) if values.size()==1 else lerpf(float(values[0]),float(values[-1]),float(index)/maxf(1,rows-1))
 	return result
+
+## Manual guard: CA9324..CA94B8 selects the reduction by ATK type and truncates 100 minus the value.
+static func guard_taken_percent(row: Array, attack_type: String) -> int:
+	var column: int
+	match attack_type:
+		"[physic]":column = 2
+		"[magic]":column = 3
+		_:return 100
+	if row.size() <= column:return 100
+	return clampi(int(100.0-float(row[column])),0,100)

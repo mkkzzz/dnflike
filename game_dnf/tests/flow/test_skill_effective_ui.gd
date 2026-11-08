@@ -80,7 +80,10 @@ func run() -> void:
 					var expected_meta := "MP：%d    冷却：%.1f秒" % [int(move.get("mp",0)),float(move.get("cool_ms",0))/1000.0]
 					check(body.text.contains(expected_meta),mode+" "+id+" detail resources match combat")
 					var hits: Array = move.get("hits",[])
-					if not hits.is_empty():check(body.text.contains("攻击力：%d%%" % int(hits[0].get("percent",100))),mode+" "+id+" detail attack matches combat")
+					if id == "epidemicrasa":
+						check(not body.text.contains("攻击力："),mode+" "+id+" non-attacking object has no direct damage line")
+					elif not hits.is_empty():
+						check(body.text.contains("攻击力：%d%%" % int(hits[0].get("percent",100))),mode+" "+id+" detail attack matches combat")
 				if game.SkillDescriptions.SKILLS.has(id):
 					game.windows.skill_tip(id,Rect2(20,20,28,28),true)
 					check(texts(game.windows.tip).contains("技能等级 %d" % expected),mode+" "+id+" shortcut rank")
@@ -111,6 +114,24 @@ func run() -> void:
 		var preview_move: Dictionary = game.skill_catalog.table.moves["normalwave"]
 		game.skill_catalog.get_profile_skill("guard",game.session.profile)
 		check(is_same(preview_move, game.skill_catalog.table.moves["normalwave"]), "selecting another skill in the same context reuses compiled preview moves")
+	check(game.session.command("numbers.growtype",{"growtype":"asura","force":true})["ok"], "registered fixed-damage preview job")
+	for id: String in ["icewave", "firewave"]:
+		grant(id,1)
+		panel.selected = id
+		game.show_overlay("numbers")
+		await process_frame
+		var body: RichTextLabel = game.modal.find_child("skill_detail_body",true,false)
+		var expected_fixed := [251] if id == "icewave" else [584,1170]
+		for amount: int in expected_fixed:
+			check(body.text.contains("魔法攻击力：固定 %d" % amount), id + " detail shows each original fixed component")
+		check(not body.text.contains("攻击力：0%"), id + " detail suppresses the zero percentage")
+		game.windows.skill_tip(id,Rect2(20,20,28,28),true)
+		check(texts(game.windows.tip).contains("魔法攻击力：固定 %d" % expected_fixed[0]), id + " shortcut shows fixed rather than percentage damage")
+	grant("guard",4)
+	game.windows.skill_tip("guard",Rect2(20,20,28,28),true)
+	var guard_tip := texts(game.windows.tip)
+	check(guard_tip.contains("物理 30%") and guard_tip.contains("魔法 70%"), "guard tip shows the two source damage categories")
+	check(not guard_tip.contains("攻击力："), "defensive guard does not advertise its unused attack adapter")
 	game.windows.hide_tooltip()
 	battle.queue_free()
 	game.ui.free()

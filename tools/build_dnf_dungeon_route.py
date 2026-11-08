@@ -76,8 +76,6 @@ def pick_map(cell: dict, role: str) -> str:
     candidates = [str(c) for c in cell.get('map_candidates') or []]
     if role == 'start':
         preferred = [c for c in candidates if Path(c).stem.lower().startswith('s')]
-    elif role == 'boss':
-        preferred = [c for c in candidates if Path(c).stem.lower().startswith('b')]
     else:
         preferred = [c for c in candidates if not Path(c).stem.lower().startswith(('s', 'b'))]
     chosen = (preferred or candidates)
@@ -86,17 +84,29 @@ def pick_map(cell: dict, role: str) -> str:
     return Path(chosen[0]).stem
 
 
-def build(export: dict, start_cell=None, boss_cell=None) -> list[dict]:
+def has_source_boss(room: dict) -> bool:
+    return any(monster.get('raw') and monster['raw'][-1] == '[boss]' for monster in room.get('monsters', []))
+
+
+def build(export: dict, start_cell=None, boss_cell=None) -> list[dict] | None:
     cells = cell_graph(export)
+    maps = export['dungeon']['rooms']
     starts = sorted(cells) if start_cell is None else [tuple(start_cell)]
     bosses = sorted(cells) if boss_cell is None else [tuple(boss_cell)]
+    # A boss cell may also accept ordinary maps or multiple mode-specific maps.
+    # Generate a default route only when the cell has a unique source boss map.
+    endings = {}
+    for b in bosses:
+        if not cells[b].get('boss_candidate'):
+            continue
+        candidates = [path for path in cells[b]['map_candidates'] if has_source_boss(maps[path])]
+        if len(candidates) == 1:
+            endings[b] = candidates[0]
     best = None
     for s in starts:
         if not cells[s].get('start_candidate') or not (cells[s].get('map_candidates') or []):
             continue
-        for b in bosses:
-            if not cells[b].get('boss_candidate') or not (cells[b].get('map_candidates') or []):
-                continue
+        for b in endings:
             path = shortest(cells, s, b)
             if path is not None and (best is None or len(path) < len(best[2])):
                 best = (s, b, path)
@@ -112,7 +122,7 @@ def build(export: dict, start_cell=None, boss_cell=None) -> list[dict]:
         })
     rooms.append({
         'name': '',
-        'placement': '%d_%d:%s' % (boss[0], boss[1], pick_map(cells[boss], 'boss')),
+        'placement': '%d_%d:%s' % (boss[0], boss[1], Path(endings[boss]).stem),
         'next': '',
         'boss': True,
     })
@@ -165,6 +175,9 @@ def main() -> int:
         applied = 0
         waiting = []
         for dungeon_id, folder, name, region, level in PENDING:
+            if dungeon_id in dungeons and not args.refresh_existing:
+                print('  [KEEP] %-24s 已有运行配置，保留入口/等级/前置/隐藏状态' % dungeon_id)
+                continue
             export = GAME / folder / 'map_export.json'
             if not export.is_file():
                 waiting.append(dungeon_id)
@@ -172,7 +185,7 @@ def main() -> int:
             export_doc = json.loads(export.read_text(encoding='utf-8'))
             rooms = build(export_doc)
             if rooms is None:
-                waiting.append(dungeon_id + '(无连通路径)')
+                waiting.append(dungeon_id + '(无连通路径或领主地图不明确)')
                 continue
             for room in rooms:
                 room['name'] = name
@@ -183,9 +196,6 @@ def main() -> int:
                 'source': {'path': origin.get('path', ''),
                            'sha256': origin.get('sha256', ''),
                            'evidence': '由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成'}}
-            if dungeon_id in dungeons and not args.refresh_existing:
-                print('  [KEEP] %-24s 已有运行配置，保留入口/等级/前置/隐藏状态' % dungeon_id)
-                continue
             dungeons[dungeon_id] = merge_route(
                 dungeons.get(dungeon_id),
                 generated,
@@ -223,6 +233,8 @@ def main() -> int:
         raise SystemExit('--write 需要 --id 与存在的 --export')
     export = json.loads(path.read_text(encoding='utf-8'))
     rooms = build(export)
+    if rooms is None:
+        raise SystemExit('未找到可到达且有唯一原版领主地图的领主格')
     for room in rooms:
         room['name'] = args.name or args.id
     spec = {'name': args.name or args.id, 'region': args.region,

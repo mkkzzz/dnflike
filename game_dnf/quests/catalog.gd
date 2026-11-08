@@ -128,6 +128,8 @@ func validate_definition(q: Dictionary) -> void:
 		for rule in clears:
 			if not rule is Dictionary or not rule.get("item") is String or not preload("res://items/catalog.gd").ITEMS.has(rule.get("item","")):
 				errors.append("任务通关物品无效："+id);continue
+			if not rule.get("dungeon") is String or not config["dungeons"].has(rule["dungeon"]):
+				errors.append("任务通关物品副本无效："+id)
 			if not whole(rule.get("amount"),1,9999) or not whole(rule.get("limit"),1,9999) or not rule.get("difficulty") is Array or rule["difficulty"].is_empty():
 				errors.append("任务通关物品数量无效："+id)
 			else:

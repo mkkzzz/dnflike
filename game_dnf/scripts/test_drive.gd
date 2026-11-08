@@ -309,7 +309,7 @@ func run_combat() -> void:
 	api.set_p("facing",1)
 	var hp := float(api.p("hp"))
 	api.damage_player(50,Vector2(api.p("pos"))+Vector2(30,0))
-	check(is_equal_approx(hp-float(api.p("hp")),10),"frontal guard reduces damage by eighty percent")
+	check(is_equal_approx(hp-float(api.p("hp")),30),"frontal guard uses the first physical mitigation row")
 	api.set_p("invuln_ms",0.0)
 	hp = float(api.p("hp"))
 	api.damage_player(50,Vector2(api.p("pos"))-Vector2(30,0))
@@ -460,6 +460,7 @@ func run_combat() -> void:
 ## Behaviour regressions for confirmed adapter defects; these do not certify original fidelity.
 func run_skill_fidelity() -> void:
 	await check_bound_guard()
+	check_guard_attack_types()
 	check_normalwave_level_data()
 	check_icewave_level_data()
 	check_icewave_chain()
@@ -544,7 +545,8 @@ func check_bound_guard() -> void:
 		api.set_p("invuln_ms",0.0)
 		var hp := float(api.p("hp"))
 		api.damage_player(50,Vector2(api.p("pos"))+Vector2(30,0))
-		check(is_equal_approx(hp-float(api.p("hp")),10.0),"held guard reaches the frontal damage reducer")
+		var physical_taken := 30.0 if rank == 1 else 15.0
+		check(is_equal_approx(hp-float(api.p("hp")),physical_taken),"held guard reaches the ranked physical damage reducer")
 		var recovery_ms := 200.0 if rank == 1 else 140.0
 		check(is_equal_approx(float(game.player.get("guard_recoil_ms",0.0)),recovery_ms),"blocked hit reads source guard recovery at rank %d" % rank)
 		await ticks(2)
@@ -571,6 +573,35 @@ func check_bound_guard() -> void:
 		check(api.p("state") == "idle","rebinding guard leaves the empty G slot inactive")
 		key(KEY_G,false)
 		await ticks(1)
+
+func check_guard_attack_types() -> void:
+	var physical: Dictionary = game.table.atk("monster/characterstatue/attackinfo/fighterattack.atk")
+	var magical: Dictionary = game.table.atk("monster/characterstatue/attackinfo/magicianattack.atk")
+	check(not physical.is_empty() and not magical.is_empty(),"guard test loads original typed monster attacks")
+	var ignore_defense := {"attack_type":[{"value":"[ignore defense]","args":[]}]}
+	for sample: Array in [
+		["rank 1 physical",physical,1,1,60.0],
+		["rank 1 magical",magical,1,1,85.0],
+		["rank 4 physical",physical,4,1,30.0],
+		["rank 4 magical",magical,4,1,70.0],
+		["missing attack type",{},1,1,60.0],
+		["ignore-defense attack",ignore_defense,1,1,100.0],
+		["rear physical",physical,1,-1,100.0],
+		["rear magical",magical,1,-1,100.0],
+	]:
+		api.restart()
+		api.set_god(false)
+		game.skill_levels["guard"] = int(sample[2])
+		api.set_p("state","guard")
+		api.set_p("facing",1)
+		api.set_p("invuln_ms",0.0)
+		var pos := Vector2(api.p("pos"))
+		var attacker: Dictionary = api.spawn_dummy(pos+Vector2(30.0*int(sample[3]),0))
+		var before := float(api.p("hp"))
+		var hit := {"atk":sample[1],"percent":100.0,"lift":-1.0}
+		game.land_hit(attacker,game.player,hit,Vector3(pos.x,pos.y,0.0),-int(sample[3]),100.0)
+		check(is_equal_approx(before-float(api.p("hp")),float(sample[4])),"guard damage entry applies expected HP loss for "+String(sample[0]))
+		check((api.p("state") == "guard") == (int(sample[3]) > 0),"guard outcome preserves facing gate for "+String(sample[0]))
 
 func check_normalwave_phases() -> void:
 	for rates in [[1.0,1.0,50.0,150.0,450.0],[2.0,0.5,100.0,150.0,350.0],[0.5,2.0,25.0,225.0,650.0]]:

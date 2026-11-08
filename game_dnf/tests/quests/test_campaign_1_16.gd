@@ -46,8 +46,8 @@ func satisfy(session: Session,q: Dictionary) -> void:
 			var given: Dictionary=session.command("numbers.gear_give",{"id":"iron_sword"})
 			var quote: Dictionary=session.Services.quote(session.profile,"services.disassemble",{"uid":given.uid})
 			session.service_command("services.disassemble",{"uid":given.uid,"signature":quote.signature,"transaction":"campaign:"+q.id},{"npc":"norton","nearby":true})
-	if not q.get("clear_items",[]).is_empty():
-		session.run={"id":"campaign_clear:"+q.id,"dungeon":"sunderland_dark","difficulty":"normal"}
+	for rule: Dictionary in q.get("clear_items", []):
+		session.run={"id":"campaign_clear:"+q.id,"dungeon":rule.dungeon,"difficulty":rule.difficulty[0]}
 		session.award_clear_items()
 
 func run() -> void:
@@ -87,9 +87,26 @@ func run() -> void:
 	completed(s,"original.quest.202")
 	var sinda_accept: Dictionary=s.quest_command("quest.accept",{"id":"original.quest.203"},{"npc":"sinda","nearby":true})
 	check(sinda_accept.ok,"dark forest investigation accepts before its clear reward: "+String(sinda_accept.get("message","")))
-	s.run={"id":"campaign_clear","dungeon":"sunderland_dark","difficulty":"normal"}
-	check(s.award_clear_items() and Inventory.stock(s.profile,"original_3081")==1,"clear reward creates the exact source item once")
-	check(not s.award_clear_items() and Inventory.stock(s.profile,"original_3081")==1,"clear reward respects the source holding cap")
+	check(s.command("flow.depart", {"dungeon":"lorien"}).ok and s.finish_run(true, {}).ok,
+		"unrelated dungeon settles through the normal flow")
+	check(Inventory.stock(s.profile, "original_3081") == 0 and s.quests.status(s.profile, "original.quest.203") == "active",
+		"unrelated victory leaves the Sinda quest active without its hammer")
+	s.command("flow.return")
+	check(s.command("flow.depart", {"dungeon":"sunderland_dark"}).ok and s.finish_run(false, {}).ok,
+		"defeat in the source dungeon settles through the normal flow")
+	check(Inventory.stock(s.profile, "original_3081") == 0, "defeat does not award the hammer")
+	s.command("flow.return")
+	check(s.command("flow.difficulty", {"id":"expert"}).ok and s.command("flow.depart", {"dungeon":"sunderland_dark"}).ok
+		and s.finish_run(true, {}).ok, "victory in the source dungeon settles on Expert")
+	check(Inventory.stock(s.profile, "original_3081") == 1 and s.quests.status(s.profile, "original.quest.203") == "ready",
+		"source dungeon victory awards the hammer and prepares the Sinda hand-in")
+	s.command("flow.return")
+	check(s.command("flow.depart", {"dungeon":"sunderland_dark"}).ok and s.finish_run(true, {}).ok
+		and Inventory.stock(s.profile, "original_3081") == 1, "another source clear respects the holding cap")
+	s.command("flow.return")
+	check(s.quest_command("quest.claim", {"id":"original.quest.203"}, {"npc":"sinda", "nearby":true}).ok
+		and Inventory.stock(s.profile, "original_3081") == 0 and s.quests.has_completed(s.profile, "original.quest.203"),
+		"Sinda hand-in consumes the source hammer and completes the quest")
 
 	completed(s,"original.quest.117")
 	var sharan_accept: Dictionary=s.quest_command("quest.accept",{"id":"original.quest.4601"},{"npc":"sharan","nearby":true})

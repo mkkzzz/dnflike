@@ -347,7 +347,7 @@ func award_clear_items() -> bool:
 		var quest:Dictionary=quests.catalog.definitions[id]
 		if profile.get("quest_state",{}).get("entries",{}).get(id,{}).get("state")!="active":continue
 		for rule:Dictionary in quest.get("clear_items",[]):
-			if run.get("difficulty") not in rule["difficulty"]:continue
+			if run.get("dungeon") != rule.get("dungeon") or run.get("difficulty") not in rule["difficulty"]:continue
 			var owned:=Inventory.stock(profile,rule["item"])
 			var count:=mini(int(rule["amount"]),int(rule["limit"])-owned)
 			if count<=0:continue

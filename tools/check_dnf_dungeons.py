@@ -16,6 +16,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from build_dnf_dungeon_route import has_source_boss
 
 ROOT = Path(__file__).resolve().parent.parent
 GAME = ROOT / 'game_dnf'
@@ -118,9 +119,9 @@ def main() -> int:
                 elif need not in [g['direction'] for g in gates]:
                     fails.append('%s: 第 %d 房 %s 的 next=%s 无对应门（有 %s）'
                                  % (name, index, pid, need, [g['direction'] for g in gates]))
-            # BOSS 身份由路线的 boss 标记决定；怪物表里的 [boss] 标签是原版附加信息，缺了只提示。
-            if room.get('boss') and not any(m.get('raw') and str(m['raw'][-1]) == '[boss]' for m in map_room.get('monsters', [])):
-                warnings.append('%s: BOSS 房 %s 的怪物表里没有 [boss] 标记' % (name, pid))
+            if room.get('boss') and not has_source_boss(map_room):
+                message = '%s: BOSS 房 %s 的怪物表里没有 [boss] 标记' % (name, pid)
+                (warnings if spec.get('hidden') else fails).append(message)
 
     print('\n== 城镇入口')
     for town, loc in towns.items():

@@ -50,7 +50,7 @@ NPCS = {1: 'linus', 2: 'seria', 3: 'kanna', 4: 'sinda', 5: 'shusia',
         127: 'the_last_mehmet'}
 # IDs independently present in the existing dungeon source definitions.
 DUNGEONS = {1: 'lorien', 2: 'lorien_inside', 3: 'mirkwood', 4: 'mirkwood_deep',
-            5: 'sunderland', 6: 'sunderland_poison'}
+            5: 'sunderland', 6: 'sunderland_poison', 1000: 'sunderland_dark'}
 QUEST_META = {'[' + x + ']' for x in 'name|grade|difficulty|gold multiple|npc index|complete npc index|job|grow type|level|pre required quest|type|sub type|int data|reward type|reward int data|reward selection int data|condition message|depend message|solve message|dialog|dungeon info|ignore quest level 4 exp|cant giveup'.split('|')}
 QUEST_METADATA = {
     '[effect after clear quest]', '[relation quest]', '[quest piece]',
@@ -297,6 +297,7 @@ def pair_items(values):
 
 def compile_quest(number, path, sha, fields, words, existing, items, monster_index, *, custom_events=None, dungeon_index=None, npc_index=None, map_index=None):
     plan, reasons = quest_plan(fields)
+    quest_dungeons = DUNGEONS if dungeon_index is None else dungeon_index
     if number is None:reasons.append('unindexed')
     if not words.get('[name]') or not words.get('[condition message]'):reasons.append('missing_chinese_text')
     if any(BAD.search(v) for v in words.values()):reasons.append('invalid_display_text')
@@ -348,7 +349,7 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
                     o['source_map_id']=int(p['map'])
                     if p.get('source_extra'):o['source_extra']=p['source_extra']
         else:
-            dungeon = (DUNGEONS if dungeon_index is None else dungeon_index).get(p['dungeon'])
+            dungeon = quest_dungeons.get(p['dungeon'])
             if p['dungeon']==-1 and dungeon_index is not None:
                 dungeon='any';o['allowed_dungeons']=sorted(set(dungeon_index.values()))
             if not dungeon:reasons.append('dungeon_unavailable:' + str(p['dungeon']))
@@ -417,13 +418,18 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
             reasons.append('clear_reward_item_grammar')
         else:
             for index in range(0,len(raw_clear),6):
-                probability,difficulty,item,amount,chance,limit=raw_clear[index:index+6]
+                row = raw_clear[index:index+6]
+                if not all(type(value) is int for value in row):
+                    reasons.append('clear_reward_item_grammar')
+                    continue
+                dungeon,difficulty,item,amount,chance,limit=row
+                dungeon_id = quest_dungeons.get(dungeon)
                 modes=quest_difficulty_modes(difficulty)
                 item_id='original_%d' % item
-                if probability!=1000 or modes is None or item_id not in items or amount<1 or chance!=100 or limit<1:
+                if not dungeon_id or modes is None or item_id not in items or not 1 <= amount <= 9999 or chance!=100 or not 1 <= limit <= 9999:
                     reasons.append('clear_reward_item_unsupported')
                 else:
-                    clear_items.append({'difficulty':modes,'item':item_id,'amount':amount,'limit':limit})
+                    clear_items.append({'dungeon':dungeon_id,'difficulty':modes,'item':item_id,'amount':amount,'limit':limit})
     giver_key=giver or ''
     receiver_key=receiver or ''
     q = {'id': existing.get(number, 'original.quest.%s' % number),

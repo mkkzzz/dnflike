@@ -390,7 +390,7 @@
     },
     {
      "name": "龙人之塔",
-     "placement": "3_2:(2,0)d1601",
+     "placement": "3_2:(3,2)b1823",
      "next": "",
      "boss": true
     }
@@ -444,7 +444,7 @@
     },
     {
      "name": "石巨人塔",
-     "placement": "1_0:(1,0)2004",
+     "placement": "1_0:(1,0)b2005",
      "next": "",
      "boss": true
     }
@@ -601,7 +601,7 @@
     },
     {
      "name": "幽暗回廊",
-     "placement": "0_2:(0,0)d2401",
+     "placement": "0_2:(0,2)b2401",
      "next": "",
      "boss": true
     }
@@ -650,7 +650,7 @@
     },
     {
      "name": "人偶之塔",
-     "placement": "1_2:(0,3)h1831",
+     "placement": "1_2:(1,2)b1823",
      "next": "",
      "boss": true
     }
@@ -694,7 +694,7 @@
     },
     {
      "name": "龙人之塔·亚蒙下层",
-     "placement": "3_2:(2,0)d1601",
+     "placement": "3_2:(3,2)b1823",
      "next": "",
      "boss": true
     }

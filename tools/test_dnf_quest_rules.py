@@ -28,6 +28,21 @@ class QuestRules(unittest.TestCase):
     def test_disassembly_exact_norton_tuple(self):
         self.assertEqual(plan('[disjoint item]',0,[-2,-1,-1,13])[0][0]['npc'],13)
         self.assertTrue(plan('[disjoint item]',0,[-2,-1,-1,17])[1])
+    def test_clear_reward_keeps_original_dungeon(self):
+        fields = {'[grade]': ['[epic]'], '[npc index]': [4], '[type]': ['[seeking]'],
+                  '[sub type]': [-1], '[int data]': [3081, 1],
+                  '[clear reward item]': [1000, -1, 3081, 1, 100, 1]}
+        words = {'[name]': '暗黑雷鸣废墟', '[condition message]': '取得铁匠锤'}
+        quest, _, reasons = compile_quest(203, 'n_quest/example/a.qst', 'x', fields, words, {},
+                                          {'original_3081': {}}, {}, dungeon_index={1000: 'sunderland_dark'})
+        self.assertEqual(reasons, [])
+        self.assertEqual(quest['clear_items'], [{'dungeon': 'sunderland_dark',
+            'difficulty': ['normal', 'adventure', 'expert', 'king'],
+            'item': 'original_3081', 'amount': 1, 'limit': 1}])
+        blocked, _, reasons = compile_quest(203, 'n_quest/example/a.qst', 'x', fields, words, {},
+                                            {'original_3081': {}}, {}, dungeon_index={})
+        self.assertNotIn('clear_items', blocked)
+        self.assertIn('clear_reward_item_unsupported', reasons)
     def test_full_reproducible_audit_and_runtime(self):
         runtime,audit=build();catalog,missing=sync_catalog(runtime)
         self.assertFalse(missing);self.assertEqual(stale_outputs(runtime,audit,catalog),[]);self.assertEqual(audit,load(AUDIT))

@@ -39,4 +39,30 @@ func _values(id: String) -> Dictionary:
 	var percentages: Array = []
 	for hit: Dictionary in move.get("hits", []):
 		if not percentages.has(hit.get("percent", 100)):percentages.append(hit.get("percent", 100))
-	return {"mp":float(move.get("mp", 0)), "cooldown":float(move.get("cool_ms", 0)) / 1000.0, "damage_percent":percentages, "source":move.get("skill", "")}
+	var damage_lines: Array[String] = []
+	# Guard enters its defensive state before the legacy adapter's hit list runs.
+	if id != "guard":
+		for stage: Dictionary in move.get("stages", [move]):
+			for hit: Dictionary in stage.get("hits", []):
+				_append_damage_line(damage_lines, hit)
+				var successor: Dictionary = hit.get("native_controller", {}).get("child", {})
+				if not successor.is_empty():_append_damage_line(damage_lines, successor)
+	return {"mp":float(move.get("mp", 0)), "cooldown":float(move.get("cool_ms", 0)) / 1000.0,
+		"damage_percent":percentages, "damage_lines":damage_lines, "source":move.get("skill", "")}
+
+func _append_damage_line(lines: Array[String], hit: Dictionary) -> void:
+	var segments: Array = hit.get("segments", [])
+	if hit.get("kind") == "object":
+		segments = table.object(String(hit["object"])).get("segments", [])
+	if segments.is_empty():return
+	var parts: Array[String] = []
+	var percent := float(hit.get("percent", 0))
+	var fixed := float(hit.get("fixed", 0))
+	var additional := float(hit.get("true_damage", 0))
+	if percent != 0.0:parts.append(String.num(percent).trim_suffix(".0") + "%")
+	if fixed != 0.0:parts.append("固定 " + String.num(fixed).trim_suffix(".0"))
+	if additional != 0.0:parts.append("额外 " + String.num(additional).trim_suffix(".0"))
+	if parts.is_empty():return
+	var label := "魔法攻击力：" if hit.get("damage_type") == "magical" else "物理攻击力："
+	var line := label + " + ".join(parts)
+	if line not in lines:lines.append(line)

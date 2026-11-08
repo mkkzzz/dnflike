@@ -232,9 +232,14 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 	brief.custom_minimum_size = Vector2.ZERO
 	brief.set_deferred("size", Vector2(268, 30))
 	skin.label(tip, "魔法消耗  %d     冷却  %.1f 秒" % [values["mp"], values["cooldown"]], Vector2(16, 103), 11, Color("a7dd74"))
-	var row := "伤害倍率  "
-	for value in values["damage_percent"]:row += "%d%%  " % int(value)
-	if not values["damage_percent"].is_empty():skin.label(tip, row, Vector2(16, 124), 11)
+	var damage: Array = values["damage_lines"]
+	if not damage.is_empty():
+		var row := String(damage[0])
+		if damage.size() > 1:row += "（其余见技能窗）"
+		var damage_label: Label = skin.label(tip, row, Vector2(16, 124), 11)
+		damage_label.clip_text = true
+		damage_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		damage_label.size.x = 268
 	if detailed:
 		var detail: String = data["detail"]
 		if id == "buff":
@@ -246,8 +251,10 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 				detail += "  %s ×%.2f" % [game.number_windows.NAMES.get(mod["stat"],mod["stat"]),float(mod["value"])+float(mod.get("per_level",0))*(rank-1)]
 				index += 1
 		if id == "guard":
-			var definition: Dictionary = game.session.Numbers.shared_config()["skills"][id]
-			detail += "\n当前正面承伤 %.0f%%" % (maxf(0,float(definition["guard_factor"])-(rank-1)*float(definition["guard_per_level"]))*100)
+			var skills = game.session.Numbers.Skills
+			var guard_row: Array = skills.sample(game.session.Numbers.record(id),rank)["level_row"]
+			var label := "1级正面承伤" if rank == 0 else "当前正面承伤"
+			detail += "\n%s  物理 %d%%  魔法 %d%%" % [label,skills.guard_taken_percent(guard_row,"[physic]"),skills.guard_taken_percent(guard_row,"[magic]")]
 		var text: Label = skin.label(tip, detail, Vector2(16, 148), 11)
 		text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		text.clip_text = true

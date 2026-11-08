@@ -222516,6 +222516,7 @@
    },
    "clear_items": [
     {
+     "dungeon": "sunderland_dark",
      "difficulty": [
       "normal",
       "adventure",

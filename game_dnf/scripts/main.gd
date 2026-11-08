@@ -1361,17 +1361,21 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 		var chance := float(row[0])/100.0 if not row.is_empty() else 0.05
 		guarded = rng.chance(chance)
 	var taken := float(amount)
-	if guarded:
+	if manual_guard:
+		var rank := int(skill_levels.get("guard",1))
+		var row: Array = Numbers.Skills.sample(Numbers.record("guard"),rank)["level_row"]
+		# Original ATK +30 resets to physical when the source omits attack type.
+		var attack_type := Kernel.MoveTable.enum_value(atk,"attack_type","[physic]")
+		taken *= float(Numbers.Skills.guard_taken_percent(row,attack_type))/100.0
+		# CC5E78..CC5E98 reads guard.skl column 1, and CB1139 compares the state clock to it.
+		if amount > 0 and row.size() > 1:player["guard_recoil_ms"] = float(row[1])
+	elif guarded:
+		# Auto Guard retains its existing approximation until the native trigger is integrated.
 		var guard_factor := float(rules["player"]["guard_factor"])
 		if numeric_player != null:
 			var definition: Dictionary = Numbers.shared_config()["skills"]["guard"]
 			guard_factor = maxf(0,float(definition["guard_factor"])-(int(skill_levels.get("guard",1))-1)*float(definition["guard_per_level"]))
 		taken *= guard_factor
-		if manual_guard and amount > 0:
-			# CC5E78..CC5E98 reads guard.skl column 1, and CB1139 compares the state clock to it.
-			var rank := int(skill_levels.get("guard",1))
-			var row: Array = Numbers.Skills.sample(Numbers.record("guard"),rank)["level_row"]
-			if row.size() > 1:player["guard_recoil_ms"] = float(row[1])
 	elif numeric_player == null and float(player["buff_ms"])>0:taken *= float(rules["buff"]["damage_taken"])
 	var keiga: Dictionary = active_effect("keiga")
 	if taken > 0 and not keiga.is_empty() and int(keiga.get("absorb_remaining",0)) > 0:
