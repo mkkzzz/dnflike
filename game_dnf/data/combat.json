@@ -312,20 +312,25 @@
       150,
       420
      ],
-     "percent_col": 0
+       "percent_col": 0,
+       "fixed_col": 1
     }
    ],
    "fx": [
     {
      "key": "hardattack1",
-     "at": 150
+     "at": 0,
+     "action_clock": true
     },
     {
      "key": "hardattack2",
-     "at": 300
+     "at": 0,
+     "action_clock": true
     }
    ],
-   "source": "Body hardAttack.ani carries no attack boxes; the opaque extent of original HardAttackBlade1.ani supplies the trial box window (E-ADAPT, DNF-D011). ATK is the original dark, magic, down reaction."
+   "voice": "R_SM_GUE",
+   "swing": 0,
+   "source": "CC65A6 selects the HardAttack body. Mounted weapon ANI frames supply the attack boxes. The old trial box is the fallback when no original weapon is mounted. CC66EE and CC6735 read the percent and fixed skill columns. Both FX clips attach at state entry and carry their own empty first frame."
   },
   "moonlight": {
    "skill": "skill/swordman/moonlightslash.skl",

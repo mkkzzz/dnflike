@@ -10,6 +10,7 @@ const WeaponAppearance = preload("res://content/api/weapon_appearance.gd")
 const SKILL_RUNTIME := "res://data/skill_runtime.json"
 const SWORDMAN_WEAPON_POSES := {"attack1":"attack1","attack2":"attack2","attack3":"attack3",
 	"upper":"hitback","upper_followup":"upperslashafter",
+	"hardattack":"hardattack",
 	"tripleslash1":"tripleslash1","tripleslash2":"tripleslash2","tripleslash3":"tripleslash3",
 	"tripleslash4":"tripleslash4","tripleslash5":"tripleslash5"}
 const SHORT_MASTERY_SKL := "skill/swordman/shortswordmastery.skl"

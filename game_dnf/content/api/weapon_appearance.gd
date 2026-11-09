@@ -2,9 +2,10 @@ extends RefCounted
 ## Item identity is separate from weapon family (simulation/sound/skill rules).
 const PATH := "res://assets_local/weapon_appearance_v2/manifest.json"
 const POSE_OVERLAYS := ["res://assets_local/weapon_appearance_v3/manifest.json",
-	"res://assets_local/weapon_appearance_v4/manifest.json"]
+	"res://assets_local/weapon_appearance_v4/manifest.json",
+	"res://assets_local/weapon_appearance_v5/manifest.json"]
 const PARENT_TIMED_POSES := ["attack1", "attack2", "attack3", "hitback", "upperslashafter",
-	"tripleslash1", "tripleslash2", "tripleslash3", "tripleslash4", "tripleslash5"]
+	"tripleslash1", "tripleslash2", "tripleslash3", "tripleslash4", "tripleslash5", "hardattack"]
 static var _data: Dictionary = {}
 static var _layers: Dictionary = {}
 

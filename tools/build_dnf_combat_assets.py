@@ -358,13 +358,16 @@ GUARD_AUDIO = {
 }
 TRIPLE_SWING = 'R_TSLASH'
 TRIPLE_SWING_FILES = [f'sounds/char/swordman/effect/tslash_{index:02}.ogg' for index in (1, 2, 3)]
-# Original audio.xml RANDOM group R_TSLASH, in the same order as TSLASH_01..03.
-SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33)}
+HARDATTACK_VOICE = 'R_SM_GUE'
+HARDATTACK_VOICE_FILES = [f'sounds/char/swordman/sm_gue_{index:02}.ogg' for index in (1, 2)]
+# Original audio.xml RANDOM groups, in the same order as their source items.
+SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33), HARDATTACK_VOICE: (50, 50)}
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
     **{key: [path] for key, path in GUARD_AUDIO.items()},
     TRIPLE_SWING: TRIPLE_SWING_FILES,
+    HARDATTACK_VOICE: HARDATTACK_VOICE_FILES,
     **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
     **ZEALOT_SOUNDS,
     **OUTERWALL_SOUNDS,
@@ -1281,6 +1284,8 @@ def main() -> int:
                         help='Add original guard spark, dust, and audio cues')
     parser.add_argument('--extend-triple-cues', action='store_true',
                         help='Add the final two Triple Slash animations and original weapon sound group')
+    parser.add_argument('--extend-hardattack-voice', action='store_true',
+                        help='Add the original Ghost Slash voice group')
     parser.add_argument('--extend-upper-followup', action='store_true',
                         help='Add the original short-sword Upper Slash follow-up effect and sounds')
     parser.add_argument('--extend-khazan', action='store_true',
@@ -1353,6 +1358,9 @@ def main() -> int:
         specs = [('effects', key, EFFECTS[key]) for key in ('guard_spark', 'guard_dust')]
         specs.extend(('audio', key, path) for key, path in GUARD_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_hardattack_voice:
+        print(json.dumps(extend_skill_banks(args.library, OUT, [('audio', HARDATTACK_VOICE, HARDATTACK_VOICE_FILES)])))
         return 0
     if args.extend_triple_cues:
         specs = [('effects', key, EFFECTS[key]) for key in ('triple4', 'triple5')]

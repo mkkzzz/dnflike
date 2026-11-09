@@ -613,6 +613,40 @@ func check_enhanced_triple_slash() -> void:
 	step(140)
 	check(game.player["stage"]==4,"the fifth stage cannot continue into a sixth")
 
+func check_hardattack() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.skill_grant",{"id":"hardattack","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["hardattack"]
+	for item: Array in [["original_27000","shortsword",1],["original_27601","katana",-1]]:
+		start_room(item[0],item[1],item[2],spec)
+		game.numeric_player.values["attack_speed"] = 1.25
+		game.numeric_player.values["hit"] = 1.0
+		var hit: Dictionary = game.move_def("hardattack")["hits"][0]
+		check(hit["source"]=="attached_weapon" and hit["segments"][0]["start"]==150.0
+			and hit["segments"][0]["end"]==300.0 and hit["segments"][0]["frames"].size()==4,
+			"Ghost Slash uses the equipped weapon's four live body frames")
+		check(hit["percent"]==378.0 and hit["fixed"]==85.0 and hit["damage_type"]=="magical" and hit["element"]=="dark",
+			"Ghost Slash uses the two original SKL columns and the dark magic ATK")
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(100*int(item[2]),0))
+		press(KEY_A)
+		step(119)
+		var layers: Array = game.view.effects.filter(func(fx):return fx.data["source"].get_file() in ["hardattack1.ani","hardattack2.ani"])
+		check(game.hit_count==0 and layers.size()==2 and layers.all(func(fx):return fx.frame.get("img")==null),
+			"both Ghost Slash layers attach at entry and share the original blank 150 ms startup")
+		check(cues("R_SM_GUE").size()==1 and game.view.audio.variants["R_SM_GUE"].size()==2
+			and game.view.audio.variants["R_SM_GUE"].all(func(stream):return stream is AudioStreamOggVorbis),
+			"Ghost Slash plays the mounted original voice group")
+		step(1)
+		check(game.hit_count==1 and target["hp"]<target["max_hp"],"Ghost Slash hits at body frame 3 in both directions")
+		check(layers.all(func(fx):return fx.follow==0 and fx.clock_ms==150.0 and fx.frame["img_frame"]==0),
+			"both Ghost Slash layers reveal their first image on the contact frame")
+		check(game.view.player_actor.equipment_layers.all(func(layer):return int(layer.frame.get("frame",-1))==3),
+			"the two visible weapon layers use the original body frame index")
+		var expired: Dictionary = api.spawn_dummy(POINT+Vector2(100*int(item[2]),0))
+		step(120)
+		check(game.hit_count==1 and expired["hp"]==expired["max_hp"],"the frame-7 boundary ends Ghost Slash contact")
+
 func check_triple_cooldown() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -745,6 +779,7 @@ func run() -> void:
 	check_triple_slash()
 	check_enhanced_triple_slash()
 	check_triple_cooldown()
+	check_hardattack()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
 	quit(1 if failures else 0)
