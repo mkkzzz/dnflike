@@ -14,6 +14,8 @@
    "skillfx_blast_blood_light_f3e56a7e": "passiveobject/character/swordman/animation/blastblood/blast_blood_light.ani",
    "skillfx_blastbloodfloor1_e45c71e7": "passiveobject/character/swordman/animation/blastbloodfloor1.ani",
    "skillfx_blastbloodfloor2_449b3720": "passiveobject/character/swordman/animation/blastbloodfloor2.ani",
+   "skillfx_blastbloodhit1_59acce6f": "passiveobject/character/swordman/animation/blastbloodhit1.ani",
+   "skillfx_blastbloodhit2_098a61e5": "passiveobject/character/swordman/animation/blastbloodhit2.ani",
    "skillfx_blastbloodpresub_front_bd8155d0": "passiveobject/character/swordman/animation/blastbloodpresub_front.ani",
    "skillfx_blood1_8a08949c": "passiveobject/character/swordman/animation/blastblood/blood1.ani",
    "skillfx_blood2_610abe1d": "passiveobject/character/swordman/animation/blastblood/blood2.ani",
@@ -846,7 +848,7 @@
     "target_reaction_rules",
     "fixed_attack_scaling",
     "etc_layer_order",
-    "hit_effects",
+    "hit_fx_nested_lifetime",
     "non_weapon_attack_speed"
    ],
    "material_cost": {
@@ -868,6 +870,10 @@
        "fixed_col": 0,
        "lift": 450,
        "native_controller": {
+        "ground_hit_fx": [
+         "skillfx_blastbloodhit1_59acce6f",
+         "skillfx_blastbloodhit2_098a61e5"
+        ],
         "kind": "bloodblast",
         "layers": [],
         "reset_count": 3,

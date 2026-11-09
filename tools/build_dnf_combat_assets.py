@@ -1497,6 +1497,8 @@ def main() -> int:
                      for hit in hits for key in hit['native_controller']['layers'])
         specs.extend(('effects', layer['effect'], assets['effect_anims'][layer['effect']])
                      for hit in hits for layer in hit['native_controller'].get('ani_layers', []))
+        specs.extend(('effects', key, assets['effect_anims'][key])
+                     for hit in hits for key in hit['native_controller'].get('ground_hit_fx', []))
         specs.extend(('objects', hit['object'], hit['object'])
                      for hit in hits if hit['object'] in assets['objects'])
         specs.extend(('audio', key, path) for key, path in BLOODBLAST_AUDIO.items())

@@ -192,6 +192,8 @@ NATIVE_ANIMATION_BINDINGS = {
     OBJ_ROOT + "animation/blastbloodpresub_back.ani",
     OBJ_ROOT + "animation/blastbloodpresub_front.ani",
     OBJ_ROOT + "animation/blastbloodfloor2.ani",
+    OBJ_ROOT + "animation/blastbloodhit1.ani",
+    OBJ_ROOT + "animation/blastbloodhit2.ani",
     CHR_FX + "icewave.ani",
     CHR_FX + "firewavebig-sword-effect.ani",
     OBJ_ROOT + "animation/firewavebig/blast-front.ani",
@@ -1098,6 +1100,14 @@ def build_move(
             if reset_frames:
                 first, last = (timeline[frame]["start_ms"] for frame in reset_frames)
                 controller.update(reset_ms=(last-first)//static[0], reset_count=static[0]-1)
+            if name == "blastbloodsuborigin":
+                # A61879 and A61959 create separate ground and normal draw objects.
+                controller["ground_hit_fx"] = [
+                    add_fx(fx, effects, OBJ_ROOT + f"animation/blastbloodhit{i}.ani")
+                    for i in (1, 2)
+                ]
+                if not all(controller["ground_hit_fx"]):
+                    raise ValueError("Missing original Blood Blast contact animations")
             if name == "blastbloodorigin":
                 plume = records[obj["etc_motions"][0]]["decoded"]["timeline"]
                 controller["sound_at_ms"] = plume[8]["start_ms"]
@@ -1121,7 +1131,7 @@ def build_move(
                 "native_state": "bloodblast", "native_recovery_col": 3,
                 "material_cost": fixed_cube_cost(skill, records),
                 "fidelity_pending": ["target_reaction_rules", "fixed_attack_scaling",
-                                     "etc_layer_order", "hit_effects", "non_weapon_attack_speed"],
+                                     "etc_layer_order", "hit_fx_nested_lifetime", "non_weapon_attack_speed"],
                 "stages": [{"ani": "summon1"}, {"ani": "summon2", "voice": "SM_BLOOD_CAST", "hits": hits}]}
     if key in BUFF_SKILLS:
         stages.append({"ani": CAST_ANIM, "atk": "", "hits": []})

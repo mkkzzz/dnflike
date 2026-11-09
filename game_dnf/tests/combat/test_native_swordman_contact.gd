@@ -1720,7 +1720,7 @@ func check_bloodblast() -> void:
 	profile.command("numbers.skill_grant",{"id":"bloodblast","level":2})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["bloodblast"]
-	start_room("original_27601","katana",1,spec,"berserker")
+	start_room("original_27601","katana",-1,spec,"berserker")
 	var spent: Array = []
 	session.set_skill_material_spender(func(id: int, amount: int):
 		spent.append([id,amount])
@@ -1745,6 +1745,7 @@ func check_bloodblast() -> void:
 	var sub: Dictionary = game.objects[0]
 	var pillar: Dictionary = game.objects[1]
 	var ground: Dictionary = game.objects[2]
+	var contact_keys: Array = sub["hit"]["native_controller"]["ground_hit_fx"]
 	check(sub["def"]["path"].ends_with("/blastbloodsuborigin.obj") and sub["pos"]==POINT
 		and pillar["def"]["path"].ends_with("/blastbloodorigin.obj") and pillar["pos"]==POINT+Vector2(0,50)
 		and ground["def"]["path"].ends_with("/blastbloodpresuborigin.obj") and ground["pos"]==POINT,
@@ -1794,7 +1795,7 @@ func check_bloodblast() -> void:
 	var views: Dictionary = game.view.object_views
 	check(ids.all(func(id):return views.has(id) and not views[id].frame.has("sprite")),
 		"all ten ALS tracks are attached at their original layer positions and remain blank at 1099 ms")
-	move_target(target,POINT+Vector2(100,-12))
+	move_target(target,POINT+Vector2(100.75,-12.25))
 	target["vz"] = 0.0
 	game.monsters.append(target)
 	game.step_objects(1)
@@ -1811,14 +1812,27 @@ func check_bloodblast() -> void:
 	check(ordered,"all ten layers reference their 1100 ms sprites in ascending ALS draw order at the pillar depth")
 	game.step_objects(19)
 	check(not sub["hits"].has(target["id"]),"the centered spray has no contact before 1120 ms")
+	check(contact_keys.all(func(key):return cues(key).is_empty()),
+		"neither the ground burst nor the main pillar creates the centered spray hit effects")
 	game.step_objects(1)
 	check(sub["hits"].has(target["id"]) and target["state"]=="air"
 		and is_equal_approx(float(target["vz"]),450.0*lift),
 		"the centered spray launches at 1120 ms with its own static lift")
+	var contact_origin := Vector2(Vector2i(target["pos"]))
+	check(contact_keys.all(func(key):return (cues(key).size()==1 and cues(key)[0]["point"]==contact_origin
+		and cues(key)[0]["height"]==0.0 and cues(key)[0]["facing"]==1)),
+		"the grounded hit creates both draw objects at target XYZ before lift, facing the native default direction")
 	game.monsters.clear()
 	game.step_objects(60)
 	check(sub["hits"].is_empty() and sub["hit_resets_left"]==2 and cues("FIRE_PILLAR_UP").size()==1,
 		"the spray first resets at 1180 ms and the pillar cue stays one-shot")
+	move_target(target,contact_origin,30.0)
+	target["vz"] = 0.0
+	game.monsters.append(target)
+	game.step_objects(0.0)
+	check(sub["hits"].has(target["id"]) and contact_keys.all(func(key):return cues(key).size()==1),
+		"the same spray still hits an airborne target, without creating the ground effects")
+	game.monsters.clear()
 	step(559)
 	check(game.player["action"]=="bloodblast","recovery holds at 559 ms")
 	step(1)
@@ -1828,6 +1842,24 @@ func check_bloodblast() -> void:
 	check(not views.has("%s:ani:20" % pillar["id"]) and not views.has("%s:layer:1" % pillar["id"])
 		and views.has("%s:ani:30" % pillar["id"]),
 		"finished floor layers leave the view while the eruption remains active")
+	var contact_views: Array = game.view.effects.filter(func(fx):return (
+		String(fx.data["source"]).get_file() in ["blastbloodhit1.ani","blastbloodhit2.ani"]))
+	check(contact_views.size()==2,"both native contact clips are bound to render views")
+	if contact_views.size()!=2:return
+	var first = contact_views[0]
+	var second = contact_views[1]
+	check(first.z_index==1 and second.z_index==int(contact_origin.y)
+		and first.position==second.position and first.facing==1 and second.facing==1,
+		"the first effect draws over the floor and the second sorts at the original target depth")
+	var anchor: Vector2 = first.position
+	move_target(target,POINT+Vector2(200,20),80.0)
+	game.view.present(game.view_snapshot(),399.0,399.0)
+	check(not first.frame.has("sprite") and not second.frame.has("sprite"),"contact art stays blank through 399 ms")
+	game.view.present(game.view_snapshot(),1.0,1.0)
+	check(not first.frame.has("sprite") and second.frame.has("sprite"),"Hit2 starts at 400 ms")
+	game.view.present(game.view_snapshot(),70.0,70.0)
+	check(first.frame.has("sprite") and second.frame.has("sprite") and first.position==anchor and second.position==anchor,
+		"Hit1 starts at 470 ms and both effects stay at the grounded contact point")
 
 func run() -> void:
 	game = session.mount(root)

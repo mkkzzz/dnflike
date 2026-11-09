@@ -1747,6 +1747,15 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		amount = roundi(before_hp-float(player["hp"]))
 		if numeric_player != null and not contact_only:last_damage["trace"]["actual_amount"] = amount
 	else:
+		var ground_hit_fx: Array = hit.get("native_controller",{}).get("ground_hit_fx",[])
+		if not ground_hit_fx.is_empty() and not contact_only and int(target["z"]) == 0:
+			# A61738 checks the target height before the local reaction changes it.
+			# A6191F/A619EE place both draw-only objects at the original ground point.
+			var ground := Vector2(Vector2i(target["pos"]))
+			for index in ground_hit_fx.size():
+				bus.emit("combat.cue",{"kind":"fx","key":ground_hit_fx[index],
+					"point":ground,"height":0.0,"facing":1,"fresh":true,
+					"depth_offset":1-int(ground.y) if index==0 else 0})
 		target["hp"] = maxf(0,float(target["hp"])-amount)
 		# The native hit callback removes sleep only after 200 elapsed ms.
 		if not contact_only and target.has("numeric") and int(target["numeric"].sleep_age())>200:
