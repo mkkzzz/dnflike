@@ -10,6 +10,7 @@ const CombatSession = preload("res://combat/api/combat_session.gd")
 const Kernel = preload("res://combat/api/kernel.gd")
 const BattleView = preload("res://view/battle_view.gd")
 const MapLoader = preload("res://scripts/native_map_loader.gd")
+const NativeMaze = preload("res://combat/data/native_maze.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
 const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field","rasa_field"]
@@ -54,6 +55,10 @@ var props: Array = []
 var room_index := 0
 var room_cleared := false
 var room_snapshots: Dictionary = {}
+var native_maze: NativeMaze
+var native_room: Dictionary = {}
+var native_route_name := ""
+var native_bgm_volume_db := -28.0
 var room_map: Dictionary = {}
 var room_width := 640.0
 var _walk_component_ready := false
@@ -283,8 +288,12 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 ## player {hp, mp, hp_max, mp_max, damage_multiplier, job, weapon}, audio {muted, bgm_volume_db}.
 ## Long-term profile data stays with flow; these are the per-run combat stats it hands over.
 ## Without flow values, HP/MP start from the original CHR level-1 initial stats.
-func begin_room(spec: Dictionary) -> void:
+func begin_room(spec: Dictionary, maze: NativeMaze = null) -> void:
 	dungeon_id=String(spec.get("dungeon","lorien"))
+	var leaving_maze := native_maze != null and maze == null
+	native_maze = maze
+	native_room = maze.current_room() if maze != null else {}
+	native_route_name = String(spec.get("route",{}).get("name","神殿周边"))
 	var snapshot: Dictionary = spec.get("player",{})
 	numeric_player = null
 	skill_levels = {}
@@ -307,7 +316,11 @@ func begin_room(spec: Dictionary) -> void:
 	if assets["players"].has(String(snapshot.get("weapon",""))):weapon = String(snapshot["weapon"])
 	var audio_spec: Dictionary = spec.get("audio",{})
 	if audio_spec.has("muted"):_muted = bool(audio_spec["muted"])
-	if audio_spec.has("bgm_volume_db") and not _muted:view.audio.start_music(float(audio_spec["bgm_volume_db"]))
+	if leaving_maze or (maze != null and _muted):view.audio.music.stop()
+	if maze != null:
+		native_bgm_volume_db = float(audio_spec.get("bgm_volume_db",-28.0))
+	elif audio_spec.has("bgm_volume_db") and not _muted:
+		view.audio.start_music(float(audio_spec["bgm_volume_db"]))
 	run_id = String(spec.get("run_id","standalone"))
 	rng.reseed(hash(run_id))
 	room_snapshots.clear()
@@ -324,8 +337,11 @@ func begin_room(spec: Dictionary) -> void:
 	requests.clear()
 	held.clear()
 	taps.clear()
-	load_room(clampi(int(spec.get("room_index",0)),0,rules["rooms"].size()-1),String(spec.get("from","start")))
-	if spec.has("room_id"):room_id = String(spec["room_id"])
+	if maze != null:
+		load_room(int(native_room["room_index"]),"start")
+	else:
+		load_room(clampi(int(spec.get("room_index",0)),0,rules["rooms"].size()-1),String(spec.get("from","start")))
+		if spec.has("room_id"):room_id = String(spec["room_id"])
 
 func new_player() -> Dictionary:
 	return {"id":PLAYER_ID,"pos":Vector2(125,250),"z":0.0,"vz":0.0,"air_ms":0.0,"hp":max_hp,"mp":max_mp,
@@ -707,18 +723,7 @@ func step_game(ms: float) -> void:
 	for enemy: Dictionary in monsters:
 		if float(enemy["hp"])<=0:report_defeat(enemy)
 		if float(enemy["hp"])>0 or float(enemy["death_ms"])<820:all_dead = false
-	if all_dead and not room_cleared:
-		room_cleared = true
-		room_snapshots[room_index] = {"cleared":true,"props":props.duplicate(true)}
-		var boss := bool(rules["rooms"][room_index].get("boss",false))
-		# BOSS 房换战斗曲（data/bgm.json 的 dungeons.<id>.boss；缺省沿用普通曲）。
-		if not _muted:view.audio.play_music("forest02" if boss else "forest01", view.audio.music.volume_db)
-		bus.emit("combat.room_combat_finished",flow_payload({"boss":boss,"final_room":boss,
-			"source_map_id":int(room_map.get("map_id",-1)),"companions_alive":living_companion_ids()}))
-		if boss:
-			finished = true
-			victory = true
-		else:notice("房间清空 · 通道已开启")
+	if all_dead and not room_cleared:finish_current_room()
 	if room_cleared and not finished and door_lock_ms<=0:
 		for door: Dictionary in doors:
 			# Walking into the gate passes; standing right on it passes as well.
@@ -729,8 +734,37 @@ func step_game(ms: float) -> void:
 			var side := String(door.get("side",""))
 			var inside := inside_door_trigger(offset,side)
 			if inside and (move.length()>0 or offset.length()<14 or taps.get(KEY_ENTER,false)):
-				load_room(int(door["to"]),side)
+				if native_maze != null:
+					var next := native_maze.move(side)
+					if next.is_empty():continue
+					room_snapshots[room_index]["props"] = props.duplicate(true)
+					native_room = next
+					load_room(int(next["room_index"]),side)
+				else:
+					load_room(int(door["to"]),side)
 				break
+
+func finish_current_room() -> void:
+	var boss := route_boss_room()
+	var details := {"boss":boss,"final_room":boss,"source_map_id":int(room_map.get("map_id",-1)),
+		"companions_alive":living_companion_ids()}
+	if native_maze != null:
+		var cleared := native_maze.clear_room(native_room["cell"],0)
+		if cleared.is_empty():return
+		native_room["cleared"] = true
+		var cell: Vector2i = cleared["cell"]
+		details["source_cell"] = [cell.x,cell.y]
+		details["source_map_id"] = cleared["source_map_id"]
+	elif not _muted:
+		view.audio.play_music("forest02" if boss else "forest01",view.audio.music.volume_db)
+	room_cleared = true
+	room_snapshots[room_index] = {"cleared":true,"props":props.duplicate(true)}
+	bus.emit("combat.room_combat_finished",flow_payload(details))
+	if boss:
+		finished = true
+		victory = true
+	else:
+		notice("房间清空 · 通道已开启")
 
 func step_player(ms: float, move: Vector2) -> void:
 	var dt := ms/1000
@@ -2329,10 +2363,28 @@ func step_hazards(ms: float) -> void:
 			Vector3(float(prop["pos"].x), float(prop["pos"].y), 0.0), 1, float(player["attack"]))
 
 func room_placement(index: int) -> Dictionary:
+	if native_maze != null:return native_room["placement"] if index == room_index else {}
 	var id := String(rules["rooms"][index]["placement"])
 	for p: Dictionary in map_loader.placements():
 		if String(p["id"]) == id:return p
 	return {}
+
+func route_room_name() -> String:
+	return native_route_name if native_maze != null else String(rules["rooms"][room_index]["name"])
+
+func route_boss_room() -> bool:
+	return bool(native_room["boss"]) if native_maze != null else bool(rules["rooms"][room_index].get("boss",false))
+
+func route_room_count() -> int:
+	return native_maze.room_count() if native_maze != null else rules["rooms"].size()
+
+func route_room_number() -> int:
+	return native_maze.room_number() if native_maze != null else room_index+1
+
+func route_exit_target() -> Vector2:
+	if not room_cleared or finished:return Vector2.ZERO
+	if native_maze != null:return Vector2.ZERO if doors.is_empty() else Vector2(doors[0]["pos"])
+	return door_point(String(rules["rooms"][room_index]["next"]))
 
 func walkable(p: Vector2) -> bool:
 	if room_map.is_empty() or p.x < 0 or p.x >= room_width:return false
@@ -2465,20 +2517,29 @@ func load_room(index: int, from_side: String) -> void:
 	room_id = "%s:%d"%[dungeon_id,index]
 	bar_target = -1
 	doors.clear()
-	var entry: Dictionary = rules["rooms"][index]
 	var placement := room_placement(index)
 	room_map = map_loader.room(String(placement["map"]))
 	room_width = float(room_map["width"])
 	_walk_component_ready = false
 	_walk_main_cells.clear()
-	if index>0:
-		var back := String(OPPOSITE[String(rules["rooms"][index-1]["next"])])
-		doors.append({"side":back,"to":index-1,"pos":door_point(back)})
-	if index<rules["rooms"].size()-1:
-		var next_side: String = entry["next"]
-		doors.append({"side":next_side,"to":index+1,"pos":door_point(next_side)})
-	room_cleared = bool(room_snapshots.get(index,{}).get("cleared",false))
-	props = build_props(room_map)
+	var saved: Dictionary = room_snapshots.get(index,{})
+	if native_maze != null:
+		for gate: Dictionary in placement["gates"]:
+			if gate["target_cell"] == null:continue
+			var side := String(gate["direction"])
+			doors.append({"side":side,"target_cell":gate["target_cell"],"pos":door_point(side)})
+		room_cleared = bool(native_room["cleared"])
+		props = saved["props"].duplicate(true) if saved.has("props") else build_props(room_map)
+		if not _muted:view.audio.play_dungeon_music(dungeon_id,route_boss_room(),native_bgm_volume_db)
+	else:
+		if index>0:
+			var back := String(OPPOSITE[String(rules["rooms"][index-1]["next"])])
+			doors.append({"side":back,"to":index-1,"pos":door_point(back)})
+		if index<rules["rooms"].size()-1:
+			var next_side: String = rules["rooms"][index]["next"]
+			doors.append({"side":next_side,"to":index+1,"pos":door_point(next_side)})
+		room_cleared = bool(saved.get("cleared",false))
+		props = build_props(room_map)
 	# props 由地图静态美术承载（native_map_loader 已画），这里不再交给视图二次渲染；
 	# 破坏时用 combat.prop_broken 按 prop_node 下标隐藏对应节点。
 	bus.emit("combat.room_loaded",{"room_index":index,"room_id":room_id,"placement":String(placement["id"]),"props":[]})
@@ -2508,7 +2569,7 @@ func load_room(index: int, from_side: String) -> void:
 			var anchor: Array = m["anchor"]
 			spawn_enemy(Vector2(float(anchor[0]),float(anchor[1])),String(m["raw"][-1]) == "[boss]",kind)
 	place_room_companions()
-	notice(String(entry["name"])+(" · 领主出现" if entry.get("boss",false) else ""))
+	notice(route_room_name()+(" · 领主出现" if route_boss_room() else ""))
 
 ## Gate anchor of the current room on the given side (placement gate, else map pathgate).
 func door_point(side: String) -> Vector2:
@@ -2884,20 +2945,25 @@ func view_snapshot() -> Dictionary:
 			objs.append_array(_rasa_child_layers(item,o,controller))
 		else:
 			objs.append(item)
-	var route: Array = []
-	for i in rules["rooms"].size():
-		var room: Dictionary = rules["rooms"][i]
-		route.append({"cell":room_placement(i).get("cell",[0,0]),"visited":room_snapshots.has(i),"current":i==room_index,"boss":bool(room.get("boss",false))})
-	var boss_room := bool(rules["rooms"][room_index].get("boss",false))
+	var route: Array = native_maze.route_view() if native_maze != null else []
+	if native_maze == null:
+		for i in rules["rooms"].size():
+			var room: Dictionary = rules["rooms"][i]
+			route.append({"cell":room_placement(i).get("cell",[0,0]),"visited":room_snapshots.has(i),"current":i==room_index,"boss":bool(room.get("boss",false))})
+	var placement_id := String(native_room["placement"]["id"]) if native_maze != null else String(rules["rooms"][room_index]["placement"])
+	var stage_info := {"room_index":room_index,"placement":placement_id,
+		"cleared":room_cleared and not route_boss_room(),"doors":doors.duplicate(true)}
+	if native_maze != null:
+		stage_info["resolved_placement"] = native_room["placement"]
+		stage_info["broken_props"] = props.filter(func(prop):return prop.get("broken",false)).map(func(prop):return int(prop["node"]))
 	return {"frame":_frame,"paused":paused,
 		"player":{"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,
 			"flash":float(player["flash_ms"])>0,"buff":float(player["buff_ms"])>0,"weapon":weapon,
 			"aura":String(move_def("buff").get("aura_fx","")) if float(player["buff_ms"])>0 else ""},
 		"enemies":enemies,"companions":friendly,"objects":objs,"props":props_view(),
-		"stage":{"room_index":room_index,"placement":String(rules["rooms"][room_index]["placement"]),
-			"cleared":room_cleared and not boss_room,"doors":doors.duplicate(true)},
-		"hud":{"room_name":String(rules["rooms"][room_index]["name"]),"alive":alive,"room_cleared":room_cleared,
+		"stage":stage_info,
+		"hud":{"room_name":route_room_name(),"alive":alive,"room_cleared":room_cleared,
 			"route":route,"combo":combo_count,"toast":toast,"toast_ms":toast_ms,"skills":skill_bar(),"monster_bar":monster_bar(),
 			"player":{"hp":float(player["hp"]),"mp":float(player["mp"]),"hp_max":max_hp,"mp_max":max_mp,
 				"job":job,"weapon":weapon,"buff_ms":float(player["buff_ms"]),"buff_label":String(move_def("buff").get("label","")),

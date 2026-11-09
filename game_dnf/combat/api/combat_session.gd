@@ -16,6 +16,8 @@ signal companion_defeated(event: Dictionary)
 const SCENE := "res://scenes/main.tscn"
 const FLOW_EVENTS := ["combat.monster_defeated", "combat.room_combat_finished", "combat.player_defeated", "combat.companion_defeated"]
 const SkillSlots = preload("res://stats/api/skill_slots.gd")
+const NativeMaze = preload("res://combat/data/native_maze.gd")
+const DetRng = preload("res://core/det_rng.gd")
 
 var game: Node
 
@@ -47,7 +49,23 @@ func start_room(spec: Dictionary) -> bool:
 	var player_spec: Dictionary=spec.get("player",{})
 	if not preload("res://content/api/weapon_appearance.gd").valid_spec(player_spec):return false
 	var route: Dictionary=spec.get("route",{})
-	if route.has("map_export"):
+	var maze: NativeMaze
+	if route.get("mode","") == "native_maze":
+		if not route.has("map_export") or spec.get("dungeon") != "outerwall":return false
+		var probe = game.map_loader.get_script().new()
+		if not probe.load_export(String(route["map_export"])):return false
+		maze = NativeMaze.new()
+		if not maze.start(probe.data,DetRng.new(hash(String(spec.get("run_id","standalone"))))):return false
+		if not _validate_native_maze(probe,maze) or not game.view.audio.has_dungeon_music(String(spec["dungeon"])):
+			return false
+		_use_map_export(probe)
+	elif not route.has("map_export") and game.native_maze != null:
+		var probe = game.map_loader.get_script().new()
+		if not probe.load_export(String(game.content.rules()["map_export"])):return false
+		game.rules = game.rules.duplicate(true)
+		game.rules["rooms"] = game.content.rules()["rooms"].duplicate(true)
+		_use_map_export(probe)
+	elif route.has("map_export"):
 		# Validate the complete route before changing the live map/table. Unknown
 		# monsters must reject entry rather than silently vanishing from a room.
 		var probe=game.map_loader.get_script().new()
@@ -84,11 +102,41 @@ func start_room(spec: Dictionary) -> bool:
 			if not forward or not reciprocal:return false
 		game.rules=game.rules.duplicate(true)
 		game.rules["rooms"]=rooms.duplicate(true)
-		game.map_loader.data=probe.data
-		game.map_loader.base_dir=probe.base_dir
-		game.map_loader.textures.clear()
-	game.begin_room(spec)
+		_use_map_export(probe)
+	game.begin_room(spec,maze)
 	if player_spec.has("weapon_item"):game.view.set_equipped_weapon(String(player_spec["weapon_item"]))
+	return true
+
+func _use_map_export(loader) -> void:
+	game.map_loader.data = loader.data
+	game.map_loader.base_dir = loader.base_dir
+	game.map_loader.textures.clear()
+	game.map_loader.errors.clear()
+
+func _validate_native_maze(loader, maze: NativeMaze) -> bool:
+	var pending: Array[String] = []
+	var checked := {}
+	for path: String in maze.required_map_paths():
+		var room: Dictionary = loader.room(path)
+		for monster: Dictionary in room["monsters"]:
+			var mob := String(monster["mob"])
+			if mob not in pending:pending.append(mob)
+		for companion: Dictionary in room.get("companions",[]):
+			if not game.can_spawn_companion(companion):return false
+	while not pending.is_empty():
+		var mob: String = pending.pop_front()
+		if checked.has(mob):continue
+		checked[mob] = true
+		var kind: String = game.table.monster_by_mob(mob)
+		if kind == "":return false
+		var definition: Dictionary = game.table.monsters[kind]
+		var bank: Dictionary = game.combat_assets.get("monsters",{}).get(definition["bank"],{})
+		var texture := String(bank.get("atlas",{}).get("texture",""))
+		if texture == "" or not ResourceLoader.exists(texture,"Texture2D"):return false
+		for child: String in definition.get("native_suicide",{}).get("spawn",{}).get("mobs",[]):
+			if child not in pending:pending.append(child)
+	for image: Dictionary in loader.data["images"].values():
+		if not FileAccess.file_exists(loader.base_dir.path_join(String(image["file"]))):return false
 	return true
 
 ## The outer flow owns configurable hotkeys; the internal test harness uses this bridge.
@@ -177,13 +225,12 @@ func read_view() -> Dictionary:
 	var enemies: Array = []
 	for enemy: Dictionary in game.monsters:
 		if float(enemy["hp"]) > 0:enemies.append({"id":enemy["id"],"pos":Vector2(enemy["pos"]),"hp":float(enemy["hp"]),"chief":enemy["chief"]})
-	var rooms: Array = game.rules["rooms"]
-	var exit_target := Vector2.ZERO
-	if game.room_cleared and not game.finished:exit_target = game.door_point(String(rooms[game.room_index]["next"]))
+	var room_count: int = game.route_room_count()
+	var exit_target: Vector2 = game.route_exit_target()
 	return {"run_id":game.run_id,"room_id":game.room_id,"room_index":game.room_index,
 		"time_ms":game.elapsed_ms,"death_id":game.last_defeat_id,"invulnerable_ms":float(p["invuln_ms"]),
 		"revive_fx_count":game.view.revive_fx_count,
-		"room":game.room_index+1,"room_count":rooms.size(),"room_name":String(rooms[game.room_index]["name"]),
+		"room":game.route_room_number(),"room_count":room_count,"room_name":game.route_room_name(),
 		"hp":float(p["hp"]),"hp_max":game.max_hp,"mp":float(p["mp"]),"mp_max":game.max_mp,
 		"pos":Vector2(p["pos"]),"camera_x":roundf(game.view.camera_x),"facing":int(p["facing"]),"job":game.job,"weapon":game.weapon,"weapon_item":String(game.view._weapon_item) if game.view._item_appearance_enabled else "",
 		"attack_damage":game.attack_power(),
@@ -205,13 +252,12 @@ func read_runtime_view() -> Dictionary:
 	for enemy: Dictionary in game.monsters:
 		if float(enemy["hp"]) <= 0:continue
 		enemies.append({"id":enemy["id"],"pos":Vector2(enemy["pos"]),"hp":float(enemy["hp"]),"chief":enemy["chief"]})
-	var rooms: Array = game.rules["rooms"]
-	var exit_target := Vector2.ZERO
-	if game.room_cleared and not game.finished:exit_target = game.door_point(String(rooms[game.room_index]["next"]))
+	var room_count: int = game.route_room_count()
+	var exit_target: Vector2 = game.route_exit_target()
 	return {"run_id":game.run_id,"room_id":game.room_id,"room_index":game.room_index,
 		"time_ms":game.elapsed_ms,"death_id":game.last_defeat_id,"invulnerable_ms":float(p["invuln_ms"]),
 		"revive_fx_count":game.view.revive_fx_count,
-		"room":game.room_index+1,"room_count":rooms.size(),"room_name":String(rooms[game.room_index]["name"]),
+		"room":game.route_room_number(),"room_count":room_count,"room_name":game.route_room_name(),
 		"hp":float(p["hp"]),"hp_max":game.max_hp,"mp":float(p["mp"]),"mp_max":game.max_mp,
 		"pos":Vector2(p["pos"]),"camera_x":roundf(game.view.camera_x),"facing":int(p["facing"]),
 		"player_state":String(p["state"]),"player_z":float(p["z"]),"player_vz":float(p["vz"]),

@@ -95,6 +95,10 @@
   "arden": {
    "normal": "skycastle",
    "boss": "skycastle_boss"
+  },
+  "outerwall": {
+   "normal": "outer_temple",
+   "boss": "behemoth_b01_1"
   }
  },
  "ambience": {
@@ -270,6 +274,18 @@
    "source": "music/skycastle_boss.ogg",
    "sha256": "fc0ce6567f2ae28edade31489c74a84c78bf1a3072b602ab3ba010f21c4d7f0a",
    "bytes": 919062
+  },
+  "outer_temple": {
+   "file": "audio/bgm/outer_temple.ogg",
+   "source": "music/outer_temple.ogg",
+   "sha256": "476a0974462e2789a25002417e3c90c54196dcfe56ad5644c24c70fcaa33f70d",
+   "bytes": 1930418
+  },
+  "behemoth_b01_1": {
+   "file": "audio/bgm/behemoth_b01_1.ogg",
+   "source": "music/behemoth_b01_1.ogg",
+   "sha256": "5986f1d354055f00835eddaa0f9e9af9150c718a37a464bced49c0bc92106858",
+   "bytes": 1101176
   },
   "amb_town_01": {
    "file": "audio/bgm/amb_town_01.ogg",

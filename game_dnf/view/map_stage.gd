@@ -21,20 +21,31 @@ var _open := false
 func setup(map_loader) -> void:
 	loader = map_loader
 
+func invalidate_room() -> void:
+	_placement = ""
+
 ## info: {placement, cleared}
 func show_room(info: Dictionary) -> void:
 	var placement := String(info.get("placement",""))
 	if placement != _placement:
 		_placement = placement
-		if root != null:root.queue_free()
+		if root != null:
+			root.hide()
+			root.queue_free()
 		root = null
-		for p: Dictionary in loader.placements():
-			if String(p["id"]) == placement:
-				root = loader.build(p)
-				add_child(root)
-				var room: Dictionary = loader.room(String(p["map"]))
-				walk_grid = room["walk_grid"]
-				room_width = float(room["width"])
+		var resolved: Dictionary = info.get("resolved_placement",{})
+		if resolved.is_empty():
+			for candidate: Dictionary in loader.placements():
+				if String(candidate["id"]) == placement:
+					resolved = candidate
+					break
+		if not resolved.is_empty():
+			root = loader.build(resolved)
+			add_child(root)
+			var room: Dictionary = loader.room(String(resolved["map"]))
+			walk_grid = room["walk_grid"]
+			room_width = float(room["width"])
+			for index: int in info.get("broken_props",[]):hide_prop(index)
 		_open = false
 	var open := bool(info.get("cleared",false))
 	cleared = open
@@ -43,6 +54,13 @@ func show_room(info: Dictionary) -> void:
 		_open = open
 		loader.set_gates_open(root,open)
 	queue_redraw()
+
+func hide_prop(index: int) -> void:
+	if root == null:return
+	for node in root.get_children():
+		if int(node.get_meta("prop_node",-1)) == index:
+			node.hide()
+			break
 
 func camera_for(player_x: float) -> float:
 	return clampf(player_x-VIEW_WIDTH/2,0.0,maxf(0.0,room_width-VIEW_WIDTH))

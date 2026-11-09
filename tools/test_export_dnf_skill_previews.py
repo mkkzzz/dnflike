@@ -1,11 +1,29 @@
+import json
 import struct
 import unittest
+from pathlib import Path, PurePosixPath
+from tempfile import TemporaryDirectory
 
-from export_dnf_skill_previews import avi_video_info, decode_neople_video, frame_atlas
+from export_dnf_skill_previews import (
+    avi_hold_frame_indices,
+    avi_video_info,
+    decode_neople_video,
+    frame_atlas,
+    swordman_clips,
+)
 
 
 def chunk(tag: bytes, contents: bytes) -> bytes:
     return tag + struct.pack("<I", len(contents)) + contents + bytes(len(contents) % 2)
+
+
+def indexed_avi(samples: list[bytes], index_offset_delta: int = 0) -> bytes:
+    movie = bytearray(b"movi")
+    index = bytearray()
+    for sample in samples:
+        index += struct.pack("<4sIII", b"00dc", 0, len(movie) + index_offset_delta, len(sample))
+        movie += chunk(b"00dc", sample)
+    return chunk(b"RIFF", b"AVI " + chunk(b"LIST", movie) + chunk(b"idx1", index))
 
 
 class SkillPreviewExport(unittest.TestCase):
@@ -42,6 +60,40 @@ class SkillPreviewExport(unittest.TestCase):
         self.assertEqual(atlas.getpixel((1, 1)), (0, 0, 0, 0))
         with self.assertRaisesRegex(ValueError, "frame count"):
             frame_atlas(rgba[:-1], 1, 1, 9)
+
+    def test_indexed_empty_samples_hold_the_previous_decoded_frame(self):
+        avi = indexed_avi([b"a", b"", b"", b"b"])
+        holds = avi_hold_frame_indices(avi, 4)
+        self.assertEqual(holds, {1, 2})
+        first, second = (17, 43, 69, 29), (0, 200, 40, 255)
+        atlas = frame_atlas(bytes(first + second), 1, 1, 4, holds)
+        self.assertEqual(list(atlas.get_flattened_data()), [first, first, first, second])
+        with self.assertRaisesRegex(ValueError, "frame count"):
+            frame_atlas(bytes(first), 1, 1, 4, holds)
+
+    def test_unverified_empty_samples_cannot_repair_frame_count(self):
+        with self.assertRaisesRegex(ValueError, "sample index disagree"):
+            avi_hold_frame_indices(indexed_avi([b"a", b"", b"b"], index_offset_delta=4), 3)
+        with self.assertRaisesRegex(ValueError, "sample index disagree"):
+            avi_hold_frame_indices(indexed_avi([b"a", b"", b"b"]), 4)
+        with self.assertRaisesRegex(ValueError, "no previous image"):
+            avi_hold_frame_indices(indexed_avi([b"", b"b"]), 2)
+
+    def test_optional_swordman_pack_uses_tracked_skill_paths(self):
+        with TemporaryDirectory() as workspace:
+            root = Path(workspace)
+            catalog = root / "catalog.json"
+            catalog.write_text(json.dumps({"skills": [
+                {"path": "skill/swordman/upperslash.skl"},
+                {"path": "skill/swordman/no_original_video.skl"},
+                {"path": "skill/fighter/guard.skl"},
+            ]}), encoding="utf-8")
+            video = root / "Video" / "Swordman"
+            video.mkdir(parents=True)
+            for filename in ("UpperSlash.AVI", "BloodBoom.avi", "Guard.avi"):
+                (video / filename).touch()
+
+            self.assertEqual(swordman_clips(video.parent, catalog), [PurePosixPath("Swordman/UpperSlash.AVI")])
 
 
 if __name__ == "__main__":

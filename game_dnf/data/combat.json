@@ -437,6 +437,36 @@
   "source": "Down + jump. Original back step has no motion file of its own (CHR [back motion] points at attack3.ani); the jump.ani rise/fall poses are used (E-ADAPT). Only normal attacks can be cancelled for now (user 2026-10-23); a cancel leaves a fading afterimage of the cancelled pose (engine-drawn in the original, E-ADAPT)."
  },
  "monsters": {
+  "native_starfish": {
+   "mob": "monster/starfish/starfish.mob",
+   "bank": "native_starfish",
+   "name": "章鱼怪"
+  },
+  "native_starfish_rukuku": {
+   "mob": "monster/starfish/starfishrukuku.mob",
+   "bank": "native_starfish_rukuku",
+   "name": "小八爪"
+  },
+  "native_raxy": {
+   "mob": "monster/zealot/raxy-a.mob",
+   "bank": "native_raxy",
+   "name": "GBL教信徒"
+  },
+  "native_bossfather": {
+   "mob": "monster/zealot/bossfather.mob",
+   "bank": "native_bossfather",
+   "name": "GBL教大祭司"
+  },
+  "native_bosspope": {
+   "mob": "monster/zealot/bosspope.mob",
+   "bank": "native_bosspope",
+   "name": "GBL教大主教"
+  },
+  "native_catapult": {
+   "mob": "monster/vehicle/catapult.mob",
+   "bank": "native_catapult",
+   "name": "龙头炮"
+  },
   "goblin": {
    "mob": "monster/goblin/goblin.mob",
    "bank": "goblin",

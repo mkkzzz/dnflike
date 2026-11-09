@@ -88,7 +88,10 @@
   "newmonsters_haze_death_squad_death_squad",
   "native_raxy",
   "native_starfish",
-  "native_starfish_rukuku"
+  "native_starfish_rukuku",
+  "native_bossfather",
+  "native_bosspope",
+  "native_catapult"
  ],
  "objects": [
   "gorecross",
@@ -129,7 +132,7 @@
  ],
  "effects": 194,
  "digits": 61,
- "audio_keys": 212,
+ "audio_keys": 213,
  "unresolved": 32,
  "unresolved_items": [
   {

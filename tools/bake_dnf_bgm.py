@@ -66,6 +66,8 @@ DUNGEONS = {
     # act8 阿登高地（无法地带主题）：act8 原生曲未在 music/ 下找到，
     # 暂借 skycastle 系（E-ADAPT，待确认 act8 曲目后替换）。
     'arden': {'normal': 'music/skycastle.ogg', 'boss': 'music/skycastle_boss.ogg'},
+    # DGN21 MAP sound list: M_OUTER_TEMPLE, M_BEHEMOTH_BOSS_01_1.
+    'outerwall': {'normal': 'music/outer_temple.ogg', 'boss': 'music/behemoth_b01_1.ogg'},
 }
 # 环境音：与 BGM 叠加的低音量底噪（原版 sounds/amb）
 AMBIENCE = {

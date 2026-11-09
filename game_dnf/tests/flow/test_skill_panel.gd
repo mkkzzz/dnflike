@@ -120,8 +120,15 @@ func check_previews(game, host, panel, upper: Button, guard: Button) -> void:
 	if preview == null:return
 	var atlas := preview.texture as AtlasTexture
 	var fallback: TextureRect = game.modal.find_child("skill_detail_icon", true, false)
-	host.check(atlas.atlas.resource_path.ends_with("/swordman_upperslash.png") and not fallback.is_visible_in_tree(),
+	host.check(atlas.atlas.resource_path == panel.PREVIEW_DIR + "swordman_upperslash.png" and not fallback.is_visible_in_tree(),
 		"original video replaces the static illustration and leaves the title readable")
+	var upper_path: String = panel.by_id[46]["path"]
+	var optional_upper = panel._optional_previews.get(upper_path)
+	panel._optional_previews[upper_path] = {"image": "missing.png"}
+	host.check(panel._preview_entry(upper_path).get("path") == atlas.atlas.resource_path,
+		"a broken optional entry cannot replace the bundled preview")
+	if optional_upper == null:panel._optional_previews.erase(upper_path)
+	else:panel._optional_previews[upper_path] = optional_upper
 	preview.set_process(false)
 	preview._elapsed = 0.0
 	preview._show_frame(0)
@@ -139,7 +146,9 @@ func check_previews(game, host, panel, upper: Button, guard: Button) -> void:
 	host.check(guard_preview != null and guard_preview != preview and not is_instance_valid(preview)
 		and guard_preview.texture.atlas.resource_path.ends_with("/swordman_guard.png"),
 		"selecting Guard releases UpperSlash and starts the matching original clip")
-	var unsupported: Button = game.modal.find_child("skill_node_5", true, false)
+	if not panel._preview_entry("skill/swordman/hardattack.skl").is_empty():
+		await check_optional_previews(game, host, panel)
+	var unsupported: Button = game.modal.find_child("skill_node_94", true, false)
 	host.click_control(unsupported)
 	await host.ticks(2)
 	fallback = game.modal.find_child("skill_detail_icon", true, false)
@@ -149,8 +158,29 @@ func check_previews(game, host, panel, upper: Button, guard: Button) -> void:
 	host.click_control(upper)
 	await host.ticks(2)
 
+func check_optional_previews(game, host, panel) -> void:
+	var hardattack: Button = game.modal.find_child("skill_node_5", true, false)
+	host.click_control(hardattack)
+	var preview := await playing_preview(game, host)
+	host.check(preview != null and preview.texture.atlas.resource_path == panel.SWORDMAN_PREVIEW_DIR + "swordman_hardattack.png",
+		"real pointer selection loads HardAttack from the optional local pack")
+	await host.frame("62b_skill_preview_optional")
+	var scroll: VScrollBar = game.modal.find_child("skill_tree_scroll", true, false)
+	var old_scroll := scroll.value
+	scroll.value = scroll.max_value - scroll.page
+	await host.ticks(2)
+	var hundred_sword: Button = game.modal.find_child("skill_node_86", true, false)
+	host.click_control(hundred_sword)
+	preview = await playing_preview(game, host)
+	host.check(preview != null and preview.texture.atlas.resource_path == panel.SWORDMAN_PREVIEW_DIR + "swordman_hundredsword.png",
+		"scrolling and selecting HundredSword loads its largest-bytes optional atlas")
+	scroll.value = old_scroll
+	await host.ticks(2)
+
 func playing_preview(game, host) -> TextureRect:
-	for tick in range(60):
+	# Fixed-FPS headless frames can advance faster than the texture worker.
+	var deadline := Time.get_ticks_msec() + 3000
+	while Time.get_ticks_msec() < deadline:
 		var preview := game.modal.find_child("skill_detail_preview", true, false) as TextureRect
 		if preview != null and preview.texture is AtlasTexture:return preview
 		await host.ticks(1)

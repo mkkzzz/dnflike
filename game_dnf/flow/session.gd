@@ -326,16 +326,25 @@ func combat_event(event: Dictionary) -> Dictionary:
 		"combat.room_combat_finished":
 			var map_changed:=false
 			var room_index=int(event.get("room_index",-1))
-			var rooms:Array=dungeons.get(run.get("dungeon",""),{}).get("rooms",[])
+			var route := active_dungeon_route()
+			var rooms: Array = route.get("rooms",[])
+			var cell: Array = []
 			# Quest mazes need exact MAP identity and companion survival, not the ordinary cell adapter.
-			if not run.has("quest_maze") and room_index>=0 and room_index<rooms.size():
-				var placement=String(rooms[room_index].get("placement",""))
-				var cell_text=placement.split(":")[0]
-				var cell_parts=cell_text.split("_")
-				if cell_parts.size()==2:
-					var cell=[int(cell_parts[0]),int(cell_parts[1])]
-					map_changed=ingest_quest_event({"type":"map.cleared","event_id":"map:"+String(run["id"])+":"+str(room_index),
-						"dungeon":run["dungeon"],"cell":cell,"victory":true})
+			if not run.has("quest_maze"):
+				if route.get("mode","") == "native_maze":
+					var source_cell = event.get("source_cell")
+					if not source_cell is Array or source_cell.size() != 2 or not source_cell[0] is int or not source_cell[1] is int:
+						return reject("迷宫事件缺少原房间坐标")
+					if room_index < 0 or int(event.get("source_map_id",-1)) <= 0 or event.get("boss") != event.get("final_room"):
+						return reject("迷宫事件缺少原地图或房间状态")
+					cell = source_cell
+				elif room_index>=0 and room_index<rooms.size():
+					var placement=String(rooms[room_index].get("placement",""))
+					var cell_parts=placement.split(":")[0].split("_")
+					if cell_parts.size()==2:cell=[int(cell_parts[0]),int(cell_parts[1])]
+			if not cell.is_empty():
+				map_changed=ingest_quest_event({"type":"map.cleared","event_id":"map:"+String(run["id"])+":"+str(room_index),
+					"dungeon":run["dungeon"],"cell":cell,"victory":true})
 			if bool(event.get("final_room", false)):
 				var finished=finish_run(true,event.get("stats",{}))
 				if finished["ok"] and ingest_escort_clear(event):

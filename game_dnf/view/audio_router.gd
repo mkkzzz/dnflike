@@ -10,6 +10,7 @@ var voice_pool: Array = []
 var music: AudioStreamPlayer
 var music_bank: Dictionary = {}
 var music_paths: Dictionary = {}
+var dungeon_music: Dictionary = {}
 var _last: Dictionary = {}
 var _cursor := 0
 const SAME_KEY_THROTTLE_MS := 50
@@ -40,6 +41,16 @@ func start_music(volume_db := -28.0) -> void:
 	if music.playing:return
 	play_music("forest01", volume_db)
 
+func play_dungeon_music(dungeon: String, boss: bool, volume_db: float) -> void:
+	_ensure_music_manifest()
+	var tracks: Dictionary = dungeon_music.get(dungeon,{})
+	play_music(String(tracks.get("boss" if boss else "normal","")),volume_db)
+
+func has_dungeon_music(dungeon: String) -> bool:
+	_ensure_music_manifest()
+	var tracks: Dictionary = dungeon_music.get(dungeon,{})
+	return music_paths.has(tracks.get("normal","")) and music_paths.has(tracks.get("boss",""))
+
 ## 按 data/bgm.json 的键播放原版曲目（曲目已随仓库分发，循环由流自身负责）。
 func play_music(key: String, volume_db := -28.0) -> void:
 	_ensure_music_manifest()
@@ -53,6 +64,7 @@ func play_music(key: String, volume_db := -28.0) -> void:
 func _ensure_music_manifest() -> void:
 	if not music_paths.is_empty() or not FileAccess.file_exists("res://data/bgm.json"):return
 	var doc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/bgm.json"))
+	dungeon_music = doc.get("dungeons",{})
 	for key: String in doc.get("tracks", {}):
 		var path := "res://assets_local/" + String(doc["tracks"][key]["file"])
 		if not ResourceLoader.exists(path):continue

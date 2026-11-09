@@ -1,5 +1,6 @@
 """Dependency checks for native state-handler bindings in the combat pack."""
 from copy import deepcopy
+import json
 import unittest
 
 from compile_dnf_content import (
@@ -9,6 +10,7 @@ from compile_dnf_content import (
     compile_native_attack_emissions,
     compile_native_attack_selection,
 )
+from dnf_asset_store import ROOT
 
 
 class NativeAttackEmissionTest(unittest.TestCase):
@@ -136,6 +138,39 @@ class NativeAttackContactTest(unittest.TestCase):
         self.records[self.bolt_ani]['decoded']['timeline'][0]['attack_boxes'].clear()
         with self.assertRaisesRegex(ValueError, 'needs both original attack timelines'):
             self.compile()
+
+
+class OuterwallProductionContentTest(unittest.TestCase):
+    def test_source_actors_and_attack_objects_are_packaged(self):
+        assets = ROOT / 'game_dnf/assets_local'
+        pack = json.loads((assets / 'content/combat_content.json').read_text(encoding='utf8'))
+        manifest = json.loads((assets / 'combat/manifest.json').read_text(encoding='utf8'))
+        indexes = pack['indexes']
+        records = pack['records']
+        for mob_id, bank_id, path, attack_frames in (
+            (265, 'native_bossfather', 'monster/zealot/bossfather.mob', 4),
+            (266, 'native_bosspope', 'monster/zealot/bosspope.mob', 4),
+            (270, 'native_catapult', 'monster/vehicle/catapult.mob', 18),
+        ):
+            with self.subTest(mob=mob_id):
+                self.assertEqual(indexes['monsters_goblin'][str(mob_id)], path)
+                bank = manifest['monsters'][bank_id]
+                self.assertEqual(bank['mob'], path)
+                self.assertEqual(len(bank['clips']['attack']['frames']), attack_frames)
+                self.assertEqual(manifest['sources'][path], records[path]['source']['sha256'])
+                for dependency in records[path]['decoded']['attack_infos']:
+                    self.assertEqual(records[dependency]['kind'], 'atk')
+
+        pope = records[indexes['monsters_goblin']['266']]['native_attack_contacts']
+        cannon = records[indexes['monsters_goblin']['270']]['native_attack_emissions']
+        self.assertEqual([row['object_id'] for row in pope], [30073])
+        self.assertEqual([(row['slot'], row['object_id']) for row in cannon], [(0, 30034), (1, 30034)])
+        for emission in cannon:
+            self.assertEqual(records[emission['ptl_path']]['kind'], 'ptl')
+        for object_id, bank_id in ((30034, 'native_cannonball'), (30073, 'native_pope_thunderbolt')):
+            path = indexes['passive_objects'][str(object_id)]
+            self.assertEqual(records[path]['kind'], 'obj')
+            self.assertEqual(manifest['objects'][bank_id]['object'], path)
 
 
 if __name__ == '__main__':

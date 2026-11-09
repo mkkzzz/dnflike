@@ -164,11 +164,7 @@ func play_revive_effect(pos: Vector2, z: float) -> void:
 ## 可破坏物被打碎：地图里对应节点按 loader 打好的 prop_node 下标隐藏。
 func _on_prop_broken(event: Dictionary) -> void:
 	var index := int(event.get("node", -1))
-	if index < 0 or stage == null or stage.root == null:return
-	for node in stage.root.get_children():
-		if int(node.get_meta("prop_node", -1)) == index:
-			node.visible = false
-			return
+	if index >= 0 and stage != null:stage.hide_prop(index)
 
 func set_debug_collision(enabled: bool) -> void:
 	stage.debug_collision = enabled
@@ -356,6 +352,7 @@ func _present_objects(list: Array) -> void:
 			object_views.erase(id)
 
 func _on_room_loaded(event: Dictionary) -> void:
+	stage.invalidate_room()
 	for view in prop_views:
 		if is_instance_valid(view):view.queue_free()
 	prop_views.clear()

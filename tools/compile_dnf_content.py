@@ -108,6 +108,15 @@ NATIVE_ZEALOT_MONSTERS = {
     'native_starfish': 'monster/starfish/starfish.mob',
     'native_starfish_rukuku': 'monster/starfish/starfishrukuku.mob',
 }
+NATIVE_OUTERWALL_MOBS = {
+    265: ('native_bossfather', 'monster/zealot/bossfather.mob',
+          'e1c3ca23b7ad4ba9c6067f0c70b8f958cc62aadebdc2408b037af0241252727c'),
+    266: ('native_bosspope', 'monster/zealot/bosspope.mob',
+          NATIVE_ATTACK_CONTACTS['monster/zealot/bosspope.mob']['sha256']['monster/zealot/bosspope.mob']),
+    270: ('native_catapult', 'monster/vehicle/catapult.mob',
+          NATIVE_ATTACK_EMISSIONS['monster/vehicle/catapult.mob']['sha256']['monster/vehicle/catapult.mob']),
+}
+NATIVE_OUTERWALL_BANKS = {key: path for key, path, _sha in NATIVE_OUTERWALL_MOBS.values()}
 NATIVE_ZEALOT_SOURCE_SHA = '187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84'
 NATIVE_RAXY_SOURCE = {
     'monster/zealot/raxy-a.mob': '5a6e4599e577eff2668d7cbe14faefe7a577dff0f89b45fb9d1f3f5beb39e7b7',
@@ -918,7 +927,7 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
     # 编译范围：哥布林家族 + 早期手写四只 + **副本实际引用到的全部 mob**。
     # 只认硬编码范围会让天空之城/桑德兰那批怪在内容包里查不到，运行时整只怪被跳过。
     extra = {path.lower() for path in extra_mob_paths}
-    required = extra | NATIVE_ATTACK_CONTACTS.keys() | set(NATIVE_ZEALOT_MONSTERS.values())
+    required = extra | NATIVE_ATTACK_CONTACTS.keys() | set(NATIVE_ZEALOT_MONSTERS.values()) | set(NATIVE_OUTERWALL_BANKS.values())
     needed = referenced_mob_paths() | required
     passive_objects = lib.listing('passiveobject/passiveobject.lst')
     for index, rel in sorted(monsters.items()):
@@ -995,6 +1004,9 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
     unresolved_mobs = required - set(monster_index.values())
     if unresolved_mobs:
         raise ValueError('Required MOB paths missing from the original index or archive: ' + ', '.join(sorted(unresolved_mobs)))
+    for mob_id, (_key, path, sha) in NATIVE_OUTERWALL_MOBS.items():
+        if monster_index.get(str(mob_id)) != path or records[path]['source']['sha256'] != sha:
+            raise ValueError(f'Native Outerwall MOB{mob_id} needs exact source {path}')
     for p in object_paths:
         obj = add(p, 'obj', 'scope')
         if not obj:

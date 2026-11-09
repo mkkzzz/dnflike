@@ -61,6 +61,19 @@ func required_map_paths() -> Array[String]:
 			if path not in paths:paths.append(path)
 	return paths
 
+func room_count() -> int:
+	return _pools.size()
+
+func room_number() -> int:
+	return _visited.keys().find(_current)+1
+
+func route_view() -> Array:
+	var route: Array = []
+	for cell: Vector2i in _pools:
+		route.append({"cell":[cell.x,cell.y],"visited":_visited.has(cell),
+			"current":cell == _current,"boss":cell == _boss})
+	return route
+
 func current_room() -> Dictionary:
 	if _visited.is_empty():return {}
 	var choice: Dictionary = _visited[_current]

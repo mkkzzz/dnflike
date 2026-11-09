@@ -230,7 +230,7 @@
   "game_dnf/data/native_runtime.json": "5d188709d45b658d74d0058563e82da509bf9a0e34b2a3c6cbb8dc4217b749bc",
   "game_dnf/data/runtime_items.json": "e0e3ce46d6b39aae805808a1bce7110c55aa9265606ce7f671534543690ae2ae",
   "game_dnf/data/monster_catalog.json": "bc0689f1d377e47a66d439fdc2a99d998bc14d32fdfb7d38ce3276a090c7563c",
-  "game_dnf/data/combat.json": "cba7ae4b96d0bc2b49a74037d0cb112d87e324262f8ce8ac76bda107caea8d23",
+  "game_dnf/data/combat.json": "5c3e1eeabb8ffec038bb25ff73a5b7c535a8af75f5021bde48fe1c4fa2f8e1c5",
   "game_dnf/data/dungeons.json": "bcab4b60b7821736e8e4f4530284dddb8da1ea9457db29fa2cd662fe767a52cc",
   "game_dnf/data/towns.json": "c28d11e969afe865e577c52f81763871e1ecfb30f38ac501960dde5a48b6bdd9",
   "game_dnf/data/campaign_1_16.json": "976058418137f7de23e97d0d0c70d58201e4386b6751ea737bb361a151ced221",
@@ -402,7 +402,6 @@
   "dungeon_unavailable:1502": 13,
   "dungeon_unavailable:33": 12,
   "field:[send postal]": 12,
-  "monster_unavailable:260": 11,
   "monster_unavailable:61192": 11,
   "dungeon_unavailable:64": 11,
   "monster_unavailable:61143": 11,
@@ -436,7 +435,6 @@
   "monster_unavailable:1081": 8,
   "monster_unavailable:3002": 8,
   "reward_item_unavailable:original_1080": 8,
-  "monster_unavailable:266": 8,
   "objective:[meet npc]:sub=-1:width=2": 8,
   "monster_reward_item_quantity": 8,
   "monster_unavailable:61704": 8,
@@ -461,7 +459,6 @@
   "reward_grammar:conditional choice": 7,
   "monster_unavailable:502": 7,
   "reward_item_unavailable:original_1029": 7,
-  "monster_unavailable:265": 7,
   "monster_unavailable:202": 7,
   "monster_unavailable:61456": 7,
   "monster_unavailable:62013": 7,
@@ -477,7 +474,6 @@
   "objective:[condition under clear]:sub=9:width=3": 7,
   "objective:[condition under clear]:sub=15:width=4": 7,
   "monster_unavailable:61707": 6,
-  "monster_unavailable:250": 6,
   "monster_unavailable:411": 6,
   "monster_unavailable:500": 6,
   "reward_item_unavailable:original_1026": 6,
@@ -635,12 +631,10 @@
   "monster_unavailable:61202": 3,
   "monster_unavailable:61438": 3,
   "monster_unavailable:61442": 3,
-  "monster_unavailable:252": 3,
   "monster_unavailable:253": 3,
   "monster_unavailable:50031": 3,
   "reward_item_unavailable:original_1022": 3,
   "monster_unavailable:50092": 3,
-  "monster_unavailable:270": 3,
   "monster_unavailable:50096": 3,
   "monster_unavailable:50098": 3,
   "dungeon_unavailable:65": 3,
@@ -2458,9 +2452,7 @@
    ],
    "reasons": [
     "dungeon_unavailable:25",
-    "monster_unavailable:250",
     "monster_unavailable:251",
-    "monster_unavailable:252",
     "monster_unavailable:253",
     "reward_grammar:conditional choice",
     "prerequisite_not_executable"
@@ -4568,8 +4560,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:21",
-    "monster_unavailable:260",
-    "monster_unavailable:270",
     "npc_not_in_town",
     "quest_grade:[urgent]",
     "prerequisite_not_executable"
@@ -4620,8 +4610,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:21",
-    "monster_unavailable:250",
-    "monster_unavailable:270",
     "npc_not_in_town",
     "quest_grade:[urgent]",
     "prerequisite_not_executable"
@@ -4672,8 +4660,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:21",
-    "monster_unavailable:250",
-    "monster_unavailable:270",
     "npc_not_in_town",
     "quest_grade:[urgent]",
     "prerequisite_not_executable"
@@ -4724,8 +4710,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:21",
-    "monster_unavailable:265",
-    "monster_unavailable:266",
     "npc_not_in_town",
     "quest_grade:[urgent]",
     "prerequisite_not_executable"
@@ -4776,8 +4760,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:21",
-    "monster_unavailable:265",
-    "monster_unavailable:266",
     "npc_not_in_town",
     "quest_grade:[urgent]",
     "prerequisite_not_executable"
@@ -5039,8 +5021,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:21",
-    "monster_unavailable:265",
-    "monster_unavailable:266",
     "npc_not_in_town",
     "quest_grade:[urgent]",
     "prerequisite_not_executable"
@@ -9275,7 +9255,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:23",
-    "monster_unavailable:252",
     "monster_unavailable:602",
     "npc_not_in_town",
     "quest_grade:[urgent]",
@@ -10227,7 +10206,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:24",
-    "monster_unavailable:260",
     "monster_unavailable:263",
     "npc_not_in_town",
     "quest_grade:[urgent]",
@@ -11142,7 +11120,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:25",
-    "monster_unavailable:260",
     "monster_unavailable:501",
     "npc_not_in_town",
     "quest_grade:[urgent]",
@@ -11247,7 +11224,6 @@
    "reasons": [
     "dungeon_unavailable:25",
     "monster_unavailable:201",
-    "monster_unavailable:250",
     "npc_not_in_town",
     "quest_grade:[urgent]",
     "prerequisite_not_executable"
@@ -12206,7 +12182,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:26",
-    "monster_unavailable:260",
     "monster_unavailable:262",
     "npc_not_in_town",
     "quest_grade:[urgent]",
@@ -17239,13 +17214,10 @@
    ],
    "reasons": [
     "dungeon_unavailable:-1",
-    "monster_unavailable:260",
     "monster_unavailable:261",
     "monster_unavailable:262",
     "monster_unavailable:263",
     "monster_unavailable:264",
-    "monster_unavailable:265",
-    "monster_unavailable:266",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -19890,8 +19862,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:21",
-    "monster_unavailable:250",
-    "monster_unavailable:260",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -19938,8 +19908,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:21",
-    "monster_unavailable:265",
-    "monster_unavailable:266",
     "reward_item_unavailable:original_7584",
     "prerequisite_not_executable"
    ],
@@ -20412,11 +20380,8 @@
    ],
    "reasons": [
     "dungeon_unavailable:25",
-    "monster_unavailable:250",
     "monster_unavailable:251",
-    "monster_unavailable:252",
     "monster_unavailable:253",
-    "monster_unavailable:260",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -58660,7 +58625,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:91",
-    "monster_unavailable:260",
     "monster_unavailable:63023",
     "npc_not_in_town",
     "quest_grade:[urgent]",
@@ -63140,7 +63104,6 @@
     "dungeon_unavailable:-1",
     "monster_unavailable:202",
     "monster_unavailable:251",
-    "monster_unavailable:266",
     "monster_unavailable:281",
     "monster_unavailable:3002",
     "monster_unavailable:502",
@@ -68674,7 +68637,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:91",
-    "monster_unavailable:260",
     "monster_unavailable:500",
     "monster_unavailable:59018",
     "monster_unavailable:59019",
@@ -74987,9 +74949,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:21",
-    "monster_unavailable:260",
-    "monster_unavailable:265",
-    "monster_unavailable:266",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -79167,8 +79126,6 @@
     "monster_unavailable:1043",
     "monster_unavailable:202",
     "monster_unavailable:251",
-    "monster_unavailable:265",
-    "monster_unavailable:266",
     "monster_unavailable:281",
     "monster_unavailable:3002",
     "monster_unavailable:502",
@@ -81453,7 +81410,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:26",
-    "monster_unavailable:260",
     "monster_unavailable:261",
     "monster_unavailable:262",
     "prerequisite_not_executable"

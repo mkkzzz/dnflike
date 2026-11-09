@@ -6,6 +6,7 @@ const SkillSlots = preload("res://stats/api/skill_slots.gd")
 const CATALOG := "res://data/skill_catalog.json"
 const MANIFEST := "res://assets_local/skill_panel/manifest.json"
 const PREVIEW_DIR := "res://assets_local/skill_previews_v1/"
+const SWORDMAN_PREVIEW_DIR := "res://assets_local/skill_previews_swordman_v1/"
 const WINDOW_ORIGIN := Vector2(14, 12)
 const WINDOW_SIZE := Vector2(772, 490)
 const TREE_ORIGIN := Vector2(10, 88)
@@ -44,6 +45,7 @@ var _detail_line_height := 14
 var _detail_wrap_width := 174
 var _detail_scroll_theme: Theme
 var _previews: Dictionary = {}
+var _optional_previews: Dictionary = {}
 
 class DetailPreview extends TextureRect:
 	var _frame_size: Vector2
@@ -78,6 +80,8 @@ class DetailPreview extends TextureRect:
 		set_process(_atlas != null)
 
 	func play(source: Texture2D) -> void:
+		var rows := ceilf(float(_frame_count) / _columns)
+		if source.get_size() != _frame_size * Vector2(_columns, rows):return
 		_atlas = AtlasTexture.new()
 		_atlas.atlas = source
 		_atlas.filter_clip = true
@@ -187,11 +191,8 @@ func _load() -> void:
 	_detail_line_height = maxi(1, int(detail_layout.get("line_height", 14)))
 	var detail_size: Array = detail_layout.get("size", [179, 260])
 	_detail_wrap_width = int(detail_size[0]) + int(detail_layout.get("display_marginwidth", -5))
-	var preview_manifest_path := PREVIEW_DIR + "manifest.json"
-	if FileAccess.file_exists(preview_manifest_path):
-		var preview_manifest = JSON.parse_string(FileAccess.get_file_as_string(preview_manifest_path))
-		if preview_manifest is Dictionary and preview_manifest.get("schema") == "dnf_skill_previews/1":
-			_previews = preview_manifest.get("clips", {})
+	_previews = _read_previews(PREVIEW_DIR)
+	_optional_previews = _read_previews(SWORDMAN_PREVIEW_DIR)
 	for skill: Dictionary in skills:
 		by_id[int(skill["id"])] = skill
 		by_key[String(skill["key"])] = skill
@@ -671,6 +672,35 @@ func _load_preview(path: String, preview: DetailPreview) -> void:
 	if is_instance_valid(preview) and not preview.is_queued_for_deletion() and atlas != null:
 		preview.play(atlas)
 
+func _read_previews(directory: String) -> Dictionary:
+	var path := directory + "manifest.json"
+	if not FileAccess.file_exists(path):return {}
+	var manifest := JSON.new()
+	if manifest.parse(FileAccess.get_file_as_string(path)) != OK or not manifest.data is Dictionary:return {}
+	if manifest.data.get("schema") != "dnf_skill_previews/1":return {}
+	var clips = manifest.data.get("clips")
+	return clips if clips is Dictionary else {}
+
+func _preview_entry(skill_path: String) -> Dictionary:
+	# Keep bundled previews authoritative even when an optional pack repeats a key.
+	for directory: String in [PREVIEW_DIR, SWORDMAN_PREVIEW_DIR]:
+		var clips := _previews if directory == PREVIEW_DIR else _optional_previews
+		var clip = clips.get(skill_path.to_lower())
+		if not clip is Dictionary:continue
+		var image = clip.get("image")
+		if not image is String or not image.is_valid_filename() or not image.ends_with(".png"):continue
+		var size := _array(clip.get("size"))
+		var time_base := _array(clip.get("time_base"))
+		var frames := _number(clip.get("frame_count"))
+		var columns := _number(clip.get("columns"))
+		if size.size() != 2 or _number(size[0]) != 160 or _number(size[1]) != 90:continue
+		if frames < 1 or columns < 1 or columns > frames:continue
+		if time_base.size() != 2 or _number(time_base[0]) < 1 or _number(time_base[1]) < 1:continue
+		var path := directory + String(image)
+		if ResourceLoader.exists(path, "Texture2D"):
+			return {"clip": clip, "path": path}
+	return {}
+
 func _detail(root: Control, preview: DetailPreview = null) -> void:
 	var skin = game.skin
 	var skill: Dictionary = by_key.get(selected, {})
@@ -722,12 +752,11 @@ func _detail(root: Control, preview: DetailPreview = null) -> void:
 	if preview != null:
 		preview.mount(panel, fallback)
 	else:
-		var clip: Dictionary = _previews.get(String(skill.get("path", "")).to_lower(), {})
-		var video_path := PREVIEW_DIR + String(clip.get("image", ""))
-		if not clip.is_empty() and ResourceLoader.exists(video_path, "Texture2D"):
-			preview = DetailPreview.new(clip)
+		var entry := _preview_entry(String(skill.get("path", "")))
+		if not entry.is_empty():
+			preview = DetailPreview.new(entry["clip"])
 			preview.mount(panel, fallback)
-			_load_preview(video_path, preview)
+			_load_preview(entry["path"], preview)
 
 	var description := String(skill.get("explain", ""))
 	if description == "":

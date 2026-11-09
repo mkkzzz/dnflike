@@ -35,7 +35,7 @@ from dnf_asset_store import ROOT
 from dnf_pvf import open_library, resolve
 from dnf_locomotion import build as build_locomotion
 from build_dnf_particles import parse as parse_particle
-from compile_dnf_content import NATIVE_ZEALOT_MONSTERS
+from compile_dnf_content import NATIVE_OUTERWALL_BANKS, NATIVE_ZEALOT_MONSTERS
 
 OUT = ROOT / 'game_dnf/assets_local/combat'
 ACTIVE_OUT = OUT
@@ -78,6 +78,9 @@ MONSTERS = {
     'goblin_thrower_taskmaster': ('monster/goblin/goblinthrowertaskmaster.mob','monster/goblin/animation_gero',[]),
 }
 MONSTER_CLIPS = ['stay', 'move', 'attack1', 'throw', 'damage1', 'damage2', 'down', 'sit', 'overturn']
+# These ETC ANI slots use the same body IMG as the basic motions. Cast and
+# firing overlays remain separate source dependencies, with their own timing.
+OUTERWALL_BODY_ETC_SLOTS = {'native_bossfather': (2,), 'native_bosspope': (2, 7), 'native_catapult': ()}
 OBJECTS = {
     'gorecross': 'passiveobject/character/swordman/animation/gorecross1.ani',
     'throwstone': 'passiveobject/monster/goblin/animation/throwstone.ani',
@@ -175,10 +178,13 @@ ZEALOT_SOUNDS = {
     'ZGM_ATK': ['sounds/mon/act3/zgm_atk.ogg'],
     'ZGM_ATTACH': ['sounds/mon/act3/zgm_attach.ogg'],
 }
+# Father and Pope ATK [hit wav], resolved by the original audio.xml.
+OUTERWALL_SOUNDS = {'SPEAR_HIT': ['sounds/effect/spear_hit.ogg']}
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
     **ZEALOT_SOUNDS,
+    **OUTERWALL_SOUNDS,
     'DRGCANNON_SHOOT': ['sounds/mon/act3/drgcan_shoot.ogg'],
     'R_BOMB_HIT': ['sounds/effect/bomb_hit_01.ogg', 'sounds/effect/bomb_hit_02.ogg'],
     'swing1': ['sounds/char/swordman/sm_atk_01.ogg'], 'swing2': ['sounds/char/swordman/sm_atk_02.ogg'],
@@ -507,7 +513,9 @@ def catalog_monster_specs() -> dict:
                 for monster in room.get('monsters') or []:
                     if monster.get('mob'):
                         needed.add(str(monster['mob']).lower())
-    builtin = {str(mob).lower() for mob, _dir, _extra in MONSTERS.values()} | set(NATIVE_ZEALOT_MONSTERS.values())
+    builtin = {str(mob).lower() for mob, _dir, _extra in MONSTERS.values()}
+    builtin.update(NATIVE_ZEALOT_MONSTERS.values())
+    builtin.update(NATIVE_OUTERWALL_BANKS.values())
     out = {}
     for _key, mob in catalog.items():
         path = str(mob['path']).lower()
@@ -614,14 +622,14 @@ def breakable_particle_animations(src: Source) -> tuple[dict, dict]:
     return effects, mapping
 
 
-def native_zealot_monster_bank(src: Source, key: str, mob: str, unresolved: list) -> dict:
+def native_monster_bank(src: Source, key: str, mob: str, unresolved: list) -> dict:
     """Use the pinned content pack to include the exact native state animation clips."""
     record = src.pack_records.get(mob, {})
     decoded = record.get('decoded', {})
     suicide = record.get('native_suicide', {})
     jump = record.get('native_starfish_jump', {})
-    if not decoded or not (suicide or jump):
-        raise ValueError('Compile the native Zealot and StarFish content first: ' + mob)
+    if not decoded or not (suicide or jump or NATIVE_OUTERWALL_BANKS.get(key) == mob):
+        raise ValueError('Compile the native monster content first: ' + mob)
     motions = {}
     for pose, field in (('stay', 'waiting_motion'), ('move', 'move_motion'), ('sit', 'sit_motion'),
                         ('damage1', 'damage_motion_1'), ('damage2', 'damage_motion_2'),
@@ -635,7 +643,11 @@ def native_zealot_monster_bank(src: Source, key: str, mob: str, unresolved: list
             motions[PurePosixPath(path).stem] = path
             if slot == 0:
                 motions['attack'] = path
-    specials = (suicide['suicide_ani'],) if suicide else (decoded.get('etc_motions') or [])
+    specials = decoded.get('etc_motions') or []
+    if key in OUTERWALL_BODY_ETC_SLOTS:
+        specials = [specials[slot] for slot in OUTERWALL_BODY_ETC_SLOTS[key]]
+    elif suicide:
+        specials = (suicide['suicide_ani'],)
     for path in specials:
         if path:
             motions[PurePosixPath(path).stem] = path
@@ -730,8 +742,8 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     for key, spec in monster_specifications().items():
         manifest['monsters'][key] = monster_bank(src, key, spec['mob'], spec.get('clip_dir', ''), unresolved,
                                                   spec.get('extra', ()), spec.get('motions'))
-    for key, path in NATIVE_ZEALOT_MONSTERS.items():
-        manifest['monsters'][key] = native_zealot_monster_bank(src, key, path, unresolved)
+    for key, path in (NATIVE_ZEALOT_MONSTERS | NATIVE_OUTERWALL_BANKS).items():
+        manifest['monsters'][key] = native_monster_bank(src, key, path, unresolved)
     for key, path in objects.items():
         try:
             animation_path = src.object_animation(path)
@@ -961,7 +973,7 @@ def extend_skill_banks(library: Path | None, output: Path, specs: list, *, pack_
                 additions.extend(clip['file'] for clip in bank)
                 continue
             if section == 'monsters':
-                bank = native_zealot_monster_bank(src, key, path, unresolved)
+                bank = native_monster_bank(src, key, path, unresolved)
             else:
                 ani = src.object_animation(path) if section == 'objects' else path
                 bank = effect_bank(src, safe_atlas_key('obj', key) if section == 'objects' else key, ani, unresolved)
@@ -1024,11 +1036,18 @@ def main() -> int:
                         help='Add the Pope contact attack object without changing existing banks')
     parser.add_argument('--extend-raxy-starfish', action='store_true',
                         help='Add the original Raxy and StarFish banks and state sounds')
-    parser.add_argument('--output', type=Path, help='Existing asset tree for --extend-raxy-starfish')
-    parser.add_argument('--pack', type=Path, help='Compiled source pack for --extend-raxy-starfish')
+    parser.add_argument('--extend-outerwall', action='store_true',
+                        help='Add the original Father, Pope and Catapult body banks')
+    parser.add_argument('--output', type=Path, help='Existing asset tree for incremental monster builds')
+    parser.add_argument('--pack', type=Path, help='Compiled source pack for incremental monster builds')
     args = parser.parse_args()
-    if (args.output or args.pack) and not args.extend_raxy_starfish:
-        parser.error('--output and --pack require --extend-raxy-starfish')
+    if (args.output or args.pack) and not (args.extend_raxy_starfish or args.extend_outerwall):
+        parser.error('--output and --pack require --extend-raxy-starfish or --extend-outerwall')
+    if args.extend_outerwall:
+        specs = [('monsters', key, path) for key, path in NATIVE_OUTERWALL_BANKS.items()]
+        specs.extend(('audio', key, paths) for key, paths in OUTERWALL_SOUNDS.items())
+        print(json.dumps(extend_skill_banks(args.library, args.output or OUT, specs, pack_path=args.pack)))
+        return 0
     if args.extend_raxy_starfish:
         specs = [('monsters', key, path) for key, path in NATIVE_ZEALOT_MONSTERS.items()]
         specs.extend(('audio', key, paths) for key, paths in ZEALOT_SOUNDS.items())

@@ -3,6 +3,7 @@ extends SceneTree
 const Maze = preload("res://combat/data/native_maze.gd")
 const Loader = preload("res://scripts/native_map_loader.gd")
 const DetRng = preload("res://core/det_rng.gd")
+const OUTERWALL_EXPORT := "res://assets_local/native_maps/outerwall_v1/map_export.json"
 const OPPOSITE := {"left":"right","right":"left","up":"down","down":"up"}
 
 var checks := 0
@@ -31,9 +32,10 @@ func check(ok: bool, label: String) -> void:
 
 func run() -> void:
 	var args := OS.get_cmdline_user_args()
+	var path := args[0] if args.size() == 1 else OUTERWALL_EXPORT
 	var loader := Loader.new()
-	if args.size() != 1 or not loader.load_export(args[0]):
-		push_error("[NATIVE_MAZE] Pass the fresh OuterWall map_export.json after --")
+	if args.size() > 1 or not loader.load_export(path):
+		push_error("[NATIVE_MAZE] Could not load OuterWall map export: " + path)
 		quit(2)
 		return
 	var export: Dictionary = loader.data

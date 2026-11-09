@@ -16,6 +16,8 @@ game_dnf/assets_local/.combat_local_build.json
 game_dnf/assets_local/.flow_install.json
 game_dnf/assets_local/.items_install.json
 game_dnf/assets_local/build_validation.json
+# 可从本机原版 Video 导出的可选技能视频包
+game_dnf/assets_local/skill_previews_swordman_v1/
 
 # 烘焙贴图：由 tools/bake_game_assets.py 从 render_preview.py 生成，不入库
 game/art/
