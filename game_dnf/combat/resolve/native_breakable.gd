@@ -1,15 +1,16 @@
 extends RefCounted
 
 const HitJudge = preload("res://combat/hit/hit_judge.gd")
+const NativeBoxLoot = preload("res://loot/native_box.gd")
 const OBJECT_IDS := [300, 770, 771]
 
-## The final MAP field is the nested payload count. This adapter covers empty payloads.
+## The final header field of a special row is its nested payload count.
 static func supports(item: Dictionary) -> bool:
 	var raw: Array = item.get("raw", [])
 	if raw.size() < 4 or int(raw[0]) not in OBJECT_IDS:return false
 	match item.get("source_tag"):
 		"[passive object]":return raw.size() == 4
-		"[special passive object]":return raw.size() == 5 and int(raw[4]) == 0
+		"[special passive object]":return (raw.size() == 5 and int(raw[4]) == 0) or NativeBoxLoot.draw_count(item) > 0
 	return false
 
 static func create(item: Dictionary, source: Dictionary, damage_boxes: Array, node: int) -> Dictionary:

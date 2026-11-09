@@ -70,8 +70,10 @@ func room_number() -> int:
 func route_view() -> Array:
 	var route: Array = []
 	for cell: Vector2i in _pools:
+		var choice: Dictionary = _visited.get(cell,{})
 		route.append({"cell":[cell.x,cell.y],"visited":_visited.has(cell),
-			"current":cell == _current,"boss":cell == _boss})
+			"current":cell == _current,"boss":cell == _boss,"mask":int(_cells[cell]["mask"]),
+			"source_map_id":choice.get("map_id",0)})
 	return route
 
 func current_room() -> Dictionary:

@@ -1,0 +1,163 @@
+{
+  "schema": "dnf_original_item_images/1",
+  "revision": 1,
+  "items": {
+    "original_1068": "c184259378ac_10",
+    "original_1069": "c184259378ac_11",
+    "original_1070": "c184259378ac_12",
+    "original_1071": "c184259378ac_13",
+    "original_1072": "c184259378ac_14"
+  },
+  "field_images": {
+    "original_1068": "aefbfc6433d3_33",
+    "original_1069": "aefbfc6433d3_33",
+    "original_1070": "aefbfc6433d3_33",
+    "original_1071": "aefbfc6433d3_33",
+    "original_1072": "aefbfc6433d3_33"
+  },
+  "pixel_policy": "Native source RGBA, unchanged size; no resize, repaint or separate preview assets",
+  "images": {
+    "c184259378ac_10": {
+      "file": "img/c184259378ac_10.png",
+      "source_path": "sprite/item/stackable/consumption.img",
+      "source_npk": "ImagePacks2/sprite_item_stackable.NPK",
+      "img_sha256": "c184259378acada368588d840dad78a6c3d9c57136e7693200d98288e955b6f5",
+      "frame": 10,
+      "size": [
+        28,
+        28
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "variants": 2
+    },
+    "aefbfc6433d3_33": {
+      "file": "img/aefbfc6433d3_33.png",
+      "source_path": "sprite/item/fieldimage.img",
+      "source_npk": "ImagePacks2/!!!!!!!!!!!!!!!!!!!!宝珠.NPK",
+      "img_sha256": "aefbfc6433d3ea3d22028bcf3d68967f23fe6e93ddefd7b3dca4a6cb567c8e8f",
+      "frame": 33,
+      "size": [
+        39,
+        42
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "variants": 3
+    },
+    "c184259378ac_11": {
+      "file": "img/c184259378ac_11.png",
+      "source_path": "sprite/item/stackable/consumption.img",
+      "source_npk": "ImagePacks2/sprite_item_stackable.NPK",
+      "img_sha256": "c184259378acada368588d840dad78a6c3d9c57136e7693200d98288e955b6f5",
+      "frame": 11,
+      "size": [
+        28,
+        28
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "variants": 2
+    },
+    "c184259378ac_12": {
+      "file": "img/c184259378ac_12.png",
+      "source_path": "sprite/item/stackable/consumption.img",
+      "source_npk": "ImagePacks2/sprite_item_stackable.NPK",
+      "img_sha256": "c184259378acada368588d840dad78a6c3d9c57136e7693200d98288e955b6f5",
+      "frame": 12,
+      "size": [
+        28,
+        28
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "variants": 2
+    },
+    "c184259378ac_13": {
+      "file": "img/c184259378ac_13.png",
+      "source_path": "sprite/item/stackable/consumption.img",
+      "source_npk": "ImagePacks2/sprite_item_stackable.NPK",
+      "img_sha256": "c184259378acada368588d840dad78a6c3d9c57136e7693200d98288e955b6f5",
+      "frame": 13,
+      "size": [
+        28,
+        28
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "variants": 2
+    },
+    "c184259378ac_14": {
+      "file": "img/c184259378ac_14.png",
+      "source_path": "sprite/item/stackable/consumption.img",
+      "source_npk": "ImagePacks2/sprite_item_stackable.NPK",
+      "img_sha256": "c184259378acada368588d840dad78a6c3d9c57136e7693200d98288e955b6f5",
+      "frame": 14,
+      "size": [
+        28,
+        28
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "variants": 2
+    }
+  },
+  "diagnostics": [
+    {
+      "level": "info",
+      "code": "image_variants",
+      "path": "original_1068",
+      "detail": "sprite/item/stackable/consumption.img: 2 candidates; chose ImagePacks2/sprite_item_stackable.NPK (sprite_ package first, not proven client priority)"
+    },
+    {
+      "level": "info",
+      "code": "image_variants",
+      "path": "original_1068",
+      "detail": "sprite/item/fieldimage.img: 3 candidates; chose ImagePacks2/!!!!!!!!!!!!!!!!!!!!宝珠.NPK (sprite_ package first, not proven client priority)"
+    },
+    {
+      "level": "info",
+      "code": "image_variants",
+      "path": "original_1069",
+      "detail": "sprite/item/stackable/consumption.img: 2 candidates; chose ImagePacks2/sprite_item_stackable.NPK (sprite_ package first, not proven client priority)"
+    },
+    {
+      "level": "info",
+      "code": "image_variants",
+      "path": "original_1070",
+      "detail": "sprite/item/stackable/consumption.img: 2 candidates; chose ImagePacks2/sprite_item_stackable.NPK (sprite_ package first, not proven client priority)"
+    },
+    {
+      "level": "info",
+      "code": "image_variants",
+      "path": "original_1071",
+      "detail": "sprite/item/stackable/consumption.img: 2 candidates; chose ImagePacks2/sprite_item_stackable.NPK (sprite_ package first, not proven client priority)"
+    },
+    {
+      "level": "info",
+      "code": "image_variants",
+      "path": "original_1072",
+      "detail": "sprite/item/stackable/consumption.img: 2 candidates; chose ImagePacks2/sprite_item_stackable.NPK (sprite_ package first, not proven client priority)"
+    }
+  ],
+  "files": {
+    "img/aefbfc6433d3_33.png": "79d68f7c256c8800d52565828045f8c9fc5f2923ef7d0720e33afb19a654564b",
+    "img/c184259378ac_10.png": "9a146d6724f66cfa03fad8106bbacc638d63ebc185058b1710e23d31dc360e64",
+    "img/c184259378ac_11.png": "3d405fd5eeba885a774ed9671d0f7072cd2eb8f8917f0e99a4ef992174c53b86",
+    "img/c184259378ac_12.png": "5d4cba1ba819c49d6b471a16c964976511b7e3c337fe920699e5e163000a1b66",
+    "img/c184259378ac_13.png": "d6913342e54f3a37250ad5769544d1922235e02e24f2e880ca22005218665b05",
+    "img/c184259378ac_14.png": "67a0291341520ec6314cb1fd7e7099644e609f449b0ab422e6973f7c6f575004"
+  }
+}

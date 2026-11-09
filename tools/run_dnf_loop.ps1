@@ -145,6 +145,8 @@ if ($Test) {
         $mazeCoreExit=$LASTEXITCODE
         $mazeSession=& $GodotPath --headless --path $gamePath --quit-after 1200 --script res://tests/combat/test_native_maze_session.gd 2>&1
         $mazeSessionExit=$LASTEXITCODE
+        $mazeMinimap=& $GodotPath --headless --path $gamePath --quit-after 1200 --script res://tests/combat/test_native_maze_minimap.gd 2>&1
+        $mazeMinimapExit=$LASTEXITCODE
     } finally {$ErrorActionPreference=$popePreference}
     $popeCombat | Write-Output
     if ($popeExit -ne 0 -or ($popeCombat -match 'SCRIPT ERROR|ERROR:') -or -not ($popeCombat -match '\[NATIVE_POPE\] COMPLETE checks=\d+ failures=0')) {throw "Native Pope contact regression failed."}
@@ -154,6 +156,8 @@ if ($Test) {
     if ($mazeCoreExit -ne 0 -or ($mazeCore -match 'SCRIPT ERROR|ERROR:') -or -not ($mazeCore -match '\[NATIVE_MAZE\] COMPLETE checks=\d+ failures=0')) {throw "Native maze selection regression failed."}
     $mazeSession | Write-Output
     if ($mazeSessionExit -ne 0 -or ($mazeSession -match 'SCRIPT ERROR|ERROR:') -or -not ($mazeSession -match '\[NATIVE_MAZE_SESSION\] COMPLETE checks=\d+ failures=0')) {throw "Native maze battle and settlement regression failed."}
+    $mazeMinimap | Write-Output
+    if ($mazeMinimapExit -ne 0 -or ($mazeMinimap -match 'SCRIPT ERROR|ERROR:') -or -not ($mazeMinimap -match '\[NATIVE_MAZE_MINIMAP\] COMPLETE checks=\d+ failures=0')) {throw "Native maze minimap regression failed."}
     $skillEffectPreference=$ErrorActionPreference
     try {
         $ErrorActionPreference="Continue"

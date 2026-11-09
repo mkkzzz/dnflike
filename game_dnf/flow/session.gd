@@ -305,6 +305,8 @@ func combat_event(event: Dictionary) -> Dictionary:
 			Services.death_penalty(profile)
 			state="defeated";result={}
 			return {"ok":true}
+		"combat.prop_loot_released":
+			return {"ok":true,"loot_changed":Loot.release_box(run,event)}
 		"combat.monster_defeated":
 			var progression: Dictionary = Numbers.shared_config()["progression"]
 			var drops: Array=preload("res://quests/drops.gd").entries(profile,run,event,quests.catalog.definitions)

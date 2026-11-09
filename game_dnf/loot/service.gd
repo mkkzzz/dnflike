@@ -1,6 +1,7 @@
 extends RefCounted
 ## Stable rolls are persisted with the run. A claim updates ownership and receipt together.
 const Inventory=preload("res://items/inventory.gd")
+const NativeBoxLoot=preload("res://loot/native_box.gd")
 static var _config: Dictionary = {}
 static func config() -> Dictionary:
 	if _config.is_empty():_config = JSON.parse_string(FileAccess.get_file_as_string("res://data/loot.json"))
@@ -31,6 +32,26 @@ static func generate(run: Dictionary, event: Dictionary, quest_drops: Array=[]) 
 		run["loot"]["drops"][id]={"id":id,"item":entry["id"],"count":count,"quality":quality,"room":event["room_id"],"position":[position.x+index*28-28,position.y],"claimed":false}
 		if entry.has("quest"):run["loot"]["drops"][id]["quest"]=entry["quest"]
 		index+=1
+	return true
+
+static func release_box(run: Dictionary, event: Dictionary) -> bool:
+	if run.get("dungeon") != "outerwall" or event.get("run_id") != run.get("id"):return false
+	var room = event.get("room_id")
+	var node = event.get("node")
+	var position = event.get("position")
+	var items = event.get("items")
+	if not room is String or not room.begins_with("outerwall:") or not Inventory.Numbers.whole(node,0,10000):return false
+	if not position is Vector2 or not position.is_finite() or not items is Array or items.is_empty() or items.size()>2:return false
+	for id in items:
+		if not id is String or not NativeBoxLoot.items().has(id):return false
+	if not run.has("loot"):run["loot"]={"seen":{},"drops":{}}
+	var key := "%s:box:%d"%[room,int(node)]
+	if run["loot"]["seen"].has(key):return false
+	run["loot"]["seen"][key]=true
+	for index in items.size():
+		var id := "%s:%s:%d"%[run["id"],key,index]
+		run["loot"]["drops"][id]={"id":id,"item":items[index],"count":1,"quality":50,
+			"room":room,"position":[position.x,position.y],"claimed":false}
 	return true
 
 static func pending(run: Dictionary, room: String) -> Array:

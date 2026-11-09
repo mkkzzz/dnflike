@@ -661,6 +661,7 @@ func depart() -> void:
 	combat.room_combat_finished.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
 	combat.player_defeated.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
 	combat.monster_defeated.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
+	combat.prop_loot_released.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
 	var stat: Dictionary = session.run["stats"]
 	var headless_test := test_mode and DisplayServer.get_name() == "headless"
 	var started: bool = combat.start_room({"run_id": String(session.run["id"]), "dungeon":selected_dungeon, "route":session.active_dungeon_route(), "room_id": selected_dungeon+":0", "room_index": 0,
@@ -687,6 +688,8 @@ func on_combat_event(event: Dictionary) -> void:
 	var response: Dictionary = session.combat_event(event)
 	if response["ok"] and event.get("type")=="combat.monster_defeated" and (int(response.get("amount",0))>0 or response.get("quest_changed",false) or response.get("loot_changed",false)):
 		if int(session.profile["level"])>before_level:sync_number_changes("numbers.xp")
+		request_profile_save()
+	elif response["ok"] and event.get("type")=="combat.prop_loot_released" and response.get("loot_changed",false):
 		request_profile_save()
 	elif response["ok"] and response.get("quest_changed",false) and session.state!="result":
 		request_profile_save()

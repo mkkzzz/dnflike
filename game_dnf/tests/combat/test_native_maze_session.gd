@@ -4,6 +4,9 @@ const CombatSession = preload("res://combat/api/combat_session.gd")
 const FlowSession = preload("res://flow/session.gd")
 const DetRng = preload("res://core/det_rng.gd")
 const NativeMaze = preload("res://combat/data/native_maze.gd")
+const NativeBoxLoot = preload("res://loot/native_box.gd")
+const Loot = preload("res://loot/service.gd")
+const Inventory = preload("res://items/inventory.gd")
 const EXPORT := "res://assets_local/native_maps/outerwall_v1/map_export.json"
 const ROUTE := {"mode":"native_maze","map_export":EXPORT,"name":"神殿周边"}
 const NORMAL_MUSIC := "res://assets_local/audio/bgm/outer_temple.ogg"
@@ -12,6 +15,7 @@ const BOSS_MUSIC := "res://assets_local/audio/bgm/behemoth_b01_1.ogg"
 var session := CombatSession.new()
 var game
 var events: Array[Dictionary] = []
+var loot_events: Array[Dictionary] = []
 var flow: FlowSession
 var checks := 0
 var failures := 0
@@ -30,6 +34,7 @@ func run() -> void:
 	game.set_process(false)
 	game.set_physics_process(false)
 	session.room_combat_finished.connect(record_clear)
+	session.prop_loot_released.connect(record_loot)
 	check(not game.missing_assets,"production combat tables and new source atlases load")
 	if not game.missing_assets:
 		check_upper_run()
@@ -47,6 +52,10 @@ func run() -> void:
 func record_clear(event: Dictionary) -> void:
 	events.append(event)
 	if flow != null:check(bool(flow.combat_event(event)["ok"]),"flow accepts the source room event")
+
+func record_loot(event: Dictionary) -> void:
+	loot_events.append(event)
+	check(flow != null and flow.combat_event(event).get("loot_changed",false),"flow accepts a live box release")
 
 func seed_for(start_slot: int, boss_slot: int, map_slot: int) -> int:
 	for number in range(1,100):
@@ -192,7 +201,22 @@ func check_live_pot() -> void:
 	for entry: Dictionary in pots:check_prop_burst(entry,10,2)
 
 func check_breakable_run() -> void:
+	var rolls := [0,999,1000,2499,2500,2999,3000,3499,3500,6499,6500,10000]
+	var expected := [1068,1068,1069,1069,1070,1070,1071,1071,1072,1072,0,0]
+	for i in rolls.size():
+		check(NativeBoxLoot.pick(rolls[i]) == ("original_%d"%expected[i] if expected[i] else ""),
+			"the original cumulative box roll boundary at %d"%rolls[i])
 	var export: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(EXPORT))
+	var double_boxes: Array = export["dungeon"]["rooms"]["map/outerwall/n3002.map"]["objects"].filter(
+		func(item):return NativeBoxLoot.draw_count(item) == 2)
+	check(double_boxes.size() == 1,"MAP3006 retains its single source box that draws twice")
+	var pair: Array[String] = []
+	for seed in range(1,100):
+		pair = NativeBoxLoot.prepare(2,seed)
+		if pair.size() == 2:
+			check(NativeBoxLoot.prepare(1,seed) == pair.slice(0,1),"the second draw preserves the first selection")
+			break
+	check(pair.size() == 2,"two source draws can independently return two items")
 	var run := ""
 	# Select a replay whose unchosen upper entrance uses the original box MAP.
 	for i in range(1,100):
@@ -202,11 +226,23 @@ func check_breakable_run() -> void:
 		for side: String in ["right","up","up","left"]:
 			maze.clear_room(maze.current_room()["cell"],0)
 			maze.move(side)
-		if maze.current_room()["source_map_id"] == 3019:
+		if maze.current_room()["source_map_id"] != 3019:continue
+		var map: String = maze.current_room()["placement"]["map"]
+		var objects: Array = export["dungeon"]["rooms"][map]["objects"]
+		var populated := false
+		for node in objects.size():
+			var draws := NativeBoxLoot.draw_count(objects[node])
+			if draws > 0 and not NativeBoxLoot.prepare(draws,hash("%s:outerwall:0:box:%d"%[id,node])).is_empty():
+				populated = true
+				break
+		if populated:
 			run = id
 			break
-	flow = null
-	var started := not run.is_empty() and session.start_room({"run_id":run,"dungeon":"outerwall","route":ROUTE,"audio":{"muted":true}})
+	flow = FlowSession.new()
+	flow.dungeons["outerwall"] = ROUTE.duplicate()
+	flow.profile["next_run"] = int(run.get_slice("_",1))
+	var started: bool = not run.is_empty() and flow.command("flow.depart",{"dungeon":"outerwall"})["ok"] and flow.run["id"] == run \
+		and session.start_room({"run_id":run,"dungeon":"outerwall","route":ROUTE,"audio":{"muted":true}})
 	check(started,"live source route starts with a replayable ordinary box placement")
 	if not started:return
 	clear_all()
@@ -257,15 +293,40 @@ func check_breakable_run() -> void:
 		clear_all()
 		if not hop(side):return
 	present_room()
-	check(game.native_room["source_map_id"] == 3019 and game.props.size() == 2,
-		"the box MAP enables its two empty payload rows and excludes nested item rows")
-	if game.props.is_empty():return
-	var box: Dictionary = game.props[0]
+	var empty_boxes: Array = game.props.filter(func(prop):return not prop.has("box_items"))
+	var loaded_boxes: Array = game.props.filter(func(prop):return not prop.get("box_items",[]).is_empty())
+	check(game.native_room["source_map_id"] == 3019 and empty_boxes.size() == 2 and not loaded_boxes.is_empty(),
+		"the box MAP loads both empty and populated original rows")
+	if empty_boxes.is_empty() or loaded_boxes.is_empty():return
+	var box: Dictionary = empty_boxes[0]
 	shape = box["damage_boxes"][0]
 	check(box["hp"] == 300 and box["damage_boxes"].size() == 2,"the original collection box has two damage boxes and 300 HP")
 	game.bus.clear_history()
 	prop_melee(shape.get_center(),atk,300)
 	check_prop_burst(box,15)
+	check(loot_events.is_empty(),"an empty source box releases no items")
+	box = loaded_boxes[0]
+	var contents: Array = box["box_items"].duplicate()
+	shape = box["damage_boxes"][0]
+	prop_melee(shape.get_center(),atk,299)
+	check(loot_events.is_empty() and Loot.pending(flow.run,game.room_id).is_empty(),"preallocated items stay hidden until final depletion")
+	prop_melee(shape.get_center(),atk,1)
+	prop_melee(shape.get_center(),atk,300)
+	var drops := Loot.pending(flow.run,game.room_id)
+	check(loot_events.size() == 1 and drops.size() == contents.size() and drops.map(func(drop):return drop["item"]) == contents,
+		"the original items reach the real run ledger exactly once")
+	if drops.is_empty() or loot_events.is_empty():return
+	check(not flow.combat_event(loot_events[0]).get("loot_changed",false),"duplicate box release cannot duplicate ground loot")
+	var drop: Dictionary = drops[0]
+	var item: String = drop["item"]
+	var before := Inventory.stock(flow.profile,item)
+	var position: Vector2 = box["pos"]
+	check(not Loot.claim(flow.profile,flow.run,drop["id"],game.room_id,position+Vector2(999,0))["ok"],
+		"the original item still requires a nearby claim")
+	check(Loot.claim(flow.profile,flow.run,drop["id"],game.room_id,position)["ok"] and Inventory.stock(flow.profile,item) == before+1,
+		"claim delivers the exact stackable ID to inventory")
+	check(not Loot.claim(flow.profile,flow.run,drop["id"],game.room_id,position)["ok"] and Loot.valid(flow.run),
+		"the saved ledger retains the claim receipt")
 
 func prop_melee(point: Vector3, atk: Dictionary, amount: int, fresh := true) -> void:
 	game.player["pos"] = Vector2(point.x,point.y)

@@ -12,12 +12,14 @@ signal monster_defeated(event: Dictionary)
 signal room_combat_finished(event: Dictionary)
 signal player_defeated(event: Dictionary)
 signal companion_defeated(event: Dictionary)
+signal prop_loot_released(event: Dictionary)
 
 const SCENE := "res://scenes/main.tscn"
-const FLOW_EVENTS := ["combat.monster_defeated", "combat.room_combat_finished", "combat.player_defeated", "combat.companion_defeated"]
+const FLOW_EVENTS := ["combat.monster_defeated", "combat.room_combat_finished", "combat.player_defeated", "combat.companion_defeated", "combat.prop_loot_released"]
 const SkillSlots = preload("res://stats/api/skill_slots.gd")
 const NativeMaze = preload("res://combat/data/native_maze.gd")
 const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
+const NativeBoxLoot = preload("res://loot/native_box.gd")
 const DetRng = preload("res://core/det_rng.gd")
 
 var game: Node
@@ -57,6 +59,7 @@ func start_room(spec: Dictionary) -> bool:
 		if not probe.load_export(String(route["map_export"])):return false
 		maze = NativeMaze.new()
 		if not maze.start(probe.data,DetRng.new(hash(String(spec.get("run_id","standalone"))))):return false
+		if not NativeBoxLoot.ready(probe.data["dungeon"]):return false
 		if not _validate_native_maze(probe,maze) or not game.view.audio.has_dungeon_music(String(spec["dungeon"])):
 			return false
 		_use_map_export(probe)
@@ -303,6 +306,7 @@ func _bind() -> void:
 func _relay(event: Dictionary) -> void:
 	match String(event["type"]):
 		"combat.monster_defeated":monster_defeated.emit(event)
+		"combat.prop_loot_released":prop_loot_released.emit(event)
 		"combat.room_combat_finished":room_combat_finished.emit(event)
 		"combat.player_defeated":player_defeated.emit(event)
 		"combat.companion_defeated":companion_defeated.emit(event)

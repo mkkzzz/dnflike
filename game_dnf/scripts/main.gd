@@ -12,6 +12,7 @@ const BattleView = preload("res://view/battle_view.gd")
 const MapLoader = preload("res://scripts/native_map_loader.gd")
 const NativeMaze = preload("res://combat/data/native_maze.gd")
 const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
+const NativeBoxLoot = preload("res://loot/native_box.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
 const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field","rasa_field"]
@@ -1216,6 +1217,10 @@ func apply_native_prop_hits(world: Array, hit: Dictionary, power: float, seen: D
 		bus.emit("combat.damage",{"target":prop["id"],"amount":amount,"critical":resolved["critical"],
 			"category":resolved["category"],"victim":"prop","reaction":"none","point":Vector3(pos.x,pos.y,height)})
 		if not destroyed:continue
+		var items: Array = prop.get("box_items",[])
+		if not items.is_empty():
+			bus.emit("combat.prop_loot_released",{"run_id":run_id,"room_id":room_id,
+				"node":prop["node"],"position":pos,"items":items.duplicate()})
 		var offset: Array = source["particle_offset"]
 		bus.emit("combat.cue",{"kind":"native_particle","path":source["destroy_particle"],
 			"point":pos+Vector2(float(offset[0]),float(offset[1])),"height":height+float(offset[2])})
@@ -2347,7 +2352,11 @@ func build_props(room: Dictionary) -> Array:
 			if NativeBreakable.supports(item):
 				var source: Dictionary = content.record(path)["native_breakable"]
 				var timeline: Array = table.timeline(source["motion_ani"])
-				out.append(NativeBreakable.create(item,source,timeline[0]["damage_boxes"],object_index))
+				var prop := NativeBreakable.create(item,source,timeline[0]["damage_boxes"],object_index)
+				var draws := NativeBoxLoot.draw_count(item)
+				if draws > 0:
+					prop["box_items"] = NativeBoxLoot.prepare(draws,hash("%s:%s:box:%d"%[run_id,room_id,object_index]))
+				out.append(prop)
 			continue
 		# 两类场景物件：可破坏物（打碎）与陷阱（trap/* 里有 [attack info] 的会伤害玩家）。
 		var breakable := path.contains("breakableobject/")

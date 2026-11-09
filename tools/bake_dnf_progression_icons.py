@@ -14,6 +14,7 @@ def main():
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--version', default='items_original_v1')
     parser.add_argument('--ids', help='Comma-separated stable item IDs for an additive batch')
+    parser.add_argument('--items-file', type=Path, default=ROOT/'game_dnf/data/runtime_items.json')
     args = parser.parse_args()
     if not args.version.startswith('items_original_v') or not args.version.removeprefix('items_original_v').isdigit():
         raise ValueError('Expected an items_original_vN version')
@@ -28,7 +29,7 @@ def main():
         return
     if output.exists() and any(output.iterdir()):
         raise ValueError('Immutable asset version exists; use --check or a new version directory')
-    items = json.loads((ROOT/'game_dnf/data/runtime_items.json').read_text(encoding='utf-8'))['items']
+    items = json.loads(args.items_file.read_text(encoding='utf-8'))['items']
     if args.ids:
         items = {key:items[key] for key in args.ids.split(',')}
     version = json.loads(LOCK.read_text(encoding='utf-8'))['version']
