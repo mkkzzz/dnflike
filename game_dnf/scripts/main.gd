@@ -1449,14 +1449,25 @@ func step_bloody_rave_suction(move: Dictionary, stage: Dictionary, from: float, 
 	for enemy: Dictionary in monsters:
 		var id: int = enemy["id"]
 		if contacted.has(id) or float(enemy["hp"]) <= 0.0 or target_invulnerable(enemy):continue
-		if Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy)).is_empty():continue
+		var contact: Dictionary = Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy))
+		if contact.is_empty():continue
 		contacted[id] = now
 		# The ATK status is resolved separately from the pull permission.
 		if enemy.has("numeric") and not phase["suction_bleed"].is_empty():
 			if enemy["numeric"].apply_source_bleed(phase["suction_bleed"],rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
 				bus.emit("combat.status",{"target":id,"id":"bleed","change":"added"})
+		bloody_rave_contact_cue(move,enemy,contact["point"])
 		if not targets.has(id) and bool(enemy["def"].get("grab_allowed",true)):
 			targets[id] = {"fraction":Vector2.ZERO}
+
+func bloody_rave_contact_cue(move: Dictionary, enemy: Dictionary, point: Vector3) -> void:
+	# CC284E..CC28FE samples angle, then Z jitter, then X jitter at the overlap center.
+	var angle := lerpf(-0.4000000059604645,0.4000000059604645,rng.range_int(0,99)/99.0)
+	var height := int(point.z)+rng.range_int(-50,49)
+	var x := int(point.x)+rng.range_int(-50,49)
+	bus.emit("combat.cue",{"kind":"fx","key":move["suction_contact_fx"],"point":Vector2(x,int(enemy["pos"].y)),
+		"height":height,"facing":player["facing"],"angle":angle,"fresh":true})
+	play_sound(move["suction_contact_sound"])
 
 func step_bloody_rave_pull(enemy: Dictionary, pull: Dictionary, center: Vector2, speed: Vector2, elapsed: int) -> void:
 	# 975560 steps X and Y separately, keeping the fraction and testing each pixel.

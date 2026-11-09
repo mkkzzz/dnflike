@@ -139,9 +139,9 @@
   "passiveobject/character/swordman/blastbloodpresuborigin.obj",
   "passiveobject/character/swordman/givebloodsub.obj"
  ],
- "effects": 345,
+ "effects": 346,
  "digits": 61,
- "audio_keys": 264,
+ "audio_keys": 265,
  "unresolved": 32,
  "unresolved_items": [
   {

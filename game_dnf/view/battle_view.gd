@@ -602,6 +602,7 @@ func _spawn_fx(event: Dictionary) -> void:
 	fx.z_index = int(point.y)+depth_offset
 	if depth_offset != 4:fx.set_meta("depth_offset",depth_offset)
 	fx.base_scale = float(event.get("scale",1.0))
+	fx.base_rotation = float(event.get("angle",0.0))
 	fx.tag = String(event.get("tag",""))
 	fx.follow = int(event.get("follow",-1))
 	fx.max_ms = float(event.get("max_ms",-1.0))

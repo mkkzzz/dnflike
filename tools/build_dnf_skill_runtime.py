@@ -1172,10 +1172,11 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
     rear = add_fx(fx, effects, OBJ_ROOT + "animation/bloodyravelayer.ani")
     end_fx = add_fx(fx, effects, slots[7])
     typhoon = add_fx(fx, effects, slots[6])
+    contact_fx = add_fx(fx, effects, slots[14])
     typhoon_frames = records[slots[6]]["decoded"]["timeline"]
     if any(frame["end_ms"] - frame["start_ms"] != 40 for frame in typhoon_frames):
         raise ValueError("Unexpected Bloody Rave typhoon frame timing")
-    if not slash or not rear or not end_fx or not typhoon or not all(cue["key"] for cue in inhale_fx + sword_fx):
+    if not slash or not rear or not end_fx or not typhoon or not contact_fx or not all(cue["key"] for cue in inhale_fx + sword_fx):
         raise ValueError("Missing original Bloody Rave presentation bank")
     if records[slash]["decoded"].get("add_object_effect") != ["Animation/BloodyRaveLayer.ani", -1]:
         raise ValueError("Unexpected Bloody Rave slash attachment")
@@ -1187,9 +1188,10 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
     return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "bloody_rave",
             "requires_effect": "frenzy", "material_cost": fixed_cube_cost(skill, records),
             "suction_bleed_base": bleed_attack_base, "suction_end_fx": end_fx,
+            "suction_contact_fx": contact_fx, "suction_contact_sound": contact["hit_wav"],
             "suction_typhoon": {**typhoon_params, "key": typhoon, "frames": len(typhoon_frames), "frame_ms": 40,
                                 "at": inhale[8]["start_ms"], "fade_in_ms": 300},
-            "fidelity_pending": ["special_target_permissions_and_weights", "contact_hit_presentation",
+            "fidelity_pending": ["special_target_permissions_and_weights", "contact_effect_parent_transform",
                                  "cancel_permission"],
             "stages": [{"ani": "bloodyraveinhale", "fx": inhale_fx, "voice": "SM_BLOOD_RAVE_STORM"},
                        {"ani": "bloodyraveslash", "fx": sword_fx,

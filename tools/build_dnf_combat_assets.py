@@ -364,6 +364,9 @@ BLOODY_RAVE_AUDIO = {
     'DRAWING_SWORD': 'sounds/char/swordman/effect/drawing_sword.ogg',
     'SM_BLOOD_RAVE_ATK': 'sounds/char/swordman/sm_blood_rave_atk.ogg',
 }
+BLOODY_RAVE_CONTACT_AUDIO = {
+    'MINERALSWDC_HIT_01': 'sounds/char/swordman/weapon/minswdc_hit.ogg',
+}
 DRAW_AUDIO = {
     'SM_BAL_READY': 'sounds/char/swordman/sm_bal1.ogg',
     'SM_BAL_SHOT': 'sounds/char/swordman/sm_bal2.ogg',
@@ -483,6 +486,7 @@ CUE_SOUNDS = {
     **{key: [path] for key, path in THIRST_AUDIO.items()},
     **{key: [path] for key, path in GRAB_BLAST_AUDIO.items()},
     **{key: [path] for key, path in BLOODY_RAVE_AUDIO.items()},
+    **{key: [path] for key, path in BLOODY_RAVE_CONTACT_AUDIO.items()},
     **{key: [path] for key, path in DRAW_AUDIO.items()},
     **{key: [path] for key, path in OVERDRIVE_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
@@ -1423,6 +1427,8 @@ def main() -> int:
                         help='Add the original Bloody Rave End.ani bank')
     parser.add_argument('--extend-bloody-rave-typhoon', action='store_true',
                         help='Add the original Bloody Rave Typhoon.ani bank')
+    parser.add_argument('--extend-bloody-rave-contact', action='store_true',
+                        help='Add the original Bloody Rave contact animation and ATK sound')
     parser.add_argument('--extend-thirst', action='store_true',
                         help='Add the original Thirst cast and release effects and sounds')
     parser.add_argument('--extend-draw', action='store_true',
@@ -1552,6 +1558,13 @@ def main() -> int:
         runtime = json.loads(SKILL_RUNTIME.read_bytes())
         key = runtime['moves']['bloodyrave']['suction_typhoon']['key']
         print(json.dumps(extend_skill_banks(args.library, OUT, [('effects', key, runtime['assets']['effect_anims'][key])])))
+        return 0
+    if args.extend_bloody_rave_contact:
+        runtime = json.loads(SKILL_RUNTIME.read_bytes())
+        key = runtime['moves']['bloodyrave']['suction_contact_fx']
+        specs = [('effects', key, runtime['assets']['effect_anims'][key])]
+        specs.extend(('audio', cue, path) for cue, path in BLOODY_RAVE_CONTACT_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_overdrive:
         specs = [('effects', key, path) for key, path in SELF_BUFF_EFFECTS.items()]

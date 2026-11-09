@@ -63,6 +63,7 @@
    "skillfx_grab_stay_741ff61f": "passiveobject/character/swordman/animation/epidemicrasa/grab_stay.ani",
    "skillfx_grab_stay_ldodge_19279fcb": "passiveobject/character/swordman/animation/epidemicrasa/grab_stay_ldodge.ani",
    "skillfx_grabblastblood_9dd6d17c": "character/swordman/effect/animation/grabblastblood.ani",
+   "skillfx_hit_bc6d8512": "character/swordman/effect/animation/bloodyrave/hit.ani",
    "skillfx_icewave_ca30731c": "character/swordman/effect/animation/icewave.ani",
    "skillfx_jumpchainattackslash1_katana_under_0e0a4d92": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash1_katana_under.ani",
    "skillfx_jumpchainattackslash2_katana_under_3fe65613": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash2_katana_under.ani",
@@ -1199,7 +1200,7 @@
   "bloodyrave": {
    "fidelity_pending": [
     "special_target_permissions_and_weights",
-    "contact_hit_presentation",
+    "contact_effect_parent_transform",
     "cancel_permission"
    ],
    "material_cost": {
@@ -1414,6 +1415,8 @@
     "sha256": "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4",
     "source": "etc/etcparameter.etc"
    },
+   "suction_contact_fx": "skillfx_hit_bc6d8512",
+   "suction_contact_sound": "MINERALSWDC_HIT_01",
    "suction_end_fx": "skillfx_end_3fcb6599",
    "suction_typhoon": {
     "at": 710,

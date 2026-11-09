@@ -2100,11 +2100,13 @@ func check_bloody_rave_contact_bleed() -> void:
 		if scenario == "passive":profile.command("numbers.skill_grant",{"id":"bleedingmastery","level":1})
 		var spec := profile.stats()
 		spec["skill_slots"] = ["bloodyrave"]
-		start_room("original_27601","katana",1,spec,"berserker")
+		var facing := -1 if scenario == "passive" else 1
+		start_room("original_27601","katana",facing,spec,"berserker")
+		if scenario == "miss":game.view.audio.muted = false
 		game.apply_skill_effect("buff","frenzy")
 		game.numeric_player.values["attack_speed"] = 1.0
 		session.set_skill_material_spender(func(_id: int, _amount: int):return true)
-		var target: Dictionary = api.spawn_dummy(POINT+Vector2(145,0))
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(145*facing,0))
 		target["def"] = target["def"].duplicate()
 		target["def"]["grab_allowed"] = scenario != "repeat"
 		var level := 47 if scenario == "passive" else 45
@@ -2113,10 +2115,41 @@ func check_bloody_rave_contact_bleed() -> void:
 		target["numeric"].values["abnormal_resistance"] = 0
 		press(KEY_A)
 		step(0)
-		game.rng.reseed(seeds[2281 if scenario == "miss" else 2279])
+		var seed_value: int = seeds[2281 if scenario == "miss" else 2279]
+		game.rng.reseed(seed_value)
+		var source_move: Dictionary = game.move_def("bloodyrave")
+		var contact_key: String = source_move["suction_contact_fx"]
+		var sound_key: String = source_move["suction_contact_sound"]
 		step(789)
 		check(not target["numeric"].effects.active.has("bleed"),"the pre-contact inhale frames never apply bleed")
+		check(cues(contact_key).is_empty() and cues(sound_key).is_empty(),"the contact effects wait for the original attack frame")
+		var judge = preload("res://combat/hit/hit_judge.gd")
+		var boxes: Array = game.action_def()["timeline"][9]["attack_boxes"]
+		var hit_world: Array = judge.world_boxes(boxes,Vector3(POINT.x,POINT.y,0),facing)
+		var overlap: Vector3 = judge.contact(hit_world,game.enemy_damage_boxes(target))["point"]
+		var sample = preload("res://core/det_rng.gd").new(seed_value)
+		sample.range_int(0,9999)
+		var angle := lerpf(-0.4,0.4,sample.range_int(0,99)/99.0)
+		var z := int(overlap.z)+sample.range_int(-50,49)
+		var x := int(overlap.x)+sample.range_int(-50,49)
 		step(1)
+		var emitted: Array = cues(contact_key)
+		check(emitted.size()==1 and emitted[0]["facing"]==facing and emitted[0]["point"]==Vector2(x,POINT.y)
+			and emitted[0]["height"]==z and is_equal_approx(float(emitted[0]["angle"]),angle) and cues(sound_key).size()==1,
+			"contact animation and original hit sound follow the sampled collision point independently of bleed")
+		if scenario == "miss":
+			var audio = game.view.audio
+			var stream: AudioStream = audio.variants[sound_key][0]
+			check(stream is AudioStreamOggVorbis and audio.voice_pool.any(func(voice):return voice.stream==stream and voice.playing),
+				"the original ATK Ogg reaches the voice pool on a contact that fails the bleed roll")
+		if scenario == "repeat":
+			var hits: Array = game.view.effects.filter(func(fx):return fx.cue_key==contact_key)
+			check(hits.size()==1 and int(hits[0].frame["frame"])==0 and is_equal_approx(hits[0].base_rotation,angle),
+				"the spawned contact view displays the first native frame with the sampled angle")
+			game.view.present(game.view_snapshot(),0.0,194.0)
+			check(hits.size()==1 and int(hits[0].frame["frame"])==4,"the contact view holds its fifth frame through 194 ms")
+			game.view.present(game.view_snapshot(),0.0,1.0)
+			check(game.view.effects.all(func(fx):return fx.cue_key!=contact_key),"contact visual expires at 195 ms independently of the inhale")
 		var entry: Dictionary = target["numeric"].effects.active.get("bleed",{})
 		check((not entry.is_empty()) == (scenario in ["repeat","passive"]) and target["hp"]==5000.0,
 			"Bloody Rave contact roll and resistance gate without direct damage: "+scenario)
@@ -2130,8 +2163,10 @@ func check_bloody_rave_contact_bleed() -> void:
 		step(200)
 		step(49)
 		check(applications.size()==1,"an overlapping target cannot bleed again before the rearm boundary")
+		check(cues(contact_key).size()==1,"continuous overlap does not replay the contact animation early")
 		step(1)
 		check(applications.size()==2,"a new contact can independently stack bleed on the 250 ms rearm")
+		check(cues(contact_key).size()==2,"an eligible repeat contact plays a fresh animation")
 		target["numeric"].values["hp_max"] = 5000.0
 		game.step_numeric_actor(target,target["numeric"],0.0)
 		check(target["hp"]==4890.0,"the two sourced bleed ticks deal 110 HP through the numeric actor")

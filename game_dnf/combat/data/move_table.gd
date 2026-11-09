@@ -427,6 +427,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["suction_bleed_base"] = spec["suction_bleed_base"]["by_level"]
 		move["suction_end_fx"] = String(spec["suction_end_fx"])
 		move["suction_typhoon"] = spec["suction_typhoon"]
+		move["suction_contact_fx"] = String(spec["suction_contact_fx"])
+		move["suction_contact_sound"] = String(spec["suction_contact_sound"])
 	if spec.get("native_state","") == "thirst":
 		var values: Array = skill["static"]
 		move.merge({"native_state":"thirst","hp_percent":int(values[0]),
