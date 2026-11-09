@@ -1883,8 +1883,8 @@ func check_grab_blast_startup() -> void:
 	var spec := profile.stats()
 	spec["skill_slots"] = ["grabblastblood"]
 	var denied := ["whiff","invulnerable","freeze","stone","source_disabled","no_down","body_immune"]
-	for outcome: String in denied+["hit","bleed_frenzy","interrupted","body_armor"]:
-		var facing := -1 if outcome == "body_armor" else 1
+	for outcome: String in denied+["hit","bleed_frenzy","interrupted","interrupted_left","body_armor"]:
+		var facing := -1 if outcome in ["body_armor","interrupted_left"] else 1
 		start_room("original_27601","katana",facing,spec,"berserker")
 		var empowered := outcome == "bleed_frenzy"
 		if empowered:game.apply_skill_effect("buff","frenzy")
@@ -1936,16 +1936,18 @@ func check_grab_blast_startup() -> void:
 		var clock: float = target["clock"]
 		game.player["pos"] = POINT+Vector2(5,4)
 		game.update_enemy(target,20.0)
-		check(target["clock"]==clock and target["pos"]==POINT+Vector2(48,3) and game.enemy_ani(target)==["damage2",20.0],
+		check(target["clock"]==clock and target["pos"]==POINT+Vector2(5+43*facing,3) and game.enemy_ani(target)==["damage2",20.0],
 			"captured monster follows the caster and advances only its held animation")
 		game.player["pos"] = POINT
 		game.update_enemy(target,0.0)
-		if outcome == "interrupted":
-			game.hurt_player(7,{"pos":POINT+Vector2(40,0)},{},-1)
+		if outcome.begins_with("interrupted"):
+			game.hurt_player(7,{"pos":POINT+Vector2(40*facing,0)},{},-facing)
 			step(750)
 			check(not game.player.has("grab_blast_target") and not target.has("grab_blast_pose")
-				and target["state"]=="air" and game.objects.is_empty(),
-				"interruption releases the held pose and lets the target fall without a spray")
+				and target["state"]=="grab_blast_down" and game.objects.is_empty()
+				and target["facing"]==-facing and float(target["native_jump_velocity"].x)*facing>=633.0
+				and float(target["native_jump_velocity"].x)*facing<=950.0,
+				"interruption releases the held target into the native knockdown in either direction")
 			continue
 		step(99)
 		check(target["hp"]==50000.0,"Bloodlust has no direct damage through 99 ms after capture")
@@ -1970,14 +1972,34 @@ func check_grab_blast_startup() -> void:
 			"Bloodlust selects the source spray and truncates each fixed damage component in order")
 		check(target["hp"]<before_spray and game.objects[0]["hits"].has(target["id"]) and game.objects[0]["hits"].size()==1,
 			"Bloodlust directs its first spray hit to the held target even outside the ANI boxes")
+		check(target["state"]=="grab_blast_down" and game.enemy_ani(target)==["down",0.0]
+			and target["native_jump_gravity"]==-1500.0 and float(target["native_jump_velocity"].x)>=633.0
+			and float(target["native_jump_velocity"].x)<=950.0
+			and int(round(float(target["vz"])*float(target["vz"])/3000.0)) in [7,8],
+			"Bloodlust replaces the held target's spray reaction with the Goblin-weight DOWN launch")
 		var hp: float = target["hp"]
 		var bystander_hp: float = bystander["hp"]
 		var distant_hp: float = distant["hp"]
 		game.step_objects(100.0,int(game.objects[0]["id"]))
 		check(game.objects[0]["clock"]==0.0 and target["hp"]==hp and bystander["hp"]<bystander_hp and distant["hp"]==distant_hp,
 			"the spray's first authored frame hits nearby bystanders and cannot repeat the directed hit")
+		if not empowered:
+			target["stuck_ms"] = 0.0
+			var release_pos: Vector2 = target["pos"]
+			game.update_enemy(target,40.0)
+			check(float(target["pos"].x)>release_pos.x and float(target["z"])>110.0,"the held victim follows the DOWN launch after release")
+			for tick in range(12):game.update_enemy(target,40.0)
+			check(target["z"]==0.0 and target["state"]=="down" and not target.has("native_jump_velocity"),
+				"the DOWN launch ends on the ground without the shared bounce")
 		step(450)
 		check(game.player["action"]=="","Bloodlust completes the 1200 ms capture branch")
+	var floor_x := 0
+	while floor_x<int(POINT.x) and not game.walkable(Vector2(floor_x,POINT.y)):floor_x += 1
+	var saved := Vector3i(int(POINT.x),int(POINT.y),5)
+	check(game.grab_blast_release_position(Vector3i(floor_x-3,int(POINT.y),110),saved)==Vector3i(floor_x,int(POINT.y),110),
+		"the blocked release point searches along its original depth in three-pixel increments")
+	check(game.grab_blast_release_position(Vector3i(-250,int(POINT.y),110),saved)==saved,
+		"the release returns to the saved XYZ when the native search cannot find a walkable point")
 
 func check_draw_second_slash() -> void:
 	for family: String in ["katana","beamsword"]:

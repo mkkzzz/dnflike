@@ -1783,6 +1783,7 @@ func try_grab_blast(stage: Dictionary, clock: float) -> bool:
 		if int(body_frame.get("items",{}).get("13",0)) not in [0,1]:continue
 		if Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy)).is_empty():continue
 		player["grab_blast_target"] = int(enemy["id"])
+		enemy["grab_blast_origin"] = Vector3i(roundi(enemy["pos"].x),roundi(enemy["pos"].y),roundi(enemy["z"]))
 		enemy["grab_blast_pose"] = ["damage2",0.0] if enemy["def"]["ani_paths"].has("damage2") else enemy_ani(enemy)
 		enemy["clock"] = 0.0
 		enemy.erase("native_jump_velocity")
@@ -1814,11 +1815,38 @@ func anchor_grab_blast_victim(enemy: Dictionary) -> void:
 func release_grab_blast_victim(enemy: Dictionary) -> void:
 	player.erase("grab_blast_target")
 	if enemy.is_empty():return
+	var saved: Vector3i = enemy["grab_blast_origin"]
+	enemy.erase("grab_blast_origin")
 	enemy.erase("grab_blast_pose")
-	if enemy["state"] == "hold":
-		enemy["pos"] = constrain_pos(enemy["pos"])
-		enemy["state"] = "air" if float(enemy["z"]) > 0.0 else "idle"
-		enemy["bounced"] = false
+	if float(enemy["hp"]) <= 0.0:return
+	var at := grab_blast_release_position(Vector3i(roundi(enemy["pos"].x),roundi(enemy["pos"].y),roundi(enemy["z"])),saved)
+	var facing := int(player["facing"])
+	var weight := int(enemy["def"]["weight"])
+	# 25261B7 sends DOWN with raw push/lift 1000/100. 82C497 uses
+	# 827E40 for weight, 82C6A8 halves X, and 82C95D samples X before Z.
+	const GRAVITY := 1500.0
+	var scale := 2100.0+0.01209999993443489*(weight-10000)
+	var horizontal := int(4000000.0/scale)
+	var vertical := int(400000.0/scale)
+	var speed := sample_native_down(int(horizontal*0.5),0.8,1.2)
+	var rise := sample_native_down(int(vertical*vertical/(2.0*GRAVITY)),0.9,1.1)
+	enemy["pos"] = Vector2(at.x,at.y)
+	enemy["facing"] = -facing
+	enemy["push_ms"] = 0.0
+	enemy["clock"] = 0.0
+	start_native_flight(enemy,float(at.z),Vector2(facing*speed,0),rise,-GRAVITY)
+	enemy["state"] = "grab_blast_down"
+
+func grab_blast_release_position(at: Vector3i, saved: Vector3i) -> Vector3i:
+	if at.z < 0:return saved
+	# 7EFF5B searches the original row first, then each +/- depth offset.
+	for y in range(0,201,3):
+		for x in range(0,201,3):
+			for horizontal: int in ([x,-x] if x else [0]):
+				for depth: int in ([y,-y] if y else [0]):
+					var point := Vector3i(at.x+horizontal,at.y+depth,at.z)
+					if walkable(Vector2(point.x,point.y)):return point
+	return saved
 
 func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float) -> void:
 	var strike_due := from < 100.0 and to >= 100.0 and active_effect("thirst").is_empty()
@@ -1843,15 +1871,14 @@ func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float
 	# CB6D42 and CB6D83 truncate each column separately before adding them.
 	if bleeding:amount += int(native_fixed_attack_product(float(move["grab_bleed_bonus"]),base))
 	amount = int(float(amount*grab_frenzy_percent())/100.0)
-	release_grab_blast_victim(target)
 	var spray_hit := grab_fixed_hit(spray,float(amount))
 	spray_hit["starts_at_zero"] = true
 	var object := spawn_object(spray_hit,"player",Vector2(position),float(height),facing,attack_power())
-	if object.is_empty() or target.is_empty() or float(target["hp"]) <= 0.0:return
-	# CNGrabBlastBlood initializes a directed hit from the captured actor's
-	# payload before its ANI boxes are tested for nearby actors.
-	object["hits"][target["id"]] = true
-	land_hit(player,target,spray_hit,point,facing,float(object["power"]))
+	if not object.is_empty() and not target.is_empty() and float(target["hp"]) > 0.0:
+		# CNGrabBlastBlood dispatches the held hit before CB7102 sends DOWN.
+		object["hits"][target["id"]] = true
+		land_hit(player,target,spray_hit,point,facing,float(object["power"]))
+	release_grab_blast_victim(target)
 
 func grab_frenzy_percent() -> int:
 	if active_effect("frenzy").is_empty():return 100
@@ -2409,6 +2436,11 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 	elif state == "native_summon_jump":
 		step_native_summon_jump(enemy,dt)
 		return
+	elif state == "grab_blast_down":
+		if advance_native_flight(enemy,dt):
+			enemy["state"] = "down"
+			enemy["down_ms"] = 0.0
+		return
 	elif state == "attack":
 		var bite: Dictionary = m.get("native_starfish_bite",{})
 		if not bite.is_empty() and int(enemy.get("move_index",-1)) == int(bite["move_index"]):
@@ -2688,8 +2720,8 @@ func release_starfish_victim(enemy: Dictionary) -> void:
 	var weight := float(table.player["weight"])
 	var gravity := -float(enemy["def"]["native_starfish_bite"]["gravity"])
 	var impulse := float(int(200.0*4000.0/(2100.0+0.0121*(weight-10000.0))))
-	var speed := sample_starfish_down(float(int(impulse*0.5)),0.8,1.2)
-	var height := sample_starfish_down(float(int(impulse*impulse/(2.0*gravity))),0.9,1.1)
+	var speed := sample_native_down(int(impulse*0.5),0.8,1.2)
+	var height := sample_native_down(int(impulse*impulse/(2.0*gravity)),0.9,1.1)
 	player["push_v"] = -int(player["facing"])*speed
 	player["push_ms"] = float(rules["reaction"]["push_decay_ms"])
 	player["vz"] = sqrt(2.0*gravity*height)
@@ -2697,11 +2729,13 @@ func release_starfish_victim(enemy: Dictionary) -> void:
 	player["state"] = "air"
 	player["bounced"] = false
 
-func sample_starfish_down(base: float, lower: float, upper: float) -> int:
+func sample_native_down(base: int, lower: float, upper: float) -> int:
 	var low := int(base*lower)
 	var high := int(base*upper)
 	var roll := rng.range_int(0,0x7fffffff)%1000
-	return int(float(high-low)*float(roll)/999.0+float(low))
+	# 11AEE50 interpolates in single precision before truncating.
+	var scaled := ActorNumbers.native_scalar(float((high-low)*roll)/999.0)
+	return int(ActorNumbers.native_scalar(scaled+low))
 
 func poll_native_enemy_attack(enemy: Dictionary, policy: Dictionary) -> int:
 	var width: Array = table.player["width"]
@@ -4158,6 +4192,7 @@ func enemy_ani(enemy: Dictionary) -> Array:
 			if pick >= 0 and pick < moves.size():return [String(moves[pick]["stem"]).to_lower(), float(enemy["clock"])]
 			return ["attack",float(enemy["clock"])]
 		"hurt":return [String(enemy["hit_motion"]),0.0]
+		"grab_blast_down":return ["down",float(enemy["clock"])]
 		"air":return ["overturn",0.0]
 		"down":return ["down",Kernel.Reaction.down_clock(enemy,rp,table.monster_timeline(m,"down"))]
 		"dead":

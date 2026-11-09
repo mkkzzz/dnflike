@@ -873,6 +873,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		"name":String(spec.get("name",key)),"level":int(mob.get("level",[1])[0]),
 		"hp":monster_base_hp(mob)*_ability(mob,"[HP MAX]")/100.0,
 		"attack":float(base["attack"])*_ability(mob,"[EQUIPMENT_PHYSICAL_ATTACK]")/100.0,
+		"weight":int(mob.get("weight",[68000])[0]),
 		"speed":move_px(float(mob.get("move_speed",[300])[0])),"sight":float(mob.get("vision",mob.get("sight",300))),
 		"blind_resistance":int(mob.get("blind_resistance",0)),
 		"sleep_resistance":int(mob.get("sleep_resistance",0)),
