@@ -1777,6 +1777,78 @@ func check_draw_sword() -> void:
 	check(cues("SM_BAL_SHOT").size()==1 and game.hit_count>0,
 		"weapon hit and shot share the accelerated body clock at 420 ms")
 
+func check_draw_second_slash() -> void:
+	for family: String in ["katana","beamsword"]:
+		var blade := family == "katana"
+		var mastery := "blademastery" if blade else "lightswordmastery"
+		var item := "original_27601" if blade else ""
+		var profile := ProfileSession.new()
+		profile.command("numbers.level",{"level":60})
+		profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+		profile.command("numbers.skill_grant",{"id":"draw","level":2})
+		profile.command("numbers.skill_grant",{"id":mastery,"level":7})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["draw"]
+		# The production room has no light-sword appearance bank yet. Exercise its
+		# source geometry and action in a room with the neutral body appearance.
+		var mount := func():
+			start_room(item,family if blade else "shortsword",1,spec)
+			if not blade:game.table.configure_skills(game.skill_levels,"weaponmaster",family)
+		spec["skills"]["weapon_mastery_up"] = 0
+		mount.call()
+		check(game.move_def("draw")["stages"].size()==1,"rank seven alone is below the Oath gate for "+family)
+		spec["skills"]["weapon_mastery_up"] = 1
+		spec["skills"][mastery] = 3 if blade else 4
+		mount.call()
+		check(game.skill_levels[mastery]==6 and game.move_def("draw")["stages"].size()==1,
+			"effective mastery six does not open the second slash for "+family)
+		spec["skills"][mastery] += 1
+		mount.call()
+		var spent: Array = []
+		session.set_skill_material_spender(func(id: int, amount: int):
+			spent.append([id,amount])
+			return true)
+		game.numeric_player.values["attack_speed"] = 1.0
+		for target: Dictionary in game.monsters:move_target(target,POINT+Vector2(1200,0))
+		for index in 2:
+			move_target(game.monsters[index],POINT+Vector2(125 if index==0 else -125,0))
+			game.monsters[index]["hp"] = 10000.0
+		var move: Dictionary = game.move_def("draw")
+		check(game.skill_levels[mastery]==7 and move["stages"].size()==2 and move["draw_second_slash_at"]==775.0,
+			"effective mastery seven enables a second slash at body frame eight for "+family)
+		if move["stages"].size()!=2:continue
+		check(move["stages"][1]["hits"][0]["percent"]==(404.0 if blade else 248.0),
+			"the second slash takes its attack percent from the equipped mastery")
+		press(KEY_A)
+		step(525)
+		step(248)
+		press(KEY_A)
+		step(1)
+		step(1)
+		check(game.player["stage"]==0 and game.hit_count==2,"an early tap cannot carry into the second slash window")
+		var paid_mp: float = game.player["mp"]
+		var paid_cooldown: float = game.player["cooldowns"]["draw"]
+		press(KEY_X if blade else KEY_A)
+		step(0)
+		check(game.player["stage"]==1 and game.player["clock"]==500.0
+			and game.view.player_actor.pose=="momentaryslash" and game.view.player_actor.sample()["frame"]==1
+			and cues("SM_BAL_READY").size()==2,
+			"the second slash restarts the original pose at frame one with its ready cue")
+		check(game.action_def()["hits"][0]["percent"]==(494.0 if blade else 303.0) and game.hit_count==2,
+			"two first-slash targets apply the native 225 per-mille bonus before the new hit window")
+		step(24)
+		check(game.hit_count==2 and cues("SM_BAL_SHOT").size()==1,"second slash waits through its opening frame")
+		step(1)
+		var swing := "R_KATANAA" if blade else "R_BEAMSWDA"
+		check(game.hit_count==4 and game.view.player_actor.sample()["frame"]==2
+			and cues("SM_BAL_SHOT").size()==2 and cues(swing).size()==2 and game.player["mp"]==paid_mp
+			and game.player["cooldowns"]["draw"]==paid_cooldown and spent==[[3037,1]],
+			"the next frame hits the same targets independently without a second skill payment")
+		press(KEY_X)
+		step(530)
+		check(game.player["action"]=="" and cues("SWD_BAL_END").size()==2,
+			"the second slash sheathes and cannot loop to a third strike")
+
 func check_draw_short_wave() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -2326,6 +2398,7 @@ func run() -> void:
 	check_frenzy_toggle()
 	check_bloodblast()
 	check_draw_sword()
+	check_draw_second_slash()
 	check_draw_short_wave()
 	check_thirst()
 	check_hardattack()

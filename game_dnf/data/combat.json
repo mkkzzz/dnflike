@@ -14,7 +14,9 @@
   "weapon_index": {
    "shortsword": 0,
    "katana": 1,
-   "greatsword": 3
+   "club": 2,
+   "greatsword": 3,
+   "beamsword": 5
   },
   "source": "physical_attack has no original equivalent until equipment/stats exist; walk/run px/s are the trial calibration for CHR move speed 850; weapon_index is the CHR weapon subtype row (E-INFER from sound names)."
  },

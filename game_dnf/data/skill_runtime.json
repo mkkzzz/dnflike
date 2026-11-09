@@ -1543,7 +1543,8 @@
   },
   "draw": {
    "fidelity_pending": [
-    "katana_and_beamsword_followups",
+    "followup_abnormal_status",
+    "beamsword_equipped_appearance",
     "wave_wall_and_final_damage",
     "additional_effect_dispatch",
     "original_command",

@@ -505,6 +505,8 @@ func move_def(name: String) -> Dictionary:
 		return player["triple_cast"]
 	if name == "weaponcombo" and player.get("action","") == name and player.has("weapon_combo_cast"):
 		return player["weapon_combo_cast"]
+	if name == "draw" and player.get("action","") == name and player.has("draw_cast"):
+		return player["draw_cast"]
 	return table.moves.get(name,{})
 
 func active_effect(id: String) -> Dictionary:
@@ -661,6 +663,9 @@ func buffering(code: int) -> void:
 			if int(player["stage"]) == 0 and float(player["clock"]) >= followup:
 				player["queued_upper_followup"] = true
 			return
+	if code == KEY_X and player["action"] == "draw" and move_def("draw").has("draw_second_slash_at"):
+		player["queued_combo"] = true
+		return
 	if code in [KEY_C,KEY_SPACE] and held.get(KEY_DOWN,false) and backstep_allowed():player["queued_backstep"] = true
 	elif code == KEY_X and String(player["action"]) in ["attack1","attack2","attack3","weaponcombo","frenzy1","frenzy2","frenzy3","ghoststep_attack1","ghoststep_attack2","kalla_attack1","kalla_attack2","kalla_attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]:player["queued_combo"] = true
 	elif code == KEY_Z:player["queued_skill"] = "upper"
@@ -738,6 +743,7 @@ func leave_action() -> void:
 	player.erase("action_slide")
 	player.erase("frenzy_cast")
 	player.erase("overdrive_cast")
+	player.erase("draw_cast")
 	player.erase("draw_contact_count")
 	end_action_fx()
 
@@ -1052,6 +1058,20 @@ func step_action(ms: float, move: Vector2) -> void:
 	if name == "bloodblast" and int(player["stage"]) == 0 and clock >= duration:
 		start_stage(1)
 		return
+	if m.has("draw_second_slash_at") and int(player["stage"]) == 0:
+		# CBA163 accepts the skill command or the basic attack key in the last frames.
+		var requested: bool = player["queued_skill"] == name or bool(player["queued_combo"]) \
+			or skill_input_held(name) or bool(held.get(KEY_X,false))
+		if player["queued_skill"] == name:player["queued_skill"] = ""
+		player["queued_combo"] = false
+		if requested and clock >= float(m["draw_second_slash_at"]) and clock < duration:
+			var followup: Dictionary = m["stages"][1]
+			var hit: Dictionary = followup["hits"][0]
+			hit["percent"] = float(draw_count_adjusted_attack(int(hit["percent"]),m["draw_hit_count_bonus"]))
+			end_action_fx()
+			player["fx_tag"] = "act:%d" % (action_seq+1)
+			start_stage(1,float(followup["entry_clock"]))
+			return
 	var cancel_at := float(stage.get("cancel_at",duration))
 	if not native_phase.is_empty():cancel_at = duration
 	var pending := String(player["queued_skill"])
@@ -1296,6 +1316,7 @@ func start_action(name: String, cancel := false) -> bool:
 	# A live profile refresh can rebuild the table between two stages.
 	if name == "triple":player["triple_cast"] = m
 	if name == "weaponcombo":player["weapon_combo_cast"] = m
+	if m.has("draw_second_slash_at"):player["draw_cast"] = m.duplicate(true)
 	player["native_phase"] = {}
 	player["queued_combo"] = false
 	player["queued_skill"] = ""
@@ -1513,8 +1534,8 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 			attack_rate = float(rules["buff"]["attack_speed"])
 		# CC7C56 requests attack speed for Triple Slash movement.
 		begin_action_slide(m["dash"],attack_rate)
-	# Multi-stage slides can pick their own side. Upper's native follow-up inherits facing.
-	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice"] and index == 1) and not player.has("weapon_combo_release"):
+	# Multi-stage slides can pick their own side. These native follow-ups inherit facing.
+	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw"] and index == 1) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
@@ -1728,14 +1749,15 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 							bus.emit("combat.prop_broken", {"node": int(prop.get("node", -1))})
 						break
 
+func draw_count_adjusted_attack(amount: int, rates: Array) -> int:
+	# C9F980 adjusts the attack with the first slash's distinct target count.
+	var count := int(player.get("draw_contact_count",0))
+	if count == 0:return amount
+	return int(float(amount*(1000+int(rates[mini(count,rates.size())-1])))/1000.0)
+
 func prepare_draw_short_wave(template: Dictionary) -> Dictionary:
 	var controller: Dictionary = template["native_controller"]
-	var count := int(player.get("draw_contact_count",0))
-	var amount := int(controller["base_amount"])
-	if count > 0:
-		# C9F980 applies the count-indexed per-mille term before writing the packet.
-		var rates: Array = controller["hit_count_bonus"]
-		amount = int(float(amount*(1000+int(rates[mini(count,rates.size())-1])))/1000.0)
+	var amount := draw_count_adjusted_attack(int(controller["base_amount"]),controller["hit_count_bonus"])
 	var hit := template.duplicate()
 	var atk: Dictionary = template["atk"].duplicate()
 	atk["absolute_damage"] = amount
@@ -1869,8 +1891,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			return
 	elif by_companion:
 		amount = maxi(1,roundi(amount*float(attacker["numeric"].values["damage_rate"])))
-	if by_player and player["action"] == "draw" and hit_skill_id == "draw" and hit.get("kind","") == "boxes":
-		# CADA24..CADADD records each direct hit target once for the later wave.
+	if by_player and player["action"] == "draw" and int(player["stage"]) == 0 and hit_skill_id == "draw" and hit.get("kind","") == "boxes":
+		# CADA24..CADADD records each direct hit target once for the follow-ups.
 		player["draw_contact_count"] = int(player.get("draw_contact_count",0))+1
 	var target_is_player := victim == "player"
 	bus.emit("combat.hit",{"attacker":attacker.get("id",-1),"target":target["id"],"instance":int(attacker.get("action_instance",action_seq)),"point":point,"guarded":false,"atk":String(hit.get("atk_path",""))})

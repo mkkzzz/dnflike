@@ -18,6 +18,7 @@ const SWORDMAN_WEAPON_POSES := {"attack1":"attack1","attack2":"attack2","attack3
 	"weaponcomboblade1":"weaponcomboblade1","weaponcomboblade2":"weaponcomboblade2","weaponcomboblade3":"weaponcomboblade3","weaponcomboblade4":"weaponcomboblade4"}
 const SHORT_MASTERY_SKL := "skill/swordman/shortswordmastery.skl"
 const BLADE_MASTERY_SKL := "skill/swordman/blademastery.skl"
+const LIGHT_MASTERY_SKL := "skill/swordman/lightswordmastery.skl"
 const HEAVY_MASTERY_SKL := "skill/swordman/heavyswordmastery.skl"
 const NORMAL_ATTACK_CHAIN := ["attack1","attack2","attack3"]
 # CA5474 and CA548A append the two native normal-attack cancel frames.
@@ -444,6 +445,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				built["cancel_at"] = built["duration"]
 				_append_draw_short_wave(built,spec["short_wave"],skill)
 			move["stages"].append(built)
+		if native_draw:_append_draw_second_slash(move,skill)
 		# Static SKL columns are skill-specific. They are movement parameters only
 		# when an explicit adapter declares their meaning.
 		if spec.has("dash"):
@@ -464,6 +466,28 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			hit["skill_id"] = name
 			if spec.get("form_normal",false):hit["skill"] = false
 	return move
+
+func _append_draw_second_slash(move: Dictionary, draw_skill: Dictionary) -> void:
+	# CBA09E checks Oath and each weapon's effective mastery against its own gate.
+	if int(skill_levels.get("weapon_mastery_up",0)) <= 0:return
+	var blade := weapon == "katana"
+	if not blade and weapon != "beamsword":return
+	var mastery_id := "blademastery" if blade else "lightswordmastery"
+	if int(skill_levels.get(mastery_id,0)) <= 0:return
+	var mastery := _skill_row(BLADE_MASTERY_SKL if blade else LIGHT_MASTERY_SKL)
+	var values: Array = mastery["static"]
+	if int(mastery["rank"]) < int(values[2 if blade else 3]):return
+	var opening: Dictionary = move["stages"][0]
+	if opening["hits"].is_empty():return
+	var followup := opening.duplicate(true)
+	var row: Array = mastery["level_row"]
+	# CC8658 seeks to frame 1. CC86DA takes the second slash's percent
+	# from the mastery skill, then C9F980 applies the first slash's target count.
+	followup["entry_clock"] = float(opening["timeline"][1]["start_ms"])
+	followup["hits"][0]["percent"] = float(row[4 if blade else 8])
+	move["draw_second_slash_at"] = float(opening["timeline"][8]["start_ms"])
+	move["draw_hit_count_bonus"] = draw_skill["static"].slice(1,6)
+	move["stages"].append(followup)
 
 func _append_draw_short_wave(stage: Dictionary, spec: Dictionary, draw_skill: Dictionary) -> void:
 	# CB2018..CB21AA requires the Weapon Master growth type and the
