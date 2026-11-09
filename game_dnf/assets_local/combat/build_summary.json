@@ -136,9 +136,10 @@
   "hardattack_wave_bremen_up",
   "passiveobject/character/swordman/sayaex.obj",
   "passiveobject/character/swordman/sayaexice.obj",
-  "passiveobject/character/swordman/blastbloodpresuborigin.obj"
+  "passiveobject/character/swordman/blastbloodpresuborigin.obj",
+  "passiveobject/character/swordman/givebloodsub.obj"
  ],
- "effects": 320,
+ "effects": 321,
  "digits": 61,
  "audio_keys": 254,
  "unresolved": 32,

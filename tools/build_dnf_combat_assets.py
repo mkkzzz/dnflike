@@ -1520,8 +1520,11 @@ def main() -> int:
         runtime = json.loads(SKILL_RUNTIME.read_bytes())
         assets = runtime['assets']
         move = runtime['moves']['sacrifice']
+        burst = move['full_charge_hit']
         specs = [('player_clips', name, assets['player_anims'][name]) for name in ('summon1', 'summon2')]
-        specs.extend(('effects', key, assets['effect_anims'][key]) for key in (move['cast_fx'], move['release_fx']))
+        specs.extend(('effects', key, assets['effect_anims'][key])
+                     for key in (move['cast_fx'], move['release_fx'], *burst['native_controller']['layers']))
+        specs.append(('objects', burst['object'], burst['object']))
         specs.extend(('audio', key, path) for key, path in THIRST_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0

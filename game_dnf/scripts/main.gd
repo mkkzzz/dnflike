@@ -1347,6 +1347,7 @@ func thirst_hp_cost(percent: int) -> int:
 
 func step_thirst_cast(ms: float) -> void:
 	var phase: Dictionary = player["native_phase"]
+	var move := move_def("sacrifice")
 	var elapsed := float(player["clock"])+ms
 	player["clock"] = elapsed
 	var body_clock := float(phase["body_clock"])+ms*float(phase["cast_stage_rate"])
@@ -1360,14 +1361,18 @@ func step_thirst_cast(ms: float) -> void:
 		var bit := 1 << tier
 		if tier > 0 and (int(phase["paid_mask"]) & bit) == 0:
 			phase["paid_mask"] = int(phase["paid_mask"]) | bit
-			var hp_cost := thirst_hp_cost(int(move_def("sacrifice")["tier_hp_percent"]))
+			var hp_cost := thirst_hp_cost(int(move["tier_hp_percent"]))
 			failed_payment = int(player["hp"]) <= hp_cost
 			if not failed_payment:player["hp"] = int(player["hp"])-hp_cost
 	if failed_payment or elapsed >= float(phase["end_ms"]) or (not held_skill and body_clock >= first_frame and elapsed >= 400.0):
+		# CABAA4 tests tier + 1 against floor(casting time / 500).
+		if int(phase["tier"])+1 > int(float(phase["end_ms"])/500.0) and move.has("full_charge_hit"):
+			spawn_object(move["full_charge_hit"],"player",Vector2(Vector2i(player["pos"])),
+				float(int(player["z"])),int(player["facing"]),attack_power())
 		end_action_fx()
 		player["fx_tag"] = "act:%d" % (action_seq+1)
 		start_stage(1)
-		if apply_effect({"kind":"effect","id":move_def("sacrifice")["effect_id"],"rank":int(skill_levels.get("sacrifice",1)),
+		if apply_effect({"kind":"effect","id":move["effect_id"],"rank":int(skill_levels.get("sacrifice",1)),
 				"charge_tier":phase["tier"]}):
 			play_sound("SACRI")
 		return
@@ -1889,8 +1894,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			if hit_skill_id == "hopsmash" and int(skill_levels.get("bloody_vigorous",0)) > 0:
 				effect_list.append({"id":"bleed","chance":0.4})
 		for effect: Dictionary in effect_list:
-			if effect.get("native_frenzy",false):
-				if target["numeric"].apply_frenzy_bleed(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
+			if effect.get("native_frenzy",false) or effect.has("source_bleed_total"):
+				if target["numeric"].apply_source_bleed(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
 					bus.emit("combat.status",{"target":target["id"],"id":"bleed","change":"added"})
 				continue
 			var chance := float(effect.get("chance",1))
@@ -3882,7 +3887,7 @@ func view_snapshot() -> Dictionary:
 			objs.append(item)
 		elif controller.get("kind","") == "rasa_child":
 			objs.append_array(_rasa_child_layers(item,o,controller))
-		elif controller.get("kind","") == "bloodblast":
+		elif controller.get("kind","") in ["bloodblast","thirst_burst"]:
 			item["depth_offset"] = -1
 			if bank != "":objs.append(item)
 			var layers: Array = controller["layers"]

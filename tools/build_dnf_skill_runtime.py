@@ -193,6 +193,8 @@ DIRECT_OBJECTS = {
 NATIVE_ANIMATION_BINDINGS = {
     CHR_FX + "giveblood/givebloodstay.ani",
     CHR_FX + "giveblood/givebloodshoot.ani",
+    OBJ_ROOT + "animation/givebloodsub_back.ani",
+    OBJ_ROOT + "animation/givebloodsub_front.ani",
     OBJ_ROOT + "animation/blastbloodpresub_back.ani",
     OBJ_ROOT + "animation/blastbloodpresub_front.ani",
     OBJ_ROOT + "animation/blastbloodfloor2.ani",
@@ -1103,11 +1105,17 @@ def build_move(
     if key == "sacrifice":
         cast_fx = add_fx(fx, effects, CHR_FX + "giveblood/givebloodstay.ani")
         release_fx = add_fx(fx, effects, CHR_FX + "giveblood/givebloodshoot.ani")
-        if not cast_fx or not release_fx:
-            raise ValueError("missing Thirst cast or release animation")
+        burst = add_object(objects, OBJ_ROOT + "givebloodsub.obj")
+        front_fx = add_fx(fx, effects, records[burst]["decoded"]["etc_motions"][0]) if burst else ""
+        if not all((cast_fx, release_fx, burst, front_fx)):
+            raise ValueError("missing Thirst cast, release or full-charge animation")
+        # 61CA00 installs status 11 and scales the basic and attached animations.
+        full_charge = {"object": burst, "offset": [0, 0, 1], "percent": 0,
+                       "native_controller": {"kind": "thirst_burst", "layers": [front_fx]}}
         return {"skill": str(skill["path"]), "name": str(skill["name"]),
                 "native_state": "thirst", "effect_id": "thirst", "cast_fx": cast_fx, "release_fx": release_fx,
-                "fidelity_pending": ["full_charge_object", "loop_sound", "original_command", "other_skill_bonuses"],
+                "full_charge_hit": full_charge,
+                "fidelity_pending": ["bleeding_modifiers_and_special_targets", "loop_sound", "original_command", "other_skill_bonuses"],
                 "stages": [{"ani": "summon1"}, {"ani": "summon2", "voice": "SM_SACRIFICE_CAST",
                     "fx": [{"key": release_fx, "at": 0, "action_clock": True}]}]}
     if source_key == "bloodblast" and native_bloodblast:
@@ -1855,6 +1863,7 @@ def main() -> int:
         object_candidates.update((RASA_CREATOR, RASA_CHILD))
         object_candidates.add(OBJ_ROOT + "firewavebigsub.obj")
         object_candidates.add(OBJ_ROOT + "blastbloodpresuborigin.obj")
+        object_candidates.add(OBJ_ROOT + "givebloodsub.obj")
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(
             path for path in object_candidates if safe_object(library, records, path)

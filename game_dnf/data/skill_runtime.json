@@ -53,6 +53,7 @@
    "skillfx_floor_over_73b0876a": "passiveobject/character/swordman/animation/blastblood/floor_over.ani",
    "skillfx_givebloodshoot_7c29a18a": "character/swordman/effect/animation/giveblood/givebloodshoot.ani",
    "skillfx_givebloodstay_2f68bbdd": "character/swordman/effect/animation/giveblood/givebloodstay.ani",
+   "skillfx_givebloodsub_front_e3eda19c": "passiveobject/character/swordman/animation/givebloodsub_front.ani",
    "skillfx_grab_3189b870": "passiveobject/character/swordman/animation/epidemicrasa/grab.ani",
    "skillfx_grab_ldodge_5188bbe5": "passiveobject/character/swordman/animation/epidemicrasa/grab_ldodge.ani",
    "skillfx_grab_stay_741ff61f": "passiveobject/character/swordman/animation/epidemicrasa/grab_stay.ani",
@@ -109,6 +110,7 @@
    "passiveobject/character/swordman/epidemicrasacreater.obj": "passiveobject/character/swordman/epidemicrasacreater.obj",
    "passiveobject/character/swordman/firewavebig.obj": "passiveobject/character/swordman/firewavebig.obj",
    "passiveobject/character/swordman/firewavebigsub.obj": "passiveobject/character/swordman/firewavebigsub.obj",
+   "passiveobject/character/swordman/givebloodsub.obj": "passiveobject/character/swordman/givebloodsub.obj",
    "passiveobject/character/swordman/grabblastblood.obj": "passiveobject/character/swordman/grabblastblood.obj",
    "passiveobject/character/swordman/grabblastbloodbig.obj": "passiveobject/character/swordman/grabblastbloodbig.obj",
    "passiveobject/character/swordman/grandwave.obj": "passiveobject/character/swordman/grandwave.obj",
@@ -4002,11 +4004,26 @@
    "cast_fx": "skillfx_givebloodstay_2f68bbdd",
    "effect_id": "thirst",
    "fidelity_pending": [
-    "full_charge_object",
+    "bleeding_modifiers_and_special_targets",
     "loop_sound",
     "original_command",
     "other_skill_bonuses"
    ],
+   "full_charge_hit": {
+    "native_controller": {
+     "kind": "thirst_burst",
+     "layers": [
+      "skillfx_givebloodsub_front_e3eda19c"
+     ]
+    },
+    "object": "passiveobject/character/swordman/givebloodsub.obj",
+    "offset": [
+     0,
+     0,
+     1
+    ],
+    "percent": 0
+   },
    "name": "嗜血",
    "native_state": "thirst",
    "release_fx": "skillfx_givebloodshoot_7c29a18a",

@@ -1754,6 +1754,7 @@ func check_thirst() -> void:
 	check(game.view.player_actor.pose=="summon2" and cues(release_key).size()==1
 		and cues("SM_SACRIFICE_CAST").size()==1 and cues("SACRI").size()==1,
 		"Thirst releases into Summon2 with its authored effect and sounds")
+	check(game.objects.is_empty(),"partial release does not create the full-charge object")
 	check(thirst.get("remaining_ms")==30000 and mods.map(func(mod):return mod["value"])==[10.0,2.0],
 		"rank two at tier one installs the original 30 second strength and attack modifiers")
 	step(499)
@@ -1803,6 +1804,71 @@ func check_thirst() -> void:
 	session.submit_key(KEY_A,false)
 	check(game.player["stage"]==1 and game.action_duration("sacrifice")==400.0,
 		"full hold releases at 2000 ms and applies cast speed only to recovery")
+	check_thirst_burst()
+
+func check_thirst_burst() -> void:
+	check(game.objects.size()==1,"full-charge release creates exactly one passive object")
+	if game.objects.size()!=1:return
+	var burst: Dictionary = game.objects[0]
+	var hit: Dictionary = burst["hit"]
+	check(burst["def"]["path"].ends_with("/givebloodsub.obj") and burst["pos"]==POINT
+		and burst["z"]==1.0 and is_equal_approx(burst["size_rate"],1.65),
+		"object 20148 spawns at caster Z+1 with both native scale factors")
+	check(hit["effects"]==[{"id":"bleed","chance":1.0,"status_level":40,"duration_ms":7000,"source_bleed_total":1096}],
+		"rank two packet uses columns 14 to 16 for bleed and a base 100 percent chance")
+	for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(450,0))
+	var first: Dictionary = game.monsters[0]
+	var second: Dictionary = game.monsters[1]
+	move_target(first,POINT+Vector2(75,0))
+	move_target(second,POINT)
+	for target: Dictionary in [first,second]:
+		target["hp"] = 2000.0
+		target["numeric"].values["hp_max"] = 2000.0
+		target["numeric"].values["physical_defense"] = 1000000.0
+		target["numeric"].values["level"] = 40
+		target["numeric"].values["bleeding_resistance"] = 0
+		target["numeric"].values["abnormal_resistance"] = 0
+	var hp := float(first["hp"])
+	game.step_objects(10,int(burst["id"]))
+	game.step_objects(99)
+	check(burst["clock"]==99.0 and burst["hits"].is_empty(),"creation starts at age zero with a 100 ms blank frame")
+	game.step_objects(1)
+	check(burst["hits"].has_all([first["id"],second["id"]]) and first["hp"]==hp
+		and cues("FIRE_PILLAR_HIT").size()==2,
+		"scaled first hit catches both targets with the original impact cue and zero immediate damage")
+	var bleed: Dictionary = first["numeric"].effects.active.get("bleed",{})
+	check(bleed.has("source_bleed"),"full-charge contact installs the timed original bleed payload")
+	if not bleed.has("source_bleed"):return
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var views: Dictionary = game.view.object_views
+	var layer_id := "%s:layer:0" % burst["id"]
+	check(views.has(burst["id"]) and views.has(layer_id)
+		and views[burst["id"]].z_index<views[layer_id].z_index
+		and is_equal_approx(views[layer_id].base_scale,1.65),
+		"front and back clips follow the source layering and share the scale")
+	game.step_numeric_actor(first,first["numeric"],0)
+	check(first["hp"]==hp-78,"first native tick floors 1096 / floor(7000 / 500)")
+	game.step_numeric_actor(first,first["numeric"],499)
+	check(first["hp"]==hp-78,"native bleed does not tick again before 500 ms")
+	game.step_numeric_actor(first,first["numeric"],1)
+	check(first["hp"]==hp-156,"500 ms tick consumes integer bleed HP without reapplying physical defense")
+	game.step_objects(259)
+	check(game.objects.has(burst) and cues("FIRE_PILLAR_HIT").size()==2,"object keeps one hit per target through age 359")
+	game.step_objects(1)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(game.objects.is_empty() and not views.has(layer_id) and not views.has(burst["id"]),
+		"both layers retire when the 360 ms main ANI ends")
+	game.step_numeric_actor(first,first["numeric"],6499)
+	check(first["numeric"].effects.active.has("bleed"),"bleed survives the object until its own duration ends")
+	game.step_numeric_actor(first,first["numeric"],1)
+	check(not first["numeric"].effects.active.has("bleed"),"rank two original bleed expires at 7000 ms")
+	var effects = second["numeric"].effects
+	effects.step(6000)
+	check(second["numeric"].add_effect("bleed"),"generic bleed can apply during the source bleed")
+	var mixed: Dictionary = effects.active["bleed"]
+	check(mixed["stacks"]==1 and mixed.has("source_bleed"),"generic bleed keeps its own stack count and preserves the source timer")
+	effects.step(1000)
+	check(effects.active.has("bleed") and not mixed.has("source_bleed"),"the source timer expires independently of generic bleed")
 
 func check_bloodblast() -> void:
 	var profile := ProfileSession.new()

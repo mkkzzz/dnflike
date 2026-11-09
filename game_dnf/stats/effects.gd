@@ -10,11 +10,27 @@ func add(id: String, definition: Dictionary, rank := 1) -> bool:
 	if definition.get("stacking","refresh") == "stack":stacks = mini(int(old.get("stacks",0))+1,int(definition.get("max_stacks",1)))
 	var entry := {"id":id,"definition":definition.duplicate(true),"remaining_ms":float(definition.get("duration_ms",0)),"tick_ms":float(old.get("tick_ms",0)),"stacks":stacks,"rank":rank}
 	if definition.has("absorb_hits"):entry["absorb_remaining"] = int(definition["absorb_hits"])
+	if old.has("source_bleed"):entry["source_bleed"] = old["source_bleed"]
 	active[id] = entry
 	return true
 
 func remove(id: String) -> bool:
 	return active.erase(id)
+
+func add_source_bleed(total: int, duration_ms: int, status_level: int) -> bool:
+	if duration_ms <= 0:return false
+	if not active.has("bleed"):add("bleed",{"name":"出血"})
+	var bleed: Dictionary = active["bleed"]
+	if float(bleed["remaining_ms"]) <= 0.0:bleed["stacks"] = 0
+	if not bleed.has("source_bleed"):bleed["source_bleed"] = {"applications":[]}
+	var source: Dictionary = bleed["source_bleed"]
+	# 8B568E resets the shared tick gate. Each timed application keeps its age.
+	source["next_tick_ms"] = 0.0
+	@warning_ignore("integer_division")
+	var ticks := maxi(1,duration_ms/500)
+	var amount := int(PackedFloat32Array([float(total)/ticks])[0])
+	source["applications"].append({"remaining_ms":float(duration_ms),"amount":amount,"status_level":status_level})
+	return true
 
 ## 8B5160 appends each poison application with an independent timer and HP ledger.
 func add_source_poison(amount: int, duration_ms: int) -> void:
@@ -60,6 +76,7 @@ func step(ms: float, sleep_on_ground := true) -> Array:
 	for id: String in active.keys():
 		if id == "sleep" and not sleep_on_ground:continue
 		var effect: Dictionary = active[id]
+		if effect.has("source_bleed"):step_source_bleed(effect,ms,events)
 		if effect.has("applications"):
 			step_source_poison(effect,ms,events)
 			continue
@@ -76,9 +93,31 @@ func step(ms: float, sleep_on_ground := true) -> Array:
 				effect["tick_ms"] -= interval
 				events.append({"type":"tick","id":id,"damage":float(definition.get("tick_damage",0))*int(effect["stacks"]),"damage_type":definition.get("damage_type","physical")})
 		if float(effect["remaining_ms"]) <= 0:
-			active.erase(id)
-			events.append({"type":"removed","id":id})
+			if effect.has("source_bleed"):
+				effect["tick_ms"] = 0.0
+				effect["stacks"] = 0
+			else:
+				active.erase(id)
+				events.append({"type":"removed","id":id})
 	return events
+
+func step_source_bleed(effect: Dictionary, ms: float, events: Array) -> void:
+	var source: Dictionary = effect["source_bleed"]
+	var applications: Array = source["applications"]
+	source["next_tick_ms"] = float(source["next_tick_ms"])-ms
+	# 8B2747 permits the initial update at zero. 8B30C0 schedules from the
+	# current age, then 8B4F4F removes expired applications after processing.
+	if float(source["next_tick_ms"]) <= 0.0:
+		source["next_tick_ms"] = 500.0
+		var amount := 0
+		for application: Dictionary in applications:amount += int(application["amount"])
+		if amount > 0:
+			events.append({"type":"damage_number","id":"bleed","damage":amount,"damage_type":"physical"})
+			events.append({"type":"direct_damage","id":"bleed","damage":amount,"damage_type":"physical"})
+	for index in range(applications.size()-1,-1,-1):
+		applications[index]["remaining_ms"] -= ms
+		if float(applications[index]["remaining_ms"]) <= 0.0:applications.remove_at(index)
+	if applications.is_empty():effect.erase("source_bleed")
 
 func step_frenzy_drain(effect: Dictionary, ms: float, events: Array) -> void:
 	var previous := float(effect.get("drain_elapsed_ms",0.0))

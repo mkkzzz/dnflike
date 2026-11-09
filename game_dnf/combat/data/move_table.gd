@@ -398,6 +398,10 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		var values: Array = skill["static"]
 		move.merge({"native_state":"thirst","hp_percent":int(values[0]),
 			"native_recovery_ms":int(values[2]),"tier_hp_percent":int(values[5])})
+		var burst := _build_stage({"hits":[spec["full_charge_hit"]]},skill)
+		if not burst["hits"].is_empty():
+			move["full_charge_hit"] = burst["hits"][0]
+			move["full_charge_hit"]["skill_id"] = name
 	if spec.has("material_cost"):move["material_cost"] = spec["material_cost"]
 	var weapon_hits := _swordman_hits(name)
 	if spec.has("stages"):
@@ -576,11 +580,19 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 					# of the travelling-front reaction/damage definition.
 					var child_stage := _build_stage({"hits":[controller["child"]]},skill)
 					controller["child"] = child_stage["hits"][0]
+				elif controller.get("kind","") == "thirst_burst":
+					# 61CA00 unpacks three integers and one float from skill 23.
+					hit["contact_only"] = true
+					hit["starts_at_zero"] = true
+					hit["effects"] = [{"id":"bleed","chance":1.0,"status_level":int(row[15]),
+						"duration_ms":int(row[16]),"source_bleed_total":int(row[14])}]
+					hit["size_rate"] = _native_thirst_size(float(row[17]))
 				hit["native_controller"] = controller
 				if controller.get("kind","") == "bloodblast":hit["starts_at_zero"] = true
 			hit["rear_fx"] = String(h.get("rear_fx",""))
 			# Explicit skill-specific size column; other objects retain native size.
-			hit["size_rate"] = float(row[int(h["size_col"])])/100.0 if h.has("size_col") and row.size()>int(h["size_col"]) else 1.0
+			if not hit.has("size_rate"):
+				hit["size_rate"] = float(row[int(h["size_col"])])/100.0 if h.has("size_col") and row.size()>int(h["size_col"]) else 1.0
 			if h.has("percent_col") and row.size() > int(h["percent_col"]):
 				hit["percent"] = float(row[int(h["percent_col"])])
 			elif h.has("percent"):
@@ -609,6 +621,11 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 		voice = ""
 	return {"ani":ani,"timeline":body,"duration":Timeline.duration(body),"hits":hits,"cancel_at":last,
 		"fx":fx,"voice":voice,"sounds":sounds}
+
+static func _native_thirst_size(value: float) -> float:
+	# 61CB64: two MULSS instructions, followed by sprite and box scaling.
+	var scale := PackedFloat32Array([value*0.33000001311302185])[0]
+	return PackedFloat32Array([scale*0.009999999776482582])[0]
 
 ## Explicit native field bindings only; never infer columns for other skills.
 func _level_effects(specs: Array, row: Array) -> Array:
