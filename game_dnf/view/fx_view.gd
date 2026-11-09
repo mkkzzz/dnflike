@@ -27,7 +27,8 @@ var follow := -1
 ## Native attachment offset, already mirrored when the action creates it.
 var follow_offset := Vector2.ZERO
 var fade := 1.0
-var _frame_local := 0.0
+var _next_items: Dictionary = {}
+var _frame_mix := 0.0
 var _blend_key: Variant
 
 func setup(info: Dictionary,direction: int) -> void:
@@ -51,17 +52,26 @@ func seek(t: float) -> void:
 			return
 	var local := fposmod(clock_ms,duration) if loop and duration > 0 else clock_ms
 	var elapsed := 0.0
-	_frame_local = 0.0
+	var frames: Array = data["frames"]
+	_next_items = {}
+	_frame_mix = 0.0
 	frame = {}
-	for f: Dictionary in data["frames"]:
+	for index: int in range(frames.size()):
+		var f: Dictionary = frames[index]
 		var delay = f.get("delay_ms",100)
 		var span := float(delay if delay != null else 0)
 		if local < elapsed+span:
 			frame = f
-			_frame_local = local-elapsed
+			if span > 0:
+				var next := index+1
+				if next == frames.size() and bool(data.get("loop",false)):
+					next = 0
+				if next < frames.size():
+					_next_items = frames[next].get("items",{})
+					_frame_mix = clampf((local-elapsed)/span,0.0,1.0)
 			break
 		elapsed += span
-	if frame.is_empty() and not data["frames"].is_empty():frame = data["frames"][-1]
+	if frame.is_empty() and not frames.is_empty():frame = frames[-1]
 	var blend: Dictionary = frame.get("items",{}).get("11",{})
 	var mode := int(blend.get("type",0))
 	var key: Variant = mode
@@ -91,35 +101,42 @@ void fragment() { COLOR.rgb = mono_rgb * tint_rgb; }
 		material = _materials[key]
 	queue_redraw()
 
+func _interpolation_weight() -> float:
+	return _frame_mix if int(frame.get("items",{}).get("10",0)) == 1 else 0.0
+
 ## ANI item 9 supplies RGBA endpoints; item 10 enables interpolation. Keep
 ## PTL fade separate so particle opacity is not applied twice. The renderer
 ## uses float channels; original packed-byte quantization remains unverified.
 func frame_color() -> Color:
 	var rgba: Array = frame.get("items",{}).get("9",[255,255,255,255])
 	var color := Color(float(rgba[0])/255,float(rgba[1])/255,float(rgba[2])/255,float(rgba[3])/255)
-	if int(frame.get("items",{}).get("10",0)) == 1:
-		var index: int = data["frames"].find(frame)
-		var span := float(frame.get("delay_ms",0) if frame.get("delay_ms") != null else 0)
-		if index >= 0 and index+1 < data["frames"].size() and span > 0:
-			var next_rgba: Array = data["frames"][index+1].get("items",{}).get("9",[255,255,255,255])
-			var target := Color(float(next_rgba[0])/255,float(next_rgba[1])/255,float(next_rgba[2])/255,float(next_rgba[3])/255)
-			color = color.lerp(target,clampf(_frame_local/span,0,1))
+	var weight := _interpolation_weight()
+	if weight > 0.0:
+		var next_rgba: Array = _next_items.get("9",[255,255,255,255])
+		var target := Color(float(next_rgba[0])/255,float(next_rgba[1])/255,float(next_rgba[2])/255,float(next_rgba[3])/255)
+		color = color.lerp(target,weight)
 	color.a *= fade
 	return color
+
+func frame_scale() -> Vector2:
+	var rate: Array = frame.get("items",{}).get("7",[1.0,1.0])
+	var value := Vector2(float(rate[0]),float(rate[1]))
+	var weight := _interpolation_weight()
+	if weight > 0.0:
+		var target: Array = _next_items.get("7",[1.0,1.0])
+		value = value.lerp(Vector2(float(target[0]),float(target[1])),weight)
+	return value
 
 func _draw() -> void:
 	if atlas == null or not frame.has("sprite"):return
 	var item: Dictionary = data["atlas"]["items"][frame["sprite"]]
 	var r: Array = item["rect"]
 	var o: Array = item["offset"]
-	var rate: Array = frame.get("items",{}).get("7",[1.0,1.0])
+	var rate := frame_scale()*base_scale
 	# [ROTATE] is in radians; [INTERPOLATION] (item 10) eases it toward the next frame.
 	var rotate := float(frame.get("items",{}).get("8",0.0))
-	if int(frame.get("items",{}).get("10",0)) == 1:
-		var i: int = data["frames"].find(frame)
-		if i >= 0 and i+1 < data["frames"].size():
-			var span := float(frame.get("delay_ms",0) if frame.get("delay_ms") != null else 0)
-			var next_rot := float(data["frames"][i+1].get("items",{}).get("8",0.0))
-			if span > 0:rotate = lerpf(rotate,next_rot,clampf(_frame_local/span,0,1))
-	draw_set_transform(Vector2.ZERO,rotate*facing,Vector2(facing*float(rate[0])*base_scale,float(rate[1])*base_scale))
+	var weight := _interpolation_weight()
+	if weight > 0.0:
+		rotate = lerpf(rotate,float(_next_items.get("8",0.0)),weight)
+	draw_set_transform(Vector2.ZERO,rotate*facing,Vector2(facing*rate.x,rate.y))
 	draw_texture_rect_region(atlas,Rect2(float(o[0]),float(o[1]),float(r[2]),float(r[3])),Rect2(float(r[0]),float(r[1]),float(r[2]),float(r[3])),frame_color())

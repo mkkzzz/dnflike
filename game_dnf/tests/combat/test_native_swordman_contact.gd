@@ -112,6 +112,18 @@ func check_upper_armor_visuals() -> void:
 	check(sparks.size()==6,"the original armor PTL emits six particles at high quality")
 	check(bursts.size()==1 and bursts[0]["point"]==POINT and float(bursts[0]["height"])==50.0,
 		"the original burst origin uses the actor XYZ plus half the source Stay height")
+	var source_scales := {
+		"superarmor_damage_particle01.ani": [Vector2(0.8,0.7),Vector2(0.55,0.725)],
+		"superarmor_damage_particle02.ani": [Vector2(0.6,0.6),Vector2(0.625,0.625)],
+		"superarmor_damage_particle03.ani": [Vector2(0.9,0.9),Vector2(0.925,0.575)]}
+	for particle in sparks:
+		var file := String(particle.data["source"]).get_file()
+		check(source_scales.has(file),"armor particle uses one of the three original ANI variants")
+		if not source_scales.has(file):continue
+		check(particle.frame_scale().is_equal_approx(source_scales[file][0]),"native ANI scale starts at its first endpoint: "+file)
+		particle.seek(175.0)
+		check(particle.frame_scale().is_equal_approx(source_scales[file][1]),"native ANI interpolates both scale axes halfway through frame 0: "+file)
+		particle.seek(0.0)
 	if not sparks.is_empty():
 		var spark = sparks[0]
 		check(spark.facing==1 and spark.follow==-1 and spark.clock_ms==0.0,

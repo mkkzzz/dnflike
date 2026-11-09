@@ -141,6 +141,21 @@ func run() -> void:
 	check(is_equal_approx(fx.frame_color().a,0.4),"disabled interpolation preserves frame color")
 	fx.seek(1500)
 	check(is_zero_approx(fx.frame_color().a),"zero-duration terminal frame retains transparent endpoint")
+	# Native ANI LOOP controls the successor of the last frame. A view can
+	# replay a non-looping bank without interpolating across that boundary.
+	smoke.frames[0].items["7"]=[1.0,2.0]
+	smoke.frames[1]["delay_ms"]=500
+	smoke.frames[1].items["7"]=[3.0,1.0]
+	smoke.frames[1].items["10"]=1
+	smoke["duration_ms"]=2000
+	fx.loop=true
+	fx.seek(1750)
+	check(fx.frame_scale().is_equal_approx(Vector2(3.0,1.0)),"non-looping source keeps its final scale on a replaying view")
+	smoke["loop"]=true
+	fx.seek(1750)
+	check(fx.frame_scale().is_equal_approx(Vector2(2.0,1.5)),"looping source interpolates from its last frame to its first")
+	fx.seek(2000)
+	check(fx.frame_scale().is_equal_approx(Vector2(1.0,2.0)),"wrapped view reaches the first scale endpoint")
 	fx.queue_free()
 	game.queue_free()
 	await process_frame
