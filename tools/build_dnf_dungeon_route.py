@@ -17,14 +17,15 @@ import os
 import sys
 from collections import deque
 from pathlib import Path
-from check_dnf_walk import visible_down_gate
+from check_dnf_walk import visible_down_gate, visible_entry_point
 from export_dnf_map import CELL_H, CELL_W, dungeon_placement, parse_greed
 
 ROOT = Path(__file__).resolve().parent.parent
 GAME = ROOT / 'game_dnf'
 DUNGEONS = GAME / 'data/dungeons.json'
 MOVE = {'left': (-1, 0), 'right': (1, 0), 'up': (0, -1), 'down': (0, 1)}
-QUEST_MAZES = {'draconiantower': 4307, 'hallofdoll': 4308}
+QUEST_MAZES = {'draconiantower': 4307, 'hallofdoll': 4308, 'palaceofload': 4312}
+DIFFICULTIES = ['normal', 'adventure', 'expert', 'king']
 
 # 待入表的副本清单：id, 导出目录（相对 game_dnf），中文名, region, monster_level
 PENDING = [
@@ -158,13 +159,15 @@ def source_quest_maze(dungeon: dict, quest_id: int) -> dict:
     for span in dungeon['raw'] + [{'tag': '[maze info]', 'values': []}]:
         tag = span['tag']
         if tag == '[maze info]':
-            if section.get('[quest connection]') == [0, quest_id, 2]:
+            connection = section.get('[quest connection]', [])
+            if (len(connection) == 3 and connection[:2] == [0, quest_id]
+                    and type(connection[2]) is int and 0 <= connection[2] < len(DIFFICULTIES)):
                 matches.append(section)
             section = {}
         elif not tag.startswith('[/'):
             section.setdefault(tag, []).extend(token[2] for token in span['values'])
     if len(matches) != 1:
-        raise ValueError(f'Expected exactly one Hard quest maze for QST{quest_id}')
+        raise ValueError(f'Expected exactly one quest maze for QST{quest_id}')
     return matches[0]
 
 
@@ -179,7 +182,7 @@ def compile_quest_maze(dungeon: dict, quest_id: int, name: str) -> tuple[dict, d
     map_ids = {room['map_id']: path for path, room in maps.items()}
     fixed = {}
     for tag in ('[map specification]', '[boss map specification]'):
-        values = source[tag]
+        values = source.get(tag, [])
         if len(values) % 3:
             raise ValueError(f'Invalid {tag} for QST{quest_id}')
         for x, y, map_id in zip(values[::3], values[1::3], values[2::3]):
@@ -192,12 +195,15 @@ def compile_quest_maze(dungeon: dict, quest_id: int, name: str) -> tuple[dict, d
             if fixed[pos] not in matches:
                 raise ValueError(f'QST{quest_id} fixed MAP has mismatched door code: {fixed[pos]}')
             matches = [fixed[pos]]
+        elif pos == boss:
+            matches = [path for path in matches if has_source_boss(maps[path])]
         elif pos != start:
             matches = [path for path in matches if not maps[path]['start_area'] and not has_source_boss(maps[path])]
         cell['map_candidates'] = matches
     starts = source_start_maps(cells[start], maps)
-    if len(starts) != 1 or boss not in fixed or not has_source_boss(maps[fixed[boss]]):
-        raise ValueError(f'QST{quest_id} needs a unique source start and fixed boss MAP')
+    bosses = cells[boss]['map_candidates']
+    if len(starts) != 1 or len(bosses) != 1 or not has_source_boss(maps[bosses[0]]):
+        raise ValueError(f'QST{quest_id} needs a unique source start and boss MAP')
     entry = maps[starts[0]]
     ai_character = [token[2] for span in entry['raw'] if span['tag'] == '[ai character]' for token in span['values']]
     if len(ai_character) != 8 or any(type(value) is not int for value in ai_character[:4]) or ai_character[4:6] != ['[character]', '[normal]']:
@@ -214,6 +220,9 @@ def compile_quest_maze(dungeon: dict, quest_id: int, name: str) -> tuple[dict, d
         preferred = [path for path in candidates if Path(path).stem.startswith(f'({x},{y})')]
         room = maps[(preferred or candidates)[0]]
         placement = dungeon_placement(room, cell, dungeon['pathgate_slots'], {boss}, f'quest{quest_id}_')
+        if quest_id == 4312 and (x, y) == start:
+            placement['spawn_override'] = list(visible_entry_point(room, CELL_W, CELL_H))
+            placement['spawn_adaptation'] = 'E-ADAPT: 原出生区域落在固定 HUD 下方，选最近的可见原通行格'
         visible = visible_down_gate(room, placement, CELL_W, CELL_H)
         if visible:
             gate = next(g for g in placement['gates'] if g['direction'] == 'down')
@@ -228,10 +237,13 @@ def compile_quest_maze(dungeon: dict, quest_id: int, name: str) -> tuple[dict, d
             'size': source['[size]'], 'greed_raw': source['[greed]'][0],
             'start_cell': list(start), 'boss_cell': list(boss),
             'map_specification_raw': source['[map specification]'],
-            'boss_map_specification_raw': source['[boss map specification]'],
+            'boss_map_specification_raw': source.get('[boss map specification]', []),
             'cells': list(cells.values()), 'evidence': 'E-PARSE 专用迷宫与指定地图；E-ADAPT 最短通路，同坐标优先后取稳定候选'}
-    route = {'difficulty': 'expert', 'companion_id': companion['source_id'],
-             'source_map_id': maps[fixed[boss]]['map_id'], 'rooms': rooms}
+    difficulty = source['[quest connection]'][2]
+    # QST4312's original condition explicitly permits Medium and higher.
+    modes = DIFFICULTIES[difficulty:] if quest_id == 4312 else [DIFFICULTIES[difficulty]]
+    route = {'difficulty': modes, 'companion_id': companion['source_id'],
+             'source_map_id': maps[bosses[0]]['map_id'], 'rooms': rooms}
     return maze, route, placements, companion
 
 

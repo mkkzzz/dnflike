@@ -1,14 +1,28 @@
 extends RefCounted
 ## Item identity is separate from weapon family (simulation/sound/skill rules).
 const PATH := "res://assets_local/weapon_appearance_v2/manifest.json"
+const POSE_OVERLAY := "res://assets_local/weapon_appearance_v3/manifest.json"
 static var _data: Dictionary = {}
 static var _layers: Dictionary = {}
 
 static func data() -> Dictionary:
 	if _data.is_empty():
 		var value=JSON.parse_string(FileAccess.get_file_as_string(PATH))
-		if value is Dictionary and value.get("schema")=="dnf_weapon_appearance/1":_data=value
+		if value is Dictionary and value.get("schema")=="dnf_weapon_appearance/1":
+			_data=value
+			_apply_pose_overlay()
 	return _data
+
+static func _apply_pose_overlay() -> void:
+	var overlay = JSON.parse_string(FileAccess.get_file_as_string(POSE_OVERLAY))
+	if not overlay is Dictionary or overlay.get("schema")!="dnf_weapon_pose_overlay/1":return
+	if overlay.get("base_manifest_sha256")!=FileAccess.get_sha256(PATH):return
+	if not overlay.get("bindings") is Dictionary or not overlay.get("animations") is Dictionary:return
+	var bindings: Dictionary = overlay["bindings"]
+	_data["animations"].merge(overlay["animations"],false)
+	for appearance: Dictionary in _data["appearances"].values():
+		for layer: Dictionary in appearance["layers"]:
+			layer["clips"].merge(bindings.get(layer["clips"]["stay"],{}),false)
 
 static func identity(item: String) -> String:
 	return String(data().get("legacy_aliases",{}).get(item,item))

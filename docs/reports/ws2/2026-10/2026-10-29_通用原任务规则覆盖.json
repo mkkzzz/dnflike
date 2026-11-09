@@ -3,13 +3,13 @@
  "summary": {
   "indexed_quests": 2824,
   "existing": 64,
-  "new_executable": 68,
-  "total_executable": 132,
+  "new_executable": 71,
+  "total_executable": 135,
   "objective_parsed": 2359,
   "new_lifecycles": {
-   "once": 68
+   "once": 71
   },
-  "blocked": 2692
+  "blocked": 2689
  },
  "campaign": {
   "id": "campaign_1_16",
@@ -226,13 +226,13 @@
   ]
  },
  "source_inputs": {
-  "game_dnf/data/quests.json": "3fe85110f884cad46ec67f068d0bcd2c46a297e98dc263242e229aae414c984e",
+  "game_dnf/data/quests.json": "9e1a31fbe824553beec3c3fd56dec23ad66d376f804fa18643b6978268b616ed",
   "game_dnf/data/native_runtime.json": "5d188709d45b658d74d0058563e82da509bf9a0e34b2a3c6cbb8dc4217b749bc",
   "game_dnf/data/runtime_items.json": "e0e3ce46d6b39aae805808a1bce7110c55aa9265606ce7f671534543690ae2ae",
   "game_dnf/data/monster_catalog.json": "bc0689f1d377e47a66d439fdc2a99d998bc14d32fdfb7d38ce3276a090c7563c",
   "game_dnf/data/combat.json": "cba7ae4b96d0bc2b49a74037d0cb112d87e324262f8ce8ac76bda107caea8d23",
-  "game_dnf/data/dungeons.json": "cc2ac42c14e7db8483e830803264d29e0f061bf2c3ef170b8fb63ecccb5f915a",
-  "game_dnf/data/towns.json": "a9e8b5eba1dd97cdd3e12f7fe1eee2ba2010971f905f7ae2d8e7af4f37508f64",
+  "game_dnf/data/dungeons.json": "db5411ed5d9a0078d30f1035873e607cca63b13fdb2b8c04dc5fd3dba6ad1327",
+  "game_dnf/data/towns.json": "185f3158f066ebd0067c95725ef5dab9abbfe9b14c9f0340af0787f1a63128fe",
   "game_dnf/data/campaign_1_16.json": "976058418137f7de23e97d0d0c70d58201e4386b6751ea737bb361a151ced221",
   "game_dnf/assets_local/native_data_v1/manifest.json": "7828c4203fabb534006b8b178ed24251242f144ab7bb69e572f6420a0cd08f15",
   "game_dnf/assets_local/native_maps/lorien/map_export.json": "47688ac4e4a56968173148b850e4a97b098ed8541d7e8cf5359af0efd4bce94d",
@@ -246,7 +246,7 @@
   "game_dnf/assets_local/flow_v1/skytower_v1/draconiantower/map_export.json": "424109ff35274cd7388cee83c5edc9b8e6d082eae21f93ef741dfcdeaabdabac",
   "game_dnf/assets_local/flow_v1/skytower_v1/golemtower/map_export.json": "ca4b6b709cd2f3f00802e7fb7c9c461457681de521b23272f524cc2d0acff2ca",
   "game_dnf/assets_local/flow_v1/skytower_v1/floatingcastle/map_export.json": "f72f96a1653f8d9a7cf829b692e5789196a51f46d2867327fdf443f3c97eac94",
-  "game_dnf/assets_local/flow_v1/skytower_v1/palaceofload/map_export.json": "b547872ae96f6ce817a481c374fda56d8575b31081d5547397e9118e003dbe62",
+  "game_dnf/assets_local/flow_v1/skytower_v1/palaceofload/map_export.json": "d9233a21ebc318cdd79c1137c254f0a82bacf91ff6bc0f066858b66217c3ef68",
   "game_dnf/assets_local/flow_v1/skytower_v1/darkentrance/map_export.json": "7703813f87aadf862ca9657798d0697fb402f309ecaf892d6a2c5ffa55904193",
   "game_dnf/assets_local/flow_v1/skytower_v1/hallofdoll/map_export.json": "90252284ca917a064046b17fd9f2466a4a540a1cd01d67e3744e1314962f31af",
   "game_dnf/assets_local/flow_v1/skytower_v1/draconiantower_amonlow/map_export.json": "1507e7592703a47fff6a28d3d8a7e7bc583db3d313881bbc7cda5523d90fcc12",
@@ -317,11 +317,11 @@
   "['[condition under clear]'] / [15]": 7
  },
  "blocked_reasons": {
-  "npc_not_in_town": 2181,
-  "prerequisite_not_executable": 1819,
+  "npc_not_in_town": 2149,
+  "prerequisite_not_executable": 1818,
   "quest_grade:[urgent]": 1114,
   "field:[enemy reward item]": 285,
-  "target_npc_not_in_town": 197,
+  "target_npc_not_in_town": 189,
   "field:[job change quest]": 184,
   "field:[substitutive names]": 178,
   "missing_chinese_text": 178,
@@ -473,7 +473,6 @@
   "monster_unavailable:61109": 7,
   "monster_unavailable:61194": 7,
   "reward_item_unavailable:original_1138": 7,
-  "clear_map_extra_condition_unavailable": 7,
   "objective:[condition under clear]:sub=8:width=3": 7,
   "objective:[condition under clear]:sub=9:width=3": 7,
   "objective:[condition under clear]:sub=15:width=4": 7,
@@ -505,6 +504,7 @@
   "monster_unavailable:61605": 6,
   "monster_unavailable:63021": 6,
   "monster_unavailable:61266": 6,
+  "clear_map_extra_condition_unavailable": 6,
   "monster_unavailable:56112": 6,
   "monster_unavailable:56113": 6,
   "monster_unavailable:56115": 6,
@@ -1100,7 +1100,6 @@
   "reward_item_unavailable:original_7921": 1,
   "reward_item_unavailable:original_7922": 1,
   "reward_item_unavailable:original_7923": 1,
-  "clear_map_unavailable:2408": 1,
   "monster_unavailable:61147": 1,
   "monster_unavailable:61495": 1,
   "clear_map_unavailable:4421": 1,
@@ -1459,6 +1458,7 @@
   "reward_item_unavailable:original_690000190": 1,
   "reward_item_unavailable:original_690000191": 1,
   "reward_item_unavailable:original_690000276": 1,
+  "quest_entry_dungeon_unavailable:1506": 1,
   "monster_unavailable:56142": 1,
   "monster_unavailable:56143": 1,
   "monster_unavailable:56144": 1,
@@ -1529,7 +1529,6 @@
    ],
    "objective_plan": [],
    "reasons": [
-    "npc_not_in_town",
     "objective:[condition under clear]:sub=7:width=3",
     "reward_item_unavailable:original_26603",
     "prerequisite_not_executable"
@@ -7490,8 +7489,7 @@
     }
    ],
    "reasons": [
-    "field:[expertjob level]",
-    "npc_not_in_town"
+    "field:[expertjob level]"
    ],
    "state": "blocked"
   },
@@ -7521,8 +7519,7 @@
     }
    ],
    "reasons": [
-    "field:[expertjob level]",
-    "npc_not_in_town"
+    "field:[expertjob level]"
    ],
    "state": "blocked"
   },
@@ -8491,8 +8488,7 @@
     }
    ],
    "reasons": [
-    "field:[expertjob level]",
-    "npc_not_in_town"
+    "field:[expertjob level]"
    ],
    "state": "blocked"
   },
@@ -23582,7 +23578,6 @@
    "objective_plan": [],
    "reasons": [
     "field:[exception quest]",
-    "npc_not_in_town",
     "reward_grammar:Malformed fixed reward",
     "seeking_quantity",
     "prerequisite_not_executable"
@@ -23618,7 +23613,6 @@
    "objective_plan": [],
    "reasons": [
     "field:[exception quest]",
-    "npc_not_in_town",
     "reward_grammar:Malformed fixed reward",
     "seeking_quantity",
     "prerequisite_not_executable"
@@ -24554,8 +24548,7 @@
     "dungeon_unavailable:83",
     "field:[exception quest]",
     "monster_unavailable:61458",
-    "monster_unavailable:61804",
-    "npc_not_in_town"
+    "monster_unavailable:61804"
    ],
    "state": "blocked"
   },
@@ -24592,7 +24585,6 @@
     "dungeon_unavailable:86",
     "field:[exception quest]",
     "monster_unavailable:61192",
-    "npc_not_in_town",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -24624,7 +24616,6 @@
    ],
    "reasons": [
     "field:[exception quest]",
-    "npc_not_in_town",
     "reward_item_unavailable:original_440197",
     "prerequisite_not_executable"
    ],
@@ -24657,7 +24648,6 @@
    ],
    "reasons": [
     "field:[exception quest]",
-    "npc_not_in_town",
     "reward_item_unavailable:original_450040",
     "prerequisite_not_executable"
    ],
@@ -60838,9 +60828,7 @@
     }
    ],
    "reasons": [
-    "field:[collision quest]",
-    "npc_not_in_town",
-    "target_npc_not_in_town"
+    "field:[collision quest]"
    ],
    "state": "blocked"
   },
@@ -60872,8 +60860,7 @@
    ],
    "reasons": [
     "custom_callback_unverified",
-    "field:[collision quest]",
-    "npc_not_in_town"
+    "field:[collision quest]"
    ],
    "state": "blocked"
   },
@@ -64176,7 +64163,6 @@
    "reasons": [
     "field:[collision quest]",
     "field:[job change quest]",
-    "npc_not_in_town",
     "reward_grammar:Malformed fixed reward"
    ],
    "state": "blocked"
@@ -67964,7 +67950,6 @@
    ],
    "reasons": [
     "field:[enemy reward item]",
-    "npc_not_in_town",
     "reward_item_unavailable:original_20125",
     "prerequisite_not_executable"
    ],
@@ -68237,8 +68222,7 @@
     }
    ],
    "reasons": [
-    "npc_not_in_town",
-    "target_npc_not_in_town"
+    "npc_not_in_town"
    ],
    "state": "blocked"
   },
@@ -68571,7 +68555,6 @@
     }
    ],
    "reasons": [
-    "npc_not_in_town",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -68602,7 +68585,6 @@
     }
    ],
    "reasons": [
-    "npc_not_in_town",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -70241,7 +70223,6 @@
     "field:[collision quest]",
     "field:[grow number]",
     "field:[job change quest]",
-    "npc_not_in_town",
     "reward_grammar:Malformed fixed reward"
    ],
    "state": "blocked"
@@ -70277,7 +70258,6 @@
     "field:[collision quest]",
     "field:[grow number]",
     "field:[job change quest]",
-    "npc_not_in_town",
     "reward_grammar:Malformed fixed reward"
    ],
    "state": "blocked"
@@ -74745,11 +74725,8 @@
      "amount": 1
     }
    ],
-   "reasons": [
-    "clear_map_extra_condition_unavailable",
-    "clear_map_unavailable:2408"
-   ],
-   "state": "blocked"
+   "reasons": [],
+   "state": "admitted"
   },
   {
    "id": 4313,
@@ -74775,12 +74752,8 @@
      "amount": 1
     }
    ],
-   "reasons": [
-    "npc_not_in_town",
-    "target_npc_not_in_town",
-    "prerequisite_not_executable"
-   ],
-   "state": "blocked"
+   "reasons": [],
+   "state": "admitted"
   },
   {
    "id": 4314,
@@ -74947,8 +74920,6 @@
     }
    ],
    "reasons": [
-    "npc_not_in_town",
-    "target_npc_not_in_town",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -75033,11 +75004,8 @@
      "amount": 1
     }
    ],
-   "reasons": [
-    "npc_not_in_town",
-    "target_npc_not_in_town"
-   ],
-   "state": "blocked"
+   "reasons": [],
+   "state": "admitted"
   },
   {
    "id": 4324,
@@ -75134,7 +75102,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:25",
-    "npc_not_in_town",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -75168,7 +75135,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:26",
-    "npc_not_in_town",
     "repeated_field:[dialog]",
     "prerequisite_not_executable"
    ],
@@ -75199,8 +75165,6 @@
     }
    ],
    "reasons": [
-    "npc_not_in_town",
-    "target_npc_not_in_town",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -77871,13 +77835,11 @@
    ],
    "reasons": [
     "field:[job change quest]",
-    "npc_not_in_town",
     "reward_item_unavailable:original_27997",
     "reward_item_unavailable:original_29996",
     "reward_item_unavailable:original_31695",
     "reward_item_unavailable:original_33962",
-    "reward_item_unavailable:original_35058",
-    "target_npc_not_in_town"
+    "reward_item_unavailable:original_35058"
    ],
    "state": "blocked"
   },
@@ -78341,7 +78303,6 @@
     "field:[exception quest]",
     "field:[quest point]",
     "npc_not_in_town",
-    "target_npc_not_in_town",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -85527,8 +85488,7 @@
    "reasons": [
     "field:[exception quest]",
     "field:[quest point]",
-    "monster_unavailable:61165",
-    "npc_not_in_town"
+    "monster_unavailable:61165"
    ],
    "state": "blocked"
   },
@@ -85561,7 +85521,6 @@
     "field:[enemy reward item]",
     "field:[exception quest]",
     "field:[quest point]",
-    "npc_not_in_town",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -85698,8 +85657,7 @@
    ],
    "reasons": [
     "field:[exception quest]",
-    "field:[quest point]",
-    "npc_not_in_town"
+    "field:[quest point]"
    ],
    "state": "blocked"
   },
@@ -85932,7 +85890,6 @@
    ],
    "reasons": [
     "field:[enemy reward item]",
-    "npc_not_in_town",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -88630,7 +88587,6 @@
    ],
    "reasons": [
     "clear_map_unavailable:6514",
-    "npc_not_in_town",
     "repeated_field:[dialog]",
     "reward_item_unavailable:original_7776",
     "prerequisite_not_executable"
@@ -88810,7 +88766,6 @@
    "reasons": [
     "character_target_unsupported",
     "clear_map_unavailable:6514",
-    "npc_not_in_town",
     "repeated_field:[dialog]",
     "reward_item_unavailable:original_7776",
     "prerequisite_not_executable"
@@ -103954,7 +103909,7 @@
     }
    ],
    "reasons": [
-    "npc_not_in_town"
+    "quest_entry_dungeon_unavailable:1506"
    ],
    "state": "blocked"
   },

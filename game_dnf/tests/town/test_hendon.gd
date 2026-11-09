@@ -170,11 +170,11 @@ func run() -> void:
 
 func westcoast_errand() -> void:
 	var quest := "original.quest.298"
-	var prior := "original.quest.7"
-	var entry: Dictionary=game.session.quests.new_entry(game.session.quests.catalog.definitions[prior])
-	entry["state"]="completed"
-	game.session.profile["quest_state"]["entries"][prior]=entry
-	game.session.profile["quest_state"]["transactions"][game.session.Quests.transaction_id(prior)]=true
+	for prior in ["original.quest.7","original.quest.20"]:
+		var entry: Dictionary=game.session.quests.new_entry(game.session.quests.catalog.definitions[prior])
+		entry["state"]="completed"
+		game.session.profile["quest_state"]["entries"][prior]=entry
+		game.session.profile["quest_state"]["transactions"][game.session.Quests.transaction_id(prior)]=true
 	game.session.profile["level"]=25
 	await walk_to(Vector2(32,260))
 	await cross("elven_to_city","hendon_city")
@@ -192,6 +192,16 @@ func westcoast_errand() -> void:
 	await walk_to(Vector2(2450,320))
 	await cross("westcoast_to_westcoast_magic","westcoast_magic")
 	check(game.town.map_loaders["westcoast_magic"].errors.is_empty(),"Sharan's room resolves the shared textures with its own manifest")
+	await walk_to(Vector2(1500,260))
+	await walk_to(Vector2(630,240))
+	await talk("sharan")
+	await task("original.quest.4321","接受委托",0)
+	await walk_to(Vector2(1059,240))
+	await talk("iris")
+	portrait=game.modal.find_child("iris_dialogue_illustration",true,false)
+	check(is_instance_valid(portrait) and portrait.texture.get_size()==Vector2(64,130),"Iris dialogue shows the original NPC big face")
+	await task("original.quest.4321","领取报酬",1)
+	check(game.session.quests.status(game.session.profile,"original.quest.4321")=="completed","Sharan's original 4321 completes through E dialogue with Iris")
 	await walk_to(Vector2(1500,260))
 	await walk_to(Vector2(1500,320))
 	await cross("westcoast_magic_exit","westcoast")

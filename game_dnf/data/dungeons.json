@@ -403,7 +403,9 @@
    },
    "quest_routes": {
     "original.quest.4307": {
-     "difficulty": "expert",
+     "difficulty": [
+      "expert"
+     ],
      "companion_id": 201,
      "source_map_id": 1619,
      "rooms": [
@@ -612,6 +614,50 @@
     "path": "",
     "sha256": "",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+   },
+   "quest_routes": {
+    "original.quest.4312": {
+     "difficulty": [
+      "adventure",
+      "expert",
+      "king"
+     ],
+     "companion_id": 202,
+     "source_map_id": 2408,
+     "rooms": [
+      {
+       "name": "城主宫殿",
+       "placement": "1_5:quest4312_gsd(1,5)",
+       "next": "up"
+      },
+      {
+       "name": "城主宫殿",
+       "placement": "1_4:quest4312_(1,4)h2412",
+       "next": "up"
+      },
+      {
+       "name": "城主宫殿",
+       "placement": "1_3:quest4312_(1,3)g2411",
+       "next": "up"
+      },
+      {
+       "name": "城主宫殿",
+       "placement": "1_2:quest4312_(1,2)de2410",
+       "next": "up"
+      },
+      {
+       "name": "城主宫殿",
+       "placement": "1_1:quest4312_(1,1)dr2409",
+       "next": "up"
+      },
+      {
+       "name": "城主宫殿",
+       "placement": "1_0:quest4312_(1,0)b2408",
+       "next": "",
+       "boss": true
+      }
+     ]
+    }
    }
   },
   "darkentrance": {
@@ -713,7 +759,9 @@
    },
    "quest_routes": {
     "original.quest.4308": {
-     "difficulty": "expert",
+     "difficulty": [
+      "expert"
+     ],
      "companion_id": 202,
      "source_map_id": 1820,
      "rooms": [

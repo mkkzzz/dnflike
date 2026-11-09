@@ -105,7 +105,7 @@ func validate_definition(q: Dictionary) -> void:
 			if not config["dungeons"].has(o.get("dungeon","")) or not o.get("cell") is Array or o["cell"].size()!=2 or not whole(o["cell"][0],0,9999) or not whole(o["cell"][1],0,9999):
 				errors.append("任务地图目标无效："+id)
 			if o.has("quest_maze") or o.has("companion_id"):
-				if o.get("quest_maze")!=id or not whole(o.get("source_map_id"),1,1000000000) or not whole(o.get("companion_id"),1,1000000000) or o.get("difficulty")!=["expert"]:
+				if o.get("quest_maze")!=id or not whole(o.get("source_map_id"),1,1000000000) or not whole(o.get("companion_id"),1,1000000000) or not o.has("difficulty"):
 					errors.append("任务陪战条件无效："+id)
 	var grants=q.get("grant_items",{})
 	if not grants is Dictionary:errors.append("任务发放物品无效："+id)

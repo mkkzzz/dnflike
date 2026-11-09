@@ -235,6 +235,17 @@ def visible_down_gate(room: dict, placement: dict, cell_w: float, cell_h: float)
     return nearest_walkable_gate_point(room, source, 'down', cell_w, cell_h, visible)
 
 
+def visible_entry_point(room: dict, cell_w: float, cell_h: float) -> tuple[float, float]:
+    x, y, width, height = room['start_area']
+    center = (x + width / 2, y + height / 2)
+    cells = {(col, row) for row, values in enumerate(room['walk_grid'])
+             for col, value in enumerate(values) if value == 0}
+    main = max(grid_blocks(cells), key=len)
+    visible = [((col + 0.5) * cell_w, (row + 0.5) * cell_h) for col, row in main
+               if (row + 0.5) * cell_h + MAP_DY < HUD_TOP]
+    return min(visible, key=lambda p: (math.dist(p, center), p[1], p[0]))
+
+
 def check_dungeon_routes(game: Path) -> list[str]:
     fails: list[str] = []
     route_doc = json.loads((game / 'data/dungeons.json').read_text(encoding='utf-8'))

@@ -149,6 +149,8 @@
    "standalonewaveready": "character/swordman/animation/standalonewaveready.ani",
    "standalonewavestrong": "character/swordman/animation/standalonewavestrong.ani",
    "summon2": "character/swordman/animation/summon2.ani",
+   "throw1": "character/swordman/animation/throw1.ani",
+   "throw2": "character/swordman/animation/throw2.ani",
    "tripleslash1": "character/swordman/animation/tripleslash1.ani",
    "tripleslash2": "character/swordman/animation/tripleslash2.ani",
    "tripleslash3": "character/swordman/animation/tripleslash3.ani",
@@ -922,22 +924,23 @@
   },
   "bremen": {
    "fidelity_pending": [
-    "cast_frame",
     "area_membership_filters",
     "area_draw_order",
     "voice",
     "status_level_resistance_formula"
    ],
    "name": "侵蚀之普戾蒙",
+   "native_charge_ani": "throw1",
+   "native_state": "ghost_cast",
    "skill": "skill/swordman/bremen.skl",
    "stages": [
     {
-     "ani": "summon2",
+     "ani": "throw2",
      "atk": "",
      "fx": [],
      "hits": [
       {
-       "at": 420,
+       "at": 0,
        "native_controller": {
         "appear_fx": [
          "skillfx_bremenareaappear1_558ce479",
@@ -2871,21 +2874,22 @@
   },
   "khazan": {
    "fidelity_pending": [
-    "cast_frame",
     "area_membership_filters",
     "area_draw_order",
     "voice"
    ],
    "name": "刀魂之卡赞",
+   "native_charge_ani": "throw1",
+   "native_state": "ghost_cast",
    "skill": "skill/swordman/khazan.skl",
    "stages": [
     {
-     "ani": "summon2",
+     "ani": "throw2",
      "atk": "",
      "fx": [],
      "hits": [
       {
-       "at": 320,
+       "at": 0,
        "native_controller": {
         "appear_fx": [
          "skillfx_khazanareaappear1_5ef16f6c",

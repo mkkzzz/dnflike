@@ -853,6 +853,15 @@ def extend_skill_banks(library: Path | None, output: Path, specs: list) -> dict:
         manifest = json.loads((output/'manifest.json').read_text(encoding='utf8'))
         additions, unresolved = [], []
         for section, key, path in specs:
+            if section == 'player_clips':
+                clip = src.animation(path)
+                if not clip.get('frames'):
+                    raise ValueError('Missing player clip: '+path)
+                if key in manifest[section] and manifest[section][key] != clip:
+                    raise ValueError('Existing player clip differs: '+key)
+                manifest[section][key] = clip
+                additions.append(path)
+                continue
             if section == 'audio':
                 audio = {}
                 copy_audio(src, [path], audio, key, unresolved)
@@ -913,7 +922,14 @@ def main() -> int:
                         help='Add the Khazan ghost and area banks, preserving existing assets')
     parser.add_argument('--extend-bremen', action='store_true',
                         help='Add the Bremen ghost and area banks, preserving existing assets')
+    parser.add_argument('--extend-ghost-cast-clips', action='store_true',
+                        help='Add original ghost cast clip metadata to the existing player atlases')
     args = parser.parse_args()
+    if args.extend_ghost_cast_clips:
+        motions = json.loads(SKILL_RUNTIME.read_text(encoding='utf8'))['assets']['player_anims']
+        specs = [('player_clips', key, motions[key]) for key in ('throw1', 'throw2')]
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
     if args.extend_khazan or args.extend_bremen:
         print(json.dumps(extend_ghost_field(args.library, 'bremen' if args.extend_bremen else 'khazan')))
         return 0

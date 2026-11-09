@@ -16,7 +16,7 @@ AUDIT=ROOT/'docs/reports/ws2/2026-10/2026-10-29_通用原任务规则覆盖.json
 STATUS=DATA/'native_quest_status_v2.json.gz'
 CAMPAIGN=DATA/'campaign_1_16.json'
 CATALOG=DATA/'quest_catalog.json'
-SUPPORTED_ESCORT_QUESTS = frozenset({4307, 4308})
+SUPPORTED_ESCORT_QUESTS = frozenset({4307, 4308, 4312})
 
 def load(path):return json.loads(path.read_text(encoding='utf-8'))
 def compressed(path):return json.loads(gzip.decompress(path.read_bytes()))

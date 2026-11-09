@@ -618,6 +618,7 @@
   "westcoast_magic": {
    "placement": "westcoast_magic",
    "declared": [
+    "iris",
     "sharan"
    ],
    "npcs": [
@@ -653,6 +654,39 @@
       ]
      },
      "field_animation": "npc/animation/npc_sr.ani"
+    },
+    {
+     "id": "iris",
+     "local_id": "iris",
+     "anchor": [
+      1059,
+      210,
+      0
+     ],
+     "layer": "normal",
+     "implemented": true,
+     "field_wav": [
+      "R_NPC_IRIS_AMB_LOOP"
+     ],
+     "popup_wav": [
+      "R_NPC_IRIS_TALK",
+      "R_NPC_IRIS_FAREWELL"
+     ],
+     "faces": {
+      "small": [
+       "Map/Npc/NpcFace02.img",
+       42
+      ],
+      "big": [
+       "Map/Npc/NpcFace02.img",
+       41
+      ],
+      "popup": [
+       "Map/Npc/NpcFace02.img",
+       43
+      ]
+     },
+     "field_animation": "npc/animation/npc_ir.ani"
     }
    ]
   }

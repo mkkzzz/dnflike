@@ -1,5 +1,5 @@
 extends SceneTree
-## Actual action -> effect API integration. Native cast onset/animation is not certified.
+## Actual action -> effect API integration and the source ghost cast boundaries.
 const Numbers = preload("res://stats/api/numbers.gd")
 const Actor = preload("res://stats/api/actor_numbers.gd")
 const Session = preload("res://flow/session.gd")
@@ -48,11 +48,54 @@ func run() -> void:
 		check(not game.start_action("magicalattackup"),"cooldown still rejects a repeat cast")
 		game.numeric_player.step(20000)
 		check(game.numeric_player.values==before and not game.numeric_player.effects.active.has("magical_memory"),"real combat numeric actor returns to base after source duration")
+	check_ghost_casts(game,session)
 	check_khazan(game,session)
 	game.queue_free()
 	await process_frame
 	print("[SKILL_EFFECTS] COMPLETE checks=",checks," failures=",failures)
 	quit(0 if failures==0 else 1)
+
+func check_ghost_casts(game, session) -> void:
+	for sample: Array in [["khazan",150,250],["bremen",200,300]]:
+		var name := String(sample[0])
+		for rates: Array in [[1000,1000],[1001,1001],[1600,1600],[1600,1250]]:
+			game.restart()
+			game.numeric_player = Actor.new()
+			game.numeric_player.configure(session.stats())
+			game.numeric_player.values["cast_speed"] = float(rates[0])/1000.0
+			game.skill_levels = {name:1}
+			game.table.configure_skills(game.skill_levels,"swordman","katana")
+			game.player["mp"] = game.numeric_player.values["mp_max"]
+			var release_ms := int(float(sample[1])*1000.0/float(rates[0]))
+			var recovery_ms := int(sample[2])
+			var label := "%s %d/%d" % [name,rates[0],rates[1]]
+			check(game.start_action(name),label+" starts the source cast")
+			check(game.player_ani()==["throw1",0.0] and game.objects.is_empty(),label+" starts in Throw1 with no field")
+			game.step_action(release_ms-1,Vector2.ZERO)
+			var before: Array = game.player_ani()
+			check(before[0]=="throw1" and is_equal_approx(float(before[1]),float(release_ms-1)*float(rates[0])/1000.0) and game.objects.is_empty(),label+" uses the cast-rate Throw1 clock until one ms before release")
+			game.view.present(game.view_snapshot(),0,0)
+			check(game.view.player_actor.pose=="throw1" and not game.view.player_actor.sample().is_empty() and not game.player_damage_boxes().is_empty(),label+" the view and damage boxes consume Throw1")
+			game.numeric_player.values["cast_speed"] = float(rates[1])/1000.0
+			game.step_action(1,Vector2.ZERO)
+			check(game.player_ani()==["throw2",0.0] and game.objects.size()==1,label+" switches to Throw2 and creates exactly one field at release")
+			game.view.present(game.view_snapshot(),0,0)
+			check(game.view.player_actor.pose=="throw2" and not game.view.player_actor.sample().is_empty() and not game.player_damage_boxes().is_empty(),label+" the view and damage boxes consume Throw2")
+			game.step_action(recovery_ms-1,Vector2.ZERO)
+			check(game.player_ani()==["throw2",float(recovery_ms-1)] and game.objects.size()==1,label+" keeps the native base-rate release pose and fixed recovery")
+			game.step_action(1,Vector2.ZERO)
+			check(game.player["state"]=="idle" and game.objects.size()==1,label+" recovers at the exact boundary without generating another field")
+			check(not game.start_action(name),label+" still enforces cooldown after recovery")
+		game.restart()
+		game.numeric_player = Actor.new()
+		game.numeric_player.configure(session.stats())
+		game.player["mp"] = game.numeric_player.values["mp_max"]
+		game.player["invuln_ms"] = 0.0
+		check(game.start_action(name),name+" starts the interrupt fixture")
+		game.step_action(1,Vector2.ZERO)
+		game.damage_player(10,Vector2(game.player["pos"])+Vector2(20,0))
+		game.step_player(600,Vector2.ZERO)
+		check(game.player["action"]=="" and game.player["native_phase"].is_empty() and game.objects.is_empty(),name+" a hit during charge prevents the field")
 
 func check_khazan(game, session) -> void:
 	game.restart()

@@ -4,6 +4,7 @@ const Inventory=preload("res://items/inventory.gd")
 const Drops=preload("res://quests/drops.gd")
 const Native=preload("res://content/api/native_catalog.gd")
 const CombatSession=preload("res://combat/api/combat_session.gd")
+const Frame=preload("res://view/world_frame.gd")
 var checks:=0
 var failures:=0
 
@@ -140,7 +141,8 @@ func light_lord_chain() -> void:
 	check(session.quest_command("quest.claim", {"id":delivery}, sharan).ok
 		and Inventory.stock(session.profile, "original_3107") == 0, "Sharan receives the memory crystal")
 
-func escort_maze(dungeon: String, quest: String, companion: int, maps: Array, boss: String) -> void:
+func escort_maze(dungeon: String, quest: String, companion: int, maps: Array, boss: String,
+		modes: Array, giver: String, reward: int) -> void:
 	var session := Session.new()
 	session.profile.level = 18
 	for required: String in session.dungeons[dungeon].get("requires", []):
@@ -153,13 +155,16 @@ func escort_maze(dungeon: String, quest: String, companion: int, maps: Array, bo
 	session.command("flow.return")
 	for required: String in session.quests.catalog.definitions[quest].requires:
 		completed(session, required)
-	check(session.quest_command("quest.accept", {"id":quest}, {"npc":"gsd","nearby":true}).ok, "G.S.D. offers the original escort quest after its prerequisites")
-	session.command("flow.difficulty", {"id":"adventure"})
-	check(session.command("flow.depart", selection).ok and not session.run.has("quest_maze"), "the active escort quest still uses the ordinary Adventure route")
-	session.finish_run(false, {})
-	session.command("flow.return")
-	session.command("flow.difficulty", {"id":"expert"})
-	check(session.command("flow.depart", {"dungeon":dungeon}).ok and session.run.get("quest_maze")==quest, "Hard departure binds the active original quest maze")
+	session.profile.level = int(session.quests.catalog.definitions[quest].min_level)
+	check(session.quest_command("quest.accept", {"id":quest}, {"npc":giver,"nearby":true}).ok, "the source NPC offers the escort quest after its prerequisites")
+	for mode in ["normal","adventure","expert","king"]:
+		session.command("flow.difficulty", {"id":mode})
+		check(session.command("flow.depart", selection).ok and session.run.has("quest_maze")==modes.has(mode),
+			"departure honors the original escort difficulty gate: "+mode)
+		session.finish_run(false, {})
+		session.command("flow.return")
+	session.command("flow.difficulty", {"id":modes[0]})
+	check(session.command("flow.depart", {"dungeon":dungeon}).ok and session.run.get("quest_maze")==quest, "an eligible departure binds the active original quest maze")
 	var route := session.active_dungeon_route()
 	var combat := CombatSession.new()
 	var battle = combat.mount(root)
@@ -176,17 +181,34 @@ func escort_maze(dungeon: String, quest: String, companion: int, maps: Array, bo
 		return
 	check(battle.room_map.companions.size()==1 and int(battle.room_map.companions[0].source_id)==companion,
 		"the first room exposes the original friendly APC placement")
+	if dungeon=="palaceofload":
+		var player_pos: Vector2=battle.player.pos
+		var ally_pos: Vector2=battle.companion_views()[0].pos
+		check(battle.room_map.start_area.map(func(value):return int(value))==[871,379,165,50] and ally_pos==Vector2(954,300),
+			"Palace keeps the raw entrance area and original G.S.D. spawn")
+		check(player_pos==Vector2(952,306) and battle.walkable(player_pos) and battle.walkable(ally_pos)
+			and player_pos.y+Frame.MAP_DY<Frame.HUD_TOP and ally_pos.y+Frame.MAP_DY<Frame.HUD_TOP
+			and battle.door_point(route.rooms[0].next)==Vector2(944,190),
+			"Palace fixed HUD leaves both actors visible on the original floor and the source gate reachable")
 	for index in maps.size():
 		check(battle.room_index==index and int(battle.room_map.map_id)==maps[index], "quest gate reaches source MAP%d" % maps[index])
+		var walk_from_palace_entry := dungeon=="palaceofload" and index==0
 		if index==maps.size()-1:
 			check(battle.monsters.any(func(enemy):return enemy.chief and enemy.mob==boss), "the dedicated final MAP loads the original boss")
 		else:
-			battle.player.pos=battle.door_point(route.rooms[index].next)
+			if not walk_from_palace_entry:battle.player.pos=battle.door_point(route.rooms[index].next)
 			battle.door_lock_ms=0.0
 		for enemy: Dictionary in battle.monsters:
 			enemy.hp=0.0
 			enemy.death_ms=1000.0
-		battle._physics_process(1.0/60.0)
+		if walk_from_palace_entry:
+			combat.submit_key(KEY_UP,true)
+			for tick in range(120):
+				battle._physics_process(1.0/60.0)
+				if battle.room_index==1:break
+			combat.submit_key(KEY_UP,false)
+			check(battle.room_index==1,"the Palace player can walk from the visible entrance to the original gate")
+		else:battle._physics_process(1.0/60.0)
 	check(battle.map_loader.errors.is_empty() and session.state=="result" and session.result.victory, "quest maps render and the final room settles the battle")
 	check(session.QuestConditions.escort_survived(final_event,int(maps[-1]),companion),
 		"the combat settlement reports the exact final MAP and a living source APC")
@@ -195,8 +217,13 @@ func escort_maze(dungeon: String, quest: String, companion: int, maps: Array, bo
 	session.command("flow.return")
 	var gold: int = session.profile.gold
 	check(session.quest_command("quest.claim", {"id":quest}, {"npc":"gsd","nearby":true}).ok
-		and int(session.profile.gold)==gold+5000,"the actual escort route pays the original reward at G.S.D.")
+		and int(session.profile.gold)==gold+reward,"the actual escort route pays the original reward at G.S.D.")
 	if quest=="original.quest.4308":escort_followups(session)
+	if quest=="original.quest.4312":
+		var next := {"id":"original.quest.4313"}
+		check(session.quest_command("quest.accept",next,{"npc":"gsd","nearby":true}).ok,"G.S.D. sends the player to Iris after the Palace escort")
+		session.npc_met("iris")
+		check(session.quest_command("quest.claim",next,{"npc":"iris","nearby":true}).ok,"visiting Iris completes original quest 4313")
 
 func escort_followups(session: Session) -> void:
 	var kiri := {"npc":"kiri","nearby":true}
@@ -355,9 +382,11 @@ func run() -> void:
 	light_lord_chain()
 	escort_completion_guards()
 	escort_maze("draconiantower", "original.quest.4307", 201,
-		[1618,1602,1620,1603,1609,1610,1604,1619], "monster/draconian/lakius.mob")
+		[1618,1602,1620,1603,1609,1610,1604,1619], "monster/draconian/lakius.mob", ["expert"], "gsd", 5000)
 	escort_maze("hallofdoll", "original.quest.4308", 202,
-		[1819,1821,1805,1811,1812,1813,1808,1803,1802,1820], "monster/dollmaster/masterdogri.mob")
+		[1819,1821,1805,1811,1812,1813,1808,1803,1802,1820], "monster/dollmaster/masterdogri.mob", ["expert"], "gsd", 5000)
+	escort_maze("palaceofload", "original.quest.4312", 202,
+		[2421,2412,2411,2410,2409,2408], "monster/lordoflight/lordoflight.mob", ["adventure","expert","king"], "kiri", 100)
 
 	print("[CAMPAIGN] COMPLETE checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)

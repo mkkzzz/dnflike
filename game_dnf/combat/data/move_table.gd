@@ -254,6 +254,10 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["native_state"] = "wave_cast"
 		move["native_recovery_ms"] = float(skill["static"][int(spec["native_recovery_col"])])
 		move["native_move"] = {"speed":0.0,"accel":0.0}
+	if spec.get("native_state","") == "ghost_cast":
+		move["native_state"] = "ghost_cast"
+		move["native_charge_ani"] = String(spec["native_charge_ani"])
+		move["native_recovery_ms"] = float(skill["static"][0])
 	if spec.has("stages"):
 		move["stages"] = []
 		for stage: Dictionary in spec["stages"]:move["stages"].append(_build_stage(stage,skill))

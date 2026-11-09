@@ -3,7 +3,7 @@
  "evidence": "原版 .qst 结构化字段 E-PARSE；总账保留名称/描述字符串引用，完整简体正文见 native_data_v1，启用名称取运行定义",
  "summary": {
   "total": 3716,
-  "implemented": 132,
+  "implemented": 136,
   "failed": 0,
   "pending_name_refs": 1383,
   "groups": {
@@ -36492,9 +36492,9 @@
     1
    ],
    "name_ref": "",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.9925",
+   "local_name": "[古代地下城] 重领赫尔德的庇佑"
   },
   {
    "path": "n_quest/northmyre/leshphon/scroll_67_leshphon.qst",
@@ -82090,9 +82090,9 @@
     100
    ],
    "name_ref": "string:332333",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4312",
+   "local_name": "和赛格哈特对决"
   },
   {
    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_sky_gsd_9.qst",
@@ -82112,9 +82112,9 @@
     100
    ],
    "name_ref": "string:332338",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4313",
+   "local_name": "答案在使徒身上"
   },
   {
    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_1.qst",
@@ -82243,9 +82243,9 @@
     100
    ],
    "name_ref": "string:332363",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4321",
+   "local_name": "占卜师艾丽丝"
   },
   {
    "path": "n_quest/westcost/palaceofload/niutouxiewangjidi_a.qst",

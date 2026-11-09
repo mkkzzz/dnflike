@@ -38,6 +38,7 @@ NPCS = {
     10: ('lorian', '罗莉安'),
     11: ('kagon', '卡坤'),
     12: ('sharan', '莎兰'),
+    28: ('iris', '艾丽丝'),
 }
 
 
@@ -115,7 +116,7 @@ def main() -> int:
                     continue
                 npc_key, name = NPCS[row[0]]
                 resident, animation, portrait = export_town_npc(
-                    lib, npc_listing, row, npc_key, name, native_portrait=npc_key == 'kagon')
+                    lib, npc_listing, row, npc_key, name, native_portrait=npc_key in ('kagon', 'iris'))
                 room.setdefault('animations', []).append(animation)
                 residents.append(resident)
                 if portrait:

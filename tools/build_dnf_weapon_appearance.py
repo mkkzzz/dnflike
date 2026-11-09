@@ -103,19 +103,22 @@ def check(output):
     return data
 
 
-def extend_poses(src, output, base, poses):
+def extend_poses(src, output, base, poses, overlay=False):
     """New immutable metadata revision; unchanged native PNGs remain in the base pack."""
     data=check(base)
-    data['dependencies']={**data.get('dependencies',{}),
-        'res://assets_local/'+base.name+'/manifest.json':sha((base/'manifest.json').read_bytes())}
-    data['files']={}
-    remap={};appearances={}
-    for old,skin in data['appearances'].items():
+    base_sha=sha((base/'manifest.json').read_bytes())
+    bindings, animations = {}, {}
+    for skin in data['appearances'].values():
         for layer in skin['layers']:
-            folder=PurePosixPath(layer['clips']['stay']).parent
+            stay=layer['clips']['stay']
+            folder=PurePosixPath(stay).parent
             bank=data['banks'][layer['bank']]
             for pose in poses:
+                if overlay and pose in layer['clips']:
+                    raise ValueError('Pose overlay cannot replace an existing clip: '+pose)
                 path=str(folder/(pose+'.ani'));ani=src.animation(path)
+                if not ani['frames']:
+                    raise ValueError('Missing original weapon pose: '+path)
                 for frame in ani['frames']:
                     if frame.get('img'):
                         image=bind_image(frame['img'],skin['variation'])
@@ -131,9 +134,25 @@ def extend_poses(src, output, base, poses):
                     blend=frame.get('items',{}).get('11')
                     if blend and (blend.get('type')!=5 or len(blend.get('color',[]))!=3):
                         raise ValueError('Unsupported weapon blend: '+path)
-                data['animations'][path]={'frames':ani['frames'],'duration_ms':ani['duration_ms'],'source_ani':path,'sha256':src.sources[path],'sync_body_frame':True}
-                data['source_animations'][path]=src.sources[path]
-                layer['clips'][pose]=path
+                animations[path]={'frames':ani['frames'],'duration_ms':ani['duration_ms'],
+                                  'source_ani':path,'sha256':src.sources[path]}
+                if not overlay:
+                    animations[path]['sync_body_frame']=True
+                bindings.setdefault(stay,{})[pose]=path
+    if overlay:
+        write(output/'manifest.json',{'schema':'dnf_weapon_pose_overlay/1',
+              'base_manifest_sha256':base_sha,'bindings':bindings,'animations':animations})
+        print('WEAPON POSE OVERLAY VERIFIED',len(bindings),'layers',len(animations),'source ANIs')
+        return
+    data['dependencies']={**data.get('dependencies',{}),
+        'res://assets_local/'+base.name+'/manifest.json':base_sha}
+    data['files']={}
+    data['animations'].update(animations)
+    data['source_animations'].update({path:ani['sha256'] for path,ani in animations.items()})
+    remap={};appearances={}
+    for old,skin in data['appearances'].items():
+        for layer in skin['layers']:
+            layer['clips'].update(bindings[layer['clips']['stay']])
         new=sha(json.dumps(skin['layers'],sort_keys=True,separators=(',',':')).encode())[:20]
         remap[old]=new;appearances[new]=skin
     data['appearances']=appearances
@@ -150,17 +169,19 @@ def main():
     parser.add_argument('--check',action='store_true')
     parser.add_argument('--extend-from',type=Path,help='Verified existing appearance pack; reuse immutable PNGs')
     parser.add_argument('--pose',action='append',default=[],help='Explicit source ANI pose to append to an existing pack')
+    parser.add_argument('--pose-overlay',action='store_true',help='Write only the new poses and the pinned base manifest SHA')
     args=parser.parse_args()
     if not re.fullmatch(r'weapon_appearance_v\d+',args.version):raise ValueError('Expected immutable weapon_appearance_vN')
     output=ROOT/'game_dnf/assets_local'/args.version
     if args.check:check(output);return
+    if args.pose_overlay and not args.extend_from:parser.error('--pose-overlay requires --extend-from')
     if output.exists() and any(output.iterdir()):raise ValueError('Immutable appearance version already exists')
     output.mkdir(parents=True,exist_ok=True)
     src=Source(args.library)
     if args.extend_from:
         try:
             if not args.pose or any(not re.fullmatch(r'[a-z0-9_]+',pose) for pose in args.pose):raise ValueError('Explicit source poses required')
-            extend_poses(src,output,args.extend_from,args.pose)
+            extend_poses(src,output,args.extend_from,args.pose,args.pose_overlay)
         finally:src.lib.close();src.cat.close()
         return
     ram=sqlite3.connect(':memory:');src.cat.backup(ram);src.cat.close();ram.row_factory=sqlite3.Row

@@ -1,13 +1,13 @@
 {
  "schema": "dnf_native_quest_rules/2",
  "source_inputs": {
-  "game_dnf/data/quests.json": "3fe85110f884cad46ec67f068d0bcd2c46a297e98dc263242e229aae414c984e",
+  "game_dnf/data/quests.json": "9e1a31fbe824553beec3c3fd56dec23ad66d376f804fa18643b6978268b616ed",
   "game_dnf/data/native_runtime.json": "5d188709d45b658d74d0058563e82da509bf9a0e34b2a3c6cbb8dc4217b749bc",
   "game_dnf/data/runtime_items.json": "e0e3ce46d6b39aae805808a1bce7110c55aa9265606ce7f671534543690ae2ae",
   "game_dnf/data/monster_catalog.json": "bc0689f1d377e47a66d439fdc2a99d998bc14d32fdfb7d38ce3276a090c7563c",
   "game_dnf/data/combat.json": "cba7ae4b96d0bc2b49a74037d0cb112d87e324262f8ce8ac76bda107caea8d23",
-  "game_dnf/data/dungeons.json": "cc2ac42c14e7db8483e830803264d29e0f061bf2c3ef170b8fb63ecccb5f915a",
-  "game_dnf/data/towns.json": "a9e8b5eba1dd97cdd3e12f7fe1eee2ba2010971f905f7ae2d8e7af4f37508f64",
+  "game_dnf/data/dungeons.json": "db5411ed5d9a0078d30f1035873e607cca63b13fdb2b8c04dc5fd3dba6ad1327",
+  "game_dnf/data/towns.json": "185f3158f066ebd0067c95725ef5dab9abbfe9b14c9f0340af0787f1a63128fe",
   "game_dnf/data/campaign_1_16.json": "976058418137f7de23e97d0d0c70d58201e4386b6751ea737bb361a151ced221",
   "game_dnf/assets_local/native_data_v1/manifest.json": "7828c4203fabb534006b8b178ed24251242f144ab7bb69e572f6420a0cd08f15",
   "game_dnf/assets_local/native_maps/lorien/map_export.json": "47688ac4e4a56968173148b850e4a97b098ed8541d7e8cf5359af0efd4bce94d",
@@ -21,7 +21,7 @@
   "game_dnf/assets_local/flow_v1/skytower_v1/draconiantower/map_export.json": "424109ff35274cd7388cee83c5edc9b8e6d082eae21f93ef741dfcdeaabdabac",
   "game_dnf/assets_local/flow_v1/skytower_v1/golemtower/map_export.json": "ca4b6b709cd2f3f00802e7fb7c9c461457681de521b23272f524cc2d0acff2ca",
   "game_dnf/assets_local/flow_v1/skytower_v1/floatingcastle/map_export.json": "f72f96a1653f8d9a7cf829b692e5789196a51f46d2867327fdf443f3c97eac94",
-  "game_dnf/assets_local/flow_v1/skytower_v1/palaceofload/map_export.json": "b547872ae96f6ce817a481c374fda56d8575b31081d5547397e9118e003dbe62",
+  "game_dnf/assets_local/flow_v1/skytower_v1/palaceofload/map_export.json": "d9233a21ebc318cdd79c1137c254f0a82bacf91ff6bc0f066858b66217c3ef68",
   "game_dnf/assets_local/flow_v1/skytower_v1/darkentrance/map_export.json": "7703813f87aadf862ca9657798d0697fb402f309ecaf892d6a2c5ffa55904193",
   "game_dnf/assets_local/flow_v1/skytower_v1/hallofdoll/map_export.json": "90252284ca917a064046b17fd9f2466a4a540a1cd01d67e3744e1314962f31af",
   "game_dnf/assets_local/flow_v1/skytower_v1/draconiantower_amonlow/map_export.json": "1507e7592703a47fff6a28d3d8a7e7bc583db3d313881bbc7cda5523d90fcc12",
@@ -4464,6 +4464,77 @@
    "source_metadata": {}
   },
   {
+   "id": "original.quest.4312",
+   "source": {
+    "id": 4312,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_sky_gsd_8.qst",
+    "sha256": "06ea0373a4950f85267f8a619b037f275625e8ac230c9dc0fe25b6db47b715bc",
+    "raw_type": [
+     "[clear map]"
+    ],
+    "raw_int_data": [
+     2408,
+     202
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "和赛格哈特对决",
+   "description": "与G.S.D一起通过天空之城的城主宫殿，然后向G.S.D回复，要求地下城难度为中等难度(Medium)以上。(此任务只能独自进行，若通过时G.S.D没有生存下来，则无法完成任务)",
+   "dialogue": {
+    "accept": "好，你说的那个地方肯定就是赛格哈特居住的城主宫殿了！ 你带上G.S.D一起去吧， 你先走， 我马上告诉G.S.D。",
+    "complete": "谢谢， 虽然没有找到全部答案。 不过多亏你的帮忙， 我已经了解大概内容了。"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 25,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4311"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kiri",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_map",
+     "amount": 1,
+     "target": "palaceofload:1_0",
+     "dungeon": "palaceofload",
+     "cell": [
+      1,
+      0
+     ],
+     "source_map_id": 2408,
+     "quest_maze": "original.quest.4312",
+     "companion_id": 202,
+     "difficulty": [
+      "adventure",
+      "expert",
+      "king"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": false,
+   "source_metadata": {}
+  },
+  {
    "id": "original.quest.126",
    "source": {
     "id": 126,
@@ -4577,6 +4648,67 @@
    "enabled": true,
    "abandonable": true,
    "source_metadata": {}
+  },
+  {
+   "id": "original.quest.4313",
+   "source": {
+    "id": 4313,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_sky_gsd_9.qst",
+    "sha256": "f0af0ce75846893ff337efbee6ae49ee2d6dbc02925dbf885854f0a172a00f44",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     28
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "答案在使徒身上",
+   "description": "拜访吟游诗人艾丽丝。(在西海岸的莎兰的左侧)",
+   "dialogue": {
+    "accept": "果然， 那个叫光之城主的家伙和我的鬼手产生了强烈的共鸣。 巴卡尔和他制造的生命体以及鬼手之间会有什么关联呢？\n看来得借助占卜师的力量， 才能找到答案了。\n年轻人， 辛苦了！ 如果你在冒险时发现我要找的线索， 记得告诉我啊。",
+    "complete": "充满疑问的人啊……你的脚步声那么沉重……是什么让你的心如此混乱？\n啊……鬼手与巴卡尔？ 那分明是和「使徒」有关。\n巴卡尔曾经被列为魔界的使徒， 后来因为对权力的贪欲被魔界的其他使徒驱逐了……\n如果你能找到使徒， 一切就会真相大白……"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 25,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4312"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "iris",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "iris"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[relation quest]": [
+     2
+    ]
+   }
   },
   {
    "id": "original.quest.16",
@@ -5220,6 +5352,67 @@
    "grant_items": {
     "original_3107": 1
    }
+  },
+  {
+   "id": "original.quest.4321",
+   "source": {
+    "id": 4321,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_6.qst",
+    "sha256": "0cd866691d212d0885a090efae84500dc606e94886511c88b44c259536ae5d03",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     28
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "占卜师艾丽丝",
+   "description": "找艾丽丝谈谈。",
+   "dialogue": {
+    "accept": "这是装有赛格哈特记忆的水晶球， 让我看看。 嗯嗯……\n啊！！ 某种东西在阻止施放魔法……\n它是什么呢， 我觉得你最好还是找那边的艾丽丝看看吧。\n你放心， 她给我们暗精灵提供了很多帮助， 而且是位德高望重的占星师， 她一定会帮助你的。",
+    "complete": "你带来了邪恶的魔法气息。 嗯， 这是……某个被创造的生命体……\n你想知道什么呢？ 啊……对了， 你是为了去天界才去天空之城的吧。\n……从赛格哈特的记忆中， 我们了解到， 巴卡尔用自身特有的魔法阵困住了天界。 人们可以从天界去外面的世界， 但没有巴卡尔的允许无法回来。\n好可惜呀， 冒险家。"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 25,
+   "max_level": 99,
+   "requires": [
+    "original.quest.20"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "iris",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "iris"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[job message]": [
+     1
+    ]
+   }
   }
  ],
  "auto_quest_ids": [
@@ -5234,13 +5427,13 @@
  "coverage": {
   "indexed_quests": 2824,
   "existing": 64,
-  "new_executable": 68,
-  "total_executable": 132,
+  "new_executable": 71,
+  "total_executable": 135,
   "objective_parsed": 2359,
   "new_lifecycles": {
-   "once": 68
+   "once": 71
   },
-  "blocked": 2692
+  "blocked": 2689
  },
  "campaign": {
   "id": "campaign_1_16",
@@ -5457,5 +5650,5 @@
   ]
  },
  "status_file": "res://data/native_quest_status_v2.json.gz",
- "status_sha256": "a841d21c1f3311476ef749088b3a92a1e68c2d78f86e5fcc2c9d949ef8103c82"
+ "status_sha256": "753fdd095aaa0b2f9b802f6df1fb316f47288aded2605602b1214a21e5212ac8"
 }

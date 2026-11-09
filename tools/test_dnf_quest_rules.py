@@ -49,7 +49,7 @@ class QuestRules(unittest.TestCase):
                   '[pre required quest]': [4306], '[cant giveup]': [1], '[reward int data]': [0, 5000]}
         words = {'[name]': 'G.S.D亲自出马', '[condition message]': '陪同G.S.D通关'}
         target = {'dungeon': 'draconiantower', 'cell': [0, 2], 'quest_id': 4307, 'companion_id': 201,
-                  'difficulty': 'expert'}
+                  'difficulty': ['expert']}
         def compile_with_target():
             return compile_quest(4307, 'n_quest/example/a.qst', 'x', fields, words, {}, {}, {},
                                  dungeon_index={11: 'draconiantower'}, map_index={'1619': target})
@@ -71,6 +71,9 @@ class QuestRules(unittest.TestCase):
         target['companion_id'] = 202
         _, _, reasons = compile_with_target()
         self.assertIn('clear_map_extra_condition_unavailable', reasons)
+        target.update(companion_id=201,difficulty=[])
+        _, _, reasons = compile_with_target()
+        self.assertIn('clear_map_escort_difficulty_unavailable', reasons)
     def test_full_reproducible_audit_and_runtime(self):
         runtime,audit=build();catalog,missing=sync_catalog(runtime)
         self.assertFalse(missing);self.assertEqual(stale_outputs(runtime,audit,catalog),[]);self.assertEqual(audit,load(AUDIT))
@@ -78,6 +81,9 @@ class QuestRules(unittest.TestCase):
         admitted={r['id'] for r in audit['rows'] if r['state']=='admitted'}
         self.assertEqual(admitted,{q['source']['id'] for q in runtime['quests']})
         self.assertTrue(all(not r['reasons'] for r in audit['rows'] if r['state']=='admitted'))
+        entry = next(r for r in audit['rows'] if r['id']==9925)
+        self.assertEqual(entry['state'], 'blocked')
+        self.assertIn('quest_entry_dungeon_unavailable:1506', entry['reasons'])
         eye_quest = next(q for q in runtime['quests'] if q['source']['id'] == 4306)
         self.assertEqual(eye_quest['requires'], ['original.quest.4305'])
         self.assertEqual(eye_quest['consume'], {'original_3129': 15})

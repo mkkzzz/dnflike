@@ -238,7 +238,7 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 			run = {"id": "run_%d" % int(profile["next_run"]), "dungeon": dungeon, "difficulty":profile.get("difficulty", "normal"), "stats": stats()}
 			var quest_routes: Dictionary = dungeons[dungeon].get("quest_routes", {})
 			for quest: String in quest_routes:
-				if quest_routes[quest]["difficulty"]==run["difficulty"] and quests.status(profile, quest)=="active":
+				if run["difficulty"] in quest_routes[quest]["difficulty"] and quests.status(profile, quest)=="active":
 					run["quest_maze"]=quest
 					break
 			Consumables.initialize(run);Recovery.initialize(run)
@@ -285,7 +285,7 @@ func ingest_escort_clear(event: Dictionary) -> bool:
 	var quest: String = run.get("quest_maze", "")
 	if quest.is_empty() or not is_same(event.get("boss"),true) or not is_same(event.get("final_room"),true):return false
 	var route: Dictionary = dungeons[run["dungeon"]].get("quest_routes", {}).get(quest, {})
-	if route.is_empty() or route["difficulty"]!=run["difficulty"]:return false
+	if route.is_empty() or run["difficulty"] not in route["difficulty"]:return false
 	var final_index: int = route["rooms"].size()-1
 	if not is_same(event.get("room_index"),final_index) or event.get("room_id")!="%s:%d" % [run["dungeon"],final_index]:return false
 	var party_size: int = QuestConditions.facts(run,event.get("stats",{}))["party_size"]

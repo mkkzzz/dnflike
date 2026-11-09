@@ -47,11 +47,13 @@ RESIST = {'[' + x + ' resistance]': x + '_resist' for x in ['fire', 'water', 'li
 NPCS = {1: 'linus', 2: 'seria', 3: 'kanna', 4: 'sinda', 5: 'shusia',
         6: 'pungjin', 7: 'gsd', 8: 'danjin', 9: 'shylock', 10: 'lorian',
         11: 'kagon', 12: 'sharan', 13: 'norton', 17: 'kiri', 18: 'birken',
-        27: 'albert', 45: 'grandis',
+        27: 'albert', 28: 'iris', 45: 'grandis',
         127: 'the_last_mehmet'}
 # IDs independently present in the existing dungeon source definitions.
 DUNGEONS = {1: 'lorien', 2: 'lorien_inside', 3: 'mirkwood', 4: 'mirkwood_deep',
             5: 'sunderland', 6: 'sunderland_poison', 1000: 'sunderland_dark'}
+# dungeon/ancient/leshphon.dgn [required item] [4430, 1, 1].
+ENTRY_REWARD_ITEMS = {1506: 'original_4430'}
 QUEST_META = {'[' + x + ']' for x in 'name|grade|difficulty|gold multiple|npc index|complete npc index|job|grow type|level|pre required quest|type|sub type|int data|reward type|reward int data|reward selection int data|condition message|depend message|solve message|dialog|dungeon info|ignore quest level 4 exp|cant giveup'.split('|')}
 QUEST_METADATA = {
     '[effect after clear quest]', '[relation quest]', '[quest piece]',
@@ -368,10 +370,11 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
                     o['cell']=[int(cell[0]),int(cell[1])]
                     o['source_map_id']=int(p['map'])
                     if escort:
-                        if target.get('difficulty')!='expert':
+                        modes=target.get('difficulty',[])
+                        if not isinstance(modes,list) or not modes or any(mode not in quest_difficulty_modes(-1) for mode in modes):
                             reasons.append('clear_map_escort_difficulty_unavailable')
                         o.update(quest_maze='original.quest.%d' % number, companion_id=companion[0],
-                                 difficulty=[target.get('difficulty')])
+                                 difficulty=modes)
         else:
             dungeon = quest_dungeons.get(p['dungeon'])
             if p['dungeon']==-1 and dungeon_index is not None:
@@ -403,6 +406,11 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
             if item not in items:reasons.append('reward_item_unavailable:' + item)
         if scalar(fields, '[reward type]', '[item]') != '[item]':reasons.append('reward_type')
     except ValueError as exc:reasons.append('reward_grammar:' + str(exc))
+    dungeon_info = fields.get('[dungeon info]', [])
+    if len(dungeon_info) == 2 and type(dungeon_info[0]) is int:
+        entry_dungeon = dungeon_info[0]
+        if entry_dungeon not in quest_dungeons and ENTRY_REWARD_ITEMS.get(entry_dungeon) in reward['items']:
+            reasons.append('quest_entry_dungeon_unavailable:' + str(entry_dungeon))
     target_characters=[value for value in fields.get('[target character]',[]) if isinstance(value,str)]
     if target_characters and '[demonic swordman]' not in target_characters:
         reasons.append('character_target_unsupported')

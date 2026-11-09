@@ -120,11 +120,9 @@ CAST_OBJECTS = {
     "icewave": (OBJ_ROOT + "icewave1.obj", 360, 0.0, -1),
     "firewave": (OBJ_ROOT + "firewavebig.obj", 420, 360.0, 1800),
     "bloodblast": (OBJ_ROOT + "grabblastbloodbig.obj", 280, 0.0, 1700),
-    "khazan": (OBJ_ROOT + "khazan.obj", 320, 0.0, 25000),
     "grabblastblood": (OBJ_ROOT + "grabblastblood.obj", 320, 0.0, 1200),
     "releasewave": (OBJ_ROOT + "releasewave.obj", 260, 480.0, 1200),
     "saya": (OBJ_ROOT + "saya.obj", 420, 0.0, 25000),
-    "bremen": (OBJ_ROOT + "bremen.obj", 420, 0.0, 25000),
     "tombstonerain": (None, 480, 0.0, 2600),
     "grandwave": (OBJ_ROOT + "grandwave.obj", 420, 520.0, 1800),
     "dotarea": (None, 220, 0.0, 16000),
@@ -965,7 +963,7 @@ def build_move(
         }
     names = STAGE_NAMES.get(key, [])
     names = STAGE_ANI_OVERRIDES.get(key, names)
-    if not names and key in CAST_OBJECTS:
+    if not names and (key in CAST_OBJECTS or key in ("khazan", "bremen")):
         names = [CAST_ANIM]
     if not names:
         exact = CHR_ANI + key + ".ani"
@@ -1011,7 +1009,8 @@ def build_move(
             )
         )
     if stages and not any(stage.get("hits") for stage in stages) and key not in BUFF_SKILLS and not (
-        key in CAST_OBJECTS and CAST_OBJECTS[key][0] in SAFE_OBJECTS
+        key in ("khazan", "bremen")
+        or key in CAST_OBJECTS and CAST_OBJECTS[key][0] in SAFE_OBJECTS
         or DIRECT_OBJECTS.get(key) and DIRECT_OBJECTS[key][0] in SAFE_OBJECTS
     ):
         generic_record = records.get(GENERIC_HIT_EFFECT, {})
@@ -1087,17 +1086,21 @@ def build_move(
         )
         if not all((ghost_fx, appear_1, appear_2, stay, disappear)):
             raise ValueError(f"Incomplete original {key} animation banks")
-        area_values = records[str(skill["path"]).lower()]["decoded"]["dungeon"]["static_data"]
-        if len(area_values) != 2 or area_values[1] <= 0:
-            raise ValueError(f"Missing original {key} area radius")
-        radius = area_values[1]
+        dungeon = records[str(skill["path"]).lower()]["decoded"]["dungeon"]
+        if len(dungeon["static_data"]) != 2 or min(dungeon["static_data"]) <= 0:
+            raise ValueError(f"Missing original {key} recovery or area radius")
+        radius = dungeon["static_data"][1]
+        # CBBCE0..CBBE7E starts state 13 with SKL casting time, static[0]
+        # recovery and motion index zero. 85C750 loads CHR throw motion 1-1/1-2.
+        result["native_state"] = "ghost_cast"
+        result["native_charge_ani"] = "throw1"
         # CD6026/CD6137 -> 86DE68/86DE70: mirror the original 122 px X offset.
         # A689F0 -> 5FF9D0: static[1] supplies the aura radius and area ANI scale.
-        result["fidelity_pending"] = ["cast_frame", "area_membership_filters", "area_draw_order", "voice"]
+        result["fidelity_pending"] = ["area_membership_filters", "area_draw_order", "voice"]
         if key == "bremen":
             result["fidelity_pending"].append("status_level_resistance_formula")
-        stages[:] = [{"ani": CAST_ANIM, "atk": "", "hits": [{
-            "object": path, "at": CAST_OBJECTS[key][1], "offset": [122, 0, 0],
+        stages[:] = [{"ani": "throw2", "atk": "", "hits": [{
+            "object": path, "at": 0, "offset": [122, 0, 0],
             "percent": 0, "speed": 0,
             "native_controller": {
                 "kind": key + "_field", "duration_col": 1, "radius": radius,
@@ -1589,6 +1592,7 @@ def main() -> int:
             if value and value[0]
         }
         object_candidates.update(OBJ_ROOT + f"icewave{i}.obj" for i in range(1, 7))
+        object_candidates.update(OBJ_ROOT + key + ".obj" for key in ("khazan", "bremen"))
         object_candidates.add(OBJ_ROOT + "firewavebigsub.obj")
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(
@@ -1647,6 +1651,9 @@ def main() -> int:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects)
         if move:
             moves[runtime_id] = move
+            charge_ani = move.get("native_charge_ani")
+            if charge_ani:
+                player_anims[charge_ani] = CHR_ANI + charge_ani + ".ani"
             for stage in move.get("stages", []):
                 ani = str(stage.get("ani", ""))
                 if ani:

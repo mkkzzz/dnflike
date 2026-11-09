@@ -556,7 +556,7 @@ func action_def() -> Dictionary:
 
 func action_duration(action: String) -> float:
 	var m := move_def(action)
-	if m.get("native_state","") in ["normalwave","wave_cast"] and player.get("native_phase",{}).size()>0:
+	if String(player.get("action","")) == action and player.get("native_phase",{}).has("end_ms"):
 		return float(player["native_phase"]["end_ms"])
 	var stage := action_def() if String(player.get("action","")) == action else m
 	# Generic moves retain the ANI duration. Only an evidenced state controller
@@ -565,7 +565,14 @@ func action_duration(action: String) -> float:
 
 func action_ani_clock(elapsed: float) -> float:
 	var phase: Dictionary = player.get("native_phase",{})
+	if phase.has("charge_rate"):
+		var release_at := float(phase["wait_ms"])
+		return elapsed*float(phase["charge_rate"]) if elapsed < release_at else elapsed-release_at
 	return Kernel.NativeWave.ani_clock(phase,elapsed) if not phase.is_empty() else elapsed
+
+func action_event_clock(elapsed: float) -> float:
+	var phase: Dictionary = player.get("native_phase",{})
+	return elapsed-float(phase["wait_ms"]) if phase.has("charge_rate") else action_ani_clock(elapsed)
 
 func buffering(code: int) -> void:
 	if code in [KEY_C,KEY_SPACE] and held.get(KEY_DOWN,false) and backstep_allowed():player["queued_backstep"] = true
@@ -819,7 +826,7 @@ func step_action(ms: float, move: Vector2) -> void:
 	var native_phase: Dictionary = player.get("native_phase",{})
 	if not native_phase.is_empty():clock = old_clock+ms
 	player["clock"] = clock
-	if not native_phase.is_empty():
+	if not native_phase.is_empty() and not native_phase.has("charge_rate"):
 		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
 	if m.has("dash"):
@@ -836,8 +843,10 @@ func step_action(ms: float, move: Vector2) -> void:
 		var air_speed := float(player.get("air_move_speed",rules["player"]["walk_speed"]))
 		if air_speed <= 0.0:air_speed = float(rules["player"]["walk_speed"])
 		move_player(Vector2(move.x*air_speed,move.y*air_speed*float(rules["units"]["depth_speed_ratio"]))*ms/1000.0)
-	action_cues(stage,action_ani_clock(old_clock),action_ani_clock(clock))
-	apply_player_hits(stage,action_ani_clock(old_clock),action_ani_clock(clock))
+	var old_event_clock := action_event_clock(old_clock)
+	var event_clock := action_event_clock(clock)
+	action_cues(stage,old_event_clock,event_clock)
+	apply_player_hits(stage,old_event_clock,event_clock)
 	var duration := action_duration(name)
 	var cancel_at := float(stage.get("cancel_at",duration))
 	if not native_phase.is_empty():cancel_at = duration
@@ -1036,6 +1045,13 @@ func start_stage(index: int) -> void:
 		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
 		var cast_rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 		player["native_phase"] = Kernel.NativeWave.plan(m,attack_rate,cast_rate)
+	elif m.get("native_state","") == "ghost_cast":
+		var cast_rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
+		var cast_speed := maxi(1,roundi(cast_rate*1000.0))
+		var release_at := int(float(m["cast_ms"])*1000.0/cast_speed)
+		# Phase 1 sets mode 0 at 8591E3. The 1000 rate then preserves static[0].
+		player["native_phase"] = {"wait_ms":release_at,"charge_rate":cast_speed/1000.0,
+			"end_ms":release_at+float(m["native_recovery_ms"])}
 	# Multi-stage slides may turn round between stages (each slash picks its own side).
 	if m.has("stages"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
@@ -1047,8 +1063,9 @@ func start_stage(index: int) -> void:
 	if swing >= 0:
 		var wav: Array = table.weapon_wav(weapon)
 		if swing < wav.size() and String(wav[swing]) != "":play_sound(String(wav[swing]))
-	action_cues(stage,-1.0,action_ani_clock(0.0))
-	apply_player_hits(stage,-1.0,action_ani_clock(0.0))
+	var event_clock := action_event_clock(0.0)
+	action_cues(stage,-1.0,event_clock)
+	apply_player_hits(stage,-1.0,event_clock)
 
 func apply_skill_effect(skill_id: String, effect_id: String) -> void:
 	if numeric_player != null:
@@ -1448,6 +1465,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 	if not guarded and not (numeric_player.effects.flag("super_armor") if numeric_player != null else float(player["buff_ms"])>0):
 		end_action_fx()
 		player["action"] = ""
+		player["native_phase"] = {}
 		player["queued_combo"] = false
 		player["queued_skill"] = ""
 		reaction = Kernel.Reaction.apply(player,atk,facing,rules["reaction"],float(numeric_player.values["hit_recovery"]) if numeric_player != null else float(table.player["hit_recovery"]))
@@ -1954,6 +1972,8 @@ func load_room(index: int, from_side: String) -> void:
 	var spawn := Vector2(room_width-160,250)
 	var area = room_map.get("start_area")
 	if area is Array and area.size() == 4:spawn = Vector2(float(area[0])+float(area[2])/2,float(area[1])+float(area[3])/2)
+	var visible_entry = placement.get("spawn_override")
+	if visible_entry is Array and visible_entry.size() == 2:spawn = Vector2(float(visible_entry[0]),float(visible_entry[1]))
 	if OPPOSITE.has(from_side):
 		var side: String = OPPOSITE[from_side]
 		spawn = door_point(side)+{"left":Vector2(48,0),"right":Vector2(-48,0),"up":Vector2(0,36),"down":Vector2(0,-36)}[side]
@@ -2239,8 +2259,13 @@ func player_ani() -> Array:
 	var state: String = player["state"]
 	var rp: Dictionary = rules["reaction"]
 	if state=="action":
-		if String(move_def(String(player["action"])).get("effect_id","")) != "":return [String(move_def(String(player["action"]))["ani"]),float(player["clock"])]
-		return [String(action_def()["ani"]),action_ani_clock(float(player["clock"]))]
+		var m := move_def(String(player["action"]))
+		var elapsed := float(player["clock"])
+		if String(m.get("effect_id","")) != "":return [String(m["ani"]),elapsed]
+		var phase: Dictionary = player.get("native_phase",{})
+		if phase.has("charge_rate") and elapsed < float(phase["wait_ms"]):
+			return [String(m["native_charge_ani"]),action_ani_clock(elapsed)]
+		return [String(action_def()["ani"]),action_ani_clock(elapsed)]
 	if state=="dead":return ["down",float(table.player_timeline("down")[2]["start_ms"]) if table.player_timeline("down").size()>2 else 0.0]
 	if state=="hurt":return [String(player["hit_motion"]),0.0]
 	if state=="air":return ["overturn",0.0]

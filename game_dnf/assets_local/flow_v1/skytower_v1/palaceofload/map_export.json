@@ -221355,7 +221355,27 @@
      "[type]"
     ],
     "map_id": 2421,
-    "role_hint": "normal"
+    "role_hint": "normal",
+    "companions": [
+     {
+      "source_id": 202,
+      "anchor": [
+       954,
+       300,
+       0
+      ],
+      "raw": [
+       202,
+       954,
+       300,
+       0,
+       "[character]",
+       "[normal]",
+       0,
+       0
+      ]
+     }
+    ]
    }
   },
   "placements": [
@@ -227010,9 +227030,681 @@
       ]
      }
     ]
+   },
+   {
+    "id": "1_5:quest4312_gsd(1,5)",
+    "cell": [
+     1,
+     5
+    ],
+    "map": "map/palaceofload/gsd(1,5).map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "normal",
+      "object": "5660",
+      "anchor": [
+       15,
+       292,
+       0
+      ],
+      "target_cell": [
+       0,
+       5
+      ]
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "5663",
+      "anchor": [
+       1739,
+       281,
+       0
+      ],
+      "target_cell": [
+       2,
+       5
+      ]
+     },
+     {
+      "direction": "up",
+      "kind": "normal",
+      "object": "5666",
+      "anchor": [
+       944,
+       190,
+       0
+      ],
+      "target_cell": [
+       1,
+       4
+      ]
+     }
+    ],
+    "spawn_override": [
+     952.0,
+     306.0
+    ],
+    "spawn_adaptation": "E-ADAPT: 原出生区域落在固定 HUD 下方，选最近的可见原通行格",
+    "quest_maze": "original.quest.4312"
+   },
+   {
+    "id": "1_4:quest4312_(1,4)h2412",
+    "cell": [
+     1,
+     4
+    ],
+    "map": "map/palaceofload/(1,4)h2412.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "wall",
+      "object": "5662",
+      "anchor": [
+       12,
+       676,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "right",
+      "kind": "wall",
+      "object": "5665",
+      "anchor": [
+       975,
+       872,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "up",
+      "kind": "normal",
+      "object": "5666",
+      "anchor": [
+       979,
+       192,
+       0
+      ],
+      "target_cell": [
+       1,
+       3
+      ]
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "5668",
+      "anchor": [
+       121,
+       344,
+       0
+      ],
+      "target_cell": [
+       1,
+       5
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4312"
+   },
+   {
+    "id": "1_3:quest4312_(1,3)g2411",
+    "cell": [
+     1,
+     3
+    ],
+    "map": "map/palaceofload/(1,3)g2411.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "wall",
+      "object": "5662",
+      "anchor": [
+       12,
+       298,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "right",
+      "kind": "wall",
+      "object": "5665",
+      "anchor": [
+       1972,
+       255,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "up",
+      "kind": "normal",
+      "object": "5666",
+      "anchor": [
+       1300,
+       207,
+       0
+      ],
+      "target_cell": [
+       1,
+       2
+      ]
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "5668",
+      "anchor": [
+       796,
+       347,
+       0
+      ],
+      "target_cell": [
+       1,
+       4
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4312"
+   },
+   {
+    "id": "1_2:quest4312_(1,2)de2410",
+    "cell": [
+     1,
+     2
+    ],
+    "map": "map/palaceofload/(1,2)de2410.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "normal",
+      "object": "5660",
+      "anchor": [
+       21,
+       289,
+       0
+      ],
+      "target_cell": [
+       0,
+       2
+      ]
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "5663",
+      "anchor": [
+       1776,
+       247,
+       0
+      ],
+      "target_cell": [
+       2,
+       2
+      ]
+     },
+     {
+      "direction": "up",
+      "kind": "normal",
+      "object": "5666",
+      "anchor": [
+       970,
+       194,
+       0
+      ],
+      "target_cell": [
+       1,
+       1
+      ]
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "5668",
+      "anchor": [
+       518,
+       344,
+       0
+      ],
+      "target_cell": [
+       1,
+       3
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4312"
+   },
+   {
+    "id": "1_1:quest4312_(1,1)dr2409",
+    "cell": [
+     1,
+     1
+    ],
+    "map": "map/palaceofload/(1,1)dr2409.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "wall",
+      "object": "5662",
+      "anchor": [
+       6,
+       649,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "right",
+      "kind": "wall",
+      "object": "5665",
+      "anchor": [
+       816,
+       656,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "up",
+      "kind": "boss",
+      "object": "5667",
+      "anchor": [
+       768,
+       192,
+       0
+      ],
+      "target_cell": [
+       1,
+       0
+      ]
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "5668",
+      "anchor": [
+       442,
+       346,
+       0
+      ],
+      "target_cell": [
+       1,
+       2
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4312"
+   },
+   {
+    "id": "1_0:quest4312_(1,0)b2408",
+    "cell": [
+     1,
+     0
+    ],
+    "map": "map/palaceofload/(1,0)b2408.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "normal",
+      "object": "5660",
+      "anchor": [
+       20,
+       290,
+       0
+      ],
+      "target_cell": [
+       0,
+       0
+      ]
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "5663",
+      "anchor": [
+       1979,
+       252,
+       0
+      ],
+      "target_cell": [
+       2,
+       0
+      ]
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "5668",
+      "anchor": [
+       1732,
+       345,
+       0
+      ],
+      "target_cell": [
+       1,
+       1
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4312"
    }
   ],
-  "cell_map_rule": "E-INFER: a map is a candidate when its [dungeon] lists this dungeon and its [greed] contains the cell letter"
+  "cell_map_rule": "E-INFER: a map is a candidate when its [dungeon] lists this dungeon and its [greed] contains the cell letter",
+  "quest_mazes": {
+   "original.quest.4312": {
+    "source_id": 4312,
+    "quest_connection_raw": [
+     0,
+     4312,
+     1
+    ],
+    "size": [
+     3,
+     6
+    ],
+    "greed_raw": "JJNNMM\r\n KKKKKK\r\n LLPPOO\r\n KKKKKK\r\n KKKKKK\r\n DDHHGG",
+    "start_cell": [
+     1,
+     5
+    ],
+    "boss_cell": [
+     1,
+     0
+    ],
+    "map_specification_raw": [
+     0,
+     0,
+     2401,
+     2,
+     0,
+     2414,
+     0,
+     1,
+     2402,
+     1,
+     1,
+     2409,
+     2,
+     1,
+     2415,
+     0,
+     2,
+     2403,
+     1,
+     2,
+     2410,
+     2,
+     2,
+     2416,
+     0,
+     3,
+     2404,
+     1,
+     3,
+     2411,
+     2,
+     3,
+     2417,
+     0,
+     4,
+     2405,
+     1,
+     4,
+     2412,
+     2,
+     4,
+     2418
+    ],
+    "boss_map_specification_raw": [],
+    "cells": [
+     {
+      "x": 0,
+      "y": 0,
+      "code": "JJ",
+      "mask": 9,
+      "doors": [
+       "right",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(0,0)p2401.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 0,
+      "code": "NN",
+      "mask": 13,
+      "doors": [
+       "left",
+       "right",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(1,0)b2408.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 0,
+      "code": "MM",
+      "mask": 12,
+      "doors": [
+       "left",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(2,0)p2414.map"
+      ]
+     },
+     {
+      "x": 0,
+      "y": 1,
+      "code": "KK",
+      "mask": 10,
+      "doors": [
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(0,1)de2402.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 1,
+      "code": "KK",
+      "mask": 10,
+      "doors": [
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(1,1)dr2409.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 1,
+      "code": "KK",
+      "mask": 10,
+      "doors": [
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(2,1)h2415.map"
+      ]
+     },
+     {
+      "x": 0,
+      "y": 2,
+      "code": "LL",
+      "mask": 11,
+      "doors": [
+       "right",
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(0,2)g2403.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 2,
+      "code": "PP",
+      "mask": 15,
+      "doors": [
+       "left",
+       "right",
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(1,2)de2410.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 2,
+      "code": "OO",
+      "mask": 14,
+      "doors": [
+       "left",
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(2,2)dr2416.map"
+      ]
+     },
+     {
+      "x": 0,
+      "y": 3,
+      "code": "KK",
+      "mask": 10,
+      "doors": [
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(0,3)h2404.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 3,
+      "code": "KK",
+      "mask": 10,
+      "doors": [
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(1,3)g2411.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 3,
+      "code": "KK",
+      "mask": 10,
+      "doors": [
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(2,3)de2417.map"
+      ]
+     },
+     {
+      "x": 0,
+      "y": 4,
+      "code": "KK",
+      "mask": 10,
+      "doors": [
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(0,4)dr2405.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 4,
+      "code": "KK",
+      "mask": 10,
+      "doors": [
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(1,4)h2412.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 4,
+      "code": "KK",
+      "mask": 10,
+      "doors": [
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(2,4)g2418.map"
+      ]
+     },
+     {
+      "x": 0,
+      "y": 5,
+      "code": "DD",
+      "mask": 3,
+      "doors": [
+       "right",
+       "up"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(0,5)d2406.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 5,
+      "code": "HH",
+      "mask": 7,
+      "doors": [
+       "left",
+       "right",
+       "up"
+      ],
+      "map_candidates": [
+       "map/palaceofload/gsd(1,5).map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 5,
+      "code": "GG",
+      "mask": 6,
+      "doors": [
+       "left",
+       "up"
+      ],
+      "map_candidates": [
+       "map/palaceofload/(2,5)d2419.map"
+      ]
+     }
+    ],
+    "evidence": "E-PARSE 专用迷宫与指定地图；E-ADAPT 最短通路，同坐标优先后取稳定候选"
+   }
+  }
  },
  "images": {
   "267a7cf47bc4_0": {

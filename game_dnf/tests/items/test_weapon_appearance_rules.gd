@@ -33,6 +33,9 @@ func run() -> void:
 			actor.present(pose,50,1,30,0.5,Color(0.5,0.8,1,0.6))
 			for layer in actor.equipment_layers:
 				check(not layer.frame.is_empty() and layer.height==30 and layer.facing==1 and is_equal_approx(layer.tint.a,0.6),"source weapon timeline and actor height/tint follow all existing poses: "+id+"/"+pose)
+		for sample: Array in [["throw1",50.0,160],["throw2",0.0,165],["throw2",450.0,173]]:
+			actor.present(sample[0],sample[1],1,0,0)
+			check(actor.equipment_layers.all(func(layer):return layer.clips.has(sample[0]) and int(layer.frame.get("img_frame",-1))==sample[2]),"ghost cast uses both native weapon layers and their ANI clock: "+id+"/"+String(sample[0]))
 		actor.present("attack1",100,-1,0,0)
 		check(actor.equipment_layers.all(func(layer):return layer.facing==-1 and layer.height==0),"both weapon layers mirror with the body: "+id)
 	check(original_weapons==Appearance.data().items.size(),"coverage is exact for all registered original weapons")
