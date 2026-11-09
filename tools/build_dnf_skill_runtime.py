@@ -1089,6 +1089,22 @@ def draw_weapon_tracks(library) -> dict:
 
 
 DRAW_WAVE_ALS = OBJ_ROOT + "animation/momentaryslash/start.ani.als"
+DRAW_EFFECT_SCRIPT = "sqr/common.nut"
+
+
+def draw_effect_slots(library) -> dict:
+    source = library.raw(DRAW_EFFECT_SCRIPT)
+    if not source or source[1] != "28b733752116ca5fee2ca0a9dbb335686e8b0c5403069d795dc691144ba2fa79":
+        raise ValueError("unverified Swordman skill effect registration")
+    swordman = source[0].split(b"function sq_LoadSkillEffect_Swordman(", 1)[1]
+    block = re.search(rb"else if \(skillIndex == SKILL_MOMENTARY_SLASH\)\s*\{([^}]+)\}", swordman)
+    if not block:
+        raise ValueError("missing Swordman Draw Sword effect registration")
+    names = re.findall(rb'obj\.sq_LoadSkillEffectAni\(skillIndex, "([^"]+)"\);', block[1])
+    if len(names) != 10 or not all(name.lower().startswith(b"effect/animation/momentaryslash/") for name in names):
+        raise ValueError("unexpected Swordman Draw Sword effect slots")
+    return {"source": DRAW_EFFECT_SCRIPT, "sha256": source[1],
+            "paths": ["character/swordman/" + name.decode("ascii").lower() for name in names[:8]]}
 
 
 def draw_wave_layer(library) -> dict:
@@ -1135,7 +1151,7 @@ def build_move(
         atk = "character/swordman/attackinfo/momentaryslash.atk"
         return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "draw",
                 "material_cost": fixed_cube_cost(skill, records),
-                "fidelity_pending": ["followup_abnormal_status", "beamsword_equipped_appearance", "wave_wall_and_final_damage", "additional_effect_dispatch",
+                "fidelity_pending": ["followup_abnormal_status", "beamsword_equipped_appearance", "wave_wall_and_final_damage", "greatsword_charge",
                                      "original_command", "weapon_durability"],
                 "stages": [{"ani": "momentaryslash", "voice": "SM_BAL_READY",
                             "hits": [{"atk": atk, "percent_col": 0, "attached_weapon": True}]}]}
@@ -1871,12 +1887,14 @@ def main() -> int:
         fixed_attack_base = dungeon_fixed_attack_base(library)
         draw_tracks = draw_weapon_tracks(library)
         draw_layer = draw_wave_layer(library)
+        draw_slashes = draw_effect_slots(library)
         SAFE_EFFECTS.clear()
         SAFE_EFFECTS.update(path for path in effect_paths if supported_animation_binding(library, path))
         SAFE_EFFECTS.update(layer["path"] for layer in bloodblast_script["layers"]
                             if safe_animation(library, layer["path"]))
         if safe_animation(library, draw_layer["path"]):
             SAFE_EFFECTS.add(draw_layer["path"])
+        SAFE_EFFECTS.update(path for path in draw_slashes["paths"] if safe_animation(library, path))
         object_candidates = {
             value[0]
             for value in CAST_OBJECTS.values()
@@ -1962,6 +1980,11 @@ def main() -> int:
                 move["fixed_attack_base"] = fixed_attack_base
             if key == "momentaryslash":
                 move["weapon_tracks"] = draw_tracks
+                slash_fx = [add_fx(fx, effects, path) for path in draw_slashes["paths"]]
+                if not all(slash_fx):
+                    raise ValueError("missing original Draw Sword slash layer")
+                move["slash_layers"] = {"source": draw_slashes["source"], "sha256": draw_slashes["sha256"],
+                                        "slots": slash_fx}
                 wave = add_object(objects, OBJ_ROOT + "momentaryslashwave.obj")
                 rear = add_fx(fx, effects, draw_layer["path"])
                 if not wave or not rear:

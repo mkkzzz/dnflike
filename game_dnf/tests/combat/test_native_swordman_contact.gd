@@ -1713,6 +1713,23 @@ func check_frenzy_toggle() -> void:
 	check(game.player["hp"]==hp and game.player["mp"]==0.0 and spent==[[3037,1]],
 		"deactivation takes no HP, MP, or additional cube")
 
+func draw_slash_views() -> Array:
+	return game.view.effects.filter(func(fx):return String(fx.data.get("source","")).contains("/momentaryslash/momentaryslash_"))
+
+func check_draw_slash_layers(color: String, frame: int) -> void:
+	var layers := draw_slash_views()
+	var stems := ["none_under","none_upper",color+"_ldodge_under",color+"_ldodge_upper"]
+	var depths := [-2,1,-1,2]
+	var valid := layers.size()==stems.size()
+	for index in layers.size():
+		if index >= stems.size():break
+		var fx = layers[index]
+		var source := String(fx.data["source"])
+		valid = valid and source.ends_with("/momentaryslash_"+String(stems[index])+".ani") \
+			and int(fx.frame.get("frame",-1))==frame and fx.z_index==game.view.player_actor.z_index+depths[index] \
+			and fx.facing==game.player["facing"] and int(fx.frame["items"].get("11",{}).get("type",0))==(0 if index<2 else 2)
+	check(valid,"Draw Sword uses the four registered "+color+" layers in order at FX frame "+str(frame))
+
 func check_draw_sword() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -1744,7 +1761,7 @@ func check_draw_sword() -> void:
 		and hit["percent"]==1192.0 and hit["atk_path"].ends_with("/momentaryslash.atk"),
 		"Draw Sword uses CHR slot 8, rank two percent and the attached weapon")
 	check(spent==[[3037,1],[3037,1]] and game.player["mp"]<before_mp
-		and cues("SM_BAL_READY").size()==1 and cues("SM_BAL_SHOT").is_empty() and game.hit_count==0,
+		and cues("SM_BAL_READY").size()==1 and cues("SM_BAL_SHOT").is_empty() and game.hit_count==0 and draw_slash_views().is_empty(),
 		"the paid cast winds up without damage through frame 1")
 	step(1)
 	check(game.hit_count==2 and rear["hp"]<10000.0 and front["hp"]<10000.0 and game.objects.is_empty(),
@@ -1752,7 +1769,16 @@ func check_draw_sword() -> void:
 	check(cues("SM_BAL_SHOT").size()==1 and cues("R_KATANAA").size()==1
 		and cues("R_DRAWING_SWORD_HIT").size()==2 and cues("SWD_BAL_END").is_empty(),
 		"outgoing frame triggers the original shot, weapon swing and hit sounds")
-	step(249)
+	check_draw_slash_layers("blue",0)
+	step(34)
+	check_draw_slash_layers("blue",0)
+	step(1)
+	check_draw_slash_layers("blue",1)
+	step(139)
+	check_draw_slash_layers("blue",4)
+	step(1)
+	check(draw_slash_views().is_empty(),"all four slash effects end at 175 action milliseconds")
+	step(74)
 	check(game.hit_count==2 and cues("SWD_BAL_END").is_empty(),"one hit per target and no sheath sound before body frame 8")
 	step(1)
 	check(cues("SWD_BAL_END").size()==1,"body frame 8 plays the authored sheath cue")
@@ -1776,6 +1802,10 @@ func check_draw_sword() -> void:
 	step(1)
 	check(cues("SM_BAL_SHOT").size()==1 and game.hit_count>0,
 		"weapon hit and shot share the accelerated body clock at 420 ms")
+	step(27)
+	check_draw_slash_layers("blue",0)
+	step(1)
+	check_draw_slash_layers("blue",1)
 
 func check_draw_second_slash() -> void:
 	for family: String in ["katana","beamsword"]:
@@ -1821,6 +1851,7 @@ func check_draw_second_slash() -> void:
 			"the second slash takes its attack percent from the equipped mastery")
 		press(KEY_A)
 		step(525)
+		check_draw_slash_layers("blue",0)
 		step(248)
 		press(KEY_A)
 		step(1)
@@ -1832,7 +1863,7 @@ func check_draw_second_slash() -> void:
 		step(0)
 		check(game.player["stage"]==1 and game.player["clock"]==500.0
 			and game.view.player_actor.pose=="momentaryslash" and game.view.player_actor.sample()["frame"]==1
-			and cues("SM_BAL_READY").size()==2,
+			and cues("SM_BAL_READY").size()==2 and draw_slash_views().is_empty(),
 			"the second slash restarts the original pose at frame one with its ready cue")
 		check(game.action_def()["hits"][0]["percent"]==(494.0 if blade else 303.0) and game.hit_count==2,
 			"two first-slash targets apply the native 225 per-mille bonus before the new hit window")
@@ -1844,6 +1875,7 @@ func check_draw_second_slash() -> void:
 			and cues("SM_BAL_SHOT").size()==2 and cues(swing).size()==2 and game.player["mp"]==paid_mp
 			and game.player["cooldowns"]["draw"]==paid_cooldown and spent==[[3037,1]],
 			"the next frame hits the same targets independently without a second skill payment")
+		check_draw_slash_layers("red" if blade else "white",0)
 		press(KEY_X)
 		step(530)
 		check(game.player["action"]=="" and cues("SWD_BAL_END").size()==2,

@@ -1407,7 +1407,7 @@ def main() -> int:
     parser.add_argument('--extend-thirst', action='store_true',
                         help='Add the original Thirst cast and release effects and sounds')
     parser.add_argument('--extend-draw', action='store_true',
-                        help='Add the original Draw Sword sounds and short-sword wave layers')
+                        help='Add the original Draw Sword slash layers, short-sword wave and sounds')
     parser.add_argument('--extend-overdrive', action='store_true',
                         help='Add the original state 17 cast animations and Overdrive sounds')
     parser.add_argument('--extend-weapon-combo', action='store_true',
@@ -1540,11 +1540,12 @@ def main() -> int:
         return 0
     if args.extend_draw:
         runtime = json.loads(SKILL_RUNTIME.read_bytes())
-        wave = runtime['moves']['draw']['short_wave']
-        rear = wave['rear_fx']
+        draw = runtime['moves']['draw']
+        wave = draw['short_wave']
+        effect_paths = runtime['assets']['effect_anims']
         specs = [('audio', key, path) for key, path in DRAW_AUDIO.items()]
-        specs.extend([('effects', rear, runtime['assets']['effect_anims'][rear]),
-                      ('objects', wave['object'], wave['object'])])
+        specs.extend(('effects', key, effect_paths[key]) for key in [wave['rear_fx'], *draw['slash_layers']['slots']])
+        specs.append(('objects', wave['object'], wave['object']))
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_weapon_combo:

@@ -70,6 +70,14 @@
    "skillfx_lightmove1_1_847fea3b": "character/swordman/effect/animation/rapidmoveslash/lightmove1-1.ani",
    "skillfx_lightmove1_2_b2a9b7bc": "character/swordman/effect/animation/rapidmoveslash/lightmove1-2.ani",
    "skillfx_lightmove2_1_7a67e3a5": "character/swordman/effect/animation/rapidmoveslash/lightmove2-1.ani",
+   "skillfx_momentaryslash_blue_ldodge_under_5f7d8fce": "character/swordman/effect/animation/momentaryslash/momentaryslash_blue_ldodge_under.ani",
+   "skillfx_momentaryslash_blue_ldodge_upper_6f91f65b": "character/swordman/effect/animation/momentaryslash/momentaryslash_blue_ldodge_upper.ani",
+   "skillfx_momentaryslash_none_under_785ce934": "character/swordman/effect/animation/momentaryslash/momentaryslash_none_under.ani",
+   "skillfx_momentaryslash_none_upper_d05d0fd9": "character/swordman/effect/animation/momentaryslash/momentaryslash_none_upper.ani",
+   "skillfx_momentaryslash_red_ldodge_under_1aae7aa1": "character/swordman/effect/animation/momentaryslash/momentaryslash_red_ldodge_under.ani",
+   "skillfx_momentaryslash_red_ldodge_upper_546d5d55": "character/swordman/effect/animation/momentaryslash/momentaryslash_red_ldodge_upper.ani",
+   "skillfx_momentaryslash_white_ldodge_under_624964ef": "character/swordman/effect/animation/momentaryslash/momentaryslash_white_ldodge_under.ani",
+   "skillfx_momentaryslash_white_ldodge_upper_25c26dc2": "character/swordman/effect/animation/momentaryslash/momentaryslash_white_ldodge_upper.ani",
    "skillfx_moonlightslash1_d0608d59": "character/swordman/effect/animation/moonlightslash1.ani",
    "skillfx_moonlightslash2_574395d9": "character/swordman/effect/animation/moonlightslash2.ani",
    "skillfx_moonlightslashfull_3d8e1047": "character/swordman/effect/animation/moonlightslashfull.ani",
@@ -1546,7 +1554,7 @@
     "followup_abnormal_status",
     "beamsword_equipped_appearance",
     "wave_wall_and_final_damage",
-    "additional_effect_dispatch",
+    "greatsword_charge",
     "original_command",
     "weapon_durability"
    ],
@@ -1574,6 +1582,20 @@
     "rear_fx": "skillfx_startb_82b8530b"
    },
    "skill": "skill/swordman/momentaryslash.skl",
+   "slash_layers": {
+    "sha256": "28b733752116ca5fee2ca0a9dbb335686e8b0c5403069d795dc691144ba2fa79",
+    "slots": [
+     "skillfx_momentaryslash_none_under_785ce934",
+     "skillfx_momentaryslash_blue_ldodge_under_5f7d8fce",
+     "skillfx_momentaryslash_none_upper_d05d0fd9",
+     "skillfx_momentaryslash_blue_ldodge_upper_6f91f65b",
+     "skillfx_momentaryslash_white_ldodge_under_624964ef",
+     "skillfx_momentaryslash_white_ldodge_upper_25c26dc2",
+     "skillfx_momentaryslash_red_ldodge_under_1aae7aa1",
+     "skillfx_momentaryslash_red_ldodge_upper_546d5d55"
+    ],
+    "source": "sqr/common.nut"
+   },
    "stages": [
     {
      "ani": "momentaryslash",

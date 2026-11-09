@@ -438,6 +438,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			if native_draw:
 				# CB21D8 and CB22B3 are one-shot gates on body frames 2 and 8.
 				var shot := float(frames[2]["start_ms"])
+				built["fx"] = _draw_slash_cues(spec["slash_layers"]["slots"],shot,1,3)
 				built["sounds"] = [{"key":"SM_BAL_SHOT","at":shot},
 					{"key":"SWD_BAL_END","at":float(frames[8]["start_ms"])}]
 				var wav := weapon_wav(weapon)
@@ -445,7 +446,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				built["cancel_at"] = built["duration"]
 				_append_draw_short_wave(built,spec["short_wave"],skill)
 			move["stages"].append(built)
-		if native_draw:_append_draw_second_slash(move,skill)
+		if native_draw:_append_draw_second_slash(move,skill,spec["slash_layers"]["slots"])
 		# Static SKL columns are skill-specific. They are movement parameters only
 		# when an explicit adapter declares their meaning.
 		if spec.has("dash"):
@@ -467,7 +468,14 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			if spec.get("form_normal",false):hit["skill"] = false
 	return move
 
-func _append_draw_second_slash(move: Dictionary, draw_skill: Dictionary) -> void:
+func _draw_slash_cues(slots: Array, shot: float, under: int, upper: int) -> Array:
+	# CB23F1..CB2477 installs two normal layers, then the colored pair.
+	var cues: Array = []
+	for binding: Array in [[0,-2],[2,1],[under,-1],[upper,2]]:
+		cues.append({"key":slots[binding[0]],"at":shot,"depth_offset":binding[1],"action_clock":true})
+	return cues
+
+func _append_draw_second_slash(move: Dictionary, draw_skill: Dictionary, slots: Array) -> void:
 	# CBA09E checks Oath and each weapon's effective mastery against its own gate.
 	if int(skill_levels.get("weapon_mastery_up",0)) <= 0:return
 	var blade := weapon == "katana"
@@ -484,6 +492,8 @@ func _append_draw_second_slash(move: Dictionary, draw_skill: Dictionary) -> void
 	# CC8658 seeks to frame 1. CC86DA takes the second slash's percent
 	# from the mastery skill, then C9F980 applies the first slash's target count.
 	followup["entry_clock"] = float(opening["timeline"][1]["start_ms"])
+	var shot := float(opening["timeline"][2]["start_ms"])
+	followup["fx"] = _draw_slash_cues(slots,shot,6,7) if blade else _draw_slash_cues(slots,shot,4,5)
 	followup["hits"][0]["percent"] = float(row[4 if blade else 8])
 	move["draw_second_slash_at"] = float(opening["timeline"][8]["start_ms"])
 	move["draw_hit_count_bonus"] = draw_skill["static"].slice(1,6)
