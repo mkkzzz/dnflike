@@ -1874,6 +1874,33 @@ func check_draw_target_deadlines() -> void:
 	game.step_game(1)
 	check(target["hp"]<5000.0 and game.draw_pending_hits.is_empty(),"the public battle update settles on the first tick beyond the deadline")
 
+	for guard: String in ["no_hurtboxes","invulnerable_frame","super_armor"]:
+		start_room("original_27601","katana",1,spec)
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(1200,0))
+		target = api.spawn_dummy(POINT+Vector2(100,0))
+		var before := float(target["hp"])
+		press(KEY_A)
+		step(525)
+		check(game.draw_pending_hits.size()==1,"the initial frame registers before the target changes pose: "+guard)
+		game.end_action()
+		var frame: Dictionary = game.enemy_frame(target)
+		var boxes: Array = frame["damage_boxes"]
+		var items: Dictionary = frame.get("items",{})
+		frame["items"] = items.duplicate()
+		if guard == "no_hurtboxes":frame["damage_boxes"] = []
+		else:frame["items"]["13"] = 2 if guard == "invulnerable_frame" else 1
+		step(201)
+		frame["damage_boxes"] = boxes
+		frame["items"] = items
+		step(1)
+		var count := 1 if guard == "super_armor" else 0
+		var hits: Array = game.bus.events_of("combat.damage").filter(func(event):return event.get("source_object",0)==35687)
+		check(hits.size()==count and (target["hp"]<before)==(count==1) and game.draw_pending_hits.is_empty(),
+			"the delayed attack checks the new frame once and never retries: "+guard)
+
 func check_bloody_rave_phases() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})

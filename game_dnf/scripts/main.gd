@@ -2360,6 +2360,10 @@ func step_draw_hits(ms: float, first_new_id: int) -> void:
 			continue
 		var target: Dictionary = entry["target"]
 		if not monsters.has(target) or float(target["hp"]) <= 0.0 or target_invulnerable(target):continue
+		# B2FFD4 dispatches by identity. The target's 869D80 gate checks its
+		# current hurtboxes and body mode without repeating the overlap test.
+		var frame := enemy_frame(target)
+		if frame.get("damage_boxes",[]).is_empty() or int(frame.get("items",{}).get("13",0)) == 2:continue
 		var hit: Dictionary = entry["hit"].duplicate()
 		hit["percent"] = float(draw_count_adjusted_attack(int(hit["percent"]),entry["rates"],entry["targets"].size()))
 		hit["draw_impact"] = true
