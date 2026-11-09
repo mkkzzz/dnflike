@@ -3358,7 +3358,9 @@ func attack_body_armor() -> bool:
 	var upper := String(player["action"]) == "upper" and int(player["stage"]) == 0
 	# OutRageBreakSlash carries body mode 1 on frames 2..7. Ready uses the
 	# constructor's default mode, so only the authored slash frames qualify.
-	if not upper and stage.get("ani","") not in ["weaponcomboheavy2","outragebreakslash"]:return false
+	# Charge Crash uses the authored dash, uppercut and frozen preparation pose.
+	if not upper and player["action"] != "charge_crash" \
+			and stage.get("ani","") not in ["weaponcomboheavy2","outragebreakslash"]:return false
 	# CD42F3 installs an override for the first two frames. After CB0E2E
 	# clears it, 7F13F0 still reads the current ANI's own body state.
 	var frame := Kernel.Timeline.frame_at(stage["timeline"],action_ani_clock(float(player["clock"])))
@@ -3460,7 +3462,8 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int, 
 		apply_effect({"kind":"effect","id":"counter_evasion","target":PLAYER_ID,"rank":int(skill_levels["stuckuponcounter"])})
 	if float(player["hp"])<=0:
 		if player.has("triple_cast") or player.has("hardattack_charge") or player.has("hardattack_release") \
-				or player.has("weapon_combo_cast") or player.has("draw_cast") or player.has("grab_blast_target"):leave_action()
+				or player.has("weapon_combo_cast") or player.has("draw_cast") or player.has("grab_blast_target") \
+				or player.has("charge_crash_hold"):leave_action()
 		player["state"] = "dead"
 		finished = true
 		victory = false

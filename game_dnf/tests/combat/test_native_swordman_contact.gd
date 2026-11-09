@@ -3183,6 +3183,45 @@ func check_charge_crash_uppercut() -> void:
 	check(game.hit_count==1 and game.player["stuck_ms"]==30.0 and target["stuck_ms"]==30.0,
 		"the integrated contact tick does not use up the target's new hitstop")
 
+func check_charge_crash_body_armor() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"charge_crash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["charge_crash"]
+	spec["skills"]["heavyswordmastery"] = 7
+	var normal_atk: Dictionary = game.table.atk("character/swordman/attackinfo/attack1.atk")
+	var piercing_atk := normal_atk.duplicate()
+	piercing_atk["ignore_super_armor"] = 1
+	for sample: Array in [[0,349.0,false,true],[1,339.0,false,true],
+			[2,399.0,false,true],[2,399.0,true,false],[3,0.0,false,false]]:
+		start_room("","greatsword",1,spec)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		session.submit_key(KEY_A,true)
+		step(0)
+		if sample[0] >= 1:step(350)
+		if sample[0] >= 2:step(340)
+		if sample[0] == 3:step(400)
+		step(sample[1])
+		check(game.player["stage"]==sample[0],"Charge Crash reaches the expected body phase "+str(sample))
+		var before_hp: float = game.player["hp"]
+		var atk: Dictionary = piercing_atk if sample[2] else normal_atk
+		var reaction: String = game.hurt_player(7,{"pos":game.player["pos"]+Vector2(50,0)},atk,-1)
+		var armored: bool = sample[3]
+		check(game.player["hp"]==before_hp-7,"Charge Crash body armor still takes incoming damage")
+		check((reaction=="none" and game.player["action"]=="charge_crash") if armored
+			else (reaction=="stagger" and game.player["action"]=="" and not game.player.has("charge_crash_hold")),
+			"Charge Crash preserves only the original armored phases "+str(sample))
+		check(cues("upper_armor_light").size()==int(armored),"Charge Crash body armor emits the native hit feedback")
+		session.submit_key(KEY_A,false)
+		if sample[0] == 2 and armored:
+			game.player["invuln_ms"] = 0.0
+			game.hurt_player(ceilf(game.player["hp"]),{"pos":game.player["pos"]+Vector2(50,0)},normal_atk,-1)
+			check(game.player["state"]=="dead" and not game.player.has("charge_crash_hold"),
+				"lethal damage clears the frozen Charge Crash hold even through body armor")
+
 func check_charge_crash_mastery() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -4096,6 +4135,7 @@ func run() -> void:
 	check_draw_sword()
 	check_draw_target_deadlines()
 	check_charge_crash_uppercut()
+	check_charge_crash_body_armor()
 	check_charge_crash_mastery()
 	check_draw_second_slash()
 	check_bloody_rave_phases()
