@@ -31,10 +31,10 @@
 - 技能面板独立契约已完成；本轮没有修改面板生产代码，后续面板缺陷需先用 `test_ws1_panel_contract.gd` 复现再改。
 - 任务日志/追踪/NPC 对话和装备 NPC 服务已完成并发布；下一项为仓库与装备操作界面，随后是角色属性与装备管理、死亡提示与复活交互。只读素材浏览工具作为储备；角色删除、多职业、正式转职和存档事务仍不在本区范围。
 - `python tools/check_dnf_deps.py` 当前报告 2 个既有违规：`combat/api/combat_session.gd`、`combat/resolve/native_breakable.gd` 引用 `res://loot/native_box.gd`。两处属于 ws2 当前生产文件，本批未改，需由 ws2 处理依赖边界。
-- 标准 `run_dnf_loop.ps1 -Test` 预检停在既有 `build_dnf_quest_rules.py --check` stale；本轮未擅自重建 ws2 任务产物，直接运行同一 `loop.tscn --loop-test`，完整流程 461 项通过。
+- 标准 `run_dnf_loop.ps1 -Test` 预检停在既有 `build_dnf_quest_rules.py --check` stale；本轮未擅自重建 ws2 任务产物，直接运行同一 `loop.tscn --loop-test`，完整流程 470 项通过。
 - [ws2 多招式接收诊断](../../reports/ws2/2026-10/2026-10-29_ws1多招式接收回归差异.md)：ws1 已完成修复并从独立场景复跑通过；等待 ws2 在当前主线保留原断言接收复核。
 - content 模块迁移等待 ws2 接收；新代码一律使用 `res://content/api/…`，`Numbers.shared_config()` 返回值不可修改。
-- 最近正式入口 `loop.tscn --loop-test` 为 461 项 `failures=0`；任务指引 29 项、任务规则 50 项也通过。复活真实流程 28 项、纯规则 53 项、1～16 主线事务 132 项、原生批量 7,780 项保留为既有证据。
+- 最近正式入口 `loop.tscn --loop-test` 为 470 项 `failures=0`；任务指引 29 项、任务规则 50 项也通过。复活真实流程 28 项、纯规则 53 项、1～16 主线事务 132 项、原生批量 7,780 项保留为既有证据。
 - 1～16 主线仍待 rainmk 从建角开始用真实输入玩到 16 级并反馈节奏/画面/经济卡点；自动化验证按任务等级抬级，不算真人通关。
 - act8 仅作怪物逻辑测试床：验证攻击/受击/选招/移动/死亡和内容包/图集即可，不做城镇入口、主线接入或内容验收。
 - act8 逻辑测试床已跑通；9 种 haze IMG 缺失，待 ws2 补同来源原图后再烘焙图集和做画面验收。
