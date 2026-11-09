@@ -87,6 +87,17 @@ if ($importExit -ne 0 -or ($importOutput -match '(?m)^(SCRIPT ERROR|ERROR:)')) {
     throw "Loop project import failed."
 }
 if ($Test) {
+    $companionProgram=& $GodotPath --headless --path $gamePath --script res://tests/combat/test_companion_program.gd 2>&1
+    $companionProgram | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($companionProgram -match 'SCRIPT ERROR|ERROR:') -or -not ($companionProgram -match '\[COMPANION_PROGRAM\] COMPLETE checks=\d+ failures=0')) {throw "Companion source-program regression failed."}
+    $companionPreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $companionCombat=& $GodotPath --headless --path $gamePath --script res://tests/combat/test_companion_combat.gd 2>&1
+        $companionExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$companionPreference}
+    $companionCombat | Write-Output
+    if ($companionExit -ne 0 -or ($companionCombat -match 'SCRIPT ERROR|ERROR:') -or -not ($companionCombat -match '\[COMPANION_COMBAT\] COMPLETE checks=\d+ failures=0')) {throw "Companion battle regression failed."}
     & python (Join-Path $PSScriptRoot "test_dnf_particle_axis.py")
     if ($LASTEXITCODE -ne 0) {throw "Native particle arithmetic evidence is stale."}
     $particleMotion=& $GodotPath --headless --path $gamePath --script res://tests/combat/test_native_particle_motion.gd 2>&1

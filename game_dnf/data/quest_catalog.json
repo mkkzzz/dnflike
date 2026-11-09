@@ -3,7 +3,7 @@
  "evidence": "原版 .qst 结构化字段 E-PARSE；总账保留名称/描述字符串引用，完整简体正文见 native_data_v1，启用名称取运行定义",
  "summary": {
   "total": 3716,
-  "implemented": 127,
+  "implemented": 132,
   "failed": 0,
   "pending_name_refs": 1383,
   "groups": {
@@ -80754,9 +80754,9 @@
     100
    ],
    "name_ref": "string:332125",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4311",
+   "local_name": "朝向天空之城的最上层 2"
   },
   {
    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_skycastle_10.qst",
@@ -80932,9 +80932,9 @@
     5000
    ],
    "name_ref": "string:332162",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4307",
+   "local_name": "G.S.D亲自出马"
   },
   {
    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_skycastle_1.qst",
@@ -81271,9 +81271,9 @@
     100
    ],
    "name_ref": "string:332219",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4310",
+   "local_name": "朝向天空之城的最上层 1"
   },
   {
    "path": "n_quest/westcost/golemtower/epic_20_golemtower_skycastle_6.qst",
@@ -81624,9 +81624,9 @@
     5000
    ],
    "name_ref": "string:332272",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4308",
+   "local_name": "去更高地方"
   },
   {
    "path": "n_quest/westcost/hallofdoll/epic_18_hallofdoll_sky_gsd_5.qst",
@@ -81646,9 +81646,9 @@
     100
    ],
    "name_ref": "string:332277",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4309",
+   "local_name": "鬼手啊，你到底想说什么"
   },
   {
    "path": "n_quest/westcost/hallofdoll/epic_18_hallofdoll_skycastle_5.qst",

@@ -11,9 +11,10 @@ extends RefCounted
 signal monster_defeated(event: Dictionary)
 signal room_combat_finished(event: Dictionary)
 signal player_defeated(event: Dictionary)
+signal companion_defeated(event: Dictionary)
 
 const SCENE := "res://scenes/main.tscn"
-const FLOW_EVENTS := ["combat.monster_defeated", "combat.room_combat_finished", "combat.player_defeated"]
+const FLOW_EVENTS := ["combat.monster_defeated", "combat.room_combat_finished", "combat.player_defeated", "combat.companion_defeated"]
 const SkillSlots = preload("res://stats/api/skill_slots.gd")
 
 var game: Node
@@ -54,6 +55,7 @@ func start_room(spec: Dictionary) -> bool:
 		var rooms=route.get("rooms",[])
 		if not rooms is Array or rooms.is_empty():return false
 		var placements: Array[Dictionary]=[]
+		var companion_ids: Array[int] = []
 		for i in rooms.size():
 			var room: Dictionary=rooms[i]
 			var found: Dictionary={}
@@ -61,9 +63,14 @@ func start_room(spec: Dictionary) -> bool:
 				if placement["id"]==room.get("placement"):found=placement;break
 			if found.is_empty():return false
 			placements.append(found)
-			for monster: Dictionary in probe.room(found["map"])["monsters"]:
+			var map: Dictionary = probe.room(found["map"])
+			for monster: Dictionary in map["monsters"]:
 				if game.table.monster_by_mob(String(monster["mob"]))=="":return false
+			for companion: Dictionary in map.get("companions",[]):
+				if not game.can_spawn_companion(companion):return false
+				companion_ids.append(int(companion["source_id"]))
 			if i<rooms.size()-1 and room.get("next") not in ["left","right","up","down"]:return false
+		if route.has("companion_id") and int(route["companion_id"]) not in companion_ids:return false
 		if not rooms[-1].get("boss",false):return false
 		var opposite := {"left":"right","right":"left","up":"down","down":"up"}
 		for i in range(rooms.size()-1):
@@ -185,7 +192,7 @@ func read_view() -> Dictionary:
 		"effects":game.numeric_player.effects.view() if game.numeric_player != null else [],
 		"skills":game.skill_levels.duplicate(true),"last_damage":game.last_damage.duplicate(true),
 		"cooldowns":Dictionary(p["cooldowns"]).duplicate(),"buff_ms":float(p["buff_ms"]),
-		"enemies":enemies,"alive_monsters":enemies.size(),"exit_target":exit_target,
+		"enemies":enemies,"companions":game.companion_views(),"alive_monsters":enemies.size(),"exit_target":exit_target,
 		"room_cleared":game.room_cleared,"finished":game.finished,"victory":game.victory,"paused":game.paused}
 
 ## Lightweight per-frame view for HUD/loot consumers. It intentionally omits
@@ -210,7 +217,7 @@ func read_runtime_view() -> Dictionary:
 		"player_state":String(p["state"]),"player_z":float(p["z"]),"player_vz":float(p["vz"]),
 		"job":game.job,"weapon":game.weapon,"weapon_item":String(game.view._weapon_item) if game.view._item_appearance_enabled else "",
 		"cooldowns":Dictionary(p["cooldowns"]).duplicate(),"buff_ms":float(p["buff_ms"]),
-		"enemies":enemies,"alive_monsters":enemies.size(),"exit_target":exit_target,
+		"enemies":enemies,"companions":game.companion_views(),"alive_monsters":enemies.size(),"exit_target":exit_target,
 		"room_cleared":game.room_cleared,"finished":game.finished,"victory":game.victory,"paused":game.paused}
 
 func events():
@@ -225,6 +232,7 @@ func _relay(event: Dictionary) -> void:
 		"combat.monster_defeated":monster_defeated.emit(event)
 		"combat.room_combat_finished":room_combat_finished.emit(event)
 		"combat.player_defeated":player_defeated.emit(event)
+		"combat.companion_defeated":companion_defeated.emit(event)
 
 func _alive() -> bool:
 	return game != null and is_instance_valid(game) and not game.is_queued_for_deletion()

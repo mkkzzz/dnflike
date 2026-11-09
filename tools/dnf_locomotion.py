@@ -14,13 +14,18 @@ AVATAR = [
 WEAPONS = {'shortsword':'sswd', 'katana':'katana', 'greatsword':'lswd'}
 MOTION_DIR = 'character/swordman/animation/'
 
-def compose(src, paths, index):
+def compose(src, paths, index, *, colors=None):
     layers = []
     for path in paths:
         image, meta = src.frame(path, index)
         box = image.getbbox()
         if box:
-            layers.append((image.crop(box), meta['x'] + box[0], meta['y'] + box[1]))
+            crop = image.crop(box)
+            if colors and path in colors:
+                alpha = crop.getchannel('A')
+                crop = Image.new('RGBA', crop.size, colors[path] + (255,))
+                crop.putalpha(alpha)
+            layers.append((crop, meta['x'] + box[0], meta['y'] + box[1]))
     if not layers:raise ValueError('Empty required locomotion frame: ' + str(index))
     x0=min(x for _,x,y in layers); y0=min(y for _,x,y in layers)
     x1=max(x+im.width for im,x,y in layers); y1=max(y+im.height for im,x,y in layers)

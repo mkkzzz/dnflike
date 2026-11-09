@@ -183,9 +183,20 @@ func command(profile: Dictionary, kind: String, payload: Dictionary, context: Di
 	profile.assign(candidate)
 	return {"ok":true, "id":id, "kind":kind, "status":status(profile, id)}
 
+func map_clear_matches(objective: Dictionary, event: Dictionary) -> bool:
+	if event.get("dungeon")!=objective.get("dungeon"):return false
+	if objective.has("quest_maze"):
+		return event["type"]=="escort.map_cleared" and event.get("quest_maze")==objective["quest_maze"] \
+			and is_same(event.get("victory"),true) and is_same(event.get("party_size"),1) \
+			and Conditions.escort_survived(event,int(objective["source_map_id"]),int(objective["companion_id"]))
+	var cell = event.get("cell")
+	var target = objective.get("cell")
+	return event["type"]=="map.cleared" and cell is Array and target is Array and cell.size()==2 and target.size()==2 \
+		and int(cell[0])==int(target[0]) and int(cell[1])==int(target[1])
+
 func ingest(profile: Dictionary, event: Dictionary) -> Dictionary:
 	if not valid(profile):return fail("任务存档无效")
-	if event.get("type") not in ["npc.met", "combat.monster_defeated", "dungeon.cleared", "map.cleared", "skill.learned", "item.disassembled"] or not event.get("event_id") is String or event["event_id"].is_empty():return fail("任务事件无效")
+	if event.get("type") not in ["npc.met", "combat.monster_defeated", "dungeon.cleared", "map.cleared", "escort.map_cleared", "skill.learned", "item.disassembled"] or not event.get("event_id") is String or event["event_id"].is_empty():return fail("任务事件无效")
 	if event.get("type")=="skill.learned" and (not event.get("skill") is String or event["skill"].is_empty() or not Catalog.whole(event.get("levels"),1,100)):return fail("技能学习事件无效")
 	var changed: Array[String] = []
 	for id: String in profile["quest_state"]["entries"]:
@@ -195,13 +206,10 @@ func ingest(profile: Dictionary, event: Dictionary) -> Dictionary:
 		if entry["state"] != "active" or not q["enabled"] or not eligible(profile,q):continue
 		for o: Dictionary in q["objectives"]:
 			if o["type"] == "collect_item" or objective_count(profile, o, entry) >= int(o["amount"]):continue
-			var cell_matches:=false
-			if event.get("cell") is Array and o.get("cell") is Array and event["cell"].size()==2 and o["cell"].size()==2:
-				cell_matches=int(event["cell"][0])==int(o["cell"][0]) and int(event["cell"][1])==int(o["cell"][1])
 			var matches: bool = (o["type"] == "meet_npc" and event["type"] == "npc.met" and event.get("npc") == o["target"]) or (o["type"] == "kill_monster" and event["type"] == "combat.monster_defeated" and event.get("monster_id") == o["target"]) or (o["type"] == "clear_dungeon" and event["type"] == "dungeon.cleared" and (event.get("dungeon") == o["target"] or o["target"]=="any") and event.get("victory", false))
 			matches = matches or (o["type"]=="learn_skill" and event["type"]=="skill.learned" and o["target"]=="any")
 			matches = matches or (o["type"]=="disassemble_item" and event["type"]=="item.disassembled" and event.get("npc")==o.get("npc") and event.get("item") is String and not event["item"].is_empty() and (o["target"]=="any" or o["target"]==event["item"]))
-			matches = matches or (o["type"]=="clear_map" and event["type"]=="map.cleared" and event.get("dungeon")==o.get("dungeon") and cell_matches)
+			matches = matches or (o["type"]=="clear_map" and map_clear_matches(o,event))
 			if not matches or (o.has("dungeon") and o["dungeon"]!="any" and event.get("dungeon") != o["dungeon"]) or (o.has("difficulty") and event.get("difficulty") not in o["difficulty"]):continue
 			if o.has("allowed_dungeons") and event.get("dungeon") not in o["allowed_dungeons"]:continue
 			if not Conditions.matches(o.get("conditions",{}),event.get("facts",{})):continue

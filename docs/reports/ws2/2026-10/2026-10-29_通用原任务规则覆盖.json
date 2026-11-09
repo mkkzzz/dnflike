@@ -3,13 +3,13 @@
  "summary": {
   "indexed_quests": 2824,
   "existing": 64,
-  "new_executable": 63,
-  "total_executable": 127,
+  "new_executable": 68,
+  "total_executable": 132,
   "objective_parsed": 2359,
   "new_lifecycles": {
-   "once": 63
+   "once": 68
   },
-  "blocked": 2697
+  "blocked": 2692
  },
  "campaign": {
   "id": "campaign_1_16",
@@ -318,7 +318,7 @@
  },
  "blocked_reasons": {
   "npc_not_in_town": 2181,
-  "prerequisite_not_executable": 1824,
+  "prerequisite_not_executable": 1819,
   "quest_grade:[urgent]": 1114,
   "field:[enemy reward item]": 285,
   "target_npc_not_in_town": 197,
@@ -872,7 +872,6 @@
   "reward_item_unavailable:original_7134": 2,
   "reward_item_unavailable:original_7137": 2,
   "reward_item_unavailable:original_26596": 2,
-  "clear_map_companion_survival_unavailable": 2,
   "clear_map_unavailable:6809": 2,
   "reward_item_unavailable:original_100050042": 2,
   "reward_item_unavailable:original_100060012": 2,
@@ -74597,10 +74596,8 @@
      "amount": 1
     }
    ],
-   "reasons": [
-    "clear_map_companion_survival_unavailable"
-   ],
-   "state": "blocked"
+   "reasons": [],
+   "state": "admitted"
   },
   {
    "id": 4308,
@@ -74630,11 +74627,8 @@
      "amount": 1
     }
    ],
-   "reasons": [
-    "clear_map_companion_survival_unavailable",
-    "prerequisite_not_executable"
-   ],
-   "state": "blocked"
+   "reasons": [],
+   "state": "admitted"
   },
   {
    "id": 4309,
@@ -74660,10 +74654,8 @@
      "amount": 1
     }
    ],
-   "reasons": [
-    "prerequisite_not_executable"
-   ],
-   "state": "blocked"
+   "reasons": [],
+   "state": "admitted"
   },
   {
    "id": 4310,
@@ -74692,10 +74684,8 @@
      "conditions": {}
     }
    ],
-   "reasons": [
-    "prerequisite_not_executable"
-   ],
-   "state": "blocked"
+   "reasons": [],
+   "state": "admitted"
   },
   {
    "id": 4311,
@@ -74724,10 +74714,8 @@
      "conditions": {}
     }
    ],
-   "reasons": [
-    "prerequisite_not_executable"
-   ],
-   "state": "blocked"
+   "reasons": [],
+   "state": "admitted"
   },
   {
    "id": 4312,
@@ -74759,8 +74747,7 @@
    ],
    "reasons": [
     "clear_map_extra_condition_unavailable",
-    "clear_map_unavailable:2408",
-    "prerequisite_not_executable"
+    "clear_map_unavailable:2408"
    ],
    "state": "blocked"
   },

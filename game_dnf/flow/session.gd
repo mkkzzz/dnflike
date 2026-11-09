@@ -281,6 +281,20 @@ func add_item(id: String, count: int) -> void:
 	# Guaranteed settlement rewards and legacy migration use recoverable overflow.
 	Inventory.give(profile,id,count,50,true)
 
+func ingest_escort_clear(event: Dictionary) -> bool:
+	var quest: String = run.get("quest_maze", "")
+	if quest.is_empty() or not is_same(event.get("boss"),true) or not is_same(event.get("final_room"),true):return false
+	var route: Dictionary = dungeons[run["dungeon"]].get("quest_routes", {}).get(quest, {})
+	if route.is_empty() or route["difficulty"]!=run["difficulty"]:return false
+	var final_index: int = route["rooms"].size()-1
+	if not is_same(event.get("room_index"),final_index) or event.get("room_id")!="%s:%d" % [run["dungeon"],final_index]:return false
+	var party_size: int = QuestConditions.facts(run,event.get("stats",{}))["party_size"]
+	if party_size!=1 or not is_same(event.get("party_size",party_size),party_size):return false
+	if not QuestConditions.escort_survived(event,int(route["source_map_id"]),int(route["companion_id"])):return false
+	return ingest_quest_event({"type":"escort.map_cleared", "event_id":"escort:"+String(run["id"]),
+		"quest_maze":quest,"dungeon":run["dungeon"],"difficulty":run["difficulty"],"party_size":party_size,
+		"source_map_id":event["source_map_id"],"companions_alive":event["companions_alive"],"victory":true})
+
 func combat_event(event: Dictionary) -> Dictionary:
 	invalidate_stats()
 	if state != "battle" or event.get("run_id") != run.get("id"):return reject("忽略过期战斗事件")
@@ -324,6 +338,9 @@ func combat_event(event: Dictionary) -> Dictionary:
 						"dungeon":run["dungeon"],"cell":cell,"victory":true})
 			if bool(event.get("final_room", false)):
 				var finished=finish_run(true,event.get("stats",{}))
+				if finished["ok"] and ingest_escort_clear(event):
+					map_changed=true
+					result["quest_changed"]=true
 				finished["quest_changed"]=map_changed or bool(finished.get("quest_changed",false))
 				return finished
 			return {"ok":true,"quest_changed":map_changed}

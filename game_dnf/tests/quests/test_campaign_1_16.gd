@@ -145,17 +145,15 @@ func escort_maze(dungeon: String, quest: String, companion: int, maps: Array, bo
 	session.profile.level = 18
 	for required: String in session.dungeons[dungeon].get("requires", []):
 		completed(session, required)
-	check(not session.quests.catalog.definitions.has(quest), "escort quest stays unavailable until companion survival is implemented")
+	check(session.quests.status(session.profile,quest)=="locked", "escort quest is not offered before its source prerequisites")
 	var selection := {"dungeon":dungeon, "quest_maze":quest}
 	session.command("flow.difficulty", {"id":"expert"})
 	check(session.command("flow.depart", selection).ok and not session.run.has("quest_maze"), "departure cannot request a quest maze without an active quest")
 	session.finish_run(false, {})
 	session.command("flow.return")
-	# Only the in-memory test catalog has the escort quest. Production rewards stay gated.
-	var fixture: Dictionary=session.quests.catalog.definitions["original.quest.4601"].duplicate(true)
-	fixture.id=quest
-	session.quests.catalog.definitions[quest]=fixture
-	session.profile.quest_state.entries[quest]=session.quests.new_entry(fixture)
+	for required: String in session.quests.catalog.definitions[quest].requires:
+		completed(session, required)
+	check(session.quest_command("quest.accept", {"id":quest}, {"npc":"gsd","nearby":true}).ok, "G.S.D. offers the original escort quest after its prerequisites")
 	session.command("flow.difficulty", {"id":"adventure"})
 	check(session.command("flow.depart", selection).ok and not session.run.has("quest_maze"), "the active escort quest still uses the ordinary Adventure route")
 	session.finish_run(false, {})
@@ -166,7 +164,10 @@ func escort_maze(dungeon: String, quest: String, companion: int, maps: Array, bo
 	var combat := CombatSession.new()
 	var battle = combat.mount(root)
 	battle.set_physics_process(false)
-	combat.room_combat_finished.connect(func(event: Dictionary):session.combat_event(event))
+	var final_event: Dictionary={}
+	combat.room_combat_finished.connect(func(event: Dictionary):
+		if event.get("final_room",false):final_event.assign(event)
+		session.combat_event(event))
 	var started := combat.start_room({"run_id":session.run.id, "dungeon":dungeon, "route":route,
 		"room_id":dungeon+":0", "room_index":0, "player":session.run.stats, "audio":{"muted":true}})
 	check(started, "combat API validates the complete quest route and original MOB roster")
@@ -187,8 +188,75 @@ func escort_maze(dungeon: String, quest: String, companion: int, maps: Array, bo
 			enemy.death_ms=1000.0
 		battle._physics_process(1.0/60.0)
 	check(battle.map_loader.errors.is_empty() and session.state=="result" and session.result.victory, "quest maps render and the final room settles the battle")
-	check(session.quests.status(session.profile,quest)=="active", "quest route victory without APC survival does not complete a quest objective")
+	check(session.QuestConditions.escort_survived(final_event,int(maps[-1]),companion),
+		"the combat settlement reports the exact final MAP and a living source APC")
+	check(session.quests.status(session.profile,quest)=="ready", "the final battle completes the accepted original escort objective")
 	combat.stop()
+	session.command("flow.return")
+	var gold: int = session.profile.gold
+	check(session.quest_command("quest.claim", {"id":quest}, {"npc":"gsd","nearby":true}).ok
+		and int(session.profile.gold)==gold+5000,"the actual escort route pays the original reward at G.S.D.")
+	if quest=="original.quest.4308":escort_followups(session)
+
+func escort_followups(session: Session) -> void:
+	var kiri := {"npc":"kiri","nearby":true}
+	var talk := {"id":"original.quest.4309"}
+	check(session.quest_command("quest.accept",talk,{"npc":"gsd","nearby":true}).ok,"G.S.D. sends the player to Kiri after the second escort")
+	session.npc_met("kiri")
+	check(session.quest_command("quest.claim",talk,kiri).ok,"meeting Kiri completes the original follow-up")
+	for row: Array in [["original.quest.4310","golemtower",20],["original.quest.4311","darkentrance",22]]:
+		var payload := {"id":row[0]}
+		session.profile.level=row[2]
+		check(session.quest_command("quest.accept",payload,kiri).ok,"the original Sky Tower follow-up becomes available: "+row[0])
+		session.command("flow.difficulty",{"id":"adventure"})
+		check(session.command("flow.depart",{"dungeon":row[1]}).ok,"the original follow-up dungeon route is selectable: "+row[1])
+		session.finish_run(true,{})
+		session.command("flow.return")
+		check(session.quest_command("quest.claim",payload,kiri).ok,"the Adventure clear can be handed in at Kiri: "+row[0])
+
+func escort_completion_guards() -> void:
+	var session := Session.new()
+	var quest := "original.quest.4307"
+	var dungeon := "draconiantower"
+	var gsd := {"npc":"gsd","nearby":true}
+	var route: Dictionary = session.dungeons[dungeon].quest_routes[quest]
+	var last_index: int = route.rooms.size()-1
+	var payload := {"id":quest}
+	session.profile.level=16
+	check(not session.quest_command("quest.accept",payload,gsd).ok,"escort requires the preceding dragon-eye quest")
+	completed(session,"original.quest.4306")
+	completed(session,"original.quest.8")
+	session.profile.level=15
+	check(not session.quest_command("quest.accept",payload,gsd).ok,"escort requires the source level")
+	session.profile.level=16
+	check(session.quest_command("quest.accept",payload,gsd).ok and not session.quest_command("quest.abandon",payload,gsd).ok,
+		"G.S.D. offers the source quest and it cannot be abandoned")
+	session.ingest_quest_event({"type":"map.cleared","event_id":"ordinary-cell","dungeon":dungeon,"cell":[0,2],"difficulty":"expert"})
+	check(session.quests.status(session.profile,quest)=="active","an ordinary room clear cannot satisfy an escort objective")
+	var proof := {"source_map_id":1619,"companions_alive":[201]}
+	var final_event := {"type":"combat.room_combat_finished","room_id":"%s:%d" % [dungeon,last_index],
+		"room_index":last_index,"final_room":true,"boss":true}
+	var invalid := [{}, {"source_map_id":1620,"companions_alive":[201]}, {"source_map_id":1619,"companions_alive":[]},
+		{"source_map_id":1619,"companions_alive":[202]}, {"source_map_id":1619,"companions_alive":["201"]},
+		proof.merged({"party_size":2}), proof.merged({"room_id":"wrong-room"}), proof.merged({"final_room":false}),
+		proof.merged({"boss":false}), proof.merged({"run_id":"expired"})]
+	session.command("flow.difficulty",{"id":"expert"})
+	for evidence: Dictionary in invalid:
+		session.command("flow.depart",{"dungeon":dungeon})
+		var event := final_event.merged({"run_id":session.run.id}).merged(evidence,true)
+		session.combat_event(event)
+		check(session.quests.status(session.profile,quest)=="active","invalid escort proof leaves the quest active: "+str(evidence))
+		if session.state=="battle":session.finish_run(false,{})
+		session.command("flow.return")
+	session.command("flow.depart",{"dungeon":dungeon})
+	var valid_event := final_event.merged({"run_id":session.run.id}).merged(proof)
+	check(session.combat_event(valid_event).ok and session.quests.status(session.profile,quest)=="ready",
+		"exact Hard MAP and living APC evidence unlocks escort turn-in")
+	check(not session.combat_event(valid_event).ok,"replaying the final combat event cannot add progress")
+	session.command("flow.return")
+	var gold: int = session.profile.gold
+	check(session.quest_command("quest.claim",payload,gsd).ok and int(session.profile.gold)==gold+5000
+		and not session.quest_command("quest.claim",payload,gsd).ok,"the source 5000-gold reward is paid only once at G.S.D.")
 
 func run() -> void:
 	var rules: Dictionary=Native.quest_rules()
@@ -285,6 +353,7 @@ func run() -> void:
 	check(remaining.is_empty(),"all campaign nodes form one playable dependency graph")
 	draconian_eyes()
 	light_lord_chain()
+	escort_completion_guards()
 	escort_maze("draconiantower", "original.quest.4307", 201,
 		[1618,1602,1620,1603,1609,1610,1604,1619], "monster/draconian/lakius.mob")
 	escort_maze("hallofdoll", "original.quest.4308", 202,

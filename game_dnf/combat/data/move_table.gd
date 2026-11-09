@@ -182,6 +182,25 @@ func configure_skills(levels: Dictionary, active_job := "", active_weapon := "")
 			continue
 		moves[name] = _build_move(name, _selected_move_spec(name))
 
+## The companion samples its own AIC ranks against the same source moves. Share
+## immutable content and caches without changing the player's active context.
+func companion_moves(levels: Dictionary, active_weapon: String) -> Dictionary:
+	var context = get_script().new()
+	context.db = db
+	context.rules = rules
+	context.assets = assets
+	context.skill_runtime = skill_runtime
+	context.move_specs = move_specs
+	context.objects = objects
+	context._timelines = _timelines
+	context.skill_levels = levels
+	context.job = "asura"
+	context.weapon = active_weapon
+	var result := {}
+	for name: String in levels:
+		if move_specs.has(name):result[name] = context._build_move(name,context._selected_move_spec(name))
+	return result
+
 func _selected_move_spec(name: String) -> Dictionary:
 	var base: Dictionary = Dictionary(move_specs.get(name, {})).duplicate(true)
 	var generated: Dictionary = skill_runtime.get("moves", {}).get(name, {})

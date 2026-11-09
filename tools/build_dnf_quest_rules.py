@@ -16,6 +16,7 @@ AUDIT=ROOT/'docs/reports/ws2/2026-10/2026-10-29_通用原任务规则覆盖.json
 STATUS=DATA/'native_quest_status_v2.json.gz'
 CAMPAIGN=DATA/'campaign_1_16.json'
 CATALOG=DATA/'quest_catalog.json'
+SUPPORTED_ESCORT_QUESTS = frozenset({4307, 4308})
 
 def load(path):return json.loads(path.read_text(encoding='utf-8'))
 def compressed(path):return json.loads(gzip.decompress(path.read_bytes()))
@@ -89,7 +90,9 @@ def build():
             map_id=str(route['source_map_id'])
             if map_id in map_targets:raise ValueError('Ambiguous quest MAP '+map_id)
             map_targets[map_id]={'dungeon':key,'cell':maze['boss_cell'],
-                                 'quest_id':maze['source_id'],'companion_id':route['companion_id']}
+                                 'quest_id':maze['source_id'],'companion_id':route['companion_id'],
+                                 'difficulty':route['difficulty'],
+                                 'escort_runtime':maze['source_id'] in SUPPORTED_ESCORT_QUESTS}
     records={}
     for shard in sorted({index['locations'][p] for p in index['indexes']['quests'].values()}):records.update(compressed(BASE/shard)['records'])
     source_jobs={}

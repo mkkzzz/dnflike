@@ -3732,6 +3732,75 @@
    "source_metadata": {}
   },
   {
+   "id": "original.quest.4307",
+   "source": {
+    "id": 4307,
+    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_sky_gsd_3.qst",
+    "sha256": "a33cd9f9be6a304f8be4a9562fda243bc7a5c2eebb9f1433a6e214f4b4689f2b",
+    "raw_type": [
+     "[clear map]"
+    ],
+    "raw_int_data": [
+     1619,
+     201
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "G.S.D亲自出马",
+   "description": "与G.S.D一起通过天空之城的龙人之塔，要求地下城难度为高等难度(Hard)。(此任务只能独自进行，若通过时G.S.D没有生存下来，则无法完成任务)",
+   "dialogue": {
+    "accept": "我的感觉果然没错， 虽然还不清楚详细的内容， 但这些生命体在某些方面与鬼手是有关联的。\n嗯， 看来我得亲自去天空之城看看， 也许我能把众多鬼剑士追查了一辈子的秘密解开。 年轻人， 我老头子的眼睛看不见， 麻烦你把我带到天空之城吧。",
+    "complete": "年轻人， 辛苦你了。"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 16,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4306"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_map",
+     "amount": 1,
+     "target": "draconiantower:0_2",
+     "dungeon": "draconiantower",
+     "cell": [
+      0,
+      2
+     ],
+     "source_map_id": 1619,
+     "quest_maze": "original.quest.4307",
+     "companion_id": 201,
+     "difficulty": [
+      "expert"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 5000,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": false,
+   "source_metadata": {}
+  },
+  {
    "id": "original.quest.121",
    "source": {
     "id": 121,
@@ -3790,6 +3859,75 @@
    "source_metadata": {}
   },
   {
+   "id": "original.quest.4308",
+   "source": {
+    "id": 4308,
+    "path": "n_quest/westcost/hallofdoll/epic_18_hallofdoll_sky_gsd_4.qst",
+    "sha256": "30c7e8863646b254751603e5fc77ad335786e66619e7d0e92625450b6a921203",
+    "raw_type": [
+     "[clear map]"
+    ],
+    "raw_int_data": [
+     1820,
+     202
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "去更高地方",
+   "description": "与G.S.D一起通过天空之城的人偶玄关，要求地下城难度为高等难度(Hard)。(此任务只能独自进行，若通过时G.S.D没有生存下来，则无法完成任务)",
+   "dialogue": {
+    "accept": "我去天空之城时发现， 那些强烈的气息好像是从天空之城上方传来的。\n呵呵， 不好意思啊， 我要再去一趟天空之城， 你能带我去吗？ 这次要到更高一层才行。",
+    "complete": "辛苦你了， 还是没有找到线索， 有点可惜了。"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 18,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4307"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_map",
+     "amount": 1,
+     "target": "hallofdoll:0_1",
+     "dungeon": "hallofdoll",
+     "cell": [
+      0,
+      1
+     ],
+     "source_map_id": 1820,
+     "quest_maze": "original.quest.4308",
+     "companion_id": 202,
+     "difficulty": [
+      "expert"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 5000,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": false,
+   "source_metadata": {}
+  },
+  {
    "id": "original.quest.122",
    "source": {
     "id": 122,
@@ -3836,6 +3974,63 @@
    ],
    "reward": {
     "gold": 200,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.4309",
+   "source": {
+    "id": 4309,
+    "path": "n_quest/westcost/hallofdoll/epic_18_hallofdoll_sky_gsd_5.qst",
+    "sha256": "87b5f756ed40e7ecc9ecea8e7ff7e80ee7b4de3a2501d794904ef878717a439f",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     17
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "鬼手啊，你到底想说什么",
+   "description": "去找凯莉",
+   "dialogue": {
+    "accept": "到底天空之城是什么呢？ 那里的生命体是怎样出现的……你也很想知道吧?\n听说我们这里有位从天界来的女神枪手， 她也许知道天空之城的秘密。 嗯， 我想亲自去问她。 你如果有兴趣， 就跟我一起去吧。",
+    "complete": "哎哟~ 原来是帅气的老爷爷啊！！ 有什么事吗? \n <npc::7> 冒昧来访， 失礼了。 听说你是从天界来的……因为天空之城最近散发的气息很不寻常， 所以我才来麻烦你。\n而且我的鬼手对那股气息有了反应， 越到天空之城的上层感应越强烈。\n我想既然你是从天界来的， 或许你对天空之城的那些气息会有所了解。"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 18,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4308"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "kiri",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "kiri"
+    }
+   ],
+   "reward": {
+    "gold": 100,
     "xp": 0,
     "items": {},
     "conditional_items": [],
@@ -3948,6 +4143,67 @@
    ]
   },
   {
+   "id": "original.quest.4310",
+   "source": {
+    "id": 4310,
+    "path": "n_quest/westcost/golemtower/epic_20_golemtower_sky_gsd_6.qst",
+    "sha256": "f70f5be9147b4608b7f9df17f5008b64ff6ae22ef7a9677739099cced2d1826a",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     13,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "朝向天空之城的最上层 1",
+   "description": "通过天空之城的石巨人塔，要求地下城难度为中等难度(Medium)以上。",
+   "dialogue": {
+    "accept": "天空之城……\n一千年前， 一个叫巴卡尔的非常坏~的混蛋掌控了天界， 并把天界和阿拉德大陆唯一的一条往来交流的通道给堵塞了。 之后还用自己的魔法创造了一大堆生命体， 让它们守卫天空之城。\n <npc::7> 那么……我的鬼手对天空之城的气息有感应， 也是和巴卡尔那家伙有关？\n <npc::17> 这个， 我还真不清楚。 如果你想知道真相， 最好去找天空之城的赛格哈特， 它也是巴卡尔用魔法创造的生命体。\n <npc::7> 赛格哈特啊…… 我不能离开太长时间， 这位年轻人会替我和你一起去。 年轻人， 你能办到吧?\n呵呵， 你身上散发的气息告诉我， 你能胜任的。",
+    "complete": "哎呀， 怪不得G.S.D对你赞不绝口呢， 你果然有点实力呀~"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 20,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4309"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kiri",
+   "receiver": "kiri",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "golemtower",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
    "id": "original.quest.124",
    "source": {
     "id": 124,
@@ -4001,6 +4257,67 @@
    ],
    "reward": {
     "gold": 0,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.4311",
+   "source": {
+    "id": 4311,
+    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_sky_gsd_7.qst",
+    "sha256": "d91aa2b4468c64b123389a5cdac1da0ac5abb1d144627b26d8ed337cd81e14e3",
+    "raw_type": [
+     "[condition under clear]"
+    ],
+    "raw_int_data": [
+     14,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "朝向天空之城的最上层 2",
+   "description": "通过天空之城的黑暗玄廊，要求地下城难度为中等难度(Medium)以上。",
+   "dialogue": {
+    "accept": "我从天界掉下来时， 途中经过了一个海洋， 所以我从那么高的地方掉落下来也没有摔坏。\n我听说， 被称为光之城主的赛格哈特的城主宫殿就在天空之海的某处， 这可能不大好找。 看来， 我们只好把它可能在的地方都找一遍了。",
+    "complete": "你平安回来了？ 你找到城主宫殿了吧？"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 22,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4310"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kiri",
+   "receiver": "kiri",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "clear_dungeon",
+     "amount": 1,
+     "target": "darkentrance",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 100,
     "xp": 0,
     "items": {},
     "conditional_items": [],
@@ -4917,13 +5234,13 @@
  "coverage": {
   "indexed_quests": 2824,
   "existing": 64,
-  "new_executable": 63,
-  "total_executable": 127,
+  "new_executable": 68,
+  "total_executable": 132,
   "objective_parsed": 2359,
   "new_lifecycles": {
-   "once": 63
+   "once": 68
   },
-  "blocked": 2697
+  "blocked": 2692
  },
  "campaign": {
   "id": "campaign_1_16",
@@ -5140,5 +5457,5 @@
   ]
  },
  "status_file": "res://data/native_quest_status_v2.json.gz",
- "status_sha256": "b8673a800b80ea2032d56b56334dd653b677147f1d4498f5efc56b21a1b9c742"
+ "status_sha256": "a841d21c1f3311476ef749088b3a92a1e68c2d78f86e5fcc2c9d949ef8103c82"
 }

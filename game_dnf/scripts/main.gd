@@ -20,6 +20,7 @@ const RUN_TAP_MS := 240
 const RECOVERY_INPUT_BUFFER_MS := 120.0
 const Numbers = preload("res://stats/api/numbers.gd")
 const ActorNumbers = preload("res://stats/api/actor_numbers.gd")
+const CompanionProgram = preload("res://combat/action/companion_program.gd")
 var numeric_player
 var skill_levels: Dictionary = {}
 var skill_slots: Array = ["", "", "", "", "", "", "", "", "", "", "", ""]
@@ -45,6 +46,8 @@ var rules: Dictionary = {}
 var player_clips: Dictionary = {}
 var player: Dictionary = {}
 var monsters: Array = []
+var companions: Array[Dictionary] = []
+var _companion_programs: Dictionary = {}
 var objects: Array = []
 var props: Array = []
 var room_index := 0
@@ -257,7 +260,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 		if int(body["id"])==PLAYER_ID and god_mode:continue
 		var amount := Numbers.Damage.resolve({"independent_attack":100,"level":numeric_monster_level},actor.values,{"percent":0,"fixed":event["damage"],"damage_type":event["damage_type"]},[0.0,1.0],Numbers.shared_config()["formula"])
 		body["hp"] = maxf(0,float(body["hp"])-int(amount["amount"]))
-		bus.emit("combat.damage",{"target":body["id"],"amount":amount["amount"],"critical":false,"category":event["damage_type"],"victim":"player" if body["id"]==PLAYER_ID else "monster","reaction":"none","point":Vector3(body["pos"].x,body["pos"].y,float(body["z"]))})
+		bus.emit("combat.damage",{"target":body["id"],"amount":amount["amount"],"critical":false,"category":event["damage_type"],"victim":victim_kind(body),"reaction":"none","point":Vector3(body["pos"].x,body["pos"].y,float(body["z"]))})
 		if body["id"]==PLAYER_ID:
 			damage_taken += int(amount["amount"])
 			if float(body["hp"])<=0:
@@ -269,7 +272,8 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 		elif float(body["hp"])<=0:
 			body["state"] = "dead"
 			body["death_ms"] = 0.0
-			report_defeat(body)
+			if body.has("companion_id"):report_companion_defeat(body)
+			else:report_defeat(body)
 		if float(body["hp"])<=0:break
 
 ## Spec fields (contract v1): run_id, room_id, room_index (transitional trial route), from (entry side),
@@ -304,6 +308,7 @@ func begin_room(spec: Dictionary) -> void:
 	run_id = String(spec.get("run_id","standalone"))
 	rng.reseed(hash(run_id))
 	room_snapshots.clear()
+	companions.clear()
 	finished = false
 	item_restorations.clear()
 	victory = false
@@ -676,6 +681,7 @@ func step_game(ms: float) -> void:
 	else:
 		step_player(ms,move)
 	for enemy: Dictionary in monsters:update_enemy(enemy,ms)
+	for companion: Dictionary in companions:update_companion(companion,ms)
 	step_objects(ms,first_new_object_id)
 	if _aura_pulse_ms <= 0:
 		_aura_pulse_ms = 1000.0
@@ -693,7 +699,8 @@ func step_game(ms: float) -> void:
 		var boss := bool(rules["rooms"][room_index].get("boss",false))
 		# BOSS 房换战斗曲（data/bgm.json 的 dungeons.<id>.boss；缺省沿用普通曲）。
 		if not _muted:view.audio.play_music("forest02" if boss else "forest01", view.audio.music.volume_db)
-		bus.emit("combat.room_combat_finished",flow_payload({"boss":boss,"final_room":boss}))
+		bus.emit("combat.room_combat_finished",flow_payload({"boss":boss,"final_room":boss,
+			"source_map_id":int(room_map.get("map_id",-1)),"companions_alive":living_companion_ids()}))
 		if boss:
 			finished = true
 			victory = true
@@ -883,10 +890,11 @@ func apply_effect(effect: Dictionary) -> bool:
 		var actor = numeric_player
 		if int(effect.get("target",PLAYER_ID)) != PLAYER_ID:
 			actor = null
-			for enemy: Dictionary in monsters:
-				if int(enemy["id"]) == int(effect["target"]):
-					body = enemy
-					actor = enemy.get("numeric")
+			for target: Dictionary in monsters+companions:
+				if int(target["id"]) == int(effect["target"]):
+					body = target
+					actor = target.get("numeric")
+					break
 		if actor == null or float(body["hp"])<=0:return false
 		var id := String(effect.get("id",""))
 		var applied: bool = actor.add_effect(id,int(effect.get("rank",1)),effect) if effect["kind"]=="effect" else actor.remove_effect(id)
@@ -1117,8 +1125,11 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: Vector3, facing: int, power: float) -> void:
 	var atk: Dictionary = hit["atk"]
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
+	var by_companion := attacker.has("companion_id")
+	var victim := victim_kind(target)
+	if victim != "monster" and (by_player or by_companion):return
 	var hit_skill_id := String(hit.get("skill_id",player["action"]))
-	var percent := float(hit["percent"])*skill_damage_multiplier(hit_skill_id)
+	var percent := float(hit["percent"])*(1.0 if by_companion else skill_damage_multiplier(hit_skill_id))
 	var amount := Kernel.Reaction.damage(power*(float(rules["buff"]["damage"]) if by_player and float(player["buff_ms"])>0 else 1.0),percent)
 	var resolved := {"critical":false,"category":"physical","missed":false}
 	if numeric_player != null:
@@ -1133,10 +1144,12 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		last_damage = resolved.duplicate(true)
 		amount = int(resolved["amount"])
 		if amount<=0:
-			bus.emit("combat.damage",{"target":target["id"],"amount":0,"critical":false,"category":resolved["category"],"missed":resolved["missed"],"victim":"player" if int(target["id"])==PLAYER_ID else "monster","reaction":"none","point":point})
+			bus.emit("combat.damage",{"target":target["id"],"amount":0,"critical":false,"category":resolved["category"],"missed":resolved["missed"],"victim":victim,"reaction":"none","point":point})
 			return
-	var target_is_player := int(target.get("id",-1)) == PLAYER_ID
-	bus.emit("combat.hit",{"attacker":attacker.get("id",-1),"target":target["id"],"instance":action_seq,"point":point,"guarded":false,"atk":String(hit.get("atk_path",""))})
+	elif by_companion:
+		amount = maxi(1,roundi(amount*float(attacker["numeric"].values["damage_rate"])))
+	var target_is_player := victim == "player"
+	bus.emit("combat.hit",{"attacker":attacker.get("id",-1),"target":target["id"],"instance":int(attacker.get("action_instance",action_seq)),"point":point,"guarded":false,"atk":String(hit.get("atk_path",""))})
 	var reaction := "none"
 	if target_is_player:
 		var before_hp := float(player["hp"])
@@ -1149,17 +1162,22 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"]),float(hit.get("lift",-1)))
 		target["clock"] = 0.0
 		target["flash_ms"] = 65.0
-		combo_count += 1
-		combo_ms = float(rules["combo_window_ms"])
-		hit_count += 1
-		if by_player:bar_target = int(target["id"])
+		if victim == "monster" and not by_companion:
+			combo_count += 1
+			combo_ms = float(rules["combo_window_ms"])
+			hit_count += 1
+			if by_player:bar_target = int(target["id"])
+		if by_companion:
+			attacker["attack_success"] = true
+			var source_id = attacker["skills"].find_key(hit_skill_id)
+			attacker["last_attack"] = -1 if source_id == null else int(source_id)
 	var stop := float(rules["hitstop"]["down_ms"] if reaction in ["launch","down","air"] else rules["hitstop"]["hit_ms"])
 	# Thrown and spawned objects freeze only their target; the caster keeps moving.
 	if String(hit.get("kind","")) != "object" and not hit.has("object"):
 		attacker["stuck_ms"] = maxf(float(attacker.get("stuck_ms",0)),stop)
 	target["stuck_ms"] = maxf(float(target.get("stuck_ms",0)),stop)
 	bus.emit("combat.damage",{"target":target["id"],"amount":amount,"critical":resolved["critical"],"category":resolved["category"],
-		"victim":"player" if target_is_player else "monster","reaction":reaction,
+		"victim":victim,"reaction":reaction,
 		"point":Vector3(Vector2(target["pos"]).x,Vector2(target["pos"]).y,float(target["z"]))})
 	hit_cues(atk,point,facing,by_player)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0:
@@ -1173,13 +1191,20 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			if effect.get("id","") == "bleed" and hit_skill_id in ["rage_slash","hopsmash"] and int(skill_levels.get("bloody_vigorous",0)) > 0:
 				chance = minf(1.0,chance+0.4)
 			if rng.chance(chance):
-				var request := {"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(skill_levels.get(hit_skill_id,1))}
+				var ranks: Dictionary = attacker["ranks"] if by_companion else skill_levels
+				var request := {"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(ranks.get(hit_skill_id,1))}
 				for field: String in ["duration_ms","status_level"]:
 					if effect.has(field):request[field] = effect[field]
 				apply_effect(request)
-		if bool(resolved.get("critical",false)) and int(skill_levels.get("defensedownoncritical",0)) > 0:
+		if by_player and bool(resolved.get("critical",false)) and int(skill_levels.get("defensedownoncritical",0)) > 0:
 			apply_effect({"kind":"effect","id":"defense_down","target":target["id"],"rank":int(skill_levels["defensedownoncritical"])})
-	if not target_is_player:
+	if victim == "companion":
+		play_sound("hurt")
+		if float(target["hp"]) <= 0:
+			target["state"] = "dead"
+			target["death_ms"] = 0.0
+			report_companion_defeat(target)
+	elif victim == "monster":
 		# 按怪物种类播受击/死亡音（bake_dnf_monster_sounds.py 生成 mon_<key>_<event>）；
 		# 该类怪没有独立音效时退回通用的哥布林音，避免完全无声。
 		var mob_key := String(target["def"].get("key", ""))
@@ -1247,6 +1272,33 @@ func player_damage_boxes() -> Array:
 	var f: Dictionary = Kernel.Timeline.frame_at(tl,float(ani[1]),String(ani[0]) in ["stay","move","dash"])
 	return Kernel.HitJudge.world_boxes(f.get("damage_boxes",[]),Kernel.HitJudge.anchor(player["pos"],float(player["z"])),int(player["facing"]))
 
+func victim_kind(actor: Dictionary) -> String:
+	if int(actor.get("id",-1)) == PLAYER_ID:return "player"
+	return "companion" if actor.has("companion_id") else "monster"
+
+func friendly_targets() -> Array:
+	var targets: Array = [player] if float(player["hp"]) > 0 else []
+	for companion: Dictionary in companions:
+		if float(companion["hp"]) > 0:targets.append(companion)
+	return targets
+
+func nearest_living(point: Vector2, actors: Array) -> Dictionary:
+	var nearest: Dictionary = {}
+	var distance := INF
+	for actor: Dictionary in actors:
+		if float(actor["hp"]) <= 0:continue
+		var next := CompanionProgram.target_distance(point,actor["pos"])
+		if next >= distance:continue
+		distance = next
+		nearest = actor
+	return nearest
+
+func friendly_damage_boxes(target: Dictionary) -> Array:
+	if int(target["id"]) == PLAYER_ID:return player_damage_boxes()
+	var ani := companion_ani(target)
+	var frame: Dictionary = Kernel.Timeline.frame_at(table.player_timeline(String(ani[0])),float(ani[1]),String(ani[0]) in ["stay","move","dash"])
+	return Kernel.HitJudge.world_boxes(frame.get("damage_boxes",[]),Kernel.HitJudge.anchor(target["pos"],float(target["z"])),int(target["facing"]))
+
 func update_enemy(enemy: Dictionary, ms: float) -> void:
 	if enemy.has("numeric") and float(enemy["hp"])>0:
 		step_numeric_actor(enemy,enemy["numeric"],ms)
@@ -1276,7 +1328,9 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 	elif state == "attack":
 		enemy_attack(enemy,advance)
 	elif state in ["idle","move"] and enemy.get("ai",true):
-		var intent: Dictionary = Kernel.MonsterAI.think(enemy,m,player["pos"],float(player["z"]))
+		var target := player if companions.is_empty() else nearest_living(enemy["pos"],friendly_targets())
+		if target.is_empty():return
+		var intent: Dictionary = Kernel.MonsterAI.think(enemy,m,target["pos"],float(target["z"]))
 		enemy["facing"] = int(intent["face"])
 		if intent["attack"]:
 			enemy["state"] = "attack"
@@ -1320,17 +1374,20 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 			spawn_object(hit,"monster",enemy["pos"],float(enemy["z"]),facing,float(enemy["attack"]),enemy)
 			if String(throw["sound"]) != "":play_sound(String(throw["sound"]))
 	else:
+		var targets := friendly_targets()
 		for s in move_segments.size():
-			if enemy["hits"].has(s):continue
 			var boxes: Array = Kernel.Timeline.segment_boxes(move_segments[s],old_t,t)
 			if boxes.is_empty():continue
 			var world: Array = Kernel.HitJudge.world_boxes(boxes,Kernel.HitJudge.anchor(enemy["pos"],float(enemy["z"])),int(enemy["facing"]))
-			var c: Dictionary = Kernel.HitJudge.contact(world,player_damage_boxes())
-			if c.is_empty():continue
-			enemy["hits"][s] = true
-			land_hit(enemy,player,{"atk":move_atk,"atk_path":move_atk_path,
-				"percent":100.0+float(move_atk.get("damage_bonus",0)),"lift":-1.0},
-				c["point"],int(enemy["facing"]),float(enemy["attack"]))
+			for target: Dictionary in targets:
+				var key := Vector2i(s,int(target["id"]))
+				if enemy["hits"].has(key) or float(target["hp"]) <= 0:continue
+				var c: Dictionary = Kernel.HitJudge.contact(world,friendly_damage_boxes(target))
+				if c.is_empty():continue
+				enemy["hits"][key] = true
+				land_hit(enemy,target,{"atk":move_atk,"atk_path":move_atk_path,
+					"percent":100.0+float(move_atk.get("damage_bonus",0)),"lift":-1.0},
+					c["point"],int(enemy["facing"]),float(enemy["attack"]))
 	if t >= Kernel.Timeline.duration(move_timeline):
 		enemy["state"] = "idle"
 		enemy["clock"] = 0.0
@@ -1474,7 +1531,7 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		var controller: Dictionary = hit.get("native_controller",{})
 		var kind := String(controller.get("kind",""))
 		var object_ms := ms
-		if first_new_object_id > 0 and int(o["id"]) >= first_new_object_id and o["owner"] == "player" \
+		if first_new_object_id > 0 and int(o["id"]) >= first_new_object_id and o["owner"] in ["player","companion"] \
 				and (kind in GHOST_FIELD_KINDS or hit.get("skill_id","") in ["normalwave","icewave","firewave"]):
 			# CB25FB..CB2819 creates a fresh object at release. Evaluate frame zero
 			# now without charging the new object for the caster's creation update.
@@ -1537,20 +1594,19 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 			if not boxes.is_empty():
 				var world: Array = Kernel.HitJudge.world_boxes(boxes,Kernel.HitJudge.anchor(o["pos"],float(o["z"])),int(o["facing"]),float(o.get("size_rate",1)))
 				var attacker: Dictionary = player if o["owner"] == "player" else o["source"]
-				if o["owner"] == "player":
-					for enemy: Dictionary in monsters:
-						if o["hits"].has(enemy["id"]) or float(enemy["hp"])<=0:continue
-						var c: Dictionary = Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy))
-						if c.is_empty():continue
-						o["hits"][enemy["id"]] = true
-						land_hit(attacker,enemy,hit,c["point"],int(o["facing"]),float(o["power"]))
-						if int(obj["piercing"]) <= 0:done = true
-				elif not o["hits"].has(PLAYER_ID):
-					var c: Dictionary = Kernel.HitJudge.contact(world,player_damage_boxes())
-					if not c.is_empty():
-						o["hits"][PLAYER_ID] = true
-						land_hit(o["source"] if not o["source"].is_empty() else {"id":-1,"pos":o["pos"],"stuck_ms":0.0},player,hit,c["point"],int(o["facing"]),float(o["power"]))
-						if int(obj["piercing"]) <= 0:done = true
+				if attacker.is_empty():attacker = {"id":-1,"pos":o["pos"],"stuck_ms":0.0}
+				var friendly: bool = o["owner"] in ["player","companion"]
+				var targets := monsters if friendly else friendly_targets()
+				for target: Dictionary in targets:
+					if o["hits"].has(target["id"]) or float(target["hp"])<=0:continue
+					var target_boxes := enemy_damage_boxes(target) if friendly else friendly_damage_boxes(target)
+					var c: Dictionary = Kernel.HitJudge.contact(world,target_boxes)
+					if c.is_empty():continue
+					o["hits"][target["id"]] = true
+					land_hit(attacker,target,hit,c["point"],int(o["facing"]),float(o["power"]))
+					if int(obj["piercing"]) <= 0:
+						done = true
+						if not friendly:break
 		if life > 0 and t >= life:done = true
 		elif life <= 0 and t >= Kernel.Timeline.duration(tl) and (active < 0 or t >= active):done = true
 		if active >= 0 and t >= active and life <= 0 and Kernel.Timeline.duration(tl) > 2000:done = true
@@ -1916,6 +1972,7 @@ func load_room(index: int, from_side: String) -> void:
 			if kind == "":continue
 			var anchor: Array = m["anchor"]
 			spawn_enemy(Vector2(float(anchor[0]),float(anchor[1])),String(m["raw"][-1]) == "[boss]",kind)
+	place_room_companions()
 	notice(String(entry["name"])+(" · 领主出现" if entry.get("boss",false) else ""))
 
 ## Gate anchor of the current room on the given side (placement gate, else map pathgate).
@@ -1947,6 +2004,234 @@ func clear_monsters() -> void:
 	for enemy: Dictionary in monsters:
 		bus.emit("combat.entity_removed",{"entity_id":enemy["id"]})
 	monsters.clear()
+
+# ---------------------------------------------------------------- friendly APCs
+
+func can_spawn_companion(entry: Dictionary) -> bool:
+	var source_id := int(entry.get("source_id",-1))
+	var raw: Array = entry.get("raw",[])
+	var anchor: Array = entry.get("anchor",[])
+	if raw.size() != 8 or raw[4] != "[character]" or raw[5] != "[normal]" or anchor.size() != 3:return false
+	if int(raw[0]) != source_id or raw.slice(1,4) != anchor:return false
+	if not _companion_programs.has(source_id):_companion_programs[source_id] = CompanionProgram.load_program(source_id)
+	return not _companion_programs[source_id].is_empty() and view.has_companion_appearance(source_id)
+
+func place_room_companions() -> void:
+	var placements := {}
+	for entry: Dictionary in room_map.get("companions",[]):
+		if not can_spawn_companion(entry):continue
+		var source_id := int(entry["source_id"])
+		placements[source_id] = entry["anchor"]
+		if companions.any(func(actor):return int(actor["companion_id"])==source_id):continue
+		companions.append(make_companion(source_id,_companion_programs[source_id]))
+	for companion: Dictionary in companions:
+		if float(companion["hp"])<=0:continue
+		var source_id := int(companion["companion_id"])
+		var anchor: Array = placements.get(source_id,[])
+		# Only the source room gives an APC anchor. Else carry the actor through
+		# the gate at the nearest walkable position beside the player.
+		companion["pos"] = Vector2(float(anchor[0]),float(anchor[1])) if not anchor.is_empty() else constrain_pos(Vector2(player["pos"])-Vector2(24*int(player["facing"]),0))
+		companion["z"] = float(anchor[2]) if not anchor.is_empty() else 0.0
+		companion.merge({"state":"idle","action":"","clock":0.0,"vz":0.0,"stuck_ms":0.0,
+			"push_ms":0.0,"flash_ms":0.0,"think_ms":0.0,"attack_success":false},true)
+		bus.emit("combat.entity_spawned",{"entity_id":companion["id"],"kind":"companion","source_id":source_id})
+
+func make_companion(source_id: int, program: Dictionary) -> Dictionary:
+	var config: Dictionary = Numbers.shared_config()
+	var numbers: Dictionary = config["base"].duplicate()
+	# Until the AIC stat-rate application is decoded, use a separate base actor.
+	# The source damage multiplier is explicit and applies to all attack types.
+	numbers["hp_max"] = table.player["hp_max"]
+	numbers["mp_max"] = table.player["mp_max"]
+	numbers["damage_rate"] *= float(program["attack_damage_rate"][0])
+	var actor = ActorNumbers.new()
+	actor.configure({"numbers":numbers})
+	var ranks := {}
+	var local_by_source := {}
+	for key in ["skill","quick_skill"]:
+		var raw: Array = program.get(key,[])
+		for i in range(0,raw.size()-1,2):
+			var id := int(raw[i])
+			var local := String(config["skill_index"].get(str(id),""))
+			if local == "" or int(raw[i+1]) <= 0:continue
+			ranks[local] = int(raw[i+1])
+			local_by_source[id] = local
+	var companion := new_player()
+	companion.merge({"id":_next_entity_id,"companion_id":source_id,"program":program,"numeric":actor,
+		"hp":float(actor.values["hp_max"]),"max_hp":float(actor.values["hp_max"]),"mp":float(actor.values["mp_max"]),
+		"attack":float(actor.values["physical_attack"]),"ranks":ranks,"skills":local_by_source,
+		"moves":table.companion_moves(ranks,"shortsword"),"death_ms":0.0},true)
+	_next_entity_id += 1
+	return companion
+
+func living_companion_ids() -> Array[int]:
+	var ids: Array[int] = []
+	for companion: Dictionary in companions:
+		if float(companion["hp"])>0:ids.append(int(companion["companion_id"]))
+	ids.sort()
+	return ids
+
+func companion_views() -> Array:
+	var result: Array = []
+	for companion: Dictionary in companions:
+		result.append({"id":companion["id"],"source_id":companion["companion_id"],"pos":Vector2(companion["pos"]),
+			"hp":float(companion["hp"]),"max_hp":float(companion["max_hp"]),"alive":float(companion["hp"])>0})
+	return result
+
+func report_companion_defeat(companion: Dictionary) -> void:
+	if companion.get("defeat_reported",false):return
+	companion["defeat_reported"] = true
+	bus.emit("combat.companion_defeated",flow_payload({"entity_id":companion["id"],
+		"source_id":companion["companion_id"],"source_map_id":int(room_map.get("map_id",-1))}))
+
+func update_companion(companion: Dictionary, ms: float) -> void:
+	if float(companion["hp"])<=0:
+		companion["death_ms"] = float(companion["death_ms"])+ms
+		return
+	var actor = companion["numeric"]
+	step_numeric_actor(companion,actor,ms)
+	if float(companion["hp"])<=0:return
+	var cd: Dictionary = companion["cooldowns"]
+	for skill: String in cd:cd[skill] = maxf(0.0,float(cd[skill])-ms)
+	companion["mp"] = minf(float(actor.values["mp_max"]),float(companion["mp"])+ms*float(actor.values["mp_regen"])/1000.0)
+	companion["flash_ms"] = maxf(0.0,float(companion["flash_ms"])-ms)
+	if float(companion["stuck_ms"])>0:
+		companion["stuck_ms"] = maxf(0.0,float(companion["stuck_ms"])-ms)
+		return
+	var state := String(companion["state"])
+	if actor.effects.controlled() or state in ["hurt","air","down"]:
+		Kernel.Reaction.step_body(companion,ms,float(rules["player"]["gravity"]),rules["reaction"],move_in_world)
+		if state=="down":companion["clock"] = float(companion["down_ms"])
+		return
+	if state=="action":
+		step_companion_action(companion,ms)
+		return
+	var program: Dictionary = companion["program"]
+	var origin: Vector2 = companion["pos"]
+	var target := nearest_living(origin,monsters)
+	if not target.is_empty() and CompanionProgram.target_distance(origin,target["pos"])>float(program["vision"][0]):target = {}
+	var goal := Vector2(player["pos"]) if target.is_empty() else Vector2(target["pos"])
+	var offset := goal-origin
+	if offset.x != 0.0:companion["facing"] = 1 if offset.x > 0.0 else -1
+	companion["think_ms"] = float(companion["think_ms"])-ms
+	if float(companion["think_ms"])<=0.0:
+		companion["think_ms"] = float(program["think_term"][0])
+		if not target.is_empty() and choose_companion_action(companion,target):return
+	var keep := float(program["keep_distance_with_target"][0])
+	var move := Vector2(signf(offset.x) if absf(offset.x)>keep else 0.0,signf(offset.y) if absf(offset.y)>8.0 else 0.0)
+	if not move.is_zero_approx():
+		var speed := float(rules["player"]["walk_speed"])*float(actor.values["move_speed"])*ms/1000.0
+		companion["pos"] = move_in_world(origin,Vector2(move.x,move.y*float(rules["units"]["depth_speed_ratio"]))*speed)
+		companion["state"] = "move"
+	else:companion["state"] = "idle"
+	companion["clock"] = float(companion["clock"])+ms if state==companion["state"] else 0.0
+
+func choose_companion_action(companion: Dictionary, target: Dictionary) -> bool:
+	var program: Dictionary = companion["program"]
+	var actor = companion["numeric"]
+	var usable := {}
+	var active := {}
+	for source_id: int in companion["skills"]:
+		var id: String = companion["skills"][source_id]
+		var move: Dictionary = companion["moves"].get(id,{})
+		if move.is_empty():continue
+		var effect := String(move.get("effect_id",""))
+		if effect != "":active[source_id] = actor.effects.active.has(effect)
+		var required := String(move.get("requires_effect",""))
+		usable[source_id] = float(companion["cooldowns"].get(id,0))<=0.0 \
+			and float(companion["mp"])>=float(move["mp"])*float(actor.values["mp_cost_rate"]) \
+			and (required == "" or actor.effects.active.has(required))
+	var context := {"position":companion["pos"],"target_position":target["pos"],"facing":companion["facing"],
+		"usable":usable,"skill_on":active,"last_attack":int(companion.get("last_attack",-1)),
+		"attack_success":bool(companion["attack_success"]),"target_state":4 if target["state"]=="down" else -1}
+	companion["attack_success"] = false
+	for entry in ["event","action"]:
+		var stream = CompanionProgram.choose(program,entry,context)
+		# The original combo stream waits for an ordinary three-hit chain.
+		if not stream is String or stream == "cancel_wave_combo":continue
+		var source_id := CompanionProgram.stream_skill(program,stream)
+		if not usable.get(source_id,false):continue
+		var id: String = companion["skills"][source_id]
+		var move: Dictionary = companion["moves"][id]
+		companion["state"] = "action"
+		companion["action"] = id
+		companion["clock"] = 0.0
+		companion["hits"] = {}
+		companion["mp"] = float(companion["mp"])-float(move["mp"])*float(actor.values["mp_cost_rate"])
+		companion["cooldowns"][id] = float(move["cool_ms"])*float(actor.values["cooldown_rate"])
+		companion["native_phase"] = Kernel.NativeWave.plan(move,float(actor.values["attack_speed"]),float(actor.values["cast_speed"])) \
+			if move.get("native_state","") in ["normalwave","wave_cast"] else {}
+		companion["action_instance"] = int(companion.get("action_instance",0))+1
+		bus.emit("combat.action_started",{"entity_id":companion["id"],"action":id,"instance":companion["action_instance"]})
+		var effect := String(move.get("effect_id",""))
+		if effect != "":actor.add_effect(effect,int(companion["ranks"][id]))
+		companion_action_events(companion,move,-1.0,0.0)
+		return true
+	return false
+
+func step_companion_action(companion: Dictionary, ms: float) -> void:
+	var id: String = companion["action"]
+	var move: Dictionary = companion["moves"][id]
+	var phase: Dictionary = companion["native_phase"]
+	var actor = companion["numeric"]
+	var old_t := float(companion["clock"])
+	var speed_kind := String(Numbers.shared_config()["skills"].get(id,{}).get("speed","attack"))
+	var speed := float(actor.values["cast_speed" if speed_kind=="cast" else "attack_speed"])
+	var t := old_t+ms*(speed if phase.is_empty() else 1.0)
+	companion["clock"] = t
+	if not phase.is_empty():
+		var dx := Kernel.NativeWave.distance(phase,t)-Kernel.NativeWave.distance(phase,old_t)
+		if dx != 0.0:companion["pos"] = move_in_world(companion["pos"],Vector2(dx*int(companion["facing"]),0))
+	companion_action_events(companion,move,companion_action_clock(companion,old_t),companion_action_clock(companion,t))
+	var duration := float(move["duration"] if phase.is_empty() else phase["end_ms"])
+	if t >= duration:
+		companion["state"] = "idle"
+		companion["action"] = ""
+		companion["clock"] = 0.0
+
+func companion_action_clock(companion: Dictionary, time: float) -> float:
+	var phase: Dictionary = companion.get("native_phase",{})
+	return time if phase.is_empty() else Kernel.NativeWave.ani_clock(phase,time)
+
+func companion_action_events(companion: Dictionary, move: Dictionary, old_t: float, t: float) -> void:
+	var point: Vector2 = companion["pos"]
+	var z := float(companion["z"])
+	var facing := int(companion["facing"])
+	for fx: Dictionary in move["fx"]:
+		var at := float(fx["at"])
+		if at > old_t and at <= t:
+			bus.emit("combat.cue",{"kind":"fx","key":fx["key"],"point":point,"height":z,"facing":facing,
+				"follow":companion["id"],"offset_x":float(fx.get("offset_x",0)),"action_instance":companion["action_instance"],
+				"action_clock_at":at if fx.get("action_clock",false) else -1.0})
+	var hits: Array = move["hits"]
+	for i in hits.size():
+		var hit: Dictionary = hits[i]
+		if hit["kind"] == "object":
+			if float(hit["at"]) > old_t and float(hit["at"]) <= t:
+				spawn_object(hit,"companion",point,z,facing,float(companion["attack"]),companion)
+			continue
+		for s in hit["segments"].size():
+			var boxes: Array = Kernel.Timeline.segment_boxes(hit["segments"][s],old_t,t)
+			if boxes.is_empty():continue
+			var world: Array = Kernel.HitJudge.world_boxes(boxes,Kernel.HitJudge.anchor(point,z),facing)
+			for enemy: Dictionary in monsters:
+				var key := "%d:%d:%d"%[i,s,int(enemy["id"])]
+				if float(enemy["hp"])<=0.0 or companion["hits"].has(key):continue
+				var contact: Dictionary = Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy))
+				if contact.is_empty():continue
+				companion["hits"][key] = true
+				land_hit(companion,enemy,hit,contact["point"],facing,float(companion["attack"]))
+
+func companion_ani(companion: Dictionary) -> Array:
+	match String(companion["state"]):
+		"action":
+			var move: Dictionary = companion["moves"][companion["action"]]
+			return [move["ani"],companion_action_clock(companion,float(companion["clock"]))]
+		"hurt":return [companion["hit_motion"],0.0]
+		"air":return ["overturn",0.0]
+		"down","dead":return ["down",Kernel.Reaction.down_clock(companion,rules["reaction"],table.player_timeline("down"))]
+		"move":return ["move",float(companion["clock"])]
+	return ["stay",float(companion["clock"])]
 
 # ---------------------------------------------------------------- presentation state
 
@@ -2028,6 +2313,13 @@ func view_snapshot() -> Dictionary:
 		enemies.append({"id":enemy["id"],"pos":Vector2(enemy["pos"]),"z":float(enemy["z"]),"facing":int(enemy["facing"]),
 			"ani":String(enemy["def"]["motions"].get(e_ani[0],e_ani[0])),"clock":e_ani[1],"flash":float(enemy["flash_ms"])>0,"alive":is_alive,
 			"death_ms":float(enemy["death_ms"]),"hp_ratio":float(enemy["hp"])/float(enemy["max_hp"]),"chief":enemy["chief"]})
+	var friendly: Array = []
+	for companion: Dictionary in companions:
+		var current := companion_ani(companion)
+		friendly.append({"id":companion["id"],"pos":Vector2(companion["pos"]),"z":float(companion["z"]),
+			"facing":int(companion["facing"]),"ani":String(current[0]),"clock":float(current[1]),"state":companion["state"],
+			"action_instance":int(companion.get("action_instance",-1)),"flash":float(companion["flash_ms"])>0,
+			"alive":float(companion["hp"])>0,"death_ms":float(companion["death_ms"])})
 	var objs: Array = []
 	for o: Dictionary in objects:
 		if String(o["def"]["bank"]) == "":continue
@@ -2047,7 +2339,7 @@ func view_snapshot() -> Dictionary:
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,
 			"flash":float(player["flash_ms"])>0,"buff":float(player["buff_ms"])>0,"weapon":weapon,
 			"aura":String(move_def("buff").get("aura_fx","")) if float(player["buff_ms"])>0 else ""},
-		"enemies":enemies,"objects":objs,"props":props_view(),
+		"enemies":enemies,"companions":friendly,"objects":objs,"props":props_view(),
 		"stage":{"room_index":room_index,"placement":String(rules["rooms"][room_index]["placement"]),
 			"cleared":room_cleared and not boss_room,"doors":doors.duplicate(true)},
 		"hud":{"room_name":String(rules["rooms"][room_index]["name"]),"alive":alive,"room_cleared":room_cleared,

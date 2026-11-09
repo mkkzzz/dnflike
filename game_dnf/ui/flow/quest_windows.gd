@@ -170,7 +170,9 @@ func objective_line(o: Dictionary) -> String:
 		"collect_item":label=String(game.Catalog.ITEMS.get(o["target"],{}).get("name",o["target"]))
 		"learn_skill":label="学习任意技能一级"
 		"disassemble_item":label="在"+game.session.quests.npc_name(o["npc"])+"处分解一件装备"
-		"clear_map":label=String(game.session.quests.catalog.config["dungeons"].get(o.get("dungeon",""),"目标地图"))+" · 特殊地图目标"
+		"clear_map":
+			label=String(game.session.quests.catalog.config["dungeons"].get(o.get("dungeon",""),"目标地图"))
+			label+=" · 单人通关并确保 G.S.D. 存活" if o.has("companion_id") else " · 特殊地图目标"
 	var rules: Dictionary=o.get("conditions",{})
 	if rules.has("max_elapsed_ms"):label+=" · 限时 %g 秒" % (float(rules["max_elapsed_ms"])/1000.0)
 	if rules.has("max_hits_taken"):label+=" · 被击不超过 %d 次" % int(rules["max_hits_taken"])

@@ -340,13 +340,18 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
             if not o['npc']:reasons.append('target_npc_not_in_town')
         elif p['type']=='clear_map':
             target=(map_index or {}).get(str(p['map']))
-            if target and target.get('quest_id',number)!=number:
+            quest_maze=target and 'quest_id' in target
+            companion=p.get('source_extra',[])
+            escort=quest_maze and target['quest_id']==number and companion==[target.get('companion_id')]
+            if quest_maze and target['quest_id']!=number:
                 reasons.append('clear_map_quest_maze_unavailable')
-            if p.get('source_extra'):
-                if target and p['source_extra']==[target.get('companion_id')]:
+            if companion:
+                if escort and not target.get('escort_runtime',False):
                     reasons.append('clear_map_companion_survival_unavailable')
-                else:
+                elif not escort:
                     reasons.append('clear_map_extra_condition_unavailable')
+            elif quest_maze:
+                reasons.append('clear_map_companion_objective_mismatch')
             if not target:
                 reasons.append('clear_map_unavailable:'+str(p['map']))
             else:
@@ -362,7 +367,11 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
                     o['dungeon']=dungeon
                     o['cell']=[int(cell[0]),int(cell[1])]
                     o['source_map_id']=int(p['map'])
-                    if p.get('source_extra'):o['source_extra']=p['source_extra']
+                    if escort:
+                        if target.get('difficulty')!='expert':
+                            reasons.append('clear_map_escort_difficulty_unavailable')
+                        o.update(quest_maze='original.quest.%d' % number, companion_id=companion[0],
+                                 difficulty=[target.get('difficulty')])
         else:
             dungeon = quest_dungeons.get(p['dungeon'])
             if p['dungeon']==-1 and dungeon_index is not None:

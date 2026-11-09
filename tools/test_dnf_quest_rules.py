@@ -45,14 +45,32 @@ class QuestRules(unittest.TestCase):
         self.assertIn('clear_reward_item_unsupported', reasons)
     def test_escort_map_is_blocked_until_survival_is_enforced(self):
         fields = {'[grade]': ['[epic]'], '[npc index]': [7], '[type]': ['[clear map]'],
-                  '[sub type]': [0], '[int data]': [1619, 201]}
+                  '[sub type]': [0], '[int data]': [1619, 201], '[level]': [16, 99],
+                  '[pre required quest]': [4306], '[cant giveup]': [1], '[reward int data]': [0, 5000]}
         words = {'[name]': 'G.S.D亲自出马', '[condition message]': '陪同G.S.D通关'}
-        _, _, reasons = compile_quest(4307, 'n_quest/example/a.qst', 'x', fields, words, {}, {}, {},
-                                     dungeon_index={11: 'draconiantower'},
-                                     map_index={'1619': {'dungeon': 'draconiantower', 'cell': [0, 2],
-                                                        'quest_id': 4307, 'companion_id': 201}})
+        target = {'dungeon': 'draconiantower', 'cell': [0, 2], 'quest_id': 4307, 'companion_id': 201,
+                  'difficulty': 'expert'}
+        def compile_with_target():
+            return compile_quest(4307, 'n_quest/example/a.qst', 'x', fields, words, {}, {}, {},
+                                 dungeon_index={11: 'draconiantower'}, map_index={'1619': target})
+        _, _, reasons = compile_with_target()
         self.assertIn('clear_map_companion_survival_unavailable', reasons)
         self.assertNotIn('clear_map_unavailable:1619', reasons)
+        target['escort_runtime'] = True
+        quest, _, reasons = compile_with_target()
+        self.assertFalse(reasons)
+        self.assertEqual(quest['objectives'], [{
+            'id': 'objective_0', 'type': 'clear_map', 'amount': 1, 'target': 'draconiantower:0_2',
+            'dungeon': 'draconiantower', 'cell': [0, 2], 'source_map_id': 1619,
+            'quest_maze': 'original.quest.4307', 'companion_id': 201, 'difficulty': ['expert'],
+        }])
+        self.assertEqual(quest['min_level'], 16)
+        self.assertEqual(quest['requires'], ['original.quest.4306'])
+        self.assertFalse(quest['abandonable'])
+        self.assertEqual(quest['reward']['gold'], 5000)
+        target['companion_id'] = 202
+        _, _, reasons = compile_with_target()
+        self.assertIn('clear_map_extra_condition_unavailable', reasons)
     def test_full_reproducible_audit_and_runtime(self):
         runtime,audit=build();catalog,missing=sync_catalog(runtime)
         self.assertFalse(missing);self.assertEqual(stale_outputs(runtime,audit,catalog),[]);self.assertEqual(audit,load(AUDIT))

@@ -59,7 +59,13 @@ func run() -> void:
 				var missing:=int(o.amount)-preload("res://items/inventory.gd").stock(s.profile,o.target)
 				if missing>0:check(preload("res://items/inventory.gd").give(s.profile,o.target,missing)["ok"],"source collection fixture is obtainable: "+q.id)
 			elif o.type=="clear_map":
-				s.quests.ingest(s.profile,{"type":"map.cleared","event_id":"map:"+q.id,"dungeon":o.dungeon,"cell":o.cell})
+				if o.has("quest_maze"):
+					s.quests.ingest(s.profile,{"type":"map.cleared","event_id":"ordinary-map:"+q.id,"dungeon":o.dungeon,"victory":true})
+					check(s.quests.status(s.profile,q.id)=="active","ordinary map clear cannot satisfy escort objective: "+q.id)
+					s.quests.ingest(s.profile,{"type":"escort.map_cleared","event_id":"escort:"+q.id,"dungeon":o.dungeon,
+						"quest_maze":o.quest_maze,"source_map_id":int(o.source_map_id),"companions_alive":[int(o.companion_id)],
+						"party_size":1,"difficulty":o.difficulty[0],"victory":true})
+				else:s.quests.ingest(s.profile,{"type":"map.cleared","event_id":"map:"+q.id,"dungeon":o.dungeon,"cell":o.cell})
 			elif o.type=="learn_skill":
 				s.quests.ingest(s.profile,{"type":"skill.learned","event_id":"skill:"+q.id,"skill":"upper","levels":1})
 			elif o.type=="disassemble_item":

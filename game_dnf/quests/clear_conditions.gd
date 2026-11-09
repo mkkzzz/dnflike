@@ -23,6 +23,14 @@ static func matches(rules: Dictionary, facts: Dictionary) -> bool:
 		elif facts[field]>rules[key]:return false
 	return true
 
+static func escort_survived(event: Dictionary, map_id: int, companion_id: int) -> bool:
+	var source_map = event.get("source_map_id")
+	var alive = event.get("companions_alive")
+	if not source_map is int or source_map!=map_id or not alive is Array:return false
+	for id in alive:
+		if not id is int or id<=0:return false
+	return companion_id in alive
+
 static func initialize(run: Dictionary) -> void:
 	if not run.has("quest_facts"):run["quest_facts"]={"hits_taken":0,"seen":{}}
 

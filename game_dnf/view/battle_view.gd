@@ -37,6 +37,7 @@ var revive_effects: Array = []
 var numbers: Array = []
 var prop_views: Array = []
 var enemy_actors: Dictionary = {}
+var _companion_banks: Dictionary = {}
 var object_views: Dictionary = {}
 var ghosts: Array = []
 var aura
@@ -167,14 +168,18 @@ func set_debug_collision(enabled: bool) -> void:
 ## frame_ms always elapses (damage numbers); sim_ms is the simulation time actually advanced.
 func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	var p: Dictionary = s["player"]
+	var companions: Array = s.get("companions",[])
+	var companion_by_id := {}
+	for companion: Dictionary in companions:companion_by_id[companion["id"]] = companion
 	_player_pos = Vector2(p["pos"])
 	_player_z = float(p["z"])
 	for fx in effects:
 		if is_instance_valid(fx) and not fx.is_queued_for_deletion():
-			if fx.follow == 0:fx.position = _canvas(_player_pos, _player_z)+fx.follow_offset
+			var source: Dictionary = p if fx.follow == 0 else companion_by_id.get(fx.follow,{})
+			if not source.is_empty():fx.position = _canvas(Vector2(source["pos"]),float(source["z"]))+fx.follow_offset
 			if fx.action_clock_at >= 0:
-				if int(p.get("action_instance",-1)) != fx.action_instance or p.get("state","") != "action":fx.queue_free()
-				else:fx.seek(maxf(0,float(p["clock"])-fx.action_clock_at))
+				if int(source.get("action_instance",-1)) != fx.action_instance or source.get("state","") != "action":fx.queue_free()
+				else:fx.seek(maxf(0,float(source["clock"])-fx.action_clock_at))
 			elif fx.get_meta("particle_birth_pending",false):
 				# The cue was created during this simulation tick. Its ANI begins
 				# at zero, rather than consuming a tick before its first rendering.
@@ -202,7 +207,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 		pickup_pose_frames = 0
 	player_actor.present(pose,pose_clock,p["facing"],p["z"],1.0 if p["flash"] else 0.0)
 	_present_aura(String(p.get("aura","")),p,sim_ms)
-	for e: Dictionary in s["enemies"]:
+	for e: Dictionary in s["enemies"]+companions:
 		var actor = enemy_actors.get(e["id"])
 		if actor == null:continue
 		actor.position = _canvas(Vector2(e["pos"]), 0.0)
@@ -334,8 +339,22 @@ func _on_room_loaded(event: Dictionary) -> void:
 		view.setup(_assets["scene"],prop)
 		prop_views.append(view)
 
+func companion_bank(source_id: int) -> Dictionary:
+	if _companion_banks.is_empty():
+		var path := "res://assets_local/companions_v1/manifest.json"
+		if not FileAccess.file_exists(path):return {}
+		var manifest = JSON.parse_string(FileAccess.get_file_as_string(path))
+		if manifest is Dictionary and manifest.get("schema") == "dnf_companion_appearance/1":_companion_banks = manifest.get("actors",{})
+	return _companion_banks.get(str(source_id),{})
+
+func has_companion_appearance(source_id: int) -> bool:
+	var bank := companion_bank(source_id)
+	var texture := String(bank.get("atlas",{}).get("texture",""))
+	return bank.get("clips",{}).has("stay") and texture != "" and ResourceLoader.exists(texture)
+
 func _on_entity_spawned(event: Dictionary) -> void:
-	var bank: Dictionary = _combat.get("monsters",{}).get(String(event["appearance"]),{})
+	var bank: Dictionary = companion_bank(int(event["source_id"])) if event.get("kind","") == "companion" \
+		else _combat.get("monsters",{}).get(String(event["appearance"]),{})
 	if bank.is_empty():return
 	var actor = ActorView.new()
 	world.add_child(actor)
