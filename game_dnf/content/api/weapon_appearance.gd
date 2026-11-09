@@ -8,16 +8,18 @@ static var _layers: Dictionary = {}
 
 static func data() -> Dictionary:
 	if _data.is_empty():
-		var value=JSON.parse_string(FileAccess.get_file_as_string(PATH))
+		var manifest_text := FileAccess.get_file_as_string(PATH)
+		var value = JSON.parse_string(manifest_text)
 		if value is Dictionary and value.get("schema")=="dnf_weapon_appearance/1":
 			_data=value
-			_apply_pose_overlay()
+			# Existing Windows clones may still have CRLF from before Git pinned this file.
+			_apply_pose_overlay(manifest_text.replace("\r\n", "\n").sha256_text())
 	return _data
 
-static func _apply_pose_overlay() -> void:
+static func _apply_pose_overlay(base_sha256: String) -> void:
 	var overlay = JSON.parse_string(FileAccess.get_file_as_string(POSE_OVERLAY))
 	if not overlay is Dictionary or overlay.get("schema")!="dnf_weapon_pose_overlay/1":return
-	if overlay.get("base_manifest_sha256")!=FileAccess.get_sha256(PATH):return
+	if overlay.get("base_manifest_sha256")!=base_sha256:return
 	if not overlay.get("bindings") is Dictionary or not overlay.get("animations") is Dictionary:return
 	var bindings: Dictionary = overlay["bindings"]
 	_data["animations"].merge(overlay["animations"],false)

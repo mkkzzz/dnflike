@@ -67,9 +67,11 @@ class Atlas:
         canvas = Image.new('RGBA', (2048, self.y + self.row_h + 2))
         for image, x, y in self.images:
             canvas.paste(image, (x, y))
-        canvas.save(self.output / (self.name + '.png'))
+        path = self.output / (self.name + '.png')
+        canvas.save(path)
         return {
             'texture': 'res://assets_local/revive_v1/' + self.name + '.png',
+            'texture_sha256': digest(path),
             'items': self.items,
         }
 
@@ -142,15 +144,40 @@ def build(output: Path) -> dict:
         (output / 'manifest.json').write_text(
             json.dumps(manifest, ensure_ascii=False, indent=1) + '\n',
             encoding='utf-8',
+            newline='\n',
         )
         return manifest
     finally:
         src.lib.close()
 
 
+def check_installed(output: Path) -> bool:
+    try:
+        manifest = json.loads((output / 'manifest.json').read_text(encoding='utf-8'))
+        if manifest['schema'] != 'dnf_revive_assets/1':
+            print('[REVIVE] invalid installed manifest schema')
+            return False
+        hashes = {
+            'coin_icon.png': manifest['ui']['coin_icon']['sha256'],
+            'coin_in.ogg': manifest['audio']['coin_in']['sha256'],
+        }
+        for key in EFFECTS:
+            hashes[key + '.png'] = manifest['effects'][key]['atlas']['texture_sha256']
+        for name, expected in hashes.items():
+            path = output / name
+            if not path.is_file() or digest(path) != expected:
+                print('[REVIVE] missing or changed installed file: ' + name)
+                return False
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        print(f'[REVIVE] invalid installed manifest: {error}')
+        return False
+    print('[REVIVE] installed files verified')
+    return True
+
+
 def check(output: Path) -> bool:
     expected = json.loads((output / 'manifest.json').read_text(encoding='utf-8'))
-    with tempfile.TemporaryDirectory(dir=ROOT / 'temp', prefix='revive-check-') as folder:
+    with tempfile.TemporaryDirectory(prefix='revive-check-') as folder:
         fresh = Path(folder)
         actual = build(fresh)
         if expected != actual:
@@ -170,13 +197,17 @@ def check(output: Path) -> bool:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=OUTPUT)
-    parser.add_argument('--check', action='store_true')
+    checks = parser.add_mutually_exclusive_group()
+    checks.add_argument('--check', action='store_true', help='compare with a fresh bake from the source library')
+    checks.add_argument('--check-installed', action='store_true', help='verify installed file hashes without the source library')
     args = parser.parse_args()
     output = args.output.resolve()
     if not any(output.is_relative_to(p.resolve()) for p in [ROOT / 'temp', ROOT / 'game_dnf/assets_local']):
         parser.error('Output must be inside temp/ or assets_local/')
     if args.check:
         return 0 if check(output) else 1
+    if args.check_installed:
+        return 0 if check_installed(output) else 1
     manifest = build(output)
     print('[REVIVE] wrote %s effects=%d audio=%d' % (output, len(manifest['effects']), len(manifest['audio'])))
     return 0

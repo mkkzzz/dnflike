@@ -22,6 +22,7 @@
   "coin": {
    "atlas": {
     "texture": "res://assets_local/revive_v1/coin.png",
+    "texture_sha256": "dbc5fbfedcc694eb92b330309e5ebb69b981b9cc78413f066e70081a5bd112ea",
     "items": {
      "0": {
       "rect": [
@@ -797,6 +798,7 @@
   "spark": {
    "atlas": {
     "texture": "res://assets_local/revive_v1/spark.png",
+    "texture_sha256": "91cb0b456e1a53d71b318e6d25c8164024041aa62f454e13482c710cfb922692",
     "items": {
      "0": {
       "rect": [

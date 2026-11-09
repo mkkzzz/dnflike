@@ -26,7 +26,9 @@ ws1 可从 [普通章鱼抓咬](../../reports/ws2/2026-11/2026-11-09_章鱼原�
 | ws2 | **招式还原。** 先普攻三段和上挑，再格挡与三段斩。核对原状态机、输入与取消、武器类别、动作与特效层、音效触发、命中盒、伤害与硬直 | [战斗入口](../../../game_dnf/scripts/main.gd)、[会话](../../../game_dnf/combat/api/combat_session.gd)、[招式表](../../../game_dnf/combat/data/move_table.gd)、[帧时序](../../../game_dnf/combat/action/timeline.gd)、[战斗配置](../../../game_dnf/data/combat.json)、[武器层接口](../../../game_dnf/content/api/weapon_appearance.gd)、相关战斗视图、武器层回归及技能运行包 |
 | ws2 | **技能栏与原画校对。** 取原格底、键字、原坐标与边界，校对技能面板清晰度、拖放和旧存档兼容 | [正式流程 HUD](../../../game_dnf/flow/loop_root.gd)、[槽位契约](../../../game_dnf/stats/api/skill_slots.gd)、[资源构建器](../../../tools/build_dnf_flow_assets.py)、快捷栏运行包、现有[循环专项](../../../game_dnf/tests/flow/test_loop.gd)及[技能交互专项](../../../game_dnf/tests/flow/test_skill_shortcuts.gd) |
 
-ws1 用仓库的[基础资源清单](../../../game_dnf/assets_local/manifest.json)、[战斗资源](../../../game_dnf/assets_local/combat/manifest.json)、[运行数据](../../../game_dnf/assets_local/content/combat_content.json)和[武器层清单](../../../game_dnf/assets_local/weapon_appearance_v3/manifest.json)。从仓库根目录执行 `powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_dnf_loop.ps1 -Test -WeaponAppearanceOnly` 验证换装、存档和实际进图。独立专项通过 Godot 的 `--headless --path game_dnf --script` 运行，回归入口集成由 ws2 处理。上述任务不需要安装原客户端，也无需下载完整提取库。报告分别标记“当前版本复现”和“已按原规则核对”。
+ws1 用仓库的[基础资源清单](../../../game_dnf/assets_local/manifest.json)、[战斗资源](../../../game_dnf/assets_local/combat/manifest.json)、[运行数据](../../../game_dnf/assets_local/content/combat_content.json)和[武器层清单](../../../game_dnf/assets_local/weapon_appearance_v3/manifest.json)。准备 Godot 4.7.2 和仓库 Python 依赖后，从仓库根目录执行 `powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_dnf_loop.ps1 -Test -WeaponAppearanceOnly` 验证换装、存档和实际进图。全新检出如在首次导入阶段退出，可单独运行 Godot 的 `--headless --path game_dnf --editor --import --quit` 并检查日志，再复跑同一入口。
+
+独立专项通过 Godot 的 `--headless --path game_dnf --script` 运行，回归入口集成由 ws2 处理。上述任务不需要安装原客户端，也无需下载完整提取库。正式入口默认使用随仓库分发的运行包，复活资源按哈希核验；从源库重烘焙使用独立检查。报告分别标记“当前版本复现”和“已按原规则核对”。
 
 首批重叠文件由 ws2 编辑。ws1 将可复跑用例、基准提交和观察结果交给 ws2 集成修复；适合 ws1 独立实现的返修，可按单项交接对应文件和断言。以后交接到现有生产文件或生成物时，先写交接记录，由接收方登记接手后切换唯一编辑方。
 
