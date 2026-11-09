@@ -1087,14 +1087,8 @@ func step_action(ms: float, move: Vector2) -> void:
 			hit["percent"] = float(draw_count_adjusted_attack(int(hit["percent"]),m["draw_hit_count_bonus"],player["draw_targets"].size()))
 			if hit.has("draw_status") and numeric_player != null:
 				var status: Dictionary = hit["draw_status"]
-				var base_by_level: Array = m["draw_status_base"]
-				var level := int(numeric_player.values["level"])
-				var base := int(base_by_level[level-1]) if level > 0 and level < base_by_level.size() else 0
-				# 90A6B0..90A6D8 uses the status base column and truncates after SSE scaling.
-				var ratio := Kernel.NativeMotion.f32(float(status["damage_percent"])-100.0)
-				ratio = Kernel.NativeMotion.f32(1.0+Kernel.NativeMotion.f32(ratio*ActorNumbers.NATIVE_PERCENT))
 				var field := "source_bleed_total" if status["id"] == "bleed" else "source_shock_amount"
-				status[field] = int(Kernel.NativeMotion.f32(ratio*Kernel.NativeMotion.f32(base)))
+				status[field] = native_status_attack_amount(float(status["damage_percent"]),m["draw_status_base"])
 				hit["effects"].append(status)
 			end_action_fx()
 			player["fx_tag"] = "act:%d" % (action_seq+1)
@@ -1890,6 +1884,13 @@ func step_grab_blast(move: Dictionary, stage: Dictionary, clock: float) -> bool:
 	amount = int(float(amount*grab_frenzy_percent())/100.0)
 	var spray_hit := grab_fixed_hit(spray,float(amount))
 	spray_hit["starts_at_zero"] = true
+	if move.has("grab_bleed_base") and numeric_player != null and not active_effect("thirst").is_empty():
+		# CB6E40..CB6F55 serializes skill 23's status before the object hits anyone.
+		var thirst: Dictionary = Numbers.Skills.sample(Numbers.record("sacrifice"),int(skill_levels.get("sacrifice",1)))
+		var row: Array = thirst["level_row"]
+		var total := native_status_attack_amount(float(row[10]),move["grab_bleed_base"])
+		spray_hit["effects"] = [{"id":"bleed","chance":float(thirst["static"][6])/100.0,
+			"status_level":int(row[9]),"duration_ms":int(row[11]),"source_bleed_total":total}]
 	var object := spawn_object(spray_hit,"player",Vector2(position),float(height),facing,attack_power())
 	if not object.is_empty() and target_alive:
 		# CNGrabBlastBlood dispatches the held hit before CB7102 sends DOWN.
@@ -2052,6 +2053,12 @@ func native_fixed_attack_product(value: float, base: int) -> float:
 	ratio = ActorNumbers.native_scalar(ratio*ActorNumbers.NATIVE_PERCENT)
 	ratio = ActorNumbers.native_scalar(1.0+ratio)
 	return ActorNumbers.native_scalar(ratio*ActorNumbers.native_scalar(base))
+
+func native_status_attack_amount(percent: float, base_by_level: Array) -> int:
+	# 90A6B0..90A6D8 uses the status column with the same SSE scale and truncation.
+	var level := int(numeric_player.values["level"])
+	var base := int(base_by_level[level-1]) if level > 0 and level < base_by_level.size() else 0
+	return int(native_fixed_attack_product(percent,base))
 
 func prepare_bloodblast_damage(template: Dictionary) -> Dictionary:
 	var base := native_fixed_attack_base(move_def("bloodblast")["fixed_attack_base"])

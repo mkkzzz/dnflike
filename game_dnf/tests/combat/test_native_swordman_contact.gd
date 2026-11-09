@@ -2036,12 +2036,14 @@ func check_grab_blast_thirst() -> void:
 	profile.command("numbers.level",{"level":60})
 	profile.command("numbers.growtype",{"growtype":"berserker"})
 	profile.command("numbers.skill_grant",{"id":"grabblastblood","level":1})
-	profile.command("numbers.skill_grant",{"id":"sacrifice","level":1})
-	var spec := profile.stats()
-	spec["skill_slots"] = ["grabblastblood"]
-	for scenario: String in ["four_strikes","expires","interrupted"]:
+	for scenario: String in ["four_strikes","expires","interrupted","large"]:
+		var large := scenario == "large"
+		var rank := 2 if large else 1
+		profile.command("numbers.skill_grant",{"id":"sacrifice","level":rank})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["grabblastblood"]
 		start_room("original_27601","katana",1,spec,"berserker")
-		game.apply_effect({"kind":"effect","id":"thirst","rank":1})
+		game.apply_effect({"kind":"effect","id":"thirst","rank":rank})
 		check(not game.active_effect("thirst").is_empty(),"Thirst is active before the shortcut starts Bloodlust")
 		var target: Dictionary = api.spawn_dummy(POINT+Vector2(50,0))
 		target["hp"] = 50000.0
@@ -2062,7 +2064,8 @@ func check_grab_blast_thirst() -> void:
 			step(50)
 			check(game.objects.is_empty(),"expiry still respects the 750 ms spray floor")
 			step(1)
-			check(game.objects.size()==1 and not game.player.has("grab_blast_target"),"ordinary spray follows when Thirst expires during the hold")
+			check(game.objects.size()==1 and not game.player.has("grab_blast_target") and not target["numeric"].effects.active.has("bleed"),
+				"Thirst expiry falls back to an ordinary spray without its bleed payload")
 			continue
 		step(1)
 		check(grab_direct_hits().size()==2,"Thirst dispatches its second strike at 700 ms")
@@ -2074,7 +2077,7 @@ func check_grab_blast_thirst() -> void:
 			continue
 		target["numeric"].effects.add_source_bleed(0,3000,38)
 		step(50)
-		target["numeric"].effects.remove("bleed")
+		if not large:target["numeric"].effects.remove("bleed")
 		check(game.objects.is_empty() and game.active_effect("bloodlust_strength").is_empty(),"750 ms does not cut off active Thirst strikes")
 		step(650)
 		check(grab_direct_hits().size()==3 and game.player["action"]=="grabblastblood","a delayed third update still keeps the victim held past 1200 ms")
@@ -2084,11 +2087,26 @@ func check_grab_blast_thirst() -> void:
 		check(grab_direct_hits().size()==4 and game.objects.is_empty(),"the fourth direct strike does not spray in the same update")
 		step(1)
 		check(grab_direct_hits().size()==4 and game.objects.is_empty(),"timer exhaustion advances the original spray-ready substate")
+		var bystander: Dictionary = game.spawn_enemy(POINT+Vector2(100,0))
+		bystander["hp"] = 50000.0
+		check(not bystander["numeric"].effects.active.has("bleed") and target["numeric"].effects.active.has("bleed")==large,
+			"the four direct strikes do not carry the spray's new bleed application")
 		step(1)
-		check(game.objects.size()==1 and game.objects[0]["hit"]["object"].ends_with("/grabblastblood.obj")
+		var spray_name := "/grabblastbloodbig.obj" if large else "/grabblastblood.obj"
+		check(game.objects.size()==1 and game.objects[0]["hit"]["object"].ends_with(spray_name)
 			and game.active_effect("bloodlust_strength").get("remaining_ms",0)==20000.0
 			and not game.player.has("grab_blast_target") and game.player["action"]=="",
 			"Thirst remembers bleed during the extended hold but sprays by live bleed and releases after four strikes")
+		var expected := {"id":"bleed","chance":1.0,"status_level":40 if large else 37,
+			"duration_ms":3000,"source_bleed_total":136 if large else 131}
+		check(game.objects[0]["hit"]["effects"]==[expected],"spray records the source Thirst rank and level-60 status damage")
+		game.step_objects(16.0,int(game.objects[0]["id"]))
+		for victim: Dictionary in [target,bystander]:
+			var bleed: Dictionary = victim["numeric"].effects.active.get("bleed",{})
+			var applications: Array = bleed.get("source_bleed",{}).get("applications",[])
+			check(applications.size()==(2 if large and victim==target else 1)
+				and applications.back()=={"remaining_ms":3000.0,"amount":22 if large else 21,"status_level":expected["status_level"]},
+				"the source spray applies the same bleed to the held victim and bystander without duplicating the held hit")
 
 func grab_direct_hits() -> Array:
 	return game.bus.events_of("combat.hit").filter(func(event):return event.get("atk","").ends_with("/grabblastblood.atk"))

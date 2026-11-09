@@ -404,6 +404,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			# CC97FF/CC980F configure the Thirst strike timer from static columns 2 and 3.
 			move["grab_strike_interval_ms"] = int(skill["static"][2])
 			move["grab_strike_count"] = int(skill["static"][3])
+			move["grab_bleed_base"] = spec["grab_bleed_base"]["by_level"]
 		move["fixed_attack_base"] = spec["fixed_attack_base"]["by_level"]
 		var strike_path := String(spec["strike_atk"])
 		var row: Array = skill["level_row"]
