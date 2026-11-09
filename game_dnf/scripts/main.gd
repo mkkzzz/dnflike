@@ -370,7 +370,7 @@ func begin_room(spec: Dictionary, maze: NativeMaze = null) -> void:
 func new_player() -> Dictionary:
 	return {"id":PLAYER_ID,"pos":Vector2(125,250),"z":0.0,"vz":0.0,"air_ms":0.0,"hp":max_hp,"mp":max_mp,
 		"facing":1,"state":"idle","action":"","stage":0,"clock":0.0,"motion_clock":0.0,
-		"guard_recoil_ms":0.0,
+		"guard_hold_ms":0.0,"guard_recoil_ms":0.0,
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
 		"invuln_ms":0.0,"flash_ms":0.0,"upper_armor_fx_ms":0.0,"landing_ms":0.0,"buff_ms":0.0,"cooldowns":{},"hits":{},
 		"queued_combo":false,"queued_skill":"","queued_jump":false,"queued_backstep":false,"fx_tag":"",
@@ -723,10 +723,6 @@ func step_game(ms: float) -> void:
 	var move := Vector2(float(bool(held.get(KEY_RIGHT,false)))-float(bool(held.get(KEY_LEFT,false))),float(bool(held.get(KEY_DOWN,false)))-float(bool(held.get(KEY_UP,false))))
 	if move.x == 0 or signi(int(move.x)) != run_direction:run_direction = 0
 	if move.length_squared()>1:move = move.normalized()
-	if player["state"] == "guard":
-		if float(player["stuck_ms"]) <= 0.0:
-			player["guard_recoil_ms"] = maxf(0.0,float(player["guard_recoil_ms"])-ms)
-		if float(player["guard_recoil_ms"]) <= 0.0 and not guard_input_held():player["state"] = "idle"
 	var first_new_object_id := _next_entity_id
 	# Local hitstop: only the attacker and its targets freeze; inputs are buffered meanwhile.
 	if player["state"] == "hold":
@@ -811,6 +807,12 @@ func finish_current_room() -> void:
 func step_player(ms: float, move: Vector2) -> void:
 	var dt := ms/1000
 	player["motion_clock"] = float(player["motion_clock"])+ms
+	if player["state"] == "guard":
+		player["guard_hold_ms"] = maxf(0.0,float(player["guard_hold_ms"])-ms)
+		player["guard_recoil_ms"] = maxf(0.0,float(player["guard_recoil_ms"])-ms)
+		# CB8AF2 only checks the held command after the current phase's gate.
+		if maxf(float(player["guard_hold_ms"]),float(player["guard_recoil_ms"])) <= 0.0 and not guard_input_held():
+			player["state"] = "idle"
 	if bool(player["queued_backstep"]):
 		player["queued_backstep"] = false
 		if backstep_allowed():start_action("backstep",true)
@@ -1030,6 +1032,8 @@ func set_input_paused(value: bool) -> void:
 	held.clear()
 	requests.clear()
 	if not player.is_empty():
+		# Flow pause clears input ownership, including any unhit guard hold.
+		player["guard_hold_ms"] = 0.0
 		player["recovery_code"] = -1
 		player["recovery_buffer_ms"] = 0.0
 		run_direction = 0
@@ -1104,9 +1108,8 @@ func start_action(name: String, cancel := false) -> bool:
 	player["queued_jump"] = false
 	player["queued_backstep"] = false
 	if guard:
-		# Source guard.skl keeps the defensive state while the skill key is held.
-		# MP is paid at entry above; animation duration does not end this state.
 		player["clock"] = 0.0
+		player["guard_hold_ms"] = float(m["guard_min_hold_ms"])
 		player["guard_recoil_ms"] = 0.0
 		action_seq += 1
 		bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"instance":action_seq})
@@ -1982,8 +1985,11 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 		# Original ATK +30 resets to physical when the source omits attack type.
 		var attack_type := Kernel.MoveTable.enum_value(atk,"attack_type","[physic]")
 		taken *= float(Numbers.Skills.guard_taken_percent(row,attack_type))/100.0
-		# CC5E78..CC5E98 reads guard.skl column 1, and CB1139 compares the state clock to it.
-		if amount > 0 and row.size() > 1:player["guard_recoil_ms"] = float(row[1])
+		if amount > 0 and row.size() > 1:
+			# CC6135 clears the initial hold gate on re-entry. CC5E98
+			# sets the separate recoil clock from the active guard rank.
+			player["guard_hold_ms"] = 0.0
+			player["guard_recoil_ms"] = float(row[1])
 	elif numeric_player == null and float(player["buff_ms"])>0:taken *= float(rules["buff"]["damage_taken"])
 	var keiga: Dictionary = active_effect("keiga")
 	if taken > 0 and not keiga.is_empty() and int(keiga.get("absorb_remaining",0)) > 0:

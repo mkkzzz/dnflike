@@ -304,6 +304,10 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		"effect_id":String(spec.get("effect_id","")),"requires_effect":String(spec.get("requires_effect","")),
 		"movement":String(spec.get("movement","")),
 		"super_armor":bool(spec.get("super_armor",false)),"invuln_ms":float(spec.get("invuln_ms",0))}
+	if name == "guard":
+		# CC615E stores the initial phase's release threshold from static column 0.
+		var guard_static: Array = skill.get("static",[])
+		move["guard_min_hold_ms"] = float(guard_static[0]) if not guard_static.is_empty() else 0.0
 	if spec.get("native_state","") == "normalwave":
 		move["native_state"] = "normalwave"
 		move["native_recovery_ms"] = float(skill["static"][0])

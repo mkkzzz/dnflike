@@ -237,6 +237,54 @@ func check_followup() -> void:
 	check(game.player["stage"]==1 and game.hurt_player(7,{"pos":POINT+Vector2(40,0)},{},-1)=="stagger",
 		"state 30 no longer uses HitBack armor and can be interrupted")
 
+func check_guard_release() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.skill_grant",{"id":"guard","level":4})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["","","guard"]
+
+	start_room("original_27601","katana",1,spec)
+	session.submit_key(KEY_D,true)
+	step(0)
+	check(game.player["state"]=="guard" and game.player["guard_hold_ms"]==500.0,
+		"manual guard starts with the original 500 ms minimum")
+	session.submit_key(KEY_D,false)
+	step(499)
+	check(game.player["state"]=="guard","releasing early keeps guarding before 500 ms")
+	step(1)
+	check(game.player["state"]=="idle","released guard exits at 500 ms")
+
+	start_room("original_27601","katana",1,spec)
+	session.submit_key(KEY_D,true)
+	step(0)
+	step(500)
+	check(game.player["state"]=="guard","guard remains active after its minimum while the key is down")
+	session.submit_key(KEY_D,false)
+	step(0)
+	check(game.player["state"]=="idle","releasing past the minimum immediately exits guard")
+
+	start_room("original_27601","katana",1,spec)
+	session.submit_key(KEY_D,true)
+	step(0)
+	step(50)
+	var reaction: String = game.hurt_player(10,{"pos":POINT+Vector2(40,0)},{},-1)
+	check(reaction=="guard" and game.player["guard_recoil_ms"]==140.0 and game.player["guard_hold_ms"]==0.0,
+		"a blocked hit replaces the initial hold gate with rank 4 recovery")
+	session.submit_key(KEY_D,false)
+	step(139)
+	check(game.player["state"]=="guard","released guard remains active before recoil ends")
+	step(1)
+	check(game.player["state"]=="idle","recoil exits at 140 ms without a second 500 ms minimum")
+
+	start_room("original_27601","katana",1,spec)
+	session.submit_key(KEY_D,true)
+	step(0)
+	session.pause()
+	session.resume()
+	step(0)
+	check(game.player["state"]=="idle","flow pause clears the guard hold with its input ownership")
+
 func check_triple_slash() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -387,6 +435,7 @@ func run() -> void:
 	check_upper_body_armor()
 	check_upper_armor_visuals()
 	check_followup()
+	check_guard_release()
 	check_triple_slash()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
