@@ -988,6 +988,10 @@
   "buff": {
    "effect_id": "frenzy",
    "hp_cost_row": 0,
+   "material_cost": {
+    "amount": 1,
+    "source_id": 3037
+   },
    "name": "血之狂暴",
    "skill": "skill/swordman/frenzy.skl",
    "stages": [

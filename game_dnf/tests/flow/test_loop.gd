@@ -675,6 +675,7 @@ func run() -> void:
 	await interactions.run()
 	interactions.queue_free()
 	check_saya_item_cost()
+	check_frenzy_item_cost()
 	# Dummy audio still releases its final Ogg playback on the mixer thread. At
 	# fixed-fps headless speed the last run can start/stop in < one audio block.
 	# Give that worker one bounded wall-clock drain before engine shutdown.
@@ -683,7 +684,7 @@ func run() -> void:
 	print("[LOOP_TEST] COMPLETE checks=%d failures=%d captures=%d" % [checks, failures, captured.size()])
 	get_tree().quit(1 if failures else 0)
 
-func cast_saya_key(code: int) -> void:
+func cast_battle_key(code: int) -> void:
 	game.forward_battle_key(code,true)
 	game.battle.step_player(0,Vector2.ZERO)
 	game.forward_battle_key(code,false)
@@ -718,28 +719,79 @@ func check_saya_item_cost() -> void:
 	battle.numeric_player.values["cast_speed"] = 1.0
 	var before_mp := float(battle.player["mp"])
 	var before: Dictionary = game.session.serialize()
-	cast_saya_key(KEY_S)
+	cast_battle_key(KEY_S)
 	check(battle.player["state"]!="action" and battle.objects.is_empty() and not battle.player["cooldowns"].has("sayaex")
 		and battle.player["mp"]==before_mp and game.session.serialize()==before,"missing cube rejects EX before cast, MP, cooldown, or profile mutation")
 	game.Session.Inventory.give(game.session.profile,"original_3037",2)
 	before = game.session.serialize()
 	var path: String = game.store.path
 	game.store.path = "res://data/numbers.json/cannot_write.json"
-	cast_saya_key(KEY_S)
+	cast_battle_key(KEY_S)
 	check(game.save_failed and battle.player["state"]!="action" and not battle.player["cooldowns"].has("sayaex")
 		and battle.player["mp"]==before_mp and game.session.serialize()==before,"failed cube save rolls back the ledger and the cast can be retried")
 	game.store.path = path
-	cast_saya_key(KEY_S)
+	cast_battle_key(KEY_S)
 	check(not game.save_failed and battle.player["action"]=="sayaex" and battle.objects.is_empty()
 		and game.Session.Inventory.stock(game.session.profile,"original_3037")==1,"EX commits one cube before the ghost field appears")
 	var loaded = game.Session.new()
 	check(game.store.read_into(loaded) and game.Session.Inventory.stock(loaded.profile,"original_3037")==1,"reloading the committed save preserves the EX material deduction")
 	battle.leave_action()
 	battle.player["state"] = "idle"
-	cast_saya_key(KEY_S)
+	cast_battle_key(KEY_S)
 	check(battle.player["state"]!="action" and battle.objects.is_empty() and game.Session.Inventory.stock(game.session.profile,"original_3037")==1,
 		"interrupted EX keeps the committed cost and a cooldown rejection spends nothing")
-	cast_saya_key(KEY_A)
+	cast_battle_key(KEY_A)
 	battle.step_action(250,Vector2.ZERO)
 	check(battle.objects.size()==1 and battle.objects[0]["def"]["path"].ends_with("/saya.obj")
 		and game.Session.Inventory.stock(game.session.profile,"original_3037")==0,"normal Saya spends the remaining cube through the same formal action path")
+
+func check_frenzy_item_cost() -> void:
+	var fixture = game.Session.new()
+	fixture.command("numbers.level",{"level":60})
+	fixture.command("numbers.growtype",{"growtype":"berserker"})
+	fixture.command("numbers.skill_grant",{"id":"buff","level":1})
+	fixture.command("slots.move",{"source":{"place":"skill_catalog","id":"buff"},"target":{"place":"skill","index":0}})
+	var storage = game.Store.new()
+	storage.path = "res://../temp/skill_item_tests/frenzy.json"
+	game.show_character_selection()
+	var entered: bool = storage.write(fixture) and game.enter_character(storage.path)
+	check(entered,"Frenzy material test loads a durable Berserker with a real shortcut")
+	if not entered:return
+	game.selected_dungeon = "lorien"
+	game.depart()
+	if not is_instance_valid(game.battle):
+		check(false,"Frenzy material fixture enters the formal dungeon")
+		return
+	var battle = game.battle
+	battle.set_physics_process(false)
+	battle.player["hp"] = 1000.0
+	battle.player["mp"] = 5000.0
+	var before: Dictionary = game.session.serialize()
+	cast_battle_key(KEY_A)
+	check(battle.player["action"]=="" and battle.player["hp"]==1000.0 and battle.player["mp"]==5000.0
+		and not battle.player["cooldowns"].has("buff") and game.session.serialize()==before,
+		"missing cube rejects Frenzy before HP, MP, cooldown, or profile mutation")
+
+	game.Session.Inventory.give(game.session.profile,"original_3037",1)
+	before = game.session.serialize()
+	var path: String = game.store.path
+	game.store.path = "res://data/numbers.json/cannot_write.json"
+	cast_battle_key(KEY_A)
+	check(game.save_failed and battle.player["action"]=="" and battle.player["hp"]==1000.0
+		and battle.player["mp"]==5000.0 and not battle.player["cooldowns"].has("buff")
+		and game.session.serialize()==before,"failed cube save leaves Frenzy and its HP and MP costs untouched")
+
+	game.store.path = path
+	cast_battle_key(KEY_A)
+	check(not game.save_failed and battle.player["action"]=="buff" and battle.player["hp"]==780.0
+		and battle.player["mp"]<5000.0 and battle.active_effect("frenzy").is_empty()
+		and game.Session.Inventory.stock(game.session.profile,"original_3037")==0,
+		"the Frenzy retry commits one cube and HP and MP before the form activates")
+	var loaded = game.Session.new()
+	check(game.store.read_into(loaded) and game.Session.Inventory.stock(loaded.profile,"original_3037")==0,
+		"reloading the Berserker save retains the Frenzy cube deduction")
+	battle.player["invuln_ms"] = 0.0
+	battle.hurt_player(1,{"pos":battle.player["pos"]+Vector2(40,0)},{},-1)
+	check(battle.active_effect("frenzy").is_empty() and not battle.player.has("frenzy_cast")
+		and game.Session.Inventory.stock(game.session.profile,"original_3037")==0,
+		"interrupting Frenzy before release keeps its committed cube cost")

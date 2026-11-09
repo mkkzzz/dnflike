@@ -331,6 +331,7 @@ func run_combat() -> void:
 	api.set_p("action","")
 	api.set_p("hp",1000.0)
 	api.set_p("mp",500.0)
+	game.session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
 	await tap(KEY_F)
 	await ticks(2)
 	check(not game.view_snapshot()["player"]["buff"] and String(api.p("action"))=="buff","F starts the original Frenzy cast before the form activates")

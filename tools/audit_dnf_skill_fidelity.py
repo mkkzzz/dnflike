@@ -16,7 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / "game_dnf"
-OVERLAYS = ("hp_cost_row", "requires_effect", "super_armor", "invuln_ms", "effect_id", "cast_fx", "aura_fx")
+OVERLAYS = ("hp_cost_row", "material_cost", "requires_effect", "super_armor", "invuln_ms", "effect_id", "cast_fx", "aura_fx")
 DIMENSIONS = ("body_animation", "weapon_pose", "effect_composition", "timing", "hit_and_damage", "status_and_state", "original_client_comparison")
 SWORDMAN_ANIMATION = "character/swordman/animation/"
 SWORDMAN_OBJECT = "passiveobject/character/swordman/"

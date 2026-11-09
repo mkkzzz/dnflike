@@ -908,6 +908,7 @@ func check_overdrive_critical() -> void:
 			is_equal_approx(game.numeric_player.values["physical_crit"],base_crit),"Overdrive expires and restores baseline critical chance")
 
 func check_frenzy_drain() -> void:
+	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
 	profile.command("numbers.growtype",{"growtype":"berserker"})
@@ -1058,6 +1059,42 @@ func check_frenzy_cast() -> void:
 		and game.bus.events_of("combat.cue").any(func(event):return event.get("kind")=="fx_clear"),
 		"an interrupted cast clears its effect and never enables the form")
 
+func check_frenzy_toggle() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["buff"]
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.player["hp"] = 1000.0
+	var spent: Array = []
+	session.set_skill_material_spender(func(id: int, amount: int):
+		spent.append([id,amount])
+		return spent.size()==1)
+	press(KEY_A)
+	step(0)
+	step(float(game.player["frenzy_cast"]["duration_ms"]))
+	game.end_action()
+	# Isolate the appendage gate from the normal cooldown, which began earlier.
+	game.player["cooldowns"]["buff"] = 0.0
+	game.step_numeric_actor(game.player,game.numeric_player,9999)
+	game.player["mp"] = 0.0
+	press(KEY_A)
+	step(0)
+	check(not game.active_effect("frenzy").is_empty() and game.player["action"]==""
+		and game.bus.events_of("combat.action_rejected")[-1]["reason"]=="frenzy_minimum_duration",
+		"the Frenzy shortcut rejects deactivation at 9999 ms of active time")
+	game.step_numeric_actor(game.player,game.numeric_player,1)
+	var hp: float = game.player["hp"]
+	press(KEY_A)
+	step(0)
+	check(game.active_effect("frenzy").is_empty() and game.primary_normal_attack()=="attack1"
+		and game.player["action"]=="" and not game.view_snapshot()["player"]["buff"],
+		"the same shortcut deactivates Frenzy at 10000 ms without a new cast")
+	check(game.player["hp"]==hp and game.player["mp"]==0.0 and spent==[[3037,1]],
+		"deactivation takes no HP, MP, or additional cube")
+
 func run() -> void:
 	game = session.mount(root)
 	game.set_physics_process(false)
@@ -1168,6 +1205,7 @@ func run() -> void:
 	check_frenzy_drain()
 	check_frenzy_attributes()
 	check_frenzy_cast()
+	check_frenzy_toggle()
 	check_hardattack()
 	check_hardattack_charge()
 	check_hardattack_followup()

@@ -1163,6 +1163,13 @@ func start_action(name: String, cancel := false) -> bool:
 			if not cancel or not normal_attack_cancel_allowed(m):
 				return reject_action(name,"state")
 	if float(player["cooldowns"].get(name,0))>0:return reject_action(name,"cooldown")
+	if m.has("frenzy_disable_after_ms"):
+		var frenzy := active_effect("frenzy")
+		if not frenzy.is_empty():
+			# CC1166 tests the active appendage clock; C9DC0C removes it on skill use.
+			if int(frenzy.get("drain_elapsed_ms",0.0)) < int(m["frenzy_disable_after_ms"]):
+				return reject_action(name,"frenzy_minimum_duration")
+			return apply_effect({"kind":"remove_effect","id":"frenzy","target":PLAYER_ID})
 	var hp_cost := 0.0
 	if m.has("hp_cost_row"):
 		var sample: Dictionary = table._skill_row(String(m.get("skill","")))

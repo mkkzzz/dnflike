@@ -990,6 +990,13 @@ def build_rasa_move(skill: dict, records: dict, fx: dict, effects: dict, objects
     }
 
 
+def fixed_cube_cost(skill: dict, records: dict) -> dict:
+    item_id, first_cost, last_cost = records[str(skill["path"]).lower()]["decoded"]["consume_item"]
+    if item_id != 3037 or first_cost != last_cost or first_cost <= 0:
+        raise ValueError(f"Unverified item cost for {skill['key']}")
+    return {"source_id": item_id, "amount": first_cost}
+
+
 def build_move(
     skill: dict,
     records: dict,
@@ -1023,7 +1030,7 @@ def build_move(
             "name": str(skill["name"]),
             "stages": stages,
             "effect_id": BUFF_SKILLS[key],
-            **({"hp_cost_row": 0} if key == "frenzy" else {}),
+            **({"hp_cost_row": 0, "material_cost": fixed_cube_cost(skill, records)} if key == "frenzy" else {}),
         }
     names = STAGE_NAMES.get(key, [])
     names = STAGE_ANI_OVERRIDES.get(key, names)
@@ -1190,10 +1197,7 @@ def build_move(
             hit["effects"] = [{"id": "freeze", "chance_col": 2, "chance_scale": 0.001,
                                "status_level_col": 3, "duration_ms_col": 4}]
             hit["native_controller"]["height_limit"] = statics[2]
-            item_id, first_cost, last_cost = records[str(skill["path"]).lower()]["decoded"]["consume_item"]
-            if item_id != 3037 or first_cost != last_cost or first_cost <= 0:
-                raise ValueError(f"Unverified item cost for {source_key}")
-            result["material_cost"] = {"source_id": item_id, "amount": first_cost}
+            result["material_cost"] = fixed_cube_cost(skill, records)
             result["fidelity_pending"].append("skill_item_cost_modifiers")
         if source_key == "sayaex":
             # CD7C73 distinguishes 20062 from ordinary 20012, and the last
