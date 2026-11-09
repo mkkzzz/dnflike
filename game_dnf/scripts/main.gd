@@ -1071,16 +1071,14 @@ func step_action(ms: float, move: Vector2) -> void:
 			var remaining_ms := maxf(0.0,(action_duration(name)-old_clock)/maxf(speed,0.001))
 			new_motion_clock = old_motion_clock+minf(ms,remaining_ms)
 			motion["elapsed_ms"] = new_motion_clock
-		var v0 := float(motion["speed"])
-		var a := float(motion["accel"])
-		var stop := float(motion.get("stop_s",v0/-a if a < 0 else float(stage.get("duration",0))/1000.0))
-		var t0 := minf(old_motion_clock/1000.0,stop)
-		var t1 := minf(new_motion_clock/1000.0,stop)
-		var dx := (v0*t1+0.5*a*t1*t1)-(v0*t0+0.5*a*t0*t0)
-		if dx != 0:
-			dx *= int(player["facing"])
-			if native_slide:move_along_ground_pixels(dx)
-			else:move_player(Vector2(dx,0))
+		var dx := slide_delta(motion,old_motion_clock,new_motion_clock,float(stage.get("duration",0)))*int(player["facing"])
+		if native_slide:
+			var depth: Dictionary = motion.get("depth",{})
+			var dy := 0.0
+			if not depth.is_empty():
+				dy = slide_delta(depth,old_motion_clock,new_motion_clock,0.0)*int(depth["direction"])
+			if dx != 0.0 or dy != 0.0:move_along_ground_pixels(dx,dy)
+		elif dx != 0.0:move_player(Vector2(dx,0))
 		# CB742E..CB7453 clears the current ATK's contact ledger at the action timer deadline.
 		if motion.has("rehit_at_ms") and new_motion_clock >= float(motion["rehit_at_ms"]):
 			player["hits"].clear()
@@ -1938,6 +1936,12 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	if name == "rapidmoveslash" and index % 2 == 1:
 		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
 		begin_action_slide(m["rapid_slide"],attack_rate)
+		# CBD472 samples depth at ready completion. CCC7D0/CCC820 lock it for the slash.
+		var depth := int(bool(held.get(KEY_DOWN,false)))-int(bool(held.get(KEY_UP,false)))
+		if depth != 0:
+			var motion := action_slide_axis(m["rapid_depth_slide"],attack_rate)
+			motion["direction"] = depth
+			player["action_slide"]["depth"] = motion
 	# Multi-stage slides can pick their own side. These native follow-ups inherit facing.
 	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw","grabblastblood","outragebreak"] and index == 1) \
 			and not (name == "charge_crash" and index > 0) \
@@ -2128,12 +2132,24 @@ func step_hardattack_charge(ms: float) -> void:
 		play_sound("GHOSTSLASH_CHARGE_END")
 
 func begin_action_slide(config: Dictionary, rate: float) -> void:
+	player["action_slide"] = action_slide_axis(config,rate)
+	player["action_slide"]["elapsed_ms"] = 0.0
+
+func action_slide_axis(config: Dictionary, rate: float) -> Dictionary:
 	# 827F20 scales velocity and truncates acceleration. 8A7210 uses integer ms.
 	var motion_rate := int(rate*1000.0)/1000.0
 	var velocity := float(config["speed"])*motion_rate
 	var acceleration := int(float(config["accel"])*motion_rate)
 	var stop := int(-velocity*1000.0/acceleration)/1000.0 if acceleration < 0 else INF
-	player["action_slide"] = {"speed":velocity,"accel":acceleration,"stop_s":stop,"elapsed_ms":0.0}
+	return {"speed":velocity,"accel":acceleration,"stop_s":stop}
+
+func slide_delta(axis: Dictionary, from_ms: float, to_ms: float, duration_ms: float) -> float:
+	var v := float(axis["speed"])
+	var a := float(axis["accel"])
+	var stop := float(axis.get("stop_s",v/-a if a < 0 else duration_ms/1000.0))
+	var t0 := minf(from_ms/1000.0,stop)
+	var t1 := minf(to_ms/1000.0,stop)
+	return (v*t1+0.5*a*t1*t1)-(v*t0+0.5*a*t0*t0)
 
 func start_hardattack_followup(stage: Dictionary) -> void:
 	end_action_fx()
@@ -4374,19 +4390,23 @@ func move_in_world(from: Vector2,delta: Vector2) -> Vector2:
 func move_player(delta: Vector2) -> void:
 	player["pos"] = move_in_world(player["pos"],delta)
 
-func move_along_ground_pixels(dx: float) -> void:
+func move_along_ground_pixels(dx: float, dy := 0.0) -> void:
 	var pos: Vector2 = player["pos"]
-	var x := roundi(pos.x)
-	var target_x := roundi(pos.x+dx)
-	var direction := signi(target_x-x)
-	var row := roundi(pos.y)
-	# 8A8C20 tests each rounded pixel and 8A8D63 restores the last clear one.
-	while x != target_x:
-		if not walkable(Vector2(x+direction,row)):
-			player["pos"] = Vector2(x,pos.y)
-			return
-		x += direction
-	player["pos"] = Vector2(pos.x+dx,pos.y)
+	# 8A8C20 tests each rounded pixel on the current axis, with the other axis fixed.
+	for axis: int in 2:
+		var distance := dx if axis == 0 else dy
+		if distance == 0.0:continue
+		var pixel := Vector2i(pos.round())
+		var start := pixel[axis]
+		var target := roundi(pos[axis]+distance)
+		var direction := signi(target-start)
+		while pixel[axis] != target:
+			pixel[axis] += direction
+			if not walkable(Vector2(pixel)):break
+			start = pixel[axis]
+		# 8A8D63 writes the last clear pixel when blocked.
+		pos[axis] = pos[axis]+distance if start == target else float(start)
+	player["pos"] = pos
 
 func load_room(index: int, from_side: String) -> void:
 	clear_monsters()

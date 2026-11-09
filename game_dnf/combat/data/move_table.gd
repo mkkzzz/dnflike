@@ -601,6 +601,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			sequence.append_array(move["stages"].slice(2,4))
 			move["stages"] = sequence
 			move["rapid_slide"] = {"speed":float(stat[2]),"accel":float(stat[3])}
+			move["rapid_depth_slide"] = {"speed":float(stat[4]),"accel":float(stat[5])}
 		move.merge(move["stages"][0],false)
 	else:
 		move.merge(_build_stage(spec,skill,weapon_hits),false)

@@ -3143,6 +3143,74 @@ func check_rapid_move_slash() -> void:
 		step(300)
 		check(game.player["action"]=="","Rapid Move Slash recovers after the final motion")
 
+func check_rapid_move_slash_depth() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["rapidmoveslash"]
+	for sample: Array in [[1,KEY_DOWN,1.0,1],[-1,KEY_UP,1.25,-1],[1,KEY_UP,1.0,0]]:
+		start_room("original_27601","katana",sample[0],spec)
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		game.clear_monsters()
+		var rate: float = sample[2]
+		var depth: int = sample[3]
+		game.numeric_player.values["attack_speed"] = rate
+		game.room_map = game.room_map.duplicate(true)
+		for row: Array in game.room_map["walk_grid"]:row.fill(0)
+		press(KEY_A)
+		step(159.0/rate)
+		session.submit_key(sample[1],true)
+		check(game.player["pos"]==POINT,"Rapid Move Slash stays still while reading the ready animation")
+		if depth == 0:session.submit_key(sample[1],false)
+		step(1.0/rate)
+		check(game.player["stage"]==1,"the ready boundary samples the depth input")
+		session.submit_key(sample[1],false)
+		var opposite := KEY_UP if sample[1] == KEY_DOWN else KEY_DOWN
+		session.submit_key(opposite,true)
+		step(100)
+		check(Vector2(game.player["pos"]).is_equal_approx(POINT+Vector2(175*rate*int(sample[0]),25*rate*depth)),
+			"Rapid Move Slash keeps its initial depth direction after a key change "+str(sample))
+		step(201)
+		check(is_equal_approx(float(game.player["pos"].y),POINT.y+45*rate*depth),
+			"the original depth axis stops at 300 ms independently of the body and horizontal motion")
+		press(KEY_A)
+		step(0)
+		var next_origin: Vector2 = game.player["pos"]
+		step(161.0/rate)
+		step(100)
+		var next_depth := -1 if opposite == KEY_UP else 1
+		check(game.player["stage"]==3 and is_equal_approx(float(game.player["pos"].y),next_origin.y+25*rate*next_depth),
+			"the next slash re-reads depth at the end of its own ready phase")
+		session.submit_key(opposite,false)
+
+	for blocked_axis: int in 2:
+		start_room("original_27601","katana",1,spec)
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.room_map = game.room_map.duplicate(true)
+		var grid: Dictionary = game.map_loader.constants()
+		var span := int(grid["cell_width"] if blocked_axis == 0 else grid["cell_height"])
+		var wall := floori(POINT[blocked_axis]/span)+1
+		var walk_grid: Array = game.room_map["walk_grid"]
+		for row: Array in walk_grid:
+			row.fill(0)
+			if blocked_axis == 0:row[wall] = 1
+		if blocked_axis == 1:walk_grid[wall].fill(1)
+		var start := POINT
+		start[blocked_axis] = wall*span-2
+		game.player["pos"] = start
+		session.submit_key(KEY_DOWN,true)
+		press(KEY_A)
+		step(160)
+		step(100)
+		var expected := start+Vector2(175,25)
+		expected[blocked_axis] = wall*span-1
+		check(game.player["pos"]==expected,"blocking one axis leaves it on the last clear pixel while the other continues")
+		session.submit_key(KEY_DOWN,false)
+
 func check_charge_crash_uppercut() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -4213,6 +4281,7 @@ func run() -> void:
 	check_draw_target_deadlines()
 	check_charge_crash_uppercut()
 	check_rapid_move_slash()
+	check_rapid_move_slash_depth()
 	check_charge_crash_body_armor()
 	check_charge_crash_mastery()
 	check_draw_second_slash()
