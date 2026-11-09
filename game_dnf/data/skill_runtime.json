@@ -92,8 +92,6 @@
    "skillfx_moonlightslash2_574395d9": "character/swordman/effect/animation/moonlightslash2.ani",
    "skillfx_moonlightslashfull_3d8e1047": "character/swordman/effect/animation/moonlightslashfull.ani",
    "skillfx_normalwaveslash_0f16bb7b": "character/swordman/effect/animation/normalwaveslash.ani",
-   "skillfx_outragebreak_stone_part_1_18a07756": "character/swordman/effect/animation/outragebreak/particle/outragebreak_stone_part_1.ani",
-   "skillfx_outragebreak_stone_part_2_376e63de": "character/swordman/effect/animation/outragebreak/particle/outragebreak_stone_part_2.ani",
    "skillfx_rasa_be541dd4": "passiveobject/character/swordman/animation/epidemicrasa/rasa.ani",
    "skillfx_rasa_ldodge_91e196e9": "passiveobject/character/swordman/animation/epidemicrasa/rasa_ldodge.ani",
    "skillfx_saya2_078bfa10": "passiveobject/character/swordman/animation/saya2.ani",
@@ -119,6 +117,12 @@
    "skillfx_sword1_2c85afcf": "character/swordman/effect/animation/bloodyrave/sword1.ani",
    "skillfx_sword3_f71eb3aa": "character/swordman/effect/animation/bloodyrave/sword3.ani",
    "skillfx_sword4_7bc4b286": "character/swordman/effect/animation/bloodyrave/sword4.ani",
+   "skillfx_sword_ready_ldodge_ff4a8814": "character/swordman/effect/animation/outragebreak/sword_ready_ldodge.ani",
+   "skillfx_sword_ready_none_eec59a67": "character/swordman/effect/animation/outragebreak/sword_ready_none.ani",
+   "skillfx_sword_slash_impact_ldodge_8c40b1c6": "character/swordman/effect/animation/outragebreak/sword_slash_impact_ldodge.ani",
+   "skillfx_sword_slash_impact_none_8a132f9c": "character/swordman/effect/animation/outragebreak/sword_slash_impact_none.ani",
+   "skillfx_sword_slash_ldodge_f39e3051": "character/swordman/effect/animation/outragebreak/sword_slash_ldodge.ani",
+   "skillfx_sword_slash_none_b381d2e0": "character/swordman/effect/animation/outragebreak/sword_slash_none.ani",
    "skillfx_tn_balltail1_246e0c4a": "character/swordman/effect/animation/hellbenter/(tn)balltail1.ani",
    "skillfx_tombstonerain_7396cb89": "passiveobject/actionobject/monster/wooden_doll/animation/tombstonerain.ani",
    "skillfx_typhoon_91cf2988": "character/swordman/effect/animation/bloodyrave/typhoon.ani",
@@ -5467,87 +5471,203 @@
    ]
   },
   "outragebreak": {
-   "hp_cost_row": 0,
+   "fidelity_pending": [
+    "hp_write_timing",
+    "impact_stone_particles",
+    "floor_layering",
+    "magma_eruption",
+    "thirst_damage_branch"
+   ],
+   "fixed_attack_base": {
+    "by_level": [
+     63,
+     72,
+     80,
+     89,
+     97,
+     105,
+     114,
+     122,
+     131,
+     139,
+     147,
+     156,
+     164,
+     173,
+     181,
+     189,
+     198,
+     206,
+     215,
+     223,
+     231,
+     240,
+     248,
+     257,
+     265,
+     273,
+     282,
+     290,
+     299,
+     307,
+     315,
+     324,
+     332,
+     341,
+     349,
+     357,
+     366,
+     374,
+     383,
+     391,
+     399,
+     408,
+     416,
+     425,
+     433,
+     441,
+     450,
+     458,
+     467,
+     475,
+     486,
+     496,
+     507,
+     517,
+     528,
+     538,
+     549,
+     559,
+     570,
+     580,
+     591,
+     601,
+     612,
+     622,
+     633,
+     643,
+     654,
+     664,
+     675,
+     685,
+     696,
+     706,
+     717,
+     727,
+     738,
+     748,
+     759,
+     769,
+     780,
+     790,
+     801,
+     811,
+     822,
+     832,
+     843,
+     853,
+     864,
+     874,
+     885,
+     895,
+     906,
+     916,
+     927,
+     937,
+     948,
+     958,
+     969,
+     979,
+     990,
+     1000
+    ],
+    "sha256": "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4",
+    "source": "etc/etcparameter.etc"
+   },
+   "hp_cost_row": 3,
+   "impact_frame": 5,
+   "material_cost": {
+    "amount": 2,
+    "source_id": 3037
+   },
    "name": "崩山裂地斩",
+   "native_state": "outrage_break",
    "requires_effect": "frenzy",
    "skill": "skill/swordman/outragebreak.skl",
    "stages": [
     {
      "ani": "outragebreakready",
-     "atk": "",
      "fx": [
       {
+       "action_clock": true,
        "at": 0,
-       "key": "skillfx_outragebreak_stone_part_1_18a07756"
+       "depth_offset": 2,
+       "key": "skillfx_sword_ready_ldodge_ff4a8814"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 1,
+       "key": "skillfx_sword_ready_none_eec59a67"
       }
      ],
-     "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_outragebreak_stone_part_1_18a07756",
-       "effects": [
-        {
-         "chance": 0.3,
-         "id": "bleed"
-        }
-       ],
-       "percent_col": 0,
-       "window": [
-        0.0,
-        2800.0
-       ]
-      }
-     ]
+     "voice": "OUTRAGE_READY"
     },
     {
      "ani": "outragebreakslash",
-     "atk": "",
      "fx": [
       {
+       "action_clock": true,
        "at": 0,
-       "key": "skillfx_outragebreak_stone_part_2_376e63de"
+       "depth_offset": 2,
+       "key": "skillfx_sword_slash_ldodge_f39e3051"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 1,
+       "key": "skillfx_sword_slash_none_b381d2e0"
+      },
+      {
+       "action_clock": true,
+       "at": 600,
+       "depth_offset": 4,
+       "key": "skillfx_sword_slash_impact_ldodge_8c40b1c6"
+      },
+      {
+       "action_clock": true,
+       "at": 600,
+       "depth_offset": 3,
+       "key": "skillfx_sword_slash_impact_none_8a132f9c"
       }
      ],
      "hits": [
       {
-       "atk": "",
+       "atk": "character/swordman/attackinfo/outragebreak.atk",
        "body": true,
-       "effects": [
-        {
-         "chance": 0.3,
-         "id": "bleed"
-        }
-       ],
-       "percent_col": 1
+       "percent_col": 0
       },
       {
-       "atk": "",
-       "body": true,
-       "effects": [
-        {
-         "chance": 0.3,
-         "id": "bleed"
-        }
-       ],
-       "percent_col": 1
-      },
-      {
-       "atk": "",
-       "body": true,
-       "effects": [
-        {
-         "chance": 0.3,
-         "id": "bleed"
-        }
-       ],
-       "percent_col": 1
-      },
-      {
-       "at": 440,
-       "life_ms": 2400,
+       "at": 600,
+       "fixed_col": 1,
        "object": "passiveobject/character/swordman/outragebreakfloor.obj",
-       "percent_col": 0,
-       "speed": 0.0
+       "offset": [
+        150,
+        0,
+        0
+       ],
+       "percent": 0,
+       "starts_at_zero": true
+      }
+     ],
+     "sounds": [
+      {
+       "at": 600,
+       "key": "OUTRAGE_SWING"
+      },
+      {
+       "at": 600,
+       "key": "CCRASH_CRASH"
       }
      ]
     }

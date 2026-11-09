@@ -973,7 +973,7 @@ func step_player(ms: float, move: Vector2) -> void:
 			player["state"] = "jump" if float(player["z"])>0 else "move"
 		else:
 			player["state"] = "jump" if float(player["z"])>0 else "idle"
-	if float(player["z"])>0 or float(player["vz"])>0:
+	if (float(player["z"])>0 or float(player["vz"])>0) and not player.get("native_phase",{}).has("outrage_origin_x"):
 		player["air_ms"] = float(player["air_ms"])+ms
 		player["z"] = maxf(0,float(player["z"])+float(player["vz"])*dt)
 		player["vz"] = float(player["vz"])-float(rules["player"]["gravity"])*dt
@@ -1035,6 +1035,14 @@ func step_action(ms: float, move: Vector2) -> void:
 	var native_phase: Dictionary = player.get("native_phase",{})
 	if not native_phase.is_empty():clock = old_clock+ms
 	player["clock"] = clock
+	if m.get("native_state","") == "outrage_break":
+		if int(player["stage"]) == 0 and clock >= float(native_phase["end_ms"]):
+			# CBFC47 requests phase 1 as soon as the ready ANI finishes.
+			end_action_fx()
+			player["fx_tag"] = "act:%d" % (action_seq+1)
+			start_stage(1)
+			return
+		if int(player["stage"]) == 1:step_outrage_motion(m,native_phase,clock)
 	if native_phase.has("velocity"):
 		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
@@ -1263,7 +1271,7 @@ func normal_attack_cancel_allowed(move: Dictionary) -> bool:
 	var action: String = player["action"]
 	if action in Kernel.MoveTable.NORMAL_ATTACK_CHAIN:return true
 	# CBDB67 accepts the original attack state, which also runs the four Frenzy swings.
-	if move.get("native_state","") == "bloody_rave":return action in ["frenzy1","frenzy2","frenzy3","frenzy4"]
+	if move.get("native_state","") in ["bloody_rave","outrage_break"]:return action in ["frenzy1","frenzy2","frenzy3","frenzy4"]
 	return action in ["waveeye_attack1","waveeye_attack2","waveeye_attack3"]
 
 func begin_skill_cooldown(name: String, move: Dictionary) -> void:
@@ -1299,7 +1307,7 @@ func start_action(name: String, cancel := false) -> bool:
 	if m.has("normal_cancel_job"):
 		var state := String(player["state"])
 		if state not in ["idle","move","guard","action"]:return reject_action(name,"state")
-		if state == "guard" and m.get("native_state","") == "bloody_rave":return reject_action(name,"state")
+		if state == "guard" and m.get("native_state","") in ["bloody_rave","outrage_break"]:return reject_action(name,"state")
 		if state == "action" and float(player["clock"]) < action_duration(String(player["action"])):
 			if not cancel or not normal_attack_cancel_allowed(m):
 				return reject_action(name,"state")
@@ -1330,6 +1338,8 @@ func start_action(name: String, cancel := false) -> bool:
 	elif name == "buff":
 		# CC0F72 compares integer HP against the rank cost plus one.
 		if int(player["hp"]) <= int(hp_cost)+1:return reject_action(name,"hp")
+	elif m.get("native_state","") == "outrage_break":
+		if int(player["hp"]) <= int(hp_cost):return reject_action(name,"hp")
 	elif hp_cost > 0 and float(player["hp"]) <= hp_cost:return reject_action(name,"hp")
 	var mp_cost := skill_mp_cost(m)
 	var pay_mp_with_hp := name == "rage_slash" and int(skill_levels.get("bloody_vigorous",0)) > 0
@@ -1345,7 +1355,7 @@ func start_action(name: String, cancel := false) -> bool:
 		player["hp"] = float(player["hp"])-mp_cost
 	else:
 		player["mp"] = float(player["mp"])-mp_cost
-	if m.get("native_state","") == "thirst":
+	if m.get("native_state","") in ["thirst","outrage_break"]:
 		player["hp"] = int(player["hp"])-int(hp_cost)
 	elif hp_cost > 0:player["hp"] = float(player["hp"])-hp_cost
 	if name != "triple":begin_skill_cooldown(name,m)
@@ -1426,6 +1436,20 @@ func attach_frenzy_fx(key: String, delay := -1) -> void:
 
 func thirst_hp_cost(percent: int) -> int:
 	return int(int(max_hp)*percent/100.0)
+
+func step_outrage_motion(move: Dictionary, phase: Dictionary, clock: float) -> void:
+	var impact := int(phase["outrage_impact_ms"])
+	var elapsed := int(clock)
+	# CB44A7..CB4557 samples absolute X and Z only before frame five.
+	if elapsed >= impact:
+		player["z"] = 0.0
+		return
+	var travel: Vector2 = move["outrage_motion"]
+	var x := int(phase["outrage_origin_x"])+int(player["facing"])*int(travel.x*elapsed/impact)
+	move_along_ground_pixels(x-float(player["pos"].x))
+	var half := maxi(1,impact>>1)
+	var progress := float(elapsed)/half-1.0
+	player["z"] = float(int(travel.y*(1.0-progress*progress)))
 
 func stop_bloody_rave_loop() -> void:
 	if player.erase("bloody_rave_loop"):
@@ -1812,7 +1836,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var amount := float(int(native_fixed_attack_product(float(strike["fixed"]),base)))
 		# CC98DE..CC991C writes the scaled result to the ATK as a float.
 		amount = ActorNumbers.native_scalar(ActorNumbers.native_scalar(amount*grab_frenzy_percent())*ActorNumbers.NATIVE_PERCENT)
-		player["native_phase"]["grab_strike"] = grab_fixed_hit(strike,amount)
+		player["native_phase"]["grab_strike"] = native_fixed_hit(strike,amount)
 	elif m.get("native_state","") == "bloody_rave":
 		# CCED47 sets the ANI to weapon attack speed for both state phases.
 		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
@@ -1833,6 +1857,15 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 				bleed["status_level"] += int(row[0])
 			bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],m["suction_bleed_base"])
 			player["native_phase"]["suction_bleed"] = bleed
+	elif m.get("native_state","") == "outrage_break":
+		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+		var rate := maxi(1,int(attack_rate*1000.0))/1000.0
+		var stage := action_def()
+		var phase := {"cast_stage_rate":rate,"end_ms":int(float(stage["duration"])/rate)}
+		if index == 1:
+			phase["outrage_origin_x"] = int(player["pos"].x)
+			phase["outrage_impact_ms"] = int(float(stage["timeline"][m["impact_frame"]]["start_ms"])/rate)
+		player["native_phase"] = phase
 	elif m.get("native_state","") == "thirst":
 		var rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 		var speed := maxi(1,int(rate*1000.0))
@@ -1853,7 +1886,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		# CC7C56 requests attack speed for Triple Slash movement.
 		begin_action_slide(m["dash"],attack_rate)
 	# Multi-stage slides can pick their own side. These native follow-ups inherit facing.
-	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw","grabblastblood"] and index == 1) \
+	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw","grabblastblood","outragebreak"] and index == 1) \
 			and not (name == "draw" and opening_clock > 0.0) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
@@ -2170,7 +2203,7 @@ func step_grab_blast(move: Dictionary, stage: Dictionary, clock: float) -> bool:
 	# CB6D42 and CB6D83 truncate each column separately before adding them.
 	if bleeding:amount += int(native_fixed_attack_product(float(move["grab_bleed_bonus"]),base))
 	amount = int(float(amount*grab_frenzy_percent())/100.0)
-	var spray_hit := grab_fixed_hit(spray,float(amount))
+	var spray_hit := native_fixed_hit(spray,float(amount))
 	spray_hit["starts_at_zero"] = true
 	if move.has("grab_bleed_base") and numeric_player != null and not active_effect("thirst").is_empty():
 		# CB6E40..CB6F55 serializes skill 23's status before the object hits anyone.
@@ -2199,7 +2232,7 @@ func grab_frenzy_percent() -> int:
 	var row: Array = Numbers.Skills.sample(Numbers.record("buff"),int(skill_levels.get("buff",1)))["level_row"]
 	return 100+int(row[9])
 
-func grab_fixed_hit(template: Dictionary, amount: float) -> Dictionary:
+func native_fixed_hit(template: Dictionary, amount: float) -> Dictionary:
 	var hit := template.duplicate()
 	var atk: Dictionary = template["atk"].duplicate()
 	atk["absolute_damage"] = amount
@@ -2219,6 +2252,9 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 					hit = prepare_bloodblast_damage(hit)
 				elif hit.get("skill_id","") == "bloodyrave":
 					hit = bloody_rave_slash(hit)
+				elif hit.get("skill_id","") == "outragebreak":
+					var base := native_fixed_attack_base(move_def("outragebreak")["fixed_attack_base"])
+					hit = native_fixed_hit(hit,float(int(native_fixed_attack_product(float(hit["fixed"]),base))))
 				if hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())

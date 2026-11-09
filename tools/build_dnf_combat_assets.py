@@ -500,7 +500,11 @@ HARDATTACK_CHARGE_AUDIO = {
 HARDATTACK_WAVE_AUDIO = {f'GHOST_DRIVE_{kind.upper()}': f'sounds/char/swordman/effect/ghost_drive_{kind}.ogg'
                          for kind in (*HARDATTACK_WAVE_VARIANTS, 'hit')}
 SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33), HARDATTACK_VOICE: (50, 50)}
+OUTRAGE_AUDIO = {key: [f'sounds/char/swordman/effect/{key.lower()}.ogg']
+                 for key in ('OUTRAGE_READY', 'OUTRAGE_SWING', 'CCRASH_CRASH')}
+OUTRAGE_AUDIO['FLAMES_HIT'] = ['sounds/char/wizard/effect/fs_hit.ogg']
 CUE_SOUNDS = {
+    **OUTRAGE_AUDIO,
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     **{key: [path] for key, path in FRENZY_AUDIO.items()},
     **{key: [path] for key, path in BLOODBLAST_AUDIO.items()},
@@ -1454,6 +1458,8 @@ def main() -> int:
                         help='Add the original Bloody Rave Typhoon.ani bank')
     parser.add_argument('--extend-bloody-rave-contact', action='store_true',
                         help='Add the original Bloody Rave contact animation and ATK sound')
+    parser.add_argument('--extend-outrage-break', action='store_true',
+                        help='Add the original OutRageBreak ready, slash and impact layers and audio')
     parser.add_argument('--extend-thirst', action='store_true',
                         help='Add the original Thirst cast and release effects and sounds')
     parser.add_argument('--extend-draw', action='store_true',
@@ -1589,6 +1595,14 @@ def main() -> int:
         key = runtime['moves']['bloodyrave']['suction_contact_fx']
         specs = [('effects', key, runtime['assets']['effect_anims'][key])]
         specs.extend(('audio', cue, path) for cue, path in BLOODY_RAVE_CONTACT_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_outrage_break:
+        runtime = json.loads(SKILL_RUNTIME.read_bytes())
+        effects = runtime['assets']['effect_anims']
+        stages = runtime['moves']['outragebreak']['stages']
+        specs = [('effects', cue['key'], effects[cue['key']]) for stage in stages for cue in stage['fx']]
+        specs.extend(('audio', cue, paths) for cue, paths in OUTRAGE_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_overdrive:

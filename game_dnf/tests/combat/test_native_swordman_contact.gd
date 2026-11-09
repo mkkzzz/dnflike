@@ -2158,6 +2158,68 @@ func check_bloody_rave_thirst() -> void:
 		step(600)
 		check(game.bus.events_of("combat.damage_number").size()==release_count,"the release phase cannot pulse again")
 
+func check_outrage_break_impact() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"outragebreak","level":1})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["outragebreak"]
+	for sample: Array in [[false,1000.0,true],[true,400.99,true],[true,401.0,false],[true,401.0,true],[true,1000.0,true]]:
+		var rate := 2.0 if sample[1] == 1000.0 and sample[0] else 1.0
+		var facing := -1 if rate == 2.0 else 1
+		start_room("original_27601","katana",facing,spec,"berserker")
+		if sample[0]:game.apply_skill_effect("buff","frenzy")
+		game.numeric_player.values["attack_speed"] = rate
+		game.numeric_player.values["hit"] = 1.0
+		game.numeric_player.values["independent_attack"] = Numbers.shared_config()["base"]["independent_attack"]
+		game.player["hp"] = sample[1]
+		var before_mp: float = game.player["mp"]
+		var payments: Array = []
+		session.set_skill_material_spender(func(id: int, amount: int):
+			payments.append([id,amount])
+			return sample[2])
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(180*facing,0))
+		target["hp"] = 50000.0
+		press(KEY_A)
+		step(0)
+		if not sample[0] or sample[1] < 401.0 or not sample[2]:
+			check(game.player["action"]=="" and game.player["hp"]==sample[1] and game.player["mp"]==before_mp
+				and not game.player["cooldowns"].has("outragebreak"),"Outrage Break rejects without mutating the cast ledger")
+			check(payments==([[3037,2]] if not sample[2] else []),"only a legal HP and Frenzy state can request both cubes")
+			continue
+		check(game.view.player_actor.pose=="outragebreakready" and game.player["hp"]==sample[1]-400.0
+			and game.player["mp"]==before_mp and payments==[[3037,2]] and cues("OUTRAGE_READY").size()==1,
+			"Outrage Break enters the original ready pose and pays its rank cost once")
+		step(560.0/rate-1.0)
+		check(game.player["stage"]==0 and game.player["pos"]==POINT and game.player["z"]==0.0
+			and target["hp"]==50000.0 and game.objects.is_empty(),"the ready frame cannot move or damage")
+		step(1)
+		check(game.player["stage"]==1 and game.view.player_actor.pose=="outragebreakslash" and game.player["clock"]==0.0,
+			"the original ready ANI advances automatically on completion")
+		step(300.0/rate)
+		check(game.player["z"]==150.0 and game.player["pos"]==POINT+Vector2(65*facing,0) and target["hp"]==50000.0,
+			"the leap peaks at the middle of the speed-scaled travel interval")
+		step(300.0/rate-1.0)
+		check(game.objects.is_empty() and target["hp"]==50000.0 and game.player["pos"]==POINT+Vector2(129*facing,0),
+			"the last airborne sample uses the native integer displacement")
+		step(1)
+		check(game.player["z"]==0.0 and target["hp"]<50000.0 and game.hit_count==1 and not target["numeric"].effects.active.has("bleed"),
+			"the original body ATK hits at frame five without a synthetic bleed")
+		check(game.objects.size()==1 and game.objects[0]["pos"]==POINT+Vector2(279*facing,0)
+			and game.objects[0]["hit"]["fixed_amount"]==5846.0 and game.objects[0]["clock"]==0.0
+			and cues("OUTRAGE_SWING").size()==1 and cues("CCRASH_CRASH").size()==1,
+			"the floor object and two original sounds start at impact with the rank-one fixed attack")
+		step(180.0/rate)
+		check(game.hit_count==1 and payments==[[3037,2]],"the contiguous slash frames share one hit and one cast payment")
+		if game.objects.size()==1:
+			var floor_target: Dictionary = game.spawn_enemy(POINT+Vector2(279*facing,45))
+			floor_target["hp"] = 50000.0
+			game.step_objects(16.0,int(game.objects[0]["id"]))
+			check(floor_target["hp"]<50000.0 and game.objects[0]["clock"]==0.0 and not cues("FLAMES_HIT").is_empty(),
+				"the original floor ATK lands independently on its first frame")
+
 func check_bloody_rave_special_targets() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -3442,6 +3504,7 @@ func run() -> void:
 	check_bloody_rave_contact_bleed()
 	check_bloody_rave_cancel()
 	check_bloody_rave_thirst()
+	check_outrage_break_impact()
 	check_bloody_rave_special_targets()
 	check_grab_blast_startup()
 	check_grab_blast_non_weapon_speed()

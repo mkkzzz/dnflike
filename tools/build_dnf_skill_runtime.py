@@ -180,7 +180,6 @@ DIRECT_OBJECTS = {
     "chargecrash": (OBJ_ROOT + "chargecrashsub.obj", 700, 0.0, 1200),
     "wavespinarea": (OBJ_ROOT + "wavespinarea.obj", 420, 0.0, 5000),
     "illusionslash": (OBJ_ROOT + "illusionslashwave.obj", 900, 520.0, 1600),
-    "outragebreak": (OBJ_ROOT + "outragebreakfloor.obj", 440, 0.0, 2400),
     "hellbenter": (OBJ_ROOT + "hellbenterfinish.obj", 760, 0.0, 1800),
     "hundredsword": (OBJ_ROOT + "hundredswordhit.obj", 780, 0.0, 3000),
     "blache": (OBJ_ROOT + "blache.obj", 760, 0.0, 3600),
@@ -265,7 +264,6 @@ HIT_STATUS = {
                  "status_level_col": 5, "duration_ms_col": 6}],
     "firewave": [{"id": "burn", "chance": 0.25}],
     "gorecross": [{"id": "bleed", "chance": 0.2}],
-    "outragebreak": [{"id": "bleed", "chance": 0.3}],
 }
 
 AREA_REPEATS = {
@@ -1199,6 +1197,31 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
                                   "speed": 0, "life_ms": -1, "rear_fx": rear, "starts_at_zero": True}]}]}
 
 
+def build_outrage_break(skill: dict, records: dict, fx: dict, effects: dict, objects: dict,
+                        slots: list[str], fixed_attack_base: dict) -> dict:
+    slash = records[CHR_ANI + "outragebreakslash.ani"]["decoded"]["timeline"]
+    impact = slash[5]["start_ms"]
+    layers = [add_fx(fx, effects, path) for path in slots[:6]]
+    floor = add_object(objects, OBJ_ROOT + "outragebreakfloor.obj")
+    if not all(layers) or not floor:
+        raise ValueError("Missing original OutRageBreak animation binding")
+    ready_fx = [{"key": layers[slot], "at": 0, "action_clock": True, "depth_offset": depth}
+                for slot, depth in ((0, 2), (1, 1))]
+    slash_fx = [{"key": layers[slot], "at": at, "action_clock": True, "depth_offset": depth}
+                for slot, depth, at in ((2, 2, 0), (3, 1, 0), (4, 4, impact), (5, 3, impact))]
+    return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "outrage_break",
+            "requires_effect": "frenzy", "hp_cost_row": 3, "material_cost": fixed_cube_cost(skill, records),
+            "fixed_attack_base": fixed_attack_base, "impact_frame": 5,
+            "fidelity_pending": ["hp_write_timing", "impact_stone_particles", "floor_layering",
+                                 "magma_eruption", "thirst_damage_branch"],
+            "stages": [{"ani": "outragebreakready", "fx": ready_fx, "voice": "OUTRAGE_READY"},
+                       {"ani": "outragebreakslash", "fx": slash_fx,
+                        "sounds": [{"at": impact, "key": key} for key in ("OUTRAGE_SWING", "CCRASH_CRASH")],
+                        "hits": [{"atk": CHR_ATK + "outragebreak.atk", "body": True, "percent_col": 0},
+                                 {"object": floor, "at": impact, "offset": [150, 0, 0],
+                                  "percent": 0, "fixed_col": 1, "starts_at_zero": True}]}]}
+
+
 def build_move(
     skill: dict,
     records: dict,
@@ -1597,10 +1620,8 @@ def build_move(
     # Native state entry 0xCC906A calls the sound virtual with the selected key.
     if key in WAVE_CAST_VOICES:
         stages[0]["voice"] = WAVE_CAST_VOICES[key]
-    if key in ["bloodyrave", "outragebreak"]:
+    if key == "bloodyrave":
         result["requires_effect"] = "frenzy"
-    if key == "outragebreak":
-        result["hp_cost_row"] = 0
     return result
 
 
@@ -1988,6 +2009,7 @@ def main() -> int:
         draw_slashes = draw_effect_slots(library)
         grab_hold = grab_hold_effect_slot(library)
         rave_slots = swordman_skill_effect_slots(library, b"SKILL_BLOODY_RAVE")["paths"]
+        outrage_slots = swordman_skill_effect_slots(library, b"SKILL_OUT_RAGE_BREAK")["paths"]
         rave_typhoon = bloody_rave_typhoon_params(library)
         if len(rave_slots) != 15:
             raise ValueError("Unexpected Bloody Rave animation slots")
@@ -2002,6 +2024,7 @@ def main() -> int:
             SAFE_EFFECTS.add(grab_hold["path"])
         SAFE_EFFECTS.update(path for path in [*rave_slots, OBJ_ROOT + "animation/bloodyravelayer.ani"]
                             if safe_animation(library, path))
+        SAFE_EFFECTS.update(path for path in outrage_slots if safe_animation(library, path))
         object_candidates = {
             value[0]
             for value in CAST_OBJECTS.values()
@@ -2020,6 +2043,7 @@ def main() -> int:
         object_candidates.add(OBJ_ROOT + "givebloodsub.obj")
         object_candidates.add(OBJ_ROOT + "grabblastblood.obj")
         object_candidates.add(OBJ_ROOT + "bloodyrave.obj")
+        object_candidates.add(OBJ_ROOT + "outragebreakfloor.obj")
         object_candidates.add(OBJ_ROOT + "momentaryslashwave.obj")
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(
@@ -2083,6 +2107,8 @@ def main() -> int:
                 move["fidelity_pending"] = ["object_controller", "damage_and_status", "effect_weapon_scale", "cancel_rules", "voice"]
         elif key == "bloodyrave":
             move = build_bloody_rave(skill, records, fx, effects, objects, rave_slots, bleed_attack_base, rave_typhoon)
+        elif key == "outragebreak":
+            move = build_outrage_break(skill, records, fx, effects, objects, outrage_slots, fixed_attack_base)
         else:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects,
                               bloodblast_script=bloodblast_script)
