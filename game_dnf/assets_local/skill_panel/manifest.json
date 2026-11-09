@@ -549,6 +549,112 @@
     ]
    ],
    "max_digits": 5
+  },
+  "detail_scroll": {
+   "file": "v5/detail_scroll.png",
+   "size": [
+    15,
+    129
+   ],
+   "bank": "Interface/WindowCommon.img",
+   "bank_sha256": "8e75e1ec8514ff61edbae6baf833300c50e941ec0f0bb2ea29cb2dbcd62448d0",
+   "ui_reference": {
+    "path": "ui/skill/skillshopexplain.ui",
+    "control": "4013"
+   },
+   "frames": {
+    "decrement": [
+     16
+    ],
+    "decrement_highlight": [
+     17
+    ],
+    "decrement_pressed": [
+     18
+    ],
+    "increment": [
+     22
+    ],
+    "increment_highlight": [
+     23
+    ],
+    "increment_pressed": [
+     24
+    ],
+    "scroll": [
+     28
+    ],
+    "grabber": [
+     184,
+     185,
+     186
+    ],
+    "grabber_highlight": [
+     187,
+     188,
+     189
+    ]
+   },
+   "regions": {
+    "decrement": [
+     0,
+     0,
+     15,
+     16
+    ],
+    "decrement_highlight": [
+     0,
+     16,
+     15,
+     16
+    ],
+    "decrement_pressed": [
+     0,
+     32,
+     15,
+     16
+    ],
+    "increment": [
+     0,
+     48,
+     15,
+     16
+    ],
+    "increment_highlight": [
+     0,
+     64,
+     15,
+     16
+    ],
+    "increment_pressed": [
+     0,
+     80,
+     15,
+     16
+    ],
+    "scroll": [
+     0,
+     96,
+     15,
+     1
+    ],
+    "grabber": [
+     0,
+     97,
+     15,
+     16
+    ],
+    "grabber_highlight": [
+     0,
+     113,
+     15,
+     16
+    ]
+   },
+   "thumb_caps": [
+    7,
+    7
+   ]
   }
  },
  "ui_layout": {

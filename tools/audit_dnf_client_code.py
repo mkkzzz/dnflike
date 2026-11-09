@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 import struct
 
-from dnf_pvf_archive import Archive
+from dnf_pvf_archive import Archive, compare_indexed_payloads, indexed_payload_mask
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -84,7 +84,7 @@ def embedded_resources(raw):
     return outer
 
 
-def compare_skills(client, backup):
+def compare_skills(client, backup, matched_payloads=None):
     selected, failures, differences = [], [], []
     prefixes = ('skill/swordman/', 'character/swordman/', 'passiveobject/character/swordman/')
     suffixes = {'.skl', '.ani', '.atk', '.chr', '.obj', '.nut', '.act', '.ptl'}
@@ -100,6 +100,8 @@ def compare_skills(client, backup):
         if not current or not previous or current[1] != previous[1]:
             differences.append({'path': path, 'client_sha256': current[1] if current else None,
                                 'backup_sha256': previous[1] if previous else None})
+        elif matched_payloads is not None:
+            matched_payloads[path] = previous[0]
     return {'selected': len(selected), 'by_kind': dict(sorted(Counter(Path(p).suffix for p in selected).items())),
             'payload_crc_failures': failures, 'differences': differences}
 
@@ -108,23 +110,47 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--client-root', type=Path, required=True)
     parser.add_argument('--output', type=Path, default=ROOT/'temp/skill_logic_audit/client_code.json')
+    parser.add_argument('--record', action='append', default=[], help='Also compare this internal PVF path in all four archives')
     args = parser.parse_args()
     client_root = args.client_root/'情怀60复古'
     native = {name: embedded_resources((client_root/name).read_bytes()) for name in ('DNF.exe', '地下城与勇士.exe')}
     client = Archive(client_root/'ImagePacks2/Script.pvf', allow_known_client_transform=True)
     backup = Archive(args.client_root/'111Script.pvf')
     try:
-        result = {'schema': 'dnf_client_code_audit/1', 'effective_loaded_pvf': 'unconfirmed',
+        matched = {}
+        comparison = compare_skills(client, backup, matched)
+        requested = {}
+        for name in args.record:
+            name = name.replace('\\', '/').lower()
+            if name == 'stringtable.bin':
+                parser.error('stringtable.bin supplies the indexed payload anchor and is not an independent comparison')
+            current, previous = client.raw(name), backup.raw(name)
+            requested[name] = {'client_sha256': current[1] if current else None,
+                               'backup_sha256': previous[1] if previous else None}
+            if current and previous and current[1] == previous[1]:
+                matched[name] = previous[0]
+        stringtable = backup.raw('stringtable.bin')[0]
+        mask = indexed_payload_mask(client_root/'Script.pvf', stringtable, max(map(len, matched.values()), default=0))
+        indexed = {name: compare_indexed_payloads(client_root/name, mask, matched)
+                   for name in ('Script.pvf', 'Video/Script.pvf')}
+        result = {'schema': 'dnf_client_code_audit/2', 'effective_loaded_pvf': 'unconfirmed',
                   'native': native, 'directory_transform': client.directory_transform,
-                  'comparison': compare_skills(client, backup)}
+                  'comparison': comparison, 'additional_records': requested,
+                  'indexed_content_comparison': indexed}
     finally:
         client.close()
         backup.close()
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     print(json.dumps(result['comparison'], ensure_ascii=False))
+    for name, audit in indexed.items():
+        print(f'{name}: {audit["index_entries"]} entries, {len(audit["exact_content_matches"])} full payload matches, '
+              f'{len(audit["without_exact_match"])} without a full match')
     print('Read-only native/PVF evidence: '+str(args.output))
-    return 1 if result['comparison']['payload_crc_failures'] else 0
+    return 1 if (comparison['payload_crc_failures'] or comparison['differences'] or any(
+        audit['without_exact_match'] for audit in indexed.values()) or any(
+        not row['client_sha256'] or row['client_sha256'] != row['backup_sha256'] for row in requested.values()
+    )) else 0
 
 
 if __name__ == '__main__':

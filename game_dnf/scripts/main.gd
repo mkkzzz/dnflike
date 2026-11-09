@@ -12,7 +12,7 @@ const BattleView = preload("res://view/battle_view.gd")
 const MapLoader = preload("res://scripts/native_map_loader.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
-const GHOST_FIELD_KINDS := ["khazan_field","bremen_field"]
+const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field"]
 const OPPOSITE := {"left":"right","right":"left","up":"down","down":"up"}
 ## Double tap window for running, measured from the release of the first tap.
 const RUN_TAP_MS := 240
@@ -530,7 +530,6 @@ func pulse_passive_auras() -> void:
 			if Vector2(enemy["pos"]).distance_to(Vector2(player["pos"])) <= 260.0:
 				land_hit(player,enemy,{"atk":{},"atk_path":"","percent":percent,"skill_id":"dotarea","damage_type":"magical","element":"none","lift":-1.0},Vector3(enemy["pos"].x,enemy["pos"].y,float(enemy["z"])),int(player["facing"]),attack_power())
 	for aura_entry in [
-		["saya_aura","saya",80.0,"water",{"id":"freeze","chance":0.12}],
 		["epidemic_aura","epidemicrasa",40.0,"dark",{"id":"slow","chance":0.4}],
 	]:
 		var effect_id := String(aura_entry[0])
@@ -1029,7 +1028,6 @@ func start_action(name: String, cancel := false) -> bool:
 	player["fx_tag"] = "act:%d" % (action_seq+1)
 	start_stage(0)
 	match name:
-		"saya":apply_effect({"kind":"effect","id":"saya_aura","rank":int(skill_levels.get(name,1))})
 		"epidemicrasa":apply_effect({"kind":"effect","id":"epidemic_aura","rank":int(skill_levels.get(name,1))})
 	return true
 
@@ -1503,12 +1501,13 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 	var kind := String(controller.get("kind",""))
 	if kind in GHOST_FIELD_KINDS:
 		var exit_ms := float(controller["disappear_ms"])
-		for previous: Dictionary in objects:
-			if previous["owner"] == owner and not previous.get("superseded",false) and previous["hit"].get("native_controller",{}).get("kind") == kind:
-				# C9E490 -> A665D0 ends the active interval and keeps the exit interval.
-				previous["superseded"] = true
-				previous["exit_at_ms"] = minf(float(previous["exit_at_ms"]),float(previous["clock"]))
-				previous["life_ms"] = float(previous["exit_at_ms"])+exit_ms
+		if kind != "saya_field":
+			for previous: Dictionary in objects:
+				if previous["owner"] == owner and not previous.get("superseded",false) and previous["hit"].get("native_controller",{}).get("kind") == kind:
+					# C9E490 -> A665D0 replaces Khazan/Bremen only, keeping the exit clip.
+					previous["superseded"] = true
+					previous["exit_at_ms"] = minf(float(previous["exit_at_ms"]),float(previous["clock"]))
+					previous["life_ms"] = float(previous["exit_at_ms"])+exit_ms
 		entity["exit_at_ms"] = float(entity["life_ms"])-exit_ms
 		entity["next_pulse_ms"] = 0.0
 		entity["field_rank"] = int(skill_levels.get(String(hit["skill_id"]),1))
@@ -1559,12 +1558,15 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		o["clock"] = t
 		o["pos"] = Vector2(o["pos"])+Vector2(float(o["speed"])*int(o["facing"])*object_ms/1000.0,0)
 		if kind in GHOST_FIELD_KINDS:
+			if kind == "saya_field" and ghost_field_pulse(o):
+				# A68045..A68152 runs the area attack before the deletion check.
+				pulse_saya_field(o)
 			if t >= float(o["life_ms"]):
 				objects.remove_at(i)
 				if kind == "bremen_field":bremen_removed = true
 			elif o["owner"] == "player" and not o.get("superseded",false):
 				if kind == "khazan_field":khazan_field = o
-				else:bremen_field = o
+				elif kind == "bremen_field":bremen_field = o
 			continue
 		var active := float(hit.get("active_ms",-1))
 		var done := false
@@ -1670,6 +1672,18 @@ func update_bremen_aura(field: Dictionary) -> void:
 			var remaining := float(field["life_ms"]) - float(field["clock"])
 			if actor.add_effect("bremen_debuff",int(field["field_rank"]),{"duration_ms":remaining}):
 				actor.effects.active["bremen_debuff"]["field_id"] = field["id"]
+
+func pulse_saya_field(field: Dictionary) -> void:
+	var attacker: Dictionary = player if field["owner"] == "player" else field["source"]
+	if attacker.is_empty():return
+	var hit: Dictionary = field["hit"]
+	var height_limit := int(hit["native_controller"]["height_limit"])
+	for enemy: Dictionary in monsters:
+		var height := int(enemy["z"])
+		if float(enemy["hp"]) <= 0 or height > height_limit or not ghost_field_contains(field,enemy["pos"]):continue
+		var position: Vector2 = enemy["pos"]
+		var impact := Vector3(position.x,position.y,int((height+height_limit)/2.0))
+		land_hit(attacker,enemy,hit,impact,int(field["facing"]),float(field["power"]))
 
 ## Round the original SSE scalar operation before its truncating integer conversion.
 func _native_float32(value: float) -> float:

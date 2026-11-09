@@ -922,6 +922,8 @@ def main() -> int:
                         help='Add the Khazan ghost and area banks, preserving existing assets')
     parser.add_argument('--extend-bremen', action='store_true',
                         help='Add the Bremen ghost and area banks, preserving existing assets')
+    parser.add_argument('--extend-saya', action='store_true',
+                        help='Add the Saya ghost and area banks, preserving existing assets')
     parser.add_argument('--extend-ghost-cast-clips', action='store_true',
                         help='Add original ghost cast clip metadata to the existing player atlases')
     args = parser.parse_args()
@@ -930,8 +932,9 @@ def main() -> int:
         specs = [('player_clips', key, motions[key]) for key in ('throw1', 'throw2')]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
-    if args.extend_khazan or args.extend_bremen:
-        print(json.dumps(extend_ghost_field(args.library, 'bremen' if args.extend_bremen else 'khazan')))
+    if args.extend_khazan or args.extend_bremen or args.extend_saya:
+        skill = 'saya' if args.extend_saya else 'bremen' if args.extend_bremen else 'khazan'
+        print(json.dumps(extend_ghost_field(args.library, skill)))
         return 0
     if args.extend_firewave:
         print(json.dumps(extend_firewave(args.library)))

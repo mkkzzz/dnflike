@@ -689,6 +689,47 @@
      "field_animation": "npc/animation/npc_ir.ani"
     }
    ]
+  },
+  "westcoast_sky": {
+   "placement": "westcoast_sky",
+   "declared": [
+    "ophelia"
+   ],
+   "npcs": [
+    {
+     "id": "ophelia",
+     "local_id": "ophelia",
+     "anchor": [
+      82,
+      222,
+      0
+     ],
+     "layer": "normal",
+     "implemented": true,
+     "field_wav": [
+      "R_NPC_OPILIA_AMB_LOOP"
+     ],
+     "popup_wav": [
+      "R_NPC_OPILIA_TALK",
+      "R_NPC_OPILIA_FAREWELL"
+     ],
+     "faces": {
+      "small": [
+       "Map/Npc/NpcFace02.img",
+       30
+      ],
+      "big": [
+       "Map/Npc/NpcFace02.img",
+       29
+      ],
+      "popup": [
+       "Map/Npc/NpcFace02.img",
+       31
+      ]
+     },
+     "field_animation": "npc/animation/npc_op.ani"
+    }
+   ]
   }
  }
 }

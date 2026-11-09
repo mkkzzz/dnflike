@@ -54,7 +54,8 @@ func _append_damage_line(lines: Array[String], hit: Dictionary) -> void:
 	var segments: Array = hit.get("segments", [])
 	if hit.get("kind") == "object":
 		segments = table.object(String(hit["object"])).get("segments", [])
-	if segments.is_empty():return
+	# Saya attacks through the field's timed radius check, independent of ANI boxes.
+	if segments.is_empty() and hit.get("native_controller", {}).get("kind") != "saya_field":return
 	var parts: Array[String] = []
 	var percent := float(hit.get("percent", 0))
 	var fixed := float(hit.get("fixed", 0))

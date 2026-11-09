@@ -118,6 +118,33 @@ class SkillPanelSourceTest(unittest.TestCase):
         self.assertEqual(self.manifest['ui_layout']['popup']['body_content_size'][0],
                          body['size'][0] + options['display marginwidth'])
 
+    def test_detail_scroll_uses_original_arrow_track_and_thumb_pixels(self):
+        from PIL import Image
+        part = self.manifest['parts']['detail_scroll']
+        self.assertEqual(part['frames'], {
+            'decrement': [16], 'decrement_highlight': [17], 'decrement_pressed': [18],
+            'increment': [22], 'increment_highlight': [23], 'increment_pressed': [24],
+            'scroll': [28], 'grabber': [184, 185, 186], 'grabber_highlight': [187, 188, 189],
+        })
+        self.assertEqual(part['thumb_caps'], [7, 7])
+        self.assertEqual(part['bank'], self.build.WINDOW_BANK)
+        self.assertEqual(part['ui_reference'], {'path': self.build.SKILL_EXPLAIN_UI, 'control': '4013'})
+        with Image.open(ROOT / 'game_dnf/assets_local/skill_panel' / part['file']) as file:
+            atlas = file.convert('RGBA')
+        for state, frames in part['frames'].items():
+            with self.subTest(state=state):
+                x, y, w, h = part['regions'][state]
+                self.assertEqual(w, 15)
+                expected = Image.new('RGBA', (w, h))
+                row = 0
+                for index in frames:
+                    image, meta = self.source.frame(part['bank'], index)
+                    box = image.getbbox()
+                    expected.paste(image.crop(box), (5 + meta['x'] + box[0], row + meta['y'] + box[1]))
+                    row += image.height
+                self.assertEqual(atlas.crop((x, y, x + w, y + h)).tobytes(), expected.tobytes())
+        self.assertEqual(self.source.sources['sprite/' + part['bank'].lower()], part['bank_sha256'])
+
     def test_sp_digits_preserve_source_frames(self):
         from PIL import Image
         part = self.manifest['parts']['sp_digits']

@@ -3,7 +3,7 @@
  "evidence": "原版 .qst 结构化字段 E-PARSE；总账保留名称/描述字符串引用，完整简体正文见 native_data_v1，启用名称取运行定义",
  "summary": {
   "total": 3716,
-  "implemented": 136,
+  "implemented": 140,
   "failed": 0,
   "pending_name_refs": 1383,
   "groups": {
@@ -4044,9 +4044,9 @@
     1
    ],
    "name_ref": "string:322448",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4007",
+   "local_name": "被阻挡的路"
   },
   {
    "path": "n_quest/behimos/goddess/epic_33_goddesstemple02.qst",
@@ -4068,9 +4068,9 @@
     1
    ],
    "name_ref": "string:322452",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4015",
+   "local_name": "维纳斯女神"
   },
   {
    "path": "n_quest/behimos/goddess/epic_33_goddesstemple03.qst",
@@ -4092,9 +4092,9 @@
     1
    ],
    "name_ref": "string:322456",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4016",
+   "local_name": "古老的羊皮纸"
   },
   {
    "path": "n_quest/behimos/goddess/epic_33_goddesstemple04.qst",
@@ -4114,9 +4114,9 @@
     1
    ],
    "name_ref": "string:322460",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4017",
+   "local_name": "伪造文书"
   },
   {
    "path": "n_quest/behimos/goddess/epic_33_goddesstemple05.qst",

@@ -68,5 +68,44 @@ class ArchiveTest(unittest.TestCase):
                     reader.Archive(path, allow_known_client_transform=True)
 
 
+class IndexedArchiveTest(unittest.TestCase):
+    def setUp(self):
+        self.anchor = b'known independent plaintext anchor of distinct size'
+        self.body = b'A' * 32 + b'tested'
+        near_match = self.body[:-1] + b'!'
+        key = bytes(range(len(self.anchor)))
+        rows = [(0, self.anchor), (1, near_match), (1, self.body), (1, self.body)]
+        data = bytearray(reader.INDEXED_HEADER.pack(48984, len(rows) << 13))
+        contents = bytearray()
+        for i, (flag, body) in enumerate(rows):
+            data += reader.INDEXED_ENTRY.pack(i + 1, i + 2, i + 3, i + 4, flag, len(contents), len(body))
+            contents += bytes(a ^ b for a, b in zip(body, key))
+        self.archive = bytes(data + contents)
+
+    def test_pinned_indexed_comparison_uses_whole_payload_and_retains_aliases(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)/'indexed.pvf'
+            path.write_bytes(self.archive)
+            entries = {'a.ani': self.body, 'missing.ani': self.body[:-1] + b'?'}
+            with self.assertRaisesRegex(ValueError, 'Unrecognized indexed PVF SHA256'):
+                reader.indexed_payload_mask(path, self.anchor, len(self.body))
+            with patch.object(reader, 'INDEXED_CLIENT_SHA', hashlib.sha256(self.archive).hexdigest()):
+                mask = reader.indexed_payload_mask(path, self.anchor, len(self.body))
+                result = reader.compare_indexed_payloads(path, mask, entries)
+            self.assertEqual(result['index_entries'], 4)
+            self.assertEqual(result['without_exact_match'], ['missing.ani'])
+            self.assertEqual(result['exact_content_matches']['a.ani']['sha256'], hashlib.sha256(self.body).hexdigest())
+            self.assertEqual([r['index'] for r in result['exact_content_matches']['a.ani']['rows']], [2, 3])
+            self.assertEqual(path.read_bytes(), self.archive)
+
+    def test_rejects_noncontiguous_offsets_and_trailing_bytes(self):
+        broken = bytearray(self.archive)
+        struct.pack_into('<I', broken, reader.INDEXED_HEADER.size + 17, 1)
+        with self.assertRaisesRegex(ValueError, 'Invalid indexed PVF entry'):
+            reader._indexed_layout(broken)
+        with self.assertRaisesRegex(ValueError, 'Indexed PVF payload end'):
+            reader._indexed_layout(self.archive + b'\0')
+
+
 if __name__ == '__main__':
     unittest.main()

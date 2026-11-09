@@ -1102,6 +1102,45 @@
       },
       "labels": [],
       "camera_y": 0
+    },
+    "westcoast_sky": {
+      "name": "西海岸 · 天帷巨兽入口",
+      "asset": "res://assets_local/flow_v1/rooms/westcoast_sky/manifest.json",
+      "placement": "westcoast_sky",
+      "spawn": [
+        52,
+        268
+      ],
+      "walk": [
+        [
+          13,
+          266,
+          865,
+          70
+        ],
+        [
+          12,
+          234,
+          422,
+          49
+        ]
+      ],
+      "npcs": {
+        "ophelia": [
+          82,
+          222
+        ]
+      },
+      "labels": [],
+      "camera_y": 0,
+      "source_dungeon_gate": [
+        869,
+        261,
+        23,
+        88,
+        -1,
+        -1
+      ]
     }
   },
   "portals": {
@@ -1614,6 +1653,54 @@
       ],
       "label": "西海岸",
       "reciprocal": "westcoast_to_westcoast_magic"
+    },
+    "westcoast_magic_to_westcoast_sky": {
+      "from": "westcoast_magic",
+      "rect": [
+        1765,
+        221,
+        21,
+        110
+      ],
+      "to": "westcoast_sky",
+      "spawn": [
+        52,
+        268
+      ],
+      "label": "天帷巨兽入口 →",
+      "reciprocal": "westcoast_sky_exit",
+      "source_raw": [
+        1765,
+        221,
+        21,
+        110,
+        3,
+        4
+      ]
+    },
+    "westcoast_sky_exit": {
+      "from": "westcoast_sky",
+      "rect": [
+        2,
+        221,
+        21,
+        129
+      ],
+      "to": "westcoast_magic",
+      "spawn": [
+        1738,
+        268
+      ],
+      "label": "西海岸 · 魔法师公馆",
+      "reciprocal": "westcoast_magic_to_westcoast_sky",
+      "source_raw": [
+        2,
+        221,
+        21,
+        129,
+        3,
+        1
+      ]
     }
   },
   "npcs": {
@@ -1726,6 +1813,11 @@
    "name": "艾丽丝",
    "services": [],
    "dialogue": "我有个重要的任务需要你帮忙！"
+    },
+    "ophelia": {
+      "name": "奥菲利亚·贝伊兰斯",
+      "services": [],
+      "dialogue": "我的命运……从逃离天帷巨兽那天开始就注定了……"
     }
   },
   "source": {

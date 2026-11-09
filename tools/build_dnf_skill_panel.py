@@ -429,6 +429,58 @@ def build_sp_digits(src: B.Source, parts: dict) -> None:
     }
 
 
+def build_detail_scroll(src: B.Source, parts: dict) -> None:
+    """Pack the WindowCommon pieces actually drawn by Explain #4013."""
+    node = ui_control_node(src, SKILL_EXPLAIN_UI, '4013')
+    options = dict(child['values'] for child in node['children'] if child['tag'] == '[int option]')
+    if node['values'][0] != '[hyperlinklabel]' or node['values'][11] != 1:
+        raise ValueError('Unexpected Explain scrollbar control')
+    # 0x11F0CC0 binds the arrows and track. 0x11CAA70 uses the visible thumb caps and strip.
+    states = {
+        'decrement': [16], 'decrement_highlight': [17], 'decrement_pressed': [18],
+        'increment': [22], 'increment_highlight': [23], 'increment_pressed': [24],
+        'scroll': [28], 'grabber': [184, 185, 186], 'grabber_highlight': [187, 188, 189],
+    }
+    frames = {index: src.frame(WINDOW_BANK, index) for indexes in states.values() for index in indexes}
+    # The track starts at the unadjusted control edge, 5 px past the text wrap edge.
+    anchor = -options['display marginwidth']
+    width = max(anchor + meta['x'] + image.getbbox()[2] for image, meta in frames.values())
+    arrow_height = frames[16][1]['ch']
+    strips = {}
+    for state, indexes in states.items():
+        height = arrow_height if state.startswith(('decrement', 'increment')) else sum(
+            frames[index][0].height for index in indexes)
+        strip = Image.new('RGBA', (width, height))
+        y = 0
+        for index in indexes:
+            image, meta = frames[index]
+            bounds = image.getbbox()
+            strip.paste(image.crop(bounds), (anchor + meta['x'] + bounds[0], y + meta['y'] + bounds[1]))
+            y += image.height
+        strips[state] = strip
+    atlas = Image.new('RGBA', (width, sum(strip.height for strip in strips.values())))
+    regions = {}
+    y = 0
+    for state, strip in strips.items():
+        atlas.paste(strip, (0, y))
+        regions[state] = [0, y, width, strip.height]
+        y += strip.height
+    target = OUT / 'v5/detail_scroll.png'
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.exists():
+        with Image.open(target) as previous:
+            if previous.size != atlas.size or previous.convert('RGBA').tobytes() != atlas.tobytes():
+                raise ValueError('Explain scrollbar art differs from the existing revision')
+    else:
+        atlas.save(target)
+    parts['detail_scroll'] = {
+        'file': 'v5/detail_scroll.png', 'size': list(atlas.size), 'bank': WINDOW_BANK,
+        'bank_sha256': src.sources['sprite/' + WINDOW_BANK.lower()],
+        'ui_reference': {'path': SKILL_EXPLAIN_UI, 'control': '4013'},
+        'frames': states, 'regions': regions, 'thumb_caps': [frames[184][0].height, frames[186][0].height],
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--library', type=Path, default=None)
@@ -437,6 +489,8 @@ def main() -> int:
                         help='Only export the audited +/- revision and update its manifest entries')
     mode.add_argument('--sp-digits-only', action='store_true',
                       help='Only export the original SP digits and update their manifest entry')
+    mode.add_argument('--detail-scroll-only', action='store_true',
+                      help='Only export the original Explain scrollbar and update its manifest entry')
     args = parser.parse_args()
     if args.rank_controls_only:
         manifest_path = OUT / 'manifest.json'
@@ -458,6 +512,16 @@ def main() -> int:
         build_sp_digits(source, manifest['parts'])
         manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
         print('[SKILL_PANEL] original SP digits: 10 glyphs')
+        return 0
+    if args.detail_scroll_only:
+        manifest_path = OUT / 'manifest.json'
+        manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+        source = B.Source(args.library)
+        if source.lib.raw(SKILL_EXPLAIN_UI)[1] != manifest['source']['tree_sources'][SKILL_EXPLAIN_UI]:
+            raise ValueError('Skillshop Explain version differs from the manifest')
+        build_detail_scroll(source, manifest['parts'])
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+        print('[SKILL_PANEL] original Explain scrollbar: WindowCommon arrows, track and thumb')
         return 0
     pack = json.loads(PACK.read_text(encoding='utf-8'))
     runtime = json.loads(RUNTIME.read_text(encoding='utf-8'))
@@ -490,6 +554,7 @@ def main() -> int:
     ui_layout = build_ui_revision(src, parts)
     build_rank_controls(src, parts)
     build_sp_digits(src, parts)
+    build_detail_scroll(src, parts)
 
     skills = []
     missing_icon = []

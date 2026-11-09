@@ -39,6 +39,7 @@ TOWNS = {
     'alfhlyra': 'music/alfhlyra_new.ogg',
     'westcoast': 'music/westcoast_new.ogg',
     'westcoast_magic': 'music/westcoast_new.ogg',
+    'westcoast_sky': 'music/westcoast_new.ogg',
 }
 # 副本（key 与 data/dungeons.json 的 id 对应）。
 # 洛兰原版没有独立 BOSS 曲，用森林深处曲代用（E-ADAPT）；其余都有各自的 normal/boss。

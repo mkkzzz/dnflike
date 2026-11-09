@@ -1,13 +1,13 @@
 {
  "schema": "dnf_native_quest_rules/2",
  "source_inputs": {
-  "game_dnf/data/quests.json": "9e1a31fbe824553beec3c3fd56dec23ad66d376f804fa18643b6978268b616ed",
+  "game_dnf/data/quests.json": "783477461f124b85985ce1179c2a80e21e33f39e00f89c2f9ab0e42d15446ed9",
   "game_dnf/data/native_runtime.json": "5d188709d45b658d74d0058563e82da509bf9a0e34b2a3c6cbb8dc4217b749bc",
   "game_dnf/data/runtime_items.json": "e0e3ce46d6b39aae805808a1bce7110c55aa9265606ce7f671534543690ae2ae",
   "game_dnf/data/monster_catalog.json": "bc0689f1d377e47a66d439fdc2a99d998bc14d32fdfb7d38ce3276a090c7563c",
   "game_dnf/data/combat.json": "cba7ae4b96d0bc2b49a74037d0cb112d87e324262f8ce8ac76bda107caea8d23",
   "game_dnf/data/dungeons.json": "db5411ed5d9a0078d30f1035873e607cca63b13fdb2b8c04dc5fd3dba6ad1327",
-  "game_dnf/data/towns.json": "185f3158f066ebd0067c95725ef5dab9abbfe9b14c9f0340af0787f1a63128fe",
+  "game_dnf/data/towns.json": "c28d11e969afe865e577c52f81763871e1ecfb30f38ac501960dde5a48b6bdd9",
   "game_dnf/data/campaign_1_16.json": "976058418137f7de23e97d0d0c70d58201e4386b6751ea737bb361a151ced221",
   "game_dnf/assets_local/native_data_v1/manifest.json": "7828c4203fabb534006b8b178ed24251242f144ab7bb69e572f6420a0cd08f15",
   "game_dnf/assets_local/native_maps/lorien/map_export.json": "47688ac4e4a56968173148b850e4a97b098ed8541d7e8cf5359af0efd4bce94d",
@@ -225,6 +225,61 @@
      "limit": 10
     }
    ]
+  },
+  {
+   "id": "original.quest.4007",
+   "source": {
+    "id": 4007,
+    "path": "n_quest/behimos/goddess/epic_33_goddesstemple01.qst",
+    "sha256": "38dc1a00b4a8cbe1d847bc6851b089351a5cb538f268de8a9c0fa16ca500a677",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     28
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "被阻挡的路",
+   "description": "将神殿的存在告诉艾丽丝的。",
+   "dialogue": {
+    "accept": "最近，天帷巨兽的移动十分异常，因此而产生的震动似乎把路都堵住了。 \n 唉， 本来以为马上就能除掉罗特斯了， 可现在……不过，也不是完全没有办法…… \n 其实，神殿也可以通往第二脊椎。 之前我一直以为神殿坍塌了，还好它安然无恙。 我想是美神维纳斯的恩宠吧！不过神殿是我们GBL教的圣地， \n 除了主教其他人禁止进入。但目前这种情况下，我是该继续坚守教义呢？ 还是……唉，我真的不知道该怎么办了……",
+    "complete": "你是说因为教义的约束，所以奥菲利亚无法告知你通往第二脊椎的路吗……"
+   },
+   "category": "main",
+   "chapter": "behimos",
+   "min_level": 99,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "ophelia",
+   "receiver": "iris",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "iris"
+    }
+   ],
+   "reward": {
+    "gold": 1,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
   },
   {
    "id": "original.quest.4314",
@@ -1687,6 +1742,65 @@
    }
   },
   {
+   "id": "original.quest.4015",
+   "source": {
+    "id": 4015,
+    "path": "n_quest/behimos/goddess/epic_33_goddesstemple02.qst",
+    "sha256": "0d71f7475a64d2c3c1d8fa87d7e7df9167b3eddad6feb89b89aa622a2e7cc4fa",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     12
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "维纳斯女神",
+   "description": "为了获得[古老的羊皮纸]，找莎兰谈谈。",
+   "dialogue": {
+    "accept": "我第一次听说，天帷巨兽上还存在维纳斯女神的神殿。 \n 既然GBL教的教义一直隐瞒这个事实，那么以前应该没有人从外部进入过。 我们也不知道女神殿的具体位置，还得求助於奥菲利亚。\n 但让恪守教义的奥菲利亚违反教义告诉我们神殿的位置，好像不太容易呢。唔…… \n 但不是没有办法。 对了，你快去找莎兰要一张古老的羊皮纸。",
+    "complete": "你想要古老的羊皮纸？ 请稍等。"
+   },
+   "category": "main",
+   "chapter": "behimos",
+   "min_level": 99,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4007"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "iris",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "sharan"
+    }
+   ],
+   "reward": {
+    "gold": 1,
+    "xp": 0,
+    "items": {
+     "original_4710": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
    "id": "original.quest.4472",
    "source": {
     "id": 4472,
@@ -1970,6 +2084,68 @@
    "grant_items": {
     "original_3077": 1
    }
+  },
+  {
+   "id": "original.quest.4016",
+   "source": {
+    "id": 4016,
+    "path": "n_quest/behimos/goddess/epic_33_goddesstemple03.qst",
+    "sha256": "4f3cacab07bcb56478b1b1e5d33c797a6722629badde7484b957289e52c818c9",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     4710,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "古老的羊皮纸",
+   "description": "把古老的羊皮纸交给艾丽丝。",
+   "dialogue": {
+    "accept": "你要羊皮纸做什么呢？ 艾丽丝让你来拿的？ \n 唔……她不就站我旁边吗，干嘛不直接来拿呢？",
+    "complete": "你带来了吗？"
+   },
+   "category": "main",
+   "chapter": "behimos",
+   "min_level": 99,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4015"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "sharan",
+   "receiver": "iris",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_4710"
+    }
+   ],
+   "reward": {
+    "gold": 1,
+    "xp": 0,
+    "items": {
+     "original_4711": 1
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_4710": 1
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
   },
   {
    "id": "original.quest.4473",
@@ -2286,6 +2462,66 @@
      "limit": 1
     }
    ]
+  },
+  {
+   "id": "original.quest.4017",
+   "source": {
+    "id": 4017,
+    "path": "n_quest/behimos/goddess/epic_33_goddesstemple04.qst",
+    "sha256": "1a7ab6477a0f0a6d46f3164033d3771392a22c63b005cc653d728e073b026ce3",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     4711,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "伪造文书",
+   "description": "把[赫亚西斯的预言书]交给奥菲利亚。",
+   "dialogue": {
+    "accept": "请稍等。 （艾丽丝接过羊皮纸，在上面写了些什么）\n 好了， 我模仿赫亚西斯的笔迹写了点假的预言。 \n 好吧，虽然这个办法不怎么正直，但只要能打动奥菲利亚，也没什么关系……吧？ \n 帮我把份档交给奥菲利亚吧！",
+    "complete": "这个笔迹…… 这是‘赫亚西斯’大人预言的一部分。 上面写着‘当GBL教处於危险中时，通过女神殿走向脊椎吧’。\n 啊…… 赫亚西斯大人连这个事件都预言到了……"
+   },
+   "category": "main",
+   "chapter": "behimos",
+   "min_level": 99,
+   "max_level": 99,
+   "requires": [
+    "original.quest.4016"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "iris",
+   "receiver": "ophelia",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_4711"
+    }
+   ],
+   "reward": {
+    "gold": 1,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_4711": 1
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
   },
   {
    "id": "original.quest.4474",
@@ -5427,13 +5663,13 @@
  "coverage": {
   "indexed_quests": 2824,
   "existing": 64,
-  "new_executable": 71,
-  "total_executable": 135,
+  "new_executable": 75,
+  "total_executable": 139,
   "objective_parsed": 2359,
   "new_lifecycles": {
-   "once": 71
+   "once": 75
   },
-  "blocked": 2689
+  "blocked": 2685
  },
  "campaign": {
   "id": "campaign_1_16",
@@ -5650,5 +5886,5 @@
   ]
  },
  "status_file": "res://data/native_quest_status_v2.json.gz",
- "status_sha256": "753fdd095aaa0b2f9b802f6df1fb316f47288aded2605602b1214a21e5212ac8"
+ "status_sha256": "de2e528adf54d535134a039cdf9908ba5a115d76dc22bee465fc17eba389f758"
 }

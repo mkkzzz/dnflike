@@ -50,13 +50,14 @@ func run() -> void:
 		check(game.numeric_player.values==before and not game.numeric_player.effects.active.has("magical_memory"),"real combat numeric actor returns to base after source duration")
 	check_ghost_casts(game,session)
 	check_khazan(game,session)
+	check_saya(game,session)
 	game.queue_free()
 	await process_frame
 	print("[SKILL_EFFECTS] COMPLETE checks=",checks," failures=",failures)
 	quit(0 if failures==0 else 1)
 
 func check_ghost_casts(game, session) -> void:
-	for sample: Array in [["khazan",150,250],["bremen",200,300]]:
+	for sample: Array in [["khazan",150,250],["bremen",200,300],["saya",250,450]]:
 		var name := String(sample[0])
 		for rates: Array in [[1000,1000],[1001,1001],[1600,1600],[1600,1250]]:
 			game.restart()
@@ -177,3 +178,90 @@ func check_khazan(game, session) -> void:
 	check(view.object_views.has("%s:exit"%new_id) and game.numeric_player.values["strength"]==strength+58,"native exit starts 320ms before total lifetime and the aura is still active")
 	game.step_objects(320)
 	check(game.objects.is_empty() and game.active_effect("khazan_aura").is_empty() and game.numeric_player.values["strength"]==strength,"expired field and modifier are deleted at the total source lifetime")
+
+func check_saya(game, session) -> void:
+	var rolls := RandomNumberGenerator.new()
+	var freeze_seed := -1
+	for candidate: int in range(128):
+		rolls.seed = candidate
+		var accuracy := rolls.randf()
+		rolls.randf() # The damage path also samples a critical roll.
+		if accuracy < 0.8 and rolls.randf() < 0.147:
+			freeze_seed = candidate
+			break
+	check(freeze_seed >= 0,"deterministic Saya hit and freeze fixture")
+	for sample: Array in [[1,251,0.147,40,1950],[4,329,0.153,48,2258]]:
+		var rank := int(sample[0])
+		var label := "Saya rank %d" % rank
+		game.restart()
+		game.monsters.clear()
+		game.numeric_player = Actor.new()
+		game.numeric_player.configure(session.stats())
+		game.numeric_player.values["cast_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.skill_levels = {"saya":rank}
+		game.table.configure_skills(game.skill_levels,"swordman","katana")
+		game.player["mp"] = game.numeric_player.values["mp_max"]
+		var origin := Vector2(400,250)
+		var center := origin+Vector2(122,0)
+		game.player["pos"] = origin
+		game.player["facing"] = 1
+		var inside: Dictionary = game.spawn_enemy(center+Vector2(250,0))
+		var outside: Dictionary = game.spawn_enemy(center-Vector2(251,0))
+		var too_high: Dictionary = game.spawn_enemy(center)
+		inside["hp"] = 100000.0
+		inside["numeric"].values["status_resist"] = 0.0
+		too_high["z"] = 71.0
+		var outside_hp := float(outside["hp"])
+		var high_hp := float(too_high["hp"])
+		var move: Dictionary = game.move_def("saya")
+		var hit: Dictionary = move["stages"][0]["hits"][0]
+		var freeze: Dictionary = hit["effects"][0]
+		check(move["stages"][0]["hits"].size()==1 and move["stages"][0]["fx"].is_empty(),label+" has no unrelated cast contact box or effect")
+		check(hit["percent"]==sample[1] and is_equal_approx(float(freeze["chance"]),float(sample[2])) and freeze["status_level"]==sample[3] and freeze["duration_ms"]==sample[4],label+" compiles original damage and freeze columns")
+		game.bus.clear_history()
+		game.rng.reseed(freeze_seed)
+		check(game.start_action("saya"),label+" starts through the actual action path")
+		game.step_action(249,Vector2.ZERO)
+		game.pulse_passive_auras()
+		check(game.objects.is_empty() and game.bus.events_of("combat.damage").is_empty() and game.active_effect("saya_aura").is_empty(),label+" has neither pre-release damage nor a caster aura")
+		game.step_action(1,Vector2.ZERO)
+		check(game.objects.size()==1,label+" creates exactly one field at release")
+		if game.objects.size()!=1:continue
+		var field: Dictionary = game.objects[0]
+		var field_id := int(field["id"])
+		check(field["pos"]==center and field["life_ms"]==13000 and field["exit_at_ms"]==12680,label+" matches the native field offset and lifetime")
+		game.step_objects(17,field_id)
+		var hits: Array = game.bus.events_of("combat.hit")
+		check(field["clock"]==0.0 and hits.size()==1 and hits[0]["target"]==inside["id"] and hits[0]["point"]==Vector3(inside["pos"].x,inside["pos"].y,35.0),label+" first pulse uses field age zero and the native impact height")
+		check(outside["hp"]==outside_hp and too_high["hp"]==high_hp and inside["hp"]<100000,label+" strikes only hostiles inside radius 250 and at height <=70")
+		var resolved: Dictionary = game.last_damage
+		check(resolved.get("category")=="magical" and resolved.get("element")=="water" and is_equal_approx(float(resolved.get("trace",{}).get("percent_part",0)),float(game.numeric_player.values["magical_attack"])*float(sample[1])/100.0),label+" applies the sampled percentage as water magic")
+		var applied: Dictionary = inside["numeric"].effects.active.get("freeze",{})
+		check(applied.get("remaining_ms")==sample[4] and applied.get("definition",{}).get("status_level")==sample[3],label+" the live freeze receives source level and duration")
+		var hp_after_first := float(inside["hp"])
+		game.view.present(game.view_snapshot(),0,0)
+		check(game.view.object_views.has("%s:ghost"%field_id) and game.view.object_views.has("%s:entry:0"%field_id) and game.view.object_views.has("%s:entry:1"%field_id),label+" draws both ghost and entrance layers")
+		game.player["pos"] = origin-Vector2(500,0)
+		game.step_objects(999)
+		check(inside["hp"]==hp_after_first,label+" waits the full 1000ms between pulses")
+		inside["z"] = 70.0
+		game.rng.reseed(freeze_seed)
+		game.step_objects(1)
+		check(inside["hp"]<hp_after_first and outside["hp"]==outside_hp and too_high["hp"]==high_hp,label+" next pulse stays on the placed field and accepts the inclusive height limit")
+		game.step_objects(40)
+		game.view.present(game.view_snapshot(),0,0)
+		check(game.view.object_views.has("%s:stay"%field_id) and not game.view.object_views.has("%s:entry:0"%field_id),label+" switches to the original stay clip at 1040ms")
+		inside["pos"] = center+Vector2(400,0)
+		if rank==4:
+			game.step_action(450,Vector2.ZERO)
+			game.player["cooldowns"].erase("saya")
+			game.player["facing"] = -1
+			check(game.start_action("saya"),label+" starts a recast with cleared cooldown")
+			game.step_action(250,Vector2.ZERO)
+			check(game.objects.size()==2 and not field.get("superseded",false) and game.objects[1]["pos"]==Vector2(game.player["pos"])-Vector2(122,0),label+" mirrors placement and keeps the previous native field")
+		game.step_objects(11640)
+		game.view.present(game.view_snapshot(),0,0)
+		check(game.view.object_views.has("%s:exit"%field_id),label+" enters the original exit clip at 12680ms")
+		game.step_objects(320)
+		check(game.objects.all(func(object):return int(object["id"])!=field_id),label+" deletes the original field at 13000ms")

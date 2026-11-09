@@ -49,7 +49,12 @@
    "skillfx_normalwaveslash_0f16bb7b": "character/swordman/effect/animation/normalwaveslash.ani",
    "skillfx_outragebreak_stone_part_1_18a07756": "character/swordman/effect/animation/outragebreak/particle/outragebreak_stone_part_1.ani",
    "skillfx_outragebreak_stone_part_2_376e63de": "character/swordman/effect/animation/outragebreak/particle/outragebreak_stone_part_2.ani",
+   "skillfx_saya2_078bfa10": "passiveobject/character/swordman/animation/saya2.ani",
    "skillfx_saya_down_ced86275": "passiveobject/character/swordman/animation/hardattackcharge/saya-down.ani",
+   "skillfx_sayaareaappear1_d0189262": "passiveobject/character/swordman/animation/sayaareaappear1.ani",
+   "skillfx_sayaareaappear2_5b29c727": "passiveobject/character/swordman/animation/sayaareaappear2.ani",
+   "skillfx_sayaareadisappear_f0a73c78": "passiveobject/character/swordman/animation/sayaareadisappear.ani",
+   "skillfx_sayaareastay_b8c12288": "passiveobject/character/swordman/animation/sayaareastay.ani",
    "skillfx_slash1_06aaa5c5": "character/swordman/effect/animation/ghoststepslash/slash1.ani",
    "skillfx_slash2_0ba3d5ec": "character/swordman/effect/animation/ghoststepslash/slash2.ani",
    "skillfx_slashmove1_afe914cf": "character/swordman/effect/animation/ghoststep/slashmove1.ani",
@@ -558,18 +563,6 @@
     }
    ],
    "name": "暴走",
-   "stacking": "refresh"
-  },
-  "saya_aura": {
-   "aura": {
-    "chance": 0.12,
-    "damage_percent": 80,
-    "effect": "freeze",
-    "radius": 300
-   },
-   "duration_ms": 25000,
-   "max_stacks": 1,
-   "name": "冰霜之萨亚",
    "stacking": "refresh"
   },
   "shock": {
@@ -3571,42 +3564,72 @@
    ]
   },
   "saya": {
+   "fidelity_pending": [
+    "area_membership_filters",
+    "area_draw_order",
+    "voice",
+    "status_level_resistance_formula"
+   ],
    "name": "冰霜之萨亚",
+   "native_charge_ani": "throw1",
+   "native_state": "ghost_cast",
    "skill": "skill/swordman/saya.skl",
    "stages": [
     {
-     "ani": "summon2",
+     "ani": "throw2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_saya_down_ced86275"
-      }
-     ],
+     "fx": [],
      "hits": [
       {
-       "atk": "",
-       "derived": "skillfx_saya_down_ced86275",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0.0,
-        425.0
-       ]
-      },
-      {
-       "at": 420,
-       "effects": [],
-       "life_ms": 25000,
+       "at": 0,
+       "effects": [
+        {
+         "chance_col": 2,
+         "chance_scale": 0.001,
+         "duration_ms_col": 4,
+         "id": "freeze",
+         "status_level_col": 3
+        }
+       ],
+       "native_controller": {
+        "appear_fx": [
+         "skillfx_sayaareaappear1_d0189262",
+         "skillfx_sayaareaappear2_5b29c727"
+        ],
+        "appear_ms": 1040.0,
+        "area_scale": 1.0729613733905579,
+        "depth_scale": 0.29,
+        "disappear_fx": "skillfx_sayaareadisappear_f0a73c78",
+        "disappear_ms": 320.0,
+        "duration_col": 1,
+        "ghost_fx": "skillfx_saya2_078bfa10",
+        "height_limit": 70,
+        "kind": "saya_field",
+        "pulse_ms": 1000,
+        "radius": 250,
+        "stay_fx": "skillfx_sayaareastay_b8c12288"
+       },
        "object": "passiveobject/character/swordman/saya.obj",
+       "offset": [
+        122,
+        0,
+        0
+       ],
+       "percent": 0,
        "percent_col": 0,
-       "speed": 0.0
+       "speed": 0
       }
      ]
     }
    ]
   },
   "sayaex": {
+   "fidelity_pending": [
+    "cast_state",
+    "object_controller",
+    "damage_and_status",
+    "voice"
+   ],
    "name": "冰晶之萨亚",
    "skill": "skill/swordman/sayaex.skl",
    "stages": [

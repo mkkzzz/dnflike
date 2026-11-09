@@ -40,6 +40,7 @@ var _tip_label: Label
 var _effective_levels: Dictionary = {}
 var _detail_line_height := 14
 var _detail_wrap_width := 174
+var _detail_scroll_theme: Theme
 
 func _init(target) -> void:
 	game = target
@@ -323,6 +324,34 @@ func _style_scroll(scroll: VScrollBar) -> void:
 	for pair in [["increment", 12], ["increment_highlight", 12], ["increment_pressed", 12], ["decrement", 9], ["decrement_highlight", 9], ["decrement_pressed", 9]]:
 		scroll.add_theme_icon_override(pair[0], skin.texture("shop", pair[1]))
 
+func _style_detail_scroll(scroll: VScrollBar) -> void:
+	if _detail_scroll_theme == null:
+		var atlas := _part("detail_scroll")
+		if atlas == null:
+			_style_scroll(scroll)
+			return
+		var part: Dictionary = parts["detail_scroll"]
+		var caps: Array = part["thumb_caps"]
+		_detail_scroll_theme = Theme.new()
+		for state: String in part["regions"]:
+			var region: Array = part["regions"][state]
+			var texture := AtlasTexture.new()
+			texture.atlas = atlas
+			texture.region = Rect2(region[0], region[1], region[2], region[3])
+			texture.filter_clip = true
+			if state.begins_with("increment") or state.begins_with("decrement"):
+				_detail_scroll_theme.set_icon(state, "VScrollBar", texture)
+				continue
+			var style := StyleBoxTexture.new()
+			style.texture = texture
+			if state.begins_with("grabber"):
+				style.texture_margin_top = caps[0]
+				style.texture_margin_bottom = caps[1]
+			_detail_scroll_theme.set_stylebox(state, "VScrollBar", style)
+			if state == "grabber_highlight":
+				_detail_scroll_theme.set_stylebox("grabber_pressed", "VScrollBar", style)
+	scroll.theme = _detail_scroll_theme
+
 func _tree_node(parent: Control, node: Dictionary, skill: Dictionary) -> void:
 	var skin = game.skin
 	var key := String(skill["key"])
@@ -546,7 +575,9 @@ func _detail(root: Control) -> void:
 	body.mouse_filter = Control.MOUSE_FILTER_STOP
 	panel.add_child(body)
 	var scroll := body.get_v_scroll_bar()
-	_style_scroll(scroll)
+	_style_detail_scroll(scroll)
+	# Native arrows change the first visible row by one (0x11BCCC0).
+	scroll.custom_step = _detail_line_height
 	# Measure the themed bar after attaching the control. Explain #4013 wraps at
 	# 179 + display marginwidth whether the scrollbar is shown or hidden.
 	var scroll_width := scroll.get_minimum_size().x

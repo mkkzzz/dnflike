@@ -111,6 +111,7 @@ GENERIC_HIT_EFFECT = CHR_FX + "upperslash1.ani"
 
 # Cast skills without a dedicated hostile body motion.
 CAST_ANIM = "summon2"
+GHOST_FIELD_SKILLS = ("khazan", "bremen", "saya")
 CAST_OBJECTS = {
     "ashenfork": (OBJ_ROOT + "ashenforksub.obj", 260, 0.0, 700),
     # Native object 20001 (0x9EBAF0) dies at ANI end. Its OBJ supplies no
@@ -122,6 +123,7 @@ CAST_OBJECTS = {
     "bloodblast": (OBJ_ROOT + "grabblastbloodbig.obj", 280, 0.0, 1700),
     "grabblastblood": (OBJ_ROOT + "grabblastblood.obj", 320, 0.0, 1200),
     "releasewave": (OBJ_ROOT + "releasewave.obj", 260, 480.0, 1200),
+    # Legacy Saya EX adapter only. Ordinary Saya uses native object 20012.
     "saya": (OBJ_ROOT + "saya.obj", 420, 0.0, 25000),
     "tombstonerain": (None, 480, 0.0, 2600),
     "grandwave": (OBJ_ROOT + "grandwave.obj", 420, 520.0, 1800),
@@ -177,6 +179,7 @@ NATIVE_ANIMATION_BINDINGS = {
     *(OBJ_ROOT + f"animation/icewave{i}.ani" for i in range(1, 7)),
     OBJ_ROOT + "animation/khazanareaappear1.ani",
     OBJ_ROOT + "animation/bremenareaappear1.ani",
+    OBJ_ROOT + "animation/sayaareaappear1.ani",
 }
 
 SAFE_EFFECTS: set[str] = set()
@@ -188,7 +191,6 @@ WAVE_CAST_VOICES = {"normalwave": "HADOUKEN", "icewave": "SM_ICEWAVE", "firewave
 
 EX_BASE = {
     "tombstonerainex": "tombstonerain",
-    "sayaex": "saya",
     "momentaryslashex": "draw",
     "chargecrashex": "charge_crash",
     "firewaveex": "firewave",
@@ -316,13 +318,6 @@ ROOT_EFFECTS = {
             {"stat": "strength", "op": "add", "level_row": 0},
             {"stat": "intelligence", "op": "add", "level_row": 2},
         ],
-    },
-    "saya_aura": {
-        "name": "冰霜之萨亚",
-        "duration_ms": 25000,
-        "stacking": "refresh",
-        "max_stacks": 1,
-        "aura": {"radius": 300, "damage_percent": 80, "effect": "freeze", "chance": 0.12},
     },
     "epidemic_aura": {
         "name": "瘟疫之罗刹",
@@ -940,7 +935,8 @@ def build_move(
 ) -> dict | None:
     if skill.get("type") != "[active]":
         return None
-    key = str(skill["key"])
+    source_key = str(skill["key"])
+    key = "saya" if source_key == "sayaex" else source_key
     move_id = local_id(key)
     stages: list[dict] = []
     statuses = HIT_STATUS.get(key, [])
@@ -1072,7 +1068,9 @@ def build_move(
             "object": OBJ_ROOT + "normalwave.obj", "at": sum(delays[:3]),
             "speed": 0.0, "life_ms": -1, "percent_col": 2, "fixed_col": 0, "size_col": 1,
         }], "fx": [{"key": slash, "at": delays[0], "action_clock": True}]}]
-    if key in ("khazan", "bremen"):
+    if source_key == "sayaex":
+        result["fidelity_pending"] = ["cast_state", "object_controller", "damage_and_status", "voice"]
+    if source_key in GHOST_FIELD_SKILLS:
         path = add_object(objects, OBJ_ROOT + key + ".obj")
         if not path:
             raise ValueError(f"Missing original {key} field object")
@@ -1087,24 +1085,25 @@ def build_move(
         if not all((ghost_fx, appear_1, appear_2, stay, disappear)):
             raise ValueError(f"Incomplete original {key} animation banks")
         dungeon = records[str(skill["path"]).lower()]["decoded"]["dungeon"]
-        if len(dungeon["static_data"]) != 2 or min(dungeon["static_data"]) <= 0:
+        statics = dungeon["static_data"]
+        if len(statics) != (4 if key == "saya" else 2) or min(statics) <= 0:
             raise ValueError(f"Missing original {key} recovery or area radius")
-        radius = dungeon["static_data"][1]
+        radius = statics[1]
         # CBBCE0..CBBE7E starts state 13 with SKL casting time, static[0]
         # recovery and motion index zero. 85C750 loads CHR throw motion 1-1/1-2.
         result["native_state"] = "ghost_cast"
         result["native_charge_ani"] = "throw1"
-        # CD6026/CD6137 -> 86DE68/86DE70: mirror the original 122 px X offset.
+        # CD6026/CD6137/CD7C4E -> 86DE68/86DE70: mirror the original 122 px X offset.
         # A689F0 -> 5FF9D0: static[1] supplies the aura radius and area ANI scale.
         result["fidelity_pending"] = ["area_membership_filters", "area_draw_order", "voice"]
-        if key == "bremen":
+        if key in ("bremen", "saya"):
             result["fidelity_pending"].append("status_level_resistance_formula")
-        stages[:] = [{"ani": "throw2", "atk": "", "hits": [{
+        hit = {
             "object": path, "at": 0, "offset": [122, 0, 0],
             "percent": 0, "speed": 0,
             "native_controller": {
                 "kind": key + "_field", "duration_col": 1, "radius": radius,
-                "pulse_ms": 100 if key == "khazan" else 250,
+                "pulse_ms": statics[3] if key == "saya" else (100 if key == "khazan" else 250),
                 "area_scale": radius / 233.0,
                 # 7F10B3 multiplies the depth ratio 29 by float32 0.01.
                 "depth_scale": 0.29,
@@ -1113,7 +1112,15 @@ def build_move(
                 "appear_ms": duration_ms(records[motions[2]]),
                 "disappear_ms": duration_ms(records[motions[5]]),
             },
-        }], "fx": []}]
+        }
+        if key == "saya":
+            # A67C5B reads level[0] as a percentage. A689F0 sets the three
+            # freeze inputs and A680CE checks the height cap at each pulse.
+            hit["percent_col"] = 0
+            hit["effects"] = [{"id": "freeze", "chance_col": 2, "chance_scale": 0.001,
+                               "status_level_col": 3, "duration_ms_col": 4}]
+            hit["native_controller"]["height_limit"] = statics[2]
+        stages[:] = [{"ani": "throw2", "atk": "", "hits": [hit], "fx": []}]
     if key in ("icewave", "firewave"):
         # 0xCC899D CHR motion 9; 0xCC8B05 trigger frame4. Unlike skill20,
         # these branches keep CAST speed (0xCC8A06) and zero movement.
@@ -1592,7 +1599,7 @@ def main() -> int:
             if value and value[0]
         }
         object_candidates.update(OBJ_ROOT + f"icewave{i}.obj" for i in range(1, 7))
-        object_candidates.update(OBJ_ROOT + key + ".obj" for key in ("khazan", "bremen"))
+        object_candidates.update(OBJ_ROOT + key + ".obj" for key in GHOST_FIELD_SKILLS)
         object_candidates.add(OBJ_ROOT + "firewavebigsub.obj")
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(

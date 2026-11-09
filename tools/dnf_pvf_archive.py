@@ -2,15 +2,18 @@
 
 Algorithm matches the already used config_library.py extraction: XOR then ROR6,
 directory CRC seeded by file count, payload CRC seeded by filename hash. Refuse
-nonstandard client headers and CRC mismatches. An explicit option decodes the
+nonstandard client headers and CRC mismatches in the standard reader. An explicit option decodes the
 identified ImagePacks2 client directory transform in memory, retaining ALL CRC
 checks and leaving the source file unchanged.
+The separate indexed audit supports only the two pinned nonstandard archives.
 """
 from __future__ import annotations
 
 import array
+from collections import defaultdict
 from pathlib import Path
 import hashlib
+import mmap
 import struct
 import sys
 import zlib
@@ -38,6 +41,87 @@ def decrypt(data: bytes, key: int) -> bytes:
 # unknown layouts must fail instead of using a guessed deobfuscation fallback.
 CLIENT_IMAGE_SHA = '3893d5d1506bcc332ca4b6438f6f884d128481641483bee9478cad8d0221fe01'
 CLIENT_DIRECTORY_MASK = bytes.fromhex('e351a3418a09d5c468cf381b4c657f462bf281425d5267f4')
+
+# These are separate indexed variants. Four opaque words identify an entry;
+# their filename algorithm has not been recovered.
+INDEXED_CLIENT_SHA = '3c0e8050082ddf922abe0fe9643f3550cf42ab14576caf2ba6b1aeb3881bcea4'
+INDEXED_VIDEO_SHA = 'cfea184b6a26252e41fd419765eadd07fb748c5e0759f04d937d21cce7a99542'
+INDEXED_HEADER = struct.Struct('<II')
+INDEXED_ENTRY = struct.Struct('<IIIIBII')
+
+
+def _indexed_entries(data, count):
+    for i in range(count):
+        entry = INDEXED_ENTRY.unpack_from(data, INDEXED_HEADER.size + INDEXED_ENTRY.size * i)
+        yield i, entry
+
+
+def _indexed_layout(data):
+    if len(data) < INDEXED_HEADER.size:
+        raise ValueError('Truncated indexed PVF header')
+    version, encoded_count = INDEXED_HEADER.unpack_from(data)
+    count = encoded_count >> 13
+    base = INDEXED_HEADER.size + count * INDEXED_ENTRY.size
+    if version != 48984 or encoded_count != count << 13 or not count or base > len(data):
+        raise ValueError('Invalid indexed PVF header')
+    end = 0
+    order = 0
+    for _, (_, _, _, identifier, flag, offset, length) in _indexed_entries(data, count):
+        if identifier < order or flag not in (0, 1) or offset != end or base + offset + length > len(data):
+            raise ValueError('Invalid indexed PVF entry')
+        order = identifier
+        end = offset + length
+    if base + end != len(data):
+        raise ValueError('Indexed PVF payload end differs')
+    return version, count, base
+
+
+def indexed_payload_mask(path, stringtable, prefix_length):
+    """Derive the observed per-record XOR prefix from the root archive's unique anchor."""
+    if not stringtable or not 0 <= prefix_length <= len(stringtable):
+        raise ValueError('Indexed PVF payload exceeds verified prefix length')
+    with Path(path).open('rb') as source, mmap.mmap(source.fileno(), 0, access=mmap.ACCESS_READ) as data:
+        if hashlib.sha256(data).hexdigest() != INDEXED_CLIENT_SHA:
+            raise ValueError('Unrecognized indexed PVF SHA256')
+        _, count, base = _indexed_layout(data)
+        anchors = [base + offset for _, (_, _, _, _, flag, offset, length) in _indexed_entries(data, count)
+                   if flag == 0 and length == len(stringtable)]
+        if len(anchors) != 1:
+            raise ValueError('Indexed PVF stringtable anchor differs')
+        anchor = anchors[0]
+        return bytes(a ^ b for a, b in zip(data[anchor:anchor + prefix_length], stringtable[:prefix_length]))
+
+
+def compare_indexed_payloads(path, mask, known_payloads):
+    """Find full matches for CRC-verified named records using the known-plaintext mask.
+
+    Filename lookup and the stringtable used to derive the mask are outside the comparison.
+    """
+    if 'stringtable.bin' in known_payloads or any(len(body) > len(mask) for body in known_payloads.values()):
+        raise ValueError('Indexed PVF comparisons need an independent and complete payload prefix')
+    with Path(path).open('rb') as source, mmap.mmap(source.fileno(), 0, access=mmap.ACCESS_READ) as data:
+        digest = hashlib.sha256(data).hexdigest()
+        if digest not in {INDEXED_CLIENT_SHA, INDEXED_VIDEO_SHA}:
+            raise ValueError('Unrecognized indexed PVF SHA256')
+        version, count, base = _indexed_layout(data)
+        expected = {name: bytes(a ^ b for a, b in zip(body, mask)) for name, body in known_payloads.items()}
+        by_prefix = defaultdict(list)
+        for name, body in expected.items():
+            by_prefix[len(body), body[:32]].append(name)
+        matches = defaultdict(list)
+        for index, entry in _indexed_entries(data, count):
+            offset, length = entry[-2:]
+            start = base + offset
+            candidates = by_prefix.get((length, data[start:start + min(32, length)]), ())
+            for name in candidates:
+                if data[start:start + length] == expected[name]:
+                    matches[name].append({'index': index, 'opaque_id': list(entry[:4]), 'flag': entry[4],
+                                          'offset': start, 'bytes': length})
+        found = {name: {'sha256': hashlib.sha256(known_payloads[name]).hexdigest(), 'rows': rows}
+                 for name, rows in matches.items()}
+        return {'sha256': digest, 'version': version, 'index_entries': count, 'payload_base': base,
+                'known_plaintext_prefix_bytes': len(mask), 'exact_content_matches': found,
+                'without_exact_match': sorted(known_payloads.keys() - matches.keys())}
 
 
 class Archive:

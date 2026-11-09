@@ -59,9 +59,57 @@ func run() -> void:
 	wheel.pressed=true
 	var initial_tree_scroll: float = skill_panel.tree_scroll
 	game.get_viewport().push_input(wheel,true)
+	var wheel_release := wheel.duplicate() as InputEventMouseButton
+	wheel_release.pressed = false
+	game.get_viewport().push_input(wheel_release, true)
 	await host.ticks(3)
 	host.check(body.get_v_scroll_bar().value>0 and skill_panel.tree_scroll==initial_tree_scroll,
 		"mouse wheel scrolls a long explanation without moving the skill tree")
+	var detail_scroll := body.get_v_scroll_bar()
+	host.check(detail_scroll.size.x == 15 and detail_scroll.position.x == 174,
+		"the Explain scrollbar leaves the 174px text width intact")
+	var motion := InputEventMouseMotion.new()
+	for direction in [1, -1]:
+		var previous := detail_scroll.value
+		var arrow := InputEventMouseButton.new()
+		arrow.position = detail_scroll.get_global_transform_with_canvas() * Vector2(8, detail_scroll.size.y - 8 if direction > 0 else 8)
+		motion.position = arrow.position
+		game.get_viewport().push_input(motion, true)
+		await host.ticks(1)
+		arrow.button_index = MOUSE_BUTTON_LEFT
+		arrow.pressed = true
+		game.get_viewport().push_input(arrow, true)
+		arrow = arrow.duplicate()
+		arrow.pressed = false
+		game.get_viewport().push_input(arrow, true)
+		await host.ticks(2)
+		host.check(is_equal_approx(detail_scroll.value, previous + direction * 14.0),
+			"the Explain scrollbar arrow moves exactly one row")
+	detail_scroll.value = 0
+	var thumb := InputEventMouseButton.new()
+	thumb.position = detail_scroll.get_global_transform_with_canvas() * Vector2(8, 24)
+	motion = motion.duplicate()
+	motion.position = thumb.position
+	game.get_viewport().push_input(motion, true)
+	await host.ticks(1)
+	thumb.button_index = MOUSE_BUTTON_LEFT
+	thumb.button_mask = MOUSE_BUTTON_MASK_LEFT
+	thumb.pressed = true
+	game.get_viewport().push_input(thumb, true)
+	await host.ticks(1)
+	motion = motion.duplicate()
+	motion.position = detail_scroll.get_global_transform_with_canvas() * Vector2(8, 100)
+	motion.relative = motion.position - thumb.position
+	motion.button_mask = MOUSE_BUTTON_MASK_LEFT
+	game.get_viewport().push_input(motion, true)
+	thumb = thumb.duplicate()
+	thumb.position = motion.position
+	thumb.button_mask = 0
+	thumb.pressed = false
+	game.get_viewport().push_input(thumb, true)
+	await host.ticks(2)
+	host.check(detail_scroll.value > 0 and skill_panel.tree_scroll == initial_tree_scroll,
+		"dragging the themed Explain thumb scrolls the text only")
 	var description := body.text
 	var fits_source_width := "汉".repeat(15) + "A"
 	body.text = fits_source_width

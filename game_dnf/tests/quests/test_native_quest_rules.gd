@@ -37,10 +37,19 @@ func run() -> void:
 	var quest217: String=commands.execute(PackedStringArray(["quests","217"])).message
 	check(quest217.contains("admitted") or quest217.contains("existing"),"GM original-ID lookup reports the current compiler instead of stale migration status")
 	check(commands.execute(PackedStringArray()).message.contains("当前原任务可执行 "+str(plain.quests.catalog.definitions.size()-1)),"GM summary distinguishes current executable quests from source-only counts")
+	var level_cap:=int(Session.Numbers.shared_config().progression.level_cap)
 	for q: Dictionary in preload("res://content/api/native_catalog.gd").quest_rules().quests:
-		var s=Session.new();s.profile.level=int(q.min_level)
+		var min_level:=int(q.min_level)
+		var s=Session.new();s.profile.level=mini(min_level,level_cap)
 		s.profile.job_index=0 if -1 in q.eligibility.jobs else int(q.eligibility.jobs[0])
 		for required: String in q.requires:completed(s,required)
+		if min_level>level_cap:
+			if q.get("auto_accept",false):s.advance_auto_quests()
+			else:check(not s.quest_command("quest.accept",{"id":q.id},npc(q.giver)).ok,"manual source quest above the cap rejects acceptance: "+q.id)
+			check(s.quests.status(s.profile,q.id)=="locked" and not s.profile.quest_state.entries.has(q.id),"source quest above the cap stays locked at the highest legal level: "+q.id)
+			var at_cap=Session.new()
+			check(at_cap.restore(JSON.parse_string(JSON.stringify(s.serialize()))) and at_cap.quests.status(at_cap.profile,q.id)=="locked","above-cap source quest stays locked after restoring a legal save: "+q.id)
+			continue
 		if q.get("auto_accept",false):
 			var accepted: Dictionary=s.advance_auto_quests()
 			check(accepted.get("ok",false) and s.profile.quest_state.entries.has(q.id),"every automatic original node starts with its prerequisites: "+q.id)
