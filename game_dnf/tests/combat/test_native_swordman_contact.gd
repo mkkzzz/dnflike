@@ -2048,6 +2048,42 @@ func check_grab_blast_startup() -> void:
 	check(game.grab_blast_release_position(Vector3i(-250,int(POINT.y),110),saved)==saved,
 		"the release returns to the saved XYZ when the native search cannot find a walkable point")
 
+func check_grab_blast_non_weapon_speed() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"grabblastblood","level":1})
+	var gear := profile.command("numbers.gear_give",{"id":"original_27601"})
+	check(gear["ok"] and profile.command("numbers.gear_equip",{"uid":gear.get("uid","")})["ok"],
+		"Bloodlust speed fixture equips the original +80 attack-speed katana")
+	var spec := profile.stats()
+	spec["skill_slots"] = ["grabblastblood"]
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.numeric_player.set_runtime_modifiers([{"source":"fixture","stat":"attack_speed","op":"add","value":0.25}])
+	check(is_equal_approx(float(game.numeric_player.values["attack_speed"]),1.33)
+		and game.numeric_player.native_non_weapon_attack_rate()==1.25,
+		"Bloodlust mode 3 removes only the original weapon rate and retains the other bonus")
+	var target: Dictionary = api.spawn_dummy(POINT+Vector2(50,0))
+	target["hp"] = 50000.0
+	press(KEY_A)
+	step(127)
+	check(game.player["stage"]==0,"+80 weapon speed does not open the capture early")
+	step(1)
+	check(game.player["stage"]==1,"the remaining +250 non-weapon rate opens the capture at 128 ms")
+	var hand = game.view.object_views["player:grab_hold"]
+	step(79)
+	check(hand.clock_ms==98.75 and not hand.frame.has("sprite"),"the held hand uses the same non-weapon rate")
+	step(1)
+	check(hand.clock_ms==100.0 and hand.frame.has("sprite") and grab_direct_hits().is_empty(),
+		"the hand appears at 80 ms without accelerating the fixed 100 ms damage gate")
+	step(20)
+	check(grab_direct_hits().size()==1,"the ordinary direct strike remains at 100 ms after capture")
+	profile.command("numbers.gear_unequip",{"slot":"weapon"})
+	var unarmed := profile.stats()
+	unarmed["skill_slots"] = ["grabblastblood"]
+	check(game.update_numbers(unarmed) and game.numeric_player.native_non_weapon_attack_rate()==1.25,
+		"reconfiguring without a weapon clears the deduction and keeps the other rate")
+
 func check_grab_blast_thirst() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -2904,6 +2940,7 @@ func run() -> void:
 	check_draw_target_deadlines()
 	check_draw_second_slash()
 	check_grab_blast_startup()
+	check_grab_blast_non_weapon_speed()
 	check_grab_blast_thirst()
 	check_source_shock_limits()
 	check_draw_greatsword_charge()

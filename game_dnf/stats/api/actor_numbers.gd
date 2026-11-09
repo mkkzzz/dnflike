@@ -14,12 +14,24 @@ var effects = Numbers.Effects.new()
 var config: Dictionary = Numbers.shared_config()
 var element := "none"
 var runtime_modifiers: Array = []
+var weapon_attack_speed_per_mille := 0
 
 func configure(spec: Dictionary) -> void:
 	base = spec.get("numbers",{}).duplicate(true)
 	seed = spec.get("number_seed",{}).duplicate(true)
 	element = String(spec.get("element","none"))
+	weapon_attack_speed_per_mille = 0
+	for modifier: Dictionary in seed.get("modifiers",[]):
+		if modifier.get("stat","") == "attack_speed" and modifier.has("weapon_attack_speed_per_mille"):
+			weapon_attack_speed_per_mille = int(modifier["weapon_attack_speed_per_mille"])
 	recalculate()
+
+func native_non_weapon_attack_rate() -> float:
+	# 81456B..814597 subtracts the raw EQU bonus from the speed multiplier,
+	# then converts the result to an integer rate. The local base is 1000.
+	var deduction := native_scalar(native_scalar(float(weapon_attack_speed_per_mille))*native_scalar(0.001))
+	var multiplier := native_scalar(native_scalar(float(values["attack_speed"]))-deduction)
+	return maxi(1,int(native_scalar(multiplier*1000.0)))/1000.0
 
 func recalculate() -> void:
 	var cfg := config.duplicate()

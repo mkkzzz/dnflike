@@ -1025,6 +1025,7 @@ func step_action(ms: float, move: Vector2) -> void:
 	if numeric_player != null:
 		var speed_kind: String = Numbers.shared_config()["skills"].get(name,{}).get("speed","attack")
 		speed = float(numeric_player.values["cast_speed" if speed_kind=="cast" else "attack_speed"])
+		if name == "grabblastblood":speed = numeric_player.native_non_weapon_attack_rate()
 	var clock := old_clock+ms*speed
 	var native_phase: Dictionary = player.get("native_phase",{})
 	if not native_phase.is_empty():clock = old_clock+ms
@@ -1545,11 +1546,9 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		player["native_phase"] = {"grab_pose_ms":float(action_def()["duration"]),"end_ms":m["grab_duration_ms"],
 			"grab_substate":0,"grab_strikes_left":int(m.get("grab_strike_count",1)),"grab_next_strike_ms":100.0}
 		if m.has("grab_hold_fx"):
-			# The original attachment reads the action's mode-3 rate. The local
-			# numeric model uses its single attack-speed channel for that mode.
-			var rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+			# 8110AA reads the action's mode-3 rate for the hand attachment.
 			player["native_phase"]["grab_hold_fx"] = m["grab_hold_fx"]
-			player["native_phase"]["grab_hold_rate"] = maxi(1,int(rate*1000.0))/1000.0
+			player["native_phase"]["grab_hold_rate"] = numeric_player.native_non_weapon_attack_rate() if numeric_player != null else 1.0
 		var strike: Dictionary = m["grab_strike"]
 		var base := native_fixed_attack_base(m["fixed_attack_base"])
 		var amount := float(int(native_fixed_attack_product(float(strike["fixed"]),base)))

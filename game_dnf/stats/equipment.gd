@@ -65,7 +65,12 @@ static func modifiers(profile: Dictionary, config: Dictionary) -> Array:
 			if definition.get("stat_ranges",{}).has(stat):
 				var bounds: Array=definition["stat_ranges"][stat]
 				value=lerpf(float(bounds[0]),float(bounds[1]),float(instance["quality"])/100)
-			result.append({"source":definition["name"]+" · 编号 "+String(profile["equipment"][slot]).trim_prefix("gear_"),"stat":stat,"op":"add","value":value})
+			var modifier := {"source":definition["name"]+" · 编号 "+String(profile["equipment"][slot]).trim_prefix("gear_"),
+				"stat":stat,"op":"add","value":value}
+			if slot == "weapon" and stat == "attack_speed":
+				# 126FAD3 stores the EQU field itself for the mode-3 deduction.
+				modifier["weapon_attack_speed_per_mille"] = roundi(float(definition["stats"][stat])*1000.0)
+			result.append(modifier)
 		if slot == "weapon":
 			for stat: String in ["physical_attack","magical_attack"]:result.append({"source":"武器强化","stat":stat,"op":"add","value":int(instance["reinforce"])*float(config["formula"]["reinforce_attack_per_level"])})
 		else:
