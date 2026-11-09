@@ -1925,6 +1925,10 @@ func check_grab_blast_startup() -> void:
 			"Bloodlust's directed strike reads level column zero and the native Frenzy multiplier")
 		step(649)
 		check(game.objects.is_empty(),"Bloodlust waits through 749 ms after capture")
+		if empowered:move_target(target,POINT+Vector2(320,0))
+		var bystander: Dictionary = game.spawn_enemy(POINT+Vector2(100,0))
+		var distant: Dictionary = game.spawn_enemy(POINT+Vector2(330,0))
+		var before_spray: float = target["hp"]
 		step(1)
 		check(not game.player.has("grab_blast_target") and game.objects.size()==1
 			and game.objects[0]["pos"]==POINT+Vector2(43,1) and game.objects[0]["z"]==90.0,
@@ -1933,9 +1937,14 @@ func check_grab_blast_startup() -> void:
 		var source := "grabblastbloodbig.obj" if empowered else "grabblastblood.obj"
 		check(spray["object"].ends_with(source) and spray["percent"]==0.0 and spray["fixed_amount"]==(3419.0 if empowered else 1821.0),
 			"Bloodlust selects the source spray and truncates each fixed damage component in order")
+		check(target["hp"]<before_spray and game.objects[0]["hits"].has(target["id"]) and game.objects[0]["hits"].size()==1,
+			"Bloodlust directs its first spray hit to the held target even outside the ANI boxes")
 		var hp: float = target["hp"]
-		game.step_objects(1.0)
-		check(target["hp"]<hp,"the spray attacks from its first authored frame")
+		var bystander_hp: float = bystander["hp"]
+		var distant_hp: float = distant["hp"]
+		game.step_objects(100.0,int(game.objects[0]["id"]))
+		check(game.objects[0]["clock"]==0.0 and target["hp"]==hp and bystander["hp"]<bystander_hp and distant["hp"]==distant_hp,
+			"the spray's first authored frame hits nearby bystanders and cannot repeat the directed hit")
 		step(450)
 		check(game.player["action"]=="","Bloodlust completes the 1200 ms capture branch")
 

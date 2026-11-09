@@ -1798,8 +1798,8 @@ func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float
 	var facing := int(player["facing"])
 	var position := Vector2i(player["pos"])
 	var height := int(player["z"])
+	var point := Vector3(position.x+43*facing,position.y,height+90)
 	if strike_due and not target.is_empty():
-		var point := Vector3(position.x+43*facing,position.y,height+90)
 		land_hit(player,target,player["native_phase"]["grab_strike"],point,facing,attack_power())
 	if not spray_due:return
 	var bleeding: bool = not target.is_empty() and float(target["hp"]) > 0.0 and target.has("numeric") \
@@ -1811,7 +1811,14 @@ func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float
 	if bleeding:amount += int(native_fixed_attack_product(float(move["grab_bleed_bonus"]),base))
 	amount = int(float(amount*grab_frenzy_percent())/100.0)
 	player.erase("grab_blast_target")
-	spawn_object(grab_fixed_hit(spray,float(amount)),"player",Vector2(position),float(height),facing,attack_power())
+	var spray_hit := grab_fixed_hit(spray,float(amount))
+	spray_hit["starts_at_zero"] = true
+	var object := spawn_object(spray_hit,"player",Vector2(position),float(height),facing,attack_power())
+	if object.is_empty() or target.is_empty() or float(target["hp"]) <= 0.0:return
+	# CNGrabBlastBlood initializes a directed hit from the captured actor's
+	# payload before its ANI boxes are tested for nearby actors.
+	object["hits"][target["id"]] = true
+	land_hit(player,target,spray_hit,point,facing,float(object["power"]))
 
 func grab_frenzy_percent() -> int:
 	if active_effect("frenzy").is_empty():return 100
