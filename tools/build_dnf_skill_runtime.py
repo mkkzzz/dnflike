@@ -1161,8 +1161,8 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
             "requires_effect": "frenzy", "material_cost": fixed_cube_cost(skill, records),
             "suction_bleed_base": bleed_attack_base,
             "fidelity_pending": ["special_target_permissions_and_weights", "contact_hit_presentation",
-                                 "effect_fade_and_end", "native_audio", "cancel_permission"],
-            "stages": [{"ani": "bloodyraveinhale", "fx": inhale_fx},
+                                 "effect_fade_and_end", "cancel_permission"],
+            "stages": [{"ani": "bloodyraveinhale", "fx": inhale_fx, "voice": "SM_BLOOD_RAVE_STORM"},
                        {"ani": "bloodyraveslash", "fx": sword_fx,
                         "hits": [{"object": slash, "at": release[3]["start_ms"], "percent_col": 0,
                                   "speed": 0, "life_ms": -1, "rear_fx": rear, "starts_at_zero": True}]}]}

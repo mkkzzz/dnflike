@@ -1199,7 +1199,6 @@
     "special_target_permissions_and_weights",
     "contact_hit_presentation",
     "effect_fade_and_end",
-    "native_audio",
     "cancel_permission"
    ],
    "material_cost": {
@@ -1268,7 +1267,8 @@
        "offset_x": 55,
        "offset_y": -96
       }
-     ]
+     ],
+     "voice": "SM_BLOOD_RAVE_STORM"
     },
     {
      "ani": "bloodyraveslash",

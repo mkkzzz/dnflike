@@ -19,6 +19,8 @@ const FrenzyRecovery = preload("res://combat/resolve/frenzy_recovery.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
+# Actor sound slots are separate from entity loops. Reserve a player-only ID for native slot 25.
+const BLOODY_RAVE_LOOP_ID := 0x40000019
 const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field","rasa_field"]
 const ENEMY_ATTACK_RATE_REFRESH_MS := 300.0
 const OPPOSITE := {"left":"right","right":"left","up":"down","down":"up"}
@@ -332,6 +334,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 ## Without flow values, HP/MP start from the original CHR level-1 initial stats.
 func begin_room(spec: Dictionary, maze: NativeMaze = null) -> void:
 	stop_thirst_loop()
+	stop_bloody_rave_loop()
 	dungeon_id=String(spec.get("dungeon","lorien"))
 	var leaving_maze := native_maze != null and maze == null
 	native_maze = maze
@@ -402,6 +405,7 @@ func new_player() -> Dictionary:
 
 func emit_player_defeated() -> void:
 	stop_thirst_loop()
+	stop_bloody_rave_loop()
 	frenzy_recovery.clear()
 	var event: Dictionary=bus.emit("combat.player_defeated",flow_payload())
 	last_defeat_id=int(event.get("event_id",0))
@@ -741,6 +745,7 @@ func leave_action() -> void:
 		begin_skill_cooldown("triple",player["triple_cast"])
 		player.erase("triple_cast")
 	end_hardattack_charge()
+	stop_bloody_rave_loop()
 	player.erase("hardattack_release")
 	player.erase("weapon_combo_cast")
 	player.erase("weapon_combo_charge")
@@ -1062,14 +1067,15 @@ func step_action(ms: float, move: Vector2) -> void:
 	var old_event_clock := action_event_clock(old_clock)
 	var event_clock := action_event_clock(clock)
 	action_cues(stage,old_event_clock,event_clock)
-	if m.get("native_state","") == "bloody_rave":
-		if int(player["stage"]) == 0:
-			step_bloody_rave_suction(m,stage,old_clock,clock,true)
-			step_bloody_rave_hold(m,old_clock,clock)
-			return
-		var slash_ms := float(stage["hits"][0]["at"])/float(native_phase["cast_stage_rate"])
-		if old_clock < slash_ms:
-			step_bloody_rave_suction(m,stage,old_clock,minf(clock,slash_ms),false)
+	if m.get("native_state","") == "bloody_rave" and int(player["stage"]) == 0:
+		# CAA360..CAA3D5 starts slot 25 on zero-based inhale frame 8.
+		var loop_at := float(stage["timeline"][8]["start_ms"])
+		if old_event_clock < loop_at and event_clock >= loop_at:
+			player["bloody_rave_loop"] = true
+			bus.emit("combat.cue",{"kind":"sound","key":"BLOODYR_BLACKHOLE_LOOP","loop_id":BLOODY_RAVE_LOOP_ID})
+		step_bloody_rave_suction(m,stage,old_clock,clock)
+		step_bloody_rave_hold(m,old_clock,clock)
+		return
 	if m.get("native_state","") == "grab_blast":
 		if int(player["stage"]) == 0:
 			if try_grab_blast(stage,event_clock):return
@@ -1412,7 +1418,11 @@ func attach_frenzy_fx(key: String, delay := -1) -> void:
 func thirst_hp_cost(percent: int) -> int:
 	return int(int(max_hp)*percent/100.0)
 
-func step_bloody_rave_suction(move: Dictionary, stage: Dictionary, from: float, to: float, inhale: bool) -> void:
+func stop_bloody_rave_loop() -> void:
+	if player.erase("bloody_rave_loop"):
+		bus.emit("combat.cue",{"kind":"sound","stop":true,"loop_id":BLOODY_RAVE_LOOP_ID})
+
+func step_bloody_rave_suction(move: Dictionary, stage: Dictionary, from: float, to: float) -> void:
 	var phase: Dictionary = player["native_phase"]
 	var targets: Dictionary = phase["suction_targets"]
 	var elapsed := int(to)-maxi(int(from),int(phase["hold_start_ms"]))
@@ -1423,7 +1433,7 @@ func step_bloody_rave_suction(move: Dictionary, stage: Dictionary, from: float, 
 			var id: int = enemy["id"]
 			if not targets.has(id) or float(enemy["hp"]) <= 0.0:continue
 			step_bloody_rave_pull(enemy,targets[id],center,move["suction_speed"],elapsed)
-	if not inhale or to < float(phase["hold_start_ms"]):return
+	if to < float(phase["hold_start_ms"]):return
 	var now := int(to)
 	var contacted: Dictionary = phase["suction_contacted"]
 	if now >= int(phase["suction_poll_at"]):
@@ -1506,6 +1516,7 @@ func step_bloody_rave_hold(move: Dictionary, from: float, to: float) -> void:
 	end_action_fx()
 	player["fx_tag"] = "act:%d" % (action_seq+1)
 	start_stage(1)
+	# CCF3C0 removes category 56 movement now, leaving category 55 for the slash score.
 	player["native_phase"]["suction_targets"] = phase["suction_targets"]
 
 func step_thirst_cast(ms: float) -> void:
@@ -2067,6 +2078,11 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
 				else:
 					spawn_object(hit,"player",player["pos"],float(player["z"]),facing,attack_power())
+				if hit.get("skill_id","") == "bloodyrave":
+					# CAA8A0..CAA979 requests both cues after creating the slash, then stops slot 25.
+					play_sound("DRAWING_SWORD")
+					play_sound("SM_BLOOD_RAVE_ATK")
+					stop_bloody_rave_loop()
 			continue
 		# The original actor ledger survives all layers and frames until a new ATK is installed.
 		var attached: bool = hit.get("source","") == "attached_weapon"

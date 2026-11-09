@@ -358,6 +358,12 @@ GRAB_BLAST_AUDIO = {
     'BLOOD_SUCK': 'sounds/effect/blood_suck.ogg',
     'BLOODR_FIRE': 'sounds/char/swordman/effect/bloodr_fire.ogg',
 }
+BLOODY_RAVE_AUDIO = {
+    'SM_BLOOD_RAVE_STORM': 'sounds/char/swordman/sm_blood_rave_storm.ogg',
+    'BLOODYR_BLACKHOLE_LOOP': 'sounds/char/swordman/effect/bloodyr_blackhole.ogg',
+    'DRAWING_SWORD': 'sounds/char/swordman/effect/drawing_sword.ogg',
+    'SM_BLOOD_RAVE_ATK': 'sounds/char/swordman/sm_blood_rave_atk.ogg',
+}
 DRAW_AUDIO = {
     'SM_BAL_READY': 'sounds/char/swordman/sm_bal1.ogg',
     'SM_BAL_SHOT': 'sounds/char/swordman/sm_bal2.ogg',
@@ -476,6 +482,7 @@ CUE_SOUNDS = {
     **{key: [path] for key, path in BLOODBLAST_AUDIO.items()},
     **{key: [path] for key, path in THIRST_AUDIO.items()},
     **{key: [path] for key, path in GRAB_BLAST_AUDIO.items()},
+    **{key: [path] for key, path in BLOODY_RAVE_AUDIO.items()},
     **{key: [path] for key, path in DRAW_AUDIO.items()},
     **{key: [path] for key, path in OVERDRIVE_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
@@ -1410,6 +1417,8 @@ def main() -> int:
                         help='Add the original Frenzy release animation and cast sounds')
     parser.add_argument('--extend-bloodblast', action='store_true',
                         help='Add the ordinary Blood Blast layers and sounds')
+    parser.add_argument('--extend-bloody-rave-audio', action='store_true',
+                        help='Add the original Bloody Rave cast, loop and release sounds')
     parser.add_argument('--extend-thirst', action='store_true',
                         help='Add the original Thirst cast and release effects and sounds')
     parser.add_argument('--extend-draw', action='store_true',
@@ -1524,6 +1533,10 @@ def main() -> int:
         specs.extend(('objects', hit['object'], hit['object'])
                      for hit in hits if hit['object'] in assets['objects'])
         specs.extend(('audio', key, path) for key, path in BLOODBLAST_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_bloody_rave_audio:
+        specs = [('audio', key, path) for key, path in BLOODY_RAVE_AUDIO.items()]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_overdrive:

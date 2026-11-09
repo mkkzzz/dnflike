@@ -1882,8 +1882,9 @@ func check_bloody_rave_phases() -> void:
 	profile.command("numbers.skill_grant",{"id":"buff","level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["bloodyrave"]
-	for scenario: String in ["no_cube","tap","fast_tap","hold","one_hp"]:
+	for scenario: String in ["no_cube","tap","fast_tap","hold","one_hp","interrupt","interrupt_release"]:
 		start_room("original_27601","katana",1,spec,"berserker")
+		if scenario == "tap":game.view.audio.muted = false
 		game.apply_skill_effect("buff","frenzy")
 		var rate := 2.0 if scenario=="fast_tap" else 1.0
 		game.numeric_player.values["attack_speed"] = rate
@@ -1900,7 +1901,9 @@ func check_bloody_rave_phases() -> void:
 		if scenario == "no_cube":
 			check(game.player["action"]=="" and game.player["mp"]==before_mp and not game.player["cooldowns"].has("bloodyrave"),
 				"cube rejection leaves Bloody Rave's MP, action and cooldown untouched")
+			check(cues("SM_BLOOD_RAVE_STORM").is_empty(),"cube rejection never plays the cast voice")
 			continue
+		check(cues("SM_BLOOD_RAVE_STORM").size()==1,"the original storm voice plays once at cast entry")
 		var hold_start := 790.0/rate
 		var move: Dictionary = game.move_def("bloodyrave")
 		var first_fx: String = move["stages"][0]["fx"][0]["key"]
@@ -1913,7 +1916,19 @@ func check_bloody_rave_phases() -> void:
 		step(1.0/rate)
 		check(cues(first_fx).size()==1 and cues(first_fx)[0]["offset_x"]==55.0 and cues(first_fx)[0]["offset_y"]==-96.0,
 			"the original inhale layer is bound to the mirrored hand offset")
-		step(480.0/rate)
+		step(399.0/rate)
+		check(cues("BLOODYR_BLACKHOLE_LOOP").is_empty(),"the loop waits for zero-based inhale frame eight")
+		step(1.0/rate)
+		var loop_id: int = game.BLOODY_RAVE_LOOP_ID
+		var audio = game.view.audio
+		check(cues("BLOODYR_BLACKHOLE_LOOP").size()==1 and audio._loop_voices.has(loop_id)
+			and audio._loop_voices[loop_id].stream.loop,"the original inhale loop reaches a looping audio voice at frame eight")
+		if scenario == "interrupt":
+			game.damage_player(1.0,POINT-Vector2(50,0))
+			check(game.player["action"]=="" and not audio._loop_voices.has(loop_id)
+				and cues("SM_BLOOD_RAVE_ATK").is_empty(),"interrupting inhale stops its voice without a release cue")
+			continue
+		step(80.0/rate)
 		check(game.player["hp"]==1000.0 and game.player["stage"]==0,"HP drain starts after the scaled frame-nine gate")
 		var hold_ms := 3000.0 if scenario=="hold" else 500.0
 		step(hold_ms-1.0)
@@ -1922,14 +1937,33 @@ func check_bloody_rave_phases() -> void:
 		step(1)
 		check(game.player["stage"]==1 and game.view.player_actor.pose=="bloodyraveslash" and game.objects.is_empty(),
 			"release enters the original slash pose before its damaging frame")
+		check(audio._loop_voices.has(loop_id) and cues("DRAWING_SWORD").is_empty(),
+			"the inhale voice persists into the release windup")
+		if scenario == "interrupt_release":
+			game.damage_player(1.0,POINT-Vector2(50,0))
+			check(game.player["action"]=="" and not audio._loop_voices.has(loop_id)
+				and cues("SM_BLOOD_RAVE_ATK").is_empty(),"interrupting the windup stops the loop without playing the cut")
+			continue
 		if scenario == "hold":session.submit_key(KEY_A,false)
 		var target: Dictionary = api.spawn_dummy(POINT+Vector2(55,0))
 		target["hp"] = 50000.0
 		target["z"] = 60.0
 		game.numeric_player.values["hit"] = 1.0
 		step(460.0/rate-1.0)
-		check(game.objects.is_empty(),"Bloody Rave has no slash object before release frame three")
+		check(game.objects.is_empty() and audio._loop_voices.has(loop_id) and cues("SM_BLOOD_RAVE_ATK").is_empty(),
+			"Bloody Rave has no slash object or release cues before release frame three")
 		step(1)
+		var cues_at_cut: Array = game.bus.events_of("combat.cue").filter(func(event):
+			return event.get("key","") in ["DRAWING_SWORD","SM_BLOOD_RAVE_ATK"] \
+				or (event.get("stop",false) and event.get("loop_id",-1)==loop_id))
+		check(cues_at_cut.size()==3 and cues_at_cut[0].get("key")=="DRAWING_SWORD"
+			and cues_at_cut[1].get("key")=="SM_BLOOD_RAVE_ATK" and cues_at_cut[2].get("stop")
+			and not audio._loop_voices.has(loop_id),"slash creation orders both sounds before stopping the inhale loop")
+		if scenario == "tap":
+			for key: String in ["SM_BLOOD_RAVE_STORM","DRAWING_SWORD","SM_BLOOD_RAVE_ATK"]:
+				var original: AudioStream = audio.variants[key][0]
+				check(original is AudioStreamOggVorbis and audio.voice_pool.any(func(voice):return voice.stream==original and voice.playing),
+					key+" reaches an audio player with the original stream")
 		check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==1231.0
 			and game.objects[0]["life_ms"]==-1.0 and not String(game.objects[0]["hit"]["rear_fx"]).is_empty(),
 			"the release uses its original 1231-percent base, ANI lifetime and rear layer")
@@ -1963,10 +1997,9 @@ func check_bloody_rave_phases() -> void:
 		step(400)
 		var release_point: Vector2 = target["pos"]
 		check(game.player["stage"]==1 and game.player["native_phase"]["suction_targets"]==targets,
-			"the native pull survives the transition into the slash animation")
+			"the target remains registered for damage when entering the slash animation")
 		step(460)
-		check(target["pos"].distance_to(POINT+Vector2(55*facing,-1)) < release_point.distance_to(POINT+Vector2(55*facing,-1)),
-			"the target keeps moving toward the mirrored pull point until the slash")
+		check(target["pos"]==release_point,"the native pull ends when entering the slash animation")
 		check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==1529.0 and targets.is_empty(),
 			"one live ordinary target raises level-one attack to 1529 percent and releases the pull")
 	start_room("original_27601","katana",1,spec,"berserker")
