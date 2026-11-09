@@ -223,9 +223,9 @@ func can_revive(spec: Dictionary) -> bool:
 func revive_player(spec: Dictionary) -> bool:
 	if not can_revive(spec):return false
 	var point: Vector2=player["pos"];var facing: int=int(player["facing"])
+	leave_action()
 	var cooldowns: Dictionary=Dictionary(player["cooldowns"]).duplicate(true)
 	var had_numeric:=numeric_player!=null
-	end_action_fx()
 	player=new_player()
 	player["pos"]=point;player["facing"]=facing;player["cooldowns"]=cooldowns
 	if had_numeric:
@@ -670,7 +670,7 @@ func start_backstep() -> void:
 		bus.emit("combat.cue",{"kind":"ghost","pos":Vector2(player["pos"]),"z":float(player["z"]),
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1]})
 		bus.emit("combat.action_cancelled",{"entity_id":PLAYER_ID,"action":player["action"],"by":"backstep"})
-		end_action_fx()
+		leave_action()
 	player["state"] = "backstep"
 	player["action"] = ""
 	player["clock"] = 0.0
@@ -691,12 +691,18 @@ func end_action_fx() -> void:
 		bus.emit("combat.cue",{"kind":"fx_clear","tag":player["fx_tag"]})
 	player["fx_tag"] = ""
 
-func end_action() -> void:
+func leave_action() -> void:
+	# CC490C starts the cooldown only when leaving state 22, not on another stage.
+	if player.has("triple_cast"):
+		begin_skill_cooldown("triple",player["triple_cast"])
+		player.erase("triple_cast")
 	end_action_fx()
+
+func end_action() -> void:
+	leave_action()
 	player["native_phase"] = {}
 	player["state"] = "jump" if float(player["z"])>0 else "idle"
 	player["action"] = ""
-	player.erase("triple_cast")
 
 func step_game(ms: float) -> void:
 	var dt := ms/1000
@@ -982,7 +988,7 @@ func step_action(ms: float, move: Vector2) -> void:
 		# cancel permission must not consume and silently lose the request.
 		cancel_at = duration
 	if clock >= cancel_at and bool(player["queued_jump"]) and name == "upper":
-		end_action_fx()
+		leave_action()
 		player["state"] = "jump"
 		player["action"] = ""
 		player["vz"] = float(numeric_player.values["jump_power"]) if numeric_player != null else float(table.player["jump_power"])
@@ -1036,7 +1042,7 @@ func apply_effect(effect: Dictionary) -> bool:
 		var applied: bool = actor.add_effect(id,int(effect.get("rank",1)),effect) if effect["kind"]=="effect" else actor.remove_effect(id)
 		if applied:
 			if actor.effects.controlled():
-				if body == player:end_action_fx()
+				if body == player:leave_action()
 				body["action"] = ""
 				body["state"] = "idle"
 			body["hp"] = minf(float(body["hp"]),float(actor.values["hp_max"]))
@@ -1086,10 +1092,17 @@ func reject_action(name: String, reason: String) -> bool:
 func normal_attack_cancel_allowed(move: Dictionary) -> bool:
 	return move.has("normal_cancel_job") and String(player["state"]) == "action" and job == String(move["normal_cancel_job"]) and String(player["action"]) in ["attack1","attack2","attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]
 
+func begin_skill_cooldown(name: String, move: Dictionary) -> void:
+	var duration := float(move["cool_ms"])/1000.0
+	if duration <= 0.0:return
+	var rate := float(numeric_player.values["cooldown_rate"]) if numeric_player != null else 1.0
+	player["cooldowns"][name] = duration*rate*skill_cooldown_multiplier(name)
+
 func start_action(name: String, cancel := false) -> bool:
 	var m: Dictionary = table.moves.get(name,{})
 	if m.is_empty():return reject_action(name,"unknown")
 	if player["state"] == "hold":return reject_action(name,"state")
+	if name == "triple" and player.has("triple_cast"):return reject_action(name,"state")
 	if numeric_player != null and (numeric_player.effects.controlled() or skill_levels.has(name) and int(skill_levels[name])<=0):return reject_action(name,"unavailable")
 	var required_effect := String(m.get("requires_effect",""))
 	if required_effect != "" and (numeric_player == null or not numeric_player.effects.active.has(required_effect)):return reject_action(name,"effect")
@@ -1126,15 +1139,14 @@ func start_action(name: String, cancel := false) -> bool:
 		if float(player["mp"])<mp_cost:return reject_action(name,"mp")
 		player["mp"] = float(player["mp"])-mp_cost
 	if hp_cost > 0:player["hp"] = float(player["hp"])-hp_cost
-	if float(m["cool_ms"]) > 0:player["cooldowns"][name] = float(m["cool_ms"])/1000.0*(float(numeric_player.values["cooldown_rate"]) if numeric_player != null else 1.0)*skill_cooldown_multiplier(name)
+	if name != "triple":begin_skill_cooldown(name,m)
 	if backward_hop:
 		start_backstep()
 		return true
-	end_action_fx()
+	leave_action()
 	if name == "air_attack":player["air_attack_used"] = true
 	player["state"] = "guard" if guard else "action"
 	player["action"] = "" if guard else name
-	player.erase("triple_cast")
 	# A live profile refresh can rebuild the table between two stages.
 	if name == "triple":player["triple_cast"] = m
 	player["native_phase"] = {}
@@ -2080,7 +2092,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int, 
 			bus.emit("combat.cue",{"kind":"native_particle","path":path,"point":Vector2(player["pos"]),
 				"height":float(player["z"])+float(particle["z_offset"])})
 	if not guarded and state != "hold" and not armor_blocks_reaction and not buff_armor:
-		end_action_fx()
+		leave_action()
 		player["action"] = ""
 		player["native_phase"] = {}
 		player["queued_combo"] = false
@@ -2094,6 +2106,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int, 
 	if was_action and int(skill_levels.get("stuckuponcounter",0)) > 0:
 		apply_effect({"kind":"effect","id":"counter_evasion","target":PLAYER_ID,"rank":int(skill_levels["stuckuponcounter"])})
 	if float(player["hp"])<=0:
+		if player.has("triple_cast"):leave_action()
 		player["state"] = "dead"
 		finished = true
 		victory = false
@@ -2788,7 +2801,7 @@ func load_room(index: int, from_side: String) -> void:
 	native_zealot_summons.proxies.clear()
 	native_jar_traps.clear(self)
 	update_khazan_aura()
-	end_action_fx()
+	leave_action()
 	room_index = index
 	room_id = "%s:%d"%[dungeon_id,index]
 	bar_target = -1

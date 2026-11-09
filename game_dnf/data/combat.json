@@ -199,7 +199,8 @@
         70,
         210
        ],
-       "percent_col": 0
+       "percent_col": 0,
+       "fixed_col": 3
       }
      ],
      "voice": "triple1"
@@ -214,7 +215,8 @@
         70,
         210
        ],
-       "percent_col": 0
+       "percent_col": 0,
+       "fixed_col": 3
       }
      ],
      "voice": "triple2"
@@ -229,7 +231,8 @@
         70,
         210
        ],
-       "percent_col": 1
+       "percent_col": 1,
+       "fixed_col": 4
       }
      ],
      "voice": "triple3"
@@ -239,13 +242,13 @@
     {
      "ani": "tripleslash4",
      "atk": "character/swordman/attackinfo/tripleslash4.atk",
-     "hits": [{"percent_col": 1}],
+     "hits": [{"percent_col": 1, "fixed_col": 4}],
      "voice": "triple2"
     },
     {
      "ani": "tripleslash5",
      "atk": "character/swordman/attackinfo/tripleslash5.atk",
-     "hits": [{"percent_col": 2}],
+     "hits": [{"percent_col": 2, "fixed_col": 5}],
      "voice": "triple3"
     }
    ],

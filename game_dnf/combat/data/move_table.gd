@@ -312,7 +312,9 @@ func _apply_triple_blade_mastery(spec: Dictionary) -> void:
 	if thresholds.is_empty() or rank < int(thresholds[0]) or row.size() <= 2:return
 	var third: Dictionary = spec["stages"][2]
 	third["atk"] = "character/swordman/attackinfo/tripleslash3.atk"
+	# CC7AD1/CC7B78 pair the percentage column with the fixed column three later.
 	third["hits"][0]["percent_col"] = 0
+	third["hits"][0]["fixed_col"] = 3
 	third["voice"] = "triple1"
 	var extra: Array = spec["blade_mastery_stages"]
 	# CC7BBB writes the mastery level row's column 2 to the last attack's lift.

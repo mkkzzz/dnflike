@@ -469,6 +469,8 @@ func check_triple_slash() -> void:
 		var hits := stages.map(func(stage):return stage["hits"][0])
 		check(hits.map(func(hit):return hit["percent"])==[158.0,158.0,198.0],
 			"ordinary Triple Slash uses original percentage columns 0, 0 and 1")
+		check(hits.map(func(hit):return hit["fixed"])==[47.0,47.0,138.0],
+			"ordinary Triple Slash uses paired fixed columns 3, 3 and 4")
 		check(String(hits[2]["atk_path"]).ends_with("/tripleslash3down.atk")
 			and hits[2]["atk"]["lift_up"]==200 and hits[2]["atk"]["push_aside"]==300,
 			"the final segment installs the source knockdown ATK")
@@ -489,6 +491,9 @@ func check_triple_slash() -> void:
 		move_target(target,game.player["pos"]+Vector2(30,0))
 		step(1)
 		check(game.hit_count==1,"Triple Slash still hits a new target at 279 ms")
+		var independent: float = float(game.numeric_player.values["independent_attack"])+float(game.numeric_player.values["physical_independent_attack"])
+		check(is_equal_approx(float(game.last_damage["trace"]["fixed_part"]),47.0*independent/100.0),
+			"ordinary contact passes the first native fixed column to physical damage")
 		var expired_target: Dictionary = api.spawn_dummy(game.player["pos"]+Vector2(30,0))
 		step(1)
 		check(game.hit_count==1 and expired_target["hp"]==expired_target["max_hp"],
@@ -499,6 +504,7 @@ func check_triple_slash() -> void:
 	press(KEY_S)
 	step(0)
 	var mp: float = game.player["mp"]
+	check(float(game.player["cooldowns"].get("triple",0.0))==0.0,"Triple Slash has no cooldown while its first stage runs")
 	for index: int in [0,1]:
 		press(KEY_S)
 		step(167)
@@ -506,6 +512,7 @@ func check_triple_slash() -> void:
 		step(1)
 		check(game.player["stage"]==index+1 and game.player["clock"]==0.0 and game.player["mp"]==mp,
 			"Triple Slash advances at 210 action ms without another cast cost")
+		check(float(game.player["cooldowns"].get("triple",0.0))==0.0,"continuing state 22 does not start cooldown")
 	press(KEY_S)
 	var target: Dictionary = api.spawn_dummy(game.player["pos"]+Vector2(75,0))
 	game.numeric_player.values["hit"] = 1.0
@@ -550,6 +557,9 @@ func check_enhanced_triple_slash() -> void:
 	var hits := stages.map(func(stage):return stage["hits"][0])
 	check(hits.map(func(hit):return hit["percent"])==[158.0,158.0,158.0,198.0,198.0],
 		"enhanced Triple Slash reads the five source percentage columns")
+	var fixed := [47.0,47.0,47.0,138.0,158.0]
+	check(hits.map(func(hit):return hit["fixed"])==fixed,
+		"enhanced Triple Slash changes the third fixed column and uses distinct fourth and fifth columns")
 	check(hits[2]["atk_path"].ends_with("/tripleslash3.atk") and hits[4]["lift"]==382.0,
 		"the enhanced third stage uses its ordinary ATK and the fifth reads mastery lift")
 	check(hits[3]["segments"][0]["frames"][0]["boxes"]==[[-31.0,-20.0,46.0,163.0,35.0,46.0]]
@@ -575,6 +585,9 @@ func check_enhanced_triple_slash() -> void:
 		move_target(target,game.player["pos"]+Vector2(45*facing,0))
 		step(70)
 		check(game.hit_count==index+1 and game.player["stage"]==index,"each source stage hits the real target once")
+		var independent: float = float(game.numeric_player.values["independent_attack"])+float(game.numeric_player.values["physical_independent_attack"])
+		check(is_equal_approx(float(game.last_damage["trace"]["fixed_part"]),fixed[index]*independent/100.0),
+			"enhanced contact consumes the current fixed column at stage "+str(index+1))
 		var weapon_cues := cues("R_TSLASH")
 		check(weapon_cues.size()==index+1,"each Triple Slash stage emits one original weapon cue")
 		var layers: Array = game.view.effects.filter(func(fx):return fx.data["source"].contains("/tripleslash/"))
@@ -599,6 +612,29 @@ func check_enhanced_triple_slash() -> void:
 	press(KEY_S)
 	step(140)
 	check(game.player["stage"]==4,"the fifth stage cannot continue into a sixth")
+
+func check_triple_cooldown() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.skill_grant",{"id":"triple","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["","triple"]
+	for interrupted: bool in [false,true]:
+		start_room("original_27601","katana",1,spec)
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["cooldown_rate"] = 0.75
+		press(KEY_S)
+		step(0)
+		step(100 if interrupted else 579)
+		check(game.player["action"]=="triple" and float(game.player["cooldowns"].get("triple",0.0))==0.0,
+			"the cooldown stays at zero up to the last active frame or an interruption")
+		if interrupted:game.hurt_player(1,{"pos":POINT+Vector2(40,0)},{},-1)
+		else:step(1)
+		check(game.player["action"]=="" and is_equal_approx(float(game.player["cooldowns"].get("triple",0.0)),4.5),
+			"ending state 22 starts the full cooldown with the actor modifier")
+		game.step_game(100.0)
+		check(is_equal_approx(float(game.player["cooldowns"].get("triple",0.0)),4.4),
+			"the cooldown ticks after leaving state 22")
 	step(370)
 	check(game.player["action"]!="triple" and game.move_def("triple")["stages"].size()==3,
 		"the next cast uses the refreshed normal three-stage move")
@@ -708,6 +744,7 @@ func run() -> void:
 	check_triple_motion()
 	check_triple_slash()
 	check_enhanced_triple_slash()
+	check_triple_cooldown()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
 	quit(1 if failures else 0)
