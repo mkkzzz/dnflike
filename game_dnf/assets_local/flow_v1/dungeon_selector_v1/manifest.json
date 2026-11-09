@@ -1,0 +1,168 @@
+{
+ "schema": "dnf_native_map/1",
+ "selector_schema": "dnf_dungeon_selector/1",
+ "source": {
+  "files": {
+   "worldmap/worldmappatterntable2nd.tbl": "223e151db80545f2d85a5d89effc71b8f76079ea934c149aff4d05e40fe83dae",
+   "dungeon/dungeon.lst": "f34fd5395389a2ce54832ba1c0dc721aa4572851764150c2be17c1c70a714c48",
+   "worldmap/lorien.wdm": "43b3c8641e5c3fc115c278ed9191f2c9650228894a2c73415f4cea527c17be06",
+   "worldmap/ui/lorien.ui": "5b7cac1248d5d9facf63041cd91be1b50a2f8b07c563887663a37c19a2e18dab",
+   "dungeon/act1/lorien.dgn": "0a66d21a92945c306c74c3c1e926965c7ea644821a52606c0887687e27ab3541",
+   "dungeon/act1/lorieninside.dgn": "447e7412e9b547d1e5707032916f3ee60c691fa9572155c6b0c1fd2a7361a7e8"
+  },
+  "dungeon_listing": "dungeon/dungeon.lst",
+  "layout_consumer": "EXERESX 0x106DBBD/0x106D630/0x106CF40",
+  "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84"
+ },
+ "regions": {
+  "lorien": {
+   "wdm": "worldmap/lorien.wdm",
+   "ui": "worldmap/ui/lorien.ui",
+   "background": "4b16732c351e_0",
+   "cards": {
+    "lorien": {
+     "dgn_index": 1,
+     "dgn": "dungeon/act1/lorien.dgn",
+     "control": "IDC_WORLDMAP_BUTTON1",
+     "anchor": [
+      322,
+      244
+     ],
+     "ui_pattern": 3,
+     "dgn_pattern": [
+      1,
+      1,
+      "WorldMap/SelectdungeonSlot/elvengard.img",
+      0
+     ],
+     "compact": [
+      399,
+      234
+     ],
+     "expanded": [
+      399,
+      226
+     ],
+     "connector": [
+      338,
+      234
+     ],
+     "card": "f7fc1e07302d_0",
+     "connector_image": "9c96b6d8c417_33"
+    },
+    "lorien_inside": {
+     "dgn_index": 2,
+     "dgn": "dungeon/act1/lorieninside.dgn",
+     "control": "IDC_WORLDMAP_BUTTON2",
+     "anchor": [
+      284,
+      284
+     ],
+     "ui_pattern": 1,
+     "dgn_pattern": [
+      1,
+      2,
+      "WorldMap/SelectdungeonSlot/elvengard.img",
+      1
+     ],
+     "compact": [
+      234,
+      351
+     ],
+     "expanded": [
+      210,
+      352
+     ],
+     "connector": [
+      234,
+      301
+     ],
+     "card": "f7fc1e07302d_1",
+     "connector_image": "9c96b6d8c417_31"
+    }
+   }
+  }
+ },
+ "images": {
+  "f7fc1e07302d_0": {
+   "file": "img/f7fc1e07302d_0.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/elvengard.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "f7fc1e07302d061065441ffd187dcb8bb7b0244e6bc6d9f7cd56fbdd68145a37",
+   "frame": 0,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_33": {
+   "file": "img/9c96b6d8c417_33.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 33,
+   "size": [
+    161,
+    51
+   ],
+   "canvas_offset": [
+    18,
+    0
+   ],
+   "variants": 1
+  },
+  "f7fc1e07302d_1": {
+   "file": "img/f7fc1e07302d_1.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/elvengard.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "f7fc1e07302d061065441ffd187dcb8bb7b0244e6bc6d9f7cd56fbdd68145a37",
+   "frame": 1,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_31": {
+   "file": "img/9c96b6d8c417_31.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 31,
+   "size": [
+    118,
+    97
+   ],
+   "canvas_offset": [
+    0,
+    5
+   ],
+   "variants": 1
+  },
+  "4b16732c351e_0": {
+   "file": "img/4b16732c351e_0.png",
+   "source_path": "sprite/worldmap/lorien.img",
+   "source_npk": "ImagePacks2/sprite_worldmap.NPK",
+   "img_sha256": "4b16732c351ee69ca73c35b374db864930c91b5ccce46bfa0d3b925a16cdf203",
+   "frame": 0,
+   "size": [
+    800,
+    600
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 2
+  }
+ }
+}

@@ -1,6 +1,8 @@
 extends RefCounted
 ## Layout reconstruction from the supplied client's IMG families and UI tokens.
 ## Guide screenshots prove HUD/inventory/map style; unspecified anchors are adapted.
+const SELECTOR_EXPORT := "res://assets_local/flow_v1/dungeon_selector_v1/manifest.json"
+const MapLoader = preload("res://scripts/native_map_loader.gd")
 var game
 var skin
 var tip: Control
@@ -17,6 +19,7 @@ var item_icons: Dictionary = {}
 var original_icons: Dictionary = {}
 var native_item_manifest: Dictionary = {}
 var native_item_textures: Dictionary = {}
+var _selector_art: MapLoader
 
 func _init(root) -> void:
 	game = root
@@ -406,47 +409,88 @@ func dungeon_lock_reason(id: String) -> String:
 		if game.session.quests.status(game.session.profile, required) != "completed":return "需要先完成前置任务"
 	return "尚未开放"
 
+func _selector_region(regions: Array, choices: Array) -> Dictionary:
+	if regions.size() != 1 or choices.is_empty() or game.selected_dungeon == "forest_trial":
+		return {}
+	if _selector_art == null:
+		_selector_art = MapLoader.new()
+		_selector_art.load_export(SELECTOR_EXPORT)
+	var region: Dictionary = _selector_art.data.get("regions", {}).get(String(regions[0]), {})
+	for id: String in choices:
+		if not region.get("cards", {}).has(id):
+			return {}
+	return region
+
+func _selector_image(parent: Control, key: String, at: Vector2, scale_factor := 1.0) -> TextureRect:
+	var offset: Array = _selector_art.data["images"][key]["canvas_offset"]
+	return skin.image(parent, _selector_art.texture(key), at + Vector2(offset[0], offset[1]) * scale_factor, scale_factor)
+
 func dungeon() -> void:
 	var node = container(game.modal, Vector2.ZERO, Vector2(800, 600))
-	skin.image(node, skin.texture("worldmap"), Vector2.ZERO)
-	skin.image(node, skin.texture("select", 79), Vector2.ZERO)
-	skin.image(node, skin.texture("select", 58), Vector2(104, 0))
 	var scene_data: Dictionary = game.town.world.scene(game.town.location)
 	var regions = scene_data.get("dungeon_region", "lorien")
 	if not regions is Array:regions = [regions]
-	var region_title := String({"granfloris": "格兰之森", "skytower": "天空之城", "lorien": "洛兰"}.get(String(regions[0]), "地下城"))
-	skin.label(node, region_title, Vector2(34, 65), 22, Color("f0d18a"))
-	# 卡片按当前城镇的副本区动态列出（每页 5 张）；锁定的置灰并给出原因。
 	var choices: Array = game.session.dungeon_choices(regions)
 	if game.selected_dungeon=="forest_trial":choices=["forest_trial"]
 	if not choices.is_empty() and game.selected_dungeon not in choices:game.selected_dungeon=choices[0]
-	var pages := maxi(1, int(ceil(float(choices.size()) / 5.0)))
+	var native_region := _selector_region(regions, choices)
+	var has_native_layout := not native_region.is_empty()
+	if has_native_layout:
+		_selector_image(node, native_region["background"], Vector2.ZERO).name = "dungeon_region_background"
+	else:
+		skin.image(node, skin.texture("worldmap"), Vector2.ZERO).name = "dungeon_region_background"
+	skin.image(node, skin.texture("select", 79), Vector2.ZERO)
+	skin.image(node, skin.texture("select", 58), Vector2(104, 0))
+	var region_title := String({"granfloris": "格兰之森", "skytower": "天空之城", "lorien": "洛兰"}.get(String(regions[0]), "地下城"))
+	skin.label(node, region_title, Vector2(34, 65), 22, Color("f0d18a"))
+	var page_size := choices.size() if has_native_layout else 5
+	var pages := maxi(1, ceili(float(choices.size()) / page_size))
 	game.dungeon_page = clampi(game.dungeon_page, 0, pages - 1)
-	var start: int = int(game.dungeon_page) * 5
+	var start: int = int(game.dungeon_page) * page_size
+	var visible_choices := choices.slice(start, start + page_size)
+	if has_native_layout:
+		# The expanded card stays on top of any compact card it overlaps.
+		visible_choices.erase(game.selected_dungeon)
+		visible_choices.append(game.selected_dungeon)
 	var locations := [Vector2(300, 230), Vector2(132, 111), Vector2(466, 93), Vector2(562, 292), Vector2(130, 360)]
 	var difficulty_position:=Vector2(325,314)
-	for i in locations.size():
-		var index: int = start + i
-		if index >= choices.size():break
-		var id: String = choices[index]
+	for i in visible_choices.size():
+		var id: String = visible_choices[i]
 		var spec: Dictionary = game.session.dungeons[id]
 		var unlocked: bool = game.session.dungeon_available(id)
 		var chosen: bool = id == game.selected_dungeon
-		var pic = skin.image(node, skin.texture("dungeon_cards", i), locations[i])
+		var at: Vector2
+		var hit_size: Vector2
+		var pic: TextureRect
+		if has_native_layout:
+			var card: Dictionary = native_region["cards"][id]
+			var anchor: Array = card["expanded" if chosen else "compact"]
+			var connector: Array = card["connector"]
+			at = Vector2(anchor[0], anchor[1])
+			# Source CWorldMap balloon hit bounds and compact image scaling.
+			hit_size = Vector2(168, 63) if chosen else Vector2(118, 53)
+			_selector_image(node, card["connector_image"], Vector2(connector[0], connector[1]))
+			pic = _selector_image(node, card["card"], at, 1.0 if chosen else 0.7)
+		else:
+			at = locations[i]
+			hit_size = Vector2(168, 78)
+			pic = skin.image(node, skin.texture("dungeon_cards", i), at)
+			if unlocked and not chosen:pic.modulate = Color("b8b8b8")
+			skin.label(node, String(spec.get("name", id)), at + Vector2(6, 78), 12,
+				Color("f0d18a") if unlocked else Color("8a8578"))
+		pic.name = "dungeon_card_" + id
 		if chosen:
 			pic.name = "selected_dungeon_card"
-			difficulty_position=locations[i]+Vector2(25,pic.size.y+4)
+			difficulty_position = pic.position + Vector2(25, pic.size.y + 4)
 		if not unlocked:pic.modulate = Color("666666")
-		elif not chosen:pic.modulate = Color("b8b8b8")
-		skin.label(node, String(spec.get("name", id)), locations[i] + Vector2(6, 78), 12,
-			Color("f0d18a") if unlocked else Color("8a8578"))
 		var hit := Button.new()
 		hit.set_meta("dungeon_id",id)
 		hit.set_meta("ui_sound","map_select")
 		hit.set_meta("ui_sound_hover","map_hover")
 		hit.flat = true
-		hit.position = locations[i]
-		hit.size = Vector2(168, 78)
+		hit.position = at
+		hit.size = hit_size
+		if has_native_layout:hit.tooltip_text = String(spec.get("name", id))
 		hit.pressed.connect(func():
 			if not game.session.dungeon_available(id):
 				game.notice(dungeon_lock_reason(id))
@@ -454,12 +498,12 @@ func dungeon() -> void:
 			game.selected_dungeon = id
 			game.show_overlay("dungeon"))
 		node.add_child(hit)
-		if chosen:
+		if chosen and not has_native_layout:
 			# Card has a 12px crown above its rectangular body. Outline the body,
 			# with a native 4px rim; never tile the border across the artwork.
 			var selected := NinePatchRect.new()
 			selected.texture = skin.texture("select", 22)
-			selected.position = locations[i] + Vector2(-3, 9)
+			selected.position = at + Vector2(-3, 9)
 			selected.size = Vector2(174, 74)
 			selected.patch_margin_left = 4
 			selected.patch_margin_right = 4

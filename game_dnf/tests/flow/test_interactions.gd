@@ -54,6 +54,48 @@ func button(title: String) -> Control:
 		if not node.is_queued_for_deletion() and node.get_meta("action_label", "") == title and node.is_visible_in_tree():return node
 	return null
 
+func dungeon_button(id: String) -> Button:
+	for control: Button in game.modal.find_children("*", "Button", true, false):
+		if control.get_meta("dungeon_id", "") == id:
+			return control
+	return null
+
+func check_lorien_selector() -> void:
+	var previous: String = game.selected_dungeon
+	var quest_state: Dictionary = game.session.profile["quest_state"].duplicate(true)
+	game.selected_dungeon = "lorien"
+	game.show_overlay("dungeon")
+	await ticks()
+	var backdrop: TextureRect = game.modal.find_child("dungeon_region_background", true, false)
+	var selected: TextureRect = game.modal.find_child("selected_dungeon_card", true, false)
+	var locked: TextureRect = game.modal.find_child("dungeon_card_lorien_inside", true, false)
+	var locked_button := dungeon_button("lorien_inside")
+	host.check(backdrop.texture.get_size() == Vector2(800, 600) and selected.position == Vector2(399, 220),
+		"Lorien draws the verified source background and the expanded card with its IMG trim")
+	host.check(locked != null and locked.scale == Vector2.ONE * 0.7 and locked.modulate != Color.WHITE
+		and locked_button.position == Vector2(234, 351) and locked_button.size == Vector2(118, 53),
+		"locked Lorien Inside keeps the compact source hit area and a dimmed card")
+	host.click_control(locked_button)
+	await ticks()
+	host.check(game.selected_dungeon == "lorien" and not game.session.dungeon_available("lorien_inside"),
+		"real pointer clicks cannot select the source card before its existing prerequisite")
+	var first_clear := "lorien.first_clear"
+	var entry: Dictionary = game.session.quests.new_entry(game.session.quests.catalog.definitions[first_clear])
+	entry["state"] = "completed"
+	game.session.profile["quest_state"]["entries"][first_clear] = entry
+	game.show_overlay("dungeon")
+	await ticks()
+	host.click_control(dungeon_button("lorien_inside"))
+	await ticks()
+	selected = game.modal.find_child("selected_dungeon_card", true, false)
+	var expanded := dungeon_button("lorien_inside")
+	host.check(game.selected_dungeon == "lorien_inside" and selected.position == Vector2(210, 346)
+		and expanded.position == Vector2(210, 352) and expanded.size == Vector2(168, 63),
+		"actual compact-card clicks select the original expanded position and hit area")
+	await host.frame("18a_lorien_source_selector")
+	game.session.profile["quest_state"] = quest_state
+	game.selected_dungeon = previous
+
 func run() -> void:
 	var original = game.session
 	var path: String = game.store.path
@@ -166,6 +208,7 @@ func run() -> void:
 	await ticks()
 	host.check(scroll.value > 0 and grid.position.y == -scroll.value, "actual shop wheel moves content and scrollbar together")
 	scroll.value = 0
+	await check_lorien_selector()
 	game.show_overlay("dungeon")
 	await ticks()
 	for expected in ["adventure", "expert", "king", "normal"]:
