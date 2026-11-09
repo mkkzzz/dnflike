@@ -1210,6 +1210,67 @@ func check_frenzy_bleed() -> void:
 			game.player["stuck_ms"] = 0.0
 			game.end_action()
 
+func check_frenzy_recovery() -> void:
+	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
+	for scenario: Array in [[1,1000,99,true,-1],[1,1000,100,false,-1],
+			[1,100,100,true,0],[1,1000,100,true,6],[1,4000,100,true,22],[2,4000,100,true,27]]:
+		var profile := ProfileSession.new()
+		profile.command("numbers.level",{"level":60})
+		profile.command("numbers.growtype",{"growtype":"berserker"})
+		profile.command("numbers.skill_grant",{"id":"buff","level":scenario[0]})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["buff"]
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.player["hp"] = 1000.0
+		press(KEY_A)
+		step(0)
+		var cast_ms: float = game.player["frenzy_cast"]["duration_ms"]
+		step(cast_ms)
+		step(cast_ms)
+		game.god_mode = true
+		game.numeric_player.values["hp_regen"] = 0.0
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(60,0))
+		var far_enemy: Dictionary = game.spawn_enemy(POINT+Vector2(180,0))
+		far_enemy["ai"] = false
+		if scenario[3]:game.apply_effect({"kind":"effect","id":"bleed","target":target["id"]})
+		target["numeric"].values["hp_max"] = float(scenario[1])
+		target["hp"] = 1.0
+		game.step_game(scenario[2])
+		var before: float = game.player["hp"]
+		press(KEY_X)
+		step(0)
+		step(120)
+		var expected: int = scenario[4]
+		check(target["hp"]==0.0 and cues("frenzy_create_ball").size()==int(expected>=0)
+			and cues("FLENSE_SUCK").size()==int(expected>=0),"Frenzy kill requires a scan of a living bleeding target: "+str(scenario))
+		if expected < 0:continue
+		check(game.frenzy_recovery.view_objects(game).is_empty() and game.player["hp"]==before,
+			"Frenzy starts with only the creation effect and no HP")
+		game.step_game(179.0)
+		check(game.frenzy_recovery.view_objects(game).is_empty(),"Frenzy ball stays hidden through 179 ms")
+		game.step_game(1.0)
+		var layers: Array = game.frenzy_recovery.view_objects(game)
+		check(layers.size()==2 and layers[0]["effect"]=="frenzy_ball_layer" and layers[1]["effect"]=="frenzy_ball"
+			and layers[1]["clock"]==180.0 and layers[1]["loop"]
+			and is_equal_approx(layers[1]["fade"],100.0/255.0),"Both original blood orb layers appear at 180 ms")
+		game.step_game(450.0)
+		layers = game.frenzy_recovery.view_objects(game)
+		check(layers.size()==2 and layers[1]["clock"]==630.0 and layers[1]["fade"]==1.0,
+			"Frenzy ball begins flight at 630 ms")
+		game.step_game(399.0)
+		check(game.player["hp"]==before and cues("FLENSE_FLASH").is_empty(),"Frenzy does not heal before 1030 ms")
+		game.step_game(1.0)
+		check(game.player["hp"]==before and cues("FLENSE_FLASH").size()==1 and game.frenzy_recovery.view_objects(game).is_empty(),
+			"Frenzy starts 500 ms recovery at 1030 ms and removes the ball")
+		game.step_game(250.0)
+		check(is_equal_approx(game.player["hp"],before+float(expected)/2.0),"Frenzy recovers half of the sourced amount at 1280 ms")
+		game.step_game(250.0)
+		check(is_equal_approx(game.player["hp"],before+expected) and game.item_restorations.is_empty(),
+			"Frenzy rank and enemy max HP cap finish at 1530 ms: "+str(scenario))
+	game.god_mode = false
+
 func check_frenzy_toggle() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -1358,6 +1419,7 @@ func run() -> void:
 	check_frenzy_cast()
 	check_frenzy_normals()
 	check_frenzy_bleed()
+	check_frenzy_recovery()
 	check_frenzy_toggle()
 	check_hardattack()
 	check_hardattack_charge()

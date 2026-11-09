@@ -15,6 +15,7 @@ const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
 const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
 const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
 const NativeZealotSummons = preload("res://combat/resolve/native_zealot_summons.gd")
+const FrenzyRecovery = preload("res://combat/resolve/frenzy_recovery.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
@@ -60,6 +61,7 @@ var objects: Array = []
 var props: Array = []
 var native_jar_traps := NativeJarTraps.new()
 var native_zealot_summons := NativeZealotSummons.new()
+var frenzy_recovery := FrenzyRecovery.new()
 var room_index := 0
 var room_cleared := false
 var room_snapshots: Dictionary = {}
@@ -393,6 +395,7 @@ func new_player() -> Dictionary:
 		"recovery_code":-1,"recovery_buffer_ms":0.0,"air_attack_used":false,"air_move_speed":0.0}
 
 func emit_player_defeated() -> void:
+	frenzy_recovery.clear()
 	var event: Dictionary=bus.emit("combat.player_defeated",flow_payload())
 	last_defeat_id=int(event.get("event_id",0))
 
@@ -744,6 +747,7 @@ func step_game(ms: float) -> void:
 		refresh_dynamic_modifiers()
 		max_hp = float(numeric_player.values["hp_max"])
 		max_mp = float(numeric_player.values["mp_max"])
+	frenzy_recovery.step(self,ms)
 	player["invuln_ms"] = maxf(0,float(player["invuln_ms"])-ms)
 	player["flash_ms"] = maxf(0,float(player["flash_ms"])-ms)
 	player["upper_armor_fx_ms"] = maxf(0,float(player["upper_armor_fx_ms"])-ms)
@@ -1479,11 +1483,13 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 							bus.emit("combat.prop_broken", {"node": int(prop.get("node", -1))})
 						break
 
-func apply_native_prop_hits(world: Array, hit: Dictionary, power: float, seen: Dictionary, prefix: String) -> void:
-	var atk: Dictionary = hit.get("atk",{})
+func native_attack_has_damage(atk: Dictionary) -> bool:
 	# 293C11E checks the weapon flag, positive damage or positive absolute damage.
-	if int(atk.get("weapon_damage_apply",0)) == 0 and float(atk.get("damage",0)) <= 0.0 \
-			and float(atk.get("absolute_damage",0)) <= 0.0:return
+	return int(atk.get("weapon_damage_apply",0)) != 0 or float(atk.get("damage",0)) > 0.0 \
+		or float(atk.get("absolute_damage",0)) > 0.0
+
+func apply_native_prop_hits(world: Array, hit: Dictionary, power: float, seen: Dictionary, prefix: String) -> void:
+	if not native_attack_has_damage(hit.get("atk",{})):return
 	for prop: Dictionary in props:
 		if not prop.has("native_breakable") or prop["broken"] or prop.has("jar_warning"):continue
 		var key := prefix+str(prop["node"])
@@ -1655,6 +1661,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if float(target["hp"])<=0:
 			target["state"] = "dead"
 			target["death_ms"] = 0.0
+			if by_player and not contact_only and native_attack_has_damage(atk):
+				frenzy_recovery.record_kill(self,target)
 			play_sound("mon_%s_die" % mob_key)
 			# 死亡爆散：原版 [die effect] 的编号语义未解（E-OPEN），这里用通用 blow 特效补足死亡反馈。
 			bus.emit("combat.cue", {"kind":"fx", "key":"hit_blow_l", "point":Vector2(target["pos"]),
@@ -3230,6 +3238,8 @@ func spawn_enemy(point: Vector2, chief := false, kind := "goblin", reserved := {
 	return enemy
 
 func clear_monsters() -> void:
+	frenzy_recovery.clear()
+	active_effect("frenzy").erase("bleed_targets")
 	for enemy: Dictionary in monsters:
 		if enemy.has("starfish_capture"):release_starfish_victim(enemy)
 		bus.emit("combat.entity_removed",{"entity_id":enemy["id"]})
@@ -3594,6 +3604,7 @@ func view_snapshot() -> Dictionary:
 			objs.append(item)
 	if native_maze != null:objs.append_array(native_jar_traps.view_objects(self))
 	objs.append_array(native_zealot_summons.view_objects())
+	objs.append_array(frenzy_recovery.view_objects(self))
 	var route: Array = native_maze.route_view() if native_maze != null else []
 	if native_maze == null:
 		for i in rules["rooms"].size():

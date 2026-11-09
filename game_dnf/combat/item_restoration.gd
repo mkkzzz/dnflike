@@ -30,8 +30,7 @@ static func apply(game, effect: Dictionary) -> bool:
 			var maximum: float=game.max_hp if resource=="hp" else game.max_mp
 			game.player[resource]=minf(maximum,float(game.player[resource])+float(effect[resource]))
 	else:
-		game.item_restorations.append({"hp":effect["hp"],"mp":effect["mp"],"duration_ms":effect["duration_ms"],
-			"remaining_ms":float(effect["duration_ms"])})
+		queue(game,float(effect["hp"]),float(effect["mp"]),float(effect["duration_ms"]))
 	if effect.get("cure")=="bleed":
 		game.apply_effect({"kind":"remove_effect","id":"bleed"})
 	var stun: Dictionary=effect.get("self_stun",{})
@@ -41,14 +40,22 @@ static func apply(game, effect: Dictionary) -> bool:
 			game.bus.emit("combat.status",{"target":game.player["id"],"id":"stun","change":"added"})
 	return true
 
+static func queue(game, hp: float, mp: float, duration: float) -> Dictionary:
+	var entry := {"hp":hp,"mp":mp,"duration_ms":duration,"remaining_ms":duration}
+	game.item_restorations.append(entry)
+	return entry
+
 static func step(game, ms: float) -> void:
 	if game.player.is_empty() or game.finished or float(game.player["hp"])<=0:
 		game.item_restorations.clear();return
 	if game.paused:return
 	for entry: Dictionary in game.item_restorations.duplicate():
-		var elapsed:=minf(ms,float(entry["remaining_ms"]))
-		for resource: String in ["hp","mp"]:
-			var maximum: float=game.max_hp if resource=="hp" else game.max_mp
-			game.player[resource]=minf(maximum,float(game.player[resource])+float(entry[resource])*elapsed/float(entry["duration_ms"]))
-		entry["remaining_ms"]=maxf(0,float(entry["remaining_ms"])-elapsed)
-		if entry["remaining_ms"]<=0:game.item_restorations.erase(entry)
+		advance(game,entry,ms)
+
+static func advance(game, entry: Dictionary, ms: float) -> void:
+	var elapsed := minf(ms,float(entry["remaining_ms"]))
+	for resource: String in ["hp","mp"]:
+		var maximum: float = game.max_hp if resource=="hp" else game.max_mp
+		game.player[resource] = minf(maximum,float(game.player[resource])+float(entry[resource])*elapsed/float(entry["duration_ms"]))
+	entry["remaining_ms"] -= elapsed
+	if entry["remaining_ms"] <= 0:game.item_restorations.erase(entry)

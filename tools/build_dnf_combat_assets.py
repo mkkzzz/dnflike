@@ -325,17 +325,25 @@ WAVE_CAST_AUDIO = {
     'SM_ICEWAVE': 'sounds/char/swordman/sm_icewave.ogg',
     'SM_FIREWAVE': 'sounds/char/swordman/sm_firewave.ogg',
 }
-# CD7594 and CD75B5 resolve through audio.xml. The release requests FLENSE_CHARGE,
-# which has no entry in the supplied client's table. Do not alias FLENSE_CHANGE.
-FRENZY_CAST_AUDIO = {
+# CD7594 and CD75B5 resolve the cast keys through audio.xml; 9C587C and 9C575B
+# resolve the recovery orb keys. FLENSE_CHARGE has no entry in the supplied table.
+FRENZY_AUDIO = {
     'SM_FLENSE': 'sounds/char/swordman/sm_flense.ogg',
     'FLENSE_GET': 'sounds/char/swordman/effect/flense_get.ogg',
+    'FLENSE_SUCK': 'sounds/char/swordman/effect/flense_suck.ogg',
+    'FLENSE_FLASH': 'sounds/char/swordman/effect/flense_flash.ogg',
+}
+FRENZY_RECOVERY_EFFECTS = {
+    'frenzy_create_ball': 'character/swordman/effect/animation/frenzy/createball.ani',
+    'frenzy_ball': 'character/swordman/effect/animation/frenzy/ball.ani',
+    'frenzy_ball_layer': 'character/swordman/effect/animation/frenzy/balllayer.ani',
 }
 FRENZY_SWING_EFFECTS = {
     f'frenzy_sword{stage}_{layer}': f'character/swordman/effect/animation/frenzy/sword{stage}-{layer}.ani'
     for stage in range(1, 5) for layer in (1, 3, 4 if stage <= 2 else 2)
 }
 EFFECTS.update(FRENZY_SWING_EFFECTS)
+EFFECTS.update(FRENZY_RECOVERY_EFFECTS)
 
 # State 30 entry at CD152F and CD1578, resolved by original audio.xml.
 UPPER_FOLLOWUP_AUDIO = {
@@ -402,7 +410,7 @@ HARDATTACK_WAVE_AUDIO = {f'GHOST_DRIVE_{kind.upper()}': f'sounds/char/swordman/e
 SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33), HARDATTACK_VOICE: (50, 50)}
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
-    **{key: [path] for key, path in FRENZY_CAST_AUDIO.items()},
+    **{key: [path] for key, path in FRENZY_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
     **{key: [path] for key, path in GUARD_AUDIO.items()},
     TRIPLE_SWING: TRIPLE_SWING_FILES,
@@ -1420,7 +1428,8 @@ def main() -> int:
     if args.extend_frenzy:
         specs = [('effects', 'frenzy_blast', EFFECTS['frenzy_blast'])]
         specs.extend(('effects', key, path) for key, path in FRENZY_SWING_EFFECTS.items())
-        specs.extend(('audio', key, path) for key, path in FRENZY_CAST_AUDIO.items())
+        specs.extend(('effects', key, path) for key, path in FRENZY_RECOVERY_EFFECTS.items())
+        specs.extend(('audio', key, path) for key, path in FRENZY_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_upper_armor_light:
