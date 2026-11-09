@@ -397,7 +397,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	if spec.get("native_state","") == "thirst":
 		var values: Array = skill["static"]
 		move.merge({"native_state":"thirst","hp_percent":int(values[0]),
-			"native_recovery_ms":int(values[2]),"tier_hp_percent":int(values[5])})
+			"native_recovery_ms":int(values[2]),"tier_hp_percent":int(values[5]),
+			"active_idle_ani":String(spec["active_idle_ani"])})
 		var burst := _build_stage({"hits":[spec["full_charge_hit"]]},skill)
 		if not burst["hits"].is_empty():
 			move["full_charge_hit"] = burst["hits"][0]

@@ -280,6 +280,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 	body["hp"] = minf(float(body["hp"]),float(actor.values["hp_max"]))
 	for event: Dictionary in events:
 		if event["type"]=="removed":
+			if body["id"]==PLAYER_ID and event["id"]=="thirst":stop_thirst_loop()
 			if event["id"]=="sleep" and body["state"]=="down":
 				body["down_ms"] = float(rules["reaction"]["down_hold_ms"])
 			bus.emit("combat.status",{"target":body["id"],"id":event["id"],"change":"removed"})
@@ -326,6 +327,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 ## Long-term profile data stays with flow; these are the per-run combat stats it hands over.
 ## Without flow values, HP/MP start from the original CHR level-1 initial stats.
 func begin_room(spec: Dictionary, maze: NativeMaze = null) -> void:
+	stop_thirst_loop()
 	dungeon_id=String(spec.get("dungeon","lorien"))
 	var leaving_maze := native_maze != null and maze == null
 	native_maze = maze
@@ -395,6 +397,7 @@ func new_player() -> Dictionary:
 		"recovery_code":-1,"recovery_buffer_ms":0.0,"air_attack_used":false,"air_move_speed":0.0}
 
 func emit_player_defeated() -> void:
+	stop_thirst_loop()
 	frenzy_recovery.clear()
 	var event: Dictionary=bus.emit("combat.player_defeated",flow_payload())
 	last_defeat_id=int(event.get("event_id",0))
@@ -858,6 +861,8 @@ func finish_current_room() -> void:
 func step_player(ms: float, move: Vector2) -> void:
 	var dt := ms/1000
 	player["motion_clock"] = float(player["motion_clock"])+ms
+	if player["state"] != "idle" or float(player["landing_ms"]) > 0.0:
+		player.erase("thirst_idle_origin_ms")
 	if player["state"] == "guard":
 		player["guard_hold_ms"] = maxf(0.0,float(player["guard_hold_ms"])-ms)
 		var recoil_ms := float(player["guard_recoil_ms"])
@@ -959,6 +964,10 @@ func step_player(ms: float, move: Vector2) -> void:
 			if String(player["state"]) == "jump":player["state"] = "idle"
 			elif String(player["state"]) == "action" and move_def(String(player["action"])).get("air",false):
 				end_action()
+	if player["state"] == "idle" and float(player["landing_ms"]) <= 0.0 and not active_effect("thirst").is_empty():
+		if not player.has("thirst_idle_origin_ms"):player["thirst_idle_origin_ms"] = player["motion_clock"]
+	else:
+		player.erase("thirst_idle_origin_ms")
 
 func step_action(ms: float, move: Vector2) -> void:
 	if player.has("weapon_combo_charge"):
@@ -1149,6 +1158,7 @@ func apply_effect(effect: Dictionary) -> bool:
 				body["max_hp"] = float(actor.values["hp_max"])
 				body["attack"] = float(actor.values["physical_attack"])
 			if body == player:
+				if id == "thirst" and effect["kind"] == "remove_effect":stop_thirst_loop()
 				max_hp = float(actor.values["hp_max"])
 				max_mp = float(actor.values["mp_max"])
 				player["mp"] = minf(float(player["mp"]),max_mp)
@@ -1375,8 +1385,16 @@ func step_thirst_cast(ms: float) -> void:
 		if apply_effect({"kind":"effect","id":move["effect_id"],"rank":int(skill_levels.get("sacrifice",1)),
 				"charge_tier":phase["tier"]}):
 			play_sound("SACRI")
+			# CABE6E clears slot 26 before starting the new SACRI_LOOP voice.
+			stop_thirst_loop()
+			player["thirst_loop"] = true
+			bus.emit("combat.cue",{"kind":"sound","key":"SACRI_LOOP","loop_id":PLAYER_ID})
 		return
 	phase["body_clock"] = 0.0 if body_clock >= float(phase["thirst_loop_ms"]) else body_clock
+
+func stop_thirst_loop() -> void:
+	if player.erase("thirst_loop"):
+		bus.emit("combat.cue",{"kind":"sound","stop":true,"loop_id":PLAYER_ID})
 
 func start_overdrive_cast(move: Dictionary) -> void:
 	var authored_ms := float(action_def()["duration"])
@@ -3469,6 +3487,7 @@ func load_room(index: int, from_side: String) -> void:
 	player["z"] = 0.0
 	player["vz"] = 0.0
 	player.erase("starfish_fall_gravity")
+	player.erase("thirst_idle_origin_ms")
 	player["state"] = "idle"
 	player["action"] = ""
 	player["stuck_ms"] = 0.0
@@ -3785,6 +3804,13 @@ func player_ani() -> Array:
 	if float(player["z"])>0:return ["jump",minf(float(player["air_ms"]),600) if float(player["vz"])>=0 else 10680.0]
 	if float(player["landing_ms"])>0:return ["sit",0.0]
 	if state=="move":return ["dash" if run_direction!=0 else "move",float(player["motion_clock"])]
+	if not active_effect("thirst").is_empty():
+		# C9FAB0/C9FAF0 select CHR ETC slot 0x72 for both waiting getters.
+		var idle := String(move_def("sacrifice").get("active_idle_ani",""))
+		if idle != "":
+			var elapsed := float(player["motion_clock"])-float(player.get("thirst_idle_origin_ms",player["motion_clock"]))
+			var duration := Kernel.Timeline.duration(table.player_timeline(idle))
+			return [idle,fposmod(elapsed,maxf(1.0,duration))]
 	return ["stay",float(player["motion_clock"])]
 
 func enemy_ani(enemy: Dictionary) -> Array:
@@ -3933,6 +3959,13 @@ func view_snapshot() -> Dictionary:
 	var overdrive_age_ms := -1.0
 	if not overdrive.is_empty() and float(player["hp"]) > 0.0:
 		overdrive_age_ms = float(overdrive["definition"]["duration_ms"])-float(overdrive["remaining_ms"])
+	var thirst := active_effect("thirst")
+	if not thirst.is_empty() and float(player["hp"]) > 0.0:
+		# CA06CC draws its own GiveBloodStay ANI as long as the appendage is valid.
+		var age := float(thirst["definition"]["duration_ms"])-float(thirst["remaining_ms"])
+		objs.append({"id":"player:thirst","effect":move_def("sacrifice")["cast_fx"],
+			"pos":Vector2(player["pos"]),"z":float(player["z"]),"facing":int(player["facing"]),
+			"clock":age,"loop":true,"depth_offset":1})
 	return {"frame":_frame,"paused":paused,"status_clock_ms":native_jar_traps.clock_ms,
 		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,

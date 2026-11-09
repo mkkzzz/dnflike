@@ -1114,8 +1114,9 @@ def build_move(
                        "native_controller": {"kind": "thirst_burst", "layers": [front_fx]}}
         return {"skill": str(skill["path"]), "name": str(skill["name"]),
                 "native_state": "thirst", "effect_id": "thirst", "cast_fx": cast_fx, "release_fx": release_fx,
-                "full_charge_hit": full_charge,
-                "fidelity_pending": ["bleeding_modifiers_and_special_targets", "loop_sound", "original_command", "other_skill_bonuses"],
+                "full_charge_hit": full_charge, "active_idle_ani": "staysacrifice",
+                "fidelity_pending": ["bleeding_modifiers_and_special_targets", "loop_stop_during_nonidle_expiry",
+                                     "original_command", "other_skill_bonuses"],
                 "stages": [{"ani": "summon1"}, {"ani": "summon2", "voice": "SM_SACRIFICE_CAST",
                     "fx": [{"key": release_fx, "at": 0, "action_clock": True}]}]}
     if source_key == "bloodblast" and native_bloodblast:
@@ -1931,6 +1932,9 @@ def main() -> int:
             charge_ani = move.get("native_charge_ani")
             if charge_ani:
                 player_anims[charge_ani] = CHR_ANI + charge_ani + ".ani"
+            idle_ani = move.get("active_idle_ani")
+            if idle_ani:
+                player_anims[idle_ani] = CHR_ANI + idle_ani + ".ani"
             for stage in move.get("stages", []):
                 ani = str(stage.get("ani", ""))
                 if ani:

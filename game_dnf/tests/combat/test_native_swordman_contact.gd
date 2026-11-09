@@ -1754,6 +1754,11 @@ func check_thirst() -> void:
 	check(game.view.player_actor.pose=="summon2" and cues(release_key).size()==1
 		and cues("SM_SACRIFICE_CAST").size()==1 and cues("SACRI").size()==1,
 		"Thirst releases into Summon2 with its authored effect and sounds")
+	check(cues("SACRI_LOOP").size()==1 and game.view.audio._loop_voices.has(0)
+		and game.view.audio._loop_voices[0].stream.loop,
+		"release starts one true loop on the caster's audio voice")
+	check(game.view.object_views.has("player:thirst") and game.view.object_views["player:thirst"].loop,
+		"the active buff draws its own looping GiveBloodStay clip during release")
 	check(game.objects.is_empty(),"partial release does not create the full-charge object")
 	check(thirst.get("remaining_ms")==30000 and mods.map(func(mod):return mod["value"])==[10.0,2.0],
 		"rank two at tier one installs the original 30 second strength and attack modifiers")
@@ -1762,6 +1767,20 @@ func check_thirst() -> void:
 	step(1)
 	check(game.player["action"]=="" and not game.active_effect("thirst").is_empty(),
 		"the cast visual ends while the Thirst appendage remains")
+	var actor = game.view.player_actor
+	check(actor.pose=="staysacrifice" and actor.sample()["frame"]==0
+		and actor.equipment_layers.all(func(layer):return layer.clips.has("staysacrifice")),
+		"Thirst selects source ETC 114 with both item-specific weapon tracks on recovery exit")
+	step(1549)
+	check(actor.sample()["frame"]==15,"the special idle shows its last authored frame at 1549 ms")
+	step(1)
+	check(actor.sample()["frame"]==0,"the special idle loops to frame zero at 1550 ms")
+	game.step_player(10,Vector2.RIGHT)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(actor.pose=="move" and game.view.object_views.has("player:thirst") and game.view.audio._loop_voices.has(0),
+		"moving keeps the persistent effect and sound with the original move pose")
+	step(0)
+	check(actor.pose=="staysacrifice" and actor.sample()["frame"]==0,"returning to idle resets its body and weapon clock")
 	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
 	game.numeric_player.values["independent_attack"] = float(Numbers.shared_config()["base"]["independent_attack"])+1.0
 	press(KEY_S)
@@ -1771,7 +1790,10 @@ func check_thirst() -> void:
 	var ground: Dictionary = game.objects[2]
 	check(ground["hit"]["fixed_amount"]==1388 and ground["hit"].get("fixed_amount_bleeding")==1466,
 		"rank two Thirst packs a second fixed amount at release before integer truncation")
-	game.numeric_player.remove_effect("thirst")
+	game.apply_effect({"kind":"remove_effect","id":"thirst"})
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(not game.view.audio._loop_voices.has(0) and not game.view.object_views.has("player:thirst"),
+		"explicit removal releases the loop voice and the active draw layer")
 	var target: Dictionary = game.monsters[0]
 	for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(400,0))
 	move_target(target,POINT)
@@ -1805,6 +1827,16 @@ func check_thirst() -> void:
 	check(game.player["stage"]==1 and game.action_duration("sacrifice")==400.0,
 		"full hold releases at 2000 ms and applies cast speed only to recovery")
 	check_thirst_burst()
+	step(400)
+	game.step_numeric_actor(game.player,game.numeric_player,29999)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(game.view.player_actor.pose=="staysacrifice" and game.view.audio._loop_voices.has(0),
+		"the idle, aura and loop remain until the original active time expires")
+	game.step_numeric_actor(game.player,game.numeric_player,1)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(game.view.player_actor.pose=="stay" and not game.view.audio._loop_voices.has(0)
+		and not game.view.object_views.has("player:thirst"),
+		"natural expiry restores ordinary idle and stops both active presentations")
 
 func check_thirst_burst() -> void:
 	check(game.objects.size()==1,"full-charge release creates exactly one passive object")
@@ -1850,8 +1882,9 @@ func check_thirst_burst() -> void:
 	check(first["hp"]==hp-78,"first native tick floors 1096 / floor(7000 / 500)")
 	game.step_numeric_actor(first,first["numeric"],499)
 	check(first["hp"]==hp-78,"native bleed does not tick again before 500 ms")
+	first["state"] = "move"
 	game.step_numeric_actor(first,first["numeric"],1)
-	check(first["hp"]==hp-156,"500 ms tick consumes integer bleed HP without reapplying physical defense")
+	check(first["hp"]==hp-156,"an ordinary moving monster takes the same 500 ms bleed tick without a second defense pass")
 	game.step_objects(259)
 	check(game.objects.has(burst) and cues("FIRE_PILLAR_HIT").size()==2,"object keeps one hit per target through age 359")
 	game.step_objects(1)

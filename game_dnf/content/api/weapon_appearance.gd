@@ -7,7 +7,8 @@ const POSE_OVERLAYS := ["res://assets_local/weapon_appearance_v3/manifest.json",
 	"res://assets_local/weapon_appearance_v6/manifest.json",
 	"res://assets_local/weapon_appearance_v7/manifest.json",
 	"res://assets_local/weapon_appearance_v8/manifest.json",
-	"res://assets_local/weapon_appearance_v9/manifest.json"]
+	"res://assets_local/weapon_appearance_v9/manifest.json",
+	"res://assets_local/weapon_appearance_v10/manifest.json"]
 const PARENT_TIMED_POSES := ["attack1", "attack2", "attack3", "hitback", "upperslashafter",
 	"frenzy1", "frenzy2", "frenzy3", "frenzy4",
 	"tripleslash1", "tripleslash2", "tripleslash3", "tripleslash4", "tripleslash5", "hardattack", "hardattackchargeafter",

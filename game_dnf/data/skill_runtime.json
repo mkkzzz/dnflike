@@ -194,6 +194,7 @@
    "standalonewavebasic": "character/swordman/animation/standalonewavebasic.ani",
    "standalonewaveready": "character/swordman/animation/standalonewaveready.ani",
    "standalonewavestrong": "character/swordman/animation/standalonewavestrong.ani",
+   "staysacrifice": "character/swordman/animation/staysacrifice.ani",
    "summon1": "character/swordman/animation/summon1.ani",
    "summon2": "character/swordman/animation/summon2.ani",
    "throw1": "character/swordman/animation/throw1.ani",
@@ -4001,11 +4002,12 @@
    ]
   },
   "sacrifice": {
+   "active_idle_ani": "staysacrifice",
    "cast_fx": "skillfx_givebloodstay_2f68bbdd",
    "effect_id": "thirst",
    "fidelity_pending": [
     "bleeding_modifiers_and_special_targets",
-    "loop_sound",
+    "loop_stop_during_nonidle_expiry",
     "original_command",
     "other_skill_bonuses"
    ],

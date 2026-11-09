@@ -351,6 +351,7 @@ BLOODBLAST_AUDIO = {
 THIRST_AUDIO = {
     'SM_SACRIFICE_CAST': 'sounds/char/swordman/sm_sacri.ogg',
     'SACRI': 'sounds/char/swordman/effect/sacri.ogg',
+    'SACRI_LOOP': 'sounds/char/swordman/effect/sacri_loop.ogg',
 }
 FRENZY_RECOVERY_EFFECTS = {
     'frenzy_create_ball': 'character/swordman/effect/animation/frenzy/createball.ani',
@@ -1521,7 +1522,8 @@ def main() -> int:
         assets = runtime['assets']
         move = runtime['moves']['sacrifice']
         burst = move['full_charge_hit']
-        specs = [('player_clips', name, assets['player_anims'][name]) for name in ('summon1', 'summon2')]
+        specs = [('player_clips', name, assets['player_anims'][name])
+                 for name in ('summon1', 'summon2', move['active_idle_ani'])]
         specs.extend(('effects', key, assets['effect_anims'][key])
                      for key in (move['cast_fx'], move['release_fx'], *burst['native_controller']['layers']))
         specs.append(('objects', burst['object'], burst['object']))
