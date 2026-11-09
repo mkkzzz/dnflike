@@ -1433,7 +1433,7 @@ func step_bloody_rave_suction(move: Dictionary, stage: Dictionary, from: float, 
 		var center := Vector2(Vector2i(player["pos"]))+Vector2(55*int(player["facing"]),-1)
 		for enemy: Dictionary in monsters:
 			var id: int = enemy["id"]
-			if not targets.has(id) or float(enemy["hp"]) <= 0.0:continue
+			if not targets.has(id) or not targets[id]["pull"] or float(enemy["hp"]) <= 0.0:continue
 			step_bloody_rave_pull(enemy,targets[id],center,move["suction_speed"],elapsed)
 	if to < float(phase["hold_start_ms"]):return
 	var now := int(to)
@@ -1457,8 +1457,10 @@ func step_bloody_rave_suction(move: Dictionary, stage: Dictionary, from: float, 
 			if enemy["numeric"].apply_source_bleed(phase["suction_bleed"],rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
 				bus.emit("combat.status",{"target":id,"id":"bleed","change":"added"})
 		bloody_rave_contact_cue(move,enemy,contact["point"])
-		if not targets.has(id) and bool(enemy["def"].get("grab_allowed",true)):
-			targets[id] = {"fraction":Vector2.ZERO}
+		# 869DDB rejects body mode 2. This contact uses a different gate from Bloodlust.
+		if not targets.has(id) and int(enemy_frame(enemy).get("items",{}).get("13",0)) != 2:
+			# CC29D5 skips the movement appendage for fixtures after registering the target.
+			targets[id] = {"fraction":Vector2.ZERO,"pull":not enemy["def"].get("rave_fixture",false)}
 
 func bloody_rave_contact_cue(move: Dictionary, enemy: Dictionary, point: Vector3) -> void:
 	# CC284E..CC28FE samples angle, then Z jitter, then X jitter at the overlap center.
@@ -1492,11 +1494,13 @@ func step_bloody_rave_pull(enemy: Dictionary, pull: Dictionary, center: Vector2,
 
 func bloody_rave_slash(template: Dictionary) -> Dictionary:
 	var targets: Dictionary = player["native_phase"]["suction_targets"]
+	var move := move_def("bloodyrave")
+	var weights: Array = move["suction_special_scores"]
 	var score := 0
 	for enemy: Dictionary in monsters:
-		if targets.has(int(enemy["id"])) and float(enemy["hp"]) > 0.0:score += 1
+		if targets.has(int(enemy["id"])) and float(enemy["hp"]) > 0.0:
+			score += bloody_rave_target_score(enemy,weights)
 	targets.clear()
-	var move := move_def("bloodyrave")
 	var first := int(template["percent"])-100
 	var last := int(move["suction_max_percent"])-100
 	var cap := int(move["suction_score_cap"])
@@ -1509,6 +1513,19 @@ func bloody_rave_slash(template: Dictionary) -> Dictionary:
 		delta = ActorNumbers.native_scalar(delta/cap)
 		hit["percent"] = float(int(ActorNumbers.native_scalar(first+delta))+100)
 	return hit
+
+func bloody_rave_target_score(enemy: Dictionary, weights: Array) -> int:
+	# CAA6AE selects the first matching static column, 9, 7, 8, 6, then 10.
+	var mob: Dictionary = enemy["def"]
+	if mob.get("rave_common_champion_drop",false):return int(weights[3])
+	var source_id := int(enemy["source_mob_id"])
+	if (source_id >= 50000 and source_id <= 51000) or (source_id >= 56000 and source_id <= 60000):
+		return int(weights[1])
+	var rank := int(enemy["source_monster_rank"])
+	if rank in [3,8]:return int(weights[2])
+	if rank in [1,2,6,7]:return int(weights[0])
+	if mob.get("rave_human_armor",false):return int(weights[4])
+	return 1
 
 func step_bloody_rave_hold(move: Dictionary, from: float, to: float) -> void:
 	var phase: Dictionary = player["native_phase"]
@@ -4116,13 +4133,15 @@ func load_room(index: int, from_side: String) -> void:
 			var kind: String = table.monster_by_mob(mob)
 			if kind == "":continue
 			var anchor: Array = m["anchor"]
-			var source: Dictionary = {}
+			var raw: Array = m["raw"]
+			var rank_tag = raw[11] if raw[9] == "[NPC]" else raw[9]
+			var rank := ["[normal]","[champion]","[super champion]","[boss]"].find(rank_tag)
+			var source := {"source_mob_id":int(m["id"]),"source_monster_rank":rank}
 			if native_maze != null and mob in NativeZealotSummons.CASTERS:
 				# The ordinary MAP row uses a level relative to the DGN basis.
-				var raw: Array = m["raw"]
 				var level := int(raw[2])+(native_maze.basis_level if int(raw[1]) != 0 else 0)
 				source["level"] = clampi(level,1,200)
-			spawn_enemy(Vector2(float(anchor[0]),float(anchor[1])),String(m["raw"][-1]) == "[boss]",kind,source)
+			spawn_enemy(Vector2(float(anchor[0]),float(anchor[1])),rank == 3,kind,source)
 	place_room_companions()
 	notice(route_room_name()+(" · 领主出现" if route_boss_room() else ""))
 
@@ -4141,6 +4160,7 @@ func spawn_enemy(point: Vector2, chief := false, kind := "goblin", reserved := {
 	var hp := float(m["hp"])*(float(base["boss_hp_scale"]) if chief else 1.0)
 	var spawn := point if reserved.has("summon_owner") else constrain_pos(point)
 	var enemy := {"id":int(reserved.get("id",_next_entity_id)),"kind":kind,"def":m,"mob":m["mob"],"pos":spawn,"z":float(reserved.get("z",0.0)),"vz":0.0,
+		"source_mob_id":int(reserved.get("source_mob_id",-1)),"source_monster_rank":int(reserved.get("source_monster_rank",3 if chief else 0)),
 		"facing":int(reserved.get("facing",-1)),"state":"idle","clock":0.0,"hp":hp,"max_hp":hp,"chief":chief,
 		"attack":float(m["attack"])*(float(base["boss_attack_scale"]) if chief else 1.0),
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,

@@ -1978,6 +1978,8 @@ func check_bloody_rave_phases() -> void:
 		session.set_skill_material_spender(func(_id: int, _amount: int):return true)
 		var front := POINT+Vector2(160*facing,20)
 		var target: Dictionary = api.spawn_dummy(front)
+		target["def"] = target["def"].duplicate()
+		target["def"]["grab_allowed"] = false
 		var behind: Dictionary = game.spawn_enemy(POINT+Vector2(-80*facing,0))
 		var above: Dictionary = game.spawn_enemy(front)
 		above["z"] = 300.0
@@ -1993,7 +1995,7 @@ func check_bloody_rave_phases() -> void:
 		dead["hp"] = 0.0
 		step(100)
 		check(target["pos"]==front-Vector2(14*facing,4) and behind["pos"]==POINT+Vector2(-80*facing,0),
-			"pull keeps integer steps and the native 80-percent two-axis speed")
+			"pull keeps native two-axis speed even if Bloodlust cannot grab the target")
 		step(400)
 		var release_point: Vector2 = target["pos"]
 		check(game.player["stage"]==1 and game.player["native_phase"]["suction_targets"]==targets,
@@ -2015,6 +2017,53 @@ func check_bloody_rave_phases() -> void:
 	step(500)
 	step(460)
 	check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==3621.0,"eight or more normal targets use the original upper damage column")
+
+func check_bloody_rave_special_targets() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"bloodyrave","level":1})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["bloodyrave"]
+	var cases := {
+		"body_immune":[{}, {}, 1231.0],
+		"champion":[{"source_monster_rank":1}, {}, 2426.0],
+		"super_champion":[{"source_monster_rank":2}, {}, 2426.0],
+		"boss":[{"source_monster_rank":3}, {}, 3023.0],
+		"armored_boss":[{"source_monster_rank":3}, {"rave_human_armor":true}, 3023.0],
+		"human_armor":[{}, {"rave_human_armor":true}, 3023.0],
+		"special_id":[{"source_mob_id":50000,"source_monster_rank":3}, {}, 2724.0],
+		"upper_special_id":[{"source_mob_id":60000}, {}, 2724.0],
+		"outside_special_ids":[{"source_mob_id":51001}, {}, 1529.0],
+		"common_champion_drop":[{"source_mob_id":50000}, {"rave_common_champion_drop":true}, 3023.0]}
+	for label: String in cases:
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.apply_skill_effect("buff","frenzy")
+		game.numeric_player.values["attack_speed"] = 1.0
+		session.set_skill_material_spender(func(_id: int, _amount: int):return true)
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(145,0))
+		var fixture: Array = cases[label]
+		target.merge(fixture[0],true)
+		target["def"] = target["def"].duplicate()
+		target["def"].merge(fixture[1],true)
+		var frame_items: Dictionary = game.enemy_frame(target)["items"]
+		var previous_body_mode = frame_items.get("13")
+		if label == "body_immune":frame_items["13"] = 2
+		press(KEY_A)
+		step(0)
+		step(790)
+		var targets: Dictionary = game.player["native_phase"]["suction_targets"]
+		check(targets.has(target["id"]) == (label != "body_immune"),"the suction status checks the target body mode: "+label)
+		if label == "body_immune":
+			check(cues(game.move_def("bloodyrave")["suction_contact_fx"]).size()==1,
+				"body mode 2 rejects the suction status after the contact cue")
+		step(500)
+		if previous_body_mode == null:frame_items.erase("13")
+		else:frame_items["13"] = previous_body_mode
+		step(460)
+		check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==fixture[2],
+			"the slash uses the first matching source score for "+label)
 
 func check_bloody_rave_fade() -> void:
 	var profile := ProfileSession.new()
@@ -2108,7 +2157,7 @@ func check_bloody_rave_contact_bleed() -> void:
 		session.set_skill_material_spender(func(_id: int, _amount: int):return true)
 		var target: Dictionary = api.spawn_dummy(POINT+Vector2(145*facing,0))
 		target["def"] = target["def"].duplicate()
-		target["def"]["grab_allowed"] = scenario != "repeat"
+		if scenario == "repeat":target["def"]["rave_fixture"] = game.table.monsters["soldier_axionexpeller"]["rave_fixture"]
 		var level := 47 if scenario == "passive" else 45
 		target["numeric"].values["level"] = level
 		target["numeric"].values["bleeding_resistance"] = 100 if scenario == "resist" else 0
@@ -2158,14 +2207,17 @@ func check_bloody_rave_contact_bleed() -> void:
 		check(applications==[{"remaining_ms":5000.0,"amount":55,"status_level":level}],
 			"the inhale uses the original bleed duration, damage base and effective status level")
 		if scenario != "repeat":continue
-		check(game.player["native_phase"]["suction_targets"].is_empty(),"a contact can bleed a target that cannot be pulled")
+		var targets: Dictionary = game.player["native_phase"]["suction_targets"]
+		check(targets.has(target["id"]) and not targets[target["id"]]["pull"],
+			"a MOB fixture can bleed and remain registered without receiving the movement appendage")
 		game.rng.reseed(seeds[2279])
 		step(200)
 		step(49)
 		check(applications.size()==1,"an overlapping target cannot bleed again before the rearm boundary")
 		check(cues(contact_key).size()==1,"continuous overlap does not replay the contact animation early")
 		step(1)
-		check(applications.size()==2,"a new contact can independently stack bleed on the 250 ms rearm")
+		check(applications.size()==2 and target["pos"]==POINT+Vector2(145*facing,0),
+			"a fixture stays in place and can independently stack bleed on the 250 ms rearm")
 		check(cues(contact_key).size()==2,"an eligible repeat contact plays a fresh animation")
 		target["numeric"].values["hp_max"] = 5000.0
 		game.step_numeric_actor(target,target["numeric"],0.0)
@@ -2176,6 +2228,9 @@ func check_bloody_rave_contact_bleed() -> void:
 		step(250)
 		check(game.player["stage"]==1 and applications.size()==release_count,
 			"the release animation no longer makes inhale contacts")
+		step(460)
+		check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==1529.0,
+			"an ordinary fixture contributes one score to the final slash")
 
 func check_grab_blast_startup() -> void:
 	var profile := ProfileSession.new()
@@ -3245,6 +3300,7 @@ func run() -> void:
 	check_bloody_rave_phases()
 	check_bloody_rave_fade()
 	check_bloody_rave_contact_bleed()
+	check_bloody_rave_special_targets()
 	check_grab_blast_startup()
 	check_grab_blast_non_weapon_speed()
 	check_grab_blast_thirst()

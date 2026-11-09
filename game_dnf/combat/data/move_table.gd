@@ -420,6 +420,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["suction_speed"] = Vector2(float(skill["static"][2]),float(skill["static"][3]))
 		move["suction_score_cap"] = int(skill["static"][4])
 		move["suction_contact_ms"] = int(skill["static"][5])
+		move["suction_special_scores"] = skill["static"].slice(6,11)
 		move["suction_max_percent"] = int(skill["level_row"][1])
 		move["suction_bleed"] = {"chance":NativeMotion.f32(float(skill["level_row"][2])*0.10000000149011612)/100.0,
 			"status_level":int(skill["level_row"][3]),"duration_ms":int(skill["level_row"][4]),
@@ -913,9 +914,17 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		or (_first_path(mob.get("damage_actions_1",[])) == "" and _first_path(mob.get("down_actions",[])) != "")
 	var grab_allowed := true
 	for field: Dictionary in record.get("raw",[]):
-		if field["tag"] == "[is grabable]" and not field["values"].is_empty():
-			# 12A8FD7 converts the source integer to a boolean. MOB defaults to 1.
-			grab_allowed = int(field["values"][0]) != 0
+		if field["values"].is_empty():continue
+		match field["tag"]:
+			"[is grabable]":
+				# 12A8FD7 converts the source integer to a boolean. MOB defaults to 1.
+				grab_allowed = int(field["values"][0]) != 0
+			"[category]":
+				m["rave_fixture"] = "[fixture]" in field["values"]
+				m["rave_human_armor"] = "[human armor]" in field["values"]
+			"[common champion drop item]":
+				# 12A4FB3 loads the MOB flag copied to the actor by 899D74.
+				m["rave_common_champion_drop"] = int(field["values"][0]) != 0
 	m["grab_allowed"] = grab_allowed and grab_motions
 	if _native_target_classes.has(path):
 		var profile := {"uses_ai_vision":_native_target_classes[path]=="ai","sight":int(mob.get("sight",200)),
