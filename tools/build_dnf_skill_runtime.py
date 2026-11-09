@@ -393,9 +393,12 @@ BUFF_EFFECTS = {
         "duration_level_row": 0,
         "stacking": "refresh",
         "max_stacks": 1,
-        # CD936A selects column 3 in tenths of a percentage point (enum 15).
-        "modifiers": [{"stat": "physical_crit", "op": "add", "level_row": 3, "scale": 0.001}],
-        "weapon_attack": 30,
+        "modifiers": [
+            # CD92B6 -> CD935C writes column 2 to equipment physical attack (enum 4).
+            {"stat": "physical_attack", "op": "add", "level_row": 2},
+            # CD936A selects column 3 in tenths of a percentage point (enum 15).
+            {"stat": "physical_crit", "op": "add", "level_row": 3, "scale": 0.001},
+        ],
         "durability_rate": 3.0,
     },
     "reckless": {

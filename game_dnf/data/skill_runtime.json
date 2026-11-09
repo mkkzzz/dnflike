@@ -529,6 +529,11 @@
    "max_stacks": 1,
    "modifiers": [
     {
+     "level_row": 2,
+     "op": "add",
+     "stat": "physical_attack"
+    },
+    {
      "level_row": 3,
      "op": "add",
      "scale": 0.001,
@@ -537,8 +542,7 @@
    ],
    "name": "破极兵刃",
    "source_skill": "overdrive",
-   "stacking": "refresh",
-   "weapon_attack": 30
+   "stacking": "refresh"
   },
   "quick_standing": {
    "duration_ms": 1,

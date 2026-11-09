@@ -882,17 +882,20 @@ func check_triple_cooldown() -> void:
 	check(game.player["action"]!="triple" and game.move_def("triple")["stages"].size()==3,
 		"the next cast uses the refreshed normal three-stage move")
 
-func check_overdrive_critical() -> void:
+func check_overdrive_attributes() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
 	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
-	for sample: Array in [[1,0.05],[2,0.055],[4,0.066]]:
+	for sample: Array in [[1,0.05,30],[2,0.055,36],[4,0.066,50],[20,0.15,252]]:
 		profile.command("numbers.skill_grant",{"id":"overdrive","level":sample[0]})
 		var spec := profile.stats()
 		spec["skill_slots"] = ["overdrive"]
 		start_room("original_27601","katana",1,spec)
 		game.player["mp"] = 5000.0
 		var base_crit: float = game.numeric_player.values["physical_crit"]
+		var base_physical: float = game.numeric_player.values["physical_attack"]
+		var base_magical: float = game.numeric_player.values["magical_attack"]
+		var base_panel: float = game.numeric_player.values["physical_panel"]
 		press(KEY_A)
 		step(0)
 		var effect: Dictionary = game.numeric_player.effects.active.get("overdrive",{})
@@ -900,12 +903,30 @@ func check_overdrive_critical() -> void:
 			"Overdrive shortcut applies the original duration at rank "+str(sample[0]))
 		check(is_equal_approx(game.numeric_player.values["physical_crit"]-base_crit,float(sample[1])),
 			"Overdrive adds the correct original critical chance at rank "+str(sample[0]))
+		check(is_equal_approx(game.numeric_player.values["physical_attack"]-base_physical,float(sample[2]))
+			and game.numeric_player.values["magical_attack"]==base_magical,
+			"Overdrive raises physical attack and preserves magical attack at rank "+str(sample[0]))
+		check(game.numeric_player.values["physical_panel"]>base_panel,
+			"Overdrive updates the derived physical panel with the weapon attack bonus")
+		if sample[0]==2:
+			step(game.action_duration("overdrive"))
+			var target: Dictionary = api.spawn_dummy(POINT+Vector2(60,0))
+			game.numeric_player.values["attack_speed"] = 1.0
+			game.numeric_player.values["hit"] = 1.0
+			press(KEY_X)
+			step(0)
+			step(210)
+			check(target["hp"]<5000.0 and is_equal_approx(game.last_damage.get("trace",{}).get("attack",0.0),base_physical+36.0),
+				"Overdrive's original rank two weapon attack reaches the normal-hit damage resolver")
 		game.step_numeric_actor(game.player,game.numeric_player,119999)
 		check(game.numeric_player.effects.active.get("overdrive",{}).get("remaining_ms")==1.0,
 			"Overdrive lasts through the last millisecond")
 		game.step_numeric_actor(game.player,game.numeric_player,1)
-		check(not game.numeric_player.effects.active.has("overdrive") and
-			is_equal_approx(game.numeric_player.values["physical_crit"],base_crit),"Overdrive expires and restores baseline critical chance")
+		check(not game.numeric_player.effects.active.has("overdrive")
+			and is_equal_approx(game.numeric_player.values["physical_crit"],base_crit)
+			and is_equal_approx(game.numeric_player.values["physical_attack"],base_physical)
+			and is_equal_approx(game.numeric_player.values["physical_panel"],base_panel),
+			"Overdrive expiry restores baseline physical attack, panel and critical chance")
 
 func check_frenzy_drain() -> void:
 	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
@@ -1413,7 +1434,7 @@ func run() -> void:
 	check_triple_slash()
 	check_enhanced_triple_slash()
 	check_triple_cooldown()
-	check_overdrive_critical()
+	check_overdrive_attributes()
 	check_frenzy_drain()
 	check_frenzy_attributes()
 	check_frenzy_cast()
