@@ -35,6 +35,7 @@ var audio
 var effects: Array = []
 var particle_bursts = ParticleBursts.new()
 var _particle_banks: Dictionary = {}
+var _particle_emitters: Array[Dictionary] = []
 var revive_effects: Array = []
 var numbers: Array = []
 var prop_views: Array = []
@@ -178,6 +179,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	for companion: Dictionary in companions:companion_by_id[companion["id"]] = companion
 	_player_pos = Vector2(p["pos"])
 	_player_z = float(p["z"])
+	_advance_native_emitters(sim_ms)
 	for fx in effects:
 		if is_instance_valid(fx) and not fx.is_queued_for_deletion():
 			var source: Dictionary = p if fx.follow == 0 else companion_by_id.get(fx.follow,{})
@@ -362,6 +364,7 @@ func _on_room_loaded(event: Dictionary) -> void:
 	for fx in effects:
 		if is_instance_valid(fx):fx.queue_free()
 	effects.clear()
+	_particle_emitters.clear()
 	for v in object_views.values():
 		if is_instance_valid(v):v.queue_free()
 	object_views.clear()
@@ -420,22 +423,48 @@ func _spawn_native_particle(event: Dictionary) -> void:
 		push_error("Missing original particle template: "+path)
 		return
 	var point: Vector2 = event["point"]
-	var result: Dictionary = particle_bursts.emit_once(template.decoded,
-		Vector3i(int(point.x),int(point.y),int(event.get("height",0))),bool(event.get("mirrored",false)))
+	var origin := Vector3i(int(point.x),int(point.y),int(event.get("height",0)))
+	var mirrored := bool(event.get("mirrored",false))
+	var scale_value := float(event.get("scale",1.0))
+	var definition: Dictionary = template.decoded
+	if float(definition.get("creation_frequency",0)) <= 0.0:
+		_append_native_particles(path,scale_value,particle_bursts.emit_once(definition,origin,mirrored))
+		return
+	var emitter: RefCounted = particle_bursts.create_emitter(definition,origin,mirrored)
+	var result: Dictionary = particle_bursts.emit_at(emitter,0)
+	if _append_native_particles(path,scale_value,result) and not result.finished:
+		_particle_emitters.append({"emitter":emitter,"path":path,"scale":scale_value,"elapsed_ms":0.0,"birth_pending":true})
+
+func _advance_native_emitters(sim_ms: float) -> void:
+	if _particle_emitters.is_empty():return
+	var remaining: Array[Dictionary] = []
+	for entry in _particle_emitters:
+		if entry.birth_pending:
+			entry.birth_pending = false
+		elif sim_ms > 0.0:
+			entry.elapsed_ms += sim_ms
+			var result: Dictionary = particle_bursts.emit_at(entry.emitter,int(entry.elapsed_ms))
+			if not _append_native_particles(entry.path,entry.scale,result) or result.finished:
+				continue
+		remaining.append(entry)
+	_particle_emitters = remaining
+
+func _append_native_particles(path: String, scale_value: float, result: Dictionary) -> bool:
 	if not result.ok:
 		push_error(str(result.problems))
-		return
+		return false
 	for emission: Dictionary in result.particles:
 		var particle = NativeParticleView.new()
 		world.add_child(particle)
-		particle.base_scale = float(event.get("scale",1.0))
+		particle.base_scale = scale_value
 		particle.set_meta("source_ptl",path)
 		particle.set_meta("particle_birth_pending",true)
-		if not particle.setup_particle(emission,_particle_banks.get(emission.entry.path,{})):
+		if not particle.setup_particle(emission,_particle_banks.get(String(emission.entry.path).to_lower(),{})):
 			push_error(str(particle.errors))
 			particle.queue_free()
 			continue
 		effects.append(particle)
+	return true
 
 func _spawn_fx(event: Dictionary) -> void:
 	var key := String(event["key"])

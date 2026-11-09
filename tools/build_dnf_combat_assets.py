@@ -35,7 +35,8 @@ from dnf_asset_store import ROOT
 from dnf_pvf import open_library, resolve
 from dnf_locomotion import build as build_locomotion
 from build_dnf_particles import parse as parse_particle
-from compile_dnf_content import (NATIVE_OUTERWALL_BANKS, NATIVE_OUTERWALL_BREAKABLES,
+from compile_dnf_content import (NATIVE_JAR_TRAP_OBJECTS, NATIVE_JAR_TRAP_SHA, NATIVE_JAR_TRAP_WARNING,
+                                 NATIVE_OUTERWALL_BANKS, NATIVE_OUTERWALL_BREAKABLES,
                                  NATIVE_ZEALOT_MONSTERS, OUTERWALL_BREAKABLE_ROOT)
 
 OUT = ROOT / 'game_dnf/assets_local/combat'
@@ -49,7 +50,7 @@ NATIVE_PARTICLES = [
 ]
 
 
-def native_particle_definitions(src):
+def native_particle_definitions(src, extra_pins=None):
     """Small runtime subset, decoded from the source; retain duplicate choices."""
     particles, effects = {}, {}
     pinned = {}
@@ -67,6 +68,7 @@ def native_particle_definitions(src):
                 raise ValueError('Native breakable source differs from compiled pack: ' + source)
             src.sources[source] = digest
         pinned[path] = hashes
+    pinned.update(extra_pins or {})
     for path in [*NATIVE_PARTICLES, *pinned]:
         doc = src.lib.script(path)
         if not doc:
@@ -83,6 +85,75 @@ def native_particle_definitions(src):
         for animation in entry['animations']:
             effects['native_'+PurePosixPath(animation).stem] = animation
     return particles, effects
+
+
+OUTERWALL_TRAP_SOUNDS = {
+    'FIRE_EXPLOSION_CREATE': ('sounds/effect/magic/fire_explosion.ogg',
+                              'b36e216267d64695ddc0256e953a52c1b469c4ce7109612872b79bb163e6613b'),
+    'CLOUD_KILL_LOOP': ('sounds/effect/magic/cloudkill.ogg',
+                        '3db734272e26a4b368a030e3bd3377da0d8e8502763ef3ed8991238c75a8cebf'),
+    'TINGKERBELL_FLOAT_LOOP': ('sounds/effect/tingk_float.ogg',
+                              'e2b4d6721e73baf137ab930a43eb94d3216225d2b494c100d472512b602be23f'),
+    'TINGKERBELL_ALL_ABSORB': ('sounds/effect/tingk_aab.ogg',
+                               'ec83d74dde031fade3e99682977bbbdc96e56e9b6d11a00730d8da8828b38593'),
+    'TINGKERBELL_HP_ABSORB': ('sounds/effect/tingk_hab.ogg',
+                              '5f9e6b0ca0f3bcb5285f77986aaaf5a9153cd5c6062a086d166395fe6ba81b6c'),
+}
+
+
+def native_jar_trap_assets(src):
+    effects, pinned, objects, hashes = {}, {}, {}, {}
+
+    def bank_for(path):
+        key = 'native_jar_' + PurePosixPath(path).stem
+        effects[key] = path
+        return key
+
+    warning = src.pack_records.get(NATIVE_JAR_TRAP_WARNING, {}).get('native_trap_warning')
+    if not warning:
+        raise ValueError('Compile the original jar trap warning before baking')
+    hashes[warning['rate_source']] = warning['rate_sha256']
+    hashes[NATIVE_JAR_TRAP_WARNING] = src.pack_records[NATIVE_JAR_TRAP_WARNING]['source']['sha256']
+    warning = dict(warning, ani=NATIVE_JAR_TRAP_WARNING, bank=bank_for(NATIVE_JAR_TRAP_WARNING))
+    for path, (source_ids, kind) in NATIVE_JAR_TRAP_OBJECTS.items():
+        spec = src.pack_records.get(path, {}).get('native_trap', {})
+        if spec.get('source_ids') != list(source_ids) or spec.get('kind') != kind:
+            raise ValueError('Compile the original jar trap object before baking: ' + path)
+        hashes.update(spec['source_hashes'])
+        for particle in spec['particles']:
+            pinned[particle] = spec['source_hashes']
+        row = {key: spec[key] for key in ('kind', 'motion_ani', 'attack', 'attack_window_ms',
+                                         'floating_height', 'particles', 'spawn_sound', 'hit_sound',
+                                         'consume_sound')}
+        row['source_path'] = path
+        row['motion_bank'] = bank_for(spec['motion_ani']) if spec['extra_animations'] else ''
+        row['attack_timeline'] = src.pack_records[spec['motion_ani']]['decoded']['timeline']
+        row['extras'] = [bank_for(animation) for animation in spec['extra_animations']]
+        row['destroy'] = [bank_for(animation) for animation in spec['destroy_animations']]
+        for source_id in source_ids:
+            objects[str(source_id)] = row
+    if hashes != NATIVE_JAR_TRAP_SHA:
+        raise ValueError('Compiled jar trap dependencies do not match the pinned original set')
+    for path, digest in hashes.items():
+        raw = src.lib.raw(path)
+        if not raw or raw[1] != digest:
+            raise ValueError('Original jar trap asset differs: ' + path)
+    src.sources.update(hashes)
+    return {'warning': warning, 'objects': objects}, effects, pinned
+
+
+def copy_native_jar_trap_audio(src, audio, unresolved):
+    for key, (path, digest) in OUTERWALL_TRAP_SOUNDS.items():
+        found = src.audio(path)
+        if not found or found[1] != digest or sha(found[0].read_bytes()) != digest:
+            raise ValueError('Original jar trap audio differs: ' + path)
+        clips = {}
+        copy_audio(src, [path], clips, key, unresolved)
+        if (key in audio and audio[key] != clips[key]
+                or sha((ACTIVE_OUT/'audio'/PurePosixPath(path).name).read_bytes()) != digest):
+            raise ValueError('Existing jar trap audio differs: ' + key)
+        audio.update(clips)
+
 
 MONSTERS = {
     # key: (mob path, clip dir, extra clips)
@@ -760,8 +831,10 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     objects.update(runtime_assets.get('objects', {}))
     effects = dict(EFFECTS)
     effects.update(runtime_assets.get('effect_anims', {}))
-    manifest['particles'], particle_effects = native_particle_definitions(src)
+    manifest['native_jar_traps'], trap_effects, trap_pins = native_jar_trap_assets(src)
+    manifest['particles'], particle_effects = native_particle_definitions(src, trap_pins)
     effects.update(particle_effects)
+    effects.update(trap_effects)
     for key, spec in monster_specifications().items():
         manifest['monsters'][key] = monster_bank(src, key, spec['mob'], spec.get('clip_dir', ''), unresolved,
                                                   spec.get('extra', ()), spec.get('motions'))
@@ -848,6 +921,7 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     manifest['monster_hp']['source'] = MONSTER_HP_IMG
     for key, files in CUE_SOUNDS.items():
         copy_audio(src, files, manifest['audio'], key, unresolved)
+    copy_native_jar_trap_audio(src, manifest['audio'], unresolved)
     for key in SOUND_KEYS:
         copy_audio(src, sound_files(src, key), manifest['audio'], key, unresolved)
     for weapon, row in weapon_sounds(src).items():
@@ -887,7 +961,12 @@ def extend_native_particles(library: Path | None, output: Path = OUT, *, pack_pa
         shutil.copytree(output, stage, dirs_exist_ok=True)
         ACTIVE_OUT = stage
         manifest = json.loads((output/'manifest.json').read_text(encoding='utf8'))
-        definitions, effects = native_particle_definitions(src)
+        traps, trap_effects, trap_pins = native_jar_trap_assets(src)
+        if 'native_jar_traps' in manifest and manifest['native_jar_traps'] != traps:
+            raise ValueError('Existing original jar trap contract differs')
+        manifest['native_jar_traps'] = traps
+        definitions, effects = native_particle_definitions(src, trap_pins)
+        effects.update(trap_effects)
         unresolved = []
         for key, path in effects.items():
             bank = effect_bank(src, key, path, unresolved)
@@ -906,6 +985,7 @@ def extend_native_particles(library: Path | None, output: Path = OUT, *, pack_pa
             if key in manifest['audio'] and manifest['audio'][key] != audio.get(key):
                 raise ValueError('Existing particle audio binding differs: ' + key)
         manifest['audio'].update(audio)
+        copy_native_jar_trap_audio(src, manifest['audio'], unresolved)
         if unresolved:
             raise ValueError('Incomplete particle assets: '+str(unresolved))
         for path, digest in src.sources.items():

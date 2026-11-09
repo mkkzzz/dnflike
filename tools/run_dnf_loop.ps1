@@ -147,6 +147,8 @@ if ($Test) {
         $mazeSessionExit=$LASTEXITCODE
         $mazeMinimap=& $GodotPath --headless --path $gamePath --quit-after 1200 --script res://tests/combat/test_native_maze_minimap.gd 2>&1
         $mazeMinimapExit=$LASTEXITCODE
+        $particles=& $GodotPath --headless --path $gamePath --quit-after 1200 --script res://tests/combat/test_continuous_particles.gd 2>&1
+        $particlesExit=$LASTEXITCODE
     } finally {$ErrorActionPreference=$popePreference}
     $popeCombat | Write-Output
     if ($popeExit -ne 0 -or ($popeCombat -match 'SCRIPT ERROR|ERROR:') -or -not ($popeCombat -match '\[NATIVE_POPE\] COMPLETE checks=\d+ failures=0')) {throw "Native Pope contact regression failed."}
@@ -158,6 +160,8 @@ if ($Test) {
     if ($mazeSessionExit -ne 0 -or ($mazeSession -match 'SCRIPT ERROR|ERROR:') -or -not ($mazeSession -match '\[NATIVE_MAZE_SESSION\] COMPLETE checks=\d+ failures=0')) {throw "Native maze battle and settlement regression failed."}
     $mazeMinimap | Write-Output
     if ($mazeMinimapExit -ne 0 -or ($mazeMinimap -match 'SCRIPT ERROR|ERROR:') -or -not ($mazeMinimap -match '\[NATIVE_MAZE_MINIMAP\] COMPLETE checks=\d+ failures=0')) {throw "Native maze minimap regression failed."}
+    $particles | Write-Output
+    if ($particlesExit -ne 0 -or ($particles -match 'SCRIPT ERROR|ERROR:') -or -not ($particles -match '\[CONTINUOUS_PARTICLES\] COMPLETE checks=\d+ failures=0')) {throw "Original continuous particle regression failed."}
     $skillEffectPreference=$ErrorActionPreference
     try {
         $ErrorActionPreference="Continue"

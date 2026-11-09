@@ -20,6 +20,7 @@ const SkillSlots = preload("res://stats/api/skill_slots.gd")
 const NativeMaze = preload("res://combat/data/native_maze.gd")
 const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
 const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
+const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const DetRng = preload("res://core/det_rng.gd")
 
@@ -61,6 +62,7 @@ func start_room(spec: Dictionary) -> bool:
 		maze = NativeMaze.new()
 		if not maze.start(probe.data,DetRng.new(hash(String(spec.get("run_id","standalone"))))):return false
 		if not NativeBoxLoot.ready(probe.data["dungeon"]):return false
+		if not NativeJarTraps.ready(game.combat_assets):return false
 		if not _validate_native_maze(probe,maze) or not game.view.audio.has_dungeon_music(String(spec["dungeon"])):
 			return false
 		NativePotMonsters.prepare_catalog(probe.data["dungeon"])

@@ -3,7 +3,11 @@ extends Node
 ## frame events) resolved by tools/build_dnf_combat_assets.py; R_ keys pick a random variant.
 ## Throttle, voice pool and gain budget are unchanged from the trial battle scene.
 
-var muted := false
+var muted := false:
+	set(value):
+		muted = value
+		for voice: AudioStreamPlayer in _loop_voices.values():
+			voice.stream_paused = muted
 var sound_streams: Dictionary = {}
 var variants: Dictionary = {}
 var voice_pool: Array = []
@@ -12,6 +16,7 @@ var music_bank: Dictionary = {}
 var music_paths: Dictionary = {}
 var dungeon_music: Dictionary = {}
 var _last: Dictionary = {}
+var _loop_voices: Dictionary = {}
 var _cursor := 0
 const SAME_KEY_THROTTLE_MS := 50
 
@@ -85,35 +90,52 @@ func _exit_tree() -> void:
 	for voice: AudioStreamPlayer in voice_pool:
 		voice.stop()
 		voice.stream = null
+	_loop_voices.clear()
 	sound_streams.clear()
 	variants.clear()
 	music_bank.clear()
 	music_paths.clear()
 
 func on_cue(event: Dictionary) -> void:
-	if String(event.get("kind","")) == "sound":play(String(event["key"]))
+	if String(event.get("kind","")) != "sound":return
+	var loop_id := int(event.get("loop_id",-1))
+	if event.get("stop",false):
+		var voice: AudioStreamPlayer = _loop_voices.get(loop_id)
+		if voice != null:
+			voice.stop()
+			voice.stream = null
+			voice.stream_paused = false
+			_loop_voices.erase(loop_id)
+		return
+	play(String(event["key"]),loop_id)
 
-func play(key: String) -> void:
-	if muted:return
+func play(key: String, loop_id := -1) -> void:
+	if (muted and loop_id < 0) or _loop_voices.has(loop_id):return
 	var stream: AudioStream = null
 	if variants.has(key) and not variants[key].is_empty():stream = variants[key][randi()%variants[key].size()]
 	elif sound_streams.has(key):stream = sound_streams[key]
 	if stream == null:return
 	var now := Time.get_ticks_msec()
-	if now-int(_last.get(key,-1000))<SAME_KEY_THROTTLE_MS:return
-	_last[key] = now
+	if loop_id < 0:
+		if now-int(_last.get(key,-1000))<SAME_KEY_THROTTLE_MS:return
+		_last[key] = now
 	var voice: AudioStreamPlayer = null
 	for i in voice_pool.size():
 		var candidate := voice_pool[(_cursor+i)%voice_pool.size()] as AudioStreamPlayer
-		if not candidate.playing:
+		if not candidate.playing and not candidate.stream_paused:
 			voice = candidate
 			_cursor = (_cursor+i+1)%voice_pool.size()
 			break
 	if voice == null:
 		# Never cut a longer line just because the voice pool is momentarily busy.
 		return
+	if loop_id >= 0 and stream is AudioStreamOggVorbis:
+		stream = stream.duplicate()
+		(stream as AudioStreamOggVorbis).loop = true
+		_loop_voices[loop_id] = voice
 	voice.stream = stream
 	# Conservative peak budget, even before source PCM normalization:
 	# 8*10^(-21/20)+10^(-28/20)=0.753 < 0.86 (assuming peak <= 1).
 	voice.volume_db = -23 if key.begins_with("goblin") else -21
 	voice.play()
+	if loop_id >= 0:voice.stream_paused = muted

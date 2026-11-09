@@ -13,6 +13,7 @@ const MapLoader = preload("res://scripts/native_map_loader.gd")
 const NativeMaze = preload("res://combat/data/native_maze.gd")
 const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
 const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
+const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
@@ -55,6 +56,7 @@ var companions: Array[Dictionary] = []
 var _companion_programs: Dictionary = {}
 var objects: Array = []
 var props: Array = []
+var native_jar_traps := NativeJarTraps.new()
 var room_index := 0
 var room_cleared := false
 var room_snapshots: Dictionary = {}
@@ -334,6 +336,7 @@ func begin_room(spec: Dictionary, maze: NativeMaze = null) -> void:
 	last_defeat_id = 0
 	paused = false
 	elapsed_ms = 0
+	native_jar_traps.clock_ms = 0.0
 	damage_taken = 0
 	hit_count = 0
 	combo_count = 0
@@ -667,6 +670,7 @@ func end_action() -> void:
 
 func step_game(ms: float) -> void:
 	var dt := ms/1000
+	if native_maze != null:native_jar_traps.clock_ms += ms
 	preload("res://combat/item_restoration.gd").step(self,ms)
 	if numeric_player != null:
 		step_numeric_actor(player,numeric_player,ms)
@@ -720,6 +724,7 @@ func step_game(ms: float) -> void:
 		_aura_pulse_ms = 1000.0
 		pulse_passive_auras()
 	step_hazards(ms)
+	if native_maze != null:native_jar_traps.step(self)
 	for prop: Dictionary in props:
 		if prop.get("broken",false):prop["broken_ms"] = float(prop.get("broken_ms",0))+ms
 	var all_dead := true
@@ -744,6 +749,7 @@ func step_game(ms: float) -> void:
 					var next := native_maze.move(side)
 					if next.is_empty():continue
 					room_snapshots[room_index]["props"] = props.duplicate(true)
+					room_snapshots[room_index]["jar_traps"] = native_jar_traps.snapshot()
 					native_room = next
 					load_room(int(next["room_index"]),side)
 				else:
@@ -1196,7 +1202,7 @@ func apply_native_prop_hits(world: Array, hit: Dictionary, power: float, seen: D
 	if int(atk.get("weapon_damage_apply",0)) == 0 and float(atk.get("damage",0)) <= 0.0 \
 			and float(atk.get("absolute_damage",0)) <= 0.0:return
 	for prop: Dictionary in props:
-		if not prop.has("native_breakable") or prop["broken"]:continue
+		if not prop.has("native_breakable") or prop["broken"] or prop.has("jar_warning"):continue
 		var key := prefix+str(prop["node"])
 		if seen.has(key) or Kernel.HitJudge.contact(world,prop["damage_boxes"]).is_empty():continue
 		seen[key] = true
@@ -1221,6 +1227,7 @@ func apply_native_prop_hits(world: Array, hit: Dictionary, power: float, seen: D
 		bus.emit("combat.damage",{"target":prop["id"],"amount":amount,"critical":resolved["critical"],
 			"category":resolved["category"],"victim":"prop","reaction":"none","point":Vector3(pos.x,pos.y,height)})
 		if not destroyed:continue
+		if native_jar_traps.break_pot(self,prop):continue
 		var items: Array = prop.get("box_items",[])
 		if not items.is_empty():
 			bus.emit("combat.prop_loot_released",{"run_id":run_id,"room_id":room_id,
@@ -1231,11 +1238,16 @@ func apply_native_prop_hits(world: Array, hit: Dictionary, power: float, seen: D
 			entry["facing"] = int(prop["facing"])
 			spawn_enemy(pos,false,table.monster_by_mob(child["mob"]),entry)
 			if not entry["launch"].is_empty() and child["mob"] == NativePotMonsters.MOBS[250]:play_sound("ZGM_SPRING")
-		var offset: Array = source["particle_offset"]
-		bus.emit("combat.cue",{"kind":"native_particle","path":source["destroy_particle"],
-			"point":pos+Vector2(float(offset[0]),float(offset[1])),"height":height+float(offset[2])})
-		if not String(source["destroy_sound"]).is_empty():play_sound(String(source["destroy_sound"]))
-		bus.emit("combat.prop_broken",{"node":prop["node"]})
+		complete_native_prop_break(prop)
+
+func complete_native_prop_break(prop: Dictionary) -> void:
+	prop["broken"] = true
+	var source: Dictionary = prop["native_breakable"]
+	var offset: Array = source["particle_offset"]
+	bus.emit("combat.cue",{"kind":"native_particle","path":source["destroy_particle"],
+		"point":Vector2(prop["pos"])+Vector2(float(offset[0]),float(offset[1])),"height":float(prop["z"])+float(offset[2])})
+	if not String(source["destroy_sound"]).is_empty():play_sound(String(source["destroy_sound"]))
+	bus.emit("combat.prop_broken",{"node":prop["node"]})
 
 ## One landed hit, attacker -> target. Damage, reaction, local hitstop, events and cues.
 func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: Vector3, facing: int, power: float) -> void:
@@ -2362,9 +2374,12 @@ func build_props(room: Dictionary) -> Array:
 		if native_maze != null:
 			# Source routes only enable the exact payloads supported by the adapter.
 			if NativeBreakable.supports(item):
+				var trap := NativeJarTraps.prepare(item,hash("%s:%s:trap:%d"%[run_id,room_id,object_index]))
+				if not trap.is_empty() and int(trap["id"]) not in NativeJarTraps.ENABLED:continue
 				var source: Dictionary = content.record(path)["native_breakable"]
 				var timeline: Array = table.timeline(source["motion_ani"])
 				var prop := NativeBreakable.create(item,source,timeline[0]["damage_boxes"],object_index)
+				if not trap.is_empty():prop["jar_trap"] = trap
 				var draws := NativeBoxLoot.draw_count(item)
 				if draws > 0:
 					prop["box_items"] = NativeBoxLoot.prepare(draws,hash("%s:%s:box:%d"%[run_id,room_id,object_index]))
@@ -2590,6 +2605,7 @@ func move_player(delta: Vector2) -> void:
 func load_room(index: int, from_side: String) -> void:
 	clear_monsters()
 	objects.clear()
+	native_jar_traps.clear(self)
 	update_khazan_aura()
 	end_action_fx()
 	room_index = index
@@ -2622,6 +2638,7 @@ func load_room(index: int, from_side: String) -> void:
 	# props 由地图静态美术承载（native_map_loader 已画），这里不再交给视图二次渲染；
 	# 破坏时用 combat.prop_broken 按 prop_node 下标隐藏对应节点。
 	bus.emit("combat.room_loaded",{"room_index":index,"room_id":room_id,"placement":String(placement["id"]),"props":[]})
+	if native_maze != null:native_jar_traps.restore_room(self,saved.get("jar_traps",[]))
 	# Dungeon entry: centre of the map's own [dungeon start area]; doors spawn beside the paired gate.
 	var spawn := Vector2(room_width-160,250)
 	var area = room_map.get("start_area")
@@ -3030,6 +3047,7 @@ func view_snapshot() -> Dictionary:
 			objs.append_array(_rasa_child_layers(item,o,controller))
 		else:
 			objs.append(item)
+	if native_maze != null:objs.append_array(native_jar_traps.view_objects(self))
 	var route: Array = native_maze.route_view() if native_maze != null else []
 	if native_maze == null:
 		for i in rules["rooms"].size():

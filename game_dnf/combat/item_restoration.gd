@@ -1,5 +1,5 @@
 extends RefCounted
-## Paid item requests only. Recovery follows simulation time; no inventory or save access.
+## Shared HP/MP restoration follows simulation time; no inventory or save access.
 static func valid(effect: Dictionary) -> bool:
 	if effect.get("kind")!="restore":return false
 	for key: String in ["hp","mp","duration_ms"]:

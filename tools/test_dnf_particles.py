@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 from build_dnf_particles import parse
-from compile_dnf_content import decode_fields
+from compile_dnf_content import NATIVE_JAR_TRAP_SHA, decode_fields
 from dnf_particle_fields import decode_particle_fields
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,6 +45,48 @@ class ParticleFields(unittest.TestCase):
                 texture = ROOT/'game_dnf'/bank['atlas']['texture'].removeprefix('res://')
                 self.assertTrue(texture.is_file())
         self.assertEqual(len(paths),9)
+
+    def test_jar_traps_keep_original_active_and_visual_windows_separate(self):
+        manifest = json.loads((ROOT/'game_dnf/assets_local/combat/manifest.json').read_text(encoding='utf8'))
+        traps = manifest['native_jar_traps']
+        warning = traps['warning']
+        self.assertEqual(warning['rate_percent'], [100, 130, 160, 190])
+        self.assertEqual(warning['duration_ms'], [1991, 1531, 1244, 1047])
+        bank = manifest['effects'][warning['bank']]
+        self.assertEqual(bank['source'], warning['ani'])
+        self.assertEqual([frame['delay_ms'] for frame in bank['frames']], [181] * 11)
+        self.assertTrue(all(frame['items']['7'] == warning['scale'] for frame in bank['frames']))
+
+        records = self.pack['records']
+        objects = traps['objects']
+        self.assertEqual(set(objects), {'40002', '48003', '2200', '2210', '2410'})
+        self.assertEqual(objects['2200'], objects['2210'])
+        self.assertNotEqual(objects['2200']['motion_bank'], objects['2410']['motion_bank'])
+        fixtures = [('40002', 400, [-65, -40, -50, 130, 80, 100]),
+                    ('48003', 750, [-90, -25, 0, 187, 52, 70]),
+                    ('2200', None, [-22, -16, -5, 39, 32, 36]),
+                    ('2410', None, [-22, -16, -5, 39, 32, 36])]
+        effect_sources = {value['source'] for value in manifest['effects'].values()}
+        for source_id, duration, box in fixtures:
+            entry = objects[source_id]
+            with self.subTest(source_id=source_id):
+                self.assertEqual(entry['attack_window_ms'], duration)
+                self.assertIn(int(source_id), records[entry['source_path']]['native_trap']['source_ids'])
+                self.assertEqual(entry['attack_timeline'], records[entry['motion_ani']]['decoded']['timeline'])
+                self.assertTrue(all(frame['attack_boxes'] == [box] for frame in entry['attack_timeline']))
+                self.assertEqual(len(entry['extras']), 2 if duration is None else 0)
+                self.assertEqual(len(entry['destroy']), 2 if duration is None else 0)
+                for path in entry['particles']:
+                    self.assertEqual(manifest['particles'][path]['decoded'], records[path]['decoded'])
+                    for item in manifest['particles'][path]['decoded']['object_entries']:
+                        child = item['path']
+                        self.assertIn(child, effect_sources)
+                        self.assertFalse(any(frame['attack_boxes'] for frame in records[child]['decoded']['timeline']))
+        self.assertEqual([manifest['particles'][p]['decoded']['life_time'] for p in objects['40002']['particles']],
+                         [500, 700, 700, 1000])
+        gas = manifest['particles'][objects['48003']['particles'][0]]['decoded']
+        self.assertEqual((gas['maximum_create_time'], gas['life_time']), (2000, 4000))
+        self.assertEqual({p: manifest['sources'][p] for p in NATIVE_JAR_TRAP_SHA}, NATIVE_JAR_TRAP_SHA)
 
     def test_original_ice_axes_are_independent_and_match_compiled_content(self):
         fixtures = [

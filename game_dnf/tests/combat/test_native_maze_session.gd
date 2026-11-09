@@ -5,6 +5,7 @@ const FlowSession = preload("res://flow/session.gd")
 const DetRng = preload("res://core/det_rng.gd")
 const NativeMaze = preload("res://combat/data/native_maze.gd")
 const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
+const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const Loot = preload("res://loot/service.gd")
 const Inventory = preload("res://items/inventory.gd")
@@ -53,6 +54,7 @@ func run() -> void:
 		check_lower_run()
 		check_breakable_run()
 		check_pot_run()
+		check_jar_trap_run()
 		check(session.start_room({"run_id":"lorien-reset","dungeon":"lorien","audio":{"muted":true}})
 			and game.native_maze == null and game.room_placement(0)["map"].begins_with("map/lorien/")
 			and not game.view.audio.music.playing,
@@ -79,10 +81,10 @@ func seed_for(start_slot: int, boss_slot: int, map_slot: int) -> int:
 		if entry == start_slot and boss == boss_slot and map == map_slot:return number
 	return -1
 
-func start_spec(start_slot: int, boss_slot: int, map_slot: int) -> Dictionary:
+func start_spec(start_slot: int, boss_slot: int, map_slot: int, number := -1) -> Dictionary:
 	flow = FlowSession.new()
 	flow.dungeons["outerwall"] = ROUTE.duplicate()
-	flow.profile["next_run"] = seed_for(start_slot,boss_slot,map_slot)
+	flow.profile["next_run"] = number if number > 0 else seed_for(start_slot,boss_slot,map_slot)
 	check(flow.profile["next_run"] > 0 and flow.command("flow.depart",{"dungeon":"outerwall"})["ok"],
 		"flow builds a run using the internal source route contract")
 	return {"run_id":flow.run["id"],"dungeon":"outerwall","route":flow.active_dungeon_route(),
@@ -116,6 +118,13 @@ func check_preflight(spec: Dictionary) -> void:
 	check(not session.start_room(spec) and session.read_runtime_view() == before,
 		"a missing native prop particle rejects admission without changing the current battle")
 	particles[particle] = template
+	var sounds: Dictionary = game.combat_assets["audio"]
+	var sound := "TINGKERBELL_FLOAT_LOOP"
+	var voices: Array = sounds[sound]
+	sounds.erase(sound)
+	check(not session.start_room(spec) and session.read_runtime_view() == before,
+		"a missing fairy loop rejects admission without changing the current battle")
+	sounds[sound] = voices
 
 func check_upper_run() -> void:
 	var spec := start_spec(0,1,0)
@@ -360,6 +369,152 @@ func check_prop_burst(prop: Dictionary, count: int, burst_count := 1) -> void:
 		and game.bus.events_of("combat.prop_broken").size() == burst_count,"depletion advances one stage and hides the exact original sprite")
 	check(particles.size() == count*burst_count and particles.all(func(node):return node.errors.is_empty()),
 		"the battle view instantiates every original PTL fragment")
+
+func check_jar_trap_run() -> void:
+	var export: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(EXPORT))
+	var map_path := "map/outerwall/n3008.map"
+	var node := 10
+	var item: Dictionary = export["dungeon"]["rooms"][map_path]["objects"][node]
+	var rows := NativeJarTraps.rows(item)
+	var fire_rolls := PotRolls.new([0,3])
+	var fairy_rolls := PotRolls.new([1,1,2])
+	check(NativeJarTraps.select(rows,fire_rolls) == {"id":40002,"custom":320} and fire_rolls.queue == [3]
+		and NativeJarTraps.select(rows,fairy_rolls) == {"id":2200,"custom":1} and fairy_rolls.queue.is_empty()
+		and NativeJarTraps.select(rows,PotRolls.new([1,1,3])).is_empty(),
+		"original jar rows compare strictly and stop rolling at the first match")
+	for child in [40002,2200]:
+		var number := 0
+		for candidate in range(1,500):
+			var run_id := "run_%d"%candidate
+			var maze := NativeMaze.new()
+			if not maze.start(export,DetRng.new(hash(run_id))) or maze.current_room()["cell"] != Vector2i.ZERO:continue
+			maze.clear_room(Vector2i.ZERO,0)
+			var next := maze.move("right")
+			if next.get("placement",{}).get("map","") != map_path:continue
+			var room := "outerwall:%d"%next["room_index"]
+			if NativeJarTraps.prepare(item,hash("%s:%s:trap:%d"%[run_id,room,node])).get("id") == child:
+				number = candidate
+				break
+		check(number > 0,"a normal run reaches the source jar with child %d"%child)
+		if number == 0:return
+		events.clear()
+		var spec := start_spec(0,0,0,number)
+		var started := session.start_room(spec)
+		check(started,"trap fixture starts through the public session")
+		if not started:return
+		clear_all()
+		if not hop("right"):return
+		clear_all()
+		present_room()
+		var traps: Array = game.props.filter(func(prop):return prop["node"] == node)
+		check(traps.size() == 1 and traps[0].get("jar_trap",{}).get("id") == child,
+			"the live MAP builds the prepared source jar")
+		if traps.size() != 1:return
+		var pot: Dictionary = traps[0]
+		var atk: Dictionary = game.move_def("normalwave")["hits"][0]["atk"]
+		game.bus.clear_history()
+		prop_melee(pot["damage_boxes"][1].get_center(),atk,1000)
+		if child == 40002:check_fire_jar(pot)
+		else:check_green_fairy(pot)
+
+func check_fire_jar(pot: Dictionary) -> void:
+	var warning: Dictionary = pot.get("jar_warning",{})
+	check(not warning.is_empty() and warning.get("duration") == 1991.0 and not pot["broken"]
+		and prop_visible(pot["node"]) and game.bus.events_of("combat.jar_trap_spawned").is_empty(),
+		"normal fire trap arms a 1991 ms warning with the original pot still visible")
+	if warning.is_empty():return
+	var objects: Array = game.native_jar_traps.view_objects(game)
+	check(objects.size() == 1 and objects[0]["z"] == float(pot["z"])+129.0
+		and objects[0]["effect"] == "native_jar_trapexclamation","warning follows the original jar-height anchor")
+	if not hop("left"):return
+	game.step_game(1990.0)
+	if not hop("right"):return
+	present_room()
+	var node: int = pot["node"]
+	var current: Array = game.props.filter(func(prop):return prop["node"] == node)
+	check(current.size() == 1 and current[0].get("jar_warning") == warning and prop_visible(node)
+		and game.bus.events_of("combat.jar_trap_spawned").is_empty(),
+		"returning one millisecond before the original deadline retains the warning")
+	if current.size() != 1:return
+	game.player["pos"] = pot["pos"]+Vector2(-200,0)
+	game.player["invuln_ms"] = 0.0
+	game.rng = PotRolls.new([])
+	var hp: float = game.player["hp"]
+	game.step_game(1.0)
+	var spawned: Array = game.bus.events_of("combat.jar_trap_spawned")
+	var paths: Array = game.combat_assets["native_jar_traps"]["objects"]["40002"]["particles"]
+	var bursts: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("path") in paths)
+	check(spawned.size() == 1 and spawned[0]["custom"] == 320 and spawned[0]["height"] == float(pot["z"]) and bursts.size() == 4
+		and current[0]["broken"] and not current[0].has("jar_warning") and not prop_visible(node)
+		and game.player["hp"] == hp,"expiry shatters the original jar once, emits four PTL sources and misses outside its box")
+	if not hop("left"):return
+	game.step_game(398.0)
+	if not hop("right"):return
+	game.player["pos"] = pot["pos"]
+	game.player["invuln_ms"] = 0.0
+	var enemy: Dictionary = game.spawn_enemy(pot["pos"],false,"native_starfish_rukuku")
+	enemy["ai"] = false
+	var enemy_hp: float = enemy["hp"]
+	game.step_game(1.0)
+	check(game.player["hp"] < hp and enemy["hp"] < enemy_hp and game.last_damage.get("category") == "magical"
+		and game.last_damage.get("element") == "fire" and game.last_damage.get("trace",{}).get("fixed_part") == 320.0
+		and game.last_damage.get("trace",{}).get("percent_part") == 0.0,
+		"after a revisit at 399 ms the fire box deals the original fixed-base fire magic to both opposing teams")
+	var after: float = game.player["hp"]
+	game.step_game(1.0)
+	check(game.player["hp"] == after and game.native_jar_traps.actors.is_empty()
+		and game.bus.events_of("combat.jar_trap_spawned").size() == 1,"the fire hitbox ends at 400 ms")
+
+func check_green_fairy(pot: Dictionary) -> void:
+	var actors: Array = game.native_jar_traps.actors
+	var initial: Array = game.native_jar_traps.view_objects(game)
+	check(pot["broken"] and not pot.has("jar_warning") and actors.size() == 1
+		and actors[0]["z"] == 50.0 and initial.map(func(layer):return layer["effect"]) == ["native_jar_hpmpfairy","native_jar_hpmpfairyef"]
+		and game.view.audio._loop_voices.has(actors[0]["id"]),
+		"green fairy spawns immediately with the source float height, body, light and loop sound")
+	if actors.size() != 1:return
+	var id: int = actors[0]["id"]
+	var voice: AudioStreamPlayer = game.view.audio._loop_voices.get(id)
+	game.view.audio.muted = true
+	check(voice != null and voice.stream_paused,"the mute setting also pauses an already playing fairy loop")
+	game.view.audio.muted = false
+	if not hop("left"):return
+	check(actors.is_empty() and not game.view.audio._loop_voices.has(id),"leaving the fairy room stops its audible loop")
+	game.step_game(150.0)
+	if not hop("right"):return
+	var frames: Array = game.native_jar_traps.view_objects(game)
+	check(actors.size() == 1 and actors[0]["id"] == id and frames[0]["clock"] == 150.0
+		and game.view.audio._loop_voices.has(id),"the original fairy retains its age and identity through a real room revisit")
+	game.player["pos"] = pot["pos"]+Vector2(-200,0)
+	game.player["hp"] = floorf(game.max_hp/4.0)
+	game.player["mp"] = game.max_mp-10.0
+	game.step_game(100.0)
+	check(actors.size() == 1 and game.item_restorations.is_empty(),"standing outside the fairy attack box leaves it available")
+	game.player["pos"] = pot["pos"]
+	var hp: float = game.player["hp"]
+	var mp: float = game.player["mp"]
+	var hp_recovery := floorf(game.max_hp/2.0)
+	var hp_regen: float = game.numeric_player.values["hp_regen"]
+	var mp_regen: float = game.numeric_player.values["mp_regen"]
+	game.step_game(0.0)
+	var absorbed: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("key") == "TINGKERBELL_ALL_ABSORB")
+	var death: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("key") in ["native_jar_hpmpfairydestroy","native_jar_heartdestroy"])
+	check(actors.is_empty() and game.item_restorations.size() == 1 and not game.view.audio._loop_voices.has(id)
+		and absorbed.size() == 1 and game.bus.events_of("combat.jar_fairy_consumed").size() == 1,
+		"contact consumes the fairy exactly once, plays the absorb cue and stops the float loop")
+	check(death.size() == 1 and death[0]["key"] == "native_jar_hpmpfairydestroy"
+		and death[0]["point"] == pot["pos"] and death[0]["height"] == 50.0,
+		"the ordinary fairy draws only its original main disappearance at the source anchor")
+	var recovery: Dictionary = game.item_restorations[0] if game.item_restorations.size() == 1 else {}
+	check(is_equal_approx(float(recovery.get("hp",-1.0)),hp_recovery)
+		and is_equal_approx(float(recovery.get("mp",-1.0)),game.max_mp-mp),"source fairy caps each recovery by the current resource gap")
+	game.step_game(500.0)
+	check(is_equal_approx(game.player["hp"],hp+(hp_recovery+hp_regen)/2.0)
+		and is_equal_approx(game.player["mp"],minf(game.max_mp,(mp+game.max_mp+mp_regen)/2.0)),
+		"the source fairy recovery and ordinary regeneration advance separately")
+	game.step_game(500.0)
+	check(is_equal_approx(game.player["hp"],hp+hp_recovery+hp_regen) and game.player["mp"] == game.max_mp
+		and game.item_restorations.is_empty(),"fairy restores half max HP and ends at the one-second source deadline")
 
 func prepare_pot_fixture() -> void:
 	var export: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(EXPORT))

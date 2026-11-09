@@ -3,6 +3,7 @@ extends RefCounted
 const HitJudge = preload("res://combat/hit/hit_judge.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
+const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
 const OBJECT_IDS := [300, 770, 771]
 
 ## The final header field of a special row is its nested payload count.
@@ -11,7 +12,9 @@ static func supports(item: Dictionary) -> bool:
 	if raw.size() < 4 or int(raw[0]) not in OBJECT_IDS:return false
 	match item.get("source_tag"):
 		"[passive object]":return raw.size() == 4
-		"[special passive object]":return (raw.size() == 5 and int(raw[4]) == 0) or NativeBoxLoot.draw_count(item) > 0 or not NativePotMonsters.rows(item).is_empty()
+		"[special passive object]":
+			return (raw.size() == 5 and int(raw[4]) == 0) or NativeBoxLoot.draw_count(item) > 0 \
+				or not NativePotMonsters.rows(item).is_empty() or not NativeJarTraps.rows(item).is_empty()
 	return false
 
 static func create(item: Dictionary, source: Dictionary, damage_boxes: Array, node: int) -> Dictionary:

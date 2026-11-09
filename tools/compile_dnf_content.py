@@ -132,6 +132,52 @@ NATIVE_OUTERWALL_BREAKABLES = {
           'ebf839e8df70e9b1e4da0da1b76b3a339731c886861d59e75f7997e1595bfade',
           '0856c4e55f330aa2d057b6831050777608db86cbec0f300c9ee1db0d951309fb'),
 }
+NATIVE_JAR_TRAP_WARNING = 'common/commoneffect/animation/trapexclamation.ani'
+NATIVE_JAR_TRAP_RATE = 'etc/difficultpenalty.etc'
+NATIVE_JAR_TRAP_COMMON = 'passiveobject/common/'
+NATIVE_JAR_TRAP_FAIRY = OUTERWALL_BREAKABLE_ROOT + 'fairy/'
+NATIVE_JAR_TRAP_OBJECTS = {
+    NATIVE_JAR_TRAP_COMMON + 'fireexplosion.obj': ((40002,), 'fire'),
+    NATIVE_JAR_TRAP_COMMON + 'cloudkill.obj': ((48003,), 'poison'),
+    NATIVE_JAR_TRAP_FAIRY + 'hpmpfairy.obj': ((2200, 2210), 'hpmp_fairy'),
+    NATIVE_JAR_TRAP_FAIRY + 'invinsiblefairy.obj': ((2410,), 'invincibility_fairy'),
+}
+NATIVE_JAR_TRAP_SHA = {
+    NATIVE_JAR_TRAP_WARNING: '85bdb1155196f53aca0a2d993c5ed09db4010a73d5031dc214797db617f3deb8',
+    NATIVE_JAR_TRAP_RATE: '4378483366ccab2691749e0f48e41c0398776507ceb917e6859f5f21e0701d9a',
+    **{NATIVE_JAR_TRAP_COMMON + path: digest for path, digest in {
+        'animation/cloudkill.ani': '3e950b31c0bf2ef09aac1becdcc1c9cdc6998caca7631212ce7c3da5cb4edb22',
+        'animation/fireexplosion.ani': 'f51bef6a57be8132a8698447bd72c6c80983549e1a6c2db3d3abda52e96f74c4',
+        'animation/fireexplosionparticle1.ani': '66b4126dbe82ecf1875c87423d92ee5a8066dc31ae5da0ccc43b2ab1ee2f3866',
+        'animation/fireexplosionparticle2.ani': 'f116dbc72cb70453dc87199556ae68704599954f1014368bbc113afcdd92682e',
+        'animation/fireexplosionparticle3.ani': '870b567b24d7e01422f4ae5e0cf1a1b4981a730907da2411c80fee34e9ddb9f1',
+        'animation/fireexplosionparticle4.ani': '4cdd032d48b183698b6e98cebdd6a2e77aebd9115bb9082494ab3a761e892cc3',
+        'animation/poisonsmoke.ani': '7f630d8365a791c2f018b643f6c1d69e9f376496adc34b338956c8e27e1f8d0b',
+        'animation/poisonsmoke2.ani': '93f68f07c5f54442de7293a2748f45f6c675819aac4f16cf4045c92c333b9ed7',
+        'attackinfo/cloudkill.atk': '446f6a3ea884d3add7971c286b9b71a1c71872856d2a571efb39b78545186b04',
+        'attackinfo/fireexplosion.atk': '84af81374a841e83bce1279352e60c85134841444546ff11aadecfaeecd306cb',
+        'cloudkill.obj': '9538676ea3c18f8babb4bca34cda5a46dbd2ee576fa7efbf426cd8c54e517d40',
+        'fireexplosion.obj': 'ca64017a803f74bde1dfc4d7fad854d784a19fa75df2422b8d57adc58c74949e',
+        'particle/fireexplosionparticle1.ptl': '133de360602dec17fc9b200666ffe1895f96a2a31318c09199004af5ad5da79d',
+        'particle/fireexplosionparticle2.ptl': '13f31f30e1357152ef6807b0ea5e8aef1533be73686f155a9ee735ae9cd51f98',
+        'particle/fireexplosionparticle3.ptl': '39ab1fb24c2b5fc267a4ea92b0fe1129125a4dd555d32afecb0c8fab05b3a28e',
+        'particle/fireexplosionparticle4.ptl': 'fe486a39ebf731210bcd74a17c42b60b679d2e646018b230d674778c4b2d977c',
+        'particle/poisongas.ptl': '3f94d8cfb6e68f0d32c52ebdc45ee875bb07c8707f956c5b9d3174db5db3ce4d',
+    }.items()},
+    **{NATIVE_JAR_TRAP_FAIRY + path: digest for path, digest in {
+        'animation/heart.ani': '9d8bdbd1a421cc1c3a8e42bfa13cf2e2019db37f3fd3a19b8bf48435bb7f028d',
+        'animation/heartdestroy.ani': '522acaa599c8145e4aa825e387ec809540ce67ea29386d733ca51c40ee18f52b',
+        'animation/hpmpfairy.ani': '2b23c81314baa246e1313e718ccd6d39e7d6195d13905f4811c34ac673769155',
+        'animation/hpmpfairydestroy.ani': '53917dab0029eabd3415f494bfdc3ad113b4625c9a2e63a6643b41ca85597925',
+        'animation/hpmpfairyef.ani': '3acd353c889efb6f1defd43819aaa19536b773540b943d285a774af2178fc483',
+        'animation/invinsiblefairy.ani': '87b64bebb17ceb596a8ea6c9f9428d63f41de4c994ad54e1b200d8aa3d95e8a5',
+        'animation/invinsiblefairydestroy.ani': '18c902271f1ae68adcb173db4462133eb860622b51b43a83544ac6159310f9ad',
+        'animation/invinsiblefairyef.ani': '38761edefd9450ae4bded24df0549a6a1e6f77e9dd8e523af49cc9fe7c93e00b',
+        'attackinfo/fairy.atk': '9a2f3fb9c281bf046b623051cea2b5e07275a817ea2c6da031f161bbd0c4fc9c',
+        'hpmpfairy.obj': '182e22d890b40edea5883409a4a29366877bb5d8aa3fa329da07dfa3384a0da8',
+        'invinsiblefairy.obj': '799ddff60c30db44854be21c0adaac7395ceb7ee1b1a11b9d0d3aae8d54352b5',
+    }.items()},
+}
 NATIVE_ZEALOT_SOURCE_SHA = '187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84'
 NATIVE_RAXY_SOURCE = {
     'monster/zealot/raxy-a.mob': '5a6e4599e577eff2668d7cbe14faefe7a577dff0f89b45fb9d1f3f5beb39e7b7',
@@ -906,6 +952,73 @@ def compile_native_outerwall_breakables(passive_index: dict, add) -> None:
         }
 
 
+def compile_native_jar_traps(lib: Library, passive_index: dict, add) -> None:
+    def require(path: str, origin: str) -> dict:
+        row = add(path, path.rsplit('.', 1)[1], origin)
+        if not row or row['source']['sha256'] != NATIVE_JAR_TRAP_SHA.get(path):
+            raise ValueError('Original jar trap source changed: ' + path)
+        return row
+
+    warning = require(NATIVE_JAR_TRAP_WARNING, 'OBJ771 trap warning')
+    rate_script = lib.script(NATIVE_JAR_TRAP_RATE)
+    if not rate_script or rate_script['sha256'] != NATIVE_JAR_TRAP_SHA[NATIVE_JAR_TRAP_RATE]:
+        raise ValueError('Original jar trap difficulty table changed')
+    rates, = (row['values'] for row in rate_script['fields'] if row['tag'] == '[COMMON TRAP EXPLOSION]')
+    base_duration = warning['decoded']['duration_ms']
+    if rates != [100, 130, 160, 190] or base_duration != 1991:
+        raise ValueError('Original jar trap warning timing changed')
+    warning['native_trap_warning'] = {
+        'base_duration_ms': base_duration, 'rate_percent': rates,
+        'duration_ms': [base_duration * 100 // rate for rate in rates],
+        'scale': warning['decoded']['timeline'][0]['items']['7'],
+        'rate_source': NATIVE_JAR_TRAP_RATE,
+        'rate_sha256': rate_script['sha256'],
+    }
+
+    for path, (source_ids, kind) in NATIVE_JAR_TRAP_OBJECTS.items():
+        if any(resolve('passiveobject/passiveobject.lst', passive_index.get(source_id, '')) != path
+               for source_id in source_ids):
+            raise ValueError('Original jar trap LST entry changed: ' + path)
+        obj = require(path, 'OBJ771 trap dispatch')
+        fields = obj['decoded']
+        motion, = fields['basic_motion']
+        attack, = fields['attack_infos']
+        motion_record = require(motion, path)
+        attack_record = require(attack, path)
+        motion_data = motion_record['decoded']
+        timeline = motion_data['timeline']
+        if not timeline or any(not frame['attack_boxes'] for frame in timeline):
+            raise ValueError('Original jar trap collision motion missing: ' + motion)
+
+        strings = fields['string_data']
+        extras = fields.get('etc_motions', [])
+        destroy = [resolve(path, item) for item in strings[6:8]] if extras else []
+        particles = [] if extras else [resolve(path, item) for item in strings]
+        hashes = {row['id']: row['source']['sha256'] for row in (obj, motion_record, attack_record)}
+        for particle in particles:
+            ptl = require(particle, path)
+            if ptl['unsupported'] or ptl['decoded']['object_type'] != '[animation]':
+                raise ValueError('Unresolved original jar trap emitter: ' + particle)
+            hashes[particle] = ptl['source']['sha256']
+            for entry in ptl['decoded']['object_entries']:
+                ani = require(entry['path'], particle)
+                if entry['parameter'] != -1 or any(frame['attack_boxes'] for frame in ani['decoded']['timeline']):
+                    raise ValueError('Unexpected original jar trap particle child: ' + entry['path'])
+                hashes[ani['id']] = ani['source']['sha256']
+        for animation in extras + destroy:
+            hashes[animation] = require(animation, path)['source']['sha256']
+        obj['native_trap'] = {
+            'source_ids': list(source_ids), 'kind': kind, 'motion_ani': motion, 'attack': attack,
+            'attack_window_ms': None if extras else motion_data['duration_ms'],
+            'floating_height': fields.get('floating_height', 0), 'particles': particles,
+            'spawn_sound': 'TINGKERBELL_FLOAT_LOOP' if extras else {'poison': 'CLOUD_KILL_LOOP'}.get(kind, ''),
+            'hit_sound': attack_record['decoded'].get('hit_wav', ''),
+            'consume_sound': {'hpmp_fairy': 'TINGKERBELL_ALL_ABSORB',
+                              'invincibility_fairy': 'TINGKERBELL_HP_ABSORB'}.get(kind, ''),
+            'extra_animations': extras, 'destroy_animations': destroy, 'source_hashes': hashes,
+        }
+
+
 def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dict:
     records: dict[str, dict] = {}
     missing: list[dict] = []
@@ -982,6 +1095,7 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
     needed = referenced_mob_paths() | required
     passive_objects = lib.listing('passiveobject/passiveobject.lst')
     compile_native_outerwall_breakables(passive_objects, add)
+    compile_native_jar_traps(lib, passive_objects, add)
     for index, rel in sorted(monsters.items()):
         p = ('monster/' + rel).lower()
         if not (p.startswith('monster/goblin/') or p in {
