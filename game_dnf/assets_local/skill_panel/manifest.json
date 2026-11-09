@@ -659,6 +659,14 @@
  },
  "ui_layout": {
   "evidence": "UI references parsed from this archived PVF; runtime placement adapters are explicit",
+  "detail_title": {
+   "position": [
+    0,
+    13
+   ],
+   "ui_path": "ui/skill/skillshopexplain.ui",
+   "control": "4011"
+  },
   "detail_body": {
    "position": [
     9,

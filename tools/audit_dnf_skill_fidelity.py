@@ -18,6 +18,25 @@ ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / "game_dnf"
 OVERLAYS = ("hp_cost_row", "requires_effect", "super_armor", "invuln_ms", "effect_id", "cast_fx", "aura_fx")
 DIMENSIONS = ("body_animation", "weapon_pose", "effect_composition", "timing", "hit_and_damage", "status_and_state", "original_client_comparison")
+SWORDMAN_ANIMATION = "character/swordman/animation/"
+SWORDMAN_OBJECT = "passiveobject/character/swordman/"
+CAST_EVIDENCE_IMAGE_SHA256 = "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84"
+# Native dispatch and passiveobject.lst, independently of the runtime builder.
+# A matching row covers these cast bindings only. Each object has its own rules.
+WAVE_CASTS = {
+    20: ("normalwave", 3, 20001, "normalwave"),
+    21: ("wave_cast", 4, 20002, "icewave1"),
+    22: ("wave_cast", 4, 20024, "firewavebig"),
+    99: ("wave_cast", 4, 20100, "firewavebigex"),
+    100: ("wave_cast", 4, 20105, "icewave1ex"),
+}
+GHOST_CASTS = {
+    25: (20011, "khazan"),
+    36: (20012, "saya"),
+    41: (20013, "bremen"),
+    75: (20040, "epidemicrasacreater"),
+    96: (20062, "sayaex"),
+}
 
 
 def read(path):
@@ -45,7 +64,7 @@ def inspect_move(move, runtime, records, clips):
 
     for stage in move.get("stages", [move]):
         ani = stage.get("ani", "")
-        path = "character/swordman/animation/" + ani + ".ani" if ani else ""
+        path = SWORDMAN_ANIMATION + ani + ".ani" if ani else ""
         record = records.get(path, {}).get("decoded", {})
         if ani == "summon2":
             risks.add("generic_buff_motion_binding_needs_verification")
@@ -79,7 +98,55 @@ def inspect_move(move, runtime, records, clips):
         risks.add("one_millisecond_placeholder_effect")
     if len(stages) > 1:
         risks.add("stage_transition_and_damage_columns_need_verification")
-    return {"movement": move.get("movement", ""), "effect_id": effect_id, "risks": sorted(risks), "stages": stages}
+    return {"movement": move.get("movement", ""), "effect_id": effect_id,
+            "fidelity_pending": move.get("fidelity_pending", []), "risks": sorted(risks), "stages": stages}
+
+
+def native_cast_families(runtime, combat, records):
+    """Compare shared cast inputs and first emission, leaving object behavior open."""
+    keys_by_source = {int(skill["source_id"]): key for key, skill in runtime["skills"].items()}
+    wave_ani = records[SWORDMAN_ANIMATION + "wave.ani"]["decoded"]["timeline"]
+    families = {
+        "swordman_wave": {
+            "original_state": 24,
+            "dispatch": "0xCC899D / 0xCB25FB",
+            "members": {
+                skill_id: (state, "", "wave", wave_ani[frame]["start_ms"], object_id, object_name)
+                for skill_id, (state, frame, object_id, object_name) in WAVE_CASTS.items()
+            },
+        },
+        "swordman_ghost": {
+            "original_state": 13,
+            "dispatch": "0xCBBCD5 / 0x19EBF14",
+            "members": {
+                skill_id: ("ghost_cast", "throw1", "throw2", 0, object_id, object_name)
+                for skill_id, (object_id, object_name) in GHOST_CASTS.items()
+            },
+        },
+    }
+    for family in families.values():
+        members = []
+        for skill_id, (state, charge, ani, at, object_id, object_name) in family["members"].items():
+            key = keys_by_source.get(skill_id, "")
+            skill = runtime["skills"].get(key, {})
+            move = effective_base(key, runtime, combat) if key else {}
+            stage = next(iter(move.get("stages", [move])), {})
+            emissions = [{"path": hit["object"], "at": hit.get("at")}
+                         for hit in stage.get("hits", []) if "object" in hit]
+            expected_emission = {"path": SWORDMAN_OBJECT + object_name + ".obj", "at": at}
+            actual = {"state": move.get("native_state", ""), "charge_ani": move.get("native_charge_ani", ""),
+                      "ani": stage.get("ani", ""), "emissions": emissions}
+            expected = {"state": state, "charge_ani": charge, "ani": ani, "emissions": [expected_emission]}
+            members.append({
+                "source_id": skill_id, "key": key, "tree_visible": skill.get("tree_visible", False),
+                "object_id": object_id, "expected": expected, "actual": actual,
+                "expected_object_sha256": records.get(expected_emission["path"], {}).get("source", {}).get("sha256", ""),
+                "binding_differences": [name for name in expected if expected[name] != actual[name]],
+                "fidelity_pending": move.get("fidelity_pending", []),
+            })
+        family["client_image_sha256"] = CAST_EVIDENCE_IMAGE_SHA256
+        family["members"] = members
+    return families
 
 
 def audit(runtime, combat, records, catalog, clips):
@@ -155,13 +222,19 @@ def main():
     base = read(GAME / "assets_local/manifest.json")
     baked = read(GAME / "assets_local/combat/manifest.json")
     clips = set(baked["player_clips"]) | {p.removeprefix("player/") for p in base["clips"] if p.startswith("player/")}
-    document = audit(runtime, read(GAME / "data/combat.json"), read(GAME / "assets_local/content/combat_content.json")["records"], read(GAME / "data/skill_catalog.json"), clips)
+    combat = read(GAME / "data/combat.json")
+    records = read(GAME / "assets_local/content/combat_content.json")["records"]
+    document = audit(runtime, combat, records, read(GAME / "data/skill_catalog.json"), clips)
+    document["native_cast_families"] = native_cast_families(runtime, combat, records)
     document["inputs_sha256"] = {str(p.relative_to(ROOT)).replace("\\", "/"): hashlib.sha256(p.read_bytes()).hexdigest() for p in (GAME / "data/skill_runtime.json", GAME / "data/combat.json", GAME / "assets_local/content/combat_content.json")}
     if args.client_root:
         document["client_archives"] = client_inventory(args.client_root)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(document["counts"], ensure_ascii=False))
+    for name, family in document["native_cast_families"].items():
+        differences = [row["source_id"] for row in family["members"] if row["binding_differences"]]
+        print(f"{name} cast binding differences: {differences}")
     print("Evidence gaps written to " + str(args.output))
 
 

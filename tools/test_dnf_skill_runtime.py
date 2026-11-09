@@ -119,6 +119,26 @@ class SkillRuntimeTest(unittest.TestCase):
             for fx in stage.get("fx", []):
                 self.assertNotIn("upperslash", self.runtime["assets"]["effect_anims"][fx["key"]])
 
+    def test_native_cast_families_compare_live_binding_and_keep_object_gaps(self):
+        from audit_dnf_skill_fidelity import native_cast_families
+
+        combat = json.loads((ROOT / "game_dnf/data/combat.json").read_text(encoding="utf8"))
+        records = self.pack["records"]
+        families = native_cast_families(self.runtime, combat, records)
+        by_id = {row["source_id"]: row for family in families.values() for row in family["members"]}
+        for skill_id in (20, 21, 22, 25, 36, 41):
+            self.assertEqual(by_id[skill_id]["binding_differences"], [], skill_id)
+        self.assertTrue(by_id[21]["fidelity_pending"])
+        self.assertEqual(by_id[75]["expected"]["emissions"][0]["path"],
+                         "passiveobject/character/swordman/epidemicrasacreater.obj")
+        self.assertTrue(by_id[75]["tree_visible"])
+        for skill_id in (96, 99, 100):
+            self.assertFalse(by_id[skill_id]["tree_visible"])
+
+        override = {"moves": dict(combat["moves"], normalwave={"stages": [{"ani": "summon2"}]})}
+        ground_wave = native_cast_families(self.runtime, override, records)["swordman_wave"]["members"][0]
+        self.assertEqual(ground_wave["binding_differences"], ["state", "ani", "emissions"])
+
     def test_blank_frames_are_not_missing_image_paths(self):
         class Library:
             def animation(self, path):

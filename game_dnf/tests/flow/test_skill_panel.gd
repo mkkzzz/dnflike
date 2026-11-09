@@ -37,6 +37,13 @@ func run(game, host) -> void:
 		await host.ticks(2)
 		host.check(panel.selected == button.get_meta("skill_key"), "viewport click selects the requested skill")
 		host.check(is_instance_valid(content) and content == game.modal.find_child("skill_tree_content", true, false), "selection retains tree controls and drag sources")
+		var skill: Dictionary = panel.by_key[panel.selected]
+		var title: Label = game.modal.find_child("skill_detail_title", true, false)
+		var rank: Label = game.modal.find_child("skill_detail_title_rank", true, false)
+		host.check(title.position == Vector2(0, 13) and title.text == skill["name"] and title.get_theme_color("font_color") == Color("f7d65a"),
+			"real skill clicks use the Explain title anchor and original active skill color")
+		host.check(rank.position == Vector2(title.size.x, title.position.y) and rank.text == " Lv%d" % int(panel._effective_levels.get(skill["local_id"], 0)),
+			"real skill clicks show the effective rank alongside the current name")
 	var selected_frame: TextureRect = upper.get_child(0)
 	upper.mouse_entered.emit()
 	upper.mouse_exited.emit()

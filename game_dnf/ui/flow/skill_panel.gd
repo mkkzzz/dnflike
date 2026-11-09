@@ -38,6 +38,7 @@ var _sp_label: Label
 var _sp_digits_view: Control
 var _tip_label: Label
 var _effective_levels: Dictionary = {}
+var _detail_title_position := Vector2(0, 13)
 var _detail_line_height := 14
 var _detail_wrap_width := 174
 var _detail_scroll_theme: Theme
@@ -126,7 +127,10 @@ func _load() -> void:
 	trees = catalog.get("trees", {})
 	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(MANIFEST))
 	parts = manifest.get("parts", {})
-	var detail_layout: Dictionary = manifest.get("ui_layout", {}).get("detail_body", {})
+	var ui_layout: Dictionary = manifest.get("ui_layout", {})
+	var title_position: Array = ui_layout.get("detail_title", {}).get("position", [0, 13])
+	_detail_title_position = Vector2(title_position[0], title_position[1])
+	var detail_layout: Dictionary = ui_layout.get("detail_body", {})
 	_detail_line_height = maxi(1, int(detail_layout.get("line_height", 14)))
 	var detail_size: Array = detail_layout.get("size", [179, 260])
 	_detail_wrap_width = int(detail_size[0]) + int(detail_layout.get("display_marginwidth", -5))
@@ -567,6 +571,30 @@ func _edge_points(source: Dictionary, target: Dictionary) -> Array[Vector2]:
 func _selected_id() -> int:
 	return int(by_key.get(selected, {}).get("id", -1))
 
+func _detail_title(panel: Control, skill: Dictionary, learned_rank: int, effective_rank: int) -> void:
+	# Explain #4011 is the parent of the dynamic name and effective level (0x4FC040).
+	var skin = game.skin
+	var name_color := Color("8cff71") if String(skill["type"]) == "[passive]" else Color("f7d65a")
+	var title: Label = skin.label(panel, String(skill["name"]), _detail_title_position, 13, name_color)
+	title.name = "skill_detail_title"
+	title.clip_text = true
+	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	var available_width := panel.size.x - _detail_title_position.x
+	if String(skill["local_id"]).is_empty():
+		title.size = Vector2(available_width, 18)
+		return
+	var level_color := name_color
+	if effective_rank != learned_rank:
+		level_color = Color("41ff4e") if effective_rank > learned_rank else Color("ff3232")
+	var level_text := " Lv%d" % effective_rank
+	var font := title.get_theme_font("font")
+	var font_size := title.get_theme_font_size("font_size")
+	var level_width := ceilf(font.get_string_size(level_text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x)
+	var name_width := ceilf(font.get_string_size(title.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x)
+	title.size = Vector2(minf(name_width, available_width - level_width), 18)
+	var level: Label = skin.label(panel, level_text, _detail_title_position + Vector2(title.size.x, 0), font_size, level_color)
+	level.name = "skill_detail_title_rank"
+
 func _detail(root: Control) -> void:
 	var skin = game.skin
 	var skill: Dictionary = by_key.get(selected, {})
@@ -590,11 +618,11 @@ func _detail(root: Control) -> void:
 	board.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_TILE
 	board.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(board)
+	var local := String(skill["local_id"])
+	var rank := int(game.session.profile["skills"].get(local, 0)) if local != "" else 0
+	var effective_rank := int(_effective_levels.get(local, 0))
 	skin.image(panel, _part("title"), Vector2(-20, 3))
-	var title_label: Label = skin.label(panel, String(skill["name"]), Vector2(15, 8), 13, Color("f0d18a"))
-	title_label.size = Vector2(173, 18)
-	title_label.clip_text = true
-	title_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_detail_title(panel, skill, rank, effective_rank)
 	var art := _part("detail_art")
 	if art != null:
 		skin.image(panel, art, Vector2(19, 33))
@@ -607,9 +635,6 @@ func _detail(root: Control) -> void:
 	var separator := _part("detail_separator")
 	if separator != null:
 		skin.image(panel, separator, Vector2(8, 134))
-	var local := String(skill["local_id"])
-	var rank := int(game.session.profile["skills"].get(local, 0)) if local != "" else 0
-	var effective_rank := int(_effective_levels.get(local,0))
 	var limit := runtime_max_level(skill)
 	var level_text := "等级  %d / %d" % [effective_rank, limit] if local != "" else "状态  未实装"
 	var level_label: Label = skin.label(panel, level_text, Vector2(30, 104), 11, Color("e8ddb9"))

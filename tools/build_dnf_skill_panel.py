@@ -290,6 +290,13 @@ def ui_control(src: B.Source, path: str, control_id: str) -> list:
     return ui_control_node(src, path, control_id)['values']
 
 
+def detail_title_layout(src: B.Source) -> dict:
+    title = ui_control(src, SKILL_EXPLAIN_UI, '4011')
+    if title[0] != '[control]':
+        raise ValueError('Unexpected SkillShopExplain title anchor')
+    return {'position': title[2:4], 'ui_path': SKILL_EXPLAIN_UI, 'control': '4011'}
+
+
 def build_ui_revision(src: B.Source, parts: dict) -> dict:
     """Export immutable v2 parts with the exact owning UI references attached."""
     output = OUT / 'v2'
@@ -330,6 +337,7 @@ def build_ui_revision(src: B.Source, parts: dict) -> dict:
     display_marginwidth = body_options['display marginwidth']
     return {
         'evidence': 'UI references parsed from this archived PVF; runtime placement adapters are explicit',
+        'detail_title': detail_title_layout(src),
         'detail_body': {'position': body[2:4], 'size': body[6:8], 'line_height': line_height,
                         'display_marginwidth': display_marginwidth,
                         'ui_path': SKILL_EXPLAIN_UI, 'control': '4013'},

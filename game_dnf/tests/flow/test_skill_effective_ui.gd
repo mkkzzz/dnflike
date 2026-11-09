@@ -71,6 +71,12 @@ func run() -> void:
 				var node: Dictionary = panel._node_views.get(key,{})
 				check(not node.is_empty() and node["rank"].text==str(expected),mode+" "+id+" tree effective rank")
 				var detail: Control = game.modal.find_child("skill_detail",true,false)
+				var title: Label = detail.get_node("skill_detail_title")
+				var title_rank: Label = detail.get_node("skill_detail_title_rank")
+				var expected_color := Color("8cff71") if panel.by_key[key]["type"] == "[passive]" else Color("f7d65a")
+				check(title.get_theme_color("font_color") == expected_color, mode+" "+id+" title uses the original type color")
+				check(title_rank.text == " Lv%d" % expected and title_rank.get_theme_color("font_color") == (Color("41ff4e") if expected > base else expected_color),
+					mode+" "+id+" title shows effective level in its original color")
 				check(texts(detail).contains("等级  %d / %d" % [expected,maximum]),mode+" "+id+" detail effective rank")
 				check(texts(detail).contains("已学等级  %d" % base),mode+" "+id+" learned rank remains separate")
 				check(int(battle.skill_levels[id])==expected,mode+" "+id+" matches actual combat rank")

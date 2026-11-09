@@ -107,6 +107,10 @@ class SkillPanelSourceTest(unittest.TestCase):
         top_left, _ = self.source.frame(self.build.WINDOW_BANK, 213)
         self.assertEqual(top_left.size, (12, 13))
         self.assertEqual(board.crop((0, 0, 12, 13)).tobytes(), top_left.convert('RGBA').tobytes())
+        title = self.manifest['ui_layout']['detail_title']
+        self.assertEqual(title['control'], '4011')
+        self.assertEqual(title['ui_path'], self.build.SKILL_EXPLAIN_UI)
+        self.assertEqual(title['position'], self.build.ui_control(self.source, title['ui_path'], title['control'])[2:4])
         body = self.manifest['ui_layout']['detail_body']
         source = self.build.ui_control_node(self.source, body['ui_path'], body['control'])
         self.assertEqual(source['values'][0], '[hyperlinklabel]')
