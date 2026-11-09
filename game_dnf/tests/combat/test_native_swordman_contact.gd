@@ -1882,7 +1882,8 @@ func check_grab_blast_startup() -> void:
 	profile.command("numbers.skill_grant",{"id":"buff","level":2})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["grabblastblood"]
-	for outcome: String in ["whiff","invulnerable","hit","bleed_frenzy","interrupted"]:
+	var denied := ["whiff","invulnerable","freeze","stone","source_disabled","no_down","body_immune"]
+	for outcome: String in denied+["hit","bleed_frenzy","interrupted","body_armor"]:
 		start_room("original_27601","katana",1,spec,"berserker")
 		var empowered := outcome == "bleed_frenzy"
 		if empowered:game.apply_skill_effect("buff","frenzy")
@@ -1894,6 +1895,22 @@ func check_grab_blast_startup() -> void:
 		target["numeric"].values["hp_max"] = 50000.0
 		if empowered:target["numeric"].effects.add_source_bleed(0,3000,38)
 		if outcome == "invulnerable":target["invuln_ms"] = 2000.0
+		if outcome in ["freeze","stone"]:
+			target["numeric"].effects.add(outcome,{"duration_ms":2000.0})
+		if outcome in ["source_disabled","no_down"]:
+			var record: Dictionary = game.content.record(target["mob"])
+			var raw: Array = record["raw"]
+			var decoded: Dictionary = record["decoded"]
+			var down: Array = decoded["down_motion"]
+			if outcome == "source_disabled":raw.append({"tag":"[is grabable]","values":[0]})
+			else:decoded.erase("down_motion")
+			target["def"] = game.table._build_monster("goblin",{"mob":target["mob"]})
+			if outcome == "source_disabled":raw.pop_back()
+			else:decoded["down_motion"] = down
+		var frame_items: Dictionary = game.enemy_frame(target)["items"]
+		var previous_body_mode = frame_items.get("13")
+		if outcome == "body_immune":frame_items["13"] = 2
+		if outcome == "body_armor":frame_items["13"] = 1
 		press(KEY_A)
 		step(0)
 		check(game.player["clock"]==120.0 and game.view.player_actor.pose=="grab" and game.view.player_actor.sample()["frame"]==3,
@@ -1901,13 +1918,16 @@ func check_grab_blast_startup() -> void:
 		step(159)
 		check(game.player["stage"]==0 and game.objects.is_empty(),"Bloodlust cannot capture before frame seven")
 		step(1)
-		if outcome in ["whiff","invulnerable"]:
+		if previous_body_mode == null:frame_items.erase("13")
+		else:frame_items["13"] = previous_body_mode
+		if outcome in denied:
 			check(game.player["stage"]==0,"Bloodlust never enters the spray phase for "+outcome)
 			step(360)
 			check(game.player["action"]=="" and game.objects.is_empty(),"Bloodlust recovers without a spray for "+outcome)
 			continue
 		check(game.player.get("grab_blast_target",-1)==target["id"] and game.view.player_actor.sample()["frame"]==16,
 			"Bloodlust captures one target and holds the terminal pose at frame seven contact")
+		if outcome == "body_armor":continue
 		var clock: float = target["clock"]
 		game.update_enemy(target,20.0)
 		check(target["clock"]==clock,"captured monster does not advance its action")

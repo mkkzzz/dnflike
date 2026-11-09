@@ -883,6 +883,15 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		"hit_recovery":float(mob.get("hit_recovery",[500])[0]),
 		"keep_distance":float(spec.get("keep_distance",mob.get("keep_distance",0))),
 		"motions":motions, "ani_paths":ani_paths}
+	# 81442D uses the damage/down ANI pair, or a down action with no damage action.
+	var grab_motions := (ani_paths.has("damage1") and ani_paths.has("down")) \
+		or (_first_path(mob.get("damage_actions_1",[])) == "" and _first_path(mob.get("down_actions",[])) != "")
+	var grab_allowed := true
+	for field: Dictionary in record.get("raw",[]):
+		if field["tag"] == "[is grabable]" and not field["values"].is_empty():
+			# 12A8FD7 converts the source integer to a boolean. MOB defaults to 1.
+			grab_allowed = int(field["values"][0]) != 0
+	m["grab_allowed"] = grab_allowed and grab_motions
 	if _native_target_classes.has(path):
 		var profile := {"uses_ai_vision":_native_target_classes[path]=="ai","sight":int(mob.get("sight",200)),
 			"vision":int(mob.get("vision",1500)),"back_vision":1500,"keep_distance":-1}

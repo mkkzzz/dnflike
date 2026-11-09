@@ -1776,6 +1776,11 @@ func try_grab_blast(stage: Dictionary, clock: float) -> bool:
 	var world := Kernel.HitJudge.world_boxes(boxes,Kernel.HitJudge.anchor(player["pos"],float(player["z"])),int(player["facing"]))
 	for enemy: Dictionary in monsters:
 		if float(enemy["hp"]) <= 0.0 or target_invulnerable(enemy):continue
+		if not enemy["def"].get("grab_allowed",true):continue
+		if enemy.has("numeric") and (enemy["numeric"].effects.active.has("freeze") or enemy["numeric"].effects.active.has("stone")):continue
+		# CC22EB calls the victim's grab predicate. 8143F2 accepts body modes 0 and 1.
+		var body_frame := enemy_frame(enemy)
+		if int(body_frame.get("items",{}).get("13",0)) not in [0,1]:continue
 		if Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy)).is_empty():continue
 		player["grab_blast_target"] = int(enemy["id"])
 		end_action_fx()
@@ -2268,10 +2273,13 @@ func spawn_effect(name: String, point: Vector2, direction: int, z := 0.0) -> voi
 
 # ---------------------------------------------------------------- monsters
 
-func enemy_damage_boxes(enemy: Dictionary) -> Array:
+func enemy_frame(enemy: Dictionary) -> Dictionary:
 	var ani := enemy_ani(enemy)
 	var tl: Array = table.monster_timeline(enemy["def"],String(ani[0]))
-	var f: Dictionary = Kernel.Timeline.frame_at(tl,float(ani[1]),String(ani[0]) in ["stay","move"])
+	return Kernel.Timeline.frame_at(tl,float(ani[1]),String(ani[0]) in ["stay","move"])
+
+func enemy_damage_boxes(enemy: Dictionary) -> Array:
+	var f := enemy_frame(enemy)
 	return Kernel.HitJudge.world_boxes(f.get("damage_boxes",[]),Kernel.HitJudge.anchor(enemy["pos"],float(enemy["z"])),int(enemy["facing"]))
 
 func player_damage_boxes() -> Array:
