@@ -1511,6 +1511,7 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		entity["exit_at_ms"] = float(entity["life_ms"])-exit_ms
 		entity["next_pulse_ms"] = 0.0
 		entity["field_rank"] = int(skill_levels.get(String(hit["skill_id"]),1))
+		if controller.has("first_update_sound"):entity["first_update_sound"] = controller["first_update_sound"]
 		if kind == "khazan_field" and numeric_player != null:numeric_player.remove_effect("khazan_aura")
 	if controller.get("kind","") == "icewave_chain":
 		var ordinal := int(hit.get("chain_ordinal",0))
@@ -1558,6 +1559,11 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		o["clock"] = t
 		o["pos"] = Vector2(o["pos"])+Vector2(float(o["speed"])*int(o["facing"])*object_ms/1000.0,0)
 		if kind in GHOST_FIELD_KINDS:
+			if o.has("first_update_sound"):
+				# A67B64 checks a per-object latch, independent of the pulse clock.
+				var first_sound := String(o["first_update_sound"])
+				o.erase("first_update_sound")
+				play_sound(first_sound)
 			if kind == "saya_field" and ghost_field_pulse(o):
 				# A68045..A68152 runs the area attack before the deletion check.
 				pulse_saya_field(o)

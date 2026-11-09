@@ -20,6 +20,7 @@ func run() -> void:
 	game.external_mode = true
 	game._muted = true
 	root.add_child(game)
+	game.view.audio.muted = true
 	game.set_process(false)
 	game.set_physics_process(false)
 	check(not game.missing_assets,"internal combat scene loads existing skill resources")
@@ -49,6 +50,7 @@ func run() -> void:
 		game.numeric_player.step(20000)
 		check(game.numeric_player.values==before and not game.numeric_player.effects.active.has("magical_memory"),"real combat numeric actor returns to base after source duration")
 	check_ghost_casts(game,session)
+	check_ghost_cast_sounds(game,session)
 	check_khazan(game,session)
 	check_saya(game,session)
 	game.queue_free()
@@ -97,6 +99,42 @@ func check_ghost_casts(game, session) -> void:
 		game.damage_player(10,Vector2(game.player["pos"])+Vector2(20,0))
 		game.step_player(600,Vector2.ZERO)
 		check(game.player["action"]=="" and game.player["native_phase"].is_empty() and game.objects.is_empty(),name+" a hit during charge prevents the field")
+
+func check_ghost_cast_sounds(game, session) -> void:
+	var audio = game.view.audio
+	var was_muted: bool = audio.muted
+	audio.muted = false
+	for sample: Array in [["khazan",150,"SM_GHOST_KAZHAN","GHOST_KAJAN"],
+			["bremen",200,"SM_GHOST_BREMEN","GHOST_BREMEN"],["saya",250,"SM_GHOST_SAYA","GHOST_SAYA"]]:
+		var skill := String(sample[0])
+		var cast_key := String(sample[2])
+		var field_key := String(sample[3])
+		game.restart()
+		for voice in audio.voice_pool:voice.stop()
+		game.numeric_player = Actor.new()
+		game.numeric_player.configure(session.stats())
+		game.numeric_player.values["cast_speed"] = 1.0
+		game.skill_levels = {skill:1}
+		game.table.configure_skills(game.skill_levels,"swordman","katana")
+		game.player["mp"] = game.numeric_player.values["mp_max"]
+		game.bus.clear_history()
+		var cues := func() -> Array:
+			return game.bus.events_of("combat.cue").filter(func(e):return e.get("kind")=="sound" and e["key"] in [cast_key,field_key]).map(func(e):return e["key"])
+		check(game.start_action(skill),skill+" starts for the sound fixture")
+		game.step_action(float(sample[1])-1.0,Vector2.ZERO)
+		check(cues.call().is_empty() and game.objects.is_empty(),skill+" charge remains silent")
+		game.step_action(1.0,Vector2.ZERO)
+		check(cues.call()==[cast_key] and game.objects.size()==1,skill+" actor sound plays at release before the field updates")
+		game.step_objects(0.0)
+		check(cues.call()==[cast_key,field_key],skill+" first field update emits its own sound even at age zero")
+		for key: String in [cast_key,field_key]:
+			var stream = audio.variants.get(key,[null])[0]
+			check(stream is AudioStreamOggVorbis and audio.voice_pool.any(func(voice):return voice.stream==stream and voice.playing),key+" original stream reaches the audio player")
+		game.step_objects(0.0)
+		game.step_objects(1000.0)
+		game.step_objects(40000.0)
+		check(cues.call()==[cast_key,field_key],skill+" zero-time updates, pulses and expiry do not repeat either sound")
+	audio.muted = was_muted
 
 func check_khazan(game, session) -> void:
 	game.restart()

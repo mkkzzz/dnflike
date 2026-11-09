@@ -188,6 +188,11 @@ IMAGE_DB = None
 IMAGE_PATHS: set[str] | None = None
 
 WAVE_CAST_VOICES = {"normalwave": "HADOUKEN", "icewave": "SM_ICEWAVE", "firewave": "SM_FIREWAVE"}
+GHOST_FIELD_SOUNDS = {
+    "khazan": ("SM_GHOST_KAZHAN", "GHOST_KAJAN"),
+    "bremen": ("SM_GHOST_BREMEN", "GHOST_BREMEN"),
+    "saya": ("SM_GHOST_SAYA", "GHOST_SAYA"),
+}
 
 EX_BASE = {
     "tombstonerainex": "tombstonerain",
@@ -1095,9 +1100,10 @@ def build_move(
         result["native_charge_ani"] = "throw1"
         # CD6026/CD6137/CD7C4E -> 86DE68/86DE70: mirror the original 122 px X offset.
         # A689F0 -> 5FF9D0: static[1] supplies the aura radius and area ANI scale.
-        result["fidelity_pending"] = ["area_membership_filters", "area_draw_order", "voice"]
+        result["fidelity_pending"] = ["area_membership_filters", "area_draw_order"]
         if key in ("bremen", "saya"):
             result["fidelity_pending"].append("status_level_resistance_formula")
+        cast_sound, field_sound = GHOST_FIELD_SOUNDS[key]
         hit = {
             "object": path, "at": 0, "offset": [122, 0, 0],
             "percent": 0, "speed": 0,
@@ -1111,6 +1117,8 @@ def build_move(
                 "stay_fx": stay, "disappear_fx": disappear,
                 "appear_ms": duration_ms(records[motions[2]]),
                 "disappear_ms": duration_ms(records[motions[5]]),
+                # A67B64..A67D96 gates the object sound on its first update.
+                "first_update_sound": field_sound,
             },
         }
         if key == "saya":
@@ -1120,7 +1128,9 @@ def build_move(
             hit["effects"] = [{"id": "freeze", "chance_col": 2, "chance_scale": 0.001,
                                "status_level_col": 3, "duration_ms_col": 4}]
             hit["native_controller"]["height_limit"] = statics[2]
-        stages[:] = [{"ani": "throw2", "atk": "", "hits": [hit], "fx": []}]
+        # The actor sound is in the phase 1 branch, before object creation.
+        stages[:] = [{"ani": "throw2", "atk": "", "hits": [hit], "fx": [],
+                      "sounds": [{"at": 0, "key": cast_sound}]}]
     if key in ("icewave", "firewave"):
         # 0xCC899D CHR motion 9; 0xCC8B05 trigger frame4. Unlike skill20,
         # these branches keep CAST speed (0xCC8A06) and zero movement.

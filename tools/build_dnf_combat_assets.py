@@ -154,8 +154,19 @@ WAVE_CAST_AUDIO = {
     'SM_FIREWAVE': 'sounds/char/swordman/sm_firewave.ogg',
 }
 
+# Preserve audio.xml spelling: Khazan's caster key is KAZHAN and the object key is KAJAN.
+GHOST_FIELD_AUDIO = {
+    'SM_GHOST_KAZHAN': 'sounds/char/swordman/sm_kghost.ogg',
+    'GHOST_KAJAN': 'sounds/effect/magic/ghost_kajan.ogg',
+    'SM_GHOST_BREMEN': 'sounds/char/swordman/sm_bghost.ogg',
+    'GHOST_BREMEN': 'sounds/effect/magic/ghost_bremen.ogg',
+    'SM_GHOST_SAYA': 'sounds/char/swordman/sm_sghost.ogg',
+    'GHOST_SAYA': 'sounds/effect/magic/ghost_saya.ogg',
+}
+
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
+    **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
     'swing1': ['sounds/char/swordman/sm_atk_01.ogg'], 'swing2': ['sounds/char/swordman/sm_atk_02.ogg'],
     'swing3': ['sounds/char/swordman/sm_atk_03.ogg'], 'jump': ['sounds/char/swordman/sm_jump.ogg'],
     'jump_attack': ['sounds/char/swordman/sm_jumpatk_01.ogg', 'sounds/char/swordman/sm_jumpatk_02.ogg'],
@@ -834,9 +845,12 @@ def extend_firewave(library: Path | None, output: Path = OUT) -> dict:
 
 def extend_ghost_field(library: Path | None, skill: str, output: Path = OUT) -> dict:
     runtime = json.loads(SKILL_RUNTIME.read_text(encoding='utf8'))
-    hit = runtime['moves'][skill]['stages'][0]['hits'][0]['native_controller']
-    keys = [hit['ghost_fx'], *hit['appear_fx'], hit['stay_fx'], hit['disappear_fx']]
+    stage = runtime['moves'][skill]['stages'][0]
+    controller = stage['hits'][0]['native_controller']
+    keys = [controller['ghost_fx'], *controller['appear_fx'], controller['stay_fx'], controller['disappear_fx']]
     specs = [('effects', key, runtime['assets']['effect_anims'][key]) for key in keys]
+    for key in (stage['sounds'][0]['key'], controller['first_update_sound']):
+        specs.append(('audio', key, GHOST_FIELD_AUDIO[key]))
     return extend_skill_banks(library, output, specs)
 
 

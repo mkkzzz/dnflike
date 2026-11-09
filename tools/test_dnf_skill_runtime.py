@@ -160,13 +160,38 @@ class SkillRuntimeTest(unittest.TestCase):
         for skill, key, digest in rows:
             with self.subTest(skill=skill):
                 self.assertEqual(self.moves[skill]["stages"][0]["voice"], key)
-                bank, = manifest["audio"][key]
-                self.assertEqual(bank["sha256"], digest)
-                sample = ROOT / "game_dnf" / bank["file"].removeprefix("res://")
-                self.assertEqual(hashlib.sha256(sample.read_bytes()).hexdigest(), digest)
+                self.assert_original_audio(manifest, key, digest)
         for skill in ("icewaveex", "firewaveex"):
             self.assertTrue(all("voice" not in stage for stage in self.moves[skill]["stages"]))
             self.assertIn("voice", self.moves[skill]["fidelity_pending"])
+
+    def assert_original_audio(self, manifest, key, digest):
+        bank, = manifest["audio"][key]
+        self.assertEqual(bank["sha256"], digest)
+        sample = ROOT / "game_dnf" / bank["file"].removeprefix("res://")
+        self.assertEqual(hashlib.sha256(sample.read_bytes()).hexdigest(), digest)
+
+    def test_ghost_field_sounds_are_original_and_bound_to_the_two_phases(self):
+        manifest = json.loads(COMBAT.read_text(encoding="utf8"))
+        rows = [
+            ("khazan", "SM_GHOST_KAZHAN", "GHOST_KAJAN",
+             "fabb3a7cc972fdcacdd1aecf4c61626923265fee8157ba321bdd35407eedbb20",
+             "bf92a6f7752cc7a3b13c23b543225f7272e5bfb9ecc8446ced35de25636928d2"),
+            ("bremen", "SM_GHOST_BREMEN", "GHOST_BREMEN",
+             "b346924d13ae7eb1bee5723d797bd8bc13a6c085971f84947e881b5f84ec7f27",
+             "13bf3c1737bf2e3202ec655b8727f8041fed2c6e4b93763630b623681503bbf5"),
+            ("saya", "SM_GHOST_SAYA", "GHOST_SAYA",
+             "36b208a425b1d39281859d0a2a73cac1abd0e691e163491f4a75fab76e507ad4",
+             "aae0367dd1e330fa385031c6c39918dddb67b4290fa35a3c80ab9da56d01aad7"),
+        ]
+        for skill, cast_key, field_key, cast_digest, field_digest in rows:
+            with self.subTest(skill=skill):
+                stage = self.moves[skill]["stages"][0]
+                self.assertNotIn("voice", stage)
+                self.assertEqual(stage["sounds"], [{"at": 0, "key": cast_key}])
+                self.assertEqual(stage["hits"][0]["native_controller"]["first_update_sound"], field_key)
+                self.assert_original_audio(manifest, cast_key, cast_digest)
+                self.assert_original_audio(manifest, field_key, field_digest)
 
     def test_ice_chain_bakes_each_original_variant_and_blank_tail(self):
         manifest = json.loads(COMBAT.read_text(encoding="utf8"))

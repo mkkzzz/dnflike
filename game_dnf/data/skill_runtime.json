@@ -919,7 +919,6 @@
    "fidelity_pending": [
     "area_membership_filters",
     "area_draw_order",
-    "voice",
     "status_level_resistance_formula"
    ],
    "name": "侵蚀之普戾蒙",
@@ -945,6 +944,7 @@
         "disappear_fx": "skillfx_bremenareadisappear_69a734b7",
         "disappear_ms": 320.0,
         "duration_col": 1,
+        "first_update_sound": "GHOST_BREMEN",
         "ghost_fx": "skillfx_bremen2_267aab10",
         "kind": "bremen_field",
         "pulse_ms": 250,
@@ -959,6 +959,12 @@
        ],
        "percent": 0,
        "speed": 0
+      }
+     ],
+     "sounds": [
+      {
+       "at": 0,
+       "key": "SM_GHOST_BREMEN"
       }
      ]
     }
@@ -2868,8 +2874,7 @@
   "khazan": {
    "fidelity_pending": [
     "area_membership_filters",
-    "area_draw_order",
-    "voice"
+    "area_draw_order"
    ],
    "name": "刀魂之卡赞",
    "native_charge_ani": "throw1",
@@ -2894,6 +2899,7 @@
         "disappear_fx": "skillfx_khazanareadisappear_6c00971a",
         "disappear_ms": 320.0,
         "duration_col": 1,
+        "first_update_sound": "GHOST_KAJAN",
         "ghost_fx": "skillfx_khazan2_47804aa3",
         "kind": "khazan_field",
         "pulse_ms": 100,
@@ -2908,6 +2914,12 @@
        ],
        "percent": 0,
        "speed": 0
+      }
+     ],
+     "sounds": [
+      {
+       "at": 0,
+       "key": "SM_GHOST_KAZHAN"
       }
      ]
     }
@@ -3567,7 +3579,6 @@
    "fidelity_pending": [
     "area_membership_filters",
     "area_draw_order",
-    "voice",
     "status_level_resistance_formula"
    ],
    "name": "冰霜之萨亚",
@@ -3602,6 +3613,7 @@
         "disappear_fx": "skillfx_sayaareadisappear_f0a73c78",
         "disappear_ms": 320.0,
         "duration_col": 1,
+        "first_update_sound": "GHOST_SAYA",
         "ghost_fx": "skillfx_saya2_078bfa10",
         "height_limit": 70,
         "kind": "saya_field",
@@ -3618,6 +3630,12 @@
        "percent": 0,
        "percent_col": 0,
        "speed": 0
+      }
+     ],
+     "sounds": [
+      {
+       "at": 0,
+       "key": "SM_GHOST_SAYA"
       }
      ]
     }
