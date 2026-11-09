@@ -220,7 +220,7 @@
         70,
         210
        ],
-       "percent_col": 1
+       "percent_col": 0
       }
      ],
      "fx": [
@@ -233,7 +233,7 @@
     },
     {
      "ani": "tripleslash3",
-     "atk": "character/swordman/attackinfo/tripleslash3.atk",
+     "atk": "character/swordman/attackinfo/tripleslash3down.atk",
      "hits": [
       {
        "derived": "triple3",
@@ -241,7 +241,7 @@
         70,
         210
        ],
-       "percent_col": 2
+       "percent_col": 1
       }
      ],
      "fx": [
@@ -257,7 +257,7 @@
     "speed_static": 0,
     "accel_static": 1
    },
-   "source": "Slash bodies carry no attack boxes. Equipped weapon ANI boxes use the parent frame clock. Slash effect extents remain the fallback for weapons without mounted source clips. Slide integration uses SKL static_data [600, -1000] as px/s and px/s² (E-INFER)."
+   "source": "Slash bodies carry no attack boxes. Equipped weapon ANI boxes use the parent frame clock. Slash effect extents remain the fallback for weapons without mounted source clips. State 22 uses SKL static columns 0 and 1 with attack-speed scaling and an independent movement clock."
   },
   "rage_slash": {
    "ani": "gorecross",

@@ -818,7 +818,7 @@ func step_player(ms: float, move: Vector2) -> void:
 			var speed := float(player["guard_recoil_speed"])
 			var next_speed := maxf(0.0,speed+float(player["guard_recoil_accel"])*seconds)
 			# 8280E0 applies the opposite horizontal direction and keeps depth still.
-			move_guard_recoil(-int(player["facing"])*(speed+next_speed)*0.5*seconds)
+			move_along_ground_pixels(-int(player["facing"])*(speed+next_speed)*0.5*seconds)
 			player["guard_recoil_speed"] = next_speed
 			player["guard_recoil_ms"] = recoil_ms-active_ms
 			if next_speed < 40.0 and not bool(player["guard_dust_emitted"]):
@@ -941,14 +941,26 @@ func step_action(ms: float, move: Vector2) -> void:
 		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
 	if m.has("dash"):
-		# Decelerating slide per stage: x(t) = v0 t + a t^2 / 2 until the speed reaches zero.
-		var v0 := float(m["dash"]["speed"])
-		var a := float(m["dash"]["accel"])
-		var stop := v0/-a if a < 0 else float(stage.get("duration",0))/1000.0
-		var t0 := minf(old_clock/1000.0,stop)
-		var t1 := minf(clock/1000.0,stop)
+		var motion: Dictionary = m["dash"]
+		var old_motion_clock := old_clock
+		var new_motion_clock := clock
+		if name == "triple":
+			motion = player["triple_slide"]
+			old_motion_clock = float(motion["elapsed_ms"])
+			# State 22 uses real milliseconds for motion, independently of the ANI clock.
+			var remaining_ms := maxf(0.0,(action_duration(name)-old_clock)/maxf(speed,0.001))
+			new_motion_clock = old_motion_clock+minf(ms,remaining_ms)
+			motion["elapsed_ms"] = new_motion_clock
+		var v0 := float(motion["speed"])
+		var a := float(motion["accel"])
+		var stop := float(motion.get("stop_s",v0/-a if a < 0 else float(stage.get("duration",0))/1000.0))
+		var t0 := minf(old_motion_clock/1000.0,stop)
+		var t1 := minf(new_motion_clock/1000.0,stop)
 		var dx := (v0*t1+0.5*a*t1*t1)-(v0*t0+0.5*a*t0*t0)
-		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
+		if dx != 0:
+			dx *= int(player["facing"])
+			if name == "triple":move_along_ground_pixels(dx)
+			else:move_player(Vector2(dx,0))
 	if bool(m.get("air",false)) and move.length_squared() > 0:
 		# Jump attacks keep the airborne steering of a plain jump; facing stays locked.
 		var air_speed := float(player.get("air_move_speed",rules["player"]["walk_speed"]))
@@ -1167,6 +1179,16 @@ func start_stage(index: int) -> void:
 		# Phase 1 sets mode 0 at 8591E3. The 1000 rate then preserves static[0].
 		player["native_phase"] = {"wait_ms":release_at,"charge_rate":cast_speed/1000.0,
 			"end_ms":release_at+float(m["native_recovery_ms"])}
+	if name == "triple":
+		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+		if numeric_player == null and float(player["buff_ms"]) > 0.0:
+			attack_rate = float(rules["buff"]["attack_speed"])
+		var motion_rate := int(attack_rate*1000.0)/1000.0
+		# CC7C56 requests attack speed. 827F20 scales velocity and truncates acceleration.
+		var velocity := float(m["dash"]["speed"])*motion_rate
+		var acceleration := int(float(m["dash"]["accel"])*motion_rate)
+		var stop := int(-velocity*1000.0/acceleration)/1000.0 if acceleration < 0 else INF
+		player["triple_slide"] = {"speed":velocity,"accel":acceleration,"stop_s":stop,"elapsed_ms":0.0}
 	# Multi-stage slides can pick their own side. Upper's native follow-up inherits facing.
 	if m.has("stages") and not (name == "upper" and index == 1):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
@@ -2739,7 +2761,7 @@ func move_in_world(from: Vector2,delta: Vector2) -> Vector2:
 func move_player(delta: Vector2) -> void:
 	player["pos"] = move_in_world(player["pos"],delta)
 
-func move_guard_recoil(dx: float) -> void:
+func move_along_ground_pixels(dx: float) -> void:
 	var pos: Vector2 = player["pos"]
 	var x := roundi(pos.x)
 	var target_x := roundi(pos.x+dx)

@@ -396,6 +396,42 @@ func check_guard_feedback() -> void:
 		check(cues("guard_dust").size()==1 and cues("SWD_GUARD_END").size()==1,
 			"finishing the same recoil adds no second dust and releases guard once")
 
+func check_triple_motion() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.skill_grant",{"id":"triple","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["","triple"]
+	for sample: Array in [[1,1.0,179.8],[-1,0.8,144.0],[1,1.25,213.44]]:
+		var facing: int = sample[0]
+		start_room("original_27601","katana",facing,spec)
+		game.numeric_player.values["attack_speed"] = sample[1]
+		press(KEY_S)
+		step(0)
+		check(game.player["pos"]==POINT,"Triple Slash enters without teleporting")
+		step(1000.0)
+		check(game.player["state"]=="idle" and Vector2(game.player["pos"]).is_equal_approx(
+			POINT+Vector2(float(sample[2])*facing,0)),
+			"Triple Slash travel is bounded by both real stop time and the animated state")
+
+	start_room("original_27601","katana",1,spec)
+	game.numeric_player.values["attack_speed"] = 1.25
+	press(KEY_S)
+	step(0)
+	step(100)
+	check(Vector2(game.player["pos"]).is_equal_approx(POINT+Vector2(68.75,0)),
+		"Triple Slash scales acceleration once on its real movement clock")
+	session.submit_key(KEY_LEFT,true)
+	press(KEY_S)
+	step(68)
+	var turn_point: Vector2 = game.player["pos"]
+	check(turn_point.is_equal_approx(POINT+Vector2(108.36,0)) and game.player["stage"]==1
+		and game.player["facing"]==-1,"Triple Slash completes the current slide before the next segment turns")
+	step(100)
+	check(Vector2(game.player["pos"]).is_equal_approx(turn_point-Vector2(68.75,0)),
+		"the next Triple Slash segment starts a fresh mirrored slide")
+	session.submit_key(KEY_LEFT,false)
+
 func check_triple_slash() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -407,6 +443,12 @@ func check_triple_slash() -> void:
 		game.numeric_player.values["attack_speed"] = 1.0
 		game.numeric_player.values["hit"] = 1.0
 		var stages: Array = game.move_def("triple")["stages"]
+		var hits := stages.map(func(stage):return stage["hits"][0])
+		check(hits.map(func(hit):return hit["percent"])==[158.0,158.0,198.0],
+			"ordinary Triple Slash uses original percentage columns 0, 0 and 1")
+		check(String(hits[2]["atk_path"]).ends_with("/tripleslash3down.atk")
+			and hits[2]["atk"]["lift_up"]==200 and hits[2]["atk"]["push_aside"]==300,
+			"the final segment installs the source knockdown ATK")
 		for stage: Dictionary in stages:
 			var hit: Dictionary = stage["hits"][0]
 			var segment: Dictionary = hit["segments"][0]
@@ -442,7 +484,12 @@ func check_triple_slash() -> void:
 		check(game.player["stage"]==index+1 and game.player["clock"]==0.0 and game.player["mp"]==mp,
 			"Triple Slash advances at 210 action ms without another cast cost")
 	press(KEY_S)
-	step(168)
+	var target: Dictionary = api.spawn_dummy(game.player["pos"]+Vector2(75,0))
+	game.numeric_player.values["hit"] = 1.0
+	step(56)
+	check(target["state"]=="air" and float(target["vz"])>0.0,
+		"the final Triple Slash segment knocks down a live enemy")
+	step(112)
 	check(game.player["stage"]==2,"ordinary Triple Slash has no fourth stage")
 	step(296)
 	check(game.player["action"]!="triple","Triple Slash recovers at the end of the final body animation")
@@ -549,6 +596,7 @@ func run() -> void:
 	check_guard_release()
 	check_guard_recoil_motion()
 	check_guard_feedback()
+	check_triple_motion()
 	check_triple_slash()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
