@@ -1092,19 +1092,33 @@ DRAW_WAVE_ALS = OBJ_ROOT + "animation/momentaryslash/start.ani.als"
 DRAW_EFFECT_SCRIPT = "sqr/common.nut"
 
 
-def draw_effect_slots(library) -> dict:
+def swordman_skill_effect_slots(library, skill: bytes) -> dict:
     source = library.raw(DRAW_EFFECT_SCRIPT)
     if not source or source[1] != "28b733752116ca5fee2ca0a9dbb335686e8b0c5403069d795dc691144ba2fa79":
         raise ValueError("unverified Swordman skill effect registration")
     swordman = source[0].split(b"function sq_LoadSkillEffect_Swordman(", 1)[1]
-    block = re.search(rb"else if \(skillIndex == SKILL_MOMENTARY_SLASH\)\s*\{([^}]+)\}", swordman)
+    block = re.search(rb"else if \(skillIndex == " + skill + rb"\)\s*\{([^}]+)\}", swordman)
     if not block:
-        raise ValueError("missing Swordman Draw Sword effect registration")
+        raise ValueError(f"missing Swordman effect registration for {skill!r}")
     names = re.findall(rb'obj\.sq_LoadSkillEffectAni\(skillIndex, "([^"]+)"\);', block[1])
-    if len(names) != 10 or not all(name.lower().startswith(b"effect/animation/momentaryslash/") for name in names):
-        raise ValueError("unexpected Swordman Draw Sword effect slots")
     return {"source": DRAW_EFFECT_SCRIPT, "sha256": source[1],
             "paths": ["character/swordman/" + name.decode("ascii").lower() for name in names]}
+
+
+def draw_effect_slots(library) -> dict:
+    registration = swordman_skill_effect_slots(library, b"SKILL_MOMENTARY_SLASH")
+    paths = registration["paths"]
+    if len(paths) != 10 or not all(path.startswith(CHR_FX + "momentaryslash/") for path in paths):
+        raise ValueError("unexpected Swordman Draw Sword effect slots")
+    return registration
+
+
+def grab_hold_effect_slot(library) -> dict:
+    registration = swordman_skill_effect_slots(library, b"SKILL_GRAB_BLAST_BLOOD")
+    paths = registration.pop("paths")
+    if paths != [CHR_FX + "grabblastblood.ani"]:
+        raise ValueError("unexpected Swordman Bloodlust effect slot")
+    return {**registration, "path": paths[0]}
 
 
 def draw_wave_layer(library) -> dict:
@@ -1906,6 +1920,7 @@ def main() -> int:
         draw_tracks = draw_weapon_tracks(library)
         draw_layer = draw_wave_layer(library)
         draw_slashes = draw_effect_slots(library)
+        grab_hold = grab_hold_effect_slot(library)
         SAFE_EFFECTS.clear()
         SAFE_EFFECTS.update(path for path in effect_paths if supported_animation_binding(library, path))
         SAFE_EFFECTS.update(layer["path"] for layer in bloodblast_script["layers"]
@@ -1913,6 +1928,8 @@ def main() -> int:
         if safe_animation(library, draw_layer["path"]):
             SAFE_EFFECTS.add(draw_layer["path"])
         SAFE_EFFECTS.update(path for path in draw_slashes["paths"] if safe_animation(library, path))
+        if safe_animation(library, grab_hold["path"]):
+            SAFE_EFFECTS.add(grab_hold["path"])
         object_candidates = {
             value[0]
             for value in CAST_OBJECTS.values()
@@ -1999,6 +2016,10 @@ def main() -> int:
                 move["fixed_attack_base"] = fixed_attack_base
             if key == "grabblastblood":
                 move["grab_bleed_base"] = bleed_attack_base
+                effect = add_fx(fx, effects, grab_hold["path"])
+                if not effect:
+                    raise ValueError("Missing original Bloodlust hold effect")
+                move["grab_hold_fx"] = {**grab_hold, "effect": effect}
             if key == "momentaryslash":
                 move["weapon_tracks"] = draw_tracks
                 move["draw_bleed_base"] = bleed_attack_base

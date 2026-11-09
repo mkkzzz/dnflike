@@ -1544,6 +1544,12 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	elif m.get("native_state","") == "grab_blast" and index == 1:
 		player["native_phase"] = {"grab_pose_ms":float(action_def()["duration"]),"end_ms":m["grab_duration_ms"],
 			"grab_substate":0,"grab_strikes_left":int(m.get("grab_strike_count",1)),"grab_next_strike_ms":100.0}
+		if m.has("grab_hold_fx"):
+			# The original attachment reads the action's mode-3 rate. The local
+			# numeric model uses its single attack-speed channel for that mode.
+			var rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+			player["native_phase"]["grab_hold_fx"] = m["grab_hold_fx"]
+			player["native_phase"]["grab_hold_rate"] = maxi(1,int(rate*1000.0))/1000.0
 		var strike: Dictionary = m["grab_strike"]
 		var base := native_fixed_attack_base(m["fixed_attack_base"])
 		var amount := float(int(native_fixed_attack_product(float(strike["fixed"]),base)))
@@ -4327,6 +4333,13 @@ func view_snapshot() -> Dictionary:
 				objs.append(layer)
 		else:
 			objs.append(item)
+	var grab_phase: Dictionary = player.get("native_phase",{})
+	if player["state"] == "action" and grab_phase.has("grab_hold_fx"):
+		# CC987C adds skill 31 slot 0 at the hand. CC4D6D removes it on state exit.
+		var facing := int(player["facing"])
+		objs.append({"id":"player:grab_hold","effect":grab_phase["grab_hold_fx"],"pos":Vector2(player["pos"])+Vector2(43*facing,0),
+			"z":float(player["z"])+90.0,"facing":facing,"clock":float(player["clock"])*float(grab_phase["grab_hold_rate"]),
+			"loop":true,"depth_offset":1})
 	if native_maze != null:objs.append_array(native_jar_traps.view_objects(self))
 	objs.append_array(native_zealot_summons.view_objects())
 	objs.append_array(frenzy_recovery.view_objects(self))
